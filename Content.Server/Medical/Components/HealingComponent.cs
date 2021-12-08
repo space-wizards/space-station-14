@@ -19,6 +19,8 @@ namespace Content.Server.Medical.Components
     [RegisterComponent]
     public class HealingComponent : Component, IAfterInteract
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "Healing";
 
         [DataField("damage", required: true)]
@@ -40,7 +42,7 @@ namespace Content.Server.Medical.Components
                 return false;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Target.Value, out DamageableComponent? targetDamage))
+            if (!_entMan.TryGetComponent(eventArgs.Target.Value, out DamageableComponent? targetDamage))
             {
                 return true;
             }
@@ -60,7 +62,7 @@ namespace Content.Server.Medical.Components
                 return true;
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedStackComponent?>(Owner, out var stack) && !EntitySystem.Get<StackSystem>().Use(Owner, 1, stack))
+            if (_entMan.TryGetComponent<SharedStackComponent?>(Owner, out var stack) && !EntitySystem.Get<StackSystem>().Use(Owner, 1, stack))
             {
                 return true;
             }

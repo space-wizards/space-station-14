@@ -17,6 +17,8 @@ namespace Content.Server.Light.Components
     [RegisterComponent]
     public class ExpendableLightComponent : SharedExpendableLightComponent, IUse
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         /// <summary>
         ///     Status of light, whether or not it is emitting light.
         /// </summary>
@@ -36,14 +38,14 @@ namespace Content.Server.Light.Components
         {
             base.Initialize();
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<ItemComponent?>(Owner, out var item))
+            if (_entMan.TryGetComponent<ItemComponent?>(Owner, out var item))
             {
                 item.EquippedPrefix = "unlit";
             }
 
             CurrentState = ExpendableLightState.BrandNew;
             Owner.EnsureComponent<PointLightComponent>();
-            IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out _appearance);
+            _entMan.TryGetComponent(Owner, out _appearance);
         }
 
         /// <summary>
@@ -53,7 +55,7 @@ namespace Content.Server.Light.Components
         {
             if (!Activated && CurrentState == ExpendableLightState.BrandNew)
             {
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<ItemComponent?>(Owner, out var item))
+                if (_entMan.TryGetComponent<ItemComponent?>(Owner, out var item))
                 {
                     item.EquippedPrefix = "lit";
                 }
@@ -92,7 +94,7 @@ namespace Content.Server.Light.Components
 
         private void UpdateSpriteAndSounds(bool on)
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out SpriteComponent? sprite))
+            if (_entMan.TryGetComponent(Owner, out SpriteComponent? sprite))
             {
                 switch (CurrentState)
                 {
@@ -126,7 +128,7 @@ namespace Content.Server.Light.Components
                 }
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out ClothingComponent? clothing))
+            if (_entMan.TryGetComponent(Owner, out ClothingComponent? clothing))
             {
                 clothing.ClothingEquippedPrefix = on ? "Activated" : string.Empty;
             }
@@ -155,13 +157,13 @@ namespace Content.Server.Light.Components
                     case ExpendableLightState.Fading:
 
                         CurrentState = ExpendableLightState.Dead;
-                        IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityName = SpentName;
-                        IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityDescription = SpentDesc;
+                        _entMan.GetComponent<MetaDataComponent>(Owner).EntityName = SpentName;
+                        _entMan.GetComponent<MetaDataComponent>(Owner).EntityDescription = SpentDesc;
 
                         UpdateSpriteAndSounds(Activated);
                         UpdateVisualizer();
 
-                        if (IoCManager.Resolve<IEntityManager>().TryGetComponent<ItemComponent?>(Owner, out var item))
+                        if (_entMan.TryGetComponent<ItemComponent?>(Owner, out var item))
                         {
                             item.EquippedPrefix = "unlit";
                         }

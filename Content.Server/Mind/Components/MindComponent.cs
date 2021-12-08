@@ -22,6 +22,8 @@ namespace Content.Server.Mind.Components
     public class MindComponent : Component, IExamine
 #pragma warning restore 618
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         /// <inheritdoc />
         public override string Name => "Mind";
 
@@ -59,7 +61,7 @@ namespace Content.Server.Mind.Components
         public void InternalEjectMind()
         {
             if (!Deleted)
-                IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, new MindRemovedMessage());
+                _entMan.EventBus.RaiseLocalEvent(Owner, new MindRemovedMessage());
             Mind = null;
         }
 
@@ -71,7 +73,7 @@ namespace Content.Server.Mind.Components
         public void InternalAssignMind(Mind value)
         {
             Mind = value;
-            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, new MindAddedMessage());
+            _entMan.EventBus.RaiseLocalEvent(Owner, new MindAddedMessage());
         }
 
         protected override void Shutdown()
@@ -86,7 +88,7 @@ namespace Content.Server.Mind.Components
             {
                 if (Mind?.VisitingEntity is {Valid: true} visiting)
                 {
-                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent(visiting, out GhostComponent? ghost))
+                    if (_entMan.TryGetComponent(visiting, out GhostComponent? ghost))
                     {
                         EntitySystem.Get<SharedGhostSystem>().SetCanReturnToBody(ghost, false);
                     }
@@ -95,27 +97,27 @@ namespace Content.Server.Mind.Components
                 }
                 else if (GhostOnShutdown)
                 {
-                    var spawnPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates;
+                    var spawnPosition = _entMan.GetComponent<TransformComponent>(Owner).Coordinates;
                     // Use a regular timer here because the entity has probably been deleted.
                     Timer.Spawn(0, () =>
                     {
                         // Async this so that we don't throw if the grid we're on is being deleted.
                         var mapMan = IoCManager.Resolve<IMapManager>();
 
-                        var gridId = spawnPosition.GetGridId(IoCManager.Resolve<IEntityManager>());
+                        var gridId = spawnPosition.GetGridId(_entMan);
                         if (gridId == GridId.Invalid || !mapMan.GridExists(gridId))
                         {
                             spawnPosition = EntitySystem.Get<GameTicker>().GetObserverSpawnPoint();
                         }
 
-                        var ghost = IoCManager.Resolve<IEntityManager>().SpawnEntity("MobObserver", spawnPosition);
-                        var ghostComponent = IoCManager.Resolve<IEntityManager>().GetComponent<GhostComponent>(ghost);
+                        var ghost = _entMan.SpawnEntity("MobObserver", spawnPosition);
+                        var ghostComponent = _entMan.GetComponent<GhostComponent>(ghost);
                         EntitySystem.Get<SharedGhostSystem>().SetCanReturnToBody(ghostComponent, false);
 
                         if (Mind != null)
                         {
                             string? val = Mind.CharacterName ?? string.Empty;
-                            IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(ghost).EntityName = val;
+                            _entMan.GetComponent<MetaDataComponent>(ghost).EntityName = val;
                             Mind.TransferTo(ghost);
                         }
                     });
@@ -131,7 +133,7 @@ namespace Content.Server.Mind.Components
             }
 
             var dead =
-                IoCManager.Resolve<IEntityManager>().TryGetComponent<MobStateComponent?>(Owner, out var state) &&
+                _entMan.TryGetComponent<MobStateComponent?>(Owner, out var state) &&
                 state.IsDead();
 
             if (!HasMind)

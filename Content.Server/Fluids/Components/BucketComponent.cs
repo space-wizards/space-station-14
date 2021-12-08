@@ -23,6 +23,8 @@ namespace Content.Server.Fluids.Components
     [RegisterComponent]
     public class BucketComponent : Component, IInteractUsing
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "Bucket";
         public const string SolutionName = "bucket";
 
@@ -56,7 +58,7 @@ namespace Content.Server.Fluids.Components
             var solutionsSys = EntitySystem.Get<SolutionContainerSystem>();
             if (!solutionsSys.TryGetSolution(Owner, SolutionName, out var contents) ||
                 _currentlyUsing.Contains(eventArgs.Using) ||
-                !IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Using, out MopComponent? mopComponent) ||
+                !_entMan.TryGetComponent(eventArgs.Using, out MopComponent? mopComponent) ||
                 mopComponent.Mopping)
             {
                 return false;
@@ -87,7 +89,7 @@ namespace Content.Server.Fluids.Components
             _currentlyUsing.Remove(eventArgs.Using);
 
             if (result == DoAfterStatus.Cancelled ||
-                (!IoCManager.Resolve<IEntityManager>().EntityExists(Owner) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityLifeStage) >= EntityLifeStage.Deleted ||
+                (!_entMan.EntityExists(Owner) ? EntityLifeStage.Deleted : _entMan.GetComponent<MetaDataComponent>(Owner).EntityLifeStage) >= EntityLifeStage.Deleted ||
                 mopComponent.Deleted ||
                 CurrentVolume <= 0 ||
                 !Owner.InRangeUnobstructed(mopComponent.Owner))

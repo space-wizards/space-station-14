@@ -76,8 +76,7 @@ namespace Content.Server.GameTicking.Presets
                 }
             }
 
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-            var ghost = entityManager.SpawnEntity("MobObserver", position.ToMap(entityManager));
+            var ghost = entities.SpawnEntity("MobObserver", position.ToMap(entities));
 
             // Try setting the ghost entity name to either the character name or the player name.
             // If all else fails, it'll default to the default entity prototype name, "observer".
@@ -87,7 +86,7 @@ namespace Content.Server.GameTicking.Presets
             else if (!string.IsNullOrWhiteSpace(mind.Session?.Name))
                 entities.GetComponent<MetaDataComponent>(ghost).EntityName = mind.Session.Name;
 
-            var ghostComponent = IoCManager.Resolve<IEntityManager>().GetComponent<GhostComponent>(ghost);
+            var ghostComponent = entities.GetComponent<GhostComponent>(ghost);
 
             if (mind.TimeOfDeath.HasValue)
             {

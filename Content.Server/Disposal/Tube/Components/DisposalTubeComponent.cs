@@ -20,6 +20,8 @@ namespace Content.Server.Disposal.Tube.Components
 {
     public abstract class DisposalTubeComponent : Component, IDisposalTubeComponent, IBreakAct
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public static readonly TimeSpan ClangDelay = TimeSpan.FromSeconds(0.5);
         public TimeSpan LastClang;
 
@@ -35,7 +37,7 @@ namespace Content.Server.Disposal.Tube.Components
 
         [ViewVariables]
         private bool Anchored =>
-            !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out PhysicsComponent? physics) ||
+            !_entMan.TryGetComponent(Owner, out PhysicsComponent? physics) ||
             physics.BodyType == BodyType.Static;
 
         /// <summary>
@@ -88,7 +90,7 @@ namespace Content.Server.Disposal.Tube.Components
 
             foreach (var entity in Contents.ContainedEntities.ToArray())
             {
-                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out DisposalHolderComponent? holder))
+                if (!_entMan.TryGetComponent(entity, out DisposalHolderComponent? holder))
                 {
                     continue;
                 }
@@ -106,7 +108,7 @@ namespace Content.Server.Disposal.Tube.Components
 
         private void UpdateVisualState()
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AppearanceComponent? appearance))
+            if (!_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
             {
                 return;
             }
@@ -122,7 +124,7 @@ namespace Content.Server.Disposal.Tube.Components
 
         public void AnchoredChanged()
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out PhysicsComponent? physics))
+            if (!_entMan.TryGetComponent(Owner, out PhysicsComponent? physics))
             {
                 return;
             }

@@ -22,6 +22,7 @@ namespace Content.Server.Headset
     public class HeadsetComponent : Component, IListen, IRadio, IExamine
 #pragma warning restore 618
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IServerNetManager _netManager = default!;
 
         public override string Name => "Headset";
@@ -59,7 +60,7 @@ namespace Content.Server.Headset
         {
             if (Owner.TryGetContainer(out var container))
             {
-                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(container.Owner, out ActorComponent? actor))
+                if (!_entMan.TryGetComponent(container.Owner, out ActorComponent? actor))
                     return;
 
                 var playerChannel = actor.PlayerSession.ConnectedClient;
@@ -69,7 +70,7 @@ namespace Content.Server.Headset
                 msg.Channel = ChatChannel.Radio;
                 msg.Message = message;
                 //Square brackets are added here to avoid issues with escaping
-                msg.MessageWrap = Loc.GetString("chat-radio-message-wrap", ("channel", $"\\[{channel}\\]"), ("name", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(source).EntityName));
+                msg.MessageWrap = Loc.GetString("chat-radio-message-wrap", ("channel", $"\\[{channel}\\]"), ("name", Name: _entMan.GetComponent<MetaDataComponent>(source).EntityName));
                 _netManager.ServerSendMessage(msg, playerChannel);
             }
         }

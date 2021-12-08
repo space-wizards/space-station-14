@@ -25,6 +25,8 @@ namespace Content.Server.Cuffs.Components
     [ComponentReference(typeof(SharedCuffableComponent))]
     public class CuffableComponent : SharedCuffableComponent
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         /// <summary>
         /// How many of this entity's hands are currently cuffed.
         /// </summary>
@@ -64,7 +66,7 @@ namespace Content.Server.Cuffs.Components
 
             if (CuffedHandCount > 0)
             {
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<HandcuffComponent?>(LastAddedCuffs, out var cuffs))
+                if (_entMan.TryGetComponent<HandcuffComponent?>(LastAddedCuffs, out var cuffs))
                 {
                     return new CuffableComponentState(CuffedHandCount,
                        CanStillInteract,
@@ -89,7 +91,7 @@ namespace Content.Server.Cuffs.Components
         /// <param name="prototype"></param>
         public bool TryAddNewCuffs(EntityUid user, EntityUid handcuff)
         {
-            if (!IoCManager.Resolve<IEntityManager>().HasComponent<HandcuffComponent>(handcuff))
+            if (!_entMan.HasComponent<HandcuffComponent>(handcuff))
             {
                 Logger.Warning($"Handcuffs being applied to player are missing a {nameof(HandcuffComponent)}!");
                 return false;
@@ -102,14 +104,14 @@ namespace Content.Server.Cuffs.Components
             }
 
             // Success!
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(user, out HandsComponent? handsComponent) && handsComponent.IsHolding(handcuff))
+            if (_entMan.TryGetComponent(user, out HandsComponent? handsComponent) && handsComponent.IsHolding(handcuff))
             {
                 // Good lord handscomponent is scuffed, I hope some smug person will fix it someday
                 handsComponent.Drop(handcuff);
             }
 
             Container.Insert(handcuff);
-            CanStillInteract = IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out HandsComponent? ownerHands) && ownerHands.HandNames.Count() > CuffedHandCount;
+            CanStillInteract = _entMan.TryGetComponent(Owner, out HandsComponent? ownerHands) && ownerHands.HandNames.Count() > CuffedHandCount;
 
             OnCuffedStateChanged?.Invoke();
             UpdateAlert();
@@ -129,7 +131,7 @@ namespace Content.Server.Cuffs.Components
         /// </summary>
         public void UpdateHeldItems()
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out HandsComponent? handsComponent)) return;
+            if (!_entMan.TryGetComponent(Owner, out HandsComponent? handsComponent)) return;
 
             var itemCount = handsComponent.GetAllHeldItems().Count();
             var freeHandCount = handsComponent.HandNames.Count() - CuffedHandCount;
@@ -156,7 +158,7 @@ namespace Content.Server.Cuffs.Components
         /// </summary>
         private void UpdateAlert()
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out ServerAlertsComponent? status))
+            if (_entMan.TryGetComponent(Owner, out ServerAlertsComponent? status))
             {
                 if (CanStillInteract)
                 {
@@ -198,14 +200,14 @@ namespace Content.Server.Cuffs.Components
                 }
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<HandcuffComponent?>(cuffsToRemove, out var cuff))
+            if (!_entMan.TryGetComponent<HandcuffComponent?>(cuffsToRemove, out var cuff))
             {
                 Logger.Warning($"A user is trying to remove handcuffs without a {nameof(HandcuffComponent)}. This should never happen!");
                 return;
             }
 
             var attempt = new UncuffAttemptEvent(user, Owner);
-            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(user, attempt);
+            _entMan.EventBus.RaiseLocalEvent(user, attempt);
 
             if (attempt.Cancelled)
             {
@@ -257,23 +259,23 @@ namespace Content.Server.Cuffs.Components
                 SoundSystem.Play(Filter.Pvs(Owner), cuff.EndUncuffSound.GetSound(), Owner);
 
                 Container.ForceRemove(cuffsToRemove);
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(cuffsToRemove).AttachToGridOrMap();
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(cuffsToRemove).WorldPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).WorldPosition;
+                _entMan.GetComponent<TransformComponent>(cuffsToRemove).AttachToGridOrMap();
+                _entMan.GetComponent<TransformComponent>(cuffsToRemove).WorldPosition = _entMan.GetComponent<TransformComponent>(Owner).WorldPosition;
 
                 if (cuff.BreakOnRemove)
                 {
                     cuff.Broken = true;
 
-                    IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(cuffsToRemove).EntityName = cuff.BrokenName;
-                    IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(cuffsToRemove).EntityDescription = cuff.BrokenDesc;
+                    _entMan.GetComponent<MetaDataComponent>(cuffsToRemove).EntityName = cuff.BrokenName;
+                    _entMan.GetComponent<MetaDataComponent>(cuffsToRemove).EntityDescription = cuff.BrokenDesc;
 
-                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SpriteComponent?>(cuffsToRemove, out var sprite) && cuff.BrokenState != null)
+                    if (_entMan.TryGetComponent<SpriteComponent?>(cuffsToRemove, out var sprite) && cuff.BrokenState != null)
                     {
                         sprite.LayerSetState(0, cuff.BrokenState); // TODO: safety check to see if RSI contains the state?
                     }
                 }
 
-                CanStillInteract = IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out HandsComponent? handsComponent) && handsComponent.HandNames.Count() > CuffedHandCount;
+                CanStillInteract = _entMan.TryGetComponent(Owner, out HandsComponent? handsComponent) && handsComponent.HandNames.Count() > CuffedHandCount;
                 OnCuffedStateChanged?.Invoke();
                 UpdateAlert();
                 Dirty();

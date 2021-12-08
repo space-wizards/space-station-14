@@ -31,6 +31,7 @@ namespace Content.Server.Fluids.Components
         public const float SprayDistance = 3f;
         public const string SolutionName = "spray";
 
+        [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         [DataField("transferAmount")]
@@ -99,8 +100,8 @@ namespace Content.Server.Fluids.Components
             if(curTime < _cooldownEnd)
                 return true;
 
-            var playerPos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(eventArgs.User).Coordinates;
-            var entManager = IoCManager.Resolve<IEntityManager>();
+            var playerPos = _entMan.GetComponent<TransformComponent>(eventArgs.User).Coordinates;
+            var entManager = _entMan;
 
             if (eventArgs.ClickLocation.GetGridId(entManager) != playerPos.GetGridId(entManager))
                 return true;
@@ -124,10 +125,10 @@ namespace Content.Server.Fluids.Components
                 var diffNorm = diffPos.Normalized;
                 var diffLength = diffPos.Length;
 
-                var target = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(eventArgs.User).Coordinates.Offset((diffNorm + rotation.ToVec()).Normalized * diffLength + quarter);
+                var target = _entMan.GetComponent<TransformComponent>(eventArgs.User).Coordinates.Offset((diffNorm + rotation.ToVec()).Normalized * diffLength + quarter);
 
-                if (target.TryDistance(IoCManager.Resolve<IEntityManager>(), playerPos, out var distance) && distance > SprayDistance)
-                    target = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(eventArgs.User).Coordinates.Offset(diffNorm * SprayDistance);
+                if (target.TryDistance(_entMan, playerPos, out var distance) && distance > SprayDistance)
+                    target = _entMan.GetComponent<TransformComponent>(eventArgs.User).Coordinates.Offset(diffNorm * SprayDistance);
 
                 var solution = EntitySystem.Get<SolutionContainerSystem>().SplitSolution(Owner, contents, _transferAmount);
 
@@ -135,24 +136,24 @@ namespace Content.Server.Fluids.Components
                     break;
 
                 var vapor = entManager.SpawnEntity(_vaporPrototype, playerPos.Offset(distance < 1 ? quarter : threeQuarters));
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(vapor).LocalRotation = rotation;
+                _entMan.GetComponent<TransformComponent>(vapor).LocalRotation = rotation;
 
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(vapor, out AppearanceComponent? appearance))
+                if (_entMan.TryGetComponent(vapor, out AppearanceComponent? appearance))
                 {
                     appearance.SetData(VaporVisuals.Color, contents.Color.WithAlpha(1f));
                     appearance.SetData(VaporVisuals.State, true);
                 }
 
                 // Add the solution to the vapor and actually send the thing
-                var vaporComponent = IoCManager.Resolve<IEntityManager>().GetComponent<VaporComponent>(vapor);
+                var vaporComponent = _entMan.GetComponent<VaporComponent>(vapor);
                 var vaporSystem = EntitySystem.Get<VaporSystem>();
                 vaporSystem.TryAddSolution(vaporComponent, solution);
 
                 // impulse direction is defined in world-coordinates, not local coordinates
-                var impulseDirection = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(vapor).WorldRotation.ToVec();
+                var impulseDirection = _entMan.GetComponent<TransformComponent>(vapor).WorldRotation.ToVec();
                 vaporSystem.Start(vaporComponent, impulseDirection, _sprayVelocity, target, _sprayAliveTime);
 
-                if (_impulse > 0f && IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User, out IPhysBody? body))
+                if (_impulse > 0f && _entMan.TryGetComponent(eventArgs.User, out IPhysBody? body))
                 {
                     body.ApplyLinearImpulse(-impulseDirection * _impulse);
                 }
@@ -163,7 +164,7 @@ namespace Content.Server.Fluids.Components
             _lastUseTime = curTime;
             _cooldownEnd = _lastUseTime + TimeSpan.FromSeconds(_cooldownTime);
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out ItemCooldownComponent? cooldown))
+            if (_entMan.TryGetComponent(Owner, out ItemCooldownComponent? cooldown))
             {
                 cooldown.CooldownStart = _lastUseTime;
                 cooldown.CooldownEnd = _cooldownEnd;

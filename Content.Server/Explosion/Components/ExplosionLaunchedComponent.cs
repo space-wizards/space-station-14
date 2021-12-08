@@ -9,19 +9,21 @@ namespace Content.Server.Explosion.Components
     [RegisterComponent]
     public class ExplosionLaunchedComponent : Component, IExAct
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "ExplosionLaunched";
 
         void IExAct.OnExplosion(ExplosionEventArgs eventArgs)
         {
-            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(Owner) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityLifeStage) >= EntityLifeStage.Deleted)
+            if (_entMan.Deleted(Owner))
                 return;
 
             var sourceLocation = eventArgs.Source;
-            var targetLocation = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(eventArgs.Target).Coordinates;
+            var targetLocation = _entMan.GetComponent<TransformComponent>(eventArgs.Target).Coordinates;
 
             if (sourceLocation.Equals(targetLocation)) return;
 
-            var offset = (targetLocation.ToMapPos(IoCManager.Resolve<IEntityManager>()) - sourceLocation.ToMapPos(IoCManager.Resolve<IEntityManager>()));
+            var offset = (targetLocation.ToMapPos(_entMan) - sourceLocation.ToMapPos(_entMan));
 
             //Don't throw if the direction is center (0,0)
             if (offset == Vector2.Zero) return;

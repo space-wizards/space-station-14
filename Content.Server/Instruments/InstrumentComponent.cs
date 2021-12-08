@@ -11,6 +11,8 @@ namespace Content.Server.Instruments;
 [RegisterComponent, ComponentReference(typeof(SharedInstrumentComponent))]
 public sealed class InstrumentComponent : SharedInstrumentComponent
 {
+    [Dependency] private readonly IEntityManager _entMan = default!;
+
     [ViewVariables]
     public float Timer = 0f;
 
@@ -23,9 +25,10 @@ public sealed class InstrumentComponent : SharedInstrumentComponent
     [ViewVariables]
     public int MidiEventCount = 0;
 
+    // TODO Instruments: Make this ECS
     public IPlayerSession? InstrumentPlayer =>
-        IoCManager.Resolve<IEntityManager>().GetComponentOrNull<ActivatableUIComponent>(Owner)?.CurrentSingleUser
-        ?? IoCManager.Resolve<IEntityManager>().GetComponentOrNull<ActorComponent>(Owner)?.PlayerSession;
+        _entMan.GetComponentOrNull<ActivatableUIComponent>(Owner)?.CurrentSingleUser
+        ?? _entMan.GetComponentOrNull<ActorComponent>(Owner)?.PlayerSession;
 
     [ViewVariables] public BoundUserInterface? UserInterface => Owner.GetUIOrNull(InstrumentUiKey.Key);
 }

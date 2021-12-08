@@ -20,6 +20,8 @@ namespace Content.Server.Extinguisher
     [RegisterComponent]
     public class FireExtinguisherComponent : SharedFireExtinguisherComponent, IAfterInteract, IUse, IActivate, IDropped
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "FireExtinguisher";
 
         [DataField("refillSound")]
@@ -58,7 +60,7 @@ namespace Content.Server.Extinguisher
             }
 
             if (eventArgs.Target is not {Valid: true} target ||
-                !IoCManager.Resolve<IEntityManager>().HasComponent<ReagentTankComponent>(target) ||
+                !_entMan.HasComponent<ReagentTankComponent>(target) ||
                 !solutionContainerSystem.TryGetDrainableSolution(target, out var targetSolution) ||
                 !solutionContainerSystem.TryGetDrainableSolution(Owner, out var container))
             {
@@ -103,13 +105,13 @@ namespace Content.Server.Extinguisher
 
             _safety = state;
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AppearanceComponent? appearance))
+            if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
                 appearance.SetData(FireExtinguisherVisuals.Safety, _safety);
         }
 
         void IDropped.Dropped(DroppedEventArgs eventArgs)
         {
-            if (_hasSafety && IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AppearanceComponent? appearance))
+            if (_hasSafety && _entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
                 appearance.SetData(FireExtinguisherVisuals.Safety, _safety);
         }
     }

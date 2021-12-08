@@ -28,6 +28,7 @@ namespace Content.Server.Medical.Components
     [ComponentReference(typeof(SharedMedicalScannerComponent))]
     public class MedicalScannerComponent : SharedMedicalScannerComponent, IActivate, IDestroyAct
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IServerPreferencesManager _prefsManager = null!;
 
         public static readonly TimeSpan InternalOpenAttemptDelay = TimeSpan.FromSeconds(0.5);
@@ -36,7 +37,7 @@ namespace Content.Server.Medical.Components
         private ContainerSlot _bodyContainer = default!;
 
         [ViewVariables]
-        private bool Powered => !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
+        private bool Powered => !_entMan.TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
         [ViewVariables]
         private BoundUserInterface? UserInterface => Owner.GetUIOrNull(MedicalScannerUiKey.Key);
 
@@ -71,7 +72,7 @@ namespace Content.Server.Medical.Components
             var body = _bodyContainer.ContainedEntity;
             if (body == null)
             {
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AppearanceComponent? appearance))
+                if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
                 {
                     appearance?.SetData(MedicalScannerVisuals.Status, MedicalScannerStatus.Open);
                 }
@@ -79,7 +80,7 @@ namespace Content.Server.Medical.Components
                 return EmptyUIState;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(body.Value, out DamageableComponent? damageable))
+            if (!_entMan.TryGetComponent(body.Value, out DamageableComponent? damageable))
             {
                 return EmptyUIState;
             }
@@ -90,7 +91,7 @@ namespace Content.Server.Medical.Components
             }
 
             var cloningSystem = EntitySystem.Get<CloningSystem>();
-            var scanned = IoCManager.Resolve<IEntityManager>().TryGetComponent(_bodyContainer.ContainedEntity.Value, out MindComponent? mindComponent) &&
+            var scanned = _entMan.TryGetComponent(_bodyContainer.ContainedEntity.Value, out MindComponent? mindComponent) &&
                          mindComponent.Mind != null &&
                          cloningSystem.HasDnaScan(mindComponent.Mind);
 
@@ -136,7 +137,7 @@ namespace Content.Server.Medical.Components
                 if (body == null)
                     return MedicalScannerStatus.Open;
 
-                var state = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<MobStateComponent>(body.Value);
+                var state = _entMan.GetComponentOrNull<MobStateComponent>(body.Value);
 
                 return state == null ? MedicalScannerStatus.Open : GetStatusFromDamageState(state);
             }
@@ -146,7 +147,7 @@ namespace Content.Server.Medical.Components
 
         private void UpdateAppearance()
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AppearanceComponent? appearance))
+            if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
             {
                 appearance.SetData(MedicalScannerVisuals.Status, GetStatus());
             }
@@ -154,7 +155,7 @@ namespace Content.Server.Medical.Components
 
         void IActivate.Activate(ActivateEventArgs args)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User, out ActorComponent? actor))
+            if (!_entMan.TryGetComponent(args.User, out ActorComponent? actor))
             {
                 return;
             }
@@ -198,7 +199,7 @@ namespace Content.Server.Medical.Components
                     {
                         var cloningSystem = EntitySystem.Get<CloningSystem>();
 
-                        if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(_bodyContainer.ContainedEntity.Value, out MindComponent? mindComp) || mindComp.Mind == null)
+                        if (!_entMan.TryGetComponent(_bodyContainer.ContainedEntity.Value, out MindComponent? mindComp) || mindComp.Mind == null)
                         {
                             obj.Session.AttachedEntity.Value.PopupMessageCursor(Loc.GetString("medical-scanner-component-msg-no-soul"));
                             break;

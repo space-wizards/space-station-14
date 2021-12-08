@@ -13,26 +13,28 @@ namespace Content.Server.Inventory.Components
     [RegisterComponent]
     public class DebugEquipComponent : Component, IEquipped, IEquippedHand, IUnequipped, IUnequippedHand
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "DebugEquip";
 
         void IEquipped.Equipped(EquippedEventArgs eventArgs)
         {
-            eventArgs.User.PopupMessage("equipped " + IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityName);
+            eventArgs.User.PopupMessage("equipped " + _entMan.GetComponent<MetaDataComponent>(Owner).EntityName);
         }
 
         void IEquippedHand.EquippedHand(EquippedHandEventArgs eventArgs)
         {
-            eventArgs.User.PopupMessage("equipped hand " + IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityName);
+            eventArgs.User.PopupMessage("equipped hand " + _entMan.GetComponent<MetaDataComponent>(Owner).EntityName);
         }
 
         void IUnequipped.Unequipped(UnequippedEventArgs eventArgs)
         {
-            eventArgs.User.PopupMessage("unequipped " + IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityName);
+            eventArgs.User.PopupMessage("unequipped " + _entMan.GetComponent<MetaDataComponent>(Owner).EntityName);
         }
 
         void IUnequippedHand.UnequippedHand(UnequippedHandEventArgs eventArgs)
         {
-            eventArgs.User.PopupMessage("unequipped hand" + IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityName);
+            eventArgs.User.PopupMessage("unequipped hand" + _entMan.GetComponent<MetaDataComponent>(Owner).EntityName);
         }
     }
 }

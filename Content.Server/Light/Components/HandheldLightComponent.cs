@@ -34,6 +34,8 @@ namespace Content.Server.Light.Components
     internal sealed class HandheldLightComponent : SharedHandheldLightComponent, IUse, IExamine, IInteractUsing
 #pragma warning restore 618
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         [ViewVariables(VVAccess.ReadWrite)] [DataField("wattage")] public float Wattage { get; set; } = 3f;
         [ViewVariables] private PowerCellSlotComponent _cellSlot = default!;
         private PowerCellComponent? Cell => _cellSlot.Cell;
@@ -70,7 +72,7 @@ namespace Content.Server.Light.Components
         protected override void OnRemove()
         {
             base.OnRemove();
-            IoCManager.Resolve<IEntityManager>().EventBus.QueueEvent(EventSource.Local, new DeactivateHandheldLightMessage(this));
+            _entMan.EventBus.QueueEvent(EventSource.Local, new DeactivateHandheldLightMessage(this));
         }
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
@@ -118,7 +120,7 @@ namespace Content.Server.Light.Components
             SetState(false);
             Activated = false;
             UpdateLightAction();
-            IoCManager.Resolve<IEntityManager>().EventBus.QueueEvent(EventSource.Local, new DeactivateHandheldLightMessage(this));
+            _entMan.EventBus.QueueEvent(EventSource.Local, new DeactivateHandheldLightMessage(this));
 
             if (makeNoise)
             {
@@ -157,7 +159,7 @@ namespace Content.Server.Light.Components
             Activated = true;
             UpdateLightAction();
             SetState(true);
-            IoCManager.Resolve<IEntityManager>().EventBus.QueueEvent(EventSource.Local, new ActivateHandheldLightMessage(this));
+            _entMan.EventBus.QueueEvent(EventSource.Local, new ActivateHandheldLightMessage(this));
 
             SoundSystem.Play(Filter.Pvs(Owner), TurnOnSound.GetSound(), Owner);
             return true;
@@ -165,22 +167,22 @@ namespace Content.Server.Light.Components
 
         private void SetState(bool on)
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out SpriteComponent? sprite))
+            if (_entMan.TryGetComponent(Owner, out SpriteComponent? sprite))
             {
                 sprite.LayerSetVisible(1, on);
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out PointLightComponent? light))
+            if (_entMan.TryGetComponent(Owner, out PointLightComponent? light))
             {
                 light.Enabled = on;
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out ClothingComponent? clothing))
+            if (_entMan.TryGetComponent(Owner, out ClothingComponent? clothing))
             {
                 clothing.ClothingEquippedPrefix = Loc.GetString(on ? "on" : "off");
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out ItemComponent? item))
+            if (_entMan.TryGetComponent(Owner, out ItemComponent? item))
             {
                 item.EquippedPrefix = Loc.GetString(on ? "on" : "off");
             }
@@ -199,7 +201,7 @@ namespace Content.Server.Light.Components
                 return;
             }
 
-            var appearanceComponent = IoCManager.Resolve<IEntityManager>().GetComponent<AppearanceComponent>(Owner);
+            var appearanceComponent = _entMan.GetComponent<AppearanceComponent>(Owner);
 
             if (Cell.MaxCharge - Cell.CurrentCharge < Cell.MaxCharge * 0.70)
             {

@@ -26,6 +26,8 @@ namespace Content.Server.Disposal.Tube.Components
     [ComponentReference(typeof(IDisposalTubeComponent))]
     public class DisposalTaggerComponent : DisposalTransitComponent, IActivate
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "DisposalTagger";
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -33,7 +35,7 @@ namespace Content.Server.Disposal.Tube.Components
 
         [ViewVariables]
         public bool Anchored =>
-            !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out PhysicsComponent? physics) ||
+            !_entMan.TryGetComponent(Owner, out PhysicsComponent? physics) ||
             physics.BodyType == BodyType.Static;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(DisposalTaggerUiKey.Key);
@@ -126,12 +128,12 @@ namespace Content.Server.Disposal.Tube.Components
         /// <param name="args">Data relevant to the event such as the actor which triggered it.</param>
         void IActivate.Activate(ActivateEventArgs args)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User, out ActorComponent? actor))
+            if (!_entMan.TryGetComponent(args.User, out ActorComponent? actor))
             {
                 return;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(args.User, out HandsComponent? hands))
+            if (!_entMan.TryGetComponent(args.User, out HandsComponent? hands))
             {
                 Owner.PopupMessage(args.User, Loc.GetString("disposal-tagger-window-activate-no-hands"));
                 return;

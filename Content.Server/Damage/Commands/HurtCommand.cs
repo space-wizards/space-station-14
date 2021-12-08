@@ -82,7 +82,7 @@ namespace Content.Server.Damage.Commands
             string[] args,
             [NotNullWhen(true)] out Damage? func)
         {
-
+            var entMan = IoCManager.Resolve<IEntityManager>();
 
             if (!int.TryParse(args[1], out var amount))
             {
@@ -99,7 +99,7 @@ namespace Content.Server.Damage.Commands
                     var damage = new DamageSpecifier(damageGroup, amount);
                     EntitySystem.Get<DamageableSystem>().TryChangeDamage(entity, damage, ignoreResistances);
 
-                    shell.WriteLine($"Damaged entity {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityName} with id {entity} for {amount} {damageGroup} damage{(ignoreResistances ? ", ignoring resistances." : ".")}");
+                    shell.WriteLine($"Damaged entity {entMan.GetComponent<MetaDataComponent>(entity).EntityName} with id {entity} for {amount} {damageGroup} damage{(ignoreResistances ? ", ignoring resistances." : ".")}");
                 };
 
                 return true;
@@ -112,7 +112,7 @@ namespace Content.Server.Damage.Commands
                     var damage = new DamageSpecifier(damageType, amount);
                     EntitySystem.Get<DamageableSystem>().TryChangeDamage(entity, damage, ignoreResistances);
 
-                    shell.WriteLine($"Damaged entity {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityName} with id {entity} for {amount} {damageType} damage{(ignoreResistances ? ", ignoring resistances." : ".")}");
+                    shell.WriteLine($"Damaged entity {entMan.GetComponent<MetaDataComponent>(entity).EntityName} with id {entity} for {amount} {damageType} damage{(ignoreResistances ? ", ignoring resistances." : ".")}");
 
                 };
                 return true;
@@ -136,6 +136,8 @@ namespace Content.Server.Damage.Commands
             bool ignoreResistances;
             EntityUid entity;
             Damage? damageFunc;
+
+            var entMan = IoCManager.Resolve<IEntityManager>();
 
             switch (args.Length)
             {
@@ -190,9 +192,9 @@ namespace Content.Server.Damage.Commands
                     return;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out DamageableComponent? damageable))
+            if (!entMan.TryGetComponent(entity, out DamageableComponent? damageable))
             {
-                shell.WriteLine($"Entity {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityName} with id {entity} does not have a {nameof(DamageableComponent)}.");
+                shell.WriteLine($"Entity {entMan.GetComponent<MetaDataComponent>(entity).EntityName} with id {entity} does not have a {nameof(DamageableComponent)}.");
                 return;
             }
 

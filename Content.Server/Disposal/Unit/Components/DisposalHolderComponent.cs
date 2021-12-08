@@ -18,6 +18,8 @@ namespace Content.Server.Disposal.Unit.Components
     [RegisterComponent]
     public class DisposalHolderComponent : Component, IGasMixtureHolder
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "DisposalHolder";
 
         public Container Container = null!;
@@ -79,8 +81,8 @@ namespace Content.Server.Disposal.Unit.Components
                 return false;
             }
 
-            return IoCManager.Resolve<IEntityManager>().HasComponent<ItemComponent>(entity) ||
-                   IoCManager.Resolve<IEntityManager>().HasComponent<SharedBodyComponent>(entity);
+            return _entMan.HasComponent<ItemComponent>(entity) ||
+                   _entMan.HasComponent<SharedBodyComponent>(entity);
         }
 
         public bool TryInsert(EntityUid entity)
@@ -90,7 +92,7 @@ namespace Content.Server.Disposal.Unit.Components
                 return false;
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out IPhysBody? physics))
+            if (_entMan.TryGetComponent(entity, out IPhysBody? physics))
             {
                 physics.CanCollide = false;
             }

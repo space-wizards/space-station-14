@@ -16,6 +16,8 @@ namespace Content.Server.Ghost.Roles.Components
     [RegisterComponent, ComponentReference(typeof(GhostRoleComponent))]
     public class GhostRoleMobSpawnerComponent : GhostRoleComponent
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "GhostRoleMobSpawner";
 
         [ViewVariables(VVAccess.ReadWrite)] [DataField("deleteOnSpawn")]
@@ -40,10 +42,10 @@ namespace Content.Server.Ghost.Roles.Components
             if (string.IsNullOrEmpty(Prototype))
                 throw new NullReferenceException("Prototype string cannot be null or empty!");
 
-            var mob = IoCManager.Resolve<IEntityManager>().SpawnEntity(Prototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
+            var mob = _entMan.SpawnEntity(Prototype, _entMan.GetComponent<TransformComponent>(Owner).Coordinates);
 
             if (MakeSentient)
-                MakeSentientCommand.MakeSentient(mob, IoCManager.Resolve<IEntityManager>());
+                MakeSentientCommand.MakeSentient(mob, _entMan);
 
             mob.EnsureComponent<MindComponent>();
 
@@ -56,7 +58,7 @@ namespace Content.Server.Ghost.Roles.Components
             Taken = true;
 
             if (_deleteOnSpawn)
-                IoCManager.Resolve<IEntityManager>().DeleteEntity(Owner);
+                _entMan.DeleteEntity(Owner);
 
             return true;
         }

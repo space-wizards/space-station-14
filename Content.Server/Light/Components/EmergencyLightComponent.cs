@@ -21,6 +21,8 @@ namespace Content.Server.Light.Components
     public class EmergencyLightComponent : SharedEmergencyLightComponent, IExamine
 #pragma warning restore 618
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         [ViewVariables]
         private EmergencyLightState State
         {
@@ -31,7 +33,7 @@ namespace Content.Server.Light.Components
                     return;
 
                 _state = value;
-                IoCManager.Resolve<IEntityManager>().EventBus.RaiseEvent(EventSource.Local, new EmergencyLightMessage(this, _state));
+                _entMan.EventBus.RaiseEvent(EventSource.Local, new EmergencyLightMessage(this, _state));
             }
         }
 
@@ -60,7 +62,7 @@ namespace Content.Server.Light.Components
         /// </summary>
         public void UpdateState()
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver))
+            if (!_entMan.TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver))
             {
                 return;
             }
@@ -80,7 +82,7 @@ namespace Content.Server.Light.Components
 
         public void OnUpdate(float frameTime)
         {
-            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(Owner) || !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out BatteryComponent? battery) || IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityPaused))
+            if ((!_entMan.EntityExists(Owner) || !_entMan.TryGetComponent(Owner, out BatteryComponent? battery) || _entMan.GetComponent<MetaDataComponent>(Owner).EntityPaused))
             {
                 return;
             }
@@ -98,7 +100,7 @@ namespace Content.Server.Light.Components
                 battery.CurrentCharge += _chargingWattage * frameTime * _chargingEfficiency;
                 if (battery.IsFullyCharged)
                 {
-                    if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver))
+                    if (_entMan.TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver))
                     {
                         receiver.Load = 1;
                     }
@@ -110,23 +112,23 @@ namespace Content.Server.Light.Components
 
         private void TurnOff()
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out PointLightComponent? light))
+            if (_entMan.TryGetComponent(Owner, out PointLightComponent? light))
             {
                 light.Enabled = false;
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AppearanceComponent? appearance))
+            if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
                 appearance.SetData(EmergencyLightVisuals.On, false);
         }
 
         private void TurnOn()
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out PointLightComponent? light))
+            if (_entMan.TryGetComponent(Owner, out PointLightComponent? light))
             {
                 light.Enabled = true;
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AppearanceComponent? appearance))
+            if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
                 appearance.SetData(EmergencyLightVisuals.On, true);
         }
 

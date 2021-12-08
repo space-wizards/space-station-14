@@ -15,6 +15,7 @@ namespace Content.Server.Ghost.Components
     public class GhostRadioComponent : Component, IRadio
     {
         [Dependency] private readonly IServerNetManager _netManager = default!;
+        [Dependency] private readonly IEntityManager _entMan = default!;
 
         public override string Name => "GhostRadio";
 
@@ -25,7 +26,7 @@ namespace Content.Server.Ghost.Components
 
         public void Receive(string message, int channel, EntityUid speaker)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out ActorComponent? actor))
+            if (!_entMan.TryGetComponent(Owner, out ActorComponent? actor))
                 return;
 
             var playerChannel = actor.PlayerSession.ConnectedClient;
@@ -35,7 +36,7 @@ namespace Content.Server.Ghost.Components
             msg.Channel = ChatChannel.Radio;
             msg.Message = message;
             //Square brackets are added here to avoid issues with escaping
-            msg.MessageWrap = Loc.GetString("chat-radio-message-wrap", ("channel", $"\\[{channel}\\]"), ("name", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(speaker).EntityName));
+            msg.MessageWrap = Loc.GetString("chat-radio-message-wrap", ("channel", $"\\[{channel}\\]"), ("name", Name: _entMan.GetComponent<MetaDataComponent>(speaker).EntityName));
             _netManager.ServerSendMessage(msg, playerChannel);
         }
 
