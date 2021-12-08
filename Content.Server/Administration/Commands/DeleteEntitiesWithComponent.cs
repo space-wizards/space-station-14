@@ -42,7 +42,7 @@ namespace Content.Server.Administration.Commands
             var count = 0;
             foreach (var entity in entitiesWithAllComponents)
             {
-                IoCManager.Resolve<IEntityManager>().DeleteEntity(entity);
+                entityManager.DeleteEntity(entity);
                 count += 1;
             }
 

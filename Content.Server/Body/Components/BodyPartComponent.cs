@@ -21,6 +21,8 @@ namespace Content.Server.Body.Components
     [ComponentReference(typeof(SharedBodyPartComponent))]
     public class BodyPartComponent : SharedBodyPartComponent, IAfterInteract
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         private readonly Dictionary<int, object> _optionsCache = new();
         private SharedBodyComponent? _owningBodyCache;
         private int _idHash;
@@ -61,9 +63,9 @@ namespace Content.Server.Body.Components
             // identical on it
             foreach (var mechanismId in MechanismIds)
             {
-                var entity = IoCManager.Resolve<IEntityManager>().SpawnEntity(mechanismId, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).MapPosition);
+                var entity = _entMan.SpawnEntity(mechanismId, _entMan.GetComponent<TransformComponent>(Owner).MapPosition);
 
-                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out SharedMechanismComponent? mechanism))
+                if (!_entMan.TryGetComponent(entity, out SharedMechanismComponent? mechanism))
                 {
                     Logger.Error($"Entity {mechanismId} does not have a {nameof(SharedMechanismComponent)} component.");
                     continue;
@@ -101,7 +103,7 @@ namespace Content.Server.Body.Components
             _surgeonCache = null;
             _owningBodyCache = null;
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Target.Value, out SharedBodyComponent? body))
+            if (_entMan.TryGetComponent(eventArgs.Target.Value, out SharedBodyComponent? body))
             {
                 SendSlots(eventArgs, body);
             }
@@ -138,8 +140,8 @@ namespace Content.Server.Body.Components
 
             if (_optionsCache.Count > 0)
             {
-                OpenSurgeryUI(IoCManager.Resolve<IEntityManager>().GetComponent<ActorComponent>(eventArgs.User).PlayerSession);
-                BodyPartSlotRequest(IoCManager.Resolve<IEntityManager>().GetComponent<ActorComponent>(eventArgs.User).PlayerSession,
+                OpenSurgeryUI(_entMan.GetComponent<ActorComponent>(eventArgs.User).PlayerSession);
+                BodyPartSlotRequest(_entMan.GetComponent<ActorComponent>(eventArgs.User).PlayerSession,
                     toSend);
                 _surgeonCache = eventArgs.User;
                 _owningBodyCache = body;
@@ -158,7 +160,7 @@ namespace Content.Server.Body.Components
         private void ReceiveBodyPartSlot(int key)
         {
             if (_surgeonCache == null ||
-                !IoCManager.Resolve<IEntityManager>().TryGetComponent(_surgeonCache.Value, out ActorComponent? actor))
+                !_entMan.TryGetComponent(_surgeonCache.Value, out ActorComponent? actor))
             {
                 return;
             }

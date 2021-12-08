@@ -10,6 +10,8 @@ namespace Content.Server.Chemistry.Components
     [RegisterComponent]
     public class TransformableContainerComponent : Component
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "TransformableContainer";
 
         public SpriteSpecifier? InitialSprite;
@@ -23,14 +25,14 @@ namespace Content.Server.Chemistry.Components
         {
             base.Initialize();
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out SpriteComponent? sprite) &&
+            if (_entMan.TryGetComponent(Owner, out SpriteComponent? sprite) &&
                 sprite.BaseRSIPath != null)
             {
                 InitialSprite = new SpriteSpecifier.Rsi(new ResourcePath(sprite.BaseRSIPath), "icon");
             }
 
-            InitialName = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityName;
-            InitialDescription = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityDescription;
+            InitialName = _entMan.GetComponent<MetaDataComponent>(Owner).EntityName;
+            InitialDescription = _entMan.GetComponent<MetaDataComponent>(Owner).EntityDescription;
         }
 
         protected override void Startup()

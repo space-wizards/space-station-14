@@ -35,7 +35,7 @@ namespace Content.Server.AME.Components
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs args)
         {
-            if (!IoCManager.Resolve<IEntityManager>().HasComponent<HandsComponent>(args.User))
+            if (!_serverEntityManager.HasComponent<HandsComponent>(args.User))
             {
                 Owner.PopupMessage(args.User, Loc.GetString("ame-part-component-interact-using-no-hands"));
                 return false;
@@ -58,7 +58,7 @@ namespace Content.Server.AME.Components
 
             SoundSystem.Play(Filter.Pvs(Owner), _unwrapSound.GetSound(), Owner);
 
-            IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(Owner);
+            _serverEntityManager.QueueDeleteEntity(Owner);
 
             return true;
         }

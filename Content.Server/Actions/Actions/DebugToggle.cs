@@ -17,13 +17,15 @@ namespace Content.Server.Actions.Actions
 
         public bool DoToggleAction(ToggleItemActionEventArgs args)
         {
+            var entMan = IoCManager.Resolve<IEntityManager>();
+
             if (args.ToggledOn)
             {
-                args.Performer.PopupMessageEveryone(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(args.Item).EntityName + ": " + MessageOn);
+                args.Performer.PopupMessageEveryone(entMan.GetComponent<MetaDataComponent>(args.Item).EntityName + ": " + MessageOn);
             }
             else
             {
-                args.Performer.PopupMessageEveryone(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(args.Item).EntityName + ": " +MessageOff);
+                args.Performer.PopupMessageEveryone(entMan.GetComponent<MetaDataComponent>(args.Item).EntityName + ": " +MessageOff);
             }
 
             return true;

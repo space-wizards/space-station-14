@@ -31,14 +31,16 @@ namespace Content.Server.Construction.Conditions
         {
             var entity = args.Examined;
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out AirlockComponent? airlock)) return false;
+            var entMan = IoCManager.Resolve<IEntityManager>();
+
+            if (!entMan.TryGetComponent(entity, out AirlockComponent? airlock)) return false;
 
             if (airlock.BoltsDown != Value)
             {
                 if (Value == true)
-                    args.PushMarkup(Loc.GetString("construction-examine-condition-airlock-bolt", ("entityName", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityName)) + "\n");
+                    args.PushMarkup(Loc.GetString("construction-examine-condition-airlock-bolt", ("entityName", Name: entMan.GetComponent<MetaDataComponent>(entity).EntityName)) + "\n");
                 else
-                    args.PushMarkup(Loc.GetString("construction-examine-condition-airlock-unbolt", ("entityName", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityName)) + "\n");
+                    args.PushMarkup(Loc.GetString("construction-examine-condition-airlock-unbolt", ("entityName", Name: entMan.GetComponent<MetaDataComponent>(entity).EntityName)) + "\n");
                 return true;
             }
 

@@ -27,8 +27,9 @@ namespace Content.Server.AME
         [ViewVariables]
         private AMEControllerComponent? _masterController;
 
-        [Dependency]
-        private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
+
+        [Dependency] private readonly IEntityManager _entMan = default!;
 
         public AMEControllerComponent? MasterController => _masterController;
 
@@ -46,10 +47,10 @@ namespace Content.Server.AME
             foreach (var node in groupNodes)
             {
                 var nodeOwner = node.Owner;
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(nodeOwner, out AMEShieldComponent? shield))
+                if (_entMan.TryGetComponent(nodeOwner, out AMEShieldComponent? shield))
                 {
-                    var nodeNeighbors = grid.GetCellsInSquareArea(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(nodeOwner).Coordinates, 1)
-                        .Where(entity => entity != nodeOwner && IoCManager.Resolve<IEntityManager>().HasComponent<AMEShieldComponent>(entity));
+                    var nodeNeighbors = grid.GetCellsInSquareArea(_entMan.GetComponent<TransformComponent>(nodeOwner).Coordinates, 1)
+                        .Where(entity => entity != nodeOwner && _entMan.HasComponent<AMEShieldComponent>(entity));
 
                     if (nodeNeighbors.Count() >= 8)
                     {
@@ -68,7 +69,7 @@ namespace Content.Server.AME
             foreach (var node in groupNodes)
             {
                 var nodeOwner = node.Owner;
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(nodeOwner, out AMEControllerComponent? controller))
+                if (_entMan.TryGetComponent(nodeOwner, out AMEControllerComponent? controller))
                 {
                     if (_masterController == null)
                     {

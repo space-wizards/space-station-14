@@ -32,7 +32,7 @@ namespace Content.Server.Buckle.Components
     [ComponentReference(typeof(SharedBuckleComponent))]
     public class BuckleComponent : SharedBuckleComponent
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         [ComponentDependency] public readonly AppearanceComponent? Appearance = null;
@@ -115,8 +115,8 @@ namespace Content.Server.Buckle.Components
         /// <param name="strap">The strap to reattach to.</param>
         public void ReAttach(StrapComponent strap)
         {
-            var ownTransform = _entityManager.GetComponent<TransformComponent>(Owner);
-            var strapTransform = _entityManager.GetComponent<TransformComponent>(strap.Owner);
+            var ownTransform = _entMan.GetComponent<TransformComponent>(Owner);
+            var strapTransform = _entMan.GetComponent<TransformComponent>(strap.Owner);
 
             ownTransform.AttachParent(strapTransform);
             ownTransform.LocalRotation = Angle.Zero;
@@ -152,7 +152,7 @@ namespace Content.Server.Buckle.Components
                 return false;
             }
 
-            if (!_entityManager.TryGetComponent(to, out strap))
+            if (!_entMan.TryGetComponent(to, out strap))
             {
                 return false;
             }
@@ -176,7 +176,7 @@ namespace Content.Server.Buckle.Components
                 }
             }
 
-            if (!_entityManager.HasComponent<HandsComponent>(user))
+            if (!_entMan.HasComponent<HandsComponent>(user))
             {
                 popupSystem.PopupEntity(Loc.GetString("buckle-component-no-hands-message"), user, Filter.Entities(user));
                 return false;
@@ -192,10 +192,10 @@ namespace Content.Server.Buckle.Components
                 return false;
             }
 
-            var parent = _entityManager.GetComponent<TransformComponent>(to).Parent;
+            var parent = _entMan.GetComponent<TransformComponent>(to).Parent;
             while (parent != null)
             {
-                if (parent == _entityManager.GetComponent<TransformComponent>(user))
+                if (parent == _entMan.GetComponent<TransformComponent>(user))
                 {
                     var message = Loc.GetString(Owner == user
                         ? "buckle-component-cannot-buckle-message"
@@ -254,7 +254,7 @@ namespace Content.Server.Buckle.Components
             SendMessage(new BuckleMessage(Owner, to));
 #pragma warning restore 618
 
-            if (_entityManager.TryGetComponent(Owner, out SharedPullableComponent? ownerPullable))
+            if (_entMan.TryGetComponent(Owner, out SharedPullableComponent? ownerPullable))
             {
                 if (ownerPullable.Puller != null)
                 {
@@ -262,7 +262,7 @@ namespace Content.Server.Buckle.Components
                 }
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(to, out SharedPullableComponent? toPullable))
+            if (_entMan.TryGetComponent(to, out SharedPullableComponent? toPullable))
             {
                 if (toPullable.Puller == Owner)
                 {
@@ -317,15 +317,15 @@ namespace Content.Server.Buckle.Components
 
             BuckledTo = null;
 
-            if (_entityManager.GetComponent<TransformComponent>(Owner).Parent == _entityManager.GetComponent<TransformComponent>(oldBuckledTo.Owner))
+            if (_entMan.GetComponent<TransformComponent>(Owner).Parent == _entMan.GetComponent<TransformComponent>(oldBuckledTo.Owner))
             {
-                _entityManager.GetComponent<TransformComponent>(Owner).AttachParentToContainerOrGrid();
-                _entityManager.GetComponent<TransformComponent>(Owner).WorldRotation = _entityManager.GetComponent<TransformComponent>(oldBuckledTo.Owner).WorldRotation;
+                _entMan.GetComponent<TransformComponent>(Owner).AttachParentToContainerOrGrid();
+                _entMan.GetComponent<TransformComponent>(Owner).WorldRotation = _entMan.GetComponent<TransformComponent>(oldBuckledTo.Owner).WorldRotation;
             }
 
             Appearance?.SetData(BuckleVisuals.Buckled, false);
 
-            if (IoCManager.Resolve<IEntityManager>().HasComponent<KnockedDownComponent>(Owner)
+            if (_entMan.HasComponent<KnockedDownComponent>(Owner)
                 || (_mobState?.IsIncapacitated() ?? false))
             {
                 EntitySystem.Get<StandingStateSystem>().Down(Owner);
@@ -335,7 +335,7 @@ namespace Content.Server.Buckle.Components
                 EntitySystem.Get<StandingStateSystem>().Stand(Owner);
             }
 
-            _mobState?.CurrentState?.EnterState(Owner, IoCManager.Resolve<IEntityManager>());
+            _mobState?.CurrentState?.EnterState(Owner, _entMan);
 
             UpdateBuckleStatus();
 
@@ -395,7 +395,7 @@ namespace Content.Server.Buckle.Components
             int? drawDepth = null;
 
             if (BuckledTo != null &&
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(BuckledTo.Owner).LocalRotation.GetCardinalDir() == Direction.North &&
+                _entMan.GetComponent<TransformComponent>(BuckledTo.Owner).LocalRotation.GetCardinalDir() == Direction.North &&
                 BuckledTo.SpriteComponent != null)
             {
                 drawDepth = BuckledTo.SpriteComponent.DrawDepth - 1;

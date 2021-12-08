@@ -24,9 +24,10 @@ namespace Content.Server.Chemistry.TileReactions
         {
             var entities = tile.GetEntitiesInTileFast().ToArray();
             var amount = FixedPoint2.Zero;
+            var entMan = IoCManager.Resolve<IEntityManager>();
             foreach (var entity in entities)
             {
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out CleanableComponent? cleanable))
+                if (entMan.TryGetComponent(entity, out CleanableComponent? cleanable))
                 {
                     var next = (amount + cleanable.CleanAmount) * CleanAmountMultiplier;
                     // Nothing left?
@@ -34,7 +35,7 @@ namespace Content.Server.Chemistry.TileReactions
                         break;
 
                     amount = next;
-                    IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(entity);
+                    entMan.QueueDeleteEntity(entity);
                 }
             }
 

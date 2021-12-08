@@ -223,7 +223,7 @@ namespace Content.Server.Arcade.Components
         public void ProcessWin()
         {
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            entityManager.SpawnEntity(_random.Pick(_possibleRewards), IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).MapPosition);
+            entityManager.SpawnEntity(_random.Pick(_possibleRewards), entityManager.GetComponent<TransformComponent>(Owner).MapPosition);
         }
 
         /// <summary>

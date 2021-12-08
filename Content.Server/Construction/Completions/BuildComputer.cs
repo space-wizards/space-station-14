@@ -40,7 +40,7 @@ namespace Content.Server.Construction.Completions
 
             var board = container.ContainedEntities[0];
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(board, out ComputerBoardComponent? boardComponent))
+            if (!entityManager.TryGetComponent(board, out ComputerBoardComponent? boardComponent))
             {
                 Logger.Warning($"Computer entity {uid} had an invalid entity in container \"{Container}\"! Aborting build computer action.");
                 return;
@@ -50,7 +50,7 @@ namespace Content.Server.Construction.Completions
 
             var transform = entityManager.GetComponent<TransformComponent>(uid);
             var computer = entityManager.SpawnEntity(boardComponent.Prototype, transform.Coordinates);
-            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(computer).LocalRotation = transform.LocalRotation;
+            entityManager.GetComponent<TransformComponent>(computer).LocalRotation = transform.LocalRotation;
 
             var computerContainer = containerSystem.EnsureContainer<Container>(computer, Container);
 
@@ -58,7 +58,7 @@ namespace Content.Server.Construction.Completions
             foreach (var ent in computerContainer.ContainedEntities.ToArray())
             {
                 computerContainer.ForceRemove(ent);
-                IoCManager.Resolve<IEntityManager>().DeleteEntity(ent);
+                entityManager.DeleteEntity(ent);
             }
 
             computerContainer.Insert(board);

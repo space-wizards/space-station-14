@@ -34,6 +34,8 @@ namespace Content.Server.Atmos.Components
     public class GasTankComponent : Component, IExamine, IGasMixtureHolder, IUse, IDropped, IActivate
 #pragma warning restore 618
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "GasTank";
 
         private const float MaxExplosionRange = 14f;
@@ -155,14 +157,14 @@ namespace Content.Server.Atmos.Components
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User, out ActorComponent? actor)) return false;
+            if (!_entMan.TryGetComponent(eventArgs.User, out ActorComponent? actor)) return false;
             OpenInterface(actor.PlayerSession);
             return true;
         }
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User, out ActorComponent? actor)) return;
+            if (!_entMan.TryGetComponent(eventArgs.User, out ActorComponent? actor)) return;
             OpenInterface(actor.PlayerSession);
         }
 
@@ -230,10 +232,10 @@ namespace Content.Server.Atmos.Components
 
         private InternalsComponent? GetInternalsComponent(EntityUid? owner = null)
         {
-            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(Owner) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityLifeStage) >= EntityLifeStage.Deleted) return null;
-            if (owner != null) return IoCManager.Resolve<IEntityManager>().GetComponentOrNull<InternalsComponent>(owner.Value);
+            if ((!_entMan.EntityExists(Owner) ? EntityLifeStage.Deleted : _entMan.GetComponent<MetaDataComponent>(Owner).EntityLifeStage) >= EntityLifeStage.Deleted) return null;
+            if (owner != null) return _entMan.GetComponentOrNull<InternalsComponent>(owner.Value);
             return Owner.TryGetContainer(out var container)
-                ? IoCManager.Resolve<IEntityManager>().GetComponentOrNull<InternalsComponent>(container.Owner)
+                ? _entMan.GetComponentOrNull<InternalsComponent>(container.Owner)
                 : null;
         }
 
@@ -271,7 +273,7 @@ namespace Content.Server.Atmos.Components
 
                 EntitySystem.Get<ExplosionSystem>().SpawnExplosion(Owner, (int) (range * 0.25f), (int) (range * 0.5f), (int) (range * 1.5f), 1);
 
-                IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(Owner);
+                _entMan.QueueDeleteEntity(Owner);
                 return;
             }
 
@@ -279,13 +281,13 @@ namespace Content.Server.Atmos.Components
             {
                 if (_integrity <= 0)
                 {
-                    var environment = atmosphereSystem.GetTileMixture(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates, true);
+                    var environment = atmosphereSystem.GetTileMixture(_entMan.GetComponent<TransformComponent>(Owner).Coordinates, true);
                     if(environment != null)
                         atmosphereSystem.Merge(environment, Air);
 
-                    SoundSystem.Play(Filter.Pvs(Owner), _ruptureSound.GetSound(), IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates, AudioHelpers.WithVariation(0.125f));
+                    SoundSystem.Play(Filter.Pvs(Owner), _ruptureSound.GetSound(), _entMan.GetComponent<TransformComponent>(Owner).Coordinates, AudioHelpers.WithVariation(0.125f));
 
-                    IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(Owner);
+                    _entMan.QueueDeleteEntity(Owner);
                     return;
                 }
 
@@ -297,7 +299,7 @@ namespace Content.Server.Atmos.Components
             {
                 if (_integrity <= 0)
                 {
-                    var environment = atmosphereSystem.GetTileMixture(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates, true);
+                    var environment = atmosphereSystem.GetTileMixture(_entMan.GetComponent<TransformComponent>(Owner).Coordinates, true);
                     if (environment == null)
                         return;
 

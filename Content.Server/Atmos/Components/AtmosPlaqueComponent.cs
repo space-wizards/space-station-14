@@ -10,6 +10,8 @@ namespace Content.Server.Atmos.Components
     [RegisterComponent]
     public sealed class AtmosPlaqueComponent : Component, IMapInit
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "AtmosPlaque";
 
         [DataField("plaqueType")]
@@ -55,6 +57,8 @@ namespace Content.Server.Atmos.Components
                 return;
             }
 
+            var metaData = _entMan.GetComponent<MetaDataComponent>(Owner);
+
             var val = _type switch
             {
                 PlaqueType.Zumos =>
@@ -68,7 +72,8 @@ namespace Content.Server.Atmos.Components
                 PlaqueType.Unset => "Uhm",
                 _ => "Uhm",
             };
-            IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityDescription = val;
+
+            metaData.EntityDescription = val;
 
             var val1 = _type switch
             {
@@ -83,9 +88,10 @@ namespace Content.Server.Atmos.Components
                 PlaqueType.Unset => "Uhm",
                 _ => "Uhm",
             };
-            IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityName = val1;
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AppearanceComponent? appearance))
+            metaData.EntityName = val1;
+
+            if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
             {
                 var state = _type == PlaqueType.Zumos ? "zumosplaque" : "atmosplaque";
 

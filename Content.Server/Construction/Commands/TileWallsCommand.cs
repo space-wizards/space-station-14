@@ -74,7 +74,7 @@ namespace Content.Server.Construction.Commands
                     continue;
                 }
 
-                var prototype = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(child).EntityPrototype;
+                var prototype = entityManager.GetComponent<MetaDataComponent>(child).EntityPrototype;
                 while (true)
                 {
                     if (prototype?.Parent == null)
@@ -90,12 +90,14 @@ namespace Content.Server.Construction.Commands
                     continue;
                 }
 
-                if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(child).Anchored)
+                var childTransform = entityManager.GetComponent<TransformComponent>(child);
+
+                if (!childTransform.Anchored)
                 {
                     continue;
                 }
 
-                var tile = grid.GetTileRef(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(child).Coordinates);
+                var tile = grid.GetTileRef(childTransform.Coordinates);
                 var tileDef = (ContentTileDefinition) tileDefinitionManager[tile.Tile.TypeId];
 
                 if (tileDef.Name == "underplating")
@@ -103,7 +105,7 @@ namespace Content.Server.Construction.Commands
                     continue;
                 }
 
-                grid.SetTile(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(child).Coordinates, underplatingTile);
+                grid.SetTile(childTransform.Coordinates, underplatingTile);
                 changed++;
             }
 

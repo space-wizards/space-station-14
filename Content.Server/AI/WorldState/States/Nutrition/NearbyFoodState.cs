@@ -18,18 +18,19 @@ namespace Content.Server.AI.WorldState.States.Nutrition
         protected override List<EntityUid> GetTrueValue()
         {
             var result = new List<EntityUid>();
+            var entMan = IoCManager.Resolve<IEntityManager>();
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AiControllerComponent? controller))
+            if (!entMan.TryGetComponent(Owner, out AiControllerComponent? controller))
             {
                 return result;
             }
 
             foreach (var entity in Visibility
-                .GetNearestEntities(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates, typeof(FoodComponent), controller.VisionRadius))
+                .GetNearestEntities(entMan.GetComponent<TransformComponent>(Owner).Coordinates, typeof(FoodComponent), controller.VisionRadius))
             {
                 if (entity.TryGetContainer(out var container))
                 {
-                    if (!IoCManager.Resolve<IEntityManager>().HasComponent<EntityStorageComponent>(container.Owner))
+                    if (!entMan.HasComponent<EntityStorageComponent>(container.Owner))
                     {
                         continue;
                     }

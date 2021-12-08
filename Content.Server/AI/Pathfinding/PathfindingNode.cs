@@ -260,14 +260,15 @@ namespace Content.Server.AI.Pathfinding
         /// TODO: Could probably optimise this slightly more.
         public void AddEntity(EntityUid entity, IPhysBody physicsComponent)
         {
+            var entMan = IoCManager.Resolve<IEntityManager>();
             // If we're a door
-            if (IoCManager.Resolve<IEntityManager>().HasComponent<AirlockComponent>(entity) || IoCManager.Resolve<IEntityManager>().HasComponent<ServerDoorComponent>(entity))
+            if (entMan.HasComponent<AirlockComponent>(entity) || entMan.HasComponent<ServerDoorComponent>(entity))
             {
                 // If we need access to traverse this then add to readers, otherwise no point adding it (except for maybe tile costs in future)
                 // TODO: Check for powered I think (also need an event for when it's depowered
                 // AccessReader calls this whenever opening / closing but it can seem to get called multiple times
                 // Which may or may not be intended?
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out AccessReader? accessReader) && !_accessReaders.ContainsKey(entity))
+                if (entMan.TryGetComponent(entity, out AccessReader? accessReader) && !_accessReaders.ContainsKey(entity))
                 {
                     _accessReaders.Add(entity, accessReader);
                     ParentChunk.Dirty();

@@ -19,6 +19,8 @@ namespace Content.Server.Body.Components
     [ComponentReference(typeof(IGhostOnMove))]
     public class BodyComponent : SharedBodyComponent, IGhostOnMove
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         private Container _partContainer = default!;
 
         [DataField("gibSound")] private SoundSpecifier _gibSound = new SoundCollectionSpecifier("gib");
@@ -57,9 +59,9 @@ namespace Content.Server.Body.Components
                 {
                     // Using MapPosition instead of Coordinates here prevents
                     // a crash within the character preview menu in the lobby
-                    var entity = IoCManager.Resolve<IEntityManager>().SpawnEntity(preset.PartIDs[slot.Id], IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).MapPosition);
+                    var entity = _entMan.SpawnEntity(preset.PartIDs[slot.Id], _entMan.GetComponent<TransformComponent>(Owner).MapPosition);
 
-                    if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out SharedBodyPartComponent? part))
+                    if (!_entMan.TryGetComponent(entity, out SharedBodyPartComponent? part))
                     {
                         Logger.Error($"Entity {slot.Id} does not have a {nameof(SharedBodyPartComponent)} component.");
                         continue;
@@ -87,22 +89,22 @@ namespace Content.Server.Body.Components
         {
             base.Gib(gibParts);
 
-            SoundSystem.Play(Filter.Pvs(Owner), _gibSound.GetSound(), IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates, AudioHelpers.WithVariation(0.025f));
+            SoundSystem.Play(Filter.Pvs(Owner), _gibSound.GetSound(), _entMan.GetComponent<TransformComponent>(Owner).Coordinates, AudioHelpers.WithVariation(0.025f));
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out ContainerManagerComponent? container))
+            if (_entMan.TryGetComponent(Owner, out ContainerManagerComponent? container))
             {
                 foreach (var cont in container.GetAllContainers())
                 {
                     foreach (var ent in cont.ContainedEntities)
                     {
                         cont.ForceRemove(ent);
-                        IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(ent).Coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates;
+                        _entMan.GetComponent<TransformComponent>(ent).Coordinates = _entMan.GetComponent<TransformComponent>(Owner).Coordinates;
                         ent.RandomOffset(0.25f);
                     }
                 }
             }
 
-            IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(Owner);
+            _entMan.QueueDeleteEntity(Owner);
         }
     }
 }

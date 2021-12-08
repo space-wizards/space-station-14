@@ -13,8 +13,7 @@ namespace Content.Server.AI.Utility.Considerations.Nutrition.Food
         {
             var target = context.GetState<TargetEntityState>().GetValue();
 
-            if (target == null || !IoCManager.Resolve<IEntityManager>().EntityExists(target)
-                               || !IoCManager.Resolve<IEntityManager>().TryGetComponent<FoodComponent?>(target, out var foodComp)
+            if (target == null || !IoCManager.Resolve<IEntityManager>().TryGetComponent<FoodComponent?>(target, out var foodComp)
                                || !EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(target, foodComp.SolutionName, out var food))
             {
                 return 0.0f;

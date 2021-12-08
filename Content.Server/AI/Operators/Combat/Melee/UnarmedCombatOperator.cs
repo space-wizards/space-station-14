@@ -8,6 +8,8 @@ namespace Content.Server.AI.Operators.Combat.Melee
 {
     public sealed class UnarmedCombatOperator : AiOperator
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         private readonly float _burstTime;
         private float _elapsedTime;
 
@@ -17,6 +19,8 @@ namespace Content.Server.AI.Operators.Combat.Melee
 
         public UnarmedCombatOperator(EntityUid owner, EntityUid target, float burstTime = 1.0f)
         {
+            IoCManager.InjectDependencies(this);
+
             _owner = owner;
             _target = target;
             _burstTime = burstTime;
@@ -29,7 +33,7 @@ namespace Content.Server.AI.Operators.Combat.Melee
                 return true;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(_owner, out CombatModeComponent? combatModeComponent))
+            if (!_entMan.TryGetComponent(_owner, out CombatModeComponent? combatModeComponent))
             {
                 return false;
             }
@@ -39,7 +43,7 @@ namespace Content.Server.AI.Operators.Combat.Melee
                 combatModeComponent.IsInCombatMode = true;
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(_owner, out UnarmedCombatComponent? unarmedCombatComponent))
+            if (_entMan.TryGetComponent(_owner, out UnarmedCombatComponent? unarmedCombatComponent))
             {
                 _unarmedCombat = unarmedCombatComponent;
             }
@@ -56,7 +60,7 @@ namespace Content.Server.AI.Operators.Combat.Melee
             if (!base.Shutdown(outcome))
                 return false;
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(_owner, out CombatModeComponent? combatModeComponent))
+            if (_entMan.TryGetComponent(_owner, out CombatModeComponent? combatModeComponent))
             {
                 combatModeComponent.IsInCombatMode = false;
             }
@@ -76,14 +80,14 @@ namespace Content.Server.AI.Operators.Combat.Melee
                 return Outcome.Failed;
             }
 
-            if ((IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_target).Coordinates.Position - IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_owner).Coordinates.Position).Length >
+            if ((_entMan.GetComponent<TransformComponent>(_target).Coordinates.Position - _entMan.GetComponent<TransformComponent>(_owner).Coordinates.Position).Length >
                 _unarmedCombat.Range)
             {
                 return Outcome.Failed;
             }
 
             var interactionSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<InteractionSystem>();
-            interactionSystem.AiUseInteraction(_owner, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_target).Coordinates, _target);
+            interactionSystem.AiUseInteraction(_owner, _entMan.GetComponent<TransformComponent>(_target).Coordinates, _target);
             _elapsedTime += frameTime;
             return Outcome.Continuing;
         }

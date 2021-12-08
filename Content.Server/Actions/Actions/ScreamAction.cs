@@ -26,6 +26,7 @@ namespace Content.Server.Actions.Actions
         private const float Volume = 4f;
 
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly IEntityManager _entMan = default!;
 
         [DataField("male", required: true)] private SoundSpecifier _male = default!;
         [DataField("female", required: true)] private SoundSpecifier _female = default!;
@@ -42,8 +43,8 @@ namespace Content.Server.Actions.Actions
         public void DoInstantAction(InstantActionEventArgs args)
         {
             if (!EntitySystem.Get<ActionBlockerSystem>().CanSpeak(args.Performer)) return;
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<HumanoidAppearanceComponent?>(args.Performer, out var humanoid)) return;
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedActionsComponent?>(args.Performer, out var actions)) return;
+            if (!_entMan.TryGetComponent<HumanoidAppearanceComponent?>(args.Performer, out var humanoid)) return;
+            if (!_entMan.TryGetComponent<SharedActionsComponent?>(args.Performer, out var actions)) return;
 
             if (_random.Prob(.01f))
             {

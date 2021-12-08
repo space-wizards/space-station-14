@@ -24,6 +24,8 @@ namespace Content.Server.Configurable
     [ComponentReference(typeof(SharedConfigurationComponent))]
     public class ConfigurationComponent : SharedConfigurationComponent, IInteractUsing, ISerializationHooks
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(ConfigurationUiKey.Key);
 
         [DataField("keys")] private List<string> _keys = new();
@@ -81,10 +83,10 @@ namespace Content.Server.Configurable
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (UserInterface == null || !IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User, out ActorComponent? actor))
+            if (UserInterface == null || !_entMan.TryGetComponent(eventArgs.User, out ActorComponent? actor))
                 return false;
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ToolComponent?>(eventArgs.Using, out var tool) || !tool.Qualities.Contains(_qualityNeeded))
+            if (!_entMan.TryGetComponent<ToolComponent?>(eventArgs.Using, out var tool) || !tool.Qualities.Contains(_qualityNeeded))
                 return false;
 
             OpenUserInterface(actor);

@@ -8,6 +8,8 @@ namespace Content.Server.Body.Components
     [RegisterComponent]
     public class InternalsComponent : Component
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "Internals";
         [ViewVariables] public EntityUid GasTankEntity { get; set; }
         [ViewVariables] public EntityUid BreathToolEntity { get; set; }
@@ -17,7 +19,7 @@ namespace Content.Server.Body.Components
             var old = BreathToolEntity;
             BreathToolEntity = default;
 
-            if (old != default && IoCManager.Resolve<IEntityManager>().TryGetComponent(old, out BreathToolComponent? breathTool) )
+            if (old != default && _entMan.TryGetComponent(old, out BreathToolComponent? breathTool) )
             {
                 breathTool.DisconnectInternals();
                 DisconnectTank();
@@ -26,7 +28,7 @@ namespace Content.Server.Body.Components
 
         public void ConnectBreathTool(EntityUid toolEntity)
         {
-            if (BreathToolEntity != default && IoCManager.Resolve<IEntityManager>().TryGetComponent(BreathToolEntity, out BreathToolComponent? tool))
+            if (BreathToolEntity != default && _entMan.TryGetComponent(BreathToolEntity, out BreathToolComponent? tool))
             {
                 tool.DisconnectInternals();
             }
@@ -36,7 +38,7 @@ namespace Content.Server.Body.Components
 
         public void DisconnectTank()
         {
-            if (GasTankEntity != default && IoCManager.Resolve<IEntityManager>().TryGetComponent(GasTankEntity, out GasTankComponent? tank))
+            if (GasTankEntity != default && _entMan.TryGetComponent(GasTankEntity, out GasTankComponent? tank))
             {
                 tank.DisconnectFromInternals(Owner);
             }
@@ -49,7 +51,7 @@ namespace Content.Server.Body.Components
             if (BreathToolEntity == default)
                 return false;
 
-            if (GasTankEntity != default && IoCManager.Resolve<IEntityManager>().TryGetComponent(GasTankEntity, out GasTankComponent? tank))
+            if (GasTankEntity != default && _entMan.TryGetComponent(GasTankEntity, out GasTankComponent? tank))
             {
                 tank.DisconnectFromInternals(Owner);
             }
@@ -62,9 +64,9 @@ namespace Content.Server.Body.Components
         {
             return BreathToolEntity != default &&
                    GasTankEntity != default &&
-                   IoCManager.Resolve<IEntityManager>().TryGetComponent(BreathToolEntity, out BreathToolComponent? breathTool) &&
+                   _entMan.TryGetComponent(BreathToolEntity, out BreathToolComponent? breathTool) &&
                    breathTool.IsFunctional &&
-                   IoCManager.Resolve<IEntityManager>().TryGetComponent(GasTankEntity, out GasTankComponent? gasTank) &&
+                   _entMan.TryGetComponent(GasTankEntity, out GasTankComponent? gasTank) &&
                    gasTank.Air != default;
         }
 

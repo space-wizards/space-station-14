@@ -25,6 +25,7 @@ namespace Content.Server.Cargo.Components
     [RegisterComponent]
     public class CargoTelepadComponent : Component
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         public override string Name => "CargoTelepad";
 
@@ -67,14 +68,14 @@ namespace Content.Server.Cargo.Components
         {
             if (args.Powered && _currentState == CargoTelepadState.Unpowered) {
                 _currentState = CargoTelepadState.Idle;
-                if(IoCManager.Resolve<IEntityManager>().TryGetComponent<SpriteComponent?>(Owner, out var spriteComponent) && spriteComponent.LayerCount > 0)
+                if(_entMan.TryGetComponent<SpriteComponent?>(Owner, out var spriteComponent) && spriteComponent.LayerCount > 0)
                     spriteComponent.LayerSetState(0, "idle");
                 TeleportLoop();
             }
             else if (!args.Powered)
             {
                 _currentState = CargoTelepadState.Unpowered;
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SpriteComponent?>(Owner, out var spriteComponent) && spriteComponent.LayerCount > 0)
+                if (_entMan.TryGetComponent<SpriteComponent?>(Owner, out var spriteComponent) && spriteComponent.LayerCount > 0)
                     spriteComponent.LayerSetState(0, "offline");
             }
         }
@@ -83,23 +84,23 @@ namespace Content.Server.Cargo.Components
             if (_currentState == CargoTelepadState.Idle && _teleportQueue.Count > 0)
             {
                 _currentState = CargoTelepadState.Charging;
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SpriteComponent?>(Owner, out var spriteComponent) && spriteComponent.LayerCount > 0)
+                if (_entMan.TryGetComponent<SpriteComponent?>(Owner, out var spriteComponent) && spriteComponent.LayerCount > 0)
                     spriteComponent.LayerSetState(0, "idle");
                 Owner.SpawnTimer((int) (TeleportDelay * 1000), () =>
                 {
-                    if (!Deleted && !((!IoCManager.Resolve<IEntityManager>().EntityExists(Owner) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityLifeStage) >= EntityLifeStage.Deleted) && _currentState == CargoTelepadState.Charging && _teleportQueue.Count > 0)
+                    if (!Deleted && !((!_entMan.EntityExists(Owner) ? EntityLifeStage.Deleted : _entMan.GetComponent<MetaDataComponent>(Owner).EntityLifeStage) >= EntityLifeStage.Deleted) && _currentState == CargoTelepadState.Charging && _teleportQueue.Count > 0)
                     {
                         _currentState = CargoTelepadState.Teleporting;
-                        if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SpriteComponent?>(Owner, out var spriteComponent) && spriteComponent.LayerCount > 0)
+                        if (_entMan.TryGetComponent<SpriteComponent?>(Owner, out var spriteComponent) && spriteComponent.LayerCount > 0)
                             spriteComponent.LayerSetState(0, "beam");
                         Owner.SpawnTimer((int) (TeleportDuration * 1000), () =>
                         {
-                            if (!Deleted && !((!IoCManager.Resolve<IEntityManager>().EntityExists(Owner) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityLifeStage) >= EntityLifeStage.Deleted) && _currentState == CargoTelepadState.Teleporting && _teleportQueue.Count > 0)
+                            if (!Deleted && !((!_entMan.EntityExists(Owner) ? EntityLifeStage.Deleted : _entMan.GetComponent<MetaDataComponent>(Owner).EntityLifeStage) >= EntityLifeStage.Deleted) && _currentState == CargoTelepadState.Teleporting && _teleportQueue.Count > 0)
                             {
                                 SoundSystem.Play(Filter.Pvs(Owner), _teleportSound.GetSound(), Owner, AudioParams.Default.WithVolume(-8f));
                                 SpawnProduct(_teleportQueue[0]);
                                 _teleportQueue.RemoveAt(0);
-                                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SpriteComponent?>(Owner, out var spriteComponent) && spriteComponent.LayerCount > 0)
+                                if (_entMan.TryGetComponent<SpriteComponent?>(Owner, out var spriteComponent) && spriteComponent.LayerCount > 0)
                                     spriteComponent.LayerSetState(0, "idle");
                                 _currentState = CargoTelepadState.Idle;
                                 TeleportLoop();
@@ -119,18 +120,18 @@ namespace Content.Server.Cargo.Components
             if (!_prototypeManager.TryIndex(data.ProductId, out CargoProductPrototype? prototype))
                 return;
 
-            var product = IoCManager.Resolve<IEntityManager>().SpawnEntity(prototype.Product, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
+            var product = _entMan.SpawnEntity(prototype.Product, _entMan.GetComponent<TransformComponent>(Owner).Coordinates);
 
-            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(product).Anchored = false;
+            _entMan.GetComponent<TransformComponent>(product).Anchored = false;
 
             // spawn a piece of paper.
-            var printed = IoCManager.Resolve<IEntityManager>().SpawnEntity(PrinterOutput, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(printed, out PaperComponent paper))
+            var printed = _entMan.SpawnEntity(PrinterOutput, _entMan.GetComponent<TransformComponent>(Owner).Coordinates);
+            if (!_entMan.TryGetComponent(printed, out PaperComponent paper))
                 return;
 
             // fill in the order data
             string val = Loc.GetString("cargo-console-paper-print-name", ("orderNumber", data.OrderNumber));
-            IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(printed).EntityName = val;
+            _entMan.GetComponent<MetaDataComponent>(printed).EntityName = val;
             paper.SetContent(Loc.GetString(
                 "cargo-console-paper-print-text",
                 ("orderNumber", data.OrderNumber),
@@ -139,7 +140,7 @@ namespace Content.Server.Cargo.Components
                 ("approver", data.Approver)));
 
             // attempt to attach the label
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(product, out PaperLabelComponent label))
+            if (_entMan.TryGetComponent(product, out PaperLabelComponent label))
             {
                 EntitySystem.Get<ItemSlotsSystem>().TryInsert(Owner, label.LabelSlot, printed);
             }

@@ -11,11 +11,15 @@ namespace Content.Server.AI.Operators.Inventory
     /// </summary>
     public class InteractWithEntityOperator : AiOperator
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         private readonly EntityUid _owner;
         private readonly EntityUid _useTarget;
 
         public InteractWithEntityOperator(EntityUid owner, EntityUid useTarget)
         {
+            IoCManager.InjectDependencies(this);
+
             _owner = owner;
             _useTarget = useTarget;
 
@@ -23,7 +27,9 @@ namespace Content.Server.AI.Operators.Inventory
 
         public override Outcome Execute(float frameTime)
         {
-            if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_useTarget).GridID != IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_owner).GridID)
+            var targetTransform = _entMan.GetComponent<TransformComponent>(_useTarget);
+
+            if (targetTransform.GridID != _entMan.GetComponent<TransformComponent>(_owner).GridID)
             {
                 return Outcome.Failed;
             }
@@ -33,14 +39,14 @@ namespace Content.Server.AI.Operators.Inventory
                 return Outcome.Failed;
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(_owner, out CombatModeComponent? combatModeComponent))
+            if (_entMan.TryGetComponent(_owner, out CombatModeComponent? combatModeComponent))
             {
                 combatModeComponent.IsInCombatMode = false;
             }
 
             // Click on da thing
-            var interactionSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<InteractionSystem>();
-            interactionSystem.AiUseInteraction(_owner, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(_useTarget).Coordinates, _useTarget);
+            var interactionSystem = EntitySystem.Get<InteractionSystem>();
+            interactionSystem.AiUseInteraction(_owner, targetTransform.Coordinates, _useTarget);
 
             return Outcome.Success;
         }

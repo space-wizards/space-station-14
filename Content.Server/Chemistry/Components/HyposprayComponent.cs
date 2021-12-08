@@ -23,6 +23,8 @@ namespace Content.Server.Chemistry.Components
     [RegisterComponent]
     public sealed class HyposprayComponent : SharedHyposprayComponent
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         [DataField("clumsyFailChance")]
         [ViewVariables(VVAccess.ReadWrite)]
         public float ClumsyFailChance { get; set; } = 0.5f;
@@ -80,7 +82,7 @@ namespace Content.Server.Chemistry.Components
             {
                 target.Value.PopupMessage(Loc.GetString("hypospray-component-feel-prick-message"));
                 var meleeSys = EntitySystem.Get<MeleeWeaponSystem>();
-                var angle = Angle.FromWorldVec(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(target.Value).WorldPosition - IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(user).WorldPosition);
+                var angle = Angle.FromWorldVec(_entMan.GetComponent<TransformComponent>(target.Value).WorldPosition - _entMan.GetComponent<TransformComponent>(user).WorldPosition);
                 meleeSys.SendLunge(angle, user);
             }
 
@@ -116,8 +118,8 @@ namespace Content.Server.Chemistry.Components
                 // TODO: Does checking for BodyComponent make sense as a "can be hypospray'd" tag?
                 // In SS13 the hypospray ONLY works on mobs, NOT beakers or anything else.
 
-                return IoCManager.Resolve<IEntityManager>().HasComponent<SolutionContainerManagerComponent>(entity)
-                       && IoCManager.Resolve<IEntityManager>().HasComponent<MobStateComponent>(entity);
+                return _entMan.HasComponent<SolutionContainerManagerComponent>(entity)
+                       && _entMan.HasComponent<MobStateComponent>(entity);
             }
 
             return true;
@@ -125,7 +127,7 @@ namespace Content.Server.Chemistry.Components
 
         public override ComponentState GetComponentState()
         {
-            var solutionSys = IoCManager.Resolve<IEntityManager>().EntitySysManager.GetEntitySystem<SolutionContainerSystem>();
+            var solutionSys = _entMan.EntitySysManager.GetEntitySystem<SolutionContainerSystem>();
             return solutionSys.TryGetSolution(Owner, SolutionName, out var solution)
                 ? new HyposprayComponentState(solution.CurrentVolume, solution.MaxVolume)
                 : new HyposprayComponentState(FixedPoint2.Zero, FixedPoint2.Zero);

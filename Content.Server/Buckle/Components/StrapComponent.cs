@@ -21,6 +21,8 @@ namespace Content.Server.Buckle.Components
     {
         [ComponentDependency] public readonly SpriteComponent? SpriteComponent = null;
 
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         private readonly HashSet<EntityUid> _buckledEntities = new();
 
         /// <summary>
@@ -147,7 +149,7 @@ namespace Content.Server.Buckle.Components
         {
             foreach (var entity in _buckledEntities.ToArray())
             {
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<BuckleComponent?>(entity, out var buckle))
+                if (_entMan.TryGetComponent<BuckleComponent?>(entity, out var buckle))
                 {
                     buckle.TryUnbuckle(entity, true);
                 }
@@ -164,7 +166,7 @@ namespace Content.Server.Buckle.Components
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<BuckleComponent?>(eventArgs.User, out var buckle))
+            if (!_entMan.TryGetComponent<BuckleComponent?>(eventArgs.User, out var buckle))
             {
                 return false;
             }
@@ -174,7 +176,7 @@ namespace Content.Server.Buckle.Components
 
         public override bool DragDropOn(DragDropEvent eventArgs)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Dragged, out BuckleComponent? buckleComponent)) return false;
+            if (!_entMan.TryGetComponent(eventArgs.Dragged, out BuckleComponent? buckleComponent)) return false;
             return buckleComponent.TryBuckle(eventArgs.User, Owner);
         }
     }

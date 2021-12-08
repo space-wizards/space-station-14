@@ -14,6 +14,7 @@ namespace Content.Server.Botany.Components
     {
         [ComponentDependency] private readonly ApcPowerReceiverComponent? _powerReceiver = default!;
 
+        [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
         public override string Name => "SeedExtractor";
@@ -27,17 +28,17 @@ namespace Content.Server.Botany.Components
             if (!_powerReceiver?.Powered ?? false)
                 return false;
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Using, out ProduceComponent? produce) && produce.Seed != null)
+            if (_entMan.TryGetComponent(eventArgs.Using, out ProduceComponent? produce) && produce.Seed != null)
             {
-                eventArgs.User.PopupMessageCursor(Loc.GetString("seed-extractor-component-interact-message",("name", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(eventArgs.Using).EntityName)));
+                eventArgs.User.PopupMessageCursor(Loc.GetString("seed-extractor-component-interact-message",("name", Name: _entMan.GetComponent<MetaDataComponent>(eventArgs.Using).EntityName)));
 
-                IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(eventArgs.Using);
+                _entMan.QueueDeleteEntity(eventArgs.Using);
 
                 var random = _random.Next(_minSeeds, _maxSeeds);
 
                 for (var i = 0; i < random; i++)
                 {
-                    produce.Seed.SpawnSeedPacket(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates, IoCManager.Resolve<IEntityManager>());
+                    produce.Seed.SpawnSeedPacket(_entMan.GetComponent<TransformComponent>(Owner).Coordinates, _entMan);
                 }
 
                 return true;

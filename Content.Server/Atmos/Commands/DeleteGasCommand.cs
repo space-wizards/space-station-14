@@ -24,6 +24,8 @@ namespace Content.Server.Atmos.Commands
             GridId gridId;
             Gas? gas = null;
 
+            var entMan = IoCManager.Resolve<IEntityManager>();
+
             switch (args.Length)
             {
                 case 0:
@@ -40,7 +42,7 @@ namespace Content.Server.Atmos.Commands
                         return;
                     }
 
-                    gridId = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(playerEntity).GridID;
+                    gridId = entMan.GetComponent<TransformComponent>(playerEntity).GridID;
 
                     if (gridId == GridId.Invalid)
                     {
@@ -67,7 +69,7 @@ namespace Content.Server.Atmos.Commands
                             return;
                         }
 
-                        gridId = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(playerEntity).GridID;
+                        gridId = entMan.GetComponent<TransformComponent>(playerEntity).GridID;
 
                         if (gridId == GridId.Invalid)
                         {

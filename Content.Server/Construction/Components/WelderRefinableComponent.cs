@@ -19,6 +19,8 @@ namespace Content.Server.Construction.Components
     [RegisterComponent]
     public class WelderRefinableComponent : Component, IInteractUsing
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         [DataField("refineResult")]
         private HashSet<string>? _refineResult = new() { };
 
@@ -38,7 +40,7 @@ namespace Content.Server.Construction.Components
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             // check if object is welder
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Using, out ToolComponent? tool))
+            if (!_entMan.TryGetComponent(eventArgs.Using, out ToolComponent? tool))
                 return false;
 
             // check if someone is already welding object
@@ -57,17 +59,17 @@ namespace Content.Server.Construction.Components
             }
 
             // get last owner coordinates and delete it
-            var resultPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates;
-            IoCManager.Resolve<IEntityManager>().DeleteEntity(Owner);
+            var resultPosition = _entMan.GetComponent<TransformComponent>(Owner).Coordinates;
+            _entMan.DeleteEntity(Owner);
 
             // spawn each result after refine
             foreach (var result in _refineResult!)
             {
-                var droppedEnt = IoCManager.Resolve<IEntityManager>().SpawnEntity(result, resultPosition);
+                var droppedEnt = _entMan.SpawnEntity(result, resultPosition);
 
                 // TODO: If something has a stack... Just use a prototype with a single thing in the stack.
                 // This is not a good way to do it.
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<StackComponent?>(droppedEnt, out var stack))
+                if (_entMan.TryGetComponent<StackComponent?>(droppedEnt, out var stack))
                     EntitySystem.Get<StackSystem>().SetCount(droppedEnt,1, stack);
             }
 

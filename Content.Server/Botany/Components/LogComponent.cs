@@ -18,15 +18,17 @@ namespace Content.Server.Botany.Components
             if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User))
                 return false;
 
+            var entMan = IoCManager.Resolve<IEntityManager>();
+
             if (eventArgs.Using.HasTag("BotanySharp"))
             {
                 for (var i = 0; i < 2; i++)
                 {
-                    var plank = IoCManager.Resolve<IEntityManager>().SpawnEntity("MaterialWoodPlank1", IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
+                    var plank = entMan.SpawnEntity("MaterialWoodPlank1", entMan.GetComponent<TransformComponent>(Owner).Coordinates);
                     plank.RandomOffset(0.25f);
                 }
 
-                IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(Owner);
+                entMan.QueueDeleteEntity(Owner);
 
                 return true;
             }

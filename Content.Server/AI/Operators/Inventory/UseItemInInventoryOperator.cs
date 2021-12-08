@@ -21,13 +21,15 @@ namespace Content.Server.AI.Operators.Inventory
 
         public override Outcome Execute(float frameTime)
         {
+            var entMan = IoCManager.Resolve<IEntityManager>();
+
             // TODO: Also have this check storage a la backpack etc.
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(_owner, out HandsComponent? handsComponent))
+            if (!entMan.TryGetComponent(_owner, out HandsComponent? handsComponent))
             {
                 return Outcome.Failed;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(_target, out ItemComponent? itemComponent))
+            if (!entMan.TryGetComponent(_target, out ItemComponent? itemComponent))
             {
                 return Outcome.Failed;
             }

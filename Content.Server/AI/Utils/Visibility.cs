@@ -12,8 +12,9 @@ namespace Content.Server.AI.Utils
         // Should this be in robust or something? Fark it
         public static IEnumerable<EntityUid> GetNearestEntities(EntityCoordinates grid, Type component, float range)
         {
+            var entMan = IoCManager.Resolve<IEntityManager>();
             var inRange = GetEntitiesInRange(grid, component, range).ToList();
-            var sortedInRange = inRange.OrderBy(o => (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(o).Coordinates.Position - grid.Position).Length);
+            var sortedInRange = inRange.OrderBy(o => (entMan.GetComponent<TransformComponent>(o).Coordinates.Position - grid.Position).Length);
 
             return sortedInRange;
         }
@@ -23,12 +24,14 @@ namespace Content.Server.AI.Utils
             var entityManager = IoCManager.Resolve<IEntityManager>();
             foreach (var entity in entityManager.GetAllComponents(component).Select(c => c.Owner))
             {
-                if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Coordinates.GetGridId(entityManager) != grid.GetGridId(entityManager))
+                var transform = entityManager.GetComponent<TransformComponent>(entity);
+
+                if (transform.Coordinates.GetGridId(entityManager) != grid.GetGridId(entityManager))
                 {
                     continue;
                 }
 
-                if ((IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Coordinates.Position - grid.Position).Length <= range)
+                if ((transform.Coordinates.Position - grid.Position).Length <= range)
                 {
                     yield return entity;
                 }

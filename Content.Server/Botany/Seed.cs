@@ -257,14 +257,14 @@ namespace Content.Server.Botany
             var seedComp = seed.EnsureComponent<SeedComponent>();
             seedComp.Seed = this;
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(seed, out SpriteComponent? sprite))
+            if (entityManager.TryGetComponent(seed, out SpriteComponent? sprite))
             {
                 // Seed state will always be seed. Blame the spriter if that's not the case!
                 sprite.LayerSetSprite(0, new SpriteSpecifier.Rsi(PlantRsi, "seed"));
             }
 
             string val = Loc.GetString("botany-seed-packet-name", ("seedName", SeedName), ("seedNoun", SeedNoun));
-            IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(seed).EntityName = val;
+            entityManager.GetComponent<MetaDataComponent>(seed).EntityName = val;
 
             return seed;
         }
@@ -342,10 +342,9 @@ namespace Content.Server.Botany
 
                 if (Mysterious)
                 {
-                    string val1 = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityName + "?";
-                    IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityName = val1;
-                    string val = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityDescription + (" " + Loc.GetString("botany-mysterious-description-addon"));
-                    IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityDescription = val;
+                    var metaData = entityManager.GetComponent<MetaDataComponent>(entity);
+                    metaData.EntityName += "?";
+                    metaData.EntityDescription += (" " + Loc.GetString("botany-mysterious-description-addon"));
                 }
             }
 

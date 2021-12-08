@@ -22,15 +22,17 @@ namespace Content.Server.AI.Operators.Inventory
 
         public override Outcome Execute(float frameTime)
         {
-            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(_target) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(_target).EntityLifeStage) >= EntityLifeStage.Deleted ||
-                !IoCManager.Resolve<IEntityManager>().HasComponent<ItemComponent>(_target) ||
-                _target.IsInContainer() ||
-                !_owner.InRangeUnobstructed(_target, popup: true))
+            var entMan = IoCManager.Resolve<IEntityManager>();
+
+            if (entMan.Deleted(_target)
+                || !entMan.HasComponent<ItemComponent>(_target)
+                || _target.IsInContainer()
+                || !_owner.InRangeUnobstructed(_target, popup: true))
             {
                 return Outcome.Failed;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(_owner, out HandsComponent? handsComponent))
+            if (!entMan.TryGetComponent(_owner, out HandsComponent? handsComponent))
             {
                 return Outcome.Failed;
             }
@@ -56,7 +58,7 @@ namespace Content.Server.AI.Operators.Inventory
                 return Outcome.Failed;
             }
 
-            var interactionSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<InteractionSystem>();
+            var interactionSystem = EntitySystem.Get<InteractionSystem>();
             interactionSystem.InteractHand(_owner, _target);
             return Outcome.Success;
         }

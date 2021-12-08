@@ -23,8 +23,10 @@ namespace Content.Server.Actions.Actions
 
         public void DoInstantAction(InstantActionEventArgs args)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ServerUserInterfaceComponent?>(args.Performer, out var serverUi)) return;
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ActorComponent?>(args.Performer, out var actor)) return;
+            var entMan = IoCManager.Resolve<IEntityManager>();
+
+            if (!entMan.TryGetComponent<ServerUserInterfaceComponent?>(args.Performer, out var serverUi)) return;
+            if (!entMan.TryGetComponent<ActorComponent?>(args.Performer, out var actor)) return;
             if (!serverUi.TryGetBoundUserInterface(InstrumentUiKey.Key,out var bui)) return;
 
             bui.Toggle(actor.PlayerSession);

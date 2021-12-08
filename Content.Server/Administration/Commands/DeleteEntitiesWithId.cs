@@ -23,12 +23,12 @@ namespace Content.Server.Administration.Commands
 
             var id = args[0].ToLower();
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            var entities = entityManager.GetEntities().Where(e => IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(e).EntityPrototype?.ID.ToLower() == id);
+            var entities = entityManager.GetEntities().Where(e => entityManager.GetComponent<MetaDataComponent>(e).EntityPrototype?.ID.ToLower() == id);
             var i = 0;
 
             foreach (var entity in entities)
             {
-                IoCManager.Resolve<IEntityManager>().DeleteEntity(entity);
+                entityManager.DeleteEntity(entity);
                 i++;
             }
 

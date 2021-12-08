@@ -16,14 +16,14 @@ namespace Content.Server.AI.WorldState.States.Combat.Nearby
         protected override List<EntityUid> GetTrueValue()
         {
             var result = new List<EntityUid>();
+            var entMan = IoCManager.Resolve<IEntityManager>();
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AiControllerComponent? controller))
+            if (!entMan.TryGetComponent(Owner, out AiControllerComponent? controller))
             {
                 return result;
             }
 
-            foreach (var entity in Visibility
-                .GetNearestEntities(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates, typeof(MeleeWeaponComponent), controller.VisionRadius))
+            foreach (var entity in Visibility.GetNearestEntities(entMan.GetComponent<TransformComponent>(Owner).Coordinates, typeof(MeleeWeaponComponent), controller.VisionRadius))
             {
                 result.Add(entity);
             }

@@ -13,11 +13,12 @@ namespace Content.Server.AI.WorldState.States.Inventory
 
         public override IEnumerable<EntityUid> GetValue()
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out HandsComponent? handsComponent))
+            var entMan = IoCManager.Resolve<IEntityManager>();
+            if (entMan.TryGetComponent(Owner, out HandsComponent? handsComponent))
             {
                 foreach (var item in handsComponent.GetAllHeldItems())
                 {
-                    if ((!IoCManager.Resolve<IEntityManager>().EntityExists(item.Owner) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(item.Owner).EntityLifeStage) >= EntityLifeStage.Deleted)
+                    if (entMan.Deleted(item.Owner))
                         continue;
 
                     yield return item.Owner;

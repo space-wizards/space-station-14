@@ -28,12 +28,14 @@ namespace Content.Server.Construction.Conditions
         {
             var entity = args.Examined;
 
+            var anchored = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Anchored;
+
             switch (Anchored)
             {
-                case true when !IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Anchored:
+                case true when !anchored:
                     args.PushMarkup(Loc.GetString("construction-examine-condition-entity-anchored"));
                     return true;
-                case false when IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Anchored:
+                case false when anchored:
                     args.PushMarkup(Loc.GetString("construction-examine-condition-entity-unanchored"));
                     return true;
             }

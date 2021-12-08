@@ -13,11 +13,13 @@ namespace Content.Server.Body.Components
     [ComponentReference(typeof(SharedBodyScannerComponent))]
     public class BodyScannerComponent : SharedBodyScannerComponent, IActivate
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(BodyScannerUiKey.Key);
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User, out ActorComponent? actor))
+            if (!_entMan.TryGetComponent(eventArgs.User, out ActorComponent? actor))
             {
                 return;
             }
@@ -29,7 +31,7 @@ namespace Content.Server.Body.Components
                 return;
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(session.AttachedEntity, out SharedBodyComponent? body))
+            if (_entMan.TryGetComponent(session.AttachedEntity, out SharedBodyComponent? body))
             {
                 var state = InterfaceState(body);
                 UserInterface?.SetState(state);

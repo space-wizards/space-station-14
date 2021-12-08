@@ -55,31 +55,36 @@ namespace Content.Server.Commands
 
         public static string SubstituteEntityDetails(IConsoleShell shell, EntityUid ent, string ruleString)
         {
+            var entMan = IoCManager.Resolve<IEntityManager>();
+            var transform = entMan.GetComponent<TransformComponent>(ent);
+
             // gross, is there a better way to do this?
             ruleString = ruleString.Replace("$ID", ent.ToString());
             ruleString = ruleString.Replace("$WX",
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(ent).WorldPosition.X.ToString(CultureInfo.InvariantCulture));
+                transform.WorldPosition.X.ToString(CultureInfo.InvariantCulture));
             ruleString = ruleString.Replace("$WY",
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(ent).WorldPosition.Y.ToString(CultureInfo.InvariantCulture));
+                transform.WorldPosition.Y.ToString(CultureInfo.InvariantCulture));
             ruleString = ruleString.Replace("$LX",
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(ent).LocalPosition.X.ToString(CultureInfo.InvariantCulture));
+                transform.LocalPosition.X.ToString(CultureInfo.InvariantCulture));
             ruleString = ruleString.Replace("$LY",
-                IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(ent).LocalPosition.Y.ToString(CultureInfo.InvariantCulture));
-            ruleString = ruleString.Replace("$NAME", IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(ent).EntityName);
+                transform.LocalPosition.Y.ToString(CultureInfo.InvariantCulture));
+            ruleString = ruleString.Replace("$NAME", entMan.GetComponent<MetaDataComponent>(ent).EntityName);
 
             if (shell.Player is IPlayerSession player)
             {
                 if (player.AttachedEntity is {Valid: true} p)
                 {
+                    var pTransform = entMan.GetComponent<TransformComponent>(p);
+
                     ruleString = ruleString.Replace("$PID", ent.ToString());
                     ruleString = ruleString.Replace("$PWX",
-                        IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(p).WorldPosition.X.ToString(CultureInfo.InvariantCulture));
+                        pTransform.WorldPosition.X.ToString(CultureInfo.InvariantCulture));
                     ruleString = ruleString.Replace("$PWY",
-                        IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(p).WorldPosition.Y.ToString(CultureInfo.InvariantCulture));
+                        pTransform.WorldPosition.Y.ToString(CultureInfo.InvariantCulture));
                     ruleString = ruleString.Replace("$PLX",
-                        IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(p).LocalPosition.X.ToString(CultureInfo.InvariantCulture));
+                        pTransform.LocalPosition.X.ToString(CultureInfo.InvariantCulture));
                     ruleString = ruleString.Replace("$PLY",
-                        IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(p).LocalPosition.Y.ToString(CultureInfo.InvariantCulture));
+                        pTransform.LocalPosition.Y.ToString(CultureInfo.InvariantCulture));
                 }
             }
             return ruleString;

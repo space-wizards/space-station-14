@@ -14,12 +14,14 @@ namespace Content.Server.Chemistry.Components
     [ComponentReference(typeof(SolutionAreaEffectComponent))]
     public class SmokeSolutionAreaEffectComponent : SolutionAreaEffectComponent
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "SmokeSolutionAreaEffect";
         public new const string SolutionName = "solutionArea";
 
         protected override void UpdateVisuals()
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AppearanceComponent? appearance) &&
+            if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance) &&
                 EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
             {
                 appearance.SetData(SmokeVisuals.Color, solution.Color);
@@ -31,10 +33,10 @@ namespace Content.Server.Chemistry.Components
             if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
                 return;
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out BloodstreamComponent? bloodstream))
+            if (!_entMan.TryGetComponent(entity, out BloodstreamComponent? bloodstream))
                 return;
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out InternalsComponent? internals) &&
+            if (_entMan.TryGetComponent(entity, out InternalsComponent? internals) &&
                 internals.AreInternalsWorking())
                 return;
 
@@ -56,9 +58,9 @@ namespace Content.Server.Chemistry.Components
 
         protected override void OnKill()
         {
-            if ((!IoCManager.Resolve<IEntityManager>().EntityExists(Owner) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityLifeStage) >= EntityLifeStage.Deleted)
+            if ((!_entMan.EntityExists(Owner) ? EntityLifeStage.Deleted : _entMan.GetComponent<MetaDataComponent>(Owner).EntityLifeStage) >= EntityLifeStage.Deleted)
                 return;
-            IoCManager.Resolve<IEntityManager>().DeleteEntity(Owner);
+            _entMan.DeleteEntity(Owner);
         }
     }
 }

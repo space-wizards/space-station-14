@@ -15,6 +15,8 @@ namespace Content.Server.Computer
     [RegisterComponent]
     public sealed class ComputerComponent : SharedComputerComponent, IMapInit
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         [ViewVariables]
         [DataField("board")]
         private string? _boardPrototype;
@@ -26,8 +28,8 @@ namespace Content.Server.Computer
             // Let's ensure the container manager and container are here.
             Owner.EnsureContainer<Container>("board", out var _);
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out ApcPowerReceiverComponent? powerReceiver) &&
-                IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AppearanceComponent? appearance))
+            if (_entMan.TryGetComponent(Owner, out ApcPowerReceiverComponent? powerReceiver) &&
+                _entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
             {
                 appearance.SetData(ComputerVisuals.Powered, powerReceiver.Powered);
             }
@@ -49,7 +51,7 @@ namespace Content.Server.Computer
 
         private void PowerReceiverOnOnPowerStateChanged(PowerChangedMessage e)
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AppearanceComponent? appearance))
+            if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
             {
                 appearance.SetData(ComputerVisuals.Powered, e.Powered);
             }
@@ -63,7 +65,7 @@ namespace Content.Server.Computer
         private void CreateComputerBoard()
         {
             // Ensure that the construction component is aware of the board container.
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out ConstructionComponent? construction))
+            if (_entMan.TryGetComponent(Owner, out ConstructionComponent? construction))
                 EntitySystem.Get<ConstructionSystem>().AddContainer(Owner, "board", construction);
 
             // We don't do anything if this is null or empty.
@@ -79,7 +81,7 @@ namespace Content.Server.Computer
                     return;
             }
 
-            var board = IoCManager.Resolve<IEntityManager>().SpawnEntity(_boardPrototype, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
+            var board = _entMan.SpawnEntity(_boardPrototype, _entMan.GetComponent<TransformComponent>(Owner).Coordinates);
 
             if(!container.Insert(board))
                 Logger.Warning($"Couldn't insert board {board} to computer {Owner}!");
