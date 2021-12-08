@@ -126,7 +126,7 @@ namespace Content.Server.Clothing.Components
     {
         public bool DoToggleAction(ToggleItemActionEventArgs args)
         {
-            if (!_entMan.TryGetComponent<MagbootsComponent?>(args.Item, out var magboots))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<MagbootsComponent?>(args.Item, out var magboots))
                 return false;
 
             magboots.Toggle(args.Performer);

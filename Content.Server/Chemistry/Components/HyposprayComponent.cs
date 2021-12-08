@@ -45,7 +45,7 @@ namespace Content.Server.Chemistry.Components
 
         public bool TryDoInject(EntityUid? target, EntityUid user)
         {
-            if (!EligibleEntity(target))
+            if (!EligibleEntity(target, _entMan))
                 return false;
 
             string? msgFormat = null;
@@ -54,7 +54,7 @@ namespace Content.Server.Chemistry.Components
             {
                 msgFormat = "hypospray-component-inject-self-message";
             }
-            else if (EligibleEntity(user) && ClumsyComponent.TryRollClumsy(user, ClumsyFailChance))
+            else if (EligibleEntity(user, _entMan) && ClumsyComponent.TryRollClumsy(user, ClumsyFailChance))
             {
                 msgFormat = "hypospray-component-inject-self-clumsy-message";
                 target = user;
@@ -113,13 +113,13 @@ namespace Content.Server.Chemistry.Components
 
             EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(target.Value, targetSolution, removedSolution);
 
-            static bool EligibleEntity([NotNullWhen(true)] EntityUid? entity)
+            static bool EligibleEntity([NotNullWhen(true)] EntityUid? entity, IEntityManager entMan)
             {
                 // TODO: Does checking for BodyComponent make sense as a "can be hypospray'd" tag?
                 // In SS13 the hypospray ONLY works on mobs, NOT beakers or anything else.
 
-                return _entMan.HasComponent<SolutionContainerManagerComponent>(entity)
-                       && _entMan.HasComponent<MobStateComponent>(entity);
+                return entMan.HasComponent<SolutionContainerManagerComponent>(entity)
+                       && entMan.HasComponent<MobStateComponent>(entity);
             }
 
             return true;

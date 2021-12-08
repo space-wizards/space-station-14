@@ -360,7 +360,7 @@ namespace Content.Shared.Body.Components
                 return _mechanisms;
             }
 
-            entityManager ??= _entMan;
+            IoCManager.Resolve(ref entityManager);
 
             var mechanisms = new List<SharedMechanismComponent>(MechanismIds.Length);
 
