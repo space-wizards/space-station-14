@@ -99,9 +99,10 @@ namespace Content.Client.Kitchen.UI
                 {
                     return;
                 }
-                var texture = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(entity).Icon?.Default;
 
-                var solidItem = ChamberContentBox.BoxContents.AddItem(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityName, texture);
+                var texture = _entityManager.GetComponent<SpriteComponent>(entity).Icon?.Default;
+
+                var solidItem = ChamberContentBox.BoxContents.AddItem(_entityManager.GetComponent<MetaDataComponent>(entity).EntityName, texture);
                 var solidIndex = ChamberContentBox.BoxContents.IndexOf(solidItem);
                 _chamberVisualContents.Add(solidIndex, entity);
             }

@@ -26,6 +26,7 @@ namespace Content.Client.Light.Components
     [ImplicitDataDefinitionForInheritors]
     public abstract class LightBehaviourAnimationTrack : AnimationTrackProperty
     {
+        protected IEntityManager _entMan = default!;
         protected IRobustRandom _random = default!;
 
         [DataField("id")] [ViewVariables] public string ID { get; set; } = string.Empty;
@@ -53,12 +54,13 @@ namespace Content.Client.Light.Components
         private float _maxTime = default;
         private EntityUid _parent = default!;
 
-        public void Initialize(EntityUid parent, IRobustRandom random)
+        public void Initialize(EntityUid parent, IRobustRandom random, IEntityManager entMan)
         {
             _random = random;
+            _entMan = entMan;
             _parent = parent;
 
-            if (Enabled && IoCManager.Resolve<IEntityManager>().TryGetComponent(_parent, out PointLightComponent? light))
+            if (Enabled && _entMan.TryGetComponent(_parent, out PointLightComponent? light))
             {
                 light.Enabled = true;
             }
@@ -68,7 +70,7 @@ namespace Content.Client.Light.Components
 
         public void UpdatePlaybackValues(Animation owner)
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(_parent, out PointLightComponent? light))
+            if (_entMan.TryGetComponent(_parent, out PointLightComponent? light))
             {
                 light.Enabled = true;
             }
@@ -99,7 +101,7 @@ namespace Content.Client.Light.Components
                 throw new InvalidOperationException("Property parameter is null! Check the prototype!");
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(_parent, out PointLightComponent? light))
+            if (_entMan.TryGetComponent(_parent, out PointLightComponent? light))
             {
                 AnimationHelper.SetAnimatableProperty(light, Property, value);
             }
@@ -340,6 +342,9 @@ namespace Content.Client.Light.Components
     [RegisterComponent]
     public class LightBehaviourComponent : SharedLightBehaviourComponent, ISerializationHooks
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
+
         private const string KeyPrefix = nameof(LightBehaviourComponent);
 
         public class AnimationContainer
@@ -395,7 +400,7 @@ namespace Content.Client.Light.Components
             // TODO: Do NOT ensure component here. And use eventbus events instead...
             Owner.EnsureComponent<AnimationPlayerComponent>();
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AnimationPlayerComponent? animation))
+            if (_entMan.TryGetComponent(Owner, out AnimationPlayerComponent? animation))
             {
 #pragma warning disable 618
                 animation.AnimationCompleted += OnAnimationCompleted;
@@ -404,7 +409,7 @@ namespace Content.Client.Light.Components
 
             foreach (var container in _animations)
             {
-                container.LightBehaviour.Initialize(Owner, IoCManager.Resolve<IRobustRandom>());
+                container.LightBehaviour.Initialize(Owner, _random, _entMan);
             }
 
             // we need to initialize all behaviours before starting any
@@ -430,7 +435,7 @@ namespace Content.Client.Light.Components
             {
                 container.LightBehaviour.UpdatePlaybackValues(container.Animation);
 
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AnimationPlayerComponent? animation))
+                if (_entMan.TryGetComponent(Owner, out AnimationPlayerComponent? animation))
                 {
                     animation.Play(container.Animation, container.FullKey);
                 }
@@ -442,7 +447,7 @@ namespace Content.Client.Light.Components
         /// </summary>
         private void CopyLightSettings()
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out PointLightComponent? light))
+            if (_entMan.TryGetComponent(Owner, out PointLightComponent? light))
             {
                 _originalColor = light.Color;
                 _originalEnabled = light.Enabled;
@@ -452,7 +457,7 @@ namespace Content.Client.Light.Components
             }
             else
             {
-                Logger.Warning($"{IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner).EntityName} has a {nameof(LightBehaviourComponent)} but it has no {nameof(PointLightComponent)}! Check the prototype!");
+                Logger.Warning($"{_entMan.GetComponent<MetaDataComponent>(Owner).EntityName} has a {nameof(LightBehaviourComponent)} but it has no {nameof(PointLightComponent)}! Check the prototype!");
             }
         }
 
@@ -463,7 +468,7 @@ namespace Content.Client.Light.Components
         /// </summary>
         public void StartLightBehaviour(string id = "")
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AnimationPlayerComponent? animation))
+            if (!_entMan.TryGetComponent(Owner, out AnimationPlayerComponent? animation))
             {
                 return;
             }
@@ -491,7 +496,7 @@ namespace Content.Client.Light.Components
         /// <param name="resetToOriginalSettings">Should the light have its original settings applied?</param>
         public void StopLightBehaviour(string id = "", bool removeBehaviour = false, bool resetToOriginalSettings = false)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AnimationPlayerComponent? animation))
+            if (!_entMan.TryGetComponent(Owner, out AnimationPlayerComponent? animation))
             {
                 return;
             }
@@ -519,7 +524,7 @@ namespace Content.Client.Light.Components
                 _animations.Remove(container);
             }
 
-            if (resetToOriginalSettings && IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out PointLightComponent? light))
+            if (resetToOriginalSettings && _entMan.TryGetComponent(Owner, out PointLightComponent? light))
             {
                 light.Color = _originalColor;
                 light.Enabled = _originalEnabled;
@@ -546,7 +551,7 @@ namespace Content.Client.Light.Components
                 AnimationTracks = {behaviour}
             };
 
-            behaviour.Initialize(Owner, IoCManager.Resolve<IRobustRandom>());
+            behaviour.Initialize(Owner, _random, _entMan);
 
             var container = new AnimationContainer(key, animation, behaviour);
             _animations.Add(container);

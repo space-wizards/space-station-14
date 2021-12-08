@@ -160,8 +160,9 @@ namespace Content.Client.DoAfter.UI
                 return;
             }
 
-            if (_eyeManager.CurrentMap != IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(AttachedEntity).MapID ||
-                !IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(AttachedEntity).Coordinates.IsValid(_entityManager))
+            var transform = _entityManager.GetComponent<TransformComponent>(AttachedEntity);
+
+            if (_eyeManager.CurrentMap != transform.MapID || !transform.Coordinates.IsValid(_entityManager))
             {
                 Visible = false;
                 return;
@@ -211,7 +212,7 @@ namespace Content.Client.DoAfter.UI
                 RemoveDoAfter(id);
             }
 
-            var screenCoordinates = _eyeManager.CoordinatesToScreen(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(AttachedEntity).Coordinates);
+            var screenCoordinates = _eyeManager.CoordinatesToScreen(transform.Coordinates);
             _playerPosition = new ScreenCoordinates(screenCoordinates.Position / UIScale, screenCoordinates.Window);
             LayoutContainer.SetPosition(this, new Vector2(_playerPosition.X - Width / 2, _playerPosition.Y - Height - 30.0f));
         }

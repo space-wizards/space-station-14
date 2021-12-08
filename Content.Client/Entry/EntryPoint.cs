@@ -57,6 +57,7 @@ namespace Content.Client.Entry
         [Dependency] private readonly IEscapeMenuOwner _escapeMenuOwner = default!;
         [Dependency] private readonly IGameController _gameController = default!;
         [Dependency] private readonly IStateManager _stateManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         public override void Init()
         {
@@ -141,19 +142,21 @@ namespace Content.Client.Entry
         /// <summary>
         /// Add the character interface master which combines all character interfaces into one window
         /// </summary>
-        public static void AttachPlayerToEntity(EntityAttachedEventArgs eventArgs)
+        public void AttachPlayerToEntity(EntityAttachedEventArgs eventArgs)
         {
-            IoCManager.Resolve<IEntityManager>().AddComponent<CharacterInterfaceComponent>(eventArgs.NewEntity);
+            // TODO This is shitcode. Move this to an entity system, FOR FUCK'S SAKE
+            _entityManager.AddComponent<CharacterInterfaceComponent>(eventArgs.NewEntity);
         }
 
         /// <summary>
         /// Remove the character interface master from this entity now that we have detached ourselves from it
         /// </summary>
-        public static void DetachPlayerFromEntity(EntityDetachedEventArgs eventArgs)
+        public void DetachPlayerFromEntity(EntityDetachedEventArgs eventArgs)
         {
-            if (!((!IoCManager.Resolve<IEntityManager>().EntityExists(eventArgs.OldEntity) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(eventArgs.OldEntity).EntityLifeStage) >= EntityLifeStage.Deleted))
+            // TODO This is shitcode. Move this to an entity system, FOR FUCK'S SAKE
+            if (!_entityManager.Deleted(eventArgs.OldEntity))
             {
-                IoCManager.Resolve<IEntityManager>().RemoveComponent<CharacterInterfaceComponent>(eventArgs.OldEntity);
+                _entityManager.RemoveComponent<CharacterInterfaceComponent>(eventArgs.OldEntity);
             }
         }
 

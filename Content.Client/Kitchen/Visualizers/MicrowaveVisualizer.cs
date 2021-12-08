@@ -16,9 +16,10 @@ namespace Content.Client.Kitchen.Visualizers
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
-            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner);
+            var entMan = IoCManager.Resolve<IEntityManager>();
+            var sprite = entMan.GetComponent<ISpriteComponent>(component.Owner);
 
-            var microwaveComponent = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<MicrowaveComponent>(component.Owner);
+            var microwaveComponent = entMan.GetComponentOrNull<MicrowaveComponent>(component.Owner);
 
             if (!component.TryGetData(PowerDeviceVisuals.VisualState, out MicrowaveVisualState state))
             {

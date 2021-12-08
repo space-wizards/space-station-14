@@ -90,7 +90,7 @@ namespace Content.Client.Disposal.Visualizers
                 case VisualState.Flushing:
                     sprite.LayerSetState(DisposalUnitVisualLayers.Base, _stateAnchored);
 
-                    var animPlayer = IoCManager.Resolve<IEntityManager>().GetComponent<AnimationPlayerComponent>(appearance.Owner);
+                    var animPlayer = entities.GetComponent<AnimationPlayerComponent>(appearance.Owner);
 
                     if (!animPlayer.HasRunningAnimation(AnimationKey))
                     {

@@ -37,8 +37,8 @@ namespace Content.Client.Damage
     /// </summary>
     public class DamageVisualizer : AppearanceVisualizer
     {
-        [Dependency] IPrototypeManager _prototypeManager = default!;
-        [Dependency] IEntityManager _entityManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private const string _name = "DamageVisualizer";
         /// <summary>
@@ -195,11 +195,14 @@ namespace Content.Client.Damage
             public readonly string? Color;
         }
 
+        public DamageVisualizer()
+        {
+            IoCManager.InjectDependencies(this);
+        }
+
         public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
-
-            IoCManager.InjectDependencies(this);
 
             var damageData = _entityManager.EnsureComponent<DamageVisualizerDataComponent>(entity);
             VerifyVisualizerSetup(entity, damageData);
@@ -291,9 +294,9 @@ namespace Content.Client.Damage
 
         private void InitializeVisualizer(EntityUid entity, DamageVisualizerDataComponent damageData)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out SpriteComponent? spriteComponent)
-                || !IoCManager.Resolve<IEntityManager>().TryGetComponent<DamageableComponent?>(entity, out var damageComponent)
-                || !IoCManager.Resolve<IEntityManager>().HasComponent<AppearanceComponent>(entity))
+            if (!_entityManager.TryGetComponent(entity, out SpriteComponent? spriteComponent)
+                || !_entityManager.TryGetComponent<DamageableComponent?>(entity, out var damageComponent)
+                || !_entityManager.HasComponent<AppearanceComponent>(entity))
                 return;
 
             _thresholds.Add(FixedPoint2.Zero);
@@ -504,7 +507,7 @@ namespace Content.Client.Damage
 
         public override void OnChangeData(AppearanceComponent component)
         {
-            var entities = IoCManager.Resolve<IEntityManager>();
+            var entities = _entityManager;
             if (!entities.TryGetComponent(component.Owner, out DamageVisualizerDataComponent damageData))
                 return;
 
@@ -526,7 +529,7 @@ namespace Content.Client.Damage
 
         private void HandleDamage(AppearanceComponent component, DamageVisualizerDataComponent damageData)
         {
-            var entities = IoCManager.Resolve<IEntityManager>();
+            var entities = _entityManager;
             if (!entities.TryGetComponent(component.Owner, out SpriteComponent spriteComponent)
                 || !entities.TryGetComponent(component.Owner, out DamageableComponent damageComponent))
                 return;

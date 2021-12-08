@@ -36,9 +36,11 @@ namespace Content.Client.Body.UI
                 return;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().EntityExists(scannerState.Uid))
+            var entMan = IoCManager.Resolve<IEntityManager>();
+
+            if (!entMan.EntityExists(scannerState.Uid))
             {
-                throw new ArgumentException($"Received an invalid entity with id {scannerState.Uid} for body scanner with id {Owner.Owner} at {IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner.Owner).MapPosition}");
+                throw new ArgumentException($"Received an invalid entity with id {scannerState.Uid} for body scanner with id {Owner.Owner} at {entMan.GetComponent<TransformComponent>(Owner.Owner).MapPosition}");
             }
 
             _display?.UpdateDisplay(_entity);

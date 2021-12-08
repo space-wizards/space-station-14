@@ -12,6 +12,8 @@ namespace Content.Client.Lathe.Visualizers
     [UsedImplicitly]
     public class AutolatheVisualizer : AppearanceVisualizer
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         private const string AnimationKey = "inserting_animation";
 
         private Animation _buildingAnimation;
@@ -23,6 +25,7 @@ namespace Content.Client.Lathe.Visualizers
 
         public AutolatheVisualizer()
         {
+            IoCManager.InjectDependencies(this);
             _buildingAnimation = PopulateAnimation("building", "building_unlit", 0.5f);
             _insertingMetalAnimation = PopulateAnimation("inserting_metal", "inserting_unlit", 0.5f);
             _insertingGlassAnimation = PopulateAnimation("inserting_glass", "inserting_unlit", 0.5f);
@@ -50,9 +53,9 @@ namespace Content.Client.Lathe.Visualizers
 
         public override void InitializeEntity(EntityUid entity)
         {
-            if (!IoCManager.Resolve<IEntityManager>().HasComponent<AnimationPlayerComponent>(entity))
+            if (!_entMan.HasComponent<AnimationPlayerComponent>(entity))
             {
-                IoCManager.Resolve<IEntityManager>().AddComponent<AnimationPlayerComponent>(entity);
+                _entMan.AddComponent<AnimationPlayerComponent>(entity);
             }
         }
 
@@ -60,8 +63,8 @@ namespace Content.Client.Lathe.Visualizers
         {
             base.OnChangeData(component);
 
-            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner);
-            var animPlayer = IoCManager.Resolve<IEntityManager>().GetComponent<AnimationPlayerComponent>(component.Owner);
+            var sprite = _entMan.GetComponent<ISpriteComponent>(component.Owner);
+            var animPlayer = _entMan.GetComponent<AnimationPlayerComponent>(component.Owner);
             if (!component.TryGetData(PowerDeviceVisuals.VisualState, out LatheVisualState state))
             {
                 state = LatheVisualState.Idle;

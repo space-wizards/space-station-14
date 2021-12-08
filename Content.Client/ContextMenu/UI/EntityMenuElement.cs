@@ -10,6 +10,8 @@ namespace Content.Client.ContextMenu.UI
     {
         public const string StyleClassEntityMenuCountText = "contextMenuCount";
 
+        [Dependency] private IEntityManager _entityManager = default!;
+
         /// <summary>
         ///     The entity that can be accessed by interacting with this element.
         /// </summary>
@@ -28,6 +30,8 @@ namespace Content.Client.ContextMenu.UI
 
         public EntityMenuElement(EntityUid entity = default)
         {
+            IoCManager.InjectDependencies(this);
+
             CountLabel = new Label { StyleClasses = { StyleClassEntityMenuCountText } };
             Icon.AddChild(new LayoutContainer() { Children = { EntityIcon, CountLabel } });
 
@@ -57,7 +61,7 @@ namespace Content.Client.ContextMenu.UI
         /// </summary>
         public void UpdateEntity(EntityUid entity = default)
         {
-            if (Entity != default && IoCManager.Resolve<IEntityManager>().EntityExists(Entity) && !entity.Valid)
+            if (Entity != default && _entityManager.EntityExists(Entity) && !entity.Valid)
                 entity = Entity;
 
             if (entity == default)
@@ -66,12 +70,12 @@ namespace Content.Client.ContextMenu.UI
                 return;
             }
 
-            EntityIcon.Sprite = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<ISpriteComponent>(entity);
+            EntityIcon.Sprite = _entityManager.GetComponentOrNull<ISpriteComponent>(entity);
 
             if (UserInterfaceManager.DebugMonitors.Visible)
-                Text = $"{IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity!).EntityName} ({entity})";
+                Text = $"{_entityManager.GetComponent<MetaDataComponent>(entity!).EntityName} ({entity})";
             else
-                Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity!).EntityName;
+                Text = _entityManager.GetComponent<MetaDataComponent>(entity!).EntityName;
         }
     }
 }

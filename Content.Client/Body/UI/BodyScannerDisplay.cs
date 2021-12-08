@@ -146,10 +146,11 @@ namespace Content.Client.Body.UI
 
         private void UpdateBodyPartBox(SharedBodyPartComponent part, string slotName)
         {
-            BodyPartLabel.Text = $"{Loc.GetString(slotName)}: {Loc.GetString(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(part.Owner).EntityName)}";
+            var entMan = IoCManager.Resolve<IEntityManager>();
+            BodyPartLabel.Text = $"{Loc.GetString(slotName)}: {Loc.GetString(entMan.GetComponent<MetaDataComponent>(part.Owner).EntityName)}";
 
             // TODO BODY Part damage
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(part.Owner, out DamageableComponent? damageable))
+            if (entMan.TryGetComponent(part.Owner, out DamageableComponent? damageable))
             {
                 BodyPartHealth.Text = Loc.GetString("body-scanner-display-body-part-damage-text",("damage", damageable.TotalDamage));
             }

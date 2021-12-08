@@ -14,6 +14,8 @@ namespace Content.Client.Doors
     [UsedImplicitly]
     public class AirlockVisualizer : AppearanceVisualizer, ISerializationHooks
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         private const string AnimationKey = "airlock_animation";
 
         [DataField("animationTime")]
@@ -45,6 +47,11 @@ namespace Content.Client.Doors
         private Animation CloseAnimation = default!;
         private Animation OpenAnimation = default!;
         private Animation DenyAnimation = default!;
+
+        public AirlockVisualizer()
+        {
+            IoCManager.InjectDependencies(this);
+        }
 
         void ISerializationHooks.AfterDeserialization()
         {
@@ -110,9 +117,9 @@ namespace Content.Client.Doors
 
         public override void InitializeEntity(EntityUid entity)
         {
-            if (!IoCManager.Resolve<IEntityManager>().HasComponent<AnimationPlayerComponent>(entity))
+            if (!_entMan.HasComponent<AnimationPlayerComponent>(entity))
             {
-                IoCManager.Resolve<IEntityManager>().AddComponent<AnimationPlayerComponent>(entity);
+                _entMan.AddComponent<AnimationPlayerComponent>(entity);
             }
         }
 
@@ -120,8 +127,8 @@ namespace Content.Client.Doors
         {
             base.OnChangeData(component);
 
-            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner);
-            var animPlayer = IoCManager.Resolve<IEntityManager>().GetComponent<AnimationPlayerComponent>(component.Owner);
+            var sprite = _entMan.GetComponent<ISpriteComponent>(component.Owner);
+            var animPlayer = _entMan.GetComponent<AnimationPlayerComponent>(component.Owner);
             if (!component.TryGetData(DoorVisuals.VisualState, out DoorVisualState state))
             {
                 state = DoorVisualState.Closed;

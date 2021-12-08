@@ -40,7 +40,7 @@ namespace Content.Client.Disposal.Systems
         {
             if (component.Deleted) return true;
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner, out ClientUserInterfaceComponent? userInterface)) return true;
+            if (!EntityManager.TryGetComponent(component.Owner, out ClientUserInterfaceComponent? userInterface)) return true;
 
             var state = component.UiState;
             if (state == null) return true;

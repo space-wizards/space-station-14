@@ -85,7 +85,7 @@ namespace Content.Client.ContextMenu.UI
 
             var entitySpriteStates = GroupEntities(entities);
             var orderedStates = entitySpriteStates.ToList();
-            orderedStates.Sort((x, y) => string.CompareOrdinal(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(x.First()).EntityPrototype?.Name, IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(y.First()).EntityPrototype?.Name));
+            orderedStates.Sort((x, y) => string.CompareOrdinal(_entityManager.GetComponent<MetaDataComponent>(x.First()).EntityPrototype?.Name, _entityManager.GetComponent<MetaDataComponent>(y.First()).EntityPrototype?.Name));
             Elements.Clear();
             AddToUI(orderedStates);
 
@@ -139,7 +139,7 @@ namespace Content.Client.ContextMenu.UI
                 var funcId = _inputManager.NetworkBindMap.KeyFunctionID(func);
 
                 var message = new FullInputCmdMessage(_gameTiming.CurTick, _gameTiming.TickFraction, funcId,
-                    BoundKeyState.Down, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).Coordinates, args.PointerLocation, entity);
+                    BoundKeyState.Down, _entityManager.GetComponent<TransformComponent>(entity).Coordinates, args.PointerLocation, entity);
 
                 var session = _playerManager.LocalPlayer?.Session;
                 if (session != null)
@@ -187,7 +187,7 @@ namespace Content.Client.ContextMenu.UI
 
             foreach (var entity in Elements.Keys.ToList())
             {
-                if ((!IoCManager.Resolve<IEntityManager>().EntityExists(entity) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityLifeStage) >= EntityLifeStage.Deleted || !ignoreFov && !_examineSystem.CanExamine(player, entity))
+                if ((!_entityManager.EntityExists(entity) ? EntityLifeStage.Deleted : _entityManager.GetComponent<MetaDataComponent>(entity).EntityLifeStage) >= EntityLifeStage.Deleted || !ignoreFov && !_examineSystem.CanExamine(player, entity))
                     RemoveEntity(entity);
             }
         }
@@ -253,7 +253,7 @@ namespace Content.Client.ContextMenu.UI
             // find the element associated with this entity
             if (!Elements.TryGetValue(entity, out var element))
             {
-                Logger.Error($"Attempted to remove unknown entity from the entity menu: {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityName} ({entity})");
+                Logger.Error($"Attempted to remove unknown entity from the entity menu: {_entityManager.GetComponent<MetaDataComponent>(entity).EntityName} ({entity})");
                 return;
             }
 
@@ -338,7 +338,7 @@ namespace Content.Client.ContextMenu.UI
 
                 if (entityElement.Entity != default)
                 {
-                    if (!((!IoCManager.Resolve<IEntityManager>().EntityExists(entityElement.Entity) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entityElement.Entity).EntityLifeStage) >= EntityLifeStage.Deleted))
+                    if (!((!_entityManager.EntityExists(entityElement.Entity) ? EntityLifeStage.Deleted : _entityManager.GetComponent<MetaDataComponent>(entityElement.Entity).EntityLifeStage) >= EntityLifeStage.Deleted))
                         return entityElement.Entity;
                     continue;
                 }

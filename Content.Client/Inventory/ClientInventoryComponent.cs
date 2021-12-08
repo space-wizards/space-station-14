@@ -22,6 +22,8 @@ namespace Content.Client.Inventory
     [ComponentReference(typeof(SharedInventoryComponent))]
     public class ClientInventoryComponent : SharedInventoryComponent
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         private readonly Dictionary<Slots, EntityUid> _slots = new();
 
         public IReadOnlyDictionary<Slots, EntityUid> AllSlots => _slots;
@@ -92,7 +94,7 @@ namespace Content.Client.Inventory
 
             foreach (var (slot, entity) in state.Entities)
             {
-                if (!IoCManager.Resolve<IEntityManager>().EntityExists(entity))
+                if (!_entMan.EntityExists(entity))
                 {
                     continue;
                 }
@@ -136,7 +138,7 @@ namespace Content.Client.Inventory
                 return;
             }
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out ClothingComponent? clothing))
+            if (_entMan.TryGetComponent(entity, out ClothingComponent? clothing))
             {
                 var flag = SlotMasks[slot];
                 var data = clothing.GetEquippedStateInfo(flag, SpeciesId);

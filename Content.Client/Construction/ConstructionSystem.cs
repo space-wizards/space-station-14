@@ -144,7 +144,7 @@ namespace Content.Client.Construction
             if (!args.EntityUid.IsValid() || !args.EntityUid.IsClientSide())
                 return false;
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ConstructionGhostComponent?>(args.EntityUid, out var ghostComp))
+            if (!EntityManager.TryGetComponent<ConstructionGhostComponent?>(args.EntityUid, out var ghostComp))
                 return false;
 
             TryStartConstruction(ghostComp.GhostId);
@@ -172,12 +172,12 @@ namespace Content.Client.Construction
             }
 
             var ghost = EntityManager.SpawnEntity("constructionghost", loc);
-            var comp = IoCManager.Resolve<IEntityManager>().GetComponent<ConstructionGhostComponent>(ghost);
+            var comp = EntityManager.GetComponent<ConstructionGhostComponent>(ghost);
             comp.Prototype = prototype;
             comp.GhostId = _nextId++;
-            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(ghost).LocalRotation = dir.ToAngle();
+            EntityManager.GetComponent<TransformComponent>(ghost).LocalRotation = dir.ToAngle();
             _ghosts.Add(comp.GhostId, comp);
-            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(ghost);
+            var sprite = EntityManager.GetComponent<SpriteComponent>(ghost);
             sprite.Color = new Color(48, 255, 48, 128);
             sprite.AddBlankLayer(0); // There is no way to actually check if this already exists, so we blindly insert a new one
             sprite.LayerSetSprite(0, prototype.Icon);
@@ -192,7 +192,7 @@ namespace Content.Client.Construction
         {
             foreach (var ghost in _ghosts)
             {
-                if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(ghost.Value.Owner).Coordinates.Equals(loc)) return true;
+                if (EntityManager.GetComponent<TransformComponent>(ghost.Value.Owner).Coordinates.Equals(loc)) return true;
             }
 
             return false;
@@ -207,7 +207,7 @@ namespace Content.Client.Construction
                 throw new ArgumentException($"Can't start construction for a ghost with no prototype. Ghost id: {ghostId}");
             }
 
-            var transform = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(ghost.Owner);
+            var transform = EntityManager.GetComponent<TransformComponent>(ghost.Owner);
             var msg = new TryStartStructureConstructionMessage(transform.Coordinates, ghost.Prototype.ID, transform.LocalRotation, ghostId);
             RaiseNetworkEvent(msg);
         }
@@ -227,7 +227,7 @@ namespace Content.Client.Construction
         {
             if (_ghosts.TryGetValue(ghostId, out var ghost))
             {
-                IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(ghost.Owner);
+                EntityManager.QueueDeleteEntity(ghost.Owner);
                 _ghosts.Remove(ghostId);
             }
         }
@@ -239,7 +239,7 @@ namespace Content.Client.Construction
         {
             foreach (var (_, ghost) in _ghosts)
             {
-                IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(ghost.Owner);
+                EntityManager.QueueDeleteEntity(ghost.Owner);
             }
 
             _ghosts.Clear();

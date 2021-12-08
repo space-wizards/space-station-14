@@ -21,25 +21,25 @@ namespace Content.Client.ContextMenu.UI
         {
             if (GroupingContextMenuType == 0)
             {
-                var newEntities = entities.GroupBy(e => IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(e).EntityName + (IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(e).EntityPrototype?.ID ?? string.Empty)).ToList();
+                var newEntities = entities.GroupBy(e => _entityManager.GetComponent<MetaDataComponent>(e).EntityName + (_entityManager.GetComponent<MetaDataComponent>(e).EntityPrototype?.ID ?? string.Empty)).ToList();
                 return newEntities.Select(grp => grp.ToList()).ToList();
             }
             else
             {
-                var newEntities = entities.GroupBy(e => e, new PrototypeAndStatesContextMenuComparer(depth)).ToList();
+                var newEntities = entities.GroupBy(e => e, new PrototypeAndStatesContextMenuComparer(depth, _entityManager)).ToList();
                 return newEntities.Select(grp => grp.ToList()).ToList();
             }
         }
 
         private sealed class PrototypeAndStatesContextMenuComparer : IEqualityComparer<EntityUid>
         {
-            private static readonly List<Func<EntityUid, EntityUid, bool>> EqualsList = new()
+            private static readonly List<Func<EntityUid, EntityUid, IEntityManager, bool>> EqualsList = new()
             {
-                (a, b) => IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(a).EntityPrototype!.ID == IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(b).EntityPrototype!.ID,
-                (a, b) =>
+                (a, b, entMan) => entMan.GetComponent<MetaDataComponent>(a).EntityPrototype!.ID == entMan.GetComponent<MetaDataComponent>(b).EntityPrototype!.ID,
+                (a, b, entMan) =>
                 {
-                    IoCManager.Resolve<IEntityManager>().TryGetComponent<ISpriteComponent?>(a, out var spriteA);
-                    IoCManager.Resolve<IEntityManager>().TryGetComponent<ISpriteComponent?>(b, out var spriteB);
+                    entMan.TryGetComponent<ISpriteComponent?>(a, out var spriteA);
+                    entMan.TryGetComponent<ISpriteComponent?>(b, out var spriteB);
 
                     if (spriteA == null || spriteB == null)
                         return spriteA == spriteB;
@@ -50,13 +50,13 @@ namespace Content.Client.ContextMenu.UI
                     return xStates.OrderBy(t => t).SequenceEqual(yStates.OrderBy(t => t));
                 },
             };
-            private static readonly List<Func<EntityUid, int>> GetHashCodeList = new()
+            private static readonly List<Func<EntityUid, IEntityManager, int>> GetHashCodeList = new()
             {
-                e => EqualityComparer<string>.Default.GetHashCode(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(e).EntityPrototype!.ID),
-                e =>
+                (e, entMan) => EqualityComparer<string>.Default.GetHashCode(entMan.GetComponent<MetaDataComponent>(e).EntityPrototype!.ID),
+                (e, entMan) =>
                 {
                     var hash = 0;
-                    foreach (var element in IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(e).AllLayers.Where(obj => obj.Visible).Select(s => s.RsiState.Name))
+                    foreach (var element in entMan.GetComponent<ISpriteComponent>(e).AllLayers.Where(obj => obj.Visible).Select(s => s.RsiState.Name))
                     {
                         hash ^= EqualityComparer<string>.Default.GetHashCode(element!);
                     }
@@ -67,9 +67,13 @@ namespace Content.Client.ContextMenu.UI
             private static int Count => EqualsList.Count - 1;
 
             private readonly int _depth;
-            public PrototypeAndStatesContextMenuComparer(int step = 0)
+            private readonly IEntityManager _entMan;
+            public PrototypeAndStatesContextMenuComparer(int step = 0, IEntityManager? entMan = null)
             {
+                IoCManager.Resolve(ref entMan);
+
                 _depth = step > Count ? Count : step;
+                _entMan = entMan;
             }
 
             public bool Equals(EntityUid x, EntityUid y)
@@ -79,12 +83,12 @@ namespace Content.Client.ContextMenu.UI
                     return y == default;
                 }
 
-                return y != default && EqualsList[_depth](x, y);
+                return y != default && EqualsList[_depth](x, y, _entMan);
             }
 
             public int GetHashCode(EntityUid e)
             {
-                return GetHashCodeList[_depth](e);
+                return GetHashCodeList[_depth](e, _entMan);
             }
         }
     }

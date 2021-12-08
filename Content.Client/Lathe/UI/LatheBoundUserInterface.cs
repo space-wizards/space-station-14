@@ -13,6 +13,7 @@ namespace Content.Client.Lathe.UI
 {
     public class LatheBoundUserInterface : BoundUserInterface
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         [ViewVariables]
@@ -37,9 +38,9 @@ namespace Content.Client.Lathe.UI
         {
             base.Open();
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Owner, out MaterialStorageComponent? storage)
-            ||  !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Owner, out SharedLatheComponent? lathe)
-            ||  !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Owner, out SharedLatheDatabaseComponent? database)) return;
+            if (!_entMan.TryGetComponent(Owner.Owner, out MaterialStorageComponent? storage)
+            ||  !_entMan.TryGetComponent(Owner.Owner, out SharedLatheComponent? lathe)
+            ||  !_entMan.TryGetComponent(Owner.Owner, out SharedLatheDatabaseComponent? database)) return;
 
             Storage = storage;
             Lathe = lathe;

@@ -50,12 +50,12 @@ namespace Content.Client.Commands
             EntitySystem.Get<SubFloorHideSystem>()
                 .ShowAll = true;
 
-            var components = IoCManager.Resolve<IEntityManager>()
-                .EntityQuery<SubFloorHideComponent>(true);
+            var entMan = IoCManager.Resolve<IEntityManager>();
+            var components = entMan.EntityQuery<SubFloorHideComponent>(true);
 
             foreach (var component in components)
             {
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner, out ISpriteComponent? sprite))
+                if (entMan.TryGetComponent(component.Owner, out ISpriteComponent? sprite))
                 {
                     sprite.DrawDepth = (int) DrawDepth.Overlays;
                 }

@@ -22,6 +22,7 @@ namespace Content.Client.Lobby.UI
 {
     public class LobbyCharacterPreviewPanel : Control
     {
+        private readonly IEntityManager _entMan;
         private readonly IClientPreferencesManager _preferencesManager;
         private EntityUid _previewDummy;
         private readonly Label _summaryLabel;
@@ -31,6 +32,7 @@ namespace Content.Client.Lobby.UI
         public LobbyCharacterPreviewPanel(IEntityManager entityManager,
             IClientPreferencesManager preferencesManager)
         {
+            _entMan = entityManager;
             _preferencesManager = preferencesManager;
             _previewDummy = entityManager.SpawnEntity("MobHumanDummy", MapCoordinates.Nullspace);
 
@@ -98,15 +100,15 @@ namespace Content.Client.Lobby.UI
             _preferencesManager.OnServerDataLoaded -= UpdateUI;
 
             if (!disposing) return;
-            IoCManager.Resolve<IEntityManager>().DeleteEntity(_previewDummy);
+            _entMan.DeleteEntity(_previewDummy);
             _previewDummy = default;
         }
 
-        private static SpriteView MakeSpriteView(EntityUid entity, Direction direction)
+        private SpriteView MakeSpriteView(EntityUid entity, Direction direction)
         {
             return new()
             {
-                Sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(entity),
+                Sprite = _entMan.GetComponent<ISpriteComponent>(entity),
                 OverrideDirection = direction,
                 Scale = (2, 2)
             };
@@ -136,11 +138,11 @@ namespace Content.Client.Lobby.UI
             }
         }
 
-        public static void GiveDummyJobClothes(EntityUid dummy, HumanoidCharacterProfile profile)
+        public void GiveDummyJobClothes(EntityUid dummy, HumanoidCharacterProfile profile)
         {
             var protoMan = IoCManager.Resolve<IPrototypeManager>();
 
-            var inventory = IoCManager.Resolve<IEntityManager>().GetComponent<ClientInventoryComponent>(dummy);
+            var inventory = _entMan.GetComponent<ClientInventoryComponent>(dummy);
 
             var highPriorityJob = profile.JobPriorities.FirstOrDefault(p => p.Value == JobPriority.High).Key;
 
@@ -151,7 +153,7 @@ namespace Content.Client.Lobby.UI
 
             if (job.StartingGear != null)
             {
-                var entityMan = IoCManager.Resolve<IEntityManager>();
+                var entityMan = _entMan;
                 var gear = protoMan.Index<StartingGearPrototype>(job.StartingGear);
 
                 foreach (var slot in AllSlots)
@@ -161,7 +163,7 @@ namespace Content.Client.Lobby.UI
                     {
                         var item = entityMan.SpawnEntity(itemType, MapCoordinates.Nullspace);
                         inventory.SetSlotVisuals(slot, item);
-                        IoCManager.Resolve<IEntityManager>().DeleteEntity(item);
+                        _entMan.DeleteEntity(item);
                     }
                 }
             }

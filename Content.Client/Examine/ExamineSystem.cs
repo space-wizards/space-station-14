@@ -135,14 +135,14 @@ namespace Content.Client.Examine
             };
             vBox.AddChild(hBox);
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out ISpriteComponent? sprite))
+            if (EntityManager.TryGetComponent(entity, out ISpriteComponent? sprite))
             {
                 hBox.AddChild(new SpriteView { Sprite = sprite, OverrideDirection = Direction.South });
             }
 
             hBox.AddChild(new Label
             {
-                Text = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(entity).EntityName,
+                Text = EntityManager.GetComponent<MetaDataComponent>(entity).EntityName,
                 HorizontalExpand = true,
             });
 
