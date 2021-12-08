@@ -64,7 +64,7 @@
   - type: StorageFill
     contents:
       - id: Zipties
-        amount: 8
+        amount: 10
   - type: Sprite
     layers:
       - state: box_security
