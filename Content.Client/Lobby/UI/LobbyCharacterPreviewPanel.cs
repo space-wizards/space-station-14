@@ -138,11 +138,12 @@ namespace Content.Client.Lobby.UI
             }
         }
 
-        public void GiveDummyJobClothes(EntityUid dummy, HumanoidCharacterProfile profile)
+        public static void GiveDummyJobClothes(EntityUid dummy, HumanoidCharacterProfile profile)
         {
             var protoMan = IoCManager.Resolve<IPrototypeManager>();
 
-            var inventory = _entMan.GetComponent<ClientInventoryComponent>(dummy);
+            var entMan = IoCManager.Resolve<IEntityManager>();
+            var inventory = entMan.GetComponent<ClientInventoryComponent>(dummy);
 
             var highPriorityJob = profile.JobPriorities.FirstOrDefault(p => p.Value == JobPriority.High).Key;
 
@@ -153,7 +154,6 @@ namespace Content.Client.Lobby.UI
 
             if (job.StartingGear != null)
             {
-                var entityMan = _entMan;
                 var gear = protoMan.Index<StartingGearPrototype>(job.StartingGear);
 
                 foreach (var slot in AllSlots)
@@ -161,9 +161,9 @@ namespace Content.Client.Lobby.UI
                     var itemType = gear.GetGear(slot, profile);
                     if (itemType != string.Empty)
                     {
-                        var item = entityMan.SpawnEntity(itemType, MapCoordinates.Nullspace);
+                        var item = entMan.SpawnEntity(itemType, MapCoordinates.Nullspace);
                         inventory.SetSlotVisuals(slot, item);
-                        _entMan.DeleteEntity(item);
+                        entMan.DeleteEntity(item);
                     }
                 }
             }
