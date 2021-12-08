@@ -28,7 +28,7 @@ namespace Content.Client.Atmos.Overlays
             var drawHandle = args.WorldHandle;
 
             var mapId = args.Viewport.Eye!.Position.MapId;
-            var worldBounds = args.WorldAABB;
+            var worldBounds = args.WorldBounds;
 
             foreach (var mapGrid in _mapManager.FindGridsIntersecting(mapId, worldBounds))
             {

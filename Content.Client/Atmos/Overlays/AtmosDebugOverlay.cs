@@ -30,7 +30,7 @@ namespace Content.Client.Atmos.Overlays
             var drawHandle = args.WorldHandle;
 
             var mapId = args.Viewport.Eye!.Position.MapId;
-            var worldBounds = args.WorldAABB;
+            var worldBounds = args.WorldBounds;
 
             // IF YOU ARE ABOUT TO INTRODUCE CHUNKING OR SOME OTHER OPTIMIZATION INTO THIS CODE:
             //  -- THINK! --
