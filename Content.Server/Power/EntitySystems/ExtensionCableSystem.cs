@@ -172,7 +172,7 @@ namespace Content.Server.Power.EntitySystems
             RaiseLocalEvent(provider.Owner, new ReceiverConnectedEvent(receiver), broadcast: false);
         }
 
-        private static bool TryFindAvailableProvider(EntityUid owner, float range, [NotNullWhen(true)] out ExtensionCableProviderComponent? foundProvider)
+        private bool TryFindAvailableProvider(EntityUid owner, float range, [NotNullWhen(true)] out ExtensionCableProviderComponent? foundProvider)
         {
             var nearbyEntities = IoCManager.Resolve<IEntityLookup>()
                 .GetEntitiesInRange(owner, range);

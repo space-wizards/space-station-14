@@ -317,7 +317,7 @@ namespace Content.Server.Power.EntitySystems
             _powerState.Networks.Allocate(out network.Id) = network;
         }
 
-        private static void DoReconnectApcNet(ApcNet net)
+        private void DoReconnectApcNet(ApcNet net)
         {
             var netNode = net.NetworkNode;
 
@@ -349,7 +349,7 @@ namespace Content.Server.Power.EntitySystems
             }
         }
 
-        private static void DoReconnectPowerNet(PowerNet net)
+        private void DoReconnectPowerNet(PowerNet net)
         {
             var netNode = net.NetworkNode;
 

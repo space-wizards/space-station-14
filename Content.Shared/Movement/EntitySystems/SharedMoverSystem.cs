@@ -82,10 +82,12 @@ namespace Content.Shared.Movement.EntitySystems
 
             var ent = session?.AttachedEntity;
 
-            if (ent == null || !EntityManager.EntityExists(ent.Value))
+            var entMan = IoCManager.Resolve<IEntityManager>();
+
+            if (ent == null || !entMan.EntityExists(ent.Value))
                 return false;
 
-            if (!EntityManager.TryGetComponent(ent.Value, out T? comp))
+            if (!entMan.TryGetComponent(ent.Value, out T? comp))
                 return false;
 
             component = comp;

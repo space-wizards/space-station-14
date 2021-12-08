@@ -114,7 +114,7 @@ namespace Content.Server.Storage.EntitySystems
             args.Verbs.Add(verb);
         }
 
-        private static void HandleEntityRemovedFromContainer(EntRemovedFromContainerMessage message)
+        private void HandleEntityRemovedFromContainer(EntRemovedFromContainerMessage message)
         {
             var oldParentEntity = message.Container.Owner;
 
@@ -124,7 +124,7 @@ namespace Content.Server.Storage.EntitySystems
             }
         }
 
-        private static void HandleEntityInsertedIntoContainer(EntInsertedIntoContainerMessage message)
+        private void HandleEntityInsertedIntoContainer(EntInsertedIntoContainerMessage message)
         {
             var oldParentEntity = message.Container.Owner;
 
