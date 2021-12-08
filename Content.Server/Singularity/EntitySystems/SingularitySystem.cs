@@ -66,8 +66,7 @@ namespace Content.Server.Singularity.EntitySystems
 
             var otherUid = args.OtherFixture.Body.OwnerUid;
 
-            if (!CanDestroy(component, otherUid)) return;
-
+            // HandleDestroy will also check CanDestroy for us
             HandleDestroy(component, otherUid);
         }
 
