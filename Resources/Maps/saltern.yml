@@ -6963,7 +6963,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 656
-  type: AirlockShuttle
+  type: AirlockExternalShuttleLocked
   components:
   - rot: -1.5707963267948966 rad
     pos: -41.5,8.5
@@ -7014,7 +7014,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 661
-  type: AirlockShuttle
+  type: AirlockExternalShuttleLocked
   components:
   - rot: -1.5707963267948966 rad
     pos: -41.5,4.5
