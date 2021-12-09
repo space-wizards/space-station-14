@@ -1,3 +1,4 @@
+#nullable enable annotations
 using System.Threading.Tasks;
 using Content.Server.Hands.Components;
 using Content.Server.Interaction;
@@ -407,9 +408,9 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
         [Reflect(false)]
         private class TestInteractionSystem : EntitySystem
         {
-            public ComponentEventHandler<HandsComponent, ClickAttackEvent> AttackEvent;
-            public EntityEventHandler<InteractUsingEvent> InteractUsingEvent;
-            public EntityEventHandler<InteractHandEvent> InteractHandEvent;
+            public ComponentEventHandler<HandsComponent, ClickAttackEvent>? AttackEvent;
+            public EntityEventHandler<InteractUsingEvent>? InteractUsingEvent;
+            public EntityEventHandler<InteractHandEvent>? InteractHandEvent;
 
             public override void Initialize()
             {

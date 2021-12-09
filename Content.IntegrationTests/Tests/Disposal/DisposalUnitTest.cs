@@ -1,3 +1,4 @@
+#nullable enable annotations
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Disposal.Tube.Components;
@@ -151,7 +152,7 @@ namespace Content.IntegrationTests.Tests.Disposal
                 Assert.True(entityManager.HasComponent<DisposalEntryComponent>(disposalTrunk));
 
                 // Can't insert, unanchored and unpowered
-                entityManager.GetComponent<TransformComponent>(unit.Owner).Anchored = false;
+                entityManager.GetComponent<TransformComponent>(unit!.Owner).Anchored = false;
                 UnitInsertContains(unit, false, human, wrench, disposalUnit, disposalTrunk);
             });
 
