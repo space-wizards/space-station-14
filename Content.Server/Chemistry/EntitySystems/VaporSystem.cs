@@ -36,7 +36,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
             foreach (var (_, value) in contents.Solutions)
             {
-                value.DoEntityReaction(args.OtherFixture.Body.Owner.Uid, ReactionMethod.Touch);
+                value.DoEntityReaction(args.OtherFixture.Body.Owner, ReactionMethod.Touch);
             }
 
             // Check for collision with a impassable object (e.g. wall) and stop
@@ -52,7 +52,7 @@ namespace Content.Server.Chemistry.EntitySystems
             vapor.Target = target;
             vapor.AliveTime = aliveTime;
             // Set Move
-            if (vapor.Owner.TryGetComponent(out PhysicsComponent? physics))
+            if (EntityManager.TryGetComponent(vapor.Owner, out PhysicsComponent? physics))
             {
                 physics.BodyStatus = BodyStatus.InAir;
                 physics.ApplyLinearImpulse(dir * speed);
@@ -66,13 +66,13 @@ namespace Content.Server.Chemistry.EntitySystems
                 return false;
             }
 
-            if (!_solutionContainerSystem.TryGetSolution(vapor.Owner.Uid, SharedVaporComponent.SolutionName,
+            if (!_solutionContainerSystem.TryGetSolution(vapor.Owner, SharedVaporComponent.SolutionName,
                 out var vaporSolution))
             {
                 return false;
             }
 
-            return _solutionContainerSystem.TryAddSolution(vapor.Owner.Uid, vaporSolution, solution);
+            return _solutionContainerSystem.TryAddSolution(vapor.Owner, vaporSolution, solution);
         }
 
         public override void Update(float frameTime)
@@ -97,24 +97,24 @@ namespace Content.Server.Chemistry.EntitySystems
             vapor.Timer += frameTime;
             vapor.ReactTimer += frameTime;
 
-            if (vapor.ReactTimer >= ReactTime && vapor.Owner.Transform.GridID.IsValid())
+            if (vapor.ReactTimer >= ReactTime && EntityManager.GetComponent<TransformComponent>(vapor.Owner).GridID.IsValid())
             {
                 vapor.ReactTimer = 0;
-                var mapGrid = _mapManager.GetGrid(entity.Transform.GridID);
+                var mapGrid = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(entity).GridID);
 
-                var tile = mapGrid.GetTileRef(entity.Transform.Coordinates.ToVector2i(EntityManager, _mapManager));
+                var tile = mapGrid.GetTileRef(EntityManager.GetComponent<TransformComponent>(entity).Coordinates.ToVector2i(EntityManager, _mapManager));
                 foreach (var reagentQuantity in contents.Contents.ToArray())
                 {
                     if (reagentQuantity.Quantity == FixedPoint2.Zero) continue;
                     var reagent = _protoManager.Index<ReagentPrototype>(reagentQuantity.ReagentId);
-                    _solutionContainerSystem.TryRemoveReagent(vapor.Owner.Uid, contents, reagentQuantity.ReagentId,
+                    _solutionContainerSystem.TryRemoveReagent(vapor.Owner, contents, reagentQuantity.ReagentId,
                         reagent.ReactionTile(tile, (reagentQuantity.Quantity / vapor.TransferAmount) * 0.25f));
                 }
             }
 
             // Check if we've reached our target.
             if (!vapor.Reached &&
-                vapor.Target.TryDistance(EntityManager, entity.Transform.Coordinates, out var distance) &&
+                vapor.Target.TryDistance(EntityManager, EntityManager.GetComponent<TransformComponent>(entity).Coordinates, out var distance) &&
                 distance <= 0.5f)
             {
                 vapor.Reached = true;
@@ -123,7 +123,7 @@ namespace Content.Server.Chemistry.EntitySystems
             if (contents.CurrentVolume == 0 || vapor.Timer > vapor.AliveTime)
             {
                 // Delete this
-                entity.QueueDelete();
+                EntityManager.QueueDeleteEntity(entity);
             }
         }
     }

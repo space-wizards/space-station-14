@@ -67,9 +67,9 @@ namespace Content.Server.BarSign.Systems
                 return;
             }
 
-            if (component.Owner.TryGetComponent(out SpriteComponent? sprite))
+            if (EntityManager.TryGetComponent(component.Owner, out SpriteComponent? sprite))
             {
-                if (!component.Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || !receiver.Powered)
+                if (!EntityManager.TryGetComponent(component.Owner, out ApcPowerReceiverComponent? receiver) || !receiver.Powered)
                 {
                     sprite.LayerSetState(0, "empty");
                     sprite.LayerSetShader(0, "shaded");
@@ -83,14 +83,15 @@ namespace Content.Server.BarSign.Systems
 
             if (!string.IsNullOrEmpty(prototype.Name))
             {
-                component.Owner.Name = prototype.Name;
+                EntityManager.GetComponent<MetaDataComponent>(component.Owner).EntityName = prototype.Name;
             }
             else
             {
-                component.Owner.Name = Loc.GetString("barsign-component-name");
+                string val = Loc.GetString("barsign-component-name");
+                EntityManager.GetComponent<MetaDataComponent>(component.Owner).EntityName = val;
             }
 
-            component.Owner.Description = prototype.Description;
+            EntityManager.GetComponent<MetaDataComponent>(component.Owner).EntityDescription = prototype.Description;
         }
     }
 }

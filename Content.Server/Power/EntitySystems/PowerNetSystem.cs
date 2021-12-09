@@ -6,6 +6,7 @@ using Content.Server.Power.NodeGroups;
 using Content.Server.Power.Pow3r;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 
 namespace Content.Server.Power.EntitySystems
@@ -269,7 +270,7 @@ namespace Content.Server.Power.EntitySystems
                     {
                         lastRecv = newRecv;
                         var msg = new PowerConsumerReceivedChanged(newRecv, consumer.DrawRate);
-                        RaiseLocalEvent(consumer.Owner.Uid, msg);
+                        RaiseLocalEvent(consumer.Owner, msg);
                     }
                 }
 
@@ -284,11 +285,11 @@ namespace Content.Server.Power.EntitySystems
 
                     if (lastPowerSupply == 0f && currentSupply != 0f)
                     {
-                        RaiseLocalEvent(powerNetBattery.Owner.Uid, new PowerNetBatterySupplyEvent {Supply = true});
+                        RaiseLocalEvent(powerNetBattery.Owner, new PowerNetBatterySupplyEvent {Supply = true});
                     }
                     else if (lastPowerSupply > 0f && currentSupply == 0f)
                     {
-                        RaiseLocalEvent(powerNetBattery.Owner.Uid, new PowerNetBatterySupplyEvent {Supply = false});
+                        RaiseLocalEvent(powerNetBattery.Owner, new PowerNetBatterySupplyEvent {Supply = false});
                     }
                 }
 
@@ -316,7 +317,7 @@ namespace Content.Server.Power.EntitySystems
             _powerState.Networks.Allocate(out network.Id) = network;
         }
 
-        private static void DoReconnectApcNet(ApcNet net)
+        private void DoReconnectApcNet(ApcNet net)
         {
             var netNode = net.NetworkNode;
 
@@ -342,13 +343,13 @@ namespace Content.Server.Power.EntitySystems
 
             foreach (var apc in net.Apcs)
             {
-                var netBattery = apc.Owner.GetComponent<PowerNetworkBatteryComponent>();
+                var netBattery = EntityManager.GetComponent<PowerNetworkBatteryComponent>(apc.Owner);
                 netNode.BatteriesDischarging.Add(netBattery.NetworkBattery.Id);
                 netBattery.NetworkBattery.LinkedNetworkDischarging = netNode.Id;
             }
         }
 
-        private static void DoReconnectPowerNet(PowerNet net)
+        private void DoReconnectPowerNet(PowerNet net)
         {
             var netNode = net.NetworkNode;
 
@@ -371,14 +372,14 @@ namespace Content.Server.Power.EntitySystems
 
             foreach (var charger in net.Chargers)
             {
-                var battery = charger.Owner.GetComponent<PowerNetworkBatteryComponent>();
+                var battery = EntityManager.GetComponent<PowerNetworkBatteryComponent>(charger.Owner);
                 netNode.BatteriesCharging.Add(battery.NetworkBattery.Id);
                 battery.NetworkBattery.LinkedNetworkCharging = netNode.Id;
             }
 
             foreach (var discharger in net.Dischargers)
             {
-                var battery = discharger.Owner.GetComponent<PowerNetworkBatteryComponent>();
+                var battery = EntityManager.GetComponent<PowerNetworkBatteryComponent>(discharger.Owner);
                 netNode.BatteriesDischarging.Add(battery.NetworkBattery.Id);
                 battery.NetworkBattery.LinkedNetworkDischarging = netNode.Id;
             }

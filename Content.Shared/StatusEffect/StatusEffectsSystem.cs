@@ -37,7 +37,7 @@ namespace Content.Shared.StatusEffect
                     // if we're past the end point of the effect
                     if (_gameTiming.CurTime > state.Value.Cooldown.Item2)
                     {
-                        TryRemoveStatusEffect(status.Owner.Uid, state.Key, status);
+                        TryRemoveStatusEffect(status.Owner, state.Key, status);
                     }
                 }
             }
@@ -121,7 +121,7 @@ namespace Content.Shared.StatusEffect
                 {
                     // Fuck this shit I hate it
                     var newComponent = (Component) _componentFactory.GetComponent(component);
-                    newComponent.Owner = EntityManager.GetEntity(uid);
+                    newComponent.Owner = uid;
 
                     EntityManager.AddComponent(uid, newComponent);
                     status.ActiveEffects[key].RelevantComponent = component;

@@ -48,8 +48,8 @@ namespace Content.Server.Stunnable
                 if (target != null)
                 {
                     // TODO: Use PopupSystem
-                    source.PopupMessageOtherClients(Loc.GetString("stunned-component-disarm-success-others", ("source", source.Name), ("target", target.Name)));
-                    source.PopupMessageCursor(Loc.GetString("stunned-component-disarm-success", ("target", target.Name)));
+                    source.PopupMessageOtherClients(Loc.GetString("stunned-component-disarm-success-others", ("source", Name: EntityManager.GetComponent<MetaDataComponent>(source).EntityName), ("target", Name: EntityManager.GetComponent<MetaDataComponent>(target).EntityName)));
+                    source.PopupMessageCursor(Loc.GetString("stunned-component-disarm-success", ("target", Name: EntityManager.GetComponent<MetaDataComponent>(target).EntityName)));
                 }
             }
 

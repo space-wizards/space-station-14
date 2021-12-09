@@ -18,6 +18,8 @@ namespace Content.Shared.Body.Components
     [NetworkedComponent()]
     public abstract class SharedBodyPartComponent : Component, IBodyPartContainer
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "BodyPart";
 
         private SharedBodyComponent? _body;
@@ -109,11 +111,11 @@ namespace Content.Shared.Body.Components
         public BodyPartSymmetry Symmetry { get; private set; } = BodyPartSymmetry.None;
 
         [ViewVariables]
-        public ISurgeryData? SurgeryDataComponent => Owner.GetComponentOrNull<ISurgeryData>();
+        public ISurgeryData? SurgeryDataComponent => _entMan.GetComponentOrNull<ISurgeryData>(Owner);
 
         protected virtual void OnAddMechanism(SharedMechanismComponent mechanism)
         {
-            var prototypeId = mechanism.Owner.Prototype!.ID;
+            var prototypeId = _entMan.GetComponent<MetaDataComponent>(mechanism.Owner).EntityPrototype!.ID;
 
             if (!_mechanismIds.Contains(prototypeId))
             {
@@ -128,7 +130,7 @@ namespace Content.Shared.Body.Components
 
         protected virtual void OnRemoveMechanism(SharedMechanismComponent mechanism)
         {
-            _mechanismIds.Remove(mechanism.Owner.Prototype!.ID);
+            _mechanismIds.Remove(_entMan.GetComponent<MetaDataComponent>(mechanism.Owner).EntityPrototype!.ID);
             mechanism.Part = null;
             SizeUsed -= mechanism.Size;
 
@@ -142,7 +144,7 @@ namespace Content.Shared.Body.Components
             var i = 0;
             foreach (var mechanism in _mechanisms)
             {
-                mechanismIds[i] = mechanism.OwnerUid;
+                mechanismIds[i] = mechanism.Owner;
                 i++;
             }
 
@@ -182,7 +184,7 @@ namespace Content.Shared.Body.Components
             return SurgeryDataComponent?.CheckSurgery(surgery) ?? false;
         }
 
-        public bool AttemptSurgery(SurgeryType toolType, IBodyPartContainer target, ISurgeon surgeon, IEntity performer)
+        public bool AttemptSurgery(SurgeryType toolType, IBodyPartContainer target, ISurgeon surgeon, EntityUid performer)
         {
             DebugTools.AssertNotNull(toolType);
             DebugTools.AssertNotNull(target);
@@ -267,7 +269,7 @@ namespace Content.Shared.Body.Components
         {
             if (RemoveMechanism(mechanism))
             {
-                mechanism.Owner.Transform.Coordinates = coordinates;
+                _entMan.GetComponent<TransformComponent>(mechanism.Owner).Coordinates = coordinates;
                 return true;
             }
 
@@ -292,34 +294,34 @@ namespace Content.Shared.Body.Components
                 return false;
             }
 
-            mechanism.Owner.Delete();
+            _entMan.DeleteEntity(mechanism.Owner);
             return true;
         }
 
         private void AddedToBody(SharedBodyComponent body)
         {
-            Owner.Transform.LocalRotation = 0;
-            Owner.Transform.AttachParent(body.Owner);
+            _entMan.GetComponent<TransformComponent>(Owner).LocalRotation = 0;
+            _entMan.GetComponent<TransformComponent>(Owner).AttachParent(body.Owner);
             OnAddedToBody(body);
 
             foreach (var mechanism in _mechanisms)
             {
-                Owner.EntityManager.EventBus.RaiseLocalEvent(mechanism.OwnerUid, new AddedToBodyEvent(body));
+                _entMan.EventBus.RaiseLocalEvent(mechanism.Owner, new AddedToBodyEvent(body));
             }
         }
 
         private void RemovedFromBody(SharedBodyComponent old)
         {
-            if (!Owner.Transform.Deleted)
+            if (!_entMan.GetComponent<TransformComponent>(Owner).Deleted)
             {
-                Owner.Transform.AttachToGridOrMap();
+                _entMan.GetComponent<TransformComponent>(Owner).AttachToGridOrMap();
             }
 
             OnRemovedFromBody(old);
 
             foreach (var mechanism in _mechanisms)
             {
-                Owner.EntityManager.EventBus.RaiseLocalEvent(mechanism.OwnerUid, new RemovedFromBodyEvent(old));
+                _entMan.EventBus.RaiseLocalEvent(mechanism.Owner, new RemovedFromBodyEvent(old));
             }
         }
 
@@ -358,18 +360,18 @@ namespace Content.Shared.Body.Components
                 return _mechanisms;
             }
 
-            entityManager ??= IoCManager.Resolve<IEntityManager>();
+            IoCManager.Resolve(ref entityManager);
 
             var mechanisms = new List<SharedMechanismComponent>(MechanismIds.Length);
 
             foreach (var id in MechanismIds)
             {
-                if (!entityManager.TryGetEntity(id, out var entity))
+                if (!entityManager.EntityExists(id))
                 {
                     continue;
                 }
 
-                if (!entity.TryGetComponent(out SharedMechanismComponent? mechanism))
+                if (!entityManager.TryGetComponent(id, out SharedMechanismComponent? mechanism))
                 {
                     continue;
                 }

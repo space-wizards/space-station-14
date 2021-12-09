@@ -37,8 +37,7 @@ namespace Content.Client.CharacterInterface
 
         private void HandleOpenCharacterMenu()
         {
-            if (_playerManager.LocalPlayer?.ControlledEntity == null
-                || !_playerManager.LocalPlayer.ControlledEntity.TryGetComponent(out CharacterInterfaceComponent? characterInterface))
+            if (!EntityManager.TryGetComponent(_playerManager.LocalPlayer?.ControlledEntity, out CharacterInterfaceComponent? characterInterface))
             {
                 return;
             }

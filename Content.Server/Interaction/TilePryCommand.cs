@@ -4,6 +4,7 @@ using Content.Shared.Administration;
 using Content.Shared.Maps;
 using Robust.Server.Player;
 using Robust.Shared.Console;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
@@ -15,6 +16,8 @@ namespace Content.Server.Interaction
     [AdminCommand(AdminFlags.Debug)]
     class TilePryCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntityManager _entities = default!;
+
         public string Command => "tilepry";
         public string Description => "Pries up all tiles in a radius around the user.";
         public string Help => $"Usage: {Command} <radius>";
@@ -22,7 +25,7 @@ namespace Content.Server.Interaction
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
-            if (player?.AttachedEntity == null)
+            if (player?.AttachedEntity is not {} attached)
             {
                 return;
             }
@@ -46,9 +49,9 @@ namespace Content.Server.Interaction
             }
 
             var mapManager = IoCManager.Resolve<IMapManager>();
-            var playerGrid = player.AttachedEntity.Transform.GridID;
+            var playerGrid = _entities.GetComponent<TransformComponent>(attached).GridID;
             var mapGrid = mapManager.GetGrid(playerGrid);
-            var playerPosition = player.AttachedEntity.Transform.Coordinates;
+            var playerPosition = _entities.GetComponent<TransformComponent>(attached).Coordinates;
             var tileDefinitionManager = IoCManager.Resolve<ITileDefinitionManager>();
 
             for (var i = -radius; i <= radius; i++)

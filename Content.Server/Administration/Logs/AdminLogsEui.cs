@@ -26,7 +26,6 @@ public sealed class AdminLogsEui : BaseEui
 
     private readonly ISawmill _sawmill;
     private readonly AdminLogSystem _logSystem;
-    private readonly GameTicker _gameTicker;
 
     private int _clientBatchSize;
     private bool _isLoading = true;
@@ -43,7 +42,6 @@ public sealed class AdminLogsEui : BaseEui
         _configuration.OnValueChanged(CCVars.AdminLogsClientBatchSize, ClientBatchSizeChanged, true);
 
         _logSystem = EntitySystem.Get<AdminLogSystem>();
-        _gameTicker = EntitySystem.Get<GameTicker>();
 
         _filter = new LogFilter
         {

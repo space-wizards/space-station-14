@@ -42,9 +42,7 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            var target = entityManager.GetEntity(eUid);
-
-            if (!target.HasComponent<MindComponent>())
+            if (!entityManager.HasComponent<MindComponent>(eUid))
             {
                 shell.WriteLine(Loc.GetString("set-mind-command-target-has-no-mind-message"));
                 return;
@@ -69,11 +67,11 @@ namespace Content.Server.Administration.Commands
             {
                 mind = new Mind.Mind(session.UserId)
                 {
-                    CharacterName = target.Name
+                    CharacterName = entityManager.GetComponent<MetaDataComponent>(eUid).EntityName
                 };
                 mind.ChangeOwningPlayer(session.UserId);
             }
-            mind.TransferTo(target.Uid);
+            mind.TransferTo(eUid);
         }
     }
 }

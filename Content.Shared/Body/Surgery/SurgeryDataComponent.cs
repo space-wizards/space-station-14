@@ -9,7 +9,7 @@ namespace Content.Shared.Body.Surgery
     /// </summary>
     public interface ISurgeryData : IComponent
     {
-        public delegate void SurgeryAction(IBodyPartContainer container, ISurgeon surgeon, IEntity performer);
+        public delegate void SurgeryAction(IBodyPartContainer container, ISurgeon surgeon, EntityUid performer);
 
         /// <summary>
         ///     The <see cref="SharedBodyPartComponent"/> this
@@ -78,6 +78,6 @@ namespace Content.Shared.Body.Surgery
         /// <param name="performer">The entity performing the surgery.</param>
         /// <returns>True if successful, false otherwise.</returns>
         public bool PerformSurgery(SurgeryType surgeryType, IBodyPartContainer container, ISurgeon surgeon,
-            IEntity performer);
+            EntityUid performer);
     }
 }
