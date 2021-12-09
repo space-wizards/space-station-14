@@ -52,16 +52,12 @@ namespace Content.Server.Kitchen.EntitySystems
         private void OnDragDrop(EntityUid uid, KitchenSpikeComponent component, DragDropEvent args)
         {
             if(args.Handled)
-                 return;
-
-            if (!EntityManager.TryGetComponent<SharedButcherableComponent>(args.Dragged, out var butcherable)
-                || butcherable.BeingButchered)
                 return;
 
             if (!Spikeable(uid, args.User, args.Dragged, component))
                 return;
 
-            if (TrySpike(uid, args.User, args.Dragged, component, butcherable))
+            if (TrySpike(uid, args.User, args.Dragged, component))
                 args.Handled = true;
         }
 
@@ -77,7 +73,7 @@ namespace Content.Server.Kitchen.EntitySystems
         private void Spike(EntityUid uid, EntityUid userUid, EntityUid victimUid,
             KitchenSpikeComponent? component = null, SharedButcherableComponent? butcherable = null)
         {
-            if (!Resolve(uid, ref component) || !Resolve(victimUid, ref butcherable))
+            if (!Resolve(uid, ref component) || !Resolve(victimUid, ref butcherable) || butcherable.BeingButchered)
                 return;
 
             component.MeatPrototype = butcherable.MeatPrototype;
@@ -117,8 +113,7 @@ namespace Content.Server.Kitchen.EntitySystems
             if (!string.IsNullOrEmpty(component.MeatPrototype))
             {
                 var meat = EntityManager.SpawnEntity(component.MeatPrototype, Transform(uid).Coordinates);
-
-                //meat.Name = component.MeatName;
+                EntityManager.GetComponent<MetaDataComponent>(meat).EntityName = component.MeatName;
             }
 
             if (component.MeatParts != 0)
