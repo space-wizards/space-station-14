@@ -17,6 +17,7 @@ namespace Content.Server.CharacterAppearance.Components
     [ComponentReference(typeof(IActivate))]
     public class MagicMirrorComponent : SharedMagicMirrorComponent, IActivate
     {
+        [Dependency] private readonly IEntityManager _entities = default!;
         [Dependency] private readonly SpriteAccessoryManager _spriteAccessoryManager = default!;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(MagicMirrorUiKey.Key);
@@ -43,12 +44,12 @@ namespace Content.Server.CharacterAppearance.Components
 
         private void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
         {
-            if (obj.Session.AttachedEntity == null)
+            if (obj.Session.AttachedEntity is not {Valid: true} player)
             {
                 return;
             }
 
-            if (!obj.Session.AttachedEntity.TryGetComponent(out HumanoidAppearanceComponent? looks))
+            if (!_entities.TryGetComponent(player, out HumanoidAppearanceComponent? looks))
             {
                 return;
             }
@@ -91,17 +92,17 @@ namespace Content.Server.CharacterAppearance.Components
                     break;
             }
 
-            EntitySystem.Get<HumanoidAppearanceSystem>().ForceAppearanceUpdate(obj.Session.AttachedEntity.Uid);
+            EntitySystem.Get<HumanoidAppearanceSystem>().ForceAppearanceUpdate(player);
         }
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
+            if (!_entities.TryGetComponent(eventArgs.User, out ActorComponent? actor))
             {
                 return;
             }
 
-            if (!eventArgs.User.TryGetComponent(out HumanoidAppearanceComponent? looks))
+            if (!_entities.TryGetComponent(eventArgs.User, out HumanoidAppearanceComponent? looks))
             {
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("magic-mirror-component-activate-user-has-no-hair"));
                 return;

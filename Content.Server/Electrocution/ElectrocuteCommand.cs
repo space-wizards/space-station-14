@@ -52,7 +52,7 @@ namespace Content.Server.Electrocution
             }
 
             entityManager.EntitySysManager.GetEntitySystem<ElectrocutionSystem>()
-                .TryDoElectrocution(uid, null, damage, TimeSpan.FromSeconds(seconds));
+                .TryDoElectrocution(uid, null, damage, TimeSpan.FromSeconds(seconds), true);
         }
     }
 }

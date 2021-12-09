@@ -7,6 +7,7 @@ using Content.Shared.Coordinates;
 using Content.Shared.FixedPoint;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
@@ -89,12 +90,12 @@ namespace Content.IntegrationTests.Tests.Fluids
             var sPauseManager = server.ResolveDependency<IPauseManager>();
             var sTileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>();
             var sGameTiming = server.ResolveDependency<IGameTiming>();
-            var sEntityManager = server.ResolveDependency<IEntityManager>();
+            var entityManager = server.ResolveDependency<IEntityManager>();
 
             MapId sMapId = default;
             IMapGrid sGrid;
             GridId sGridId = default;
-            IEntity sGridEntity = null;
+            EntityUid sGridEntity = default;
             EntityCoordinates sCoordinates = default;
 
             // Spawn a paused map with one tile to spawn puddles on
@@ -104,8 +105,8 @@ namespace Content.IntegrationTests.Tests.Fluids
                 sPauseManager.SetMapPaused(sMapId, true);
                 sGrid = sMapManager.CreateGrid(sMapId);
                 sGridId = sGrid.Index;
-                sGridEntity = sEntityManager.GetEntity(sGrid.GridEntityId);
-                sGridEntity.Paused = true; // See https://github.com/space-wizards/RobustToolbox/issues/1444
+                sGridEntity = sGrid.GridEntityId;
+                entityManager.GetComponent<MetaDataComponent>(sGridEntity).EntityPaused = true; // See https://github.com/space-wizards/RobustToolbox/issues/1444
 
                 var tileDefinition = sTileDefinitionManager["underplating"];
                 var tile = new Tile(tileDefinition.TileId);
@@ -119,15 +120,15 @@ namespace Content.IntegrationTests.Tests.Fluids
             {
                 Assert.True(sPauseManager.IsGridPaused(sGridId));
                 Assert.True(sPauseManager.IsMapPaused(sMapId));
-                Assert.True(sGridEntity.Paused);
             });
 
             float evaporateTime = default;
             PuddleComponent puddle = null;
+            MetaDataComponent meta = null;
             EvaporationComponent evaporation;
-            
+
             var amount = 2;
-            
+
             var entitySystemManager = server.ResolveDependency<IEntitySystemManager>();
             var spillSystem = entitySystemManager.GetEntitySystem<SpillableSystem>();
 
@@ -136,15 +137,16 @@ namespace Content.IntegrationTests.Tests.Fluids
             {
                 var solution = new Solution("Water", FixedPoint2.New(amount));
                 puddle = spillSystem.SpillAt(solution, sCoordinates, "PuddleSmear");
+                meta = entityManager.GetComponent<MetaDataComponent>(puddle.Owner);
 
                 // Check that the puddle was created
                 Assert.NotNull(puddle);
 
-                evaporation = puddle.Owner.GetComponent<EvaporationComponent>();
+                evaporation = entityManager.GetComponent<EvaporationComponent>(puddle.Owner);
 
-                puddle.Owner.Paused = true; // See https://github.com/space-wizards/RobustToolbox/issues/1445
+                meta.EntityPaused = true; // See https://github.com/space-wizards/RobustToolbox/issues/1445
 
-                Assert.True(puddle.Owner.Paused);
+                Assert.True(meta.EntityPaused);
 
                 // Check that the puddle is going to evaporate
                 Assert.Positive(evaporation.EvaporateTime);
@@ -162,10 +164,10 @@ namespace Content.IntegrationTests.Tests.Fluids
             // No evaporation due to being paused
             await server.WaitAssertion(() =>
             {
-                Assert.True(puddle.Owner.Paused);
+                Assert.True(meta.EntityPaused);
 
                 // Check that the puddle still exists
-                Assert.False(puddle.Owner.Deleted);
+                Assert.False(meta.EntityDeleted);
             });
 
             // Unpause the map
@@ -176,10 +178,10 @@ namespace Content.IntegrationTests.Tests.Fluids
             {
                 Assert.False(sPauseManager.IsMapPaused(sMapId));
                 Assert.False(sPauseManager.IsGridPaused(sGridId));
-                Assert.False(puddle.Owner.Paused);
+                Assert.False(meta.EntityPaused);
 
                 // Check that the puddle still exists
-                Assert.False(puddle.Owner.Deleted);
+                Assert.False(meta.EntityDeleted);
             });
 
             // Wait enough time for it to evaporate

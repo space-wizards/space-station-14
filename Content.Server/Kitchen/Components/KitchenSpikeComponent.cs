@@ -7,6 +7,7 @@ using Content.Shared.Kitchen.Components;
 using Content.Shared.Popups;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 
 namespace Content.Server.Kitchen.Components

@@ -42,7 +42,7 @@ namespace Content.Client.CharacterInterface
             base.Initialize();
 
             //Use all the character ui interfaced components to create the character window
-            _uiComponents = Owner.GetAllComponents<ICharacterUI>().ToList();
+            _uiComponents = IoCManager.Resolve<IEntityManager>().GetComponents<ICharacterUI>(Owner).ToList();
             if (_uiComponents.Count == 0)
             {
                 return;

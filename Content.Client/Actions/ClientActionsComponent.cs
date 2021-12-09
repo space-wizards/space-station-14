@@ -1,7 +1,5 @@
 using Content.Client.Actions.Assignments;
 using Content.Client.Actions.UI;
-using Content.Client.Hands;
-using Content.Client.Inventory;
 using Content.Client.Items.Managers;
 using Content.Shared.Actions.Components;
 using Content.Shared.Actions.Prototypes;
@@ -226,17 +224,17 @@ namespace Content.Client.Actions
         /// Highlights the item slot (inventory or hand) that contains this item
         /// </summary>
         /// <param name="item"></param>
-        public void HighlightItemSlot(IEntity item)
+        public void HighlightItemSlot(EntityUid item)
         {
             StopHighlightingItemSlots();
 
-            _highlightedEntity = item.Uid;
-            _itemSlotManager.HighlightEntity(item.Uid);
+            _highlightedEntity = item;
+            _itemSlotManager.HighlightEntity(item);
         }
 
         /// <summary>
         /// Stops highlighting any item slots we are currently highlighting.
-        /// </summary>
+        /// </summary>H
         public void StopHighlightingItemSlots()
         {
             if (_highlightedEntity == default)

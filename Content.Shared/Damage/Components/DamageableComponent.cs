@@ -92,7 +92,7 @@ namespace Content.Shared.Damage
                 damage.DamageDict.Add(typeID, damageValue);
             }
 
-            EntitySystem.Get<DamageableSystem>().TryChangeDamage(OwnerUid, damage);
+            EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner, damage);
         }
 
         // TODO EXPLOSION Remove this.
@@ -113,7 +113,7 @@ namespace Content.Shared.Damage
                 damage.DamageDict.Add(typeID, damageValue);
             }
 
-            EntitySystem.Get<DamageableSystem>().TryChangeDamage(OwnerUid, damage);
+            EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner, damage);
         }
     }
 

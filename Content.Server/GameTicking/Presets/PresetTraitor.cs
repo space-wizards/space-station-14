@@ -3,19 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules;
-using Content.Server.Inventory.Components;
-using Content.Server.Items;
 using Content.Server.Objectives.Interfaces;
-using Content.Server.PDA;
 using Content.Server.Players;
 using Content.Server.Roles;
 using Content.Server.Traitor;
 using Content.Server.Traitor.Uplink;
 using Content.Server.Traitor.Uplink.Account;
-using Content.Server.Traitor.Uplink.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Dataset;
-using Content.Shared.Inventory;
 using Content.Shared.Traitor.Uplink;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
@@ -126,12 +121,12 @@ namespace Content.Server.GameTicking.Presets
                 // initiate uplink account.
                 DebugTools.AssertNotNull(mind.OwnedEntity);
 
-                var uplinkAccount = new UplinkAccount(StartingBalance, mind.OwnedEntity!.Uid);
+                var uplinkAccount = new UplinkAccount(StartingBalance, mind.OwnedEntity!);
                 var accounts = EntityManager.EntitySysManager.GetEntitySystem<UplinkAccountsSystem>();
                 accounts.AddNewAccount(uplinkAccount);
 
                 if (!EntityManager.EntitySysManager.GetEntitySystem<UplinkSystem>()
-                    .AddUplink(mind.OwnedEntity, uplinkAccount))
+                    .AddUplink(mind.OwnedEntity!.Value, uplinkAccount))
                     continue;
 
                 var traitorRole = new TraitorRole(mind);
