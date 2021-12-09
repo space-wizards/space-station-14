@@ -4,6 +4,7 @@ using Content.Server.Storage.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Operators.Inventory
 {
@@ -13,10 +14,10 @@ namespace Content.Server.AI.Operators.Inventory
     /// </summary>
     public sealed class CloseLastStorageOperator : AiOperator
     {
-        private readonly IEntity _owner;
-        private IEntity? _target;
+        private readonly EntityUid _owner;
+        private EntityUid _target;
 
-        public CloseLastStorageOperator(IEntity owner)
+        public CloseLastStorageOperator(EntityUid owner)
         {
             _owner = owner;
         }
@@ -37,7 +38,7 @@ namespace Content.Server.AI.Operators.Inventory
 
             _target = blackboard.GetState<LastOpenedStorageState>().GetValue();
 
-            return _target != null;
+            return _target != default;
         }
 
         public override bool Shutdown(Outcome outcome)
@@ -47,18 +48,18 @@ namespace Content.Server.AI.Operators.Inventory
 
             var blackboard = UtilityAiHelpers.GetBlackboard(_owner);
 
-            blackboard?.GetState<LastOpenedStorageState>().SetValue(null);
+            blackboard?.GetState<LastOpenedStorageState>().SetValue(default);
             return true;
         }
 
         public override Outcome Execute(float frameTime)
         {
-            if (_target == null || !_owner.InRangeUnobstructed(_target, popup: true))
+            if (_target == default || !_owner.InRangeUnobstructed(_target, popup: true))
             {
                 return Outcome.Failed;
             }
 
-            if (!_target.TryGetComponent(out EntityStorageComponent? storageComponent) ||
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(_target, out EntityStorageComponent? storageComponent) ||
                 storageComponent.IsWeldedShut)
             {
                 return Outcome.Failed;

@@ -6,8 +6,10 @@ using Content.Server.Administration;
 using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Console;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -16,6 +18,8 @@ namespace Content.Server.GameTicking.Commands
     [AdminCommand(AdminFlags.Server | AdminFlags.Mapping)]
     class MappingCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntityManager _entities = default!;
+
         public string Command => "mapping";
         public string Description => "Creates and teleports you to a new uninitialized map for mapping.";
         public string Help => $"Usage: {Command} <mapname> / {Command} <id> <mapname>";
@@ -74,8 +78,11 @@ namespace Content.Server.GameTicking.Commands
             shell.ExecuteCommand($"addmap {mapId} false");
             shell.ExecuteCommand($"loadbp {mapId} \"{CommandParsing.Escape(mapName)}\" true");
 
-            if (player.AttachedEntity?.Prototype?.ID != "AdminObserver")
+            if (player.AttachedEntity is {Valid: true} playerEntity &&
+                _entities.GetComponent<MetaDataComponent>(playerEntity).EntityPrototype?.ID != "AdminObserver")
+            {
                 shell.ExecuteCommand("aghost");
+            }
 
             shell.ExecuteCommand($"tp 0 0 {mapId}");
             shell.RemoteExecuteCommand("showmarkers");

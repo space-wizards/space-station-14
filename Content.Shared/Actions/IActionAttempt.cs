@@ -39,24 +39,24 @@ namespace Content.Shared.Actions
         /// <summary>
         /// Perform the server-side logic of the action
         /// </summary>
-        void DoInstantAction(IEntity player);
+        void DoInstantAction(EntityUid player);
 
         /// <summary>
         /// Perform the server-side logic of the toggle action
         /// </summary>
         /// <returns>true if the attempt to toggle was successful, meaning the state should be toggled to the
         /// indicated value</returns>
-        bool DoToggleAction(IEntity player, bool on);
+        bool DoToggleAction(EntityUid player, bool on);
 
         /// <summary>
         /// Perform the server-side logic of the target point action
         /// </summary>
-        void DoTargetPointAction(IEntity player, EntityCoordinates target);
+        void DoTargetPointAction(EntityUid player, EntityCoordinates target);
 
         /// <summary>
         /// Perform the server-side logic of the target entity action
         /// </summary>
-        void DoTargetEntityAction(IEntity player, IEntity target);
+        void DoTargetEntityAction(EntityUid player, EntityUid target);
     }
 
     public class ActionAttempt : IActionAttempt
@@ -80,22 +80,22 @@ namespace Content.Shared.Actions
             actionsComponent.ToggleAction(_action.ActionType, toggleOn);
         }
 
-        public void DoInstantAction(IEntity player)
+        public void DoInstantAction(EntityUid player)
         {
             _action.InstantAction.DoInstantAction(new InstantActionEventArgs(player, _action.ActionType));
         }
 
-        public bool DoToggleAction(IEntity player, bool on)
+        public bool DoToggleAction(EntityUid player, bool on)
         {
             return _action.ToggleAction.DoToggleAction(new ToggleActionEventArgs(player, _action.ActionType, on));
         }
 
-        public void DoTargetPointAction(IEntity player, EntityCoordinates target)
+        public void DoTargetPointAction(EntityUid player, EntityCoordinates target)
         {
             _action.TargetPointAction.DoTargetPointAction(new TargetPointActionEventArgs(player, target, _action.ActionType));
         }
 
-        public void DoTargetEntityAction(IEntity player, IEntity target)
+        public void DoTargetEntityAction(EntityUid player, EntityUid target)
         {
             _action.TargetEntityAction.DoTargetEntityAction(new TargetEntityActionEventArgs(player, _action.ActionType,
                 target));
@@ -142,35 +142,35 @@ namespace Content.Shared.Actions
     public class ItemActionAttempt : IActionAttempt
     {
         private readonly ItemActionPrototype _action;
-        private readonly IEntity _item;
+        private readonly EntityUid _item;
         private readonly ItemActionsComponent _itemActions;
 
         public BaseActionPrototype Action => _action;
 
-        public ItemActionAttempt(ItemActionPrototype action, IEntity item, ItemActionsComponent itemActions)
+        public ItemActionAttempt(ItemActionPrototype action, EntityUid item, ItemActionsComponent itemActions)
         {
             _action = action;
             _item = item;
             _itemActions = itemActions;
         }
 
-        public void DoInstantAction(IEntity player)
+        public void DoInstantAction(EntityUid player)
         {
             _action.InstantAction.DoInstantAction(new InstantItemActionEventArgs(player, _item, _action.ActionType));
         }
 
-        public bool DoToggleAction(IEntity player, bool on)
+        public bool DoToggleAction(EntityUid player, bool on)
         {
             return _action.ToggleAction.DoToggleAction(new ToggleItemActionEventArgs(player, on, _item, _action.ActionType));
         }
 
-        public void DoTargetPointAction(IEntity player, EntityCoordinates target)
+        public void DoTargetPointAction(EntityUid player, EntityCoordinates target)
         {
             _action.TargetPointAction.DoTargetPointAction(new TargetPointItemActionEventArgs(player, target, _item,
                 _action.ActionType));
         }
 
-        public void DoTargetEntityAction(IEntity player, IEntity target)
+        public void DoTargetEntityAction(EntityUid player, EntityUid target)
         {
             _action.TargetEntityAction.DoTargetEntityAction(new TargetEntityItemActionEventArgs(player, target,
                 _item, _action.ActionType));
@@ -190,7 +190,7 @@ namespace Content.Shared.Actions
         public ComponentMessage PerformInstantActionMessage()
 #pragma warning restore 618
         {
-            return new PerformInstantItemActionMessage(_action.ActionType, _item.Uid);
+            return new PerformInstantItemActionMessage(_action.ActionType, _item);
         }
 
 #pragma warning disable 618
@@ -199,23 +199,23 @@ namespace Content.Shared.Actions
         {
             if (toggleOn)
             {
-                return new PerformToggleOnItemActionMessage(_action.ActionType, _item.Uid);
+                return new PerformToggleOnItemActionMessage(_action.ActionType, _item);
             }
-            return new PerformToggleOffItemActionMessage(_action.ActionType, _item.Uid);
+            return new PerformToggleOffItemActionMessage(_action.ActionType, _item);
         }
 
 #pragma warning disable 618
         public ComponentMessage PerformTargetPointActionMessage(PointerInputCmdHandler.PointerInputCmdArgs args)
 #pragma warning restore 618
         {
-            return new PerformTargetPointItemActionMessage(_action.ActionType, _item.Uid, args.Coordinates);
+            return new PerformTargetPointItemActionMessage(_action.ActionType, _item, args.Coordinates);
         }
 
 #pragma warning disable 618
         public ComponentMessage PerformTargetEntityActionMessage(PointerInputCmdHandler.PointerInputCmdArgs args)
 #pragma warning restore 618
         {
-            return new PerformTargetEntityItemActionMessage(_action.ActionType, _item.Uid, args.EntityUid);
+            return new PerformTargetEntityItemActionMessage(_action.ActionType, _item, args.EntityUid);
         }
 
         public override string ToString()

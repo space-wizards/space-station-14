@@ -9,6 +9,7 @@
   - type: Clothing
     sprite: Clothing/Mask/gas.rsi
   - type: BreathMask
+  - type: IngestionBlocker
 
 - type: entity
   parent: ClothingMaskBase
@@ -21,6 +22,7 @@
   - type: Clothing
     sprite: Clothing/Mask/breath.rsi
   - type: BreathMask
+  - type: IngestionBlocker
 
 - type: entity
   parent: ClothingMaskBase
@@ -69,3 +71,4 @@
   - type: Clothing
     sprite: Clothing/Mask/sterile.rsi
   - type: BreathMask
+  - type: IngestionBlocker

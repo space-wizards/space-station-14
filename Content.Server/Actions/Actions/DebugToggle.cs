@@ -2,6 +2,8 @@
 using Content.Shared.Actions.Behaviors;
 using Content.Shared.Actions.Behaviors.Item;
 using JetBrains.Annotations;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Actions.Actions
@@ -15,13 +17,15 @@ namespace Content.Server.Actions.Actions
 
         public bool DoToggleAction(ToggleItemActionEventArgs args)
         {
+            var entMan = IoCManager.Resolve<IEntityManager>();
+
             if (args.ToggledOn)
             {
-                args.Performer.PopupMessageEveryone(args.Item.Name + ": " + MessageOn);
+                args.Performer.PopupMessageEveryone(entMan.GetComponent<MetaDataComponent>(args.Item).EntityName + ": " + MessageOn);
             }
             else
             {
-                args.Performer.PopupMessageEveryone(args.Item.Name + ": " +MessageOff);
+                args.Performer.PopupMessageEveryone(entMan.GetComponent<MetaDataComponent>(args.Item).EntityName + ": " +MessageOff);
             }
 
             return true;

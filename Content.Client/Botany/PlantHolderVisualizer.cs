@@ -2,6 +2,7 @@ using Content.Shared.Botany;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Botany
@@ -9,11 +10,11 @@ namespace Content.Client.Botany
     [UsedImplicitly]
     public class PlantHolderVisualizer : AppearanceVisualizer
     {
-        public override void InitializeEntity(IEntity entity)
+        public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
 
-            var sprite = entity.GetComponent<ISpriteComponent>();
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(entity);
 
             sprite.LayerMapReserveBlank(PlantHolderLayers.Plant);
             sprite.LayerMapReserveBlank(PlantHolderLayers.HealthLight);
@@ -55,7 +56,7 @@ namespace Content.Client.Botany
         {
             base.OnChangeData(component);
 
-            var sprite = component.Owner.GetComponent<ISpriteComponent>();
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner);
 
             if (component.TryGetData<SpriteSpecifier>(PlantHolderVisuals.Plant, out var specifier))
             {

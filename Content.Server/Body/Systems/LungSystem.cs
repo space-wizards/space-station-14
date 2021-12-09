@@ -50,14 +50,14 @@ public class LungSystem : EntitySystem
         Inhale(uid, lung.CycleDelay);
     }
 
-    public void UpdateLung(EntityUid uid, float frameTime,
+    public void UpdateLung(EntityUid uid,
         LungComponent? lung=null,
         SharedMechanismComponent? mech=null)
     {
         if (!Resolve(uid, ref lung, ref mech))
             return;
 
-        if (mech.Body != null && EntityManager.TryGetComponent(mech.Body.OwnerUid, out MobStateComponent? mobState) && mobState.IsCritical())
+        if (mech.Body != null && EntityManager.TryGetComponent((mech.Body).Owner, out MobStateComponent? mobState) && mobState.IsCritical())
         {
             return;
         }
@@ -69,8 +69,8 @@ public class LungSystem : EntitySystem
 
         lung.AccumulatedFrametime += lung.Status switch
         {
-            LungStatus.Inhaling => frameTime,
-            LungStatus.Exhaling => -frameTime,
+            LungStatus.Inhaling => 1,
+            LungStatus.Exhaling => -1,
             _ => throw new ArgumentOutOfRangeException()
         };
 
@@ -111,12 +111,12 @@ public class LungSystem : EntitySystem
 
         // TODO Jesus Christ make this event based.
         if (mech.Body != null &&
-            EntityManager.TryGetComponent(mech.Body.OwnerUid, out InternalsComponent? internals) &&
+            EntityManager.TryGetComponent((mech.Body).Owner, out InternalsComponent? internals) &&
             internals.BreathToolEntity != null &&
             internals.GasTankEntity != null &&
-            internals.BreathToolEntity.TryGetComponent(out BreathToolComponent? breathTool) &&
+            EntityManager.TryGetComponent(internals.BreathToolEntity, out BreathToolComponent? breathTool) &&
             breathTool.IsFunctional &&
-            internals.GasTankEntity.TryGetComponent(out GasTankComponent? gasTank))
+            EntityManager.TryGetComponent(internals.GasTankEntity, out GasTankComponent? gasTank))
         {
             TakeGasFrom(uid, frameTime, gasTank.RemoveAirVolume(Atmospherics.BreathVolume), lung);
             return;
@@ -148,7 +148,7 @@ public class LungSystem : EntitySystem
         if (mech.Body == null)
             return;
 
-        if (!EntityManager.TryGetComponent(mech.Body.OwnerUid, out BloodstreamComponent? bloodstream))
+        if (!EntityManager.TryGetComponent((mech.Body).Owner, out BloodstreamComponent? bloodstream))
             return;
 
         var to = bloodstream.Air;
@@ -189,10 +189,10 @@ public class LungSystem : EntitySystem
         if (mech.Body == null)
             return;
 
-        if (!EntityManager.TryGetComponent(mech.Body.OwnerUid, out BloodstreamComponent? bloodstream))
+        if (!EntityManager.TryGetComponent((mech.Body).Owner, out BloodstreamComponent? bloodstream))
             return;
 
-        _bloodstreamSystem.PumpToxins(mech.Body.OwnerUid, lung.Air, bloodstream);
+        _bloodstreamSystem.PumpToxins((mech.Body).Owner, lung.Air, bloodstream);
 
         var lungRemoved = lung.Air.RemoveRatio(0.5f);
         _atmosSys.Merge(to, lungRemoved);
