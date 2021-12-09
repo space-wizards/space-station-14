@@ -12,12 +12,7 @@
   - type: Fixtures
     fixtures:
     - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.4,-0.1,0.4,0.1"
-      layer:
-      - SmallImpassable
-      mask:
-      - VaultImpassable
+        !type:PhysShapeAabb {}
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
