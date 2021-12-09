@@ -8,6 +8,7 @@ using Content.Shared.Body.Part;
 using Content.Shared.Body.Surgery;
 using Content.Shared.Popups;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using static Content.Shared.Body.Surgery.ISurgeryData;
 
@@ -20,6 +21,8 @@ namespace Content.Server.Body.Surgery
     [ComponentReference(typeof(ISurgeryData))]
     public class BiologicalSurgeryDataComponent : Component, ISurgeryData
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "BiologicalSurgeryData";
 
         private readonly HashSet<SharedMechanismComponent> _disconnectedOrgans = new();
@@ -30,7 +33,7 @@ namespace Content.Server.Body.Surgery
 
         private bool VesselsClamped { get; set; }
 
-        public SharedBodyPartComponent? Parent => Owner.GetComponentOrNull<SharedBodyPartComponent>();
+        public SharedBodyPartComponent? Parent => _entMan.GetComponentOrNull<SharedBodyPartComponent>(Owner);
 
         public BodyPartType? ParentType => Parent?.PartType;
 
@@ -50,9 +53,9 @@ namespace Content.Server.Body.Surgery
             }
         }
 
-        private async Task<bool> SurgeryDoAfter(IEntity performer)
+        private async Task<bool> SurgeryDoAfter(EntityUid performer)
         {
-            if (!performer.HasComponent<DoAfterComponent>())
+            if (!_entMan.HasComponent<DoAfterComponent>(performer))
             {
                 return true;
             }
@@ -202,7 +205,7 @@ namespace Content.Server.Body.Surgery
             return GetSurgeryStep(toolType) != null;
         }
 
-        public bool PerformSurgery(SurgeryType surgeryType, IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
+        public bool PerformSurgery(SurgeryType surgeryType, IBodyPartContainer container, ISurgeon surgeon, EntityUid performer)
         {
             var step = GetSurgeryStep(surgeryType);
 
@@ -215,7 +218,7 @@ namespace Content.Server.Body.Surgery
             return true;
         }
 
-        private async void OpenSkinSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
+        private async void OpenSkinSurgery(IBodyPartContainer container, ISurgeon surgeon, EntityUid performer)
         {
             if (Parent == null)
             {
@@ -230,7 +233,7 @@ namespace Content.Server.Body.Surgery
             }
         }
 
-        private async void ClampVesselsSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
+        private async void ClampVesselsSurgery(IBodyPartContainer container, ISurgeon surgeon, EntityUid performer)
         {
             if (Parent == null) return;
 
@@ -242,7 +245,7 @@ namespace Content.Server.Body.Surgery
             }
         }
 
-        private async void RetractSkinSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
+        private async void RetractSkinSurgery(IBodyPartContainer container, ISurgeon surgeon, EntityUid performer)
         {
             if (Parent == null) return;
 
@@ -254,7 +257,7 @@ namespace Content.Server.Body.Surgery
             }
         }
 
-        private async void CauterizeIncisionSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
+        private async void CauterizeIncisionSurgery(IBodyPartContainer container, ISurgeon surgeon, EntityUid performer)
         {
             if (Parent == null) return;
 
@@ -268,7 +271,7 @@ namespace Content.Server.Body.Surgery
             }
         }
 
-        private void LoosenOrganSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
+        private void LoosenOrganSurgery(IBodyPartContainer container, ISurgeon surgeon, EntityUid performer)
         {
             if (Parent == null) return;
             if (Parent.Mechanisms.Count <= 0) return;
@@ -289,7 +292,7 @@ namespace Content.Server.Body.Surgery
         }
 
         private async void LoosenOrganSurgeryCallback(SharedMechanismComponent? target, IBodyPartContainer container, ISurgeon surgeon,
-            IEntity performer)
+            EntityUid performer)
         {
             if (Parent == null || target == null || !Parent.Mechanisms.Contains(target))
             {
@@ -298,7 +301,7 @@ namespace Content.Server.Body.Surgery
 
             performer.PopupMessage(Loc.GetString("biological-surgery-data-component-loosen-organ-message"));
 
-            if (!performer.HasComponent<DoAfterComponent>())
+            if (!_entMan.HasComponent<DoAfterComponent>(performer))
             {
                 AddDisconnectedOrgan(target);
                 return;
@@ -310,7 +313,7 @@ namespace Content.Server.Body.Surgery
             }
         }
 
-        private void RemoveOrganSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
+        private void RemoveOrganSurgery(IBodyPartContainer container, ISurgeon surgeon, EntityUid performer)
         {
             if (Parent == null) return;
 
@@ -330,7 +333,7 @@ namespace Content.Server.Body.Surgery
         }
 
         private async void RemoveOrganSurgeryCallback(SharedMechanismComponent? target, IBodyPartContainer container, ISurgeon surgeon,
-            IEntity performer)
+            EntityUid performer)
         {
             if (Parent == null || target == null || !Parent.Mechanisms.Contains(target))
             {
@@ -339,21 +342,21 @@ namespace Content.Server.Body.Surgery
 
             performer.PopupMessage(Loc.GetString("biological-surgery-data-component-remove-organ-message"));
 
-            if (!performer.HasComponent<DoAfterComponent>())
+            if (!_entMan.HasComponent<DoAfterComponent>(performer))
             {
-                Parent.RemoveMechanism(target, performer.Transform.Coordinates);
+                Parent.RemoveMechanism(target, _entMan.GetComponent<TransformComponent>(performer).Coordinates);
                 RemoveDisconnectedOrgan(target);
                 return;
             }
 
             if (await SurgeryDoAfter(performer))
             {
-                Parent.RemoveMechanism(target, performer.Transform.Coordinates);
+                Parent.RemoveMechanism(target, _entMan.GetComponent<TransformComponent>(performer).Coordinates);
                 RemoveDisconnectedOrgan(target);
             }
         }
 
-        private async void RemoveBodyPartSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
+        private async void RemoveBodyPartSurgery(IBodyPartContainer container, ISurgeon surgeon, EntityUid performer)
         {
             if (Parent == null) return;
             if (container is not SharedBodyComponent body) return;

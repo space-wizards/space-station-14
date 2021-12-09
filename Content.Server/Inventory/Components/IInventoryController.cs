@@ -17,12 +17,12 @@ namespace Content.Server.Inventory.Components
         /// <param name="flagsCheck">Whether the entity passes default slot masks & flags checks.</param>
         /// <param name="reason">The translated reason why the item cannot be equiped, if this function returns false. Can be null.</param>
         /// <returns>True if the entity can be equipped, false otherwise</returns>
-        bool CanEquip(Slots slot, IEntity entity, bool flagsCheck, [NotNullWhen(false)] out string? reason)
+        bool CanEquip(Slots slot, EntityUid entity, bool flagsCheck, [NotNullWhen(false)] out string? reason)
         {
             reason = null;
             return flagsCheck;
         }
 
-        bool CanEquip(Slots slot, IEntity entity, bool flagsCheck) => CanEquip(slot, entity, flagsCheck, out _);
+        bool CanEquip(Slots slot, EntityUid entity, bool flagsCheck) => CanEquip(slot, entity, flagsCheck, out _);
     }
 }

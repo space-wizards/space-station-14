@@ -99,7 +99,7 @@
 - type: entity
   id: CrateNPCMonkeyCube
   name: monkey cube crate
-  parent: CrateGenericonimo
+  parent: CrateGenericSteel
   components:
   - type: StorageFill
     contents:

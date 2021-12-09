@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Content.Server.Administration.Logs;
 using Content.Server.Alert;
 using Content.Server.Atmos.Components;
 using Content.Server.Stunnable;
@@ -8,6 +9,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Damage;
+using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Temperature;
@@ -26,6 +28,7 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly StunSystem _stunSystem = default!;
         [Dependency] private readonly TemperatureSystem _temperatureSystem = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+        [Dependency] private readonly AdminLogSystem _logSystem = default!;
 
         private const float MinimumFireStacks = -10f;
         private const float MaximumFireStacks = 20f;
@@ -54,7 +57,7 @@ namespace Content.Server.Atmos.EntitySystems
                 return;
 
             var isHotEvent = new IsHotEvent();
-            RaiseLocalEvent(args.Used.Uid, isHotEvent, false);
+            RaiseLocalEvent(args.Used, isHotEvent, false);
 
             if (!isHotEvent.IsHot)
                 return;
@@ -65,7 +68,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void OnCollideEvent(EntityUid uid, FlammableComponent flammable, StartCollideEvent args)
         {
-            var otherUid = args.OtherFixture.Body.Owner.Uid;
+            var otherUid = args.OtherFixture.Body.Owner;
             if (!EntityManager.TryGetComponent(otherUid, out FlammableComponent? otherFlammable))
                 return;
 
@@ -140,6 +143,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!flammable.OnFire)
                 return;
 
+            _logSystem.Add(LogType.Flammable, $"{flammable.Owner} stopped being on fire damage");
             flammable.OnFire = false;
             flammable.FireStacks = 0;
 
@@ -155,6 +159,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             if (flammable.FireStacks > 0 && !flammable.OnFire)
             {
+                _logSystem.Add(LogType.Flammable, $"{flammable.Owner} is on fire");
                 flammable.OnFire = true;
             }
 
@@ -168,13 +173,13 @@ namespace Content.Server.Atmos.EntitySystems
             if (!Resolve(uid, ref flammable, ref alerts))
                 return;
 
-            if (!flammable.OnFire || !_actionBlockerSystem.CanInteract(flammable.Owner.Uid) || flammable.Resisting)
+            if (!flammable.OnFire || !_actionBlockerSystem.CanInteract(flammable.Owner) || flammable.Resisting)
                 return;
 
             flammable.Resisting = true;
 
             flammable.Owner.PopupMessage(Loc.GetString("flammable-component-resist-message"));
-            _stunSystem.TryParalyze(uid, TimeSpan.FromSeconds(2f), alerts: alerts);
+            _stunSystem.TryParalyze(uid, TimeSpan.FromSeconds(2f), true, alerts: alerts);
 
             // TODO FLAMMABLE: Make this not use TimerComponent...
             flammable.Owner.SpawnTimer(2000, () =>
@@ -195,9 +200,9 @@ namespace Content.Server.Atmos.EntitySystems
                 var fireStackDelta = fireStackMod - flammable.FireStacks;
                 if (fireStackDelta > 0)
                 {
-                    AdjustFireStacks(flammable.OwnerUid, fireStackDelta, flammable);
+                    AdjustFireStacks((flammable).Owner, fireStackDelta, flammable);
                 }
-                Ignite(flammable.OwnerUid, flammable);
+                Ignite((flammable).Owner, flammable);
             }
             _fireEvents.Clear();
 
@@ -211,7 +216,7 @@ namespace Content.Server.Atmos.EntitySystems
             // TODO: This needs cleanup to take off the crust from TemperatureComponent and shit.
             foreach (var (flammable, physics, transform) in EntityManager.EntityQuery<FlammableComponent, IPhysBody, TransformComponent>())
             {
-                var uid = flammable.Owner.Uid;
+                var uid = flammable.Owner;
 
                 // Slowly dry ourselves off if wet.
                 if (flammable.FireStacks < 0)
@@ -219,7 +224,7 @@ namespace Content.Server.Atmos.EntitySystems
                     flammable.FireStacks = MathF.Min(0, flammable.FireStacks + 1);
                 }
 
-                flammable.Owner.TryGetComponent(out ServerAlertsComponent? status);
+                EntityManager.TryGetComponent(flammable.Owner, out ServerAlertsComponent? status);
 
                 if (!flammable.OnFire)
                 {

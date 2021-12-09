@@ -1,6 +1,41 @@
 - type: entity
-  name: retro laser gun
+  id: BatteryGunBase
   parent: BaseItem
+  abstract: true
+  components:
+  - type: RangedWeapon
+  - type: BatteryBarrel
+    fireRate: 2
+    minAngle: 0
+    maxAngle: 45
+    angleIncrease: 15
+    angleDecay: 45
+    ammoPrototype: RedLaser
+    currentSelector: Single
+    allSelectors:
+    - Single
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser.ogg
+    cellSlot:
+      ejectOnUse: true
+      insertSound: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+      ejectSound: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
+      soundOptions: 
+        volume: -2
+      startingItem: PowerCellSmallStandard
+      whitelist:
+        components:
+        - Battery
+  - type: Appearance
+    visuals:
+    - type: MagVisualizer
+      magState: mag
+      steps: 5
+      zeroVisible: false
+
+- type: entity
+  name: retro laser gun
+  parent: BatteryGunBase
   id: LaserGun
   description: A weapon using light amplified by the stimulated emission of radiation.
   components:
@@ -19,23 +54,7 @@
   - type: RangedWeapon
   - type: BatteryBarrel
     minAngle: 10
-    maxAngle: 45
-    angleIncrease: 15
-    angleDecay: 45
-    currentSelector: Single
-    allSelectors:
-    - Single
-    fireRate: 2
-    powerCellPrototype: PowerCellSmallStandard
-    powerCellRemovable: true
     fireCost: 40
-    ammoPrototype: RedLaser
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/laser.ogg
-    soundPowerCellInsert:
-      path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
-    soundPowerCellEject:
-      path: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
   - type: Appearance
     visuals:
     - type: MagVisualizer
@@ -45,7 +64,7 @@
 
 - type: entity
   name: makeshift laser gun
-  parent: BaseItem
+  parent: BatteryGunBase
   id: MakeshiftLaser
   description: Better pray it won't burn your hands off.
   components:
@@ -61,36 +80,12 @@
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Battery/makeshift.rsi
-  - type: RangedWeapon
   - type: BatteryBarrel
-    currentSelector: Single
-    allSelectors:
-    - Single
-    fireRate: 2
-    minAngle: 0
-    maxAngle: 45
-    angleIncrease: 15
-    angleDecay: 45
-    powerCellPrototype: PowerCellSmallStandard
-    powerCellRemovable: true
     fireCost: 40
-    ammoPrototype: RedLaser
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/laser.ogg
-    soundPowerCellInsert:
-      path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
-    soundPowerCellEject:
-      path: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
-  - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 5
-      zeroVisible: false
 
 - type: entity
   name: svalinn laser pistol
-  parent: BaseItem
+  parent: BatteryGunBase
   id: LaserPistolSvalinn
   description: A cheap and widely used laser pistol.
   components:
@@ -106,36 +101,12 @@
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Battery/svalinn.rsi
-  - type: RangedWeapon
   - type: BatteryBarrel
-    currentSelector: Single
-    allSelectors:
-    - Single
-    fireRate: 2
-    minAngle: 0
-    maxAngle: 45
-    angleIncrease: 15
-    angleDecay: 45
-    powerCellPrototype: PowerCellSmallStandard
-    powerCellRemovable: true
     fireCost: 20
-    ammoPrototype: RedLaser
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/laser.ogg
-    soundPowerCellInsert:
-      path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
-    soundPowerCellEject:
-      path: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
-  - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 5
-      zeroVisible: false
 
 - type: entity
   name: cog laser carbine
-  parent: BaseItem
+  parent: BatteryGunBase
   id: LaserRifleCog
   description: Favoured by Nanotrasen Security for being cheap and easy to use.
   components:
@@ -151,36 +122,12 @@
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Battery/cog.rsi
-  - type: RangedWeapon
   - type: BatteryBarrel
-    currentSelector: Single
-    allSelectors:
-    - Single
-    fireRate: 2
-    minAngle: 0
-    maxAngle: 45
-    angleIncrease: 15
-    angleDecay: 45
-    powerCellPrototype: PowerCellSmallStandard
-    powerCellRemovable: true
     fireCost: 10
-    ammoPrototype: RedLaser
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/laser.ogg
-    soundPowerCellInsert:
-      path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
-    soundPowerCellEject:
-      path: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
-  - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 5
-      zeroVisible: false
 
 - type: entity
   name: laser cannon
-  parent: BaseItem
+  parent: BatteryGunBase
   id: LaserCannon
   description: A heavy duty, high powered laser weapon.
   components:
@@ -196,36 +143,25 @@
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
-  - type: RangedWeapon
   - type: BatteryBarrel
-    currentSelector: Single
-    allSelectors:
-    - Single
-    fireRate: 2
-    minAngle: 0
-    maxAngle: 45
-    angleIncrease: 15
-    angleDecay: 45
-    powerCellPrototype: PowerCellSmallSuper
-    powerCellRemovable: true
     fireCost: 600
     ammoPrototype: RedHeavyLaser
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
-    soundPowerCellInsert:
-      path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
-    soundPowerCellEject:
-      path: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
-  - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 5
-      zeroVisible: false
+    cellSlot:
+      ejectOnUse: true
+      insertSound: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+      ejectSound: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
+      soundOptions: 
+        volume: -2
+      startingItem: PowerCellSmallSuper
+      whitelist:
+        components:
+        - Battery
 
 - type: entity
   name: x-ray cannon
-  parent: BaseItem
+  parent: BatteryGunBase
   id: XrayCannon
   description: An experimental weapon that uses concentrated x-ray energy against its target.
   components:
@@ -241,26 +177,21 @@
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Battery/xray.rsi
-  - type: RangedWeapon
   - type: BatteryBarrel
-    currentSelector: Single
-    allSelectors:
-    - Single
-    fireRate: 2
-    minAngle: 0
-    maxAngle: 45
-    angleIncrease: 15
-    angleDecay: 45
-    powerCellPrototype: PowerCellSmallSuper
-    powerCellRemovable: true
     fireCost: 600
     ammoPrototype: XrayLaser
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
-    soundPowerCellInsert:
-      path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
-    soundPowerCellEject:
-      path: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
+    cellSlot:
+      ejectOnUse: true
+      insertSound: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+      ejectSound: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
+      soundOptions: 
+        volume: -2
+      startingItem: PowerCellSmallSuper
+      whitelist:
+        components:
+        - Battery
   - type: Appearance
     visuals:
     - type: MagVisualizer
@@ -270,7 +201,7 @@
 
 - type: entity
   name: taser
-  parent: BaseItem
+  parent: BatteryGunBase
   id: TaserGun
   description: A low-capacity, energy-based stun gun used by security teams to subdue targets at range.
   components:
@@ -293,26 +224,23 @@
     Slots:
     - Belt
     HeldPrefix: taser4
-  - type: RangedWeapon
   - type: BatteryBarrel
-    currentSelector: Single
-    allSelectors:
-    - Single
-    fireRate: 2
     minAngle: 5
-    maxAngle: 45
     angleIncrease: 20
-    angleDecay: 15
-    powerCellPrototype: PowerCellSmallStandard
-    powerCellRemovable: false
     fireCost: 80
     ammoPrototype: BulletTaser
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser.ogg
-    soundPowerCellInsert:
-      path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
-    soundPowerCellEject:
-      path: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
+    cellSlot:
+      insertSound: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+      ejectSound: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
+      soundOptions: 
+        volume: -2
+      locked: true
+      startingItem: PowerCellSmallStandard
+      whitelist:
+        components:
+        - Battery
   - type: Appearance
     visuals:
     - type: MagVisualizer
@@ -322,7 +250,7 @@
 
 - type: entity
   name: laser gun
-  parent: BaseItem
+  parent: BatteryGunBase
   id: LaserSecGun
   description: A laser gun.
   components:
@@ -338,28 +266,16 @@
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
-  - type: RangedWeapon
   - type: BatteryBarrel
-    minAngle: 10
-    maxAngle: 45
-    angleIncrease: 15
-    angleDecay: 45
-    currentSelector: Single
-    allSelectors:
-    - Single
+    minAngle: 1
     fireRate: 6
-    powerCellPrototype: PowerCellMediumStandard
-    powerCellRemovable: true
-    ammoPrototype: RedLaser
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/laser.ogg
-    soundPowerCellInsert:
-      path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
-    soundPowerCellEject:
-      path: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
-  - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 5
-      zeroVisible: false
+    cellSlot:
+      ejectOnUse: true
+      insertSound: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+      ejectSound: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
+      soundOptions: 
+        volume: -2
+      startingItem: PowerCellMediumStandard
+      whitelist:
+        components:
+        - Battery

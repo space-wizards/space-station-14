@@ -2,6 +2,7 @@ using Content.Shared.Weapons.Melee;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 
 namespace Content.Client.Weapons.Melee.Components
@@ -9,6 +10,8 @@ namespace Content.Client.Weapons.Melee.Components
     [RegisterComponent]
     public sealed class MeleeWeaponArcAnimationComponent : Component
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "MeleeWeaponArcAnimation";
 
         private MeleeWeaponAnimationPrototype? _meleeWeaponAnimation;
@@ -21,16 +24,16 @@ namespace Content.Client.Weapons.Melee.Components
         {
             base.Initialize();
 
-            _sprite = Owner.GetComponent<SpriteComponent>();
+            _sprite = _entMan.GetComponent<SpriteComponent>(Owner);
         }
 
-        public void SetData(MeleeWeaponAnimationPrototype prototype, Angle baseAngle, IEntity attacker, bool followAttacker = true)
+        public void SetData(MeleeWeaponAnimationPrototype prototype, Angle baseAngle, EntityUid attacker, bool followAttacker = true)
         {
             _meleeWeaponAnimation = prototype;
             _sprite?.AddLayer(new RSI.StateId(prototype.State));
             _baseAngle = baseAngle;
             if(followAttacker)
-                Owner.Transform.AttachParent(attacker);
+                _entMan.GetComponent<TransformComponent>(Owner).AttachParent(attacker);
         }
 
         internal void Update(float frameTime)
@@ -50,16 +53,17 @@ namespace Content.Client.Weapons.Melee.Components
                 _sprite.Color = new Color(r, g, b, a);
             }
 
+            var transform = _entMan.GetComponent<TransformComponent>(Owner);
+
             switch (_meleeWeaponAnimation.ArcType)
             {
                 case WeaponArcType.Slash:
                     var angle = Angle.FromDegrees(_meleeWeaponAnimation.Width)/2;
-                    Owner.Transform.WorldRotation =
-                        _baseAngle + Angle.Lerp(-angle, angle, (float) (_timer / _meleeWeaponAnimation.Length.TotalSeconds));
+                    transform.WorldRotation = _baseAngle + Angle.Lerp(-angle, angle, (float) (_timer / _meleeWeaponAnimation.Length.TotalSeconds));
                     break;
 
                 case WeaponArcType.Poke:
-                    Owner.Transform.WorldRotation = _baseAngle;
+                    transform.WorldRotation = _baseAngle;
 
                     if (_sprite != null)
                     {
@@ -71,7 +75,7 @@ namespace Content.Client.Weapons.Melee.Components
 
             if (_meleeWeaponAnimation.Length.TotalSeconds <= _timer)
             {
-                Owner.Delete();
+                _entMan.DeleteEntity(Owner);
             }
         }
     }

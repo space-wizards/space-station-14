@@ -1,44 +1,42 @@
 using System.Collections.Generic;
-using System.Linq;
 using Content.Server.AI.Components;
 using Content.Shared.Damage;
 using JetBrains.Annotations;
-using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Map;
 using Robust.Shared.Player;
 
 namespace Content.Server.AI.WorldState.States.Mobs
 {
     [UsedImplicitly]
-    public sealed class NearbyPlayersState : CachedStateData<List<IEntity>>
+    public sealed class NearbyPlayersState : CachedStateData<List<EntityUid>>
     {
         public override string Name => "NearbyPlayers";
 
-        protected override List<IEntity> GetTrueValue()
+        protected override List<EntityUid> GetTrueValue()
         {
-            var result = new List<IEntity>();
+            var result = new List<EntityUid>();
 
-            if (!Owner.TryGetComponent(out AiControllerComponent? controller))
+            var entMan = IoCManager.Resolve<IEntityManager>();
+            if (!entMan.TryGetComponent(Owner, out AiControllerComponent? controller))
             {
                 return result;
             }
 
             var nearbyPlayers = Filter.Empty()
-                .AddInRange(Owner.Transform.MapPosition, controller.VisionRadius)
+                .AddInRange(entMan.GetComponent<TransformComponent>(Owner).MapPosition, controller.VisionRadius)
                 .Recipients;
 
             foreach (var player in nearbyPlayers)
             {
-                if (player.AttachedEntity == null)
+                if (player.AttachedEntity is not {Valid: true} playerEntity)
                 {
                     continue;
                 }
 
-                if (player.AttachedEntity != Owner && player.AttachedEntity.HasComponent<DamageableComponent>())
+                if (player.AttachedEntity != Owner && entMan.HasComponent<DamageableComponent>(playerEntity))
                 {
-                    result.Add(player.AttachedEntity);
+                    result.Add(playerEntity);
                 }
             }
 

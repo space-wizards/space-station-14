@@ -1,14 +1,11 @@
 using System;
-using Content.Shared.Physics.Pull;
 using Robust.Shared.Analyzers;
-using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
+using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics.Joints;
-using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Pulling.Components
@@ -27,20 +24,20 @@ namespace Content.Shared.Pulling.Components
         /// The current entity pulling this component.
         /// SharedPullingStateManagementSystem should be writing this. This means definitely not you.
         /// </summary>
-        public IEntity? Puller { get; set; }
+        public EntityUid? Puller { get; set; }
         /// <summary>
         /// The pull joint.
         /// SharedPullingStateManagementSystem should be writing this. This means probably not you.
         /// </summary>
         public DistanceJoint? PullJoint { get; set; }
 
-        public bool BeingPulled => Puller != null;
+        public bool BeingPulled => Puller != default;
 
         public EntityCoordinates? MovingTo { get; set; }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
-            return new PullableComponentState(Puller?.Uid);
+            return new PullableComponentState(Puller);
         }
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
@@ -52,25 +49,25 @@ namespace Content.Shared.Pulling.Components
                 return;
             }
 
-            if (state.Puller == null)
+            if (!state.Puller.HasValue)
             {
                 EntitySystem.Get<SharedPullingStateManagementSystem>().ForceDisconnectPullable(this);
                 return;
             }
 
-            if (!Owner.EntityManager.TryGetEntity(state.Puller.Value, out var entity))
+            if (!state.Puller.Value.IsValid())
             {
                 Logger.Error($"Invalid entity {state.Puller.Value} for pulling");
                 return;
             }
 
-            if (Puller == entity)
+            if (Puller == state.Puller)
             {
                 // don't disconnect and reconnect a puller for no reason
                 return;
             }
 
-            if (!entity.TryGetComponent<SharedPullerComponent>(out var comp))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedPullerComponent?>(state.Puller.Value, out var comp))
             {
                 Logger.Error($"Entity {state.Puller.Value} for pulling had no Puller component");
                 // ensure it disconnects from any different puller, still
@@ -89,7 +86,7 @@ namespace Content.Shared.Pulling.Components
 
         protected override void OnRemove()
         {
-            if (Puller != null)
+            if (Puller != default)
             {
                 // This is absolute paranoia but it's also absolutely necessary. Too many puller state bugs. - 20kdc
                 Logger.ErrorS("c.go.c.pulling", "PULLING STATE CORRUPTION IMMINENT IN PULLABLE {0} - OnRemove called when Puller is set!", Owner);

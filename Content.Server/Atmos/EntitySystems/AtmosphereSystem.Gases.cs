@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Content.Server.Atmos.Reactions;
 using Content.Shared.Atmos;
-using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using DependencyAttribute = Robust.Shared.IoC.DependencyAttribute;
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -37,8 +38,25 @@ namespace Content.Server.Atmos.EntitySystems
 
         public float GetHeatCapacity(GasMixture mixture)
         {
-            Span<float> tmp = stackalloc float[mixture.Moles.Length];
-            NumericsHelpers.Multiply(mixture.Moles, GasSpecificHeats, tmp);
+            return GetHeatCapacityCalculation(mixture.Moles, mixture.Immutable);
+        }
+
+        public float GetHeatCapacityArchived(GasMixture mixture)
+        {
+            return GetHeatCapacityCalculation(mixture.MolesArchived, mixture.Immutable);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private float GetHeatCapacityCalculation(float[] moles, bool immutable)
+        {
+            // Little hack to make space gas mixtures have heat capacity, therefore allowing them to cool down rooms.
+            if (immutable && MathHelper.CloseTo(NumericsHelpers.HorizontalAdd(moles), 0f))
+            {
+                return Atmospherics.SpaceHeatCapacity;
+            }
+
+            Span<float> tmp = stackalloc float[moles.Length];
+            NumericsHelpers.Multiply(moles, GasSpecificHeats, tmp);
             return MathF.Max(NumericsHelpers.HorizontalAdd(tmp), Atmospherics.MinimumHeatCapacity);
         }
 
@@ -72,7 +90,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         public float Share(GasMixture receiver, GasMixture sharer, int atmosAdjacentTurfs)
         {
-            var temperatureDelta = receiver.Temperature - sharer.Temperature;
+            var temperatureDelta = receiver.TemperatureArchived - sharer.TemperatureArchived;
             var absTemperatureDelta = Math.Abs(temperatureDelta);
             var oldHeatCapacity = 0f;
             var oldSharerHeatCapacity = 0f;
@@ -123,12 +141,12 @@ namespace Content.Server.Atmos.EntitySystems
                 // Transfer of thermal energy (via changed heat capacity) between self and sharer.
                 if (!receiver.Immutable && newHeatCapacity > Atmospherics.MinimumHeatCapacity)
                 {
-                    receiver.Temperature = ((oldHeatCapacity * receiver.Temperature) - (heatCapacityToSharer * receiver.Temperature) + (heatCapacitySharerToThis * sharer.Temperature)) / newHeatCapacity;
+                    receiver.Temperature = ((oldHeatCapacity * receiver.Temperature) - (heatCapacityToSharer * receiver.TemperatureArchived) + (heatCapacitySharerToThis * sharer.TemperatureArchived)) / newHeatCapacity;
                 }
 
                 if (!sharer.Immutable && newSharerHeatCapacity > Atmospherics.MinimumHeatCapacity)
                 {
-                    sharer.Temperature = ((oldSharerHeatCapacity * sharer.Temperature) - (heatCapacitySharerToThis * sharer.Temperature) + (heatCapacityToSharer*receiver.Temperature)) / newSharerHeatCapacity;
+                    sharer.Temperature = ((oldSharerHeatCapacity * sharer.Temperature) - (heatCapacitySharerToThis * sharer.TemperatureArchived) + (heatCapacityToSharer*receiver.TemperatureArchived)) / newSharerHeatCapacity;
                 }
 
                 // Thermal energy of the system (self and sharer) is unchanged.
@@ -147,17 +165,17 @@ namespace Content.Server.Atmos.EntitySystems
             var moles = receiver.TotalMoles;
             var theirMoles = sharer.TotalMoles;
 
-            return (receiver.Temperature * (moles + movedMoles)) - (sharer.Temperature * (theirMoles - movedMoles)) * Atmospherics.R / receiver.Volume;
+            return (receiver.TemperatureArchived * (moles + movedMoles)) - (sharer.TemperatureArchived * (theirMoles - movedMoles)) * Atmospherics.R / receiver.Volume;
 
         }
 
         public float TemperatureShare(GasMixture receiver, GasMixture sharer, float conductionCoefficient)
         {
-            var temperatureDelta = receiver.Temperature - sharer.Temperature;
+            var temperatureDelta = receiver.TemperatureArchived - sharer.TemperatureArchived;
             if (MathF.Abs(temperatureDelta) > Atmospherics.MinimumTemperatureDeltaToConsider)
             {
-                var heatCapacity = GetHeatCapacity(receiver);
-                var sharerHeatCapacity = GetHeatCapacity(sharer);
+                var heatCapacity = GetHeatCapacityArchived(receiver);
+                var sharerHeatCapacity = GetHeatCapacityArchived(sharer);
 
                 if (sharerHeatCapacity > Atmospherics.MinimumHeatCapacity && heatCapacity > Atmospherics.MinimumHeatCapacity)
                 {
@@ -176,10 +194,10 @@ namespace Content.Server.Atmos.EntitySystems
 
         public float TemperatureShare(GasMixture receiver, float conductionCoefficient, float sharerTemperature, float sharerHeatCapacity)
         {
-            var temperatureDelta = receiver.Temperature - sharerTemperature;
+            var temperatureDelta = receiver.TemperatureArchived - sharerTemperature;
             if (MathF.Abs(temperatureDelta) > Atmospherics.MinimumTemperatureDeltaToConsider)
             {
-                var heatCapacity = GetHeatCapacity(receiver);
+                var heatCapacity = GetHeatCapacityArchived(receiver);
 
                 if (sharerHeatCapacity > Atmospherics.MinimumHeatCapacity && heatCapacity > Atmospherics.MinimumHeatCapacity)
                 {
