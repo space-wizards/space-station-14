@@ -25,9 +25,9 @@ namespace Content.Server.Explosion.EntitySystems
     public class TriggerEvent : HandledEntityEventArgs
     {
         public EntityUid Triggered { get; }
-        public EntityUid User { get; }
+        public EntityUid? User { get; }
 
-        public TriggerEvent(EntityUid triggered, EntityUid user = default)
+        public TriggerEvent(EntityUid triggered, EntityUid? user = null)
         {
             Triggered = triggered;
             User = user;
@@ -62,7 +62,7 @@ namespace Content.Server.Explosion.EntitySystems
         }
 
         // You really shouldn't call this directly (TODO Change that when ExplosionHelper gets changed).
-        public void Explode(EntityUid uid, ExplosiveComponent component, EntityUid user = default)
+        public void Explode(EntityUid uid, ExplosiveComponent component, EntityUid? user = null)
         {
             if (component.Exploding)
             {
@@ -123,23 +123,23 @@ namespace Content.Server.Explosion.EntitySystems
 
         private void HandleCollide(EntityUid uid, TriggerOnCollideComponent component, StartCollideEvent args)
         {
-            EntityUid user = default;
+            EntityUid? user = null;
             if (EntityManager.TryGetComponent(uid, out ProjectileComponent projectile))
                 user = projectile.Shooter;
             else if (EntityManager.TryGetComponent(uid, out ThrownItemComponent thrown))
-                user = thrown.Thrower ?? default;
+                user = thrown.Thrower;
 
             Trigger(component.Owner, user);
         }
 
 
-        public void Trigger(EntityUid trigger, EntityUid user = default)
+        public void Trigger(EntityUid trigger, EntityUid? user = null)
         {
             var triggerEvent = new TriggerEvent(trigger, user);
             EntityManager.EventBus.RaiseLocalEvent(trigger, triggerEvent);
         }
 
-        public void HandleTimerTrigger(TimeSpan delay, EntityUid triggered, EntityUid user = default)
+        public void HandleTimerTrigger(TimeSpan delay, EntityUid triggered, EntityUid? user = null)
         {
             if (delay.TotalSeconds <= 0)
             {

@@ -294,7 +294,7 @@ namespace Content.Server.Explosion.EntitySystems
             int heavyImpactRange = 0,
             int lightImpactRange = 0,
             int flashRange = 0,
-            EntityUid user = default,
+            EntityUid? user = null,
             ExplosiveComponent? explosive = null,
             TransformComponent? transform = null)
         {
@@ -333,8 +333,8 @@ namespace Content.Server.Explosion.EntitySystems
             int heavyImpactRange = 0,
             int lightImpactRange = 0,
             int flashRange = 0,
-            EntityUid entity = default,
-            EntityUid user = default)
+            EntityUid? entity = null,
+            EntityUid? user = null)
         {
             var mapId = epicenter.GetMapId(EntityManager);
             if (mapId == MapId.Nullspace)
@@ -344,19 +344,19 @@ namespace Content.Server.Explosion.EntitySystems
 
             // logging
             var text = $"{epicenter} with range {devastationRange}/{heavyImpactRange}/{lightImpactRange}/{flashRange}";
-            if (!entity.Valid)
+            if (entity == null || !entity.Value.IsValid())
             {
                 _logSystem.Add(LogType.Explosion, LogImpact.High, $"Explosion spawned at {text}");
             }
-            else if (!user.Valid)
+            else if (user == null || !user.Value.IsValid())
             {
                 _logSystem.Add(LogType.Explosion, LogImpact.High,
-                    $"{ToPrettyString(entity)} exploded at {text}");
+                    $"{ToPrettyString(entity.Value)} exploded at {text}");
             }
             else
             {
                 _logSystem.Add(LogType.Explosion, LogImpact.High,
-                    $"{ToPrettyString(user)} caused {ToPrettyString(entity)} to explode at {text}");
+                    $"{ToPrettyString(user.Value)} caused {ToPrettyString(entity.Value)} to explode at {text}");
             }
 
             var maxRange = MathHelper.Max(devastationRange, heavyImpactRange, lightImpactRange, 0);
