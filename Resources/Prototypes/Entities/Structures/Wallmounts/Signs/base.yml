@@ -5,13 +5,19 @@
   components:
   - type: Clickable
   - type: InteractionOutline
+  - type: Rotatable
   - type: Physics
     bodyType: Static
     canCollide: false
   - type: Fixtures
     fixtures:
     - shape:
-        !type:PhysShapeAabb {}
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.1,0.4,0.1"
+      layer:
+      - SmallImpassable
+      mask:
+      - VaultImpassable
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
