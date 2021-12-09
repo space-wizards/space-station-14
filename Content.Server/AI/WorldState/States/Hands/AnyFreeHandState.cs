@@ -1,5 +1,7 @@
 using Content.Server.Hands.Components;
 using JetBrains.Annotations;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.AI.WorldState.States.Hands
 {
@@ -9,7 +11,7 @@ namespace Content.Server.AI.WorldState.States.Hands
         public override string Name => "AnyFreeHand";
         public override bool GetValue()
         {
-            if (!Owner.TryGetComponent(out HandsComponent? handsComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out HandsComponent? handsComponent))
             {
                 return false;
             }

@@ -1,8 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Items;
 using Content.Shared.Item;
-using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using static Content.Shared.Inventory.EquipmentSlotDefines;
 
@@ -24,7 +24,7 @@ namespace Content.Server.Inventory.Components
             _inventory = Owner.EnsureComponent<InventoryComponent>();
         }
 
-        bool IInventoryController.CanEquip(Slots slot, IEntity entity, bool flagsCheck, [NotNullWhen(false)] out string? reason)
+        bool IInventoryController.CanEquip(Slots slot, EntityUid entity, bool flagsCheck, [NotNullWhen(false)] out string? reason)
         {
             var slotMask = SlotMasks[slot];
             reason = null;
@@ -42,7 +42,7 @@ namespace Content.Server.Inventory.Components
 
                 if (slotMask == SlotFlags.POCKET)
                 {
-                    var itemComponent = entity.GetComponent<ItemComponent>();
+                    var itemComponent = IoCManager.Resolve<IEntityManager>().GetComponent<ItemComponent>(entity);
 
                     // If this item is small enough then it always fits in pockets.
                     if (itemComponent.Size <= (int) ReferenceSizes.Pocket)

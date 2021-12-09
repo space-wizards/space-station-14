@@ -27,7 +27,7 @@ namespace Content.Server.Verbs.Commands
             var verbSystem = EntitySystem.Get<SharedVerbSystem>();
 
             // get the 'player' entity (defaulting to command user, otherwise uses a uid)
-            IEntity? playerEntity = null;
+            EntityUid? playerEntity = null;
             if (!int.TryParse(args[0], out var intPlayerUid))
             {
                 if (args[0] == "self" && shell.Player?.AttachedEntity != null)
@@ -42,7 +42,7 @@ namespace Content.Server.Verbs.Commands
             }
             else
             {
-                entityManager.TryGetEntity(new EntityUid(intPlayerUid), out playerEntity);
+                entityManager.EntityExists(new EntityUid(intPlayerUid));
             }
 
             // gets the target entity
@@ -58,16 +58,14 @@ namespace Content.Server.Verbs.Commands
                 return;
             }
 
-            var entUid = new EntityUid(intUid);
-            if (!entityManager.TryGetEntity(entUid, out var target))
+            var target = new EntityUid(intUid);
+            if (!entityManager.EntityExists(target))
             {
                 shell.WriteError(Loc.GetString("list-verbs-command-invalid-target-entity"));
                 return;
             }
 
-            var verbs = verbSystem.GetLocalVerbs(
-                target, playerEntity, VerbType.All, true
-            );
+            var verbs = verbSystem.GetLocalVerbs(target, playerEntity.Value, VerbType.All, true);
 
             foreach (var (type, set) in verbs)
             {

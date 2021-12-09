@@ -1,6 +1,7 @@
 ﻿using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using static Content.Shared.AME.SharedAMEShieldComponent;
 
 namespace Content.Client.AME.Visualizers
@@ -8,10 +9,10 @@ namespace Content.Client.AME.Visualizers
     [UsedImplicitly]
     public class AMEVisualizer : AppearanceVisualizer
     {
-        public override void InitializeEntity(IEntity entity)
+        public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
-            var sprite = entity.GetComponent<ISpriteComponent>();
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(entity);
             sprite.LayerMapSet(Layers.Core, sprite.AddLayerState("core"));
             sprite.LayerSetVisible(Layers.Core, false);
             sprite.LayerMapSet(Layers.CoreState, sprite.AddLayerState("core_weak"));
@@ -21,7 +22,7 @@ namespace Content.Client.AME.Visualizers
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
-            var sprite = component.Owner.GetComponent<ISpriteComponent>();
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner);
             if (component.TryGetData<string>(AMEShieldVisuals.Core, out var core))
             {
                 if (core == "isCore")

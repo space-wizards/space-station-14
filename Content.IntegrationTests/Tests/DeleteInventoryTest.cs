@@ -28,17 +28,17 @@ namespace Content.IntegrationTests.Tests
 
                 var entMgr = IoCManager.Resolve<IEntityManager>();
                 var container = entMgr.SpawnEntity(null, MapCoordinates.Nullspace);
-                var inv = container.AddComponent<InventoryComponent>();
+                var inv = entMgr.AddComponent<InventoryComponent>(container);
 
                 var child = entMgr.SpawnEntity(null, MapCoordinates.Nullspace);
-                var item = child.AddComponent<ClothingComponent>();
+                var item = entMgr.AddComponent<ClothingComponent>(child);
                 item.SlotFlags = SlotFlags.HEAD;
 
                 // Equip item.
                 Assert.That(inv.Equip(Slots.HEAD, item, false), Is.True);
 
                 // Delete parent.
-                container.Delete();
+                entMgr.DeleteEntity(container);
 
                 // Assert that child item was also deleted.
                 Assert.That(item.Deleted, Is.True);

@@ -1,6 +1,7 @@
 using Content.Server.Doors.Components;
 using Content.Shared.Doors;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Physics.Dynamics;
 
 namespace Content.Server.Doors
@@ -45,7 +46,7 @@ namespace Content.Server.Doors
 
         private void HandleCollide(EntityUid uid, ServerDoorComponent component, StartCollideEvent args)
         {
-            if (!args.OtherFixture.Body.Owner.HasComponent<DoorBumpOpenerComponent>())
+            if (!EntityManager.HasComponent<DoorBumpOpenerComponent>(args.OtherFixture.Body.Owner))
             {
                 return;
             }

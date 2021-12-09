@@ -16,12 +16,12 @@ namespace Content.Shared.Construction.Conditions
     [DataDefinition]
     public class WallmountCondition : IConstructionCondition
     {
-        public bool Condition(IEntity user, EntityCoordinates location, Direction direction)
+        public bool Condition(EntityUid user, EntityCoordinates location, Direction direction)
         {
             var entManager = IoCManager.Resolve<IEntityManager>();
 
             // get blueprint and user position
-            var userWorldPosition = user.Transform.WorldPosition;
+            var userWorldPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(user).WorldPosition;
             var objWorldPosition = location.ToMap(entManager).Position;
 
             // find direction from user to blueprint
@@ -36,7 +36,7 @@ namespace Content.Shared.Construction.Conditions
             var physics = EntitySystem.Get<SharedPhysicsSystem>();
             var rUserToObj = new CollisionRay(userWorldPosition, userToObject.Normalized, (int) CollisionGroup.Impassable);
             var length = userToObject.Length;
-            var userToObjRaycastResults = physics.IntersectRayWithPredicate(user.Transform.MapID, rUserToObj, maxLength: length,
+            var userToObjRaycastResults = physics.IntersectRayWithPredicate(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(user).MapID, rUserToObj, maxLength: length,
                 predicate: (e) => !e.HasTag("Wall"));
             if (!userToObjRaycastResults.Any())
                 return false;
@@ -46,7 +46,7 @@ namespace Content.Shared.Construction.Conditions
 
             // check that we didn't try to build wallmount that facing another adjacent wall
             var rAdjWall = new CollisionRay(objWorldPosition, direction.ToVec(), (int) CollisionGroup.Impassable);
-            var adjWallRaycastResults = physics.IntersectRayWithPredicate(user.Transform.MapID, rAdjWall, maxLength: 0.5f,
+            var adjWallRaycastResults = physics.IntersectRayWithPredicate(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(user).MapID, rAdjWall, maxLength: 0.5f,
                predicate: (e) => e == targetWall || !e.HasTag("Wall"));
             return !adjWallRaycastResults.Any();
         }

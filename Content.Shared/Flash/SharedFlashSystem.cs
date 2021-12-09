@@ -16,7 +16,7 @@ namespace Content.Shared.Flash
         private void OnGetStateAttempt(EntityUid uid, SharedFlashableComponent component, ComponentGetStateAttemptEvent args)
         {
             // Only send state to the player attached to the entity.
-            if (args.Player.AttachedEntityUid != uid)
+            if (args.Player.AttachedEntity != uid)
                 args.Cancel();
         }
 
