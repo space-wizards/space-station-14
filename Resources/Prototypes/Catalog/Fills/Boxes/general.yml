@@ -95,6 +95,7 @@
       - id: ClothingMaskBreath
       - id: EmergencyOxygenTankFilled
       - id: EpinephrineMedipen
+      - id: Flare
   - type: Sprite
     layers:
       - state: box
