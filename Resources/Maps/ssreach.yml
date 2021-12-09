@@ -1307,6 +1307,51 @@ entities:
       -19,5: 1
       -18,5: 1
       -17,5: 1
+      2,-10: 1
+      3,-11: 1
+      3,-10: 1
+      4,-12: 1
+      4,-11: 1
+      4,-10: 1
+      5,-13: 1
+      5,-12: 1
+      5,-11: 1
+      5,-10: 1
+      6,-14: 1
+      6,-13: 1
+      6,-12: 1
+      6,-11: 1
+      6,-10: 1
+      7,-15: 1
+      7,-14: 1
+      1,7: 1
+      2,7: 1
+      2,8: 1
+      3,7: 1
+      3,8: 1
+      3,9: 1
+      4,7: 1
+      4,8: 1
+      4,9: 1
+      4,10: 1
+      5,7: 1
+      5,8: 1
+      5,9: 1
+      5,10: 1
+      5,11: 1
+      6,7: 1
+      6,8: 1
+      6,9: 1
+      6,10: 1
+      6,11: 1
+      6,12: 1
+      7,7: 1
+      7,8: 1
+      7,9: 1
+      7,10: 1
+      7,11: 1
+      7,12: 1
+      7,13: 1
     uniqueMixes:
     - volume: 2500
       temperature: 293.15
@@ -1609,16 +1654,16 @@ entities:
   - fixtures:
     - shape: !type:PolygonShape
         vertices:
-        - 0,-7
-        - 0,-6
-        - -15,-6
-        - -15,-7
-      id: grid_chunk--15--7
+        - 0,-9
+        - 0,-8
+        - -1,-8
+        - -1,-9
+      id: grid_chunk--1--9
       mask:
       - MapGrid
       layer:
       - MapGrid
-      mass: 60
+      mass: 4
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -1632,6 +1677,32 @@ entities:
       layer:
       - MapGrid
       mass: 40
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 0,-7
+        - 0,-6
+        - -15,-6
+        - -15,-7
+      id: grid_chunk--15--7
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 60
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 0,-6
+        - 0,0
+        - -16,0
+        - -16,-6
+      id: grid_chunk--16--6
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 384
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -1687,32 +1758,6 @@ entities:
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
-        - 0,-9
-        - 0,-8
-        - -1,-8
-        - -1,-9
-      id: grid_chunk--1--9
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 4
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - -16,-4
-        - -16,-3
-        - -25,-3
-        - -25,-4
-      id: grid_chunk--25--4
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 36
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
         - 0,7
         - 0,8
         - -1,8
@@ -1723,84 +1768,6 @@ entities:
       layer:
       - MapGrid
       mass: 4
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 16,-10
-        - 16,0
-        - 0,0
-        - 0,-10
-      id: grid_chunk-0--10
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 640
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 16,-11
-        - 16,-10
-        - 1,-10
-        - 1,-11
-      id: grid_chunk-1--11
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 60
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 16,-12
-        - 16,-11
-        - 2,-11
-        - 2,-12
-      id: grid_chunk-2--12
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 56
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 16,-13
-        - 16,-12
-        - 3,-12
-        - 3,-13
-      id: grid_chunk-3--13
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 52
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 16,-14
-        - 16,-13
-        - 4,-13
-        - 4,-14
-      id: grid_chunk-4--14
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 48
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 16,-15
-        - 16,-14
-        - 5,-14
-        - 5,-15
-      id: grid_chunk-5--15
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 44
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -1817,47 +1784,99 @@ entities:
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
+        - 16,-15
+        - 16,-14
+        - 5,-14
+        - 5,-15
+      id: grid_chunk-5--15
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 44
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 16,-14
+        - 16,-13
+        - 4,-13
+        - 4,-14
+      id: grid_chunk-4--14
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 48
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 16,-13
+        - 16,-12
+        - 3,-12
+        - 3,-13
+      id: grid_chunk-3--13
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 52
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 16,-12
+        - 16,-11
+        - 2,-11
+        - 2,-12
+      id: grid_chunk-2--12
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 56
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 16,-11
+        - 16,-10
+        - 1,-10
+        - 1,-11
+      id: grid_chunk-1--11
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 60
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 16,-10
         - 16,0
-        - 16,7
-        - 0,7
+        - 0,0
+        - 0,-10
+      id: grid_chunk-0--10
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 640
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 16,0
+        - 16,9
+        - 0,9
         - 0,0
       id: grid_chunk-0-0
       mask:
       - MapGrid
       layer:
       - MapGrid
-      mass: 448
+      mass: 576
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
-        - 1,7
-        - 1,8
-        - 0,8
-        - 0,7
-      id: grid_chunk-0-7
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 4
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 2,8
-        - 2,9
-        - 0,9
-        - 0,8
-      id: grid_chunk-0-8
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 8
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 3,9
-        - 3,10
+        - 16,9
+        - 16,10
         - 1,10
         - 1,9
       id: grid_chunk-1-9
@@ -1865,12 +1884,12 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 8
+      mass: 60
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
-        - 4,10
-        - 4,11
+        - 16,10
+        - 16,11
         - 2,11
         - 2,10
       id: grid_chunk-2-10
@@ -1878,12 +1897,12 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 8
+      mass: 56
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
-        - 5,11
-        - 5,12
+        - 16,11
+        - 16,12
         - 3,12
         - 3,11
       id: grid_chunk-3-11
@@ -1891,12 +1910,12 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 8
+      mass: 52
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
-        - 6,12
-        - 6,13
+        - 16,12
+        - 16,13
         - 4,13
         - 4,12
       id: grid_chunk-4-12
@@ -1904,12 +1923,12 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 8
+      mass: 48
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
-        - 7,13
-        - 7,14
+        - 16,13
+        - 16,14
         - 5,14
         - 5,13
       id: grid_chunk-5-13
@@ -1917,20 +1936,7 @@ entities:
       - MapGrid
       layer:
       - MapGrid
-      mass: 8
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 16,7
-        - 16,14
-        - 8,14
-        - 8,7
-      id: grid_chunk-8-7
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 224
+      mass: 44
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -2142,6 +2148,58 @@ entities:
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
+        - -16,-6
+        - -16,-5
+        - -18,-5
+        - -18,-6
+      id: grid_chunk--18--6
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 8
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -22,-5
+        - -22,-4
+        - -25,-4
+        - -25,-5
+      id: grid_chunk--25--5
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 12
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -16,-5
+        - -16,-4
+        - -19,-4
+        - -19,-5
+      id: grid_chunk--19--5
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 12
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -16,-4
+        - -16,-3
+        - -25,-3
+        - -25,-4
+      id: grid_chunk--25--4
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 36
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
         - -22,-3
         - -22,-2
         - -25,-2
@@ -2191,71 +2249,6 @@ entities:
       layer:
       - MapGrid
       mass: 32
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 0,-6
-        - 0,0
-        - -16,0
-        - -16,-6
-      id: grid_chunk--16--6
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 384
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - -16,-6
-        - -16,-5
-        - -18,-5
-        - -18,-6
-      id: grid_chunk--18--6
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 8
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - -16,-5
-        - -16,-4
-        - -19,-4
-        - -19,-5
-      id: grid_chunk--19--5
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 12
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - -22,-5
-        - -22,-4
-        - -25,-4
-        - -25,-5
-      id: grid_chunk--25--5
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 12
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - -16,4
-        - -16,5
-        - -18,5
-        - -18,4
-      id: grid_chunk--18-4
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 8
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -2334,6 +2327,19 @@ entities:
       layer:
       - MapGrid
       mass: 12
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -16,4
+        - -16,5
+        - -18,5
+        - -18,4
+      id: grid_chunk--18-4
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 8
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -2491,71 +2497,95 @@ entities:
       - MapGrid
       mass: 20
       restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 1,7
+        - 1,8
+        - 0,8
+        - 0,7
+      id: grid_chunk-0-7
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 4
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 2,8
+        - 2,9
+        - 0,9
+        - 0,8
+      id: grid_chunk-0-8
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 8
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 16,7
+        - 16,14
+        - 8,14
+        - 8,7
+      id: grid_chunk-8-7
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 224
+      restitution: 0.1
     type: Fixtures
   - chunkCollection: {}
     type: DecalGrid
 - uid: 5
-  type: AMEShielding
+  type: CrateEngineeringAMEJar
   components:
-  - pos: -16.5,-1.5
+  - pos: -12.5,-2.5
     parent: 4
     type: Transform
+  - isPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+      PaperLabel: !type:ContainerSlot {}
+    type: ContainerContainer
 - uid: 6
-  type: AMEShielding
-  components:
-  - pos: -16.5,-0.5
-    parent: 4
-    type: Transform
-- uid: 7
-  type: AMEShielding
-  components:
-  - pos: -16.5,0.5
-    parent: 4
-    type: Transform
-- uid: 8
-  type: AMEShielding
-  components:
-  - pos: -15.5,-1.5
-    parent: 4
-    type: Transform
-- uid: 9
-  type: AMEShielding
-  components:
-  - pos: -15.5,-0.5
-    parent: 4
-    type: Transform
-- uid: 10
-  type: AMEShielding
-  components:
-  - pos: -15.5,0.5
-    parent: 4
-    type: Transform
-- uid: 11
-  type: AMEShielding
-  components:
-  - pos: -14.5,-1.5
-    parent: 4
-    type: Transform
-- uid: 12
-  type: AMEShielding
-  components:
-  - pos: -14.5,-0.5
-    parent: 4
-    type: Transform
-- uid: 13
-  type: AMEShielding
-  components:
-  - pos: -14.5,0.5
-    parent: 4
-    type: Transform
-- uid: 14
   type: AMEController
   components:
-  - pos: -13.5,-0.5
+  - pos: -14.5,2.5
     parent: 4
     type: Transform
   - containers:
       AMEController-fuelJarContainer: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 7
+  type: CrateEngineeringAMEJar
+  components:
+  - pos: -12.5,-3.5
+    parent: 4
+    type: Transform
+  - isPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+      PaperLabel: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 8
+  type: CrateEngineeringAMEJar
+  components:
+  - pos: -13.5,-3.5
+    parent: 4
+    type: Transform
+  - isPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+      PaperLabel: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 15
   type: GravityGenerator
@@ -2567,11 +2597,9 @@ entities:
     type: AmbientSound
   - powerLoad: 500
     type: ApcPowerReceiver
-  - active: False
-    charge: 0
+  - charge: 0.8601768
     type: GravityGenerator
-  - radius: 0.75
-    enabled: False
+  - radius: 2.2553093
     type: PointLight
 - uid: 16
   type: SalternSmes
@@ -11473,100 +11501,10 @@ entities:
   - pos: -14.5,-3.5
     parent: 4
     type: Transform
-- uid: 1128
-  type: Catwalk
-  components:
-  - pos: -14.5,-2.5
-    parent: 4
-    type: Transform
 - uid: 1129
   type: Catwalk
   components:
   - pos: -15.5,-3.5
-    parent: 4
-    type: Transform
-- uid: 1130
-  type: Catwalk
-  components:
-  - pos: -15.5,-2.5
-    parent: 4
-    type: Transform
-- uid: 1131
-  type: Catwalk
-  components:
-  - pos: -16.5,-2.5
-    parent: 4
-    type: Transform
-- uid: 1132
-  type: Catwalk
-  components:
-  - pos: -16.5,-1.5
-    parent: 4
-    type: Transform
-- uid: 1133
-  type: Catwalk
-  components:
-  - pos: -16.5,-0.5
-    parent: 4
-    type: Transform
-- uid: 1134
-  type: Catwalk
-  components:
-  - pos: -16.5,0.5
-    parent: 4
-    type: Transform
-- uid: 1135
-  type: Catwalk
-  components:
-  - pos: -16.5,1.5
-    parent: 4
-    type: Transform
-- uid: 1136
-  type: Catwalk
-  components:
-  - pos: -15.5,-1.5
-    parent: 4
-    type: Transform
-- uid: 1137
-  type: Catwalk
-  components:
-  - pos: -15.5,-0.5
-    parent: 4
-    type: Transform
-- uid: 1138
-  type: Catwalk
-  components:
-  - pos: -15.5,0.5
-    parent: 4
-    type: Transform
-- uid: 1139
-  type: Catwalk
-  components:
-  - pos: -15.5,1.5
-    parent: 4
-    type: Transform
-- uid: 1140
-  type: Catwalk
-  components:
-  - pos: -14.5,-1.5
-    parent: 4
-    type: Transform
-- uid: 1141
-  type: Catwalk
-  components:
-  - pos: -14.5,-0.5
-    parent: 4
-    type: Transform
-- uid: 1142
-  type: Catwalk
-  components:
-  - pos: -14.5,0.5
-    parent: 4
-    type: Transform
-- uid: 1143
-  type: Catwalk
-  components:
-  - pos: -14.5,1.5
     parent: 4
     type: Transform
 - uid: 1144
@@ -13765,42 +13703,6 @@ entities:
     type: Transform
   - releasePressure: 10.1325
     type: GasCanister
-- uid: 1396
-  type: AMEShielding
-  components:
-  - pos: -16.5,-2.5
-    parent: 4
-    type: Transform
-- uid: 1397
-  type: AMEShielding
-  components:
-  - pos: -15.5,-2.5
-    parent: 4
-    type: Transform
-- uid: 1398
-  type: AMEShielding
-  components:
-  - pos: -14.5,-2.5
-    parent: 4
-    type: Transform
-- uid: 1399
-  type: AMEShielding
-  components:
-  - pos: -16.5,1.5
-    parent: 4
-    type: Transform
-- uid: 1400
-  type: AMEShielding
-  components:
-  - pos: -15.5,1.5
-    parent: 4
-    type: Transform
-- uid: 1401
-  type: AMEShielding
-  components:
-  - pos: -14.5,1.5
-    parent: 4
-    type: Transform
 - uid: 1402
   type: WallReinforced
   components:
