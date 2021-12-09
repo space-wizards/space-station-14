@@ -73,7 +73,7 @@ namespace Content.Server.Kitchen.EntitySystems
         private void Spike(EntityUid uid, EntityUid userUid, EntityUid victimUid,
             KitchenSpikeComponent? component = null, SharedButcherableComponent? butcherable = null)
         {
-            if (!Resolve(uid, ref component) || !Resolve(victimUid, ref butcherable) || butcherable.BeingButchered)
+            if (!Resolve(uid, ref component) || !Resolve(victimUid, ref butcherable))
                 return;
 
             component.MeatPrototype = butcherable.MeatPrototype;
@@ -161,7 +161,7 @@ namespace Content.Server.Kitchen.EntitySystems
         public bool TrySpike(EntityUid uid, EntityUid userUid, EntityUid victimUid, KitchenSpikeComponent? component = null,
             SharedButcherableComponent? butcherable = null, MobStateComponent? mobState = null)
         {
-            if (!Resolve(uid, ref component) || !Resolve(victimUid, ref butcherable))
+            if (!Resolve(uid, ref component) || !Resolve(victimUid, ref butcherable) || butcherable.BeingButchered)
                 return false;
 
             // THE WHAT? (again)

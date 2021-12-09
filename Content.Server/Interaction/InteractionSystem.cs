@@ -175,6 +175,10 @@ namespace Content.Server.Interaction
 
             // trigger dragdrops on the dropped entity
             RaiseLocalEvent(msg.Dropped, interactionArgs);
+
+            if (interactionArgs.Handled)
+                return;
+
             foreach (var dragDrop in EntityManager.GetComponents<IDraggable>(msg.Dropped))
             {
                 if (dragDrop.CanDrop(interactionArgs) &&
@@ -186,6 +190,10 @@ namespace Content.Server.Interaction
 
             // trigger dragdropons on the targeted entity
             RaiseLocalEvent(msg.Target, interactionArgs, false);
+
+            if (interactionArgs.Handled)
+                return;
+
             foreach (var dragDropOn in EntityManager.GetComponents<IDragDropOn>(msg.Target))
             {
                 if (dragDropOn.CanDragDropOn(interactionArgs) &&
