@@ -8,6 +8,7 @@ using Content.Shared.Popups;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
+using System.Threading;
 
 namespace Content.Server.Kitchen.Components
 {
@@ -21,6 +22,9 @@ namespace Content.Server.Kitchen.Components
         public string MeatSource1p = "?";
         public string MeatSource0 = "?";
         public string MeatName = "?";
+
+        // Prevents simultaneous spiking of two bodies (could be replaced with CancellationToken, but I don't see any situation where Cancel could be called)
+        public bool InUse;
 
         // ECS this out!, when DragDropSystem and InteractionSystem refactored
         public override bool DragDropOn(DragDropEvent eventArgs)

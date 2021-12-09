@@ -34,12 +34,16 @@ namespace Content.Server.Kitchen.EntitySystems
 
         private void OnSpikingFail(EntityUid uid, KitchenSpikeComponent component, SpikingFailEvent args)
         {
+            component.InUse = false;
+
             if (EntityManager.TryGetComponent<SharedButcherableComponent>(args.VictimUid, out var butcherable))
                 butcherable.BeingButchered = false;
         }
 
         private void OnSpikingFinished(EntityUid uid, KitchenSpikeComponent component, SpikingFinishedEvent args)
         {
+            component.InUse = false;
+
             if (EntityManager.TryGetComponent<SharedButcherableComponent>(args.VictimUid, out var butcherable))
                 butcherable.BeingButchered = false;
 
@@ -161,7 +165,8 @@ namespace Content.Server.Kitchen.EntitySystems
         public bool TrySpike(EntityUid uid, EntityUid userUid, EntityUid victimUid, KitchenSpikeComponent? component = null,
             SharedButcherableComponent? butcherable = null, MobStateComponent? mobState = null)
         {
-            if (!Resolve(uid, ref component) || !Resolve(victimUid, ref butcherable) || butcherable.BeingButchered)
+            if (!Resolve(uid, ref component) || component.InUse ||
+                !Resolve(victimUid, ref butcherable) || butcherable.BeingButchered)
                 return false;
 
             // THE WHAT? (again)
@@ -169,7 +174,7 @@ namespace Content.Server.Kitchen.EntitySystems
             if (Resolve(victimUid, ref mobState) &&
                 !mobState.IsDead())
             {
-                _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-deny-not-dead", ("victim", butcherable.Owner)),
+                _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-deny-not-dead", ("victim", victimUid)),
                     victimUid, Filter.Entities(userUid));
                 return false;
             }
@@ -182,6 +187,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-begin-hook-self", ("this", uid)), victimUid, Filter.Pvs(uid)); // This is actually unreachable and should be in SuicideEvent
 
             butcherable.BeingButchered = true;
+            component.InUse = true;
 
             var doAfterArgs = new DoAfterEventArgs(userUid, component.SpikeDelay, default, uid)
             {
