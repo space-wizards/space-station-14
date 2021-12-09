@@ -7,7 +7,6 @@ using Content.Shared.Kitchen.Components;
 using Content.Shared.Popups;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 
 namespace Content.Server.Kitchen.Components
@@ -30,7 +29,7 @@ namespace Content.Server.Kitchen.Components
         }
 
         // ECS this out!, Handleable SuicideEvent?
-        SuicideKind ISuicideAct.Suicide(IEntity victim, IChatManager chat)
+        SuicideKind ISuicideAct.Suicide(EntityUid victim, IChatManager chat)
         {
             var othersMessage = Loc.GetString("comp-kitchen-spike-suicide-other", ("victim", victim));
             victim.PopupMessageOtherClients(othersMessage);
