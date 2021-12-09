@@ -16,6 +16,11 @@
             - material: Steel
               amount: 5
               doAfter: 2.5
+        - to: destroyedmachineframe
+          steps:
+            - material: Steel
+              amount: 5
+              doAfter: 2.5
 
     - node: missingWires
       entity: UnfinishedMachineFrame
