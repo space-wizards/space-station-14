@@ -13,6 +13,8 @@ namespace Content.Server.AI.Commands
     [AdminCommand(AdminFlags.Fun)]
     public class AddAiCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntityManager _entities = default!;
+
         public string Command => "addai";
         public string Description => "Add an ai component with a given processor to an entity.";
         public string Help => "Usage: addai <entityId> <behaviorSet1> <behaviorSet2>..."
@@ -29,25 +31,25 @@ namespace Content.Server.AI.Commands
 
             var entId = new EntityUid(int.Parse(args[0]));
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetEntity(entId, out var ent))
+            if (!_entities.EntityExists(entId))
             {
                 shell.WriteLine($"Unable to find entity with uid {entId}");
                 return;
             }
 
-            if (ent.HasComponent<AiControllerComponent>())
+            if (_entities.HasComponent<AiControllerComponent>(entId))
             {
                 shell.WriteLine("Entity already has an AI component.");
                 return;
             }
 
             // TODO: IMover refffaaccctttooorrr
-            if (ent.HasComponent<IMoverComponent>())
+            if (_entities.HasComponent<IMoverComponent>(entId))
             {
-                ent.RemoveComponent<IMoverComponent>();
+                _entities.RemoveComponent<IMoverComponent>(entId);
             }
 
-            var comp = ent.AddComponent<UtilityAi>();
+            var comp = _entities.AddComponent<UtilityAi>(entId);
             var behaviorManager = IoCManager.Resolve<INpcBehaviorManager>();
 
             for (var i = 1; i < args.Length; i++)

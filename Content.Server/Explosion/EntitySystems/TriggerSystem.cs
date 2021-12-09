@@ -24,10 +24,10 @@ namespace Content.Server.Explosion.EntitySystems
     /// </summary>
     public class TriggerEvent : HandledEntityEventArgs
     {
-        public IEntity Triggered { get; }
+        public EntityUid Triggered { get; }
         public EntityUid? User { get; }
 
-        public TriggerEvent(IEntity triggered, EntityUid? user = null)
+        public TriggerEvent(EntityUid triggered, EntityUid? user = null)
         {
             Triggered = triggered;
             User = user;
@@ -127,18 +127,19 @@ namespace Content.Server.Explosion.EntitySystems
             if (EntityManager.TryGetComponent(uid, out ProjectileComponent projectile))
                 user = projectile.Shooter;
             else if (EntityManager.TryGetComponent(uid, out ThrownItemComponent thrown))
-                user = thrown.Thrower?.Uid;
+                user = thrown.Thrower;
 
             Trigger(component.Owner, user);
         }
 
-        public void Trigger(IEntity trigger, EntityUid? user = null)
+
+        public void Trigger(EntityUid trigger, EntityUid? user = null)
         {
             var triggerEvent = new TriggerEvent(trigger, user);
-            EntityManager.EventBus.RaiseLocalEvent(trigger.Uid, triggerEvent);
+            EntityManager.EventBus.RaiseLocalEvent(trigger, triggerEvent);
         }
 
-        public void HandleTimerTrigger(TimeSpan delay, IEntity triggered, EntityUid? user = null)
+        public void HandleTimerTrigger(TimeSpan delay, EntityUid triggered, EntityUid? user = null)
         {
             if (delay.TotalSeconds <= 0)
             {
@@ -148,7 +149,7 @@ namespace Content.Server.Explosion.EntitySystems
 
             Timer.Spawn(delay, () =>
             {
-                if (triggered.Deleted) return;
+                if (Deleted(triggered)) return;
                 Trigger(triggered, user);
             });
         }

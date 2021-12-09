@@ -2,6 +2,7 @@ using System;
 using Content.Shared.Doors;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using DrawDepthTag = Robust.Shared.GameObjects.DrawDepth;
@@ -38,7 +39,7 @@ namespace Content.Client.Doors
 
                 base.State = value;
 
-                Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new DoorStateChangedEvent(State), false);
+                IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, new DoorStateChangedEvent(State), false);
             }
         }
 

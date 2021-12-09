@@ -19,6 +19,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
+using static Robust.Shared.Input.Binding.PointerInputCmdHandler;
 using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
 namespace Content.Client.Tabletop
@@ -57,7 +58,7 @@ namespace Content.Client.Tabletop
                 return;
 
             // If there is no player entity, return
-            if (_playerManager.LocalPlayer is not { ControlledEntity: { Uid: var playerEntity } }) return;
+            if (_playerManager.LocalPlayer is not {ControlledEntity: { } playerEntity}) return;
 
             if (StunnedOrNoHands(playerEntity))
             {
@@ -159,7 +160,7 @@ namespace Content.Client.Tabletop
             _window = null;
         }
 
-        private bool OnUse(in PointerInputCmdHandler.PointerInputCmdArgs args)
+        private bool OnUse(in PointerInputCmdArgs args)
         {
             return args.State switch
             {
@@ -169,13 +170,14 @@ namespace Content.Client.Tabletop
             };
         }
 
-        private bool OnMouseDown(in PointerInputCmdHandler.PointerInputCmdArgs args)
+        private bool OnMouseDown(in PointerInputCmdArgs args)
         {
             // Return if no player entity
-            if (_playerManager.LocalPlayer is not { ControlledEntity: { Uid : var playerEntityUid } }) return false;
+            if (_playerManager.LocalPlayer is not {ControlledEntity: { } playerEntity})
+                return false;
 
             // Return if can not see table or stunned/no hands
-            if (!CanSeeTable(playerEntityUid, _table) || StunnedOrNoHands(playerEntityUid))
+            if (!CanSeeTable(playerEntity, _table) || StunnedOrNoHands(playerEntity))
             {
                 return false;
             }
@@ -204,7 +206,7 @@ namespace Content.Client.Tabletop
             return true;
         }
 
-        private bool OnMouseUp(in PointerInputCmdHandler.PointerInputCmdArgs args)
+        private bool OnMouseUp(in PointerInputCmdArgs args)
         {
             StopDragging();
             return false;

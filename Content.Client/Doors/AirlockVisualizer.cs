@@ -1,12 +1,11 @@
 using System;
 using Content.Client.Wires.Visualizers;
-using Content.Shared.Audio;
 using Content.Shared.Doors;
-using Content.Shared.Sound;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -15,6 +14,8 @@ namespace Content.Client.Doors
     [UsedImplicitly]
     public class AirlockVisualizer : AppearanceVisualizer, ISerializationHooks
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         private const string AnimationKey = "airlock_animation";
 
         [DataField("animationTime")]
@@ -49,6 +50,8 @@ namespace Content.Client.Doors
 
         void ISerializationHooks.AfterDeserialization()
         {
+            IoCManager.InjectDependencies(this);
+
             CloseAnimation = new Animation {Length = TimeSpan.FromSeconds(_delay)};
             {
                 var flick = new AnimationTrackSpriteFlick();
@@ -109,11 +112,11 @@ namespace Content.Client.Doors
             }
         }
 
-        public override void InitializeEntity(IEntity entity)
+        public override void InitializeEntity(EntityUid entity)
         {
-            if (!entity.HasComponent<AnimationPlayerComponent>())
+            if (!_entMan.HasComponent<AnimationPlayerComponent>(entity))
             {
-                entity.AddComponent<AnimationPlayerComponent>();
+                _entMan.AddComponent<AnimationPlayerComponent>(entity);
             }
         }
 
@@ -121,8 +124,8 @@ namespace Content.Client.Doors
         {
             base.OnChangeData(component);
 
-            var sprite = component.Owner.GetComponent<ISpriteComponent>();
-            var animPlayer = component.Owner.GetComponent<AnimationPlayerComponent>();
+            var sprite = _entMan.GetComponent<ISpriteComponent>(component.Owner);
+            var animPlayer = _entMan.GetComponent<AnimationPlayerComponent>(component.Owner);
             if (!component.TryGetData(DoorVisuals.VisualState, out DoorVisualState state))
             {
                 state = DoorVisualState.Closed;

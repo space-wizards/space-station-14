@@ -21,7 +21,7 @@ namespace Content.Server.Damage.Systems
 
         private void OnDoHit(EntityUid uid, DamageOtherOnHitComponent component, ThrowDoHitEvent args)
         {
-            var dmg = _damageableSystem.TryChangeDamage(args.Target.Uid, component.Damage, component.IgnoreResistances);
+            var dmg = _damageableSystem.TryChangeDamage(args.Target, component.Damage, component.IgnoreResistances);
             if (dmg != null)
                 _logSystem.Add(LogType.ThrowHit, $"{args.Target} received {dmg.Total} damage from collision");
         }

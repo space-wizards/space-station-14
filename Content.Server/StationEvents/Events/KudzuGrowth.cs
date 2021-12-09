@@ -1,4 +1,3 @@
-using Content.Shared.Station;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -31,7 +30,7 @@ public class KudzuGrowth : StationEvent
     // Give crew at least 9 minutes to either have it gone, or to suffer another event. Kudzu is not actually required to be dead for another event to roll.
     protected override float EndAfter => 60*4;
 
-    private IEntity? _targetGrid;
+    private EntityUid _targetGrid;
 
     private Vector2i _targetTile;
 
