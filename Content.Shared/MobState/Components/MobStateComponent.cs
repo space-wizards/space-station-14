@@ -318,13 +318,6 @@ namespace Content.Shared.MobState.Components
             state.UpdateState(Owner, threshold, entMan);
 
             var stateChangeEvent = new MobStateChangedEvent(this, old, state);
-            Owner.EntityManager.EventBus.RaiseLocalEvent(OwnerUid, stateChangeEvent);
-
-            var message = new MobStateChangedMessage(this, old, state);
-#pragma warning disable 618
-            SendMessage(message);
-#pragma warning restore 618
-            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, message);
             var message = new MobStateChangedEvent(this, old, state);
             entMan.EventBus.RaiseLocalEvent(Owner, message);
             Dirty();
