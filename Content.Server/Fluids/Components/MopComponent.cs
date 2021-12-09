@@ -130,7 +130,7 @@ namespace Content.Server.Fluids.Components
             Mopping = false;
 
             if (result == DoAfterStatus.Cancelled ||
-                (!_entities.EntityExists(Owner) ? EntityLifeStage.Deleted : _entities.GetComponent<MetaDataComponent>(Owner).EntityLifeStage) >= EntityLifeStage.Deleted ||
+                _entities.Deleted(Owner) ||
                 puddleComponent.Deleted)
                 return false;
 

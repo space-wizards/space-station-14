@@ -106,7 +106,7 @@ namespace Content.Server.Morgue.Components
             _cremateCancelToken = new CancellationTokenSource();
             Owner.SpawnTimer(_burnMilis, () =>
             {
-                if ((!_entities.EntityExists(Owner) ? EntityLifeStage.Deleted : _entities.GetComponent<MetaDataComponent>(Owner).EntityLifeStage) >= EntityLifeStage.Deleted)
+                if (_entities.Deleted(Owner))
                     return;
 
                 Appearance?.SetData(CrematoriumVisuals.Burning, false);

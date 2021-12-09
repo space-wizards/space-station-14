@@ -51,8 +51,7 @@ namespace Content.Client.DoAfter
             var currentTime = _gameTiming.CurTime;
 
             // Can't see any I guess?
-            if (_attachedEntity is not {Valid: true} entity ||
-                (!EntityManager.EntityExists(_attachedEntity.Value) ? EntityLifeStage.Deleted : EntityManager.GetComponent<MetaDataComponent>(entity).EntityLifeStage) >= EntityLifeStage.Deleted)
+            if (_attachedEntity is not {Valid: true} entity || Deleted(entity))
                 return;
 
             var viewbox = _eyeManager.GetWorldViewport().Enlarged(2.0f);

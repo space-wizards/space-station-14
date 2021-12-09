@@ -219,7 +219,7 @@ namespace Content.Server.PneumaticCannon
             if (!EntityManager.TryGetComponent<ServerStorageComponent?>(comp.Owner, out var storage))
                 return;
 
-            if ((!EntityManager.EntityExists(data.User) ? EntityLifeStage.Deleted : EntityManager.GetComponent<MetaDataComponent>(data.User).EntityLifeStage) >= EntityLifeStage.Deleted)
+            if (Deleted(data.User))
                 return;
 
             if (storage.StoredEntities == null) return;
@@ -243,7 +243,7 @@ namespace Content.Server.PneumaticCannon
                && comp.Power == PneumaticCannonPower.High)
             {
                 _stun.TryParalyze(data.User, TimeSpan.FromSeconds(comp.HighPowerStunTime), true, status);
-                
+
                 data.User.PopupMessage(Loc.GetString("pneumatic-cannon-component-power-stun",
                     ("cannon", comp.Owner)));
             }

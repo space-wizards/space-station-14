@@ -12,8 +12,7 @@ namespace Content.Server.AI.Utility.Considerations.Movement
             var self = context.GetState<SelfState>().GetValue();
             var entities = IoCManager.Resolve<IEntityManager>();
 
-            if (context.GetState<TargetEntityState>().GetValue() is not {Valid: true} target ||
-                (!entities.EntityExists(target) ? EntityLifeStage.Deleted : entities.GetComponent<MetaDataComponent>(target).EntityLifeStage) >= EntityLifeStage.Deleted ||
+            if (context.GetState<TargetEntityState>().GetValue() is not {Valid: true} target || entities.Deleted(target) ||
                 entities.GetComponent<TransformComponent>(target).GridID != entities.GetComponent<TransformComponent>(self).GridID)
             {
                 return 0.0f;

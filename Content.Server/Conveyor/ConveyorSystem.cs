@@ -132,7 +132,7 @@ namespace Content.Server.Conveyor
             //todo uuuhhh cache this
             foreach (var entity in _entityLookup.GetEntitiesIntersecting(comp.Owner, flags: LookupFlags.Approximate))
             {
-                if ((!EntityManager.EntityExists(entity) ? EntityLifeStage.Deleted : EntityManager.GetComponent<MetaDataComponent>(entity).EntityLifeStage) >= EntityLifeStage.Deleted)
+                if (Deleted(entity))
                 {
                     continue;
                 }

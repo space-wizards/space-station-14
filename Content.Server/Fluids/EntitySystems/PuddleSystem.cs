@@ -57,7 +57,7 @@ namespace Content.Server.Fluids.EntitySystems
 
         private void UpdateVisuals(EntityUid uid, PuddleComponent puddleComponent)
         {
-            if ((!EntityManager.EntityExists(puddleComponent.Owner) ? EntityLifeStage.Deleted : EntityManager.GetComponent<MetaDataComponent>(puddleComponent.Owner).EntityLifeStage) >= EntityLifeStage.Deleted || EmptyHolder(uid, puddleComponent) ||
+            if (Deleted(puddleComponent.Owner) || EmptyHolder(uid, puddleComponent) ||
                 !EntityManager.TryGetComponent<AppearanceComponent>(uid, out var appearanceComponent))
             {
                 return;

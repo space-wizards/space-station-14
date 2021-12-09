@@ -131,7 +131,7 @@ namespace Content.Client.Viewport
                 return;
             }
 
-            if (_lastHoveredEntity != default && !((!_entityManager.EntityExists(_lastHoveredEntity) ? EntityLifeStage.Deleted : _entityManager.GetComponent<MetaDataComponent>(_lastHoveredEntity).EntityLifeStage) >= EntityLifeStage.Deleted) &&
+            if (_lastHoveredEntity != default && !_entityManager.Deleted(_lastHoveredEntity) &&
                 _entityManager.TryGetComponent(_lastHoveredEntity, out outline))
             {
                 outline.OnMouseLeave();

@@ -97,7 +97,7 @@ namespace Content.Server.Projectiles.Components
 
             Owner.SpawnTimer((int) _deathTime.TotalMilliseconds, () =>
             {
-                if (!((!_entMan.EntityExists(Owner) ? EntityLifeStage.Deleted : _entMan.GetComponent<MetaDataComponent>(Owner).EntityLifeStage) >= EntityLifeStage.Deleted))
+                if (!_entMan.Deleted(Owner))
                 {
                     _entMan.DeleteEntity(Owner);
                 }

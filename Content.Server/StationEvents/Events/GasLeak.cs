@@ -121,7 +121,7 @@ namespace Content.Server.StationEvents.Events
 
             if (!_foundTile ||
                 _targetGrid == default ||
-                (!_entityManager.EntityExists(_targetGrid) ? EntityLifeStage.Deleted : _entityManager.GetComponent<MetaDataComponent>(_targetGrid).EntityLifeStage) >= EntityLifeStage.Deleted ||
+                _entityManager.Deleted(_targetGrid) ||
                 !atmosphereSystem.IsSimulatedGrid(_entityManager.GetComponent<TransformComponent>(_targetGrid).GridID))
             {
                 Running = false;

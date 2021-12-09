@@ -264,7 +264,7 @@ namespace Content.Server.AI.Pathfinding
         /// <param name="entity"></param>
         private void HandleEntityAdd(EntityUid entity)
         {
-            if ((!EntityManager.EntityExists(entity) ? EntityLifeStage.Deleted : EntityManager.GetComponent<MetaDataComponent>(entity).EntityLifeStage) >= EntityLifeStage.Deleted ||
+            if (Deleted(entity) ||
                 _lastKnownPositions.ContainsKey(entity) ||
                 !EntityManager.TryGetComponent(entity, out IPhysBody? physics) ||
                 !PathfindingNode.IsRelevant(entity, physics))

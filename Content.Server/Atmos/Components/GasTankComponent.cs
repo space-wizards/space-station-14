@@ -232,7 +232,7 @@ namespace Content.Server.Atmos.Components
 
         private InternalsComponent? GetInternalsComponent(EntityUid? owner = null)
         {
-            if ((!_entMan.EntityExists(Owner) ? EntityLifeStage.Deleted : _entMan.GetComponent<MetaDataComponent>(Owner).EntityLifeStage) >= EntityLifeStage.Deleted) return null;
+            if (_entMan.Deleted(Owner)) return null;
             if (owner != null) return _entMan.GetComponentOrNull<InternalsComponent>(owner.Value);
             return Owner.TryGetContainer(out var container)
                 ? _entMan.GetComponentOrNull<InternalsComponent>(container.Owner)

@@ -16,7 +16,9 @@ namespace Content.Server.Morgue.Components
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (Morgue != null && !((!IoCManager.Resolve<IEntityManager>().EntityExists(Morgue) ? EntityLifeStage.Deleted : IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Morgue).EntityLifeStage) >= EntityLifeStage.Deleted) && IoCManager.Resolve<IEntityManager>().TryGetComponent<MorgueEntityStorageComponent?>(Morgue, out var comp))
+            var entMan = IoCManager.Resolve<IEntityManager>();
+
+            if (Morgue != default && !entMan.Deleted(Morgue) && entMan.TryGetComponent<MorgueEntityStorageComponent?>(Morgue, out var comp))
             {
                 comp.Activate(new ActivateEventArgs(eventArgs.User, Morgue));
             }

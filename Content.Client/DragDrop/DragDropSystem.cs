@@ -175,7 +175,7 @@ namespace Content.Client.DragDrop
 
         private bool OnBeginDrag()
         {
-            if (_dragDropHelper.Dragged == default || (!EntityManager.EntityExists(_dragDropHelper.Dragged) ? EntityLifeStage.Deleted : EntityManager.GetComponent<MetaDataComponent>(_dragDropHelper.Dragged).EntityLifeStage) >= EntityLifeStage.Deleted)
+            if (_dragDropHelper.Dragged == default || Deleted(_dragDropHelper.Dragged))
             {
                 // something happened to the clicked entity or we moved the mouse off the target so
                 // we shouldn't replay the original click
@@ -212,7 +212,7 @@ namespace Content.Client.DragDrop
 
         private bool OnContinueDrag(float frameTime)
         {
-            if (_dragDropHelper.Dragged == default || (!EntityManager.EntityExists(_dragDropHelper.Dragged) ? EntityLifeStage.Deleted : EntityManager.GetComponent<MetaDataComponent>(_dragDropHelper.Dragged).EntityLifeStage) >= EntityLifeStage.Deleted)
+            if (_dragDropHelper.Dragged == default || Deleted(_dragDropHelper.Dragged))
             {
                 return false;
             }
@@ -352,10 +352,8 @@ namespace Content.Client.DragDrop
 
         private void HighlightTargets()
         {
-            if (_dragDropHelper.Dragged == default ||
-                (!EntityManager.EntityExists(_dragDropHelper.Dragged) ? EntityLifeStage.Deleted : EntityManager.GetComponent<MetaDataComponent>(_dragDropHelper.Dragged).EntityLifeStage) >= EntityLifeStage.Deleted ||
-                _dragShadow == default ||
-                (!EntityManager.EntityExists(_dragShadow) ? EntityLifeStage.Deleted : EntityManager.GetComponent<MetaDataComponent>(_dragShadow).EntityLifeStage) >= EntityLifeStage.Deleted)
+            if (_dragDropHelper.Dragged == default || Deleted(_dragDropHelper.Dragged) ||
+                _dragShadow == default || Deleted(_dragShadow))
             {
                 Logger.Warning("Programming error. Can't highlight drag and drop targets, not currently " +
                                "dragging anything or dragged entity / shadow was deleted.");

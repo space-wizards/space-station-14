@@ -57,7 +57,7 @@ namespace Content.Server.Engineering.EntitySystems
                     return;
             }
 
-            if (component.Deleted || (!EntityManager.EntityExists(component.Owner) ? EntityLifeStage.Deleted : EntityManager.GetComponent<MetaDataComponent>(component.Owner).EntityLifeStage) >= EntityLifeStage.Deleted)
+            if (component.Deleted || Deleted(component.Owner))
                 return;
 
             if (EntityManager.TryGetComponent<SharedStackComponent?>(component.Owner, out var stackComp)

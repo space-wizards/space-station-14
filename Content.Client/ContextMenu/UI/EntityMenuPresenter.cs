@@ -187,7 +187,7 @@ namespace Content.Client.ContextMenu.UI
 
             foreach (var entity in Elements.Keys.ToList())
             {
-                if ((!_entityManager.EntityExists(entity) ? EntityLifeStage.Deleted : _entityManager.GetComponent<MetaDataComponent>(entity).EntityLifeStage) >= EntityLifeStage.Deleted || !ignoreFov && !_examineSystem.CanExamine(player, entity))
+                if (_entityManager.Deleted(entity) || !ignoreFov && !_examineSystem.CanExamine(player, entity))
                     RemoveEntity(entity);
             }
         }
@@ -338,7 +338,7 @@ namespace Content.Client.ContextMenu.UI
 
                 if (entityElement.Entity != default)
                 {
-                    if (!((!_entityManager.EntityExists(entityElement.Entity) ? EntityLifeStage.Deleted : _entityManager.GetComponent<MetaDataComponent>(entityElement.Entity).EntityLifeStage) >= EntityLifeStage.Deleted))
+                    if (!_entityManager.Deleted(entityElement.Entity))
                         return entityElement.Entity;
                     continue;
                 }

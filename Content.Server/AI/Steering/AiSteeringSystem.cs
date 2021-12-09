@@ -246,7 +246,7 @@ namespace Content.Server.AI.Steering
         private SteeringStatus Steer(EntityUid entity, IAiSteeringRequest steeringRequest, float frameTime)
         {
             // Main optimisation to be done below is the redundant calls and adding more variables
-            if ((!EntityManager.EntityExists(entity) ? EntityLifeStage.Deleted : EntityManager.GetComponent<MetaDataComponent>(entity).EntityLifeStage) >= EntityLifeStage.Deleted ||
+            if (Deleted(entity) ||
                 !EntityManager.TryGetComponent(entity, out AiControllerComponent? controller) ||
                 !EntitySystem.Get<ActionBlockerSystem>().CanMove(entity) ||
                 !EntityManager.GetComponent<TransformComponent>(entity).GridID.IsValid())
@@ -658,7 +658,7 @@ namespace Content.Server.AI.Steering
                     // err for now we'll just assume the first entity is the center and just add a vector for it
 
                     //Pathfinding updates are deferred so this may not be done yet.
-                    if ((!EntityManager.EntityExists(physicsEntity) ? EntityLifeStage.Deleted : EntityManager.GetComponent<MetaDataComponent>(physicsEntity).EntityLifeStage) >= EntityLifeStage.Deleted) continue;
+                    if (Deleted(physicsEntity)) continue;
 
                     // if we're moving in the same direction then ignore
                     // So if 2 entities are moving towards each other and both detect a collision they'll both move in the same direction

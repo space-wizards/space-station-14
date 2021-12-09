@@ -130,7 +130,7 @@ namespace Content.Server.Explosion.EntitySystems
             // and splitted into two lists based on if they are Impassable or not
             foreach (var entity in entitiesInRange)
             {
-                if ((!EntityManager.EntityExists(entity) ? EntityLifeStage.Deleted : EntityManager.GetComponent<MetaDataComponent>(entity).EntityLifeStage) >= EntityLifeStage.Deleted || entity.IsInContainer())
+                if (Deleted(entity) || entity.IsInContainer())
                 {
                     continue;
                 }

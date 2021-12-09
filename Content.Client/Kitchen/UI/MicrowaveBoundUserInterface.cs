@@ -110,14 +110,9 @@ namespace Content.Client.Kitchen.UI
             _menu.IngredientsList.Clear();
             foreach (var entity in containedSolids)
             {
-                if (!_entityManager.EntityExists(entity))
+                if (_entityManager.Deleted(entity))
                 {
                     return;
-                }
-
-                if ((!_entityManager.EntityExists(entity) ? EntityLifeStage.Deleted : _entityManager.GetComponent<MetaDataComponent>(entity).EntityLifeStage) >= EntityLifeStage.Deleted)
-                {
-                    continue;
                 }
 
                 Texture? texture;

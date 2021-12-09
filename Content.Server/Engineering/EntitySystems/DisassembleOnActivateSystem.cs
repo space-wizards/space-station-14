@@ -41,7 +41,7 @@ namespace Content.Server.Engineering.EntitySystems
                 component.TokenSource.Cancel();
             }
 
-            if (component.Deleted || (!EntityManager.EntityExists(component.Owner) ? EntityLifeStage.Deleted : EntityManager.GetComponent<MetaDataComponent>(component.Owner).EntityLifeStage) >= EntityLifeStage.Deleted)
+            if (component.Deleted || Deleted(component.Owner))
                 return;
 
             var entity = EntityManager.SpawnEntity(component.Prototype, EntityManager.GetComponent<TransformComponent>(component.Owner).Coordinates);

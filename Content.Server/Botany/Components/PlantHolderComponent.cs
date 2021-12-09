@@ -421,7 +421,7 @@ namespace Content.Server.Botany.Components
 
         public bool DoHarvest(EntityUid user)
         {
-            if (Seed == null || (!_entMan.EntityExists(user) ? EntityLifeStage.Deleted : _entMan.GetComponent<MetaDataComponent>(user).EntityLifeStage) >= EntityLifeStage.Deleted || !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
+            if (Seed == null || _entMan.Deleted(user) || !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 return false;
 
             if (Harvest && !Dead)

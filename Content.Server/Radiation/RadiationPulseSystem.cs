@@ -34,7 +34,7 @@ namespace Content.Server.Radiation
                     comp.Update(RadiationCooldown);
                     var ent = comp.Owner;
 
-                    if ((!_entMan.EntityExists(ent) ? EntityLifeStage.Deleted : _entMan.GetComponent<MetaDataComponent>(ent).EntityLifeStage) >= EntityLifeStage.Deleted) continue;
+                    if (Deleted(ent)) continue;
 
                     foreach (var entity in _lookup.GetEntitiesInRange(_entMan.GetComponent<TransformComponent>(ent).Coordinates, comp.Range))
                     {

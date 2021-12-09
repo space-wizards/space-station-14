@@ -88,7 +88,7 @@ namespace Content.Server.Cargo.Components
                     spriteComponent.LayerSetState(0, "idle");
                 Owner.SpawnTimer((int) (TeleportDelay * 1000), () =>
                 {
-                    if (!Deleted && !((!_entMan.EntityExists(Owner) ? EntityLifeStage.Deleted : _entMan.GetComponent<MetaDataComponent>(Owner).EntityLifeStage) >= EntityLifeStage.Deleted) && _currentState == CargoTelepadState.Charging && _teleportQueue.Count > 0)
+                    if (!Deleted && !_entMan.Deleted(Owner) && _currentState == CargoTelepadState.Charging && _teleportQueue.Count > 0)
                     {
                         _currentState = CargoTelepadState.Teleporting;
                         if (_entMan.TryGetComponent<SpriteComponent?>(Owner, out var spriteComponent) && spriteComponent.LayerCount > 0)

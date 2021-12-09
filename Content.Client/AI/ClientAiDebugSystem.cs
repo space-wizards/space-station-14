@@ -40,7 +40,7 @@ namespace Content.Client.AI
             var deletedEntities = new List<EntityUid>(0);
             foreach (var (entity, panel) in _aiBoxes)
             {
-                if ((!EntityManager.EntityExists(entity) ? EntityLifeStage.Deleted : EntityManager.GetComponent<MetaDataComponent>(entity).EntityLifeStage) >= EntityLifeStage.Deleted)
+                if (Deleted(entity))
                 {
                     deletedEntities.Add(entity);
                     continue;

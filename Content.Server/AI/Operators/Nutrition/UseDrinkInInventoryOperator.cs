@@ -32,7 +32,7 @@ namespace Content.Server.AI.Operators.Nutrition
             var entities = IoCManager.Resolve<IEntityManager>();
 
             // TODO: Also have this check storage a la backpack etc.
-            if ((!entities.EntityExists(_target) ? EntityLifeStage.Deleted : entities.GetComponent<MetaDataComponent>(_target).EntityLifeStage) >= EntityLifeStage.Deleted ||
+            if (entities.Deleted(_target) ||
                 !entities.TryGetComponent(_owner, out HandsComponent? handsComponent) ||
                 !entities.TryGetComponent(_target, out ItemComponent? itemComponent))
             {

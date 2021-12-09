@@ -94,7 +94,7 @@ namespace Content.Server.Explosion.Components
                 return false;
             Owner.SpawnTimer((int) (_delay * 1000), () =>
             {
-                if ((!_entMan.EntityExists(Owner) ? EntityLifeStage.Deleted : _entMan.GetComponent<MetaDataComponent>(Owner).EntityLifeStage) >= EntityLifeStage.Deleted)
+                if (_entMan.Deleted(Owner))
                     return;
                 _countDown = true;
                 var random = IoCManager.Resolve<IRobustRandom>();

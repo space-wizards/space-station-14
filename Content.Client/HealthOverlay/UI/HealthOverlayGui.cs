@@ -73,7 +73,7 @@ namespace Content.Client.HealthOverlay.UI
 
         private void MoreFrameUpdate(FrameEventArgs args)
         {
-            if ((!_entities.EntityExists(Entity) ? EntityLifeStage.Deleted : _entities.GetComponent<MetaDataComponent>(Entity).EntityLifeStage) >= EntityLifeStage.Deleted)
+            if (_entities.Deleted(Entity))
             {
                 return;
             }
@@ -139,8 +139,7 @@ namespace Content.Client.HealthOverlay.UI
 
             MoreFrameUpdate(args);
 
-            if ((!_entities.EntityExists(Entity) ? EntityLifeStage.Deleted : _entities.GetComponent<MetaDataComponent>(Entity).EntityLifeStage) >= EntityLifeStage.Deleted ||
-                _eyeManager.CurrentMap != _entities.GetComponent<TransformComponent>(Entity).MapID)
+            if (_entities.Deleted(Entity) || _eyeManager.CurrentMap != _entities.GetComponent<TransformComponent>(Entity).MapID)
             {
                 Visible = false;
                 return;

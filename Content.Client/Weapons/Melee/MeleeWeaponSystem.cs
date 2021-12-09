@@ -52,7 +52,7 @@ namespace Content.Client.Weapons.Melee
                 return;
             }
 
-            if (!((!EntityManager.EntityExists(attacker) ? EntityLifeStage.Deleted : EntityManager.GetComponent<MetaDataComponent>(attacker).EntityLifeStage) >= EntityLifeStage.Deleted))
+            if (!Deleted(attacker))
             {
                 var lunge = attacker.EnsureComponent<MeleeLungeComponent>();
                 lunge.SetData(msg.Angle);

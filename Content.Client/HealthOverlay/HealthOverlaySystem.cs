@@ -73,7 +73,7 @@ namespace Content.Client.HealthOverlay
                 return;
             }
 
-            if (_attachedEntity == null || (!_entities.EntityExists(_attachedEntity.Value) ? EntityLifeStage.Deleted : _entities.GetComponent<MetaDataComponent>(_attachedEntity.Value).EntityLifeStage) >= EntityLifeStage.Deleted)
+            if (_attachedEntity is not {} ent || Deleted(ent))
             {
                 return;
             }
@@ -84,7 +84,7 @@ namespace Content.Client.HealthOverlay
             {
                 var entity = mobState.Owner;
 
-                if (_entities.GetComponent<TransformComponent>(_attachedEntity.Value).MapID != _entities.GetComponent<TransformComponent>(entity).MapID ||
+                if (_entities.GetComponent<TransformComponent>(ent).MapID != _entities.GetComponent<TransformComponent>(entity).MapID ||
                     !viewBox.Contains(_entities.GetComponent<TransformComponent>(entity).WorldPosition))
                 {
                     if (_guis.TryGetValue(entity, out var oldGui))

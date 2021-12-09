@@ -108,7 +108,7 @@ namespace Content.Server.Radiation
 
         public void Update(float frameTime)
         {
-            if (!Decay || (!_entMan.EntityExists(Owner) ? EntityLifeStage.Deleted : _entMan.GetComponent<MetaDataComponent>(Owner).EntityLifeStage) >= EntityLifeStage.Deleted)
+            if (!Decay || _entMan.Deleted(Owner))
                 return;
 
             if (_duration <= 0f)

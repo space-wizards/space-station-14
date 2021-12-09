@@ -58,7 +58,7 @@ namespace Content.Server.Chemistry.Components
 
         protected override void OnKill()
         {
-            if ((!_entMan.EntityExists(Owner) ? EntityLifeStage.Deleted : _entMan.GetComponent<MetaDataComponent>(Owner).EntityLifeStage) >= EntityLifeStage.Deleted)
+            if (_entMan.Deleted(Owner))
                 return;
             _entMan.DeleteEntity(Owner);
         }

@@ -114,7 +114,7 @@ namespace Content.Shared.Throwing
 
         public void LandComponent(ThrownItemComponent thrownItem)
         {
-            if (thrownItem.Deleted || (!EntityManager.EntityExists(thrownItem.Owner) ? EntityLifeStage.Deleted : EntityManager.GetComponent<MetaDataComponent>(thrownItem.Owner).EntityLifeStage) >= EntityLifeStage.Deleted || _containerSystem.IsEntityInContainer(thrownItem.Owner)) return;
+            if (thrownItem.Deleted || Deleted(thrownItem.Owner) || _containerSystem.IsEntityInContainer(thrownItem.Owner)) return;
 
             var landing = thrownItem.Owner;
 

@@ -99,8 +99,7 @@ namespace Content.Client.Items.Managers
                 return;
             }
 
-            if (entity == default ||
-                (!_entityManager.EntityExists(entity) ? EntityLifeStage.Deleted : _entityManager.GetComponent<MetaDataComponent>(entity).EntityLifeStage) >= EntityLifeStage.Deleted ||
+            if (entity == default || _entityManager.Deleted(entity) ||
                 !_entityManager.TryGetComponent(entity, out ItemCooldownComponent? cooldown) ||
                 !cooldown.CooldownStart.HasValue ||
                 !cooldown.CooldownEnd.HasValue)

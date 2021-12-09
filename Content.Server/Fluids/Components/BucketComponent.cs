@@ -88,11 +88,8 @@ namespace Content.Server.Fluids.Components
 
             _currentlyUsing.Remove(eventArgs.Using);
 
-            if (result == DoAfterStatus.Cancelled ||
-                (!_entMan.EntityExists(Owner) ? EntityLifeStage.Deleted : _entMan.GetComponent<MetaDataComponent>(Owner).EntityLifeStage) >= EntityLifeStage.Deleted ||
-                mopComponent.Deleted ||
-                CurrentVolume <= 0 ||
-                !Owner.InRangeUnobstructed(mopComponent.Owner))
+            if (result == DoAfterStatus.Cancelled || _entMan.Deleted(Owner) || mopComponent.Deleted ||
+                CurrentVolume <= 0 || !Owner.InRangeUnobstructed(mopComponent.Owner))
                 return false;
 
             // Top up mops solution given it needs it to annihilate puddles I guess
