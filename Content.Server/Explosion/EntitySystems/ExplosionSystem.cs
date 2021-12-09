@@ -294,7 +294,7 @@ namespace Content.Server.Explosion.EntitySystems
             int heavyImpactRange = 0,
             int lightImpactRange = 0,
             int flashRange = 0,
-            EntityUid? user = null,
+            EntityUid user = default,
             ExplosiveComponent? explosive = null,
             TransformComponent? transform = null)
         {
@@ -351,12 +351,12 @@ namespace Content.Server.Explosion.EntitySystems
             else if (!user.Valid)
             {
                 _logSystem.Add(LogType.Explosion, LogImpact.High,
-                    $"{EntityManager.ToPrettyString(entity.Value)} exploded at {text}");
+                    $"{EntityManager.ToPrettyString(entity)} exploded at {text}");
             }
             else
             {
                 _logSystem.Add(LogType.Explosion, LogImpact.High,
-                    $"{EntityManager.ToPrettyString(user.Value)} caused {EntityManager.ToPrettyString(entity.Value)} to explode at {text}");
+                    $"{EntityManager.ToPrettyString(user)} caused {EntityManager.ToPrettyString(entity)} to explode at {text}");
             }
 
             var maxRange = MathHelper.Max(devastationRange, heavyImpactRange, lightImpactRange, 0);
