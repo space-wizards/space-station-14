@@ -34,7 +34,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (args.Handled)
                 return;
 
-            if (TrySliceFood(uid, args.UserUid, args.UsedUid, component))
+            if (TrySliceFood(uid, args.User, args.Used, component))
                 args.Handled = true;
         }
 
@@ -57,7 +57,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 return false;
             }
 
-            var sliceUid = EntityManager.SpawnEntity(component.Slice, transform.Coordinates).Uid;
+            var sliceUid = EntityManager.SpawnEntity(component.Slice, transform.Coordinates);
 
             var lostSolution = _solutionContainerSystem.SplitSolution(uid, solution,
                 solution.CurrentVolume / FixedPoint2.New(component.Count));
@@ -86,7 +86,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             // Split last slice
             if (component.Count == 1) {
-                var lastSlice = EntityManager.SpawnEntity(component.Slice, transform.Coordinates).Uid;
+                var lastSlice = EntityManager.SpawnEntity(component.Slice, transform.Coordinates);
 
                 // Fill last slice with the rest of the solution
                 FillSlice(lastSlice, solution);

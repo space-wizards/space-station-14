@@ -1,15 +1,15 @@
-#- type: accessLevel
-#  id: HeadOfSecurity
-#  name: Head of Security
+- type: accessLevel
+  id: HeadOfSecurity
+  name: Head of Security
 
 - type: accessLevel
   id: Security
+  
+- type: accessLevel
+  id: Armory
 
 #- type: accessLevel
 #  id: Brig
 
 #- type: accessLevel
 #  id: Detective
-
-- type: accessLevel
-  id: Armory

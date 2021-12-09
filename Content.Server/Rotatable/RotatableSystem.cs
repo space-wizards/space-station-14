@@ -2,6 +2,7 @@ using Content.Shared.Popups;
 using Content.Shared.Rotatable;
 using Content.Shared.Verbs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
@@ -38,12 +39,12 @@ namespace Content.Server.Rotatable
 
             // Check if the object is anchored, and whether we are still allowed to rotate it.
             if (!component.RotateWhileAnchored &&
-                component.Owner.TryGetComponent(out IPhysBody? physics) &&
+                EntityManager.TryGetComponent(component.Owner, out IPhysBody? physics) &&
                 physics.BodyType == BodyType.Static)
                 return;
 
             Verb resetRotation = new();
-            resetRotation.Act = () => component.Owner.Transform.LocalRotation = Angle.Zero;
+            resetRotation.Act = () => EntityManager.GetComponent<TransformComponent>(component.Owner).LocalRotation = Angle.Zero;
             resetRotation.Category = VerbCategory.Rotate;
             resetRotation.IconTexture = "/Textures/Interface/VerbIcons/refresh.svg.192dpi.png";
             resetRotation.Text = "Reset";
@@ -53,7 +54,7 @@ namespace Content.Server.Rotatable
 
             // rotate clockwise
             Verb rotateCW = new();
-            rotateCW.Act = () => component.Owner.Transform.LocalRotation += Angle.FromDegrees(-90);
+            rotateCW.Act = () => EntityManager.GetComponent<TransformComponent>(component.Owner).LocalRotation += Angle.FromDegrees(-90);
             rotateCW.Category = VerbCategory.Rotate;
             rotateCW.IconTexture =  "/Textures/Interface/VerbIcons/rotate_cw.svg.192dpi.png";
             rotateCW.Priority = -1;
@@ -62,7 +63,7 @@ namespace Content.Server.Rotatable
 
             // rotate counter-clockwise
             Verb rotateCCW = new();
-            rotateCCW.Act = () => component.Owner.Transform.LocalRotation += Angle.FromDegrees(90);
+            rotateCCW.Act = () => EntityManager.GetComponent<TransformComponent>(component.Owner).LocalRotation += Angle.FromDegrees(90);
             rotateCCW.Category = VerbCategory.Rotate;
             rotateCCW.IconTexture = "/Textures/Interface/VerbIcons/rotate_ccw.svg.192dpi.png";
             rotateCCW.Priority = 0;
@@ -73,21 +74,21 @@ namespace Content.Server.Rotatable
         /// <summary>
         ///     Replace a flippable entity with it's flipped / mirror-symmetric entity.
         /// </summary>
-        public static void TryFlip(FlippableComponent component, IEntity user)
+        public void TryFlip(FlippableComponent component, EntityUid user)
         {
-            if (component.Owner.TryGetComponent(out IPhysBody? physics) &&
+            if (EntityManager.TryGetComponent(component.Owner, out IPhysBody? physics) &&
                 physics.BodyType == BodyType.Static)
             {
                 component.Owner.PopupMessage(user, Loc.GetString("flippable-component-try-flip-is-stuck"));
                 return;
             }
 
-            var oldTransform = component.Owner.Transform;
-            var entity = component.Owner.EntityManager.SpawnEntity(component.MirrorEntity, oldTransform.Coordinates);
-            var newTransform = entity.Transform;
+            var oldTransform = EntityManager.GetComponent<TransformComponent>(component.Owner);
+            var entity = EntityManager.SpawnEntity(component.MirrorEntity, oldTransform.Coordinates);
+            var newTransform = EntityManager.GetComponent<TransformComponent>(entity);
             newTransform.LocalRotation = oldTransform.LocalRotation;
             newTransform.Anchored = false;
-            component.Owner.Delete();
+            EntityManager.DeleteEntity(component.Owner);
         }
     }
 }

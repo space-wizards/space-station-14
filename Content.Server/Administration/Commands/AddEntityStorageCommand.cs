@@ -38,7 +38,7 @@ namespace Content.Server.Administration.Commands
 
             if (entityManager.TryGetComponent<EntityStorageComponent>(storageUid, out var storage))
             {
-                storage.Insert(entityManager.GetEntity(entityUid));
+                storage.Insert(entityUid);
             }
             else
             {

@@ -23,15 +23,15 @@ namespace Content.Shared.Interaction
     [PublicAPI]
     public class RangedInteractEventArgs : EventArgs
     {
-        public RangedInteractEventArgs(IEntity user, IEntity @using, EntityCoordinates clickLocation)
+        public RangedInteractEventArgs(EntityUid user, EntityUid @using, EntityCoordinates clickLocation)
         {
             User = user;
             Using = @using;
             ClickLocation = clickLocation;
         }
 
-        public IEntity User { get; }
-        public IEntity Using { get; }
+        public EntityUid User { get; }
+        public EntityUid Using { get; }
         public EntityCoordinates ClickLocation { get; }
     }
 

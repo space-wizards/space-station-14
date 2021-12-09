@@ -1,10 +1,8 @@
-﻿
-using Content.Shared.Stacks;
-using Content.Shared.Storage;
-using Content.Shared.Storage.Components;
+﻿using Content.Shared.Storage.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -26,12 +24,14 @@ namespace Content.Client.Storage.Visualizers
             }
         }
 
-        public override void InitializeEntity(IEntity entity)
+        public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
 
+            var entities = IoCManager.Resolve<IEntityManager>();
+
             if (_openIcon != null &&
-                entity.TryGetComponent<SpriteComponent>(out var spriteComponent) &&
+                entities.TryGetComponent<SpriteComponent?>(entity, out var spriteComponent) &&
                 spriteComponent.BaseRSI?.Path != null)
             {
                 spriteComponent.LayerMapReserveBlank(OpenIcon);
@@ -44,22 +44,23 @@ namespace Content.Client.Storage.Visualizers
         {
             base.OnChangeData(component);
 
-            if (_openIcon != null
-                && component.Owner.TryGetComponent<SpriteComponent>(out var spriteComponent))
-            {
-                if (component.TryGetData<SharedBagState>(SharedBagOpenVisuals.BagState, out var bagState))
-                {
-                    switch (bagState)
-                    {
-                        case SharedBagState.Open:
-                            spriteComponent.LayerSetVisible(OpenIcon, true);
-                            break;
-                        default:
-                            spriteComponent.LayerSetVisible(OpenIcon, false);
-                            break;
-                    }
+            var entities = IoCManager.Resolve<IEntityManager>();
 
-                }
+            if (_openIcon == null ||
+                !entities.TryGetComponent(component.Owner, out SpriteComponent spriteComponent))
+                return;
+
+            if (!component.TryGetData<SharedBagState>(SharedBagOpenVisuals.BagState, out var bagState))
+                return;
+
+            switch (bagState)
+            {
+                case SharedBagState.Open:
+                    spriteComponent.LayerSetVisible(OpenIcon, true);
+                    break;
+                default:
+                    spriteComponent.LayerSetVisible(OpenIcon, false);
+                    break;
             }
         }
     }

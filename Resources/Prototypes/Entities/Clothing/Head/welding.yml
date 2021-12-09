@@ -4,9 +4,7 @@
   name: welding mask
   abstract: true
   components:
-  - type: Tag
-    tags:
-    - ConcealsFace
+  - type: IngestionBlocker
 
 - type: entity
   parent: WeldingMaskBase

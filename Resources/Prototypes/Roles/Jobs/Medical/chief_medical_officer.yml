@@ -17,6 +17,7 @@
   - Command
   - Maintenance
   - Chemistry
+  - ChiefMedicalOfficer
 
 - type: startingGear
   id: CMOGear

@@ -100,7 +100,7 @@ namespace Content.Client.Hands
 
                 // Show blocked overlay if hand is blocked.
                 newButton.Blocked.Visible =
-                    hand.HeldItem != null && hand.HeldItem.HasComponent<HandVirtualItemComponent>();
+                    hand.HeldItem != null && IoCManager.Resolve<IEntityManager>().HasComponent<HandVirtualItemComponent>(hand.HeldItem);
             }
 
             if (TryGetActiveHand(out var activeHand))
@@ -250,7 +250,7 @@ namespace Content.Client.Hands
         ///     The item being held in this hand.
         /// </summary>
         [ViewVariables]
-        public IEntity? HeldItem { get; }
+        public EntityUid HeldItem { get; }
 
         /// <summary>
         ///     The button in the gui associated with this hand. Assumed to be set by gui shortly after being received from the client HandsComponent.
@@ -258,7 +258,7 @@ namespace Content.Client.Hands
         [ViewVariables]
         public HandButton HandButton { get; set; } = default!;
 
-        public GuiHand(string name, HandLocation handLocation, IEntity? heldItem)
+        public GuiHand(string name, HandLocation handLocation, EntityUid heldItem)
         {
             Name = name;
             HandLocation = handLocation;

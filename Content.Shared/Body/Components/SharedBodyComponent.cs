@@ -146,8 +146,8 @@ namespace Content.Shared.Body.Components
 
             var argsAdded = new BodyPartAddedEventArgs(slot.Id, part);
 
-            EntitySystem.Get<SharedHumanoidAppearanceSystem>().BodyPartAdded(OwnerUid, argsAdded);
-            foreach (var component in Owner.GetAllComponents<IBodyPartAdded>().ToArray())
+            EntitySystem.Get<SharedHumanoidAppearanceSystem>().BodyPartAdded(Owner, argsAdded);
+            foreach (var component in IoCManager.Resolve<IEntityManager>().GetComponents<IBodyPartAdded>(Owner).ToArray())
             {
                 component.BodyPartAdded(argsAdded);
             }
@@ -174,8 +174,8 @@ namespace Content.Shared.Body.Components
             var args = new BodyPartRemovedEventArgs(slot.Id, part);
 
 
-            EntitySystem.Get<SharedHumanoidAppearanceSystem>().BodyPartRemoved(OwnerUid, args);
-            foreach (var component in Owner.GetAllComponents<IBodyPartRemoved>())
+            EntitySystem.Get<SharedHumanoidAppearanceSystem>().BodyPartRemoved(Owner, args);
+            foreach (var component in IoCManager.Resolve<IEntityManager>().GetComponents<IBodyPartRemoved>(Owner))
             {
                 component.BodyPartRemoved(args);
             }
@@ -184,14 +184,14 @@ namespace Content.Shared.Body.Components
             if (part.PartType == BodyPartType.Leg &&
                 GetPartsOfType(BodyPartType.Leg).ToArray().Length == 0)
             {
-                EntitySystem.Get<StandingStateSystem>().Down(OwnerUid);
+                EntitySystem.Get<StandingStateSystem>().Down(Owner);
             }
 
             if (part.IsVital && SlotParts.Count(x => x.Value.PartType == part.PartType) == 0)
             {
                 // TODO BODY SYSTEM KILL : Find a more elegant way of killing em than just dumping bloodloss damage.
                 var damage = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Bloodloss"), 300);
-                EntitySystem.Get<DamageableSystem>().TryChangeDamage(part.OwnerUid, damage);
+                EntitySystem.Get<DamageableSystem>().TryChangeDamage(part.Owner, damage);
             }
 
             OnBodyChanged();
@@ -468,7 +468,7 @@ namespace Content.Shared.Body.Components
             var i = 0;
             foreach (var (part, slot) in SlotParts)
             {
-                parts[i] = (slot.Id, part.OwnerUid);
+                parts[i] = (slot.Id, Owner: part.Owner);
                 i++;
             }
 
@@ -542,12 +542,12 @@ namespace Content.Shared.Body.Components
 
             foreach (var (slot, partId) in PartIds)
             {
-                if (!entityManager.TryGetEntity(partId, out var entity))
+                if (!entityManager.EntityExists(partId))
                 {
                     continue;
                 }
 
-                if (!entity.TryGetComponent(out SharedBodyPartComponent? part))
+                if (!entityManager.TryGetComponent(partId, out SharedBodyPartComponent? part))
                 {
                     continue;
                 }

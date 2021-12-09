@@ -26,6 +26,9 @@ namespace Content.Server.Electrocution
         [DataField("onHandInteract")]
         public bool OnHandInteract { get; set; } = true;
 
+        [DataField("onInteractUsing")]
+        public bool OnInteractUsing { get; set; } = true;
+
         [DataField("requirePower")]
         public bool RequirePower { get; } = true;
 

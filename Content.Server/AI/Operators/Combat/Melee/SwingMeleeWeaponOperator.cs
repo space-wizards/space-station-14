@@ -9,14 +9,18 @@ namespace Content.Server.AI.Operators.Combat.Melee
 {
     public class SwingMeleeWeaponOperator : AiOperator
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         private readonly float _burstTime;
         private float _elapsedTime;
 
-        private readonly IEntity _owner;
-        private readonly IEntity _target;
+        private readonly EntityUid _owner;
+        private readonly EntityUid _target;
 
-        public SwingMeleeWeaponOperator(IEntity owner, IEntity target, float burstTime = 1.0f)
+        public SwingMeleeWeaponOperator(EntityUid owner, EntityUid target, float burstTime = 1.0f)
         {
+            IoCManager.InjectDependencies(this);
+
             _owner = owner;
             _target = target;
             _burstTime = burstTime;
@@ -29,7 +33,7 @@ namespace Content.Server.AI.Operators.Combat.Melee
                 return true;
             }
 
-            if (!_owner.TryGetComponent(out CombatModeComponent? combatModeComponent))
+            if (!_entMan.TryGetComponent(_owner, out CombatModeComponent? combatModeComponent))
             {
                 return false;
             }
@@ -47,7 +51,7 @@ namespace Content.Server.AI.Operators.Combat.Melee
             if (!base.Shutdown(outcome))
                 return false;
 
-            if (_owner.TryGetComponent(out CombatModeComponent? combatModeComponent))
+            if (_entMan.TryGetComponent(_owner, out CombatModeComponent? combatModeComponent))
             {
                 combatModeComponent.IsInCombatMode = false;
             }
@@ -62,15 +66,15 @@ namespace Content.Server.AI.Operators.Combat.Melee
                 return Outcome.Success;
             }
 
-            if (!_owner.TryGetComponent(out HandsComponent? hands) || hands.GetActiveHand == null)
+            if (!_entMan.TryGetComponent(_owner, out HandsComponent? hands) || hands.GetActiveHand == null)
             {
                 return Outcome.Failed;
             }
 
             var meleeWeapon = hands.GetActiveHand.Owner;
-            meleeWeapon.TryGetComponent(out MeleeWeaponComponent? meleeWeaponComponent);
+            _entMan.TryGetComponent(meleeWeapon, out MeleeWeaponComponent? meleeWeaponComponent);
 
-            if ((_target.Transform.Coordinates.Position - _owner.Transform.Coordinates.Position).Length >
+            if ((_entMan.GetComponent<TransformComponent>(_target).Coordinates.Position - _entMan.GetComponent<TransformComponent>(_owner).Coordinates.Position).Length >
                 meleeWeaponComponent?.Range)
             {
                 return Outcome.Failed;
@@ -78,7 +82,7 @@ namespace Content.Server.AI.Operators.Combat.Melee
 
             var interactionSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<InteractionSystem>();
 
-            interactionSystem.AiUseInteraction(_owner, _target.Transform.Coordinates, _target.Uid);
+            interactionSystem.AiUseInteraction(_owner, _entMan.GetComponent<TransformComponent>(_target).Coordinates, _target);
             _elapsedTime += frameTime;
             return Outcome.Continuing;
         }
