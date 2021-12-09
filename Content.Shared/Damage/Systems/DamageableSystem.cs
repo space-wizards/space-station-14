@@ -85,9 +85,9 @@ namespace Content.Shared.Damage
             component.TotalDamage = component.Damage.Total;
             component.Dirty();
 
-            if (EntityManager.TryGetComponent<AppearanceComponent>(component.OwnerUid, out var appearance) && damageDelta != null)
+            if (EntityManager.TryGetComponent<AppearanceComponent>(component.Owner, out var appearance) && damageDelta != null)
                 appearance.SetData(DamageVisualizerKeys.DamageUpdateGroups, damageDelta.GetDamagePerGroup().Keys.ToList());
-            RaiseLocalEvent(component.OwnerUid, new DamageChangedEvent(component, damageDelta, interruptsDoAfters), false);
+            RaiseLocalEvent(component.Owner, new DamageChangedEvent(component, damageDelta, interruptsDoAfters), false);
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace Content.Shared.Damage
         ///     Returns a <see cref="DamageSpecifier"/> with information about the actual damage changes. This will be
         ///     null if the user had no applicable components that can take damage.
         /// </returns>
-        public DamageSpecifier? TryChangeDamage(EntityUid uid, DamageSpecifier damage, bool ignoreResistances = false,
+        public DamageSpecifier? TryChangeDamage(EntityUid? uid, DamageSpecifier damage, bool ignoreResistances = false,
             bool interruptsDoAfters = true)
         {
             if (!EntityManager.TryGetComponent<DamageableComponent>(uid, out var damageable))
@@ -132,7 +132,7 @@ namespace Content.Shared.Damage
                 }
 
                 var ev = new DamageModifyEvent(damage);
-                RaiseLocalEvent(uid, ev, false);
+                RaiseLocalEvent(uid.Value, ev, false);
                 damage = ev.Damage;
 
                 if (damage.Empty)

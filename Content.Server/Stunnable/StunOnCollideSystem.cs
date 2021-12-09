@@ -1,11 +1,8 @@
 using System;
 using Content.Server.Alert;
 using Content.Server.Stunnable.Components;
-using Content.Shared.Alert;
-using Content.Shared.Movement.Components;
 using Content.Shared.Standing;
 using Content.Shared.StatusEffect;
-using Content.Shared.Stunnable;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -26,7 +23,7 @@ namespace Content.Server.Stunnable
 
         private void HandleCollide(EntityUid uid, StunOnCollideComponent component, StartCollideEvent args)
         {
-            var otherUid = args.OtherFixture.Body.Owner.Uid;
+            var otherUid = args.OtherFixture.Body.Owner;
 
             if (EntityManager.TryGetComponent<StatusEffectsComponent>(otherUid, out var status))
             {

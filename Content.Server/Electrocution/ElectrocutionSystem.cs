@@ -9,7 +9,6 @@ using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Power.NodeGroups;
 using Content.Server.Window;
-using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
@@ -24,7 +23,6 @@ using Content.Shared.Speech.EntitySystems;
 using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;
 using Content.Shared.Weapons.Melee;
-using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -100,7 +98,7 @@ namespace Content.Server.Electrocution
 
             foreach (var finished in finishedElectrocutionsQueue)
             {
-                var uid = finished.Owner.Uid;
+                var uid = finished.Owner;
                 if (EntityManager.EntityExists(finished.Electrocuting))
                 {
                     // TODO: damage should be scaled by shock damage multiplier
@@ -124,7 +122,7 @@ namespace Content.Server.Electrocution
             if (!electrified.OnBump)
                 return;
 
-            TryDoElectrifiedAct(uid, args.OtherFixture.Body.Owner.Uid, electrified);
+            TryDoElectrifiedAct(uid, args.OtherFixture.Body.Owner, electrified);
         }
 
         private void OnElectrifiedAttacked(EntityUid uid, ElectrifiedComponent electrified, AttackedEvent args)
@@ -132,7 +130,7 @@ namespace Content.Server.Electrocution
             if (!electrified.OnAttacked)
                 return;
 
-            TryDoElectrifiedAct(uid, args.User.Uid, electrified);
+            TryDoElectrifiedAct(uid, args.User, electrified);
         }
 
         private void OnElectrifiedHandInteract(EntityUid uid, ElectrifiedComponent electrified, InteractHandEvent args)
@@ -140,7 +138,7 @@ namespace Content.Server.Electrocution
             if (!electrified.OnHandInteract)
                 return;
 
-            TryDoElectrifiedAct(uid, args.User.Uid, electrified);
+            TryDoElectrifiedAct(uid, args.User, electrified);
         }
 
         private void OnElectrifiedInteractUsing(EntityUid uid, ElectrifiedComponent electrified, InteractUsingEvent args)
@@ -148,7 +146,7 @@ namespace Content.Server.Electrocution
             if (!electrified.OnInteractUsing)
                 return;
 
-            TryDoElectrifiedAct(uid, args.User.Uid, electrified);
+            TryDoElectrifiedAct(uid, args.User, electrified);
         }
 
         public bool TryDoElectrifiedAct(EntityUid uid, EntityUid targetUid,
@@ -167,7 +165,7 @@ namespace Content.Server.Electrocution
                 foreach (var entity in transform.Coordinates.GetEntitiesInTile(
                     LookupFlags.Approximate | LookupFlags.IncludeAnchored, _entityLookup))
                 {
-                    if (entity.HasComponent<WindowComponent>())
+                    if (EntityManager.HasComponent<WindowComponent>(entity))
                         return false;
                 }
             }
@@ -287,11 +285,10 @@ namespace Content.Server.Electrocution
             var electrocutionEntity = EntityManager.SpawnEntity(
                 $"VirtualElectrocutionLoad{node.NodeGroupID}", sourceTransform.Coordinates);
 
-            var electrocutionNode = electrocutionEntity
-                .GetComponent<NodeContainerComponent>()
+            var electrocutionNode = EntityManager.GetComponent<NodeContainerComponent>(electrocutionEntity)
                 .GetNode<ElectrocutionNode>("electrocution");
 
-            var electrocutionComponent = electrocutionEntity.GetComponent<ElectrocutionComponent>();
+            var electrocutionComponent = EntityManager.GetComponent<ElectrocutionComponent>(electrocutionEntity);
 
             electrocutionNode.CableEntity = sourceUid;
             electrocutionNode.NodeName = node.Name;
@@ -377,13 +374,12 @@ namespace Content.Server.Electrocution
             if (sourceUid != null)
             {
                 _popupSystem.PopupEntity(Loc.GetString("electrocuted-component-mob-shocked-by-source-popup-others",
-                        ("mob", EntityManager.GetEntity(uid)), ("source", EntityManager.GetEntity(sourceUid.Value))),
-                    uid, filter);
+                        ("mob", uid), ("source", (sourceUid.Value))), uid, filter);
             }
             else
             {
                 _popupSystem.PopupEntity(Loc.GetString("electrocuted-component-mob-shocked-popup-others",
-                    ("mob", EntityManager.GetEntity(uid))), uid, filter);
+                    ("mob", uid)), uid, filter);
             }
 
             return true;
@@ -406,17 +402,17 @@ namespace Content.Server.Electrocution
             visited.Add(entity);
 
             if (EntityManager.TryGetComponent(entity, out SharedPullableComponent? pullable)
-                && pullable.Puller != null
-                && !visited.Contains(pullable.Puller.Uid))
+                && pullable.Puller is {Valid: true} pullerId
+                && !visited.Contains(pullerId))
             {
-                GetChainedElectrocutionTargetsRecurse(pullable.Puller.Uid, depth + 1, visited, all);
+                GetChainedElectrocutionTargetsRecurse(pullerId, depth + 1, visited, all);
             }
 
             if (EntityManager.TryGetComponent(entity, out SharedPullerComponent? puller)
-                && puller.Pulling != null
-                && !visited.Contains(puller.Pulling.Uid))
+                && puller.Pulling is {Valid: true} pullingId
+                && !visited.Contains(pullingId))
             {
-                GetChainedElectrocutionTargetsRecurse(puller.Pulling.Uid, depth + 1, visited, all);
+                GetChainedElectrocutionTargetsRecurse(pullingId, depth + 1, visited, all);
             }
         }
 

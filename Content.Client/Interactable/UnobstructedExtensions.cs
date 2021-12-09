@@ -15,14 +15,14 @@ namespace Content.Client.Interactable
 
         public static bool InRangeUnobstructed(
             this LocalPlayer origin,
-            IEntity other,
+            EntityUid other,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
             Ignored? predicate = null,
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {
-            var otherPosition = other.Transform.MapPosition;
+            var otherPosition = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(other).MapPosition;
 
             return origin.InRangeUnobstructed(otherPosition, range, collisionMask, predicate, ignoreInsideBlocker,
                 popup);
@@ -84,7 +84,7 @@ namespace Content.Client.Interactable
                 return false;
             }
 
-            return SharedInteractionSystem.InRangeUnobstructed(originEntity, other, range, collisionMask, predicate,
+            return SharedInteractionSystem.InRangeUnobstructed(originEntity.Value, other, range, collisionMask, predicate,
                 ignoreInsideBlocker, popup);
         }
     }

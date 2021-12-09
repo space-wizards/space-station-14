@@ -9,7 +9,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Rounding;
 using Content.Shared.Sound;
 using Content.Shared.Window;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -28,6 +27,7 @@ namespace Content.Server.Window
     public class WindowComponent : SharedWindowComponent, IExamine, IInteractHand
 #pragma warning restore 618
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         [ViewVariables(VVAccess.ReadWrite)] private TimeSpan _lastKnockTime;
@@ -44,8 +44,8 @@ namespace Content.Server.Window
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
-            if (!Owner.TryGetComponent(out DamageableComponent? damageable) ||
-                !Owner.TryGetComponent(out DestructibleComponent? destructible))
+            if (!_entMan.TryGetComponent(Owner, out DamageableComponent? damageable) ||
+                !_entMan.TryGetComponent(Owner, out DestructibleComponent? destructible))
             {
                 return;
             }
@@ -71,7 +71,7 @@ namespace Content.Server.Window
             var fraction = damage == 0 || damageThreshold == 0
                 ? 0f
                 : (float) damage / damageThreshold;
-            var level = Math.Min(ContentHelpers.RoundToLevels((double) fraction, 1, 7), 5);
+            var level = Math.Min(ContentHelpers.RoundToLevels(fraction, 1, 7), 5);
 
             switch (level)
             {
@@ -105,7 +105,7 @@ namespace Content.Server.Window
 
             SoundSystem.Play(
                 Filter.Pvs(eventArgs.Target), _knockSound.GetSound(),
-                eventArgs.Target.Transform.Coordinates, AudioHelpers.WithVariation(0.05f));
+                _entMan.GetComponent<TransformComponent>(eventArgs.Target).Coordinates, AudioHelpers.WithVariation(0.05f));
             eventArgs.Target.PopupMessageEveryone(Loc.GetString("comp-window-knock"));
 
             _lastKnockTime = _gameTiming.CurTime;

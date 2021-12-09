@@ -15,7 +15,7 @@ namespace Content.Shared.Body.Surgery
             SharedMechanismComponent target,
             IBodyPartContainer container,
             ISurgeon surgeon,
-            IEntity performer);
+            EntityUid performer);
 
         /// <summary>
         ///     How long it takes to perform a single surgery step in seconds.

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
@@ -7,6 +8,7 @@ using Content.Shared.MobState.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
@@ -46,10 +48,10 @@ namespace Content.Shared.Examine
         public const float ExamineRange = 16f;
         protected const float ExamineDetailsRange = 3f;
 
-        private bool IsInDetailsRange(IEntity examiner, IEntity entity)
+        private bool IsInDetailsRange(EntityUid examiner, EntityUid entity)
         {
             // check if the mob is in ciritcal or dead
-            if (EntityManager.TryGetComponent(examiner.Uid, out MobStateComponent mobState) && mobState.IsIncapacitated())
+            if (EntityManager.TryGetComponent(examiner, out MobStateComponent mobState) && mobState.IsIncapacitated())
                 return false;
 
             if (entity.TryGetContainerMan(out var man) && man.Owner == examiner)
@@ -60,28 +62,28 @@ namespace Content.Shared.Examine
         }
 
         [Pure]
-        public bool CanExamine(IEntity examiner, IEntity examined)
+        public bool CanExamine(EntityUid examiner, EntityUid examined)
         {
-            return CanExamine(examiner, examined.Transform.MapPosition,
+            return CanExamine(examiner, EntityManager.GetComponent<TransformComponent>(examined).MapPosition,
                 entity => entity == examiner || entity == examined);
         }
 
         [Pure]
-        public virtual bool CanExamine(IEntity examiner, MapCoordinates target, Ignored? predicate = null)
+        public virtual bool CanExamine(EntityUid examiner, MapCoordinates target, Ignored? predicate = null)
         {
-            if (!examiner.TryGetComponent(out ExaminerComponent? examinerComponent))
+            if (!EntityManager.TryGetComponent(examiner, out ExaminerComponent? examinerComponent))
                 return false;
 
             if (!examinerComponent.DoRangeCheck)
                 return true;
 
-            if (examiner.Transform.MapID != target.MapId)
+            if (EntityManager.GetComponent<TransformComponent>(examiner).MapID != target.MapId)
                 return false;
 
             return InRangeUnOccluded(
-                examiner.Transform.MapPosition,
+                EntityManager.GetComponent<TransformComponent>(examiner).MapPosition,
                 target,
-                GetExaminerRange(examiner.Uid),
+                GetExaminerRange(examiner),
                 predicate: predicate,
                 ignoreInsideBlocker: true);
         }
@@ -107,6 +109,7 @@ namespace Content.Shared.Examine
                 other.MapId == MapId.Nullspace) return false;
 
             var occluderSystem = Get<OccluderSystem>();
+            var entMan = IoCManager.Resolve<IEntityManager>();
             if (!origin.InRange(other, range)) return false;
 
             var dir = other.Position - origin.Position;
@@ -126,12 +129,12 @@ namespace Content.Shared.Examine
 
             foreach (var result in rayResults)
             {
-                if (!result.HitEntity.TryGetComponent(out OccluderComponent? o))
+                if (!entMan.TryGetComponent(result.HitEntity, out OccluderComponent? o))
                 {
                     continue;
                 }
 
-                var bBox = o.BoundingBox.Translated(o.Owner.Transform.WorldPosition);
+                var bBox = o.BoundingBox.Translated(entMan.GetComponent<TransformComponent>(o.Owner).WorldPosition);
 
                 if (bBox.Contains(origin.Position) || bBox.Contains(other.Position))
                 {
@@ -144,62 +147,70 @@ namespace Content.Shared.Examine
             return true;
         }
 
-        public static bool InRangeUnOccluded(IEntity origin, IEntity other, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
+        public static bool InRangeUnOccluded(EntityUid origin, EntityUid other, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
         {
-            var originPos = origin.Transform.MapPosition;
-            var otherPos = other.Transform.MapPosition;
+            var entMan = IoCManager.Resolve<IEntityManager>();
+            var originPos = entMan.GetComponent<TransformComponent>(origin).MapPosition;
+            var otherPos = entMan.GetComponent<TransformComponent>(other).MapPosition;
 
             return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
         }
 
-        public static bool InRangeUnOccluded(IEntity origin, IComponent other, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
+        public static bool InRangeUnOccluded(EntityUid origin, IComponent other, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
         {
-            var originPos = origin.Transform.MapPosition;
-            var otherPos = other.Owner.Transform.MapPosition;
+            var entMan = IoCManager.Resolve<IEntityManager>();
+            var originPos = entMan.GetComponent<TransformComponent>(origin).MapPosition;
+            var otherPos = entMan.GetComponent<TransformComponent>(other.Owner).MapPosition;
 
             return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
         }
 
-        public static bool InRangeUnOccluded(IEntity origin, EntityCoordinates other, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
+        public static bool InRangeUnOccluded(EntityUid origin, EntityCoordinates other, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
         {
-            var originPos = origin.Transform.MapPosition;
-            var otherPos = other.ToMap(origin.EntityManager);
+            var entMan = IoCManager.Resolve<IEntityManager>();
+            var originPos = entMan.GetComponent<TransformComponent>(origin).MapPosition;
+            var otherPos = other.ToMap(entMan);
 
             return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
         }
 
-        public static bool InRangeUnOccluded(IEntity origin, MapCoordinates other, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
+        public static bool InRangeUnOccluded(EntityUid origin, MapCoordinates other, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
         {
-            var originPos = origin.Transform.MapPosition;
+            var entMan = IoCManager.Resolve<IEntityManager>();
+            var originPos = entMan.GetComponent<TransformComponent>(origin).MapPosition;
 
             return InRangeUnOccluded(originPos, other, range, predicate, ignoreInsideBlocker);
         }
 
         public static bool InRangeUnOccluded(ITargetedInteractEventArgs args, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
         {
-            var originPos = args.User.Transform.MapPosition;
-            var otherPos = args.Target.Transform.MapPosition;
+            var entMan = IoCManager.Resolve<IEntityManager>();
+            var originPos = entMan.GetComponent<TransformComponent>(args.User).MapPosition;
+            var otherPos = entMan.GetComponent<TransformComponent>(args.Target).MapPosition;
 
             return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
         }
 
         public static bool InRangeUnOccluded(DragDropEvent args, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
         {
-            var originPos = args.User.Transform.MapPosition;
-            var otherPos = args.DropLocation.ToMap(args.User.EntityManager);
+            var entMan = IoCManager.Resolve<IEntityManager>();
+            var originPos = entMan.GetComponent<TransformComponent>(args.User).MapPosition;
+            var otherPos = args.DropLocation.ToMap(entMan);
 
             return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
         }
 
         public static bool InRangeUnOccluded(AfterInteractEventArgs args, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
         {
-            var originPos = args.User.Transform.MapPosition;
-            var otherPos = args.Target?.Transform.MapPosition ?? args.ClickLocation.ToMap(args.User.EntityManager);
+            var entityManager = IoCManager.Resolve<IEntityManager>();;
+            var originPos = entityManager.GetComponent<TransformComponent>(args.User).MapPosition;
+            var target = args.Target;
+            var otherPos = (target != null ? entityManager.GetComponent<TransformComponent>(target.Value).MapPosition : args.ClickLocation.ToMap(entityManager));
 
             return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
         }
 
-        public FormattedMessage GetExamineText(IEntity entity, IEntity? examiner)
+        public FormattedMessage GetExamineText(EntityUid entity, EntityUid? examiner)
         {
             var message = new FormattedMessage();
 
@@ -211,21 +222,21 @@ namespace Content.Shared.Examine
             var doNewline = false;
 
             //Add an entity description if one is declared
-            if (!string.IsNullOrEmpty(entity.Description))
+            if (!string.IsNullOrEmpty(EntityManager.GetComponent<MetaDataComponent>(entity).EntityDescription))
             {
-                message.AddText(entity.Description);
+                message.AddText(EntityManager.GetComponent<MetaDataComponent>(entity).EntityDescription);
                 doNewline = true;
             }
 
             message.PushColor(Color.DarkGray);
 
             // Raise the event and let things that subscribe to it change the message...
-            var isInDetailsRange = IsInDetailsRange(examiner, entity);
-            var examinedEvent = new ExaminedEvent(message, entity, examiner, isInDetailsRange, doNewline);
-            RaiseLocalEvent(entity.Uid, examinedEvent);
+            var isInDetailsRange = IsInDetailsRange(examiner.Value, entity);
+            var examinedEvent = new ExaminedEvent(message, entity, examiner.Value, isInDetailsRange, doNewline);
+            RaiseLocalEvent(entity, examinedEvent);
 
             //Add component statuses from components that report one
-            foreach (var examineComponent in entity.GetAllComponents<IExamine>())
+            foreach (var examineComponent in EntityManager.GetComponents<IExamine>(entity))
             {
                 var subMessage = new FormattedMessage();
                 examineComponent.Examine(subMessage, isInDetailsRange);
@@ -263,12 +274,12 @@ namespace Content.Shared.Examine
         /// <summary>
         ///     The entity performing the examining.
         /// </summary>
-        public IEntity Examiner { get; }
+        public EntityUid Examiner { get; }
 
         /// <summary>
         ///     Entity being examined, for broadcast event purposes.
         /// </summary>
-        public IEntity Examined { get; }
+        public EntityUid Examined { get; }
 
         /// <summary>
         ///     Whether the examiner is in range of the entity to get some extra details.
@@ -277,7 +288,7 @@ namespace Content.Shared.Examine
 
         private bool _doNewLine;
 
-        public ExaminedEvent(FormattedMessage message, IEntity examined, IEntity examiner, bool isInDetailsRange, bool doNewLine)
+        public ExaminedEvent(FormattedMessage message, EntityUid examined, EntityUid examiner, bool isInDetailsRange, bool doNewLine)
         {
             Message = message;
             Examined = examined;

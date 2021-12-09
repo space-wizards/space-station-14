@@ -8,6 +8,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using System;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Light.EntitySystems
 {
@@ -36,18 +37,18 @@ namespace Content.Server.Light.EntitySystems
 
         public void ToggleLight(UnpoweredFlashlightComponent flashlight)
         {
-            if (!flashlight.Owner.TryGetComponent(out PointLightComponent? light))
+            if (!EntityManager.TryGetComponent(flashlight.Owner, out PointLightComponent? light))
                 return;
 
             flashlight.LightOn = !flashlight.LightOn;
             light.Enabled = flashlight.LightOn;
 
-            if (flashlight.Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (EntityManager.TryGetComponent(flashlight.Owner, out AppearanceComponent? appearance))
                 appearance.SetData(UnpoweredFlashlightVisuals.LightOn, flashlight.LightOn);
 
             SoundSystem.Play(Filter.Pvs(light.Owner), flashlight.ToggleSound.GetSound(), flashlight.Owner);
 
-            RaiseLocalEvent(flashlight.Owner.Uid, new LightToggleEvent(flashlight.LightOn));
+            RaiseLocalEvent(flashlight.Owner, new LightToggleEvent(flashlight.LightOn));
         }
 
     }

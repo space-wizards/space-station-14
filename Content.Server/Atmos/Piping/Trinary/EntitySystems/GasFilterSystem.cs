@@ -38,7 +38,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 
         private void OnFilterUpdated(EntityUid uid, GasFilterComponent filter, AtmosDeviceUpdateEvent args)
         {
-            var appearance = filter.Owner.GetComponentOrNull<AppearanceComponent>();
+            var appearance = EntityManager.GetComponentOrNull<AppearanceComponent>(filter.Owner);
 
             if (!filter.Enabled
             || !EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
@@ -81,10 +81,10 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 
         private void OnFilterInteractHand(EntityUid uid, GasFilterComponent component, InteractHandEvent args)
         {
-            if (!args.User.TryGetComponent(out ActorComponent? actor))
+            if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
 
-            if (component.Owner.Transform.Anchored)
+            if (EntityManager.GetComponent<TransformComponent>(component.Owner).Anchored)
             {
                 _userInterfaceSystem.TryOpen(uid, GasFilterUiKey.Key, actor.PlayerSession);
                 DirtyUI(uid, component);
@@ -104,7 +104,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
                 return;
 
             _userInterfaceSystem.TrySetUiState(uid, GasFilterUiKey.Key,
-                new GasFilterBoundUserInterfaceState(filter.Owner.Name, filter.TransferRate, filter.Enabled, filter.FilteredGas));
+                new GasFilterBoundUserInterfaceState(EntityManager.GetComponent<MetaDataComponent>(filter.Owner).EntityName, filter.TransferRate, filter.Enabled, filter.FilteredGas));
         }
 
         private void OnToggleStatusMessage(EntityUid uid, GasFilterComponent filter, GasFilterToggleStatusMessage args)

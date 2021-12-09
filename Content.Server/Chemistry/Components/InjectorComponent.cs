@@ -19,6 +19,7 @@ using Content.Shared.Interaction.Helpers;
 using Content.Shared.MobState.Components;
 using Content.Shared.Popups;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
@@ -35,6 +36,8 @@ namespace Content.Server.Chemistry.Components
     [RegisterComponent]
     public class InjectorComponent : SharedInjectorComponent, IAfterInteract, IUse
     {
+        [Dependency] private readonly IEntityManager _entities = default!;
+
         public const string SolutionName = "injector";
 
         /// <summary>
@@ -98,7 +101,7 @@ namespace Content.Server.Chemistry.Components
         /// <summary>
         /// Toggle between draw/inject state if applicable
         /// </summary>
-        private void Toggle(IEntity user)
+        private void Toggle(EntityUid user)
         {
             if (_injectOnly)
             {
@@ -138,38 +141,37 @@ namespace Content.Server.Chemistry.Components
             if (!eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
                 return false;
 
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User.Uid))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User))
                 return false;
 
             var solutionsSys = EntitySystem.Get<SolutionContainerSystem>();
             //Make sure we have the attacking entity
-            if (eventArgs.Target == null || !Owner.HasComponent<SolutionContainerManagerComponent>())
+            if (eventArgs.Target is not {Valid: true} target ||
+                !_entities.HasComponent<SolutionContainerManagerComponent>(Owner))
             {
                 return false;
             }
 
-            var targetEntity = eventArgs.Target;
-
             // Is the target a mob? If yes, use a do-after to give them time to respond.
-            if (Owner.EntityManager.HasComponent<MobStateComponent>(targetEntity.Uid) ||
-                Owner.EntityManager.HasComponent<BloodstreamComponent>(targetEntity.Uid))
+            if (_entities.HasComponent<MobStateComponent>(target) ||
+                _entities.HasComponent<BloodstreamComponent>(target))
             {
-                if (!await TryInjectDoAfter(eventArgs.User.Uid, eventArgs.Target.Uid))
+                if (!await TryInjectDoAfter(eventArgs.User, target))
                     return true;
             }
 
             // Handle injecting/drawing for solutions
             if (ToggleState == InjectorToggleMode.Inject)
             {
-                if (solutionsSys.TryGetInjectableSolution(targetEntity.Uid, out var injectableSolution))
+                if (solutionsSys.TryGetInjectableSolution(target, out var injectableSolution))
                 {
-                    TryInject(targetEntity, injectableSolution, eventArgs.User, false);
+                    TryInject(target, injectableSolution, eventArgs.User, false);
                 }
-                else if (solutionsSys.TryGetRefillableSolution(targetEntity.Uid, out var refillableSolution))
+                else if (solutionsSys.TryGetRefillableSolution(target, out var refillableSolution))
                 {
-                    TryInject(targetEntity, refillableSolution, eventArgs.User, true);
+                    TryInject(target, refillableSolution, eventArgs.User, true);
                 }
-                else if (targetEntity.TryGetComponent(out BloodstreamComponent? bloodstream))
+                else if (_entities.TryGetComponent(target, out BloodstreamComponent? bloodstream))
                 {
                     TryInjectIntoBloodstream(bloodstream, eventArgs.User);
                 }
@@ -177,20 +179,20 @@ namespace Content.Server.Chemistry.Components
                 {
                     eventArgs.User.PopupMessage(eventArgs.User,
                         Loc.GetString("injector-component-cannot-transfer-message",
-                            ("target", targetEntity)));
+                            ("target", target)));
                 }
             }
             else if (ToggleState == InjectorToggleMode.Draw)
             {
-                if (solutionsSys.TryGetDrawableSolution(targetEntity.Uid, out var drawableSolution))
+                if (solutionsSys.TryGetDrawableSolution(target, out var drawableSolution))
                 {
-                    TryDraw(targetEntity, drawableSolution, eventArgs.User);
+                    TryDraw(target, drawableSolution, eventArgs.User);
                 }
                 else
                 {
                     eventArgs.User.PopupMessage(eventArgs.User,
                         Loc.GetString("injector-component-cannot-draw-message",
-                            ("target", targetEntity)));
+                            ("target", target)));
                 }
             }
 
@@ -208,25 +210,24 @@ namespace Content.Server.Chemistry.Components
             popupSys.PopupEntity(Loc.GetString("injector-component-injecting-user"), target, Filter.Entities(user));
 
             // Get entity for logging. Log with EntityUids when?
-            var userEntity = Owner.EntityManager.GetEntity(user);
             var logSys = EntitySystem.Get<AdminLogSystem>();
 
             var actualDelay = MathF.Max(Delay, 1f);
             if (user != target)
             {
                 // Create a pop-up for the target
-                var userName = Owner.EntityManager.GetComponent<MetaDataComponent>(user).EntityName;
+                var userName = _entities.GetComponent<MetaDataComponent>(user).EntityName;
                 popupSys.PopupEntity(Loc.GetString("injector-component-injecting-target",
                     ("user", userName)), user, Filter.Entities(target));
 
                 // Check if the target is incapacitated or in combat mode and modify time accordingly.
-                if (Owner.EntityManager.TryGetComponent<MobStateComponent>(target, out var mobState) &&
+                if (_entities.TryGetComponent<MobStateComponent>(target, out var mobState) &&
                     mobState.IsIncapacitated())
                 {
                     actualDelay /= 2;
                 }
-                else if (Owner.EntityManager.TryGetComponent<CombatModeComponent>(target, out var combat) &&
-                    combat.IsInCombatMode)
+                else if (_entities.TryGetComponent<CombatModeComponent>(target, out var combat) &&
+                         combat.IsInCombatMode)
                 {
                     // Slightly increase the delay when the target is in combat mode. Helps prevents cheese injections in
                     // combat with fast syringes & lag.
@@ -234,11 +235,10 @@ namespace Content.Server.Chemistry.Components
                 }
 
                 // Add an admin log, using the "force feed" log type. It's not quite feeding, but the effect is the same.
-                var targetEntity = Owner.EntityManager.GetEntity(target);
                 if (ToggleState == InjectorToggleMode.Inject)
                 {
                     logSys.Add(LogType.ForceFeed,
-                        $"{userEntity} is attempting to inject a solution into {targetEntity}");
+                        $"{_entities.ToPrettyString(user)} is attempting to inject a solution into {_entities.ToPrettyString(target)}");
                     // TODO solution pretty string.
                 }
             }
@@ -249,7 +249,7 @@ namespace Content.Server.Chemistry.Components
 
                 if (ToggleState == InjectorToggleMode.Inject)
                     logSys.Add(LogType.Ingestion,
-                        $"{userEntity} is attempting to inject themselves with a solution.");
+                        $"{_entities.ToPrettyString(user)} is attempting to inject themselves with a solution.");
                     //TODO solution pretty string.
             }
 
@@ -279,7 +279,7 @@ namespace Content.Server.Chemistry.Components
             return true;
         }
 
-        private void TryInjectIntoBloodstream(BloodstreamComponent targetBloodstream, IEntity user)
+        private void TryInjectIntoBloodstream(BloodstreamComponent targetBloodstream, EntityUid user)
         {
             // Get transfer amount. May be smaller than _transferAmount if not enough room
             var realTransferAmount = FixedPoint2.Min(_transferAmount, targetBloodstream.Solution.AvailableVolume);
@@ -293,12 +293,12 @@ namespace Content.Server.Chemistry.Components
 
             // Move units from attackSolution to targetSolution
             var removedSolution =
-                EntitySystem.Get<SolutionContainerSystem>().SplitSolution(user.Uid, targetBloodstream.Solution, realTransferAmount);
+                EntitySystem.Get<SolutionContainerSystem>().SplitSolution(user, targetBloodstream.Solution, realTransferAmount);
 
             var bloodstreamSys = EntitySystem.Get<BloodstreamSystem>();
-            bloodstreamSys.TryAddToBloodstream(targetBloodstream.OwnerUid, removedSolution, targetBloodstream);
+            bloodstreamSys.TryAddToBloodstream((targetBloodstream).Owner, removedSolution, targetBloodstream);
 
-            removedSolution.DoEntityReaction(targetBloodstream.Owner.Uid, ReactionMethod.Injection);
+            removedSolution.DoEntityReaction(targetBloodstream.Owner, ReactionMethod.Injection);
 
             Owner.PopupMessage(user,
                 Loc.GetString("injector-component-inject-success-message",
@@ -308,9 +308,9 @@ namespace Content.Server.Chemistry.Components
             AfterInject();
         }
 
-        private void TryInject(IEntity targetEntity, Solution targetSolution, IEntity user, bool asRefill)
+        private void TryInject(EntityUid targetEntity, Solution targetSolution, EntityUid user, bool asRefill)
         {
-            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution)
+            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution)
                 || solution.CurrentVolume == 0)
             {
                 return;
@@ -327,19 +327,19 @@ namespace Content.Server.Chemistry.Components
             }
 
             // Move units from attackSolution to targetSolution
-            var removedSolution = EntitySystem.Get<SolutionContainerSystem>().SplitSolution(Owner.Uid, solution, realTransferAmount);
+            var removedSolution = EntitySystem.Get<SolutionContainerSystem>().SplitSolution(Owner, solution, realTransferAmount);
 
-            removedSolution.DoEntityReaction(targetEntity.Uid, ReactionMethod.Injection);
+            removedSolution.DoEntityReaction(targetEntity, ReactionMethod.Injection);
 
             if (!asRefill)
             {
                 EntitySystem.Get<SolutionContainerSystem>()
-                    .Inject(targetEntity.Uid, targetSolution, removedSolution);
+                    .Inject(targetEntity, targetSolution, removedSolution);
             }
             else
             {
                 EntitySystem.Get<SolutionContainerSystem>()
-                    .Refill(targetEntity.Uid, targetSolution, removedSolution);
+                    .Refill(targetEntity, targetSolution, removedSolution);
             }
 
             Owner.PopupMessage(user,
@@ -353,7 +353,7 @@ namespace Content.Server.Chemistry.Components
         private void AfterInject()
         {
             // Automatically set syringe to draw after completely draining it.
-            if (EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution)
+            if (EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution)
                 && solution.CurrentVolume == 0)
             {
                 ToggleState = InjectorToggleMode.Draw;
@@ -363,16 +363,16 @@ namespace Content.Server.Chemistry.Components
         private void AfterDraw()
         {
             // Automatically set syringe to inject after completely filling it.
-            if (EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution)
+            if (EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution)
                 && solution.AvailableVolume == 0)
             {
                 ToggleState = InjectorToggleMode.Inject;
             }
         }
 
-        private void TryDraw(IEntity targetEntity, Solution targetSolution, IEntity user)
+        private void TryDraw(EntityUid targetEntity, Solution targetSolution, EntityUid user)
         {
-            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution)
+            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution)
                 || solution.AvailableVolume == 0)
             {
                 return;
@@ -390,9 +390,9 @@ namespace Content.Server.Chemistry.Components
 
             // Move units from attackSolution to targetSolution
             var removedSolution = EntitySystem.Get<SolutionContainerSystem>()
-                .Draw(targetEntity.Uid, targetSolution, realTransferAmount);
+                .Draw(targetEntity, targetSolution, realTransferAmount);
 
-            if (!EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(targetEntity.Uid, solution, removedSolution))
+            if (!EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(targetEntity, solution, removedSolution))
             {
                 return;
             }
@@ -408,8 +408,8 @@ namespace Content.Server.Chemistry.Components
 
         public override ComponentState GetComponentState()
         {
-            Owner.EntityManager.EntitySysManager.GetEntitySystem<SolutionContainerSystem>()
-                .TryGetSolution(Owner.Uid, SolutionName, out var solution);
+            _entities.EntitySysManager.GetEntitySystem<SolutionContainerSystem>()
+                .TryGetSolution(Owner, SolutionName, out var solution);
 
             var currentVolume = solution?.CurrentVolume ?? FixedPoint2.Zero;
             var maxVolume = solution?.MaxVolume ?? FixedPoint2.Zero;

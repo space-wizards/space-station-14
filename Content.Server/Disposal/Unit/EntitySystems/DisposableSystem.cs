@@ -1,5 +1,5 @@
 using System.Linq;
-﻿using Content.Server.Atmos;
+ using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Disposal.Tube.Components;
 using Content.Server.Disposal.Tube;
@@ -47,24 +47,24 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
             foreach (var entity in holder.Container.ContainedEntities.ToArray())
             {
-                if (entity.TryGetComponent(out IPhysBody? physics))
+                if (EntityManager.TryGetComponent(entity, out IPhysBody? physics))
                 {
                     physics.CanCollide = true;
                 }
 
                 holder.Container.ForceRemove(entity);
 
-                if (entity.Transform.Parent == holderTransform)
+                if (EntityManager.GetComponent<TransformComponent>(entity).Parent == holderTransform)
                 {
                     if (duc != null)
                     {
                         // Insert into disposal unit
-                        entity.Transform.Coordinates = new EntityCoordinates(duc.OwnerUid, Vector2.Zero);
+                        EntityManager.GetComponent<TransformComponent>(entity).Coordinates = new EntityCoordinates((duc).Owner, Vector2.Zero);
                         duc.Container.Insert(entity);
                     }
                     else
                     {
-                        entity.Transform.AttachParentToContainerOrGrid();
+                        EntityManager.GetComponent<TransformComponent>(entity).AttachParentToContainerOrGrid();
                     }
                 }
             }
@@ -154,18 +154,18 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 var currentTube = holder.CurrentTube;
                 if (currentTube == null || currentTube.Deleted)
                 {
-                    ExitDisposals(holder.OwnerUid);
+                    ExitDisposals((holder).Owner);
                     break;
                 }
 
                 if (holder.TimeLeft > 0)
                 {
                     var progress = 1 - holder.TimeLeft / holder.StartingTime;
-                    var origin = currentTube.Owner.Transform.Coordinates;
+                    var origin = EntityManager.GetComponent<TransformComponent>(currentTube.Owner).Coordinates;
                     var destination = holder.CurrentDirection.ToVec();
                     var newPosition = destination * progress;
 
-                    holder.Owner.Transform.Coordinates = origin.Offset(newPosition);
+                    EntityManager.GetComponent<TransformComponent>(holder.Owner).Coordinates = origin.Offset(newPosition);
 
                     continue;
                 }
@@ -175,15 +175,15 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 currentTube.Contents.ForceRemove(holder.Owner);
 
                 // Find next tube
-                var nextTube = _disposalTubeSystem.NextTubeFor(currentTube.OwnerUid, holder.CurrentDirection);
+                var nextTube = _disposalTubeSystem.NextTubeFor(currentTube.Owner, holder.CurrentDirection);
                 if (nextTube == null || nextTube.Deleted)
                 {
-                    ExitDisposals(holder.OwnerUid);
+                    ExitDisposals((holder).Owner);
                     break;
                 }
 
                 // Perform remainder of entry process
-                if (!EnterTube(holder.OwnerUid, nextTube.OwnerUid, holder, null, nextTube, null))
+                if (!EnterTube((holder).Owner, nextTube.Owner, holder, null, nextTube, null))
                 {
                     break;
                 }

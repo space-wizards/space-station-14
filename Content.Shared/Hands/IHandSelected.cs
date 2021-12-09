@@ -17,12 +17,12 @@ namespace Content.Shared.Hands
 
     public class HandSelectedEventArgs : EventArgs
     {
-        public HandSelectedEventArgs(IEntity user)
+        public HandSelectedEventArgs(EntityUid user)
         {
             User = user;
         }
 
-        public IEntity User { get; }
+        public EntityUid User { get; }
     }
 
     /// <summary>
@@ -34,14 +34,14 @@ namespace Content.Shared.Hands
         /// <summary>
         ///     Entity that owns the selected hand.
         /// </summary>
-        public IEntity User { get; }
+        public EntityUid User { get; }
 
         /// <summary>
         ///     Item in the hand that was selected.
         /// </summary>
-        public IEntity Item { get; }
+        public EntityUid Item { get; }
 
-        public HandSelectedEvent(IEntity user, IEntity item)
+        public HandSelectedEvent(EntityUid user, EntityUid item)
         {
             User = user;
             Item = item;

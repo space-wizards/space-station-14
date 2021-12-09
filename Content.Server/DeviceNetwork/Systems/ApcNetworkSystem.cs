@@ -4,6 +4,7 @@ using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Power.Nodes;
+using Robust.Shared.IoC;
 
 namespace Content.Server.DeviceNetwork.Systems
 {
@@ -35,7 +36,7 @@ namespace Content.Server.DeviceNetwork.Systems
 
         private void OnProviderConnected(EntityUid uid, ApcNetworkComponent component, ExtensionCableSystem.ProviderConnectedEvent args)
         {
-            if (!args.Provider.Owner.TryGetComponent(out NodeContainerComponent? nodeContainer)) return;
+            if (!EntityManager.TryGetComponent(args.Provider.Owner, out NodeContainerComponent? nodeContainer)) return;
 
             if (nodeContainer.TryGetNode("power", out CableNode? node))
             {
