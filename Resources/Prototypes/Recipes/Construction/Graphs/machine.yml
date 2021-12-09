@@ -98,3 +98,18 @@
             - tool: Prying
               doAfter: 0.25
 
+    - node: destroyedmachineframe
+      entity: MachineFrameDestroyed
+      edges:
+        - to: start
+          steps:
+            - tool: Welding
+              doAfter: 5            
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 5
+            - !type:SpawnPrototype
+              prototype: CableHVStack1
+              amount: 2
+            - !type:DeleteEntity {}
