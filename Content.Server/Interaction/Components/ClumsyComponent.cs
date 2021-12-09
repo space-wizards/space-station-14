@@ -2,7 +2,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Random;
 
-
 namespace Content.Server.Interaction.Components
 {
     /// <summary>
@@ -28,9 +27,9 @@ namespace Content.Server.Interaction.Components
         /// The chance that a "bad action" happens if the user is clumsy, between 0 and 1 inclusive.
         /// </param>
         /// <returns>True if a "bad action" happened, false if the normal action should happen.</returns>
-        public static bool TryRollClumsy(IEntity entity, float chance)
+        public static bool TryRollClumsy(EntityUid entity, float chance)
         {
-            return entity.TryGetComponent(out ClumsyComponent? clumsy)
+            return IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out ClumsyComponent? clumsy)
                    && clumsy.RollClumsy(chance);
         }
     }

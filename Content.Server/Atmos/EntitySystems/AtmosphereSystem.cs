@@ -75,10 +75,10 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 foreach (var exposed in EntityManager.EntityQuery<AtmosExposedComponent>())
                 {
-                    var tile = GetTileMixture(exposed.Owner.Transform.Coordinates);
+                    var tile = GetTileMixture(EntityManager.GetComponent<TransformComponent>(exposed.Owner).Coordinates);
                     if (tile == null) continue;
-                    var updateEvent = new AtmosExposedUpdateEvent(exposed.Owner.Transform.Coordinates, tile);
-                    RaiseLocalEvent(exposed.Owner.Uid, ref updateEvent);
+                    var updateEvent = new AtmosExposedUpdateEvent(EntityManager.GetComponent<TransformComponent>(exposed.Owner).Coordinates, tile);
+                    RaiseLocalEvent(exposed.Owner, ref updateEvent);
                 }
 
                 _exposedTimer -= ExposedUpdateDelay;

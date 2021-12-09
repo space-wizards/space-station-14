@@ -7,7 +7,7 @@ namespace Content.Server.AI.Utility.Actions
         /// <summary>
         ///     NPC this action is attached to.
         /// </summary>
-        IEntity Owner { get; set; }
+        EntityUid Owner { get; set; }
 
         /// <summary>
         ///     Highest possible score for this action.

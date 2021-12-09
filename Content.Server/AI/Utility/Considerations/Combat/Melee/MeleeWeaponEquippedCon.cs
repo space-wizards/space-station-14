@@ -1,6 +1,8 @@
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States.Inventory;
 using Content.Server.Weapon.Melee.Components;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Utility.Considerations.Combat.Melee
 {
@@ -15,7 +17,7 @@ namespace Content.Server.AI.Utility.Considerations.Combat.Melee
                 return 0.0f;
             }
 
-            return equipped.HasComponent<MeleeWeaponComponent>() ? 1.0f : 0.0f;
+            return IoCManager.Resolve<IEntityManager>().HasComponent<MeleeWeaponComponent>(equipped) ? 1.0f : 0.0f;
         }
     }
 }

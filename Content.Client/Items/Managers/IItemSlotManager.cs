@@ -7,10 +7,10 @@ namespace Content.Client.Items.Managers
 {
     public interface IItemSlotManager
     {
-        bool OnButtonPressed(GUIBoundKeyEventArgs args, IEntity? item);
-        void UpdateCooldown(ItemSlotButton? cooldownTexture, IEntity? entity);
-        bool SetItemSlot(ItemSlotButton button, IEntity? entity);
-        void HoverInSlot(ItemSlotButton button, IEntity? entity, bool fits);
+        bool OnButtonPressed(GUIBoundKeyEventArgs args, EntityUid item);
+        void UpdateCooldown(ItemSlotButton? cooldownTexture, EntityUid entity);
+        bool SetItemSlot(ItemSlotButton button, EntityUid entity);
+        void HoverInSlot(ItemSlotButton button, EntityUid entity, bool fits);
         event Action<EntitySlotHighlightedEventArgs>? EntityHighlightedUpdated;
         bool IsHighlighted(EntityUid uid);
 

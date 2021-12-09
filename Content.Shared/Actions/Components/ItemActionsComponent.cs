@@ -4,6 +4,7 @@ using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -46,7 +47,7 @@ namespace Content.Shared.Actions.Components
         /// <summary>
         /// Entity currently holding this in hand or equip slot. Null if not held.
         /// </summary>
-        public IEntity? Holder { get; private set; }
+        public EntityUid? Holder { get; private set; }
         // cached actions component of the holder, since we'll need to access it frequently
         private SharedActionsComponent? _holderActionsComponent;
 
@@ -85,7 +86,7 @@ namespace Content.Shared.Actions.Components
             if (_holderActionsComponent == null) return;
             foreach (var (actionType, state) in _actions)
             {
-                _holderActionsComponent.GrantOrUpdateItemAction(actionType, OwnerUid, state);
+                _holderActionsComponent.GrantOrUpdateItemAction(actionType, Owner, state);
             }
         }
 
@@ -94,7 +95,7 @@ namespace Content.Shared.Actions.Components
             if (_holderActionsComponent == null) return;
             foreach (var (actionType, state) in _actions)
             {
-                _holderActionsComponent.RevokeItemAction(actionType, OwnerUid);
+                _holderActionsComponent.RevokeItemAction(actionType, Owner);
             }
         }
 
@@ -151,7 +152,7 @@ namespace Content.Shared.Actions.Components
             if (!dirty) return;
 
             _actions[actionType] = actionState;
-            _holderActionsComponent?.GrantOrUpdateItemAction(actionType, OwnerUid, actionState);
+            _holderActionsComponent?.GrantOrUpdateItemAction(actionType, Owner, actionState);
         }
 
         /// <summary>
@@ -183,7 +184,7 @@ namespace Content.Shared.Actions.Components
         void IEquippedHand.EquippedHand(EquippedHandEventArgs eventArgs)
         {
             // this entity cannot be granted actions if no actions component
-            if (!eventArgs.User.TryGetComponent<SharedActionsComponent>(out var actionsComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedActionsComponent?>(eventArgs.User, out var actionsComponent))
                 return;
             Holder = eventArgs.User;
             _holderActionsComponent = actionsComponent;
@@ -195,7 +196,7 @@ namespace Content.Shared.Actions.Components
         void IEquipped.Equipped(EquippedEventArgs eventArgs)
         {
             // this entity cannot be granted actions if no actions component
-            if (!eventArgs.User.TryGetComponent<SharedActionsComponent>(out var actionsComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedActionsComponent?>(eventArgs.User, out var actionsComponent))
                 return;
             Holder = eventArgs.User;
             _holderActionsComponent = actionsComponent;

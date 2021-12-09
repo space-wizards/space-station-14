@@ -65,9 +65,9 @@ namespace Content.Server.Mind
         public bool IsVisitingEntity => VisitingEntity != null;
 
         [ViewVariables]
-        public IEntity? VisitingEntity { get; private set; }
+        public EntityUid? VisitingEntity { get; private set; }
 
-        [ViewVariables] public IEntity? CurrentEntity => VisitingEntity ?? OwnedEntity;
+        [ViewVariables] public EntityUid? CurrentEntity => VisitingEntity ?? OwnedEntity;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public string? CharacterName { get; set; }
@@ -90,7 +90,7 @@ namespace Content.Server.Mind
         ///     Can be null.
         /// </summary>
         [ViewVariables]
-        public IEntity? OwnedEntity => OwnedComponent?.Owner;
+        public EntityUid? OwnedEntity => OwnedComponent?.Owner;
 
         /// <summary>
         ///     An enumerable over all the roles this mind has.
@@ -153,9 +153,7 @@ namespace Content.Server.Mind
                 //    (If being a borg or AI counts as dead, then this is highly likely, as it's still the same Mind for practical purposes.)
 
                 // This can be null if they're deleted (spike / brain nom)
-                if (OwnedEntity == null)
-                    return true;
-                var targetMobState = OwnedEntity.GetComponentOrNull<MobStateComponent>();
+                var targetMobState = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<MobStateComponent>(OwnedEntity);
                 // This can be null if it's a brain (this happens very often)
                 // Brains are the result of gibbing so should definitely count as dead
                 if (targetMobState == null)
@@ -184,7 +182,10 @@ namespace Content.Server.Mind
             role.Greet();
 
             var message = new RoleAddedEvent(role);
-            OwnedEntity?.EntityManager.EventBus.RaiseLocalEvent(OwnedEntity.Uid, message);
+            if (OwnedEntity != null)
+            {
+                IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(OwnedEntity.Value, message);
+            }
 
             return role;
         }
@@ -206,7 +207,11 @@ namespace Content.Server.Mind
             _roles.Remove(role);
 
             var message = new RoleRemovedEvent(role);
-            OwnedEntity?.EntityManager.EventBus.RaiseLocalEvent(OwnedEntity.Uid, message);
+
+            if (OwnedEntity != null)
+            {
+                IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(OwnedEntity.Value, message);
+            }
         }
 
         public bool HasRole<T>() where T : Role
@@ -246,7 +251,7 @@ namespace Content.Server.Mind
         /// <summary>
         ///     Transfer this mind's control over to a new entity.
         /// </summary>
-        /// <param name="entityUid">
+        /// <param name="entity">
         ///     The entity to control.
         ///     Can be null, in which case it will simply detach the mind from any entity.
         /// </param>
@@ -256,31 +261,30 @@ namespace Content.Server.Mind
         /// <exception cref="ArgumentException">
         ///     Thrown if <paramref name="entity"/> is already owned by another mind.
         /// </exception>
-        public void TransferTo(EntityUid? entityUid, bool ghostCheckOverride = false)
+        public void TransferTo(EntityUid? entity, bool ghostCheckOverride = false)
         {
             var entMan = IoCManager.Resolve<IEntityManager>();
-            IEntity? entity = (entityUid != null) ? entMan.GetEntity(entityUid.Value) : null;
 
             MindComponent? component = null;
             var alreadyAttached = false;
 
-            if (entityUid != null)
+            if (entity != null)
             {
-                if (!entMan.TryGetComponent<MindComponent>(entityUid.Value, out component))
+                if (!entMan.TryGetComponent<MindComponent>(entity.Value, out component))
                 {
-                    component = entMan.AddComponent<MindComponent>(entityUid.Value);
+                    component = entMan.AddComponent<MindComponent>(entity.Value);
                 }
                 else if (component!.HasMind)
                 {
                     EntitySystem.Get<GameTicker>().OnGhostAttempt(component.Mind!, false);
                 }
 
-                if (entMan.TryGetComponent<ActorComponent>(entityUid.Value, out var actor))
+                if (entMan.TryGetComponent<ActorComponent>(entity.Value, out var actor))
                 {
                     // Happens when transferring to your currently visited entity.
                     if (actor.PlayerSession != Session)
                     {
-                        throw new ArgumentException("Visit target already has a session.", nameof(entityUid));
+                        throw new ArgumentException("Visit target already has a session.", nameof(entity));
                     }
 
                     alreadyAttached = true;
@@ -292,16 +296,16 @@ namespace Content.Server.Mind
             OwnedComponent = component;
             OwnedComponent?.InternalAssignMind(this);
 
-            if (IsVisitingEntity
+            if (VisitingEntity != null
                 && (ghostCheckOverride // to force mind transfer, for example from ControlMobVerb
-                || !VisitingEntity!.TryGetComponent(out GhostComponent? ghostComponent) // visiting entity is not a Ghost
+                || !entMan.TryGetComponent(VisitingEntity!, out GhostComponent? ghostComponent) // visiting entity is not a Ghost
                 || !ghostComponent.CanReturnToBody))  // it is a ghost, but cannot return to body anyway, so it's okay
             {
-                VisitingEntity = null;
+                VisitingEntity = default;
             }
 
             // Player is CURRENTLY connected.
-            if (Session != null && !alreadyAttached && VisitingEntity == null)
+            if (Session != null && !alreadyAttached && VisitingEntity == default)
             {
                 Session.AttachToEntity(entity);
                 Logger.Info($"Session {Session.Name} transferred to entity {entity}.");
@@ -350,12 +354,12 @@ namespace Content.Server.Mind
             newOwnerData.UpdateMindFromMindChangeOwningPlayer(this);
         }
 
-        public void Visit(IEntity entity)
+        public void Visit(EntityUid entity)
         {
             Session?.AttachToEntity(entity);
             VisitingEntity = entity;
 
-            var comp = entity.AddComponent<VisitingMindComponent>();
+            var comp = IoCManager.Resolve<IEntityManager>().AddComponent<VisitingMindComponent>(entity);
             comp.Mind = this;
 
             Logger.Info($"Session {Session?.Name} visiting entity {entity}.");
@@ -363,24 +367,25 @@ namespace Content.Server.Mind
 
         public void UnVisit()
         {
-            if (!IsVisitingEntity)
+            if (VisitingEntity == null)
             {
                 return;
             }
 
             Session?.AttachToEntity(OwnedEntity);
-            var oldVisitingEnt = VisitingEntity;
+            var oldVisitingEnt = VisitingEntity.Value;
             // Null this before removing the component to avoid any infinite loops.
-            VisitingEntity = null;
+            VisitingEntity = default;
 
             DebugTools.AssertNotNull(oldVisitingEnt);
 
-            if (oldVisitingEnt!.HasComponent<VisitingMindComponent>())
+            var entities = IoCManager.Resolve<IEntityManager>();
+            if (entities.HasComponent<VisitingMindComponent>(oldVisitingEnt))
             {
-                oldVisitingEnt.RemoveComponent<VisitingMindComponent>();
+                entities.RemoveComponent<VisitingMindComponent>(oldVisitingEnt);
             }
 
-            oldVisitingEnt.EntityManager.EventBus.RaiseLocalEvent(oldVisitingEnt.Uid, new MindUnvisitedMessage());
+            entities.EventBus.RaiseLocalEvent(oldVisitingEnt, new MindUnvisitedMessage());
         }
 
         public bool TryGetSession([NotNullWhen(true)] out IPlayerSession? session)

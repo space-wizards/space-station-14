@@ -6,6 +6,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Engineering.EntitySystems
 {
@@ -40,18 +41,18 @@ namespace Content.Server.Engineering.EntitySystems
                 component.TokenSource.Cancel();
             }
 
-            if (component.Deleted || component.Owner.Deleted)
+            if (component.Deleted || Deleted(component.Owner))
                 return;
 
-            var entity = EntityManager.SpawnEntity(component.Prototype, component.Owner.Transform.Coordinates);
+            var entity = EntityManager.SpawnEntity(component.Prototype, EntityManager.GetComponent<TransformComponent>(component.Owner).Coordinates);
 
-            if (args.User.TryGetComponent<HandsComponent>(out var hands)
-                && entity.TryGetComponent<ItemComponent>(out var item))
+            if (EntityManager.TryGetComponent<HandsComponent?>(args.User, out var hands)
+                && EntityManager.TryGetComponent<ItemComponent?>(entity, out var item))
             {
                 hands.PutInHandOrDrop(item);
             }
 
-            component.Owner.Delete();
+            EntityManager.DeleteEntity(component.Owner);
 
             return;
         }

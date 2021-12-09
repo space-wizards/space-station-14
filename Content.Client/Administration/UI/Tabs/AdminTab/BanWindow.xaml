@@ -1,6 +1,7 @@
 ﻿<SS14Window
     xmlns="https://spacestation14.io"
-    Title="{Loc Ban}" MinSize="425 162">
+    xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
+    Title="{Loc Ban}" MinSize="425 325">
     <BoxContainer Orientation="Vertical">
         <BoxContainer Orientation="Horizontal">
             <Label Text="{Loc Player}" MinWidth="100" />
@@ -17,6 +18,7 @@
             <Control MinWidth="50" />
             <LineEdit Name="MinutesLine" MinWidth="100" HorizontalExpand="True" PlaceHolder="{Loc 0 minutes for a permanent ban}" />
         </BoxContainer>
+        <cc:PlayerListControl Name="PlayerList" VerticalExpand="True" />
         <Control MinWidth="50" />
         <Button Name="SubmitButton" Text="{Loc Ban}" />
     </BoxContainer>

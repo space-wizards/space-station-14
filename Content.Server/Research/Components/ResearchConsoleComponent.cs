@@ -22,12 +22,13 @@ namespace Content.Server.Research.Components
     [ComponentReference(typeof(IActivate))]
     public class ResearchConsoleComponent : SharedResearchConsoleComponent, IActivate
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         [DataField("sound")]
         private SoundSpecifier _soundCollectionName = new SoundCollectionSpecifier("keyboard");
 
-        [ViewVariables] private bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
+        [ViewVariables] private bool Powered => !_entMan.TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(ResearchConsoleUiKey.Key);
 
@@ -47,9 +48,9 @@ namespace Content.Server.Research.Components
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage message)
         {
-            if (!Owner.TryGetComponent(out TechnologyDatabaseComponent? database))
+            if (!_entMan.TryGetComponent(Owner, out TechnologyDatabaseComponent? database))
                 return;
-            if (!Owner.TryGetComponent(out ResearchClientComponent? client))
+            if (!_entMan.TryGetComponent(Owner, out ResearchClientComponent? client))
                 return;
             if (!Powered)
                 return;
@@ -90,7 +91,7 @@ namespace Content.Server.Research.Components
 
         private ResearchConsoleBoundInterfaceState GetNewUiState()
         {
-            if (!Owner.TryGetComponent(out ResearchClientComponent? client) ||
+            if (!_entMan.TryGetComponent(Owner, out ResearchClientComponent? client) ||
                 client.Server == null)
                 return new ResearchConsoleBoundInterfaceState(default, default);
 
@@ -111,7 +112,7 @@ namespace Content.Server.Research.Components
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
+            if (!_entMan.TryGetComponent(eventArgs.User, out ActorComponent? actor))
                 return;
             if (!Powered)
             {
