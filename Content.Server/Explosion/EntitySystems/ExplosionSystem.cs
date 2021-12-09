@@ -356,7 +356,7 @@ namespace Content.Server.Explosion.EntitySystems
             else
             {
                 _logSystem.Add(LogType.Explosion, LogImpact.High,
-                    $"{entity.Value} caused {entity.Value} to explode at {text}");
+                    $"{user.Value} caused {entity.Value} to explode at {text}");
             }
 
             var maxRange = MathHelper.Max(devastationRange, heavyImpactRange, lightImpactRange, 0);
