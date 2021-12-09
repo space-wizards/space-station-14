@@ -1,6 +1,8 @@
 using Content.Server.Administration.Logs;
+using Content.Server.CharacterAppearance.Systems;
 using Content.Server.Chat.Managers;
 using Content.Server.Maps;
+using Content.Server.PDA;
 using Content.Server.Preferences.Managers;
 using Content.Server.Roles;
 using Content.Server.Station;
@@ -91,5 +93,7 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly IGameMapManager _gameMapManager = default!;
         [Dependency] private readonly StationSystem _stationSystem = default!;
         [Dependency] private readonly AdminLogSystem _adminLogSystem = default!;
+        [Dependency] private readonly HumanoidAppearanceSystem _humanoidAppearanceSystem = default!;
+        [Dependency] private readonly PDASystem _pdaSystem = default!;
     }
 }

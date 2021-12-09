@@ -5,7 +5,6 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Player;
-using Robust.Shared.Players;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
@@ -16,6 +15,7 @@ namespace Content.Server.Radiation
     [ComponentReference(typeof(SharedRadiationPulseComponent))]
     public sealed class RadiationPulseComponent : SharedRadiationPulseComponent
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
@@ -108,11 +108,11 @@ namespace Content.Server.Radiation
 
         public void Update(float frameTime)
         {
-            if (!Decay || Owner.Deleted)
+            if (!Decay || _entMan.Deleted(Owner))
                 return;
 
             if (_duration <= 0f)
-                Owner.QueueDelete();
+                _entMan.QueueDeleteEntity(Owner);
 
             _duration -= frameTime;
         }

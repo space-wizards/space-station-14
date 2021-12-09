@@ -31,7 +31,7 @@ namespace Content.Client.DoAfter
         /// </summary>
         public const float ExcessTime = 0.5f;
 
-        private IEntity? _attachedEntity;
+        private EntityUid? _attachedEntity;
 
         public override void Initialize()
         {
@@ -51,7 +51,7 @@ namespace Content.Client.DoAfter
             var currentTime = _gameTiming.CurTime;
 
             // Can't see any I guess?
-            if (_attachedEntity == null || _attachedEntity.Deleted)
+            if (_attachedEntity is not {Valid: true} entity || Deleted(entity))
                 return;
 
             var viewbox = _eyeManager.GetWorldViewport().Enlarged(2.0f);
@@ -59,23 +59,23 @@ namespace Content.Client.DoAfter
             foreach (var comp in EntityManager.EntityQuery<DoAfterComponent>(true))
             {
                 var doAfters = comp.DoAfters.ToList();
-                var compPos = comp.Owner.Transform.WorldPosition;
+                var compPos = EntityManager.GetComponent<TransformComponent>(comp.Owner).WorldPosition;
 
                 if (doAfters.Count == 0 ||
-                    comp.Owner.Transform.MapID != _attachedEntity.Transform.MapID ||
+                    EntityManager.GetComponent<TransformComponent>(comp.Owner).MapID != EntityManager.GetComponent<TransformComponent>(entity).MapID ||
                     !viewbox.Contains(compPos))
                 {
                     comp.Disable();
                     continue;
                 }
 
-                var range = (compPos - _attachedEntity.Transform.WorldPosition).Length +
+                var range = (compPos - EntityManager.GetComponent<TransformComponent>(entity).WorldPosition).Length +
                             0.01f;
 
                 if (comp.Owner != _attachedEntity &&
                     !ExamineSystemShared.InRangeUnOccluded(
-                        _attachedEntity.Transform.MapPosition,
-                        comp.Owner.Transform.MapPosition, range,
+                        EntityManager.GetComponent<TransformComponent>(entity).MapPosition,
+                        EntityManager.GetComponent<TransformComponent>(comp.Owner).MapPosition, range,
                         entity => entity == comp.Owner || entity == _attachedEntity))
                 {
                     comp.Disable();
@@ -84,7 +84,7 @@ namespace Content.Client.DoAfter
 
                 comp.Enable();
 
-                var userGrid = comp.Owner.Transform.Coordinates;
+                var userGrid = EntityManager.GetComponent<TransformComponent>(comp.Owner).Coordinates;
 
                 // Check cancellations / finishes
                 foreach (var (id, doAfter) in doAfters)
@@ -116,8 +116,8 @@ namespace Content.Client.DoAfter
 
                     if (doAfter.BreakOnTargetMove)
                     {
-                        if (EntityManager.TryGetEntity(doAfter.TargetUid, out var targetEntity) &&
-                            !targetEntity.Transform.Coordinates.InRange(EntityManager, doAfter.TargetGrid,
+                        if (EntityManager.EntityExists(doAfter.TargetUid) &&
+                            !EntityManager.GetComponent<TransformComponent>(doAfter.TargetUid).Coordinates.InRange(EntityManager, doAfter.TargetGrid,
                                 doAfter.MovementThreshold))
                         {
                             comp.Cancel(id, currentTime);

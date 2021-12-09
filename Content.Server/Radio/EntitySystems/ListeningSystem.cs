@@ -7,7 +7,7 @@ namespace Content.Server.Radio.EntitySystems
     [UsedImplicitly]
     public class ListeningSystem : EntitySystem
     {
-        public void PingListeners(IEntity source, string message)
+        public void PingListeners(EntityUid source, string message)
         {
             foreach (var listener in EntityManager.EntityQuery<IListen>(true))
             {

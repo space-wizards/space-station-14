@@ -39,7 +39,7 @@ namespace Content.Server.Light.Components
         public void OnBreak(BreakageEventArgs eventArgs)
         {
             EntitySystem.Get<LightBulbSystem>()
-                .SetState(Owner.Uid, LightBulbState.Broken, this);
+                .SetState(Owner, LightBulbState.Broken, this);
         }
     }
 }

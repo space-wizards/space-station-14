@@ -3,6 +3,7 @@ using Content.Server.PowerCell.Components;
 using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.Interaction;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Weapon
 {
@@ -14,17 +15,19 @@ namespace Content.Server.Weapon
     [ComponentReference(typeof(BaseCharger))]
     public sealed class WeaponCapacitorChargerComponent : BaseCharger
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "WeaponCapacitorCharger";
 
-        public override bool IsEntityCompatible(IEntity entity)
+        public override bool IsEntityCompatible(EntityUid entity)
         {
-            return entity.TryGetComponent(out ServerBatteryBarrelComponent? battery) && battery.PowerCell != null ||
-                   entity.TryGetComponent(out PowerCellSlotComponent? slot) && slot.HasCell;
+            return _entMan.TryGetComponent(entity, out ServerBatteryBarrelComponent? battery) && battery.PowerCell != null ||
+                   _entMan.TryGetComponent(entity, out PowerCellSlotComponent? slot) && slot.HasCell;
         }
 
-        protected override BatteryComponent? GetBatteryFrom(IEntity entity)
+        protected override BatteryComponent? GetBatteryFrom(EntityUid entity)
         {
-            if (entity.TryGetComponent(out PowerCellSlotComponent? slot))
+            if (_entMan.TryGetComponent(entity, out PowerCellSlotComponent? slot))
             {
                 if (slot.Cell != null)
                 {
@@ -32,7 +35,7 @@ namespace Content.Server.Weapon
                 }
             }
 
-            if (entity.TryGetComponent(out ServerBatteryBarrelComponent? battery))
+            if (_entMan.TryGetComponent(entity, out ServerBatteryBarrelComponent? battery))
             {
                 if (battery.PowerCell != null)
                 {

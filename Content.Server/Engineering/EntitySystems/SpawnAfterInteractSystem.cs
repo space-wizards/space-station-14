@@ -57,10 +57,10 @@ namespace Content.Server.Engineering.EntitySystems
                     return;
             }
 
-            if (component.Deleted || component.Owner.Deleted)
+            if (component.Deleted || Deleted(component.Owner))
                 return;
 
-            if (component.Owner.TryGetComponent<SharedStackComponent>(out var stackComp)
+            if (EntityManager.TryGetComponent<SharedStackComponent?>(component.Owner, out var stackComp)
                 && component.RemoveOnInteract && !_stackSystem.Use(uid, 1, stackComp))
             {
                 return;
@@ -68,8 +68,8 @@ namespace Content.Server.Engineering.EntitySystems
 
             EntityManager.SpawnEntity(component.Prototype, args.ClickLocation.SnapToGrid(grid));
 
-            if (component.RemoveOnInteract && stackComp == null && !component.Owner.Deleted)
-                component.Owner.Delete();
+            if (component.RemoveOnInteract && stackComp == null && !((!EntityManager.EntityExists(component.Owner) ? EntityLifeStage.Deleted : EntityManager.GetComponent<MetaDataComponent>(component.Owner).EntityLifeStage) >= EntityLifeStage.Deleted))
+                EntityManager.DeleteEntity(component.Owner);
         }
     }
 }

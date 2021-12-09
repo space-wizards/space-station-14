@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using Content.Shared.Pulling;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Controllers;
-using Robust.Shared.Maths;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Physics.Controllers
 {
@@ -65,32 +64,31 @@ namespace Content.Server.Physics.Controllers
                     continue;
                 }
 
-                var puller = pullable.Puller;
-                if (puller == null)
+                if (pullable.Puller is not {Valid: true} puller)
                 {
                     continue;
                 }
 
                 // Now that's over with...
 
-                var pullerPosition = puller.Transform.MapPosition;
-                var movingTo = pullable.MovingTo.Value.ToMap(pullable.Owner.EntityManager);
+                var pullerPosition = EntityManager.GetComponent<TransformComponent>(puller).MapPosition;
+                var movingTo = pullable.MovingTo.Value.ToMap(EntityManager);
                 if (movingTo.MapId != pullerPosition.MapId)
                 {
                     _pullableSystem.StopMoveTo(pullable);
                     continue;
                 }
 
-                if (!pullable.Owner.TryGetComponent<PhysicsComponent>(out var physics) ||
+                if (!EntityManager.TryGetComponent<PhysicsComponent?>(pullable.Owner, out var physics) ||
                     physics.BodyType == BodyType.Static ||
-                    movingTo.MapId != pullable.Owner.Transform.MapID)
+                    movingTo.MapId != EntityManager.GetComponent<TransformComponent>(pullable.Owner).MapID)
                 {
                     _pullableSystem.StopMoveTo(pullable);
                     continue;
                 }
 
                 var movingPosition = movingTo.Position;
-                var ownerPosition = pullable.Owner.Transform.MapPosition.Position;
+                var ownerPosition = EntityManager.GetComponent<TransformComponent>(pullable.Owner).MapPosition.Position;
 
                 var diff = movingPosition - ownerPosition;
                 var diffLength = diff.Length;
@@ -118,7 +116,7 @@ namespace Content.Server.Physics.Controllers
                 var impulse = accel * physics.Mass * frameTime;
                 physics.ApplyLinearImpulse(impulse);
 
-                if (puller.TryGetComponent<PhysicsComponent>(out var pullerPhysics))
+                if (EntityManager.TryGetComponent<PhysicsComponent?>(puller, out var pullerPhysics))
                 {
                     pullerPhysics.WakeBody();
                     pullerPhysics.ApplyLinearImpulse(-impulse);

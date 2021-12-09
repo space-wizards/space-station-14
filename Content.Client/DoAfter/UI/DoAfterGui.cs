@@ -27,7 +27,7 @@ namespace Content.Client.DoAfter.UI
         // We'll store cancellations for a little bit just so we can flash the graphic to indicate it's cancelled
         private readonly Dictionary<byte, TimeSpan> _cancelledDoAfters = new();
 
-        public IEntity? AttachedEntity { get; set; }
+        public EntityUid AttachedEntity { get; set; }
         private ScreenCoordinates _playerPosition;
 
         public DoAfterGui()
@@ -146,8 +146,8 @@ namespace Content.Client.DoAfter.UI
         {
             base.FrameUpdate(args);
 
-            if (AttachedEntity?.IsValid() != true ||
-                !AttachedEntity.TryGetComponent(out DoAfterComponent? doAfterComponent))
+            if (!AttachedEntity.IsValid() ||
+                !_entityManager.TryGetComponent(AttachedEntity, out DoAfterComponent? doAfterComponent))
             {
                 Visible = false;
                 return;
@@ -160,8 +160,9 @@ namespace Content.Client.DoAfter.UI
                 return;
             }
 
-            if (_eyeManager.CurrentMap != AttachedEntity.Transform.MapID ||
-                !AttachedEntity.Transform.Coordinates.IsValid(_entityManager))
+            var transform = _entityManager.GetComponent<TransformComponent>(AttachedEntity);
+
+            if (_eyeManager.CurrentMap != transform.MapID || !transform.Coordinates.IsValid(_entityManager))
             {
                 Visible = false;
                 return;
@@ -211,7 +212,7 @@ namespace Content.Client.DoAfter.UI
                 RemoveDoAfter(id);
             }
 
-            var screenCoordinates = _eyeManager.CoordinatesToScreen(AttachedEntity.Transform.Coordinates);
+            var screenCoordinates = _eyeManager.CoordinatesToScreen(transform.Coordinates);
             _playerPosition = new ScreenCoordinates(screenCoordinates.Position / UIScale, screenCoordinates.Window);
             LayoutContainer.SetPosition(this, new Vector2(_playerPosition.X - Width / 2, _playerPosition.Y - Height - 30.0f));
         }

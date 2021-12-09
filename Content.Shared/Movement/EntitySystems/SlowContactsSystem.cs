@@ -36,7 +36,7 @@ public class SlowContactsSystem : EntitySystem
 
         foreach (var colliding in _physics.GetCollidingEntities(physicsComponent))
         {
-            var ent = colliding.OwnerUid;
+            var ent = colliding.Owner;
             if (!EntityManager.TryGetComponent<SlowContactsComponent>(ent, out var slowContactsComponent))
                 continue;
 
@@ -49,7 +49,7 @@ public class SlowContactsSystem : EntitySystem
 
     private void OnEntityExit(EntityUid uid, SlowContactsComponent component, EndCollideEvent args)
     {
-        var otherUid = args.OtherFixture.Body.OwnerUid;
+        var otherUid = args.OtherFixture.Body.Owner;
         if (!EntityManager.HasComponent<MovementSpeedModifierComponent>(otherUid)
             || !EntityManager.HasComponent<SlowsOnContactComponent>(otherUid))
             return;
@@ -64,7 +64,7 @@ public class SlowContactsSystem : EntitySystem
 
     private void OnEntityEnter(EntityUid uid, SlowContactsComponent component, StartCollideEvent args)
     {
-        var otherUid = args.OtherFixture.Body.OwnerUid;
+        var otherUid = args.OtherFixture.Body.Owner;
         if (!EntityManager.HasComponent<MovementSpeedModifierComponent>(otherUid))
             return;
         if (!_statusCapableInContact.ContainsKey(otherUid))

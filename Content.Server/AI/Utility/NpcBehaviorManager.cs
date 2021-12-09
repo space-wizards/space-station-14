@@ -84,9 +84,9 @@ namespace Content.Server.AI.Utility
             if (rebuild)
                 RebuildActions(npc);
 
-            if (npc.BehaviorSets.Count == 1 && !EntitySystem.Get<AiSystem>().IsAwake(npc))
+            if (npc.BehaviorSets.Count == 1 && !npc.Awake)
             {
-                _entityManager.EventBus.RaiseEvent(EventSource.Local, new SleepAiMessage(npc, false));
+                EntitySystem.Get<NPCSystem>().WakeNPC(npc);
             }
         }
 
@@ -113,9 +113,9 @@ namespace Content.Server.AI.Utility
             if (rebuild)
                 RebuildActions(npc);
 
-            if (npc.BehaviorSets.Count == 0 && EntitySystem.Get<AiSystem>().IsAwake(npc))
+            if (npc.BehaviorSets.Count == 0 && npc.Awake)
             {
-                _entityManager.EventBus.RaiseEvent(EventSource.Local, new SleepAiMessage(npc, true));
+                EntitySystem.Get<NPCSystem>().SleepNPC(npc);
             }
         }
 
