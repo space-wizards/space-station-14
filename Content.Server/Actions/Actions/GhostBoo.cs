@@ -23,7 +23,9 @@ namespace Content.Server.Actions.Actions
 
         public void DoInstantAction(InstantActionEventArgs args)
         {
-            if (!args.Performer.TryGetComponent<SharedActionsComponent>(out var actions)) return;
+            var entMan = IoCManager.Resolve<IEntityManager>();
+
+            if (!entMan.TryGetComponent<SharedActionsComponent?>(args.Performer, out var actions)) return;
 
             // find all IGhostBooAffected nearby and do boo on them
             var ents = IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(args.Performer, _radius);
@@ -32,7 +34,7 @@ namespace Content.Server.Actions.Actions
             foreach (var ent in ents)
             {
                 var ghostBoo = new GhostBooEvent();
-                ent.EntityManager.EventBus.RaiseLocalEvent(ent.Uid, ghostBoo);
+                entMan.EventBus.RaiseLocalEvent(ent, ghostBoo);
 
                 if (ghostBoo.Handled)
                     booCounter++;

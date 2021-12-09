@@ -1,63 +1,4 @@
 Entries:
-- author: Swept
-  changes:
-  - {message: Removed solution transfer verbs., type: Remove}
-  id: 200
-  time: '2021-05-21T21:36:16.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Fixes lathes not printing any recipe., type: Fix}
-  id: 201
-  time: '2021-05-22T09:31:38.140827+00:00'
-- author: Ygg01
-  changes:
-  - {message: StackVisualizer now correctly displays levels, type: Fix}
-  id: 202
-  time: '2021-05-23T04:05:55.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Hopefully fix power equipment disappearing., type: Fix}
-  id: 203
-  time: '2021-05-23T18:18:36.0000000+00:00'
-- author: Seth
-  changes:
-  - {message: Added new technologies and recipes to the lathe., type: Add}
-  id: 204
-  time: '2021-05-24T00:38:26.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Particle Accelerator particles actually affect singularity & singularity
-      generator again, type: Fix}
-  - {message: Singularity doesn't instantly escape all containment, type: Fix}
-  id: 205
-  time: '2021-05-24T04:14:15.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Attempt 2 at fixing substation/apc/generator disappearances, type: Fix}
-  id: 206
-  time: '2021-05-24T14:39:58.0000000+00:00'
-- author: scrato
-  changes:
-  - {message: You now won't be able to get out of handcuffs if you're dead or incapacitated,
-    type: Fix}
-  id: 207
-  time: '2021-05-24T14:55:48.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Dragging an object causes it to not count as thrown anymore., type: Fix}
-  id: 208
-  time: '2021-05-27T10:47:40.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: 'Spears now apply damage when thrown, and have more damage', type: Add}
-  id: 209
-  time: '2021-05-27T10:47:49.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: 'Pulling is now more reliable across different object weights, and feels
-      better.', type: Fix}
-  id: 210
-  time: '2021-05-27T10:48:37.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: 'You can rotate barstools, PA components, and radiation collectors.',
@@ -2866,3 +2807,65 @@ Entries:
       has adjusted soul binding to monkeys accordingly.', type: Fix}
   id: 701
   time: '2021-12-03T17:11:51.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: The Salvage department is now partially there., type: Add}
+  id: 702
+  time: '2021-12-03T22:24:19.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Throw pushback ratio multiplied by 10., type: Tweak}
+  id: 703
+  time: '2021-12-04T00:26:52.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed some issues preventing mobs from taking proper suffocation damage.,
+    type: Fix}
+  id: 704
+  time: '2021-12-04T08:11:48.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: Tools (along with many other objects) have been stripped of their insulated
+      property. Go get some real insulated gloves!, type: Fix}
+  id: 705
+  time: '2021-12-04T09:59:09.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Fixed flares so they now burn longer and burn out slower., type: Fix}
+  id: 706
+  time: '2021-12-04T18:50:25.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Added nettles! They're an amazing source of histamine when cultivated
+      to high potency or ground up., type: Add}
+  id: 707
+  time: '2021-12-04T18:55:04.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Cigars and clown/mime masks no longer block drinking & eating., type: Fix}
+  id: 708
+  time: '2021-12-04T18:56:27.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Airlock access to high security areas has been updated to include only
+      those who need it., type: Tweak}
+  id: 709
+  time: '2021-12-05T03:20:06.0000000+00:00'
+- author: Mith-randalf
+  changes:
+  - {message: 'Fixed some clothing names, applied armour to previously unarmoured
+      clothes, tweaked some armour values.', type: Tweak}
+  id: 710
+  time: '2021-12-05T06:39:52.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added construction for main crates and deconstruction for all crates.
+      Use a screwdriver to deconstruct crates., type: Add}
+  id: 711
+  time: '2021-12-06T22:10:04.0000000+00:00'
+- author: pointer-to-null
+  changes:
+  - {message: Fixed the status effects cooldown time accumulation. (Major clown nerf).,
+    type: Fix}
+  id: 712
+  time: '2021-12-07T06:18:07.0000000+00:00'

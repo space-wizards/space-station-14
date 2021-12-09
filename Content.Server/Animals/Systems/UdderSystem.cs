@@ -1,16 +1,15 @@
-using System;
 using Content.Server.Animals.Components;
+using Content.Server.Chemistry.Components.SolutionManager;
+using Content.Server.Chemistry.EntitySystems;
+using Content.Server.DoAfter;
+using Content.Server.Nutrition.Components;
+using Content.Server.Popups;
+using Content.Shared.Nutrition.Components;
+using Content.Shared.Verbs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Content.Server.Chemistry.EntitySystems;
-using Content.Server.Nutrition.Components;
-using Content.Shared.Nutrition.Components;
-using Content.Server.Chemistry.Components.SolutionManager;
-using Content.Server.DoAfter;
 using Robust.Shared.Localization;
-using Content.Shared.Verbs;
 using Robust.Shared.Player;
-using Content.Server.Popups;
 
 namespace Content.Server.Animals.Systems
 {
@@ -42,7 +41,7 @@ namespace Content.Server.Animals.Systems
                     continue;
 
                 // Actually there is food digestion so no problem with instant reagent generation "OnFeed"
-                if (udder.Owner.TryGetComponent<HungerComponent>(out var hunger))
+                if (EntityManager.TryGetComponent<HungerComponent?>(udder.Owner, out var hunger))
                 {
                     hunger.HungerThresholds.TryGetValue(HungerThreshold.Peckish, out var targetThreshold);
 
@@ -51,11 +50,11 @@ namespace Content.Server.Animals.Systems
                         continue;
                 }
 
-                if (!_solutionContainerSystem.TryGetSolution(udder.OwnerUid, udder.TargetSolutionName, out var solution))
+                if (!_solutionContainerSystem.TryGetSolution(udder.Owner, udder.TargetSolutionName, out var solution))
                     continue;
 
                 //TODO: toxins from bloodstream !?
-                _solutionContainerSystem.TryAddReagent(udder.OwnerUid, solution, udder.ReagentId, udder.QuantityPerUpdate, out var accepted);
+                _solutionContainerSystem.TryAddReagent(udder.Owner, solution, udder.ReagentId, udder.QuantityPerUpdate, out var accepted);
                 udder.AccumulatedFrameTime = 0;
             }
         }
@@ -110,8 +109,7 @@ namespace Content.Server.Animals.Systems
             var split = _solutionContainerSystem.SplitSolution(uid, solution, quantity);
             _solutionContainerSystem.TryAddSolution(ev.ContainerUid, targetSolution, split);
 
-            var container = EntityManager.GetEntity(ev.ContainerUid);
-            _popupSystem.PopupEntity(Loc.GetString("udder-system-success", ("amount", quantity), ("target", container)), uid, Filter.Entities(ev.UserUid));
+            _popupSystem.PopupEntity(Loc.GetString("udder-system-success", ("amount", quantity), ("target", ev.ContainerUid)), uid, Filter.Entities(ev.UserUid));
         }
 
         private void OnMilkingFailed(EntityUid uid, UdderComponent component, MilkingFailEvent ev)
@@ -123,16 +121,18 @@ namespace Content.Server.Animals.Systems
         {
             if (args.Using == null ||
                  !args.CanInteract ||
-                 !args.Using.HasComponent<RefillableSolutionComponent>())
+                 !EntityManager.HasComponent<RefillableSolutionComponent>(args.Using.Value))
                 return;
 
-            Verb verb = new();
-            verb.Act = () =>
+            Verb verb = new()
             {
-                AttemptMilk(uid, args.User.Uid, args.Using.Uid, component);
+                Act = () =>
+                {
+                    AttemptMilk(uid, args.User, args.Using.Value, component);
+                },
+                Text = Loc.GetString("udder-system-verb-milk"),
+                Priority = 2
             };
-            verb.Text = Loc.GetString("udder-system-verb-milk");
-            verb.Priority = 2;
             args.Verbs.Add(verb);
         }
 

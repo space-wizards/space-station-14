@@ -18,8 +18,8 @@ namespace Content.Server.Power.Nodes
                 yield break;
 
             var entMan = IoCManager.Resolve<IEntityManager>();
-            var grid = IoCManager.Resolve<IMapManager>().GetGrid(Owner.Transform.GridID);
-            var gridIndex = grid.TileIndicesFor(Owner.Transform.Coordinates);
+            var grid = IoCManager.Resolve<IMapManager>().GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).GridID);
+            var gridIndex = grid.TileIndicesFor(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
 
             // While we go over adjacent nodes, we build a list of blocked directions due to
             // incoming or outgoing wire terminals.
@@ -44,11 +44,11 @@ namespace Content.Server.Power.Nodes
                     if (dir == Direction.Invalid)
                     {
                         // On own tile, block direction it faces
-                        terminalDirs |= 1 << (int) node.Owner.Transform.LocalRotation.GetCardinalDir();
+                        terminalDirs |= 1 << (int) IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(node.Owner).LocalRotation.GetCardinalDir();
                     }
                     else
                     {
-                        var terminalDir = node.Owner.Transform.LocalRotation.GetCardinalDir();
+                        var terminalDir = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(node.Owner).LocalRotation.GetCardinalDir();
                         if (terminalDir.GetOpposite() == dir)
                         {
                             // Target tile has a terminal towards us, block the direction.
@@ -73,7 +73,7 @@ namespace Content.Server.Power.Nodes
         {
             base.OnPostRebuild();
 
-            EntitySystem.Get<CableVisSystem>().QueueUpdate(Owner.Uid);
+            EntitySystem.Get<CableVisSystem>().QueueUpdate(Owner);
         }
     }
 }

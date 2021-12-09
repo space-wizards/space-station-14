@@ -29,6 +29,8 @@ namespace Content.Server.Disposal.Tube.Components
     [ComponentReference(typeof(IDisposalTubeComponent))]
     public class DisposalRouterComponent : DisposalJunctionComponent, IActivate
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "DisposalRouter";
 
         [ViewVariables]
@@ -36,7 +38,7 @@ namespace Content.Server.Disposal.Tube.Components
 
         [ViewVariables]
         public bool Anchored =>
-            !Owner.TryGetComponent(out IPhysBody? physics) ||
+            !_entMan.TryGetComponent(Owner, out IPhysBody? physics) ||
             physics.BodyType == BodyType.Static;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(DisposalRouterUiKey.Key);
@@ -52,7 +54,7 @@ namespace Content.Server.Disposal.Tube.Components
                 return directions[1];
             }
 
-            return Owner.Transform.LocalRotation.GetDir();
+            return _entMan.GetComponent<TransformComponent>(Owner).LocalRotation.GetDir();
         }
 
         protected override void Initialize()
@@ -104,7 +106,7 @@ namespace Content.Server.Disposal.Tube.Components
         private bool PlayerCanUseDisposalTagger(IPlayerSession session)
         {
             //Need player entity to check if they are still able to use the configuration interface
-            if (session.AttachedEntity == null)
+            if (session.AttachedEntity is not {} attached)
                 return false;
             if (!Anchored)
                 return false;
@@ -112,7 +114,7 @@ namespace Content.Server.Disposal.Tube.Components
             var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
             var groupController = IoCManager.Resolve<IConGroupController>();
             //Check if player can interact in their current state
-            if (!groupController.CanAdminMenu(session) && (!actionBlocker.CanInteract(session.AttachedEntityUid!.Value) || !actionBlocker.CanUse(session.AttachedEntityUid!.Value)))
+            if (!groupController.CanAdminMenu(session) && (!actionBlocker.CanInteract(attached) || !actionBlocker.CanUse(attached)))
                 return false;
 
             return true;
@@ -160,12 +162,12 @@ namespace Content.Server.Disposal.Tube.Components
         /// <param name="args">Data relevant to the event such as the actor which triggered it.</param>
         void IActivate.Activate(ActivateEventArgs args)
         {
-            if (!args.User.TryGetComponent(out ActorComponent? actor))
+            if (!_entMan.TryGetComponent(args.User, out ActorComponent? actor))
             {
                 return;
             }
 
-            if (!args.User.TryGetComponent(out HandsComponent? hands))
+            if (!_entMan.TryGetComponent(args.User, out HandsComponent? hands))
             {
                 Owner.PopupMessage(args.User, Loc.GetString("disposal-router-window-tag-input-activate-no-hands"));
                 return;

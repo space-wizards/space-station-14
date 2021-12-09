@@ -11,6 +11,7 @@
   supervisors: "the captain"
   canBeAntag: false
   access:
+  - HeadOfSecurity
   - Command
 #  - Brig
   - Security

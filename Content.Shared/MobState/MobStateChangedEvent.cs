@@ -4,11 +4,9 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Shared.MobState
 {
-#pragma warning disable 618
-    public class MobStateChangedMessage : ComponentMessage
-#pragma warning restore 618
+    public class MobStateChangedEvent : EntityEventArgs
     {
-        public MobStateChangedMessage(
+        public MobStateChangedEvent(
             MobStateComponent component,
             IMobState? oldMobState,
             IMobState currentMobState)
@@ -18,7 +16,7 @@ namespace Content.Shared.MobState
             CurrentMobState = currentMobState;
         }
 
-        public IEntity Entity => Component.Owner;
+        public EntityUid Entity => Component.Owner;
 
         public MobStateComponent Component { get; }
 

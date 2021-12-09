@@ -4,6 +4,7 @@ using Content.Shared.Singularity.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -32,10 +33,10 @@ namespace Content.Client.ParticleAccelerator
             _states.Add(ParticleAcceleratorVisualState.Level3, _baseState + "p3");
         }
 
-        public override void InitializeEntity(IEntity entity)
+        public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
-            if (!entity.TryGetComponent<ISpriteComponent>(out var sprite))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ISpriteComponent?>(entity, out var sprite))
             {
                 throw new EntityCreationException("No sprite component found in entity that has ParticleAcceleratorPartVisualizer");
             }
@@ -49,7 +50,9 @@ namespace Content.Client.ParticleAccelerator
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
-            if (!component.Owner.TryGetComponent<ISpriteComponent>(out var sprite)) return;
+
+            var entities = IoCManager.Resolve<IEntityManager>();
+            if (!entities.TryGetComponent(component.Owner, out ISpriteComponent sprite)) return;
             if (!component.TryGetData(ParticleAcceleratorVisuals.VisualState, out ParticleAcceleratorVisualState state))
             {
                 state = ParticleAcceleratorVisualState.Unpowered;
