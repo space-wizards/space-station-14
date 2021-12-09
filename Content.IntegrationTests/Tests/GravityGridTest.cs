@@ -33,6 +33,8 @@ namespace Content.IntegrationTests.Tests
             var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
             var server = StartServer(options);
 
+            await server.WaitIdleAsync();
+
             EntityUid generator = default;
             var entityMan = server.ResolveDependency<IEntityManager>();
 

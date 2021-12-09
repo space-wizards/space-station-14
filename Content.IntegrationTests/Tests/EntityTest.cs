@@ -88,8 +88,8 @@ namespace Content.IntegrationTests.Tests
                                 Logger.LogS(LogLevel.Debug, "EntityTest", $"Testing: {prototype.ID}");
                                 testEntity = entityMan.SpawnEntity(prototype.ID, testLocation);
                                 server.RunTicks(2);
-                                Assert.That(entityMan.GetComponent<MetaDataComponent>(testEntity).EntityInitialized);
-                                entityMan.DeleteEntity(testEntity);
+                                if(!entityMan.Deleted(testEntity))
+                                    entityMan.DeleteEntity(testEntity);
                             }, "Entity '{0}' threw an exception.",
                             prototype.ID);
                     }
