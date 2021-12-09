@@ -124,9 +124,9 @@ namespace Content.Server.Administration
                 verb.Category = VerbCategory.Debug;
                 verb.Act = () =>
                 {
-                    var coords = EntityManager.GetComponent<TransformComponent>(args.Target).Coordinates;
-                    Timer.Spawn(_gameTiming.TickPeriod, () => _explosions.SpawnExplosion(coords, 0, 1, 2, 1, args.Target), CancellationToken.None);
-                    if (EntityManager.TryGetComponent(args.Target, out SharedBodyComponent? body))
+                    var coords = Transform(args.Target).Coordinates;
+                    Timer.Spawn(_gameTiming.TickPeriod, () => _explosions.SpawnExplosion(coords, 0, 1, 2, 1), CancellationToken.None);
+                    if (TryComp(args.Target, out SharedBodyComponent? body))
                     {
                         body.Gib();
                     }

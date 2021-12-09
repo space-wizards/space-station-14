@@ -344,19 +344,19 @@ namespace Content.Server.Explosion.EntitySystems
 
             // logging
             var text = $"{epicenter} with range {devastationRange}/{heavyImpactRange}/{lightImpactRange}/{flashRange}";
-            if (entity == null)
+            if (entity == null || !entity.Value.IsValid())
             {
                 _logSystem.Add(LogType.Explosion, LogImpact.High, $"Explosion spawned at {text}");
             }
-            else if (user == null)
+            else if (user == null || !user.Value.IsValid())
             {
                 _logSystem.Add(LogType.Explosion, LogImpact.High,
-                    $"{entity.Value} exploded at {text}");
+                    $"{ToPrettyString(entity.Value)} exploded at {text}");
             }
             else
             {
                 _logSystem.Add(LogType.Explosion, LogImpact.High,
-                    $"{user.Value} caused {entity.Value} to explode at {text}");
+                    $"{ToPrettyString(user.Value)} caused {ToPrettyString(entity.Value)} to explode at {text}");
             }
 
             var maxRange = MathHelper.Max(devastationRange, heavyImpactRange, lightImpactRange, 0);
