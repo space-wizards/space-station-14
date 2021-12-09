@@ -1,16 +1,16 @@
+using System;
 using Content.Server.Labels.Components;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Labels;
 using Content.Shared.Interaction;
+using Content.Shared.Labels;
+using Content.Shared.Popups;
+using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Players;
 using Robust.Shared.IoC;
-using JetBrains.Annotations;
 using Robust.Shared.Localization;
-using Content.Shared.Popups;
-using System;
+using Robust.Shared.Players;
 
 namespace Content.Server.Labels
 {
@@ -34,15 +34,15 @@ namespace Content.Server.Labels
 
         private void AfterInteractOn(EntityUid uid, HandLabelerComponent handLabeler, AfterInteractEvent args)
         {
-            if (args.Target == null || !handLabeler.Whitelist.IsValid(args.Target.Uid))
+            if (args.Target is not {Valid: true} target || !handLabeler.Whitelist.IsValid(target))
                 return;
 
-            AddLabelTo(uid, handLabeler, args.Target, out string? result);
+            AddLabelTo(uid, handLabeler, target, out string? result);
             if (result != null)
                 handLabeler.Owner.PopupMessage(args.User, result);
         }
 
-        private void AddLabelTo(EntityUid uid, HandLabelerComponent? handLabeler, IEntity target, out string? result)
+        private void AddLabelTo(EntityUid uid, HandLabelerComponent? handLabeler, EntityUid target, out string? result)
         {
             if (!Resolve(uid, ref handLabeler))
             {
@@ -53,7 +53,7 @@ namespace Content.Server.Labels
             LabelComponent label = target.EnsureComponent<LabelComponent>();
 
             if (label.OriginalName != null)
-                target.Name = label.OriginalName;
+                EntityManager.GetComponent<MetaDataComponent>(target).EntityName = label.OriginalName;
             label.OriginalName = null;
 
             if (handLabeler.AssignedLabel == string.Empty)
@@ -63,15 +63,16 @@ namespace Content.Server.Labels
                 return;
             }
 
-            label.OriginalName = target.Name;
-            target.Name += $" ({handLabeler.AssignedLabel})";
+            label.OriginalName = EntityManager.GetComponent<MetaDataComponent>(target).EntityName;
+            string val = EntityManager.GetComponent<MetaDataComponent>(target).EntityName + $" ({handLabeler.AssignedLabel})";
+            EntityManager.GetComponent<MetaDataComponent>(target).EntityName = val;
             label.CurrentLabel = handLabeler.AssignedLabel;
             result = Loc.GetString("hand-labeler-successfully-applied");
         }
 
         private void OnUseInHand(EntityUid uid, HandLabelerComponent handLabeler, UseInHandEvent args)
         {
-            if (!args.User.TryGetComponent(out ActorComponent? actor))
+            if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
 
             handLabeler.Owner.GetUIOrNull(HandLabelerUiKey.Key)?.Open(actor.PlayerSession);
@@ -80,7 +81,7 @@ namespace Content.Server.Labels
 
         private bool CheckInteract(ICommonSession session)
         {
-            if (session.AttachedEntityUid is not { } uid
+            if (session.AttachedEntity is not {Valid: true } uid
                 || !Get<ActionBlockerSystem>().CanInteract(uid)
                 || !Get<ActionBlockerSystem>().CanUse(uid))
                 return false;

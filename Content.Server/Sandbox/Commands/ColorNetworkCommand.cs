@@ -6,7 +6,6 @@ using Content.Server.Atmos.Piping.EntitySystems;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Shared.Administration;
-using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
@@ -56,8 +55,7 @@ namespace Content.Server.Sandbox.Commands
                 return;
             }
 
-            var target = entityManager.GetEntity(eUid);
-            if (!target.TryGetComponent(out NodeContainerComponent? nodeContainerComponent))
+            if (!entityManager.TryGetComponent(eUid, out NodeContainerComponent? nodeContainerComponent))
             {
                 shell.WriteLine(Loc.GetString("shell-entity-is-not-node-container"));
                 return;
@@ -87,9 +85,9 @@ namespace Content.Server.Sandbox.Commands
 
             foreach (var x in group.Nodes)
             {
-                if (!x.Owner.TryGetComponent<AtmosPipeColorComponent>(out var atmosPipeColorComponent)) continue;
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<AtmosPipeColorComponent?>(x.Owner, out var atmosPipeColorComponent)) continue;
 
-                EntitySystem.Get<AtmosPipeColorSystem>().SetColor(x.Owner.Uid, atmosPipeColorComponent, color);
+                EntitySystem.Get<AtmosPipeColorSystem>().SetColor(x.Owner, atmosPipeColorComponent, color);
             }
         }
     }

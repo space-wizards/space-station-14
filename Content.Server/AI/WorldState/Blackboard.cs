@@ -12,18 +12,18 @@ namespace Content.Server.AI.WorldState
     {
         // Some stuff like "My Health" is easy to represent as components but abstract stuff like "How much food is nearby"
         // is harder. This also allows data to be cached if it's being hit frequently.
-        
+
         // This also stops you from re-writing the same boilerplate everywhere of stuff like "Do I have OuterClothing on?"
 
         private readonly Dictionary<Type, IAiState> _states = new();
         private readonly List<IPlanningState> _planningStates = new();
 
-        public Blackboard(IEntity owner)
+        public Blackboard(EntityUid owner)
         {
             Setup(owner);
         }
 
-        private void Setup(IEntity owner)
+        private void Setup(EntityUid owner)
         {
             var typeFactory = IoCManager.Resolve<IDynamicTypeFactory>();
             var blackboardManager = IoCManager.Resolve<BlackboardManager>();

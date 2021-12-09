@@ -5,7 +5,6 @@ using Content.Client.Resources;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.ResourceManagement;
-using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
@@ -78,14 +77,12 @@ namespace Content.Client.NodeContainer
 
             var mousePos = _inputManager.MouseScreenPosition.Position;
 
-            var entity = _entityManager.GetEntity(node.Entity);
-
-            var gridId = entity.Transform.GridID;
+            var gridId = _entityManager.GetComponent<TransformComponent>(node.Entity).GridID;
             var grid = _mapManager.GetGrid(gridId);
-            var gridTile = grid.TileIndicesFor(entity.Transform.Coordinates);
+            var gridTile = grid.TileIndicesFor(_entityManager.GetComponent<TransformComponent>(node.Entity).Coordinates);
 
             var sb = new StringBuilder();
-            sb.Append($"entity: {entity}\n");
+            sb.Append($"entity: {node.Entity}\n");
             sb.Append($"group id: {group.GroupId}\n");
             sb.Append($"node: {node.Name}\n");
             sb.Append($"type: {node.Type}\n");
@@ -116,13 +113,13 @@ namespace Content.Client.NodeContainer
             var worldAABB = overlayDrawArgs.WorldAABB;
             _lookup.FastEntitiesIntersecting(map, ref worldAABB, entity =>
             {
-                if (!_system.Entities.TryGetValue(entity.Uid, out var nodeData))
+                if (!_system.Entities.TryGetValue(entity, out var nodeData))
                     return;
 
-                var gridId = entity.Transform.GridID;
+                var gridId = _entityManager.GetComponent<TransformComponent>(entity).GridID;
                 var grid = _mapManager.GetGrid(gridId);
                 var gridDict = _gridIndex.GetOrNew(gridId);
-                var coords = entity.Transform.Coordinates;
+                var coords = _entityManager.GetComponent<TransformComponent>(entity).Coordinates;
 
                 // TODO: This probably shouldn't be capable of returning NaN...
                 if (float.IsNaN(coords.Position.X) || float.IsNaN(coords.Position.Y))

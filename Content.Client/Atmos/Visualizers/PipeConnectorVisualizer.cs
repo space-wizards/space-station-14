@@ -37,11 +37,12 @@ namespace Content.Client.Atmos.Visualizers
                 Logger.Error($"{nameof(PipeConnectorVisualizer)} could not load to load RSI {rsiString}.");
         }
 
-        public override void InitializeEntity(IEntity entity)
+        public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
 
-            if (!entity.TryGetComponent<ISpriteComponent>(out var sprite))
+            var entities = IoCManager.Resolve<IEntityManager>();
+            if (!entities.TryGetComponent<ISpriteComponent?>(entity, out var sprite))
                 return;
 
             if (_connectorRsi == null)
@@ -52,7 +53,7 @@ namespace Content.Client.Atmos.Visualizers
                 sprite.LayerMapReserveBlank(layerKey);
                 var layer = sprite.LayerMapGet(layerKey);
                 sprite.LayerSetRSI(layer, _connectorRsi);
-                var layerState = _baseState + ((PipeDirection) layerKey).ToString();
+                var layerState = _baseState + ((PipeDirection) layerKey);
                 sprite.LayerSetState(layer, layerState);
             }
         }
@@ -61,10 +62,11 @@ namespace Content.Client.Atmos.Visualizers
         {
             base.OnChangeData(component);
 
-            if (!component.Owner.TryGetComponent<TransformComponent>(out var xform))
+            var entities = IoCManager.Resolve<IEntityManager>();
+            if (!entities.TryGetComponent<TransformComponent>(component.Owner, out var xform))
                 return;
 
-            if (!component.Owner.TryGetComponent<ISpriteComponent>(out var sprite))
+            if (!entities.TryGetComponent<ISpriteComponent>(component.Owner, out var sprite))
                 return;
 
             if (!component.TryGetData(PipeColorVisuals.Color, out Color color))
