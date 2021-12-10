@@ -1,4 +1,5 @@
 using System;
+using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.Trinary.Components;
 using Content.Server.NodeContainer;
@@ -7,6 +8,7 @@ using Content.Server.UserInterface;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping;
 using Content.Shared.Atmos.Piping.Trinary.Components;
+using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
@@ -23,6 +25,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
     {
         [Dependency] private IGameTiming _gameTiming = default!;
         [Dependency] private UserInterfaceSystem _userInterfaceSystem = default!;
+        [Dependency] private AdminLogSystem _adminLogSystem = default!;
 
         public override void Initialize()
         {
@@ -110,12 +113,17 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
         private void OnToggleStatusMessage(EntityUid uid, GasFilterComponent filter, GasFilterToggleStatusMessage args)
         {
             filter.Enabled = args.Enabled;
+            _adminLogSystem.Add(LogType.AtmosPowerChanged, LogImpact.Medium,
+                $"{EntityManager.ToPrettyString(args.Session.AttachedEntity!.Value):player} set the power on {EntityManager.ToPrettyString(uid):device} to {args.Enabled}");
+
             DirtyUI(uid, filter);
         }
 
         private void OnTransferRateChangeMessage(EntityUid uid, GasFilterComponent filter, GasFilterChangeRateMessage args)
         {
             filter.TransferRate = Math.Clamp(args.Rate, 0f, Atmospherics.MaxTransferRate);
+            _adminLogSystem.Add(LogType.AtmosVolumeChanged, LogImpact.Medium,
+                $"{EntityManager.ToPrettyString(args.Session.AttachedEntity!.Value):player} set the transfer rate on {EntityManager.ToPrettyString(uid):device} to {args.Rate}");
             DirtyUI(uid, filter);
 
         }
