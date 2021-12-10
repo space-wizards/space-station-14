@@ -5,4 +5,4 @@ Please make sure you understand the server rules (F1) and if you have any questi
 To reiterate, you are all a crew of people who work together (even the clown) and you should not be harming each other unless you have an extremely good reason (self defence) and even then, call security over radio, stun and detain, do not commit murder as a non antagonist (see antagonist further down).
 
 
-Instead of intents, we have combat mode. Check controls above for its keybind. You can't attack anybody with it off, so no more hitting yourself with your own crowbar.
+Instead of intents, we have combat mode. Check controls below for its keybind. You can't attack anybody with it off, so no more hitting yourself with your own crowbar.
