@@ -94,7 +94,10 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         if (!EntityManager.TryGetComponent(uid, out InstrumentComponent? instrument))
             return;
 
-        if (!instrument.Playing || args.SenderSession != instrument.InstrumentPlayer || instrument.InstrumentPlayer == null)
+        if (!instrument.Playing
+            || args.SenderSession != instrument.InstrumentPlayer
+            || instrument.InstrumentPlayer == null
+            || args.SenderSession.AttachedEntity is not {} attached)
             return;
 
         var send = true;
@@ -108,11 +111,11 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
             {
                 if (instrument.LaggedBatches == (int) (MaxMidiLaggedBatches * (1 / 3d) + 1))
                 {
-                    instrument.InstrumentPlayer.AttachedEntity?.PopupMessage(
+                    attached.PopupMessage(
                         Loc.GetString("instrument-component-finger-cramps-light-message"));
                 } else if (instrument.LaggedBatches == (int) (MaxMidiLaggedBatches * (2 / 3d) + 1))
                 {
-                    instrument.InstrumentPlayer.AttachedEntity?.PopupMessage(
+                    attached.PopupMessage(
                         Loc.GetString("instrument-component-finger-cramps-serious-message"));
                 }
             }
@@ -150,15 +153,13 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
                  || instrument.LaggedBatches >= MaxMidiLaggedBatches)
                 && instrument.InstrumentPlayer != null && instrument.RespectMidiLimits)
             {
-                var mob = instrument.InstrumentPlayer.AttachedEntity;
-
                 // Just in case
-                Clean(instrument.OwnerUid);
+                Clean((instrument).Owner);
                 instrument.UserInterface?.CloseAll();
 
-                if (mob != null)
+                if (instrument.InstrumentPlayer.AttachedEntity is {Valid: true} mob)
                 {
-                    _stunSystem.TryParalyze(mob.Uid, TimeSpan.FromSeconds(1), true);
+                    _stunSystem.TryParalyze(mob, TimeSpan.FromSeconds(1), true);
 
                     instrument.Owner.PopupMessage(mob, "instrument-component-finger-cramps-max-message");
                 }

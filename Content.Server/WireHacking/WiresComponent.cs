@@ -14,7 +14,6 @@ using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Content.Shared.Tools;
 using Content.Shared.Wires;
-using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
@@ -36,8 +35,7 @@ namespace Content.Server.WireHacking
 #pragma warning restore 618
     {
         [Dependency] private readonly IRobustRandom _random = default!;
-
-        private AudioSystem _audioSystem = default!;
+        [Dependency] private readonly IEntityManager _entities = default!;
 
         private bool _isPanelOpen;
 
@@ -117,7 +115,7 @@ namespace Content.Server.WireHacking
 
         private void UpdateAppearance()
         {
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (_entities.TryGetComponent(Owner, out AppearanceComponent? appearance))
             {
                 appearance.SetData(WiresVisuals.MaintenancePanelState, IsPanelOpen && IsPanelVisible);
             }
@@ -173,9 +171,8 @@ namespace Content.Server.WireHacking
         protected override void Initialize()
         {
             base.Initialize();
-            _audioSystem = EntitySystem.Get<AudioSystem>();
 
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (_entities.TryGetComponent(Owner, out AppearanceComponent? appearance))
             {
                 appearance.SetData(WiresVisuals.MaintenancePanelState, IsPanelOpen);
             }
@@ -230,7 +227,7 @@ namespace Content.Server.WireHacking
                 hackingSystem.TryGetLayout(_layoutId, out layout);
             }
 
-            foreach (var wiresProvider in Owner.GetAllComponents<IWires>())
+            foreach (var wiresProvider in _entities.GetComponents<IWires>(Owner))
             {
                 var builder = new WiresBuilder(this, wiresProvider, layout);
                 wiresProvider.RegisterWires(builder);
@@ -334,8 +331,8 @@ namespace Content.Server.WireHacking
         /// </summary>
         public class WiresBuilder
         {
-            [NotNull] private readonly WiresComponent _wires;
-            [NotNull] private readonly IWires _owner;
+            private readonly WiresComponent _wires;
+            private readonly IWires _owner;
             private readonly WireLayout? _layout;
 
             public WiresBuilder(WiresComponent wires, IWires owner, WireLayout? layout)
@@ -410,13 +407,12 @@ namespace Content.Server.WireHacking
             {
                 case WiresActionMessage msg:
                     var wire = WiresList.Find(x => x.Id == msg.Id);
-                    var player = serverMsg.Session.AttachedEntity;
-                    if (wire == null || player == null)
+                    if (wire == null || serverMsg.Session.AttachedEntity is not {} player)
                     {
                         return;
                     }
 
-                    if (!player.TryGetComponent(out HandsComponent? handsComponent))
+                    if (!_entities.TryGetComponent(player, out HandsComponent? handsComponent))
                     {
                         Owner.PopupMessage(player, Loc.GetString("wires-component-ui-on-receive-message-no-hands"));
                         return;
@@ -428,9 +424,9 @@ namespace Content.Server.WireHacking
                         return;
                     }
 
-                    var activeHandEntity = handsComponent.GetActiveHand?.Owner;
                     ToolComponent? tool = null;
-                    activeHandEntity?.TryGetComponent(out tool);
+                    if (handsComponent.GetActiveHand?.Owner is {Valid: true} activeHandEntity)
+                        _entities.TryGetComponent(activeHandEntity, out tool);
                     var toolSystem = EntitySystem.Get<ToolSystem>();
 
                     switch (msg.Action)
@@ -442,8 +438,7 @@ namespace Content.Server.WireHacking
                                 return;
                             }
 
-                            // activeHandEntity cannot be null because tool is not null.
-                            toolSystem.PlayToolSound(activeHandEntity!.Uid, tool);
+                            toolSystem.PlayToolSound(tool.Owner, tool);
                             wire.IsCut = true;
                             UpdateUserInterface();
                             break;
@@ -454,8 +449,7 @@ namespace Content.Server.WireHacking
                                 return;
                             }
 
-                            // activeHandEntity cannot be null because tool is not null.
-                            toolSystem.PlayToolSound(activeHandEntity!.Uid, tool);
+                            toolSystem.PlayToolSound(tool.Owner, tool);
                             wire.IsCut = false;
                             UpdateUserInterface();
                             break;
@@ -501,7 +495,7 @@ namespace Content.Server.WireHacking
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!eventArgs.Using.TryGetComponent<ToolComponent>(out var tool))
+            if (!_entities.TryGetComponent<ToolComponent?>(eventArgs.Using, out var tool))
             {
                 return false;
             }
@@ -513,7 +507,7 @@ namespace Content.Server.WireHacking
                (tool.Qualities.Contains(_cuttingQuality) ||
                 tool.Qualities.Contains(_pulsingQuality)))
             {
-                if (eventArgs.User.TryGetComponent(out ActorComponent? actor))
+                if (_entities.TryGetComponent(eventArgs.User, out ActorComponent? actor))
                 {
                     OpenInterface(actor.PlayerSession);
                     return true;
@@ -521,7 +515,7 @@ namespace Content.Server.WireHacking
             }
 
             // screws the panel open if the tool can do so
-            else if (await toolSystem.UseTool(tool.Owner.Uid, eventArgs.User.Uid, Owner.Uid,
+            else if (await toolSystem.UseTool(tool.Owner, eventArgs.User, Owner,
                 0f, WireHackingSystem.ScrewTime, _screwingQuality, toolComponent:tool))
             {
                 IsPanelOpen = !IsPanelOpen;

@@ -7,6 +7,7 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Slippery;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -31,7 +32,7 @@ namespace Content.Server.Chemistry.TileReactions
 
             if (puddle != null)
             {
-                var slippery = puddle.Owner.GetComponent<SlipperyComponent>();
+                var slippery = IoCManager.Resolve<IEntityManager>().GetComponent<SlipperyComponent>(puddle.Owner);
                 slippery.LaunchForwardsMultiplier = _launchForwardsMultiplier;
                 slippery.RequiredSlipSpeed = _requiredSlipSpeed;
                 slippery.ParalyzeTime = _paralyzeTime;

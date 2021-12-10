@@ -19,6 +19,8 @@ namespace Content.Server.GameTicking.Presets
     /// </summary>
     public abstract class GamePreset
     {
+        [Dependency] private readonly IEntityManager _entities = default!;
+
         public abstract bool Start(IReadOnlyList<IPlayerSession> readyPlayers, bool force = false);
         public virtual string ModeTitle => "Sandbox";
         public virtual string Description => "Secret!";
@@ -30,7 +32,7 @@ namespace Content.Server.GameTicking.Presets
         /// <summary>
         /// Called when a player is spawned in (this includes, but is not limited to, before Start)
         /// </summary>
-        public virtual void OnSpawnPlayerCompleted(IPlayerSession session, IEntity mob, bool lateJoin) { }
+        public virtual void OnSpawnPlayerCompleted(IPlayerSession session, EntityUid mob, bool lateJoin) { }
 
         /// <summary>
         /// Called when a player attempts to ghost.
@@ -39,15 +41,18 @@ namespace Content.Server.GameTicking.Presets
         {
             var playerEntity = mind.OwnedEntity;
 
-            if (playerEntity != null && playerEntity.HasComponent<GhostComponent>())
+            var entities = IoCManager.Resolve<IEntityManager>();
+            if (entities.HasComponent<GhostComponent>(playerEntity))
                 return false;
 
-            if (mind.VisitingEntity != null)
+            if (mind.VisitingEntity != default)
             {
                 mind.UnVisit();
             }
 
-            var position = playerEntity?.Transform.Coordinates ?? EntitySystem.Get<GameTicker>().GetObserverSpawnPoint();
+            var position = playerEntity is {Valid: true}
+                ? _entities.GetComponent<TransformComponent>(playerEntity.Value).Coordinates
+                : EntitySystem.Get<GameTicker>().GetObserverSpawnPoint();
             // Ok, so, this is the master place for the logic for if ghosting is "too cheaty" to allow returning.
             // There's no reason at this time to move it to any other place, especially given that the 'side effects required' situations would also have to be moved.
             // + If CharacterDeadPhysically applies, we're physically dead. Therefore, ghosting OK, and we can return (this is critical for gibbing)
@@ -58,7 +63,7 @@ namespace Content.Server.GameTicking.Presets
             //   (If the mob survives, that's a bug. Ghosting is kept regardless.)
             var canReturn = canReturnGlobal && mind.CharacterDeadPhysically;
 
-            if (playerEntity != null && canReturnGlobal && playerEntity.TryGetComponent(out MobStateComponent? mobState))
+            if (canReturnGlobal && entities.TryGetComponent(playerEntity, out MobStateComponent? mobState))
             {
                 if (mobState.IsCritical())
                 {
@@ -67,22 +72,21 @@ namespace Content.Server.GameTicking.Presets
                     //todo: what if they dont breathe lol
                     //cry deeply
                     DamageSpecifier damage = new(IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>("Asphyxiation"), 200);
-                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(playerEntity.Uid, damage, true);
+                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(playerEntity, damage, true);
                 }
             }
 
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-            var ghost = entityManager.SpawnEntity("MobObserver", position.ToMap(entityManager));
+            var ghost = entities.SpawnEntity("MobObserver", position.ToMap(entities));
 
             // Try setting the ghost entity name to either the character name or the player name.
             // If all else fails, it'll default to the default entity prototype name, "observer".
             // However, that should rarely happen.
             if(!string.IsNullOrWhiteSpace(mind.CharacterName))
-                ghost.Name = mind.CharacterName;
+                entities.GetComponent<MetaDataComponent>(ghost).EntityName = mind.CharacterName;
             else if (!string.IsNullOrWhiteSpace(mind.Session?.Name))
-                ghost.Name = mind.Session.Name;
+                entities.GetComponent<MetaDataComponent>(ghost).EntityName = mind.Session.Name;
 
-            var ghostComponent = ghost.GetComponent<GhostComponent>();
+            var ghostComponent = entities.GetComponent<GhostComponent>(ghost);
 
             if (mind.TimeOfDeath.HasValue)
             {
@@ -94,7 +98,7 @@ namespace Content.Server.GameTicking.Presets
             if (canReturn)
                 mind.Visit(ghost);
             else
-                mind.TransferTo(ghost.Uid);
+                mind.TransferTo(ghost);
             return true;
         }
 

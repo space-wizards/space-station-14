@@ -2,8 +2,6 @@
 using Content.Shared.Actions.Components;
 using Content.Shared.Actions.Prototypes;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Construction.Steps;
-using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -29,7 +27,7 @@ public class DoAction : ReagentEffect
             if (actions.IsGranted(proto.ActionType))
             {
                 var attempt = new ActionAttempt(proto);
-                attempt.DoInstantAction(args.EntityManager.GetEntity(args.SolutionEntity));
+                attempt.DoInstantAction(args.SolutionEntity);
             }
         }
     }

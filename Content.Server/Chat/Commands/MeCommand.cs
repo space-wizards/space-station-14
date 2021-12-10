@@ -24,7 +24,7 @@ namespace Content.Server.Chat.Commands
                 return;
             }
 
-            if (player.Status != SessionStatus.InGame || !player.AttachedEntityUid.HasValue)
+            if (player.Status != SessionStatus.InGame || player.AttachedEntity == null)
                 return;
 
             if (args.Length < 1)
@@ -49,7 +49,7 @@ namespace Content.Server.Chat.Commands
                 return;
             }
 
-            chat.EntityMe(mindComponent.OwnedEntity, action);
+            chat.EntityMe(mindComponent.OwnedEntity.Value, action);
         }
     }
 }

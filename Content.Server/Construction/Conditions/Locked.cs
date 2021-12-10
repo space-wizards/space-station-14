@@ -5,6 +5,7 @@ using Content.Shared.Construction;
 using Content.Shared.Examine;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
@@ -28,9 +29,10 @@ namespace Content.Server.Construction.Conditions
 
         public bool DoExamine(ExaminedEvent args)
         {
+            var entMan = IoCManager.Resolve<IEntityManager>();
             var entity = args.Examined;
 
-            if (!entity.TryGetComponent(out LockComponent? lockcomp)) return false;
+            if (!entMan.TryGetComponent(entity, out LockComponent? lockcomp)) return false;
 
             switch (IsLocked)
             {

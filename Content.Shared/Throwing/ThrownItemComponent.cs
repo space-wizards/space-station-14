@@ -10,7 +10,7 @@ namespace Content.Shared.Throwing
     {
         public override string Name => "ThrownItem";
 
-        public IEntity? Thrower { get; set; }
+        public EntityUid? Thrower { get; set; }
     }
 
     [Serializable, NetSerializable]

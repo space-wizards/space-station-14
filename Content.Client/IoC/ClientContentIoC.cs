@@ -5,6 +5,7 @@ using Content.Client.Clickable;
 using Content.Client.EscapeMenu;
 using Content.Client.Eui;
 using Content.Client.HUD;
+using Content.Client.Info;
 using Content.Client.Items.Managers;
 using Content.Client.Module;
 using Content.Client.Parallax.Managers;
@@ -44,6 +45,7 @@ namespace Content.Client.IoC
             IoCManager.Register<EuiManager, EuiManager>();
             IoCManager.Register<IVoteManager, VoteManager>();
             IoCManager.Register<ChangelogManager, ChangelogManager>();
+            IoCManager.Register<RulesManager, RulesManager>();
             IoCManager.Register<ViewportManager, ViewportManager>();
         }
     }

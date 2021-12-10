@@ -35,15 +35,14 @@ namespace Content.Server.Traitor.Uplink.Commands
                 shell.WriteLine(Loc.GetString("shell-target-player-does-not-exist"));
                 return;
             }
-            if (session.AttachedEntity == null)
+            if (session.AttachedEntity is not {} user)
             {
                 shell.WriteLine(Loc.GetString("Selected player doesn't controll any entity"));
                 return;
             }
-            var user = session.AttachedEntity;
 
             // Get target item
-            IEntity? uplinkEntity = null;
+            EntityUid? uplinkEntity = null;
             var entityManager = IoCManager.Resolve<IEntityManager>();
             if (args.Length >= 2)
             {
@@ -60,7 +59,7 @@ namespace Content.Server.Traitor.Uplink.Commands
                     return;
                 }
 
-                uplinkEntity = entityManager.GetEntity(eUid);
+                uplinkEntity = eUid;
             }
 
             // Get TC count
@@ -68,13 +67,13 @@ namespace Content.Server.Traitor.Uplink.Commands
             var tcCount = configManager.GetCVar(CCVars.TraitorStartingBalance);
 
             // Get account
-            var uplinkAccount = new UplinkAccount(tcCount, user.Uid);
+            var uplinkAccount = new UplinkAccount(tcCount, user);
             var accounts = entityManager.EntitySysManager.GetEntitySystem<UplinkAccountsSystem>();
             accounts.AddNewAccount(uplinkAccount);
 
             // Finally add uplink
             if (!entityManager.EntitySysManager.GetEntitySystem<UplinkSystem>()
-                .AddUplink(user, uplinkAccount!, uplinkEntity))
+                .AddUplink(user, uplinkAccount, uplinkEntity))
             {
                 shell.WriteLine(Loc.GetString("Failed to add uplink to the player"));
                 return;
