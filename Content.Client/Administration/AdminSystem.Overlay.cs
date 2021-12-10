@@ -11,7 +11,7 @@ namespace Content.Client.Administration
 
         private void InitializeOverlay()
         {
-            _adminNameOverlay = new AdminNameOverlay(this, _entityManager, _eyeManager, _resourceCache, _entityLookup);
+            _adminNameOverlay = new AdminNameOverlay(this, _entityManager, _resourceCache, _entityLookup);
             _adminManager.AdminStatusUpdated += OnAdminStatusUpdated;
         }
 
