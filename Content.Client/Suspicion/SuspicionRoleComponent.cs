@@ -3,6 +3,7 @@ using Content.Client.HUD;
 using Content.Shared.Suspicion;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
+using Robust.Client.Player;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -71,7 +72,7 @@ namespace Content.Client.Suspicion
             }
 
             _overlayActive = true;
-            var overlay = new TraitorOverlay(IoCManager.Resolve<IEntityManager>(), _resourceCache);
+            var overlay = new TraitorOverlay(IoCManager.Resolve<IEntityManager>(), IoCManager.Resolve<IPlayerManager>(), _resourceCache);
             _overlayManager.AddOverlay(overlay);
         }
 

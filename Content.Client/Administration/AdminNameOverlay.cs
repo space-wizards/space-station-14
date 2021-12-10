@@ -11,13 +11,15 @@ namespace Content.Client.Administration
     {
         private readonly AdminSystem _system;
         private readonly IEntityManager _entityManager;
+        private readonly IEyeManager _eyeManager;
         private readonly IEntityLookup _entityLookup;
         private readonly Font _font;
 
-        public AdminNameOverlay(AdminSystem system, IEntityManager entityManager, IResourceCache resourceCache, IEntityLookup entityLookup)
+        public AdminNameOverlay(AdminSystem system, IEntityManager entityManager, IEyeManager eyeManager, IResourceCache resourceCache, IEntityLookup entityLookup)
         {
             _system = system;
             _entityManager = entityManager;
+            _eyeManager = eyeManager;
             _entityLookup = entityLookup;
             ZIndex = 200;
             _font = new VectorFont(resourceCache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Regular.ttf"), 10);
@@ -27,7 +29,7 @@ namespace Content.Client.Administration
 
         protected override void Draw(in OverlayDrawArgs args)
         {
-            var viewport = args.WorldAABB;
+            var viewport = _eyeManager.GetWorldViewport();
 
             foreach (var playerInfo in _system.PlayerList)
             {
@@ -39,10 +41,7 @@ namespace Content.Client.Administration
                 }
 
                 // if not on the same map, continue
-                if (IoCManager
-                        .Resolve<IEntityManager>()
-                        .GetComponent<TransformComponent>(entity)
-                        .MapID != args.Viewport.Eye!.Position.MapId)
+                if (_entityManager.GetComponent<TransformComponent>(entity).MapID != _eyeManager.CurrentMap)
                 {
                     continue;
                 }
@@ -56,15 +55,9 @@ namespace Content.Client.Administration
                 }
 
                 var lineoffset = new Vector2(0f, 11f);
-                var screenCoordinates = args
-                    .ViewportControl!
-                    .WorldToScreen(
-                            aabb.Center +
-                            new Angle(-args.Viewport.Eye!.Rotation)
-                                .RotateVec(aabb.TopRight - aabb.Center)
-                    )
-                    + new Vector2(1f, 7f);
-
+                var screenCoordinates = _eyeManager.WorldToScreen(aabb.Center +
+                                                                  new Angle(-_eyeManager.CurrentEye.Rotation).RotateVec(
+                                                                      aabb.TopRight - aabb.Center)) + new Vector2(1f, 7f);
                 if (playerInfo.Antag)
                 {
                     args.ScreenHandle.DrawString(_font, screenCoordinates + (lineoffset * 2), "ANTAG", Color.OrangeRed);

@@ -24,9 +24,10 @@ namespace Content.Client.Suspicion
 
         public TraitorOverlay(
             IEntityManager entityManager,
+            IPlayerManager playerManager,
             IResourceCache resourceCache)
         {
-            _playerManager = IoCManager.Resolve<IPlayerManager>();
+            _playerManager = playerManager;
 
             _entityManager = entityManager;
 
@@ -56,8 +57,10 @@ namespace Content.Client.Suspicion
                     continue;
                 }
 
+                var allyXform = _entityManager.GetComponent<TransformComponent>(ally);
+
                 var entPosition = _entityManager.GetComponent<TransformComponent>(ent.Value).MapPosition;
-                var allyPosition = _entityManager.GetComponent<TransformComponent>(ally).MapPosition;
+                var allyPosition = allyXform.MapPosition;
                 if (!ExamineSystemShared.InRangeUnOccluded(entPosition, allyPosition, 15,
                     entity => entity == ent || entity == ally))
                 {
@@ -65,15 +68,15 @@ namespace Content.Client.Suspicion
                 }
 
                 // if not on the same map, continue
-                if (_entityManager
-                        .GetComponent<TransformComponent>(physics.Owner)
-                        .MapID != args.Viewport.Eye!.Position.MapId
-                        || physics.Owner.IsInContainer())
+                if (allyXform.MapID != args.Viewport.Eye!.Position.MapId
+                    || physics.Owner.IsInContainer())
                 {
                     continue;
                 }
 
-                var worldBox = physics.GetWorldAABB();
+                var (allyWorldPos, allyWorldRot) = allyXform.GetWorldPositionRotation();
+
+                var worldBox = physics.GetWorldAABB(allyWorldPos, allyWorldRot);
 
                 // if not on screen, or too small, continue
                 if (!worldBox.Intersects(in viewport) || worldBox.IsEmpty())
@@ -81,7 +84,7 @@ namespace Content.Client.Suspicion
                     continue;
                 }
 
-                var screenCoordinates = args.ViewportControl!.WorldToScreen(physics.GetWorldAABB().TopLeft + (0, 0.5f));
+                var screenCoordinates = args.ViewportControl!.WorldToScreen(worldBox.TopLeft + (0, 0.5f));
                 args.ScreenHandle.DrawString(_font, screenCoordinates, _traitorText, Color.OrangeRed);
             }
         }
