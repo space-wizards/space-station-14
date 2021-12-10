@@ -1,4 +1,5 @@
 using System;
+using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Piping.Binary.Components;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.NodeContainer;
@@ -6,6 +7,7 @@ using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping;
 using Content.Shared.Atmos.Piping.Binary.Components;
+using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
@@ -22,6 +24,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
     public class GasPressurePumpSystem : EntitySystem
     {
         [Dependency] private UserInterfaceSystem _userInterfaceSystem = default!;
+        [Dependency] private AdminLogSystem _adminLogSystem = default!;
 
         public override void Initialize()
         {
@@ -111,12 +114,16 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
         private void OnToggleStatusMessage(EntityUid uid, GasPressurePumpComponent pump, GasPressurePumpToggleStatusMessage args)
         {
             pump.Enabled = args.Enabled;
+            _adminLogSystem.Add(LogType.AtmosPowerChanged, LogImpact.Medium,
+                $"{EntityManager.ToPrettyString(args.Session.AttachedEntity!.Value):player} set the power on {EntityManager.ToPrettyString(uid):device} to {args.Enabled}");
             DirtyUI(uid, pump);
         }
 
         private void OnOutputPressureChangeMessage(EntityUid uid, GasPressurePumpComponent pump, GasPressurePumpChangeOutputPressureMessage args)
         {
             pump.TargetPressure = Math.Clamp(args.Pressure, 0f, Atmospherics.MaxOutputPressure);
+            _adminLogSystem.Add(LogType.AtmosPressureChanged, LogImpact.Medium,
+                $"{EntityManager.ToPrettyString(args.Session.AttachedEntity!.Value):player} set the pressure on {EntityManager.ToPrettyString(uid):device} to {args.Pressure}kPa");
             DirtyUI(uid, pump);
 
         }

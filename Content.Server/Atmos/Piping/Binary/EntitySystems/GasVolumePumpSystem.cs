@@ -1,4 +1,5 @@
 using System;
+using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Binary.Components;
 using Content.Server.Atmos.Piping.Components;
@@ -6,6 +7,7 @@ using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Binary.Components;
+using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
@@ -24,6 +26,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private UserInterfaceSystem _userInterfaceSystem = default!;
+        [Dependency] private AdminLogSystem _adminLogSystem = default!;
 
         public override void Initialize()
         {
@@ -116,14 +119,17 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
         private void OnToggleStatusMessage(EntityUid uid, GasVolumePumpComponent pump, GasVolumePumpToggleStatusMessage args)
         {
             pump.Enabled = args.Enabled;
+            _adminLogSystem.Add(LogType.AtmosPowerChanged, LogImpact.Medium,
+                $"{EntityManager.ToPrettyString(args.Session.AttachedEntity!.Value):player} set the power on {EntityManager.ToPrettyString(uid):device} to {args.Enabled}");
             DirtyUI(uid, pump);
         }
 
         private void OnTransferRateChangeMessage(EntityUid uid, GasVolumePumpComponent pump, GasVolumePumpChangeTransferRateMessage args)
         {
             pump.TransferRate = Math.Clamp(args.TransferRate, 0f, Atmospherics.MaxTransferRate);
+            _adminLogSystem.Add(LogType.AtmosVolumeChanged, LogImpact.Medium,
+                $"{EntityManager.ToPrettyString(args.Session.AttachedEntity!.Value):player} set the transfer rate on {EntityManager.ToPrettyString(uid):device} to {args.TransferRate}");
             DirtyUI(uid, pump);
-
         }
 
         private void DirtyUI(EntityUid uid, GasVolumePumpComponent? pump)
