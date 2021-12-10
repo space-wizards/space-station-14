@@ -13,6 +13,8 @@
     sprite: Structures/Walls/railing.rsi
     state: side
   - type: Physics
+    bodyType: Static
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -45,8 +47,8 @@
         acts: [ "Destruction" ]
   - type: Climbable
   - type: Construction
-  graph: railing
-  node: railing
+    graph: railing
+    node: railing
 
 - type: entity
   parent: BaseStructure
@@ -63,6 +65,8 @@
     sprite: Structures/Walls/railing.rsi
     state: corner
   - type: Physics
+    bodyType: Static
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
