@@ -468,7 +468,7 @@ namespace Content.Shared.Interaction
             RaiseLocalEvent(used, activateMsg);
             if (activateMsg.Handled)
             {
-                _adminLogSystem.Add(LogType.InteractActivate, LogImpact.Low, $"{user} activated {used}");
+                _adminLogSystem.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user)} activated {ToPrettyString(used)}");
                 return;
             }
 
@@ -477,7 +477,7 @@ namespace Content.Shared.Interaction
 
             var activateEventArgs = new ActivateEventArgs(user, used);
             activateComp.Activate(activateEventArgs);
-            _adminLogSystem.Add(LogType.InteractActivate, LogImpact.Low, $"{user} activated {used}"); // No way to check success.
+            _adminLogSystem.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user)} activated {ToPrettyString(used)}"); // No way to check success.
         }
         #endregion
 
@@ -556,7 +556,7 @@ namespace Content.Shared.Interaction
             RaiseLocalEvent(thrown, throwMsg);
             if (throwMsg.Handled)
             {
-                _adminLogSystem.Add(LogType.Throw, LogImpact.Low,$"{user} threw {thrown}");
+                _adminLogSystem.Add(LogType.Throw, LogImpact.Low,$"{ToPrettyString(user)} threw {ToPrettyString(thrown)}");
                 return;
             }
 
@@ -568,7 +568,7 @@ namespace Content.Shared.Interaction
             {
                 comp.Thrown(args);
             }
-            _adminLogSystem.Add(LogType.Throw, LogImpact.Low,$"{user} threw {thrown}");
+            _adminLogSystem.Add(LogType.Throw, LogImpact.Low,$"{ToPrettyString(user)} threw {ToPrettyString(thrown)}");
         }
         #endregion
 
@@ -677,7 +677,7 @@ namespace Content.Shared.Interaction
             RaiseLocalEvent(item, dropMsg);
             if (dropMsg.Handled)
             {
-                _adminLogSystem.Add(LogType.Drop, LogImpact.Low, $"{user} dropped {item}");
+                _adminLogSystem.Add(LogType.Drop, LogImpact.Low, $"{ToPrettyString(user)} dropped {ToPrettyString(item)}");
                 return;
             }
 
@@ -690,7 +690,7 @@ namespace Content.Shared.Interaction
             {
                 comp.Dropped(new DroppedEventArgs(user));
             }
-            _adminLogSystem.Add(LogType.Drop, LogImpact.Low, $"{user} dropped {item}");
+            _adminLogSystem.Add(LogType.Drop, LogImpact.Low, $"{ToPrettyString(user)} dropped {ToPrettyString(item)}");
         }
         #endregion
 

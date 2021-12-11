@@ -15,10 +15,10 @@ namespace Content.Server.Chemistry.EntitySystems
         {
             base.OnReaction(solution, reaction,  randomReagent, Owner, unitReactions);
 
-            var coordinates = EntityManager.GetComponent<TransformComponent>(Owner).Coordinates;
+            var coordinates = Transform(Owner).Coordinates;
 
             _logSystem.Add(LogType.ChemicalReaction, reaction.Impact,
-                $"Chemical reaction {reaction.ID} occurred with strength {unitReactions:strength} on entity {Owner} at {coordinates}");
+                $"Chemical reaction {reaction.ID} occurred with strength {unitReactions:strength} on entity {ToPrettyString(Owner)} at {coordinates}");
 
             SoundSystem.Play(Filter.Pvs(Owner, entityManager:EntityManager), reaction.Sound.GetSound(), Owner);
         }

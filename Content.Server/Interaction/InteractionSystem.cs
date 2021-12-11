@@ -394,7 +394,7 @@ namespace Content.Server.Interaction
             // all interactions should only happen when in range / unobstructed, so no range check is needed
             var message = new InteractHandEvent(user, target);
             RaiseLocalEvent(target, message);
-            _adminLogSystem.Add(LogType.InteractHand, LogImpact.Low, $"{user} interacted with {target}");
+            _adminLogSystem.Add(LogType.InteractHand, LogImpact.Low, $"{ToPrettyString(user)} interacted with {ToPrettyString(target)}");
             if (message.Handled)
                 return;
 
@@ -482,7 +482,7 @@ namespace Content.Server.Interaction
 
                         if (ev.Handled)
                         {
-                            _adminLogSystem.Add(LogType.AttackArmedWide, LogImpact.Medium, $"{user} wide attacked with {item} at {coordinates}");
+                            _adminLogSystem.Add(LogType.AttackArmedWide, LogImpact.Medium, $"{ToPrettyString(user)} wide attacked with {ToPrettyString(item)} at {coordinates}");
                             return;
                         }
                     }
@@ -496,12 +496,12 @@ namespace Content.Server.Interaction
                             if (targetUid != default)
                             {
                                 _adminLogSystem.Add(LogType.AttackArmedClick, LogImpact.Medium,
-                                    $"{user} attacked {targetUid} with {item} at {coordinates}");
+                                    $"{ToPrettyString(user)} attacked {ToPrettyString(targetUid)} with {ToPrettyString(item)} at {coordinates}");
                             }
                             else
                             {
                                 _adminLogSystem.Add(LogType.AttackArmedClick, LogImpact.Medium,
-                                    $"{user} attacked with {item} at {coordinates}");
+                                    $"{ToPrettyString(user)} attacked with {ToPrettyString(item)} at {coordinates}");
                             }
 
                             return;
@@ -534,12 +534,12 @@ namespace Content.Server.Interaction
                     if (targetUid != default)
                     {
                         _adminLogSystem.Add(LogType.AttackUnarmedClick, LogImpact.Medium,
-                            $"{user} attacked {targetUid} at {coordinates}");
+                            $"{ToPrettyString(user)} attacked {ToPrettyString(targetUid)} at {coordinates}");
                     }
                     else
                     {
                         _adminLogSystem.Add(LogType.AttackUnarmedClick, LogImpact.Medium,
-                            $"{user} attacked at {coordinates}");
+                            $"{ToPrettyString(user)} attacked at {coordinates}");
                     }
                 }
             }

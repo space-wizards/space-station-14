@@ -95,7 +95,7 @@ namespace Content.Server.RoundEnd
 
             if (requester != default)
             {
-                _adminLog.Add(LogType.ShuttleCalled, LogImpact.High, $"Shuttle called by {requester}");
+                _adminLog.Add(LogType.ShuttleCalled, LogImpact.High, $"Shuttle called by {ToPrettyString(requester.Value)}");
             }
             else
             {
@@ -128,7 +128,7 @@ namespace Content.Server.RoundEnd
 
             if (requester != default)
             {
-                _adminLog.Add(LogType.ShuttleRecalled, LogImpact.High, $"Shuttle recalled by {requester}");
+                _adminLog.Add(LogType.ShuttleRecalled, LogImpact.High, $"Shuttle recalled by {ToPrettyString(requester.Value)}");
             }
             else
             {

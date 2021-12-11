@@ -139,7 +139,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
         {
             mixer.Enabled = args.Enabled;
             _adminLogSystem.Add(LogType.AtmosPowerChanged, LogImpact.Medium,
-                $"{EntityManager.ToPrettyString(args.Session.AttachedEntity!.Value):player} set the power on {EntityManager.ToPrettyString(uid):device} to {args.Enabled}");
+                $"{ToPrettyString(args.Session.AttachedEntity!.Value):player} set the power on {ToPrettyString(uid):device} to {args.Enabled}");
             DirtyUI(uid, mixer);
         }
 
@@ -147,7 +147,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
         {
             mixer.TargetPressure = Math.Clamp(args.Pressure, 0f, Atmospherics.MaxOutputPressure);
             _adminLogSystem.Add(LogType.AtmosPressureChanged, LogImpact.Medium,
-                $"{EntityManager.ToPrettyString(args.Session.AttachedEntity!.Value):player} set the pressure on {EntityManager.ToPrettyString(uid):device} to {args.Pressure}kPa");
+                $"{ToPrettyString(args.Session.AttachedEntity!.Value):player} set the pressure on {ToPrettyString(uid):device} to {args.Pressure}kPa");
             DirtyUI(uid, mixer);
         }
 

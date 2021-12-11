@@ -325,7 +325,7 @@ namespace Content.Server.Nutrition.EntitySystems
             });
 
             // logging
-            _logSystem.Add(LogType.ForceFeed, LogImpact.Medium, $"{user} is forcing {target} to eat {uid}");
+            _logSystem.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(user)} is forcing {ToPrettyString(target)} to eat {ToPrettyString(uid)}");
 
             return true;
         }

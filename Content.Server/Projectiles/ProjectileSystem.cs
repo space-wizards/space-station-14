@@ -58,7 +58,7 @@ namespace Content.Server.Projectiles
 
                 if (dmg is not null && EntityManager.EntityExists(component.Shooter))
                     _adminLogSystem.Add(LogType.BulletHit, LogImpact.Low,
-                        $"Projectile {component.Owner} shot by {component.Shooter:shooter} hit {otherEntity} and dealt {dmg.Total} damage");
+                        $"Projectile {ToPrettyString(component.Owner)} shot by {ToPrettyString(component.Shooter):shooter} hit {ToPrettyString(otherEntity)} and dealt {dmg.Total} damage");
             }
 
             // Damaging it can delete it

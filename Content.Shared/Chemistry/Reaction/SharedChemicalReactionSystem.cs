@@ -187,7 +187,7 @@ namespace Content.Shared.Chemistry.Reaction
                 {
                     var entity = args.SolutionEntity;
                     _logSystem.Add(LogType.ReagentEffect, effect.LogImpact,
-                        $"Reaction effect {effect.GetType().Name} of reaction ${reaction.ID:reaction} applied on entity {entity} at {EntityManager.GetComponent<TransformComponent>(entity).Coordinates}");
+                        $"Reaction effect {effect.GetType().Name} of reaction ${reaction.ID:reaction} applied on entity {ToPrettyString(entity)} at {Transform(entity).Coordinates}");
                 }
 
                 effect.Effect(args);

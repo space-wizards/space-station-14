@@ -120,7 +120,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
         {
             pump.Enabled = args.Enabled;
             _adminLogSystem.Add(LogType.AtmosPowerChanged, LogImpact.Medium,
-                $"{EntityManager.ToPrettyString(args.Session.AttachedEntity!.Value):player} set the power on {EntityManager.ToPrettyString(uid):device} to {args.Enabled}");
+                $"{ToPrettyString(args.Session.AttachedEntity!.Value):player} set the power on {ToPrettyString(uid):device} to {args.Enabled}");
             DirtyUI(uid, pump);
         }
 
@@ -128,7 +128,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
         {
             pump.TransferRate = Math.Clamp(args.TransferRate, 0f, Atmospherics.MaxTransferRate);
             _adminLogSystem.Add(LogType.AtmosVolumeChanged, LogImpact.Medium,
-                $"{EntityManager.ToPrettyString(args.Session.AttachedEntity!.Value):player} set the transfer rate on {EntityManager.ToPrettyString(uid):device} to {args.TransferRate}");
+                $"{ToPrettyString(args.Session.AttachedEntity!.Value):player} set the transfer rate on {ToPrettyString(uid):device} to {args.TransferRate}");
             DirtyUI(uid, pump);
         }
 
