@@ -1,29 +1,35 @@
 using System;
 using System.Globalization;
 using System.IO;
-using Content.Client.HUD;
+using Content.Client.Lobby;
+using Content.Client.Viewport;
 using Content.Shared.CCVar;
+using Robust.Client.State;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 using Robust.Shared.IoC;
-using Robust.Shared.Network;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Info;
 
 public sealed class RulesManager
 {
-    [Dependency] private readonly IClientNetManager _clientNetManager = default!;
     [Dependency] private readonly IResourceManager _resource = default!;
     [Dependency] private readonly IConfigurationManager _configManager = default!;
+    [Dependency] private readonly IStateManager _stateManager = default!;
 
     public event Action? OpenRulesAndInfoWindow;
 
-    private void OnConnectStateChanged(ClientConnectionState state)
+    public void Initialize()
     {
+        _stateManager.OnStateChanged += OnStateChanged;
+    }
 
-        if (state != ClientConnectionState.Connected)
+    private void OnStateChanged(StateChangedEventArgs args)
+    {
+        if (args.NewState is not GameScreen || args.NewState is not LobbyState)
             return;
+        _stateManager.OnStateChanged -= OnStateChanged;
 
         var path = new ResourcePath($"/rules_last_seen_{_configManager.GetCVar(CCVars.ServerId)}");
         var showRules = true;
@@ -45,10 +51,5 @@ public sealed class RulesManager
         using var sw = _resource.UserData.OpenWriteText(new ResourcePath($"/rules_last_seen_{_configManager.GetCVar(CCVars.ServerId)}"));
 
         sw.Write(DateTime.UtcNow.ToUniversalTime());
-    }
-
-    public void Initialize()
-    {
-        _clientNetManager.ClientConnectStateChanged += OnConnectStateChanged;
     }
 }
