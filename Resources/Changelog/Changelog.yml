@@ -1,10 +1,4 @@
 Entries:
-- author: esguard
-  changes:
-  - {message: Fixed being charged multiple times by the cargo console when spamming
-      the "approve" button., type: Fix}
-  id: 218
-  time: '2021-05-30T05:19:15.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: Fix some bugs with stacks where their appearance and count would be
@@ -2864,3 +2858,8 @@ Entries:
   - {message: Unlit welders no longer deal burn damage when used in melee., type: Fix}
   id: 719
   time: '2021-12-11T23:12:48.0000000+00:00'
+- author: moony
+  changes:
+  - {message: Admins can now create custom game objects on the fly., type: Add}
+  id: 720
+  time: '2021-12-11T23:28:16.0000000+00:00'
