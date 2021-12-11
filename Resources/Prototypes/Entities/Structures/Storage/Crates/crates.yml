@@ -291,7 +291,7 @@
 - type: entity
   id: CrateSecgear
   name: secgear crate
-  parent: CrateGeneric
+  parent: CrateBaseSecure
   components:
   - type: AccessReader
     access: [["Security"]]
@@ -316,14 +316,11 @@
     - type: StorageVisualizer
       state_open: secgearcrate_open
       state_closed: secgearcrate_door
-  - type: Construction
-    graph: CrateSecure
-    node: cratesecure
 
 - type: entity
   id: CrateEngineeringSecure
   name: secure engineering crate
-  parent: CrateGeneric
+  parent: CrateBaseSecure
   components:
   - type: AccessReader
     access: [["Engineering"]]
@@ -348,14 +345,11 @@
     - type: StorageVisualizer
       state_open: engicratesecure_open
       state_closed: engicratesecure_door
-  - type: Construction
-    graph: CrateSecure
-    node: cratesecure
 
 - type: entity
   id: CrateMedicalSecure
   name: secure medical crate
-  parent: CrateGeneric
+  parent: CrateBaseSecure
   components:
   - type: AccessReader
     access: [["Medical"]]
@@ -380,14 +374,11 @@
     - type: StorageVisualizer
       state_open: medicalcratesecure_open
       state_closed: medicalcratesecure_door
-  - type: Construction
-    graph: CrateSecure
-    node: cratesecure
 
 - type: entity
   id: CratePrivateSecure
   name: private crate
-  parent: CrateGeneric
+  parent: CrateBaseSecure
   components:
   - type: AccessReader
   - type: Lock
@@ -411,14 +402,11 @@
     - type: StorageVisualizer
       state_open: privatecrate_open
       state_closed: privatecrate_door
-  - type: Construction
-    graph: CrateSecure
-    node: cratesecure
 
 - type: entity
   id: CrateScienceSecure
   name: secure science crate
-  parent: CrateGeneric
+  parent: CrateBaseSecure
   components:
   - type: AccessReader
     access: [["Research"]]
@@ -443,14 +431,11 @@
     - type: StorageVisualizer
       state_open: scicratesecure_open
       state_closed: scicratesecure_door
-  - type: Construction
-    graph: CrateSecure
-    node: cratesecure
     
 - type: entity
   id: CratePlasma
   name: plasma crate
-  parent: CrateGeneric
+  parent: CrateBaseSecure
   components:
   - type: AccessReader
     access: [["Engineering"]]
@@ -475,14 +460,11 @@
     - type: StorageVisualizer
       state_open: plasmacrate_open
       state_closed: plasmacrate_door
-  - type: Construction
-    graph: CrateSecure
-    node: cratesecure
 
 - type: entity
   id: CrateSecure
   name: secure crate
-  parent: CrateGeneric
+  parent: CrateBaseSecure
   components:
   - type: AccessReader
   - type: Lock
@@ -506,14 +488,11 @@
     - type: StorageVisualizer
       state_open: securecrate_open
       state_closed: securecrate_door
-  - type: Construction
-    graph: CrateSecure
-    node: cratesecure
 
 - type: entity
   id: CrateHydroSecure
   name: secure hydroponics crate
-  parent: CrateGeneric
+  parent: CrateBaseSecure
   components:
   - type: AccessReader
     access: [["Service"]]
@@ -538,14 +517,11 @@
     - type: StorageVisualizer
       state_open: hydrocratesecure_open
       state_closed: hydrocratesecure_door
-  - type: Construction
-    graph: CrateSecure
-    node: cratesecure
     
 - type: entity
   id: CrateWeaponSecure
   name: secure weapon crate
-  parent: CrateGeneric
+  parent: CrateBaseSecure
   components:
   - type: AccessReader
     access: [["Security"]]
@@ -567,9 +543,6 @@
     - type: StorageVisualizer
       state_open: weaponcrate_open
       state_closed: weaponcrate_door
-  - type: Construction
-    graph: CrateSecure
-    node: cratesecure
 
 - type: entity
   id: CrateLivestock
