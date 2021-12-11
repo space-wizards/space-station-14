@@ -23,7 +23,7 @@ namespace Content.Client.Commands
 
             foreach (var mechanism in mechanisms)
             {
-                if (mechanism.Owner.TryGetComponent(out SpriteComponent? sprite))
+                if (entityManager.TryGetComponent(mechanism.Owner, out SpriteComponent? sprite))
                 {
                     sprite.ContainerOccluded = false;
                 }

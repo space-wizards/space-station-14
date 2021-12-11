@@ -11,6 +11,7 @@
       path: /Audio/Effects/singularity.ogg
   - type: Physics
     bodyType: Dynamic
+  - type: Fixtures
     fixtures:
     - id: DeleteCircle
       shape:

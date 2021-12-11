@@ -23,7 +23,7 @@ namespace Content.Shared.Actions.Behaviors
         /// </summary>
         public readonly EntityCoordinates Target;
 
-        public TargetPointActionEventArgs(IEntity performer, EntityCoordinates target, ActionType actionType)
+        public TargetPointActionEventArgs(EntityUid performer, EntityCoordinates target, ActionType actionType)
             : base(performer, actionType)
         {
             Target = target;

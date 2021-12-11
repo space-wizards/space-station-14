@@ -19,15 +19,15 @@ public class CharacterInfoSystem : EntitySystem
 
     private void OnRequestCharacterInfoEvent(RequestCharacterInfoEvent msg, EntitySessionEventArgs args)
     {
-        if (!args.SenderSession.AttachedEntityUid.HasValue
-            || args.SenderSession.AttachedEntityUid != msg.EntityUid)
+        if (!args.SenderSession.AttachedEntity.HasValue
+            || args.SenderSession.AttachedEntity != msg.EntityUid)
             return;
 
-        var entityUid = args.SenderSession.AttachedEntityUid.Value;
+        var entity = args.SenderSession.AttachedEntity.Value;
 
         var conditions = new Dictionary<string, List<ConditionInfo>>();
         var jobTitle = "No Profession";
-        if (EntityManager.TryGetComponent(entityUid, out MindComponent? mindComponent) && mindComponent.Mind != null)
+        if (EntityManager.TryGetComponent(entity, out MindComponent? mindComponent) && mindComponent.Mind != null)
         {
             var mind = mindComponent.Mind;
 
@@ -53,7 +53,7 @@ public class CharacterInfoSystem : EntitySystem
             }
         }
 
-        RaiseNetworkEvent(new CharacterInfoEvent(entityUid, jobTitle, conditions),
+        RaiseNetworkEvent(new CharacterInfoEvent(entity, jobTitle, conditions),
             Filter.SinglePlayer(args.SenderSession));
     }
 }

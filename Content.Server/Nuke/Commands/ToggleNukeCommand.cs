@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using JetBrains.Annotations;
@@ -5,7 +6,6 @@ using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using System.Linq;
 
 namespace Content.Server.Nuke.Commands
 {
@@ -42,7 +42,7 @@ namespace Content.Server.Nuke.Commands
                     return;
                 }
 
-                bombUid = bomb.OwnerUid;
+                bombUid = bomb.Owner;
             }
 
             var nukeSys = EntitySystem.Get<NukeSystem>();

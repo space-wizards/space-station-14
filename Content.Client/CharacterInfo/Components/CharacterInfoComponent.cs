@@ -22,7 +22,7 @@ namespace Content.Client.CharacterInfo.Components
 
         public void Opened()
         {
-            EntitySystem.Get<CharacterInfoSystem>().RequestCharacterInfo(OwnerUid);
+            EntitySystem.Get<CharacterInfoSystem>().RequestCharacterInfo(Owner);
         }
 
         public sealed class CharacterInfoControl : BoxContainer

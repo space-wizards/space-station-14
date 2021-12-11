@@ -31,12 +31,12 @@ namespace Content.Shared.Interaction
 
     public class AfterInteractEventArgs : EventArgs
     {
-        public IEntity User { get; }
+        public EntityUid User { get; }
         public EntityCoordinates ClickLocation { get; }
-        public IEntity? Target { get; }
+        public EntityUid? Target { get; }
         public bool CanReach { get; }
 
-        public AfterInteractEventArgs(IEntity user, EntityCoordinates clickLocation, IEntity? target, bool canReach)
+        public AfterInteractEventArgs(EntityUid user, EntityCoordinates clickLocation, EntityUid? target, bool canReach)
         {
             User = user;
             ClickLocation = clickLocation;
@@ -54,32 +54,17 @@ namespace Content.Shared.Interaction
         /// <summary>
         ///     Entity that triggered the interaction.
         /// </summary>
-        public IEntity User { get; }
-
-        /// <summary>
-        ///     Entity that triggered the interaction.
-        /// </summary>
-        public EntityUid UserUid => User.Uid;
+        public EntityUid User { get; }
 
         /// <summary>
         ///     Entity that the user used to interact.
         /// </summary>
-        public IEntity Used { get; }
-
-        /// <summary>
-        ///     Entity that the user used to interact.
-        /// </summary>
-        public EntityUid UsedUid => Used.Uid;
+        public EntityUid Used { get; }
 
         /// <summary>
         ///     Entity that was interacted on. This can be null if the attack did not click on an entity.
         /// </summary>
-        public IEntity? Target { get; }
-
-        /// <summary>
-        ///     Entity that was interacted on. This can be null if the attack did not click on an entity.
-        /// </summary>
-        public EntityUid? TargetUid => Target?.Uid;
+        public EntityUid? Target { get; }
 
         /// <summary>
         ///     Location that the user clicked outside of their interaction range.
@@ -92,7 +77,7 @@ namespace Content.Shared.Interaction
         /// </summary>
         public bool CanReach { get; }
 
-        public AfterInteractEvent(IEntity user, IEntity used, IEntity? target,
+        public AfterInteractEvent(EntityUid user, EntityUid used, EntityUid? target,
             EntityCoordinates clickLocation, bool canReach)
         {
             User = user;

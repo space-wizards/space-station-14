@@ -59,7 +59,7 @@ namespace Content.Server.Temperature.Systems
                 if (comp.Deleted || comp.Paused)
                     continue;
 
-                ChangeDamage(comp.OwnerUid, comp);
+                ChangeDamage((comp).Owner, comp);
             }
 
             ShouldUpdateDamage.Clear();

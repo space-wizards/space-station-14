@@ -1,26 +1,9 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using Content.Server.Administration.Logs;
-using Content.Server.Alert;
-using Content.Server.Atmos;
-using Content.Server.Atmos.EntitySystems;
-using Content.Server.Body.Behavior;
 using Content.Server.Body.Systems;
-using Content.Server.Temperature.Components;
-using Content.Server.Temperature.Systems;
-using Content.Shared.ActionBlocker;
-using Content.Shared.Administration.Logs;
-using Content.Shared.Alert;
 using Content.Shared.Atmos;
-using Content.Shared.Body.Components;
 using Content.Shared.Damage;
-using Content.Shared.Database;
-using Content.Shared.MobState.Components;
-using Content.Shared.Popups;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 

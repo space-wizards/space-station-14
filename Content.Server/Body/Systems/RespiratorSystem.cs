@@ -4,7 +4,6 @@ using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Alert;
 using Content.Server.Atmos;
-using Content.Server.Body.Behavior;
 using Content.Server.Body.Components;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
@@ -23,6 +22,8 @@ namespace Content.Server.Body.Systems
     {
         [Dependency] private readonly DamageableSystem _damageableSys = default!;
         [Dependency] private readonly AdminLogSystem _logSys = default!;
+        [Dependency] private readonly BodySystem _bodySystem = default!;
+        [Dependency] private readonly LungSystem _lungSystem = default!;
 
         public override void Update(float frameTime)
         {
@@ -31,41 +32,40 @@ namespace Content.Server.Body.Systems
             foreach (var (respirator, blood, body) in
                      EntityManager.EntityQuery<RespiratorComponent, BloodstreamComponent, SharedBodyComponent>())
             {
-                var uid = respirator.OwnerUid;
+                var uid = respirator.Owner;
                 if (!EntityManager.TryGetComponent<MobStateComponent>(uid, out var state) ||
                     state.IsDead())
                 {
-                    return;
+                    continue;
                 }
 
                 respirator.AccumulatedFrametime += frameTime;
 
                 if (respirator.AccumulatedFrametime < 1)
                 {
-                    return;
+                    continue;
                 }
 
-                ProcessGases(uid, respirator, frameTime, blood, body);
+                ProcessGases(uid, respirator, blood, body);
 
                 respirator.AccumulatedFrametime -= 1;
 
                 if (SuffocatingPercentage(respirator) > 0)
                 {
                     TakeSuffocationDamage(uid, respirator);
-                    return;
+                    continue;
                 }
 
                 StopSuffocation(uid, respirator);
             }
         }
 
-
-        private Dictionary<Gas, float> NeedsAndDeficit(RespiratorComponent respirator, float frameTime)
+        private Dictionary<Gas, float> NeedsAndDeficit(RespiratorComponent respirator)
         {
             var needs = new Dictionary<Gas, float>(respirator.NeedsGases);
             foreach (var (gas, amount) in respirator.DeficitGases)
             {
-                var newAmount = (needs.GetValueOrDefault(gas) + amount) * frameTime;
+                var newAmount = (needs.GetValueOrDefault(gas) + amount);
                 needs[gas] = newAmount;
             }
 
@@ -129,17 +129,23 @@ namespace Content.Server.Body.Systems
             return respirator.ProducesGases.ToDictionary(pair => pair.Key, pair => GasProducedMultiplier(respirator, pair.Key, usedAverage));
         }
 
-        private void ProcessGases(EntityUid uid, RespiratorComponent respirator, float frameTime,
+        private void ProcessGases(EntityUid uid, RespiratorComponent respirator,
             BloodstreamComponent? bloodstream,
             SharedBodyComponent? body)
         {
             if (!Resolve(uid, ref bloodstream, ref body, false))
                 return;
 
-            var lungs = body.GetMechanismBehaviors<LungBehavior>().ToArray();
+            var lungs = _bodySystem.GetComponentsOnMechanisms<LungComponent>(uid, body).ToArray();
 
-            var needs = NeedsAndDeficit(respirator, frameTime);
+            var needs = NeedsAndDeficit(respirator);
             var used = 0f;
+
+            foreach (var (lung, mech) in lungs)
+            {
+                _lungSystem.UpdateLung(lung.Owner, lung, mech);
+            }
+
             foreach (var (gas, amountNeeded) in needs)
             {
                 var bloodstreamAmount = bloodstream.Air.GetMoles(gas);
@@ -150,9 +156,9 @@ namespace Content.Server.Body.Systems
                     if (!EntityManager.GetComponent<MobStateComponent>(uid).IsCritical())
                     {
                         // Panic inhale
-                        foreach (var lung in lungs)
+                        foreach (var (lung, mech) in lungs)
                         {
-                            lung.Gasp();
+                            _lungSystem.Gasp((lung).Owner, lung, mech);
                         }
                     }
 
@@ -192,7 +198,7 @@ namespace Content.Server.Body.Systems
         private void TakeSuffocationDamage(EntityUid uid, RespiratorComponent respirator)
         {
             if (!respirator.Suffocating)
-                _logSys.Add(LogType.Asphyxiation, $"{EntityManager.GetEntity(uid)} started suffocating");
+                _logSys.Add(LogType.Asphyxiation, $"{uid:Entity} started suffocating");
 
             respirator.Suffocating = true;
 
@@ -207,7 +213,7 @@ namespace Content.Server.Body.Systems
         private void StopSuffocation(EntityUid uid, RespiratorComponent respirator)
         {
             if (respirator.Suffocating)
-                _logSys.Add(LogType.Asphyxiation, $"{EntityManager.GetEntity(uid)} stopped suffocating");
+                _logSys.Add(LogType.Asphyxiation, $"{uid:Entity} stopped suffocating");
 
             respirator.Suffocating = false;
 

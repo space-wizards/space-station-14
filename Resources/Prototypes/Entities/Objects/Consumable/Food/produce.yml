@@ -103,6 +103,37 @@
   - type: Log
 
 - type: entity
+  name: nettle
+  description: Stingy little prick.
+  id: Nettle
+  parent: ProduceBase
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/nettle.rsi
+  - type: Item
+    size: 10
+    sprite: Objects/Specific/Hydroponics/nettle.rsi
+    prefix: inhand
+  - type: MeleeWeapon
+    damage:
+      types:
+        Heat: 10
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Histamine
+          Quantity: 25
+  - type: Produce
+    seed: nettle
+  - type: MeleeChemicalInjector
+    transferAmount: 6 #To OD someone you would need 2 nettles and about 6-7 hits, the DOT is likely to crit them if they are running away with almost no health
+  - type: Extractable
+    grindableSolutionName: food
+  - type: InjectableSolution
+    solution: food
+
+- type: entity
   name: banana
   parent: FoodProduceBase
   id: FoodBanana
@@ -144,6 +175,7 @@
     enabled: false
   - type: Physics
     bodyType: Dynamic
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb

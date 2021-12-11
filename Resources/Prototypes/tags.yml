@@ -91,6 +91,9 @@
   id: DoorElectronics
 
 - type: Tag
+  id: DonkPocket
+
+- type: Tag
   id: Donut
 
 - type: Tag

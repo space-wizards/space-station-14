@@ -39,9 +39,9 @@ namespace Content.Server.Commands
         /// sending a failure to the performer if unable to.
         /// </summary>
         public static bool TryGetAttachedEntityByUsernameOrId(IConsoleShell shell,
-            string usernameOrId, IPlayerSession performer, [NotNullWhen(true)]  out IEntity? attachedEntity)
+            string usernameOrId, IPlayerSession performer, out EntityUid attachedEntity)
         {
-            attachedEntity = null;
+            attachedEntity = default;
             if (!TryGetSessionByUsernameOrId(shell, usernameOrId, performer, out var session)) return false;
             if (session.AttachedEntity == null)
             {
@@ -49,38 +49,42 @@ namespace Content.Server.Commands
                 return false;
             }
 
-            attachedEntity = session.AttachedEntity;
+            attachedEntity = session.AttachedEntity.Value;
             return true;
         }
 
-        public static string SubstituteEntityDetails(IConsoleShell shell, IEntity ent, string ruleString)
+        public static string SubstituteEntityDetails(IConsoleShell shell, EntityUid ent, string ruleString)
         {
+            var entMan = IoCManager.Resolve<IEntityManager>();
+            var transform = entMan.GetComponent<TransformComponent>(ent);
+
             // gross, is there a better way to do this?
-            ruleString = ruleString.Replace("$ID", ent.Uid.ToString());
+            ruleString = ruleString.Replace("$ID", ent.ToString());
             ruleString = ruleString.Replace("$WX",
-                ent.Transform.WorldPosition.X.ToString(CultureInfo.InvariantCulture));
+                transform.WorldPosition.X.ToString(CultureInfo.InvariantCulture));
             ruleString = ruleString.Replace("$WY",
-                ent.Transform.WorldPosition.Y.ToString(CultureInfo.InvariantCulture));
+                transform.WorldPosition.Y.ToString(CultureInfo.InvariantCulture));
             ruleString = ruleString.Replace("$LX",
-                ent.Transform.LocalPosition.X.ToString(CultureInfo.InvariantCulture));
+                transform.LocalPosition.X.ToString(CultureInfo.InvariantCulture));
             ruleString = ruleString.Replace("$LY",
-                ent.Transform.LocalPosition.Y.ToString(CultureInfo.InvariantCulture));
-            ruleString = ruleString.Replace("$NAME", ent.Name);
+                transform.LocalPosition.Y.ToString(CultureInfo.InvariantCulture));
+            ruleString = ruleString.Replace("$NAME", entMan.GetComponent<MetaDataComponent>(ent).EntityName);
 
             if (shell.Player is IPlayerSession player)
             {
-                if (player.AttachedEntity != null)
+                if (player.AttachedEntity is {Valid: true} p)
                 {
-                    var p = player.AttachedEntity;
-                    ruleString = ruleString.Replace("$PID", ent.Uid.ToString());
+                    var pTransform = entMan.GetComponent<TransformComponent>(p);
+
+                    ruleString = ruleString.Replace("$PID", ent.ToString());
                     ruleString = ruleString.Replace("$PWX",
-                        p.Transform.WorldPosition.X.ToString(CultureInfo.InvariantCulture));
+                        pTransform.WorldPosition.X.ToString(CultureInfo.InvariantCulture));
                     ruleString = ruleString.Replace("$PWY",
-                        p.Transform.WorldPosition.Y.ToString(CultureInfo.InvariantCulture));
+                        pTransform.WorldPosition.Y.ToString(CultureInfo.InvariantCulture));
                     ruleString = ruleString.Replace("$PLX",
-                        p.Transform.LocalPosition.X.ToString(CultureInfo.InvariantCulture));
+                        pTransform.LocalPosition.X.ToString(CultureInfo.InvariantCulture));
                     ruleString = ruleString.Replace("$PLY",
-                        p.Transform.LocalPosition.Y.ToString(CultureInfo.InvariantCulture));
+                        pTransform.LocalPosition.Y.ToString(CultureInfo.InvariantCulture));
                 }
             }
             return ruleString;
