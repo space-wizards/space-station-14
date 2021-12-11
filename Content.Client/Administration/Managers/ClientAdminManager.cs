@@ -36,9 +36,9 @@ namespace Content.Client.Administration.Managers
             return _availableCommands.Contains(cmdName);
         }
 
-        public bool CanViewVar()
+        public bool CanViewVar(bool write)
         {
-            return CanCommand("vv");
+            return (!write && CanCommand("vv")) || HasFlag(AdminFlags.VarEdit);
         }
 
         public bool CanAdminPlace()

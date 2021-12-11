@@ -34,7 +34,7 @@ namespace Content.Client.Administration.Managers
         /// <summary>
         ///     Check if the local player can open the VV menu.
         /// </summary>
-        bool CanViewVar();
+        bool CanViewVar(bool write);
 
         /// <summary>
         ///     Check if the local player can spawn stuff in with the entity/tile spawn panel.

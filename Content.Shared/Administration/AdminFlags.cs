@@ -81,6 +81,12 @@ namespace Content.Shared.Administration
         Adminhelp = 1 << 12,
 
         /// <summary>
+        ///     Lets you *VIEW* variables, not change them.
+        ///     <seealso cref="VarEdit"/> conveys both.
+        /// </summary>
+        VarView = 1 << 13,
+
+        /// <summary>
         ///     Dangerous host permissions like scsi.
         /// </summary>
         Host = 1u << 31,

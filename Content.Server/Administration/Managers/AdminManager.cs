@@ -441,9 +441,9 @@ namespace Content.Server.Administration.Managers
             return (attribs.Length != 0, attribs);
         }
 
-        public bool CanViewVar(IPlayerSession session)
+        public bool CanViewVar(IPlayerSession session, bool write)
         {
-            return CanCommand(session, "vv");
+            return (!write && CanCommand(session, "vv")) || (GetAdminData(session)?.HasFlag(AdminFlags.VarEdit) ?? false);
         }
 
         public bool CanAdminPlace(IPlayerSession session)
