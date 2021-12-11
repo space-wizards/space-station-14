@@ -449,3 +449,12 @@
   components:
   - type: AccessReader
     access: [["HeadOfPersonnel"]]
+
+# Shuttle airlocks
+- type: entity
+  parent: AirlockShuttle
+  id: AirlockExternalShuttleLocked
+  suffix: External, Locked
+  components:
+  - type: AccessReader
+    access: [["External"]]
