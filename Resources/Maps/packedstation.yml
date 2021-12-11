@@ -53094,7 +53094,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 5480
-  type: CarpetGay
+  type: CarpetPink
   components:
   - pos: 67.5,39.5
     parent: 0
