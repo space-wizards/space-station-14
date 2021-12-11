@@ -94,17 +94,17 @@ namespace Content.Server.Weapon.Melee
 
                     RaiseLocalEvent(target, new AttackedEvent(args.Used, args.User, args.ClickLocation));
 
-                    var damage = _damageableSystem.TryChangeDamage(target,
-                        DamageSpecifier.ApplyModifierSets(comp.Damage, hitEvent.ModifiersList));
+                    var modifiedDamage = DamageSpecifier.ApplyModifierSets(comp.Damage + hitEvent.BonusDamage, hitEvent.ModifiersList);
+                    var damageResult = _damageableSystem.TryChangeDamage(target, modifiedDamage);
 
-                    if (damage != null)
+                    if (damageResult != null)
                     {
                         if (args.Used == args.User)
                             _logSystem.Add(LogType.MeleeHit,
-                                $"{args.User} melee attacked {args.TargetEntity} using their hands and dealt {damage.Total} damage");
+                                $"{args.User} melee attacked {args.TargetEntity} using their hands and dealt {damageResult.Total} damage");
                         else
                             _logSystem.Add(LogType.MeleeHit,
-                                $"{args.User} melee attacked {args.TargetEntity} using {args.Used} and dealt {damage.Total} damage");
+                                $"{args.User} melee attacked {args.TargetEntity} using {args.Used} and dealt {damageResult.Total} damage");
                     }
 
                     SoundSystem.Play(Filter.Pvs(owner), comp.HitSound.GetSound(), target);
@@ -167,21 +167,22 @@ namespace Content.Server.Weapon.Melee
                     SoundSystem.Play(Filter.Pvs(owner), comp.MissSound.GetSound(), EntityManager.GetComponent<TransformComponent>(args.User).Coordinates);
                 }
 
+                var modifiedDamage = DamageSpecifier.ApplyModifierSets(comp.Damage + hitEvent.BonusDamage, hitEvent.ModifiersList);
+
                 foreach (var entity in hitEntities)
                 {
                     RaiseLocalEvent(entity, new AttackedEvent(args.Used, args.User, args.ClickLocation));
 
-                    var damage = _damageableSystem.TryChangeDamage(entity,
-                        DamageSpecifier.ApplyModifierSets(comp.Damage, hitEvent.ModifiersList));
+                    var damageResult = _damageableSystem.TryChangeDamage(entity, modifiedDamage);
 
-                    if (damage != null)
+                    if (damageResult != null)
                     {
                         if (args.Used == args.User)
                             _logSystem.Add(LogType.MeleeHit,
-                                $"{args.User} melee attacked {entity} using their hands and dealt {damage.Total} damage");
+                                $"{args.User} melee attacked {entity} using their hands and dealt {damageResult.Total} damage");
                         else
                             _logSystem.Add(LogType.MeleeHit,
-                                $"{args.User} melee attacked {entity} using {args.Used} and dealt {damage.Total} damage");
+                                $"{args.User} melee attacked {entity} using {args.Used} and dealt {damageResult.Total} damage");
                     }
                 }
             }
@@ -307,9 +308,12 @@ namespace Content.Server.Weapon.Melee
         public List<DamageModifierSet> ModifiersList = new();
 
         /// <summary>
-        ///     A flat amount of damage to add. Same reason as above with Multiplier.
+        ///     Damage to add to the default melee weapon damage. Applied before modifiers.
         /// </summary>
-        public int FlatDamage = 0;
+        /// <remarks>
+        ///     This might be required as damage modifier sets cannot add a new damage type to a DamageSpecifier.
+        /// </remarks>
+        public DamageSpecifier BonusDamage = new();
 
         /// <summary>
         ///     A list containing every hit entity. Can be zero.
@@ -317,7 +321,7 @@ namespace Content.Server.Weapon.Melee
         public IEnumerable<EntityUid> HitEntities { get; }
 
         /// <summary>
-        /// The user who attacked with the melee wepaon.
+        /// The user who attacked with the melee weapon.
         /// </summary>
         public EntityUid User { get; }
 
