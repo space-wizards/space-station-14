@@ -409,6 +409,9 @@ namespace Content.Shared.Interaction
         /// </summary>
         public async Task<bool> InteractDoAfter(EntityUid user, EntityUid used, EntityUid? target, EntityCoordinates clickLocation, bool canReach)
         {
+            if (target is {Valid: false})
+                target = null;
+
             var afterInteractEvent = new AfterInteractEvent(user, used, target, clickLocation, canReach);
             RaiseLocalEvent(used, afterInteractEvent, false);
             if (afterInteractEvent.Handled)
