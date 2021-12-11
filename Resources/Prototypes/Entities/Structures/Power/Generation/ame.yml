@@ -150,3 +150,6 @@
   - type: Appearance
     visuals:
     - type: AMEVisualizer
+  - type: Construction
+    graph: ame_shielding
+    node: ame_shielding
