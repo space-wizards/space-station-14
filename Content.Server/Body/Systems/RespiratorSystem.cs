@@ -24,6 +24,7 @@ namespace Content.Server.Body.Systems
         [Dependency] private readonly AdminLogSystem _logSys = default!;
         [Dependency] private readonly BodySystem _bodySystem = default!;
         [Dependency] private readonly LungSystem _lungSystem = default!;
+        [Dependency] private readonly AlertsSystem _alertsSystem = default!;
 
         public override void Update(float frameTime)
         {
@@ -204,7 +205,7 @@ namespace Content.Server.Body.Systems
 
             if (EntityManager.TryGetComponent(uid, out AlertsComponent? alertsComponent))
             {
-                Get<AlertsSystem>().ShowAlert(alertsComponent.Owner, AlertType.LowOxygen);
+                _alertsSystem.ShowAlert(alertsComponent.Owner, AlertType.LowOxygen);
             }
 
             _damageableSys.TryChangeDamage(uid, respirator.Damage, true, false);
@@ -219,7 +220,7 @@ namespace Content.Server.Body.Systems
 
             if (EntityManager.TryGetComponent(uid, out AlertsComponent? alertsComponent))
             {
-                Get<AlertsSystem>().ClearAlert(alertsComponent.Owner, AlertType.LowOxygen);
+                _alertsSystem.ClearAlert(alertsComponent.Owner, AlertType.LowOxygen);
             }
 
             _damageableSys.TryChangeDamage(uid, respirator.DamageRecovery, true);

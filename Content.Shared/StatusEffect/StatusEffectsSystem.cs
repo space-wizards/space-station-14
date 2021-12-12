@@ -15,6 +15,7 @@ namespace Content.Shared.StatusEffect
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IComponentFactory _componentFactory = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly AlertsSystem _alertsSystem = default!;
 
         public override void Initialize()
         {
@@ -192,7 +193,7 @@ namespace Content.Shared.StatusEffect
             if (proto.Alert != null && alerts != null)
             {
                 (TimeSpan, TimeSpan)? cooldown1 = GetAlertCooldown(uid, proto.Alert.Value, status);
-                EntitySystem.Get<AlertsSystem>().ShowAlert(alerts.Owner, proto.Alert.Value, null, cooldown1);
+                _alertsSystem.ShowAlert(alerts.Owner, proto.Alert.Value, null, cooldown1);
             }
 
             status.Dirty();
@@ -269,7 +270,7 @@ namespace Content.Shared.StatusEffect
             if (proto.Alert != null && alerts != null)
             {
                 var euid = alerts.Owner;
-                EntitySystem.Get<AlertsSystem>().ClearAlert(euid, proto.Alert.Value);
+                _alertsSystem.ClearAlert(euid, proto.Alert.Value);
             }
 
             status.ActiveEffects.Remove(key);
@@ -370,7 +371,7 @@ namespace Content.Shared.StatusEffect
                 && proto.Alert != null)
             {
                 (TimeSpan, TimeSpan)? cooldown = GetAlertCooldown(uid, proto.Alert.Value, status);
-                EntitySystem.Get<AlertsSystem>().ShowAlert(alert.Owner, proto.Alert.Value, null, cooldown);
+                _alertsSystem.ShowAlert(alert.Owner, proto.Alert.Value, null, cooldown);
             }
 
             return true;
@@ -409,7 +410,7 @@ namespace Content.Shared.StatusEffect
                 && proto.Alert != null)
             {
                 (TimeSpan, TimeSpan)? cooldown = GetAlertCooldown(uid, proto.Alert.Value, status);
-                EntitySystem.Get<AlertsSystem>().ShowAlert(alert.Owner, proto.Alert.Value, null, cooldown);
+                _alertsSystem.ShowAlert(alert.Owner, proto.Alert.Value, null, cooldown);
             }
 
             return true;

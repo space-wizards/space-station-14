@@ -14,6 +14,7 @@ namespace Content.Shared.Pulling.Systems
     {
         [Dependency] private readonly SharedPullingSystem _pullSystem = default!;
         [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifierSystem = default!;
+        [Dependency] private readonly AlertsSystem _alertsSystem = default!;
 
         public override void Initialize()
         {
@@ -48,7 +49,7 @@ namespace Content.Shared.Pulling.Systems
                 return;
 
             if (EntityManager.TryGetComponent(component.Owner, out AlertsComponent? alerts))
-                EntitySystem.Get<AlertsSystem>().ShowAlert(alerts.Owner, AlertType.Pulling);
+                _alertsSystem.ShowAlert(alerts.Owner, AlertType.Pulling);
 
             RefreshMovementSpeed(component);
         }
@@ -64,7 +65,7 @@ namespace Content.Shared.Pulling.Systems
             if (EntityManager.TryGetComponent(component.Owner, out AlertsComponent? alerts))
             {
                 var euid = alerts.Owner;
-                EntitySystem.Get<AlertsSystem>().ClearAlert(euid, AlertType.Pulling);
+                _alertsSystem.ClearAlert(euid, AlertType.Pulling);
             }
 
             RefreshMovementSpeed(component);

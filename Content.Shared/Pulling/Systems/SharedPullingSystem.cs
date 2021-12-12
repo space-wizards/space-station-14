@@ -25,6 +25,7 @@ namespace Content.Shared.Pulling
     public abstract partial class SharedPullingSystem : EntitySystem
     {
         [Dependency] private readonly SharedPullingStateManagementSystem _pullSm = default!;
+        [Dependency] private readonly AlertsSystem _alertsSystem = default!;
 
         /// <summary>
         ///     A mapping of pullers to the entity that they are pulling.
@@ -105,7 +106,7 @@ namespace Content.Shared.Pulling
                 return;
 
             if (EntityManager.TryGetComponent(component.Owner, out AlertsComponent? alerts))
-                EntitySystem.Get<AlertsSystem>().ShowAlert(alerts.Owner, AlertType.Pulled, null, null);
+                _alertsSystem.ShowAlert(alerts.Owner, AlertType.Pulled, null, null);
         }
 
         private  void PullableHandlePullStopped(EntityUid uid, SharedPullableComponent component, PullStoppedMessage args)
@@ -116,7 +117,7 @@ namespace Content.Shared.Pulling
             if (EntityManager.TryGetComponent(component.Owner, out AlertsComponent? alerts))
             {
                 var euid = alerts.Owner;
-                EntitySystem.Get<AlertsSystem>().ClearAlert(euid, AlertType.Pulled);
+                _alertsSystem.ClearAlert(euid, AlertType.Pulled);
             }
         }
 
