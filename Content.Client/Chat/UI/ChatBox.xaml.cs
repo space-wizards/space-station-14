@@ -396,7 +396,7 @@ namespace Content.Client.Chat.UI
 
         private void WriteChatMessage(StoredChatMessage message)
         {
-            var messageText = FormattedMessage.EscapeText(message.Message);
+            var messageText = Basic.EscapeText(message.Message);
             if (!string.IsNullOrEmpty(message.MessageWrap))
             {
                 messageText = string.Format(message.MessageWrap, messageText);
