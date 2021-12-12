@@ -1,10 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: You no longer technically 'go catatonic' when ghosting from a brain
-      or other 'effectively inanimate' object., type: Fix}
-  id: 222
-  time: '2021-06-03T08:03:19.0000000+00:00'
 - author: SweptWasTaken
   changes:
   - {message: Throwing entities into disposal units now work, type: Fix}
@@ -2859,3 +2853,9 @@ Entries:
   - {message: Fixed booze and soda dispensers colliding with tables., type: Fix}
   id: 723
   time: '2021-12-12T15:02:28.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a bug preventing people from breaking out of handcuffs., type: Fix}
+  - {message: fixed not being able to open morgues., type: Fix}
+  id: 724
+  time: '2021-12-12T17:53:03.0000000+00:00'
