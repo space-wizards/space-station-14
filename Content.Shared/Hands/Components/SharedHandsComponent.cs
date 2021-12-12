@@ -515,13 +515,11 @@ namespace Content.Shared.Hands.Components
 
             // animation
             var handSys = EntitySystem.Get<SharedHandsSystem>();
-            var initialPosition = EntityCoordinates.FromMap(Owner, _entMan.GetComponent<TransformComponent>(entity).MapPosition);
-            var finalPosition = _entMan.GetComponent<TransformComponent>(entity).LocalPosition;
+            var coordinateEntity = _entMan.GetComponent<TransformComponent>(Owner).Parent?.Owner ?? Owner;
+            var initialPosition = EntityCoordinates.FromMap(coordinateEntity, _entMan.GetComponent<TransformComponent>(entity).MapPosition);
+            var finalPosition = _entMan.GetComponent<TransformComponent>(Owner).LocalPosition;
 
-            if (!finalPosition.EqualsApprox(initialPosition.Position))
-            {
-                handSys.PickupAnimation(entity, initialPosition, finalPosition, animateUser ? null : Owner);
-            }
+            handSys.PickupAnimation(entity, initialPosition, finalPosition, animateUser ? null : Owner);
 
             handSys.PutEntityIntoHand(Owner, hand, entity, this);
             return true;

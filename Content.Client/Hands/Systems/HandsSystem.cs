@@ -105,6 +105,9 @@ namespace Content.Client.Hands
             if (!_gameTiming.IsFirstTimePredicted)
                 return;
 
+            if (finalPosition.EqualsApprox(initialPosition.Position, tolerance: 0.1f))
+                return;
+
             ReusableAnimations.AnimateEntityPickup(item, initialPosition, finalPosition);
         }
         #endregion

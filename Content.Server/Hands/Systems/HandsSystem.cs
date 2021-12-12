@@ -110,6 +110,9 @@ namespace Content.Server.Hands.Systems
         public override void PickupAnimation(EntityUid item, EntityCoordinates initialPosition, Vector2 finalPosition,
             EntityUid? exclude)
         {
+            if (finalPosition.EqualsApprox(initialPosition.Position, tolerance: 0.1f))
+                return;
+
             var filter = Filter.Pvs(item);
 
             if (exclude != null)
