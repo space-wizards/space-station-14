@@ -103,10 +103,10 @@ namespace Content.Server.Verbs
             // then log with entity information
             if (used != null)
                 _logSystem.Add(LogType.Verb, verb.Impact,
-                       $"{user} {logText} {target} while holding {used}");
+                       $"{ToPrettyString(user)} {logText} {ToPrettyString(target)} while holding {ToPrettyString(used.Value)}");
             else
                 _logSystem.Add(LogType.Verb, verb.Impact,
-                       $"{user} {logText} {target}");
+                       $"{ToPrettyString(user)} {logText} {ToPrettyString(target)}");
         }
     }
 }
