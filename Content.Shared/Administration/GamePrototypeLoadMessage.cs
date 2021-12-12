@@ -5,8 +5,6 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Administration;
 
-[NetSerializable]
-[Serializable]
 public class GamePrototypeLoadMessage : NetMessage
 {
     public override MsgGroups MsgGroup => MsgGroups.String;

@@ -7,6 +7,7 @@ using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
+using Robust.Client.UserInterface.XAML;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -20,8 +21,10 @@ namespace Content.Client.Administration.UI.Tabs.AdminbusTab
         private EntitySpawnWindow? _entitySpawnWindow;
         private TileSpawnWindow? _tileSpawnWindow;
 
-        protected override void EnteredTree()
+        public AdminbusTab()
         {
+            RobustXamlLoader.Load(this);
+            IoCManager.InjectDependencies(this);
             // For the SpawnEntitiesButton and SpawnTilesButton we need to do the press manually
             // TODO: This will probably need some command check at some point
             SpawnEntitiesButton.OnPressed += SpawnEntitiesButtonOnOnPressed;
