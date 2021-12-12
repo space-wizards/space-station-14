@@ -12,7 +12,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.2,-0.2,0.2,0.2"
+          bounds: "-0.2,-0.47,0.2,-0.15"
       mass: 25
       mask:
         - MobImpassable
