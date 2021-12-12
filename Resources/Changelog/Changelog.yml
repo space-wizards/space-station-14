@@ -1,16 +1,6 @@
 Entries:
 - author: 20kdc
   changes:
-  - {message: 'Render scale (low viewport resolution) will no longer alter singularity
-      intensity. This might reduce effect intensity, I am not sure.', type: Fix}
-  - {message: Singularity should actually not wander off into a corner this time.,
-    type: Fix}
-  - {message: Singularity generators and substations should be easier to pull around
-      through single-tile spaces., type: Fix}
-  id: 221
-  time: '2021-06-03T07:55:50.0000000+00:00'
-- author: 20kdc
-  changes:
   - {message: You no longer technically 'go catatonic' when ghosting from a brain
       or other 'effectively inanimate' object., type: Fix}
   id: 222
@@ -2864,3 +2854,8 @@ Entries:
   - {message: round end summary scrolls, type: Fix}
   id: 722
   time: '2021-12-12T13:09:47.0000000+00:00'
+- author: DelleVelleD
+  changes:
+  - {message: Fixed booze and soda dispensers colliding with tables., type: Fix}
+  id: 723
+  time: '2021-12-12T15:02:28.0000000+00:00'
