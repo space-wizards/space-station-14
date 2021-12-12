@@ -244,7 +244,7 @@ namespace Content.Client.Hands
         ///     The item being held in this hand.
         /// </summary>
         [ViewVariables]
-        public EntityUid HeldItem { get; }
+        public EntityUid? HeldItem { get; }
 
         /// <summary>
         ///     The button in the gui associated with this hand. Assumed to be set by gui shortly after being received from the client HandsComponent.
@@ -252,7 +252,7 @@ namespace Content.Client.Hands
         [ViewVariables]
         public HandButton HandButton { get; set; } = default!;
 
-        public GuiHand(string name, HandLocation handLocation, EntityUid heldItem)
+        public GuiHand(string name, HandLocation handLocation, EntityUid? heldItem)
         {
             Name = name;
             HandLocation = handLocation;

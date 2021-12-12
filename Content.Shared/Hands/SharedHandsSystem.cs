@@ -11,9 +11,8 @@ using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
-using Robust.Shared.Serialization;
 using System.Collections.Generic;
-using System.Linq;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Shared.Hands
 {
@@ -46,35 +45,20 @@ namespace Content.Shared.Hands
         #region interactions
         private void SwapHandsPressed(ICommonSession? session)
         {
-            var player = session?.AttachedEntityUid;
-            if (player == null)
-                return;
-
-            if (!EntityManager.TryGetComponent(player.Value, out SharedHandsComponent hands))
+            if (!TryGetHands(session, out var hands))
                 return;
 
             if (!hands.TryGetSwapHandsResult(out var nextHand))
                 return;
 
-            TrySetActiveHand(session!.AttachedEntityUid!.Value, nextHand, hands);
+            TrySetActiveHand(hands.Owner, nextHand, hands);
         }
 
         private bool DropPressed(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
-            var player = session?.AttachedEntity;
+            if (TryGetHands(session, out var hands))
+                hands.TryDropActiveHand(coords);
 
-            if (player == null)
-                return false;
-
-            if (!player.TryGetComponent(out SharedHandsComponent? hands))
-                return false;
-
-            var activeHand = hands.ActiveHand;
-
-            if (activeHand == null)
-                return false;
-
-            hands.TryDropHand(activeHand, coords);
             return false;
         }
         #endregion
@@ -88,37 +72,35 @@ namespace Content.Shared.Hands
             if (!Resolve(uid, ref hands))
                 return;
 
-            var entity = hand.Container?.ContainedEntity;
-
-            if (entity == null)
+            if (hand.Container?.ContainedEntity == null)
                 return;
 
-            var owner = EntityManager.GetEntity(uid);
+            var entity = hand.Container.ContainedEntity.Value;
 
             if (!hand.Container!.Remove(entity))
             {
-                Logger.Error($"{nameof(SharedHandsComponent)} on {owner} could not remove {entity} from {hand.Container}.");
+                Logger.Error($"{nameof(SharedHandsComponent)} on {uid} could not remove {entity} from {hand.Container}.");
                 return;
             }
 
-            if (EntityManager.TryGetComponent(entity.Uid, out SharedSpriteComponent? component))
+            if (EntityManager.TryGetComponent(entity, out SharedSpriteComponent? component))
                 component.Visible = true;
 
             hands.Dirty();
 
-            var unequippedHandMessage = new UnequippedHandEvent(owner, entity, hand);
-            RaiseLocalEvent(entity.Uid, unequippedHandMessage);
+            var unequippedHandMessage = new UnequippedHandEvent(uid, entity, hand);
+            RaiseLocalEvent(entity, unequippedHandMessage);
             if (unequippedHandMessage.Handled)
                 return;
 
             if (hand.Name == hands.ActiveHand)
-                RaiseLocalEvent(entity.Uid, new HandDeselectedEvent(uid, entity.Uid), false);
+                RaiseLocalEvent(entity, new HandDeselectedEvent(uid, entity), false);
         }
         
         /// <summary>
         ///     Puts an entity into the player's hand, assumes that the insertion is allowed.
         /// </summary>
-        public virtual void PutEntityIntoHand(EntityUid uid, Hand hand, IEntity entity, SharedHandsComponent? hands = null)
+        public virtual void PutEntityIntoHand(EntityUid uid, Hand hand, EntityUid entity, SharedHandsComponent? hands = null)
         {
             if (!Resolve(uid, ref hands))
                 return;
@@ -127,30 +109,29 @@ namespace Content.Shared.Hands
             if (handContainer == null || handContainer.ContainedEntity != null)
                 return;
 
-            var owner = EntityManager.GetEntity(uid);
             if (!handContainer.Insert(entity))
             {
-                Logger.Error($"{nameof(SharedHandsComponent)} on {owner} could not insert {entity} into {handContainer}.");
+                Logger.Error($"{nameof(SharedHandsComponent)} on {uid} could not insert {entity} into {handContainer}.");
                 return;
             }
 
-            if (EntityManager.TryGetComponent(entity.Uid, out SharedSpriteComponent? component))
+            if (EntityManager.TryGetComponent(entity, out SharedSpriteComponent? component))
                 component.Visible = false;
 
             hands.Dirty();
 
-            var equippedHandMessage = new EquippedHandEvent(owner, entity, hand);
-            RaiseLocalEvent(entity.Uid, equippedHandMessage);
+            var equippedHandMessage = new EquippedHandEvent(uid, entity, hand);
+            RaiseLocalEvent(entity, equippedHandMessage);
 
             // If one of the interactions resulted in the item being dropped, return early.
             if (equippedHandMessage.Handled)
                 return;
 
             if (hand.Name == hands.ActiveHand)
-                RaiseLocalEvent(entity.Uid, new HandSelectedEvent(uid, entity.Uid), false);
+                RaiseLocalEvent(entity, new HandSelectedEvent(uid, entity), false);
         }
 
-        public abstract void PickupAnimation(IEntity item, EntityCoordinates initialPosition, Vector2 finalPosition,
+        public abstract void PickupAnimation(EntityUid item, EntityCoordinates initialPosition, Vector2 finalPosition,
             EntityUid? exclude);
         #endregion
 
@@ -174,7 +155,7 @@ namespace Content.Shared.Hands
                 if (hand.HeldEntity == null)
                     continue;
 
-                if (!EntityManager.TryGetComponent(hand.HeldEntity.Uid, out SharedItemComponent? item) || item.RsiPath == null)
+                if (!EntityManager.TryGetComponent(hand.HeldEntity.Value, out SharedItemComponent? item) || item.RsiPath == null)
                     continue;
 
                 var handState = new HandVisualState(item.RsiPath, item.EquippedPrefix, hand.Location, item.Color);
@@ -185,12 +166,24 @@ namespace Content.Shared.Hands
         }
         #endregion
 
+        /// <summary>
+        ///     Given a session, try get the hands component of an attached entity.
+        /// </summary>
+        protected bool TryGetHands(ICommonSession? session, [NotNullWhen(true)] out SharedHandsComponent? hands)
+        {
+            hands = null;
+            if (session?.AttachedEntity == null)
+                return false;
+
+            return TryComp(session.AttachedEntity.Value, out hands);
+        }
+
         private void HandleSetHand(RequestSetHandEvent msg, EntitySessionEventArgs eventArgs)
         {
-            if (eventArgs.SenderSession.AttachedEntityUid == null)
+            if (eventArgs.SenderSession.AttachedEntity == null)
                 return;
 
-            TrySetActiveHand(eventArgs.SenderSession.AttachedEntityUid.Value, msg.HandName);
+            TrySetActiveHand(eventArgs.SenderSession.AttachedEntity.Value, msg.HandName);
         }
 
         /// <summary>
@@ -218,12 +211,12 @@ namespace Content.Shared.Hands
             }
 
             if (handComp.TryGetActiveHeldEntity(out var entity))
-                RaiseLocalEvent(entity.Uid, new HandDeselectedEvent(uid, entity.Uid), false);
+                RaiseLocalEvent(entity.Value, new HandDeselectedEvent(uid, entity.Value), false);
 
             handComp.ActiveHand = value;
 
             if (handComp.TryGetActiveHeldEntity(out entity))
-                RaiseLocalEvent(entity.Uid, new HandSelectedEvent(uid, entity.Uid), false);
+                RaiseLocalEvent(entity.Value, new HandSelectedEvent(uid, entity.Value), false);
 
             handComp.Dirty();
             return true;

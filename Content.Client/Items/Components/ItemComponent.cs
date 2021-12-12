@@ -6,5 +6,5 @@ namespace Content.Client.Items.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedItemComponent))]
-    public class ItemComponent : SharedItemComponen { }
+    public class ItemComponent : SharedItemComponent { }
 }

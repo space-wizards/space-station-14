@@ -109,19 +109,19 @@ namespace Content.Shared.Hands
         /// <summary>
         ///     Entity that equipped the item.
         /// </summary>
-        public IEntity User { get; }
+        public EntityUid User { get; }
 
         /// <summary>
         ///     Item that was equipped.
         /// </summary>
-        public IEntity Equipped { get; }
+        public EntityUid Equipped { get; }
 
         /// <summary>
         ///     Hand that the item was placed into.
         /// </summary>
         public Hand Hand { get; }
 
-        public EquippedHandEvent(IEntity user, IEntity equipped, Hand hand)
+        public EquippedHandEvent(EntityUid user, EntityUid equipped, Hand hand)
         {
             User = user;
             Equipped = equipped;
@@ -138,19 +138,19 @@ namespace Content.Shared.Hands
         /// <summary>
         ///     Entity that equipped the item.
         /// </summary>
-        public IEntity User { get; }
+        public EntityUid User { get; }
 
         /// <summary>
         ///     Item that was unequipped.
         /// </summary>
-        public IEntity Unequipped { get; }
+        public EntityUid Unequipped { get; }
 
         /// <summary>
         ///     Hand that the item is removed from.
         /// </summary>
         public Hand Hand { get; }
 
-        public UnequippedHandEvent(IEntity user, IEntity unequipped, Hand hand)
+        public UnequippedHandEvent(EntityUid user, EntityUid unequipped, Hand hand)
         {
             User = user;
             Unequipped = unequipped;

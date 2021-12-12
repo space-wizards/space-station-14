@@ -41,7 +41,7 @@ namespace Content.Shared.Verbs
             // call ActionBlocker checks, just cache it for the verb request.
             var canInteract = force || _actionBlockerSystem.CanInteract(user);
 
-            EntityUid @using = default;
+            EntityUid? @using = null;
             if (EntityManager.TryGetComponent(user, out SharedHandsComponent? hands) && (force || _actionBlockerSystem.CanUse(user)))
             {
                 hands.TryGetActiveHeldEntity(out @using);
@@ -49,7 +49,7 @@ namespace Content.Shared.Verbs
                 // Check whether the "Held" entity is a virtual pull entity. If yes, set that as the entity being "Used".
                 // This allows you to do things like buckle a dragged person onto a surgery table, without click-dragging
                 // their sprite.
-                if (@using != default && EntityManager.TryGetComponent<HandVirtualItemComponent?>(@using, out var pull))
+                if (TryComp(@using, out HandVirtualItemComponent? pull))
                 {
                     @using = pull.BlockingEntity;
                 }
@@ -113,11 +113,11 @@ namespace Content.Shared.Verbs
         public void LogVerb(Verb verb, EntityUid user, EntityUid target, bool forced)
         {
             // first get the held item. again.
-            EntityUid usedUid = default;
+            EntityUid? usedUid = null;
             if (EntityManager.TryGetComponent(user, out SharedHandsComponent? hands) &&
                 hands.TryGetActiveHeldEntity(out var heldEntity))
             {
-                usedUid = heldEntity;
+                usedUid = heldEntity.Value;
                 if (usedUid != default && EntityManager.TryGetComponent(usedUid, out HandVirtualItemComponent? pull))
                     usedUid = pull.BlockingEntity;
             }

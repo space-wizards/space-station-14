@@ -145,7 +145,7 @@ namespace Content.Shared.Item
             if (!CanPickup(user))
                 return false;
 
-            if (!_entMan.TryGetComponent(user, out SharedHandsComponent? hands))
+            if (!_entMan.TryGetComponent(user, out SharedHandsComponent hands))
                 return false;
 
             var activeHand = hands.ActiveHand;
@@ -160,21 +160,21 @@ namespace Content.Shared.Item
         private void OnEquippedPrefixChange()
         {
             if (!Owner.TryGetContainer(out var container) ||
-                Owner.EntityManager.TryGetComponent(container.Owner.Uid, out SharedHandsComponent hands))
+                _entMan.TryGetComponent(container.Owner, out SharedHandsComponent hands))
                 return;
 
-            EntitySystem.Get<SharedHandsSystem>().UpdateHandVisualizer(OwnerUid, hands);
+            EntitySystem.Get<SharedHandsSystem>().UpdateHandVisualizer(Owner, hands);
         }
 
         public void RemovedFromSlot()
         {
-            if (Owner.EntityManager.TryGetComponent(OwnerUid, out SharedSpriteComponent component))
+            if (_entMan.TryGetComponent(Owner, out SharedSpriteComponent component))
                 component.Visible = true;
         }
 
         public virtual void EquippedToSlot()
         {
-            if (Owner.EntityManager.TryGetComponent(OwnerUid, out SharedSpriteComponent component))
+            if (_entMan.TryGetComponent(Owner, out SharedSpriteComponent component))
                 component.Visible = false;
         }
     }

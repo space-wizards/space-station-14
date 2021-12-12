@@ -181,10 +181,10 @@ namespace Content.Shared.Actions.Components
             GrantOrUpdate(actionType, toggleOn: toggleOn);
         }
 
-        public void EquippedHand(IEntity user, Hand hand)
+        public void EquippedHand(EntityUid user, Hand hand)
         {
             // this entity cannot be granted actions if no actions component
-            if (!IoCManager.Resolve<IEntityManager>().TryComp(eventArgs.User, out SharedActionsComponent actionsComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(user, out SharedActionsComponent actionsComponent))
                 return;
             Holder = user;
             _holderActionsComponent = actionsComponent;

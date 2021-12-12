@@ -159,7 +159,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (args.Handled)
                 return;
 
-            if (!EntityManager.TryGetComponent(args.User, out SharedHandsComponent? hands))
+            if (!EntityManager.TryGetComponent(args.User, out SharedHandsComponent hands))
                 return;
 
             foreach (var slot in itemSlots.Slots.Values)
@@ -264,14 +264,14 @@ namespace Content.Shared.Containers.ItemSlots
             if (!hands.TryGetActiveHeldEntity(out var item))
                 return false;
 
-            if (!CanInsert(uid, item, slot))
+            if (!CanInsert(uid, item.Value, slot))
                 return false;
 
             // hands.Drop(item) checks CanDrop action blocker
-            if (!_actionBlockerSystem.CanInteract(user) && hands.Drop(item))
+            if (!_actionBlockerSystem.CanInteract(user) && hands.Drop(item.Value))
                 return false;
 
-            Insert(uid, slot, item);
+            Insert(uid, slot, item.Value);
             return true;
         }
         #endregion
@@ -425,7 +425,7 @@ namespace Content.Shared.Containers.ItemSlots
 
                 var verbSubject = slot.Name != string.Empty
                     ? Loc.GetString(slot.Name)
-                    : EntityManager.GetComponent<MetaDataComponent>(args.Using.Value).EntityName ?? string.Empty;
+                    : Name(args.Using.Value) ?? string.Empty;
 
                 Verb insertVerb = new();
                 insertVerb.Act = () => Insert(uid, slot, args.Using.Value);

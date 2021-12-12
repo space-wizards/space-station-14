@@ -8,6 +8,7 @@ using Content.Shared.Item;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
+using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -47,8 +48,8 @@ namespace Content.Shared.Hands.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public float ThrowRange { get; set; } = 8f;
 
-        private bool PlayerCanDrop => EntitySystem.Get<ActionBlockerSystem>().CanDrop(OwnerUid);
-        private bool PlayerCanPickup => EntitySystem.Get<ActionBlockerSystem>().CanPickup(OwnerUid);
+        private bool PlayerCanDrop => EntitySystem.Get<ActionBlockerSystem>().CanDrop(Owner);
+        private bool PlayerCanPickup => EntitySystem.Get<ActionBlockerSystem>().CanPickup(Owner);
 
         public void AddHand(string handName, HandLocation handLocation)
         {
@@ -61,7 +62,7 @@ namespace Content.Shared.Hands.Components
             Hands.Add(new Hand(handName, handLocation, container));
 
             if (ActiveHand == null)
-                EntitySystem.Get<SharedHandsSystem>().TrySetActiveHand(OwnerUid, handName, this);
+                EntitySystem.Get<SharedHandsSystem>().TrySetActiveHand(Owner, handName, this);
 
             HandCountChanged();
 
@@ -83,7 +84,7 @@ namespace Content.Shared.Hands.Components
             Hands.Remove(hand);
 
             if (ActiveHand == hand.Name)
-                EntitySystem.Get<SharedHandsSystem>().TrySetActiveHand(OwnerUid, Hands.FirstOrDefault()?.Name, this);
+                EntitySystem.Get<SharedHandsSystem>().TrySetActiveHand(Owner, Hands.FirstOrDefault()?.Name, this);
 
             HandCountChanged();
 
@@ -144,23 +145,23 @@ namespace Content.Shared.Hands.Components
             if (!TryGetActiveHand(out var hand))
                 return false;
 
-            return hand.HeldEntity != default;
+            return hand.HeldEntity != null;
         }
 
-        public bool TryGetHeldEntity(string handName, out EntityUid heldEntity)
+        public bool TryGetHeldEntity(string handName, [NotNullWhen(true)] out EntityUid? heldEntity)
         {
-            heldEntity = default;
+            heldEntity = null;
 
             if (!TryGetHand(handName, out var hand))
                 return false;
 
             heldEntity = hand.HeldEntity;
-            return heldEntity != default;
+            return heldEntity != null;
         }
 
-        public bool TryGetActiveHeldEntity(out EntityUid heldEntity)
+        public bool TryGetActiveHeldEntity([NotNullWhen(true)] out EntityUid? heldEntity)
         {
-            heldEntity = GetActiveHand()?.HeldEntity ?? default;
+            heldEntity = GetActiveHand()?.HeldEntity;
             return heldEntity != null;
         }
 
@@ -178,8 +179,8 @@ namespace Content.Shared.Hands.Components
         {
             foreach (var hand in Hands)
             {
-                if (hand.HeldEntity != default)
-                    yield return hand.HeldEntity;
+                if (hand.HeldEntity != null)
+                    yield return hand.HeldEntity.Value;
             }
         }
 
@@ -192,7 +193,7 @@ namespace Content.Shared.Hands.Components
             int acc = 0;
             foreach (var hand in Hands)
             {
-                if (hand.HeldEntity == default)
+                if (hand.HeldEntity == null)
                     acc += 1;
             }
 
@@ -333,7 +334,7 @@ namespace Content.Shared.Hands.Components
             if (!CanRemoveHeldEntityFromHand(hand))
                 return false;
 
-            EntitySystem.Get<SharedHandsSystem>().RemoveHeldEntityFromHand(OwnerUid, hand, this);
+            EntitySystem.Get<SharedHandsSystem>().RemoveHeldEntityFromHand(Owner, hand, this);
             return true;
         }
 
@@ -345,13 +346,7 @@ namespace Content.Shared.Hands.Components
             if (hand.HeldEntity == null)
                 return false;
 
-            var heldEntity = hand.HeldEntity;
-
-            var handContainer = hand.Container;
-            if (handContainer == null)
-                return false;
-
-            if (!handContainer.CanRemove(heldEntity))
+            if (!hand.Container!.CanRemove(hand.HeldEntity.Value))
                 return false;
 
             return true;
@@ -365,11 +360,13 @@ namespace Content.Shared.Hands.Components
             if (hand.HeldEntity == null)
                 return;
 
-            EntitySystem.Get<SharedHandsSystem>().RemoveHeldEntityFromHand(OwnerUid, hand, this);
+            var heldEntity = hand.HeldEntity.Value;
+
+            EntitySystem.Get<SharedHandsSystem>().RemoveHeldEntityFromHand(Owner, hand, this);
 
             EntitySystem.Get<SharedInteractionSystem>().DroppedInteraction(Owner, heldEntity);
 
-            heldEntity.Transform.WorldPosition = GetFinalDropCoordinates(targetDropLocation);
+            _entMan.GetComponent<TransformComponent>(heldEntity).WorldPosition = GetFinalDropCoordinates(targetDropLocation);
         }
 
         /// <summary>
@@ -424,6 +421,8 @@ namespace Content.Shared.Hands.Components
             if (hand.HeldEntity == null)
                 return false;
 
+            var heldEntity = hand.HeldEntity.Value;
+
             if (checkActionBlocker && !PlayerCanDrop)
                 return false;
 
@@ -441,7 +440,9 @@ namespace Content.Shared.Hands.Components
             if (hand.HeldEntity == null)
                 return;
 
-            EntitySystem.Get<SharedHandsSystem>().RemoveHeldEntityFromHand(OwnerUid, hand, this);
+            var heldEntity = hand.HeldEntity.Value;
+
+            EntitySystem.Get<SharedHandsSystem>().RemoveHeldEntityFromHand(Owner, hand, this);
 
             if (!targetContainer.Insert(heldEntity))
             {
@@ -476,7 +477,7 @@ namespace Content.Shared.Hands.Components
         /// <summary>
         ///     Tries to pick up an entity to a specific hand.
         /// </summary>
-        public bool TryPickupEntity(string handName, IEntity entity, bool checkActionBlocker = true, bool animateUser = false)
+        public bool TryPickupEntity(string handName, EntityUid entity, bool checkActionBlocker = true, bool animateUser = false)
         {
             if (!TryGetHand(handName, out var hand))
                 return false;
@@ -484,7 +485,7 @@ namespace Content.Shared.Hands.Components
             return TryPickupEntity(hand, entity, checkActionBlocker, animateUser);
         }
 
-        public bool TryPickupEntityToActiveHand(IEntity entity, bool checkActionBlocker = true, bool animateUser = false)
+        public bool TryPickupEntityToActiveHand(EntityUid entity, bool checkActionBlocker = true, bool animateUser = false)
         {
             return ActiveHand != null && TryPickupEntity(ActiveHand, entity, checkActionBlocker, animateUser);
         }
@@ -504,7 +505,7 @@ namespace Content.Shared.Hands.Components
             return true;
         }
 
-        private bool TryPickupEntity(Hand hand, IEntity entity, bool checkActionBlocker = true, bool animateUser = false)
+        private bool TryPickupEntity(Hand hand, EntityUid entity, bool checkActionBlocker = true, bool animateUser = false)
         {
             if (!CanInsertEntityIntoHand(hand, entity))
                 return false;
@@ -514,14 +515,15 @@ namespace Content.Shared.Hands.Components
 
             // animation
             var handSys = EntitySystem.Get<SharedHandsSystem>();
-            var initialPosition = EntityCoordinates.FromMap(Owner.Transform.Parent?.Owner ?? Owner, entity.Transform.MapPosition);
-            var finalPosition = Owner.Transform.LocalPosition;
+            var initialPosition = EntityCoordinates.FromMap(Owner, _entMan.GetComponent<TransformComponent>(entity).MapPosition);
+            var finalPosition = _entMan.GetComponent<TransformComponent>(entity).LocalPosition;
+
             if (!finalPosition.EqualsApprox(initialPosition.Position))
             {
-                handSys.PickupAnimation(entity, initialPosition, finalPosition, animateUser ? null : OwnerUid);
+                handSys.PickupAnimation(entity, initialPosition, finalPosition, animateUser ? null : Owner);
             }
 
-            handSys.PutEntityIntoHand(OwnerUid, hand, entity, this);
+            handSys.PutEntityIntoHand(Owner, hand, entity, this);
             return true;
         }
 
@@ -563,7 +565,7 @@ namespace Content.Shared.Hands.Components
                 return;
 
             await EntitySystem.Get<SharedInteractionSystem>()
-                .InteractUsing(Owner, activeHeldEntity, heldEntity, EntityCoordinates.Invalid);
+                .InteractUsing(Owner, activeHeldEntity.Value, heldEntity.Value, EntityCoordinates.Invalid);
         }
 
         public void ActivateItem(bool altInteract = false)
@@ -572,7 +574,7 @@ namespace Content.Shared.Hands.Components
                 return;
 
             EntitySystem.Get<SharedInteractionSystem>()
-                .TryUseInteraction(Owner, heldEntity, altInteract);
+                .TryUseInteraction(Owner, heldEntity.Value, altInteract);
         }
 
         public void ActivateHeldEntity(string handName)
@@ -595,14 +597,14 @@ namespace Content.Shared.Hands.Components
             if (!TryGetHeldEntity(handName, out var heldEntity))
                 return false;
 
-            if (!CanInsertEntityIntoHand(activeHand, heldEntity) || !CanRemoveHeldEntityFromHand(hand))
+            if (!CanInsertEntityIntoHand(activeHand, heldEntity.Value) || !CanRemoveHeldEntityFromHand(hand))
                 return false;
 
             if (checkActionBlocker && (!PlayerCanDrop || !PlayerCanPickup))
                 return false;
 
-            EntitySystem.Get<SharedHandsSystem>().RemoveHeldEntityFromHand(OwnerUid, hand, this);
-            EntitySystem.Get<SharedHandsSystem>().PutEntityIntoHand(OwnerUid, activeHand, heldEntity, this);
+            EntitySystem.Get<SharedHandsSystem>().RemoveHeldEntityFromHand(Owner, hand, this);
+            EntitySystem.Get<SharedHandsSystem>().PutEntityIntoHand(Owner, activeHand, heldEntity.Value, this);
             return true;
         }
 

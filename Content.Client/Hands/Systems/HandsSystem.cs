@@ -64,7 +64,7 @@ namespace Content.Client.Hands
                 UpdateHandContainers(uid, component);
             }
 
-            TrySetActiveHand(component.OwnerUid, state.ActiveHand, component);
+            TrySetActiveHand(uid, state.ActiveHand, component);
         }
 
         /// <summary>
@@ -73,6 +73,7 @@ namespace Content.Client.Hands
         public void UpdateHandContainers(EntityUid uid, HandsComponent? hands = null, ContainerManagerComponent? containerMan = null)
         {
             if (!Resolve(uid, ref hands, ref containerMan))
+                return;
 
             foreach (var hand in hands.Hands)
             {
@@ -82,7 +83,7 @@ namespace Content.Client.Hands
                 }
             }
 
-            if (uid == _playerManager.LocalPlayer?.ControlledEntityUid)
+            if (uid == _playerManager.LocalPlayer?.ControlledEntity)
                 UpdateGui();
         }
         #endregion
@@ -90,19 +91,16 @@ namespace Content.Client.Hands
         #region PickupAnimation
         private void HandlePickupAnimation(PickupAnimationEvent msg)
         {
-            if (!EntityManager.TryGetEntity(msg.ItemUid, out var item))
-                return;
-
-            PickupAnimation(item, msg.InitialPosition, msg.FinalPosition);
+            PickupAnimation(msg.ItemUid, msg.InitialPosition, msg.FinalPosition);
         }
 
-        public override void PickupAnimation(IEntity item, EntityCoordinates initialPosition, Vector2 finalPosition,
+        public override void PickupAnimation(EntityUid item, EntityCoordinates initialPosition, Vector2 finalPosition,
             EntityUid? exclude)
         {
             PickupAnimation(item, initialPosition, finalPosition);
         }
 
-        public void PickupAnimation(IEntity item, EntityCoordinates initialPosition, Vector2 finalPosition)
+        public void PickupAnimation(EntityUid item, EntityCoordinates initialPosition, Vector2 finalPosition)
         {
             if (!_gameTiming.IsFirstTimePredicted)
                 return;
@@ -111,7 +109,7 @@ namespace Content.Client.Hands
         }
         #endregion
 
-        public IEntity? GetActiveHandEntity()
+        public EntityUid? GetActiveHandEntity()
         {
             return TryGetPlayerHands(out var hands) && hands.TryGetActiveHeldEntity(out var entity)
                 ? entity
@@ -123,7 +121,7 @@ namespace Content.Client.Hands
         /// </summary>
         public bool TryGetPlayerHands([NotNullWhen(true)] out HandsComponent? hands)
         {
-            var player = _playerManager.LocalPlayer?.ControlledEntityUid;
+            var player = _playerManager.LocalPlayer?.ControlledEntity;
             hands = null;
             return player != null && EntityManager.TryGetComponent(player.Value, out hands);
         }
@@ -195,7 +193,7 @@ namespace Content.Client.Hands
         {
             base.HandleContainerModified(uid, component, args);
 
-            if (uid == _playerManager.LocalPlayer?.ControlledEntityUid)
+            if (uid == _playerManager.LocalPlayer?.ControlledEntity)
                 UpdateGui();
         }
 
@@ -205,7 +203,7 @@ namespace Content.Client.Hands
             if (!base.TrySetActiveHand(uid, value, handComp))
                 return false;
 
-            if (uid == _playerManager.LocalPlayer?.ControlledEntityUid)
+            if (uid == _playerManager.LocalPlayer?.ControlledEntity)
                 UpdateGui();
 
             return true;
