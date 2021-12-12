@@ -106,7 +106,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 return false;
 
             // Is using knife
-            if (!Resolve(used, ref utensil) || (utensil.Types & UtensilType.Knife) == 0)
+            if (!Resolve(used, ref utensil, false) || (utensil.Types & UtensilType.Knife) == 0)
             {
                 _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-knife-needed"), uid, Filter.Entities(user));
                 return false;
@@ -117,7 +117,7 @@ namespace Content.Server.Kitchen.EntitySystems
             if (!string.IsNullOrEmpty(component.MeatPrototype))
             {
                 var meat = EntityManager.SpawnEntity(component.MeatPrototype, Transform(uid).Coordinates);
-                EntityManager.GetComponent<MetaDataComponent>(meat).EntityName = component.MeatName;
+                MetaData(meat).EntityName = component.MeatName;
             }
 
             if (component.MeatParts != 0)
@@ -153,7 +153,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 return false;
             }
 
-            if (!Resolve(victimUid, ref butcherable) || butcherable.MeatPrototype == null)
+            if (!Resolve(victimUid, ref butcherable, false) || butcherable.MeatPrototype == null)
             {
                 _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-deny-butcher", ("victim", victimUid), ("this", uid)), victimUid, Filter.Entities(userUid));
                 return false;
@@ -171,7 +171,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
             // THE WHAT? (again)
             // Prevent dead from being spiked TODO: Maybe remove when rounds can be played and DOT is implemented
-            if (Resolve(victimUid, ref mobState) &&
+            if (Resolve(victimUid, ref mobState, false) &&
                 !mobState.IsDead())
             {
                 _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-deny-not-dead", ("victim", victimUid)),
