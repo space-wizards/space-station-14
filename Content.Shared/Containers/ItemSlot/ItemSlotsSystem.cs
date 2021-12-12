@@ -177,7 +177,7 @@ namespace Content.Shared.Containers.ItemSlots
                 if (slot.Item != null)
                     hands.TryPutInAnyHand(slot.Item.Value);
 
-                Insert(uid, slot, args.Used, args.UserUid, true);
+                Insert(uid, slot, args.Used, args.User, true);
                 args.Handled = true;
                 return;
             }

@@ -43,7 +43,7 @@ namespace Content.Shared.PDA
             if (!pda.Initialized) return;
 
             if (args.Container.ID == pda.IdSlot.ID)
-                pda.ContainedID = args.Entity.GetComponentOrNull<IdCardComponent>();
+                pda.ContainedID = CompOrNull<IdCardComponent>(args.Entity);
 
             UpdatePDAAppearance(pda);
         }
@@ -58,7 +58,7 @@ namespace Content.Shared.PDA
 
         private void UpdatePDAAppearance(PDAComponent pda)
         {
-            if (pda.Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (TryComp(pda.Owner, out AppearanceComponent ? appearance))
                 appearance.SetData(PDAVisuals.IDCardInserted, pda.ContainedID != null);
         }
     }

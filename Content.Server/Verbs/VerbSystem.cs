@@ -5,6 +5,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Verbs;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Player;
 
@@ -80,26 +81,18 @@ namespace Content.Server.Verbs
             }
         }
 
-        public void LogVerb(Verb verb, EntityUid userUid, EntityUid targetUid, bool forced)
+        public void LogVerb(Verb verb, EntityUid user, EntityUid target, bool forced)
         {
             // first get the held item. again.
-            EntityUid? usedUid = null;
-            if (EntityManager.TryGetComponent(userUid, out SharedHandsComponent? hands))
+            EntityUid? used = null;
+            if (TryComp(user, out SharedHandsComponent? hands) &&
+                hands.TryGetActiveHeldEntity(out var held))
             {
-                hands.TryGetActiveHeldEntity(out var useEntityd);
-                usedUid = useEntityd?.Uid;
-                if (usedUid != null && EntityManager.TryGetComponent(usedUid.Value, out HandVirtualItemComponent? pull))
-                    usedUid = pull.BlockingEntity;
+                if (TryComp(held, out HandVirtualItemComponent? pull))
+                    used = pull.BlockingEntity;
+                else
+                    used = held;
             }
-
-            // get all the entities
-            if (!EntityManager.TryGetEntity(userUid, out var user) ||
-                !EntityManager.TryGetEntity(targetUid, out var target))
-                return;
-
-            IEntity? used = null;
-            if (usedUid != null)
-                EntityManager.TryGetEntity(usedUid.Value, out used);
 
             // then prepare the basic log message body
             var verbText = $"{verb.Category?.Text} {verb.Text}".Trim();

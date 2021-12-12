@@ -22,18 +22,13 @@ namespace Content.Shared.Verbs
 
         private void HandleExecuteVerb(ExecuteVerbEvent args, EntitySessionEventArgs eventArgs)
         {
-            var session = eventArgs.SenderSession;
-            var userEntity = session.AttachedEntity;
-
-            if (userEntity == null)
-                return;
-
-            if (!EntityManager.TryGetEntity(args.Target, out var targetEntity))
+            var user = eventArgs.SenderSession.AttachedEntity;
+            if (user == null)
                 return;
 
             // Get the list of verbs. This effectively also checks that the requested verb is in fact a valid verb that
             // the user can perform.
-            var verbs = GetLocalVerbs(targetEntity, userEntity, args.Type)[args.Type];
+            var verbs = GetLocalVerbs(args.Target, user.Value, args.Type)[args.Type];
 
             // Note that GetLocalVerbs might waste time checking & preparing unrelated verbs even though we know
             // precisely which one we want to run. However, MOST entities will only have 1 or 2 verbs of a given type.
@@ -41,7 +36,7 @@ namespace Content.Shared.Verbs
 
             // Find the requested verb.
             if (verbs.TryGetValue(args.RequestedVerb, out var verb))
-                ExecuteVerb(verb, userEntity.Uid, args.Target);
+                ExecuteVerb(verb, user.Value, args.Target);
         }
 
         /// <summary>

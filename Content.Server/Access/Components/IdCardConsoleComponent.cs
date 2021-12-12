@@ -118,8 +118,6 @@ namespace Content.Server.Access.Components
             if (!Initialized)
                 return;
 
-            var targetIdEntity = TargetIdSlot.Item;
-
             IdCardConsoleBoundUserInterfaceState newState;
             // this could be prettier
             if (TargetIdSlot.Item is not {Valid: true} targetIdEntity)
