@@ -1,10 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: Fix some bugs with stacks where their appearance and count would be
-      incorrect client-side., type: Fix}
-  id: 219
-  time: '2021-05-30T06:54:38.996745+00:00'
 - author: TheDracheX
   changes:
   - {message: Fixed cargo points overflowing with large order quantities, type: Fix}
@@ -2863,3 +2857,10 @@ Entries:
   - {message: Admins can now create custom game objects on the fly., type: Add}
   id: 720
   time: '2021-12-11T23:28:16.0000000+00:00'
+- author: TimrodDX
+  changes:
+  - {message: The Chef on Packed now has a full container of Universal Enzyme., type: Tweak}
+  - {message: New floor tiles have been added to Packed to bring it closer to its
+      original look., type: Tweak}
+  id: 721
+  time: '2021-12-12T05:52:39.0000000+00:00'
