@@ -159,32 +159,30 @@ namespace Content.Server.Hands.Systems
         #region interactions
         private void HandleMoveItemFromHand(MoveItemFromHandMsg msg, EntitySessionEventArgs args)
         {
-            if (TryGetHands(args.SenderSession, out var hands))
+            if (TryComp(args.SenderSession.AttachedEntity, out SharedHandsComponent? hands))
                 hands.TryMoveHeldEntityToActiveHand(msg.HandName);
         }
         private void HandleUseInHand(UseInHandMsg msg, EntitySessionEventArgs args)
         {
-            if (TryGetHands(args.SenderSession, out var hands))
+            if (TryComp(args.SenderSession.AttachedEntity, out SharedHandsComponent? hands))
                 hands.ActivateItem();
         }
         private void HandleInteractUsingInHand(ClientInteractUsingInHandMsg msg, EntitySessionEventArgs args)
         {
-            if (TryGetHands(args.SenderSession, out var hands))
+            if (TryComp(args.SenderSession.AttachedEntity, out SharedHandsComponent? hands))
                 hands.InteractHandWithActiveHand(msg.HandName);
         }
 
         private void HandleActivateInHand(ActivateInHandMsg msg, EntitySessionEventArgs args)
         {
-            if (TryGetHands(args.SenderSession, out var hands))
+            if (TryComp(args.SenderSession.AttachedEntity, out SharedHandsComponent? hands))
                 hands.ActivateHeldEntity(msg.HandName);
         }
 
         private void HandleActivateItem(ICommonSession? session, bool altInteract = false)
         {
-            if (!TryGetHands(session, out var hands))
-                return;
-
-            hands.ActivateItem(altInteract);
+            if (TryComp(session?.AttachedEntity, out SharedHandsComponent? hands))
+                hands.ActivateItem(altInteract);
         }
 
         private bool HandleThrowItem(ICommonSession? session, EntityCoordinates coords, EntityUid uid)

@@ -45,7 +45,7 @@ namespace Content.Shared.Hands
         #region interactions
         private void SwapHandsPressed(ICommonSession? session)
         {
-            if (!TryGetHands(session, out var hands))
+            if (!TryComp(session?.AttachedEntity, out SharedHandsComponent? hands))
                 return;
 
             if (!hands.TryGetSwapHandsResult(out var nextHand))
@@ -56,7 +56,7 @@ namespace Content.Shared.Hands
 
         private bool DropPressed(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
-            if (TryGetHands(session, out var hands))
+            if (TryComp(session?.AttachedEntity, out SharedHandsComponent? hands))
                 hands.TryDropActiveHand(coords);
 
             return false;
@@ -165,18 +165,6 @@ namespace Content.Shared.Hands
             appearance.SetData(HandsVisuals.VisualState, new HandsVisualState(handsVisuals));
         }
         #endregion
-
-        /// <summary>
-        ///     Given a session, try get the hands component of an attached entity.
-        /// </summary>
-        protected bool TryGetHands(ICommonSession? session, [NotNullWhen(true)] out SharedHandsComponent? hands)
-        {
-            hands = null;
-            if (session?.AttachedEntity == null)
-                return false;
-
-            return TryComp(session.AttachedEntity.Value, out hands);
-        }
 
         private void HandleSetHand(RequestSetHandEvent msg, EntitySessionEventArgs eventArgs)
         {
