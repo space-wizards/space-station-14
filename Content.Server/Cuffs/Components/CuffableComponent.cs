@@ -252,15 +252,17 @@ namespace Content.Server.Cuffs.Components
                 SoundSystem.Play(Filter.Pvs(Owner), cuff.EndUncuffSound.GetSound(), Owner);
 
                 Container.ForceRemove(cuffsToRemove.Value);
-                _entMan.GetComponent<TransformComponent>(cuffsToRemove.Value).AttachToGridOrMap();
-                _entMan.GetComponent<TransformComponent>(cuffsToRemove.Value).WorldPosition = _entMan.GetComponent<TransformComponent>(Owner).WorldPosition;
+                var transform = _entMan.GetComponent<TransformComponent>(cuffsToRemove.Value);
+                transform.AttachToGridOrMap();
+                transform.WorldPosition = _entMan.GetComponent<TransformComponent>(Owner).WorldPosition;
 
                 if (cuff.BreakOnRemove)
                 {
                     cuff.Broken = true;
 
-                    _entMan.GetComponent<MetaDataComponent>(cuffsToRemove.Value).EntityName = cuff.BrokenName;
-                    _entMan.GetComponent<MetaDataComponent>(cuffsToRemove.Value).EntityDescription = cuff.BrokenDesc;
+                    var meta = _entMan.GetComponent<MetaDataComponent>(cuffsToRemove.Value);
+                    meta.EntityName = cuff.BrokenName;
+                    meta.EntityDescription = cuff.BrokenDesc;
 
                     if (_entMan.TryGetComponent<SpriteComponent?>(cuffsToRemove, out var sprite) && cuff.BrokenState != null)
                     {
