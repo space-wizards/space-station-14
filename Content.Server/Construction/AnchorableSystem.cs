@@ -30,10 +30,10 @@ namespace Content.Server.Construction
                 return;
 
             // If the used entity doesn't have a tool, return early.
-            if (!EntityManager.TryGetComponent(args.UsedUid, out ToolComponent? usedTool))
+            if (!EntityManager.TryGetComponent(args.Used, out ToolComponent? usedTool))
                 return;
 
-            args.Handled = await TryToggleAnchor(uid, args.UserUid, args.UsedUid, anchorable, usingTool:usedTool);
+            args.Handled = await TryToggleAnchor(uid, args.User, args.Used, anchorable, usingTool:usedTool);
         }
 
         /// <summary>

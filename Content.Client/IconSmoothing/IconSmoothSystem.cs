@@ -51,14 +51,14 @@ namespace Content.Client.IconSmoothing
             // Yes, we updates ALL smoothing entities surrounding us even if they would never smooth with us.
             // This is simpler to implement. If you want to optimize it be my guest.
             var senderEnt = ev.Sender;
-            if (senderEnt.IsValid() &&
-                _mapManager.TryGetGrid(senderEnt.Transform.GridID, out var grid1) &&
-                senderEnt.TryGetComponent(out IconSmoothComponent? iconSmooth)
+            if (EntityManager.EntityExists(senderEnt) &&
+                _mapManager.TryGetGrid(EntityManager.GetComponent<TransformComponent>(senderEnt).GridID, out var grid1) &&
+                EntityManager.TryGetComponent(senderEnt, out IconSmoothComponent? iconSmooth)
                 && iconSmooth.Running)
             {
-                var coords = senderEnt.Transform.Coordinates;
+                var coords = EntityManager.GetComponent<TransformComponent>(senderEnt).Coordinates;
 
-                _dirtyEntities.Enqueue(senderEnt.Uid);
+                _dirtyEntities.Enqueue(senderEnt);
                 AddValidEntities(grid1.GetInDir(coords, Direction.North));
                 AddValidEntities(grid1.GetInDir(coords, Direction.South));
                 AddValidEntities(grid1.GetInDir(coords, Direction.East));
@@ -130,7 +130,7 @@ namespace Content.Client.IconSmoothing
     /// </summary>
     public sealed class IconSmoothDirtyEvent : EntityEventArgs
     {
-        public IconSmoothDirtyEvent(IEntity sender, (GridId grid, Vector2i pos)? lastPosition, IconSmoothingMode mode)
+        public IconSmoothDirtyEvent(EntityUid sender, (GridId grid, Vector2i pos)? lastPosition, IconSmoothingMode mode)
         {
             LastPosition = lastPosition;
             Mode = mode;
@@ -139,6 +139,6 @@ namespace Content.Client.IconSmoothing
 
         public (GridId grid, Vector2i pos)? LastPosition { get; }
         public IconSmoothingMode Mode { get; }
-        public IEntity Sender { get; }
+        public EntityUid Sender { get; }
     }
 }

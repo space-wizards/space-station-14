@@ -5,7 +5,6 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Verbs;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Player;
 
@@ -27,13 +26,13 @@ namespace Content.Server.Verbs
         {
             var player = (IPlayerSession) eventArgs.SenderSession;
 
-            if (!EntityManager.TryGetEntity(args.EntityUid, out var target))
+            if (!EntityManager.EntityExists(args.EntityUid))
             {
                 Logger.Warning($"{nameof(HandleVerbRequest)} called on a non-existent entity with id {args.EntityUid} by player {player}.");
                 return;
             }
 
-            if (player.AttachedEntity == null)
+            if (player.AttachedEntity is not {} attached)
             {
                 Logger.Warning($"{nameof(HandleVerbRequest)} called by player {player} with no attached entity.");
                 return;
@@ -43,7 +42,7 @@ namespace Content.Server.Verbs
             // this, and some verbs (e.g. view variables) won't even care about whether an entity is accessible through
             // the entity menu or not.
 
-            var response = new VerbsResponseEvent(args.EntityUid, GetLocalVerbs(target, player.AttachedEntity, args.Type));
+            var response = new VerbsResponseEvent(args.EntityUid, GetLocalVerbs(args.EntityUid, attached, args.Type));
             RaiseNetworkEvent(response, player.ConnectedClient);
         }
 

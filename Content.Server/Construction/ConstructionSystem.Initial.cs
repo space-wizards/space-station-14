@@ -43,13 +43,13 @@ namespace Content.Server.Construction
         }
 
         // LEGACY CODE. See warning at the top of the file!
-        private IEnumerable<IEntity> EnumerateNearby(IEntity user)
+        private IEnumerable<EntityUid> EnumerateNearby(EntityUid user)
         {
-            if (user.TryGetComponent(out HandsComponent? hands))
+            if (EntityManager.TryGetComponent(user, out HandsComponent? hands))
             {
                 foreach (var itemComponent in hands?.GetAllHeldItems()!)
                 {
-                    if (itemComponent.Owner.TryGetComponent(out ServerStorageComponent? storage))
+                    if (EntityManager.TryGetComponent(itemComponent.Owner, out ServerStorageComponent? storage))
                     {
                         foreach (var storedEntity in storage.StoredEntities!)
                         {
@@ -61,11 +61,11 @@ namespace Content.Server.Construction
                 }
             }
 
-            if (user!.TryGetComponent(out InventoryComponent? inventory))
+            if (EntityManager.TryGetComponent(user!, out InventoryComponent? inventory))
             {
                 foreach (var held in inventory.GetAllHeldItems())
                 {
-                    if (held.TryGetComponent(out ServerStorageComponent? storage))
+                    if (EntityManager.TryGetComponent(held, out ServerStorageComponent? storage))
                     {
                         foreach (var storedEntity in storage.StoredEntities!)
                         {
@@ -84,7 +84,7 @@ namespace Content.Server.Construction
         }
 
         // LEGACY CODE. See warning at the top of the file!
-        private async Task<IEntity?> Construct(IEntity user, string materialContainer, ConstructionGraphPrototype graph, ConstructionGraphEdge edge, ConstructionGraphNode targetNode)
+        private async Task<EntityUid?> Construct(EntityUid user, string materialContainer, ConstructionGraphPrototype graph, ConstructionGraphEdge edge, ConstructionGraphNode targetNode)
         {
             // We need a place to hold our construction items!
             var container = ContainerHelpers.EnsureContainer<Container>(user, materialContainer, out var existed);
@@ -164,17 +164,17 @@ namespace Content.Server.Construction
                             if (!materialStep.EntityValid(entity, out var stack))
                                 continue;
 
-                            var splitStack = _stackSystem.Split(entity.Uid, materialStep.Amount, user.ToCoordinates(), stack);
+                            var splitStack = _stackSystem.Split(entity, materialStep.Amount, user.ToCoordinates(0, 0), stack);
 
                             if (splitStack == null)
                                 continue;
 
                             if (string.IsNullOrEmpty(materialStep.Store))
                             {
-                                if (!container.Insert(EntityManager.GetEntity(splitStack.Value)))
+                                if (!container.Insert(splitStack.Value))
                                     continue;
                             }
-                            else if (!GetContainer(materialStep.Store).Insert(EntityManager.GetEntity(splitStack.Value)))
+                            else if (!GetContainer(materialStep.Store).Insert(splitStack.Value))
                                     continue;
 
                             handled = true;
@@ -186,7 +186,7 @@ namespace Content.Server.Construction
                     case ArbitraryInsertConstructionGraphStep arbitraryStep:
                         foreach (var entity in EnumerateNearby(user))
                         {
-                            if (!arbitraryStep.EntityValid(entity.Uid, EntityManager))
+                            if (!arbitraryStep.EntityValid(entity, EntityManager))
                                 continue;
 
                             if (string.IsNullOrEmpty(arbitraryStep.Store))
@@ -235,13 +235,13 @@ namespace Content.Server.Construction
                 return null;
             }
 
-            var newEntity = EntityManager.SpawnEntity(graph.Nodes[edge.Target].Entity, user.Transform.Coordinates);
+            var newEntity = EntityManager.SpawnEntity(graph.Nodes[edge.Target].Entity, EntityManager.GetComponent<TransformComponent>(user).Coordinates);
 
             // Yes, this should throw if it's missing the component.
-            var construction = newEntity.GetComponent<ConstructionComponent>();
+            var construction = EntityManager.GetComponent<ConstructionComponent>(newEntity);
 
             // We attempt to set the pathfinding target.
-            SetPathfindingTarget(newEntity.Uid, targetNode.Name, construction);
+            SetPathfindingTarget(newEntity, targetNode.Name, construction);
 
             // We preserve the containers...
             foreach (var (name, cont) in containers)
@@ -263,14 +263,14 @@ namespace Content.Server.Construction
             {
                 foreach (var completed in step.Completed)
                 {
-                    completed.PerformAction(newEntity.Uid, user.Uid, EntityManager);
+                    completed.PerformAction(newEntity, user, EntityManager);
                 }
             }
 
             // And we also have edge completed effects!
             foreach (var completed in edge.Completed)
             {
-                completed.PerformAction(newEntity.Uid, user.Uid, EntityManager);
+                completed.PerformAction(newEntity, user, EntityManager);
             }
 
             return newEntity;
@@ -285,9 +285,11 @@ namespace Content.Server.Construction
                 return;
             }
 
-            if (!_prototypeManager.TryIndex(constructionPrototype.Graph, out ConstructionGraphPrototype? constructionGraph))
+            if (!_prototypeManager.TryIndex(constructionPrototype.Graph,
+                    out ConstructionGraphPrototype? constructionGraph))
             {
-                _sawmill.Error($"Invalid construction graph '{constructionPrototype.Graph}' in recipe '{ev.PrototypeName}'!");
+                _sawmill.Error(
+                    $"Invalid construction graph '{constructionPrototype.Graph}' in recipe '{ev.PrototypeName}'!");
                 return;
             }
 
@@ -295,25 +297,26 @@ namespace Content.Server.Construction
             var targetNode = constructionGraph.Nodes[constructionPrototype.TargetNode];
             var pathFind = constructionGraph.Path(startNode.Name, targetNode.Name);
 
-            var user = args.SenderSession.AttachedEntity;
+            if (args.SenderSession.AttachedEntity is not {Valid: true} user ||
+                !Get<ActionBlockerSystem>().CanInteract(user)) return;
 
-            if (user == null || !Get<ActionBlockerSystem>().CanInteract(user.Uid)) return;
-
-            if (!user.TryGetComponent(out HandsComponent? hands)) return;
+            if (!EntityManager.TryGetComponent(user, out HandsComponent? hands)) return;
 
             foreach (var condition in constructionPrototype.Conditions)
             {
-                if (!condition.Condition(user, user.ToCoordinates(), Direction.South))
+                if (!condition.Condition(user, user.ToCoordinates(0, 0), Direction.South))
                     return;
             }
 
-            if(pathFind == null)
-                throw new InvalidDataException($"Can't find path from starting node to target node in construction! Recipe: {ev.PrototypeName}");
+            if (pathFind == null)
+                throw new InvalidDataException(
+                    $"Can't find path from starting node to target node in construction! Recipe: {ev.PrototypeName}");
 
             var edge = startNode.GetEdge(pathFind[0].Name);
 
-            if(edge == null)
-                throw new InvalidDataException($"Can't find edge from starting node to the next node in pathfinding! Recipe: {ev.PrototypeName}");
+            if (edge == null)
+                throw new InvalidDataException(
+                    $"Can't find edge from starting node to the next node in pathfinding! Recipe: {ev.PrototypeName}");
 
             // No support for conditions here!
 
@@ -326,9 +329,8 @@ namespace Content.Server.Construction
                 }
             }
 
-            var item = await Construct(user, "item_construction", constructionGraph, edge, targetNode);
-
-            if(item != null && item.TryGetComponent(out ItemComponent? itemComp))
+            if (await Construct(user, "item_construction", constructionGraph, edge, targetNode) is {Valid: true} item &&
+                EntityManager.TryGetComponent(item, out ItemComponent? itemComp))
                 hands.PutInHandOrDrop(itemComp);
         }
 
@@ -350,9 +352,7 @@ namespace Content.Server.Construction
                 return;
             }
 
-            var user = args.SenderSession.AttachedEntity;
-
-            if (user == null)
+            if (args.SenderSession.AttachedEntity is not {Valid: true} user)
             {
                 _sawmill.Error($"Client sent {nameof(TryStartStructureConstructionMessage)} with no attached entity!");
                 return;
@@ -397,9 +397,8 @@ namespace Content.Server.Construction
                 _beingBuilt[args.SenderSession].Remove(ev.Ack);
             }
 
-            if (user == null
-                || !Get<ActionBlockerSystem>().CanInteract(user.Uid)
-                || !user.TryGetComponent(out HandsComponent? hands) || hands.GetActiveHand == null
+            if (!Get<ActionBlockerSystem>().CanInteract(user)
+                || !EntityManager.TryGetComponent(user, out HandsComponent? hands) || hands.GetActiveHand == null
                 || !user.InRangeUnobstructed(ev.Location, ignoreInsideBlocker:constructionPrototype.CanBuildInImpassable))
             {
                 Cleanup();
@@ -415,9 +414,8 @@ namespace Content.Server.Construction
                 throw new InvalidDataException($"Can't find edge from starting node to the next node in pathfinding! Recipe: {ev.PrototypeName}");
 
             var valid = false;
-            var holding = hands.GetActiveHand?.Owner;
 
-            if (holding == null)
+            if (hands.GetActiveHand?.Owner is not {Valid: true} holding)
             {
                 Cleanup();
                 return;
@@ -430,7 +428,7 @@ namespace Content.Server.Construction
                 switch (step)
                 {
                     case EntityInsertConstructionGraphStep entityInsert:
-                        if (entityInsert.EntityValid(holding.Uid, EntityManager))
+                        if (entityInsert.EntityValid(holding, EntityManager))
                             valid = true;
                         break;
                     case ToolConstructionGraphStep _:
@@ -447,9 +445,8 @@ namespace Content.Server.Construction
                 return;
             }
 
-            var structure = await Construct(user, (ev.Ack + constructionPrototype.GetHashCode()).ToString(), constructionGraph, edge, targetNode);
-
-            if (structure == null)
+            if (await Construct(user, (ev.Ack + constructionPrototype.GetHashCode()).ToString(), constructionGraph,
+                    edge, targetNode) is not {Valid: true} structure)
             {
                 Cleanup();
                 return;
@@ -457,13 +454,13 @@ namespace Content.Server.Construction
 
             // We do this to be able to move the construction to its proper position in case it's anchored...
             // Oh wow transform anchoring is amazing wow I love it!!!!
-            var wasAnchored = structure.Transform.Anchored;
-            structure.Transform.Anchored = false;
+            var wasAnchored = EntityManager.GetComponent<TransformComponent>(structure).Anchored;
+            EntityManager.GetComponent<TransformComponent>(structure).Anchored = false;
 
-            structure.Transform.Coordinates = ev.Location;
-            structure.Transform.LocalRotation = constructionPrototype.CanRotate ? ev.Angle : Angle.Zero;
+            EntityManager.GetComponent<TransformComponent>(structure).Coordinates = ev.Location;
+            EntityManager.GetComponent<TransformComponent>(structure).LocalRotation = constructionPrototype.CanRotate ? ev.Angle : Angle.Zero;
 
-            structure.Transform.Anchored = wasAnchored;
+            EntityManager.GetComponent<TransformComponent>(structure).Anchored = wasAnchored;
 
             RaiseNetworkEvent(new AckStructureConstructionMessage(ev.Ack));
 

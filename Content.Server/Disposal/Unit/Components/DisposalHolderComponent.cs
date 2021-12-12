@@ -1,11 +1,6 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using Content.Server.Atmos;
-using Content.Server.Atmos.EntitySystems;
 using Content.Server.Disposal.Tube.Components;
-using Content.Server.Disposal.Tube;
-using Content.Server.Disposal.Unit.EntitySystems;
 using Content.Server.Items;
 using Content.Shared.Atmos;
 using Content.Shared.Body.Components;
@@ -23,6 +18,8 @@ namespace Content.Server.Disposal.Unit.Components
     [RegisterComponent]
     public class DisposalHolderComponent : Component, IGasMixtureHolder
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "DisposalHolder";
 
         public Container Container = null!;
@@ -77,25 +74,25 @@ namespace Content.Server.Disposal.Unit.Components
             Container = ContainerHelpers.EnsureContainer<Container>(Owner, nameof(DisposalHolderComponent));
         }
 
-        private bool CanInsert(IEntity entity)
+        private bool CanInsert(EntityUid entity)
         {
             if (!Container.CanInsert(entity))
             {
                 return false;
             }
 
-            return entity.HasComponent<ItemComponent>() ||
-                   entity.HasComponent<SharedBodyComponent>();
+            return _entMan.HasComponent<ItemComponent>(entity) ||
+                   _entMan.HasComponent<SharedBodyComponent>(entity);
         }
 
-        public bool TryInsert(IEntity entity)
+        public bool TryInsert(EntityUid entity)
         {
             if (!CanInsert(entity) || !Container.Insert(entity))
             {
                 return false;
             }
 
-            if (entity.TryGetComponent(out IPhysBody? physics))
+            if (_entMan.TryGetComponent(entity, out IPhysBody? physics))
             {
                 physics.CanCollide = false;
             }

@@ -21,6 +21,7 @@ namespace Content.Server.Projectiles.Components
     [RegisterComponent]
     public class HitscanComponent : Component
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         public override string Name => "Hitscan";
@@ -47,7 +48,7 @@ namespace Content.Server.Projectiles.Components
         [DataField("soundHitWall")]
         private SoundSpecifier _soundHitWall = new SoundPathSpecifier("/Audio/Weapons/Guns/Hits/laser_sear_wall.ogg");
 
-        public void FireEffects(IEntity user, float distance, Angle angle, IEntity? hitEntity = null)
+        public void FireEffects(EntityUid user, float distance, Angle angle, EntityUid? hitEntity = null)
         {
             var effectSystem = EntitySystem.Get<EffectSystem>();
             _startTime = _gameTiming.CurTime;
@@ -56,12 +57,12 @@ namespace Content.Server.Projectiles.Components
             var mapManager = IoCManager.Resolve<IMapManager>();
 
             // We'll get the effects relative to the grid / map of the firer
-            var gridOrMap = user.Transform.GridID == GridId.Invalid ? mapManager.GetMapEntityId(user.Transform.MapID) :
-                mapManager.GetGrid(user.Transform.GridID).GridEntityId;
+            var gridOrMap = _entMan.GetComponent<TransformComponent>(user).GridID == GridId.Invalid ? mapManager.GetMapEntityId(_entMan.GetComponent<TransformComponent>(user).MapID) :
+                mapManager.GetGrid(_entMan.GetComponent<TransformComponent>(user).GridID).GridEntityId;
 
-            var parentXform = Owner.EntityManager.GetComponent<TransformComponent>(gridOrMap);
+            var parentXform = _entMan.GetComponent<TransformComponent>(gridOrMap);
 
-            var localCoordinates = new EntityCoordinates(gridOrMap, parentXform.InvWorldMatrix.Transform(user.Transform.WorldPosition));
+            var localCoordinates = new EntityCoordinates(gridOrMap, parentXform.InvWorldMatrix.Transform(_entMan.GetComponent<TransformComponent>(user).WorldPosition));
             var localAngle = angle - parentXform.WorldRotation;
 
             var afterEffect = AfterEffects(localCoordinates, localAngle, distance, 1.0f);
@@ -96,9 +97,9 @@ namespace Content.Server.Projectiles.Components
 
             Owner.SpawnTimer((int) _deathTime.TotalMilliseconds, () =>
             {
-                if (!Owner.Deleted)
+                if (!_entMan.Deleted(Owner))
                 {
-                    Owner.Delete();
+                    _entMan.DeleteEntity(Owner);
                 }
             });
         }
@@ -161,7 +162,7 @@ namespace Content.Server.Projectiles.Components
                 EffectSprite = _impactFlash,
                 Born = _startTime,
                 DeathTime = _deathTime,
-                Coordinates = Owner.Transform.Coordinates.Offset(angle.ToVec() * distance),
+                Coordinates = _entMan.GetComponent<TransformComponent>(Owner).Coordinates.Offset(angle.ToVec() * distance),
                 //Rotated from east facing
                 Rotation = (float) angle.FlipPositive(),
                 Color = Vector4.Multiply(new Vector4(255, 255, 255, 750), ColorModifier),

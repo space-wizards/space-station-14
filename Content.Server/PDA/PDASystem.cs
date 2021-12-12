@@ -87,9 +87,9 @@ namespace Content.Server.PDA
             UpdatePDAUserInterface(pda);
         }
 
-        private bool OpenUI(PDAComponent pda, IEntity user)
+        private bool OpenUI(PDAComponent pda, EntityUid user)
         {
-            if (!user.TryGetComponent(out ActorComponent? actor))
+            if (!EntityManager.TryGetComponent(user, out ActorComponent? actor))
                 return false;
 
             var ui = pda.Owner.GetUIOrNull(PDAUiKey.Key);
@@ -100,7 +100,7 @@ namespace Content.Server.PDA
 
         private void UpdatePDAAppearance(PDAComponent pda)
         {
-            if (pda.Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (EntityManager.TryGetComponent(pda.Owner, out AppearanceComponent? appearance))
                 appearance.SetData(PDAVisuals.IDCardInserted, pda.ContainedID != null);
         }
 
@@ -113,7 +113,7 @@ namespace Content.Server.PDA
                 JobTitle = pda.ContainedID?.JobTitle
             };
 
-            var hasUplink = pda.Owner.HasComponent<UplinkComponent>();
+            var hasUplink = EntityManager.HasComponent<UplinkComponent>(pda.Owner);
 
             var ui = pda.Owner.GetUIOrNull(PDAUiKey.Key);
             ui?.SetState(new PDAUpdateState(pda.FlashlightOn, pda.PenSlot.HasItem, ownerInfo, hasUplink));
@@ -122,7 +122,7 @@ namespace Content.Server.PDA
         private void OnUIMessage(PDAComponent pda, ServerBoundUserInterfaceMessage msg)
         {
             // cast EntityUid? to EntityUid
-            if (msg.Session.AttachedEntityUid is not EntityUid playerUid)
+            if (msg.Session.AttachedEntity is not {Valid: true} playerUid)
                 return;
 
             switch (msg.Message)
@@ -132,24 +132,24 @@ namespace Content.Server.PDA
                     break;
                 case PDAToggleFlashlightMessage _:
                     {
-                        if (pda.Owner.TryGetComponent(out UnpoweredFlashlightComponent? flashlight))
+                        if (EntityManager.TryGetComponent(pda.Owner, out UnpoweredFlashlightComponent? flashlight))
                             _unpoweredFlashlight.ToggleLight(flashlight);
                         break;
                     }
 
                 case PDAEjectIDMessage _:
                     {
-                        ItemSlotsSystem.TryEjectToHands(pda.Owner.Uid, pda.IdSlot, playerUid);
+                        ItemSlotsSystem.TryEjectToHands(pda.Owner, pda.IdSlot, playerUid);
                         break;
                     }
                 case PDAEjectPenMessage _:
                     {
-                        ItemSlotsSystem.TryEjectToHands(pda.Owner.Uid, pda.PenSlot, playerUid);
+                        ItemSlotsSystem.TryEjectToHands(pda.Owner, pda.PenSlot, playerUid);
                         break;
                     }
                 case PDAShowUplinkMessage _:
                     {
-                        if (pda.Owner.TryGetComponent(out UplinkComponent? uplink))
+                        if (EntityManager.TryGetComponent(pda.Owner, out UplinkComponent? uplink))
                             _uplinkSystem.ToggleUplinkUI(uplink, msg.Session);
                         break;
                     }

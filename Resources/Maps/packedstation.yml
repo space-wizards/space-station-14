@@ -12667,6 +12667,8 @@ entities:
       mass: 12
       restitution: 0.1
     type: Fixtures
+  - chunkCollection: {}
+    type: DecalGrid
 - uid: 1
   type: Grille
   components:
@@ -13984,9 +13986,9 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 196
-  type: AirlockMaint
+  type: AirlockJanitorLocked
   components:
-  - pos: 5.5,-7.5
+  - pos: 4.5,-2.5
     parent: 0
     type: Transform
   - containers:
@@ -13994,9 +13996,9 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 197
-  type: Airlock
+  type: AirlockMaintJanitorLocked
   components:
-  - pos: 4.5,-2.5
+  - pos: 5.5,-7.5
     parent: 0
     type: Transform
   - containers:
@@ -20813,9 +20815,9 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1181
-  type: AirlockMaintBarLocked
+  type: AirlockTheatreLocked
   components:
-  - pos: 26.5,9.5
+  - pos: 26.5,4.5
     parent: 0
     type: Transform
   - containers:
@@ -20823,9 +20825,9 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 1182
-  type: AirlockTheatreLocked
+  type: AirlockMaintTheatreLocked
   components:
-  - pos: 26.5,4.5
+  - pos: 26.5,9.5
     parent: 0
     type: Transform
   - containers:
@@ -21055,9 +21057,9 @@ entities:
     parent: 0
     type: Transform
 - uid: 1214
-  type: Airlock
+  type: AirlockMaintChapelLocked
   components:
-  - pos: 33.5,6.5
+  - pos: 29.5,9.5
     parent: 0
     type: Transform
   - containers:
@@ -21065,9 +21067,9 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 1215
-  type: AirlockMaintLocked
+  type: AirlockChapelLocked
   components:
-  - pos: 29.5,9.5
+  - pos: 33.5,6.5
     parent: 0
     type: Transform
   - containers:
@@ -23469,7 +23471,7 @@ entities:
   - startingCharge: 12000
     type: Battery
 - uid: 1592
-  type: AirlockServiceGlassLocked
+  type: AirlockKitchenGlassLocked
   components:
   - pos: 34.5,-8.5
     parent: 0
@@ -23479,7 +23481,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 1593
-  type: AirlockServiceGlassLocked
+  type: AirlockKitchenGlassLocked
   components:
   - pos: 33.5,-8.5
     parent: 0
@@ -23816,7 +23818,7 @@ entities:
     supplyRampPosition: 14.450751
     type: PowerNetworkBattery
 - uid: 1637
-  type: AirlockMaintBarLocked
+  type: AirlockMaintKitchenLocked
   components:
   - pos: 40.5,-12.5
     parent: 0
@@ -23910,7 +23912,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1648
-  type: AirlockFreezerLocked
+  type: AirlockFreezerKitchenHydroLocked
   components:
   - pos: 40.5,-9.5
     parent: 0
@@ -24138,7 +24140,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 1679
-  type: AirlockGlass
+  type: AirlockHydroGlassLocked
   components:
   - pos: 41.5,-2.5
     parent: 0
@@ -24160,7 +24162,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 1682
-  type: Windoor
+  type: WindoorHydroponicsLocked
   components:
   - pos: 44.5,-2.5
     parent: 0
@@ -24492,7 +24494,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 1719
-  type: AirlockMaintLocked
+  type: AirlockMaintHydroLocked
   components:
   - pos: 41.5,-11.5
     parent: 0
@@ -53092,7 +53094,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 5480
-  type: CarpetGay
+  type: CarpetPink
   components:
   - pos: 67.5,39.5
     parent: 0
@@ -64922,6 +64924,12 @@ entities:
       board: !type:Container
         ents: []
     type: ContainerContainer
+- uid: 6815
+  type: WindoorHydroponicsLocked
+  components:
+  - pos: 43.5,-2.5
+    parent: 0
+    type: Transform
 - uid: 6825
   type: CableApcExtension
   components:
@@ -111096,12 +111104,6 @@ entities:
   components:
   - rot: 3.141592653589793 rad
     pos: 47.5,12.5
-    parent: 0
-    type: Transform
-- uid: 11453
-  type: Windoor
-  components:
-  - pos: 43.5,-2.5
     parent: 0
     type: Transform
 - uid: 11454

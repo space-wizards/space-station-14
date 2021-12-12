@@ -123,11 +123,14 @@ namespace Content.Server.Administration
         private PlayerInfo GetPlayerInfo(IPlayerSession session)
         {
             var name = session.Name;
-            var username = session.AttachedEntity?.Name ?? string.Empty;
-            var antag = session.ContentData()?.Mind?.AllRoles.Any(r => r.Antagonist) ?? false;
-            var uid = session.AttachedEntity?.Uid ?? EntityUid.Invalid;
+            var username = string.Empty;
 
-            return new PlayerInfo(name, username, antag, uid, session.UserId);
+            if (session.AttachedEntity != null)
+                username = EntityManager.GetComponent<MetaDataComponent>(session.AttachedEntity.Value).EntityName;
+
+            var antag = session.ContentData()?.Mind?.AllRoles.Any(r => r.Antagonist) ?? false;
+
+            return new PlayerInfo(name, username, antag, session.AttachedEntity.GetValueOrDefault(), session.UserId);
         }
     }
 }

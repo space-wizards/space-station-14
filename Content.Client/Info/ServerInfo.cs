@@ -32,7 +32,7 @@ namespace Content.Client.Info
             var uriOpener = IoCManager.Resolve<IUriOpener>();
 
             var rulesButton = new Button() { Text = Loc.GetString("server-info-rules-button") };
-            rulesButton.OnPressed += args => new InfoWindow().Open();
+            rulesButton.OnPressed += args => new RulesAndInfoWindow().Open();
 
             var discordButton = new Button {Text = Loc.GetString("server-info-discord-button") };
             discordButton.OnPressed += args => uriOpener.OpenUri(UILinks.Discord);

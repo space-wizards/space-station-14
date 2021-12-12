@@ -9,6 +9,7 @@
   access:
   - Service
   - Maintenance
+  - Kitchen
 
 - type: startingGear
   id: ChefGear

@@ -22,6 +22,7 @@ using Content.Server.Sandbox;
 using Content.Server.Speech;
 using Content.Server.Voting.Managers;
 using Content.Shared.Actions;
+using Content.Shared.Administration;
 using Content.Shared.Alert;
 using Content.Shared.Kitchen;
 using Content.Shared.Module;
@@ -55,6 +56,7 @@ namespace Content.Server.IoC
             IoCManager.Register<IPlayerLocator, PlayerLocator>();
             IoCManager.Register<IAfkManager, AfkManager>();
             IoCManager.Register<IGameMapManager, GameMapManager>();
+            IoCManager.Register<IGamePrototypeLoadManager, GamePrototypeLoadManager>();
         }
     }
 }
