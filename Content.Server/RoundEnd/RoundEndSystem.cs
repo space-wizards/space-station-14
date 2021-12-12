@@ -3,10 +3,8 @@ using System.Threading;
 using Content.Server.Administration.Logs;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
-using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
-using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -80,12 +78,12 @@ namespace Content.Server.RoundEnd
             Timer.Spawn(CallCooldown, () => OnCallCooldownEnded?.Invoke(), _callCooldownEndedTokenSource.Token);
         }
 
-        public void RequestRoundEnd(IEntity? requester = null, bool checkCooldown = true)
+        public void RequestRoundEnd(EntityUid? requester = null, bool checkCooldown = true)
         {
             RequestRoundEnd(RoundEndCountdownTime, requester, checkCooldown);
         }
 
-        public void RequestRoundEnd(TimeSpan countdownTime, IEntity? requester = null, bool checkCooldown = true)
+        public void RequestRoundEnd(TimeSpan countdownTime, EntityUid? requester = null, bool checkCooldown = true)
         {
             if (IsRoundEndCountdownStarted)
                 return;
@@ -97,7 +95,7 @@ namespace Content.Server.RoundEnd
 
             if (requester != null)
             {
-                _adminLog.Add(LogType.ShuttleCalled, LogImpact.High, $"Shuttle called by {requester}");
+                _adminLog.Add(LogType.ShuttleCalled, LogImpact.High, $"Shuttle called by {ToPrettyString(requester.Value)}");
             }
             else
             {
@@ -118,7 +116,7 @@ namespace Content.Server.RoundEnd
             OnRoundEndCountdownStarted?.Invoke();
         }
 
-        public void CancelRoundEndCountdown(IEntity? requester = null, bool checkCooldown = true)
+        public void CancelRoundEndCountdown(EntityUid? requester = null, bool checkCooldown = true)
         {
             if (!IsRoundEndCountdownStarted)
                 return;
@@ -130,7 +128,7 @@ namespace Content.Server.RoundEnd
 
             if (requester != null)
             {
-                _adminLog.Add(LogType.ShuttleRecalled, LogImpact.High, $"Shuttle recalled by {requester}");
+                _adminLog.Add(LogType.ShuttleRecalled, LogImpact.High, $"Shuttle recalled by {ToPrettyString(requester.Value)}");
             }
             else
             {

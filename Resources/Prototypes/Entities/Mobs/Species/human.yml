@@ -265,6 +265,8 @@
   - type: AnimationPlayer
   - type: Buckle
   - type: UnarmedCombat
+    hitSound:
+      collection: Punch
     range: 0.8
     arcwidth: 30
     arc: fist

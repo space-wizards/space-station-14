@@ -23,9 +23,9 @@ namespace Content.Shared.Inventory
 
     public abstract class UserEventArgs : EventArgs
     {
-        public IEntity User { get; }
+        public EntityUid User { get; }
 
-        protected UserEventArgs(IEntity user)
+        protected UserEventArgs(EntityUid user)
         {
             User = user;
         }
@@ -33,7 +33,7 @@ namespace Content.Shared.Inventory
 
     public class EquippedEventArgs : UserEventArgs
     {
-        public EquippedEventArgs(IEntity user, EquipmentSlotDefines.Slots slot) : base(user)
+        public EquippedEventArgs(EntityUid user, EquipmentSlotDefines.Slots slot) : base(user)
         {
             Slot = slot;
         }
@@ -50,19 +50,19 @@ namespace Content.Shared.Inventory
         /// <summary>
         ///     Entity that equipped the item.
         /// </summary>
-        public IEntity User { get; }
+        public EntityUid User { get; }
 
         /// <summary>
         ///     Item that was equipped.
         /// </summary>
-        public IEntity Equipped { get; }
+        public EntityUid Equipped { get; }
 
         /// <summary>
         ///     Slot that the item was placed into.
         /// </summary>
         public EquipmentSlotDefines.Slots Slot { get; }
 
-        public EquippedEvent(IEntity user, IEntity equipped, EquipmentSlotDefines.Slots slot)
+        public EquippedEvent(EntityUid user, EntityUid equipped, EquipmentSlotDefines.Slots slot)
         {
             User = user;
             Equipped = equipped;

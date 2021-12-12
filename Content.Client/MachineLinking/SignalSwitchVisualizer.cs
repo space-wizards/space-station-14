@@ -2,6 +2,7 @@
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.MachineLinking
@@ -12,11 +13,11 @@ namespace Content.Client.MachineLinking
         [DataField("layer")]
         private int Layer { get; }
 
-        public override void InitializeEntity(IEntity entity)
+        public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
 
-            if (entity.TryGetComponent(out SpriteComponent? sprite))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out SpriteComponent? sprite))
             {
                 sprite.LayerMapReserveBlank(Layer);
             }
@@ -26,7 +27,8 @@ namespace Content.Client.MachineLinking
         {
             base.OnChangeData(component);
 
-            if (!component.Owner.TryGetComponent(out SpriteComponent? sprite))
+            var entities = IoCManager.Resolve<IEntityManager>();
+            if (!entities.TryGetComponent(component.Owner, out SpriteComponent? sprite))
             {
                 return;
             }

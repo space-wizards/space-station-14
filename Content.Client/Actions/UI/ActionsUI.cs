@@ -378,10 +378,10 @@ namespace Content.Client.Actions.UI
         private void UpdateActionSlot(EntityUid item, ItemActionType itemActionType, ActionSlot actionSlot,
             ActionAssignment? assignedActionType)
         {
-            if (!_entityManager.TryGetEntity(item, out var itemEntity)) return;
+            if (!_entityManager.EntityExists(item)) return;
             if (_actionManager.TryGet(itemActionType, out var action))
             {
-                actionSlot.Assign(action, itemEntity, true);
+                actionSlot.Assign(action, item, true);
             }
             else
             {
@@ -420,7 +420,7 @@ namespace Content.Client.Actions.UI
 
                 // if we are targeting with an action now on cooldown, stop targeting if we should
                 if (SelectingTargetFor?.Action != null && SelectingTargetFor.Action == action &&
-                    SelectingTargetFor.Item == itemEntity &&
+                    SelectingTargetFor.Item == item &&
                     actionState.IsOnCooldown(_gameTiming) && action.DeselectOnCooldown)
                 {
                     StopTargeting();

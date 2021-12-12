@@ -190,9 +190,6 @@ namespace Content.Shared.Containers.ItemSlots
 
         // Convenience properties
         public bool HasItem => ContainerSlot.ContainedEntity != null;
-        public IEntity? Item => ContainerSlot.ContainedEntity;
-
-        // and to make it easier for  whenever IEntity is removed
-        public EntityUid? ItemUid => ContainerSlot.ContainedEntity?.Uid;
+        public EntityUid? Item => ContainerSlot.ContainedEntity;
     }
 }

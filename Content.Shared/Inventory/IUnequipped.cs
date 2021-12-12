@@ -23,7 +23,7 @@ namespace Content.Shared.Inventory
 
     public class UnequippedEventArgs : UserEventArgs
     {
-        public UnequippedEventArgs(IEntity user, EquipmentSlotDefines.Slots slot) : base(user)
+        public UnequippedEventArgs(EntityUid user, EquipmentSlotDefines.Slots slot) : base(user)
         {
             Slot = slot;
         }
@@ -40,19 +40,19 @@ namespace Content.Shared.Inventory
         /// <summary>
         ///     Entity that equipped the item.
         /// </summary>
-        public IEntity User { get; }
+        public EntityUid User { get; }
 
         /// <summary>
         ///     Item that was unequipped.
         /// </summary>
-        public IEntity Unequipped { get; }
+        public EntityUid Unequipped { get; }
 
         /// <summary>
         ///     Slot that the item was removed from.
         /// </summary>
         public EquipmentSlotDefines.Slots Slot { get; }
 
-        public UnequippedEvent(IEntity user, IEntity unequipped, EquipmentSlotDefines.Slots slot)
+        public UnequippedEvent(EntityUid user, EntityUid unequipped, EquipmentSlotDefines.Slots slot)
         {
             User = user;
             Unequipped = unequipped;

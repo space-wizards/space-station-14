@@ -73,7 +73,6 @@ namespace Content.Client.Hands
         public void UpdateHandContainers(EntityUid uid, HandsComponent? hands = null, ContainerManagerComponent? containerMan = null)
         {
             if (!Resolve(uid, ref hands, ref containerMan))
-                return;
 
             foreach (var hand in hands.Hands)
             {
@@ -143,7 +142,7 @@ namespace Content.Client.Hands
             var pressedEntity = pressedHand.HeldEntity;
             var activeEntity = activeHand.HeldEntity;
 
-            if (pressedHand == activeHand && activeEntity != null)
+            if (pressedHand == activeHand && activeEntity != default)
             {
                 // use item in hand
                 // it will always be attack_self() in my heart.
@@ -151,21 +150,21 @@ namespace Content.Client.Hands
                 return;
             }
 
-            if (pressedHand != activeHand && pressedEntity == null)
+            if (pressedHand != activeHand && pressedEntity == default)
             {
                 // change active hand
                 EntityManager.RaisePredictiveEvent(new RequestSetHandEvent(handName));
                 return;
             }
 
-            if (pressedHand != activeHand && pressedEntity != null && activeEntity != null)
+            if (pressedHand != activeHand && pressedEntity != default && activeEntity != default)
             {
                 // use active item on held item
                 RaiseNetworkEvent(new ClientInteractUsingInHandMsg(pressedHand.Name));
                 return;
             }
 
-            if (pressedHand != activeHand && pressedEntity != null && activeEntity == null)
+            if (pressedHand != activeHand && pressedEntity != default && activeEntity == default)
             {
                 // use active item on held item
                 RaiseNetworkEvent(new MoveItemFromHandMsg(pressedHand.Name));

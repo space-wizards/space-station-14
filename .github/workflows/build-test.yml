@@ -52,5 +52,5 @@ jobs:
     - name: Content.IntegrationTests
       shell: pwsh
       run: |
-        $env:COMPlus_gcServer=1
+        $env:DOTNET_gcServer=1
         dotnet test --no-build Content.IntegrationTests/Content.IntegrationTests.csproj -v n

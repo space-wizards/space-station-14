@@ -28,6 +28,7 @@ namespace Content.Server.Hands.Components
 #pragma warning restore 618
     {
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
+        [Dependency] private readonly IEntityManager _entities = default!;
 
         [DataField("disarmedSound")] SoundSpecifier _disarmedSound = new SoundPathSpecifier("/Audio/Effects/thudswoosh.ogg");
 
@@ -77,13 +78,13 @@ namespace Content.Server.Hands.Components
                 {
                     if (ActiveHand != null && Drop(ActiveHand, false))
                     {
-                        source.PopupMessageOtherClients(Loc.GetString("hands-component-disarm-success-others-message", ("disarmer", source.Name), ("disarmed", target.Name)));
-                        source.PopupMessageCursor(Loc.GetString("hands-component-disarm-success-message", ("disarmed", target.Name)));
+                        source.PopupMessageOtherClients(Loc.GetString("hands-component-disarm-success-others-message", ("disarmer", Name: _entities.GetComponent<MetaDataComponent>(source).EntityName), ("disarmed", Name: _entities.GetComponent<MetaDataComponent>(target).EntityName)));
+                        source.PopupMessageCursor(Loc.GetString("hands-component-disarm-success-message", ("disarmed", Name: _entities.GetComponent<MetaDataComponent>(target).EntityName)));
                     }
                     else
                     {
-                        source.PopupMessageOtherClients(Loc.GetString("hands-component-shove-success-others-message", ("shover", source.Name), ("shoved", target.Name)));
-                        source.PopupMessageCursor(Loc.GetString("hands-component-shove-success-message", ("shoved", target.Name)));
+                        source.PopupMessageOtherClients(Loc.GetString("hands-component-shove-success-others-message", ("shover", Name: _entities.GetComponent<MetaDataComponent>(source).EntityName), ("shoved", Name: _entities.GetComponent<MetaDataComponent>(target).EntityName)));
+                        source.PopupMessageCursor(Loc.GetString("hands-component-shove-success-message", ("shoved", Name: _entities.GetComponent<MetaDataComponent>(target).EntityName)));
                     }
                 }
             }
@@ -94,8 +95,8 @@ namespace Content.Server.Hands.Components
         private bool BreakPulls()
         {
             // What is this API??
-            if (!Owner.TryGetComponent(out SharedPullerComponent? puller)
-                || puller.Pulling == null || !puller.Pulling.TryGetComponent(out SharedPullableComponent? pullable))
+            if (!_entities.TryGetComponent(Owner, out SharedPullerComponent? puller)
+                || puller.Pulling is not {Valid: true} pulling || !_entities.TryGetComponent(puller.Pulling.Value, out SharedPullableComponent? pullable))
                 return false;
 
             return _entitySystemManager.GetEntitySystem<PullingSystem>().TryStopPull(pullable);
@@ -134,7 +135,7 @@ namespace Content.Server.Hands.Components
             if (!TryGetHeldEntity(handName, out var heldEntity))
                 return null;
 
-            heldEntity.TryGetComponent(out ItemComponent? item);
+            _entities.TryGetComponent(heldEntity, out ItemComponent? item);
             return item;
         }
 
@@ -148,7 +149,7 @@ namespace Content.Server.Hands.Components
             if (!TryGetHeldEntity(handName, out var heldEntity))
                 return false;
 
-            return heldEntity.TryGetComponent(out item);
+            return _entities.TryGetComponent(heldEntity, out item);
         }
 
         /// <summary>
@@ -161,7 +162,7 @@ namespace Content.Server.Hands.Components
                 if (!TryGetActiveHeldEntity(out var heldEntity))
                     return null;
 
-                heldEntity.TryGetComponent(out ItemComponent? item);
+                _entities.TryGetComponent(heldEntity, out ItemComponent? item);
                 return item;
             }
         }
@@ -170,7 +171,7 @@ namespace Content.Server.Hands.Components
         {
             foreach (var entity in GetAllHeldEntities())
             {
-                if (entity.TryGetComponent(out ItemComponent? item))
+                if (_entities.TryGetComponent(entity, out ItemComponent? item))
                     yield return item;
             }
         }

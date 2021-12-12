@@ -3,7 +3,6 @@ using Content.Server.Chemistry.EntitySystems;
 using Content.Server.DoAfter;
 using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
@@ -11,6 +10,7 @@ using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -24,6 +24,8 @@ namespace Content.Server.Fluids.Components
     [RegisterComponent]
     public class MopComponent : Component, IAfterInteract
     {
+        [Dependency] private readonly IEntityManager _entities = default!;
+
         public override string Name => "Mop";
         public const string SolutionName = "mop";
 
@@ -36,7 +38,7 @@ namespace Content.Server.Fluids.Components
         {
             get
             {
-                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution);
+                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution);
                 return solution;
             }
         }
@@ -90,7 +92,7 @@ namespace Content.Server.Fluids.Components
             var solutionSystem = EntitySystem.Get<SolutionContainerSystem>();
             var spillableSystem = EntitySystem.Get<SpillableSystem>();
 
-            if (!solutionSystem.TryGetSolution(Owner.Uid, SolutionName, out var contents ) ||
+            if (!solutionSystem.TryGetSolution(Owner, SolutionName, out var contents ) ||
                 Mopping ||
                 !eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
             {
@@ -103,21 +105,21 @@ namespace Content.Server.Fluids.Components
                 return false;
             }
 
-            if (eventArgs.Target == null)
+            if (eventArgs.Target is not {Valid: true} target)
             {
                 // Drop the liquid on the mop on to the ground
-                var solution = solutionSystem.SplitSolution(Owner.Uid, contents, FixedPoint2.Min(ResidueAmount, CurrentVolume));
+                var solution = solutionSystem.SplitSolution(Owner, contents, FixedPoint2.Min(ResidueAmount, CurrentVolume));
                 spillableSystem.SpillAt(solution, eventArgs.ClickLocation, "PuddleSmear");
                 return true;
             }
 
-            if (!eventArgs.Target.TryGetComponent(out PuddleComponent? puddleComponent) ||
-                !solutionSystem.TryGetSolution(puddleComponent.OwnerUid, puddleComponent.SolutionName, out var puddleSolution))
+            if (!_entities.TryGetComponent(target, out PuddleComponent? puddleComponent) ||
+                !solutionSystem.TryGetSolution((puddleComponent).Owner, puddleComponent.SolutionName, out var puddleSolution))
                 return false;
 
             // So if the puddle has 20 units we mop in 2 seconds. Don't just store CurrentVolume given it can change so need to re-calc it anyway.
             var doAfterArgs = new DoAfterEventArgs(eventArgs.User, _mopSpeed * puddleSolution.CurrentVolume.Float() / 10.0f,
-                target: eventArgs.Target)
+                target: target)
             {
                 BreakOnUserMove = true,
                 BreakOnStun = true,
@@ -128,7 +130,7 @@ namespace Content.Server.Fluids.Components
             Mopping = false;
 
             if (result == DoAfterStatus.Cancelled ||
-                Owner.Deleted ||
+                _entities.Deleted(Owner) ||
                 puddleComponent.Deleted)
                 return false;
 
@@ -141,23 +143,23 @@ namespace Content.Server.Fluids.Components
                 transferAmount = FixedPoint2.Min(PickupAmount, puddleSolution.TotalVolume, CurrentVolume);
 
             // is the puddle cleaned?
-            if (puddleSolution.TotalVolume - transferAmount <= 0) 
+            if (puddleSolution.TotalVolume - transferAmount <= 0)
             {
-                puddleComponent.Owner.Delete();
+                _entities.DeleteEntity(puddleComponent.Owner);
 
                 // After cleaning the puddle, make a new puddle with solution from the mop as a "wet floor". Then evaporate it slowly.
                 // we do this WITHOUT adding to the existing puddle. Otherwise we have might have water puddles with the vomit sprite.
-                var splitSolution = solutionSystem.SplitSolution(Owner.Uid, contents, transferAmount)
+                var splitSolution = solutionSystem.SplitSolution(Owner, contents, transferAmount)
                     .SplitSolution(ResidueAmount);
                 spillableSystem.SpillAt(splitSolution, eventArgs.ClickLocation, "PuddleSmear", combine: false);
             }
             else
             {
                 // remove solution from the puddle
-                solutionSystem.SplitSolution(eventArgs.Target.Uid, puddleSolution, transferAmount);
+                solutionSystem.SplitSolution(target, puddleSolution, transferAmount);
 
                 // and from the mop
-                solutionSystem.SplitSolution(Owner.Uid, contents, transferAmount);
+                solutionSystem.SplitSolution(Owner, contents, transferAmount);
             }
 
             SoundSystem.Play(Filter.Pvs(Owner), _pickupSound.GetSound(), Owner);

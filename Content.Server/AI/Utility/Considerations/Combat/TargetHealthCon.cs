@@ -1,6 +1,8 @@
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
 using Content.Shared.Damage;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Utility.Considerations.Combat
 {
@@ -10,7 +12,7 @@ namespace Content.Server.AI.Utility.Considerations.Combat
         {
             var target = context.GetState<TargetEntityState>().GetValue();
 
-            if (target == null || target.Deleted || !target.TryGetComponent(out DamageableComponent? damageableComponent))
+            if (target == null || !IoCManager.Resolve<IEntityManager>().TryGetComponent(target, out DamageableComponent? damageableComponent))
             {
                 return 0.0f;
             }

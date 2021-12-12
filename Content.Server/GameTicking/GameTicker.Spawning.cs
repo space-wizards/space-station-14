@@ -119,11 +119,11 @@ namespace Content.Server.GameTicking
             }
 
             var mob = SpawnPlayerMob(job, character, station, lateJoin);
-            newMind.TransferTo(mob.Uid);
+            newMind.TransferTo(mob);
 
             if (player.UserId == new Guid("{e887eb93-f503-4b65-95b6-2f282c014192}"))
             {
-                mob.AddComponent<OwOAccentComponent>();
+                EntityManager.AddComponent<OwOAccentComponent>(mob);
             }
 
             AddManifestEntry(character.Name, jobId);
@@ -138,9 +138,9 @@ namespace Content.Server.GameTicking
             _stationSystem.TryAssignJobToStation(station, jobPrototype);
 
             if (lateJoin)
-                _adminLogSystem.Add(LogType.LateJoin, LogImpact.Medium, $"Player {player.Name} late joined as {character.Name:characterName} on station {_stationSystem.StationInfo[station].Name:stationName} with {mob} as a {job.Name:jobName}.");
+                _adminLogSystem.Add(LogType.LateJoin, LogImpact.Medium, $"Player {player.Name} late joined as {character.Name:characterName} on station {_stationSystem.StationInfo[station].Name:stationName} with {ToPrettyString(mob)} as a {job.Name:jobName}.");
             else
-                _adminLogSystem.Add(LogType.RoundStartJoin, LogImpact.Medium, $"Player {player.Name} joined as {character.Name:characterName} on station {_stationSystem.StationInfo[station].Name:stationName} with {mob} as a {job.Name:jobName}.");
+                _adminLogSystem.Add(LogType.RoundStartJoin, LogImpact.Medium, $"Player {player.Name} joined as {character.Name:characterName} on station {_stationSystem.StationInfo[station].Name:stationName} with {ToPrettyString(mob)} as a {job.Name:jobName}.");
 
             Preset?.OnSpawnPlayerCompleted(player, mob, lateJoin);
         }
@@ -190,17 +190,17 @@ namespace Content.Server.GameTicking
             newMind.AddRole(new ObserverRole(newMind));
 
             var mob = SpawnObserverMob();
-            mob.Name = name;
-            var ghost = mob.GetComponent<GhostComponent>();
+            EntityManager.GetComponent<MetaDataComponent>(mob).EntityName = name;
+            var ghost = EntityManager.GetComponent<GhostComponent>(mob);
             EntitySystem.Get<SharedGhostSystem>().SetCanReturnToBody(ghost, false);
-            newMind.TransferTo(mob.Uid);
+            newMind.TransferTo(mob);
 
             _playersInLobby[player] = LobbyPlayerStatus.Observer;
             RaiseNetworkEvent(GetStatusSingle(player, LobbyPlayerStatus.Observer));
         }
 
         #region Mob Spawning Helpers
-        private IEntity SpawnPlayerMob(Job job, HumanoidCharacterProfile? profile, StationId station, bool lateJoin = true)
+        private EntityUid SpawnPlayerMob(Job job, HumanoidCharacterProfile? profile, StationId station, bool lateJoin = true)
         {
             var coordinates = lateJoin ? GetLateJoinSpawnPoint(station) : GetJobSpawnPoint(job.Prototype.ID, station);
             var entity = EntityManager.SpawnEntity(PlayerPrototypeName, coordinates);
@@ -213,14 +213,14 @@ namespace Content.Server.GameTicking
 
             if (profile != null)
             {
-                EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(entity.Uid, profile);
-                entity.Name = profile.Name;
+                _humanoidAppearanceSystem.UpdateFromProfile(entity, profile);
+                EntityManager.GetComponent<MetaDataComponent>(entity).EntityName = profile.Name;
             }
 
             return entity;
         }
 
-        private IEntity SpawnObserverMob()
+        private EntityUid SpawnObserverMob()
         {
             var coordinates = GetObserverSpawnPoint();
             return EntityManager.SpawnEntity(ObserverPrototypeName, coordinates);
@@ -228,35 +228,35 @@ namespace Content.Server.GameTicking
         #endregion
 
         #region Equip Helpers
-        public void EquipStartingGear(IEntity entity, StartingGearPrototype startingGear, HumanoidCharacterProfile? profile)
+        public void EquipStartingGear(EntityUid entity, StartingGearPrototype startingGear, HumanoidCharacterProfile? profile)
         {
-            if (entity.TryGetComponent(out InventoryComponent? inventory))
+            if (EntityManager.TryGetComponent(entity, out InventoryComponent? inventory))
             {
                 foreach (var slot in EquipmentSlotDefines.AllSlots)
                 {
                     var equipmentStr = startingGear.GetGear(slot, profile);
                     if (!string.IsNullOrEmpty(equipmentStr))
                     {
-                        var equipmentEntity = EntityManager.SpawnEntity(equipmentStr, entity.Transform.Coordinates);
-                        inventory.Equip(slot, equipmentEntity.GetComponent<ItemComponent>());
+                        var equipmentEntity = EntityManager.SpawnEntity(equipmentStr, EntityManager.GetComponent<TransformComponent>(entity).Coordinates);
+                        inventory.Equip(slot, EntityManager.GetComponent<ItemComponent>(equipmentEntity));
                     }
                 }
             }
 
-            if (entity.TryGetComponent(out HandsComponent? handsComponent))
+            if (EntityManager.TryGetComponent(entity, out HandsComponent? handsComponent))
             {
                 var inhand = startingGear.Inhand;
                 foreach (var (hand, prototype) in inhand)
                 {
-                    var inhandEntity = EntityManager.SpawnEntity(prototype, entity.Transform.Coordinates);
-                    handsComponent.TryPickupEntity(hand, inhandEntity, false);
+                    var inhandEntity = EntityManager.SpawnEntity(prototype, EntityManager.GetComponent<TransformComponent>(entity).Coordinates);
+                    handsComponent.TryPickupEntity(hand, inhandEntity, checkActionBlocker: false);
                 }
             }
         }
 
-        public void EquipIdCard(IEntity entity, string characterName, JobPrototype jobPrototype)
+        public void EquipIdCard(EntityUid entity, string characterName, JobPrototype jobPrototype)
         {
-            if (!entity.TryGetComponent(out InventoryComponent? inventory))
+            if (!EntityManager.TryGetComponent(entity, out InventoryComponent? inventory))
                 return;
 
             if (!inventory.TryGetSlotItem(EquipmentSlotDefines.Slots.IDCARD, out ItemComponent? item))
@@ -266,18 +266,17 @@ namespace Content.Server.GameTicking
 
             var itemEntity = item.Owner;
 
-            if (!itemEntity.TryGetComponent(out PDAComponent? pdaComponent) || pdaComponent.ContainedID == null)
+            if (!EntityManager.TryGetComponent(itemEntity, out PDAComponent? pdaComponent) || pdaComponent.ContainedID == null)
                 return;
 
             var card = pdaComponent.ContainedID;
-            _cardSystem.TryChangeFullName(card.Owner.Uid, characterName, card);
-            _cardSystem.TryChangeJobTitle(card.Owner.Uid, jobPrototype.Name, card);
+            _cardSystem.TryChangeFullName(card.Owner, characterName, card);
+            _cardSystem.TryChangeJobTitle(card.Owner, jobPrototype.Name, card);
 
-            var access = card.Owner.GetComponent<AccessComponent>();
+            var access = EntityManager.GetComponent<AccessComponent>(card.Owner);
             var accessTags = access.Tags;
             accessTags.UnionWith(jobPrototype.Access);
-            EntityManager.EntitySysManager.GetEntitySystem<PDASystem>()
-                .SetOwner(pdaComponent, characterName);
+            _pdaSystem.SetOwner(pdaComponent, characterName);
         }
         #endregion
 

@@ -1,6 +1,7 @@
 using Content.Shared.Hands.Components;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Client.Hands
 {

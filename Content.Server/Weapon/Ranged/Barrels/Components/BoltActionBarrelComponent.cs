@@ -10,10 +10,10 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
-using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -31,6 +31,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
     {
         // Originally I had this logic shared with PumpBarrel and used a couple of variables to control things
         // but it felt a lot messier to play around with, especially when adding verbs
+        [Dependency] private readonly IEntityManager _entities = default!;
 
         public override string Name => "BoltActionBarrel";
 
@@ -47,7 +48,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         private int _capacity = 6;
 
         private ContainerSlot _chamberContainer = default!;
-        private Stack<IEntity> _spawnedAmmo = default!;
+        private Stack<EntityUid> _spawnedAmmo = default!;
         private Container _ammoContainer = default!;
 
         [ViewVariables]
@@ -110,7 +111,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 if (_unspawnedCount > 0)
                 {
                     _unspawnedCount--;
-                    var chamberEntity = Owner.EntityManager.SpawnEntity(_fillPrototype, Owner.Transform.Coordinates);
+                    var chamberEntity = _entities.SpawnEntity(_fillPrototype, _entities.GetComponent<TransformComponent>(Owner).Coordinates);
                     _chamberContainer.Insert(chamberEntity);
                 }
             }
@@ -124,7 +125,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             // (Is one chambered?, is the bullet spend)
             var chamber = (chamberedExists, false);
 
-            if (chamberedExists && _chamberContainer.ContainedEntity!.TryGetComponent<AmmoComponent>(out var ammo))
+            if (chamberedExists && _entities.TryGetComponent<AmmoComponent?>(_chamberContainer.ContainedEntity!.Value, out var ammo))
             {
                 chamber.Item2 = ammo.Spent;
             }
@@ -140,7 +141,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         {
             // TODO: Add existing ammo support on revolvers
             base.Initialize();
-            _spawnedAmmo = new Stack<IEntity>(_capacity - 1);
+            _spawnedAmmo = new Stack<EntityUid>(_capacity - 1);
             _ammoContainer = ContainerHelpers.EnsureContainer<Container>(Owner, $"{Name}-ammo-container", out var existing);
 
             if (existing)
@@ -154,7 +155,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
             _chamberContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-chamber-container");
 
-            if (Owner.TryGetComponent(out AppearanceComponent? appearanceComponent))
+            if (_entities.TryGetComponent(Owner, out AppearanceComponent? appearanceComponent))
             {
                 _appearanceComponent = appearanceComponent;
             }
@@ -171,14 +172,13 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             _appearanceComponent?.SetData(AmmoVisuals.AmmoMax, Capacity);
         }
 
-        public override IEntity? PeekAmmo()
+        public override EntityUid? PeekAmmo()
         {
             return _chamberContainer.ContainedEntity;
         }
 
-        public override IEntity? TakeProjectile(EntityCoordinates spawnAt)
+        public override EntityUid? TakeProjectile(EntityCoordinates spawnAt)
         {
-            var chamberEntity = _chamberContainer.ContainedEntity;
             if (_autoCycle)
             {
                 Cycle();
@@ -188,7 +188,10 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 Dirty();
             }
 
-            return chamberEntity?.GetComponentOrNull<AmmoComponent>()?.TakeBullet(spawnAt);
+            if (_chamberContainer.ContainedEntity is not {Valid: true} chamberEntity)
+                return null;
+
+            return _entities.GetComponentOrNull<AmmoComponent>(chamberEntity)?.TakeBullet(spawnAt);
         }
 
         protected override bool WeaponCanFire()
@@ -224,9 +227,9 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             UpdateAppearance();
         }
 
-        public bool TryInsertBullet(IEntity user, IEntity ammo)
+        public bool TryInsertBullet(EntityUid user, EntityUid ammo)
         {
-            if (!ammo.TryGetComponent(out AmmoComponent? ammoComponent))
+            if (!_entities.TryGetComponent(ammo, out AmmoComponent? ammoComponent))
             {
                 return false;
             }
@@ -288,16 +291,15 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
         private bool TryEjectChamber()
         {
-            var chamberedEntity = _chamberContainer.ContainedEntity;
-            if (chamberedEntity != null)
+            if (_chamberContainer.ContainedEntity is {Valid: true} chambered)
             {
-                if (!_chamberContainer.Remove(chamberedEntity))
+                if (!_chamberContainer.Remove(chambered))
                 {
                     return false;
                 }
-                if (!chamberedEntity.GetComponent<AmmoComponent>().Caseless)
+                if (!_entities.GetComponent<AmmoComponent>(chambered).Caseless)
                 {
-                    EjectCasing(chamberedEntity);
+                    EjectCasing(chambered);
                 }
                 return true;
             }
@@ -319,7 +321,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             else if (_unspawnedCount > 0)
             {
                 _unspawnedCount--;
-                var ammoEntity = Owner.EntityManager.SpawnEntity(_fillPrototype, Owner.Transform.Coordinates);
+                var ammoEntity = _entities.SpawnEntity(_fillPrototype, _entities.GetComponent<TransformComponent>(Owner).Coordinates);
                 _chamberContainer.Insert(ammoEntity);
                 return true;
             }

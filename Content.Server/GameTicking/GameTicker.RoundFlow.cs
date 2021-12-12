@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Database;
 using Content.Server.GameTicking.Events;
-using Content.Server.Players;
-using Content.Server.Mind;
 using Content.Server.Ghost;
-using Content.Server.Roles;
-using Content.Server.Station;
+using Content.Server.Mind;
+using Content.Server.Players;
 using Content.Shared.CCVar;
 using Content.Shared.Coordinates;
 using Content.Shared.GameTicking;
@@ -274,13 +272,21 @@ namespace Content.Server.GameTicking
                     }
                     // Finish
                     var antag = mind.AllRoles.Any(role => role.Antagonist);
+
+                    var playerIcName = string.Empty;
+
+                    if (mind.CharacterName != null)
+                        playerIcName = mind.CharacterName;
+                    else if (mind.CurrentEntity != null)
+                        playerIcName = EntityManager.GetComponent<MetaDataComponent>(mind.CurrentEntity.Value).EntityName;
+
                     var playerEndRoundInfo = new RoundEndMessageEvent.RoundEndPlayerInfo()
                     {
                         // Note that contentPlayerData?.Name sticks around after the player is disconnected.
                         // This is as opposed to ply?.Name which doesn't.
                         PlayerOOCName = contentPlayerData?.Name ?? "(IMPOSSIBLE: REGISTERED MIND WITH NO OWNER)",
                         // Character name takes precedence over current entity name
-                        PlayerICName = mind.CharacterName ?? mind.CurrentEntity?.Name,
+                        PlayerICName = playerIcName,
                         Role = antag
                             ? mind.AllRoles.First(role => role.Antagonist).Name
                             : mind.AllRoles.FirstOrDefault()?.Name ?? Loc.GetString("game-ticker-unknown-role"),
@@ -363,7 +369,7 @@ namespace Content.Server.GameTicking
             {
                 // TODO: Maybe something less naive here?
                 // FIXME: Actually, definitely.
-                entity.Delete();
+                EntityManager.DeleteEntity(entity);
             }
 
             _mapManager.Restart();

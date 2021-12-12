@@ -18,6 +18,7 @@ namespace Content.Server.Power.SMES
     [RegisterComponent]
     public class SmesComponent : Component
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         public override string Name => "Smes";
@@ -47,7 +48,7 @@ namespace Content.Server.Power.SMES
                 _lastChargeLevel = newLevel;
                 _lastChargeLevelChange = _gameTiming.CurTime;
 
-                if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+                if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
                 {
                     appearance.SetData(SmesVisuals.LastChargeLevel, newLevel);
                 }
@@ -59,7 +60,7 @@ namespace Content.Server.Power.SMES
                 _lastChargeState = newChargeState;
                 _lastChargeStateChange = _gameTiming.CurTime;
 
-                if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+                if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
                 {
                     appearance.SetData(SmesVisuals.LastChargeState, newChargeState);
                 }
@@ -68,7 +69,7 @@ namespace Content.Server.Power.SMES
 
         private int GetNewChargeLevel()
         {
-            if (!Owner.TryGetComponent(out BatteryComponent? battery))
+            if (!_entMan.TryGetComponent(Owner, out BatteryComponent? battery))
             {
                 return 0;
             }
@@ -78,7 +79,7 @@ namespace Content.Server.Power.SMES
 
         private ChargeState GetNewChargeState()
         {
-            var battery = Owner.GetComponent<PowerNetworkBatteryComponent>();
+            var battery = _entMan.GetComponent<PowerNetworkBatteryComponent>(Owner);
             return (battery.CurrentSupply - battery.CurrentReceiving) switch
             {
                 > 0 => ChargeState.Discharging,

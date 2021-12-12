@@ -16,7 +16,7 @@ namespace Content.Shared.MobState
             CurrentMobState = currentMobState;
         }
 
-        public IEntity Entity => Component.Owner;
+        public EntityUid Entity => Component.Owner;
 
         public MobStateComponent Component { get; }
 
