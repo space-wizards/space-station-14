@@ -1,9 +1,4 @@
 Entries:
-- author: TheDracheX
-  changes:
-  - {message: Fixed cargo points overflowing with large order quantities, type: Fix}
-  id: 220
-  time: '2021-06-01T04:45:28.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: 'Render scale (low viewport resolution) will no longer alter singularity
@@ -2864,3 +2859,8 @@ Entries:
       original look., type: Tweak}
   id: 721
   time: '2021-12-12T05:52:39.0000000+00:00'
+- author: wrexbe
+  changes:
+  - {message: round end summary scrolls, type: Fix}
+  id: 722
+  time: '2021-12-12T13:09:47.0000000+00:00'
