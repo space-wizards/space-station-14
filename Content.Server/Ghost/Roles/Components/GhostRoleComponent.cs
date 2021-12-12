@@ -14,6 +14,12 @@ namespace Content.Server.Ghost.Roles.Components
 
         [DataField("rules")] private string _roleRules = "";
 
+        /// <summary>
+        /// Whether the <see cref="MakeSentientCommand"/> should run on the mob.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("makeSentient")]
+        protected bool MakeSentient = true;
+
         // We do this so updating RoleName and RoleDescription in VV updates the open EUIs.
 
         [ViewVariables(VVAccess.ReadWrite)]

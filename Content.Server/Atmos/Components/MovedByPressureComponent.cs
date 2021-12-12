@@ -18,6 +18,7 @@ namespace Content.Server.Atmos.Components
     public class MovedByPressureComponent : Component
     {
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
+        [Dependency] private readonly IEntityManager _entMan = default!;
 
         public override string Name => "MovedByPressure";
 
@@ -42,12 +43,12 @@ namespace Content.Server.Atmos.Components
         public void ExperiencePressureDifference(int cycle, float pressureDifference, AtmosDirection direction,
             float pressureResistanceProbDelta, EntityCoordinates throwTarget)
         {
-            if (!Owner.TryGetComponent(out PhysicsComponent? physics))
+            if (!_entMan.TryGetComponent(Owner, out PhysicsComponent? physics))
                 return;
 
             // TODO ATMOS stuns?
 
-            var transform = physics.Owner.Transform;
+            var transform = _entMan.GetComponent<TransformComponent>(physics.Owner);
             var maxForce = MathF.Sqrt(pressureDifference) * 2.25f;
             var moveProb = 100f;
 
@@ -61,7 +62,7 @@ namespace Content.Server.Atmos.Components
                                                  && (maxForce >= (MoveResist * MoveForcePushRatio)))
                 || (physics.BodyType == BodyType.Static && (maxForce >= (MoveResist * MoveForceForcePushRatio))))
             {
-                if (physics.Owner.HasComponent<MobStateComponent>())
+                if (_entMan.HasComponent<MobStateComponent>(physics.Owner))
                 {
                     physics.BodyStatus = BodyStatus.InAir;
 
@@ -72,10 +73,10 @@ namespace Content.Server.Atmos.Components
 
                     Owner.SpawnTimer(2000, () =>
                     {
-                        if (Deleted || !Owner.TryGetComponent(out PhysicsComponent? physicsComponent)) return;
+                        if (Deleted || !_entMan.TryGetComponent(Owner, out PhysicsComponent? physicsComponent)) return;
 
                         // Uhh if you get race conditions good luck buddy.
-                        if (physicsComponent.Owner.HasComponent<MobStateComponent>())
+                        if (_entMan.HasComponent<MobStateComponent>(physicsComponent.Owner))
                         {
                             physicsComponent.BodyStatus = BodyStatus.OnGround;
                         }
@@ -111,14 +112,14 @@ namespace Content.Server.Atmos.Components
 
     public static class MovedByPressureExtensions
     {
-        public static bool IsMovedByPressure(this IEntity entity)
+        public static bool IsMovedByPressure(this EntityUid entity)
         {
             return entity.IsMovedByPressure(out _);
         }
 
-        public static bool IsMovedByPressure(this IEntity entity, [NotNullWhen(true)] out MovedByPressureComponent? moved)
+        public static bool IsMovedByPressure(this EntityUid entity, [NotNullWhen(true)] out MovedByPressureComponent? moved)
         {
-            return entity.TryGetComponent(out moved) &&
+            return IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out moved) &&
                    moved.Enabled;
         }
     }

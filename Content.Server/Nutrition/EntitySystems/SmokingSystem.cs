@@ -96,11 +96,11 @@ namespace Content.Server.Nutrition.EntitySystems
                 // This is awful. I hate this so much.
                 // TODO: Please, someone refactor containers and free me from this bullshit.
                 if (!smokable.Owner.TryGetContainerMan(out var containerManager) ||
-                    !containerManager.Owner.TryGetComponent(out BloodstreamComponent? bloodstream))
+                    !EntityManager.TryGetComponent(containerManager.Owner, out BloodstreamComponent? bloodstream))
                     continue;
 
-                _reactiveSystem.ReactionEntity(containerManager.OwnerUid, ReactionMethod.Ingestion, inhaledSolution);
-                _bloodstreamSystem.TryAddToBloodstream(containerManager.OwnerUid, inhaledSolution, bloodstream);
+                _reactiveSystem.ReactionEntity(containerManager.Owner, ReactionMethod.Ingestion, inhaledSolution);
+                _bloodstreamSystem.TryAddToBloodstream(containerManager.Owner, inhaledSolution, bloodstream);
             }
 
             _timer -= UpdateTimer;

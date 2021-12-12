@@ -90,17 +90,17 @@ namespace Content.Client.Audio
             _accumulator -= _cooldown;
 
             var player = _playerManager.LocalPlayer?.ControlledEntity;
-            if (player == null)
+            if (!EntityManager.TryGetComponent(player, out TransformComponent? playerManager))
             {
                 ClearSounds();
                 return;
             }
 
-            var coordinates = player.Transform.Coordinates;
+            var coordinates = playerManager.Coordinates;
 
             foreach (var (comp, (stream, _)) in _playingSounds.ToArray())
             {
-                if (!comp.Deleted && comp.Enabled && comp.Owner.Transform.Coordinates.TryDistance(EntityManager, coordinates, out var range) &&
+                if (!comp.Deleted && comp.Enabled && EntityManager.GetComponent<TransformComponent>(comp.Owner).Coordinates.TryDistance(EntityManager, coordinates, out var range) &&
                     range <= comp.Range)
                 {
                     continue;
@@ -136,11 +136,11 @@ namespace Content.Client.Audio
             foreach (var entity in _lookup.GetEntitiesInRange(coordinates, _maxAmbientRange,
                 LookupFlags.Approximate | LookupFlags.IncludeAnchored))
             {
-                if (!entity.TryGetComponent(out AmbientSoundComponent? ambientComp) ||
+                if (!EntityManager.TryGetComponent(entity, out AmbientSoundComponent? ambientComp) ||
                     _playingSounds.ContainsKey(ambientComp) ||
                     !ambientComp.Enabled ||
                     // We'll also do this crude distance check because it's what we're doing in the active loop above.
-                    !entity.Transform.Coordinates.TryDistance(EntityManager, coordinates, out var range) ||
+                    !EntityManager.GetComponent<TransformComponent>(entity).Coordinates.TryDistance(EntityManager, coordinates, out var range) ||
                     range > ambientComp.Range - RangeBuffer)
                 {
                     continue;

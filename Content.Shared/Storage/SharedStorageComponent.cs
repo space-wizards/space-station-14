@@ -7,6 +7,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Placeable;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
@@ -15,26 +16,28 @@ namespace Content.Shared.Storage
     [NetworkedComponent()]
     public abstract class SharedStorageComponent : Component, IDraggable
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "Storage";
 
-        public abstract IReadOnlyList<IEntity>? StoredEntities { get; }
+        public abstract IReadOnlyList<EntityUid>? StoredEntities { get; }
 
         /// <summary>
         ///     Removes from the storage container and updates the stored value
         /// </summary>
         /// <param name="entity">The entity to remove</param>
         /// <returns>True if no longer in storage, false otherwise</returns>
-        public abstract bool Remove(IEntity entity);
+        public abstract bool Remove(EntityUid entity);
 
         bool IDraggable.CanDrop(CanDropEvent args)
         {
-            return args.Target.TryGetComponent(out PlaceableSurfaceComponent? placeable) &&
+            return _entMan.TryGetComponent(args.Target, out PlaceableSurfaceComponent? placeable) &&
                    placeable.IsPlaceable;
         }
 
         bool IDraggable.Drop(DragDropEvent eventArgs)
         {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User.Uid))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User))
             {
                 return false;
             }
@@ -51,7 +54,7 @@ namespace Content.Shared.Storage
             {
                 if (Remove(storedEntity))
                 {
-                    storedEntity.Transform.WorldPosition = eventArgs.DropLocation.Position;
+                    _entMan.GetComponent<TransformComponent>(storedEntity).WorldPosition = eventArgs.DropLocation.Position;
                 }
             }
 

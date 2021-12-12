@@ -8,6 +8,7 @@ using Content.Shared.Popups;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -19,6 +20,8 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
     [RegisterComponent]
     public class SpeedLoaderComponent : Component, IAfterInteract, IInteractUsing, IMapInit, IUse
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "SpeedLoader";
 
         [DataField("caliber")]
@@ -27,7 +30,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
         [DataField("capacity")]
         private int _capacity = 6;
         private Container _ammoContainer = default!;
-        private Stack<IEntity> _spawnedAmmo = new();
+        private Stack<EntityUid> _spawnedAmmo = new();
         private int _unspawnedCount;
 
         public int AmmoLeft => _spawnedAmmo.Count + _unspawnedCount;
@@ -58,7 +61,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
 
         private void UpdateAppearance()
         {
-            if (Owner.TryGetComponent(out AppearanceComponent? appearanceComponent))
+            if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearanceComponent))
             {
                 appearanceComponent?.SetData(MagazineBarrelVisuals.MagLoaded, true);
                 appearanceComponent?.SetData(AmmoVisuals.AmmoCount, AmmoLeft);
@@ -66,9 +69,9 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             }
         }
 
-        public bool TryInsertAmmo(IEntity user, IEntity entity)
+        public bool TryInsertAmmo(EntityUid user, EntityUid entity)
         {
-            if (!entity.TryGetComponent(out AmmoComponent? ammoComponent))
+            if (!_entMan.TryGetComponent(entity, out AmmoComponent? ammoComponent))
             {
                 return false;
             }
@@ -92,20 +95,20 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
 
         }
 
-        private bool UseEntity(IEntity user)
+        private bool UseEntity(EntityUid user)
         {
-            if (!user.TryGetComponent(out HandsComponent? handsComponent))
+            if (!_entMan.TryGetComponent(user, out HandsComponent? handsComponent))
             {
                 return false;
             }
 
             var ammo = TakeAmmo();
-            if (ammo == null)
+            if (ammo == default)
             {
                 return false;
             }
 
-            var itemComponent = ammo.GetComponent<ItemComponent>();
+            var itemComponent = _entMan.GetComponent<ItemComponent>(ammo);
             if (!handsComponent.CanPutInHand(itemComponent))
             {
                 ServerRangedBarrelComponent.EjectCasing(ammo);
@@ -119,7 +122,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             return true;
         }
 
-        private IEntity? TakeAmmo()
+        private EntityUid TakeAmmo()
         {
             if (_spawnedAmmo.TryPop(out var entity))
             {
@@ -129,7 +132,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
 
             if (_unspawnedCount > 0)
             {
-                entity = Owner.EntityManager.SpawnEntity(_fillPrototype, Owner.Transform.Coordinates);
+                entity = _entMan.SpawnEntity(_fillPrototype, _entMan.GetComponent<TransformComponent>(Owner).Coordinates);
                 _unspawnedCount--;
             }
 
@@ -146,12 +149,13 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             // This area is dirty but not sure of an easier way to do it besides add an interface or somethin
             var changed = false;
 
-            if (eventArgs.Target.TryGetComponent(out RevolverBarrelComponent? revolverBarrel))
+            var entities = _entMan;
+            if (entities.TryGetComponent(eventArgs.Target.Value, out RevolverBarrelComponent? revolverBarrel))
             {
                 for (var i = 0; i < Capacity; i++)
                 {
                     var ammo = TakeAmmo();
-                    if (ammo == null)
+                    if (ammo == default)
                     {
                         break;
                     }
@@ -166,12 +170,13 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
                     TryInsertAmmo(eventArgs.User, ammo);
                     break;
                 }
-            } else if (eventArgs.Target.TryGetComponent(out BoltActionBarrelComponent? boltActionBarrel))
+            }
+            else if (_entMan.TryGetComponent(eventArgs.Target.Value, out BoltActionBarrelComponent? boltActionBarrel))
             {
                 for (var i = 0; i < Capacity; i++)
                 {
                     var ammo = TakeAmmo();
-                    if (ammo == null)
+                    if (ammo == default)
                     {
                         break;
                     }

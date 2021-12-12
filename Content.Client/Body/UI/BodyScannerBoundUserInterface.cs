@@ -3,6 +3,7 @@ using Content.Shared.Body.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Client.Body.UI
@@ -14,7 +15,7 @@ namespace Content.Client.Body.UI
         private BodyScannerDisplay? _display;
 
         [ViewVariables]
-        private IEntity? _entity;
+        private EntityUid _entity;
 
         public BodyScannerBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey) { }
 
@@ -35,9 +36,11 @@ namespace Content.Client.Body.UI
                 return;
             }
 
-            if (!Owner.Owner.EntityManager.TryGetEntity(scannerState.Uid, out _entity))
+            var entMan = IoCManager.Resolve<IEntityManager>();
+
+            if (!entMan.EntityExists(scannerState.Uid))
             {
-                throw new ArgumentException($"Received an invalid entity with id {scannerState.Uid} for body scanner with id {Owner.Owner.Uid} at {Owner.Owner.Transform.MapPosition}");
+                throw new ArgumentException($"Received an invalid entity with id {scannerState.Uid} for body scanner with id {Owner.Owner} at {entMan.GetComponent<TransformComponent>(Owner.Owner).MapPosition}");
             }
 
             _display?.UpdateDisplay(_entity);

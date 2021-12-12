@@ -161,4403 +161,8 @@ entities:
     type: Transform
   - index: 0
     type: MapGrid
-  - angularDamping: 0.3
+  - linearDamping: 0.1
     fixedRotation: False
-    fixtures:
-    - shape: !type:PolygonShape
-        vertices:
-        - 0,0
-        - 0,2
-        - -10,2
-        - -10,0
-      id: grid_chunk--10-0
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 80
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - -16,-6
-        - -16,-5
-        - -21,-5
-        - -21,-6
-      id: grid_chunk--21--6
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 20
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 0,-3
-        - 0,0
-        - -11,0
-        - -11,-3
-      id: grid_chunk--11--3
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 132
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 0,-5
-        - 0,-3
-        - -10,-3
-        - -10,-5
-      id: grid_chunk--10--5
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 80
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 0,-6
-        - 0,-5
-        - -16,-5
-        - -16,-6
-      id: grid_chunk--16--6
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 64
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - -16,-5
-        - -16,-4
-        - -18,-4
-        - -18,-5
-      id: grid_chunk--18--5
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 8
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - -17,-4
-        - -17,-3
-        - -19,-3
-        - -19,-4
-      id: grid_chunk--19--4
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 8
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - -18,-3
-        - -18,0
-        - -19,0
-        - -19,-3
-      id: grid_chunk--19--3
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 12
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - -17,0
-        - -17,1
-        - -19,1
-        - -19,0
-      id: grid_chunk--19-0
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 8
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - -16,1
-        - -16,2
-        - -18,2
-        - -18,1
-      id: grid_chunk--18-1
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 8
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 0,-10
-        - 0,-6
-        - -11,-6
-        - -11,-10
-      id: grid_chunk--11--10
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 176
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 0,-14
-        - 0,-11
-        - -8,-11
-        - -8,-14
-      id: grid_chunk--8--14
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 96
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 0,-11
-        - 0,-10
-        - -9,-10
-        - -9,-11
-      id: grid_chunk--9--11
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 36
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 0,-16
-        - 0,-14
-        - -1,-14
-        - -1,-16
-      id: grid_chunk--1--16
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 8
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 0,3
-        - 0,6
-        - -2,6
-        - -2,3
-      id: grid_chunk--2-3
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 24
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 0,9
-        - 0,12
-        - -2,12
-        - -2,9
-      id: grid_chunk--2-9
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 24
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 0,16
-        - 0,21
-        - -4,21
-        - -4,16
-      id: grid_chunk--4-16
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 80
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 0,13
-        - 0,16
-        - -4,16
-        - -4,13
-      id: grid_chunk--4-13
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 48
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 16,-16
-        - 16,0
-        - 0,0
-        - 0,-16
-      id: grid_chunk-0--16
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 1024
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 16,0
-        - 16,16
-        - 0,16
-        - 0,0
-      id: grid_chunk-0-0
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 1024
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 32,-16
-        - 32,0
-        - 16,0
-        - 16,-16
-      id: grid_chunk-16--16
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 1024
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 43,-16
-        - 43,-14
-        - 32,-14
-        - 32,-16
-      id: grid_chunk-32--16
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 88
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 43,-17
-        - 43,-16
-        - 32,-16
-        - 32,-17
-      id: grid_chunk-32--17
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 44
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 48,-16
-        - 48,-14
-        - 46,-14
-        - 46,-16
-      id: grid_chunk-46--16
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 16
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 48,-17
-        - 48,-16
-        - 46,-16
-        - 46,-17
-      id: grid_chunk-46--17
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 8
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 32,-32
-        - 32,-16
-        - 16,-16
-        - 16,-32
-      id: grid_chunk-16--32
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 1024
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 16,21
-        - 16,22
-        - 6,22
-        - 6,21
-      id: grid_chunk-6-21
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 40
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 16,16
-        - 16,21
-        - 4,21
-        - 4,16
-      id: grid_chunk-4-16
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 240
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 16,22
-        - 16,29
-        - 4,29
-        - 4,22
-      id: grid_chunk-4-22
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 336
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 16,29
-        - 16,32
-        - 5,32
-        - 5,29
-      id: grid_chunk-5-29
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 132
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 32,0
-        - 32,16
-        - 16,16
-        - 16,0
-      id: grid_chunk-16-0
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 1024
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 48,-14
-        - 48,0
-        - 32,0
-        - 32,-14
-      id: grid_chunk-32--14
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 896
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 32,16
-        - 32,32
-        - 16,32
-        - 16,16
-      id: grid_chunk-16-16
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 1024
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 32,48
-        - 32,50
-        - 21,50
-        - 21,48
-      id: grid_chunk-21-48
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 88
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 59,-14
-        - 59,-13
-        - 48,-13
-        - 48,-14
-      id: grid_chunk-48--14
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 44
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 64,-16
-        - 64,-14
-        - 48,-14
-        - 48,-16
-      id: grid_chunk-48--16
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 128
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 64,-13
-        - 64,0
-        - 48,0
-        - 48,-13
-      id: grid_chunk-48--13
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 832
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 48,0
-        - 48,16
-        - 32,16
-        - 32,0
-      id: grid_chunk-32-0
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 1024
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 41,39
-        - 41,40
-        - 32,40
-        - 32,39
-      id: grid_chunk-32-39
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 36
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 39,44
-        - 39,45
-        - 32,45
-        - 32,44
-      id: grid_chunk-32-44
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 28
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 37,45
-        - 37,47
-        - 32,47
-        - 32,45
-      id: grid_chunk-32-45
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 40
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 41,44
-        - 41,47
-        - 40,47
-        - 40,44
-      id: grid_chunk-40-44
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 12
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 48,47
-        - 48,48
-        - 32,48
-        - 32,47
-      id: grid_chunk-32-47
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 64
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 46,44
-        - 46,45
-        - 42,45
-        - 42,44
-      id: grid_chunk-42-44
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 16
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 48,45
-        - 48,47
-        - 42,47
-        - 42,45
-      id: grid_chunk-42-45
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 48
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 51,45
-        - 51,47
-        - 48,47
-        - 48,45
-      id: grid_chunk-48-45
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 24
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 48,32
-        - 48,39
-        - 32,39
-        - 32,32
-      id: grid_chunk-32-32
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 448
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 48,40
-        - 48,41
-        - 32,41
-        - 32,40
-      id: grid_chunk-32-40
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 64
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 47,41
-        - 47,44
-        - 32,44
-        - 32,41
-      id: grid_chunk-32-41
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 180
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 48,39
-        - 48,40
-        - 43,40
-        - 43,39
-      id: grid_chunk-43-39
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 20
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 60,41
-        - 60,42
-        - 53,42
-        - 53,41
-      id: grid_chunk-53-41
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 28
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 62,40
-        - 62,41
-        - 51,41
-        - 51,40
-      id: grid_chunk-51-40
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 44
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 63,32
-        - 63,40
-        - 50,40
-        - 50,32
-      id: grid_chunk-50-32
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 416
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 64,29
-        - 64,30
-        - 51,30
-        - 51,29
-      id: grid_chunk-51-29
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 52
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 64,45
-        - 64,47
-        - 62,47
-        - 62,45
-      id: grid_chunk-62-45
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 16
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 64,47
-        - 64,48
-        - 48,48
-        - 48,47
-      id: grid_chunk-48-47
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 64
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 64,27
-        - 64,28
-        - 61,28
-        - 61,27
-      id: grid_chunk-61-27
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 12
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 48,16
-        - 48,32
-        - 32,32
-        - 32,16
-      id: grid_chunk-32-16
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 1024
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 52,27
-        - 52,28
-        - 48,28
-        - 48,27
-      id: grid_chunk-48-27
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 16
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 64,28
-        - 64,29
-        - 48,29
-        - 48,28
-      id: grid_chunk-48-28
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 64
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 62,30
-        - 62,32
-        - 51,32
-        - 51,30
-      id: grid_chunk-51-30
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 88
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 64,16
-        - 64,27
-        - 48,27
-        - 48,16
-      id: grid_chunk-48-16
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 704
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 64,0
-        - 64,16
-        - 48,16
-        - 48,0
-      id: grid_chunk-48-0
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 1024
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 80,-10
-        - 80,-8
-        - 75,-8
-        - 75,-10
-      id: grid_chunk-75--10
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 40
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 80,-8
-        - 80,0
-        - 64,0
-        - 64,-8
-      id: grid_chunk-64--8
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 512
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 74,-11
-        - 74,-8
-        - 64,-8
-        - 64,-11
-      id: grid_chunk-64--11
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 120
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 80,-16
-        - 80,-11
-        - 64,-11
-        - 64,-16
-      id: grid_chunk-64--16
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 320
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 22,50
-        - 22,51
-        - 21,51
-        - 21,50
-      id: grid_chunk-21-50
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 4
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 32,51
-        - 32,52
-        - 21,52
-        - 21,51
-      id: grid_chunk-21-51
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 44
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 22,52
-        - 22,53
-        - 21,53
-        - 21,52
-      id: grid_chunk-21-52
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 4
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 32,53
-        - 32,54
-        - 21,54
-        - 21,53
-      id: grid_chunk-21-53
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 44
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 32,54
-        - 32,55
-        - 22,55
-        - 22,54
-      id: grid_chunk-22-54
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 40
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 31,55
-        - 31,56
-        - 24,56
-        - 24,55
-      id: grid_chunk-24-55
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 28
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 30,56
-        - 30,57
-        - 25,57
-        - 25,56
-      id: grid_chunk-25-56
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 20
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 29,57
-        - 29,58
-        - 26,58
-        - 26,57
-      id: grid_chunk-26-57
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 12
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 28,58
-        - 28,61
-        - 27,61
-        - 27,58
-      id: grid_chunk-27-58
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 12
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 48,-48
-        - 48,-32
-        - 32,-32
-        - 32,-48
-      id: grid_chunk-32--48
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 1024
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 48,-32
-        - 48,-17
-        - 32,-17
-        - 32,-32
-      id: grid_chunk-32--32
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 960
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 117,-26
-        - 117,-21
-        - 112,-21
-        - 112,-26
-      id: grid_chunk-112--26
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 100
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 122,-21
-        - 122,-16
-        - 112,-16
-        - 112,-21
-      id: grid_chunk-112--21
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 200
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 122,-16
-        - 122,-14
-        - 112,-14
-        - 112,-16
-      id: grid_chunk-112--16
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 80
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 117,-14
-        - 117,-9
-        - 112,-9
-        - 112,-14
-      id: grid_chunk-112--14
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 100
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 59,27
-        - 59,28
-        - 54,28
-        - 54,27
-      id: grid_chunk-54-27
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 20
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 15,-48
-        - 15,-47
-        - 10,-47
-        - 10,-48
-      id: grid_chunk-10--48
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 20
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 15,-47
-        - 15,-46
-        - 11,-46
-        - 11,-47
-      id: grid_chunk-11--47
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 16
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 16,-46
-        - 16,-45
-        - 11,-45
-        - 11,-46
-      id: grid_chunk-11--46
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 20
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 16,-45
-        - 16,-44
-        - 12,-44
-        - 12,-45
-      id: grid_chunk-12--45
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 16
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 3,-42
-        - 3,-41
-        - 0,-41
-        - 0,-42
-      id: grid_chunk-0--42
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 12
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 16,-44
-        - 16,-40
-        - 8,-40
-        - 8,-44
-      id: grid_chunk-8--44
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 128
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 2,-41
-        - 2,-39
-        - 0,-39
-        - 0,-41
-      id: grid_chunk-0--41
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 16
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 1,-39
-        - 1,-38
-        - 0,-38
-        - 0,-39
-      id: grid_chunk-0--39
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 4
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 14,-40
-        - 14,-38
-        - 8,-38
-        - 8,-40
-      id: grid_chunk-8--40
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 48
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 16,-40
-        - 16,-38
-        - 15,-38
-        - 15,-40
-      id: grid_chunk-15--40
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 8
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 16,-38
-        - 16,-37
-        - 0,-37
-        - 0,-38
-      id: grid_chunk-0--38
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 64
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 6,-37
-        - 6,-34
-        - 0,-34
-        - 0,-37
-      id: grid_chunk-0--37
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 72
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 16,-37
-        - 16,-34
-        - 9,-34
-        - 9,-37
-      id: grid_chunk-9--37
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 84
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 16,-34
-        - 16,-33
-        - 0,-33
-        - 0,-34
-      id: grid_chunk-0--34
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 64
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 7,-33
-        - 7,-32
-        - 0,-32
-        - 0,-33
-      id: grid_chunk-0--33
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 28
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 16,-33
-        - 16,-32
-        - 8,-32
-        - 8,-33
-      id: grid_chunk-8--33
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 32
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 27,-48
-        - 27,-46
-        - 16,-46
-        - 16,-48
-      id: grid_chunk-16--48
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 88
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 32,-48
-        - 32,-46
-        - 28,-46
-        - 28,-48
-      id: grid_chunk-28--48
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 32
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 32,-46
-        - 32,-32
-        - 16,-32
-        - 16,-46
-      id: grid_chunk-16--46
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 896
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 16,32
-        - 16,34
-        - 5,34
-        - 5,32
-      id: grid_chunk-5-32
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 88
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 6,34
-        - 6,36
-        - 5,36
-        - 5,34
-      id: grid_chunk-5-34
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 8
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 16,34
-        - 16,36
-        - 10,36
-        - 10,34
-      id: grid_chunk-10-34
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 48
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 16,36
-        - 16,38
-        - 5,38
-        - 5,36
-      id: grid_chunk-5-36
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 88
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 6,38
-        - 6,39
-        - 5,39
-        - 5,38
-      id: grid_chunk-5-38
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 4
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 16,38
-        - 16,39
-        - 12,39
-        - 12,38
-      id: grid_chunk-12-38
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 16
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 16,39
-        - 16,40
-        - 5,40
-        - 5,39
-      id: grid_chunk-5-39
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 44
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 6,40
-        - 6,42
-        - 5,42
-        - 5,40
-      id: grid_chunk-5-40
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 8
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 16,40
-        - 16,42
-        - 12,42
-        - 12,40
-      id: grid_chunk-12-40
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 32
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 16,42
-        - 16,43
-        - 5,43
-        - 5,42
-      id: grid_chunk-5-42
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 44
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 6,43
-        - 6,47
-        - 5,47
-        - 5,43
-      id: grid_chunk-5-43
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 16
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 16,47
-        - 16,48
-        - 5,48
-        - 5,47
-      id: grid_chunk-5-47
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 44
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 32,32
-        - 32,43
-        - 16,43
-        - 16,32
-      id: grid_chunk-16-32
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 704
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 32,43
-        - 32,44
-        - 17,44
-        - 17,43
-      id: grid_chunk-17-43
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 60
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 32,44
-        - 32,47
-        - 18,47
-        - 18,44
-      id: grid_chunk-18-44
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 168
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 32,47
-        - 32,48
-        - 16,48
-        - 16,47
-      id: grid_chunk-16-47
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 64
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 80,0
-        - 80,14
-        - 64,14
-        - 64,0
-      id: grid_chunk-64-0
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 896
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 77,14
-        - 77,15
-        - 64,15
-        - 64,14
-      id: grid_chunk-64-14
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 52
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 76,15
-        - 76,16
-        - 64,16
-        - 64,15
-      id: grid_chunk-64-15
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 48
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 80,16
-        - 80,18
-        - 79,18
-        - 79,16
-      id: grid_chunk-79-16
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 8
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 76,16
-        - 76,19
-        - 64,19
-        - 64,16
-      id: grid_chunk-64-16
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 144
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 80,18
-        - 80,19
-        - 77,19
-        - 77,18
-      id: grid_chunk-77-18
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 12
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 78,19
-        - 78,20
-        - 64,20
-        - 64,19
-      id: grid_chunk-64-19
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 56
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 74,20
-        - 74,24
-        - 64,24
-        - 64,20
-      id: grid_chunk-64-20
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 160
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 77,20
-        - 77,24
-        - 76,24
-        - 76,20
-      id: grid_chunk-76-20
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 16
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 80,24
-        - 80,25
-        - 64,25
-        - 64,24
-      id: grid_chunk-64-24
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 64
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 75,25
-        - 75,26
-        - 64,26
-        - 64,25
-      id: grid_chunk-64-25
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 44
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 74,26
-        - 74,30
-        - 64,30
-        - 64,26
-      id: grid_chunk-64-26
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 160
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 74,30
-        - 74,32
-        - 65,32
-        - 65,30
-      id: grid_chunk-65-30
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 72
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 82,16
-        - 82,17
-        - 80,17
-        - 80,16
-      id: grid_chunk-80-16
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 8
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 91,0
-        - 91,3
-        - 80,3
-        - 80,0
-      id: grid_chunk-80-0
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 132
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 88,3
-        - 88,6
-        - 80,6
-        - 80,3
-      id: grid_chunk-80-3
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 96
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 91,6
-        - 91,7
-        - 80,7
-        - 80,6
-      id: grid_chunk-80-6
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 44
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 87,7
-        - 87,9
-        - 80,9
-        - 80,7
-      id: grid_chunk-80-7
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 56
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 88,9
-        - 88,14
-        - 80,14
-        - 80,9
-      id: grid_chunk-80-9
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 160
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 90,7
-        - 90,14
-        - 89,14
-        - 89,7
-      id: grid_chunk-89-7
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 28
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 93,0
-        - 93,14
-        - 92,14
-        - 92,0
-      id: grid_chunk-92-0
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 56
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 93,14
-        - 93,15
-        - 84,15
-        - 84,14
-      id: grid_chunk-84-14
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 36
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 85,15
-        - 85,16
-        - 81,16
-        - 81,15
-      id: grid_chunk-81-15
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 16
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 88,-26
-        - 88,-25
-        - 80,-25
-        - 80,-26
-      id: grid_chunk-80--26
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 32
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 81,-25
-        - 81,-24
-        - 80,-24
-        - 80,-25
-      id: grid_chunk-80--25
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 4
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 88,-25
-        - 88,-24
-        - 87,-24
-        - 87,-25
-      id: grid_chunk-87--25
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 4
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 88,-24
-        - 88,-23
-        - 86,-23
-        - 86,-24
-      id: grid_chunk-86--24
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 8
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 96,-23
-        - 96,-22
-        - 87,-22
-        - 87,-23
-      id: grid_chunk-87--23
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 36
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 96,-22
-        - 96,-19
-        - 84,-19
-        - 84,-22
-      id: grid_chunk-84--22
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 144
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 96,-19
-        - 96,-18
-        - 87,-18
-        - 87,-19
-      id: grid_chunk-87--19
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 36
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 96,-18
-        - 96,-17
-        - 80,-17
-        - 80,-18
-      id: grid_chunk-80--18
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 64
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 91,-17
-        - 91,-16
-        - 80,-16
-        - 80,-17
-      id: grid_chunk-80--17
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 44
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 59,-32
-        - 59,-26
-        - 58,-26
-        - 58,-32
-      id: grid_chunk-58--32
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 24
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 62,-26
-        - 62,-25
-        - 58,-25
-        - 58,-26
-      id: grid_chunk-58--26
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 16
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 64,-26
-        - 64,-25
-        - 63,-25
-        - 63,-26
-      id: grid_chunk-63--26
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 4
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 64,-25
-        - 64,-24
-        - 58,-24
-        - 58,-25
-      id: grid_chunk-58--25
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 24
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 56,-32
-        - 56,-21
-        - 48,-21
-        - 48,-32
-      id: grid_chunk-48--32
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 352
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 64,-21
-        - 64,-20
-        - 56,-20
-        - 56,-21
-      id: grid_chunk-56--21
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 32
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 64,-20
-        - 64,-16
-        - 48,-16
-        - 48,-20
-      id: grid_chunk-48--20
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 256
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 68,-26
-        - 68,-25
-        - 64,-25
-        - 64,-26
-      id: grid_chunk-64--26
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 16
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 75,-26
-        - 75,-25
-        - 69,-25
-        - 69,-26
-      id: grid_chunk-69--26
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 24
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 80,-26
-        - 80,-25
-        - 79,-25
-        - 79,-26
-      id: grid_chunk-79--26
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 4
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 80,-25
-        - 80,-24
-        - 64,-24
-        - 64,-25
-      id: grid_chunk-64--25
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 64
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 73,-21
-        - 73,-18
-        - 64,-18
-        - 64,-21
-      id: grid_chunk-64--21
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 108
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 80,-18
-        - 80,-16
-        - 64,-16
-        - 64,-18
-      id: grid_chunk-64--18
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 128
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 41,-62
-        - 41,-61
-        - 32,-61
-        - 32,-62
-      id: grid_chunk-32--62
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 36
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 48,-61
-        - 48,-60
-        - 40,-60
-        - 40,-61
-      id: grid_chunk-40--61
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 32
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 41,-60
-        - 41,-59
-        - 40,-59
-        - 40,-60
-      id: grid_chunk-40--60
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 4
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 42,-59
-        - 42,-58
-        - 32,-58
-        - 32,-59
-      id: grid_chunk-32--59
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 40
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 42,-58
-        - 42,-56
-        - 40,-56
-        - 40,-58
-      id: grid_chunk-40--58
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 16
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 48,-60
-        - 48,-56
-        - 47,-56
-        - 47,-60
-      id: grid_chunk-47--60
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 16
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 48,-56
-        - 48,-55
-        - 40,-55
-        - 40,-56
-      id: grid_chunk-40--56
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 32
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 42,-55
-        - 42,-52
-        - 40,-52
-        - 40,-55
-      id: grid_chunk-40--55
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 24
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 48,-55
-        - 48,-52
-        - 47,-52
-        - 47,-55
-      id: grid_chunk-47--55
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 12
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 48,-52
-        - 48,-51
-        - 40,-51
-        - 40,-52
-      id: grid_chunk-40--52
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 32
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 42,-51
-        - 42,-50
-        - 40,-50
-        - 40,-51
-      id: grid_chunk-40--51
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 8
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 42,-50
-        - 42,-49
-        - 32,-49
-        - 32,-50
-      id: grid_chunk-32--50
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 40
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 48,-51
-        - 48,-49
-        - 47,-49
-        - 47,-51
-      id: grid_chunk-47--51
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 8
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 48,-49
-        - 48,-48
-        - 32,-48
-        - 32,-49
-      id: grid_chunk-32--49
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 64
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 51,-48
-        - 51,-41
-        - 50,-41
-        - 50,-48
-      id: grid_chunk-50--48
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 28
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 53,-41
-        - 53,-40
-        - 48,-40
-        - 48,-41
-      id: grid_chunk-48--41
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 20
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 53,-40
-        - 53,-36
-        - 52,-36
-        - 52,-40
-      id: grid_chunk-52--40
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 16
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 56,-36
-        - 56,-35
-        - 52,-35
-        - 52,-36
-      id: grid_chunk-52--36
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 16
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 53,-35
-        - 53,-34
-        - 52,-34
-        - 52,-35
-      id: grid_chunk-52--35
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 4
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 59,-35
-        - 59,-34
-        - 55,-34
-        - 55,-35
-      id: grid_chunk-55--35
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 16
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 49,-40
-        - 49,-33
-        - 48,-33
-        - 48,-40
-      id: grid_chunk-48--40
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 28
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 50,-33
-        - 50,-32
-        - 48,-32
-        - 48,-33
-      id: grid_chunk-48--33
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 8
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 59,-34
-        - 59,-32
-        - 58,-32
-        - 58,-34
-      id: grid_chunk-58--34
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 8
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 49,-56
-        - 49,-55
-        - 48,-55
-        - 48,-56
-      id: grid_chunk-48--56
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 4
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 51,-52
-        - 51,-51
-        - 48,-51
-        - 48,-52
-      id: grid_chunk-48--52
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 12
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 51,-51
-        - 51,-48
-        - 50,-48
-        - 50,-51
-      id: grid_chunk-50--51
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 12
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 32,-62
-        - 32,-61
-        - 29,-61
-        - 29,-62
-      id: grid_chunk-29--62
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 12
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 23,-61
-        - 23,-60
-        - 20,-60
-        - 20,-61
-      id: grid_chunk-20--61
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 12
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 31,-61
-        - 31,-60
-        - 29,-60
-        - 29,-61
-      id: grid_chunk-29--61
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 8
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 31,-60
-        - 31,-59
-        - 16,-59
-        - 16,-60
-      id: grid_chunk-16--60
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 60
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 32,-59
-        - 32,-58
-        - 16,-58
-        - 16,-59
-      id: grid_chunk-16--59
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 64
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 31,-58
-        - 31,-56
-        - 16,-56
-        - 16,-58
-      id: grid_chunk-16--58
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 120
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 27,-56
-        - 27,-55
-        - 16,-55
-        - 16,-56
-      id: grid_chunk-16--56
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 44
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 27,-55
-        - 27,-54
-        - 25,-54
-        - 25,-55
-      id: grid_chunk-25--55
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 8
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 31,-56
-        - 31,-54
-        - 28,-54
-        - 28,-56
-      id: grid_chunk-28--56
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 24
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 31,-54
-        - 31,-53
-        - 25,-53
-        - 25,-54
-      id: grid_chunk-25--54
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 24
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 18,-55
-        - 18,-52
-        - 16,-52
-        - 16,-55
-      id: grid_chunk-16--55
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 24
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 22,-55
-        - 22,-52
-        - 21,-52
-        - 21,-55
-      id: grid_chunk-21--55
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 12
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 27,-53
-        - 27,-52
-        - 25,-52
-        - 25,-53
-      id: grid_chunk-25--53
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 8
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 27,-52
-        - 27,-51
-        - 16,-51
-        - 16,-52
-      id: grid_chunk-16--52
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 44
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 31,-53
-        - 31,-51
-        - 28,-51
-        - 28,-53
-      id: grid_chunk-28--53
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 24
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 31,-51
-        - 31,-50
-        - 25,-50
-        - 25,-51
-      id: grid_chunk-25--51
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 24
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 18,-51
-        - 18,-48
-        - 16,-48
-        - 16,-51
-      id: grid_chunk-16--51
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 24
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 22,-51
-        - 22,-48
-        - 21,-48
-        - 21,-51
-      id: grid_chunk-21--51
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 12
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 27,-50
-        - 27,-48
-        - 25,-48
-        - 25,-50
-      id: grid_chunk-25--50
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 16
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 32,-50
-        - 32,-48
-        - 28,-48
-        - 28,-50
-      id: grid_chunk-28--50
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 32
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 12,-62
-        - 12,-61
-        - 11,-61
-        - 11,-62
-      id: grid_chunk-11--62
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 4
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 13,-61
-        - 13,-60
-        - 10,-60
-        - 10,-61
-      id: grid_chunk-10--61
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 12
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 16,-60
-        - 16,-56
-        - 11,-56
-        - 11,-60
-      id: grid_chunk-11--60
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 80
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 15,-56
-        - 15,-55
-        - 10,-55
-        - 10,-56
-      id: grid_chunk-10--56
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 20
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 15,-55
-        - 15,-54
-        - 11,-54
-        - 11,-55
-      id: grid_chunk-11--55
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 16
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 16,-54
-        - 16,-53
-        - 11,-53
-        - 11,-54
-      id: grid_chunk-11--54
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 20
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 15,-53
-        - 15,-51
-        - 10,-51
-        - 10,-53
-      id: grid_chunk-10--53
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 40
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 16,-51
-        - 16,-50
-        - 10,-50
-        - 10,-51
-      id: grid_chunk-10--51
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 24
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 15,-50
-        - 15,-48
-        - 10,-48
-        - 10,-50
-      id: grid_chunk-10--50
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 40
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - -11,-32
-        - -11,-31
-        - -14,-31
-        - -14,-32
-      id: grid_chunk--14--32
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 12
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - -3,-32
-        - -3,-31
-        - -10,-31
-        - -10,-32
-      id: grid_chunk--10--32
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 28
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 0,-32
-        - 0,-31
-        - -2,-31
-        - -2,-32
-      id: grid_chunk--2--32
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 8
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 0,-31
-        - 0,-30
-        - -16,-30
-        - -16,-31
-      id: grid_chunk--16--31
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 64
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 0,-30
-        - 0,-29
-        - -3,-29
-        - -3,-30
-      id: grid_chunk--3--30
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 12
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 0,-29
-        - 0,-28
-        - -16,-28
-        - -16,-29
-      id: grid_chunk--16--29
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 64
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 0,-28
-        - 0,-27
-        - -2,-27
-        - -2,-28
-      id: grid_chunk--2--28
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 8
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 0,-27
-        - 0,-26
-        - -1,-26
-        - -1,-27
-      id: grid_chunk--1--27
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 4
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 0,-18
-        - 0,-16
-        - -1,-16
-        - -1,-18
-      id: grid_chunk--1--18
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 8
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - -16,-31
-        - -16,-28
-        - -17,-28
-        - -17,-31
-      id: grid_chunk--17--31
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 12
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - -2,-43
-        - -2,-42
-        - -16,-42
-        - -16,-43
-      id: grid_chunk--16--43
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 56
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - -14,-42
-        - -14,-41
-        - -16,-41
-        - -16,-42
-      id: grid_chunk--16--42
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 8
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - -2,-42
-        - -2,-41
-        - -3,-41
-        - -3,-42
-      id: grid_chunk--3--42
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 4
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 0,-42
-        - 0,-41
-        - -1,-41
-        - -1,-42
-      id: grid_chunk--1--42
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 4
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - -2,-41
-        - -2,-40
-        - -16,-40
-        - -16,-41
-      id: grid_chunk--16--41
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 56
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - -11,-40
-        - -11,-39
-        - -14,-39
-        - -14,-40
-      id: grid_chunk--14--40
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 12
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - -7,-40
-        - -7,-39
-        - -10,-39
-        - -10,-40
-      id: grid_chunk--10--40
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 12
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - -7,-39
-        - -7,-38
-        - -14,-38
-        - -14,-39
-      id: grid_chunk--14--39
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 28
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - -3,-40
-        - -3,-38
-        - -6,-38
-        - -6,-40
-      id: grid_chunk--6--40
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 24
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - -3,-38
-        - -3,-37
-        - -16,-37
-        - -16,-38
-      id: grid_chunk--16--38
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 52
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - -14,-37
-        - -14,-36
-        - -16,-36
-        - -16,-37
-      id: grid_chunk--16--37
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 8
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - -6,-37
-        - -6,-36
-        - -13,-36
-        - -13,-37
-      id: grid_chunk--13--37
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 28
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 0,-37
-        - 0,-36
-        - -5,-36
-        - -5,-37
-      id: grid_chunk--5--37
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 20
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 0,-36
-        - 0,-35
-        - -16,-35
-        - -16,-36
-      id: grid_chunk--16--36
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 64
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - -15,-35
-        - -15,-34
-        - -16,-34
-        - -16,-35
-      id: grid_chunk--16--35
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 4
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - -12,-35
-        - -12,-34
-        - -14,-34
-        - -14,-35
-      id: grid_chunk--14--35
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 8
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - -8,-35
-        - -8,-34
-        - -11,-34
-        - -11,-35
-      id: grid_chunk--11--35
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 12
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 0,-35
-        - 0,-34
-        - -5,-34
-        - -5,-35
-      id: grid_chunk--5--35
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 20
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - -3,-34
-        - -3,-33
-        - -16,-33
-        - -16,-34
-      id: grid_chunk--16--34
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 52
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - -7,-33
-        - -7,-32
-        - -14,-32
-        - -14,-33
-      id: grid_chunk--14--33
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 28
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - -3,-33
-        - -3,-32
-        - -6,-32
-        - -6,-33
-      id: grid_chunk--6--33
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 12
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 0,-33
-        - 0,-32
-        - -2,-32
-        - -2,-33
-      id: grid_chunk--2--33
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 8
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - -16,-43
-        - -16,-40
-        - -17,-40
-        - -17,-43
-      id: grid_chunk--17--43
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 12
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - -16,-39
-        - -16,-37
-        - -19,-37
-        - -19,-39
-      id: grid_chunk--19--39
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 24
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - -18,-37
-        - -18,-33
-        - -19,-33
-        - -19,-37
-      id: grid_chunk--19--37
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 16
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - -16,-37
-        - -16,-33
-        - -17,-33
-        - -17,-37
-      id: grid_chunk--17--37
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 16
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - -16,-33
-        - -16,-32
-        - -19,-32
-        - -19,-33
-      id: grid_chunk--19--33
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 12
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 7,-32
-        - 7,-27
-        - 0,-27
-        - 0,-32
-      id: grid_chunk-0--32
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 140
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 7,-27
-        - 7,-26
-        - 3,-26
-        - 3,-27
-      id: grid_chunk-3--27
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 16
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 16,-32
-        - 16,-26
-        - 8,-26
-        - 8,-32
-      id: grid_chunk-8--32
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 192
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 16,-26
-        - 16,-23
-        - 3,-23
-        - 3,-26
-      id: grid_chunk-3--26
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 156
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 16,-23
-        - 16,-22
-        - 2,-22
-        - 2,-23
-      id: grid_chunk-2--23
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 56
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 3,-22
-        - 3,-18
-        - 2,-18
-        - 2,-22
-      id: grid_chunk-2--22
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 16
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 6,-22
-        - 6,-18
-        - 5,-18
-        - 5,-22
-      id: grid_chunk-5--22
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 16
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 16,-22
-        - 16,-18
-        - 7,-18
-        - 7,-22
-      id: grid_chunk-7--22
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 144
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 16,-18
-        - 16,-16
-        - 0,-16
-        - 0,-18
-      id: grid_chunk-0--18
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 128
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 68,48
-        - 68,49
-        - 64,49
-        - 64,48
-      id: grid_chunk-64-48
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 16
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 65,49
-        - 65,50
-        - 64,50
-        - 64,49
-      id: grid_chunk-64-49
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 4
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 73,48
-        - 73,51
-        - 72,51
-        - 72,48
-      id: grid_chunk-72-48
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 12
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 80,48
-        - 80,51
-        - 77,51
-        - 77,48
-      id: grid_chunk-77-48
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 36
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 80,51
-        - 80,52
-        - 72,52
-        - 72,51
-      id: grid_chunk-72-51
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 32
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 88,48
-        - 88,49
-        - 80,49
-        - 80,48
-      id: grid_chunk-80-48
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 32
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 92,48
-        - 92,49
-        - 89,49
-        - 89,48
-      id: grid_chunk-89-48
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 12
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 84,49
-        - 84,50
-        - 80,50
-        - 80,49
-      id: grid_chunk-80-49
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 16
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 88,49
-        - 88,50
-        - 85,50
-        - 85,49
-      id: grid_chunk-85-49
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 12
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 91,49
-        - 91,50
-        - 89,50
-        - 89,49
-      id: grid_chunk-89-49
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 8
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 86,50
-        - 86,51
-        - 80,51
-        - 80,50
-      id: grid_chunk-80-50
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 24
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 91,50
-        - 91,51
-        - 87,51
-        - 87,50
-      id: grid_chunk-87-50
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 16
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 90,51
-        - 90,52
-        - 80,52
-        - 80,51
-      id: grid_chunk-80-51
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 40
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 91,38
-        - 91,39
-        - 80,39
-        - 80,38
-      id: grid_chunk-80-38
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 44
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 91,39
-        - 91,40
-        - 88,40
-        - 88,39
-      id: grid_chunk-88-39
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 12
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 87,40
-        - 87,41
-        - 81,41
-        - 81,40
-      id: grid_chunk-81-40
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 24
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 84,41
-        - 84,42
-        - 81,42
-        - 81,41
-      id: grid_chunk-81-41
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 12
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 88,41
-        - 88,42
-        - 85,42
-        - 85,41
-      id: grid_chunk-85-41
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 12
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 91,40
-        - 91,42
-        - 89,42
-        - 89,40
-      id: grid_chunk-89-40
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 16
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 88,42
-        - 88,43
-        - 81,43
-        - 81,42
-      id: grid_chunk-81-42
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 28
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 92,42
-        - 92,43
-        - 89,43
-        - 89,42
-      id: grid_chunk-89-42
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 12
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 92,43
-        - 92,44
-        - 81,44
-        - 81,43
-      id: grid_chunk-81-43
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 44
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 85,44
-        - 85,45
-        - 82,45
-        - 82,44
-      id: grid_chunk-82-44
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 12
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 90,44
-        - 90,45
-        - 86,45
-        - 86,44
-      id: grid_chunk-86-44
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 16
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 90,45
-        - 90,46
-        - 80,46
-        - 80,45
-      id: grid_chunk-80-45
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 40
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 81,46
-        - 81,47
-        - 80,47
-        - 80,46
-      id: grid_chunk-80-46
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 4
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 87,46
-        - 87,47
-        - 82,47
-        - 82,46
-      id: grid_chunk-82-46
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 20
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 90,46
-        - 90,47
-        - 89,47
-        - 89,46
-      id: grid_chunk-89-46
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 4
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 84,47
-        - 84,48
-        - 81,48
-        - 81,47
-      id: grid_chunk-81-47
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 12
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 89,47
-        - 89,48
-        - 85,48
-        - 85,47
-      id: grid_chunk-85-47
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 16
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 92,44
-        - 92,48
-        - 91,48
-        - 91,44
-      id: grid_chunk-91-44
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 16
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 74,32
-        - 74,38
-        - 65,38
-        - 65,32
-      id: grid_chunk-65-32
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 216
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 80,38
-        - 80,39
-        - 65,39
-        - 65,38
-      id: grid_chunk-65-38
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 60
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 74,39
-        - 74,40
-        - 65,40
-        - 65,39
-      id: grid_chunk-65-39
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 36
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 80,40
-        - 80,41
-        - 65,41
-        - 65,40
-      id: grid_chunk-65-40
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 60
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 73,41
-        - 73,42
-        - 65,42
-        - 65,41
-      id: grid_chunk-65-41
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 32
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 72,42
-        - 72,43
-        - 65,43
-        - 65,42
-      id: grid_chunk-65-42
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 28
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 73,43
-        - 73,44
-        - 65,44
-        - 65,43
-      id: grid_chunk-65-43
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 32
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 80,41
-        - 80,44
-        - 77,44
-        - 77,41
-      id: grid_chunk-77-41
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 36
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 75,44
-        - 75,45
-        - 65,45
-        - 65,44
-      id: grid_chunk-65-44
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 40
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 79,44
-        - 79,45
-        - 78,45
-        - 78,44
-      id: grid_chunk-78-44
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 4
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 80,45
-        - 80,47
-        - 64,47
-        - 64,45
-      id: grid_chunk-64-45
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 128
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 73,47
-        - 73,48
-        - 64,48
-        - 64,47
-      id: grid_chunk-64-47
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 36
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 80,47
-        - 80,48
-        - 77,48
-        - 77,47
-      id: grid_chunk-77-47
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 12
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 48,48
-        - 48,49
-        - 45,49
-        - 45,48
-      id: grid_chunk-45-48
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 12
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 34,48
-        - 34,50
-        - 32,50
-        - 32,48
-      id: grid_chunk-32-48
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 16
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 34,50
-        - 34,51
-        - 33,51
-        - 33,50
-      id: grid_chunk-33-50
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 4
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 43,48
-        - 43,51
-        - 42,51
-        - 42,48
-      id: grid_chunk-42-48
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 12
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 34,51
-        - 34,52
-        - 32,52
-        - 32,51
-      id: grid_chunk-32-51
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 8
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 48,51
-        - 48,52
-        - 42,52
-        - 42,51
-      id: grid_chunk-42-51
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 24
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 43,52
-        - 43,53
-        - 33,53
-        - 33,52
-      id: grid_chunk-33-52
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 40
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 34,53
-        - 34,54
-        - 32,54
-        - 32,53
-      id: grid_chunk-32-53
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 8
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 33,54
-        - 33,55
-        - 32,55
-        - 32,54
-      id: grid_chunk-32-54
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 4
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 64,48
-        - 64,50
-        - 48,50
-        - 48,48
-      id: grid_chunk-48-48
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 128
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 50,50
-        - 50,51
-        - 49,51
-        - 49,50
-      id: grid_chunk-49-50
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 4
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 50,51
-        - 50,52
-        - 48,52
-        - 48,51
-      id: grid_chunk-48-51
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 8
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 58,50
-        - 58,52
-        - 55,52
-        - 55,50
-      id: grid_chunk-55-50
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 24
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 91,-16
-        - 91,-12
-        - 80,-12
-        - 80,-16
-      id: grid_chunk-80--16
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 176
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 92,-12
-        - 92,-11
-        - 80,-11
-        - 80,-12
-      id: grid_chunk-80--12
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 48
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 84,-9
-        - 84,-7
-        - 80,-7
-        - 80,-9
-      id: grid_chunk-80--9
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 32
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 92,-11
-        - 92,-7
-        - 85,-7
-        - 85,-11
-      id: grid_chunk-85--11
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 112
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 92,-7
-        - 92,-2
-        - 80,-2
-        - 80,-7
-      id: grid_chunk-80--7
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 240
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 93,-2
-        - 93,0
-        - 80,0
-        - 80,-2
-      id: grid_chunk-80--2
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 104
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 112,-16
-        - 112,-14
-        - 101,-14
-        - 101,-16
-      id: grid_chunk-101--16
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 88
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 109,-14
-        - 109,-11
-        - 101,-11
-        - 101,-14
-      id: grid_chunk-101--14
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 96
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 109,-11
-        - 109,-10
-        - 100,-10
-        - 100,-11
-      id: grid_chunk-100--11
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 36
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 109,-10
-        - 109,-9
-        - 104,-9
-        - 104,-10
-      id: grid_chunk-104--10
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 20
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 112,-14
-        - 112,-9
-        - 110,-9
-        - 110,-14
-      id: grid_chunk-110--14
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 40
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 101,-23
-        - 101,-22
-        - 96,-22
-        - 96,-23
-      id: grid_chunk-96--23
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 20
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 109,-26
-        - 109,-22
-        - 104,-22
-        - 104,-26
-      id: grid_chunk-104--26
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 80
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 109,-22
-        - 109,-21
-        - 96,-21
-        - 96,-22
-      id: grid_chunk-96--22
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 52
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 112,-26
-        - 112,-21
-        - 110,-21
-        - 110,-26
-      id: grid_chunk-110--26
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 40
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 112,-21
-        - 112,-17
-        - 96,-17
-        - 96,-21
-      id: grid_chunk-96--21
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 256
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 112,-17
-        - 112,-16
-        - 101,-16
-        - 101,-17
-      id: grid_chunk-101--17
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 44
-      restitution: 0.1
     bodyType: Dynamic
     type: Physics
   - gravityShakeSound: !type:SoundPathSpecifier
@@ -12666,6 +8271,4404 @@ entities:
       - 0
       - 0
     type: GridAtmosphere
+  - fixtures:
+    - shape: !type:PolygonShape
+        vertices:
+        - 0,-16
+        - 0,-14
+        - -1,-14
+        - -1,-16
+      id: grid_chunk--1--16
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 8
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 0,-14
+        - 0,-11
+        - -8,-11
+        - -8,-14
+      id: grid_chunk--8--14
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 96
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 0,-11
+        - 0,-10
+        - -9,-10
+        - -9,-11
+      id: grid_chunk--9--11
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 36
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 0,-10
+        - 0,-6
+        - -11,-6
+        - -11,-10
+      id: grid_chunk--11--10
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 176
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 0,-6
+        - 0,-5
+        - -16,-5
+        - -16,-6
+      id: grid_chunk--16--6
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 64
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 0,-5
+        - 0,-3
+        - -10,-3
+        - -10,-5
+      id: grid_chunk--10--5
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 80
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 0,-3
+        - 0,0
+        - -11,0
+        - -11,-3
+      id: grid_chunk--11--3
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 132
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 0,0
+        - 0,2
+        - -10,2
+        - -10,0
+      id: grid_chunk--10-0
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 80
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 0,3
+        - 0,6
+        - -2,6
+        - -2,3
+      id: grid_chunk--2-3
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 24
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 0,9
+        - 0,12
+        - -2,12
+        - -2,9
+      id: grid_chunk--2-9
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 24
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 0,13
+        - 0,16
+        - -4,16
+        - -4,13
+      id: grid_chunk--4-13
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 48
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 16,0
+        - 16,16
+        - 0,16
+        - 0,0
+      id: grid_chunk-0-0
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 1024
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 16,-16
+        - 16,0
+        - 0,0
+        - 0,-16
+      id: grid_chunk-0--16
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 1024
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -16,-6
+        - -16,-5
+        - -21,-5
+        - -21,-6
+      id: grid_chunk--21--6
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 20
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -16,-5
+        - -16,-4
+        - -18,-4
+        - -18,-5
+      id: grid_chunk--18--5
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 8
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -17,-4
+        - -17,-3
+        - -19,-3
+        - -19,-4
+      id: grid_chunk--19--4
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 8
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -18,-3
+        - -18,0
+        - -19,0
+        - -19,-3
+      id: grid_chunk--19--3
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 12
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -17,0
+        - -17,1
+        - -19,1
+        - -19,0
+      id: grid_chunk--19-0
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 8
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -16,1
+        - -16,2
+        - -18,2
+        - -18,1
+      id: grid_chunk--18-1
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 8
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -11,-32
+        - -11,-31
+        - -14,-31
+        - -14,-32
+      id: grid_chunk--14--32
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 12
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -3,-32
+        - -3,-31
+        - -10,-31
+        - -10,-32
+      id: grid_chunk--10--32
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 28
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 0,-32
+        - 0,-31
+        - -2,-31
+        - -2,-32
+      id: grid_chunk--2--32
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 8
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 0,-31
+        - 0,-30
+        - -16,-30
+        - -16,-31
+      id: grid_chunk--16--31
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 64
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 0,-30
+        - 0,-29
+        - -3,-29
+        - -3,-30
+      id: grid_chunk--3--30
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 12
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 0,-29
+        - 0,-28
+        - -16,-28
+        - -16,-29
+      id: grid_chunk--16--29
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 64
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 0,-28
+        - 0,-27
+        - -2,-27
+        - -2,-28
+      id: grid_chunk--2--28
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 8
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 0,-27
+        - 0,-26
+        - -1,-26
+        - -1,-27
+      id: grid_chunk--1--27
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 4
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 0,-18
+        - 0,-16
+        - -1,-16
+        - -1,-18
+      id: grid_chunk--1--18
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 8
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 7,-32
+        - 7,-27
+        - 0,-27
+        - 0,-32
+      id: grid_chunk-0--32
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 140
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 7,-27
+        - 7,-26
+        - 3,-26
+        - 3,-27
+      id: grid_chunk-3--27
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 16
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 16,-32
+        - 16,-26
+        - 8,-26
+        - 8,-32
+      id: grid_chunk-8--32
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 192
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 16,-26
+        - 16,-23
+        - 3,-23
+        - 3,-26
+      id: grid_chunk-3--26
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 156
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 16,-23
+        - 16,-22
+        - 2,-22
+        - 2,-23
+      id: grid_chunk-2--23
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 56
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 3,-22
+        - 3,-18
+        - 2,-18
+        - 2,-22
+      id: grid_chunk-2--22
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 16
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 6,-22
+        - 6,-18
+        - 5,-18
+        - 5,-22
+      id: grid_chunk-5--22
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 16
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 16,-22
+        - 16,-18
+        - 7,-18
+        - 7,-22
+      id: grid_chunk-7--22
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 144
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 16,-18
+        - 16,-16
+        - 0,-16
+        - 0,-18
+      id: grid_chunk-0--18
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 128
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 0,16
+        - 0,21
+        - -4,21
+        - -4,16
+      id: grid_chunk--4-16
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 80
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 16,16
+        - 16,21
+        - 4,21
+        - 4,16
+      id: grid_chunk-4-16
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 240
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 16,21
+        - 16,22
+        - 6,22
+        - 6,21
+      id: grid_chunk-6-21
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 40
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 16,22
+        - 16,29
+        - 4,29
+        - 4,22
+      id: grid_chunk-4-22
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 336
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 16,29
+        - 16,32
+        - 5,32
+        - 5,29
+      id: grid_chunk-5-29
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 132
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 32,0
+        - 32,16
+        - 16,16
+        - 16,0
+      id: grid_chunk-16-0
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 1024
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 32,-16
+        - 32,0
+        - 16,0
+        - 16,-16
+      id: grid_chunk-16--16
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 1024
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 32,-32
+        - 32,-16
+        - 16,-16
+        - 16,-32
+      id: grid_chunk-16--32
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 1024
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 15,-48
+        - 15,-47
+        - 10,-47
+        - 10,-48
+      id: grid_chunk-10--48
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 20
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 15,-47
+        - 15,-46
+        - 11,-46
+        - 11,-47
+      id: grid_chunk-11--47
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 16
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 16,-46
+        - 16,-45
+        - 11,-45
+        - 11,-46
+      id: grid_chunk-11--46
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 20
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 16,-45
+        - 16,-44
+        - 12,-44
+        - 12,-45
+      id: grid_chunk-12--45
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 16
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 3,-42
+        - 3,-41
+        - 0,-41
+        - 0,-42
+      id: grid_chunk-0--42
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 12
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 16,-44
+        - 16,-40
+        - 8,-40
+        - 8,-44
+      id: grid_chunk-8--44
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 128
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 2,-41
+        - 2,-39
+        - 0,-39
+        - 0,-41
+      id: grid_chunk-0--41
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 16
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 1,-39
+        - 1,-38
+        - 0,-38
+        - 0,-39
+      id: grid_chunk-0--39
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 4
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 14,-40
+        - 14,-38
+        - 8,-38
+        - 8,-40
+      id: grid_chunk-8--40
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 48
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 16,-40
+        - 16,-38
+        - 15,-38
+        - 15,-40
+      id: grid_chunk-15--40
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 8
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 16,-38
+        - 16,-37
+        - 0,-37
+        - 0,-38
+      id: grid_chunk-0--38
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 64
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 6,-37
+        - 6,-34
+        - 0,-34
+        - 0,-37
+      id: grid_chunk-0--37
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 72
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 16,-37
+        - 16,-34
+        - 9,-34
+        - 9,-37
+      id: grid_chunk-9--37
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 84
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 16,-34
+        - 16,-33
+        - 0,-33
+        - 0,-34
+      id: grid_chunk-0--34
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 64
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 7,-33
+        - 7,-32
+        - 0,-32
+        - 0,-33
+      id: grid_chunk-0--33
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 28
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 16,-33
+        - 16,-32
+        - 8,-32
+        - 8,-33
+      id: grid_chunk-8--33
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 32
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 27,-48
+        - 27,-46
+        - 16,-46
+        - 16,-48
+      id: grid_chunk-16--48
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 88
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 32,-48
+        - 32,-46
+        - 28,-46
+        - 28,-48
+      id: grid_chunk-28--48
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 32
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 32,-46
+        - 32,-32
+        - 16,-32
+        - 16,-46
+      id: grid_chunk-16--46
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 896
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 48,-32
+        - 48,-17
+        - 32,-17
+        - 32,-32
+      id: grid_chunk-32--32
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 960
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 43,-17
+        - 43,-16
+        - 32,-16
+        - 32,-17
+      id: grid_chunk-32--17
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 44
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 48,-17
+        - 48,-16
+        - 46,-16
+        - 46,-17
+      id: grid_chunk-46--17
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 8
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 48,-48
+        - 48,-32
+        - 32,-32
+        - 32,-48
+      id: grid_chunk-32--48
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 1024
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 32,16
+        - 32,32
+        - 16,32
+        - 16,16
+      id: grid_chunk-16-16
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 1024
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 48,0
+        - 48,16
+        - 32,16
+        - 32,0
+      id: grid_chunk-32-0
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 1024
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 43,-16
+        - 43,-14
+        - 32,-14
+        - 32,-16
+      id: grid_chunk-32--16
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 88
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 48,-16
+        - 48,-14
+        - 46,-14
+        - 46,-16
+      id: grid_chunk-46--16
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 16
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 48,-14
+        - 48,0
+        - 32,0
+        - 32,-14
+      id: grid_chunk-32--14
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 896
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 32,-62
+        - 32,-61
+        - 29,-61
+        - 29,-62
+      id: grid_chunk-29--62
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 12
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 23,-61
+        - 23,-60
+        - 20,-60
+        - 20,-61
+      id: grid_chunk-20--61
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 12
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 31,-61
+        - 31,-60
+        - 29,-60
+        - 29,-61
+      id: grid_chunk-29--61
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 8
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 31,-60
+        - 31,-59
+        - 16,-59
+        - 16,-60
+      id: grid_chunk-16--60
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 60
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 32,-59
+        - 32,-58
+        - 16,-58
+        - 16,-59
+      id: grid_chunk-16--59
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 64
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 31,-58
+        - 31,-56
+        - 16,-56
+        - 16,-58
+      id: grid_chunk-16--58
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 120
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 27,-56
+        - 27,-55
+        - 16,-55
+        - 16,-56
+      id: grid_chunk-16--56
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 44
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 27,-55
+        - 27,-54
+        - 25,-54
+        - 25,-55
+      id: grid_chunk-25--55
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 8
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 31,-56
+        - 31,-54
+        - 28,-54
+        - 28,-56
+      id: grid_chunk-28--56
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 24
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 31,-54
+        - 31,-53
+        - 25,-53
+        - 25,-54
+      id: grid_chunk-25--54
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 24
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 18,-55
+        - 18,-52
+        - 16,-52
+        - 16,-55
+      id: grid_chunk-16--55
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 24
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 22,-55
+        - 22,-52
+        - 21,-52
+        - 21,-55
+      id: grid_chunk-21--55
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 12
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 27,-53
+        - 27,-52
+        - 25,-52
+        - 25,-53
+      id: grid_chunk-25--53
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 8
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 27,-52
+        - 27,-51
+        - 16,-51
+        - 16,-52
+      id: grid_chunk-16--52
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 44
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 31,-53
+        - 31,-51
+        - 28,-51
+        - 28,-53
+      id: grid_chunk-28--53
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 24
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 31,-51
+        - 31,-50
+        - 25,-50
+        - 25,-51
+      id: grid_chunk-25--51
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 24
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 18,-51
+        - 18,-48
+        - 16,-48
+        - 16,-51
+      id: grid_chunk-16--51
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 24
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 22,-51
+        - 22,-48
+        - 21,-48
+        - 21,-51
+      id: grid_chunk-21--51
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 12
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 27,-50
+        - 27,-48
+        - 25,-48
+        - 25,-50
+      id: grid_chunk-25--50
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 16
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 32,-50
+        - 32,-48
+        - 28,-48
+        - 28,-50
+      id: grid_chunk-28--50
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 32
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 41,-62
+        - 41,-61
+        - 32,-61
+        - 32,-62
+      id: grid_chunk-32--62
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 36
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 48,-61
+        - 48,-60
+        - 40,-60
+        - 40,-61
+      id: grid_chunk-40--61
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 32
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 41,-60
+        - 41,-59
+        - 40,-59
+        - 40,-60
+      id: grid_chunk-40--60
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 4
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 42,-59
+        - 42,-58
+        - 32,-58
+        - 32,-59
+      id: grid_chunk-32--59
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 40
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 42,-58
+        - 42,-56
+        - 40,-56
+        - 40,-58
+      id: grid_chunk-40--58
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 16
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 48,-60
+        - 48,-56
+        - 47,-56
+        - 47,-60
+      id: grid_chunk-47--60
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 16
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 48,-56
+        - 48,-55
+        - 40,-55
+        - 40,-56
+      id: grid_chunk-40--56
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 32
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 42,-55
+        - 42,-52
+        - 40,-52
+        - 40,-55
+      id: grid_chunk-40--55
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 24
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 48,-55
+        - 48,-52
+        - 47,-52
+        - 47,-55
+      id: grid_chunk-47--55
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 12
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 48,-52
+        - 48,-51
+        - 40,-51
+        - 40,-52
+      id: grid_chunk-40--52
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 32
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 42,-51
+        - 42,-50
+        - 40,-50
+        - 40,-51
+      id: grid_chunk-40--51
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 8
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 42,-50
+        - 42,-49
+        - 32,-49
+        - 32,-50
+      id: grid_chunk-32--50
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 40
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 48,-51
+        - 48,-49
+        - 47,-49
+        - 47,-51
+      id: grid_chunk-47--51
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 8
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 48,-49
+        - 48,-48
+        - 32,-48
+        - 32,-49
+      id: grid_chunk-32--49
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 64
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 12,-62
+        - 12,-61
+        - 11,-61
+        - 11,-62
+      id: grid_chunk-11--62
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 4
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 13,-61
+        - 13,-60
+        - 10,-60
+        - 10,-61
+      id: grid_chunk-10--61
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 12
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 16,-60
+        - 16,-56
+        - 11,-56
+        - 11,-60
+      id: grid_chunk-11--60
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 80
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 15,-56
+        - 15,-55
+        - 10,-55
+        - 10,-56
+      id: grid_chunk-10--56
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 20
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 15,-55
+        - 15,-54
+        - 11,-54
+        - 11,-55
+      id: grid_chunk-11--55
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 16
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 16,-54
+        - 16,-53
+        - 11,-53
+        - 11,-54
+      id: grid_chunk-11--54
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 20
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 15,-53
+        - 15,-51
+        - 10,-51
+        - 10,-53
+      id: grid_chunk-10--53
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 40
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 16,-51
+        - 16,-50
+        - 10,-50
+        - 10,-51
+      id: grid_chunk-10--51
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 24
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 15,-50
+        - 15,-48
+        - 10,-48
+        - 10,-50
+      id: grid_chunk-10--50
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 40
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -2,-43
+        - -2,-42
+        - -16,-42
+        - -16,-43
+      id: grid_chunk--16--43
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 56
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -14,-42
+        - -14,-41
+        - -16,-41
+        - -16,-42
+      id: grid_chunk--16--42
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 8
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -2,-42
+        - -2,-41
+        - -3,-41
+        - -3,-42
+      id: grid_chunk--3--42
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 4
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 0,-42
+        - 0,-41
+        - -1,-41
+        - -1,-42
+      id: grid_chunk--1--42
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 4
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -2,-41
+        - -2,-40
+        - -16,-40
+        - -16,-41
+      id: grid_chunk--16--41
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 56
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -11,-40
+        - -11,-39
+        - -14,-39
+        - -14,-40
+      id: grid_chunk--14--40
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 12
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -7,-40
+        - -7,-39
+        - -10,-39
+        - -10,-40
+      id: grid_chunk--10--40
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 12
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -7,-39
+        - -7,-38
+        - -14,-38
+        - -14,-39
+      id: grid_chunk--14--39
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 28
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -3,-40
+        - -3,-38
+        - -6,-38
+        - -6,-40
+      id: grid_chunk--6--40
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 24
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -3,-38
+        - -3,-37
+        - -16,-37
+        - -16,-38
+      id: grid_chunk--16--38
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 52
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -14,-37
+        - -14,-36
+        - -16,-36
+        - -16,-37
+      id: grid_chunk--16--37
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 8
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -6,-37
+        - -6,-36
+        - -13,-36
+        - -13,-37
+      id: grid_chunk--13--37
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 28
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 0,-37
+        - 0,-36
+        - -5,-36
+        - -5,-37
+      id: grid_chunk--5--37
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 20
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 0,-36
+        - 0,-35
+        - -16,-35
+        - -16,-36
+      id: grid_chunk--16--36
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 64
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -15,-35
+        - -15,-34
+        - -16,-34
+        - -16,-35
+      id: grid_chunk--16--35
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 4
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -12,-35
+        - -12,-34
+        - -14,-34
+        - -14,-35
+      id: grid_chunk--14--35
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 8
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -8,-35
+        - -8,-34
+        - -11,-34
+        - -11,-35
+      id: grid_chunk--11--35
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 12
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 0,-35
+        - 0,-34
+        - -5,-34
+        - -5,-35
+      id: grid_chunk--5--35
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 20
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -3,-34
+        - -3,-33
+        - -16,-33
+        - -16,-34
+      id: grid_chunk--16--34
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 52
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -7,-33
+        - -7,-32
+        - -14,-32
+        - -14,-33
+      id: grid_chunk--14--33
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 28
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -3,-33
+        - -3,-32
+        - -6,-32
+        - -6,-33
+      id: grid_chunk--6--33
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 12
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 0,-33
+        - 0,-32
+        - -2,-32
+        - -2,-33
+      id: grid_chunk--2--33
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 8
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -16,-43
+        - -16,-40
+        - -17,-40
+        - -17,-43
+      id: grid_chunk--17--43
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 12
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -16,-39
+        - -16,-37
+        - -19,-37
+        - -19,-39
+      id: grid_chunk--19--39
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 24
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -18,-37
+        - -18,-33
+        - -19,-33
+        - -19,-37
+      id: grid_chunk--19--37
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 16
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -16,-37
+        - -16,-33
+        - -17,-33
+        - -17,-37
+      id: grid_chunk--17--37
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 16
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -16,-33
+        - -16,-32
+        - -19,-32
+        - -19,-33
+      id: grid_chunk--19--33
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 12
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 64,-16
+        - 64,-14
+        - 48,-14
+        - 48,-16
+      id: grid_chunk-48--16
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 128
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 59,-14
+        - 59,-13
+        - 48,-13
+        - 48,-14
+      id: grid_chunk-48--14
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 44
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 64,-13
+        - 64,0
+        - 48,0
+        - 48,-13
+      id: grid_chunk-48--13
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 832
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 59,-32
+        - 59,-26
+        - 58,-26
+        - 58,-32
+      id: grid_chunk-58--32
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 24
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 62,-26
+        - 62,-25
+        - 58,-25
+        - 58,-26
+      id: grid_chunk-58--26
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 16
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 64,-26
+        - 64,-25
+        - 63,-25
+        - 63,-26
+      id: grid_chunk-63--26
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 4
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 64,-25
+        - 64,-24
+        - 58,-24
+        - 58,-25
+      id: grid_chunk-58--25
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 24
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 56,-32
+        - 56,-21
+        - 48,-21
+        - 48,-32
+      id: grid_chunk-48--32
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 352
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 64,-21
+        - 64,-20
+        - 56,-20
+        - 56,-21
+      id: grid_chunk-56--21
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 32
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 64,-20
+        - 64,-16
+        - 48,-16
+        - 48,-20
+      id: grid_chunk-48--20
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 256
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 16,32
+        - 16,34
+        - 5,34
+        - 5,32
+      id: grid_chunk-5-32
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 88
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 6,34
+        - 6,36
+        - 5,36
+        - 5,34
+      id: grid_chunk-5-34
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 8
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 16,34
+        - 16,36
+        - 10,36
+        - 10,34
+      id: grid_chunk-10-34
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 48
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 16,36
+        - 16,38
+        - 5,38
+        - 5,36
+      id: grid_chunk-5-36
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 88
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 6,38
+        - 6,39
+        - 5,39
+        - 5,38
+      id: grid_chunk-5-38
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 4
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 16,38
+        - 16,39
+        - 12,39
+        - 12,38
+      id: grid_chunk-12-38
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 16
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 16,39
+        - 16,40
+        - 5,40
+        - 5,39
+      id: grid_chunk-5-39
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 44
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 6,40
+        - 6,42
+        - 5,42
+        - 5,40
+      id: grid_chunk-5-40
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 8
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 16,40
+        - 16,42
+        - 12,42
+        - 12,40
+      id: grid_chunk-12-40
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 32
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 16,42
+        - 16,43
+        - 5,43
+        - 5,42
+      id: grid_chunk-5-42
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 44
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 6,43
+        - 6,47
+        - 5,47
+        - 5,43
+      id: grid_chunk-5-43
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 16
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 16,47
+        - 16,48
+        - 5,48
+        - 5,47
+      id: grid_chunk-5-47
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 44
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 32,32
+        - 32,43
+        - 16,43
+        - 16,32
+      id: grid_chunk-16-32
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 704
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 32,43
+        - 32,44
+        - 17,44
+        - 17,43
+      id: grid_chunk-17-43
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 60
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 32,44
+        - 32,47
+        - 18,47
+        - 18,44
+      id: grid_chunk-18-44
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 168
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 32,47
+        - 32,48
+        - 16,48
+        - 16,47
+      id: grid_chunk-16-47
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 64
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 48,16
+        - 48,32
+        - 32,32
+        - 32,16
+      id: grid_chunk-32-16
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 1024
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 48,32
+        - 48,39
+        - 32,39
+        - 32,32
+      id: grid_chunk-32-32
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 448
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 41,39
+        - 41,40
+        - 32,40
+        - 32,39
+      id: grid_chunk-32-39
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 36
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 48,39
+        - 48,40
+        - 43,40
+        - 43,39
+      id: grid_chunk-43-39
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 20
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 48,40
+        - 48,41
+        - 32,41
+        - 32,40
+      id: grid_chunk-32-40
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 64
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 47,41
+        - 47,44
+        - 32,44
+        - 32,41
+      id: grid_chunk-32-41
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 180
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 39,44
+        - 39,45
+        - 32,45
+        - 32,44
+      id: grid_chunk-32-44
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 28
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 46,44
+        - 46,45
+        - 42,45
+        - 42,44
+      id: grid_chunk-42-44
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 16
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 37,45
+        - 37,47
+        - 32,47
+        - 32,45
+      id: grid_chunk-32-45
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 40
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 41,44
+        - 41,47
+        - 40,47
+        - 40,44
+      id: grid_chunk-40-44
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 12
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 48,45
+        - 48,47
+        - 42,47
+        - 42,45
+      id: grid_chunk-42-45
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 48
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 48,47
+        - 48,48
+        - 32,48
+        - 32,47
+      id: grid_chunk-32-47
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 64
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 32,48
+        - 32,50
+        - 21,50
+        - 21,48
+      id: grid_chunk-21-48
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 88
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 22,50
+        - 22,51
+        - 21,51
+        - 21,50
+      id: grid_chunk-21-50
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 4
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 32,51
+        - 32,52
+        - 21,52
+        - 21,51
+      id: grid_chunk-21-51
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 44
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 22,52
+        - 22,53
+        - 21,53
+        - 21,52
+      id: grid_chunk-21-52
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 4
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 32,53
+        - 32,54
+        - 21,54
+        - 21,53
+      id: grid_chunk-21-53
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 44
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 32,54
+        - 32,55
+        - 22,55
+        - 22,54
+      id: grid_chunk-22-54
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 40
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 31,55
+        - 31,56
+        - 24,56
+        - 24,55
+      id: grid_chunk-24-55
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 28
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 30,56
+        - 30,57
+        - 25,57
+        - 25,56
+      id: grid_chunk-25-56
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 20
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 29,57
+        - 29,58
+        - 26,58
+        - 26,57
+      id: grid_chunk-26-57
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 12
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 28,58
+        - 28,61
+        - 27,61
+        - 27,58
+      id: grid_chunk-27-58
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 12
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 48,48
+        - 48,49
+        - 45,49
+        - 45,48
+      id: grid_chunk-45-48
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 12
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 34,48
+        - 34,50
+        - 32,50
+        - 32,48
+      id: grid_chunk-32-48
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 16
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 34,50
+        - 34,51
+        - 33,51
+        - 33,50
+      id: grid_chunk-33-50
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 4
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 43,48
+        - 43,51
+        - 42,51
+        - 42,48
+      id: grid_chunk-42-48
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 12
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 34,51
+        - 34,52
+        - 32,52
+        - 32,51
+      id: grid_chunk-32-51
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 8
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 48,51
+        - 48,52
+        - 42,52
+        - 42,51
+      id: grid_chunk-42-51
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 24
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 43,52
+        - 43,53
+        - 33,53
+        - 33,52
+      id: grid_chunk-33-52
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 40
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 34,53
+        - 34,54
+        - 32,54
+        - 32,53
+      id: grid_chunk-32-53
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 8
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 33,54
+        - 33,55
+        - 32,55
+        - 32,54
+      id: grid_chunk-32-54
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 4
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 80,-16
+        - 80,-11
+        - 64,-11
+        - 64,-16
+      id: grid_chunk-64--16
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 320
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 74,-11
+        - 74,-8
+        - 64,-8
+        - 64,-11
+      id: grid_chunk-64--11
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 120
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 80,-10
+        - 80,-8
+        - 75,-8
+        - 75,-10
+      id: grid_chunk-75--10
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 40
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 80,-8
+        - 80,0
+        - 64,0
+        - 64,-8
+      id: grid_chunk-64--8
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 512
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 68,-26
+        - 68,-25
+        - 64,-25
+        - 64,-26
+      id: grid_chunk-64--26
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 16
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 75,-26
+        - 75,-25
+        - 69,-25
+        - 69,-26
+      id: grid_chunk-69--26
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 24
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 80,-26
+        - 80,-25
+        - 79,-25
+        - 79,-26
+      id: grid_chunk-79--26
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 4
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 80,-25
+        - 80,-24
+        - 64,-24
+        - 64,-25
+      id: grid_chunk-64--25
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 64
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 73,-21
+        - 73,-18
+        - 64,-18
+        - 64,-21
+      id: grid_chunk-64--21
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 108
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 80,-18
+        - 80,-16
+        - 64,-16
+        - 64,-18
+      id: grid_chunk-64--18
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 128
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 64,0
+        - 64,16
+        - 48,16
+        - 48,0
+      id: grid_chunk-48-0
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 1024
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 80,0
+        - 80,14
+        - 64,14
+        - 64,0
+      id: grid_chunk-64-0
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 896
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 77,14
+        - 77,15
+        - 64,15
+        - 64,14
+      id: grid_chunk-64-14
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 52
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 76,15
+        - 76,16
+        - 64,16
+        - 64,15
+      id: grid_chunk-64-15
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 48
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 91,0
+        - 91,3
+        - 80,3
+        - 80,0
+      id: grid_chunk-80-0
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 132
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 88,3
+        - 88,6
+        - 80,6
+        - 80,3
+      id: grid_chunk-80-3
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 96
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 91,6
+        - 91,7
+        - 80,7
+        - 80,6
+      id: grid_chunk-80-6
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 44
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 87,7
+        - 87,9
+        - 80,9
+        - 80,7
+      id: grid_chunk-80-7
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 56
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 88,9
+        - 88,14
+        - 80,14
+        - 80,9
+      id: grid_chunk-80-9
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 160
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 90,7
+        - 90,14
+        - 89,14
+        - 89,7
+      id: grid_chunk-89-7
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 28
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 93,0
+        - 93,14
+        - 92,14
+        - 92,0
+      id: grid_chunk-92-0
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 56
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 93,14
+        - 93,15
+        - 84,15
+        - 84,14
+      id: grid_chunk-84-14
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 36
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 85,15
+        - 85,16
+        - 81,16
+        - 81,15
+      id: grid_chunk-81-15
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 16
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 64,16
+        - 64,27
+        - 48,27
+        - 48,16
+      id: grid_chunk-48-16
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 704
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 52,27
+        - 52,28
+        - 48,28
+        - 48,27
+      id: grid_chunk-48-27
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 16
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 59,27
+        - 59,28
+        - 54,28
+        - 54,27
+      id: grid_chunk-54-27
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 20
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 64,27
+        - 64,28
+        - 61,28
+        - 61,27
+      id: grid_chunk-61-27
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 12
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 64,28
+        - 64,29
+        - 48,29
+        - 48,28
+      id: grid_chunk-48-28
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 64
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 64,29
+        - 64,30
+        - 51,30
+        - 51,29
+      id: grid_chunk-51-29
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 52
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 62,30
+        - 62,32
+        - 51,32
+        - 51,30
+      id: grid_chunk-51-30
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 88
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 64,48
+        - 64,50
+        - 48,50
+        - 48,48
+      id: grid_chunk-48-48
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 128
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 50,50
+        - 50,51
+        - 49,51
+        - 49,50
+      id: grid_chunk-49-50
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 4
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 50,51
+        - 50,52
+        - 48,52
+        - 48,51
+      id: grid_chunk-48-51
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 8
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 58,50
+        - 58,52
+        - 55,52
+        - 55,50
+      id: grid_chunk-55-50
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 24
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 63,32
+        - 63,40
+        - 50,40
+        - 50,32
+      id: grid_chunk-50-32
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 416
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 62,40
+        - 62,41
+        - 51,41
+        - 51,40
+      id: grid_chunk-51-40
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 44
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 60,41
+        - 60,42
+        - 53,42
+        - 53,41
+      id: grid_chunk-53-41
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 28
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 51,45
+        - 51,47
+        - 48,47
+        - 48,45
+      id: grid_chunk-48-45
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 24
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 64,45
+        - 64,47
+        - 62,47
+        - 62,45
+      id: grid_chunk-62-45
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 16
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 64,47
+        - 64,48
+        - 48,48
+        - 48,47
+      id: grid_chunk-48-47
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 64
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 80,16
+        - 80,18
+        - 79,18
+        - 79,16
+      id: grid_chunk-79-16
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 8
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 76,16
+        - 76,19
+        - 64,19
+        - 64,16
+      id: grid_chunk-64-16
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 144
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 80,18
+        - 80,19
+        - 77,19
+        - 77,18
+      id: grid_chunk-77-18
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 12
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 78,19
+        - 78,20
+        - 64,20
+        - 64,19
+      id: grid_chunk-64-19
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 56
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 74,20
+        - 74,24
+        - 64,24
+        - 64,20
+      id: grid_chunk-64-20
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 160
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 77,20
+        - 77,24
+        - 76,24
+        - 76,20
+      id: grid_chunk-76-20
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 16
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 80,24
+        - 80,25
+        - 64,25
+        - 64,24
+      id: grid_chunk-64-24
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 64
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 75,25
+        - 75,26
+        - 64,26
+        - 64,25
+      id: grid_chunk-64-25
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 44
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 74,26
+        - 74,30
+        - 64,30
+        - 64,26
+      id: grid_chunk-64-26
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 160
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 74,30
+        - 74,32
+        - 65,32
+        - 65,30
+      id: grid_chunk-65-30
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 72
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 74,32
+        - 74,38
+        - 65,38
+        - 65,32
+      id: grid_chunk-65-32
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 216
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 80,38
+        - 80,39
+        - 65,39
+        - 65,38
+      id: grid_chunk-65-38
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 60
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 74,39
+        - 74,40
+        - 65,40
+        - 65,39
+      id: grid_chunk-65-39
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 36
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 80,40
+        - 80,41
+        - 65,41
+        - 65,40
+      id: grid_chunk-65-40
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 60
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 73,41
+        - 73,42
+        - 65,42
+        - 65,41
+      id: grid_chunk-65-41
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 32
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 72,42
+        - 72,43
+        - 65,43
+        - 65,42
+      id: grid_chunk-65-42
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 28
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 73,43
+        - 73,44
+        - 65,44
+        - 65,43
+      id: grid_chunk-65-43
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 32
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 80,41
+        - 80,44
+        - 77,44
+        - 77,41
+      id: grid_chunk-77-41
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 36
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 75,44
+        - 75,45
+        - 65,45
+        - 65,44
+      id: grid_chunk-65-44
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 40
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 79,44
+        - 79,45
+        - 78,45
+        - 78,44
+      id: grid_chunk-78-44
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 4
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 80,45
+        - 80,47
+        - 64,47
+        - 64,45
+      id: grid_chunk-64-45
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 128
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 73,47
+        - 73,48
+        - 64,48
+        - 64,47
+      id: grid_chunk-64-47
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 36
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 80,47
+        - 80,48
+        - 77,48
+        - 77,47
+      id: grid_chunk-77-47
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 12
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 68,48
+        - 68,49
+        - 64,49
+        - 64,48
+      id: grid_chunk-64-48
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 16
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 65,49
+        - 65,50
+        - 64,50
+        - 64,49
+      id: grid_chunk-64-49
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 4
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 73,48
+        - 73,51
+        - 72,51
+        - 72,48
+      id: grid_chunk-72-48
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 12
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 80,48
+        - 80,51
+        - 77,51
+        - 77,48
+      id: grid_chunk-77-48
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 36
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 80,51
+        - 80,52
+        - 72,52
+        - 72,51
+      id: grid_chunk-72-51
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 32
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 91,-16
+        - 91,-12
+        - 80,-12
+        - 80,-16
+      id: grid_chunk-80--16
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 176
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 92,-12
+        - 92,-11
+        - 80,-11
+        - 80,-12
+      id: grid_chunk-80--12
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 48
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 84,-9
+        - 84,-7
+        - 80,-7
+        - 80,-9
+      id: grid_chunk-80--9
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 32
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 92,-11
+        - 92,-7
+        - 85,-7
+        - 85,-11
+      id: grid_chunk-85--11
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 112
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 92,-7
+        - 92,-2
+        - 80,-2
+        - 80,-7
+      id: grid_chunk-80--7
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 240
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 93,-2
+        - 93,0
+        - 80,0
+        - 80,-2
+      id: grid_chunk-80--2
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 104
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 88,-26
+        - 88,-25
+        - 80,-25
+        - 80,-26
+      id: grid_chunk-80--26
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 32
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 81,-25
+        - 81,-24
+        - 80,-24
+        - 80,-25
+      id: grid_chunk-80--25
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 4
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 88,-25
+        - 88,-24
+        - 87,-24
+        - 87,-25
+      id: grid_chunk-87--25
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 4
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 88,-24
+        - 88,-23
+        - 86,-23
+        - 86,-24
+      id: grid_chunk-86--24
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 8
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 96,-23
+        - 96,-22
+        - 87,-22
+        - 87,-23
+      id: grid_chunk-87--23
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 36
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 96,-22
+        - 96,-19
+        - 84,-19
+        - 84,-22
+      id: grid_chunk-84--22
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 144
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 96,-19
+        - 96,-18
+        - 87,-18
+        - 87,-19
+      id: grid_chunk-87--19
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 36
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 96,-18
+        - 96,-17
+        - 80,-17
+        - 80,-18
+      id: grid_chunk-80--18
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 64
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 91,-17
+        - 91,-16
+        - 80,-16
+        - 80,-17
+      id: grid_chunk-80--17
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 44
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 91,38
+        - 91,39
+        - 80,39
+        - 80,38
+      id: grid_chunk-80-38
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 44
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 91,39
+        - 91,40
+        - 88,40
+        - 88,39
+      id: grid_chunk-88-39
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 12
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 87,40
+        - 87,41
+        - 81,41
+        - 81,40
+      id: grid_chunk-81-40
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 24
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 84,41
+        - 84,42
+        - 81,42
+        - 81,41
+      id: grid_chunk-81-41
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 12
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 88,41
+        - 88,42
+        - 85,42
+        - 85,41
+      id: grid_chunk-85-41
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 12
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 91,40
+        - 91,42
+        - 89,42
+        - 89,40
+      id: grid_chunk-89-40
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 16
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 88,42
+        - 88,43
+        - 81,43
+        - 81,42
+      id: grid_chunk-81-42
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 28
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 92,42
+        - 92,43
+        - 89,43
+        - 89,42
+      id: grid_chunk-89-42
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 12
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 92,43
+        - 92,44
+        - 81,44
+        - 81,43
+      id: grid_chunk-81-43
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 44
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 85,44
+        - 85,45
+        - 82,45
+        - 82,44
+      id: grid_chunk-82-44
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 12
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 90,44
+        - 90,45
+        - 86,45
+        - 86,44
+      id: grid_chunk-86-44
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 16
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 90,45
+        - 90,46
+        - 80,46
+        - 80,45
+      id: grid_chunk-80-45
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 40
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 81,46
+        - 81,47
+        - 80,47
+        - 80,46
+      id: grid_chunk-80-46
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 4
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 87,46
+        - 87,47
+        - 82,47
+        - 82,46
+      id: grid_chunk-82-46
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 20
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 90,46
+        - 90,47
+        - 89,47
+        - 89,46
+      id: grid_chunk-89-46
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 4
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 84,47
+        - 84,48
+        - 81,48
+        - 81,47
+      id: grid_chunk-81-47
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 12
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 89,47
+        - 89,48
+        - 85,48
+        - 85,47
+      id: grid_chunk-85-47
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 16
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 92,44
+        - 92,48
+        - 91,48
+        - 91,44
+      id: grid_chunk-91-44
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 16
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 88,48
+        - 88,49
+        - 80,49
+        - 80,48
+      id: grid_chunk-80-48
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 32
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 92,48
+        - 92,49
+        - 89,49
+        - 89,48
+      id: grid_chunk-89-48
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 12
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 84,49
+        - 84,50
+        - 80,50
+        - 80,49
+      id: grid_chunk-80-49
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 16
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 88,49
+        - 88,50
+        - 85,50
+        - 85,49
+      id: grid_chunk-85-49
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 12
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 91,49
+        - 91,50
+        - 89,50
+        - 89,49
+      id: grid_chunk-89-49
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 8
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 86,50
+        - 86,51
+        - 80,51
+        - 80,50
+      id: grid_chunk-80-50
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 24
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 91,50
+        - 91,51
+        - 87,51
+        - 87,50
+      id: grid_chunk-87-50
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 16
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 90,51
+        - 90,52
+        - 80,52
+        - 80,51
+      id: grid_chunk-80-51
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 40
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 51,-48
+        - 51,-41
+        - 50,-41
+        - 50,-48
+      id: grid_chunk-50--48
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 28
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 53,-41
+        - 53,-40
+        - 48,-40
+        - 48,-41
+      id: grid_chunk-48--41
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 20
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 53,-40
+        - 53,-36
+        - 52,-36
+        - 52,-40
+      id: grid_chunk-52--40
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 16
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 56,-36
+        - 56,-35
+        - 52,-35
+        - 52,-36
+      id: grid_chunk-52--36
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 16
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 53,-35
+        - 53,-34
+        - 52,-34
+        - 52,-35
+      id: grid_chunk-52--35
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 4
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 59,-35
+        - 59,-34
+        - 55,-34
+        - 55,-35
+      id: grid_chunk-55--35
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 16
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 49,-40
+        - 49,-33
+        - 48,-33
+        - 48,-40
+      id: grid_chunk-48--40
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 28
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 50,-33
+        - 50,-32
+        - 48,-32
+        - 48,-33
+      id: grid_chunk-48--33
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 8
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 59,-34
+        - 59,-32
+        - 58,-32
+        - 58,-34
+      id: grid_chunk-58--34
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 8
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 101,-23
+        - 101,-22
+        - 96,-22
+        - 96,-23
+      id: grid_chunk-96--23
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 20
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 109,-26
+        - 109,-22
+        - 104,-22
+        - 104,-26
+      id: grid_chunk-104--26
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 80
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 109,-22
+        - 109,-21
+        - 96,-21
+        - 96,-22
+      id: grid_chunk-96--22
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 52
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 112,-26
+        - 112,-21
+        - 110,-21
+        - 110,-26
+      id: grid_chunk-110--26
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 40
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 112,-21
+        - 112,-17
+        - 96,-17
+        - 96,-21
+      id: grid_chunk-96--21
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 256
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 112,-17
+        - 112,-16
+        - 101,-16
+        - 101,-17
+      id: grid_chunk-101--17
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 44
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 112,-16
+        - 112,-14
+        - 101,-14
+        - 101,-16
+      id: grid_chunk-101--16
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 88
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 109,-14
+        - 109,-11
+        - 101,-11
+        - 101,-14
+      id: grid_chunk-101--14
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 96
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 109,-11
+        - 109,-10
+        - 100,-10
+        - 100,-11
+      id: grid_chunk-100--11
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 36
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 109,-10
+        - 109,-9
+        - 104,-9
+        - 104,-10
+      id: grid_chunk-104--10
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 20
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 112,-14
+        - 112,-9
+        - 110,-9
+        - 110,-14
+      id: grid_chunk-110--14
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 40
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 117,-26
+        - 117,-21
+        - 112,-21
+        - 112,-26
+      id: grid_chunk-112--26
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 100
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 122,-21
+        - 122,-16
+        - 112,-16
+        - 112,-21
+      id: grid_chunk-112--21
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 200
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 122,-16
+        - 122,-14
+        - 112,-14
+        - 112,-16
+      id: grid_chunk-112--16
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 80
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 117,-14
+        - 117,-9
+        - 112,-9
+        - 112,-14
+      id: grid_chunk-112--14
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 100
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 82,16
+        - 82,17
+        - 80,17
+        - 80,16
+      id: grid_chunk-80-16
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 8
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 49,-56
+        - 49,-55
+        - 48,-55
+        - 48,-56
+      id: grid_chunk-48--56
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 4
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 51,-52
+        - 51,-51
+        - 48,-51
+        - 48,-52
+      id: grid_chunk-48--52
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 12
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 51,-51
+        - 51,-48
+        - 50,-48
+        - 50,-51
+      id: grid_chunk-50--51
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 12
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -16,-31
+        - -16,-28
+        - -17,-28
+        - -17,-31
+      id: grid_chunk--17--31
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 12
+      restitution: 0.1
+    type: Fixtures
+  - chunkCollection: {}
+    type: DecalGrid
 - uid: 1
   type: Grille
   components:
@@ -13750,6 +13753,8 @@ entities:
   - pos: 0.3026234,-5.6171584
     parent: 0
     type: Transform
+  - fixtures: []
+    type: Fixtures
 - uid: 164
   type: AirlockMaintLocked
   components:
@@ -13981,9 +13986,9 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 196
-  type: AirlockMaint
+  type: AirlockJanitorLocked
   components:
-  - pos: 5.5,-7.5
+  - pos: 4.5,-2.5
     parent: 0
     type: Transform
   - containers:
@@ -13991,9 +13996,9 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 197
-  type: Airlock
+  type: AirlockMaintJanitorLocked
   components:
-  - pos: 4.5,-2.5
+  - pos: 5.5,-7.5
     parent: 0
     type: Transform
   - containers:
@@ -15780,7 +15785,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 456
-  type: CrateGenericonimo
+  type: CrateGenericSteel
   components:
   - pos: 5.5,19.5
     parent: 0
@@ -16761,9 +16766,9 @@ entities:
   - enabled: False
     type: AmbientSound
 - uid: 598
-  type: AirlockMaintCommandLocked
+  type: AirlockHeadOfPersonnelLocked
   components:
-  - pos: 14.5,-6.5
+  - pos: 13.5,-3.5
     parent: 0
     type: Transform
   - containers:
@@ -16771,11 +16776,9 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 599
-  type: AirlockCommandLocked
+  type: AirlockMaintHOPLocked
   components:
-  - name: Head of Personnel's Office
-    type: MetaData
-  - pos: 13.5,-3.5
+  - pos: 14.5,-6.5
     parent: 0
     type: Transform
   - containers:
@@ -16984,7 +16987,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 623
-  type: AirlockScienceLocked
+  type: AirlockCommandLocked
   components:
   - pos: 24.5,-11.5
     parent: 0
@@ -19394,7 +19397,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 970
-  type: AirlockCommandLocked
+  type: AirlockChiefEngineerLocked
   components:
   - pos: 14.5,-34.5
     parent: 0
@@ -20812,9 +20815,9 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1181
-  type: AirlockMaintBarLocked
+  type: AirlockTheatreLocked
   components:
-  - pos: 26.5,9.5
+  - pos: 26.5,4.5
     parent: 0
     type: Transform
   - containers:
@@ -20822,9 +20825,9 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 1182
-  type: AirlockTheatreLocked
+  type: AirlockMaintTheatreLocked
   components:
-  - pos: 26.5,4.5
+  - pos: 26.5,9.5
     parent: 0
     type: Transform
   - containers:
@@ -21054,9 +21057,9 @@ entities:
     parent: 0
     type: Transform
 - uid: 1214
-  type: Airlock
+  type: AirlockMaintChapelLocked
   components:
-  - pos: 33.5,6.5
+  - pos: 29.5,9.5
     parent: 0
     type: Transform
   - containers:
@@ -21064,9 +21067,9 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 1215
-  type: AirlockMaintLocked
+  type: AirlockChapelLocked
   components:
-  - pos: 29.5,9.5
+  - pos: 33.5,6.5
     parent: 0
     type: Transform
   - containers:
@@ -23468,7 +23471,7 @@ entities:
   - startingCharge: 12000
     type: Battery
 - uid: 1592
-  type: AirlockServiceGlassLocked
+  type: AirlockKitchenGlassLocked
   components:
   - pos: 34.5,-8.5
     parent: 0
@@ -23478,7 +23481,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 1593
-  type: AirlockServiceGlassLocked
+  type: AirlockKitchenGlassLocked
   components:
   - pos: 33.5,-8.5
     parent: 0
@@ -23815,7 +23818,7 @@ entities:
     supplyRampPosition: 14.450751
     type: PowerNetworkBattery
 - uid: 1637
-  type: AirlockMaintBarLocked
+  type: AirlockMaintKitchenLocked
   components:
   - pos: 40.5,-12.5
     parent: 0
@@ -23909,7 +23912,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1648
-  type: AirlockFreezerLocked
+  type: AirlockFreezerKitchenHydroLocked
   components:
   - pos: 40.5,-9.5
     parent: 0
@@ -24137,7 +24140,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 1679
-  type: AirlockGlass
+  type: AirlockHydroGlassLocked
   components:
   - pos: 41.5,-2.5
     parent: 0
@@ -24159,7 +24162,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 1682
-  type: Windoor
+  type: WindoorHydroponicsLocked
   components:
   - pos: 44.5,-2.5
     parent: 0
@@ -24491,7 +24494,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 1719
-  type: AirlockMaintLocked
+  type: AirlockMaintHydroLocked
   components:
   - pos: 41.5,-11.5
     parent: 0
@@ -26833,6 +26836,8 @@ entities:
   - pos: 6.5559034,25.52264
     parent: 0
     type: Transform
+  - fixtures: []
+    type: Fixtures
 - uid: 2066
   type: WallSolid
   components:
@@ -26956,6 +26961,8 @@ entities:
   - pos: 6.5559034,25.783308
     parent: 0
     type: Transform
+  - fixtures: []
+    type: Fixtures
 - uid: 2085
   type: BlastDoor
   components:
@@ -26998,7 +27005,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 2090
-  type: CrateGenericonimo
+  type: CrateGenericSteel
   components:
   - pos: 6.5,32.5
     parent: 0
@@ -27012,7 +27019,7 @@ entities:
       PaperLabel: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 2091
-  type: CrateGenericonimo
+  type: CrateGenericSteel
   components:
   - pos: 7.5,31.5
     parent: 0
@@ -29199,7 +29206,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 2397
-  type: AirlockCommandGlassLocked
+  type: AirlockHeadOfSecurityLocked
   components:
   - pos: 42.5,23.5
     parent: 0
@@ -30984,9 +30991,9 @@ entities:
     parent: 0
     type: Transform
 - uid: 2638
-  type: AirlockCommandLocked
+  type: AirlockCaptainLocked
   components:
-  - pos: 35.5,40.5
+  - pos: 32.5,44.5
     parent: 0
     type: Transform
   - containers:
@@ -30994,9 +31001,9 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 2639
-  type: AirlockCommandLocked
+  type: AirlockCaptainLocked
   components:
-  - pos: 32.5,44.5
+  - pos: 35.5,40.5
     parent: 0
     type: Transform
   - containers:
@@ -32244,7 +32251,7 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 2810
-  type: AirlockCommandLocked
+  type: AirlockChiefEngineerLocked
   components:
   - pos: 16.5,36.5
     parent: 0
@@ -32493,12 +32500,16 @@ entities:
   - pos: 10.555903,29.382763
     parent: 0
     type: Transform
+  - fixtures: []
+    type: Fixtures
 - uid: 2851
   type: SignalButton
   components:
   - pos: 7.2902784,29.867138
     parent: 0
     type: Transform
+  - fixtures: []
+    type: Fixtures
 - uid: 2852
   type: Poweredlight
   components:
@@ -38043,7 +38054,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 3743
-  type: CrateGenericonimo
+  type: CrateGenericSteel
   components:
   - pos: 89.5,-7.5
     parent: 0
@@ -38057,7 +38068,7 @@ entities:
       PaperLabel: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 3744
-  type: CrateGenericonimo
+  type: CrateGenericSteel
   components:
   - pos: 90.5,-7.5
     parent: 0
@@ -48322,7 +48333,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 4940
-  type: CrateGenericonimo
+  type: CrateGenericSteel
   components:
   - pos: 17.5,41.5
     parent: 0
@@ -49306,7 +49317,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 5062
-  type: AirlockCommandGlassLocked
+  type: AirlockChiefMedicalOfficerLocked
   components:
   - pos: 56.5,-8.5
     parent: 0
@@ -50420,6 +50431,8 @@ entities:
   - pos: 53.770565,-11.798379
     parent: 0
     type: Transform
+  - fixtures: []
+    type: Fixtures
 - uid: 5185
   type: LockerChiefMedicalOfficerFilled
   components:
@@ -51111,7 +51124,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 5255
-  type: AirlockCommandGlassLocked
+  type: AirlockResearchDirectorLocked
   components:
   - pos: 62.5,12.5
     parent: 0
@@ -51203,12 +51216,16 @@ entities:
   - pos: 59.81175,10.264227
     parent: 0
     type: Transform
+  - fixtures: []
+    type: Fixtures
 - uid: 5266
   type: SignalButton
   components:
   - pos: 59.81175,10.529852
     parent: 0
     type: Transform
+  - fixtures: []
+    type: Fixtures
 - uid: 5267
   type: AirlockScienceGlassLocked
   components:
@@ -51290,9 +51307,9 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 5275
-  type: AirlockCommandLocked
+  type: AirlockResearchDirectorLocked
   components:
-  - pos: 52.5,24.5
+  - pos: 56.5,28.5
     parent: 0
     type: Transform
   - containers:
@@ -51300,9 +51317,9 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 5276
-  type: AirlockCommandLocked
+  type: AirlockResearchDirectorLocked
   components:
-  - pos: 50.5,24.5
+  - pos: 52.5,24.5
     parent: 0
     type: Transform
   - containers:
@@ -52917,7 +52934,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 5459
-  type: CrateGenericonimo
+  type: CrateGenericSteel
   components:
   - pos: 9.5,-18.5
     parent: 0
@@ -53077,7 +53094,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 5480
-  type: CarpetGay
+  type: CarpetPink
   components:
   - pos: 67.5,39.5
     parent: 0
@@ -55405,7 +55422,7 @@ entities:
       cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 5767
-  type: CrateGenericonimo
+  type: CrateGenericSteel
   components:
   - pos: 12.5,16.5
     parent: 0
@@ -64815,6 +64832,48 @@ entities:
   - pos: 13.5,-12.5
     parent: 0
     type: Transform
+- uid: 6804
+  type: AirlockArmoryLocked
+  components:
+  - name: Armory
+    type: MetaData
+  - pos: 40.5,25.5
+    parent: 0
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 6805
+  type: AirlockArmoryLocked
+  components:
+  - name: Armory
+    type: MetaData
+  - pos: 39.5,25.5
+    parent: 0
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 6806
+  type: LockerWardenFilled
+  components:
+  - pos: 38.5,24.5
+    parent: 0
+    type: Transform
+  - isPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 6807
+  type: SpawnPointWarden
+  components:
+  - pos: 29.5,25.5
+    parent: 0
+    type: Transform
 - uid: 6808
   type: WallReinforced
   components:
@@ -64855,6 +64914,22 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+- uid: 6814
+  type: AirlockResearchDirectorLocked
+  components:
+  - pos: 50.5,24.5
+    parent: 0
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 6815
+  type: WindoorHydroponicsLocked
+  components:
+  - pos: 43.5,-2.5
+    parent: 0
+    type: Transform
 - uid: 6825
   type: CableApcExtension
   components:
@@ -75978,24 +76053,32 @@ entities:
   - pos: 53.5,-24.5
     parent: 0
     type: Transform
+  - fixtures: []
+    type: Fixtures
 - uid: 7945
   type: GasMinerNitrogen
   components:
   - pos: 53.5,-22.5
     parent: 0
     type: Transform
+  - fixtures: []
+    type: Fixtures
 - uid: 7946
   type: GasMinerCarbonDioxide
   components:
   - pos: 53.5,-26.5
     parent: 0
     type: Transform
+  - fixtures: []
+    type: Fixtures
 - uid: 7947
   type: GasMinerPlasma
   components:
   - pos: 53.5,-28.5
     parent: 0
     type: Transform
+  - fixtures: []
+    type: Fixtures
 - uid: 7948
   type: WarningO2
   components:
@@ -83014,12 +83097,16 @@ entities:
   - pos: 49.485035,2.0687056
     parent: 0
     type: Transform
+  - fixtures: []
+    type: Fixtures
 - uid: 8698
   type: SignalButton
   components:
   - pos: 53.74233,1.4437056
     parent: 0
     type: Transform
+  - fixtures: []
+    type: Fixtures
 - uid: 8699
   type: SpawnPointMedicalDoctor
   components:
@@ -106888,6 +106975,8 @@ entities:
   - pos: 37.465042,-25.226236
     parent: 0
     type: Transform
+  - fixtures: []
+    type: Fixtures
 - uid: 10905
   type: CableMV
   components:
@@ -108005,16 +108094,6 @@ entities:
   type: BlastDoor
   components:
   - pos: 56.5,32.5
-    parent: 0
-    type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 11055
-  type: AirlockCommand
-  components:
-  - pos: 56.5,28.5
     parent: 0
     type: Transform
   - containers:
@@ -109273,26 +109352,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 11202
-  type: AirlockVaultLocked
-  components:
-  - pos: 39.5,25.5
-    parent: 0
-    type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 11203
-  type: AirlockVaultLocked
-  components:
-  - pos: 40.5,25.5
-    parent: 0
-    type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 11204
   type: PowerCellMediumStandard
   components:
@@ -111045,12 +111104,6 @@ entities:
   components:
   - rot: 3.141592653589793 rad
     pos: 47.5,12.5
-    parent: 0
-    type: Transform
-- uid: 11453
-  type: Windoor
-  components:
-  - pos: 43.5,-2.5
     parent: 0
     type: Transform
 - uid: 11454
@@ -114302,12 +114355,16 @@ entities:
   - pos: 9.5,-33.5
     parent: 0
     type: Transform
+  - fixtures: []
+    type: Fixtures
 - uid: 11950
   type: SignalButton
   components:
   - pos: 9.5,-34.5
     parent: 0
     type: Transform
+  - fixtures: []
+    type: Fixtures
 - uid: 11951
   type: PowerCellRecharger
   components:

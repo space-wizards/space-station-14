@@ -314,7 +314,7 @@ namespace Content.Server.Atmos.EntitySystems
             var number = 0;
             while (atmosphere.CurrentRunAtmosDevices.TryDequeue(out var device))
             {
-                RaiseLocalEvent(device.Owner.Uid, _updateEvent, false);
+                RaiseLocalEvent(device.Owner, _updateEvent, false);
                 device.LastProcess = time;
 
                 if (number++ < LagCheckIterations) continue;
@@ -347,7 +347,7 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 var atmosphere = _currentRunAtmosphere[_currentRunAtmosphereIndex];
 
-                if (atmosphere.Paused || !atmosphere.Simulated || atmosphere.LifeStage >= ComponentLifeStage.Stopping)
+                if (atmosphere.LifeStage >= ComponentLifeStage.Stopping || atmosphere.Paused || !atmosphere.Simulated)
                     continue;
 
                 atmosphere.Timer += frameTime;

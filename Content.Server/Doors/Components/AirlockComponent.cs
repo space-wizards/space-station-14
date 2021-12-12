@@ -7,6 +7,7 @@ using Content.Shared.Doors;
 using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -175,7 +176,7 @@ namespace Content.Server.Doors.Components
                 _boltLightsWirePulsed ? StatusLightState.On : StatusLightState.Off, "BLTL");
 
             var ev = new DoorGetCloseTimeModifierEvent();
-            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, ev, false);
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, ev, false);
 
             var timingStatus =
                 new StatusLightData(Color.Orange, !AutoClose ? StatusLightState.Off :

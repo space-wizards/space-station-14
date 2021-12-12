@@ -35,13 +35,13 @@ namespace Content.Server.Botany.Components
             if (Seed == null)
                 return;
 
-            if (Owner.TryGetComponent(out SpriteComponent? sprite))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out SpriteComponent? sprite))
             {
                 sprite.LayerSetRSI(0, Seed.PlantRsi);
                 sprite.LayerSetState(0, Seed.PlantIconState);
             }
 
-            var solutionContainer = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner.Uid, SolutionName);
+            var solutionContainer = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, SolutionName);
             if (solutionContainer == null)
             {
                 Logger.Warning($"No solution container found in {nameof(ProduceComponent)}.");

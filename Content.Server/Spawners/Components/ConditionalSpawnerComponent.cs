@@ -12,6 +12,7 @@ namespace Content.Server.Spawners.Components
     [RegisterComponent]
     public class ConditionalSpawnerComponent : Component, IMapInit
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
         public override string Name => "ConditionalSpawner";
@@ -61,8 +62,8 @@ namespace Content.Server.Spawners.Components
                 return;
             }
 
-            if(!Owner.Deleted)
-                Owner.EntityManager.SpawnEntity(_robustRandom.Pick(Prototypes), Owner.Transform.Coordinates);
+            if(_entMan.Deleted(Owner))
+                _entMan.SpawnEntity(_robustRandom.Pick(Prototypes), _entMan.GetComponent<TransformComponent>(Owner).Coordinates);
         }
 
         public virtual void MapInit()

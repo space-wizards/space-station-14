@@ -63,7 +63,7 @@ namespace Content.Server.Power.EntitySystems
                     if (reachable is not CableNode)
                         continue;
 
-                    var otherTransform = reachable.Owner.Transform;
+                    var otherTransform = EntityManager.GetComponent<TransformComponent>(reachable.Owner);
                     if (otherTransform.GridID != grid.Index)
                         continue;
 

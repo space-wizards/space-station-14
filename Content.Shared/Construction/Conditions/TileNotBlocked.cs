@@ -14,7 +14,7 @@ namespace Content.Shared.Construction.Conditions
         [DataField("filterMobs")] private bool _filterMobs = false;
         [DataField("failIfSpace")] private bool _failIfSpace = true;
 
-        public bool Condition(IEntity user, EntityCoordinates location, Direction direction)
+        public bool Condition(EntityUid user, EntityCoordinates location, Direction direction)
         {
             var tileRef = location.GetTileRef();
 
