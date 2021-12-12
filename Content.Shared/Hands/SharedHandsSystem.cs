@@ -1,4 +1,3 @@
-using System;
 using Content.Shared.Hands.Components;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
@@ -12,7 +11,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Shared.Hands
 {
@@ -40,7 +38,6 @@ namespace Content.Shared.Hands
             base.Shutdown();
             CommandBinds.Unregister<SharedHandsSystem>();
         }
-
 
         #region interactions
         private void SwapHandsPressed(ICommonSession? session)
