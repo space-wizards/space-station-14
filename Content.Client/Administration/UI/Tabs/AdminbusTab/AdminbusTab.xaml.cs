@@ -50,17 +50,27 @@ namespace Content.Client.Administration.UI.Tabs.AdminbusTab
 
         private void SpawnEntitiesButtonOnOnPressed(BaseButton.ButtonEventArgs obj)
         {
-            _entitySpawnWindow ??= new EntitySpawnWindow(IoCManager.Resolve<IPlacementManager>(),
-                IoCManager.Resolve<IPrototypeManager>(),
-                IoCManager.Resolve<IResourceCache>());
+            //FIXME: WE SHOULDN'T NEED TO CHECK FOR DISPOSED
+            if (_entitySpawnWindow == null || _entitySpawnWindow.Disposed)
+            {
+                _entitySpawnWindow = new EntitySpawnWindow(IoCManager.Resolve<IPlacementManager>(),
+                    IoCManager.Resolve<IPrototypeManager>(),
+                    IoCManager.Resolve<IResourceCache>());
+            }
+
             EntitySystem.Get<AdminSystem>().OpenCommand(_entitySpawnWindow);
         }
 
         private void SpawnTilesButtonOnOnPressed(BaseButton.ButtonEventArgs obj)
         {
-            _tileSpawnWindow ??= new TileSpawnWindow(IoCManager.Resolve<ITileDefinitionManager>(),
-                IoCManager.Resolve<IPlacementManager>(),
-                IoCManager.Resolve<IResourceCache>());
+            //FIXME: WE SHOULDN'T NEED TO CHECK FOR DISPOSED
+            if (_tileSpawnWindow == null || _tileSpawnWindow.Disposed)
+            {
+                _tileSpawnWindow = new TileSpawnWindow(IoCManager.Resolve<ITileDefinitionManager>(),
+                    IoCManager.Resolve<IPlacementManager>(),
+                    IoCManager.Resolve<IResourceCache>());
+            }
+
             EntitySystem.Get<AdminSystem>().OpenCommand(_tileSpawnWindow);
         }
     }
