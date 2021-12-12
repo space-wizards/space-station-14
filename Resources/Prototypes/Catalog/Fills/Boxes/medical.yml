@@ -16,6 +16,25 @@
   - type: Item
   - type: Storage
     capacity: 30
+    
+- type: entity
+  name: pill canister box
+  parent: BoxBase
+  id: BoxPillCanister
+  description: A box full of pill canisters.
+  components:
+  - type: StorageFill
+    contents:
+      - id: PillCanister
+        amount: 6
+  - type: Sprite
+    layers:
+      - state: box
+      - state: pillbox
+
+  - type: Item
+  - type: Storage
+    capacity: 30
 
 - type: entity
   name: sterile box

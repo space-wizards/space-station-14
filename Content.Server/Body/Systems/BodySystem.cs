@@ -40,8 +40,15 @@ namespace Content.Server.Body.Systems
             }
         }
 
-        public IEnumerable<T> GetComponentsOnMechanisms<T>(EntityUid uid,
-            SharedBodyComponent? body) where T : Component
+        /// <summary>
+        ///     Returns a list of ValueTuples of <see cref="T"/> and SharedMechanismComponent on each mechanism
+        ///     in the given body.
+        /// </summary>
+        /// <param name="uid">The entity to check for the component on.</param>
+        /// <param name="body">The body to check for mechanisms on.</param>
+        /// <typeparam name="T">The component to check for.</typeparam>
+        public IEnumerable<(T Comp, SharedMechanismComponent Mech)> GetComponentsOnMechanisms<T>(EntityUid uid,
+            SharedBodyComponent? body=null) where T : Component
         {
             if (!Resolve(uid, ref body))
                 yield break;
@@ -49,14 +56,23 @@ namespace Content.Server.Body.Systems
             foreach (var (part, _) in body.Parts)
             foreach (var mechanism in part.Mechanisms)
             {
-                if (EntityManager.TryGetComponent<T>(mechanism.OwnerUid, out var comp))
-                    yield return comp;
+                if (EntityManager.TryGetComponent<T>((mechanism).Owner, out var comp))
+                    yield return (comp, mechanism);
             }
         }
 
+        /// <summary>
+        ///     Tries to get a list of ValueTuples of <see cref="T"/> and SharedMechanismComponent on each mechanism
+        ///     in the given body.
+        /// </summary>
+        /// <param name="uid">The entity to check for the component on.</param>
+        /// <param name="comps">The list of components.</param>
+        /// <param name="body">The body to check for mechanisms on.</param>
+        /// <typeparam name="T">The component to check for.</typeparam>
+        /// <returns>Whether any were found.</returns>
         public bool TryGetComponentsOnMechanisms<T>(EntityUid uid,
-            [NotNullWhen(true)] out IEnumerable<T>? comps,
-            SharedBodyComponent? body) where T: Component
+            [NotNullWhen(true)] out IEnumerable<(T Comp, SharedMechanismComponent Mech)>? comps,
+            SharedBodyComponent? body=null) where T: Component
         {
             if (!Resolve(uid, ref body))
             {

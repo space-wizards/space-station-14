@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Atmos;
-using Content.Server.Body.Behavior;
 using Content.Server.Body.Components;
+using Content.Server.Body.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.Body.Components;
 using NUnit.Framework;
@@ -17,7 +16,7 @@ using Robust.Shared.Maths;
 namespace Content.IntegrationTests.Tests.Body
 {
     [TestFixture]
-    [TestOf(typeof(LungBehavior))]
+    [TestOf(typeof(LungSystem))]
     public class LungTest : ContentIntegrationTest
     {
         private const string Prototypes = @"
@@ -32,7 +31,7 @@ namespace Content.IntegrationTests.Tests.Body
     template: HumanoidTemplate
     preset: HumanPreset
     centerSlot: torso
-  - type: Respirator
+  - type: ThermalRegulator
     metabolismHeat: 5000
     radiatedHeat: 400
     implicitHeatRegulation: 5000
@@ -40,6 +39,7 @@ namespace Content.IntegrationTests.Tests.Body
     shiveringHeatRegulation: 5000
     normalBodyTemperature: 310.15
     thermalRegulationTemperatureThreshold: 25
+  - type: Respirator
     needsGases:
       Oxygen: 0.00060763888
     producesGases:
@@ -63,10 +63,14 @@ namespace Content.IntegrationTests.Tests.Body
 
                 var human = entityManager.SpawnEntity("HumanBodyAndBloodstreamDummy", new MapCoordinates(Vector2.Zero, mapId));
 
-                Assert.That(human.TryGetComponent(out SharedBodyComponent body));
-                Assert.That(body.TryGetMechanismBehaviors(out List<LungBehavior> lungs));
+                var bodySys = EntitySystem.Get<BodySystem>();
+                var lungSys = EntitySystem.Get<LungSystem>();
+
+                Assert.That(entityManager.TryGetComponent(human, out SharedBodyComponent body));
+
+                var lungs = bodySys.GetComponentsOnMechanisms<LungComponent>(human, body).ToArray();
                 Assert.That(lungs.Count, Is.EqualTo(1));
-                Assert.That(human.TryGetComponent(out BloodstreamComponent bloodstream));
+                Assert.That(entityManager.TryGetComponent(human, out BloodstreamComponent bloodstream));
 
                 var gas = new GasMixture(1);
 
@@ -77,8 +81,8 @@ namespace Content.IntegrationTests.Tests.Body
                 gas.AdjustMoles(Gas.Oxygen, originalOxygen);
                 gas.AdjustMoles(Gas.Nitrogen, originalNitrogen);
 
-                var lung = lungs[0];
-                lung.Inhale(1, gas);
+                var (lung, _) = lungs[0];
+                lungSys.TakeGasFrom(((IComponent) lung).Owner, 1, gas, lung);
 
                 var lungOxygen = originalOxygen * breathedPercentage;
                 var lungNitrogen = originalNitrogen * breathedPercentage;
@@ -99,7 +103,7 @@ namespace Content.IntegrationTests.Tests.Body
                 Assert.Zero(lungOxygenBeforeExhale);
                 Assert.Zero(lungNitrogenBeforeExhale);
 
-                lung.Exhale(1, gas);
+                lungSys.PushGasTo(((IComponent) lung).Owner, gas, lung);
 
                 var lungOxygenAfterExhale = lung.Air.GetMoles(Gas.Oxygen);
                 var exhaledOxygen = Math.Abs(lungOxygenBeforeExhale - lungOxygenAfterExhale);
@@ -149,7 +153,7 @@ namespace Content.IntegrationTests.Tests.Body
             MapId mapId;
             IMapGrid grid = null;
             RespiratorComponent respirator = null;
-            IEntity human = null;
+            EntityUid human = default;
 
             var testMapName = "Maps/Test/Breathing/3by3-20oxy-80nit.yml";
 
@@ -167,18 +171,21 @@ namespace Content.IntegrationTests.Tests.Body
                 var coordinates = new EntityCoordinates(grid.GridEntityId, center);
                 human = entityManager.SpawnEntity("HumanBodyAndBloodstreamDummy", coordinates);
 
-                Assert.True(human.TryGetComponent(out SharedBodyComponent body));
-                Assert.True(body.HasMechanismBehavior<LungBehavior>());
-                Assert.True(human.TryGetComponent(out respirator));
+                Assert.True(entityManager.HasComponent<SharedBodyComponent>(human));
+                Assert.True(entityManager.TryGetComponent(human, out respirator));
                 Assert.False(respirator.Suffocating);
             });
 
             var increment = 10;
 
+
             for (var tick = 0; tick < 600; tick += increment)
             {
                 await server.WaitRunTicks(increment);
-                Assert.False(respirator.Suffocating, $"Entity {human.Name} is suffocating on tick {tick}");
+                await server.WaitAssertion(() =>
+                {
+                    Assert.False(respirator.Suffocating, $"Entity {entityManager.GetComponent<MetaDataComponent>(human).EntityName} is suffocating on tick {tick}");
+                });
             }
 
             await server.WaitIdleAsync();

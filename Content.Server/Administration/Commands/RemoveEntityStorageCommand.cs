@@ -1,4 +1,3 @@
-using Content.Server.Body.Part;
 using Content.Server.Storage.Components;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
@@ -37,7 +36,7 @@ namespace Content.Server.Administration.Commands
 
             if (entityManager.TryGetComponent<EntityStorageComponent>(parent, out var storage))
             {
-                storage.Remove(entityManager.GetEntity(entityUid));
+                storage.Remove(entityUid);
             }
             else
             {

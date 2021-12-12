@@ -6,15 +6,23 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.ViewVariables;
 using System.Collections.Generic;
+using Content.Shared.Atmos;
 
 namespace Content.Shared.Maps
 {
     [UsedImplicitly]
     [Prototype("tile")]
-    public sealed class ContentTileDefinition : IPrototype, ITileDefinition
+    public sealed class ContentTileDefinition : IPrototype, IInheritingPrototype, ITileDefinition
     {
         [ViewVariables]
         string IPrototype.ID => Name;
+
+        [DataField("parent", customTypeSerializer:typeof(PrototypeIdSerializer<ContentTileDefinition>))]
+        public string? Parent { get; private set; }
+
+        [NeverPushInheritance]
+        [DataField("abstract")]
+        public bool Abstract { get; private set; }
 
         public string Path => "/Textures/Tiles/";
 
@@ -37,6 +45,9 @@ namespace Content.Shared.Maps
         [DataField("friction")] public float Friction { get; set; }
 
         [DataField("thermalConductivity")] public float ThermalConductivity { get; set; } = 0.05f;
+
+        // Heat capacity is opt-in, not opt-out.
+        [DataField("heatCapacity")] public float HeatCapacity = Atmospherics.MinimumHeatCapacity;
 
         [DataField("item_drop", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string ItemDropPrototypeName { get; } = "FloorTileItemSteel";

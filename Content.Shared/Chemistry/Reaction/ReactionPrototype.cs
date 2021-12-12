@@ -1,10 +1,12 @@
 using System.Collections.Generic;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Sound;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Chemistry.Reaction
@@ -25,12 +27,14 @@ namespace Content.Shared.Chemistry.Reaction
         /// <summary>
         /// Reactants required for the reaction to occur.
         /// </summary>
-        [DataField("reactants")] public Dictionary<string, ReactantPrototype> Reactants = new();
+        [DataField("reactants", customTypeSerializer:typeof(PrototypeIdDictionarySerializer<ReactantPrototype, ReagentPrototype>))]
+        public Dictionary<string, ReactantPrototype> Reactants = new();
 
         /// <summary>
         /// Reagents created when the reaction occurs.
         /// </summary>
-        [DataField("products")] public Dictionary<string, FixedPoint2> Products = new();
+        [DataField("products", customTypeSerializer:typeof(PrototypeIdDictionarySerializer<FixedPoint2, ReagentPrototype>))]
+        public Dictionary<string, FixedPoint2> Products = new();
 
         /// <summary>
         /// Effects to be triggered when the reaction occurs.
@@ -45,6 +49,12 @@ namespace Content.Shared.Chemistry.Reaction
 
         // TODO SERV3: Empty on the client, (de)serialize on the server with module manager is server module
         [DataField("sound", serverOnly: true)] public SoundSpecifier Sound { get; private set; } = new SoundPathSpecifier("/Audio/Effects/Chemistry/bubbles.ogg");
+
+        /// <summary>
+        /// If true, this reaction will only consume only integer multiples of the reactant amounts. If there are not
+        /// enough reactants, the reaction does not occur. Useful for spawn-entity reactions (e.g. creating cheese).
+        /// </summary>
+        [DataField("quantized")] public bool Quantized = false;
     }
 
     /// <summary>

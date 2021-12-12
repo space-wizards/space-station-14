@@ -53,19 +53,19 @@ namespace Content.Server.Administration.Commands
             }
             else
             {
-                if (player.Status != SessionStatus.InGame || player.AttachedEntity == null)
+                if (player.Status != SessionStatus.InGame || player.AttachedEntity is not {Valid: true} playerEntity)
                 {
                     shell.WriteLine("You are not in-game!");
                     return;
                 }
 
                 var mapManager = IoCManager.Resolve<IMapManager>();
-                var currentMap = player.AttachedEntity.Transform.MapID;
-                var currentGrid = player.AttachedEntity.Transform.GridID;
+                var currentMap = entMan.GetComponent<TransformComponent>(playerEntity).MapID;
+                var currentGrid = entMan.GetComponent<TransformComponent>(playerEntity).GridID;
 
                 var found = entMan.EntityQuery<WarpPointComponent>(true)
                     .Where(p => p.Location == location)
-                    .Select(p => p.Owner.Transform.Coordinates)
+                    .Select(p => entMan.GetComponent<TransformComponent>(p.Owner).Coordinates)
                     .OrderBy(p => p, Comparer<EntityCoordinates>.Create((a, b) =>
                     {
                         // Sort so that warp points on the same grid/map are first.
@@ -113,8 +113,8 @@ namespace Content.Server.Administration.Commands
 
                 if (found.GetGridId(entMan) != GridId.Invalid)
                 {
-                    player.AttachedEntity.Transform.Coordinates = found;
-                    if (player.AttachedEntity.TryGetComponent(out IPhysBody? physics))
+                    entMan.GetComponent<TransformComponent>(playerEntity).Coordinates = found;
+                    if (entMan.TryGetComponent(playerEntity, out IPhysBody? physics))
                     {
                         physics.LinearVelocity = Vector2.Zero;
                     }

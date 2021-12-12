@@ -10,7 +10,6 @@ namespace Content.Client.MobState.Overlays
     public class CircleMaskOverlay : Overlay
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
 
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
@@ -30,7 +29,7 @@ namespace Content.Client.MobState.Overlays
 
             var worldHandle = args.WorldHandle;
             worldHandle.UseShader(_shader);
-            var viewport = _eyeManager.GetWorldViewport();
+            var viewport = args.WorldAABB;
             worldHandle.DrawRect(viewport, Color.White);
         }
     }

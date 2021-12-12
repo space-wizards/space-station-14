@@ -106,7 +106,7 @@ namespace Content.Server.GameTicking
             return assigned;
         }
 
-        private string PickBestAvailableJob(HumanoidCharacterProfile profile, StationId station)
+        private string? PickBestAvailableJob(HumanoidCharacterProfile profile, StationId station)
         {
             var available = _stationSystem.StationInfo[station].JobList;
 
@@ -148,7 +148,7 @@ namespace Content.Server.GameTicking
             }
 
             var overflows = _stationSystem.StationInfo[station].MapPrototype.OverflowJobs.Clone().ToList();
-            return _robustRandom.Pick(overflows);
+            return overflows.Count != 0 ? _robustRandom.Pick(overflows) : null;
         }
 
         [Conditional("DEBUG")]

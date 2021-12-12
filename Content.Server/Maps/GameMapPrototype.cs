@@ -1,10 +1,10 @@
 using System.Collections.Generic;
+using Content.Server.Maps.NameGenerators;
 using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Maps;
 
@@ -31,10 +31,22 @@ public class GameMapPrototype : IPrototype
     public uint MaxPlayers { get; } = uint.MaxValue;
 
     /// <summary>
-    /// Name of the given map.
+    /// Name of the map to use in generic messages, like the map vote.
     /// </summary>
     [DataField("mapName", required: true)]
     public string MapName { get; } = default!;
+
+    /// <summary>
+    /// Name of the given map.
+    /// </summary>
+    [DataField("mapNameTemplate")]
+    public string? MapNameTemplate { get; } = default!;
+
+    /// <summary>
+    /// Name generator to use for the map, if any.
+    /// </summary>
+    [DataField("nameGenerator")]
+    public GameMapNameGenerator? NameGenerator { get; } = default!;
 
     /// <summary>
     /// Relative directory path to the given map, i.e. `Maps/saltern.yml`

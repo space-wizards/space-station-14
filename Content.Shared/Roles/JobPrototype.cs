@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using Content.Shared.Access;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Roles
@@ -54,7 +56,7 @@ namespace Content.Shared.Roles
         [DataField("departments")]
         public IReadOnlyCollection<string> Departments { get; } = Array.Empty<string>();
 
-        [DataField("access")]
+        [DataField("access", customTypeSerializer: typeof(PrototypeIdListSerializer<AccessLevelPrototype>))]
         public IReadOnlyCollection<string> Access { get; } = Array.Empty<string>();
     }
 }

@@ -3,9 +3,8 @@ using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Coordinates.Helpers;
 using Content.Shared.Audio;
-using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Database;
 using Content.Shared.Sound;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
@@ -78,6 +77,9 @@ namespace Content.Server.Chemistry.ReactionEffects
         /// </summary>
         [DataField("sound", required: true)] private SoundSpecifier _sound = default!;
 
+        public override bool ShouldLog => true;
+        public override LogImpact LogImpact => LogImpact.High;
+
         void ISerializationHooks.AfterDeserialization()
         {
             IoCManager.InjectDependencies(this);
@@ -117,7 +119,7 @@ namespace Content.Server.Chemistry.ReactionEffects
             if (areaEffectComponent == null)
             {
                 Logger.Error("Couldn't get AreaEffectComponent from " + _prototypeId);
-                ent.QueueDelete();
+                IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(ent);
                 return;
             }
 
@@ -127,6 +129,6 @@ namespace Content.Server.Chemistry.ReactionEffects
             SoundSystem.Play(Filter.Pvs(args.SolutionEntity), _sound.GetSound(), args.SolutionEntity, AudioHelpers.WithVariation(0.125f));
         }
 
-        protected abstract SolutionAreaEffectComponent? GetAreaEffectComponent(IEntity entity);
+        protected abstract SolutionAreaEffectComponent? GetAreaEffectComponent(EntityUid entity);
     }
 }

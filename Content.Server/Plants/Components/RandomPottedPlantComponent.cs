@@ -11,6 +11,8 @@ namespace Content.Server.Plants.Components
     [RegisterComponent]
     public class RandomPottedPlantComponent : Component, IMapInit
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "RandomPottedPlant";
 
         private static readonly string[] RegularPlantStates;
@@ -61,7 +63,7 @@ namespace Content.Server.Plants.Components
 
             if (_selectedState != null)
             {
-                Owner.GetComponent<SpriteComponent>().LayerSetState(0, _selectedState);
+                _entMan.GetComponent<SpriteComponent>(Owner).LayerSetState(0, _selectedState);
             }
         }
 
@@ -72,7 +74,7 @@ namespace Content.Server.Plants.Components
             var list = _plastic ? PlasticPlantStates : RegularPlantStates;
             _selectedState = random.Pick(list);
 
-            Owner.GetComponent<SpriteComponent>().LayerSetState(0, _selectedState);
+            _entMan.GetComponent<SpriteComponent>(Owner).LayerSetState(0, _selectedState);
         }
     }
 }

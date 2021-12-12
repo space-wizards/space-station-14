@@ -38,7 +38,7 @@ namespace Content.Server.Inventory
         {
             if (component.TryGetSlotItem(EquipmentSlotDefines.Slots.SHOES, out ItemComponent? shoes))
             {
-                RaiseLocalEvent(shoes.Owner.Uid, args, false);
+                RaiseLocalEvent(shoes.Owner, args, false);
             }
         }
 
@@ -81,7 +81,7 @@ namespace Content.Server.Inventory
         {
             foreach (var equipped in component.GetAllHeldItems())
             {
-                RaiseLocalEvent(equipped.Uid, args, false);
+                RaiseLocalEvent(equipped, args, false);
             }
         }
     }

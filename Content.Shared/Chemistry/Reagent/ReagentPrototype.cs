@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Prototypes;
-using Content.Shared.Botany;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
+using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -15,7 +15,6 @@ using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Chemistry.Reagent
@@ -120,10 +119,13 @@ namespace Content.Shared.Chemistry.Reagent
                 if (!plantMetabolizable.ShouldApply(args, random))
                     continue;
 
-                var entity = entMan.GetEntity(args.SolutionEntity);
-                EntitySystem.Get<SharedAdminLogSystem>().Add(LogType.ReagentEffect, LogImpact.Low,
-                    $"Plant metabolism effect {plantMetabolizable.GetType().Name:effect} of reagent {ID} applied on entity {entity} at {entity.Transform.Coordinates}");
-                plantMetabolizable.Effect(args);
+                if (plantMetabolizable.ShouldLog)
+                {
+                    var entity = args.SolutionEntity;
+                    EntitySystem.Get<SharedAdminLogSystem>().Add(LogType.ReagentEffect, plantMetabolizable.LogImpact,
+                        $"Plant metabolism effect {plantMetabolizable.GetType().Name:effect} of reagent {ID} applied on entity {entMan.ToPrettyString(entity)} at {entMan.GetComponent<TransformComponent>(entity).Coordinates}");
+                    plantMetabolizable.Effect(args);
+                }
             }
         }
     }

@@ -6,29 +6,31 @@ using Content.Server.Storage.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.AI.WorldState.States.Nutrition
 {
     [UsedImplicitly]
-    public sealed class NearbyDrinkState: CachedStateData<List<IEntity>>
+    public sealed class NearbyDrinkState: CachedStateData<List<EntityUid>>
     {
         public override string Name => "NearbyDrink";
 
-        protected override List<IEntity> GetTrueValue()
+        protected override List<EntityUid> GetTrueValue()
         {
-            var result = new List<IEntity>();
+            var result = new List<EntityUid>();
+            var entMan = IoCManager.Resolve<IEntityManager>();
 
-            if (!Owner.TryGetComponent(out AiControllerComponent? controller))
+            if (!entMan.TryGetComponent(Owner, out AiControllerComponent? controller))
             {
                 return result;
             }
 
             foreach (var entity in Visibility
-                .GetNearestEntities(Owner.Transform.Coordinates, typeof(DrinkComponent), controller.VisionRadius))
+                .GetNearestEntities(entMan.GetComponent<TransformComponent>(Owner).Coordinates, typeof(DrinkComponent), controller.VisionRadius))
             {
                 if (entity.TryGetContainer(out var container))
                 {
-                    if (!container.Owner.HasComponent<EntityStorageComponent>())
+                    if (!entMan.HasComponent<EntityStorageComponent>(container.Owner))
                     {
                         continue;
                     }

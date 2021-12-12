@@ -22,12 +22,12 @@ namespace Content.Shared.Interaction
 
     public class UseEntityEventArgs : EventArgs
     {
-        public UseEntityEventArgs(IEntity user)
+        public UseEntityEventArgs(EntityUid user)
         {
             User = user;
         }
 
-        public IEntity User { get; }
+        public EntityUid User { get; }
     }
 
     /// <summary>
@@ -39,24 +39,14 @@ namespace Content.Shared.Interaction
         /// <summary>
         ///     Entity holding the item in their hand.
         /// </summary>
-        public IEntity User { get; }
-
-        /// <summary>
-        ///     Entity holding the item in their hand.
-        /// </summary>
-        public EntityUid UserUid => User.Uid;
+        public EntityUid User { get; }
 
         /// <summary>
         ///     Item that was used.
         /// </summary>
-        public IEntity Used { get; }
+        public EntityUid Used { get; }
 
-        /// <summary>
-        ///     Item that was used.
-        /// </summary>
-        public EntityUid UsedUid => Used.Uid;
-
-        public UseInHandEvent(IEntity user, IEntity used)
+        public UseInHandEvent(EntityUid user, EntityUid used)
         {
             User = user;
             Used = used;

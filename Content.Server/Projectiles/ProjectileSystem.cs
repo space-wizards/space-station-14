@@ -1,9 +1,9 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Camera;
 using Content.Server.Projectiles.Components;
-using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;
 using Content.Shared.Damage;
+using Content.Shared.Database;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -35,11 +35,11 @@ namespace Content.Server.Projectiles
 
             var otherEntity = args.OtherFixture.Body.Owner;
 
-            var coordinates = args.OtherFixture.Body.Owner.Transform.Coordinates;
+            var coordinates = EntityManager.GetComponent<TransformComponent>(args.OtherFixture.Body.Owner).Coordinates;
             var playerFilter = Filter.Pvs(coordinates);
 
-            if (!otherEntity.Deleted && component.SoundHitSpecies != null &&
-                otherEntity.HasComponent<SharedBodyComponent>())
+            if (!EntityManager.GetComponent<MetaDataComponent>(otherEntity).EntityDeleted && component.SoundHitSpecies != null &&
+                EntityManager.HasComponent<SharedBodyComponent>(otherEntity))
             {
                 SoundSystem.Play(playerFilter, component.SoundHitSpecies.GetSound(), coordinates);
             }
@@ -51,19 +51,19 @@ namespace Content.Server.Projectiles
                     SoundSystem.Play(playerFilter, soundHit, coordinates);
             }
 
-            if (!otherEntity.Deleted)
+            if (!EntityManager.GetComponent<MetaDataComponent>(otherEntity).EntityDeleted)
             {
-                var dmg = _damageableSystem.TryChangeDamage(otherEntity.Uid, component.Damage);
+                var dmg = _damageableSystem.TryChangeDamage(otherEntity, component.Damage);
                 component.DamagedEntity = true;
 
-                if (dmg is not null && EntityManager.TryGetEntity(component.Shooter, out var shooter))
-                    _adminLogSystem.Add(LogType.BulletHit, LogImpact.Low, $"Bullet shot by {shooter} hit {otherEntity}");
-                // "DamagedEntity" is misleading. Hit entity may be more accurate, as the damage may have been resisted
-                // by resistance sets.
+                if (dmg is not null && EntityManager.EntityExists(component.Shooter))
+                    _adminLogSystem.Add(LogType.BulletHit, LogImpact.Low,
+                        $"Projectile {ToPrettyString(component.Owner)} shot by {ToPrettyString(component.Shooter):shooter} hit {ToPrettyString(otherEntity)} and dealt {dmg.Total} damage");
             }
 
             // Damaging it can delete it
-            if (!otherEntity.Deleted && otherEntity.TryGetComponent(out CameraRecoilComponent? recoilComponent))
+            if (!EntityManager.GetComponent<MetaDataComponent>(otherEntity).EntityDeleted &&
+                EntityManager.TryGetComponent(otherEntity, out CameraRecoilComponent? recoilComponent))
             {
                 var direction = args.OurFixture.Body.LinearVelocity.Normalized;
                 recoilComponent.Kick(direction);
@@ -83,7 +83,7 @@ namespace Content.Server.Projectiles
 
                 if (component.TimeLeft <= 0)
                 {
-                    component.Owner.Delete();
+                    EntityManager.DeleteEntity(component.Owner);
                 }
             }
         }

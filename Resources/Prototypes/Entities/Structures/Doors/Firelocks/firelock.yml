@@ -34,6 +34,7 @@
           map: ["enum.WiresVisualLayers.MaintenancePanel"]
     - type: Physics
       canCollide: false
+    - type: Fixtures
       fixtures:
       - shape:
           !type:PhysShapeAabb
@@ -120,6 +121,7 @@
       airBlockedDirection:
         - South
     - type: Physics
+    - type: Fixtures
       fixtures:
       - shape:
           !type:PhysShapeAabb
