@@ -25,26 +25,28 @@ namespace Content.Client.Storage
     public class ClientStorageComponent : SharedStorageComponent, IDraggable
     {
         [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
-        private List<IEntity> _storedEntities = new();
+        private List<EntityUid> _storedEntities = new();
         private int StorageSizeUsed;
         private int StorageCapacityMax;
         private StorageWindow? _window;
+        public bool UIOpen => _window?.IsOpen ?? false;
 
-        public override IReadOnlyList<IEntity> StoredEntities => _storedEntities;
+        public override IReadOnlyList<EntityUid> StoredEntities => _storedEntities;
 
         protected override void Initialize()
         {
             base.Initialize();
 
             // Hide stackVisualizer on start
-            ChangeStorageVisualization(SharedBagState.Close);
+            ChangeStorageVisualization(SharedBagState.Closed);
         }
 
         protected override void OnAdd()
         {
             base.OnAdd();
-            _window = new StorageWindow(OnInteract, OnInsert) {Title = Owner.Name};
+            _window = new StorageWindow(OnInteract, OnInsert) {Title = _entityManager .GetComponent<MetaDataComponent>(Owner).EntityName};
 #pragma warning disable 618
             _window.OnClose += () => SendNetworkMessage(new CloseStorageUIMessage());
 #pragma warning restore 618
@@ -65,9 +67,7 @@ namespace Content.Client.Storage
                 return;
             }
 
-            _storedEntities = state.StoredEntities
-                .Select(id => Owner.EntityManager.GetEntity(id))
-                .ToList();
+            _storedEntities = state.StoredEntities.ToList();
         }
 
         [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
@@ -100,10 +100,10 @@ namespace Content.Client.Storage
         /// <param name="storageState"></param>
         private void HandleStorageMessage(StorageHeldItemsMessage storageState)
         {
-            _storedEntities = storageState.StoredEntities.Select(id => Owner.EntityManager.GetEntity(id)).ToList();
+            _storedEntities = storageState.StoredEntities.ToList();
             StorageSizeUsed = storageState.StorageSizeUsed;
             StorageCapacityMax = storageState.StorageSizeMax;
-            _window?.BuildEntityList(storageState.StoredEntities.ToList(), StorageSizeUsed, StorageCapacityMax);
+            _window?.BuildEntityList(_storedEntities, StorageSizeUsed, StorageCapacityMax);
         }
 
         /// <summary>
@@ -114,13 +114,11 @@ namespace Content.Client.Storage
         {
             for (var i = 0; msg.StoredEntities.Count > i; i++)
             {
-                var entityId = msg.StoredEntities[i];
+                var entity = msg.StoredEntities[i];
                 var initialPosition = msg.EntityPositions[i];
 
-                if (Owner.EntityManager.TryGetEntity(entityId, out var entity))
-                {
-                    ReusableAnimations.AnimateEntityPickup(entity, initialPosition, Owner.Transform.LocalPosition);
-                }
+                ReusableAnimations.AnimateEntityPickup(entity, initialPosition,
+                    _entityManager .GetComponent<TransformComponent>(Owner).LocalPosition, _entityManager );
             }
         }
 
@@ -134,7 +132,7 @@ namespace Content.Client.Storage
             if (_window.IsOpen)
             {
                 _window.Close();
-                ChangeStorageVisualization(SharedBagState.Close);
+                ChangeStorageVisualization(SharedBagState.Closed);
             }
             else
             {
@@ -148,18 +146,18 @@ namespace Content.Client.Storage
             if (_window == null) return;
 
             _window.Close();
-            ChangeStorageVisualization(SharedBagState.Close);
+            ChangeStorageVisualization(SharedBagState.Closed);
 
         }
 
         private void ChangeStorageVisualization(SharedBagState state)
         {
-            if (Owner.TryGetComponent<AppearanceComponent>(out var appearanceComponent))
+            if (_entityManager .TryGetComponent<AppearanceComponent>(Owner, out var appearanceComponent))
             {
                 appearanceComponent.SetData(SharedBagOpenVisuals.BagState, state);
-                if (Owner.HasComponent<ItemCounterComponent>())
+                if (_entityManager .HasComponent<ItemCounterComponent>(Owner))
                 {
-                    appearanceComponent.SetData(StackVisuals.Hide, state == SharedBagState.Close);
+                    appearanceComponent.SetData(StackVisuals.Hide, state == SharedBagState.Closed);
                 }
             }
         }
@@ -167,26 +165,23 @@ namespace Content.Client.Storage
         /// <summary>
         /// Function for clicking one of the stored entity buttons in the UI, tells server to remove that entity
         /// </summary>
-        /// <param name="entityUid"></param>
-        private void OnInteract(BaseButton.ButtonEventArgs buttonEventArgs, EntityUid entityUid)
+        /// <param name="entity"></param>
+        private void OnInteract(BaseButton.ButtonEventArgs buttonEventArgs, EntityUid entity)
         {
             if (buttonEventArgs.Event.Function == EngineKeyFunctions.UIClick)
             {
 #pragma warning disable 618
-                SendNetworkMessage(new RemoveEntityMessage(entityUid));
+                SendNetworkMessage(new RemoveEntityMessage(entity));
 #pragma warning restore 618
                 buttonEventArgs.Event.Handle();
             }
-            else if (Owner.EntityManager.TryGetEntity(entityUid, out var entity))
-            {
-                _itemSlotManager.OnButtonPressed(buttonEventArgs.Event, entity);
-            }
+            _itemSlotManager.OnButtonPressed(buttonEventArgs.Event, entity);
         }
 
         /// <summary>
         /// Function for clicking one of the stored entity buttons in the UI, tells server to remove that entity
         /// </summary>
-        /// <param name="entityUid"></param>
+        /// <param name="entity"></param>
         private void OnInsert(BaseButton.ButtonEventArgs buttonEventArgs)
         {
 #pragma warning disable 618
@@ -194,7 +189,7 @@ namespace Content.Client.Storage
 #pragma warning restore 618
         }
 
-        public override bool Remove(IEntity entity)
+        public override bool Remove(EntityUid entity)
         {
             if (_storedEntities.Remove(entity))
             {
