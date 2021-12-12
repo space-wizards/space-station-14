@@ -50,18 +50,11 @@ namespace Content.Client.RoundEnd
             {
                 Orientation = LayoutOrientation.Vertical
             };
+
             //Gamemode Name
             var gamemodeLabel = new RichTextLabel();
             gamemodeLabel.SetMarkup(Loc.GetString("round-end-summary-window-gamemode-name-label", ("gamemode", gamemode)));
             roundEndSummaryContainer.AddChild(gamemodeLabel);
-
-            //Round end text
-            if (!string.IsNullOrEmpty(roundEnd))
-            {
-                var roundEndLabel = new RichTextLabel();
-                roundEndLabel.SetMarkup(Loc.GetString(roundEnd));
-                roundEndSummaryContainer.AddChild(roundEndLabel);
-            }
 
             //Duration
             var roundTimeLabel = new RichTextLabel();
@@ -70,6 +63,14 @@ namespace Content.Client.RoundEnd
                                                    ("minutes", roundDuration.Minutes),
                                                    ("seconds", roundDuration.Seconds)));
             roundEndSummaryContainer.AddChild(roundTimeLabel);
+
+            //Round end text
+            if (!string.IsNullOrEmpty(roundEnd))
+            {
+                var roundEndLabel = new RichTextLabel();
+                roundEndLabel.SetMarkup(roundEnd);
+                roundEndSummaryContainer.AddChild(roundEndLabel);
+            }
 
             roundEndSummaryContainerScrollbox.AddChild(roundEndSummaryContainer);
             roundEndSummaryTab.AddChild(roundEndSummaryContainerScrollbox);
