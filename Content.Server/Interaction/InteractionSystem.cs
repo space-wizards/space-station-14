@@ -101,7 +101,7 @@ namespace Content.Server.Interaction
 
         public override bool CanAccessViaStorage(EntityUid user, EntityUid target)
         {
-            if (EntityManager.Deleted(target))
+            if (Deleted(target))
                 return false;
 
             if (!target.TryGetContainer(out var container))
@@ -206,7 +206,7 @@ namespace Content.Server.Interaction
                 return false;
             }
 
-            if (EntityManager.Deleted(uid))
+            if (Deleted(uid))
                 return false;
 
             InteractionActivate(user.Value, uid);
@@ -253,7 +253,7 @@ namespace Content.Server.Interaction
                 return true;
             }
 
-            UserInteraction(userEntity.Value, coords, uid);
+            UserInteraction(userEntity.Value, coords, !Deleted(uid) ? uid : null);
 
             return true;
         }
@@ -267,7 +267,7 @@ namespace Content.Server.Interaction
                 return true;
             }
 
-            UserInteraction(userEntity.Value, coords, uid, altInteract : true );
+            UserInteraction(userEntity.Value, coords, !Deleted(uid) ? uid : null, altInteract : true );
 
             return true;
         }
@@ -283,7 +283,7 @@ namespace Content.Server.Interaction
             if (userEntity.Value == uid)
                 return false;
 
-            if (EntityManager.Deleted(uid))
+            if (Deleted(uid))
                 return false;
 
             if (!InRangeUnobstructed(userEntity.Value, uid, popup: true))
@@ -336,7 +336,7 @@ namespace Content.Server.Interaction
 
             // TODO: Replace with body interaction range when we get something like arm length or telekinesis or something.
             var inRangeUnobstructed = user.InRangeUnobstructed(coordinates, ignoreInsideBlocker: true);
-            if (target == null || !inRangeUnobstructed)
+            if (target == null || Deleted(target.Value) || !inRangeUnobstructed)
             {
                 if (item == null)
                     return;
@@ -456,7 +456,7 @@ namespace Content.Server.Interaction
             if (!wideAttack)
             {
                 // Check if interacted entity is in the same container, the direct child, or direct parent of the user.
-                if (targetUid != null && !user.IsInSameOrParentContainer(targetUid.Value) && !CanAccessViaStorage(user, targetUid.Value))
+                if (targetUid != null && !Deleted(targetUid.Value) && !user.IsInSameOrParentContainer(targetUid.Value) && !CanAccessViaStorage(user, targetUid.Value))
                 {
                     Logger.WarningS("system.interaction",
                         $"User entity {ToPrettyString(user)} clicked on object {ToPrettyString(targetUid.Value)} that isn't the parent, child, or in the same container");
@@ -473,7 +473,7 @@ namespace Content.Server.Interaction
             {
                 var item = hands.GetActiveHand?.Owner;
 
-                if (item != null)
+                if (item != null && !Deleted(item.Value))
                 {
                     if (wideAttack)
                     {
