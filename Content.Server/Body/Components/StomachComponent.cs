@@ -26,7 +26,7 @@ namespace Content.Server.Body.Components
         ///     What solution should this stomach push reagents into, on the body?
         /// </summary>
         [DataField("bodySolutionName")]
-        public string BodySolutionName = SharedBloodstreamComponent.DefaultSolutionName;
+        public string BodySolutionName = BloodstreamSystem.DefaultSolutionName;
 
         /// <summary>
         ///     Initial internal solution storage volume
@@ -36,7 +36,7 @@ namespace Content.Server.Body.Components
 
         /// <summary>
         ///     Time in seconds between reagents being ingested and them being
-        ///     transferred to <see cref="SharedBloodstreamComponent"/>
+        ///     transferred to <see cref="BloodstreamComponent"/>
         /// </summary>
         [DataField("digestionDelay")]
         public float DigestionDelay = 20;

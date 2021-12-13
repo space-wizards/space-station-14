@@ -2,7 +2,6 @@
 using Content.Server.Body.Surgery.Messages;
 using Content.Shared.ActionBlocker;
 using Content.Shared.GameTicking;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Helpers;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -57,8 +56,8 @@ namespace Content.Server.Body.Surgery.Components
                     continue;
                 }
 
-                if (!_actionBlockerSystem.CanInteract(tool.PerformerCache.Uid) ||
-                    !tool.PerformerCache.InRangeUnobstructed(tool.BodyCache))
+                if (!_actionBlockerSystem.CanInteract(tool.PerformerCache.Value) ||
+                    !tool.PerformerCache.Value.InRangeUnobstructed(tool.BodyCache))
                 {
                     tool.CloseAllSurgeryUIs();
                 }

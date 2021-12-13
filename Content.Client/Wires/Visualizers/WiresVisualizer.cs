@@ -1,6 +1,7 @@
 using Content.Shared.Wires;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 // using static Content.Shared.Wires.SharedWiresComponent;
 
 namespace Content.Client.Wires.Visualizers
@@ -10,7 +11,7 @@ namespace Content.Client.Wires.Visualizers
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
-            var sprite = component.Owner.GetComponent<ISpriteComponent>();
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner);
             if (component.TryGetData<bool>(WiresVisuals.MaintenancePanelState, out var state))
             {
                 sprite.LayerSetVisible(WiresVisualLayers.MaintenancePanel, state);

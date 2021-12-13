@@ -13,7 +13,7 @@ namespace Content.Server.Pointing.Components
     public class RoguePointingArrowComponent : SharedRoguePointingArrowComponent
     {
         [ViewVariables]
-        public IEntity? Chasing;
+        public EntityUid? Chasing;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("turningDelay")]

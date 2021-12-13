@@ -9,6 +9,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Utility;
+using Robust.Shared.Utility.Markup;
 
 namespace Content.Server.Labels
 {
@@ -55,14 +56,12 @@ namespace Content.Server.Labels
             if (label.CurrentLabel == null)
                 return;
 
-            var message = new FormattedMessage();
-            message.AddText(Loc.GetString("hand-labeler-has-label", ("label", label.CurrentLabel)));
-            args.PushMessage(message);
+            args.Message.AddText(Loc.GetString("hand-labeler-has-label", ("label", label.CurrentLabel)));
         }
 
         private void OnExamined(EntityUid uid, PaperLabelComponent comp, ExaminedEvent args)
         {
-            if (comp.LabelSlot.Item == null)
+            if (comp.LabelSlot.Item is not {Valid: true} item)
                 return;
 
             if (!args.IsInDetailsRange)
@@ -71,7 +70,7 @@ namespace Content.Server.Labels
                 return;
             }
 
-            if (!EntityManager.TryGetComponent(comp.LabelSlot.Item.Uid, out PaperComponent paper))
+            if (!EntityManager.TryGetComponent(item, out PaperComponent paper))
                 // Assuming yaml has the correct entity whitelist, this should not happen.
                 return;
 

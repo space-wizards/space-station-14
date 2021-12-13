@@ -8,7 +8,7 @@ using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.Players;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.Inventory.EquipmentSlotDefines;
@@ -21,6 +21,8 @@ namespace Content.Server.Clothing.Components
     [NetworkedComponent()]
     public class ClothingComponent : ItemComponent, IUse
     {
+        [Dependency] private readonly IEntityManager _entities = default!;
+
         public override string Name => "Clothing";
 
         [ViewVariables]
@@ -52,7 +54,7 @@ namespace Content.Server.Clothing.Components
             }
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new ClothingComponentState(ClothingEquippedPrefix, EquippedPrefix);
         }
@@ -60,8 +62,8 @@ namespace Content.Server.Clothing.Components
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
             if (!_quickEquipEnabled) return false;
-            if (!eventArgs.User.TryGetComponent(out InventoryComponent? inv)
-            ||  !eventArgs.User.TryGetComponent(out HandsComponent? hands)) return false;
+            if (!_entities.TryGetComponent(eventArgs.User, out InventoryComponent? inv)
+            ||  !_entities.TryGetComponent(eventArgs.User, out HandsComponent? hands)) return false;
 
             foreach (var (slot, flag) in SlotMasks)
             {
@@ -79,14 +81,14 @@ namespace Content.Server.Clothing.Components
                     {
                         hands.Drop(item.Owner);
                         inv.Equip(slot, item);
-                        hands.PutInHand(Owner.GetComponent<ItemComponent>());
+                        hands.PutInHand(_entities.GetComponent<ItemComponent>(Owner));
                     }
                 }
                 else
                 {
                     hands.Drop(Owner);
                     if (!TryEquip(inv, slot, eventArgs.User))
-                        hands.PutInHand(Owner.GetComponent<ItemComponent>());
+                        hands.PutInHand(_entities.GetComponent<ItemComponent>(Owner));
                 }
 
                 return true;
@@ -95,7 +97,7 @@ namespace Content.Server.Clothing.Components
             return false;
         }
 
-        public bool TryEquip(InventoryComponent inv, Slots slot, IEntity user)
+        public bool TryEquip(InventoryComponent inv, Slots slot, EntityUid user)
         {
             if (!inv.Equip(slot, this, true, out var reason))
             {

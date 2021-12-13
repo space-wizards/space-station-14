@@ -70,7 +70,8 @@ namespace Content.Server.StationEvents.Events
                 // Account for split stations by just randomly picking a piece of it.
                 var possibleTargets = _entityManager.EntityQuery<StationComponent>()
                     .Where(x => x.Station == _target).ToArray();
-                var stationEnt = _robustRandom.Pick(possibleTargets).OwnerUid;
+                StationComponent tempQualifier = _robustRandom.Pick(possibleTargets);
+                var stationEnt = (tempQualifier).Owner;
 
                 if (!_entityManager.TryGetComponent<IMapGridComponent>(stationEnt, out var grid))
                     return;
@@ -88,8 +89,15 @@ namespace Content.Server.StationEvents.Events
                 return;
 
             var pulse = _entityManager.SpawnEntity("RadiationPulse", coordinates);
-            pulse.GetComponent<RadiationPulseComponent>().DoPulse();
+            _entityManager.GetComponent<RadiationPulseComponent>(pulse).DoPulse();
             ResetTimeUntilPulse();
+        }
+
+        public void SpawnPulseAt(EntityCoordinates at)
+        {
+            var pulse = IoCManager.Resolve<IEntityManager>()
+                .SpawnEntity("RadiationPulse", at);
+            _entityManager.GetComponent<RadiationPulseComponent>(pulse).DoPulse();
         }
 
         private bool TryFindRandomGrid(IMapGrid mapGrid, out EntityCoordinates coordinates)

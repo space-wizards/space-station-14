@@ -9,6 +9,7 @@
   access:
   - Chapel
   - Maintenance
+
 - type: startingGear
   id: ChaplainGear
   equipment:

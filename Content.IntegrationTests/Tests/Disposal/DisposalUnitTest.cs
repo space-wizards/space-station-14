@@ -1,3 +1,4 @@
+#nullable enable annotations
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Disposal.Tube.Components;
@@ -7,6 +8,7 @@ using Content.Server.Power.Components;
 using Content.Shared.Disposal;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Reflection;
 
@@ -36,18 +38,18 @@ namespace Content.IntegrationTests.Tests.Disposal
             }
         }
 
-        private void UnitInsert(DisposalUnitComponent unit, bool result, params IEntity[] entities)
+        private void UnitInsert(DisposalUnitComponent unit, bool result, params EntityUid[] entities)
         {
             var system = EntitySystem.Get<DisposalUnitSystem>();
 
             foreach (var entity in entities)
             {
                 Assert.That(system.CanInsert(unit, entity), Is.EqualTo(result));
-                system.TryInsert(unit.Owner.Uid, entity.Uid, entity.Uid);
+                system.TryInsert(unit.Owner, entity, entity);
             }
         }
 
-        private void UnitContains(DisposalUnitComponent unit, bool result, params IEntity[] entities)
+        private void UnitContains(DisposalUnitComponent unit, bool result, params EntityUid[] entities)
         {
             foreach (var entity in entities)
             {
@@ -55,13 +57,13 @@ namespace Content.IntegrationTests.Tests.Disposal
             }
         }
 
-        private void UnitInsertContains(DisposalUnitComponent unit, bool result, params IEntity[] entities)
+        private void UnitInsertContains(DisposalUnitComponent unit, bool result, params EntityUid[] entities)
         {
             UnitInsert(unit, result, entities);
             UnitContains(unit, result, entities);
         }
 
-        private void Flush(DisposalUnitComponent unit, bool result, params IEntity[] entities)
+        private void Flush(DisposalUnitComponent unit, bool result, params EntityUid[] entities)
         {
             Assert.That(unit.ContainedEntities, Is.SupersetOf(entities));
             Assert.That(entities.Length, Is.EqualTo(unit.ContainedEntities.Count));
@@ -81,6 +83,7 @@ namespace Content.IntegrationTests.Tests.Disposal
     damageContainer: Biological
   - type: Physics
     bodyType: KinematicController
+  - type: Fixtures
   - type: DoAfter
 
 - type: entity
@@ -93,6 +96,7 @@ namespace Content.IntegrationTests.Tests.Disposal
       - Anchoring
   - type: Physics
     bodyType: Dynamic
+  - type: Fixtures
   - type: DoAfter
 
 - type: entity
@@ -106,6 +110,7 @@ namespace Content.IntegrationTests.Tests.Disposal
   - type: ApcPowerReceiver
   - type: Physics
     bodyType: Static
+  - type: Fixtures
 
 - type: entity
   name: DisposalTrunkDummy
@@ -123,10 +128,10 @@ namespace Content.IntegrationTests.Tests.Disposal
             var server = StartServer(options);
             await server.WaitIdleAsync();
 
-            IEntity human = default!;
-            IEntity wrench = default!;
-            IEntity disposalUnit = default!;
-            IEntity disposalTrunk = default!;
+            EntityUid human = default!;
+            EntityUid wrench = default!;
+            EntityUid disposalUnit = default!;
+            EntityUid disposalTrunk = default!;
             DisposalUnitComponent unit = default!;
 
             var mapManager = server.ResolveDependency<IMapManager>();
@@ -139,21 +144,22 @@ namespace Content.IntegrationTests.Tests.Disposal
                 human = entityManager.SpawnEntity("HumanDummy", coordinates);
                 wrench = entityManager.SpawnEntity("WrenchDummy", coordinates);
                 disposalUnit = entityManager.SpawnEntity("DisposalUnitDummy", coordinates);
-                disposalTrunk = entityManager.SpawnEntity("DisposalTrunkDummy", disposalUnit.Transform.MapPosition);
+                disposalTrunk = entityManager.SpawnEntity("DisposalTrunkDummy", IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(disposalUnit).MapPosition);
 
                 // Test for components existing
-                Assert.True(disposalUnit.TryGetComponent(out unit!));
-                Assert.True(disposalTrunk.HasComponent<DisposalEntryComponent>());
+                ref DisposalUnitComponent? comp = ref unit!;
+                Assert.True(entityManager.TryGetComponent(disposalUnit, out comp));
+                Assert.True(entityManager.HasComponent<DisposalEntryComponent>(disposalTrunk));
 
                 // Can't insert, unanchored and unpowered
-                unit.Owner.Transform.Anchored = false;
+                entityManager.GetComponent<TransformComponent>(unit!.Owner).Anchored = false;
                 UnitInsertContains(unit, false, human, wrench, disposalUnit, disposalTrunk);
             });
 
             await server.WaitAssertion(() =>
             {
                 // Anchor the disposal unit
-                unit.Owner.Transform.Anchored = true;
+                entityManager.GetComponent<TransformComponent>(unit.Owner).Anchored = true;
 
                 // No power
                 Assert.False(unit.Powered);
@@ -168,7 +174,7 @@ namespace Content.IntegrationTests.Tests.Disposal
             await server.WaitAssertion(() =>
             {
                 // Move the disposal trunk away
-                disposalTrunk.Transform.WorldPosition += (1, 0);
+                entityManager.GetComponent<TransformComponent>(disposalTrunk).WorldPosition += (1, 0);
 
                 // Fail to flush with a mob and an item
                 Flush(unit, false, human, wrench);
@@ -177,7 +183,7 @@ namespace Content.IntegrationTests.Tests.Disposal
             await server.WaitAssertion(() =>
             {
                 // Move the disposal trunk back
-                disposalTrunk.Transform.WorldPosition -= (1, 0);
+                entityManager.GetComponent<TransformComponent>(disposalTrunk).WorldPosition -= (1, 0);
 
                 // Fail to flush with a mob and an item, no power
                 Flush(unit, false, human, wrench);
@@ -186,7 +192,7 @@ namespace Content.IntegrationTests.Tests.Disposal
             await server.WaitAssertion(() =>
             {
                 // Remove power need
-                Assert.True(disposalUnit.TryGetComponent(out ApcPowerReceiverComponent power));
+                Assert.True(entityManager.TryGetComponent(disposalUnit, out ApcPowerReceiverComponent power));
                 power!.NeedsPower = false;
                 Assert.True(unit.Powered);
 

@@ -3,6 +3,7 @@
   - disconnect
   - help
   - list
+  - quit
 
 - Flags: VAREDIT
   Commands:
@@ -50,7 +51,6 @@
   - tp
   - tpto
   - respawn
-  - forall
 
 - Flags: SERVER
   Commands:
@@ -72,3 +72,7 @@
   - saveconfig
   - testlog
   - sudo
+
+- Flags: QUERY
+  Commands:
+  - forall

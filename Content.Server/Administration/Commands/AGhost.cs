@@ -13,6 +13,8 @@ namespace Content.Server.Administration.Commands
     [AdminCommand(AdminFlags.Admin)]
     public class AGhost : IConsoleCommand
     {
+        [Dependency] private readonly IEntityManager _entities = default!;
+
         public string Command => "aghost";
         public string Description => "Makes you an admin ghost.";
         public string Help => "aghost";
@@ -34,34 +36,35 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            if (mind.VisitingEntity != null && mind.VisitingEntity.HasComponent<GhostComponent>())
+            if (mind.VisitingEntity != default && _entities.HasComponent<GhostComponent>(mind.VisitingEntity))
             {
                 player.ContentData()!.Mind?.UnVisit();
                 return;
             }
 
             var canReturn = mind.CurrentEntity != null;
-            var ghost = IoCManager.Resolve<IEntityManager>()
-                .SpawnEntity("AdminObserver", player.AttachedEntity?.Transform.Coordinates
-                                              ?? EntitySystem.Get<GameTicker>().GetObserverSpawnPoint());
+            var coordinates = player.AttachedEntity != null
+                ? _entities.GetComponent<TransformComponent>(player.AttachedEntity.Value).Coordinates
+                : EntitySystem.Get<GameTicker>().GetObserverSpawnPoint();
+            var ghost = _entities.SpawnEntity("AdminObserver", coordinates);
 
             if (canReturn)
             {
                 // TODO: Remove duplication between all this and "GamePreset.OnGhostAttempt()"...
                 if(!string.IsNullOrWhiteSpace(mind.CharacterName))
-                    ghost.Name = mind.CharacterName;
+                    _entities.GetComponent<MetaDataComponent>(ghost).EntityName = mind.CharacterName;
                 else if (!string.IsNullOrWhiteSpace(mind.Session?.Name))
-                    ghost.Name = mind.Session.Name;
+                    _entities.GetComponent<MetaDataComponent>(ghost).EntityName = mind.Session.Name;
 
                 mind.Visit(ghost);
             }
             else
             {
-                ghost.Name = player.Name;
-                mind.TransferTo(ghost.Uid);
+                _entities.GetComponent<MetaDataComponent>(ghost).EntityName = player.Name;
+                mind.TransferTo(ghost);
             }
 
-            var comp = ghost.GetComponent<GhostComponent>();
+            var comp = _entities.GetComponent<GhostComponent>(ghost);
             EntitySystem.Get<SharedGhostSystem>().SetCanReturnToBody(comp, canReturn);
         }
     }

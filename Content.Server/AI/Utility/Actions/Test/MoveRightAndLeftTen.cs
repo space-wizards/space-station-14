@@ -19,8 +19,9 @@ namespace Content.Server.AI.Utility.Actions.Test
 
         public override void SetupOperators(Blackboard context)
         {
-            var currentPosition = Owner.Transform.Coordinates;
-            var nextPosition = Owner.Transform.Coordinates.Offset(new Vector2(10.0f, 0.0f));
+            var entMan = IoCManager.Resolve<IEntityManager>();
+            var currentPosition = entMan.GetComponent<TransformComponent>(Owner).Coordinates;
+            var nextPosition = entMan.GetComponent<TransformComponent>(Owner).Coordinates.Offset(new Vector2(10.0f, 0.0f));
             var originalPosOp = new MoveToGridOperator(Owner, currentPosition, 0.25f);
             var newPosOp = new MoveToGridOperator(Owner, nextPosition, 0.25f);
 

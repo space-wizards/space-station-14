@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Server.Access.Components;
 using Content.Server.Inventory.Components;
 using Content.Server.Items;
@@ -9,10 +13,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 
 namespace Content.Server.Access.Systems
 {
@@ -60,7 +60,7 @@ namespace Content.Server.Access.Systems
                 return false;
             }
 
-            return reader.AccessLists.Count == 0 || reader.AccessLists.Any(a => a.IsSubsetOf(accessTags));
+            return !reader.Enabled || reader.AccessLists.Count == 0 || reader.AccessLists.Any(a => a.IsSubsetOf(accessTags));
         }
 
         public ICollection<string> FindAccessTags(EntityUid uid)
@@ -73,7 +73,7 @@ namespace Content.Server.Access.Systems
             if (EntityManager.TryGetComponent(uid, out SharedHandsComponent? hands))
             {
                 if (hands.TryGetActiveHeldEntity(out var heldItem) &&
-                    FindAccessTagsItem(heldItem.Uid, out tags))
+                    FindAccessTagsItem(heldItem, out tags))
                 {
                     return tags;
                 }
@@ -84,7 +84,7 @@ namespace Content.Server.Access.Systems
             {
                 if (inventoryComponent.HasSlot(EquipmentSlotDefines.Slots.IDCARD) &&
                     inventoryComponent.TryGetSlotItem(EquipmentSlotDefines.Slots.IDCARD, out ItemComponent? item) &&
-                    FindAccessTagsItem(item.Owner.Uid, out tags)
+                    FindAccessTagsItem(item.Owner, out tags)
                 )
                 {
                     return tags;
@@ -106,10 +106,11 @@ namespace Content.Server.Access.Systems
                 return true;
             }
 
-            if (EntityManager.TryGetComponent(uid, out PDAComponent? pda))
+            if (EntityManager.TryGetComponent(uid, out PDAComponent? pda) &&
+                pda.ContainedID?.Owner is {Valid: true} id)
             {
-                tags = pda?.ContainedID?.Owner?.GetComponent<AccessComponent>()?.Tags;
-                return tags != null;
+                tags = EntityManager.GetComponent<AccessComponent>(id).Tags;
+                return true;
             }
 
             tags = null;

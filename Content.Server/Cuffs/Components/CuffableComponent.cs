@@ -4,21 +4,19 @@ using System.Linq;
 using Content.Server.Alert;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Popups;
-using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Player;
-using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Cuffs.Components
@@ -27,15 +25,17 @@ namespace Content.Server.Cuffs.Components
     [ComponentReference(typeof(SharedCuffableComponent))]
     public class CuffableComponent : SharedCuffableComponent
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         /// <summary>
         /// How many of this entity's hands are currently cuffed.
         /// </summary>
         [ViewVariables]
         public int CuffedHandCount => Container.ContainedEntities.Count * 2;
 
-        protected IEntity LastAddedCuffs => Container.ContainedEntities[^1];
+        protected EntityUid LastAddedCuffs => Container.ContainedEntities[^1];
 
-        public IReadOnlyList<IEntity> StoredEntities => Container.ContainedEntities;
+        public IReadOnlyList<EntityUid> StoredEntities => Container.ContainedEntities;
 
         /// <summary>
         ///     Container of various handcuffs currently applied to the entity.
@@ -56,7 +56,7 @@ namespace Content.Server.Cuffs.Components
             Owner.EnsureComponentWarn<HandsComponent>();
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             // there are 2 approaches i can think of to handle the handcuff overlay on players
             // 1 - make the current RSI the handcuff type that's currently active. all handcuffs on the player will appear the same.
@@ -66,7 +66,7 @@ namespace Content.Server.Cuffs.Components
 
             if (CuffedHandCount > 0)
             {
-                if (LastAddedCuffs.TryGetComponent<HandcuffComponent>(out var cuffs))
+                if (_entMan.TryGetComponent<HandcuffComponent?>(LastAddedCuffs, out var cuffs))
                 {
                     return new CuffableComponentState(CuffedHandCount,
                        CanStillInteract,
@@ -89,9 +89,9 @@ namespace Content.Server.Cuffs.Components
         /// Add a set of cuffs to an existing CuffedComponent.
         /// </summary>
         /// <param name="prototype"></param>
-        public bool TryAddNewCuffs(IEntity user, IEntity handcuff)
+        public bool TryAddNewCuffs(EntityUid user, EntityUid handcuff)
         {
-            if (!handcuff.HasComponent<HandcuffComponent>())
+            if (!_entMan.HasComponent<HandcuffComponent>(handcuff))
             {
                 Logger.Warning($"Handcuffs being applied to player are missing a {nameof(HandcuffComponent)}!");
                 return false;
@@ -104,14 +104,14 @@ namespace Content.Server.Cuffs.Components
             }
 
             // Success!
-            if (user.TryGetComponent(out HandsComponent? handsComponent) && handsComponent.IsHolding(handcuff))
+            if (_entMan.TryGetComponent(user, out HandsComponent? handsComponent) && handsComponent.IsHolding(handcuff))
             {
                 // Good lord handscomponent is scuffed, I hope some smug person will fix it someday
                 handsComponent.Drop(handcuff);
             }
 
             Container.Insert(handcuff);
-            CanStillInteract = Owner.TryGetComponent(out HandsComponent? ownerHands) && ownerHands.HandNames.Count() > CuffedHandCount;
+            CanStillInteract = _entMan.TryGetComponent(Owner, out HandsComponent? ownerHands) && ownerHands.HandNames.Count() > CuffedHandCount;
 
             OnCuffedStateChanged?.Invoke();
             UpdateAlert();
@@ -131,7 +131,7 @@ namespace Content.Server.Cuffs.Components
         /// </summary>
         public void UpdateHeldItems()
         {
-            if (!Owner.TryGetComponent(out HandsComponent? handsComponent)) return;
+            if (!_entMan.TryGetComponent(Owner, out HandsComponent? handsComponent)) return;
 
             var itemCount = handsComponent.GetAllHeldItems().Count();
             var freeHandCount = handsComponent.HandNames.Count() - CuffedHandCount;
@@ -158,7 +158,7 @@ namespace Content.Server.Cuffs.Components
         /// </summary>
         private void UpdateAlert()
         {
-            if (Owner.TryGetComponent(out ServerAlertsComponent? status))
+            if (_entMan.TryGetComponent(Owner, out ServerAlertsComponent? status))
             {
                 if (CanStillInteract)
                 {
@@ -177,7 +177,7 @@ namespace Content.Server.Cuffs.Components
         /// </summary>
         /// <param name="user">The cuffed entity</param>
         /// <param name="cuffsToRemove">Optional param for the handcuff entity to remove from the cuffed entity. If null, uses the most recently added handcuff entity.</param>
-        public async void TryUncuff(IEntity user, IEntity? cuffsToRemove = null)
+        public async void TryUncuff(EntityUid user, EntityUid? cuffsToRemove = null)
         {
             if (_uncuffing) return;
 
@@ -194,20 +194,20 @@ namespace Content.Server.Cuffs.Components
             }
             else
             {
-                if (!Container.ContainedEntities.Contains(cuffsToRemove))
+                if (!Container.ContainedEntities.Contains(cuffsToRemove.Value))
                 {
                     Logger.Warning("A user is trying to remove handcuffs that aren't in the owner's container. This should never happen!");
                 }
             }
 
-            if (!cuffsToRemove.TryGetComponent<HandcuffComponent>(out var cuff))
+            if (!_entMan.TryGetComponent<HandcuffComponent?>(cuffsToRemove, out var cuff))
             {
                 Logger.Warning($"A user is trying to remove handcuffs without a {nameof(HandcuffComponent)}. This should never happen!");
                 return;
             }
 
-            var attempt = new UncuffAttemptEvent(user.Uid, Owner.Uid);
-            Owner.EntityManager.EventBus.RaiseLocalEvent(user.Uid, attempt);
+            var attempt = new UncuffAttemptEvent(user, Owner);
+            _entMan.EventBus.RaiseLocalEvent(user, attempt);
 
             if (attempt.Cancelled)
             {
@@ -217,13 +217,6 @@ namespace Content.Server.Cuffs.Components
             if (!isOwner && !user.InRangeUnobstructed(Owner))
             {
                 user.PopupMessage(Loc.GetString("cuffable-component-cannot-remove-cuffs-too-far-message"));
-                return;
-            }
-
-            // TODO: Why are we even doing this check?
-            if (!cuffsToRemove.InRangeUnobstructed(Owner))
-            {
-                Logger.Warning("Handcuffs being removed from player are obstructed or too far away! This should not happen!");
                 return;
             }
 
@@ -258,24 +251,26 @@ namespace Content.Server.Cuffs.Components
             {
                 SoundSystem.Play(Filter.Pvs(Owner), cuff.EndUncuffSound.GetSound(), Owner);
 
-                Container.ForceRemove(cuffsToRemove);
-                cuffsToRemove.Transform.AttachToGridOrMap();
-                cuffsToRemove.Transform.WorldPosition = Owner.Transform.WorldPosition;
+                Container.ForceRemove(cuffsToRemove.Value);
+                var transform = _entMan.GetComponent<TransformComponent>(cuffsToRemove.Value);
+                transform.AttachToGridOrMap();
+                transform.WorldPosition = _entMan.GetComponent<TransformComponent>(Owner).WorldPosition;
 
                 if (cuff.BreakOnRemove)
                 {
                     cuff.Broken = true;
 
-                    cuffsToRemove.Name = cuff.BrokenName;
-                    cuffsToRemove.Description = cuff.BrokenDesc;
+                    var meta = _entMan.GetComponent<MetaDataComponent>(cuffsToRemove.Value);
+                    meta.EntityName = cuff.BrokenName;
+                    meta.EntityDescription = cuff.BrokenDesc;
 
-                    if (cuffsToRemove.TryGetComponent<SpriteComponent>(out var sprite) && cuff.BrokenState != null)
+                    if (_entMan.TryGetComponent<SpriteComponent?>(cuffsToRemove, out var sprite) && cuff.BrokenState != null)
                     {
                         sprite.LayerSetState(0, cuff.BrokenState); // TODO: safety check to see if RSI contains the state?
                     }
                 }
 
-                CanStillInteract = Owner.TryGetComponent(out HandsComponent? handsComponent) && handsComponent.HandNames.Count() > CuffedHandCount;
+                CanStillInteract = _entMan.TryGetComponent(Owner, out HandsComponent? handsComponent) && handsComponent.HandNames.Count() > CuffedHandCount;
                 OnCuffedStateChanged?.Invoke();
                 UpdateAlert();
                 Dirty();

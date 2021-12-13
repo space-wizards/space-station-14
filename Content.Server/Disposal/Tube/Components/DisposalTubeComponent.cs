@@ -7,13 +7,10 @@ using Content.Shared.Acts;
 using Content.Shared.Disposal.Components;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
-using Content.Shared.Verbs;
-using Robust.Server.Console;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -23,6 +20,8 @@ namespace Content.Server.Disposal.Tube.Components
 {
     public abstract class DisposalTubeComponent : Component, IDisposalTubeComponent, IBreakAct
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public static readonly TimeSpan ClangDelay = TimeSpan.FromSeconds(0.5);
         public TimeSpan LastClang;
 
@@ -38,7 +37,7 @@ namespace Content.Server.Disposal.Tube.Components
 
         [ViewVariables]
         private bool Anchored =>
-            !Owner.TryGetComponent(out PhysicsComponent? physics) ||
+            !_entMan.TryGetComponent(Owner, out PhysicsComponent? physics) ||
             physics.BodyType == BodyType.Static;
 
         /// <summary>
@@ -91,16 +90,16 @@ namespace Content.Server.Disposal.Tube.Components
 
             foreach (var entity in Contents.ContainedEntities.ToArray())
             {
-                if (!entity.TryGetComponent(out DisposalHolderComponent? holder))
+                if (!_entMan.TryGetComponent(entity, out DisposalHolderComponent? holder))
                 {
                     continue;
                 }
 
-                EntitySystem.Get<DisposableSystem>().ExitDisposals(holder.OwnerUid);
+                EntitySystem.Get<DisposableSystem>().ExitDisposals((holder).Owner);
             }
         }
 
-        public void PopupDirections(IEntity entity)
+        public void PopupDirections(EntityUid entity)
         {
             var directions = string.Join(", ", ConnectableDirections());
 
@@ -109,7 +108,7 @@ namespace Content.Server.Disposal.Tube.Components
 
         private void UpdateVisualState()
         {
-            if (!Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (!_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
             {
                 return;
             }
@@ -125,7 +124,7 @@ namespace Content.Server.Disposal.Tube.Components
 
         public void AnchoredChanged()
         {
-            if (!Owner.TryGetComponent(out PhysicsComponent? physics))
+            if (!_entMan.TryGetComponent(Owner, out PhysicsComponent? physics))
             {
                 return;
             }
