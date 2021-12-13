@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Administration.Logs;
@@ -106,7 +106,7 @@ namespace Content.Shared.Slippery
                 PlaySound(component);
             }
 
-            _adminLog.Add(LogType.Slip, LogImpact.Low, $"{ToPrettyString(otherBody.Owner)} slipped on collision with {ToPrettyString(component.Owner)}");
+            _adminLog.Add(LogType.Slip, LogImpact.Low, $"{ToPrettyString(otherBody.Owner):mob} slipped on collision with {ToPrettyString(component.Owner):entity}");
 
             return true;
         }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Prototypes;
@@ -123,7 +123,7 @@ namespace Content.Shared.Chemistry.Reagent
                 {
                     var entity = args.SolutionEntity;
                     EntitySystem.Get<SharedAdminLogSystem>().Add(LogType.ReagentEffect, plantMetabolizable.LogImpact,
-                        $"Plant metabolism effect {plantMetabolizable.GetType().Name:effect} of reagent {ID} applied on entity {entMan.ToPrettyString(entity)} at {entMan.GetComponent<TransformComponent>(entity).Coordinates}");
+                        $"Plant metabolism effect {plantMetabolizable.GetType().Name:effect} of reagent {ID:reagent} applied on entity {entMan.ToPrettyString(entity):entity} at {entMan.GetComponent<TransformComponent>(entity).Coordinates:coordinates}");
                     plantMetabolizable.Effect(args);
                 }
             }

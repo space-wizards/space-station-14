@@ -482,7 +482,7 @@ namespace Content.Server.Interaction
 
                         if (ev.Handled)
                         {
-                            _adminLogSystem.Add(LogType.AttackArmedWide, LogImpact.Medium, $"{user} wide attacked with {item} at {coordinates}");
+                            _adminLogSystem.Add(LogType.AttackArmedWide, LogImpact.Medium, $"{ToPrettyString(user):user} wide attacked with {ToPrettyString(item.Value):used} at {coordinates}");
                             return;
                         }
                     }
@@ -496,12 +496,12 @@ namespace Content.Server.Interaction
                             if (targetUid != null)
                             {
                                 _adminLogSystem.Add(LogType.AttackArmedClick, LogImpact.Medium,
-                                    $"{ToPrettyString(user):user} attacked {ToPrettyString(targetUid.Value):target} with {ToPrettyString(item.Value):item} at {coordinates}");
+                                    $"{ToPrettyString(user):user} attacked {ToPrettyString(targetUid.Value):target} with {ToPrettyString(item.Value):used} at {coordinates}");
                             }
                             else
                             {
                                 _adminLogSystem.Add(LogType.AttackArmedClick, LogImpact.Medium,
-                                    $"{user} attacked with {item} at {coordinates}");
+                                    $"{ToPrettyString(user):user} attacked with {ToPrettyString(item.Value):used} at {coordinates}");
                             }
 
                             return;
