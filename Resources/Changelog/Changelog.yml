@@ -1,20 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Dead bodies can be pulled again, type: Fix}
-  id: 225
-  time: '2021-06-05T07:23:24.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Added error messages to cloning pod and medical scanner., type: Add}
-  - {message: Cloning pod is no longer pure network spam., type: Fix}
-  id: 226
-  time: '2021-06-05T17:33:00.0000000+00:00'
-- author: Seth
-  changes:
-  - {message: Added Oil, type: Add}
-  id: 227
-  time: '2021-06-05T17:53:18.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Interaction outlines removed from full-tile objects like walls, type: Tweak}
@@ -2858,3 +2842,20 @@ Entries:
   - {message: 'added railing sprites, prototype, and construction graph', type: Add}
   id: 726
   time: '2021-12-13T05:03:21.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix AHelp and Quit command permissions, type: Fix}
+  id: 727
+  time: '2021-12-13T05:45:49.0000000+00:00'
+- author: DelleVelleD
+  changes:
+  - {message: Fixed power devices remaining connected to the network after unwrenching,
+    type: Fix}
+  id: 728
+  time: '2021-12-13T05:45:54.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: You can now pull another player even if they have their hands full.,
+    type: Tweak}
+  id: 729
+  time: '2021-12-13T05:46:09.0000000+00:00'
