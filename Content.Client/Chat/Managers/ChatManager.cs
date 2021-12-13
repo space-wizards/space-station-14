@@ -21,6 +21,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Robust.Shared.Utility.Markup;
 
 namespace Content.Client.Chat.Managers
 {
@@ -420,7 +421,7 @@ namespace Content.Client.Chat.Managers
                 return;
             }
 
-            var messages = SplitMessage(FormattedMessage.RemoveMarkup(msg.Message));
+            var messages = SplitMessage(Basic.RenderMarkup(msg.Message).ToString());
 
             foreach (var message in messages)
             {

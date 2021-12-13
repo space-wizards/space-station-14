@@ -14,6 +14,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
+using Robust.Shared.Utility.Markup;
 using static Content.Client.Changelog.ChangelogManager;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
@@ -146,13 +147,13 @@ namespace Content.Client.Changelog
                         Margin = new Thickness(6, 0, 0, 0),
                     };
                     authorLabel.SetMessage(
-                        FormattedMessage.FromMarkup(Loc.GetString("changelog-author-changed", ("author", author))));
+                        Basic.RenderMarkup(Loc.GetString("changelog-author-changed", ("author", author))));
                     ChangelogBody.AddChild(authorLabel);
 
                     foreach (var change in groupedEntry.SelectMany(c => c.Changes))
                     {
                         var text = new RichTextLabel();
-                        text.SetMessage(FormattedMessage.FromMarkup(change.Message));
+                        text.SetMessage(Basic.RenderMarkup(change.Message));
                         ChangelogBody.AddChild(new BoxContainer
                         {
                             Orientation = LayoutOrientation.Horizontal,

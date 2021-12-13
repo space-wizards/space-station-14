@@ -11,6 +11,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
+using Robust.Shared.Utility.Markup;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Info
@@ -80,7 +81,7 @@ namespace Content.Client.Info
                 var text = _resourceManager.ContentFileReadAllText($"/Server Info/{path}");
                 if (markup)
                 {
-                    label.SetMessage(FormattedMessage.FromMarkup(text.Trim()));
+                    label.SetMessage(Basic.RenderMarkup(text.Trim()));
                 }
                 else
                 {
@@ -122,7 +123,7 @@ namespace Content.Client.Info
                 var text = _resourceManager.ContentFileReadAllText($"/Server Info/{path}");
                 if (markup)
                 {
-                    label.SetMessage(FormattedMessage.FromMarkup(text.Trim()));
+                    label.SetMessage(Basic.RenderMarkup(text.Trim()));
                 }
                 else
                 {
