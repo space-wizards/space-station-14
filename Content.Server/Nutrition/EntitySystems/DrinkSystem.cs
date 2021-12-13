@@ -380,7 +380,7 @@ namespace Content.Server.Nutrition.EntitySystems
             });
 
             // logging
-            _logSystem.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(userUid)} is forcing {ToPrettyString(targetUid)} to drink {ToPrettyString(uid)}");
+            _logSystem.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(userUid)} is forcing {ToPrettyString(targetUid)} to drink {ToPrettyString(uid)} {SolutionContainerSystem.ToPrettyString(drinkSolution):solution}");
 
             return true;
         }
