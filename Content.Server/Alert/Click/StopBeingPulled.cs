@@ -16,12 +16,12 @@ namespace Content.Server.Alert.Click
     [DataDefinition]
     public class StopBeingPulled : IAlertClick
     {
-        public void AlertClicked(ClickAlertEventArgs args)
+        public void AlertClicked(EntityUid player)
         {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(args.Player))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(player))
                 return;
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedPullableComponent?>(args.Player, out var playerPullable))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedPullableComponent?>(player, out var playerPullable))
             {
                 EntitySystem.Get<SharedPullingSystem>().TryStopPull(playerPullable);
             }

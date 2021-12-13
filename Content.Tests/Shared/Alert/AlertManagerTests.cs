@@ -1,9 +1,11 @@
 using System.IO;
 using Content.Shared.Alert;
 using NUnit.Framework;
+using NUnit.Framework.Interfaces;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Reflection;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Utility;
 
@@ -29,6 +31,10 @@ namespace Content.Tests.Shared.Alert
         public void TestAlertManager()
         {
             IoCManager.Resolve<ISerializationManager>().Initialize();
+
+            var reflection = IoCManager.Resolve<IReflectionManager>();
+            reflection.LoadAssemblies();
+
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             prototypeManager.Initialize();
             prototypeManager.LoadFromStream(new StringReader(PROTOTYPES));

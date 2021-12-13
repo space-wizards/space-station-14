@@ -45,7 +45,7 @@ internal class ServerAlertsSystem : SharedAlertsSystem
             return;
         }
 
-        alert.OnClick?.AlertClicked(new ClickAlertEventArgs(player.Value, alert));
+        alert.OnClick?.AlertClicked(player.Value);
     }
 
     private static void HandleComponentStartup(EntityUid uid, AlertsComponent component, ComponentStartup args)
