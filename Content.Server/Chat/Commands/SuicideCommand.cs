@@ -69,7 +69,7 @@ namespace Content.Server.Chat.Commands
                 return;
             }
 
-            if (player.Status != SessionStatus.InGame)
+            if (player.Status != SessionStatus.InGame || player.AttachedEntity == null)
                 return;
 
             var chat = IoCManager.Resolve<IChatManager>();
@@ -85,7 +85,8 @@ namespace Content.Server.Chat.Commands
             //TODO: needs to check if the mob is actually alive
             //TODO: maybe set a suicided flag to prevent resurrection?
 
-            EntitySystem.Get<AdminLogSystem>().Add(LogType.Suicide, $"{player.AttachedEntity} is committing suicide");
+            EntitySystem.Get<AdminLogSystem>().Add(LogType.Suicide,
+                $"{_entities.ToPrettyString(player.AttachedEntity.Value):player} is committing suicide");
 
             // Held item suicide
             var handsComponent = _entities.GetComponent<HandsComponent>(owner);

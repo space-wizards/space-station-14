@@ -35,7 +35,7 @@ namespace Content.Server.Damage.Systems
 
                 if (dmg != null)
                     _logSystem.Add(LogType.Damaged,
-                        $"{args.User} used {args.Used} as a welder to deal {dmg.Total} damage to {args.Target}");
+                        $"{ToPrettyString(args.User):user} used {ToPrettyString(args.Used):used} as a welder to deal {dmg.Total:damage} damage to {ToPrettyString(args.Target):target}");
 
                 args.Handled = true;
             }
@@ -47,7 +47,7 @@ namespace Content.Server.Damage.Systems
 
                 if (dmg != null)
                     _logSystem.Add(LogType.Damaged,
-                        $"{args.User} used {args.Used} as a tool to deal {dmg.Total} damage to {args.Target}");
+                        $"{ToPrettyString(args.User):user} used {ToPrettyString(args.Used):used} as a tool to deal {dmg.Total:damage} damage to {ToPrettyString(args.Target):target}");
 
                 args.Handled = true;
             }

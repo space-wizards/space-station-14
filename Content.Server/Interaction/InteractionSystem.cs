@@ -394,7 +394,7 @@ namespace Content.Server.Interaction
             // all interactions should only happen when in range / unobstructed, so no range check is needed
             var message = new InteractHandEvent(user, target);
             RaiseLocalEvent(target, message);
-            _adminLogSystem.Add(LogType.InteractHand, LogImpact.Low, $"{ToPrettyString(user)} interacted with {ToPrettyString(target)}");
+            _adminLogSystem.Add(LogType.InteractHand, LogImpact.Low, $"{ToPrettyString(user):user} interacted with {ToPrettyString(target):target}");
             if (message.Handled)
                 return;
 
@@ -482,7 +482,7 @@ namespace Content.Server.Interaction
 
                         if (ev.Handled)
                         {
-                            _adminLogSystem.Add(LogType.AttackArmedWide, LogImpact.Medium, $"{ToPrettyString(user)} wide attacked with {ToPrettyString(item)} at {coordinates}");
+                            _adminLogSystem.Add(LogType.AttackArmedWide, LogImpact.Medium, $"{ToPrettyString(user):user} wide attacked with {ToPrettyString(item):used} at {coordinates}");
                             return;
                         }
                     }
@@ -496,12 +496,12 @@ namespace Content.Server.Interaction
                             if (targetUid != default)
                             {
                                 _adminLogSystem.Add(LogType.AttackArmedClick, LogImpact.Medium,
-                                    $"{ToPrettyString(user)} attacked {ToPrettyString(targetUid)} with {ToPrettyString(item)} at {coordinates}");
+                                    $"{ToPrettyString(user):user} attacked {ToPrettyString(targetUid):target} with {ToPrettyString(item):used} at {coordinates}");
                             }
                             else
                             {
                                 _adminLogSystem.Add(LogType.AttackArmedClick, LogImpact.Medium,
-                                    $"{ToPrettyString(user)} attacked with {ToPrettyString(item)} at {coordinates}");
+                                    $"{ToPrettyString(user):user} attacked with {ToPrettyString(item):used} at {coordinates}");
                             }
 
                             return;
@@ -523,7 +523,7 @@ namespace Content.Server.Interaction
                 var ev = new WideAttackEvent(user, user, coordinates);
                 RaiseLocalEvent(user, ev, false);
                 if (ev.Handled)
-                    _adminLogSystem.Add(LogType.AttackUnarmedWide, $"{user} wide attacked at {coordinates}");
+                    _adminLogSystem.Add(LogType.AttackUnarmedWide, $"{ToPrettyString(user):user} wide attacked at {coordinates}");
             }
             else
             {
@@ -534,12 +534,12 @@ namespace Content.Server.Interaction
                     if (targetUid != default)
                     {
                         _adminLogSystem.Add(LogType.AttackUnarmedClick, LogImpact.Medium,
-                            $"{ToPrettyString(user)} attacked {ToPrettyString(targetUid)} at {coordinates}");
+                            $"{ToPrettyString(user):user} attacked {ToPrettyString(targetUid):target} at {coordinates}");
                     }
                     else
                     {
                         _adminLogSystem.Add(LogType.AttackUnarmedClick, LogImpact.Medium,
-                            $"{ToPrettyString(user)} attacked at {coordinates}");
+                            $"{ToPrettyString(user):user} attacked at {coordinates}");
                     }
                 }
             }
