@@ -1,9 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Interaction outlines removed from full-tile objects like walls, type: Tweak}
-  id: 228
-  time: '2021-06-05T18:19:06.0000000+00:00'
 - author: SethLafuente
   changes:
   - {message: Synaptizine damage per unit nerfed from 15 to 6, type: Tweak}
@@ -2859,3 +2854,9 @@ Entries:
     type: Tweak}
   id: 729
   time: '2021-12-13T05:46:09.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'The collision for broken grilles have been fixed, you can now walk
+      through them again.', type: Fix}
+  id: 730
+  time: '2021-12-13T07:57:47.0000000+00:00'
