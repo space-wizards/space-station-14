@@ -16,6 +16,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Robust.Shared.Utility.Markup;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Actions.UI
@@ -478,10 +479,10 @@ namespace Content.Client.Actions.UI
 
         private FormattedMessage SlotNumberLabel()
         {
-            if (SlotNumber > 10) return FormattedMessage.FromMarkup("");
+            if (SlotNumber > 10) return FormattedMessage.Empty;
             var number = Loc.GetString(SlotNumber == 10 ? "0" : SlotNumber.ToString());
             var color = (ActionEnabled || !HasAssignment) ? EnabledColor : DisabledColor;
-            return FormattedMessage.FromMarkup("[color=" + color + "]" + number + "[/color]");
+            return Basic.RenderMarkup("[color=" + color + "]" + number + "[/color]");
         }
 
         private void UpdateIcons()
