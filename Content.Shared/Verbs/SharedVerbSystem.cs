@@ -130,19 +130,22 @@ namespace Content.Shared.Verbs
             if (usedUid != default)
                 EntityManager.EntityExists(usedUid);
 
-            // then prepare the basic log message body
             var verbText = $"{verb.Category?.Text} {verb.Text}".Trim();
-            var logText = forced
-                ? $"was forced to execute the '{verbText}' verb targeting " // let's not frame people, eh?
-                : $"executed '{verbText}' verb targeting ";
 
-            // then log with entity information
-            if (used != null)
+            // lets not frame people, eh?
+            var executionText = forced ? "was forced to execute" : "executed";
+
+            if (used == null)
+            {
                 _logSystem.Add(LogType.Verb, verb.Impact,
-                       $"{user} {logText} {target} while holding {used}");
+                        $"{ToPrettyString(user):user} {executionText} the [{verbText:verb}] verb targeting {ToPrettyString(target):target}");
+            }
             else
+            {
                 _logSystem.Add(LogType.Verb, verb.Impact,
-                       $"{user} {logText} {target}");
+                       $"{ToPrettyString(user):user} {executionText} the [{verbText:verb}] verb targeting {ToPrettyString(target):target} while holding {ToPrettyString(used.Value):held}");
+            }
+                
         }
     }
 }

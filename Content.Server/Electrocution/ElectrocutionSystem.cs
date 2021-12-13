@@ -110,7 +110,7 @@ namespace Content.Server.Electrocution
                     var actual = _damageableSystem.TryChangeDamage(finished.Electrocuting, damage);
                     if (actual != null)
                         _logSystem.Add(LogType.Electrocution,
-                            $"{finished.Owner} took {actual.Total} powered electrocution damage");
+                            $"{ToPrettyString(finished.Owner):entity} received {actual.Total:damage} powered electrocution damage");
                 }
 
                 EntityManager.DeleteEntity(uid);
@@ -357,7 +357,7 @@ namespace Content.Server.Electrocution
 
                 if (actual != null)
                     _logSystem.Add(LogType.Electrocution,
-                        $"{statusEffects.Owner} took {actual.Total} powered electrocution damage");
+                        $"{ToPrettyString(statusEffects.Owner):entity} received {actual.Total:damage} powered electrocution damage");
             }
 
             _stutteringSystem.DoStutter(uid, time * StutteringTimeMultiplier, refresh, statusEffects, alerts);

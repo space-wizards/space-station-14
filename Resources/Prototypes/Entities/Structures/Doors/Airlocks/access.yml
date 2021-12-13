@@ -14,6 +14,46 @@
   components:
   - type: AccessReader
     access: [["Theatre"]]
+    
+- type: entity
+  parent: Airlock
+  id: AirlockChapelLocked
+  suffix: Chapel, Locked
+  components:
+  - type: AccessReader
+    access: [["Chapel"]]
+    
+- type: entity
+  parent: Airlock
+  id: AirlockJanitorLocked
+  suffix: Janitor, Locked
+  components:
+  - type: AccessReader
+    access: [["Janitor"]]
+
+- type: entity
+  parent: Airlock
+  id: AirlockKitchenLocked
+  suffix: Kitchen, Locked
+  components:
+  - type: AccessReader
+    access: [["Kitchen"]]
+    
+- type: entity
+  parent: Airlock
+  id: AirlockBarLocked
+  suffix: Bar, Locked
+  components:
+  - type: AccessReader
+    access: [["Bar"]]
+    
+- type: entity
+  parent: Airlock
+  id: AirlockHydroponicsLocked
+  suffix: Hydroponics, Locked
+  components:
+  - type: AccessReader
+    access: [["Hydroponics"]]
 
 - type: entity
   parent: AirlockExternal
@@ -29,7 +69,16 @@
   suffix: Service, Locked
   components:
   - type: AccessReader
-    access: [["Service"]]
+    access: [["Kitchen"]]
+
+- type: entity
+  parent: AirlockFreezer
+  id: AirlockFreezerKitchenHydroLocked
+  suffix: Kitchen/Hydroponics, Locked
+  components:
+  - type: AccessReader
+    access: [["Kitchen"], ["Hydroponics"]]
+
 
 - type: entity
   parent: AirlockEngineering
@@ -177,6 +226,30 @@
     access: [["Bar"]]
 
 - type: entity
+  parent: AirlockGlass
+  id: AirlockKitchenGlassLocked
+  suffix: Kitchen, Locked
+  components:
+  - type: AccessReader
+    access: [["Kitchen"]]
+
+- type: entity
+  parent: AirlockGlass
+  id: AirlockHydroGlassLocked
+  suffix: Hydroponics, Locked
+  components:
+  - type: AccessReader
+    access: [["Hydroponics"]]
+
+- type: entity
+  parent: AirlockGlass
+  id: AirlockChapelGlassLocked
+  suffix: Chapel, Locked
+  components:
+  - type: AccessReader
+    access: [["Chapel"]]
+
+- type: entity
   parent: AirlockEngineeringGlass
   id: AirlockEngineeringGlassLocked
   suffix: Glass, Locked
@@ -232,7 +305,7 @@
   - type: AccessReader
     access: [["Security"]]
 
-# Maintenance Hatchs
+# Maintenance Hatches
 - type: entity
   parent: AirlockMaint
   id: AirlockMaintLocked
@@ -280,6 +353,46 @@
   components:
   - type: AccessReader
     access: [["Bar"]]
+
+- type: entity
+  parent: AirlockMaint
+  id: AirlockMaintChapelLocked
+  suffix: Chapel, Locked
+  components:
+  - type: AccessReader
+    access: [["Chapel"]]
+
+- type: entity
+  parent: AirlockMaint
+  id: AirlockMaintHydroLocked
+  suffix: Hydroponics, Locked
+  components:
+  - type: AccessReader
+    access: [["Hydroponics"]]
+
+- type: entity
+  parent: AirlockMaint
+  id: AirlockMaintJanitorLocked
+  suffix: Janitor, Locked
+  components:
+  - type: AccessReader
+    access: [["Janitor"]]
+
+- type: entity
+  parent: AirlockMaint
+  id: AirlockMaintTheatreLocked
+  suffix: Theatre, Locked
+  components:
+  - type: AccessReader
+    access: [["Theatre"]]
+    
+- type: entity
+  parent: AirlockMaint
+  id: AirlockMaintKitchenLocked
+  suffix: Kitchen, Locked
+  components:
+  - type: AccessReader
+    access: [["Kitchen"]]
 
 - type: entity
   parent: AirlockMaint
@@ -336,3 +449,12 @@
   components:
   - type: AccessReader
     access: [["HeadOfPersonnel"]]
+
+# Shuttle airlocks
+- type: entity
+  parent: AirlockShuttle
+  id: AirlockExternalShuttleLocked
+  suffix: External, Locked
+  components:
+  - type: AccessReader
+    access: [["External"]]

@@ -409,6 +409,9 @@ namespace Content.Shared.Interaction
         /// </summary>
         public async Task<bool> InteractDoAfter(EntityUid user, EntityUid used, EntityUid? target, EntityCoordinates clickLocation, bool canReach)
         {
+            if (target is {Valid: false})
+                target = null;
+
             var afterInteractEvent = new AfterInteractEvent(user, used, target, clickLocation, canReach);
             RaiseLocalEvent(used, afterInteractEvent, false);
             if (afterInteractEvent.Handled)
@@ -465,7 +468,7 @@ namespace Content.Shared.Interaction
             RaiseLocalEvent(used, activateMsg);
             if (activateMsg.Handled)
             {
-                _adminLogSystem.Add(LogType.InteractActivate, LogImpact.Low, $"{user} activated {used}");
+                _adminLogSystem.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user):user} activated {ToPrettyString(used):used}");
                 return;
             }
 
@@ -474,7 +477,7 @@ namespace Content.Shared.Interaction
 
             var activateEventArgs = new ActivateEventArgs(user, used);
             activateComp.Activate(activateEventArgs);
-            _adminLogSystem.Add(LogType.InteractActivate, LogImpact.Low, $"{user} activated {used}"); // No way to check success.
+            _adminLogSystem.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user):user} activated {ToPrettyString(used):used}"); // No way to check success.
         }
         #endregion
 
@@ -553,7 +556,7 @@ namespace Content.Shared.Interaction
             RaiseLocalEvent(thrown, throwMsg);
             if (throwMsg.Handled)
             {
-                _adminLogSystem.Add(LogType.Throw, LogImpact.Low,$"{user} threw {thrown}");
+                _adminLogSystem.Add(LogType.Throw, LogImpact.Low,$"{ToPrettyString(user):user} threw {ToPrettyString(thrown):entity}");
                 return;
             }
 
@@ -565,7 +568,7 @@ namespace Content.Shared.Interaction
             {
                 comp.Thrown(args);
             }
-            _adminLogSystem.Add(LogType.Throw, LogImpact.Low,$"{user} threw {thrown}");
+            _adminLogSystem.Add(LogType.Throw, LogImpact.Low,$"{ToPrettyString(user):user} threw {ToPrettyString(thrown):entity}");
         }
         #endregion
 
@@ -674,7 +677,7 @@ namespace Content.Shared.Interaction
             RaiseLocalEvent(item, dropMsg);
             if (dropMsg.Handled)
             {
-                _adminLogSystem.Add(LogType.Drop, LogImpact.Low, $"{user} dropped {item}");
+                _adminLogSystem.Add(LogType.Drop, LogImpact.Low, $"{ToPrettyString(user):user} dropped {ToPrettyString(item):entity}");
                 return;
             }
 
@@ -687,7 +690,7 @@ namespace Content.Shared.Interaction
             {
                 comp.Dropped(new DroppedEventArgs(user));
             }
-            _adminLogSystem.Add(LogType.Drop, LogImpact.Low, $"{user} dropped {item}");
+            _adminLogSystem.Add(LogType.Drop, LogImpact.Low, $"{ToPrettyString(user):user} dropped {ToPrettyString(item):entity}");
         }
         #endregion
 
