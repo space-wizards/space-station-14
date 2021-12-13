@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Globalization;
 using System.IO;
 using Content.Client.HUD;
@@ -21,14 +21,14 @@ public sealed class RulesManager
 
     private void OnConnectStateChanged(ClientConnectionState state)
     {
+
         if (state != ClientConnectionState.Connected)
             return;
 
         var path = new ResourcePath($"/rules_last_seen_{_configManager.GetCVar(CCVars.ServerId)}");
         var showRules = true;
-        if (_resource.UserData.Exists(path)
-            && DateTime.TryParse(_resource.UserData.ReadAllText(path), null, DateTimeStyles.AssumeUniversal,
-                out var lastReadTime))
+        if (_resource.UserData.TryReadAllText(path, out var lastReadTimeText)
+            && DateTime.TryParse(lastReadTimeText, null, DateTimeStyles.AssumeUniversal, out var lastReadTime))
             showRules = lastReadTime < DateTime.UtcNow - TimeSpan.FromDays(60);
         else
             SaveLastReadTime();
@@ -42,8 +42,7 @@ public sealed class RulesManager
     /// </summary>
     public void SaveLastReadTime()
     {
-        using var file = _resource.UserData.Create(new ResourcePath($"/rules_last_seen_{_configManager.GetCVar(CCVars.ServerId)}"));
-        using var sw = new StreamWriter(file);
+        using var sw = _resource.UserData.OpenWriteText(new ResourcePath($"/rules_last_seen_{_configManager.GetCVar(CCVars.ServerId)}"));
 
         sw.Write(DateTime.UtcNow.ToUniversalTime());
     }
