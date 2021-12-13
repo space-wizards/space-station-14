@@ -251,7 +251,7 @@
     - type: StorageVisualizer
       state: warden
   - type: AccessReader
-    access: [["Security"]] # TODO access [["Brig"]]
+    access: [["Security", "Armory"]] # TODO access [["Brig"]]
 
 # Security Officer
 - type: entity

@@ -2,7 +2,6 @@
   id: ChiefEngineer
   name: "chief engineer"
   head: true
-  positions: 1
   startingGear: ChiefEngineerGear
   departments:
   - Command
@@ -16,6 +15,7 @@
   - Engineering
   - Command
   - External
+  - ChiefEngineer
 
 - type: startingGear
   id: ChiefEngineerGear

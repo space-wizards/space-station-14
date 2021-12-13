@@ -1,0 +1,72 @@
+- type: entity
+  id: Kudzu
+  name: kudzu
+  description: A rapidly growing, dangerous plant. WHY ARE YOU STOPPING TO LOOK AT IT?!
+  placement:
+    mode: SnapgridCenter
+    snap:
+      - Wall
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/kudzu.rsi
+      state: kudzu_11
+      drawdepth: Overdoors
+      netsync: false
+    - type: Appearance
+      visuals:
+      - type: KudzuVisualizer
+    - type: Clickable
+    - type: Transform
+      anchored: true
+    - type: Physics
+    - type: Fixtures
+      fixtures:
+      - hard: false
+        mass: 7
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        layer:
+          - MobImpassable
+    - type: Damageable
+      damageModifierSet: Wood
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 10
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - type: Temperature
+      heatDamage:
+        types:
+          Heat: 5
+    - type: Flammable
+      fireSpread: true #If you walk into incredibly dense, flaming vines, you can expect to burn.
+      cold:
+        types: {}
+      damage:
+        types:
+          Heat: 1
+    - type: Reactive
+      groups:
+        Flammable: [Touch]
+        Extinguish: [Touch]
+      reactions:
+      - reagents: [WeedKiller, PlantBGone]
+        methods: [Touch]
+        effects:
+        - !type:HealthChange
+          scaled: true
+          damage:
+            types:
+              Heat: 10
+    - type: AtmosExposed
+    - type: Spreader
+      growthResult: Kudzu
+    - type: GrowingKudzu
+      growthTickSkipChance: 0.1666
+    - type: SlowContacts
+      walkSpeedModifier: 0.2
+      sprintSpeedModifier: 0.2

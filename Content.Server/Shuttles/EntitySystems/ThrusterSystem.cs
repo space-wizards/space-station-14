@@ -12,6 +12,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Shuttles.Components;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
@@ -28,7 +29,7 @@ namespace Content.Server.Shuttles.EntitySystems
     {
         [Robust.Shared.IoC.Dependency] private readonly IMapManager _mapManager = default!;
         [Robust.Shared.IoC.Dependency] private readonly AmbientSoundSystem _ambient = default!;
-        [Robust.Shared.IoC.Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
+        [Robust.Shared.IoC.Dependency] private readonly FixtureSystem _fixtureSystem = default!;
         [Robust.Shared.IoC.Dependency] private readonly DamageableSystem _damageable = default!;
 
         // Essentially whenever thruster enables we update the shuttle's available impulses which are used for movement.
@@ -69,9 +70,9 @@ namespace Content.Server.Shuttles.EntitySystems
 
             args.PushMarkup(enabled);
 
-            var xform = EntityManager.GetComponent<TransformComponent>(uid);
-
-            if (xform.Anchored)
+            if (component.Type == ThrusterType.Linear &&
+                EntityManager.TryGetComponent(uid, out TransformComponent? xform) &&
+                xform.Anchored)
             {
                 var nozzleDir = Loc.GetString("thruster-comp-nozzle-direction",
                     ("direction", xform.LocalRotation.Opposite().ToWorldVec().GetDir().ToString().ToLowerInvariant()));
@@ -136,11 +137,33 @@ namespace Content.Server.Shuttles.EntitySystems
         {
             // TODO: Disable visualizer for old direction
 
-            if (!component.IsOn ||
+            if (!component.Enabled ||
                 component.Type != ThrusterType.Linear ||
                 !EntityManager.TryGetComponent(uid, out TransformComponent? xform) ||
                 !_mapManager.TryGetGrid(xform.GridID, out var grid) ||
-                !EntityManager.TryGetComponent(grid.GridEntityId, out ShuttleComponent? shuttleComponent)) return;
+                !EntityManager.TryGetComponent(grid.GridEntityId, out ShuttleComponent? shuttleComponent))
+            {
+                return;
+            }
+
+            var canEnable = CanEnable(uid, component);
+
+            // If it's not on then don't enable it inadvertantly (given we don't have an old rotation)
+            if (!canEnable && !component.IsOn) return;
+
+            // Enable it if it was turned off but new tile is valid
+            if (!component.IsOn && canEnable)
+            {
+                EnableThruster(uid, component);
+                return;
+            }
+
+            // Disable if new tile invalid
+            if (component.IsOn && !canEnable)
+            {
+                DisableThruster(uid, component, xform, args.OldRotation);
+                return;
+            }
 
             var oldDirection = (int) args.OldRotation.GetCardinalDir() / 2;
             var direction = (int) args.NewRotation.GetCardinalDir() / 2;
@@ -211,7 +234,7 @@ namespace Content.Server.Shuttles.EntitySystems
 
             if (!EntityManager.TryGetComponent(grid.GridEntityId, out ShuttleComponent? shuttleComponent)) return;
 
-            Logger.DebugS("thruster", $"Enabled thruster {uid}");
+            // Logger.DebugS("thruster", $"Enabled thruster {uid}");
 
             switch (component.Type)
             {
@@ -237,7 +260,7 @@ namespace Content.Server.Shuttles.EntitySystems
                             CollisionLayer = (int) CollisionGroup.MobImpassable
                         };
 
-                        _broadphase.CreateFixture(physicsComponent, fixture);
+                        _fixtureSystem.CreateFixture(physicsComponent, fixture);
                     }
 
                     break;
@@ -255,17 +278,18 @@ namespace Content.Server.Shuttles.EntitySystems
                 appearanceComponent.SetData(ThrusterVisualState.State, true);
             }
 
+            if (EntityManager.TryGetComponent(uid, out PointLightComponent? pointLightComponent))
+            {
+                pointLightComponent.Enabled = true;
+            }
+
             _ambient.SetAmbience(uid, true);
         }
 
         /// <summary>
         /// Tries to disable the thruster.
         /// </summary>
-        /// <param name="uid"></param>
-        /// <param name="component"></param>
-        /// <param name="xform"></param>
-        /// <exception cref="ArgumentOutOfRangeException"></exception>
-        public void DisableThruster(EntityUid uid, ThrusterComponent component, TransformComponent? xform = null)
+        public void DisableThruster(EntityUid uid, ThrusterComponent component, TransformComponent? xform = null, Angle? angle = null)
         {
             if (!component.IsOn ||
                 !Resolve(uid, ref xform) ||
@@ -275,12 +299,13 @@ namespace Content.Server.Shuttles.EntitySystems
 
             if (!EntityManager.TryGetComponent(grid.GridEntityId, out ShuttleComponent? shuttleComponent)) return;
 
-            Logger.DebugS("thruster", $"Disabled thruster {uid}");
+            // Logger.DebugS("thruster", $"Disabled thruster {uid}");
 
             switch (component.Type)
             {
                 case ThrusterType.Linear:
-                    var direction = ((int) xform.LocalRotation.GetCardinalDir() / 2);
+                    angle ??= xform.LocalRotation;
+                    var direction = (int) angle.Value.GetCardinalDir() / 2;
 
                     shuttleComponent.LinearThrusterImpulse[direction] -= component.Impulse;
                     DebugTools.Assert(shuttleComponent.LinearThrusters[direction].Contains(component));
@@ -300,11 +325,16 @@ namespace Content.Server.Shuttles.EntitySystems
                 appearanceComponent.SetData(ThrusterVisualState.State, false);
             }
 
+            if (EntityManager.TryGetComponent(uid, out PointLightComponent? pointLightComponent))
+            {
+                pointLightComponent.Enabled = false;
+            }
+
             _ambient.SetAmbience(uid, false);
 
             if (EntityManager.TryGetComponent(uid, out PhysicsComponent? physicsComponent))
             {
-                _broadphase.DestroyFixture(physicsComponent, BurnFixture);
+                _fixtureSystem.DestroyFixture(physicsComponent, BurnFixture);
             }
 
             _activeThrusters.Remove(component);
@@ -367,14 +397,14 @@ namespace Content.Server.Shuttles.EntitySystems
             if (args.OurFixture.ID != BurnFixture) return;
 
             _activeThrusters.Add(component);
-            component.Colliding.Add(args.OtherFixture.Body.OwnerUid);
+            component.Colliding.Add((args.OtherFixture.Body).Owner);
         }
 
         private void OnEndCollide(EntityUid uid, ThrusterComponent component, EndCollideEvent args)
         {
             if (args.OurFixture.ID != BurnFixture) return;
 
-            component.Colliding.Remove(args.OtherFixture.Body.OwnerUid);
+            component.Colliding.Remove((args.OtherFixture.Body).Owner);
 
             if (component.Colliding.Count == 0)
             {
@@ -385,117 +415,79 @@ namespace Content.Server.Shuttles.EntitySystems
         /// <summary>
         /// Considers a thrust direction as being active.
         /// </summary>
-        public void EnableThrustDirection(ShuttleComponent component, DirectionFlag direction)
+        public void EnableLinearThrustDirection(ShuttleComponent component, DirectionFlag direction)
         {
             if ((component.ThrustDirections & direction) != 0x0) return;
 
             component.ThrustDirections |= direction;
 
-            if ((direction & (DirectionFlag.East | DirectionFlag.West)) != 0x0)
+            var index = GetFlagIndex(direction);
+
+            foreach (var comp in component.LinearThrusters[index])
             {
-                switch (component.Mode)
-                {
-                    case ShuttleMode.Cruise:
-                        foreach (var comp in component.AngularThrusters)
-                        {
-                            if (!EntityManager.TryGetComponent(comp.OwnerUid, out AppearanceComponent? appearanceComponent))
-                                continue;
+                if (!EntityManager.TryGetComponent((comp).Owner, out AppearanceComponent? appearanceComponent))
+                    continue;
 
-                            comp.Firing = true;
-                            appearanceComponent.SetData(ThrusterVisualState.Thrusting, true);
-                        }
-                        break;
-                    case ShuttleMode.Docking:
-                        var index = GetFlagIndex(direction);
-
-                        foreach (var comp in component.LinearThrusters[index])
-                        {
-                            if (!EntityManager.TryGetComponent(comp.OwnerUid, out AppearanceComponent? appearanceComponent))
-                                continue;
-
-                            comp.Firing = true;
-                            appearanceComponent.SetData(ThrusterVisualState.Thrusting, true);
-                        }
-
-                        break;
-                }
-            }
-            else
-            {
-                var index = GetFlagIndex(direction);
-
-                foreach (var comp in component.LinearThrusters[index])
-                {
-                    if (!EntityManager.TryGetComponent(comp.OwnerUid, out AppearanceComponent? appearanceComponent))
-                        continue;
-
-                    comp.Firing = true;
-                    appearanceComponent.SetData(ThrusterVisualState.Thrusting, true);
-                }
+                comp.Firing = true;
+                appearanceComponent.SetData(ThrusterVisualState.Thrusting, true);
             }
         }
 
         /// <summary>
         /// Disables a thrust direction.
         /// </summary>
-        public void DisableThrustDirection(ShuttleComponent component, DirectionFlag direction)
+        public void DisableLinearThrustDirection(ShuttleComponent component, DirectionFlag direction)
         {
             if ((component.ThrustDirections & direction) == 0x0) return;
 
             component.ThrustDirections &= ~direction;
 
-            if ((direction & (DirectionFlag.East | DirectionFlag.West)) != 0x0)
+            var index = GetFlagIndex(direction);
+
+            foreach (var comp in component.LinearThrusters[index])
             {
-                switch (component.Mode)
+                if (!EntityManager.TryGetComponent((comp).Owner, out AppearanceComponent? appearanceComponent))
+                    continue;
+
+                comp.Firing = false;
+                appearanceComponent.SetData(ThrusterVisualState.Thrusting, false);
+            }
+        }
+
+        public void DisableLinearThrusters(ShuttleComponent component)
+        {
+            foreach (DirectionFlag dir in Enum.GetValues(typeof(DirectionFlag)))
+            {
+                DisableLinearThrustDirection(component, dir);
+            }
+
+            DebugTools.Assert(component.ThrustDirections == DirectionFlag.None);
+        }
+
+        public void SetAngularThrust(ShuttleComponent component, bool on)
+        {
+            if (on)
+            {
+                foreach (var comp in component.AngularThrusters)
                 {
-                    case ShuttleMode.Cruise:
-                        foreach (var comp in component.AngularThrusters)
-                        {
-                            if (!EntityManager.TryGetComponent(comp.OwnerUid, out AppearanceComponent? appearanceComponent))
-                                continue;
+                    if (!EntityManager.TryGetComponent((comp).Owner, out AppearanceComponent? appearanceComponent))
+                        continue;
 
-                            comp.Firing = false;
-                            appearanceComponent.SetData(ThrusterVisualState.Thrusting, false);
-                        }
-                        break;
-                    case ShuttleMode.Docking:
-                        var index = GetFlagIndex(direction);
-
-                        foreach (var comp in component.LinearThrusters[index])
-                        {
-                            if (!EntityManager.TryGetComponent(comp.OwnerUid, out AppearanceComponent? appearanceComponent))
-                                continue;
-
-                            comp.Firing = false;
-                            appearanceComponent.SetData(ThrusterVisualState.Thrusting, false);
-                        }
-
-                        break;
+                    comp.Firing = true;
+                    appearanceComponent.SetData(ThrusterVisualState.Thrusting, true);
                 }
             }
             else
             {
-                var index = GetFlagIndex(direction);
-
-                foreach (var comp in component.LinearThrusters[index])
+                foreach (var comp in component.AngularThrusters)
                 {
-                    if (!EntityManager.TryGetComponent(comp.OwnerUid, out AppearanceComponent? appearanceComponent))
+                    if (!EntityManager.TryGetComponent((comp).Owner, out AppearanceComponent? appearanceComponent))
                         continue;
 
                     comp.Firing = false;
                     appearanceComponent.SetData(ThrusterVisualState.Thrusting, false);
                 }
             }
-        }
-
-        public void DisableAllThrustDirections(ShuttleComponent component)
-        {
-            foreach (DirectionFlag dir in Enum.GetValues(typeof(DirectionFlag)))
-            {
-                DisableThrustDirection(component, dir);
-            }
-
-            DebugTools.Assert(component.ThrustDirections == DirectionFlag.None);
         }
 
         #endregion

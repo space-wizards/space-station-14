@@ -1,8 +1,6 @@
 - type: job
   id: Botanist
   name: "botanist"
-  positions: 2
-  spawnPositions: 2
   startingGear: BotanistGear
   departments:
   - Civilian
@@ -11,6 +9,7 @@
   access:
   - Service
   - Maintenance
+  - Hydroponics
 
 - type: startingGear
   id: BotanistGear

@@ -2,6 +2,7 @@ using Content.Client.Hands;
 using Content.Shared.Item;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Client.Items.Components
 {
@@ -14,7 +15,7 @@ namespace Content.Client.Items.Components
             if (!Owner.TryGetContainer(out var container))
                 return;
 
-            if (container.Owner.TryGetComponent(out HandsComponent? hands))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(container.Owner, out HandsComponent? hands))
                 hands.UpdateHandVisualizer();
         }
     }

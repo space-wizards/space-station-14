@@ -36,7 +36,7 @@ namespace Content.Shared.SubFloor
         [DataField("requireAnchored")]
         public bool RequireAnchored { get; set; } = true;
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new SubFloorHideComponentState(Enabled, RequireAnchored);
         }

@@ -2,8 +2,7 @@ using Content.Shared.SubFloor;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Log;
-using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.IoC;
 
 namespace Content.Client.SubFloor
 {
@@ -14,7 +13,8 @@ namespace Content.Client.SubFloor
         {
             base.OnChangeData(component);
 
-            if (!component.Owner.TryGetComponent(out SpriteComponent? sprite))
+            var entities = IoCManager.Resolve<IEntityManager>();
+            if (!entities.TryGetComponent(component.Owner, out SpriteComponent? sprite))
                 return;
 
             if (component.TryGetData(SubFloorVisuals.SubFloor, out bool subfloor))

@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Database;
 using Content.Server.GameTicking.Events;
-using Content.Server.Players;
-using Content.Server.Mind;
 using Content.Server.Ghost;
+using Content.Server.Mind;
+using Content.Server.Players;
 using Content.Shared.CCVar;
 using Content.Shared.Coordinates;
 using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
+using Content.Shared.Station;
 using Prometheus;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
@@ -64,13 +65,16 @@ namespace Content.Server.GameTicking
         {
             DefaultMap = _mapManager.CreateMap();
             var startTime = _gameTiming.RealTime;
-            var map = _gameMapManager.GetSelectedMapChecked(true).MapPath;
-            var grid = _mapLoader.LoadBlueprint(DefaultMap, map);
+            var map = _gameMapManager.GetSelectedMapChecked(true);
+            var grid = _mapLoader.LoadBlueprint(DefaultMap, map.MapPath);
+
 
             if (grid == null)
             {
-                throw new InvalidOperationException($"No grid found for map {map}");
+                throw new InvalidOperationException($"No grid found for map {map.MapName}");
             }
+
+            _stationSystem.InitialSetupStationGrid(grid.GridEntityId, map);
 
             var stationXform = EntityManager.GetComponent<TransformComponent>(grid.GridEntityId);
 
@@ -87,7 +91,6 @@ namespace Content.Server.GameTicking
                 stationXform.LocalRotation = _robustRandom.NextFloat(MathF.Tau);
             }
 
-            DefaultGridId = grid.Index;
             _spawnPoint = grid.ToCoordinates();
 
             var timeSpan = _gameTiming.RealTime - startTime;
@@ -153,14 +156,36 @@ namespace Content.Server.GameTicking
                 var profile = profiles[player.UserId];
                 if (profile.PreferenceUnavailable == PreferenceUnavailableMode.SpawnAsOverflow)
                 {
-                    assignedJobs.Add(player, OverflowJob);
+                    // Pick a random station
+                    var stations = _stationSystem.StationInfo.Keys.ToList();
+                    _robustRandom.Shuffle(stations);
+
+                    if (stations.Count == 0)
+                    {
+                        assignedJobs.Add(player, (FallbackOverflowJob, StationId.Invalid));
+                        continue;
+                    }
+
+                    foreach (var station in stations)
+                    {
+                        // Pick a random overflow job from that station
+                        var overflows = _stationSystem.StationInfo[station].MapPrototype.OverflowJobs.Clone();
+                        _robustRandom.Shuffle(overflows);
+
+                        // Stations with no overflow slots should simply get skipped over.
+                        if (overflows.Count == 0)
+                            continue;
+
+                        // If the overflow exists, put them in as it.
+                        assignedJobs.Add(player, (overflows[0], stations[0]));
+                    }
                 }
             }
 
             // Spawn everybody in!
-            foreach (var (player, job) in assignedJobs)
+            foreach (var (player, (job, station)) in assignedJobs)
             {
-                SpawnPlayer(player, profiles[player.UserId], job, false);
+                SpawnPlayer(player, profiles[player.UserId], station, job, false);
             }
 
             // Time to start the preset.
@@ -247,13 +272,21 @@ namespace Content.Server.GameTicking
                     }
                     // Finish
                     var antag = mind.AllRoles.Any(role => role.Antagonist);
+
+                    var playerIcName = string.Empty;
+
+                    if (mind.CharacterName != null)
+                        playerIcName = mind.CharacterName;
+                    else if (mind.CurrentEntity != null)
+                        playerIcName = EntityManager.GetComponent<MetaDataComponent>(mind.CurrentEntity.Value).EntityName;
+
                     var playerEndRoundInfo = new RoundEndMessageEvent.RoundEndPlayerInfo()
                     {
                         // Note that contentPlayerData?.Name sticks around after the player is disconnected.
                         // This is as opposed to ply?.Name which doesn't.
                         PlayerOOCName = contentPlayerData?.Name ?? "(IMPOSSIBLE: REGISTERED MIND WITH NO OWNER)",
                         // Character name takes precedence over current entity name
-                        PlayerICName = mind.CharacterName ?? mind.CurrentEntity?.Name,
+                        PlayerICName = playerIcName,
                         Role = antag
                             ? mind.AllRoles.First(role => role.Antagonist).Name
                             : mind.AllRoles.FirstOrDefault()?.Name ?? Loc.GetString("game-ticker-unknown-role"),
@@ -336,7 +369,7 @@ namespace Content.Server.GameTicking
             {
                 // TODO: Maybe something less naive here?
                 // FIXME: Actually, definitely.
-                entity.Delete();
+                EntityManager.DeleteEntity(entity);
             }
 
             _mapManager.Restart();

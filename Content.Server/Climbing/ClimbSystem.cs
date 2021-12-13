@@ -37,11 +37,11 @@ namespace Content.Server.Climbing
 
         private void AddClimbVerb(EntityUid uid, ClimbableComponent component, GetAlternativeVerbsEvent args)
         {
-            if (!args.CanAccess || !args.CanInteract || !_actionBlockerSystem.CanMove(args.User.Uid))
+            if (!args.CanAccess || !args.CanInteract || !_actionBlockerSystem.CanMove(args.User))
                 return;
 
             // Check that the user climb.
-            if (!args.User.TryGetComponent(out ClimbingComponent? climbingComponent) ||
+            if (!EntityManager.TryGetComponent(args.User, out ClimbingComponent? climbingComponent) ||
                 climbingComponent.IsClimbing)
                 return;
 

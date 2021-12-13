@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.FixedPoint;
@@ -44,16 +45,28 @@ namespace Content.Server.Nutrition.Components
         [DataField("utensilRequired")]
         public bool UtensilRequired = false;
 
-
         [DataField("eatMessage")]
         public string EatMessage = "food-nom";
+
+        /// <summary>
+        ///     This is how many seconds it takes to force feed someone this food.
+        ///     Should probably be smaller for small items like pills.
+        /// </summary>
+        [DataField("forceFeedDelay")]
+        public float ForceFeedDelay = 3;
+
+        /// <summary>
+        ///     Token for interrupting a do-after action (e.g., force feeding). If not null, implies component is
+        ///     currently "in use".
+        /// </summary>
+        public CancellationTokenSource? CancelToken;
 
         [ViewVariables]
         public int UsesRemaining
         {
             get
             {
-                if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution))
+                if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
                 {
                     return 0;
                 }

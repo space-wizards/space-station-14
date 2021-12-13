@@ -1,13 +1,17 @@
 - type: entity
-  id: SolarPanel
+  id: SolarPanelBasePhysSprite
+  abstract: true
   name: solar panel
   placement:
     mode: SnapgridCenter
   components:
   - type: Clickable
   - type: InteractionOutline
+  - type: Transform
+    anchored: true
   - type: Physics
     bodyType: Static
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -32,13 +36,18 @@
       output:
         !type:CableDeviceNode
         nodeGroupID: HVPower
+  - type: Anchorable
+  - type: Pullable
+
+- type: entity
+  id: SolarPanel
+  parent: SolarPanelBasePhysSprite
+  name: solar panel
+  components:
   - type: PowerSupplier
     supplyRampTolerance: 500
     supplyRampRate: 500
   - type: SolarPanel
-    supply: 1500
-  - type: Transform
-    anchored: true
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -48,13 +57,47 @@
         !type:DamageTrigger
         damage: 100
       behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:ChangeConstructionNodeBehavior
+        node: solarpanel_broken
       - !type:DoActsBehavior
         acts: ["Breakage"]
-  - type: Anchorable
-  - type: Pullable
   - type: Construction
     graph: solarpanel
     node: solarpanel
+
+- type: entity
+  id: SolarPanelBroken
+  parent: SolarPanelBasePhysSprite
+  name: solar panel
+  suffix: Broken
+  components:
+  - type: Sprite
+    state: broken
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlass:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Construction
+    graph: solarpanel
+    node: solarpanel_broken
 
 - type: entity
   id: SolarAssembly
@@ -67,9 +110,11 @@
   - type: InteractionOutline
   - type: Physics
     bodyType: Static
+  - type: Fixtures
     fixtures:
     - shape:
-        !type:PhysShapeAabb {}
+        !type:PhysShapeCircle
+        radius: 0.25
       mass: 75
       mask:
       - VaultImpassable
@@ -107,6 +152,7 @@
   - type: InteractionOutline
   - type: Physics
     bodyType: Static
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb {}

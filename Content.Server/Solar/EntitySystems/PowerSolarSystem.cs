@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Power.Components;
 using Content.Server.Solar.Components;
-using Content.Shared.Physics;
 using Content.Shared.GameTicking;
+using Content.Shared.Physics;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -112,17 +112,19 @@ namespace Content.Server.Solar.EntitySystems
             else
             {
                 TotalPanelPower = 0;
-                foreach (var panel in EntityManager.EntityQuery<SolarPanelComponent>())
+                foreach (var (panel, xform) in EntityManager.EntityQuery<SolarPanelComponent, TransformComponent>())
                 {
                     TotalPanelPower += panel.MaxSupply * panel.Coverage;
-                    panel.Owner.Transform.WorldRotation = TargetPanelRotation;
+                    xform.WorldRotation = TargetPanelRotation;
                     _updateQueue.Enqueue(panel);
                 }
             }
         }
 
-        private void UpdatePanelCoverage(SolarPanelComponent panel) {
-            IEntity entity = panel.Owner;
+        private void UpdatePanelCoverage(SolarPanelComponent panel)
+        {
+            EntityUid entity = panel.Owner;
+            var xform = EntityManager.GetComponent<TransformComponent>(entity);
 
             // So apparently, and yes, I *did* only find this out later,
             // this is just a really fancy way of saying "Lambert's law of cosines".
@@ -136,7 +138,7 @@ namespace Content.Server.Solar.EntitySystems
             // directly downwards (abs(theta) = pi) = coverage -1
             // as TowardsSun + = CCW,
             // panelRelativeToSun should - = CW
-            var panelRelativeToSun = entity.Transform.WorldRotation - TowardsSun;
+            var panelRelativeToSun = xform.WorldRotation - TowardsSun;
             // essentially, given cos = X & sin = Y & Y is 'downwards',
             // then for the first 90 degrees of rotation in either direction,
             // this plots the lower-right quadrant of a circle.
@@ -154,22 +156,22 @@ namespace Content.Server.Solar.EntitySystems
             if (coverage > 0)
             {
                 // Determine if the solar panel is occluded, and zero out coverage if so.
-                // FIXME: The "Opaque" collision group doesn't seem to work right now.
-                var ray = new CollisionRay(entity.Transform.WorldPosition, TowardsSun.ToWorldVec(), (int) CollisionGroup.Opaque);
+                var ray = new CollisionRay(xform.WorldPosition, TowardsSun.ToWorldVec(), (int) CollisionGroup.Opaque);
                 var rayCastResults = _physicsSystem.IntersectRayWithPredicate(
-                    entity.Transform.MapID,
+                    xform.MapID,
                     ray,
                     SunOcclusionCheckDistance,
-                    e => !e.Transform.Anchored || e == entity);
+                    e => !xform.Anchored || e == entity);
                 if (rayCastResults.Any())
                     coverage = 0;
             }
 
             // Total coverage calculated; apply it to the panel.
             panel.Coverage = coverage;
+            UpdateSupply((panel).Owner, panel);
         }
 
-        private void UpdateSupply(
+        public void UpdateSupply(
             EntityUid uid,
             SolarPanelComponent? solar = null,
             PowerSupplierComponent? supplier = null)

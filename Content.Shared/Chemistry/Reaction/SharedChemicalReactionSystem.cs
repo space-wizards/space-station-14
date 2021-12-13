@@ -1,7 +1,10 @@
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Administration;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -13,18 +16,87 @@ namespace Content.Shared.Chemistry.Reaction
 {
     public abstract class SharedChemicalReactionSystem : EntitySystem
     {
-        private IEnumerable<ReactionPrototype> _reactions = default!;
 
+        /// <summary>
+        ///     The maximum number of reactions that may occur when a solution is changed.
+        /// </summary>
         private const int MaxReactionIterations = 20;
 
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] protected readonly SharedAdminLogSystem _logSystem = default!;
+        [Dependency] private readonly IGamePrototypeLoadManager _gamePrototypeLoadManager = default!;
+
+        /// <summary>
+        ///     A cache of all existant chemical reactions indexed by one of their
+        ///     required reactants.
+        /// </summary>
+        private IDictionary<string, List<ReactionPrototype>> _reactions = default!;
 
         public override void Initialize()
         {
             base.Initialize();
-            _reactions = _prototypeManager.EnumeratePrototypes<ReactionPrototype>();
+
+            InitializeReactionCache();
+            _prototypeManager.PrototypesReloaded += OnPrototypesReloaded;
+            _gamePrototypeLoadManager.GamePrototypeLoaded += InitializeReactionCache;
+        }
+
+        /// <summary>
+        ///     Handles building the reaction cache.
+        /// </summary>
+        private void InitializeReactionCache()
+        {
+            _reactions = new Dictionary<string, List<ReactionPrototype>>();
+
+            var reactions = _prototypeManager.EnumeratePrototypes<ReactionPrototype>();
+            foreach(var reaction in reactions)
+            {
+                CacheReaction(reaction);
+            }
+        }
+
+        /// <summary>
+        ///     Caches a reaction by its first required reagent.
+        ///     Used to build the reaction cache.
+        /// </summary>
+        /// <param name="reaction">A reaction prototype to cache.</param>
+        private void CacheReaction(ReactionPrototype reaction)
+        {
+            var reagents = reaction.Reactants.Keys;
+            foreach(var reagent in reagents)
+            {
+                if(!_reactions.TryGetValue(reagent, out var cache))
+                {
+                    cache = new List<ReactionPrototype>();
+                    _reactions.Add(reagent, cache);
+                }
+
+                cache.Add(reaction);
+                return; // Only need to cache based on the first reagent.
+            }
+        }
+
+        /// <summary>
+        ///     Updates the reaction cache when the prototypes are reloaded.
+        /// </summary>
+        /// <param name="eventArgs">The set of modified prototypes.</param>
+        private void OnPrototypesReloaded(PrototypesReloadedEventArgs eventArgs)
+        {
+            if (!eventArgs.ByType.TryGetValue(typeof(ReactionPrototype), out var set))
+                return;
+
+            foreach (var (reactant, cache) in _reactions)
+            {
+                cache.RemoveAll((reaction) => set.Modified.ContainsKey(reaction.ID));
+                if (cache.Count == 0)
+                    _reactions.Remove(reactant);
+            }
+
+            foreach (var prototype in set.Modified.Values)
+            {
+                CacheReaction((ReactionPrototype) prototype);
+            }
         }
 
         /// <summary>
@@ -46,6 +118,17 @@ namespace Content.Shared.Chemistry.Reaction
                 if (!solution.ContainsReagent(reactantName, out var reactantQuantity))
                     return false;
 
+                if (reactantData.Value.Catalyst)
+                {
+                    // catalyst is not consumed, so will not limit the reaction. But it still needs to be present, and
+                    // for quantized reactions we need to have a minimum amount
+
+                    if (reactantQuantity == FixedPoint2.Zero || reaction.Quantized && reactantQuantity < reactantCoefficient)
+                        return false;
+
+                    continue;
+                }
+
                 var unitReactions = reactantQuantity / reactantCoefficient;
 
                 if (unitReactions < lowestUnitReactions)
@@ -53,14 +136,18 @@ namespace Content.Shared.Chemistry.Reaction
                     lowestUnitReactions = unitReactions;
                 }
             }
-            return true;
+
+            if (reaction.Quantized)
+                lowestUnitReactions = (int) lowestUnitReactions;
+
+            return lowestUnitReactions > 0;
         }
 
         /// <summary>
         ///     Perform a reaction on a solution. This assumes all reaction criteria are met.
         ///     Removes the reactants from the solution, then returns a solution with all products.
         /// </summary>
-        private Solution PerformReaction(Solution solution, EntityUid ownerUid, ReactionPrototype reaction, FixedPoint2 unitReactions)
+        private Solution PerformReaction(Solution solution, EntityUid Owner, ReactionPrototype reaction, FixedPoint2 unitReactions)
         {
             // We do this so that ReagentEffect can have something to work with, even if it's
             // a little meaningless.
@@ -83,14 +170,14 @@ namespace Content.Shared.Chemistry.Reaction
             }
 
             // Trigger reaction effects
-            OnReaction(solution, reaction, randomReagent, ownerUid, unitReactions);
+            OnReaction(solution, reaction, randomReagent, Owner, unitReactions);
 
             return products;
         }
 
-        protected virtual void OnReaction(Solution solution, ReactionPrototype reaction, ReagentPrototype randomReagent, EntityUid ownerUid, FixedPoint2 unitReactions)
+        protected virtual void OnReaction(Solution solution, ReactionPrototype reaction, ReagentPrototype randomReagent, EntityUid Owner, FixedPoint2 unitReactions)
         {
-            var args = new ReagentEffectArgs(ownerUid, null, solution,
+            var args = new ReagentEffectArgs(Owner, null, solution,
                 randomReagent,
                 unitReactions, EntityManager, null);
 
@@ -99,9 +186,13 @@ namespace Content.Shared.Chemistry.Reaction
                 if (!effect.ShouldApply(args))
                     continue;
 
-                var entity = EntityManager.GetEntity(args.SolutionEntity);
-                _logSystem.Add(LogType.ReagentEffect, LogImpact.Low,
-                    $"Reaction effect {effect.GetType().Name} of reaction ${reaction.ID:reaction} applied on entity {entity} at {entity.Transform.Coordinates}");
+                if (effect.ShouldLog)
+                {
+                    var entity = args.SolutionEntity;
+                    _logSystem.Add(LogType.ReagentEffect, effect.LogImpact,
+                        $"Reaction effect {effect.GetType().Name:effect} of reaction ${reaction.ID:reaction} applied on entity {ToPrettyString(entity):entity} at {Transform(entity).Coordinates:coordinates}");
+                }
+
                 effect.Effect(args);
             }
         }
@@ -111,48 +202,55 @@ namespace Content.Shared.Chemistry.Reaction
         ///     Removes the reactants from the solution, then returns a solution with all products.
         ///     WARNING: Does not trigger reactions between solution and new products.
         /// </summary>
-        private Solution ProcessReactions(Solution solution, EntityUid ownerUid)
+        private bool ProcessReactions(Solution solution, EntityUid Owner, [MaybeNullWhen(false)] out Solution productSolution)
         {
-            //TODO: make a hashmap at startup and then look up reagents in the contents for a reaction
-            var overallProducts = new Solution();
-            foreach (var reaction in _reactions)
+            foreach(var reactant in solution.Contents)
             {
-                if (CanReact(solution, reaction, out var unitReactions))
+                if (!_reactions.TryGetValue(reactant.ReagentId, out var reactions))
+                    continue;
+
+                foreach(var reaction in reactions)
                 {
-                    var reactionProducts = PerformReaction(solution, ownerUid, reaction, unitReactions);
-                    overallProducts.AddSolution(reactionProducts);
-                    break;
+                    if (!CanReact(solution, reaction, out var unitReactions))
+                        continue;
+
+                    productSolution = PerformReaction(solution, Owner, reaction, unitReactions);
+                    return true;
                 }
             }
-            return overallProducts;
+
+            productSolution = null;
+            return false;
         }
 
         /// <summary>
         ///     Continually react a solution until no more reactions occur.
         /// </summary>
-        public void FullyReactSolution(Solution solution, EntityUid ownerUid)
+        public void FullyReactSolution(Solution solution, EntityUid Owner)
         {
             for (var i = 0; i < MaxReactionIterations; i++)
             {
-                var products = ProcessReactions(solution, ownerUid);
+                if (!ProcessReactions(solution, Owner, out var products))
+                    return;
 
                 if (products.TotalVolume <= 0)
                     return;
 
                 solution.AddSolution(products);
             }
-            Logger.Error($"{nameof(Solution)} {ownerUid} could not finish reacting in under {MaxReactionIterations} loops.");
+            Logger.Error($"{nameof(Solution)} {Owner} could not finish reacting in under {MaxReactionIterations} loops.");
         }
 
         /// <summary>
         ///     Continually react a solution until no more reactions occur, with a volume constraint.
         ///     If a reaction's products would exceed the max volume, some product is deleted.
         /// </summary>
-        public void FullyReactSolution(Solution solution, EntityUid ownerUid, FixedPoint2 maxVolume)
+        public void FullyReactSolution(Solution solution, EntityUid Owner, FixedPoint2 maxVolume)
         {
             for (var i = 0; i < MaxReactionIterations; i++)
             {
-                var products = ProcessReactions(solution, ownerUid);
+                if (!ProcessReactions(solution, Owner, out var products))
+                    return;
 
                 if (products.TotalVolume <= 0)
                     return;
@@ -167,7 +265,7 @@ namespace Content.Shared.Chemistry.Reaction
 
                 solution.AddSolution(products);
             }
-            Logger.Error($"{nameof(Solution)} {ownerUid} could not finish reacting in under {MaxReactionIterations} loops.");
+            Logger.Error($"{nameof(Solution)} {Owner} could not finish reacting in under {MaxReactionIterations} loops.");
         }
     }
 }

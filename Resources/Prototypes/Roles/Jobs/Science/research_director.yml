@@ -2,7 +2,6 @@
   id: ResearchDirector
   name: "research director"
   head: true
-  positions: 1
   startingGear: ResearchDirectorGear
   departments:
   - Command
@@ -15,6 +14,7 @@
   - Research
   - Command
   - Maintenance
+  - ResearchDirector
 
 - type: startingGear
   id: ResearchDirectorGear

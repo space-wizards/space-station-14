@@ -1,5 +1,6 @@
 using Content.Shared.DragDrop;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Shared.Strip.Components
 {
@@ -13,7 +14,7 @@ namespace Content.Shared.Strip.Components
 
         bool IDragDropOn.CanDragDropOn(DragDropEvent eventArgs)
         {
-            if (!eventArgs.Dragged.TryGetComponent(out SharedStrippableComponent? strippable)) return false;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Dragged, out SharedStrippableComponent? strippable)) return false;
             return strippable.CanBeStripped(Owner);
         }
 

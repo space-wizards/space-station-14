@@ -1,10 +1,17 @@
+using System.Linq;
 using Content.Server.Administration.Logs;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat.Managers;
-using Content.Shared.Administration.Logs;
+using Content.Server.Station;
+using Content.Shared.Database;
+using Content.Shared.Station;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Player;
+using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events
 {
@@ -176,6 +183,46 @@ namespace Content.Server.StationEvents.Events
             {
                 Running = false;
             }
+        }
+
+
+        public static bool TryFindRandomTile(out Vector2i tile, out StationId targetStation, out EntityUid targetGrid, out EntityCoordinates targetCoords, IRobustRandom? robustRandom = null, IEntityManager? entityManager = null)
+        {
+            tile = default;
+            robustRandom ??= IoCManager.Resolve<IRobustRandom>();
+            entityManager ??= IoCManager.Resolve<IEntityManager>();
+
+            targetCoords = EntityCoordinates.Invalid;
+            targetStation = robustRandom.Pick(entityManager.EntityQuery<StationComponent>().ToArray()).Station;
+            var t = targetStation; // thanks C#
+            var possibleTargets = entityManager.EntityQuery<StationComponent>()
+                .Where(x => x.Station == t).ToArray();
+            targetGrid = robustRandom.Pick(possibleTargets).Owner;
+
+            if (!entityManager.TryGetComponent<IMapGridComponent>(targetGrid!, out var gridComp))
+                return false;
+            var grid = gridComp.Grid;
+
+            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
+            var found = false;
+            var gridBounds = grid.WorldBounds;
+            var gridPos = grid.WorldPosition;
+
+            for (var i = 0; i < 10; i++)
+            {
+                var randomX = robustRandom.Next((int) gridBounds.Left, (int) gridBounds.Right);
+                var randomY = robustRandom.Next((int) gridBounds.Bottom, (int) gridBounds.Top);
+
+                tile = new Vector2i(randomX - (int) gridPos.X, randomY - (int) gridPos.Y);
+                if (atmosphereSystem.IsTileSpace(grid, tile) || atmosphereSystem.IsTileAirBlocked(grid, tile)) continue;
+                found = true;
+                targetCoords = grid.GridTileToLocal(tile);
+                break;
+            }
+
+            if (!found) return false;
+
+            return true;
         }
     }
 }

@@ -1,6 +1,7 @@
 using Content.Server.Power.Components;
 using Content.Shared.Interaction;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.PowerCell.Components
 {
@@ -14,14 +15,14 @@ namespace Content.Server.PowerCell.Components
     {
         public override string Name => "PowerCellCharger";
 
-        public override bool IsEntityCompatible(IEntity entity)
+        public override bool IsEntityCompatible(EntityUid entity)
         {
-            return entity.HasComponent<BatteryComponent>();
+            return IoCManager.Resolve<IEntityManager>().HasComponent<BatteryComponent>(entity);
         }
 
-        protected override BatteryComponent GetBatteryFrom(IEntity entity)
+        protected override BatteryComponent GetBatteryFrom(EntityUid entity)
         {
-            return entity.GetComponent<BatteryComponent>();
+            return IoCManager.Resolve<IEntityManager>().GetComponent<BatteryComponent>(entity);
         }
     }
 }

@@ -1,4 +1,3 @@
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Sound;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -7,6 +6,7 @@ using Robust.Shared.ViewVariables;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Analyzers;
+using System.Threading;
 
 namespace Content.Server.Nutrition.Components
 {
@@ -42,5 +42,17 @@ namespace Content.Server.Nutrition.Components
 
         [DataField("burstSound")]
         public SoundSpecifier BurstSound = new SoundPathSpecifier("/Audio/Effects/flash_bang.ogg");
+
+        /// <summary>
+        ///     This is how many seconds it takes to force feed someone this drink.
+        /// </summary>
+        [DataField("forceFeedDelay")]
+        public float ForceFeedDelay = 3;
+
+        /// <summary>
+        ///     Token for interrupting a do-after action (e.g., force feeding). If not null, implies component is
+        ///     currently "in use".
+        /// </summary>
+        public CancellationTokenSource? CancelToken;
     }
 }

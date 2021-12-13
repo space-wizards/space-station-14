@@ -82,8 +82,6 @@
     - type: BiologicalSurgeryData
     #    criticalThreshold: 40
     #    deadThreshold: 80
-    - type: Extension
-      distance: 2.4
 
 - type: entity
   id: RightArmSlime
@@ -105,8 +103,6 @@
     - type: BiologicalSurgeryData
     #    criticalThreshold: 40
     #    deadThreshold: 80
-    - type: Extension
-      distance: 2.4
 
 - type: entity
   id: LeftHandSlime
@@ -128,7 +124,6 @@
     - type: BiologicalSurgeryData
     #    criticalThreshold: 30
     #    deadThreshold: 60
-    - type: Grasp
 
 - type: entity
   id: RightHandSlime
@@ -150,7 +145,6 @@
     - type: BiologicalSurgeryData
     #    criticalThreshold: 30
     #    deadThreshold: 60
-    - type: Grasp
 
 - type: entity
   id: LeftLegSlime
@@ -170,10 +164,6 @@
       compatibility: Biological
       symmetry: Left
     - type: BiologicalSurgeryData
-    - type: Leg
-      speed: 2.6
-    - type: Extension
-      distance: 3.0
 
 - type: entity
   id: RightLegSlime
@@ -195,10 +185,6 @@
     - type: BiologicalSurgeryData
     #    criticalThreshold: 45
     #    deadThreshold: 90
-    - type: Leg
-      speed: 2.6
-    - type: Extension
-      distance: 3.0
 
 - type: entity
   id: LeftFootSlime

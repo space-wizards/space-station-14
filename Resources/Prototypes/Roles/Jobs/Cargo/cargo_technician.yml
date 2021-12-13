@@ -1,8 +1,6 @@
 - type: job
   id: CargoTechnician
   name: "cargo technician"
-  positions: 2
-  spawnPositions: 1
   startingGear: CargoTechGear
   departments:
   - Cargo

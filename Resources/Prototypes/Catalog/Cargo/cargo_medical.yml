@@ -9,3 +9,15 @@
   cost: 1000
   category: Medical
   group: market
+  
+- type: cargoProduct
+  name: "Chemistry Supplies"
+  id: MedicalChemistrySupplies
+  description: Basic chemistry supplies.
+  icon:
+    sprite: Objects/Specific/Chemistry/beaker.rsi
+    state: beaker
+  product: CrateChemistrySupplies
+  cost: 500
+  category: Medical
+  group: market

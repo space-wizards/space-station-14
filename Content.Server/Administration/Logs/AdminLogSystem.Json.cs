@@ -57,9 +57,9 @@ public partial class AdminLogSystem
             EntityUid? entityId = properties[key] switch
             {
                 EntityUid id => id,
-                IEntity entity => entity.Uid,
-                IPlayerSession {AttachedEntityUid: { }} session => session.AttachedEntityUid.Value,
-                IComponent component => component.OwnerUid,
+                EntityStringRepresentation rep => rep.Uid,
+                IPlayerSession {AttachedEntity: {Valid: true}} session => session.AttachedEntity,
+                IComponent component => component.Owner,
                 _ => null
             };
 
@@ -68,9 +68,11 @@ public partial class AdminLogSystem
                 continue;
             }
 
-            var entityName = _entityManager.TryGetEntity(uid, out var resolvedEntity)
-                ? resolvedEntity.Name
+            var entityName = _entityManager.TryGetComponent(uid, out MetaDataComponent? metadata)
+                ? metadata.EntityName
                 : null;
+
+            if (entities.Any(e => e.id == (int) uid)) continue;
 
             entities.Add(((int) uid, entityName));
 

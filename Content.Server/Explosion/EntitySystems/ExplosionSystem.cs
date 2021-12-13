@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Server.Administration.Logs;
 using Content.Server.Camera;
 using Content.Server.Explosion.Components;
 using Content.Shared.Acts;
+using Content.Shared.Database;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
@@ -48,8 +50,9 @@ namespace Content.Server.Explosion.EntitySystems
         [Dependency] private readonly ActSystem _acts = default!;
         [Dependency] private readonly EffectSystem _effects = default!;
         [Dependency] private readonly TriggerSystem _triggers = default!;
+        [Dependency] private readonly AdminLogSystem _logSystem = default!;
 
-        private bool IgnoreExplosivePassable(IEntity e)
+        private bool IgnoreExplosivePassable(EntityUid e)
         {
             return e.HasTag("ExplosivePassable");
         }
@@ -78,12 +81,13 @@ namespace Content.Server.Explosion.EntitySystems
 
             foreach (var player in players)
             {
-                if (player.AttachedEntity == null || !player.AttachedEntity.TryGetComponent(out CameraRecoilComponent? recoil))
+                if (player.AttachedEntity is not {Valid: true} playerEntity ||
+                    !EntityManager.TryGetComponent(playerEntity, out CameraRecoilComponent? recoil))
                 {
                     continue;
                 }
 
-                var playerPos = player.AttachedEntity.Transform.WorldPosition;
+                var playerPos = EntityManager.GetComponent<TransformComponent>(playerEntity).WorldPosition;
                 var delta = epicenter.ToMapPos(EntityManager) - playerPos;
 
                 //Change if zero. Will result in a NaN later breaking camera shake if not changed
@@ -118,26 +122,26 @@ namespace Content.Server.Explosion.EntitySystems
         {
             var entitiesInRange = _entityLookup.GetEntitiesInRange(mapId, boundingBox, 0).ToList();
 
-            var impassableEntities = new List<(IEntity, float)>();
-            var nonImpassableEntities = new List<(IEntity, float)>();
+            var impassableEntities = new List<(EntityUid, float)>();
+            var nonImpassableEntities = new List<(EntityUid, float)>();
             // TODO: Given this seems to rely on physics it should just query directly like everything else.
 
             // The entities are paired with their distance to the epicenter
             // and splitted into two lists based on if they are Impassable or not
             foreach (var entity in entitiesInRange)
             {
-                if (entity.Deleted || entity.IsInContainer())
+                if (Deleted(entity) || entity.IsInContainer())
                 {
                     continue;
                 }
 
-                if (!entity.Transform.Coordinates.TryDistance(EntityManager, epicenter, out var distance) ||
+                if (!EntityManager.GetComponent<TransformComponent>(entity).Coordinates.TryDistance(EntityManager, epicenter, out var distance) ||
                     distance > maxRange)
                 {
                     continue;
                 }
 
-                if (!entity.TryGetComponent(out PhysicsComponent? body) || body.Fixtures.Count < 1)
+                if (!EntityManager.TryGetComponent(entity, out PhysicsComponent? body) || body.Fixtures.Count < 1)
                 {
                     continue;
                 }
@@ -167,7 +171,7 @@ namespace Content.Server.Explosion.EntitySystems
                     continue;
                 }
 
-                _acts.HandleExplosion(epicenter, entity.Uid, CalculateSeverity(distance, devastationRange, heavyRange));
+                _acts.HandleExplosion(epicenter, entity, CalculateSeverity(distance, devastationRange, heavyRange));
             }
 
             // Impassable entities were handled first so NonImpassable entities have a bigger chance to get hit. As now
@@ -179,7 +183,7 @@ namespace Content.Server.Explosion.EntitySystems
                     continue;
                 }
 
-                _acts.HandleExplosion(epicenter, entity.Uid, CalculateSeverity(distance, devastationRange, heavyRange));
+                _acts.HandleExplosion(epicenter, entity, CalculateSeverity(distance, devastationRange, heavyRange));
             }
         }
 
@@ -290,6 +294,7 @@ namespace Content.Server.Explosion.EntitySystems
             int heavyImpactRange = 0,
             int lightImpactRange = 0,
             int flashRange = 0,
+            EntityUid? user = null,
             ExplosiveComponent? explosive = null,
             TransformComponent? transform = null)
         {
@@ -302,13 +307,13 @@ namespace Content.Server.Explosion.EntitySystems
 
             if (explosive is { Exploding: false })
             {
-                _triggers.Explode(entity, explosive);
+                _triggers.Explode(entity, explosive, user);
             }
             else
             {
-                while (EntityManager.TryGetEntity(entity, out var e) && e.TryGetContainer(out var container))
+                while (EntityManager.EntityExists(entity) && entity.TryGetContainer(out var container))
                 {
-                    entity = container.Owner.Uid;
+                    entity = container.Owner;
                 }
 
                 if (!EntityManager.TryGetComponent(entity, out transform))
@@ -318,7 +323,7 @@ namespace Content.Server.Explosion.EntitySystems
 
                 var epicenter = transform.Coordinates;
 
-                SpawnExplosion(epicenter, devastationRange, heavyImpactRange, lightImpactRange, flashRange);
+                SpawnExplosion(epicenter, devastationRange, heavyImpactRange, lightImpactRange, flashRange, entity, user);
             }
         }
 
@@ -327,12 +332,31 @@ namespace Content.Server.Explosion.EntitySystems
             int devastationRange = 0,
             int heavyImpactRange = 0,
             int lightImpactRange = 0,
-            int flashRange = 0)
+            int flashRange = 0,
+            EntityUid? entity = null,
+            EntityUid? user = null)
         {
             var mapId = epicenter.GetMapId(EntityManager);
             if (mapId == MapId.Nullspace)
             {
                 return;
+            }
+
+            // logging
+            var range = $"{devastationRange}/{heavyImpactRange}/{lightImpactRange}/{flashRange}";
+            if (entity == null || !entity.Value.IsValid())
+            {
+                _logSystem.Add(LogType.Explosion, LogImpact.High, $"Explosion spawned at {epicenter:coordinates} with range {range}");
+            }
+            else if (user == null || !user.Value.IsValid())
+            {
+                _logSystem.Add(LogType.Explosion, LogImpact.High,
+                    $"{ToPrettyString(entity.Value):entity} exploded at {epicenter:coordinates} with range {range}");
+            }
+            else
+            {
+                _logSystem.Add(LogType.Explosion, LogImpact.High,
+                    $"{ToPrettyString(user.Value):user} caused {ToPrettyString(entity.Value):entity} to explode at {epicenter:coordinates} with range {range}");
             }
 
             var maxRange = MathHelper.Max(devastationRange, heavyImpactRange, lightImpactRange, 0);

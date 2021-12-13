@@ -22,6 +22,7 @@ namespace Content.Server.Headset
     public class HeadsetComponent : Component, IListen, IRadio, IExamine
 #pragma warning restore 618
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IServerNetManager _netManager = default!;
 
         public override string Name => "Headset";
@@ -50,16 +51,16 @@ namespace Content.Server.Headset
             _radioSystem = EntitySystem.Get<RadioSystem>();
         }
 
-        public bool CanListen(string message, IEntity source)
+        public bool CanListen(string message, EntityUid source)
         {
             return RadioRequested;
         }
 
-        public void Receive(string message, int channel, IEntity source)
+        public void Receive(string message, int channel, EntityUid source)
         {
             if (Owner.TryGetContainer(out var container))
             {
-                if (!container.Owner.TryGetComponent(out ActorComponent? actor))
+                if (!_entMan.TryGetComponent(container.Owner, out ActorComponent? actor))
                     return;
 
                 var playerChannel = actor.PlayerSession.ConnectedClient;
@@ -69,23 +70,23 @@ namespace Content.Server.Headset
                 msg.Channel = ChatChannel.Radio;
                 msg.Message = message;
                 //Square brackets are added here to avoid issues with escaping
-                msg.MessageWrap = Loc.GetString("chat-radio-message-wrap", ("channel", $"\\[{channel}\\]"), ("name", source.Name));
+                msg.MessageWrap = Loc.GetString("chat-radio-message-wrap", ("channel", $"\\[{channel}\\]"), ("name", Name: _entMan.GetComponent<MetaDataComponent>(source).EntityName));
                 _netManager.ServerSendMessage(msg, playerChannel);
             }
         }
 
-        public void Listen(string message, IEntity speaker)
+        public void Listen(string message, EntityUid speaker)
         {
             Broadcast(message, speaker);
         }
 
-        public void Broadcast(string message, IEntity speaker)
+        public void Broadcast(string message, EntityUid speaker)
         {
             _radioSystem.SpreadMessage(this, speaker, message, BroadcastFrequency);
             RadioRequested = false;
         }
 
-        public void Examine(FormattedMessage message, bool inDetailsRange)
+        public void Examine(FormattedMessage.Builder message, bool inDetailsRange)
         {
             message.AddText(Loc.GetString("examine-radio-frequency", ("frequency", BroadcastFrequency)));
             message.AddText("\n");

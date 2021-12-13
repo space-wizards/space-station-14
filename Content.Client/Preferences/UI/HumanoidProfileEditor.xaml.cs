@@ -21,7 +21,6 @@ using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
@@ -76,7 +75,7 @@ namespace Content.Client.Preferences.UI
 
         private readonly List<AntagPreferenceSelector> _antagPreferences;
 
-        private readonly IEntity _previewDummy;
+        private readonly EntityUid _previewDummy;
         private Control _previewSpriteControl => CSpriteViewFront;
         private Control _previewSpriteSideControl => CSpriteViewSide;
         private readonly SpriteView _previewSprite;
@@ -307,7 +306,7 @@ namespace Content.Client.Preferences.UI
                 (int) PreferenceUnavailableMode.StayInLobby);
             _preferenceUnavailableButton.AddItem(
                 Loc.GetString("humanoid-profile-editor-preference-unavailable-spawn-as-overflow-button",
-                              ("overflowJob", Loc.GetString(SharedGameTicker.OverflowJobName))),
+                              ("overflowJob", Loc.GetString(SharedGameTicker.FallbackOverflowJobName))),
                 (int) PreferenceUnavailableMode.SpawnAsOverflow);
 
             _preferenceUnavailableButton.OnItemSelected += args =>
@@ -438,7 +437,7 @@ namespace Content.Client.Preferences.UI
             #region Preview
 
             _previewDummy = entityManager.SpawnEntity("MobHumanDummy", MapCoordinates.Nullspace);
-            var sprite = _previewDummy.GetComponent<SpriteComponent>();
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(_previewDummy);
 
             // Front
             _previewSprite = new SpriteView
@@ -482,7 +481,7 @@ namespace Content.Client.Preferences.UI
             if (!disposing)
                 return;
 
-            _previewDummy.Delete();
+            IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) _previewDummy);
             _preferencesManager.OnServerDataLoaded -= LoadServerData;
         }
 
@@ -660,7 +659,7 @@ namespace Content.Client.Preferences.UI
             if (Profile is null)
                 return;
 
-            EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(_previewDummy.Uid, Profile);
+            EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(_previewDummy, Profile);
             LobbyCharacterPreviewPanel.GiveDummyJobClothes(_previewDummy, Profile);
         }
 

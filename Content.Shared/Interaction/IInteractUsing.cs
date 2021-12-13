@@ -30,7 +30,7 @@ namespace Content.Shared.Interaction
 
     public class InteractUsingEventArgs : EventArgs, ITargetedInteractEventArgs
     {
-        public InteractUsingEventArgs(IEntity user, EntityCoordinates clickLocation, IEntity @using, IEntity target)
+        public InteractUsingEventArgs(EntityUid user, EntityCoordinates clickLocation, EntityUid @using, EntityUid target)
         {
             User = user;
             ClickLocation = clickLocation;
@@ -38,10 +38,10 @@ namespace Content.Shared.Interaction
             Target = target;
         }
 
-        public IEntity User { get; }
+        public EntityUid User { get; }
         public EntityCoordinates ClickLocation { get; }
-        public IEntity Using { get; }
-        public IEntity Target { get; }
+        public EntityUid Using { get; }
+        public EntityUid Target { get; }
     }
 
     /// <summary>
@@ -53,39 +53,24 @@ namespace Content.Shared.Interaction
         /// <summary>
         ///     Entity that triggered the interaction.
         /// </summary>
-        public IEntity User { get; }
-
-        /// <summary>
-        ///     Entity that triggered the interaction.
-        /// </summary>
-        public EntityUid UserUid => User.Uid;
+        public EntityUid User { get; }
 
         /// <summary>
         ///     Entity that the user used to interact.
         /// </summary>
-        public IEntity Used { get; }
-
-        /// <summary>
-        ///     Entity that the user used to interact.
-        /// </summary>
-        public EntityUid UsedUid => Used.Uid;
+        public EntityUid Used { get; }
 
         /// <summary>
         ///     Entity that was interacted on.
         /// </summary>
-        public IEntity Target { get; }
-
-        /// <summary>
-        ///     Entity that was interacted on.
-        /// </summary>
-        public EntityUid TargetUid => Target.Uid;
+        public EntityUid Target { get; }
 
         /// <summary>
         ///     The original location that was clicked by the user.
         /// </summary>
         public EntityCoordinates ClickLocation { get; }
 
-        public InteractUsingEvent(IEntity user, IEntity used, IEntity target, EntityCoordinates clickLocation)
+        public InteractUsingEvent(EntityUid user, EntityUid used, EntityUid target, EntityCoordinates clickLocation)
         {
             User = user;
             Used = used;

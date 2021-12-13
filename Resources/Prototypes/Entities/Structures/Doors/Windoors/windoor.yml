@@ -20,6 +20,15 @@
   - type: AccessReader
     access: [["Bar"]]
 
+# Botany Windoor
+- type: entity
+  parent: Windoor
+  id: WindoorHydroponicsLocked
+  suffix: Hydroponics, Locked
+  components:
+  - type: AccessReader
+    access: [["Hydroponics"]]
+
 # Chemistry windoor
 - type: entity
   parent: WindoorSecure
@@ -27,7 +36,7 @@
   suffix: Medical, Locked
   components:
   - type: AccessReader
-    access: [["Medical"]]
+    access: [["Chemistry"]]
 
 # Science windoor
 - type: entity

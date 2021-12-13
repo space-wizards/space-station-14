@@ -21,7 +21,7 @@
 - type: entity
   id: CrateEmergencyFire
   name: firefighting crate
-  parent: CrateGenericonimo
+  parent: CrateGenericSteel
   components:
   - type: StorageFill
     contents:
@@ -53,6 +53,8 @@
         amount: 3
       - id: EmergencyOxygenTankFilled
         amount: 3
+      - id: ClothingOuterSuitEmergency
+        amount: 3
 
 - type: entity
   id: CrateEmergencyRadiation
@@ -71,3 +73,14 @@
         amount: 1
       - id: DrinkShotGlass
         amount: 2
+
+- type: entity
+  id: CrateEmergencyInflatablewall
+  name: inflatable wall crate
+  parent: CratePlastic
+  components:
+  - type: StorageFill
+    contents:
+      - id: InflatableWallStack
+        amount: 3
+

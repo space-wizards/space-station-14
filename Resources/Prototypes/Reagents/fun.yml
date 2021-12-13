@@ -5,7 +5,7 @@
   physicalDesc: fibrous
   color: "#800000"
   tileReactions:
-  - !type:CreateEntityReaction
+  - !type:CreateEntityTileReaction
     entity: Carpet
     maxOnTileWhitelist:
       tags: [ Carpet ]
@@ -31,9 +31,9 @@
   physicalDesc: buzzy
   color: "#FFD35D"
   tileReactions:
-  - !type:CreateEntityReaction
+  - !type:CreateEntityTileReaction
     entity: MobBee
-    usage: 5
+    usage: 2
     maxOnTile: 2
     randomOffsetMax: 0.3
     maxOnTileWhitelist:

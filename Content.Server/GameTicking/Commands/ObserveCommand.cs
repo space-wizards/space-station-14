@@ -1,4 +1,5 @@
 using Content.Server.Administration;
+using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
@@ -22,7 +23,10 @@ namespace Content.Server.GameTicking.Commands
             }
 
             var ticker = EntitySystem.Get<GameTicker>();
-            ticker.MakeObserve(player);
+            if (ticker.PlayersInLobby.ContainsKey(player))
+                ticker.MakeObserve(player);
+            else
+                shell.WriteError($"{player.Name} is not in the lobby.   This incident will be reported.");
         }
     }
 }

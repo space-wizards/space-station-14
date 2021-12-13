@@ -6,6 +6,7 @@
   components:
   - type: Clickable
   - type: Physics
+  - type: Fixtures
     fixtures:
       - shape:
           !type:PhysShapeAabb
@@ -31,6 +32,7 @@
         acts: ["Destruction"]
   - type: SubFloorHide
   - type: Electrified
+    onHandInteract: false
     onBump: false
     requirePower: true
     highVoltageNode: power

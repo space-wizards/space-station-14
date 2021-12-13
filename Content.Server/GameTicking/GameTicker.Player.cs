@@ -1,8 +1,11 @@
 using System;
 using Content.Server.Players;
+using Content.Server.Roles;
+using Content.Server.Station;
 using Content.Shared.GameTicking;
 using Content.Shared.GameWindow;
 using Content.Shared.Preferences;
+using Content.Shared.Station;
 using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
@@ -107,7 +110,7 @@ namespace Content.Server.GameTicking
             async void SpawnWaitPrefs()
             {
                 await _prefsManager.WaitPreferencesLoaded(session);
-                SpawnPlayer(session);
+                SpawnPlayer(session, StationId.Invalid);
             }
 
             async void AddPlayerToDb(Guid id)

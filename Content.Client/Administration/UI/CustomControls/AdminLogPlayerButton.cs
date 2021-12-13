@@ -10,7 +10,6 @@ public class AdminLogPlayerButton : Button
         Id = id;
         ClipText = true;
         ToggleMode = true;
-        Pressed = true;
     }
 
     public Guid Id { get; }

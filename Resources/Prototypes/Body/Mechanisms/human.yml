@@ -99,8 +99,7 @@
   - type: Mechanism
     size: 1
     compatibility: Biological
-    behaviors:
-    - !type:LungBehavior {}
+  - type: Lung
 
 - type: entity
   id: OrganHumanHeart
