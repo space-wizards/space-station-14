@@ -1,9 +1,4 @@
 Entries:
-- author: scaly-chimp
-  changes:
-  - {message: added several simple (and probably unbalanced) medicines., type: Add}
-  id: 224
-  time: '2021-06-05T06:23:09.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Dead bodies can be pulled again, type: Fix}
@@ -2858,3 +2853,8 @@ Entries:
       gets adopted., type: Add}
   id: 725
   time: '2021-12-13T02:25:42.0000000+00:00'
+- author: StanberyTrask
+  changes:
+  - {message: 'added railing sprites, prototype, and construction graph', type: Add}
+  id: 726
+  time: '2021-12-13T05:03:21.0000000+00:00'
