@@ -100,7 +100,7 @@ namespace Content.Server.Salvage
             if (args.Handled)
                 return;
             args.Handled = true;
-            _popupSystem.PopupEntity(CallSalvage(), uid, Filter.Entities(args.User.Uid));
+            _popupSystem.PopupEntity(CallSalvage(), uid, Filter.Entities(args.User));
         }
 
         private bool TryGetSalvagePlacementLocation(out MapCoordinates coords, out Angle angle)
@@ -109,7 +109,7 @@ namespace Content.Server.Salvage
             angle = Angle.Zero;
             foreach (var (smc, tsc) in EntityManager.EntityQuery<SalvageMagnetComponent, TransformComponent>(true))
             {
-                coords = new EntityCoordinates(smc.OwnerUid, smc.Offset).ToMap(EntityManager);
+                coords = new EntityCoordinates(smc.Owner, smc.Offset).ToMap(EntityManager);
                 var grid = tsc.GridID;
                 if (grid != GridId.Invalid)
                 {
@@ -163,7 +163,7 @@ namespace Content.Server.Salvage
 
                 var box2 = Box2.CenteredAround(spl.Position, new Vector2(map.Size * 2.0f, map.Size * 2.0f));
                 var box2rot = new Box2Rotated(box2, spAngle, spl.Position);
-                if (_physicsSystem.GetCollidingEntities(spl.MapId, in box2rot).Select(x => EntityManager.HasComponent<IMapGridComponent>(x.OwnerUid)).Count() > 0)
+                if (_physicsSystem.GetCollidingEntities(spl.MapId, in box2rot).Select(x => EntityManager.HasComponent<IMapGridComponent>(x.Owner)).Count() > 0)
                 {
                     // collided: set map to null so we don't spawn it
                     map = null;
@@ -254,7 +254,7 @@ namespace Content.Server.Salvage
                     smc.KillswitchTime += frameTime;
                     if (smc.KillswitchTime >= LeaveTimer)
                     {
-                        EntityManager.QueueDeleteEntity(smc.OwnerUid);
+                        EntityManager.QueueDeleteEntity(smc.Owner);
                     }
                 }
             }
