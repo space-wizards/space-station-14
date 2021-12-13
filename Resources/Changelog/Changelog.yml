@@ -1,11 +1,4 @@
 Entries:
-- author: SweptWasTaken
-  changes:
-  - {message: Throwing entities into disposal units now work, type: Fix}
-  - {message: Slims down disposal unit UI, type: Tweak}
-  - {message: Disposal mailing units for now, type: Remove}
-  id: 223
-  time: '2021-06-04T00:26:08.0000000+00:00'
 - author: scaly-chimp
   changes:
   - {message: added several simple (and probably unbalanced) medicines., type: Add}
@@ -2859,3 +2852,9 @@ Entries:
   - {message: fixed not being able to open morgues., type: Fix}
   id: 724
   time: '2021-12-12T17:53:03.0000000+00:00'
+- author: Efruit
+  changes:
+  - {message: Rich text is now... rich-er. Expect more fancy text effects as the system
+      gets adopted., type: Add}
+  id: 725
+  time: '2021-12-13T02:25:42.0000000+00:00'
