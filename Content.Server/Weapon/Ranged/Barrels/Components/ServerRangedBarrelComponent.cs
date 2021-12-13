@@ -399,7 +399,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 var dmg = EntitySystem.Get<DamageableSystem>().TryChangeDamage(result.HitEntity, hitscan.Damage);
                 if (dmg != null)
                     EntitySystem.Get<AdminLogSystem>().Add(LogType.HitScanHit,
-                        $"{shooter} hit {result.HitEntity} using {hitscan.Owner} and dealt {dmg.Total} damage");
+                        $"{_entities.ToPrettyString(shooter):user} hit {_entities.ToPrettyString(result.HitEntity):target} using {_entities.ToPrettyString(hitscan.Owner):used} and dealt {dmg.Total} damage");
             }
             else
             {

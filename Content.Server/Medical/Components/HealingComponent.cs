@@ -73,9 +73,9 @@ namespace Content.Server.Medical.Components
                 return true;
 
             if (eventArgs.Target != eventArgs.User)
-                EntitySystem.Get<AdminLogSystem>().Add(LogType.Healed, $"{eventArgs.User} healed {eventArgs.Target} for {healed.Total} damage");
+                EntitySystem.Get<AdminLogSystem>().Add(LogType.Healed, $"{_entMan.ToPrettyString(eventArgs.User):user} healed {_entMan.ToPrettyString(eventArgs.Target.Value):target} for {healed.Total} damage");
             else
-                EntitySystem.Get<AdminLogSystem>().Add(LogType.Healed, $"{eventArgs.User} healed themselves for {healed.Total} damage");
+                EntitySystem.Get<AdminLogSystem>().Add(LogType.Healed, $"{_entMan.ToPrettyString(eventArgs.User):user} healed themselves for {healed.Total} damage");
 
             return true;
         }

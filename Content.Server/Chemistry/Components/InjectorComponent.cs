@@ -209,6 +209,9 @@ namespace Content.Server.Chemistry.Components
             // Create a pop-up for the user
             popupSys.PopupEntity(Loc.GetString("injector-component-injecting-user"), target, Filter.Entities(user));
 
+            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
+                return false;
+
             // Get entity for logging. Log with EntityUids when?
             var logSys = EntitySystem.Get<AdminLogSystem>();
 
@@ -238,7 +241,7 @@ namespace Content.Server.Chemistry.Components
                 if (ToggleState == InjectorToggleMode.Inject)
                 {
                     logSys.Add(LogType.ForceFeed,
-                        $"{_entities.ToPrettyString(user)} is attempting to inject a solution into {_entities.ToPrettyString(target)}");
+                        $"{_entities.ToPrettyString(user):user} is attempting to inject {_entities.ToPrettyString(target):target} with a solution {SolutionContainerSystem.ToPrettyString(solution):solution}");
                     // TODO solution pretty string.
                 }
             }
@@ -249,7 +252,7 @@ namespace Content.Server.Chemistry.Components
 
                 if (ToggleState == InjectorToggleMode.Inject)
                     logSys.Add(LogType.Ingestion,
-                        $"{_entities.ToPrettyString(user)} is attempting to inject themselves with a solution.");
+                        $"{_entities.ToPrettyString(user)} is attempting to inject themselves with a solution {SolutionContainerSystem.ToPrettyString(solution):solution}.");
                     //TODO solution pretty string.
             }
 

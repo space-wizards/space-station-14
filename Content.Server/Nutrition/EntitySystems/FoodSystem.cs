@@ -415,9 +415,9 @@ namespace Content.Server.Nutrition.EntitySystems
 
             // logging
             if (user == null)
-                _logSystem.Add(LogType.ForceFeed, $"{uid} was thrown into the mouth of {target}");
+                _logSystem.Add(LogType.ForceFeed, $"{ToPrettyString(uid):food} was thrown into the mouth of {ToPrettyString(target):target}");
             else
-                _logSystem.Add(LogType.ForceFeed, $"{user} threw {uid} into the mouth of {target}");
+                _logSystem.Add(LogType.ForceFeed, $"{ToPrettyString(user.Value):user} threw {ToPrettyString(uid):food} into the mouth of {ToPrettyString(target):target}");
 
             var filter = user == null ? Filter.Entities(target) : Filter.Entities(target, user.Value);
             _popupSystem.PopupEntity(Loc.GetString(food.EatMessage), target, filter);

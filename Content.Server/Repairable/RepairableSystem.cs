@@ -36,7 +36,7 @@ namespace Content.Server.Repairable
 
             // Repair all damage
             _damageableSystem.SetAllDamage(damageable, 0);
-            _logSystem.Add(LogType.Healed, $"{args.User} repaired ${uid} back to full health");
+            _logSystem.Add(LogType.Healed, $"{ToPrettyString(args.User):user} repaired ${ToPrettyString(uid):entity} back to full health");
 
             component.Owner.PopupMessage(args.User,
                 Loc.GetString("comp-repairable-repair",

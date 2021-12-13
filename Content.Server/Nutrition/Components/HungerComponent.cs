@@ -208,9 +208,9 @@ namespace Content.Server.Nutrition.Components
             if (calculatedHungerThreshold != _currentHungerThreshold)
             {
                 if (_currentHungerThreshold == HungerThreshold.Dead)
-                    EntitySystem.Get<AdminLogSystem>().Add(LogType.Hunger, $"{Owner} has stopped starving");
+                    EntitySystem.Get<AdminLogSystem>().Add(LogType.Hunger, $"{_entMan.ToPrettyString(Owner)} has stopped starving");
                 else if (calculatedHungerThreshold == HungerThreshold.Dead)
-                    EntitySystem.Get<AdminLogSystem>().Add(LogType.Hunger, $"{Owner} has started starving");
+                    EntitySystem.Get<AdminLogSystem>().Add(LogType.Hunger, $"{_entMan.ToPrettyString(Owner)} has started starving");
 
                 _currentHungerThreshold = calculatedHungerThreshold;
                 HungerThresholdEffect();

@@ -65,7 +65,7 @@ public class SpillableSystem : EntitySystem
         if (args.User != null)
         {
             _logSystem.Add(LogType.Landed,
-                $"{EntityManager.ToPrettyString(uid)} spilled {SolutionContainerSystem.ToPrettyString(solution)} on landing");
+                $"{ToPrettyString(uid)} spilled a solution {SolutionContainerSystem.ToPrettyString(solution)} on landing");
         }
 
         var drainedSolution = _solutionContainerSystem.Drain(uid, solution, solution.DrainAvailable);
