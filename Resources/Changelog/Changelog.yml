@@ -1,11 +1,6 @@
 Entries:
 - author: mirrorcult
   changes:
-  - {message: Examining dead/catatonic people looks normal again, type: Fix}
-  id: 231
-  time: '2021-06-08T20:59:32.0000000+00:00'
-- author: mirrorcult
-  changes:
   - {message: Fire extinguisher cabinets have been mapped in around the station.,
     type: Add}
   id: 232
@@ -2860,3 +2855,8 @@ Entries:
   - {message: Mobs drop their held items when falling to the floor again., type: Fix}
   id: 732
   time: '2021-12-13T20:47:53.0000000+00:00'
+- author: shaeone
+  changes:
+  - {message: Added a decorated tree and presents!, type: Add}
+  id: 733
+  time: '2021-12-13T21:21:15.0000000+00:00'
