@@ -135,7 +135,7 @@ namespace Content.Server.Crayon
             // Decrease "Ammo"
             Charges--;
             Dirty();
-            EntitySystem.Get<AdminLogSystem>().Add(LogType.CrayonDraw, $"{_entMan.ToPrettyString(eventArgs.User):player} drew a {_color:color} {SelectedState}");
+            EntitySystem.Get<AdminLogSystem>().Add(LogType.CrayonDraw, $"{_entMan.ToPrettyString(eventArgs.User):User} drew a {_color:Color} {SelectedState}");
             return true;
         }
 

@@ -523,7 +523,7 @@ namespace Content.Server.Interaction
                 var ev = new WideAttackEvent(user, user, coordinates);
                 RaiseLocalEvent(user, ev, false);
                 if (ev.Handled)
-                    _adminLogSystem.Add(LogType.AttackUnarmedWide, $"{ToPrettyString(user):user} wide attacked at {coordinates}");
+                    _adminLogSystem.Add(LogType.AttackUnarmedWide, $"{ToPrettyString(user):User} wide attacked at {coordinates:Coordinates}");
             }
             else
             {

@@ -26,7 +26,7 @@ namespace Content.Server.Damage.Systems
             if (dmg == null)
                 return;
 
-            _logSystem.Add(LogType.Landed, $"{ToPrettyString(component.Owner)} received {dmg.Total} damage from landing");
+            _logSystem.Add(LogType.Landed, $"{ToPrettyString(component.Owner):Entity} received {dmg.Total:Damage} damage from landing");
         }
     }
 }

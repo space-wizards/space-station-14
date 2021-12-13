@@ -119,7 +119,7 @@ namespace Content.Server.Light.EntitySystems
 
                     if (damage != null)
                         _logSystem.Add(LogType.Damaged,
-                            $"{ToPrettyString(args.User):user} burned their hand on {ToPrettyString(args.Target):target} and received {damage.Total} damage");
+                            $"{ToPrettyString(args.User):User} burned their hand on {ToPrettyString(args.Target):Entity} and received {damage.Total:Damage} damage");
 
                     SoundSystem.Play(Filter.Pvs(uid), light.BurnHandSound.GetSound(), uid);
 

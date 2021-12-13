@@ -101,10 +101,10 @@ namespace Content.Server.Weapon.Melee
                     {
                         if (args.Used == args.User)
                             _logSystem.Add(LogType.MeleeHit,
-                                $"{ToPrettyString(args.User):user} melee attacked {ToPrettyString(args.Target):target} using their hands and dealt {damageResult.Total} damage");
+                                $"{ToPrettyString(args.User):User} melee attacked {ToPrettyString(args.Target):Target} using their hands and dealt {damageResult.Total:Damage} damage");
                         else
                             _logSystem.Add(LogType.MeleeHit,
-                                $"{ToPrettyString(args.User):user} melee attacked {ToPrettyString(args.Target):target} using {ToPrettyString(args.Used):used} and dealt {damageResult.Total} damage");
+                                $"{ToPrettyString(args.User):User} melee attacked {ToPrettyString(args.Target):Target} using {ToPrettyString(args.Used):Used} and dealt {damageResult.Total:Damage} damage");
                     }
 
                     SoundSystem.Play(Filter.Pvs(owner), comp.HitSound.GetSound(), target);
@@ -179,10 +179,10 @@ namespace Content.Server.Weapon.Melee
                     {
                         if (args.Used == args.User)
                             _logSystem.Add(LogType.MeleeHit,
-                                $"{ToPrettyString(args.User):user} melee attacked {ToPrettyString(entity):target} using their hands and dealt {damageResult.Total} damage");
+                                $"{ToPrettyString(args.User):User} melee attacked {ToPrettyString(entity):Target} using their hands and dealt {damageResult.Total:Damage} damage");
                         else
                             _logSystem.Add(LogType.MeleeHit,
-                                $"{ToPrettyString(args.User):user} melee attacked {ToPrettyString(entity):target} using {ToPrettyString(args.Used):used} and dealt {damageResult.Total} damage");
+                                $"{ToPrettyString(args.User):User} melee attacked {ToPrettyString(entity):Target} using {ToPrettyString(args.Used):used} and dealt {damageResult.Total:Damage} damage");
                     }
                 }
             }
