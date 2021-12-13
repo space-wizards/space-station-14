@@ -324,7 +324,7 @@ namespace Content.Server.Interaction
             if (target != null && !Deleted(target.Value) && !user.IsInSameOrParentContainer(target.Value) && !CanAccessViaStorage(user, target.Value))
             {
                 Logger.WarningS("system.interaction",
-                    $"User entity {ToPrettyString(user)} clicked on object {ToPrettyString(target.Value)} that isn't the parent, child, or in the same container");
+                    $"User entity {ToPrettyString(user):user} clicked on object {ToPrettyString(target.Value):target} that isn't the parent, child, or in the same container");
                 return;
             }
 
@@ -370,7 +370,7 @@ namespace Content.Server.Interaction
             if (coordinates.GetMapId(EntityManager) != Transform(user).MapID)
             {
                 Logger.WarningS("system.interaction",
-                    $"User entity {ToPrettyString(user)} clicked on a map they aren't located on");
+                    $"User entity {ToPrettyString(user):user} clicked on a map they aren't located on");
                 return false;
             }
 
@@ -392,7 +392,7 @@ namespace Content.Server.Interaction
             // all interactions should only happen when in range / unobstructed, so no range check is needed
             var message = new InteractHandEvent(user, target);
             RaiseLocalEvent(target, message);
-            _adminLogSystem.Add(LogType.InteractHand, LogImpact.Low, $"{ToPrettyString(user)} interacted with {ToPrettyString(target)}");
+            _adminLogSystem.Add(LogType.InteractHand, LogImpact.Low, $"{ToPrettyString(user):user} interacted with {ToPrettyString(target):target}");
             if (message.Handled)
                 return;
 
@@ -459,7 +459,7 @@ namespace Content.Server.Interaction
                 if (targetUid != null && !Deleted(targetUid.Value) && !user.IsInSameOrParentContainer(targetUid.Value) && !CanAccessViaStorage(user, targetUid.Value))
                 {
                     Logger.WarningS("system.interaction",
-                        $"User entity {ToPrettyString(user)} clicked on object {ToPrettyString(targetUid.Value)} that isn't the parent, child, or in the same container");
+                        $"User entity {ToPrettyString(user):user} clicked on object {ToPrettyString(targetUid.Value):target} that isn't the parent, child, or in the same container");
                     return;
                 }
 
@@ -496,7 +496,7 @@ namespace Content.Server.Interaction
                             if (targetUid != null)
                             {
                                 _adminLogSystem.Add(LogType.AttackArmedClick, LogImpact.Medium,
-                                    $"{ToPrettyString(user)} attacked {ToPrettyString(targetUid.Value)} with {ToPrettyString(item.Value)} at {coordinates}");
+                                    $"{ToPrettyString(user):user} attacked {ToPrettyString(targetUid.Value):target} with {ToPrettyString(item.Value):item} at {coordinates}");
                             }
                             else
                             {
@@ -523,7 +523,7 @@ namespace Content.Server.Interaction
                 var ev = new WideAttackEvent(user, user, coordinates);
                 RaiseLocalEvent(user, ev, false);
                 if (ev.Handled)
-                    _adminLogSystem.Add(LogType.AttackUnarmedWide, $"{ToPrettyString(user)} wide attacked at {coordinates}");
+                    _adminLogSystem.Add(LogType.AttackUnarmedWide, $"{ToPrettyString(user):user} wide attacked at {coordinates}");
             }
             else
             {
@@ -534,12 +534,12 @@ namespace Content.Server.Interaction
                     if (targetUid != null)
                     {
                         _adminLogSystem.Add(LogType.AttackUnarmedClick, LogImpact.Medium,
-                            $"{ToPrettyString(user)} attacked {ToPrettyString(targetUid.Value)} at {coordinates}");
+                            $"{ToPrettyString(user):user} attacked {ToPrettyString(targetUid.Value):target} at {coordinates}");
                     }
                     else
                     {
                         _adminLogSystem.Add(LogType.AttackUnarmedClick, LogImpact.Medium,
-                            $"{ToPrettyString(user)} attacked at {coordinates}");
+                            $"{ToPrettyString(user):user} attacked at {coordinates}");
                     }
                 }
             }
