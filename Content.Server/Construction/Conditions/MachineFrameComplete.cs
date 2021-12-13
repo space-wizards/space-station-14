@@ -5,9 +5,11 @@ using Content.Shared.Construction;
 using Content.Shared.Examine;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
+using Robust.Shared.Utility.Markup;
 
 namespace Content.Server.Construction.Conditions
 {
@@ -37,7 +39,7 @@ namespace Content.Server.Construction.Conditions
         {
             var entity = args.Examined;
 
-            if (!entity.TryGetComponent<MachineFrameComponent>(out var machineFrame))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<MachineFrameComponent?>(entity, out var machineFrame))
                 return false;
 
             if (!machineFrame.HasBoard)

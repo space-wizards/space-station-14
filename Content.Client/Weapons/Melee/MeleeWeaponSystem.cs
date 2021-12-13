@@ -44,28 +44,29 @@ namespace Content.Client.Weapons.Melee
                 return;
             }
 
-            if (!EntityManager.TryGetEntity(msg.Attacker, out var attacker))
+            var attacker = msg.Attacker;
+            if (!EntityManager.EntityExists(msg.Attacker))
             {
                 // FIXME: This should never happen.
                 Logger.Error($"Tried to play a weapon arc {msg.ArcPrototype}, but the attacker does not exist. attacker={msg.Attacker}, source={msg.Source}");
                 return;
             }
 
-            if (!attacker.Deleted)
+            if (!Deleted(attacker))
             {
                 var lunge = attacker.EnsureComponent<MeleeLungeComponent>();
                 lunge.SetData(msg.Angle);
 
-                var entity = EntityManager.SpawnEntity(weaponArc.Prototype, attacker.Transform.Coordinates);
-                entity.Transform.LocalRotation = msg.Angle;
+                var entity = EntityManager.SpawnEntity(weaponArc.Prototype, EntityManager.GetComponent<TransformComponent>(attacker).Coordinates);
+                EntityManager.GetComponent<TransformComponent>(entity).LocalRotation = msg.Angle;
 
-                var weaponArcAnimation = entity.GetComponent<MeleeWeaponArcAnimationComponent>();
+                var weaponArcAnimation = EntityManager.GetComponent<MeleeWeaponArcAnimationComponent>(entity);
                 weaponArcAnimation.SetData(weaponArc, msg.Angle, attacker, msg.ArcFollowAttacker);
 
                 // Due to ISpriteComponent limitations, weapons that don't use an RSI won't have this effect.
-                if (EntityManager.TryGetEntity(msg.Source, out var source) &&
+                if (EntityManager.EntityExists(msg.Source) &&
                     msg.TextureEffect &&
-                    source.TryGetComponent(out ISpriteComponent? sourceSprite) &&
+                    EntityManager.TryGetComponent(msg.Source, out ISpriteComponent? sourceSprite) &&
                     sourceSprite.BaseRSI?.Path != null)
                 {
                     var curTime = _gameTiming.CurTime;
@@ -73,7 +74,7 @@ namespace Content.Client.Weapons.Melee
                     {
                         EffectSprite = sourceSprite.BaseRSI.Path.ToString(),
                         RsiState = sourceSprite.LayerGetState(0).Name,
-                        Coordinates = attacker.Transform.Coordinates,
+                        Coordinates = EntityManager.GetComponent<TransformComponent>(attacker).Coordinates,
                         Color = Vector4.Multiply(new Vector4(255, 255, 255, 125), 1.0f),
                         ColorDelta = Vector4.Multiply(new Vector4(0, 0, 0, -10), 1.0f),
                         Velocity = msg.Angle.ToWorldVec(),
@@ -86,14 +87,14 @@ namespace Content.Client.Weapons.Melee
                 }
             }
 
-            foreach (var uid in msg.Hits)
+            foreach (var hit in msg.Hits)
             {
-                if (!EntityManager.TryGetEntity(uid, out var hitEntity) || hitEntity.Deleted)
+                if (!EntityManager.EntityExists(hit))
                 {
                     continue;
                 }
 
-                if (!hitEntity.TryGetComponent(out ISpriteComponent? sprite))
+                if (!EntityManager.TryGetComponent(hit, out ISpriteComponent? sprite))
                 {
                     continue;
                 }
@@ -102,7 +103,7 @@ namespace Content.Client.Weapons.Melee
                 var newColor = Color.Red * originalColor;
                 sprite.Color = newColor;
 
-                hitEntity.SpawnTimer(100, () =>
+                hit.SpawnTimer(100, () =>
                 {
                     // Only reset back to the original color if something else didn't change the color in the mean time.
                     if (sprite.Color == newColor)
@@ -115,9 +116,9 @@ namespace Content.Client.Weapons.Melee
 
         private void PlayLunge(PlayLungeAnimationMessage msg)
         {
-            if (EntityManager.TryGetEntity(msg.Source, out var entity))
+            if (EntityManager.EntityExists(msg.Source))
             {
-                entity.EnsureComponent<MeleeLungeComponent>().SetData(msg.Angle);
+                msg.Source.EnsureComponent<MeleeLungeComponent>().SetData(msg.Angle);
             }
             else
             {

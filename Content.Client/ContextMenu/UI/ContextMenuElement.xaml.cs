@@ -7,6 +7,7 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
+using Robust.Shared.Utility.Markup;
 
 namespace Content.Client.ContextMenu.UI
 {
@@ -45,7 +46,14 @@ namespace Content.Client.ContextMenu.UI
         /// <summary>
         ///     Convenience property to set label text.
         /// </summary>
-        public string Text { set => Label.SetMessage(FormattedMessage.FromMarkupPermissive(value.Trim())); }
+        public string Text {
+            set
+            {
+                var b = new Basic();
+                b.AddMarkupPermissive(value.Trim());
+                Label.SetMessage(b.Render());
+            }
+        }
 
         public ContextMenuElement(string? text = null)
         {

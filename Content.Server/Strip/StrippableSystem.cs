@@ -1,6 +1,7 @@
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 
 namespace Content.Server.Strip
@@ -19,7 +20,7 @@ namespace Content.Server.Strip
             if (args.Hands == null || !args.CanAccess || !args.CanInteract || args.Target == args.User)
                 return;
 
-            if (!args.User.TryGetComponent(out ActorComponent? actor))
+            if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
 
             Verb verb = new();

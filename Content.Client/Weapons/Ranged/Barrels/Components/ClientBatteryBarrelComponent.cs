@@ -38,13 +38,13 @@ namespace Content.Client.Weapons.Ranged.Barrels.Components
         protected override void Initialize()
         {
             base.Initialize();
-            EntitySystem.Get<ItemSlotsSystem>().AddItemSlot(OwnerUid, $"{Name}-powercell-container", CellSlot);
+            EntitySystem.Get<ItemSlotsSystem>().AddItemSlot(Owner, $"{Name}-powercell-container", CellSlot);
         }
 
         protected override void OnRemove()
         {
             base.OnRemove();
-            EntitySystem.Get<ItemSlotsSystem>().RemoveItemSlot(OwnerUid, CellSlot);
+            EntitySystem.Get<ItemSlotsSystem>().RemoveItemSlot(Owner, CellSlot);
         }
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)

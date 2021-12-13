@@ -4,6 +4,7 @@ using Content.Server.Mind.Components;
 using Content.Server.Players;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Ghost.Roles.Components
@@ -29,10 +30,10 @@ namespace Content.Server.Ghost.Roles.Components
                 return false;
 
             if (MakeSentient)
-                MakeSentientCommand.MakeSentient(OwnerUid, Owner.EntityManager);
+                MakeSentientCommand.MakeSentient(Owner, IoCManager.Resolve<IEntityManager>());
 
             var ghostRoleSystem = EntitySystem.Get<GhostRoleSystem>();
-            ghostRoleSystem.GhostRoleInternalCreateMindAndTransfer(session, OwnerUid, OwnerUid, this);
+            ghostRoleSystem.GhostRoleInternalCreateMindAndTransfer(session, Owner, Owner, this);
 
             ghostRoleSystem.UnregisterGhostRole(this);
 

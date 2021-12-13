@@ -1,9 +1,7 @@
 using System;
-using System.Data;
 using Content.Server.Administration.Logs;
 using Content.Server.Alert;
 using Content.Server.Atmos.Components;
-using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Damage;
@@ -86,9 +84,9 @@ namespace Content.Server.Atmos.EntitySystems
                 if (totalDamage >= barotrauma.MaxDamage)
                     continue;
 
-                var uid = barotrauma.Owner.Uid;
+                var uid = barotrauma.Owner;
 
-                var status = barotrauma.Owner.GetComponentOrNull<ServerAlertsComponent>();
+                var status = EntityManager.GetComponentOrNull<ServerAlertsComponent>(barotrauma.Owner);
 
                 var pressure = 1f;
 
@@ -112,7 +110,7 @@ namespace Content.Server.Atmos.EntitySystems
                         if (!barotrauma.TakingDamage)
                         {
                             barotrauma.TakingDamage = true;
-                            _logSystem.Add(LogType.Barotrauma, $"{barotrauma.Owner} started taking low pressure damage");
+                            _logSystem.Add(LogType.Barotrauma, $"{ToPrettyString(barotrauma.Owner):entity} started taking low pressure damage");
                         }
 
                         if (status == null) break;
@@ -141,7 +139,7 @@ namespace Content.Server.Atmos.EntitySystems
                         if (!barotrauma.TakingDamage)
                         {
                             barotrauma.TakingDamage = true;
-                            _logSystem.Add(LogType.Barotrauma, $"{barotrauma.Owner} started taking high pressure damage");
+                            _logSystem.Add(LogType.Barotrauma, $"{ToPrettyString(barotrauma.Owner):entity} started taking high pressure damage");
                         }
 
                         if (status == null) break;
@@ -160,7 +158,7 @@ namespace Content.Server.Atmos.EntitySystems
                         if (barotrauma.TakingDamage)
                         {
                             barotrauma.TakingDamage = false;
-                            _logSystem.Add(LogType.Barotrauma, $"{barotrauma.Owner} stopped taking pressure damage");
+                            _logSystem.Add(LogType.Barotrauma, $"{ToPrettyString(barotrauma.Owner):entity} stopped taking pressure damage");
                         }
                         status?.ClearAlertCategory(AlertCategory.Pressure);
                         break;

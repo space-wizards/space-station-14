@@ -85,7 +85,7 @@ namespace Content.Server.AI.Components
         {
             get
             {
-                if (Owner.TryGetComponent(out MovementSpeedModifierComponent? component))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out MovementSpeedModifierComponent? component))
                 {
                     return component.CurrentWalkSpeed;
                 }
@@ -102,7 +102,7 @@ namespace Content.Server.AI.Components
         {
             get
             {
-                if (Owner.TryGetComponent(out MovementSpeedModifierComponent? component))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out MovementSpeedModifierComponent? component))
                 {
                     return component.CurrentSprintSpeed;
                 }
