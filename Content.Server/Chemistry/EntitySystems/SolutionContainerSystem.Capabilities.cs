@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Database;
@@ -134,7 +134,7 @@ namespace Content.Server.Chemistry.EntitySystems
         public static string ToPrettyString(Solution solution)
         {
             var sb = new StringBuilder();
-            sb.Append("Solution content: [");
+            sb.Append("[");
             var first = true;
             foreach (var (id, quantity) in solution.Contents)
             {

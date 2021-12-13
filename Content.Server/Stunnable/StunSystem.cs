@@ -53,7 +53,7 @@ namespace Content.Server.Stunnable
                 }
             }
 
-            _adminLogSystem.Add(LogType.DisarmedKnockdown, LogImpact.Medium, $"{ToPrettyString(args.Source):performer} knocked down {ToPrettyString(args.Target):target}");
+            _adminLogSystem.Add(LogType.DisarmedKnockdown, LogImpact.Medium, $"{ToPrettyString(args.Source):user} knocked down {ToPrettyString(args.Target):target}");
 
             args.Handled = true;
         }
