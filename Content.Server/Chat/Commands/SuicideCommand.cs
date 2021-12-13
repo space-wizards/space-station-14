@@ -86,7 +86,7 @@ namespace Content.Server.Chat.Commands
             //TODO: maybe set a suicided flag to prevent resurrection?
 
             EntitySystem.Get<AdminLogSystem>().Add(LogType.Suicide,
-                $"{_entities.ToPrettyString(player.AttachedEntity.Value):Player} is committing suicide");
+                $"{_entities.ToPrettyString(player.AttachedEntity.Value):player} is committing suicide");
 
             // Held item suicide
             var handsComponent = _entities.GetComponent<HandsComponent>(owner);

@@ -252,7 +252,7 @@ namespace Content.Server.Chemistry.Components
 
                 if (ToggleState == InjectorToggleMode.Inject)
                     logSys.Add(LogType.Ingestion,
-                        $"{_entities.ToPrettyString(user)} is attempting to inject themselves with a solution {SolutionContainerSystem.ToPrettyString(solution):solution}.");
+                        $"{_entities.ToPrettyString(user):user} is attempting to inject themselves with a solution {SolutionContainerSystem.ToPrettyString(solution):solution}.");
                     //TODO solution pretty string.
             }
 

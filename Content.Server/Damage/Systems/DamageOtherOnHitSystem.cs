@@ -23,7 +23,7 @@ namespace Content.Server.Damage.Systems
         {
             var dmg = _damageableSystem.TryChangeDamage(args.Target, component.Damage, component.IgnoreResistances);
             if (dmg != null)
-                _logSystem.Add(LogType.ThrowHit, $"{ToPrettyString(args.Target):Target} received {dmg.Total:Damage} damage from collision");
+                _logSystem.Add(LogType.ThrowHit, $"{ToPrettyString(args.Target):target} received {dmg.Total:damage} damage from collision");
         }
     }
 }

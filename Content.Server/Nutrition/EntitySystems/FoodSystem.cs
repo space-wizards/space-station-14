@@ -325,7 +325,7 @@ namespace Content.Server.Nutrition.EntitySystems
             });
 
             // logging
-            _logSystem.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(user)} is forcing {ToPrettyString(target)} to eat {ToPrettyString(uid)} {SolutionContainerSystem.ToPrettyString(foodSolution):solution}");
+            _logSystem.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(user):user} is forcing {ToPrettyString(target):target} to eat {ToPrettyString(uid):food} {SolutionContainerSystem.ToPrettyString(foodSolution):solution}");
 
             return true;
         }
@@ -415,9 +415,9 @@ namespace Content.Server.Nutrition.EntitySystems
 
             // logging
             if (user == null)
-                _logSystem.Add(LogType.ForceFeed, $"{ToPrettyString(uid):Food} {SolutionContainerSystem.ToPrettyString(foodSolution):Solution} was thrown into the mouth of {ToPrettyString(target):Target}");
+                _logSystem.Add(LogType.ForceFeed, $"{ToPrettyString(uid):food} {SolutionContainerSystem.ToPrettyString(foodSolution):solution} was thrown into the mouth of {ToPrettyString(target):target}");
             else
-                _logSystem.Add(LogType.ForceFeed, $"{ToPrettyString(user.Value):User} threw {ToPrettyString(uid):Food} {SolutionContainerSystem.ToPrettyString(foodSolution):Solution} into the mouth of {ToPrettyString(target):Target}");
+                _logSystem.Add(LogType.ForceFeed, $"{ToPrettyString(user.Value):user} threw {ToPrettyString(uid):food} {SolutionContainerSystem.ToPrettyString(foodSolution):solution} into the mouth of {ToPrettyString(target):target}");
 
             var filter = user == null ? Filter.Entities(target) : Filter.Entities(target, user.Value);
             _popupSystem.PopupEntity(Loc.GetString(food.EatMessage), target, filter);
