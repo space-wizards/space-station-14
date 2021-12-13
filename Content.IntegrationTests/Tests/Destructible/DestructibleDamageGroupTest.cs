@@ -5,6 +5,7 @@ using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using static Content.IntegrationTests.Tests.Destructible.DestructibleTestPrototypes;
@@ -31,7 +32,7 @@ namespace Content.IntegrationTests.Tests.Destructible
             var sPrototypeManager = server.ResolveDependency<IPrototypeManager>();
             var sEntitySystemManager = server.ResolveDependency<IEntitySystemManager>();
 
-            IEntity sDestructibleEntity = null;
+            EntityUid sDestructibleEntity = default;
             DamageableComponent sDamageableComponent = null;
             TestDestructibleListenerSystem sTestThresholdListenerSystem = null;
             DamageableSystem sDamageableSystem = null;
@@ -42,7 +43,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                 var coordinates = new EntityCoordinates(gridId, 0, 0);
 
                 sDestructibleEntity = sEntityManager.SpawnEntity(DestructibleDamageGroupEntityId, coordinates);
-                sDamageableComponent = sDestructibleEntity.GetComponent<DamageableComponent>();
+                sDamageableComponent = IoCManager.Resolve<IEntityManager>().GetComponent<DamageableComponent>(sDestructibleEntity);
 
                 sTestThresholdListenerSystem = sEntitySystemManager.GetEntitySystem<TestDestructibleListenerSystem>();
                 sTestThresholdListenerSystem.ThresholdsReached.Clear();
@@ -66,19 +67,19 @@ namespace Content.IntegrationTests.Tests.Destructible
                 DamageSpecifier burnDamage = new(burnDamageGroup, FixedPoint2.New(5));
 
                 // Raise brute damage to 5
-                sDamageableSystem.TryChangeDamage(sDestructibleEntity.Uid, bruteDamage, true);
+                sDamageableSystem.TryChangeDamage(sDestructibleEntity, bruteDamage, true);
 
                 // No thresholds reached yet, the earliest one is at 10 damage
                 Assert.IsEmpty(sTestThresholdListenerSystem.ThresholdsReached);
 
                 // Raise brute damage to 10
-                sDamageableSystem.TryChangeDamage(sDestructibleEntity.Uid, bruteDamage, true);
+                sDamageableSystem.TryChangeDamage(sDestructibleEntity, bruteDamage, true);
 
                 // No threshold reached, burn needs to be 10 as well
                 Assert.IsEmpty(sTestThresholdListenerSystem.ThresholdsReached);
 
                 // Raise burn damage to 10
-                sDamageableSystem.TryChangeDamage(sDestructibleEntity.Uid, burnDamage * 2, true);
+                sDamageableSystem.TryChangeDamage(sDestructibleEntity, burnDamage * 2, true);
 
                 // One threshold reached, brute 10 + burn 10
                 Assert.That(sTestThresholdListenerSystem.ThresholdsReached.Count, Is.EqualTo(1));
@@ -101,26 +102,26 @@ namespace Content.IntegrationTests.Tests.Destructible
                 sTestThresholdListenerSystem.ThresholdsReached.Clear();
 
                 // Raise brute damage to 20
-                sDamageableSystem.TryChangeDamage(sDestructibleEntity.Uid, bruteDamage * 2, true);
+                sDamageableSystem.TryChangeDamage(sDestructibleEntity, bruteDamage * 2, true);
 
                 // No new thresholds reached
                 Assert.IsEmpty(sTestThresholdListenerSystem.ThresholdsReached);
 
                 // Raise burn damage to 20
-                sDamageableSystem.TryChangeDamage(sDestructibleEntity.Uid, burnDamage * 2, true);
+                sDamageableSystem.TryChangeDamage(sDestructibleEntity, burnDamage * 2, true);
 
                 // No new thresholds reached
                 Assert.IsEmpty(sTestThresholdListenerSystem.ThresholdsReached);
 
                 // Lower brute damage to 0
-                sDamageableSystem.TryChangeDamage(sDestructibleEntity.Uid, bruteDamage * -10);
+                sDamageableSystem.TryChangeDamage(sDestructibleEntity, bruteDamage * -10);
                 Assert.That(sDamageableComponent.TotalDamage,Is.EqualTo(FixedPoint2.New(20)));
 
                 // No new thresholds reached, healing should not trigger it
                 Assert.IsEmpty(sTestThresholdListenerSystem.ThresholdsReached);
 
                 // Raise brute damage back up to 10
-                sDamageableSystem.TryChangeDamage(sDestructibleEntity.Uid, bruteDamage * 2, true);
+                sDamageableSystem.TryChangeDamage(sDestructibleEntity, bruteDamage * 2, true);
 
                 // 10 brute + 10 burn threshold reached, brute was healed and brought back to its threshold amount and slash stayed the same
                 Assert.That(sTestThresholdListenerSystem.ThresholdsReached.Count, Is.EqualTo(1));
@@ -134,13 +135,13 @@ namespace Content.IntegrationTests.Tests.Destructible
                 Assert.IsEmpty(sTestThresholdListenerSystem.ThresholdsReached);
 
                 // Raise brute damage to 10
-                sDamageableSystem.TryChangeDamage(sDestructibleEntity.Uid, bruteDamage * 2, true);
+                sDamageableSystem.TryChangeDamage(sDestructibleEntity, bruteDamage * 2, true);
 
                 // No new thresholds reached
                 Assert.IsEmpty(sTestThresholdListenerSystem.ThresholdsReached);
 
                 // Raise burn damage to 10
-                sDamageableSystem.TryChangeDamage(sDestructibleEntity.Uid, burnDamage * 2, true);
+                sDamageableSystem.TryChangeDamage(sDestructibleEntity, burnDamage * 2, true);
 
                 // Both classes of damage were healed and then raised again, the threshold should have been reached as triggers once is default false
                 Assert.That(sTestThresholdListenerSystem.ThresholdsReached.Count, Is.EqualTo(1));
@@ -172,13 +173,13 @@ namespace Content.IntegrationTests.Tests.Destructible
                 Assert.IsEmpty(sTestThresholdListenerSystem.ThresholdsReached);
 
                 // Raise brute damage to 10
-                sDamageableSystem.TryChangeDamage(sDestructibleEntity.Uid, bruteDamage * 2, true);
+                sDamageableSystem.TryChangeDamage(sDestructibleEntity, bruteDamage * 2, true);
 
                 // No new thresholds reached
                 Assert.IsEmpty(sTestThresholdListenerSystem.ThresholdsReached);
 
                 // Raise burn damage to 10
-                sDamageableSystem.TryChangeDamage(sDestructibleEntity.Uid, burnDamage * 2, true);
+                sDamageableSystem.TryChangeDamage(sDestructibleEntity, burnDamage * 2, true);
 
                 // No new thresholds reached as triggers once is set to true and it already triggered before
                 Assert.IsEmpty(sTestThresholdListenerSystem.ThresholdsReached);

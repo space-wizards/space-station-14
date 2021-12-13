@@ -9,6 +9,7 @@ using Content.Server.AI.WorldState.States;
 using Content.Server.AI.WorldState.States.Clothing;
 using Content.Server.Clothing.Components;
 using Content.Shared.Inventory;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Utility.ExpandableActions.Clothing.Head
@@ -35,7 +36,7 @@ namespace Content.Server.AI.Utility.ExpandableActions.Clothing.Head
 
             foreach (var entity in context.GetState<NearbyClothingState>().GetValue())
             {
-                if (entity.TryGetComponent(out ClothingComponent? clothing) &&
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out ClothingComponent? clothing) &&
                     (clothing.SlotFlags & EquipmentSlotDefines.SlotFlags.HEAD) != 0)
                 {
                     yield return new PickUpHead {Owner = owner, Target = entity, Bonus = Bonus};

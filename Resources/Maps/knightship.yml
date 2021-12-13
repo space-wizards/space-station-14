@@ -1281,7 +1281,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 33
-  type: AirlockShuttle
+  type: AirlockExternalShuttleLocked
   components:
   - rot: -1.5707963267948966 rad
     pos: -5.5,1.5

@@ -2,6 +2,7 @@ using Content.Server.Atmos.Components;
 using Content.Server.Atmos.Reactions;
 using Content.Shared.Atmos;
 using Robust.Server.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Server.Atmos.EntitySystems
@@ -143,7 +144,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             foreach (var entity in _gridtileLookupSystem.GetEntitiesIntersecting(tile.GridIndex, tile.GridIndices))
             {
-                RaiseLocalEvent(entity.Uid, fireEvent, false);
+                RaiseLocalEvent(entity, fireEvent, false);
             }
         }
     }

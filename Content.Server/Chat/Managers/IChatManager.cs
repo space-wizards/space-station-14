@@ -23,8 +23,8 @@ namespace Content.Server.Chat.Managers
         void DispatchServerMessage(IPlayerSession player, string message);
 
         /// <param name="hideChat">If true, message will not be logged to chat boxes but will still produce a speech bubble.</param>
-        void EntitySay(IEntity source, string message, bool hideChat=false);
-        void EntityMe(IEntity source, string action);
+        void EntitySay(EntityUid source, string message, bool hideChat=false);
+        void EntityMe(EntityUid source, string action);
 
         void SendOOC(IPlayerSession player, string message);
         void SendAdminChat(IPlayerSession player, string message);

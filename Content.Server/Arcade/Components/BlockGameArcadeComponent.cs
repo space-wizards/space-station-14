@@ -49,10 +49,10 @@ namespace Content.Server.Arcade.Components
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if(!Powered || !eventArgs.User.TryGetComponent(out ActorComponent? actor))
+            if(!Powered || !IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User, out ActorComponent? actor))
                 return;
 
-            if(!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User.Uid))
+            if(!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User))
                 return;
 
             UserInterface?.Toggle(actor.PlayerSession);
@@ -131,7 +131,7 @@ namespace Content.Server.Arcade.Components
                     if (obj.Session != _player) break;
 
                     // TODO: Should this check if the Owner can interact...?
-                    if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(OwnerUid))
+                    if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(Owner))
                     {
                         DeactivePlayer(obj.Session);
                         break;
@@ -664,11 +664,11 @@ namespace Content.Server.Arcade.Components
                 _running = false;
                 _gameOver = true;
 
-                if (_component._player?.AttachedEntity != null)
+                if (_component._player?.AttachedEntity is {Valid: true} playerEntity)
                 {
                     var blockGameSystem = EntitySystem.Get<BlockGameSystem>();
 
-                    _highScorePlacement = blockGameSystem.RegisterHighScore(_component._player.AttachedEntity.Name, Points);
+                    _highScorePlacement = blockGameSystem.RegisterHighScore(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(playerEntity).EntityName, Points);
                     SendHighscoreUpdate();
                 }
                 _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameGameOverScreenMessage(Points, _highScorePlacement?.LocalPlacement, _highScorePlacement?.GlobalPlacement));

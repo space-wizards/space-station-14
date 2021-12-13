@@ -30,7 +30,12 @@ public class SpreaderSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<SpreaderComponent, ComponentAdd>(SpreaderAddHandler);
-        SubscribeLocalEvent<AirtightChanged>(e => UpdateNearbySpreaders(e.Airtight.OwnerUid, e.Airtight));
+        SubscribeLocalEvent<AirtightChanged>(OnAirtightChanged);
+    }
+
+    private void OnAirtightChanged(AirtightChanged e)
+    {
+        UpdateNearbySpreaders((e.Airtight).Owner, e.Airtight);
     }
 
     private void SpreaderAddHandler(EntityUid uid, SpreaderComponent component, ComponentAdd args)

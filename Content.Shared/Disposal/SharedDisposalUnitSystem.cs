@@ -31,7 +31,7 @@ namespace Content.Shared.Disposal
 
         private void HandlePreventCollide(EntityUid uid, SharedDisposalUnitComponent component, PreventCollideEvent args)
         {
-            var otherBody = args.BodyB.OwnerUid;
+            var otherBody = args.BodyB.Owner;
 
             // Items dropped shouldn't collide but items thrown should
             if (EntityManager.HasComponent<SharedItemComponent>(otherBody) &&
@@ -47,35 +47,29 @@ namespace Content.Shared.Disposal
             }
         }
 
-        public virtual bool CanInsert(SharedDisposalUnitComponent component, IEntity entity)
+        public virtual bool CanInsert(SharedDisposalUnitComponent component, EntityUid entity)
         {
-            if (!component.Owner.Transform.Anchored)
+            if (!EntityManager.GetComponent<TransformComponent>(component.Owner).Anchored)
                 return false;
 
             // TODO: Probably just need a disposable tag.
-            if (!entity.TryGetComponent(out SharedItemComponent? storable) &&
-                !entity.HasComponent<SharedBodyComponent>())
+            if (!EntityManager.TryGetComponent(entity, out SharedItemComponent? storable) &&
+                !EntityManager.HasComponent<SharedBodyComponent>(entity))
             {
                 return false;
             }
 
 
-            if (!entity.TryGetComponent(out IPhysBody? physics) ||
+            if (!EntityManager.TryGetComponent(entity, out IPhysBody? physics) ||
                 !physics.CanCollide && storable == null)
             {
-                if (!(entity.TryGetComponent(out MobStateComponent? damageState) && damageState.IsDead()))
+                if (!(EntityManager.TryGetComponent(entity, out MobStateComponent? damageState) && damageState.IsDead()))
                 {
                     return false;
                 }
             }
 
             return true;
-        }
-
-        public bool CanInsert(SharedDisposalUnitComponent component, EntityUid entityId)
-        {
-            var entity = EntityManager.GetEntity(entityId);
-            return CanInsert(component, entity);
         }
     }
 }

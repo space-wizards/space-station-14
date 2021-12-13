@@ -1,4 +1,5 @@
 using System;
+using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Binary.Components;
 using Content.Server.Atmos.Piping.Components;
@@ -6,6 +7,7 @@ using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Binary.Components;
+using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
@@ -24,6 +26,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private UserInterfaceSystem _userInterfaceSystem = default!;
+        [Dependency] private AdminLogSystem _adminLogSystem = default!;
 
         public override void Initialize()
         {
@@ -39,7 +42,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
         private void OnExamined(EntityUid uid, GasVolumePumpComponent pump, ExaminedEvent args)
         {
-            if (!pump.Owner.Transform.Anchored || !args.IsInDetailsRange) // Not anchored? Out of range? No status.
+            if (!EntityManager.GetComponent<TransformComponent>(pump.Owner).Anchored || !args.IsInDetailsRange) // Not anchored? Out of range? No status.
                 return;
 
             if (Loc.TryGetString("gas-volume-pump-system-examined", out var str,
@@ -83,7 +86,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             // Some of the gas from the mixture leaks when overclocked.
             if (pump.Overclocked)
             {
-                var tile = _atmosphereSystem.GetTileMixture(pump.Owner.Transform.Coordinates, true);
+                var tile = _atmosphereSystem.GetTileMixture(EntityManager.GetComponent<TransformComponent>(pump.Owner).Coordinates, true);
 
                 if (tile != null)
                 {
@@ -97,10 +100,10 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
         private void OnPumpInteractHand(EntityUid uid, GasVolumePumpComponent component, InteractHandEvent args)
         {
-            if (!args.User.TryGetComponent(out ActorComponent? actor))
+            if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
 
-            if (component.Owner.Transform.Anchored)
+            if (EntityManager.GetComponent<TransformComponent>(component.Owner).Anchored)
             {
                 _userInterfaceSystem.TryOpen(uid, GasVolumePumpUiKey.Key, actor.PlayerSession);
                 DirtyUI(uid, component);
@@ -116,14 +119,17 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
         private void OnToggleStatusMessage(EntityUid uid, GasVolumePumpComponent pump, GasVolumePumpToggleStatusMessage args)
         {
             pump.Enabled = args.Enabled;
+            _adminLogSystem.Add(LogType.AtmosPowerChanged, LogImpact.Medium,
+                $"{ToPrettyString(args.Session.AttachedEntity!.Value):player} set the power on {ToPrettyString(uid):device} to {args.Enabled}");
             DirtyUI(uid, pump);
         }
 
         private void OnTransferRateChangeMessage(EntityUid uid, GasVolumePumpComponent pump, GasVolumePumpChangeTransferRateMessage args)
         {
             pump.TransferRate = Math.Clamp(args.TransferRate, 0f, Atmospherics.MaxTransferRate);
+            _adminLogSystem.Add(LogType.AtmosVolumeChanged, LogImpact.Medium,
+                $"{ToPrettyString(args.Session.AttachedEntity!.Value):player} set the transfer rate on {ToPrettyString(uid):device} to {args.TransferRate}");
             DirtyUI(uid, pump);
-
         }
 
         private void DirtyUI(EntityUid uid, GasVolumePumpComponent? pump)
@@ -132,7 +138,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 return;
 
             _userInterfaceSystem.TrySetUiState(uid, GasVolumePumpUiKey.Key,
-                new GasVolumePumpBoundUserInterfaceState(pump.Owner.Name, pump.TransferRate, pump.Enabled));
+                new GasVolumePumpBoundUserInterfaceState(EntityManager.GetComponent<MetaDataComponent>(pump.Owner).EntityName, pump.TransferRate, pump.Enabled));
         }
     }
 }

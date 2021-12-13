@@ -39,7 +39,7 @@ namespace Content.Client.Camera
         {
             if (float.IsNaN(recoil.X) || float.IsNaN(recoil.Y))
             {
-                Logger.Error($"CameraRecoilComponent on entity {Owner.Uid} passed a NaN recoil value. Ignoring.");
+                Logger.Error($"CameraRecoilComponent on entity {Owner} passed a NaN recoil value. Ignoring.");
                 return;
             }
 

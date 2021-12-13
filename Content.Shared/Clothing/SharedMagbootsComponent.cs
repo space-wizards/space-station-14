@@ -20,7 +20,7 @@ namespace Content.Shared.Clothing
             // inventory system will automatically hook into the event raised by this and update accordingly
             if (Owner.TryGetContainer(out var container))
             {
-                EntitySystem.Get<MovementSpeedModifierSystem>().RefreshMovementSpeedModifiers(container.Owner.Uid);
+                EntitySystem.Get<MovementSpeedModifierSystem>().RefreshMovementSpeedModifiers(container.Owner);
             }
         }
 

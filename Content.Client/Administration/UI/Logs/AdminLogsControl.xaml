@@ -1,0 +1,68 @@
+﻿<Control xmlns="https://spacestation14.io"
+         xmlns:aui="clr-namespace:Content.Client.Administration.UI.CustomControls"
+         xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+         MinWidth="1000"
+         MinHeight="400">
+    <PanelContainer>
+        <PanelContainer.PanelOverride>
+            <gfx:StyleBoxFlat BackgroundColor="#25252add"/>
+        </PanelContainer.PanelOverride>
+        <BoxContainer Orientation="Horizontal">
+            <BoxContainer Orientation="Vertical">
+                <BoxContainer Orientation="Horizontal" MinWidth="400">
+                    <Label Text="{Loc admin-logs-round}"/>
+                    <SpinBox Name="RoundSpinBox" Value="0" MinWidth="150"/>
+                    <Control HorizontalExpand="True"/>
+                    <Button Name="ResetRoundButton" Text="{Loc admin-logs-reset}" HorizontalAlignment="Right"
+                            StyleClasses="OpenRight"/>
+                </BoxContainer>
+                <BoxContainer Orientation="Horizontal" VerticalExpand="True">
+                    <BoxContainer Orientation="Vertical" MinWidth="200">
+                        <LineEdit Name="TypeSearch" Access="Public" StyleClasses="actionSearchBox"
+                                  HorizontalExpand="true" PlaceHolder="{Loc admin-logs-search-types-placeholder}"/>
+                        <BoxContainer Orientation="Horizontal">
+                            <Button Name="SelectAllTypesButton" Text="{Loc admin-logs-select-all}"
+                                    MinWidth="100" StyleClasses="ButtonSquare"/>
+                            <Button Name="SelectNoTypesButton" Text="{Loc admin-logs-select-none}"
+                                    MinWidth="100" StyleClasses="ButtonSquare"/>
+                        </BoxContainer>
+                        <ScrollContainer VerticalExpand="True">
+                            <BoxContainer Name="TypesContainer" Access="Public" Orientation="Vertical"/>
+                        </ScrollContainer>
+                    </BoxContainer>
+                    <aui:VSeparator/>
+                    <BoxContainer Orientation="Vertical" MinWidth="200">
+                        <LineEdit Name="PlayerSearch" Access="Public" StyleClasses="actionSearchBox"
+                                  HorizontalExpand="true" PlaceHolder="{Loc admin-logs-search-players-placeholder}"/>
+                        <BoxContainer Orientation="Horizontal">
+                            <Button Name="SelectAllPlayersButton" Text="{Loc admin-logs-select-all}"
+                                    MinWidth="100" StyleClasses="ButtonSquare" />
+                            <Button Name="SelectNoPlayersButton" Text="{Loc admin-logs-select-none}"
+                                    MinWidth="100" StyleClasses="ButtonSquare"/>
+                        </BoxContainer>
+                        <ScrollContainer VerticalExpand="True">
+                            <BoxContainer Name="PlayersContainer" Access="Public" Orientation="Vertical"/>
+                        </ScrollContainer>
+                    </BoxContainer>
+                    <aui:VSeparator/>
+                </BoxContainer>
+            </BoxContainer>
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                <BoxContainer Name="TopRightContainer">
+                    <BoxContainer Name="LogImpactContainer" Orientation="Horizontal"/>
+                    <Control HorizontalExpand="True"/>
+                    <Button Name="PopOutButton" Access="Public" Text="{Loc admin-logs-pop-out}"/>
+                </BoxContainer>
+                <BoxContainer Orientation="Horizontal">
+                    <LineEdit Name="LogSearch" Access="Public" StyleClasses="actionSearchBox"
+                              HorizontalExpand="true" PlaceHolder="{Loc admin-logs-search-logs-placeholder}"/>
+                    <Button Name="RefreshButton" Access="Public" Text="{Loc admin-logs-refresh}" StyleClasses="ButtonSquare"/>
+                    <Button Name="NextButton" Access="Public" Text="{Loc admin-logs-next}" StyleClasses="OpenLeft"/>
+                </BoxContainer>
+                <ScrollContainer VerticalExpand="True" HorizontalExpand="True" HScrollEnabled="False">
+                    <BoxContainer Name="LogsContainer" Access="Public" Orientation="Vertical" VerticalExpand="True"/>
+                </ScrollContainer>
+            </BoxContainer>
+        </BoxContainer>
+    </PanelContainer>
+</Control>

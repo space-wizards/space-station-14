@@ -5,6 +5,7 @@ using Content.Shared.Administration;
 using Content.Shared.Alert;
 using Robust.Server.Player;
 using Robust.Shared.Console;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Server.Alert.Commands
@@ -19,19 +20,13 @@ namespace Content.Server.Alert.Commands
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
-            if (player == null)
+            if (player?.AttachedEntity == null)
             {
-                shell.WriteLine("You cannot run this command from the server.");
+                shell.WriteLine("You cannot run this from the server or without an attached entity.");
                 return;
             }
 
-            var attachedEntity = player.AttachedEntity;
-
-            if (attachedEntity == null)
-            {
-                shell.WriteLine("You don't have an entity.");
-                return;
-            }
+            var attachedEntity = player.AttachedEntity.Value;
 
             if (args.Length > 2)
             {
@@ -39,7 +34,7 @@ namespace Content.Server.Alert.Commands
                 if (!CommandUtils.TryGetAttachedEntityByUsernameOrId(shell, target, player, out attachedEntity)) return;
             }
 
-            if (!attachedEntity.TryGetComponent(out ServerAlertsComponent? alertsComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(attachedEntity, out ServerAlertsComponent? alertsComponent))
             {
                 shell.WriteLine("user has no alerts component");
                 return;
@@ -58,7 +53,7 @@ namespace Content.Server.Alert.Commands
                 shell.WriteLine("invalid severity " + sevint);
                 return;
             }
-            alertsComponent.ShowAlert(alert.AlertType, sevint == -1 ? (short?) null : sevint);
+            alertsComponent.ShowAlert(alert.AlertType, sevint == -1 ? null : sevint);
         }
     }
 }

@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using Content.Shared.Administration.Events;
-using Robust.Client.Graphics;
+﻿using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 
 namespace Content.Client.Administration
@@ -35,13 +34,14 @@ namespace Content.Client.Administration
             foreach (var playerInfo in _system.PlayerList)
             {
                 // Otherwise the entity can not exist yet
-                if (!_entityManager.TryGetEntity(playerInfo.EntityUid, out var entity))
+                var entity = playerInfo.EntityUid;
+                if (!_entityManager.EntityExists(entity))
                 {
                     continue;
                 }
 
                 // if not on the same map, continue
-                if (entity.Transform.MapID != _eyeManager.CurrentMap)
+                if (_entityManager.GetComponent<TransformComponent>(entity).MapID != _eyeManager.CurrentMap)
                 {
                     continue;
                 }
