@@ -3,7 +3,7 @@
   name: "salvage equipment crate"
   description: For the daring.
   suffix: Filled
-  parent: CrateGenericonimo
+  parent: CrateGenericSteel
   components:
   - type: StorageFill
     contents:
@@ -25,7 +25,7 @@
   id: CrateSalvageAssortedGoodies
   suffix: Filled, Salvage Random
   abstract: true # You should use SalvageMaterialCrateSpawner instead
-  parent: CrateGenericonimo
+  parent: CrateGenericSteel
   components:
   - type: StorageFill
     contents:
