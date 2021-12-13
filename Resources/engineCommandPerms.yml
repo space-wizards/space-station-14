@@ -3,6 +3,7 @@
   - disconnect
   - help
   - list
+  - quit
 
 - Flags: VAREDIT
   Commands:

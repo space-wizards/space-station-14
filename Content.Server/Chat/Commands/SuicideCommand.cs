@@ -8,6 +8,7 @@ using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Server.Players;
 using Content.Server.Popups;
+using Content.Shared.Administration;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Database;
