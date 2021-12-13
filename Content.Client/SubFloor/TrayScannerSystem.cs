@@ -95,22 +95,26 @@ public class TrayScannerSystem : SharedTrayScannerSystem
         Vector2 flooredPos;
 
         // zero vector implies container
+        //
+        // this means we should get the entity transform's parent
         if (transform.LocalPosition == Vector2.Zero
             && transform.Parent != null
-            && _containerSystem.ContainsEntity(transform.Parent.Owner.Uid, uid))
+            && _containerSystem.ContainsEntity(transform.ParentUid, uid))
         {
             flooredPos = transform.Parent.LocalPosition.Rounded();
 
+            // if this is also zero, we can check one more time
+            //
             // could recurse through fully but i think that's useless,
             // just attempt to check through the gp's transform and if
             // that doesn't work, just don't bother any further
             if (flooredPos == Vector2.Zero)
             {
-                if (EntityManager.TryGetComponent(transform.Parent.Owner.Uid, out TransformComponent? gpTransform)
-                    && gpTransform.Parent != null
-                    && _containerSystem.ContainsEntity(gpTransform.Parent.Owner.Uid, transform.Parent.Owner.Uid))
+                var gpTransform = transform.Parent.Parent;
+                if (gpTransform != null
+                    && _containerSystem.ContainsEntity(gpTransform.Owner.Uid, transform.ParentUid))
                 {
-                    flooredPos = gpTransform.Parent.LocalPosition.Rounded();
+                    flooredPos = gpTransform.LocalPosition.Rounded();
                 }
             }
         }
