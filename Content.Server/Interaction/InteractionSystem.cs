@@ -321,7 +321,7 @@ namespace Content.Server.Interaction
 
             // Check if interacted entity is in the same container, the direct child, or direct parent of the user.
             // This is bypassed IF the interaction happened through an item slot (e.g., backpack UI)
-            if (target != null && !user.IsInSameOrParentContainer(target.Value) && !CanAccessViaStorage(user, target.Value))
+            if (target != null && !Deleted(target.Value) && !user.IsInSameOrParentContainer(target.Value) && !CanAccessViaStorage(user, target.Value))
             {
                 Logger.WarningS("system.interaction",
                     $"User entity {ToPrettyString(user)} clicked on object {ToPrettyString(target.Value)} that isn't the parent, child, or in the same container");
