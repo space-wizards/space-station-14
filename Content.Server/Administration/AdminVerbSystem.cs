@@ -74,6 +74,25 @@ namespace Content.Server.Administration
                 verb.Impact = LogImpact.Low;
                 args.Verbs.Add(verb);
             }
+
+            // Atillery
+            if (_adminManager.HasAdminFlag(player, AdminFlags.Fun))
+            {
+                Verb verb = new();
+                verb.Text = Loc.GetString("explode-verb-get-data-text");
+                verb.Category = VerbCategory.Admin;
+                verb.Act = () =>
+                {
+                    var coords = Transform(args.Target).Coordinates;
+                    Timer.Spawn(_gameTiming.TickPeriod, () => _explosions.SpawnExplosion(coords, 0, 1, 2, 1), CancellationToken.None);
+                    if (TryComp(args.Target, out SharedBodyComponent? body))
+                    {
+                        body.Gib();
+                    }
+                };
+                verb.Impact = LogImpact.Extreme; // if you're just outright killing a person, I guess that deserves to be extreme?
+                args.Verbs.Add(verb);
+            }
         }
 
         private void AddDebugVerbs(GetOtherVerbsEvent args)
@@ -136,25 +155,6 @@ namespace Content.Server.Administration
                 verb.IconTexture = "/Textures/Interface/VerbIcons/sentient.svg.192dpi.png";
                 verb.Act = () => MakeSentientCommand.MakeSentient(args.Target, EntityManager);
                 verb.Impact = LogImpact.Medium;
-                args.Verbs.Add(verb);
-            }
-
-            // Atillery
-            if (_adminManager.HasAdminFlag(player, AdminFlags.Fun))
-            {
-                Verb verb = new();
-                verb.Text = Loc.GetString("explode-verb-get-data-text");
-                verb.Category = VerbCategory.Debug;
-                verb.Act = () =>
-                {
-                    var coords = Transform(args.Target).Coordinates;
-                    Timer.Spawn(_gameTiming.TickPeriod, () => _explosions.SpawnExplosion(coords, 0, 1, 2, 1), CancellationToken.None);
-                    if (TryComp(args.Target, out SharedBodyComponent? body))
-                    {
-                        body.Gib();
-                    }
-                };
-                verb.Impact = LogImpact.Extreme; // if you're just outright killing a person, I guess that deserves to be extreme?
                 args.Verbs.Add(verb);
             }
 
