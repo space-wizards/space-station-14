@@ -14,7 +14,7 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked {}
+    - !type:TileNotBlocked
 
 - type: construction
   name: stool
@@ -31,7 +31,7 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked {}
+    - !type:TileNotBlocked
 
 - type: construction
   name: bar stool
@@ -48,7 +48,7 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked {}
+    - !type:TileNotBlocked
 
 - type: construction
   name: office chair
@@ -65,7 +65,7 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked {}
+    - !type:TileNotBlocked
 
 - type: construction
   name: dark office chair
@@ -82,7 +82,7 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked {}
+    - !type:TileNotBlocked
 
 - type: construction
   name: comfy chair
@@ -99,7 +99,7 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked {}
+    - !type:TileNotBlocked
 
 - type: construction
   name: wooden chair
@@ -116,7 +116,7 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked {}
+    - !type:TileNotBlocked
 
 
 #tables
@@ -135,7 +135,7 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked {}
+    - !type:TileNotBlocked
 
 - type: construction
   name: reinforced table
@@ -152,7 +152,7 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked {}
+    - !type:TileNotBlocked
 
 - type: construction
   name: glass table
@@ -169,7 +169,7 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked {}
+    - !type:TileNotBlocked
 
 - type: construction
   name: reinforced glass table
@@ -186,7 +186,7 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked {}
+    - !type:TileNotBlocked
 
 - type: construction
   name: plasma glass table
@@ -203,7 +203,7 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked {}
+    - !type:TileNotBlocked
 
 - type: construction
   name: wood table
@@ -220,7 +220,7 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked {}
+    - !type:TileNotBlocked
 
 - type: construction
   name: poker table
@@ -237,7 +237,7 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked {}
+    - !type:TileNotBlocked
 
 #bathroom
 - type: construction
@@ -255,4 +255,4 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked {}
+    - !type:TileNotBlocked
