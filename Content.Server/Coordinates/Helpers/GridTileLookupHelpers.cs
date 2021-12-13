@@ -13,7 +13,7 @@ namespace Content.Server.Coordinates.Helpers
         ///     Helper that returns all entities in a turf very fast.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerable<IEntity> GetEntitiesInTileFast(this TileRef turf, GridTileLookupSystem? gridTileLookup = null)
+        public static IEnumerable<EntityUid> GetEntitiesInTileFast(this TileRef turf, GridTileLookupSystem? gridTileLookup = null)
         {
             gridTileLookup ??= EntitySystem.Get<GridTileLookupSystem>();
 
@@ -24,7 +24,7 @@ namespace Content.Server.Coordinates.Helpers
         ///     Helper that returns all entities in a turf.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerable<IEntity> GetEntitiesInTileFast(this Vector2i indices, GridId gridId, GridTileLookupSystem? gridTileLookup = null)
+        public static IEnumerable<EntityUid> GetEntitiesInTileFast(this Vector2i indices, GridId gridId, GridTileLookupSystem? gridTileLookup = null)
         {
             gridTileLookup ??= EntitySystem.Get<GridTileLookupSystem>();
             return gridTileLookup.GetEntitiesIntersecting(gridId, indices);

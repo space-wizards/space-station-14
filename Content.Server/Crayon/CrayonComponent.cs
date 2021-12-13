@@ -29,6 +29,7 @@ namespace Content.Server.Crayon
     [RegisterComponent]
     public class CrayonComponent : SharedCrayonComponent, IAfterInteract, IUse, IDropped, ISerializationHooks
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         [DataField("useSound")]
@@ -91,7 +92,7 @@ namespace Content.Server.Crayon
         // Opens the selection window
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
-            if (eventArgs.User.TryGetComponent(out ActorComponent? actor))
+            if (_entMan.TryGetComponent(eventArgs.User, out ActorComponent? actor))
             {
                 UserInterface?.Toggle(actor.PlayerSession);
                 if (UserInterface?.SessionHasOpen(actor.PlayerSession) == true)
@@ -119,7 +120,7 @@ namespace Content.Server.Crayon
                 return true;
             }
 
-            if (!eventArgs.ClickLocation.IsValid(Owner.EntityManager))
+            if (!eventArgs.ClickLocation.IsValid(_entMan))
             {
                 eventArgs.User.PopupMessage(Loc.GetString("crayon-interact-invalid-location"));
                 return true;
@@ -134,13 +135,13 @@ namespace Content.Server.Crayon
             // Decrease "Ammo"
             Charges--;
             Dirty();
-            EntitySystem.Get<AdminLogSystem>().Add(LogType.CrayonDraw, $"{eventArgs.User:player} drew a {_color:color} {SelectedState}");
+            EntitySystem.Get<AdminLogSystem>().Add(LogType.CrayonDraw, LogImpact.Low, $"{_entMan.ToPrettyString(eventArgs.User):user} drew a {_color:color} {SelectedState}");
             return true;
         }
 
         void IDropped.Dropped(DroppedEventArgs eventArgs)
         {
-            if (eventArgs.User.TryGetComponent(out ActorComponent? actor))
+            if (_entMan.TryGetComponent(eventArgs.User, out ActorComponent? actor))
                 UserInterface?.Close(actor.PlayerSession);
         }
     }

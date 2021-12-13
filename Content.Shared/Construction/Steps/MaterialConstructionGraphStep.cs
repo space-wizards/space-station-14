@@ -7,6 +7,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Utility.Markup;
 
 namespace Content.Shared.Construction.Steps
 {
@@ -24,7 +25,7 @@ namespace Content.Shared.Construction.Steps
         {
             var material = IoCManager.Resolve<IPrototypeManager>().Index<StackPrototype>(MaterialPrototypeId);
 
-            examinedEvent.Message.AddMarkup(Loc.GetString("construction-insert-material-entity", ("amount", Amount), ("materialName", material.Name)));
+            examinedEvent.Message.AddMessage(Basic.RenderMarkup(Loc.GetString("construction-insert-material-entity", ("amount", Amount), ("materialName", material.Name))));
         }
 
         public override bool EntityValid(EntityUid uid, IEntityManager entityManager)
@@ -32,9 +33,9 @@ namespace Content.Shared.Construction.Steps
             return entityManager.TryGetComponent(uid, out SharedStackComponent? stack) && stack.StackTypeId.Equals(MaterialPrototypeId) && stack.Count >= Amount;
         }
 
-        public bool EntityValid(IEntity entity, [NotNullWhen(true)] out SharedStackComponent? stack)
+        public bool EntityValid(EntityUid entity, [NotNullWhen(true)] out SharedStackComponent? stack)
         {
-            if (entity.TryGetComponent(out SharedStackComponent? otherStack) && otherStack.StackTypeId.Equals(MaterialPrototypeId) && otherStack.Count >= Amount)
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out SharedStackComponent? otherStack) && otherStack.StackTypeId.Equals(MaterialPrototypeId) && otherStack.Count >= Amount)
                 stack = otherStack;
             else
                 stack = null;

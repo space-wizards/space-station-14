@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
 using Content.Shared.Sound;
 using Content.Shared.Tools;
-using Content.Shared.Verbs;
 using Robust.Shared.Analyzers;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -80,7 +78,7 @@ namespace Content.Server.PneumaticCannon
 
         public struct FireData
         {
-            public IEntity User;
+            public EntityUid User;
             public float Strength;
             public Vector2 Direction;
         }

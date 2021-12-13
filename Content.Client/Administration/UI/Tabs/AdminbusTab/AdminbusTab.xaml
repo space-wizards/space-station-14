@@ -8,6 +8,7 @@
     <GridContainer Columns="3">
         <Button Name="SpawnEntitiesButton" Text="{Loc 'sandbox-window-spawn-entities-button'}" />
         <Button Name="SpawnTilesButton" Text="{Loc 'sandbox-window-spawn-tiles-button'} " />
+        <Button Name="LoadGamePrototypeButton" Text="{Loc 'load-game-prototype'}"/>
         <cc:CommandButton Command="deleteewc Singularity" Name="DeleteSingulos" Text="{Loc 'delete-singularities'}"/>
         <cc:UICommandButton Command="events" Text="{Loc 'open-station-events'}" WindowType="{x:Type abt:StationEventsWindow}" />
     </GridContainer>

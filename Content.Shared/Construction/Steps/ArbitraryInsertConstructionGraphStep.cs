@@ -2,6 +2,7 @@
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
+using Robust.Shared.Utility.Markup;
 
 namespace Content.Shared.Construction.Steps
 {
@@ -16,7 +17,7 @@ namespace Content.Shared.Construction.Steps
             if (string.IsNullOrEmpty(Name))
                 return;
 
-            examinedEvent.Message.AddMarkup(Loc.GetString("construction-insert-arbitrary-entity", ("stepName", Name)));
+            examinedEvent.Message.AddMessage(Basic.RenderMarkup(Loc.GetString("construction-insert-arbitrary-entity", ("stepName", Name))));
         }
 
         public override ConstructionGuideEntry GenerateGuideEntry()

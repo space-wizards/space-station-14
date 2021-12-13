@@ -21,6 +21,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Robust.Shared.Utility.Markup;
 
 namespace Content.Client.Chat.Managers
 {
@@ -231,7 +232,9 @@ namespace Content.Client.Chat.Managers
             ChatPermissionsUpdated?.Invoke(new ChatPermissionsUpdatedEventArgs {OldSelectableChannels = oldSelectable});
         }
 
-        public bool IsGhost => _playerManager.LocalPlayer?.ControlledEntity?.HasComponent<GhostComponent>() ?? false;
+        public bool IsGhost => _playerManager.LocalPlayer?.ControlledEntity is {} uid &&
+                               uid.IsValid() &&
+                               _entityManager.HasComponent<GhostComponent>(uid);
 
         public void FrameUpdate(FrameEventArgs delta)
         {
@@ -241,11 +244,11 @@ namespace Content.Client.Chat.Managers
                 return;
             }
 
-            foreach (var (entityUid, queueData) in _queuedSpeechBubbles.ShallowClone())
+            foreach (var (entity, queueData) in _queuedSpeechBubbles.ShallowClone())
             {
-                if (!_entityManager.TryGetEntity(entityUid, out var entity))
+                if (!_entityManager.EntityExists(entity))
                 {
-                    _queuedSpeechBubbles.Remove(entityUid);
+                    _queuedSpeechBubbles.Remove(entity);
                     continue;
                 }
 
@@ -257,7 +260,7 @@ namespace Content.Client.Chat.Managers
 
                 if (queueData.MessageQueue.Count == 0)
                 {
-                    _queuedSpeechBubbles.Remove(entityUid);
+                    _queuedSpeechBubbles.Remove(entity);
                     continue;
                 }
 
@@ -412,17 +415,17 @@ namespace Content.Client.Chat.Managers
 
         private void AddSpeechBubble(MsgChatMessage msg, SpeechBubble.SpeechType speechType)
         {
-            if (!_entityManager.TryGetEntity(msg.SenderEntity, out var entity))
+            if (!_entityManager.EntityExists(msg.SenderEntity))
             {
                 Logger.WarningS("chat", "Got local chat message with invalid sender entity: {0}", msg.SenderEntity);
                 return;
             }
 
-            var messages = SplitMessage(FormattedMessage.RemoveMarkup(msg.Message));
+            var messages = SplitMessage(Basic.RenderMarkup(msg.Message).ToString());
 
             foreach (var message in messages)
             {
-                EnqueueSpeechBubble(entity, message, speechType);
+                EnqueueSpeechBubble(msg.SenderEntity, message, speechType);
             }
         }
 
@@ -472,16 +475,16 @@ namespace Content.Client.Chat.Managers
             return messages;
         }
 
-        private void EnqueueSpeechBubble(IEntity entity, string contents, SpeechBubble.SpeechType speechType)
+        private void EnqueueSpeechBubble(EntityUid entity, string contents, SpeechBubble.SpeechType speechType)
         {
             // Don't enqueue speech bubbles for other maps. TODO: Support multiple viewports/maps?
-            if (entity.Transform.MapID != _eyeManager.CurrentMap)
+            if (_entityManager.GetComponent<TransformComponent>(entity).MapID != _eyeManager.CurrentMap)
                 return;
 
-            if (!_queuedSpeechBubbles.TryGetValue(entity.Uid, out var queueData))
+            if (!_queuedSpeechBubbles.TryGetValue(entity, out var queueData))
             {
                 queueData = new SpeechBubbleQueueData();
-                _queuedSpeechBubbles.Add(entity.Uid, queueData);
+                _queuedSpeechBubbles.Add(entity, queueData);
             }
 
             queueData.MessageQueue.Enqueue(new SpeechBubbleData
@@ -491,12 +494,12 @@ namespace Content.Client.Chat.Managers
             });
         }
 
-        private void CreateSpeechBubble(IEntity entity, SpeechBubbleData speechData)
+        private void CreateSpeechBubble(EntityUid entity, SpeechBubbleData speechData)
         {
             var bubble =
-                SpeechBubble.CreateSpeechBubble(speechData.Type, speechData.Message, entity, _eyeManager, this);
+                SpeechBubble.CreateSpeechBubble(speechData.Type, speechData.Message, entity, _eyeManager, this, _entityManager);
 
-            if (_activeSpeechBubbles.TryGetValue(entity.Uid, out var existing))
+            if (_activeSpeechBubbles.TryGetValue(entity, out var existing))
             {
                 // Push up existing bubbles above the mob's head.
                 foreach (var existingBubble in existing)
@@ -507,7 +510,7 @@ namespace Content.Client.Chat.Managers
             else
             {
                 existing = new List<SpeechBubble>();
-                _activeSpeechBubbles.Add(entity.Uid, existing);
+                _activeSpeechBubbles.Add(entity, existing);
             }
 
             existing.Add(bubble);

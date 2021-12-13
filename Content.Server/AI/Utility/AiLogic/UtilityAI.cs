@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using Content.Server.AI.Components;
+using Content.Server.AI.EntitySystems;
 using Content.Server.AI.LoadBalancer;
 using Content.Server.AI.Operators;
 using Content.Server.AI.Utility.Actions;
@@ -59,33 +60,13 @@ namespace Content.Server.AI.Utility.AiLogic
 
         private CancellationTokenSource? _actionCancellation;
 
-        /// <summary>
-        ///     If we can't do anything then stop thinking; should probably use ActionBlocker instead
-        /// </summary>
-        private bool _isDead;
-
-        /*public void AfterDeserialization()
-        {
-            if (BehaviorSets.Count > 0)
-            {
-                var behaviorManager = IoCManager.Resolve<INpcBehaviorManager>();
-
-                foreach (var bSet in BehaviorSets)
-                {
-                    behaviorManager.AddBehaviorSet(this, bSet, false);
-                }
-
-                behaviorManager.RebuildActions(this);
-            }
-        }*/
-
         protected override void Initialize()
         {
             if (BehaviorSets.Count > 0)
             {
                 var behaviorManager = IoCManager.Resolve<INpcBehaviorManager>();
                 behaviorManager.RebuildActions(this);
-                Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new SleepAiMessage(this, false));
+                EntitySystem.Get<NPCSystem>().WakeNPC(this);
             }
 
             base.Initialize();
@@ -101,27 +82,6 @@ namespace Content.Server.AI.Utility.AiLogic
             currentOp?.Shutdown(Outcome.Failed);
             CurrentAction?.Shutdown();
             CurrentAction = null;
-        }
-
-        public void MobStateChanged(MobStateChangedMessage message)
-        {
-            var oldDeadState = _isDead;
-            _isDead = message.Component.IsIncapacitated();
-
-            if (oldDeadState != _isDead)
-            {
-                var entityManager = IoCManager.Resolve<IEntityManager>();
-
-                switch (_isDead)
-                {
-                    case true:
-                        entityManager.EventBus.RaiseEvent(EventSource.Local, new SleepAiMessage(this, true));
-                        break;
-                    case false:
-                        entityManager.EventBus.RaiseEvent(EventSource.Local, new SleepAiMessage(this, false));
-                        break;
-                }
-            }
         }
 
         private void ReceivedAction()
@@ -185,7 +145,7 @@ namespace Content.Server.AI.Utility.AiLogic
             {
                 _planCooldownRemaining = PlanCooldown;
                 _actionCancellation = new CancellationTokenSource();
-                _actionRequest = _planner.RequestAction(new AiActionRequest(Owner.Uid, _blackboard, AvailableActions), _actionCancellation);
+                _actionRequest = _planner.RequestAction(new AiActionRequest(Owner, _blackboard, AvailableActions), _actionCancellation);
 
                 return;
             }

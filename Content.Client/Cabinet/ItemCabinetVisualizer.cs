@@ -2,6 +2,7 @@ using Content.Shared.Cabinet;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.Cabinet
@@ -19,7 +20,8 @@ namespace Content.Client.Cabinet
         {
             base.OnChangeData(component);
 
-            if (component.Owner.TryGetComponent<SpriteComponent>(out var sprite)
+            var entities = IoCManager.Resolve<IEntityManager>();
+            if (entities.TryGetComponent(component.Owner, out SpriteComponent sprite)
                 && component.TryGetData(ItemCabinetVisuals.IsOpen, out bool isOpen)
                 && component.TryGetData(ItemCabinetVisuals.ContainsItem, out bool contains))
             {

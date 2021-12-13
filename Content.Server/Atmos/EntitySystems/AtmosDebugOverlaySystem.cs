@@ -7,10 +7,10 @@ using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -131,20 +131,22 @@ namespace Content.Server.Atmos.EntitySystems
             // Afterwards we reset all the chunk data for the next time we tick.
             foreach (var session in _playerObservers)
             {
-                if (session.AttachedEntity == null) continue;
+                if (session.AttachedEntity is not {Valid: true} entity)
+                    continue;
 
-                var entity = session.AttachedEntity;
+                var transform = EntityManager.GetComponent<TransformComponent>(entity);
 
-                var worldBounds = Box2.CenteredAround(entity.Transform.WorldPosition,
+                var worldBounds = Box2.CenteredAround(transform.WorldPosition,
                     new Vector2(LocalViewRange, LocalViewRange));
 
-                foreach (var grid in _mapManager.FindGridsIntersecting(entity.Transform.MapID, worldBounds))
+                foreach (var grid in _mapManager.FindGridsIntersecting(transform.MapID, worldBounds))
                 {
-                    if (!EntityManager.TryGetEntity(grid.GridEntityId, out var gridEnt)) continue;
+                    if (!EntityManager.EntityExists(grid.GridEntityId))
+                        continue;
 
-                    if (!gridEnt.TryGetComponent<GridAtmosphereComponent>(out var gam)) continue;
+                    if (!EntityManager.TryGetComponent<GridAtmosphereComponent?>(grid.GridEntityId, out var gam)) continue;
 
-                    var entityTile = grid.GetTileRef(entity.Transform.Coordinates).GridIndices;
+                    var entityTile = grid.GetTileRef(transform.Coordinates).GridIndices;
                     var baseTile = new Vector2i(entityTile.X - (LocalViewRange / 2), entityTile.Y - (LocalViewRange / 2));
                     var debugOverlayContent = new AtmosDebugOverlayData[LocalViewRange * LocalViewRange];
 

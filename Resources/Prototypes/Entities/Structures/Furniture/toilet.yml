@@ -17,12 +17,6 @@
     solutions:
       toilet:
         maxVol: 250
-  - type: Physics
-  - type: Fixtures
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb {}
-      layer: [ Passable ]
   - type: Construction
     graph: toilet
     node: toilet

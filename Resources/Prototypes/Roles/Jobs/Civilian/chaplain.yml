@@ -7,8 +7,9 @@
   icon: "Chaplain"
   supervisors: "the head of personnel"
   access:
-#  - Chapel
+  - Chapel
   - Maintenance
+
 - type: startingGear
   id: ChaplainGear
   equipment:

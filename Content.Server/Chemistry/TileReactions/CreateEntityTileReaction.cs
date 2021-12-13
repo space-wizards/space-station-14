@@ -51,7 +51,7 @@ public class CreateEntityTileReaction : ITileReaction
                 int acc = 0;
                 foreach (var ent in tile.GetEntitiesInTile())
                 {
-                    if (Whitelist.IsValid(ent.Uid))
+                    if (Whitelist.IsValid(ent))
                         acc += 1;
 
                     if (acc >= MaxOnTile)

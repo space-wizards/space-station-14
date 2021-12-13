@@ -4,11 +4,11 @@ using System.Linq;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Client.StationEvents
 {
@@ -86,14 +86,14 @@ namespace Content.Client.StationEvents
             {
                 var pulseEntity = pulse.Owner;
 
-                if (!_pulses.Keys.Contains(pulseEntity.Uid) && PulseQualifies(pulseEntity, currentEyeLoc))
+                if (!_pulses.Keys.Contains(pulseEntity) && PulseQualifies(pulseEntity, currentEyeLoc))
                 {
                     _pulses.Add(
-                            pulseEntity.Uid,
+                            pulseEntity,
                             (
                                 _baseShader.Duplicate(),
                                 new RadiationShaderInstance(
-                                    pulseEntity.Transform.MapPosition.Position,
+                                    _entityManager.GetComponent<TransformComponent>(pulseEntity).MapPosition.Position,
                                     pulse.Range,
                                     pulse.StartTime,
                                     pulse.EndTime
@@ -104,26 +104,26 @@ namespace Content.Client.StationEvents
             }
 
             var activeShaderIds = _pulses.Keys;
-            foreach (var activePulseUid in activeShaderIds) //Remove all pulses that are added and no longer qualify
+            foreach (var pulseEntity in activeShaderIds) //Remove all pulses that are added and no longer qualify
             {
-                if (_entityManager.TryGetEntity(activePulseUid, out var pulseEntity) &&
+                if (_entityManager.EntityExists(pulseEntity) &&
                     PulseQualifies(pulseEntity, currentEyeLoc) &&
-                    pulseEntity.TryGetComponent<RadiationPulseComponent>(out var pulse))
+                    _entityManager.TryGetComponent<RadiationPulseComponent?>(pulseEntity, out var pulse))
                 {
-                    var shaderInstance = _pulses[activePulseUid];
-                    shaderInstance.instance.CurrentMapCoords = pulseEntity.Transform.MapPosition.Position;
+                    var shaderInstance = _pulses[pulseEntity];
+                    shaderInstance.instance.CurrentMapCoords = _entityManager.GetComponent<TransformComponent>(pulseEntity).MapPosition.Position;
                     shaderInstance.instance.Range = pulse.Range;
                 } else {
-                    _pulses[activePulseUid].shd.Dispose();
-                    _pulses.Remove(activePulseUid);
+                    _pulses[pulseEntity].shd.Dispose();
+                    _pulses.Remove(pulseEntity);
                 }
             }
 
         }
 
-        private bool PulseQualifies(IEntity pulseEntity, MapCoordinates currentEyeLoc)
+        private bool PulseQualifies(EntityUid pulseEntity, MapCoordinates currentEyeLoc)
         {
-            return pulseEntity.Transform.MapID == currentEyeLoc.MapId && pulseEntity.Transform.Coordinates.InRange(_entityManager, EntityCoordinates.FromMap(_entityManager, pulseEntity.Transform.ParentUid, currentEyeLoc), MaxDist);
+            return _entityManager.GetComponent<TransformComponent>(pulseEntity).MapID == currentEyeLoc.MapId && _entityManager.GetComponent<TransformComponent>(pulseEntity).Coordinates.InRange(_entityManager, EntityCoordinates.FromMap(_entityManager, _entityManager.GetComponent<TransformComponent>(pulseEntity).ParentUid, currentEyeLoc), MaxDist);
         }
 
         private sealed record RadiationShaderInstance(Vector2 CurrentMapCoords, float Range, TimeSpan Start, TimeSpan End)

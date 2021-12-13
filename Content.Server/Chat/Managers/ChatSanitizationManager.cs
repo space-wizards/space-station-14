@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
@@ -69,7 +68,7 @@ public class ChatSanitizationManager : IChatSanitizationManager
         _configurationManager.OnValueChanged(CCVars.ChatSanitizerEnabled, x => doSanitize = x, true);
     }
 
-    public bool TrySanitizeOutSmilies(string input, IEntity speaker, out string sanitized, [NotNullWhen(true)] out string? emote)
+    public bool TrySanitizeOutSmilies(string input, EntityUid speaker, out string sanitized, [NotNullWhen(true)] out string? emote)
     {
         if (!doSanitize)
         {

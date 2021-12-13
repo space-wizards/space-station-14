@@ -17,12 +17,12 @@ namespace Content.Shared.Interaction
 
     public class DroppedEventArgs : EventArgs
     {
-        public DroppedEventArgs(IEntity user)
+        public DroppedEventArgs(EntityUid user)
         {
             User = user;
         }
 
-        public IEntity User { get; }
+        public EntityUid User { get; }
     }
 
     /// <summary>

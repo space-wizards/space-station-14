@@ -46,7 +46,7 @@ public enum LogType
     HitScanHit = 42,
     Suicide = 43,
     Explosion = 44,
-    Radiation = 45,
+    Radiation = 45, // Unused
     Barotrauma = 46,
     Flammable = 47,
     Asphyxiation = 48,
@@ -55,4 +55,9 @@ public enum LogType
     Thirst = 51,
     Electrocution = 52,
     CrayonDraw = 39,
+    AtmosPressureChanged = 54,
+    AtmosPowerChanged = 55,
+    AtmosVolumeChanged = 56,
+    AtmosFilterChanged = 57,
+    AtmosRatioChanged = 58,
 }
