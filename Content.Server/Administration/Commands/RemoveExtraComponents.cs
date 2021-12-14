@@ -32,19 +32,20 @@ namespace Content.Server.Administration.Commands
 
             foreach (var entity in entityManager.GetEntities())
             {
-                if (checkPrototype && entity.Prototype != prototype || entity.Prototype == null)
+                var metaData = entityManager.GetComponent<MetaDataComponent>(entity);
+                if (checkPrototype && metaData.EntityPrototype != prototype || metaData.EntityPrototype == null)
                 {
                     continue;
                 }
 
                 var modified = false;
 
-                foreach (var component in entity.GetAllComponents())
+                foreach (var component in entityManager.GetComponents(entity))
                 {
-                    if (entity.Prototype.Components.ContainsKey(component.Name))
+                    if (metaData.EntityPrototype.Components.ContainsKey(component.Name))
                         continue;
 
-                    entityManager.RemoveComponent(entity.Uid, component);
+                    entityManager.RemoveComponent(entity, component);
                     components++;
 
                     modified = true;

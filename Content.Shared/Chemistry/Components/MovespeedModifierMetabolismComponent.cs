@@ -31,7 +31,7 @@ namespace Content.Shared.Chemistry.Components
         [ViewVariables]
         public TimeSpan ModifierTimer { get; set; } = TimeSpan.Zero;
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new MovespeedModifierMetabolismComponentState(WalkSpeedModifier, SprintSpeedModifier, ModifierTimer);
         }

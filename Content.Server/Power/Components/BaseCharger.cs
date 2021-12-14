@@ -6,9 +6,9 @@ using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Power;
-using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -19,6 +19,8 @@ namespace Content.Server.Power.Components
     [ComponentReference(typeof(IInteractUsing))]
     public abstract class BaseCharger : Component, IActivate, IInteractUsing
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         [ViewVariables]
         private BatteryComponent? _heldBattery;
 
@@ -88,22 +90,21 @@ namespace Content.Server.Power.Components
         /// This will remove the item directly into the user's hand / floor
         /// </summary>
         /// <param name="user"></param>
-        public void RemoveItem(IEntity user)
+        public void RemoveItem(EntityUid user)
         {
-            var heldItem = Container.ContainedEntity;
-            if (heldItem == null)
+            if (Container.ContainedEntity is not {Valid: true} heldItem)
             {
                 return;
             }
 
             Container.Remove(heldItem);
             _heldBattery = null;
-            if (user.TryGetComponent(out HandsComponent? handsComponent))
+            if (_entMan.TryGetComponent(user, out HandsComponent? handsComponent))
             {
-                handsComponent.PutInHandOrDrop(heldItem.GetComponent<ItemComponent>());
+                handsComponent.PutInHandOrDrop(_entMan.GetComponent<ItemComponent>(heldItem));
             }
 
-            if (heldItem.TryGetComponent(out ServerBatteryBarrelComponent? batteryBarrelComponent))
+            if (_entMan.TryGetComponent(heldItem, out ServerBatteryBarrelComponent? batteryBarrelComponent))
             {
                 batteryBarrelComponent.UpdateAppearance();
             }
@@ -118,7 +119,7 @@ namespace Content.Server.Power.Components
 
         private CellChargerStatus GetStatus()
         {
-            if (Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) &&
+            if (_entMan.TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver) &&
                 !receiver.Powered)
             {
                 return CellChargerStatus.Off;
@@ -134,7 +135,7 @@ namespace Content.Server.Power.Components
             return CellChargerStatus.Charging;
         }
 
-        public bool TryInsertItem(IEntity entity)
+        public bool TryInsertItem(EntityUid entity)
         {
             if (!IsEntityCompatible(entity) || HasCell)
             {
@@ -152,22 +153,22 @@ namespace Content.Server.Power.Components
         /// <summary>
         ///     If the supplied entity should fit into the charger.
         /// </summary>
-        public abstract bool IsEntityCompatible(IEntity entity);
+        public abstract bool IsEntityCompatible(EntityUid entity);
 
-        protected abstract BatteryComponent? GetBatteryFrom(IEntity entity);
+        protected abstract BatteryComponent? GetBatteryFrom(EntityUid entity);
 
         private void UpdateStatus()
         {
             // Not called UpdateAppearance just because it messes with the load
             var status = GetStatus();
             if (_status == status ||
-                !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver))
+                !_entMan.TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver))
             {
                 return;
             }
 
             _status = status;
-            Owner.TryGetComponent(out AppearanceComponent? appearance);
+            _entMan.TryGetComponent(Owner, out AppearanceComponent? appearance);
 
             switch (_status)
             {
@@ -206,7 +207,7 @@ namespace Content.Server.Power.Components
 
         private void TransferPower(float frameTime)
         {
-            if (Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) &&
+            if (_entMan.TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver) &&
                 !receiver.Powered)
             {
                 return;

@@ -1,3 +1,4 @@
+using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.Temperature.Components;
@@ -18,6 +19,7 @@ namespace Content.Server.Atmos.EntitySystems
     public partial class AtmosphereSystem : SharedAtmosphereSystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly AdminLogSystem _adminLog = default!;
 
         private const float ExposedUpdateDelay = 1f;
         private float _exposedTimer = 0f;
@@ -73,10 +75,10 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 foreach (var exposed in EntityManager.EntityQuery<AtmosExposedComponent>())
                 {
-                    var tile = GetTileMixture(exposed.Owner.Transform.Coordinates);
+                    var tile = GetTileMixture(EntityManager.GetComponent<TransformComponent>(exposed.Owner).Coordinates);
                     if (tile == null) continue;
-                    var updateEvent = new AtmosExposedUpdateEvent(exposed.Owner.Transform.Coordinates, tile);
-                    RaiseLocalEvent(exposed.Owner.Uid, ref updateEvent);
+                    var updateEvent = new AtmosExposedUpdateEvent(EntityManager.GetComponent<TransformComponent>(exposed.Owner).Coordinates, tile);
+                    RaiseLocalEvent(exposed.Owner, ref updateEvent);
                 }
 
                 _exposedTimer -= ExposedUpdateDelay;

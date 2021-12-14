@@ -1,24 +1,11 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Content.Server.Body.Behavior;
-using Content.Server.Body.Components;
-using Content.Server.Body.Systems;
+using System.Threading;
 using Content.Server.Chemistry.EntitySystems;
-using Content.Server.Hands.Components;
-using Content.Server.Items;
-using Content.Shared.Body.Components;
-using Content.Shared.Chemistry.Reagent;
+using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.FixedPoint;
-using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
-using Content.Shared.Popups;
 using Content.Shared.Sound;
-using Robust.Shared.Audio;
+using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -26,9 +13,8 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Nutrition.Components
 {
-    [RegisterComponent]
-    [ComponentReference(typeof(IAfterInteract))]
-    public class FoodComponent : Component, IUse, IAfterInteract
+    [RegisterComponent, Friend(typeof(FoodSystem))]
+    public class FoodComponent : Component
     {
         public override string Name => "Food";
 
@@ -37,28 +23,50 @@ namespace Content.Server.Nutrition.Components
 
         [ViewVariables]
         [DataField("useSound")]
-        private SoundSpecifier UseSound { get; set; } = new SoundPathSpecifier("/Audio/Items/eatfood.ogg");
+        public SoundSpecifier UseSound { get; set; } = new SoundPathSpecifier("/Audio/Items/eatfood.ogg");
 
         [ViewVariables]
         [DataField("trash", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        private string? TrashPrototype { get; set; }
+        public string? TrashPrototype { get; set; }
 
         [ViewVariables]
         [DataField("transferAmount")]
-        private FixedPoint2? TransferAmount { get; set; } = FixedPoint2.New(5);
+        public FixedPoint2? TransferAmount { get; set; } = FixedPoint2.New(5);
 
-        [DataField("utensilsNeeded")]
-        private UtensilType _utensilsNeeded = UtensilType.None;
+        /// <summary>
+        /// Acceptable utensil to use
+        /// </summary>
+        [DataField("utensil")]
+        public UtensilType Utensil = UtensilType.Fork; //There are more "solid" than "liquid" food
+
+        /// <summary>
+        /// Is utensil required to eat this food
+        /// </summary>
+        [DataField("utensilRequired")]
+        public bool UtensilRequired = false;
 
         [DataField("eatMessage")]
-        private string _eatMessage = "food-nom";
+        public string EatMessage = "food-nom";
+
+        /// <summary>
+        ///     This is how many seconds it takes to force feed someone this food.
+        ///     Should probably be smaller for small items like pills.
+        /// </summary>
+        [DataField("forceFeedDelay")]
+        public float ForceFeedDelay = 3;
+
+        /// <summary>
+        ///     Token for interrupting a do-after action (e.g., force feeding). If not null, implies component is
+        ///     currently "in use".
+        /// </summary>
+        public CancellationTokenSource? CancelToken;
 
         [ViewVariables]
         public int UsesRemaining
         {
             get
             {
-                if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution))
+                if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
                 {
                     return 0;
                 }
@@ -69,169 +77,6 @@ namespace Content.Server.Nutrition.Components
                 return solution.CurrentVolume == 0
                     ? 0
                     : Math.Max(1, (int) Math.Ceiling((solution.CurrentVolume / (FixedPoint2)TransferAmount).Float()));
-            }
-        }
-
-        protected override void Initialize()
-        {
-            base.Initialize();
-            // Owner.EnsureComponentWarn<SolutionContainerManager>();
-        }
-
-        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
-        {
-            if (_utensilsNeeded != UtensilType.None)
-            {
-                eventArgs.User.PopupMessage(Loc.GetString("food-you-need-utensil", ("utensil", _utensilsNeeded)));
-                return false;
-            }
-
-            return TryUseFood(eventArgs.User, null);
-        }
-
-        // Feeding someone else
-        async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
-        {
-            if (eventArgs.Target == null)
-            {
-                return false;
-            }
-
-            TryUseFood(eventArgs.User, eventArgs.Target);
-            return true;
-        }
-
-        public bool TryUseFood(IEntity? user, IEntity? target, UtensilComponent? utensilUsed = null)
-        {
-            var solutionContainerSys = EntitySystem.Get<SolutionContainerSystem>();
-            var bodySys = EntitySystem.Get<BodySystem>();
-            var stomachSys = EntitySystem.Get<StomachSystem>();
-
-            if (!solutionContainerSys.TryGetSolution(Owner.Uid, SolutionName, out var solution))
-            {
-                return false;
-            }
-
-            if (user == null)
-            {
-                return false;
-            }
-
-            if (UsesRemaining <= 0)
-            {
-                user.PopupMessage(Loc.GetString("food-component-try-use-food-is-empty", ("entity", Owner)));
-                DeleteAndSpawnTrash(user);
-                return false;
-            }
-
-            var trueTarget = target ?? user;
-
-            if (!trueTarget.TryGetComponent(out SharedBodyComponent? body) ||
-                !bodySys.TryGetComponentsOnMechanisms<StomachComponent>(body.OwnerUid, out var stomachs, body))
-            {
-                return false;
-            }
-
-            var utensils = utensilUsed != null
-                ? new List<UtensilComponent> { utensilUsed }
-                : null;
-
-            if (_utensilsNeeded != UtensilType.None)
-            {
-                utensils = new List<UtensilComponent>();
-                var types = UtensilType.None;
-
-                if (user.TryGetComponent(out HandsComponent? hands))
-                {
-                    foreach (var item in hands.GetAllHeldItems())
-                    {
-                        if (!item.Owner.TryGetComponent(out UtensilComponent? utensil))
-                        {
-                            continue;
-                        }
-
-                        utensils.Add(utensil);
-                        types |= utensil.Types;
-                    }
-                }
-
-                if (!types.HasFlag(_utensilsNeeded))
-                {
-                    trueTarget.PopupMessage(user,
-                        Loc.GetString("food-you-need-to-hold-utensil", ("utensil", _utensilsNeeded)));
-                    return false;
-                }
-            }
-
-            if (!user.InRangeUnobstructed(trueTarget, popup: true))
-            {
-                return false;
-            }
-
-            var transferAmount = TransferAmount != null ?  FixedPoint2.Min((FixedPoint2)TransferAmount, solution.CurrentVolume) : solution.CurrentVolume;
-            var split = solutionContainerSys.SplitSolution(Owner.Uid, solution, transferAmount);
-            var firstStomach = stomachs.FirstOrDefault(stomach => stomachSys.CanTransferSolution(stomach.OwnerUid, split));
-
-            if (firstStomach == null)
-            {
-                solutionContainerSys.TryAddSolution(Owner.Uid, solution, split);
-                trueTarget.PopupMessage(user, Loc.GetString("food-you-cannot-eat-any-more"));
-                return false;
-            }
-
-            // TODO: Account for partial transfer.
-            split.DoEntityReaction(trueTarget.Uid, ReactionMethod.Ingestion);
-            stomachSys.TryTransferSolution(firstStomach.OwnerUid, split, firstStomach);
-            SoundSystem.Play(Filter.Pvs(trueTarget), UseSound.GetSound(), trueTarget, AudioParams.Default.WithVolume(-1f));
-            trueTarget.PopupMessage(user, Loc.GetString(_eatMessage, ("food", Owner)));
-
-            // If utensils were used
-            if (utensils != null)
-            {
-                foreach (var utensil in utensils)
-                {
-                    utensil.TryBreak(user);
-                }
-            }
-
-            if (UsesRemaining > 0)
-            {
-                return true;
-            }
-
-            if (string.IsNullOrEmpty(TrashPrototype))
-            {
-                Owner.QueueDelete();
-                return true;
-            }
-
-            DeleteAndSpawnTrash(user);
-
-            return true;
-        }
-
-        private void DeleteAndSpawnTrash(IEntity user)
-        {
-            //We're empty. Become trash.
-            var position = Owner.Transform.Coordinates;
-            var finisher = Owner.EntityManager.SpawnEntity(TrashPrototype, position);
-
-            // If the user is holding the item
-            if (user.TryGetComponent(out HandsComponent? handsComponent) &&
-                handsComponent.IsHolding(Owner))
-            {
-                Owner.Delete();
-
-                // Put the trash in the user's hand
-                if (finisher.TryGetComponent(out ItemComponent? item) &&
-                    handsComponent.CanPutInHand(item))
-                {
-                    handsComponent.PutInHand(item);
-                }
-            }
-            else
-            {
-                Owner.Delete();
             }
         }
     }

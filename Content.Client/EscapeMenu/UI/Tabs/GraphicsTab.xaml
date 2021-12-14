@@ -35,6 +35,7 @@
                       Text="{Loc 'ui-options-vp-integer-scaling'}"
                       ToolTip="{Loc 'ui-options-vp-integer-scaling-tooltip'}" />
             <CheckBox Name="ViewportLowResCheckBox" Text="{Loc 'ui-options-vp-low-res'}" />
+            <CheckBox Name="FpsCounterCheckBox" Text="{Loc 'ui-options-fps-counter'}" />
         </BoxContainer>
         <hudUi:StripeBack HasBottomEdge="False" HasMargins="False">
             <Button Name="ApplyButton"

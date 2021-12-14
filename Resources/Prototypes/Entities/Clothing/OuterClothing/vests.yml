@@ -8,6 +8,13 @@
     sprite: Clothing/OuterClothing/Vests/mercwebvest.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Vests/mercwebvest.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.7 #slightly better overall protection but slightly worse than kevlar against bullets seems sensible
+        Slash: 0.7
+        Piercing: 0.5
+        Heat: 0.9
 
 - type: entity
   parent: ClothingOuterBase
@@ -19,6 +26,13 @@
     sprite: Clothing/OuterClothing/Vests/webvest.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Vests/webvest.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.6 #ballistic plates = better protection
+        Slash: 0.6
+        Piercing: 0.3
+        Heat: 0.9
 
 - type: entity
   parent: ClothingOuterBase
@@ -52,7 +66,7 @@
 - type: entity
   parent: ClothingOuterBase
   id: ClothingOuterVestHazard
-  name: hazard
+  name: hi-viz vest
   description: A high-visibility vest used in work zones.
   components:
   - type: Sprite

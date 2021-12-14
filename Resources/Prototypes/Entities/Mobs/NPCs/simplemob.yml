@@ -5,15 +5,10 @@
   suffix: AI
   components:
   - type: Reactive
-    reactions:
-    - reagents: [Water]
-      methods: [Touch]
-      effects:
-      - !type:ExtinguishReaction
-    - reagents: [WeldingFuel, Thermite, Plasma, Ethanol]
-      methods: [Touch]
-      effects:
-      - !type:FlammableReaction
+    groups:
+      Flammable: [Touch]
+      Extinguish: [Touch]
+      Acidic: [Touch, Ingestion]
   - type: UtilityAI
     behaviorSets:
     # - Clothing
@@ -41,6 +36,7 @@
   - type: InteractionOutline
   - type: Physics
     bodyType: KinematicController # Same for all inheritors
+  - type: Fixtures
     fixtures:
     - shape:
         # Circles, cuz rotation of rectangles looks very bad
@@ -65,13 +61,12 @@
     canResistFire: true
     damage:
       types:
-        Heat : 1
+        Heat: 1 #per second, scales with number of fire 'stacks'
   - type: Temperature
     heatDamageThreshold: 360
     coldDamageThreshold: 260
     currentTemperature: 310.15
     specificHeat: 42
-    tempDamageCoefficient: 0.1
     heatDamage:
       types:
         Heat : 1 #per second, scales with temperature & other constants
@@ -147,14 +142,15 @@
     damage:
       types:
         Blunt: 1 #per second, scales with pressure and other constants.
-  - type: Respirator
-    metabolismHeat: 5000
-    radiatedHeat: 400
-    implicitHeatRegulation: 5000
-    sweatHeatRegulation: 5000
-    shiveringHeatRegulation: 5000
+  - type: ThermalRegulator
+    metabolismHeat: 800
+    radiatedHeat: 100
+    implicitHeatRegulation: 250
+    sweatHeatRegulation: 500
+    shiveringHeatRegulation: 500
     normalBodyTemperature: 310.15
     thermalRegulationTemperatureThreshold: 25
+  - type: Respirator
     needsGases:
       Oxygen: 0.00060763888
     producesGases:
@@ -171,7 +167,6 @@
     coldDamageThreshold: 260
     currentTemperature: 310.15
     specificHeat: 42
-    tempDamageCoefficient: 0.1
     coldDamage:
       types:
         Cold : 1 #per second, scales with temperature & other constants

@@ -119,7 +119,7 @@ namespace Content.Shared.Movement.Components
         {
             base.Initialize();
             Owner.EnsureComponentWarn<PhysicsComponent>();
-            LastGridAngle = Owner.Transform.Parent?.WorldRotation ?? new Angle(0);
+            LastGridAngle = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Parent?.WorldRotation ?? new Angle(0);
         }
 
         /// <summary>
@@ -198,7 +198,7 @@ namespace Content.Shared.Movement.Components
             }
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new MoverComponentState(_heldMoveButtons);
         }

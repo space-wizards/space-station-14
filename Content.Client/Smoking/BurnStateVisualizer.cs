@@ -2,6 +2,8 @@
 using Content.Shared.Smoking;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.Smoking
@@ -23,8 +25,6 @@ namespace Content.Client.Smoking
         [DataField("unlitPrefix")]
         private string _unlitPrefix = "unlit";
 
-
-
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
@@ -37,9 +37,10 @@ namespace Content.Client.Smoking
 
         private void SetState(AppearanceComponent component, SmokableState burnState)
         {
-            var clothing = component.Owner.GetComponentOrNull<ClothingComponent>();
+            var entities = IoCManager.Resolve<IEntityManager>();
+            var clothing = entities.GetComponentOrNull<ClothingComponent>(component.Owner);
 
-            if (component.Owner.TryGetComponent<ISpriteComponent>(out var sprite))
+            if (entities.TryGetComponent(component.Owner, out ISpriteComponent sprite))
             {
                 switch (burnState)
                 {

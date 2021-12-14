@@ -59,10 +59,7 @@ namespace Content.IntegrationTests.Tests
 
             s.Post(() =>
             {
-                IoCManager.Resolve<IPlayerManager>()
-                    .GetAllPlayers()
-                    .Single()
-                    .JoinGame();
+                IoCManager.Resolve<IPlayerManager>().ServerSessions.Single().JoinGame();
 
                 var mapMan = IoCManager.Resolve<IMapManager>();
 
@@ -77,25 +74,27 @@ namespace Content.IntegrationTests.Tests
         {
             var (c, s) = await Start();
 
-            EntityUid dummyUid = default;
+            await c.WaitIdleAsync();
+
+            var cEntities = c.ResolveDependency<IEntityManager>();
+
+            EntityUid dummy = default;
             s.Post(() =>
             {
                 var pos = new MapCoordinates(Vector2.Zero, new MapId(1));
                 var ent = IoCManager.Resolve<IEntityManager>();
                 var container = ent.SpawnEntity("ContainerOcclusionA", pos);
-                var dummy = ent.SpawnEntity("ContainerOcclusionDummy", pos);
-                dummyUid = dummy.Uid;
+                dummy = ent.SpawnEntity("ContainerOcclusionDummy", pos);
 
-                container.GetComponent<EntityStorageComponent>().Insert(dummy);
+                ent.GetComponent<EntityStorageComponent>(container).Insert(dummy);
             });
 
             await RunTicksSync(c, s, 5);
 
             c.Assert(() =>
             {
-                var dummy = IoCManager.Resolve<IEntityManager>().GetEntity(dummyUid);
-                var sprite = dummy.GetComponent<SpriteComponent>();
-                var light = dummy.GetComponent<PointLightComponent>();
+                var sprite = cEntities.GetComponent<SpriteComponent>(dummy);
+                var light = cEntities.GetComponent<PointLightComponent>(dummy);
                 Assert.True(sprite.ContainerOccluded);
                 Assert.True(light.ContainerOccluded);
             });
@@ -108,25 +107,27 @@ namespace Content.IntegrationTests.Tests
         {
             var (c, s) = await Start();
 
-            EntityUid dummyUid = default;
+            await c.WaitIdleAsync();
+
+            var cEntities = c.ResolveDependency<IEntityManager>();
+
+            EntityUid dummy = default;
             s.Post(() =>
             {
                 var pos = new MapCoordinates(Vector2.Zero, new MapId(1));
                 var ent = IoCManager.Resolve<IEntityManager>();
                 var container = ent.SpawnEntity("ContainerOcclusionB", pos);
-                var dummy = ent.SpawnEntity("ContainerOcclusionDummy", pos);
-                dummyUid = dummy.Uid;
+                dummy = ent.SpawnEntity("ContainerOcclusionDummy", pos);
 
-                container.GetComponent<EntityStorageComponent>().Insert(dummy);
+                ent.GetComponent<EntityStorageComponent>(container).Insert(dummy);
             });
 
             await RunTicksSync(c, s, 5);
 
             c.Assert(() =>
             {
-                var dummy = IoCManager.Resolve<IEntityManager>().GetEntity(dummyUid);
-                var sprite = dummy.GetComponent<SpriteComponent>();
-                var light = dummy.GetComponent<PointLightComponent>();
+                var sprite = cEntities.GetComponent<SpriteComponent>(dummy);
+                var light = cEntities.GetComponent<PointLightComponent>(dummy);
                 Assert.False(sprite.ContainerOccluded);
                 Assert.False(light.ContainerOccluded);
             });
@@ -139,27 +140,29 @@ namespace Content.IntegrationTests.Tests
         {
             var (c, s) = await Start();
 
-            EntityUid dummyUid = default;
+            await c.WaitIdleAsync();
+
+            var cEntities = c.ResolveDependency<IEntityManager>();
+
+            EntityUid dummy = default;
             s.Post(() =>
             {
                 var pos = new MapCoordinates(Vector2.Zero, new MapId(1));
                 var ent = IoCManager.Resolve<IEntityManager>();
                 var containerA = ent.SpawnEntity("ContainerOcclusionA", pos);
                 var containerB = ent.SpawnEntity("ContainerOcclusionB", pos);
-                var dummy = ent.SpawnEntity("ContainerOcclusionDummy", pos);
-                dummyUid = dummy.Uid;
+                dummy = ent.SpawnEntity("ContainerOcclusionDummy", pos);
 
-                containerA.GetComponent<EntityStorageComponent>().Insert(containerB);
-                containerB.GetComponent<EntityStorageComponent>().Insert(dummy);
+                ent.GetComponent<EntityStorageComponent>(containerA).Insert(containerB);
+                ent.GetComponent<EntityStorageComponent>(containerB).Insert(dummy);
             });
 
             await RunTicksSync(c, s, 5);
 
             c.Assert(() =>
             {
-                var dummy = IoCManager.Resolve<IEntityManager>().GetEntity(dummyUid);
-                var sprite = dummy.GetComponent<SpriteComponent>();
-                var light = dummy.GetComponent<PointLightComponent>();
+                var sprite = cEntities.GetComponent<SpriteComponent>(dummy);
+                var light = cEntities.GetComponent<PointLightComponent>(dummy);
                 Assert.True(sprite.ContainerOccluded);
                 Assert.True(light.ContainerOccluded);
             });

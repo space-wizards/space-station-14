@@ -9,6 +9,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Containers;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.IoC;
 using Robust.Shared.Timing;
@@ -35,7 +36,7 @@ namespace Content.Client.Instruments.UI
             if (_owner.Instrument != null)
             {
                 _owner.Instrument.OnMidiPlaybackEnded += InstrumentOnMidiPlaybackEnded;
-                Title = _owner.Instrument.Owner.Name;
+                Title = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(_owner.Instrument.Owner).EntityName;
                 LoopButton.Disabled = !_owner.Instrument.IsMidiOpen;
                 LoopButton.Pressed = _owner.Instrument.LoopMidi;
                 StopButton.Disabled = !_owner.Instrument.IsMidiOpen;
@@ -78,6 +79,10 @@ namespace Content.Client.Instruments.UI
             var filters = new FileDialogFilters(new FileDialogFilters.Group("mid", "midi"));
             await using var file = await _fileDialogManager.OpenFile(filters);
 
+            // did the instrument menu get closed while waiting for the user to select a file?
+            if (Disposed)
+                return;
+
             // The following checks are only in place to prevent players from playing MIDI songs locally.
             // There are equivalents for these checks on the server.
 
@@ -98,7 +103,8 @@ namespace Content.Client.Instruments.UI
             // While we're waiting, load it into memory.
             await Task.WhenAll(Timer.Delay(100), file.CopyToAsync(memStream));
 
-            if (!_owner.Instrument?.OpenMidi(memStream.GetBuffer().AsSpan(0, (int) memStream.Length)) ?? true)
+            if (_owner.Instrument is not {} instrument
+                || !EntitySystem.Get<InstrumentSystem>().OpenMidi(instrument.Owner, memStream.GetBuffer().AsSpan(0, (int) memStream.Length), instrument))
                 return;
 
             MidiPlaybackSetButtonsDisabled(false);
@@ -108,16 +114,19 @@ namespace Content.Client.Instruments.UI
 
         private void MidiInputButtonOnOnToggled(ButtonToggledEventArgs obj)
         {
+            var instrumentSystem = EntitySystem.Get<InstrumentSystem>();
+
             if (obj.Pressed)
             {
                 if (!PlayCheck())
                     return;
 
                 MidiStopButtonOnPressed(null);
-                _owner.Instrument?.OpenInput();
+                if(_owner.Instrument is {} instrument)
+                    instrumentSystem.OpenInput(instrument.Owner, instrument);
             }
-            else
-                _owner.Instrument?.CloseInput();
+            else  if(_owner.Instrument is {} instrument)
+                instrumentSystem.CloseInput(instrument.Owner, false, instrument);
         }
 
         private bool PlayCheck()
@@ -130,7 +139,7 @@ namespace Content.Client.Instruments.UI
                 return false;
 
             // If we're a handheld instrument, we might be in a container. Get it just in case.
-            instrumentEnt.TryGetContainerMan(out var conMan);
+            instrumentEnt.Value.TryGetContainerMan(out var conMan);
 
             var localPlayer = IoCManager.Resolve<IPlayerManager>().LocalPlayer;
 
@@ -142,35 +151,42 @@ namespace Content.Client.Instruments.UI
                                          || conMan.Owner != localPlayer.ControlledEntity))) return false;
 
             // We check that we're in range unobstructed just in case.
-            return localPlayer.InRangeUnobstructed(instrumentEnt,
+            return localPlayer.InRangeUnobstructed(instrumentEnt.Value,
                 predicate: (e) => e == instrumentEnt || e == localPlayer.ControlledEntity);
         }
 
         private void MidiStopButtonOnPressed(ButtonEventArgs? obj)
         {
             MidiPlaybackSetButtonsDisabled(true);
-            _owner.Instrument?.CloseMidi();
+
+            if (_owner.Instrument is not { } instrument)
+                return;
+
+            EntitySystem.Get<InstrumentSystem>().CloseMidi(instrument.Owner, false, instrument);
         }
 
         private void MidiLoopButtonOnOnToggled(ButtonToggledEventArgs obj)
         {
-            if (_owner.Instrument != null)
-                _owner.Instrument.LoopMidi = obj.Pressed;
+            if (_owner.Instrument == null)
+                return;
+
+            _owner.Instrument.LoopMidi = obj.Pressed;
+            _owner.Instrument.DirtyRenderer = true;
         }
 
         private void PlaybackSliderSeek(Range _)
         {
             // Do not seek while still grabbing.
-            if (PlaybackSlider.Grabbed || _owner.Instrument == null) return;
+            if (PlaybackSlider.Grabbed || _owner.Instrument is not {} instrument) return;
 
-            _owner.Instrument.PlayerTick = (int)Math.Ceiling((double) PlaybackSlider.Value);
+            EntitySystem.Get<InstrumentSystem>().SetPlayerTick(instrument.Owner, (int)Math.Ceiling(PlaybackSlider.Value), instrument);
         }
 
         private void PlaybackSliderKeyUp(GUIBoundKeyEventArgs args)
         {
-            if (args.Function != EngineKeyFunctions.UIClick || _owner.Instrument == null) return;
+            if (args.Function != EngineKeyFunctions.UIClick || _owner.Instrument is not {} instrument) return;
 
-            _owner.Instrument.PlayerTick = (int)Math.Ceiling((double) PlaybackSlider.Value);
+            EntitySystem.Get<InstrumentSystem>().SetPlayerTick(instrument.Owner, (int)Math.Ceiling(PlaybackSlider.Value), instrument);
         }
 
         protected override void FrameUpdate(FrameEventArgs args)

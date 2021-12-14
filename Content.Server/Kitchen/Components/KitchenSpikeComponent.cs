@@ -10,9 +10,9 @@ using Content.Shared.Kitchen.Components;
 using Content.Shared.MobState.Components;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
 
@@ -22,6 +22,8 @@ namespace Content.Server.Kitchen.Components
     [ComponentReference(typeof(IActivate))]
     public class KitchenSpikeComponent : SharedKitchenSpikeComponent, IActivate, ISuicideAct
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         private int _meatParts;
         private string? _meatPrototype;
         private string _meatSource1p = "?";
@@ -40,8 +42,8 @@ namespace Content.Server.Kitchen.Components
 
             if (!string.IsNullOrEmpty(_meatPrototype))
             {
-                var meat = Owner.EntityManager.SpawnEntity(_meatPrototype, Owner.Transform.Coordinates);
-                meat.Name = _meatName;
+                var meat = _entMan.SpawnEntity(_meatPrototype, _entMan.GetComponent<TransformComponent>(Owner).Coordinates);
+                _entMan.GetComponent<MetaDataComponent>(meat).EntityName = _meatName;
             }
 
             if (_meatParts != 0)
@@ -67,13 +69,13 @@ namespace Content.Server.Kitchen.Components
 
         private void UpdateAppearance()
         {
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
             {
                 appearance.SetData(KitchenSpikeVisuals.Status, (_meatParts > 0) ? KitchenSpikeStatus.Bloody : KitchenSpikeStatus.Empty);
             }
         }
 
-        private bool Spikeable(IEntity user, IEntity victim, [NotNullWhen(true)] out SharedButcherableComponent? butcherable)
+        private bool Spikeable(EntityUid user, EntityUid victim, [NotNullWhen(true)] out SharedButcherableComponent? butcherable)
         {
             butcherable = null;
 
@@ -83,7 +85,7 @@ namespace Content.Server.Kitchen.Components
                 return false;
             }
 
-            if (!victim.TryGetComponent(out butcherable))
+            if (!_entMan.TryGetComponent(victim, out butcherable))
             {
                 Owner.PopupMessage(user, Loc.GetString("comp-kitchen-spike-deny-butcher", ("victim", victim), ("this", Owner)));
                 return false;
@@ -95,9 +97,9 @@ namespace Content.Server.Kitchen.Components
             return true;
         }
 
-        public async void TrySpike(IEntity victim, IEntity user)
+        public async void TrySpike(EntityUid victim, EntityUid user)
         {
-            var victimUid = victim.Uid;
+            var victimUid = (EntityUid) victim;
             if (_beingButchered.Contains(victimUid)) return;
 
             SharedButcherableComponent? butcherable;
@@ -106,7 +108,7 @@ namespace Content.Server.Kitchen.Components
                 return;
 
             // Prevent dead from being spiked TODO: Maybe remove when rounds can be played and DOT is implemented
-            if (victim.TryGetComponent<MobStateComponent>(out var state) &&
+            if (_entMan.TryGetComponent<MobStateComponent?>(victim, out var state) &&
                 !state.IsDead())
             {
                 Owner.PopupMessage(user, Loc.GetString("comp-kitchen-spike-deny-not-dead", ("victim", victim)));
@@ -154,12 +156,12 @@ namespace Content.Server.Kitchen.Components
 
             Owner.PopupMessageEveryone(Loc.GetString("comp-kitchen-spike-kill", ("user", user), ("victim", victim)));
             // TODO: Need to be able to leave them on the spike to do DoT, see ss13.
-            victim.Delete();
+            _entMan.DeleteEntity((EntityUid) victim);
 
             SoundSystem.Play(Filter.Pvs(Owner), SpikeSound.GetSound(), Owner);
         }
 
-        SuicideKind ISuicideAct.Suicide(IEntity victim, IChatManager chat)
+        SuicideKind ISuicideAct.Suicide(EntityUid victim, IChatManager chat)
         {
             var othersMessage = Loc.GetString("comp-kitchen-spike-suicide-other", ("victim", victim));
             victim.PopupMessageOtherClients(othersMessage);

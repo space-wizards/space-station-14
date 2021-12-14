@@ -1,7 +1,6 @@
 using Content.Server.Tabletop.Components;
 using Content.Shared.Tabletop;
 using Content.Shared.Tabletop.Events;
-using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
@@ -25,7 +24,7 @@ namespace Content.Server.Tabletop
         /// </summary>
         private void OnTabletopMove(TabletopMoveEvent msg, EntitySessionEventArgs args)
         {
-            if (args.SenderSession as IPlayerSession is not { AttachedEntityUid: { } playerEntity } playerSession)
+            if (args.SenderSession as IPlayerSession is not { AttachedEntity: { } playerEntity } playerSession)
                 return;
 
             if (!EntityManager.TryGetComponent(msg.TableUid, out TabletopGameComponent? tabletop) || tabletop.Session is not {} session)
@@ -43,29 +42,29 @@ namespace Content.Server.Tabletop
                 return;
 
             // Check if moved entity exists and has tabletop draggable component
-            if (!EntityManager.TryGetEntity(msg.MovedEntityUid, out var movedEntity))
+            if (!EntityManager.EntityExists(msg.MovedEntityUid))
                 return;
 
-            if (!EntityManager.HasComponent<TabletopDraggableComponent>(movedEntity.Uid))
+            if (!EntityManager.HasComponent<TabletopDraggableComponent>(msg.MovedEntityUid))
                 return;
 
             // TODO: some permission system, disallow movement if you're not permitted to move the item
 
             // Move the entity and dirty it (we use the map ID from the entity so noone can try to be funny and move the item to another map)
-            var transform = EntityManager.GetComponent<TransformComponent>(movedEntity.Uid);
+            var transform = EntityManager.GetComponent<TransformComponent>(msg.MovedEntityUid);
             var entityCoordinates = new EntityCoordinates(_mapManager.GetMapEntityId(transform.MapID), msg.Coordinates.Position);
             transform.Coordinates = entityCoordinates;
         }
 
         private void OnDraggingPlayerChanged(TabletopDraggingPlayerChangedEvent msg)
         {
-            var draggedEntity = EntityManager.GetEntity(msg.DraggedEntityUid);
+            var dragged = msg.DraggedEntityUid;
 
-            if (!draggedEntity.TryGetComponent<TabletopDraggableComponent>(out var draggableComponent)) return;
+            if (!EntityManager.TryGetComponent<TabletopDraggableComponent?>(dragged, out var draggableComponent)) return;
 
             draggableComponent.DraggingPlayer = msg.DraggingPlayer;
 
-            if (!draggedEntity.TryGetComponent<AppearanceComponent>(out var appearance)) return;
+            if (!EntityManager.TryGetComponent<AppearanceComponent?>(dragged, out var appearance)) return;
 
             if (draggableComponent.DraggingPlayer != null)
             {

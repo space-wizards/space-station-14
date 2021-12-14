@@ -1,43 +1,29 @@
 - type: entity
   id: AirlockShuttle
-  parent: BaseStructure
-  name: airlock
+  parent: Airlock
+  name: external airlock
   suffix: Docking
   description: Necessary for connecting two space craft together.
   components:
   - type: Docking
-  - type: InteractionOutline
   - type: Sprite
     netsync: false
     sprite: Structures/Doors/Airlocks/Standard/shuttle.rsi
     layers:
     - state: closed
       map: ["enum.DoorVisualLayers.Base"]
-    #- state: closed_unlit
-    #  shader: unshaded
-    #  map: ["enum.DoorVisualLayers.BaseUnlit"]
-    #- state: welded
-    #  map: ["enum.DoorVisualLayers.BaseWelded"]
-    #- state: bolted_unlit
-    #  shader: unshaded
-    #  map: ["enum.DoorVisualLayers.BaseBolted"]
-    #- state: panel_open
-    #  map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.49,-0.49,0.49,0.49" # don't want this colliding with walls or they won't close
-      mass: 100
-      mask:
-      - MobImpassable
-      layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+    - state: closed_unlit
+      shader: unshaded
+      map: ["enum.DoorVisualLayers.BaseUnlit"]
+    - state: welded
+      map: ["enum.DoorVisualLayers.BaseWelded"]
+    - state: bolted_unlit
+      shader: unshaded
+      map: ["enum.DoorVisualLayers.BaseBolted"]
+    - state: panel_open
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Door
+    bumpOpen: false
     closeTimeTwo: 0.4
     openTimeTwo: 0.4
     board: DoorElectronics
@@ -48,42 +34,9 @@
       path: /Audio/Effects/docking.ogg
     closeSound:
       path: /Audio/Effects/docking.ogg
-  #  denySound:
-  #    path: /Audio/Machines/airlock_deny.ogg
-  - type: Airlock
-  - type: Appearance
-    visuals:
-    - type: AirlockVisualizer
-      simpleVisuals: true
-  #  - type: WiresVisualizer
-  - type: ApcPowerReceiver
-  - type: ExtensionCableReceiver
-  #- type: Wires
-  #  BoardName: "Airlock Control"
-  #  LayoutId: Airlock
-  #- type: UserInterface
-  #  interfaces:
-  #  - key: enum.WiresUiKey.Key
-  #    type: WiresBoundUserInterface
+    denySound:
+      path: /Audio/Machines/airlock_deny.ogg
   - type: Airtight
     fixVacuum: true
-  - type: Occluder
-  - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 500
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-  #- type: Construction
-  #  graph: airlock
-  #  node: airlock
-  - type: IconSmooth
-    key: walls
-    mode: NoSprite
-  placement:
-    mode: SnapgridCenter
+    airBlockedDirection:
+      - South

@@ -1,0 +1,11 @@
+- type: entity
+  id: Present
+  parent: BaseItem
+  name: Present
+  description: A little box with incredible surprises inside.
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/present.rsi
+    layers:
+      - state: present
+      #- state: unwrapped

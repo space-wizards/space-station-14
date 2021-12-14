@@ -2,7 +2,6 @@
   id: ChiefEngineer
   name: "chief engineer"
   head: true
-  positions: 1
   startingGear: ChiefEngineerGear
   departments:
   - Command
@@ -10,11 +9,13 @@
   icon: "ChiefEngineer"
   requireAdminNotify: true
   supervisors: "the captain"
+  canBeAntag: false
   access:
   - Maintenance
   - Engineering
   - Command
   - External
+  - ChiefEngineer
 
 - type: startingGear
   id: ChiefEngineerGear

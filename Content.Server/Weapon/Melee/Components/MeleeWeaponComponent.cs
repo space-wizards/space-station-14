@@ -14,7 +14,7 @@ namespace Content.Server.Weapon.Melee.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("hitSound")]
-        public SoundSpecifier HitSound { get; set; } = new SoundPathSpecifier("/Audio/Weapons/genhit1.ogg");
+        public SoundSpecifier HitSound { get; set; } = new SoundCollectionSpecifier("GenericHit");
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("missSound")]

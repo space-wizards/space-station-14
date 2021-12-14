@@ -4,9 +4,9 @@ namespace Content.Shared.Movement
 {
     public sealed class RelayMovementEntityEvent : EntityEventArgs
     {
-        public IEntity Entity { get; }
+        public EntityUid Entity { get; }
 
-        public RelayMovementEntityEvent(IEntity entity)
+        public RelayMovementEntityEvent(EntityUid entity)
         {
             Entity = entity;
         }

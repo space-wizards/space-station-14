@@ -4,6 +4,8 @@ using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 
 namespace Content.Client.Pointing
@@ -23,9 +25,9 @@ namespace Content.Client.Pointing
 
         private void SetRotation(AppearanceComponent component, Angle rotation)
         {
-            var sprite = component.Owner.GetComponent<ISpriteComponent>();
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner);
 
-            if (!sprite.Owner.TryGetComponent(out AnimationPlayerComponent? animation))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(sprite.Owner, out AnimationPlayerComponent? animation))
             {
                 sprite.Rotation = rotation;
                 return;

@@ -1,12 +1,13 @@
 ﻿using Content.Server.Body.Components;
+using Content.Server.Body.Systems;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Inventory.Components;
 using Content.Server.Items;
 using Content.Shared.FixedPoint;
 using Content.Shared.Foam;
 using Content.Shared.Inventory;
-using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Chemistry.Components
@@ -15,32 +16,34 @@ namespace Content.Server.Chemistry.Components
     [ComponentReference(typeof(SolutionAreaEffectComponent))]
     public class FoamSolutionAreaEffectComponent : SolutionAreaEffectComponent
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "FoamSolutionAreaEffect";
-        public new const string SolutionName = "foam";
+        public new const string SolutionName = "solutionArea";
 
         [DataField("foamedMetalPrototype")] private string? _foamedMetalPrototype;
 
         protected override void UpdateVisuals()
         {
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance) &&
-                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution))
+            if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance) &&
+                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
             {
                 appearance.SetData(FoamVisuals.Color, solution.Color.WithAlpha(0.80f));
             }
         }
 
-        protected override void ReactWithEntity(IEntity entity, double solutionFraction)
+        protected override void ReactWithEntity(EntityUid entity, double solutionFraction)
         {
-            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution))
+            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
                 return;
 
-            if (!entity.TryGetComponent(out BloodstreamComponent? bloodstream))
+            if (!_entMan.TryGetComponent(entity, out BloodstreamComponent? bloodstream))
                 return;
 
             // TODO: Add a permeability property to clothing
             // For now it just adds to protection for each clothing equipped
             var protection = 0f;
-            if (entity.TryGetComponent(out InventoryComponent? inventory))
+            if (_entMan.TryGetComponent(entity, out InventoryComponent? inventory))
             {
                 foreach (var slot in inventory.Slots)
                 {
@@ -55,19 +58,21 @@ namespace Content.Server.Chemistry.Components
                 }
             }
 
+            var bloodstreamSys = EntitySystem.Get<BloodstreamSystem>();
+
             var cloneSolution = solution.Clone();
             var transferAmount = FixedPoint2.Min(cloneSolution.TotalVolume * solutionFraction * (1 - protection),
-                bloodstream.EmptyVolume);
+                bloodstream.Solution.AvailableVolume);
             var transferSolution = cloneSolution.SplitSolution(transferAmount);
 
-            bloodstream.TryTransferSolution(transferSolution);
+            bloodstreamSys.TryAddToBloodstream(entity, transferSolution, bloodstream);
         }
 
         protected override void OnKill()
         {
-            if (Owner.Deleted)
+            if (_entMan.Deleted(Owner))
                 return;
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
             {
                 appearance.SetData(FoamVisuals.State, true);
             }
@@ -76,10 +81,10 @@ namespace Content.Server.Chemistry.Components
             {
                 if (!string.IsNullOrEmpty(_foamedMetalPrototype))
                 {
-                    Owner.EntityManager.SpawnEntity(_foamedMetalPrototype, Owner.Transform.Coordinates);
+                    _entMan.SpawnEntity(_foamedMetalPrototype, _entMan.GetComponent<TransformComponent>(Owner).Coordinates);
                 }
 
-                Owner.QueueDelete();
+                _entMan.QueueDeleteEntity(Owner);
             });
         }
     }

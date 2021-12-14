@@ -1,5 +1,7 @@
 ﻿using Content.Shared.Wires;
 using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.Power
@@ -14,7 +16,8 @@ namespace Content.Client.Power
         {
             base.OnChangeData(component);
 
-            if (!component.Owner.TryGetComponent(out SpriteComponent? sprite))
+            var entities = IoCManager.Resolve<IEntityManager>();
+            if (!entities.TryGetComponent(component.Owner, out SpriteComponent? sprite))
                 return;
 
             if (!component.TryGetData(WireVisVisuals.ConnectedMask, out WireVisDirFlags mask))

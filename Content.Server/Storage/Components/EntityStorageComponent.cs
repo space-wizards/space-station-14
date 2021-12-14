@@ -2,10 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.Tools;
 using Content.Server.Ghost.Components;
-using Content.Server.Tools.Components;
-using Content.Shared.ActionBlocker;
+using Content.Server.Tools;
 using Content.Shared.Acts;
 using Content.Shared.Body.Components;
 using Content.Shared.Interaction;
@@ -16,9 +14,6 @@ using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Content.Shared.Storage;
 using Content.Shared.Tools;
-using Content.Shared.Tools.Components;
-using Content.Shared.Verbs;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -38,6 +33,8 @@ namespace Content.Server.Storage.Components
     [ComponentReference(typeof(IStorageComponent))]
     public class EntityStorageComponent : Component, IActivate, IStorageComponent, IInteractUsing, IDestroyAct, IExAct
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "EntityStorage";
 
         private const float MaxSize = 1.0f; // maximum width or height of an entity allowed inside the storage.
@@ -153,9 +150,9 @@ namespace Content.Server.Storage.Components
             Contents.ShowContents = _showContents;
             Contents.OccludesLight = _occludesLight;
 
-            if (Owner.TryGetComponent<PlaceableSurfaceComponent>(out var surface))
+            if (_entMan.TryGetComponent<PlaceableSurfaceComponent?>(Owner, out var surface))
             {
-                EntitySystem.Get<PlaceableSurfaceSystem>().SetPlaceable(Owner.Uid, Open, surface);
+                EntitySystem.Get<PlaceableSurfaceSystem>().SetPlaceable(Owner, Open, surface);
             }
 
             UpdateAppearance();
@@ -166,7 +163,7 @@ namespace Content.Server.Storage.Components
             ToggleOpen(eventArgs.User);
         }
 
-        public virtual bool CanOpen(IEntity user, bool silent = false)
+        public virtual bool CanOpen(EntityUid user, bool silent = false)
         {
             if (IsWeldedShut)
             {
@@ -174,7 +171,7 @@ namespace Content.Server.Storage.Components
                 return false;
             }
 
-            if (Owner.TryGetComponent<LockComponent>(out var @lock) && @lock.Locked)
+            if (_entMan.TryGetComponent<LockComponent?>(Owner, out var @lock) && @lock.Locked)
             {
                 if (!silent) Owner.PopupMessage(user, Loc.GetString("entity-storage-component-locked-message"));
                 return false;
@@ -183,12 +180,12 @@ namespace Content.Server.Storage.Components
             return true;
         }
 
-        public virtual bool CanClose(IEntity user, bool silent = false)
+        public virtual bool CanClose(EntityUid user, bool silent = false)
         {
             return true;
         }
 
-        public void ToggleOpen(IEntity user)
+        public void ToggleOpen(EntityUid user)
         {
             if (Open)
             {
@@ -219,14 +216,14 @@ namespace Content.Server.Storage.Components
                 // 5. if this is NOT AN ITEM, then mobs can always be eaten unless unless a previous law prevents it
 
                 // Let's not insert admin ghosts, yeah? This is really a a hack and should be replaced by attempt events
-                if (Owner.EntityManager.HasComponent<GhostComponent>(entity.Uid))
+                if (_entMan.HasComponent<GhostComponent>(entity))
                     continue;
 
                 // checks
 
-                var targetIsItem = Owner.EntityManager.HasComponent<SharedItemComponent>(entity.Uid);
-                var targetIsMob = Owner.EntityManager.HasComponent<SharedBodyComponent>(entity.Uid);
-                var storageIsItem = Owner.EntityManager.HasComponent<SharedItemComponent>(OwnerUid);
+                var targetIsItem = _entMan.HasComponent<SharedItemComponent>(entity);
+                var targetIsMob = _entMan.HasComponent<SharedBodyComponent>(entity);
+                var storageIsItem = _entMan.HasComponent<SharedItemComponent>(Owner);
 
                 var allowedToEat = false;
 
@@ -271,7 +268,7 @@ namespace Content.Server.Storage.Components
 
         private void UpdateAppearance()
         {
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
             {
                 appearance.SetData(StorageVisuals.CanWeld, _canWeldShut);
                 appearance.SetData(StorageVisuals.Welded, _isWeldedShut);
@@ -280,39 +277,39 @@ namespace Content.Server.Storage.Components
 
         private void ModifyComponents()
         {
-            if (!_isCollidableWhenOpen && Owner.TryGetComponent<IPhysBody>(out var physics))
+            if (!_isCollidableWhenOpen && _entMan.TryGetComponent<FixturesComponent?>(Owner, out var manager))
             {
                 if (Open)
                 {
-                    foreach (var fixture in physics.Fixtures)
+                    foreach (var (_, fixture) in manager.Fixtures)
                     {
                         fixture.CollisionLayer &= ~OpenMask;
                     }
                 }
                 else
                 {
-                    foreach (var fixture in physics.Fixtures)
+                    foreach (var (_, fixture) in manager.Fixtures)
                     {
                         fixture.CollisionLayer |= OpenMask;
                     }
                 }
             }
 
-            if (Owner.TryGetComponent<PlaceableSurfaceComponent>(out var surface))
+            if (_entMan.TryGetComponent<PlaceableSurfaceComponent?>(Owner, out var surface))
             {
-                EntitySystem.Get<PlaceableSurfaceSystem>().SetPlaceable(Owner.Uid, Open, surface);
+                EntitySystem.Get<PlaceableSurfaceSystem>().SetPlaceable(Owner, Open, surface);
             }
 
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
             {
                 appearance.SetData(StorageVisuals.Open, Open);
             }
         }
 
-        protected virtual bool AddToContents(IEntity entity)
+        protected virtual bool AddToContents(EntityUid entity)
         {
             if (entity == Owner) return false;
-            if (entity.TryGetComponent(out IPhysBody? entityPhysicsComponent))
+            if (_entMan.TryGetComponent(entity, out IPhysBody? entityPhysicsComponent))
             {
                 if (MaxSize < entityPhysicsComponent.GetWorldAABB().Size.X
                     || MaxSize < entityPhysicsComponent.GetWorldAABB().Size.Y)
@@ -326,7 +323,7 @@ namespace Content.Server.Storage.Components
 
         public virtual Vector2 ContentsDumpPosition()
         {
-            return Owner.Transform.WorldPosition;
+            return _entMan.GetComponent<TransformComponent>(Owner).WorldPosition;
         }
 
         private void EmptyContents()
@@ -335,8 +332,8 @@ namespace Content.Server.Storage.Components
             {
                 if (Contents.Remove(contained))
                 {
-                    contained.Transform.WorldPosition = ContentsDumpPosition();
-                    if (contained.TryGetComponent<IPhysBody>(out var physics))
+                    _entMan.GetComponent<TransformComponent>(contained).WorldPosition = ContentsDumpPosition();
+                    if (_entMan.TryGetComponent<IPhysBody?>(contained, out var physics))
                     {
                         physics.CanCollide = true;
                     }
@@ -344,14 +341,14 @@ namespace Content.Server.Storage.Components
             }
         }
 
-        public virtual bool TryOpenStorage(IEntity user)
+        public virtual bool TryOpenStorage(EntityUid user)
         {
             if (!CanOpen(user)) return false;
             OpenStorage();
             return true;
         }
 
-        public virtual bool TryCloseStorage(IEntity user)
+        public virtual bool TryCloseStorage(EntityUid user)
         {
             if (!CanClose(user)) return false;
             CloseStorage();
@@ -359,33 +356,27 @@ namespace Content.Server.Storage.Components
         }
 
         /// <inheritdoc />
-        public bool Remove(IEntity entity)
+        public bool Remove(EntityUid entity)
         {
             return Contents.CanRemove(entity);
         }
 
         /// <inheritdoc />
-        public bool Insert(IEntity entity)
+        public bool Insert(EntityUid entity)
         {
             // Trying to add while open just dumps it on the ground below us.
             if (Open)
             {
-                entity.Transform.WorldPosition = Owner.Transform.WorldPosition;
+                var entMan = _entMan;
+                entMan.GetComponent<TransformComponent>(entity).WorldPosition = entMan.GetComponent<TransformComponent>(Owner).WorldPosition;
                 return true;
             }
 
-            if (!Contents.Insert(entity)) return false;
-
-            entity.Transform.LocalPosition = Vector2.Zero;
-            if (entity.TryGetComponent(out IPhysBody? body))
-            {
-                body.CanCollide = false;
-            }
-            return true;
+            return Contents.Insert(entity);
         }
 
         /// <inheritdoc />
-        public bool CanInsert(IEntity entity)
+        public bool CanInsert(EntityUid entity)
         {
             if (Open)
             {
@@ -431,7 +422,7 @@ namespace Content.Server.Storage.Components
 
             var toolSystem = EntitySystem.Get<ToolSystem>();
 
-            if (!await toolSystem.UseTool(eventArgs.Using.Uid, eventArgs.User.Uid, Owner.Uid, 1f, 1f, _weldingQuality))
+            if (!await toolSystem.UseTool(eventArgs.Using, eventArgs.User, Owner, 1f, 1f, _weldingQuality))
             {
                 _beingWelded = false;
                 return false;
@@ -448,7 +439,7 @@ namespace Content.Server.Storage.Components
             EmptyContents();
         }
 
-        protected virtual IEnumerable<IEntity> DetermineCollidingEntities()
+        protected virtual IEnumerable<EntityUid> DetermineCollidingEntities()
         {
             var entityLookup = IoCManager.Resolve<IEntityLookup>();
             return entityLookup.GetEntitiesIntersecting(Owner, -0.015f, LookupFlags.Approximate);
@@ -464,7 +455,7 @@ namespace Content.Server.Storage.Components
             var containedEntities = Contents.ContainedEntities.ToList();
             foreach (var entity in containedEntities)
             {
-                var exActs = entity.GetAllComponents<IExAct>().ToArray();
+                var exActs = _entMan.GetComponents<IExAct>(entity).ToArray();
                 foreach (var exAct in exActs)
                 {
                     exAct.OnExplosion(eventArgs);

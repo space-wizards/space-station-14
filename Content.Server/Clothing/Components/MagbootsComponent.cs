@@ -2,7 +2,6 @@ using Content.Server.Alert;
 using Content.Server.Atmos.Components;
 using Content.Server.Inventory.Components;
 using Content.Server.Items;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Behaviors.Item;
 using Content.Shared.Actions.Components;
@@ -10,13 +9,11 @@ using Content.Shared.Alert;
 using Content.Shared.Clothing;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
-using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
-using Robust.Shared.Players;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.Inventory.EquipmentSlotDefines;
@@ -30,6 +27,9 @@ namespace Content.Server.Clothing.Components
         [ComponentDependency] private ItemComponent? _item = null;
         [ComponentDependency] private ItemActionsComponent? _itemActions = null;
         [ComponentDependency] private SpriteComponent? _sprite = null;
+
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         private bool _on;
 
         [ViewVariables]
@@ -50,7 +50,7 @@ namespace Content.Server.Clothing.Components
             }
         }
 
-        public void Toggle(IEntity user)
+        public void Toggle(EntityUid user)
         {
             On = !On;
         }
@@ -59,12 +59,12 @@ namespace Content.Server.Clothing.Components
         {
             if (On && eventArgs.Slot == Slots.SHOES)
             {
-                if (eventArgs.User.TryGetComponent(out MovedByPressureComponent? movedByPressure))
+                if (_entMan.TryGetComponent(eventArgs.User, out MovedByPressureComponent? movedByPressure))
                 {
                     movedByPressure.Enabled = true;
                 }
 
-                if (eventArgs.User.TryGetComponent(out ServerAlertsComponent? alerts))
+                if (_entMan.TryGetComponent(eventArgs.User, out ServerAlertsComponent? alerts))
                 {
                     alerts.ClearAlert(AlertType.Magboots);
                 }
@@ -81,15 +81,15 @@ namespace Content.Server.Clothing.Components
             if (!Owner.TryGetContainer(out var container))
                 return;
 
-            if (container.Owner.TryGetComponent(out InventoryComponent? inventoryComponent)
+            if (_entMan.TryGetComponent(container.Owner, out InventoryComponent? inventoryComponent)
                 && inventoryComponent.GetSlotItem(Slots.SHOES)?.Owner == Owner)
             {
-                if (container.Owner.TryGetComponent(out MovedByPressureComponent? movedByPressure))
+                if (_entMan.TryGetComponent(container.Owner, out MovedByPressureComponent? movedByPressure))
                 {
                     movedByPressure.Enabled = false;
                 }
 
-                if (container.Owner.TryGetComponent(out ServerAlertsComponent? alerts))
+                if (_entMan.TryGetComponent(container.Owner, out ServerAlertsComponent? alerts))
                 {
                     if (On)
                     {
@@ -114,7 +114,7 @@ namespace Content.Server.Clothing.Components
             Toggle(eventArgs.User);
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new MagbootsComponentState(On);
         }
@@ -126,7 +126,7 @@ namespace Content.Server.Clothing.Components
     {
         public bool DoToggleAction(ToggleItemActionEventArgs args)
         {
-            if (!args.Item.TryGetComponent<MagbootsComponent>(out var magboots))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<MagbootsComponent?>(args.Item, out var magboots))
                 return false;
 
             magboots.Toggle(args.Performer);

@@ -27,13 +27,21 @@ namespace Content.Server.Climbing
             SubscribeLocalEvent<ClimbableComponent, GetAlternativeVerbsEvent>(AddClimbVerb);
         }
 
+        public void ForciblySetClimbing(EntityUid uid, ClimbingComponent? component = null)
+        {
+            if (!Resolve(uid, ref component, false))
+                return;
+            component.IsClimbing = true;
+            UnsetTransitionBoolAfterBufferTime(uid, component);
+        }
+
         private void AddClimbVerb(EntityUid uid, ClimbableComponent component, GetAlternativeVerbsEvent args)
         {
-            if (!args.CanAccess || !args.CanInteract || !_actionBlockerSystem.CanMove(args.User.Uid))
+            if (!args.CanAccess || !args.CanInteract || !_actionBlockerSystem.CanMove(args.User))
                 return;
 
             // Check that the user climb.
-            if (!args.User.TryGetComponent(out ClimbingComponent? climbingComponent) ||
+            if (!EntityManager.TryGetComponent(args.User, out ClimbingComponent? climbingComponent) ||
                 climbingComponent.IsClimbing)
                 return;
 
@@ -53,6 +61,17 @@ namespace Content.Server.Climbing
         public void RemoveActiveClimber(ClimbingComponent climbingComponent)
         {
             _activeClimbers.Remove(climbingComponent);
+        }
+
+        public void UnsetTransitionBoolAfterBufferTime(EntityUid uid, ClimbingComponent? component = null)
+        {
+            if (!Resolve(uid, ref component, false))
+                return;
+            component.Owner.SpawnTimer((int) (SharedClimbingComponent.BufferTime * 1000), () =>
+            {
+                if (component.Deleted) return;
+                component.OwnerIsTransitioning = false;
+            });
         }
 
         public override void Update(float frameTime)

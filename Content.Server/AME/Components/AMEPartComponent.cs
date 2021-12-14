@@ -35,13 +35,13 @@ namespace Content.Server.AME.Components
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs args)
         {
-            if (!args.User.HasComponent<HandsComponent>())
+            if (!_serverEntityManager.HasComponent<HandsComponent>(args.User))
             {
                 Owner.PopupMessage(args.User, Loc.GetString("ame-part-component-interact-using-no-hands"));
                 return false;
             }
 
-            if (!EntitySystem.Get<ToolSystem>().HasQuality(args.Using.Uid, _qualityNeeded))
+            if (!EntitySystem.Get<ToolSystem>().HasQuality(args.Using, _qualityNeeded))
                 return false;
 
             if (!_mapManager.TryGetGrid(args.ClickLocation.GetGridId(_serverEntityManager), out var mapGrid))
@@ -55,11 +55,10 @@ namespace Content.Server.AME.Components
             }
 
             var ent = _serverEntityManager.SpawnEntity("AMEShielding", mapGrid.GridTileToLocal(snapPos));
-            ent.Transform.LocalRotation = Owner.Transform.LocalRotation;
 
             SoundSystem.Play(Filter.Pvs(Owner), _unwrapSound.GetSound(), Owner);
 
-            Owner.QueueDelete();
+            _serverEntityManager.QueueDeleteEntity(Owner);
 
             return true;
         }

@@ -18,12 +18,14 @@
         amount: 1
       - id: SprayBottleSpaceCleaner
         amount: 2
+      - id: TrashBag
+        amount: 2
 
 - type: entity
   id: CrateServiceReplacementLights
   name: replacement lights crate
   description: May the light of Aether shine upon this station! Or at least, the light of forty two light tubes and twenty one light bulbs.
-  parent: CrateGenericonimo
+  parent: CrateGenericSteel
   components:
   - type: StorageFill
     contents:
@@ -36,7 +38,7 @@
   id: CrateServiceSmokeables
   name: smokeables crate
   description: "Tired of a quick death on the station? Order this crate and chain-smoke your way to a coughy demise!"
-  parent: CrateGenericonimo
+  parent: CrateGenericSteel
   components:
   - type: StorageFill
     contents:
@@ -56,13 +58,13 @@
       - id: CigarCase
         orGroup: Cigars
       - id: Matchbox
-        amount: 2 
+        amount: 2
 
 - type: entity
   id: CrateServiceCustomSmokable
   name: DIY smokeables crate
   description: Want to get a little creative with what you use to destroy your lungs? Then this crate is for you! Has everything you need to roll your own Cigarettes.
-  parent: CrateGenericonimo
+  parent: CrateGenericSteel
   components:
   - type: StorageFill
     contents:

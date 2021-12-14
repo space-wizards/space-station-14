@@ -4,7 +4,6 @@
   id: ChiefMedicalOfficer
   name: "chief medical officer"
   head: true
-  positions: 1
   startingGear: CMOGear
   departments:
   - Command
@@ -12,10 +11,13 @@
   icon: "ChiefMedicalOfficer"
   requireAdminNotify: true
   supervisors: "the captain"
+  canBeAntag: false
   access:
   - Medical
   - Command
   - Maintenance
+  - Chemistry
+  - ChiefMedicalOfficer
 
 - type: startingGear
   id: CMOGear

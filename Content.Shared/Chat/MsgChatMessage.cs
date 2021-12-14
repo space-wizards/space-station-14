@@ -40,6 +40,8 @@ namespace Content.Shared.Chat
         /// </summary>
         public Color MessageColorOverride { get; set; } = Color.Transparent;
 
+        public bool HideChat { get; set; }
+
 
         public override void ReadFromBuffer(NetIncomingMessage buffer)
         {
@@ -57,6 +59,7 @@ namespace Content.Shared.Chat
                     break;
             }
             MessageColorOverride = buffer.ReadColor();
+            HideChat = buffer.ReadBoolean();
         }
 
         public override void WriteToBuffer(NetOutgoingMessage buffer)
@@ -75,6 +78,7 @@ namespace Content.Shared.Chat
                     break;
             }
             buffer.Write(MessageColorOverride);
+            buffer.Write(HideChat);
         }
     }
 }

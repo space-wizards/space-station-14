@@ -16,8 +16,9 @@
   - type: SmokeSolutionAreaEffect
   - type: SolutionContainerManager
     solutions:
-      smoke:
+      solutionArea:
         maxVol: 600
+        canReact: false
 
 - type: entity
   id: Foam
@@ -42,8 +43,10 @@
   - type: Transform
     anchored: true
   - type: Physics
+  - type: Fixtures
     fixtures:
-    - shape:
+    - hard: false
+      shape:
         !type:PhysShapeAabb
           bounds: "-0.4,-0.4,0.4,0.4"
       layer:
@@ -51,8 +54,9 @@
   - type: FoamSolutionAreaEffect
   - type: SolutionContainerManager
     solutions:
-      foam:
+      solutionArea:
         maxVol: 600
+        canReact: false
   - type: Slippery
 
 - type: entity
@@ -66,6 +70,15 @@
     layers:
     - state: mfoam
       map: ["enum.FoamVisualLayers.Base"]
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - hard: true
+      shape:
+        !type:PhysShapeAabb
+        bounds: "-0.4,-0.4,0.4,0.4"
+      layer:
+      - MobImpassable
   - type: Appearance
     visuals:
     - type: FoamVisualizer
@@ -85,6 +98,15 @@
     layers:
       - state: mfoam
         map: ["enum.FoamVisualLayers.Base"]
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - hard: true
+      shape:
+        !type:PhysShapeAabb
+        bounds: "-0.4,-0.4,0.4,0.4"
+      layer:
+      - MobImpassable
   - type: Appearance
     visuals:
       - type: FoamVisualizer
@@ -111,6 +133,7 @@
     netsync: false
     drawdepth: Walls
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb {}

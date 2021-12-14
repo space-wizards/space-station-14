@@ -58,11 +58,10 @@ namespace Content.Server.GameTicking.Rules
                 return;
 
             IPlayerSession? winner = null;
-            foreach (var playerSession in _playerManager.GetAllPlayers())
+            foreach (var playerSession in _playerManager.ServerSessions)
             {
-                var playerEntity = playerSession.AttachedEntity;
-                if (playerEntity == null
-                    || !playerEntity.TryGetComponent(out MobStateComponent? state))
+                if (playerSession.AttachedEntity is not {Valid: true} playerEntity
+                    || !_entityManager.TryGetComponent(playerEntity, out MobStateComponent? state))
                 {
                     continue;
                 }

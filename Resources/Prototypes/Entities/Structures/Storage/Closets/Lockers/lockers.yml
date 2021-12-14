@@ -186,7 +186,7 @@
       state: med
       state_closed: chemical_door
   - type: AccessReader
-    access: [ [ "Medical" ] ]
+    access: [ [ "Chemistry" ] ]
 
 # CMO
 - type: entity
@@ -251,7 +251,7 @@
     - type: StorageVisualizer
       state: warden
   - type: AccessReader
-    access: [["Security"]] # TODO access [["Brig"]]
+    access: [["Security", "Armory"]] # TODO access [["Brig"]]
 
 # Security Officer
 - type: entity

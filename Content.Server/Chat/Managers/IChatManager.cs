@@ -17,12 +17,14 @@ namespace Content.Server.Chat.Managers
         /// </summary>
         /// <param name="message"></param>
         /// <param name="sender"></param>
-        void DispatchStationAnnouncement(string message, string sender = "CentComm");
+        /// <param name="playDefaultSound">If the default 'PA' sound should be played.</param>
+        void DispatchStationAnnouncement(string message, string sender = "CentComm", bool playDefaultSound = true);
 
         void DispatchServerMessage(IPlayerSession player, string message);
 
-        void EntitySay(IEntity source, string message);
-        void EntityMe(IEntity source, string action);
+        /// <param name="hideChat">If true, message will not be logged to chat boxes but will still produce a speech bubble.</param>
+        void EntitySay(EntityUid source, string message, bool hideChat=false);
+        void EntityMe(EntityUid source, string action);
 
         void SendOOC(IPlayerSession player, string message);
         void SendAdminChat(IPlayerSession player, string message);

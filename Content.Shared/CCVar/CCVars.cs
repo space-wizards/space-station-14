@@ -8,6 +8,16 @@ namespace Content.Shared.CCVar
     public sealed class CCVars : CVars
     {
         /*
+         * Server
+         */
+
+        /// <summary>
+        ///     Change this to have the changelog and rules "last seen" date stored separately.
+        /// </summary>
+        public static readonly CVarDef<string> ServerId =
+            CVarDef.Create("server.id", "unknown_server_id");
+
+        /*
          * Ambience
          */
 
@@ -44,38 +54,74 @@ namespace Content.Shared.CCVar
          * Game
          */
 
+        /// <summary>
+        ///     Controls if the game should run station events
+        /// </summary>
         public static readonly CVarDef<bool>
-            EventsEnabled = CVarDef.Create("events.enabled", false, CVar.ARCHIVE | CVar.SERVERONLY);
+            EventsEnabled = CVarDef.Create("events.enabled", true, CVar.ARCHIVE | CVar.SERVERONLY);
 
         public static readonly CVarDef<bool>
             GameDummyTicker = CVarDef.Create("game.dummyticker", false, CVar.ARCHIVE | CVar.SERVERONLY);
 
+        /// <summary>
+        ///     Controls if the lobby is enabled. If it is not, and there are no available jobs, you may get stuck on a black screen.
+        /// </summary>
         public static readonly CVarDef<bool>
             GameLobbyEnabled = CVarDef.Create("game.lobbyenabled", false, CVar.ARCHIVE);
 
+        /// <summary>
+        ///     Controls the duration of the lobby timer in seconds. Defaults to 2 minutes and 30 seconds.
+        /// </summary>
         public static readonly CVarDef<int>
-            GameLobbyDuration = CVarDef.Create("game.lobbyduration", 60, CVar.ARCHIVE);
+            GameLobbyDuration = CVarDef.Create("game.lobbyduration", 150, CVar.ARCHIVE);
 
+        /// <summary>
+        ///     Controls if players can latejoin at all.
+        /// </summary>
         public static readonly CVarDef<bool>
             GameDisallowLateJoins = CVarDef.Create("game.disallowlatejoins", false, CVar.ARCHIVE | CVar.SERVERONLY);
 
+        /// <summary>
+        ///     Controls the default game preset.
+        /// </summary>
         public static readonly CVarDef<string>
             GameLobbyDefaultPreset = CVarDef.Create("game.defaultpreset", "Suspicion", CVar.ARCHIVE);
 
+        /// <summary>
+        ///     Controls if the game can force a different preset if the current preset's criteria are not met.
+        /// </summary>
         public static readonly CVarDef<bool>
             GameLobbyFallbackEnabled = CVarDef.Create("game.fallbackenabled", true, CVar.ARCHIVE);
 
+        /// <summary>
+        ///     The preset for the game to fall back to if the selected preset could not be used, and fallback is enabled.
+        /// </summary>
         public static readonly CVarDef<string>
             GameLobbyFallbackPreset = CVarDef.Create("game.fallbackpreset", "Sandbox", CVar.ARCHIVE);
 
+        /// <summary>
+        ///     Controls if people can win the game in Suspicion or Deathmatch.
+        /// </summary>
         public static readonly CVarDef<bool>
             GameLobbyEnableWin = CVarDef.Create("game.enablewin", true, CVar.ARCHIVE);
 
+        /// <summary>
+        ///     Controls the maximum number of character slots a player is allowed to have.
+        /// </summary>
         public static readonly CVarDef<int>
             GameMaxCharacterSlots = CVarDef.Create("game.maxcharacterslots", 10, CVar.ARCHIVE | CVar.SERVERONLY);
 
+        /// <summary>
+        ///     Controls the game map prototype to load. SS14 stores these prototypes in Prototypes/Maps.
+        /// </summary>
         public static readonly CVarDef<string>
-            GameMap = CVarDef.Create("game.map", "Maps/saltern.yml", CVar.SERVERONLY);
+            GameMap = CVarDef.Create("game.map", "saltern", CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Controls if the game should obey map criteria or not. Overriden if a map vote or similar occurs.
+        /// </summary>
+        public static readonly CVarDef<bool>
+            GameMapForced = CVarDef.Create("game.mapforced", false, CVar.SERVERONLY);
 
         /// <summary>
         ///     Whether a random position offset will be applied to the station on roundstart.
@@ -135,7 +181,7 @@ namespace Content.Shared.CCVar
             CVarDef.Create("traitor.min_players", 5);
 
         public static readonly CVarDef<int> TraitorMaxTraitors =
-            CVarDef.Create("traitor.max_traitors", 4);
+            CVarDef.Create("traitor.max_traitors", 7);
 
         public static readonly CVarDef<int> TraitorPlayersPerTraitor =
             CVarDef.Create("traitor.players_per_traitor", 5);
@@ -147,7 +193,7 @@ namespace Content.Shared.CCVar
             CVarDef.Create("traitor.starting_balance", 20);
 
         public static readonly CVarDef<int> TraitorMaxDifficulty =
-            CVarDef.Create("traitor.max_difficulty", 4);
+            CVarDef.Create("traitor.max_difficulty", 6);
 
         public static readonly CVarDef<int> TraitorMaxPicks =
             CVarDef.Create("traitor.max_picks", 20);
@@ -260,14 +306,17 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<float> HudHeldItemOffset =
             CVarDef.Create("hud.held_item_offset", 28f, CVar.ARCHIVE | CVar.CLIENTONLY);
 
+        public static readonly CVarDef<bool> HudFpsCounterVisible =
+            CVarDef.Create("hud.fps_counter_visible", false, CVar.CLIENTONLY | CVar.ARCHIVE);
 
         /*
-         * AI
+         * NPCs
          */
 
-        public static readonly CVarDef<int> AIMaxUpdates =
-            CVarDef.Create("ai.maxupdates", 64);
+        public static readonly CVarDef<int> NPCMaxUpdates =
+            CVarDef.Create("npc.max_updates", 64);
 
+        public static readonly CVarDef<bool> NPCEnabled = CVarDef.Create("npc.enabled", true);
 
         /*
          * Net
@@ -291,6 +340,29 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<bool> AdminAnnounceLogout =
             CVarDef.Create("admin.announce_logout", true, CVar.SERVERONLY);
+
+        /*
+         * Admin logs
+         */
+
+        /// <summary>
+        ///     Controls if admin logs are enabled. Highly recommended to shut this off for development.
+        /// </summary>
+        public static readonly CVarDef<bool> AdminLogsEnabled =
+            CVarDef.Create("adminlogs.enabled", true, CVar.SERVERONLY);
+
+        public static readonly CVarDef<float> AdminLogsQueueSendDelay =
+            CVarDef.Create("adminlogs.queue_send_delay_seconds", 5f, CVar.SERVERONLY);
+
+        public static readonly CVarDef<int> AdminLogsQueueMax =
+            CVarDef.Create("adminlogs.queue_max", 5000, CVar.SERVERONLY);
+
+        public static readonly CVarDef<int> AdminLogsPreRoundQueueMax =
+            CVarDef.Create("adminlogs.pre_round_queue_max", 5000, CVar.SERVERONLY);
+
+        // How many logs to send to the client at once
+        public static readonly CVarDef<int> AdminLogsClientBatchSize =
+            CVarDef.Create("adminlogs.client_batch_size", 1000, CVar.SERVERONLY);
 
         /*
          * Atmos
@@ -416,6 +488,30 @@ namespace Content.Shared.CCVar
          */
 
         /// <summary>
+        ///     Allows enabling/disabling player-started votes for ultimate authority
+        /// </summary>
+        public static readonly CVarDef<bool> VoteEnabled =
+            CVarDef.Create("vote.enabled", true, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     See vote.enabled, but specific to restart votes
+        /// </summary>
+        public static readonly CVarDef<bool> VoteRestartEnabled =
+            CVarDef.Create("vote.restart_enabled", true, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     See vote.enabled, but specific to preset votes
+        /// </summary>
+        public static readonly CVarDef<bool> VotePresetEnabled =
+            CVarDef.Create("vote.preset_enabled", true, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     See vote.enabled, but specific to map votes
+        /// </summary>
+        public static readonly CVarDef<bool> VoteMapEnabled =
+            CVarDef.Create("vote.map_enabled", true, CVar.SERVERONLY);
+
+        /// <summary>
         ///     The required ratio of the server that must agree for a restart round vote to go through.
         /// </summary>
         public static readonly CVarDef<float> VoteRestartRequiredRatio =
@@ -467,6 +563,9 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<int> ChatMaxMessageLength =
             CVarDef.Create("chat.max_message_length", 1000, CVar.SERVER | CVar.REPLICATED);
+
+        public static readonly CVarDef<bool> ChatSanitizerEnabled =
+            CVarDef.Create("chat.chat_sanitizer_enabled", true, CVar.SERVERONLY);
 
         /*
          * AFK

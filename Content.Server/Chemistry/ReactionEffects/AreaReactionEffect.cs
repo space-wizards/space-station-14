@@ -3,8 +3,8 @@ using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Coordinates.Helpers;
 using Content.Shared.Audio;
-using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Reaction;
+using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Database;
 using Content.Shared.Sound;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
@@ -23,7 +23,7 @@ namespace Content.Server.Chemistry.ReactionEffects
     /// </summary>
     [UsedImplicitly]
     [ImplicitDataDefinitionForInheritors]
-    public abstract class AreaReactionEffect : IReactionEffect, ISerializationHooks
+    public abstract class AreaReactionEffect : ReagentEffect, ISerializationHooks
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
 
@@ -40,16 +40,9 @@ namespace Content.Server.Chemistry.ReactionEffects
         [DataField("diluteReagents")] private bool _diluteReagents;
 
         /// <summary>
-        /// At what range should the reagents volume stay the same. If the effect range is higher than this then the reagents
-        /// will get diluted. If the effect range is lower than this then the reagents will get concentrated.
+        /// Used to calculate dilution. Increasing this makes the reagents more diluted.
         /// </summary>
-        [DataField("reagentDilutionStart")] private int _reagentDilutionStart = 4;
-
-        /// <summary>
-        /// Used to calculate dilution. Increasing this makes the reagents get more diluted. This means that a lower range
-        /// will be needed to make the reagents volume get closer to zero.
-        /// </summary>
-        [DataField("reagentDilutionFactor")] private float _reagentDilutionFactor = 1;
+        [DataField("reagentDilutionFactor")] private float _reagentDilutionFactor = 1f;
 
         /// <summary>
         /// Used to calculate concentration. Reagents get linearly more concentrated as the range goes from
@@ -84,16 +77,22 @@ namespace Content.Server.Chemistry.ReactionEffects
         /// </summary>
         [DataField("sound", required: true)] private SoundSpecifier _sound = default!;
 
+        public override bool ShouldLog => true;
+        public override LogImpact LogImpact => LogImpact.High;
+
         void ISerializationHooks.AfterDeserialization()
         {
             IoCManager.InjectDependencies(this);
         }
 
-        public void React(Solution solution, EntityUid solutionEntity, double intensity, IEntityManager entityManager)
+        public override void Effect(ReagentEffectArgs args)
         {
-            var splitSolution = EntitySystem.Get<SolutionContainerSystem>().SplitSolution(solutionEntity, solution, solution.MaxVolume);
+            if (args.Source == null)
+                return;
+
+            var splitSolution = EntitySystem.Get<SolutionContainerSystem>().SplitSolution(args.SolutionEntity, args.Source, args.Source.MaxVolume);
             // We take the square root so it becomes harder to reach higher amount values
-            var amount = (int) Math.Round(_rangeConstant + _rangeMultiplier*Math.Sqrt(intensity));
+            var amount = (int) Math.Round(_rangeConstant + _rangeMultiplier*Math.Sqrt(args.Quantity.Float()));
             amount = Math.Min(amount, _maxRange);
 
             if (_diluteReagents)
@@ -101,45 +100,35 @@ namespace Content.Server.Chemistry.ReactionEffects
                 // The maximum value of solutionFraction is _reagentMaxConcentrationFactor, achieved when amount = 0
                 // The infimum of solutionFraction is 0, which is approached when amount tends to infinity
                 // solutionFraction is equal to 1 only when amount equals _reagentDilutionStart
-                float solutionFraction;
-                if (amount >= _reagentDilutionStart)
-                {
-                    // Weird formulas here but basically when amount increases, solutionFraction gets closer to 0 in a reciprocal manner
-                    // _reagentDilutionFactor defines how fast solutionFraction gets closer to 0
-                    solutionFraction = 1 / (_reagentDilutionFactor*(amount - _reagentDilutionStart) + 1);
-                }
-                else
-                {
-                    // Here when amount decreases, solutionFraction gets closer to _reagentMaxConcentrationFactor in a linear manner
-                    solutionFraction = amount * (1 - _reagentMaxConcentrationFactor) / _reagentDilutionStart +
-                                       _reagentMaxConcentrationFactor;
-                }
-                splitSolution.RemoveSolution(splitSolution.TotalVolume * solutionFraction);
+                // Weird formulas here but basically when amount increases, solutionFraction gets closer to 0 in a reciprocal manner
+                // _reagentDilutionFactor defines how fast solutionFraction gets closer to 0
+                float solutionFraction = 1 / (_reagentDilutionFactor*(amount) + 1);
+                splitSolution.RemoveSolution(splitSolution.TotalVolume * (1 - solutionFraction));
             }
 
-            var transform = entityManager.GetComponent<TransformComponent>(solutionEntity);
+            var transform = args.EntityManager.GetComponent<TransformComponent>(args.SolutionEntity);
 
             if (!_mapManager.TryFindGridAt(transform.MapPosition, out var grid)) return;
 
             var coords = grid.MapToGrid(transform.MapPosition);
 
-            var ent = entityManager.SpawnEntity(_prototypeId, coords.SnapToGrid());
+            var ent = args.EntityManager.SpawnEntity(_prototypeId, coords.SnapToGrid());
 
             var areaEffectComponent = GetAreaEffectComponent(ent);
 
             if (areaEffectComponent == null)
             {
                 Logger.Error("Couldn't get AreaEffectComponent from " + _prototypeId);
-                ent.QueueDelete();
+                IoCManager.Resolve<IEntityManager>().QueueDeleteEntity(ent);
                 return;
             }
 
             areaEffectComponent.TryAddSolution(splitSolution);
             areaEffectComponent.Start(amount, _duration, _spreadDelay, _removeDelay);
 
-            SoundSystem.Play(Filter.Pvs(solutionEntity), _sound.GetSound(), solutionEntity, AudioHelpers.WithVariation(0.125f));
+            SoundSystem.Play(Filter.Pvs(args.SolutionEntity), _sound.GetSound(), args.SolutionEntity, AudioHelpers.WithVariation(0.125f));
         }
 
-        protected abstract SolutionAreaEffectComponent? GetAreaEffectComponent(IEntity entity);
+        protected abstract SolutionAreaEffectComponent? GetAreaEffectComponent(EntityUid entity);
     }
 }

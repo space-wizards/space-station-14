@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Net;
+using System.Text.Json;
+using Content.Shared.Database;
 using Microsoft.EntityFrameworkCore;
 
 namespace Content.Server.Database
@@ -31,6 +33,9 @@ namespace Content.Server.Database
         public DbSet<Player> Player { get; set; } = default!;
         public DbSet<Admin> Admin { get; set; } = null!;
         public DbSet<AdminRank> AdminRank { get; set; } = null!;
+        public DbSet<Round> Round { get; set; } = null!;
+        public DbSet<AdminLog> AdminLog { get; set; } = null!;
+        public DbSet<AdminLogPlayer> AdminLogPlayer { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -79,6 +84,22 @@ namespace Content.Server.Database
             modelBuilder.Entity<AdminRankFlag>()
                 .HasIndex(f => new {f.Flag, f.AdminRankId})
                 .IsUnique();
+
+            modelBuilder.Entity<AdminLog>()
+                .HasKey(log => new {log.Id, log.RoundId});
+
+            modelBuilder.Entity<AdminLog>()
+                .Property(log => log.Id)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<AdminLogPlayer>()
+                .HasOne(player => player.Player)
+                .WithMany(player => player.AdminLogs)
+                .HasForeignKey(player => player.PlayerUserId)
+                .HasPrincipalKey(player => player.UserId);
+
+            modelBuilder.Entity<AdminLogPlayer>()
+                .HasKey(logPlayer => new {logPlayer.PlayerUserId, logPlayer.LogId, logPlayer.RoundId});
         }
     }
 
@@ -178,6 +199,10 @@ namespace Content.Server.Database
         public DateTime LastSeenTime { get; set; }
         public IPAddress LastSeenAddress { get; set; } = null!;
         public byte[]? LastSeenHWId { get; set; }
+
+        // Data that changes with each round
+        public List<Round> Rounds { get; set; } = null!;
+        public List<AdminLogPlayer> AdminLogs { get; set; } = null!;
     }
 
     public class Admin
@@ -216,5 +241,55 @@ namespace Content.Server.Database
 
         public int AdminRankId { get; set; }
         public AdminRank Rank { get; set; } = default!;
+    }
+
+    public class Round
+    {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
+        public List<Player> Players { get; set; } = default!;
+
+        public List<AdminLog> AdminLogs { get; set; } = default!;
+    }
+
+    [Index(nameof(Type))]
+    public class AdminLog
+    {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
+        [Key, ForeignKey("Round")] public int RoundId { get; set; }
+        public Round Round { get; set; } = default!;
+
+        [Required] public LogType Type { get; set; }
+
+        [Required] public LogImpact Impact { get; set; }
+
+        [Required] public DateTime Date { get; set; }
+
+        [Required] public string Message { get; set; } = default!;
+
+        [Required, Column(TypeName = "jsonb")] public JsonDocument Json { get; set; } = default!;
+
+        public List<AdminLogPlayer> Players { get; set; } = default!;
+
+        public List<AdminLogEntity> Entities { get; set; } = default!;
+    }
+
+    public class AdminLogPlayer
+    {
+        [Required, Key, ForeignKey("Player")] public Guid PlayerUserId { get; set; }
+        public Player Player { get; set; } = default!;
+
+        [Required, Key] public int LogId { get; set; }
+        [Required, Key] public int RoundId { get; set; }
+        [ForeignKey("LogId,RoundId")] public AdminLog Log { get; set; } = default!;
+    }
+
+    public class AdminLogEntity
+    {
+        [Required, Key] public int Uid { get; set; }
+        public string? Name { get; set; } = default!;
     }
 }

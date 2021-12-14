@@ -2,8 +2,10 @@ using System.Linq;
 using Content.Server.Body.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.MobState.Components;
 using JetBrains.Annotations;
@@ -14,13 +16,13 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Body.Systems
 {
-    // TODO mirror in the future working on mechanisms move updating here to BodySystem so it can be ordered?
     [UsedImplicitly]
     public class MetabolizerSystem : EntitySystem
     {
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly SharedAdminLogSystem _logSystem = default!;
 
         public override void Initialize()
         {
@@ -41,7 +43,7 @@ namespace Content.Server.Body.Systems
                 {
                     if (mech.Body != null)
                     {
-                        _solutionContainerSystem.EnsureSolution(mech.Body.OwnerUid, component.SolutionName);
+                        _solutionContainerSystem.EnsureSolution((mech.Body).Owner, component.SolutionName);
                     }
                 }
             }
@@ -59,7 +61,7 @@ namespace Content.Server.Body.Systems
                 if (metab.AccumulatedFrametime >= metab.UpdateFrequency)
                 {
                     metab.AccumulatedFrametime -= metab.UpdateFrequency;
-                    TryMetabolize(metab.OwnerUid, metab);
+                    TryMetabolize((metab).Owner, metab);
                 }
             }
         }
@@ -84,10 +86,10 @@ namespace Content.Server.Body.Systems
 
                     if (body != null)
                     {
-                        if (!Resolve(body.OwnerUid, ref manager, false))
+                        if (!Resolve((body).Owner, ref manager, false))
                             return;
-                        _solutionContainerSystem.TryGetSolution(body.OwnerUid, meta.SolutionName, out solution, manager);
-                        solutionEntityUid = body.OwnerUid;
+                        _solutionContainerSystem.TryGetSolution((body).Owner, meta.SolutionName, out solution, manager);
+                        solutionEntityUid = body.Owner;
                     }
                 }
             }
@@ -150,26 +152,23 @@ namespace Content.Server.Body.Systems
                             continue;
                     }
 
-                    var args = new ReagentEffectArgs(solutionEntityUid.Value, meta.OwnerUid, solution, proto, entry.MetabolismRate,
+                    var args = new ReagentEffectArgs(solutionEntityUid.Value, (meta).Owner, solution, proto, entry.MetabolismRate,
                         EntityManager, null);
 
                     // do all effects, if conditions apply
                     foreach (var effect in entry.Effects)
                     {
-                        bool failed = false;
-                        if (effect.Conditions != null)
-                        {
-                            foreach (var cond in effect.Conditions)
-                            {
-                                if (!cond.Condition(args))
-                                    failed = true;
-                            }
+                        if (!effect.ShouldApply(args, _random))
+                            continue;
 
-                            if (failed)
-                                continue;
+                        if (effect.ShouldLog)
+                        {
+                            var entity = args.SolutionEntity;
+                            _logSystem.Add(LogType.ReagentEffect, effect.LogImpact,
+                                $"Metabolism effect {effect.GetType().Name:effect} of reagent {args.Reagent.Name:reagent} applied on entity {entity} at {Transform(entity).Coordinates:coordinates}");
                         }
 
-                        effect.Metabolize(args);
+                        effect.Effect(args);
                     }
                 }
 

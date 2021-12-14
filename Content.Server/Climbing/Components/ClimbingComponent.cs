@@ -81,15 +81,11 @@ namespace Content.Server.Climbing.Components
 
             // Since there are bodies with different masses:
             // mass * 5 seems enough to move entity
-            // instead of launching cats like rockets against the walls with constant impulse value.  
+            // instead of launching cats like rockets against the walls with constant impulse value.
             Body.ApplyLinearImpulse((to - from).Normalized * velocity * Body.Mass * 5);
             OwnerIsTransitioning = true;
 
-            Owner.SpawnTimer((int) (BufferTime * 1000), () =>
-            {
-                if (Deleted) return;
-                OwnerIsTransitioning = false;
-            });
+            EntitySystem.Get<ClimbSystem>().UnsetTransitionBoolAfterBufferTime(Owner, this);
         }
 
         public void Update()
@@ -103,7 +99,7 @@ namespace Content.Server.Climbing.Components
                 IsClimbing = false;
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new ClimbModeComponentState(_isClimbing, OwnerIsTransitioning);
         }

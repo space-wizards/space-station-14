@@ -68,7 +68,7 @@ namespace Content.Shared.Disposal.Components
             Pressurizing
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new DisposalUnitComponentState(RecentlyEjected);
         }

@@ -7,13 +7,9 @@ using Content.Server.Power.Components;
 using Content.Server.RoundEnd;
 using Content.Server.UserInterface;
 using Content.Shared.Communications;
-using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
-using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 using Timer = Robust.Shared.Timing.Timer;
@@ -21,12 +17,13 @@ using Timer = Robust.Shared.Timing.Timer;
 namespace Content.Server.Communications
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IActivate))]
-    public class CommunicationsConsoleComponent : SharedCommunicationsConsoleComponent, IActivate
+    public class CommunicationsConsoleComponent : SharedCommunicationsConsoleComponent
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
-        private bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
+        [Dependency] private readonly IEntityManager _entities = default!;
+
+        private bool Powered => !_entities.TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
         private RoundEndSystem RoundEndSystem => EntitySystem.Get<RoundEndSystem>();
 
@@ -90,11 +87,11 @@ namespace Content.Server.Communications
             switch (obj.Message)
             {
                 case CommunicationsConsoleCallEmergencyShuttleMessage _:
-                    RoundEndSystem.RequestRoundEnd();
+                    RoundEndSystem.RequestRoundEnd(obj.Session.AttachedEntity);
                     break;
 
                 case CommunicationsConsoleRecallEmergencyShuttleMessage _:
-                    RoundEndSystem.CancelRoundEndCountdown();
+                    RoundEndSystem.CancelRoundEndCountdown(obj.Session.AttachedEntity);
                     break;
                 case CommunicationsConsoleAnnounceMessage msg:
                     if (!CanAnnounce())
@@ -104,42 +101,21 @@ namespace Content.Server.Communications
                     _announceCooldownEndedTokenSource.Cancel();
                     _announceCooldownEndedTokenSource = new CancellationTokenSource();
                     LastAnnounceTime = _gameTiming.CurTime;
-                    Timer.Spawn(AnnounceCooldown, () => UpdateBoundInterface(), _announceCooldownEndedTokenSource.Token);
+                    Timer.Spawn(AnnounceCooldown, UpdateBoundInterface, _announceCooldownEndedTokenSource.Token);
                     UpdateBoundInterface();
 
                     var message = msg.Message.Length <= 256 ? msg.Message.Trim() : $"{msg.Message.Trim().Substring(0, 256)}...";
 
                     var author = "Unknown";
-                    var mob = obj.Session.AttachedEntity;
-                    if (mob != null && mob.TryGetHeldId(out var id))
+                    if (obj.Session.AttachedEntity is {Valid: true} mob && mob.TryGetHeldId(out var id))
                     {
                         author = $"{id.FullName} ({CultureInfo.CurrentCulture.TextInfo.ToTitleCase(id.JobTitle ?? string.Empty)})".Trim();
                     }
-
-                    SoundSystem.Play(Filter.Broadcast(), "/Audio/Announcements/announce.ogg", AudioParams.Default.WithVolume(-2f));
 
                     message += $"\nSent by {author}";
                     _chatManager.DispatchStationAnnouncement(message, "Communications Console");
                     break;
             }
-        }
-
-        public void OpenUserInterface(IPlayerSession session)
-        {
-            UserInterface?.Open(session);
-        }
-
-        void IActivate.Activate(ActivateEventArgs eventArgs)
-        {
-            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
-                return;
-/*
-            if (!Powered)
-            {
-                return;
-            }
-*/
-            OpenUserInterface(actor.PlayerSession);
         }
     }
 }

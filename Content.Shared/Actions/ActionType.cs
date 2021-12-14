@@ -17,7 +17,8 @@ namespace Content.Shared.Actions
         DebugTargetPointRepeat,
         DebugTargetEntity,
         DebugTargetEntityRepeat,
-        SpellPie
+        SpellPie,
+        PAIMidi
     }
 
     /// <summary>

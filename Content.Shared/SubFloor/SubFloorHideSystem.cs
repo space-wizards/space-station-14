@@ -60,14 +60,14 @@ namespace Content.Shared.SubFloor
         {
             subFloor.Enabled = enabled;
             subFloor.Dirty();
-            UpdateEntity(subFloor.Owner.Uid);
+            UpdateEntity(subFloor.Owner);
         }
 
         public void SetRequireAnchoring(SubFloorHideComponent subFloor, bool requireAnchored)
         {
             subFloor.RequireAnchored = requireAnchored;
             subFloor.Dirty();
-            UpdateEntity(subFloor.Owner.Uid);
+            UpdateEntity(subFloor.Owner);
         }
 
         private void OnSubFloorStarted(EntityUid uid, SubFloorHideComponent component, ComponentStartup _)
@@ -79,7 +79,8 @@ namespace Content.Shared.SubFloor
         private void OnSubFloorTerminating(EntityUid uid, SubFloorHideComponent component, ComponentShutdown _)
         {
             // If component is being deleted don't need to worry about updating any component stuff because it won't matter very shortly.
-            if (EntityManager.GetEntity(uid).LifeStage >= EntityLifeStage.Terminating) return;
+            if (EntityManager.GetComponent<MetaDataComponent>(uid).EntityLifeStage >= EntityLifeStage.Terminating)
+                return;
 
             // Regardless of whether we're on a subfloor or not, unhide.
             UpdateEntity(uid, true);
@@ -125,7 +126,7 @@ namespace Content.Shared.SubFloor
         {
             foreach (var comp in EntityManager.EntityQuery<SubFloorHideComponent>(true))
             {
-                UpdateEntity(comp.Owner.Uid);
+                UpdateEntity(comp.Owner);
             }
         }
 
@@ -192,7 +193,7 @@ namespace Content.Shared.SubFloor
             }
 
             // Set an appearance data value so visualizers can use this as needed.
-            if (EntityManager.TryGetComponent(uid, out SharedAppearanceComponent? appearanceComponent))
+            if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearanceComponent))
             {
                 appearanceComponent.SetData(SubFloorVisuals.SubFloor, subFloorVisible);
             }

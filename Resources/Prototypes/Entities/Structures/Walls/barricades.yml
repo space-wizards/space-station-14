@@ -11,6 +11,7 @@
     sprite: Structures/Walls/barricades.rsi
     state: barricadewooden
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb {}
@@ -43,9 +44,6 @@
   - type: AtmosExposed
   - type: Flammable
     fireSpread: true
-    damage:
-      types:
-        Heat : 1 #per second, scales with number of fire 'stacks'
   - type: Appearance
     visuals:
     - type: FireVisualizer

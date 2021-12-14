@@ -1,31 +1,30 @@
-# - type: job
-#   id: Warden
-#   name: "warden"
-#   positions: 1
-#   spawnPositions: 1
-#   startingGear: WardenGear
-#   departments:
-#   - Security
-#   icon: "Warden"
-#   supervisors: "the head of security"
-#   access:
-#   - Security
-#   - Brig
-#   - Maintenance
-#   - Service
-#
-# - type: startingGear
-#   id: WardenGear
-#   equipment:
-#     head: ClothingHeadHatWarden
-#     innerclothing: ClothingUniformJumpsuitWarden
-#     backpack: ClothingBackpackSecurityFilled
-#     shoes: ClothingShoesBootsJack
-#     eyes: ClothingEyesGlassesSecurity
-#     outerclothing: ClothingOuterVestKevlar
-#     idcard: WardenPDA
-#     ears: ClothingHeadsetSecurity
-#     belt: ClothingBeltSecurityFilled
-#   innerclothingskirt: ClothingUniformJumpskirtWarden
-#   satchel: ClothingBackpackSatchelSecurityFilled
-#   duffelbag: ClothingBackpackDuffelSecurityFilled
+- type: job
+  id: Warden
+  name: "warden"
+  startingGear: WardenGear
+  departments:
+  - Security
+  icon: "Warden"
+  supervisors: "the head of security"
+  canBeAntag: false
+  access:
+  - Security
+  - Armory
+  - Maintenance
+  - Service
+
+- type: startingGear
+  id: WardenGear
+  equipment:
+    head: ClothingHeadHatWarden
+    innerclothing: ClothingUniformJumpsuitWarden
+    backpack: ClothingBackpackSecurityFilled
+    shoes: ClothingShoesBootsJack
+    eyes: ClothingEyesGlassesSecurity
+    outerclothing: ClothingOuterCoatWarden
+    idcard: WardenPDA
+    ears: ClothingHeadsetSecurity
+    belt: ClothingBeltSecurityFilled
+  innerclothingskirt: ClothingUniformJumpskirtWarden
+  satchel: ClothingBackpackSatchelSecurityFilled
+  duffelbag: ClothingBackpackDuffelSecurityFilled

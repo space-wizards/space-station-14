@@ -2,11 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Content.Server.Administration.Logs;
 using Content.Server.Camera;
 using Content.Server.Projectiles.Components;
 using Content.Server.Weapon.Ranged.Ammunition.Components;
-using Content.Shared.Audio;
 using Content.Shared.Damage;
+using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Sound;
@@ -19,7 +20,6 @@ using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using Robust.Shared.Physics.Broadphase;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -27,6 +27,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Robust.Shared.Utility.Markup;
 
 namespace Content.Server.Weapon.Ranged.Barrels.Components
 {
@@ -35,13 +36,14 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
     /// Only difference between them is how they retrieve a projectile to shoot (battery, magazine, etc.)
     /// </summary>
 #pragma warning disable 618
-    public abstract class ServerRangedBarrelComponent : SharedRangedBarrelComponent, IUse, IInteractUsing, IExamine, ISerializationHooks
+    public abstract class ServerRangedBarrelComponent : SharedRangedBarrelComponent, IExamine, ISerializationHooks
 #pragma warning restore 618
     {
         // There's still some of py01 and PJB's work left over, especially in underlying shooting logic,
         // it's just when I re-organised it changed me as the contributor
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
+        [Dependency] private readonly IEntityManager _entities = default!;
 
         public override FireRateSelector FireRateSelector => _fireRateSelector;
 
@@ -56,8 +58,8 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         // _lastFire is when we actually fired (so if we hold the button then recoil doesn't build up if we're not firing)
         private TimeSpan _lastFire;
 
-        public abstract IEntity? PeekAmmo();
-        public abstract IEntity? TakeProjectile(EntityCoordinates spawnAt);
+        public abstract EntityUid? PeekAmmo();
+        public abstract EntityUid? TakeProjectile(EntityCoordinates spawnAt);
 
         // Recoil / spray control
         [DataField("minAngle")]
@@ -132,9 +134,9 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             }
         }
 
-        protected override void OnAdd()
+        protected override void Initialize()
         {
-            base.OnAdd();
+            base.Initialize();
 
             Owner.EnsureComponentWarn(out ServerRangedWeaponComponent rangedWeaponComponent);
 
@@ -146,7 +148,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         protected override void OnRemove()
         {
             base.OnRemove();
-            if (Owner.TryGetComponent(out ServerRangedWeaponComponent? rangedWeaponComponent))
+            if (_entities.TryGetComponent(Owner, out ServerRangedWeaponComponent? rangedWeaponComponent))
             {
                 rangedWeaponComponent.Barrel = null;
                 rangedWeaponComponent.FireHandler -= Fire;
@@ -165,10 +167,6 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             var angle = Angle.FromDegrees(direction.Degrees + _currentAngle.Degrees * random);
             return angle;
         }
-
-        public abstract bool UseEntity(UseEntityEventArgs eventArgs);
-
-        public abstract Task<bool> InteractUsing(InteractUsingEventArgs eventArgs);
 
         public void ChangeFireSelector(FireRateSelector rateSelector)
         {
@@ -192,7 +190,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         /// </summary>
         /// <param name="shooter">Entity that is operating the weapon, usually the player.</param>
         /// <param name="targetPos">Target position on the map to shoot at.</param>
-        private void Fire(IEntity shooter, Vector2 targetPos)
+        private void Fire(EntityUid shooter, Vector2 targetPos)
         {
             if (ShotsLeft == 0)
             {
@@ -201,32 +199,30 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             }
 
             var ammo = PeekAmmo();
-            var projectile = TakeProjectile(shooter.Transform.Coordinates);
-            if (projectile == null)
+            if (TakeProjectile(_entities.GetComponent<TransformComponent>(shooter).Coordinates) is not {Valid: true} projectile)
             {
                 SoundSystem.Play(Filter.Broadcast(), SoundEmpty.GetSound(), Owner);
                 return;
             }
 
             // At this point firing is confirmed
-            var direction = (targetPos - shooter.Transform.WorldPosition).ToAngle();
+            var direction = (targetPos - _entities.GetComponent<TransformComponent>(shooter).WorldPosition).ToAngle();
             var angle = GetRecoilAngle(direction);
             // This should really be client-side but for now we'll just leave it here
-            if (shooter.TryGetComponent(out CameraRecoilComponent? recoilComponent))
+            if (_entities.TryGetComponent(shooter, out CameraRecoilComponent? recoilComponent))
             {
                 recoilComponent.Kick(-angle.ToVec() * 0.15f);
             }
 
             // This section probably needs tweaking so there can be caseless hitscan etc.
-            if (projectile.TryGetComponent(out HitscanComponent? hitscan))
+            if (_entities.TryGetComponent(projectile, out HitscanComponent? hitscan))
             {
                 FireHitscan(shooter, hitscan, angle);
             }
-            else if (projectile.HasComponent<ProjectileComponent>() &&
-                     ammo != null &&
-                     ammo.TryGetComponent(out AmmoComponent? ammoComponent))
+            else if (_entities.HasComponent<ProjectileComponent>(projectile) &&
+                     _entities.TryGetComponent(ammo, out AmmoComponent? ammoComponent))
             {
-                FireProjectiles(shooter, projectile, ammoComponent.ProjectilesFired, ammoComponent.EvenSpreadAngle, angle, ammoComponent.Velocity, ammo);
+                FireProjectiles(shooter, projectile, ammoComponent.ProjectilesFired, ammoComponent.EvenSpreadAngle, angle, ammoComponent.Velocity, ammo.Value);
 
                 if (CanMuzzleFlash)
                 {
@@ -235,7 +231,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
                 if (ammoComponent.Caseless)
                 {
-                    ammo.Delete();
+                    _entities.DeleteEntity(ammo.Value);
                 }
             }
             else
@@ -259,23 +255,26 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         /// <param name="prototypeManager"></param>
         /// <param name="ejectDirections"></param>
         public static void EjectCasing(
-            IEntity entity,
+            EntityUid entity,
             bool playSound = true,
+            Direction[]? ejectDirections = null,
             IRobustRandom? robustRandom = null,
             IPrototypeManager? prototypeManager = null,
-            Direction[]? ejectDirections = null)
+            IEntityManager? entities = null)
         {
-            robustRandom ??= IoCManager.Resolve<IRobustRandom>();
+            IoCManager.Resolve(ref robustRandom, ref prototypeManager, ref entities);
+
             ejectDirections ??= new[]
                 {Direction.East, Direction.North, Direction.NorthWest, Direction.South, Direction.SouthEast, Direction.West};
 
             const float ejectOffset = 1.8f;
-            var ammo = entity.GetComponent<AmmoComponent>();
+            var ammo = entities.GetComponent<AmmoComponent>(entity);
             var offsetPos = ((robustRandom.NextFloat() - 0.5f) * ejectOffset, (robustRandom.NextFloat() - 0.5f) * ejectOffset);
-            entity.Transform.Coordinates = entity.Transform.Coordinates.Offset(offsetPos);
-            entity.Transform.LocalRotation = robustRandom.Pick(ejectDirections).ToAngle();
+            entities.GetComponent<TransformComponent>(entity).Coordinates = entities.GetComponent<TransformComponent>(entity).Coordinates.Offset(offsetPos);
+            entities.GetComponent<TransformComponent>(entity).LocalRotation = robustRandom.Pick(ejectDirections).ToAngle();
 
-            SoundSystem.Play(Filter.Broadcast(), ammo.SoundCollectionEject.GetSound(), entity.Transform.Coordinates, AudioParams.Default.WithVolume(-1));
+            var coordinates = entities.GetComponent<TransformComponent>(entity).Coordinates;
+            SoundSystem.Play(Filter.Broadcast(), ammo.SoundCollectionEject.GetSound(), coordinates, AudioParams.Default.WithVolume(-1));
         }
 
         /// <summary>
@@ -283,7 +282,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         /// Wraps EjectCasing to make it less toxic for bulk ejections
         /// </summary>
         /// <param name="entities"></param>
-        public static void EjectCasings(IEnumerable<IEntity> entities)
+        public static void EjectCasings(IEnumerable<EntityUid> entities)
         {
             var robustRandom = IoCManager.Resolve<IRobustRandom>();
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
@@ -293,7 +292,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
             foreach (var entity in entities)
             {
-                EjectCasing(entity, playSound, robustRandom, prototypeManager, ejectDirections);
+                EjectCasing(entity, playSound, ejectDirections, robustRandom, prototypeManager);
                 soundPlayCount++;
                 if (soundPlayCount > 3)
                 {
@@ -306,7 +305,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         /// <summary>
         /// Handles firing one or many projectiles
         /// </summary>
-        private void FireProjectiles(IEntity shooter, IEntity baseProjectile, int count, float evenSpreadAngle, Angle angle, float velocity, IEntity ammo)
+        private void FireProjectiles(EntityUid shooter, EntityUid baseProjectile, int count, float evenSpreadAngle, Angle angle, float velocity, EntityUid ammo)
         {
             List<Angle>? sprayAngleChange = null;
             if (count > 1)
@@ -315,10 +314,10 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 sprayAngleChange = Linspace(-evenSpreadAngle / 2, evenSpreadAngle / 2, count);
             }
 
-            var firedProjectiles = new List<IEntity>();
+            var firedProjectiles = new EntityUid[count];
             for (var i = 0; i < count; i++)
             {
-                IEntity projectile;
+                EntityUid projectile;
 
                 if (i == 0)
                 {
@@ -326,10 +325,12 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 }
                 else
                 {
-                    projectile =
-                        Owner.EntityManager.SpawnEntity(baseProjectile.Prototype?.ID, baseProjectile.Transform.Coordinates);
+                    projectile = _entities.SpawnEntity(
+                        _entities.GetComponent<MetaDataComponent>(baseProjectile).EntityPrototype?.ID,
+                        _entities.GetComponent<TransformComponent>(baseProjectile).Coordinates);
                 }
-                firedProjectiles.Add(projectile);
+
+                firedProjectiles[i] = projectile;
 
                 Angle projectileAngle;
 
@@ -342,10 +343,10 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                     projectileAngle = angle;
                 }
 
-                var physics = projectile.GetComponent<IPhysBody>();
+                var physics = _entities.GetComponent<IPhysBody>(projectile);
                 physics.BodyStatus = BodyStatus.InAir;
 
-                var projectileComponent = projectile.GetComponent<ProjectileComponent>();
+                var projectileComponent = _entities.GetComponent<ProjectileComponent>(projectile);
                 projectileComponent.IgnoreEntity(shooter);
 
                 // FIXME: Work around issue where inserting and removing an entity from a container,
@@ -353,17 +354,16 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 // See SharedBroadphaseSystem.HandleContainerInsert()... It sets Awake to false, which causes this.
                 projectile.SpawnTimer(TimeSpan.FromMilliseconds(25), () =>
                 {
-                    projectile
-                        .GetComponent<IPhysBody>()
+                    _entities.GetComponent<IPhysBody>(projectile)
                         .LinearVelocity = projectileAngle.ToVec() * velocity;
                 });
 
 
-                projectile.Transform.WorldRotation = projectileAngle + MathHelper.PiOver2;
+                _entities.GetComponent<TransformComponent>(projectile).WorldRotation = projectileAngle + MathHelper.PiOver2;
             }
-#pragma warning disable 618
-            ammo.SendMessage(this, new BarrelFiredMessage(firedProjectiles));
-#pragma warning restore 618
+
+            _entities.EventBus.RaiseLocalEvent(Owner, new GunShotEvent(firedProjectiles));
+            _entities.EventBus.RaiseLocalEvent(ammo, new AmmoShotEvent(firedProjectiles));
         }
 
         /// <summary>
@@ -385,18 +385,21 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         /// <summary>
         /// Fires hitscan entities and then displays their effects
         /// </summary>
-        private void FireHitscan(IEntity shooter, HitscanComponent hitscan, Angle angle)
+        private void FireHitscan(EntityUid shooter, HitscanComponent hitscan, Angle angle)
         {
-            var ray = new CollisionRay(Owner.Transform.Coordinates.ToMapPos(Owner.EntityManager), angle.ToVec(), (int) hitscan.CollisionMask);
+            var ray = new CollisionRay(_entities.GetComponent<TransformComponent>(Owner).Coordinates.ToMapPos(_entities), angle.ToVec(), (int) hitscan.CollisionMask);
             var physicsManager = EntitySystem.Get<SharedPhysicsSystem>();
-            var rayCastResults = physicsManager.IntersectRay(Owner.Transform.MapID, ray, hitscan.MaxLength, shooter, false).ToList();
+            var rayCastResults = physicsManager.IntersectRay(_entities.GetComponent<TransformComponent>(Owner).MapID, ray, hitscan.MaxLength, shooter, false).ToList();
 
             if (rayCastResults.Count >= 1)
             {
                 var result = rayCastResults[0];
                 var distance = result.Distance;
                 hitscan.FireEffects(shooter, distance, angle, result.HitEntity);
-                EntitySystem.Get<DamageableSystem>().TryChangeDamage(result.HitEntity.Uid, hitscan.Damage);
+                var dmg = EntitySystem.Get<DamageableSystem>().TryChangeDamage(result.HitEntity, hitscan.Damage);
+                if (dmg != null)
+                    EntitySystem.Get<AdminLogSystem>().Add(LogType.HitScanHit,
+                        $"{_entities.ToPrettyString(shooter):user} hit {_entities.ToPrettyString(result.HitEntity):target} using {_entities.ToPrettyString(hitscan.Owner):used} and dealt {dmg.Total:damage} damage");
             }
             else
             {
@@ -405,7 +408,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         }
         #endregion
 
-        public virtual void Examine(FormattedMessage message, bool inDetailsRange)
+        public virtual void Examine(FormattedMessage.Builder message, bool inDetailsRange)
         {
             var fireRateMessage = Loc.GetString(FireRateSelector switch
             {
@@ -419,13 +422,37 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         }
     }
 
-#pragma warning disable 618
-    public class BarrelFiredMessage : ComponentMessage
-#pragma warning restore 618
+    /// <summary>
+    /// Raised on a gun when it fires projectiles.
+    /// </summary>
+    public sealed class GunShotEvent : EntityEventArgs
     {
-        public readonly List<IEntity> FiredProjectiles;
+        /// <summary>
+        /// Uid of the entity that shot.
+        /// </summary>
+        public EntityUid Uid;
 
-        public BarrelFiredMessage(List<IEntity> firedProjectiles)
+        public readonly EntityUid[] FiredProjectiles;
+
+        public GunShotEvent(EntityUid[] firedProjectiles)
+        {
+            FiredProjectiles = firedProjectiles;
+        }
+    }
+
+    /// <summary>
+    /// Raised on ammo when it is fired.
+    /// </summary>
+    public sealed class AmmoShotEvent : EntityEventArgs
+    {
+        /// <summary>
+        /// Uid of the entity that shot.
+        /// </summary>
+        public EntityUid Uid;
+
+        public readonly EntityUid[] FiredProjectiles;
+
+        public AmmoShotEvent(EntityUid[] firedProjectiles)
         {
             FiredProjectiles = firedProjectiles;
         }

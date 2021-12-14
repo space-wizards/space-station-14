@@ -5,6 +5,7 @@ using Content.Shared.MobState.Components;
 using Content.Shared.Tag;
 using Content.Shared.Throwing;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
@@ -29,13 +30,13 @@ namespace Content.Server.Throwing
         /// <param name="direction">A vector pointing from the entity to its destination.</param>
         /// <param name="strength">How much the direction vector should be multiplied for velocity.</param>
         /// <param name="user"></param>
-        /// <param name="pushbackRatio">The ratio of impulse applied to the thrower</param>
-        internal static void TryThrow(this IEntity entity, Vector2 direction, float strength = 1.0f, IEntity? user = null, float pushbackRatio = 1.0f)
+        /// <param name="pushbackRatio">The ratio of impulse applied to the thrower - defaults to 10 because otherwise it's not enough to properly recover from getting spaced</param>
+        internal static void TryThrow(this EntityUid entity, Vector2 direction, float strength = 1.0f, EntityUid? user = null, float pushbackRatio = 10.0f)
         {
-            if (entity.Deleted ||
-                direction == Vector2.Zero ||
+            var entities = IoCManager.Resolve<IEntityManager>();
+            if (entities.GetComponent<MetaDataComponent>(entity).EntityDeleted ||
                 strength <= 0f ||
-                !entity.TryGetComponent(out PhysicsComponent? physicsComponent))
+                !entities.TryGetComponent(entity, out PhysicsComponent? physicsComponent))
             {
                 return;
             }
@@ -46,14 +47,14 @@ namespace Content.Server.Throwing
                 return;
             }
 
-            if (entity.HasComponent<MobStateComponent>())
+            if (entities.HasComponent<MobStateComponent>(entity))
             {
                 Logger.Warning("Throwing not supported for mobs!");
                 return;
             }
 
             var comp = entity.EnsureComponent<ThrownItemComponent>();
-            if (entity.HasComponent<ItemComponent>())
+            if (entities.HasComponent<ItemComponent>(entity))
             {
                 comp.Thrower = user;
                 // Give it a l'il spin.
@@ -61,13 +62,13 @@ namespace Content.Server.Throwing
                 {
                     physicsComponent.ApplyAngularImpulse(ThrowAngularImpulse);
                 }
-                else
+                else if(direction != Vector2.Zero)
                 {
-                    entity.Transform.LocalRotation = direction.ToWorldAngle() - Math.PI;
+                    entities.GetComponent<TransformComponent>(entity).LocalRotation = direction.ToWorldAngle() - Math.PI;
                 }
 
                 if (user != null)
-                    EntitySystem.Get<InteractionSystem>().ThrownInteraction(user, entity);
+                    EntitySystem.Get<InteractionSystem>().ThrownInteraction(user.Value, entity);
             }
 
             var impulseVector = direction.Normalized * strength * physicsComponent.Mass;
@@ -79,6 +80,7 @@ namespace Content.Server.Throwing
             if (time < FlyTime)
             {
                 physicsComponent.BodyStatus = BodyStatus.OnGround;
+                EntitySystem.Get<ThrownItemSystem>().LandComponent(comp);
             }
             else
             {
@@ -93,10 +95,10 @@ namespace Content.Server.Throwing
             }
 
             // Give thrower an impulse in the other direction
-            if (user != null && pushbackRatio > 0.0f && user.TryGetComponent(out IPhysBody? body))
+            if (user != null && pushbackRatio > 0.0f && entities.TryGetComponent(user.Value, out IPhysBody? body))
             {
                 var msg = new ThrowPushbackAttemptEvent();
-                body.Owner.EntityManager.EventBus.RaiseLocalEvent(body.Owner.Uid, msg);
+                entities.EventBus.RaiseLocalEvent(body.Owner, msg);
 
                 if (!msg.Cancelled)
                 {

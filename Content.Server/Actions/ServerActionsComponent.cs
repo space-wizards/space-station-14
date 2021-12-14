@@ -1,12 +1,10 @@
 using System;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
 using Content.Shared.Actions.Prototypes;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction;
-using Robust.Server.GameObjects;
-using Robust.Server.GameStates;
+using Robust.Shared;
+using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -21,7 +19,27 @@ namespace Content.Server.Actions
     [ComponentReference(typeof(SharedActionsComponent))]
     public sealed class ServerActionsComponent : SharedActionsComponent
     {
-        [Dependency] private readonly IServerGameStateManager _stateManager = default!;
+        [Dependency] private readonly IConfigurationManager _configManager = default!;
+        [Dependency] private readonly IEntityManager _entities = default!;
+
+        private float MaxUpdateRange;
+
+        protected override void Initialize()
+        {
+            base.Initialize();
+            _configManager.OnValueChanged(CVars.NetMaxUpdateRange, OnRangeChanged, true);
+        }
+
+        protected override void Shutdown()
+        {
+            base.Shutdown();
+            _configManager.UnsubValueChanged(CVars.NetMaxUpdateRange, OnRangeChanged);
+        }
+
+        private void OnRangeChanged(float obj)
+        {
+            MaxUpdateRange = obj;
+        }
 
         [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession? session = null)
@@ -34,15 +52,14 @@ namespace Content.Server.Actions
                 throw new ArgumentNullException(nameof(session));
             }
 
-            var player = session.AttachedEntity;
-            if (player != Owner) return;
+            if (session.AttachedEntity is not {Valid: true} player || player != Owner) return;
             var attempt = ActionAttempt(performActionMessage, session);
             if (attempt == null) return;
 
             if (!attempt.TryGetActionState(this, out var actionState) || !actionState.Enabled)
             {
                 Logger.DebugS("action", "user {0} attempted to use" +
-                                        " action {1} which is not granted to them", player.Name,
+                                        " action {1} which is not granted to them", _entities.GetComponent<MetaDataComponent>(player).EntityName,
                     attempt);
                 return;
             }
@@ -50,7 +67,7 @@ namespace Content.Server.Actions
             if (actionState.IsOnCooldown(GameTiming))
             {
                 Logger.DebugS("action", "user {0} attempted to use" +
-                                        " action {1} which is on cooldown", player.Name,
+                                        " action {1} which is on cooldown", _entities.GetComponent<MetaDataComponent>(player).EntityName,
                     attempt);
                 return;
             }
@@ -65,7 +82,7 @@ namespace Content.Server.Actions
                     if (toggleMsg.ToggleOn == actionState.ToggledOn)
                     {
                         Logger.DebugS("action", "user {0} attempted to" +
-                                                " toggle action {1} to {2}, but it is already toggled {2}", player.Name,
+                                                " toggle action {1} to {2}, but it is already toggled {2}", _entities.GetComponent<MetaDataComponent>(player).EntityName,
                             attempt.Action.Name, toggleMsg.ToggleOn);
                         return;
                     }
@@ -88,17 +105,17 @@ namespace Content.Server.Actions
                     break;
                 case BehaviorType.TargetEntity:
                     if (performActionMessage is not ITargetEntityActionMessage targetEntityMsg) return;
-                    if (!EntityManager.TryGetEntity(targetEntityMsg.Target, out var entity))
+                    if (!EntityManager.EntityExists(targetEntityMsg.Target))
                     {
                         Logger.DebugS("action", "user {0} attempted to" +
                                                 " perform target entity action {1} but could not find entity with " +
-                                                "provided uid {2}", player.Name, attempt.Action.Name,
+                                                "provided uid {2}", _entities.GetComponent<MetaDataComponent>(player).EntityName, attempt.Action.Name,
                             targetEntityMsg.Target);
                         return;
                     }
-                    if (!CheckRangeAndSetFacing(entity.Transform.Coordinates, player)) return;
+                    if (!CheckRangeAndSetFacing(_entities.GetComponent<TransformComponent>(targetEntityMsg.Target).Coordinates, player)) return;
 
-                    attempt.DoTargetEntityAction(player, entity);
+                    attempt.DoTargetEntityAction(player, targetEntityMsg.Target);
                     break;
                 case BehaviorType.None:
                     break;
@@ -110,48 +127,52 @@ namespace Content.Server.Actions
         private IActionAttempt? ActionAttempt(BasePerformActionMessage message, ICommonSession session)
         {
             IActionAttempt? attempt;
+            var player = session.AttachedEntity;
+
             switch (message)
             {
                 case PerformActionMessage performActionMessage:
                     if (!ActionManager.TryGet(performActionMessage.ActionType, out var action))
                     {
                         Logger.DebugS("action", "user {0} attempted to perform" +
-                                                " unrecognized action {1}", session.AttachedEntity,
+                                                " unrecognized action {1}", player,
                             performActionMessage.ActionType);
                         return null;
                     }
                     attempt = new ActionAttempt(action);
                     break;
                 case PerformItemActionMessage performItemActionMessage:
-                    if (!ActionManager.TryGet(performItemActionMessage.ActionType, out var itemAction))
+                    var type = performItemActionMessage.ActionType;
+                    if (!ActionManager.TryGet(type, out var itemAction))
                     {
                         Logger.DebugS("action", "user {0} attempted to perform" +
                                                 " unrecognized item action {1}",
-                            session.AttachedEntity, performItemActionMessage.ActionType);
+                            player, type);
                         return null;
                     }
 
-                    if (!EntityManager.TryGetEntity(performItemActionMessage.Item, out var item))
+                    var item = performItemActionMessage.Item;
+                    if (!EntityManager.EntityExists(item))
                     {
                         Logger.DebugS("action", "user {0} attempted to perform" +
                                                 " item action {1} for unknown item {2}",
-                            session.AttachedEntity, performItemActionMessage.ActionType, performItemActionMessage.Item);
+                            player, type, item);
                         return null;
                     }
 
-                    if (!item.TryGetComponent<ItemActionsComponent>(out var actionsComponent))
+                    if (!_entities.TryGetComponent<ItemActionsComponent?>(item, out var actionsComponent))
                     {
                         Logger.DebugS("action", "user {0} attempted to perform" +
                                                 " item action {1} for item {2} which has no ItemActionsComponent",
-                            session.AttachedEntity, performItemActionMessage.ActionType, item);
+                            player, type, item);
                         return null;
                     }
 
-                    if (actionsComponent.Holder != session.AttachedEntity)
+                    if (actionsComponent.Holder != player)
                     {
                         Logger.DebugS("action", "user {0} attempted to perform" +
                                                 " item action {1} for item {2} which they are not holding",
-                            session.AttachedEntity, performItemActionMessage.ActionType, item);
+                            player, type, item);
                         return null;
                     }
 
@@ -165,7 +186,7 @@ namespace Content.Server.Actions
             {
                 Logger.DebugS("action", "user {0} attempted to" +
                                         " perform action {1} as a {2} behavior, but this action is actually a" +
-                                        " {3} behavior", session.AttachedEntity, attempt, message.BehaviorType,
+                                        " {3} behavior", player, attempt, message.BehaviorType,
                     attempt.Action.BehaviorType);
                 return null;
             }
@@ -173,17 +194,17 @@ namespace Content.Server.Actions
             return attempt;
         }
 
-        private bool CheckRangeAndSetFacing(EntityCoordinates target, IEntity player)
+        private bool CheckRangeAndSetFacing(EntityCoordinates target, EntityUid player)
         {
             // ensure it's within their clickable range
             var targetWorldPos = target.ToMapPos(EntityManager);
-            var rangeBox = new Box2(player.Transform.WorldPosition, player.Transform.WorldPosition)
-                .Enlarged(_stateManager.PvsRange);
+            var rangeBox = new Box2(_entities.GetComponent<TransformComponent>(player).WorldPosition, _entities.GetComponent<TransformComponent>(player).WorldPosition)
+                .Enlarged(MaxUpdateRange);
             if (!rangeBox.Contains(targetWorldPos))
             {
                 Logger.DebugS("action", "user {0} attempted to" +
                                         " perform target action further than allowed range",
-                    player.Name);
+                    _entities.GetComponent<MetaDataComponent>(player).EntityName);
                 return false;
             }
 

@@ -18,6 +18,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 using Robust.Shared.Network;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Utility.Markup;
 using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.Administration.UI
@@ -58,9 +59,7 @@ namespace Content.Client.Administration.UI
 
         public void ReceiveLine(string text)
         {
-            var formatted = new FormattedMessage(1);
-            formatted.AddMarkup(text);
-            TextOutput.AddMessage(formatted);
+            TextOutput.AddMessage(Basic.RenderMarkup(text));
         }
     }
 }

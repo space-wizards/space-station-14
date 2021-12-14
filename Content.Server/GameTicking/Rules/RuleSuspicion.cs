@@ -25,7 +25,7 @@ namespace Content.Server.GameTicking.Rules
     /// <summary>
     ///     Simple GameRule that will do a TTT-like gamemode with traitors.
     /// </summary>
-    public sealed class RuleSuspicion : GameRule, IEntityEventSubscriber
+    public sealed class RuleSuspicion : GameRule
     {
         private static readonly TimeSpan DeadCheckDelay = TimeSpan.FromSeconds(1);
 
@@ -33,6 +33,7 @@ namespace Content.Server.GameTicking.Rules
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
+        [Dependency] private readonly IEntityManager _entities = default!;
 
         [DataField("addedSound")] private SoundSpecifier _addedSound = new SoundPathSpecifier("/Audio/Misc/tatoralert.ogg");
 
@@ -86,11 +87,11 @@ namespace Content.Server.GameTicking.Rules
             var traitorsAlive = 0;
             var innocentsAlive = 0;
 
-            foreach (var playerSession in _playerManager.GetAllPlayers())
+            foreach (var playerSession in _playerManager.ServerSessions)
             {
-                if (playerSession.AttachedEntity == null
-                    || !playerSession.AttachedEntity.TryGetComponent(out MobStateComponent? mobState)
-                    || !playerSession.AttachedEntity.HasComponent<SuspicionRoleComponent>())
+                if (playerSession.AttachedEntity is not {Valid: true} playerEntity
+                    || !_entities.TryGetComponent(playerEntity, out MobStateComponent? mobState)
+                    || !_entities.HasComponent<SuspicionRoleComponent>(playerEntity))
                 {
                     continue;
                 }

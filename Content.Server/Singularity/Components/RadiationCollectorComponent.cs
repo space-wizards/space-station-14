@@ -4,7 +4,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Radiation;
 using Content.Shared.Singularity.Components;
-using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -75,7 +74,7 @@ namespace Content.Server.Singularity.Components
 
         protected void SetAppearance(RadiationCollectorVisualState state)
         {
-            if (Owner.TryGetComponent<AppearanceComponent>(out var appearance))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<AppearanceComponent?>(Owner, out var appearance))
             {
                 appearance.SetData(RadiationCollectorVisuals.VisualState, state);
             }

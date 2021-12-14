@@ -13,9 +13,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Chemistry.EntitySystems
@@ -67,7 +65,7 @@ namespace Content.Server.Chemistry.EntitySystems
             ExaminedEvent args)
         {
             SolutionContainerManagerComponent? solutionsManager = null;
-            if (!Resolve(args.Examined.Uid, ref solutionsManager)
+            if (!Resolve(args.Examined, ref solutionsManager)
                 || !solutionsManager.Solutions.TryGetValue(examinableComponent.Solution, out var solutionHolder))
                 return;
 
@@ -99,7 +97,7 @@ namespace Content.Server.Chemistry.EntitySystems
         }
 
         private void UpdateAppearance(EntityUid uid, Solution solution,
-            SharedAppearanceComponent? appearanceComponent = null)
+            AppearanceComponent? appearanceComponent = null)
         {
             if (!EntityManager.EntityExists(uid)
                 || !Resolve(uid, ref appearanceComponent, false))
@@ -290,11 +288,11 @@ namespace Content.Server.Chemistry.EntitySystems
             UpdateChemicals(uid, solution);
         }
 
-        public FixedPoint2 GetReagentQuantity(EntityUid ownerUid, string reagentId)
+        public FixedPoint2 GetReagentQuantity(EntityUid owner, string reagentId)
         {
             var reagentQuantity = FixedPoint2.New(0);
-            if (EntityManager.TryGetEntity(ownerUid, out var owner)
-                && owner.TryGetComponent(out SolutionContainerManagerComponent? managerComponent))
+            if (EntityManager.EntityExists(owner)
+                && EntityManager.TryGetComponent(owner, out SolutionContainerManagerComponent? managerComponent))
             {
                 foreach (var solution in managerComponent.Solutions.Values)
                 {

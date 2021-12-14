@@ -1,0 +1,21 @@
+- type: entity
+  name: broken bottle
+  parent: BaseItem 
+  id: BrokenBottle
+  description: In Space Glasgow this is called a conversation starter
+  components:
+  - type: ItemCooldown
+  - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 7
+    hitSound:
+      path: /Audio/Weapons/bladeslice.ogg
+  - type: Sprite
+    sprite: Objects/Consumable/TrashDrinks/broken_bottle.rsi
+    state: icon
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 2
+

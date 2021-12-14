@@ -1,18 +1,16 @@
-using System;
 using System.Threading.Tasks;
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
-using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Extinguisher;
+using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
-using Content.Shared.Extinguisher;
-using Content.Shared.FixedPoint;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -22,6 +20,8 @@ namespace Content.Server.Extinguisher
     [RegisterComponent]
     public class FireExtinguisherComponent : SharedFireExtinguisherComponent, IAfterInteract, IUse, IActivate, IDropped
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "FireExtinguisher";
 
         [DataField("refillSound")]
@@ -59,26 +59,27 @@ namespace Content.Server.Extinguisher
                 return false;
             }
 
-            var targetEntity = eventArgs.Target;
-            if (eventArgs.Target.HasComponent<ReagentTankComponent>()
-                && solutionContainerSystem.TryGetDrainableSolution(targetEntity.Uid, out var targetSolution)
-                && solutionContainerSystem.TryGetDrainableSolution(Owner.Uid, out var container))
+            if (eventArgs.Target is not {Valid: true} target ||
+                !_entMan.HasComponent<ReagentTankComponent>(target) ||
+                !solutionContainerSystem.TryGetDrainableSolution(target, out var targetSolution) ||
+                !solutionContainerSystem.TryGetDrainableSolution(Owner, out var container))
             {
-                var transfer = FixedPoint2.Min(container.AvailableVolume, targetSolution.DrainAvailable);
-                if (transfer > 0)
-                {
-                    var drained = solutionContainerSystem.Drain(targetEntity.Uid, targetSolution, transfer);
-                    solutionContainerSystem.TryAddSolution(Owner.Uid, container, drained);
-
-                    SoundSystem.Play(Filter.Pvs(Owner), _refillSound.GetSound(), Owner);
-                    eventArgs.Target.PopupMessage(eventArgs.User,
-                        Loc.GetString("fire-extingusiher-component-after-interact-refilled-message", ("owner", Owner)));
-                }
-
-                return true;
+                return false;
             }
 
-            return false;
+            var transfer = FixedPoint2.Min(container.AvailableVolume, targetSolution.DrainAvailable);
+            if (transfer > 0)
+            {
+                var drained = solutionContainerSystem.Drain(target, targetSolution, transfer);
+                solutionContainerSystem.TryAddSolution(Owner, container, drained);
+
+                SoundSystem.Play(Filter.Pvs(Owner), _refillSound.GetSound(), Owner);
+                eventArgs.Target.Value.PopupMessage(eventArgs.User,
+                    Loc.GetString("fire-extingusiher-component-after-interact-refilled-message", ("owner", Owner)));
+            }
+
+            return true;
+
         }
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
@@ -91,26 +92,26 @@ namespace Content.Server.Extinguisher
             ToggleSafety(eventArgs.User);
         }
 
-        private void ToggleSafety(IEntity user)
+        private void ToggleSafety(EntityUid user)
         {
             SoundSystem.Play(Filter.Pvs(Owner), SafetySound.GetSound(), Owner, AudioHelpers.WithVariation(0.125f).WithVolume(-4f));
             SetSafety(user, !_safety);
         }
 
-        private void SetSafety(IEntity user, bool state)
+        private void SetSafety(EntityUid user, bool state)
         {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user.Uid) || !_hasSafety)
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) || !_hasSafety)
                 return;
 
             _safety = state;
 
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
                 appearance.SetData(FireExtinguisherVisuals.Safety, _safety);
         }
 
         void IDropped.Dropped(DroppedEventArgs eventArgs)
         {
-            if (_hasSafety && Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (_hasSafety && _entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
                 appearance.SetData(FireExtinguisherVisuals.Safety, _safety);
         }
     }
