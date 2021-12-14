@@ -84,29 +84,32 @@ namespace Content.Server.Verbs
         public void LogVerb(Verb verb, EntityUid user, EntityUid target, bool forced)
         {
             // first get the held item. again.
-            EntityUid? used = null;
+            EntityUid? holding = null;
             if (TryComp(user, out SharedHandsComponent? hands) &&
-                hands.TryGetActiveHeldEntity(out var held))
+                hands.TryGetActiveHeldEntity(out var heldEntity))
             {
-                if (TryComp(held, out HandVirtualItemComponent? pull))
-                    used = pull.BlockingEntity;
-                else
-                    used = held;
+                holding = heldEntity;
             }
 
-            // then prepare the basic log message body
-            var verbText = $"{verb.Category?.Text} {verb.Text}".Trim();
-            var logText = forced
-                ? $"was forced to execute the '{verbText}' verb targeting " // let's not frame people, eh?
-                : $"executed '{verbText}' verb targeting ";
+            // if this is a virtual pull, get the held entity
+            if (holding != null && TryComp(holding, out HandVirtualItemComponent? pull))
+                holding = pull.BlockingEntity;
 
-            // then log with entity information
-            if (used != null)
+            var verbText = $"{verb.Category?.Text} {verb.Text}".Trim();
+
+            // lets not frame people, eh?
+            var executionText = forced ? "was forced to execute" : "executed";
+
+            if (holding == null)
+            {
                 _logSystem.Add(LogType.Verb, verb.Impact,
-                       $"{ToPrettyString(user)} {logText} {ToPrettyString(target)} while holding {ToPrettyString(used.Value)}");
+                        $"{ToPrettyString(user):user} {executionText} the [{verbText:verb}] verb targeting {ToPrettyString(target):target}");
+            }
             else
+            {
                 _logSystem.Add(LogType.Verb, verb.Impact,
-                       $"{ToPrettyString(user)} {logText} {ToPrettyString(target)}");
+                       $"{ToPrettyString(user):user} {executionText} the [{verbText:verb}] verb targeting {ToPrettyString(target):target} while holding {ToPrettyString(holding.Value):held}");
+            }
         }
     }
 }
