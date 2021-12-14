@@ -4,13 +4,19 @@
   - help
   - list
   - quit
+  - hardquit
   - cvar
-  - devwindow
+  - svbind
+  - bind
+  - exec # macro moment
+  - clear
 
 - Flags: VAREDIT
   Commands:
   - addcomp
+  - addcompc
   - rmcomp
+  - rmcompc
   - vv
   - scale
 
@@ -26,16 +32,60 @@
   - netaudit
   - querymappaused
   - physics
+  - showislands
   - showtime
+  - showspritebb
+  - cldbglyr
   - togglefov
   - togglehardfov
   - togglelight
+  - togglelightbuf
   - toggleshadows
   - testbed
+  - lightbb
   - vv
   - szr_stats
   - addview
   - removeview
+  - hwid
+  - fill
+  - dumpentities
+  - getcomponentregistration
+  - monitor
+  - fuck
+  - showpos
+  - showray
+  - showchunkbb
+  - entfo
+  - sggcell
+  - ldrsc
+  - rldrsc
+  - rldshader
+  - rldloc
+  - guidump
+  - uitest
+  - setclipboard
+  - getclipboard
+  - chunkinfo
+  - keyinfo
+  - showanchored
+  - dmetamem
+  - launchauth
+  - lsmonitor
+  - monitorinfo
+  - setmonitor
+  - watch
+  - sendgarbage
+  - setinputcontext
+  - showvelocities
+  - tilelookup
+  - net_entityreport
+  - net_graph
+  - net_watchent
+  - net_draw_interp
+  - vram
+  - devwindow
+  - scene
 
 
 - Flags: MAPPING
@@ -51,6 +101,7 @@
   - savebp
   - savemap
   - tpgrid
+  - gridtc
 
 - Flags: ADMIN
   Commands:
@@ -72,16 +123,19 @@
 - Flags: SPAWN
   Commands:
   - spawn
+  - cspawn
 
 - Flags: HOST
   Commands:
   - gc_mode
   - gc
+  - gcf
   - loglevel
   - saveconfig
   - testlog
   - sudo
   - scsi
+  - csi
   - lsasm
 
 - Flags: QUERY
