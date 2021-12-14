@@ -26,10 +26,5 @@ namespace Content.Server.Inventory
         {
             component.CheckUniformExists();
         }
-
-        private void HandleInvRemovedFromContainer(EntityUid uid, InventoryComponent component, EntRemovedFromContainerMessage args)
-        {
-            component.ForceUnequip(args.Container, args.Entity);
-        }
     }
 }
