@@ -28,7 +28,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Players;
-using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 
 #pragma warning disable 618
@@ -113,10 +112,10 @@ namespace Content.Shared.Interaction
         /// <param name="altInteract">Whether to use default or alternative interactions (usually as a result of
         /// alt+clicking). If combat mode is enabled, the alternative action is to perform the default non-combat
         /// interaction. Having an item in the active hand also disables alternative interactions.</param>
-        public async void UserInteraction(EntityUid user, EntityCoordinates coordinates, EntityUid clickedEntity, bool altInteract = false)
+        public async void UserInteraction(EntityUid user, EntityCoordinates coordinates, EntityUid? target, bool altInteract = false)
         {
-            // TODO remove invalid/default uid and use nullable.
-            EntityUid? target = clickedEntity.Valid ? clickedEntity : null;
+            if (target != null && Deleted(target.Value))
+                return;
 
             // TODO COMBAT Consider using alt-interact for advanced combat? maybe alt-interact disarms?
             if (!altInteract && TryComp(user, out SharedCombatModeComponent? combatMode) && combatMode.IsInCombatMode)
@@ -315,7 +314,7 @@ namespace Content.Shared.Interaction
 
             foreach (var result in rayResults)
             {
-                if (!EntityManager.TryGetComponent(result.HitEntity, out IPhysBody? p))
+                if (!TryComp(result.HitEntity, out IPhysBody? p))
                 {
                     continue;
                 }
@@ -374,7 +373,7 @@ namespace Content.Shared.Interaction
             bool popup = false)
         {
             predicate ??= e => e == origin || e == other;
-            return InRangeUnobstructed(origin, EntityManager.GetComponent<TransformComponent>(other).MapPosition, range, collisionMask, predicate, ignoreInsideBlocker, popup);
+            return InRangeUnobstructed(origin, Transform(other).MapPosition, range, collisionMask, predicate, ignoreInsideBlocker, popup);
         }
 
         /// <summary>
@@ -506,7 +505,7 @@ namespace Content.Shared.Interaction
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {
-            var originPosition = EntityManager.GetComponent<TransformComponent>(origin).MapPosition;
+            var originPosition = Transform(origin).MapPosition;
             predicate ??= e => e == origin;
 
             var inRange = InRangeUnobstructed(originPosition, other, range, collisionMask, predicate, ignoreInsideBlocker);
@@ -553,7 +552,7 @@ namespace Content.Shared.Interaction
 
             var interactUsingEventArgs = new InteractUsingEventArgs(user, clickLocation, used, target);
 
-            var interactUsings = EntityManager.GetComponents<IInteractUsing>(target).OrderByDescending(x => x.Priority);
+            var interactUsings = AllComps<IInteractUsing>(target).OrderByDescending(x => x.Priority);
             foreach (var interactUsing in interactUsings)
             {
                 // If an InteractUsing returns a status completion we finish our interaction
@@ -579,7 +578,7 @@ namespace Content.Shared.Interaction
                 return true;
 
             var afterInteractEventArgs = new AfterInteractEventArgs(user, clickLocation, target, canReach);
-            var afterInteracts = EntityManager.GetComponents<IAfterInteract>(used).OrderByDescending(x => x.Priority).ToList();
+            var afterInteracts = AllComps<IAfterInteract>(used).OrderByDescending(x => x.Priority).ToList();
 
             foreach (var afterInteract in afterInteracts)
             {
@@ -605,7 +604,7 @@ namespace Content.Shared.Interaction
 
         protected void InteractionActivate(EntityUid user, EntityUid used)
         {
-            if (EntityManager.TryGetComponent<UseDelayComponent?>(used, out var delayComponent))
+            if (TryComp(used, out UseDelayComponent? delayComponent))
             {
                 if (delayComponent.ActiveDelay)
                     return;
@@ -633,7 +632,7 @@ namespace Content.Shared.Interaction
                 return;
             }
 
-            if (!EntityManager.TryGetComponent(used, out IActivate? activateComp))
+            if (!TryComp(used, out IActivate? activateComp))
                 return;
 
             var activateEventArgs = new ActivateEventArgs(user, used);
@@ -667,7 +666,7 @@ namespace Content.Shared.Interaction
         /// </summary>
         public void UseInteraction(EntityUid user, EntityUid used)
         {
-            if (EntityManager.TryGetComponent<UseDelayComponent?>(used, out var delayComponent))
+            if (TryComp(used, out UseDelayComponent? delayComponent))
             {
                 if (delayComponent.ActiveDelay)
                     return;
@@ -680,7 +679,7 @@ namespace Content.Shared.Interaction
             if (useMsg.Handled)
                 return;
 
-            var uses = EntityManager.GetComponents<IUse>(used).ToList();
+            var uses = AllComps<IUse>(used).ToList();
 
             // Try to use item on any components which have the interface
             foreach (var use in uses)
@@ -721,7 +720,7 @@ namespace Content.Shared.Interaction
                 return;
             }
 
-            var comps = EntityManager.GetComponents<IThrown>(thrown).ToList();
+            var comps = AllComps<IThrown>(thrown).ToList();
             var args = new ThrownEventArgs(user);
 
             // Call Thrown on all components that implement the interface
@@ -745,7 +744,7 @@ namespace Content.Shared.Interaction
             if (equipMsg.Handled)
                 return;
 
-            var comps = EntityManager.GetComponents<IEquipped>(equipped).ToList();
+            var comps = AllComps<IEquipped>(equipped).ToList();
 
             // Call Thrown on all components that implement the interface
             foreach (var comp in comps)
@@ -765,7 +764,7 @@ namespace Content.Shared.Interaction
             if (unequipMsg.Handled)
                 return;
 
-            var comps = EntityManager.GetComponents<IUnequipped>(equipped).ToList();
+            var comps = AllComps<IUnequipped>(equipped).ToList();
 
             // Call Thrown on all components that implement the interface
             foreach (var comp in comps)
@@ -786,7 +785,7 @@ namespace Content.Shared.Interaction
             if (equippedHandMessage.Handled)
                 return;
 
-            var comps = EntityManager.GetComponents<IEquippedHand>(item).ToList();
+            var comps = AllComps<IEquippedHand>(item).ToList();
 
             foreach (var comp in comps)
             {
@@ -805,7 +804,7 @@ namespace Content.Shared.Interaction
             if (unequippedHandMessage.Handled)
                 return;
 
-            var comps = EntityManager.GetComponents<IUnequippedHand>(item).ToList();
+            var comps = AllComps<IUnequippedHand>(item).ToList();
 
             foreach (var comp in comps)
             {
@@ -842,9 +841,9 @@ namespace Content.Shared.Interaction
                 return;
             }
 
-            EntityManager.GetComponent<TransformComponent>(item).LocalRotation = Angle.Zero;
+            Transform(item).LocalRotation = Angle.Zero;
 
-            var comps = EntityManager.GetComponents<IDropped>(item).ToList();
+            var comps = AllComps<IDropped>(item).ToList();
 
             // Call Land on all components that implement the interface
             foreach (var comp in comps)
@@ -867,7 +866,7 @@ namespace Content.Shared.Interaction
             if (handSelectedMsg.Handled)
                 return;
 
-            var comps = EntityManager.GetComponents<IHandSelected>(item).ToList();
+            var comps = AllComps<IHandSelected>(item).ToList();
 
             // Call Land on all components that implement the interface
             foreach (var comp in comps)
@@ -887,7 +886,7 @@ namespace Content.Shared.Interaction
             if (handDeselectedMsg.Handled)
                 return;
 
-            var comps = EntityManager.GetComponents<IHandDeselected>(item).ToList();
+            var comps = AllComps<IHandDeselected>(item).ToList();
 
             // Call Land on all components that implement the interface
             foreach (var comp in comps)
