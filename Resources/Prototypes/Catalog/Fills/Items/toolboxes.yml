@@ -34,6 +34,8 @@
       - id: Wirecutter
       - id: CableApcStack
       - id: CableMVStack
+      - id: trayScanner
+        prob: 0.9
       - id: ClothingHandsGlovesColorYellow
         prob: 0.05
         orGroup: GlovesOrWires

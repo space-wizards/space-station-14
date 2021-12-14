@@ -1,16 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix uncuffing yourself, type: Fix}
-  - {message: Can no longer break pulling when cuffed, type: Fix}
-  id: 237
-  time: '2021-06-16T14:37:06.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: 'Solar control computers UI scale properly, better prediction, unusable
-      by ghosts', type: Fix}
-  id: 238
-  time: '2021-06-16T14:49:02.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: 'Lights have been dimmed around the station for budgetary purposes.
@@ -2862,3 +2850,14 @@ Entries:
       reveal what is underneath., type: Add}
   id: 738
   time: '2021-12-14T07:46:47.0000000+00:00'
+- author: zlodo
+  changes:
+  - {message: Combat gloves now actually work., type: Fix}
+  id: 739
+  time: '2021-12-14T13:08:19.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: T-Ray Scanner can now be obtained from Youtool! As well as some engineering
+      toolboxes and lockers., type: Add}
+  id: 740
+  time: '2021-12-14T20:21:41.0000000+00:00'
