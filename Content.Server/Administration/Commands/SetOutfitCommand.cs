@@ -1,11 +1,8 @@
 using Content.Server.Administration.UI;
 using Content.Server.EUI;
-using Content.Server.Inventory.Components;
-using Content.Server.Items;
 using Content.Server.PDA;
 using Content.Server.Preferences.Managers;
 using Content.Shared.Administration;
-using Content.Shared.Inventory;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Server.GameObjects;
@@ -15,6 +12,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
+using InventoryComponent = Content.Shared.Inventory.InventoryComponent;
 
 namespace Content.Server.Administration.Commands
 {

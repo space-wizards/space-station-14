@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Access.Components;
-using Content.Server.Inventory.Components;
-using Content.Server.Items;
 using Content.Server.PDA;
 using Content.Shared.Access;
 using Content.Shared.Hands.Components;
@@ -19,6 +17,7 @@ namespace Content.Server.Access.Systems
     public class AccessReaderSystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly InventorySystem _inventorySystem = default!;
 
         public override void Initialize()
         {
@@ -80,16 +79,8 @@ namespace Content.Server.Access.Systems
             }
 
             // maybe its inside an inventory slot?
-            if (EntityManager.TryGetComponent(uid, out InventoryComponent? inventoryComponent))
-            {
-                if (inventoryComponent.HasSlot(EquipmentSlotDefines.Slots.IDCARD) &&
-                    inventoryComponent.TryGetSlotItem(EquipmentSlotDefines.Slots.IDCARD, out ItemComponent? item) &&
-                    FindAccessTagsItem(item.Owner, out tags)
-                )
-                {
-                    return tags;
-                }
-            }
+            if (_inventorySystem.TryGetSlotEntity(uid, "id", out var idUid) && FindAccessTagsItem(idUid.Value, out tags))
+                return tags;
 
             return Array.Empty<string>();
         }

@@ -9,12 +9,9 @@ namespace Content.Shared.Clothing
     {
         public string? ClothingEquippedPrefix { get; }
 
-        public string? EquippedPrefix { get; }
-
-        public ClothingComponentState(string? clothingEquippedPrefix, string? equippedPrefix)
+        public ClothingComponentState(string? clothingEquippedPrefix)
         {
             ClothingEquippedPrefix = clothingEquippedPrefix;
-            EquippedPrefix = equippedPrefix;
         }
     }
 }

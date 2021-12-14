@@ -1,16 +1,5 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using Content.Server.Hands.Components;
-using Content.Server.Inventory.Components;
-using Content.Server.Items;
-using Content.Shared.Access;
-using Content.Shared.Inventory;
-using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 

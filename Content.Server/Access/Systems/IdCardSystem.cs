@@ -1,19 +1,19 @@
 using Content.Server.Access.Components;
-using Content.Server.Inventory.Components;
-using Content.Server.Items;
 using Content.Server.PDA;
 using Content.Shared.Access;
 using Content.Shared.Hands.Components;
-using Content.Shared.Inventory;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Inventory;
 using Robust.Shared.IoC;
 
 namespace Content.Server.Access.Systems
 {
     public class IdCardSystem : EntitySystem
     {
+        [Dependency] private readonly InventorySystem _inventorySystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -102,10 +102,7 @@ namespace Content.Server.Access.Systems
                 return true;
 
             // check inventory slot?
-            if (EntityManager.TryGetComponent(uid, out InventoryComponent? inventoryComponent) &&
-                inventoryComponent.HasSlot(EquipmentSlotDefines.Slots.IDCARD) &&
-                inventoryComponent.TryGetSlotItem(EquipmentSlotDefines.Slots.IDCARD, out ItemComponent? item) &&
-                TryGetIdCard(item.Owner, out idCard))
+            if (_inventorySystem.TryGetSlotEntity(uid, "id", out var idUid) && TryGetIdCard(idUid.Value, out idCard))
             {
                 return true;
             }

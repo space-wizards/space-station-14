@@ -14,23 +14,35 @@ public class EquippedEventBase : EntityEventArgs
     /// </summary>
     public readonly EntityUid Equipment;
 
-    public EquippedEventBase(EntityUid equipee, EntityUid equipment)
+    /// <summary>
+    /// The slot the entity got equipped to.
+    /// </summary>
+    public readonly string Slot;
+
+    /// <summary>
+    /// Slotflags of the slot the entity just got equipped to.
+    /// </summary>
+    public readonly SlotFlags SlotFlags;
+
+    public EquippedEventBase(EntityUid equipee, EntityUid equipment, SlotDefinition slotDefinition)
     {
         Equipee = equipee;
         Equipment = equipment;
+        Slot = slotDefinition.Name;
+        SlotFlags = slotDefinition.SlotFlags;
     }
 }
 
 public class DidEquipEvent : EquippedEventBase
 {
-    public DidEquipEvent(EntityUid equipee, EntityUid equipment) : base(equipee, equipment)
+    public DidEquipEvent(EntityUid equipee, EntityUid equipment, SlotDefinition slotDefinition) : base(equipee, equipment, slotDefinition)
     {
     }
 }
 
 public class GotEquippedEvent : EquippedEventBase
 {
-    public GotEquippedEvent(EntityUid equipee, EntityUid equipment) : base(equipee, equipment)
+    public GotEquippedEvent(EntityUid equipee, EntityUid equipment, SlotDefinition slotDefinition) : base(equipee, equipment, slotDefinition)
     {
     }
 }

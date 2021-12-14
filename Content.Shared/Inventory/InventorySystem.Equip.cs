@@ -51,10 +51,10 @@ public partial class InventorySystem
 
         _movementSpeed.RefreshMovementSpeedModifiers(uid);
 
-        var equippedEvent = new DidEquipEvent(uid, itemUid);
+        var equippedEvent = new DidEquipEvent(uid, itemUid, slotDefinition);
         RaiseLocalEvent(uid, equippedEvent);
 
-        var gotEquippedEvent = new GotEquippedEvent(uid, itemUid);
+        var gotEquippedEvent = new GotEquippedEvent(uid, itemUid, slotDefinition);
         RaiseLocalEvent(itemUid, gotEquippedEvent);
 
         return true;
@@ -75,7 +75,7 @@ public partial class InventorySystem
             return false;
         }
 
-        var attemptEvent = new IsEquippingAttemptEvent(uid, itemUid, slotDefinition.SlotFlags);
+        var attemptEvent = new IsEquippingAttemptEvent(uid, itemUid, slotDefinition);
         RaiseLocalEvent(uid, attemptEvent);
         if (attemptEvent.Cancelled)
         {
@@ -83,7 +83,7 @@ public partial class InventorySystem
             return false;
         }
 
-        var itemAttemptEvent = new BeingEquippedAttemptEvent(uid, itemUid, slotDefinition.SlotFlags);
+        var itemAttemptEvent = new BeingEquippedAttemptEvent(uid, itemUid, slotDefinition);
         RaiseLocalEvent(itemUid, itemAttemptEvent);
         if (itemAttemptEvent.Cancelled)
         {
@@ -113,7 +113,7 @@ public partial class InventorySystem
 
         if (!entity.HasValue) return false;
 
-        if (!force && !CanUnequip(uid, slot, out var reason, slotContainer, inventory))
+        if (!force && !CanUnequip(uid, slot, out var reason, slotContainer, slotDefinition, inventory))
         {
             if(!silent) _popup.PopupCursor(Loc.GetString(reason), Filter.Local());
             return false;
@@ -137,23 +137,23 @@ public partial class InventorySystem
 
         _movementSpeed.RefreshMovementSpeedModifiers(uid);
 
-        var unequippedEvent = new DidUnequipEvent(uid, entity.Value);
+        var unequippedEvent = new DidUnequipEvent(uid, entity.Value, slotDefinition);
         RaiseLocalEvent(uid, unequippedEvent);
 
-        var gotUnequippedEvent = new GotUnequippedEvent(uid, entity.Value);
+        var gotUnequippedEvent = new GotUnequippedEvent(uid, entity.Value, slotDefinition);
         RaiseLocalEvent(entity.Value, gotUnequippedEvent);
 
 
         return true;
     }
 
-    public bool CanUnequip(EntityUid uid, string slot, [NotNullWhen(false)] out string? reason, ContainerSlot? containerSlot = null, InventoryComponent? inventory = null)
+    public bool CanUnequip(EntityUid uid, string slot, [NotNullWhen(false)] out string? reason, ContainerSlot? containerSlot = null, SlotDefinition? slotDefinition = null, InventoryComponent? inventory = null)
     {
         reason = "inventory-component-can-unequip-cannot";
         if (!Resolve(uid, ref inventory))
             return false;
 
-        if (containerSlot == null && !TryGetSlotContainer(uid, slot, out containerSlot, out _, inventory))
+        if ((containerSlot == null || slotDefinition == null) && !TryGetSlotContainer(uid, slot, out containerSlot, out slotDefinition, inventory))
             return false;
 
         if (containerSlot.ContainedEntity == null)
@@ -164,7 +164,7 @@ public partial class InventorySystem
 
         var itemUid = containerSlot.ContainedEntity.Value;
 
-        var attemptEvent = new IsUnequippingAttemptEvent(uid, itemUid);
+        var attemptEvent = new IsUnequippingAttemptEvent(uid, itemUid, slotDefinition);
         RaiseLocalEvent(uid, attemptEvent);
         if (attemptEvent.Cancelled)
         {
@@ -172,7 +172,7 @@ public partial class InventorySystem
             return false;
         }
 
-        var itemAttemptEvent = new BeingUnequippedAttemptEvent(uid, itemUid);
+        var itemAttemptEvent = new BeingUnequippedAttemptEvent(uid, itemUid, slotDefinition);
         RaiseLocalEvent(itemUid, itemAttemptEvent);
         if (itemAttemptEvent.Cancelled)
         {

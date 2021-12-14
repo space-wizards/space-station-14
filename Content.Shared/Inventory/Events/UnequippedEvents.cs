@@ -14,23 +14,29 @@ public class UnequippedEventBase : EntityEventArgs
     /// </summary>
     public readonly EntityUid Equipment;
 
-    public UnequippedEventBase(EntityUid equipee, EntityUid equipment)
+    /// <summary>
+    /// The slot the entity got unequipped from.
+    /// </summary>
+    public readonly string Slot;
+
+    public UnequippedEventBase(EntityUid equipee, EntityUid equipment, SlotDefinition slotDefinition)
     {
         Equipee = equipee;
         Equipment = equipment;
+        Slot = slotDefinition.Name;
     }
 }
 
 public class DidUnequipEvent : UnequippedEventBase
 {
-    public DidUnequipEvent(EntityUid equipee, EntityUid equipment) : base(equipee, equipment)
+    public DidUnequipEvent(EntityUid equipee, EntityUid equipment, SlotDefinition slotDefinition) : base(equipee, equipment, slotDefinition)
     {
     }
 }
 
 public class GotUnequippedEvent : UnequippedEventBase
 {
-    public GotUnequippedEvent(EntityUid equipee, EntityUid equipment) : base(equipee, equipment)
+    public GotUnequippedEvent(EntityUid equipee, EntityUid equipment, SlotDefinition slotDefinition) : base(equipee, equipment, slotDefinition)
     {
     }
 }

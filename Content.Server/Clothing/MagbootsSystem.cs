@@ -1,4 +1,8 @@
+using Content.Server.Alert;
+using Content.Server.Atmos.Components;
 using Content.Server.Clothing.Components;
+using Content.Shared.Alert;
+using Content.Shared.Inventory.Events;
 using Content.Shared.Movement.EntitySystems;
 using Content.Shared.Slippery;
 using Content.Shared.Verbs;
@@ -16,6 +20,29 @@ namespace Content.Server.Clothing
             SubscribeLocalEvent<MagbootsComponent, GetActivationVerbsEvent>(AddToggleVerb);
             SubscribeLocalEvent<MagbootsComponent, SlipAttemptEvent>(OnSlipAttempt);
             SubscribeLocalEvent<MagbootsComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
+            SubscribeLocalEvent<MagbootsComponent, GotEquippedEvent>(OnGotEquipped);
+            SubscribeLocalEvent<MagbootsComponent, GotUnequippedEvent>(OnGotUnequipped);
+        }
+
+        private void OnGotUnequipped(EntityUid uid, MagbootsComponent component, GotUnequippedEvent args)
+        {
+            if (component.On && args.Slot == "shoes")
+            {
+                if (TryComp(args.Equipee, out MovedByPressureComponent? movedByPressure))
+                {
+                    movedByPressure.Enabled = true;
+                }
+
+                if (TryComp(args.Equipee, out ServerAlertsComponent? alerts))
+                {
+                    alerts.ClearAlert(AlertType.Magboots);
+                }
+            }
+        }
+
+        private void OnGotEquipped(EntityUid uid, MagbootsComponent component, GotEquippedEvent args)
+        {
+            component.UpdateContainer();
         }
 
         private void OnRefreshMovespeed(EntityUid uid, MagbootsComponent component, RefreshMovementSpeedModifiersEvent args)

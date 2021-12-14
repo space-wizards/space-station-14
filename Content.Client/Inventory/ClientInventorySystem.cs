@@ -31,7 +31,7 @@ namespace Content.Client.Inventory
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IConfigurationManager _config = default!;
 
-        private const int ButtonSize = 64;
+        public const int ButtonSize = 64;
         private const int ButtonSeparation = 4;
         private const int RightSeparation = 2;
 

@@ -78,6 +78,19 @@ public partial class InventorySystem : EntitySystem
         return true;
     }
 
+    public bool TryGetSlots(EntityUid uid, [NotNullWhen(true)] out SlotDefinition[]? slotDefinitions, InventoryComponent? inventoryComponent = null)
+    {
+        slotDefinitions = null;
+        if (!Resolve(uid, ref inventoryComponent))
+            return false;
+
+        if (!_prototypeManager.TryIndex<InventoryTemplatePrototype>(inventoryComponent.TemplateId, out var templatePrototype))
+            return false;
+
+        slotDefinitions = templatePrototype.Slots;
+        return true;
+    }
+
     public struct ContainerSlotEnumerator
     {
         private readonly InventorySystem _inventorySystem;

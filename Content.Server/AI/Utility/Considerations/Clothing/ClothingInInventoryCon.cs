@@ -10,7 +10,7 @@ namespace Content.Server.AI.Utility.Considerations.Clothing
 {
     public sealed class ClothingInInventoryCon : Consideration
     {
-        public ClothingInInventoryCon Slot(EquipmentSlotDefines.SlotFlags slotFlags, Blackboard context)
+        public ClothingInInventoryCon Slot(SlotFlags slotFlags, Blackboard context)
         {
             // Ideally we'd just use a variable but then if we were iterating through multiple AI at once it'd be
             // Stuffed so we need to store it on the AI's context.
