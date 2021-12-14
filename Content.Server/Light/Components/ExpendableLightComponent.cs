@@ -1,6 +1,6 @@
 using Content.Server.Clothing.Components;
-using Content.Server.Items;
 using Content.Shared.Interaction;
+using Content.Shared.Item;
 using Content.Shared.Light.Component;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -38,7 +38,7 @@ namespace Content.Server.Light.Components
         {
             base.Initialize();
 
-            if (_entMan.TryGetComponent<ItemComponent?>(Owner, out var item))
+            if (_entMan.TryGetComponent<SharedItemComponent?>(Owner, out var item))
             {
                 item.EquippedPrefix = "unlit";
             }
@@ -55,7 +55,7 @@ namespace Content.Server.Light.Components
         {
             if (!Activated && CurrentState == ExpendableLightState.BrandNew)
             {
-                if (_entMan.TryGetComponent<ItemComponent?>(Owner, out var item))
+                if (_entMan.TryGetComponent<SharedItemComponent?>(Owner, out var item))
                 {
                     item.EquippedPrefix = "lit";
                 }
@@ -163,7 +163,7 @@ namespace Content.Server.Light.Components
                         UpdateSpriteAndSounds(Activated);
                         UpdateVisualizer();
 
-                        if (_entMan.TryGetComponent<ItemComponent?>(Owner, out var item))
+                        if (_entMan.TryGetComponent<SharedItemComponent?>(Owner, out var item))
                         {
                             item.EquippedPrefix = "unlit";
                         }

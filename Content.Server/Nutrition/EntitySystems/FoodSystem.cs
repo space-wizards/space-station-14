@@ -23,6 +23,8 @@ using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using Content.Shared.Hands;
+using Content.Shared.Inventory;
+using Content.Shared.Item;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
@@ -39,6 +41,7 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly SharedAdminLogSystem _logSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
+        [Dependency] private readonly InventorySystem _inventorySystem = default!;
 
         public override void Initialize()
         {
@@ -220,7 +223,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 EntityManager.DeleteEntity((component).Owner);
 
                 // Put the trash in the user's hand
-                if (EntityManager.TryGetComponent(finisher, out ItemComponent? item) &&
+                if (EntityManager.TryGetComponent(finisher, out SharedItemComponent? item) &&
                     handsComponent.CanPutInHand(item))
                 {
                     handsComponent.PutInHand(item);
@@ -477,20 +480,20 @@ namespace Content.Server.Nutrition.EntitySystems
 
             IngestionBlockerComponent blocker;
 
-            if (component.TryGetSlotItem(EquipmentSlotDefines.Slots.MASK, out ItemComponent? mask) &&
-                EntityManager.TryGetComponent(mask.Owner, out blocker) &&
+            if (_inventorySystem.TryGetSlotEntity(uid, "mask", out var maskUid) &&
+                EntityManager.TryGetComponent(maskUid, out blocker) &&
                 blocker.Enabled)
             {
-                args.Blocker = mask.Owner;
+                args.Blocker = maskUid;
                 args.Cancel();
                 return;
             }
 
-            if (component.TryGetSlotItem(EquipmentSlotDefines.Slots.HEAD, out ItemComponent? head) &&
-                EntityManager.TryGetComponent(head.Owner, out blocker) &&
+            if (_inventorySystem.TryGetSlotEntity(uid, "head", out var headUid) &&
+                EntityManager.TryGetComponent(headUid, out blocker) &&
                 blocker.Enabled)
             {
-                args.Blocker = head.Owner;
+                args.Blocker = headUid;
                 args.Cancel();
             }
         }

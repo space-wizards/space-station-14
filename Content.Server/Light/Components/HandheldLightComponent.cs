@@ -1,6 +1,5 @@
 using System.Threading.Tasks;
 using Content.Server.Clothing.Components;
-using Content.Server.Items;
 using Content.Server.PowerCell.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
@@ -8,6 +7,7 @@ using Content.Shared.Actions.Behaviors.Item;
 using Content.Shared.Actions.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Item;
 using Content.Shared.Light.Component;
 using Content.Shared.Popups;
 using Content.Shared.Rounding;
@@ -183,7 +183,7 @@ namespace Content.Server.Light.Components
                 clothing.ClothingEquippedPrefix = Loc.GetString(on ? "on" : "off");
             }
 
-            if (_entMan.TryGetComponent(Owner, out ItemComponent? item))
+            if (_entMan.TryGetComponent(Owner, out SharedItemComponent? item))
             {
                 item.EquippedPrefix = Loc.GetString(on ? "on" : "off");
             }
