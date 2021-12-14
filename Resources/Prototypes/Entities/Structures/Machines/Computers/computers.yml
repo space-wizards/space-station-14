@@ -25,6 +25,8 @@
     radius: 1.5
     energy: 1.6
     color: "#43ccb5"
+  - type: Rotatable
+    rotateWhileAnchored: true
 
 - type: entity
   parent: ComputerShuttleBase
@@ -259,6 +261,7 @@
       - EmergencyFire
       - EmergencyInternals
       - EmergencyRadiation
+      - EmergencyInflatablewall
       - ArmorySmg
       - ArmoryShotgun
       - SecurityArmor

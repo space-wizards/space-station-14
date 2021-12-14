@@ -12,6 +12,7 @@
     - state: closed
       map: ["enum.DoorVisualLayers.Base"]
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb

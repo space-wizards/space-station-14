@@ -23,7 +23,7 @@
 - type: entity
   parent: HatBase
   id: ClothingHeadHelmetHardsuitDeathsquad
-  name: deathsquad
+  name: deathsquad hardsuit helmet
   description: A robust helmet for special operations.
   components:
   - type: Sprite

@@ -8,6 +8,7 @@ using Robust.Shared.Utility;
 using System.Threading.Tasks;
 using Content.Server.Doors.Components;
 using Content.Shared.Examine;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Construction.Conditions
 {
@@ -30,14 +31,16 @@ namespace Content.Server.Construction.Conditions
         {
             var entity = args.Examined;
 
-            if (!entity.TryGetComponent(out AirlockComponent? airlock)) return false;
+            var entMan = IoCManager.Resolve<IEntityManager>();
+
+            if (!entMan.TryGetComponent(entity, out AirlockComponent? airlock)) return false;
 
             if (airlock.BoltsDown != Value)
             {
                 if (Value == true)
-                    args.PushMarkup(Loc.GetString("construction-examine-condition-airlock-bolt", ("entityName", entity.Name)) + "\n");
+                    args.PushMarkup(Loc.GetString("construction-examine-condition-airlock-bolt", ("entityName", Name: entMan.GetComponent<MetaDataComponent>(entity).EntityName)) + "\n");
                 else
-                    args.PushMarkup(Loc.GetString("construction-examine-condition-airlock-unbolt", ("entityName", entity.Name)) + "\n");
+                    args.PushMarkup(Loc.GetString("construction-examine-condition-airlock-unbolt", ("entityName", Name: entMan.GetComponent<MetaDataComponent>(entity).EntityName)) + "\n");
                 return true;
             }
 

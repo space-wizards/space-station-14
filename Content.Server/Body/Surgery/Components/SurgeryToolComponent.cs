@@ -5,13 +5,13 @@ using Content.Server.Body.Components;
 using Content.Server.Body.Surgery.Messages;
 using Content.Server.UserInterface;
 using Content.Shared.Body.Components;
-using Content.Shared.Body.Part;
 using Content.Shared.Body.Surgery;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -26,6 +26,8 @@ namespace Content.Server.Body.Surgery.Components
     [RegisterComponent]
     public class SurgeryToolComponent : Component, ISurgeon, IAfterInteract
     {
+        [Dependency] private readonly IEntityManager _entities = default!;
+
         public override string Name => "SurgeryTool";
 
         private readonly Dictionary<int, object> _optionsCache = new();
@@ -44,7 +46,7 @@ namespace Content.Server.Body.Surgery.Components
 
         public SharedBodyComponent? BodyCache { get; private set; }
 
-        public IEntity? PerformerCache { get; private set; }
+        public EntityUid? PerformerCache { get; private set; }
 
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
@@ -53,7 +55,7 @@ namespace Content.Server.Body.Surgery.Components
                 return false;
             }
 
-            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
+            if (!_entities.TryGetComponent(eventArgs.User, out ActorComponent? actor))
             {
                 return false;
             }
@@ -61,7 +63,7 @@ namespace Content.Server.Body.Surgery.Components
             CloseAllSurgeryUIs();
 
             // Attempt surgery on a body by sending a list of operable parts for the client to choose from
-            if (eventArgs.Target.TryGetComponent(out SharedBodyComponent? body))
+            if (_entities.TryGetComponent(eventArgs.Target.Value, out SharedBodyComponent? body))
             {
                 // Create dictionary to send to client (text to be shown : data sent back if selected)
                 var toSend = new Dictionary<string, int>();
@@ -88,7 +90,7 @@ namespace Content.Server.Body.Surgery.Components
                     NotUsefulPopup();
                 }
             }
-            else if (eventArgs.Target.TryGetComponent<SharedBodyPartComponent>(out var part))
+            else if (_entities.TryGetComponent<SharedBodyPartComponent?>(eventArgs.Target.Value, out var part))
             {
                 // Attempt surgery on a DroppedBodyPart - there's only one possible target so no need for selection UI
                 PerformerCache = eventArgs.User;
@@ -108,7 +110,7 @@ namespace Content.Server.Body.Surgery.Components
                 }
 
                 // Log error if the surgery fails somehow.
-                Logger.Debug($"Error when trying to perform surgery on ${nameof(SharedBodyPartComponent)} {eventArgs.User.Name}");
+                Logger.Debug($"Error when trying to perform surgery on ${nameof(SharedBodyPartComponent)} {_entities.GetComponent<MetaDataComponent>(eventArgs.User).EntityName}");
                 throw new InvalidOperationException();
             }
 
@@ -128,8 +130,8 @@ namespace Content.Server.Body.Surgery.Components
 
             if (_optionsCache.Count > 0 && PerformerCache != null)
             {
-                OpenSurgeryUI(PerformerCache.GetComponent<ActorComponent>().PlayerSession);
-                UpdateSurgeryUIMechanismRequest(PerformerCache.GetComponent<ActorComponent>().PlayerSession,
+                OpenSurgeryUI(_entities.GetComponent<ActorComponent>(PerformerCache.Value).PlayerSession);
+                UpdateSurgeryUIMechanismRequest(_entities.GetComponent<ActorComponent>(PerformerCache.Value).PlayerSession,
                     toSend);
                 _callbackCache = callback;
             }
@@ -159,7 +161,7 @@ namespace Content.Server.Body.Surgery.Components
 #pragma warning disable 618
             SendMessage(message);
 #pragma warning restore 618
-            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, message);
+            _entities.EventBus.RaiseEvent(EventSource.Local, message);
         }
 
         private void UpdateSurgeryUIBodyPartRequest(IPlayerSession session, Dictionary<string, int> options)
@@ -213,7 +215,7 @@ namespace Content.Server.Body.Surgery.Components
         private void HandleReceiveBodyPart(int key)
         {
             if (PerformerCache == null ||
-                !PerformerCache.TryGetComponent(out ActorComponent? actor))
+                !_entities.TryGetComponent(PerformerCache.Value, out ActorComponent? actor))
             {
                 return;
             }
@@ -227,10 +229,10 @@ namespace Content.Server.Body.Surgery.Components
                 return;
             }
 
-            var target = (SharedBodyPartComponent) targetObject!;
+            var target = (SharedBodyPartComponent) targetObject;
 
             // TODO BODY Reconsider
-            if (!target.AttemptSurgery(_surgeryType, BodyCache, this, PerformerCache))
+            if (!target.AttemptSurgery(_surgeryType, BodyCache, this, PerformerCache.Value))
             {
                 NotUsefulAnymorePopup();
             }
@@ -247,21 +249,21 @@ namespace Content.Server.Body.Surgery.Components
                 !_optionsCache.TryGetValue(key, out var targetObject) ||
                 targetObject is not MechanismComponent target ||
                 PerformerCache == null ||
-                !PerformerCache.TryGetComponent(out ActorComponent? actor))
+                !_entities.TryGetComponent(PerformerCache.Value, out ActorComponent? actor))
             {
                 NotUsefulAnymorePopup();
                 return;
             }
 
             CloseSurgeryUI(actor.PlayerSession);
-            _callbackCache?.Invoke(target, BodyCache, this, PerformerCache);
+            _callbackCache?.Invoke(target, BodyCache, this, PerformerCache.Value);
         }
 
         private void NotUsefulPopup()
         {
             if (PerformerCache == null) return;
 
-            BodyCache?.Owner.PopupMessage(PerformerCache,
+            BodyCache?.Owner.PopupMessage(PerformerCache.Value,
                 Loc.GetString("surgery-tool-component-not-useful-message", ("bodyPart", Owner)));
         }
 
@@ -269,7 +271,7 @@ namespace Content.Server.Body.Surgery.Components
         {
             if (PerformerCache == null) return;
 
-            BodyCache?.Owner.PopupMessage(PerformerCache,
+            BodyCache?.Owner.PopupMessage(PerformerCache.Value,
                 Loc.GetString("surgery-tool-component-not-useful-anymore-message", ("bodyPart", Owner)));
         }
     }

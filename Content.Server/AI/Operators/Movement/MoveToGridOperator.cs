@@ -8,12 +8,12 @@ namespace Content.Server.AI.Operators.Movement
 {
     public sealed class MoveToGridOperator : AiOperator
     {
-        private readonly IEntity _owner;
+        private readonly EntityUid _owner;
         private GridTargetSteeringRequest? _request;
         private readonly EntityCoordinates _target;
         public float DesiredRange { get; set; }
 
-        public MoveToGridOperator(IEntity owner, EntityCoordinates target, float desiredRange = 1.5f)
+        public MoveToGridOperator(EntityUid owner, EntityCoordinates target, float desiredRange = 1.5f)
         {
             _owner = owner;
             _target = target;

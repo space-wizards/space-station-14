@@ -15,6 +15,7 @@
   - type: Clickable
   - type: Slippery
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb

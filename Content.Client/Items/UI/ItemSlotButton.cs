@@ -3,6 +3,7 @@ using Content.Client.Cooldown;
 using Content.Client.HUD;
 using Content.Client.Items.Managers;
 using Content.Client.Stylesheets;
+using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -148,7 +149,12 @@ namespace Content.Client.Items.UI
         {
             if (EntityHover)
             {
-                HoverSpriteView.Sprite?.Owner.Delete();
+                ISpriteComponent? tempQualifier = HoverSpriteView.Sprite;
+                if (tempQualifier != null)
+                {
+                    IoCManager.Resolve<IEntityManager>().DeleteEntity(tempQualifier.Owner);
+                }
+
                 HoverSpriteView.Sprite = null;
             }
         }

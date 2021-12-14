@@ -11,6 +11,7 @@
     layers:
     - state: assembly
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb

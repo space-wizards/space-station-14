@@ -31,6 +31,7 @@
     enabled: false
   - type: Physics
     bodyType: KinematicController
+  - type: Fixtures
     fixtures: # TODO: Make a second fixture.
     - shape:
         !type:PhysShapeAabb
@@ -71,6 +72,7 @@
     enabled: false
   - type: Physics
     bodyType: KinematicController
+  - type: Fixtures
     fixtures: # TODO: Make a second fixture.
     - shape:
         !type:PhysShapeAabb

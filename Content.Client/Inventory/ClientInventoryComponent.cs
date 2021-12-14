@@ -4,9 +4,7 @@ using System.Linq;
 using Content.Client.Clothing;
 using Content.Client.Items.UI;
 using Content.Shared.CharacterAppearance;
-using Content.Shared.Chemistry;
 using Content.Shared.Inventory;
-using Content.Shared.Movement.Components;
 using Content.Shared.Movement.EntitySystems;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
@@ -17,7 +15,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Reflection;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
-using static Content.Shared.Inventory.EquipmentSlotDefines;
 using static Content.Shared.Inventory.SharedInventoryComponent.ClientInventoryMessage;
 
 namespace Content.Client.Inventory
@@ -30,6 +27,8 @@ namespace Content.Client.Inventory
     [Friend(typeof(ClientInventorySystem))]
     public class ClientInventoryComponent : InventoryComponent
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public Control? BottomLeftButtons;
         public Control? BottomRightButtons;
         public Control? TopQuickButtons;
@@ -39,11 +38,9 @@ namespace Content.Client.Inventory
         public readonly List<ItemSlotButton> SlotButtons = new();
 
 
+        private readonly Dictionary<Slots, EntityUid> _slots = new();
 
-
-        private readonly Dictionary<Slots, IEntity> _slots = new();
-
-        public IReadOnlyDictionary<Slots, IEntity> AllSlots => _slots;
+        public IReadOnlyDictionary<Slots, EntityUid> AllSlots => _slots;
 
         [ViewVariables] public InventoryInterfaceController InterfaceController { get; private set; } = default!;
 
@@ -95,9 +92,9 @@ namespace Content.Client.Inventory
             }
         }
 
-        public override bool IsEquipped(IEntity item)
+        public override bool IsEquipped(EntityUid item)
         {
-            return item != null && _slots.Values.Any(e => e == item);
+            return item != default && _slots.Values.Any(e => e == item);
         }
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
@@ -109,9 +106,9 @@ namespace Content.Client.Inventory
 
             var doneSlots = new HashSet<Slots>();
 
-            foreach (var (slot, entityUid) in state.Entities)
+            foreach (var (slot, entity) in state.Entities)
             {
-                if (!Owner.EntityManager.TryGetEntity(entityUid, out var entity))
+                if (!_entMan.EntityExists(entity))
                 {
                     continue;
                 }
@@ -125,9 +122,7 @@ namespace Content.Client.Inventory
 
             if (state.HoverEntity != null)
             {
-                var (slot, (entityUid, fits)) = state.HoverEntity.Value;
-                var entity = Owner.EntityManager.GetEntity(entityUid);
-
+                var (slot, (entity, fits)) = state.HoverEntity.Value;
                 InterfaceController?.HoverInSlot(slot, entity, fits);
             }
 
@@ -140,24 +135,24 @@ namespace Content.Client.Inventory
                 }
             }
 
-            EntitySystem.Get<MovementSpeedModifierSystem>().RefreshMovementSpeedModifiers(OwnerUid);
+            EntitySystem.Get<MovementSpeedModifierSystem>().RefreshMovementSpeedModifiers(Owner);
         }
 
-        private void _setSlot(Slots slot, IEntity entity)
+        private void _setSlot(Slots slot, EntityUid entity)
         {
             SetSlotVisuals(slot, entity);
 
             InterfaceController?.AddToSlot(slot, entity);
         }
 
-        internal void SetSlotVisuals(Slots slot, IEntity entity)
+        internal void SetSlotVisuals(Slots slot, EntityUid entity)
         {
             if (_sprite == null)
             {
                 return;
             }
 
-            if (entity.TryGetComponent(out ClothingComponent? clothing))
+            if (_entMan.TryGetComponent(entity, out ClothingComponent? clothing))
             {
                 var flag = SlotMasks[slot];
                 var data = clothing.GetEquippedStateInfo(flag, SpeciesId);
@@ -247,12 +242,12 @@ namespace Content.Client.Inventory
             _playerAttached = true;
         }
 
-        public bool TryGetSlot(Slots slot, [NotNullWhen(true)] out IEntity? item)
+        public bool TryGetSlot(Slots slot, [NotNullWhen(true)] out EntityUid item)
         {
             return _slots.TryGetValue(slot, out item);
         }
 
-        public bool TryFindItemSlots(IEntity item, [NotNullWhen(true)] out Slots? slots)
+        public bool TryFindItemSlots(EntityUid item, [NotNullWhen(true)] out Slots? slots)
         {
             slots = null;
 

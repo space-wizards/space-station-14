@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using Content.Client.HUD;
+using Content.Shared.Input;
 using Content.Client.Items.Components;
 using Content.Client.Items.UI;
 using Content.Shared.CCVar;
-using Content.Shared.Input;
 using Content.Shared.Inventory;
 using Content.Shared.Movement.EntitySystems;
 using Content.Shared.Slippery;
@@ -12,7 +12,6 @@ using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Client.Utility;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input.Binding;
@@ -20,7 +19,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 
 namespace Content.Client.Inventory
 {
@@ -130,9 +128,9 @@ namespace Content.Client.Inventory
         // jesus christ, this is duplicated to server/client, should really just be shared..
         private void OnSlipAttemptEvent(EntityUid uid, ClientInventoryComponent component, SlipAttemptEvent args)
         {
-            if (component.TryGetSlot(EquipmentSlotDefines.Slots.SHOES, out IEntity? shoes))
+            if (component.TryGetSlot(EquipmentSlotDefines.Slots.SHOES, out EntityUid shoes))
             {
-                RaiseLocalEvent(shoes.Uid, args, false);
+                RaiseLocalEvent(shoes, args, false);
             }
         }
 
@@ -140,9 +138,9 @@ namespace Content.Client.Inventory
         {
             foreach (var (_, ent) in component.AllSlots)
             {
-                if (ent != null)
+                if (ent != default)
                 {
-                    RaiseLocalEvent(ent.Uid, args, false);
+                    RaiseLocalEvent(ent, args, false);
                 }
             }
         }
