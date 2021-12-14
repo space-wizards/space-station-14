@@ -38,7 +38,6 @@ namespace Content.Server.Radiation
         public List<string> RadiationDamageTypeIDs = new() {"Radiation"};
         public void Radiate(float Energy, float Range, IComponent Source, float frameTime)
         {
-            var entityManager = IoCManager.Resolve<IEntityManager>();
             _accumulator += frameTime;
 
             DamageSpecifier _damage = new();
@@ -47,23 +46,23 @@ namespace Content.Server.Radiation
             while (_accumulator > RadiationCooldown)
             {
                 _accumulator -= RadiationCooldown;
-                foreach (var entity in _lookup.GetEntitiesInRange(Source.Owner.Transform.Coordinates, Range))
+                foreach (var Target in _lookup.GetEntitiesInRange(Transform(Source.Owner).Coordinates, Range))
                 {
-                    float InRange = _lookup.GetEntitiesInRange(Source.Owner.Transform.Coordinates, Range).Count();
-                    if (entity.HasComponent<DamageableComponent>())
+                    float InRange = _lookup.GetEntitiesInRange(Transform(Source.Owner).Coordinates, Range).Count();
+                    if (EntityManager.HasComponent<DamageableComponent>(Target))
                     {
                         //TODO: make damage falloff with range and add plasmaglass occluding
                         _damage = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Radiation"), (int) Energy/100);
 
                         foreach (var typeID in RadiationDamageTypeIDs)
-                        _damageable.TryChangeDamage(entity.Uid, _damage);
+                        _damageable.TryChangeDamage(Target, _damage);
                     }
 
-                    if (entity.HasComponent<RadiationCollectorComponent>())
+                    if (EntityManager.HasComponent<PowerSupplierComponent>(Target))
                     {
                         //TODO: make energy falloff with range and plasmaglass occluding
-                        float supply = (Energy / InRange) * 1.25f;
-                        entity.GetComponent<PowerSupplierComponent>().MaxSupply = supply;
+                        float supply = (Energy / InRange) * 1.1f;
+                        EntityManager.GetComponent<PowerSupplierComponent>(Target).MaxSupply = supply;
                     }
                 }
             }

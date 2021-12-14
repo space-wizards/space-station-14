@@ -144,7 +144,7 @@ namespace Content.Server.Singularity.EntitySystems
 
             foreach (var entity in _lookup.GetEntitiesInRange(EntityManager.GetComponent<TransformComponent>(component.Owner).MapID, worldPos, destroyRange))
             {
-                if (entity.HasComponent<SupermatterComponent>())
+                if (EntityManager.HasComponent<SupermatterComponent>(entity))
                     component.Scrung = true;
                 HandleDestroy(component, entity);
             }

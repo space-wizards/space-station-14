@@ -15,6 +15,7 @@
       damageModifierSet: Glass
     - type: Physics
       bodyType: Dynamic
+    - type: Fixtures
       fixtures:
       - shape:
           !type:PhysShapeAabb
@@ -38,11 +39,13 @@
     - type: Pullable
     - type: Sprite
       drawdepth: 2
-      layers:
-      - texture: "Structures/Power/Generation/supermatter/supermatter.png"
+      sprite: Structures/Power/Generation/supermatter.rsi
+      state: supermatter
+    - type: Icon
+      sprite: Structures/Power/Generation/supermatter.rsi
+      state: supermatter
     - type: PointLight
       enabled: true
       radius: 10
       energy: 5
       color: "#d9ce00"
-    #- type: RgbLightController
