@@ -68,7 +68,7 @@ public partial class InventorySystem : EntitySystem
         return true;
     }
 
-    public bool TryGetContainerSlotEnumerator(EntityUid uid, [NotNullWhen(true)] out ContainerSlotEnumerator? containerSlotEnumerator, InventoryComponent? component = null)
+    public bool TryGetContainerSlotEnumerator(EntityUid uid, out ContainerSlotEnumerator containerSlotEnumerator, InventoryComponent? component = null)
     {
         containerSlotEnumerator = default;
         if (!Resolve(uid, ref component))
