@@ -1,12 +1,6 @@
 Entries:
 - author: Seth
   changes:
-  - {message: Made windows and walls immune to punches and low damaging tools, type: Tweak}
-  - {message: Made reinforced and plasma windows stronger, type: Tweak}
-  id: 235
-  time: '2021-06-11T23:53:51.0000000+00:00'
-- author: Seth
-  changes:
   - {message: Made RCDs unable to destroy reinforced walls and airlocks., type: Tweak}
   id: 236
   time: '2021-06-16T03:36:13.0000000+00:00'
@@ -2859,3 +2853,10 @@ Entries:
   - {message: Pointing at entities works again., type: Fix}
   id: 736
   time: '2021-12-14T02:21:55.0000000+00:00'
+- author: Mith-randalf
+  changes:
+  - {message: 'Using information extracted from captured Assistants, security now
+      have access to single-use zipties from the security dispenser and cargo''s new
+      restraints crate.', type: Add}
+  id: 737
+  time: '2021-12-14T05:17:27.0000000+00:00'
