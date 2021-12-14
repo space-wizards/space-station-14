@@ -29,6 +29,8 @@
     Blunt: 16
     Slash: 16
     Piercing: 16
+    Shock: 10
+    Heat: 10
 
 - type: damageModifierSet
   id: Inflatable
