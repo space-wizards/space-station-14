@@ -274,6 +274,40 @@
     - !type:TileNotBlocked
 
 - type: construction
+  name: railing
+  id: Railing
+  graph: railing
+  startNode: start
+  targetNode: railing
+  category: Structures
+  description: Basic railing meant to protect idiots like you from falling.
+  icon:
+    sprite: Structures/Walls/railing.rsi
+    state: side
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  name: railing corner
+  id: RailingCorner
+  graph: railing
+  startNode: start
+  targetNode: railingCorner
+  category: Structures
+  description: Basic railing meant to protect idiots like you from falling.
+  icon:
+    sprite: Structures/Walls/railing.rsi
+    state: corner
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
   name: airlock
   id: airlock
   graph: airlock
