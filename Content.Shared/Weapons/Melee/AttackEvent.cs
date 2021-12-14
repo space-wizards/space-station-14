@@ -27,21 +27,14 @@ namespace Content.Shared.Weapons.Melee
         /// <summary>
         ///     UID of the entity that was attacked.
         /// </summary>
-        public EntityUid Target { get; }
+        public EntityUid? Target { get; }
 
-        /// <summary>
-        ///     Entity that was attacked.
-        /// </summary>
-        public EntityUid? TargetEntity { get; }
-
-        public ClickAttackEvent(EntityUid used, EntityUid user, EntityCoordinates clickLocation, EntityUid target = default)
+        public ClickAttackEvent(EntityUid used, EntityUid user, EntityCoordinates clickLocation, EntityUid? target = null)
         {
             Used = used;
             User = user;
             ClickLocation = clickLocation;
             Target = target;
-
-            TargetEntity = IoCManager.Resolve<IEntityManager>().EntityExists(Target) ? Target : default(EntityUid?);
         }
     }
 

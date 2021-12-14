@@ -892,6 +892,7 @@ namespace Content.Shared.Hands.Components
         [ViewVariables]
         public IContainer? Container { get; set; }
 
+        // TODO: Make this a nullable EntityUid...
         [ViewVariables]
         public EntityUid HeldEntity => Container?.ContainedEntities.FirstOrDefault() ?? EntityUid.Invalid;
 
