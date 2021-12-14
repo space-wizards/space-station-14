@@ -131,11 +131,13 @@ namespace Content.Server.Stack
             if (!args.CanAccess || !args.CanInteract)
                 return;
 
-            Verb halve = new();
-            halve.Text = Loc.GetString("comp-stack-split-halve");
-            halve.Category = VerbCategory.Split;
-            halve.Act = () => UserSplit(uid, args.User, stack.Count / 2, stack);
-            halve.Priority = 1;
+            Verb halve = new()
+            {
+                Text = Loc.GetString("comp-stack-split-halve"),
+                Category = VerbCategory.Split,
+                Act = () => UserSplit(uid, args.User, stack.Count / 2, stack),
+                Priority = 1
+            };
             args.Verbs.Add(halve);
 
             var priority = 0;
@@ -144,13 +146,15 @@ namespace Content.Server.Stack
                 if (amount >= stack.Count)
                     continue;
 
-                Verb verb = new();
-                verb.Text = amount.ToString();
-                verb.Category = VerbCategory.Split;
-                verb.Act = () => UserSplit(uid, args.User, amount, stack);
+                Verb verb = new()
+                {
+                    Text = amount.ToString(),
+                    Category = VerbCategory.Split,
+                    Act = () => UserSplit(uid, args.User, amount, stack),
+                    // we want to sort by size, not alphabetically by the verb text.
+                    Priority = priority
+                };
 
-                // we want to sort by size, not alphabetically by the verb text.
-                verb.Priority = priority;
                 priority--;
 
                 args.Verbs.Add(verb);
@@ -173,22 +177,10 @@ namespace Content.Server.Stack
                 return;
             }
 
-            if (TryComp<HandsComponent>(userUid, out var hands))
-            {
-                if (hands.TryGetActiveHeldEntity(out var heldItem) && heldItem != stack.Owner)
-                {
-                    return;
-                }
-            }
-            else
-            {
-                return;
-            }
-
             if (Split(uid, amount, userTransform.Coordinates, stack) is not {} split)
                 return;
 
-            if (TryComp<ItemComponent>(split, out var item))
+            if (TryComp<HandsComponent>(userUid, out var hands) && TryComp<ItemComponent>(split, out var item))
             {
                 hands.PutInHandOrDrop(item);
             }
