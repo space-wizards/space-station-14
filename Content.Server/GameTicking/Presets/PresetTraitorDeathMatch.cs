@@ -5,8 +5,6 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules;
 using Content.Server.Hands.Components;
-using Content.Server.Inventory.Components;
-using Content.Server.Items;
 using Content.Server.PDA;
 using Content.Server.Players;
 using Content.Server.Spawners.Components;
@@ -42,6 +40,7 @@ namespace Content.Server.GameTicking.Presets
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        private InventorySystem _inventorySystem = default!;
 
         public string PDAPrototypeName => "CaptainPDA";
         public string BeltPrototypeName => "ClothingBeltJanitorFilled";
@@ -54,6 +53,7 @@ namespace Content.Server.GameTicking.Presets
 
         public override bool Start(IReadOnlyList<IPlayerSession> readyPlayers, bool force = false)
         {
+            _inventorySystem = EntitySystem.Get<InventorySystem>();
             var gameTicker = EntitySystem.Get<GameTicker>();
             gameTicker.AddGameRule<RuleTraitorDeathMatch>();
             _restarter = gameTicker.AddGameRule<RuleMaxTimeRestart>();
@@ -80,43 +80,43 @@ namespace Content.Server.GameTicking.Presets
 
             // Delete anything that may contain "dangerous" role-specific items.
             // (This includes the PDA, as everybody gets the captain PDA in this mode for true-all-access reasons.)
-            if (mind.OwnedEntity is {Valid: true} owned && _entityManager.TryGetComponent(owned, out InventoryComponent? inventory))
+            if (_entityManager.TryGetComponent(mind.OwnedEntity, out InventoryComponent? inventory))
             {
-                var victimSlots = new[] {EquipmentSlotDefines.Slots.IDCARD, EquipmentSlotDefines.Slots.BELT, EquipmentSlotDefines.Slots.BACKPACK};
+                var victimSlots = new[] {"id", "belt", "back"};
                 foreach (var slot in victimSlots)
                 {
-                    if (inventory.TryGetSlotItem(slot, out ItemComponent? vItem))
-                        _entityManager.DeleteEntity(vItem.Owner);
+                    if (_inventorySystem.TryGetSlotEntity(mind.OwnedEntity.Value, slot, out var itemUid, inventory))
+                        _entityManager.DeleteEntity(itemUid.Value);
                 }
 
                 // Replace their items:
 
                 //  pda
-                var newPDA = _entityManager.SpawnEntity(PDAPrototypeName, _entityManager.GetComponent<TransformComponent>(owned).Coordinates);
-                inventory.Equip(EquipmentSlotDefines.Slots.IDCARD, _entityManager.GetComponent<ItemComponent>(newPDA));
+                var newPDA = _entityManager.SpawnEntity(PDAPrototypeName, _entityManager.GetComponent<TransformComponent>(mind.OwnedEntity.Value).Coordinates);
+                _inventorySystem.TryEquip(mind.OwnedEntity.Value, newPDA, "id", true);
 
                 //  belt
-                var newTmp = _entityManager.SpawnEntity(BeltPrototypeName, _entityManager.GetComponent<TransformComponent>(owned).Coordinates);
-                inventory.Equip(EquipmentSlotDefines.Slots.BELT, _entityManager.GetComponent<ItemComponent>(newTmp));
+                var newTmp = _entityManager.SpawnEntity(BeltPrototypeName, _entityManager.GetComponent<TransformComponent>(mind.OwnedEntity.Value).Coordinates);
+                _inventorySystem.TryEquip(mind.OwnedEntity.Value, newTmp, "belt", true);
 
                 //  backpack
-                newTmp = _entityManager.SpawnEntity(BackpackPrototypeName, _entityManager.GetComponent<TransformComponent>(owned).Coordinates);
-                inventory.Equip(EquipmentSlotDefines.Slots.BACKPACK, _entityManager.GetComponent<ItemComponent>(newTmp));
+                newTmp = _entityManager.SpawnEntity(BackpackPrototypeName, _entityManager.GetComponent<TransformComponent>(mind.OwnedEntity.Value).Coordinates);
+                _inventorySystem.TryEquip(mind.OwnedEntity.Value, newTmp, "back", true);
 
                 // Like normal traitors, they need access to a traitor account.
-                var uplinkAccount = new UplinkAccount(startingBalance, owned);
+                var uplinkAccount = new UplinkAccount(startingBalance, mind.OwnedEntity.Value);
                 var accounts = _entityManager.EntitySysManager.GetEntitySystem<UplinkAccountsSystem>();
                 accounts.AddNewAccount(uplinkAccount);
 
                 _entityManager.EntitySysManager.GetEntitySystem<UplinkSystem>()
-                    .AddUplink(owned, uplinkAccount, newPDA);
+                    .AddUplink(mind.OwnedEntity.Value, uplinkAccount, newPDA);
 
-                _allOriginalNames[uplinkAccount] = _entityManager.GetComponent<MetaDataComponent>(owned).EntityName;
+                _allOriginalNames[uplinkAccount] = _entityManager.GetComponent<MetaDataComponent>(mind.OwnedEntity.Value).EntityName;
 
                 // The PDA needs to be marked with the correct owner.
                 var pda = _entityManager.GetComponent<PDAComponent>(newPDA);
                 _entityManager.EntitySysManager.GetEntitySystem<PDASystem>()
-                    .SetOwner(pda, _entityManager.GetComponent<MetaDataComponent>(owned).EntityName);
+                    .SetOwner(pda, _entityManager.GetComponent<MetaDataComponent>(mind.OwnedEntity.Value).EntityName);
                 _entityManager.AddComponent<TraitorDeathMatchReliableOwnerTagComponent>(newPDA).UserId = mind.UserId;
             }
 

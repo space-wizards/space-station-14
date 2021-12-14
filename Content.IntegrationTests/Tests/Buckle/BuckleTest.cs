@@ -1,11 +1,11 @@
 using System.Threading.Tasks;
 using Content.Server.Buckle.Components;
 using Content.Server.Hands.Components;
-using Content.Server.Items;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Buckle.Components;
+using Content.Shared.Item;
 using Content.Shared.Standing;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
@@ -252,7 +252,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                     var akms = entityManager.SpawnEntity(ItemDummyId, coordinates);
 
                     // Equip items
-                    Assert.True(entityManager.TryGetComponent(akms, out ItemComponent item));
+                    Assert.True(entityManager.TryGetComponent(akms, out SharedItemComponent item));
                     Assert.True(hands.PutInHand(item));
                 }
             });

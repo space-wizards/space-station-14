@@ -3,6 +3,7 @@ using Content.Server.EUI;
 using Content.Server.PDA;
 using Content.Server.Preferences.Managers;
 using Content.Shared.Administration;
+using Content.Shared.Inventory;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Server.GameObjects;
@@ -86,23 +87,27 @@ namespace Content.Server.Administration.Commands
                 profile = prefs.SelectedCharacter as HumanoidCharacterProfile;
             }
 
-            foreach (var slot in inventoryComponent.Slots)
+            var invSystem = EntitySystem.Get<InventorySystem>();
+            if (invSystem.TryGetSlots(target, out var slotDefinitions, inventoryComponent))
             {
-                inventoryComponent.ForceUnequip(slot);
-                var gearStr = startingGear.GetGear(slot, profile);
-                if (gearStr == string.Empty)
+                foreach (var slot in slotDefinitions)
                 {
-                    continue;
-                }
-                var equipmentEntity = entityManager.SpawnEntity(gearStr, entityManager.GetComponent<TransformComponent>(target).Coordinates);
-                if (slot == EquipmentSlotDefines.Slots.IDCARD &&
-                    entityManager.TryGetComponent<PDAComponent?>(equipmentEntity, out var pdaComponent) &&
-                    pdaComponent.ContainedID != null)
-                {
-                    pdaComponent.ContainedID.FullName = entityManager.GetComponent<MetaDataComponent>(target).EntityName;
-                }
+                    invSystem.TryUnequip(target, slot.Name, true, true, inventoryComponent);
+                    var gearStr = startingGear.GetGear(slot.Name, profile);
+                    if (gearStr == string.Empty)
+                    {
+                        continue;
+                    }
+                    var equipmentEntity = entityManager.SpawnEntity(gearStr, entityManager.GetComponent<TransformComponent>(target).Coordinates);
+                    if (slot.Name == "id" &&
+                        entityManager.TryGetComponent<PDAComponent?>(equipmentEntity, out var pdaComponent) &&
+                        pdaComponent.ContainedID != null)
+                    {
+                        pdaComponent.ContainedID.FullName = entityManager.GetComponent<MetaDataComponent>(target).EntityName;
+                    }
 
-                inventoryComponent.Equip(slot, entityManager.GetComponent<ItemComponent>(equipmentEntity), false);
+                    invSystem.TryEquip(target, equipmentEntity, slot.Name, true, inventory: inventoryComponent);
+                }
             }
         }
     }
