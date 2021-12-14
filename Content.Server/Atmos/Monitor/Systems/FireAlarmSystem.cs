@@ -23,7 +23,7 @@ namespace Content.Server.Atmos.Monitor.Systems
             if (!_interactionSystem.InRangeUnobstructed(args.User, args.Target))
                 return;
 
-            if (args.User.TryGetComponent(out ActorComponent? actor)
+            if (EntityManager.TryGetComponent(args.User, out ActorComponent? actor)
                 && EntityManager.TryGetComponent(uid, out AtmosMonitorComponent? monitor)
                 && EntityManager.TryGetComponent(uid, out ApcPowerReceiverComponent? power)
                 && power.Powered)

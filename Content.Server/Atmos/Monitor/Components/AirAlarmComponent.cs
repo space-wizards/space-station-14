@@ -165,10 +165,10 @@ namespace Content.Server.Atmos.Monitor.Components
                             break;
                         case Wires.Panic:
                             if (CurrentMode != AirAlarmMode.Panic)
-                                _airAlarmSystem.SetMode(Owner.Uid, DeviceNetComponent.Address, AirAlarmMode.Panic, true, false);
+                                _airAlarmSystem.SetMode(Owner, DeviceNetComponent.Address, AirAlarmMode.Panic, true, false);
                             break;
                         case Wires.DeviceSync:
-                            _airAlarmSystem.SyncAllDevices(Owner.Uid);
+                            _airAlarmSystem.SyncAllDevices(Owner);
                             break;
                     }
                     break;
@@ -182,7 +182,7 @@ namespace Content.Server.Atmos.Monitor.Components
                             break;
                         case Wires.Panic:
                             if (CurrentMode == AirAlarmMode.Panic)
-                                _airAlarmSystem.SetMode(Owner.Uid, DeviceNetComponent.Address, AirAlarmMode.Filtering, true, false);
+                                _airAlarmSystem.SetMode(Owner, DeviceNetComponent.Address, AirAlarmMode.Filtering, true, false);
                             break;
                         case Wires.Access:
                             FullAccess = false;

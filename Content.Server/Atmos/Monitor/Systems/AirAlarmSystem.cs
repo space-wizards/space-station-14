@@ -190,7 +190,7 @@ namespace Content.Server.Atmos.Monitor.Systems
             if (!_interactionSystem.InRangeUnobstructed(args.User, args.Target))
                 return;
 
-            if (!args.User.TryGetComponent(out ActorComponent? actor))
+            if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
 
             if (EntityManager.TryGetComponent(uid, out WiresComponent wire))
@@ -204,7 +204,7 @@ namespace Content.Server.Atmos.Monitor.Systems
                 if (!recv.Powered)
                     return;
 
-            component.Owner.GetUIOrNull(SharedAirAlarmInterfaceKey.Key)?.Open(actor.PlayerSession);
+            _uiSystem.GetUiOrNull(component.Owner, SharedAirAlarmInterfaceKey.Key)?.Open(actor.PlayerSession);
             component.ActivePlayers.Add(actor.PlayerSession.UserId);
             AddActiveInterface(uid);
             SendAddress(uid);
@@ -249,15 +249,15 @@ namespace Content.Server.Atmos.Monitor.Systems
                 SyncDevice(uid, args.Address);
         }
 
-        private bool AccessCheck(EntityUid uid, IEntity? user, AirAlarmComponent? component = null)
+        private bool AccessCheck(EntityUid uid, EntityUid? user, AirAlarmComponent? component = null)
         {
             if (Resolve(uid, ref component))
                 if (EntityManager.TryGetComponent(uid, out AccessReader reader))
                     if (user != null)
-                        if (_accessSystem.IsAllowed(reader, user.Uid) || component.FullAccess)
+                        if (_accessSystem.IsAllowed(reader, (EntityUid) user) || component.FullAccess)
                             return true;
                         else
-                            user.PopupMessage(Loc.GetString("air-alarm-ui-access-denied"));
+                            ((EntityUid) user).PopupMessage(Loc.GetString("air-alarm-ui-access-denied"));
 
             return false;
         }

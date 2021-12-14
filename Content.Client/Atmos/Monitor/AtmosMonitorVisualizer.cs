@@ -3,6 +3,7 @@ using Content.Shared.Atmos.Monitor;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -10,6 +11,7 @@ namespace Content.Client.Atmos.Monitor
 {
     public class AtmosMonitorVisualizer : AppearanceVisualizer
     {
+        [Dependency] IEntityManager _entityManager = default!;
         [DataField("layerMap")]
         private string _layerMap { get; } = string.Empty;
 
@@ -23,9 +25,16 @@ namespace Content.Client.Atmos.Monitor
         [DataField("setOnDepowered")]
         private readonly Dictionary<string, string>? _setOnDepowered;
 
+        public override void InitializeEntity(EntityUid entity)
+        {
+            base.InitializeEntity(entity);
+
+            IoCManager.InjectDependencies(this);
+        }
+
         public override void OnChangeData(AppearanceComponent component)
         {
-            if (!component.Owner.TryGetComponent<SpriteComponent>(out var sprite))
+            if (!_entityManager.TryGetComponent<SpriteComponent>(component.Owner, out var sprite))
                 return;
 
             if (!sprite.LayerMapTryGet(_layerMap, out int layer))
