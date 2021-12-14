@@ -51,7 +51,7 @@ namespace Content.Server.PDA
 
             if (invSystem.TryGetContainerSlotEnumerator(player, out var enumerator))
             {
-                while (enumerator.Value.MoveNext(out var containerSlot))
+                while (enumerator.MoveNext(out var containerSlot))
                 {
                     if(!containerSlot.ContainedEntity.HasValue) continue;
 

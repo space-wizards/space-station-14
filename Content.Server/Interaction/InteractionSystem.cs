@@ -5,16 +5,15 @@ using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Server.CombatMode;
 using Content.Server.Hands.Components;
-using Content.Server.Items;
 using Content.Server.Pulling;
 using Content.Server.Storage.Components;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.DragDrop;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
+using Content.Shared.Item;
 using Content.Shared.Popups;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Weapons.Melee;
@@ -508,7 +507,7 @@ namespace Content.Server.Interaction
                         }
                     }
                 }
-                else if (!wideAttack && targetUid != null && HasComp<ItemComponent>(targetUid.Value))
+                else if (!wideAttack && targetUid != null && HasComp<SharedItemComponent>(targetUid.Value))
                 {
                     // We pick up items if our hand is empty, even if we're in combat mode.
                     InteractHand(user, targetUid.Value);

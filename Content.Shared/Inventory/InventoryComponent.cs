@@ -28,7 +28,7 @@ public class InventoryComponent : Component, IExAct
         if (EntitySystem.Get<InventorySystem>()
             .TryGetContainerSlotEnumerator(Owner, out var enumerator, this))
         {
-            while (enumerator.Value.MoveNext(out var container))
+            while (enumerator.MoveNext(out var container))
             {
                 if (!container.ContainedEntity.HasValue) continue;
                 foreach (var exAct in _entityManager.GetComponents<IExAct>(container.ContainedEntity.Value).ToArray())
