@@ -19,6 +19,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
+using Robust.Shared.Utility.Markup;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Morgue.Components
@@ -48,7 +49,7 @@ namespace Content.Server.Morgue.Components
 
         private CancellationTokenSource? _cremateCancelToken;
 
-        void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
+        void IExamine.Examine(FormattedMessage.Builder message, bool inDetailsRange)
         {
             if (Appearance == null) return;
 

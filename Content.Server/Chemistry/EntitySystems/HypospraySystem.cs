@@ -35,7 +35,10 @@ namespace Content.Server.Chemistry.EntitySystems
 
         public void OnClickAttack(EntityUid uid, HyposprayComponent comp, ClickAttackEvent args)
         {
-            comp.TryDoInject(args.Target, args.User);
+            if (args.Target == null)
+                return;
+
+            comp.TryDoInject(args.Target.Value, args.User);
         }
     }
 }

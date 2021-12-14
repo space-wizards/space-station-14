@@ -9,6 +9,7 @@ using Content.Server.Items;
 using Content.Server.Pulling;
 using Content.Server.Storage.Components;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.DragDrop;
 using Content.Shared.Input;
@@ -38,7 +39,6 @@ namespace Content.Server.Interaction
     [UsedImplicitly]
     public sealed class InteractionSystem : SharedInteractionSystem
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly PullingSystem _pullSystem = default!;
         [Dependency] private readonly AdminLogSystem _adminLogSystem = default!;
@@ -69,19 +69,19 @@ namespace Content.Server.Interaction
 
         public override bool CanAccessViaStorage(EntityUid user, EntityUid target)
         {
-            if (!EntityManager.EntityExists(target))
+            if (Deleted(target))
                 return false;
 
             if (!target.TryGetContainer(out var container))
                 return false;
 
-            if (!EntityManager.TryGetComponent(container.Owner, out ServerStorageComponent storage))
+            if (!TryComp(container.Owner, out ServerStorageComponent? storage))
                 return false;
 
             if (storage.Storage?.ID != container.ID)
                 return false;
 
-            if (!EntityManager.TryGetComponent(user, out ActorComponent actor))
+            if (!TryComp(user, out ActorComponent? actor))
                 return false;
 
             // we don't check if the user can access the storage entity itself. This should be handed by the UI system.
@@ -100,9 +100,7 @@ namespace Content.Server.Interaction
             if (!_actionBlockerSystem.CanInteract(userEntity.Value))
                 return;
 
-            if (!EntityManager.EntityExists(msg.Dropped))
-                return;
-            if (!EntityManager.EntityExists(msg.Target))
+            if (Deleted(msg.Dropped) || Deleted(msg.Target))
                 return;
 
             var interactionArgs = new DragDropEvent(userEntity.Value, msg.DropLocation, msg.Dropped, msg.Target);
@@ -114,7 +112,7 @@ namespace Content.Server.Interaction
 
             // trigger dragdrops on the dropped entity
             RaiseLocalEvent(msg.Dropped, interactionArgs);
-            foreach (var dragDrop in EntityManager.GetComponents<IDraggable>(msg.Dropped))
+            foreach (var dragDrop in AllComps<IDraggable>(msg.Dropped))
             {
                 if (dragDrop.CanDrop(interactionArgs) &&
                     dragDrop.Drop(interactionArgs))
@@ -125,7 +123,7 @@ namespace Content.Server.Interaction
 
             // trigger dragdropons on the targeted entity
             RaiseLocalEvent(msg.Target, interactionArgs, false);
-            foreach (var dragDropOn in EntityManager.GetComponents<IDragDropOn>(msg.Target))
+            foreach (var dragDropOn in AllComps<IDragDropOn>(msg.Target))
             {
                 if (dragDropOn.CanDragDropOn(interactionArgs) &&
                     dragDropOn.DragDropOn(interactionArgs))
@@ -145,7 +143,7 @@ namespace Content.Server.Interaction
                 return false;
             }
 
-            if (!EntityManager.EntityExists(uid))
+            if (Deleted(uid))
                 return false;
 
             InteractionActivate(user.Value, uid);
@@ -162,7 +160,7 @@ namespace Content.Server.Interaction
                 return true;
             }
 
-            if (EntityManager.TryGetComponent(userEntity.Value, out CombatModeComponent? combatMode) && combatMode.IsInCombatMode)
+            if (TryComp(userEntity, out CombatModeComponent? combatMode) && combatMode.IsInCombatMode)
                 DoAttack(userEntity.Value, coords, true);
 
             return true;
@@ -177,7 +175,7 @@ namespace Content.Server.Interaction
         /// <param name="uid"></param>
         internal void AiUseInteraction(EntityUid entity, EntityCoordinates coords, EntityUid uid)
         {
-            if (EntityManager.HasComponent<ActorComponent>(entity))
+            if (HasComp<ActorComponent>(entity))
                 throw new InvalidOperationException();
 
             UserInteraction(entity, coords, uid);
@@ -192,7 +190,7 @@ namespace Content.Server.Interaction
                 return true;
             }
 
-            UserInteraction(userEntity.Value, coords, uid);
+            UserInteraction(userEntity.Value, coords, !Deleted(uid) ? uid : null);
 
             return true;
         }
@@ -205,16 +203,16 @@ namespace Content.Server.Interaction
                 return true;
             }
 
-            if (userEntity == uid)
+            if (userEntity.Value == uid)
                 return false;
 
-            if (!EntityManager.EntityExists(uid))
+            if (Deleted(uid))
                 return false;
 
             if (!InRangeUnobstructed(userEntity.Value, uid, popup: true))
                 return false;
 
-            if (!EntityManager.TryGetComponent(uid, out SharedPullableComponent? pull))
+            if (!TryComp(uid, out SharedPullableComponent? pull))
                 return false;
 
             return _pullSystem.TogglePull(userEntity.Value, pull);
@@ -233,13 +231,13 @@ namespace Content.Server.Interaction
             // all interactions should only happen when in range / unobstructed, so no range check is needed
             var message = new InteractHandEvent(user, target);
             RaiseLocalEvent(target, message);
-            _adminLogSystem.Add(LogType.InteractHand, LogImpact.Low, $"{ToPrettyString(user)} interacted with {ToPrettyString(target)}");
+            _adminLogSystem.Add(LogType.InteractHand, LogImpact.Low, $"{ToPrettyString(user):user} interacted with {ToPrettyString(target):target}");
             if (message.Handled)
                 return;
 
             var interactHandEventArgs = new InteractHandEventArgs(user, target);
 
-            var interactHandComps = EntityManager.GetComponents<IInteractHand>(target).ToList();
+            var interactHandComps = AllComps<IInteractHand>(target).ToList();
             foreach (var interactHandComp in interactHandComps)
             {
                 // If an InteractHand returns a status completion we finish our interaction
@@ -269,7 +267,7 @@ namespace Content.Server.Interaction
                 if (rangedMsg.Handled)
                     return true;
 
-                var rangedInteractions = EntityManager.GetComponents<IRangedInteract>(target.Value).ToList();
+                var rangedInteractions = AllComps<IRangedInteract>(target.Value).ToList();
                 var rangedInteractionEventArgs = new RangedInteractEventArgs(user, used, clickLocation);
 
                 // See if we have a ranged interaction
@@ -297,10 +295,10 @@ namespace Content.Server.Interaction
             if (!wideAttack)
             {
                 // Check if interacted entity is in the same container, the direct child, or direct parent of the user.
-                if (target != null && !user.IsInSameOrParentContainer(target.Value) && !CanAccessViaStorage(user, target.Value))
+                if (target != null && !Deleted(target.Value) && !user.IsInSameOrParentContainer(target.Value) && !CanAccessViaStorage(user, target.Value))
                 {
                     Logger.WarningS("system.interaction",
-                        $"User entity named {ToPrettyString(user)} clicked on object {ToPrettyString(target.Value)} that isn't the parent, child, or in the same container");
+                        $"User entity {ToPrettyString(user):user} clicked on object {ToPrettyString(target.Value):target} that isn't the parent, child, or in the same container");
                     return;
                 }
 
@@ -310,44 +308,46 @@ namespace Content.Server.Interaction
             }
 
             // Verify user has a hand, and find what object they are currently holding in their active hand
-            if (EntityManager.TryGetComponent<HandsComponent?>(user, out var hands))
+            if (TryComp(user, out HandsComponent? hands))
             {
-                if (hands.GetActiveHand?.Owner is {Valid: true} item)
+                var item = hands.GetActiveHand?.Owner;
+
+                if (item != null && !Deleted(item.Value))
                 {
                     if (wideAttack)
                     {
-                        var ev = new WideAttackEvent(item, user, coordinates);
-                        RaiseLocalEvent(item, ev, false);
+                        var ev = new WideAttackEvent(item.Value, user, coordinates);
+                        RaiseLocalEvent(item.Value, ev, false);
 
                         if (ev.Handled)
                         {
-                            _adminLogSystem.Add(LogType.AttackArmedWide, LogImpact.Medium, $"{ToPrettyString(user)} wide attacked with {ToPrettyString(item)} at {coordinates}");
+                            _adminLogSystem.Add(LogType.AttackArmedWide, LogImpact.Medium, $"{ToPrettyString(user):user} wide attacked with {ToPrettyString(item.Value):used} at {coordinates}");
                             return;
                         }
                     }
                     else
                     {
-                        var ev = new ClickAttackEvent(item, user, coordinates, target);
-                        RaiseLocalEvent(item, ev, false);
+                        var ev = new ClickAttackEvent(item.Value, user, coordinates, target);
+                        RaiseLocalEvent(item.Value, ev, false);
 
                         if (ev.Handled)
                         {
                             if (target != null)
                             {
                                 _adminLogSystem.Add(LogType.AttackArmedClick, LogImpact.Medium,
-                                    $"{ToPrettyString(user)} attacked {ToPrettyString(target.Value)} with {ToPrettyString(item)} at {coordinates}");
+                                    $"{ToPrettyString(user):user} attacked {ToPrettyString(target.Value):target} with {ToPrettyString(item.Value):used} at {coordinates}");
                             }
                             else
                             {
                                 _adminLogSystem.Add(LogType.AttackArmedClick, LogImpact.Medium,
-                                    $"{ToPrettyString(user)} attacked with {ToPrettyString(item)} at {coordinates}");
+                                    $"{ToPrettyString(user):user} attacked with {ToPrettyString(item.Value):used} at {coordinates}");
                             }
 
                             return;
                         }
                     }
                 }
-                else if (!wideAttack && target != null && _entityManager.HasComponent<ItemComponent>(target))
+                else if (!wideAttack && target != null && HasComp<ItemComponent>(target.Value))
                 {
                     // We pick up items if our hand is empty, even if we're in combat mode.
                     InteractHand(user, target.Value);
@@ -362,7 +362,7 @@ namespace Content.Server.Interaction
                 var ev = new WideAttackEvent(user, user, coordinates);
                 RaiseLocalEvent(user, ev, false);
                 if (ev.Handled)
-                    _adminLogSystem.Add(LogType.AttackUnarmedWide, $"{user} wide attacked at {coordinates}");
+                    _adminLogSystem.Add(LogType.AttackUnarmedWide, $"{ToPrettyString(user):user} wide attacked at {coordinates}");
             }
             else
             {
@@ -373,12 +373,12 @@ namespace Content.Server.Interaction
                     if (target != null)
                     {
                         _adminLogSystem.Add(LogType.AttackUnarmedClick, LogImpact.Medium,
-                            $"{ToPrettyString(user)} attacked {ToPrettyString(target.Value)} at {coordinates}");
+                            $"{ToPrettyString(user):user} attacked {ToPrettyString(target.Value):target} at {coordinates}");
                     }
                     else
                     {
                         _adminLogSystem.Add(LogType.AttackUnarmedClick, LogImpact.Medium,
-                            $"{ToPrettyString(user)} attacked at {coordinates}");
+                            $"{ToPrettyString(user):user} attacked at {coordinates}");
                     }
                 }
             }

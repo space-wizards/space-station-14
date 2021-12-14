@@ -7,6 +7,7 @@ using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
+using Robust.Client.UserInterface.XAML;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -20,8 +21,10 @@ namespace Content.Client.Administration.UI.Tabs.AdminbusTab
         private EntitySpawnWindow? _entitySpawnWindow;
         private TileSpawnWindow? _tileSpawnWindow;
 
-        protected override void EnteredTree()
+        public AdminbusTab()
         {
+            RobustXamlLoader.Load(this);
+            IoCManager.InjectDependencies(this);
             // For the SpawnEntitiesButton and SpawnTilesButton we need to do the press manually
             // TODO: This will probably need some command check at some point
             SpawnEntitiesButton.OnPressed += SpawnEntitiesButtonOnOnPressed;
@@ -47,17 +50,27 @@ namespace Content.Client.Administration.UI.Tabs.AdminbusTab
 
         private void SpawnEntitiesButtonOnOnPressed(BaseButton.ButtonEventArgs obj)
         {
-            _entitySpawnWindow ??= new EntitySpawnWindow(IoCManager.Resolve<IPlacementManager>(),
-                IoCManager.Resolve<IPrototypeManager>(),
-                IoCManager.Resolve<IResourceCache>());
+            //FIXME: WE SHOULDN'T NEED TO CHECK FOR DISPOSED
+            if (_entitySpawnWindow == null || _entitySpawnWindow.Disposed)
+            {
+                _entitySpawnWindow = new EntitySpawnWindow(IoCManager.Resolve<IPlacementManager>(),
+                    IoCManager.Resolve<IPrototypeManager>(),
+                    IoCManager.Resolve<IResourceCache>());
+            }
+
             EntitySystem.Get<AdminSystem>().OpenCommand(_entitySpawnWindow);
         }
 
         private void SpawnTilesButtonOnOnPressed(BaseButton.ButtonEventArgs obj)
         {
-            _tileSpawnWindow ??= new TileSpawnWindow(IoCManager.Resolve<ITileDefinitionManager>(),
-                IoCManager.Resolve<IPlacementManager>(),
-                IoCManager.Resolve<IResourceCache>());
+            //FIXME: WE SHOULDN'T NEED TO CHECK FOR DISPOSED
+            if (_tileSpawnWindow == null || _tileSpawnWindow.Disposed)
+            {
+                _tileSpawnWindow = new TileSpawnWindow(IoCManager.Resolve<ITileDefinitionManager>(),
+                    IoCManager.Resolve<IPlacementManager>(),
+                    IoCManager.Resolve<IResourceCache>());
+            }
+
             EntitySystem.Get<AdminSystem>().OpenCommand(_tileSpawnWindow);
         }
     }

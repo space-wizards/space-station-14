@@ -16,6 +16,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
+using Robust.Shared.Utility.Markup;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Weapon.Ranged.Barrels.Components
@@ -328,7 +329,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             return false;
         }
 
-        public override void Examine(FormattedMessage message, bool inDetailsRange)
+        public override void Examine(FormattedMessage.Builder message, bool inDetailsRange)
         {
             base.Examine(message, inDetailsRange);
 

@@ -62,7 +62,7 @@ namespace Content.Server.Spawners.Components
                 return;
             }
 
-            if(_entMan.Deleted(Owner))
+            if(!_entMan.Deleted(Owner))
                 _entMan.SpawnEntity(_robustRandom.Pick(Prototypes), _entMan.GetComponent<TransformComponent>(Owner).Coordinates);
         }
 
