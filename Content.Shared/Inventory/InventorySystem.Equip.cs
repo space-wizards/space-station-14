@@ -182,4 +182,15 @@ public partial class InventorySystem
 
         return true;
     }
+
+    public bool TryGetSlotEntity(EntityUid uid, string slot, [NotNullWhen(true)] out EntityUid? entityUid, InventoryComponent? inventoryComponent = null, ContainerManagerComponent? containerManagerComponent = null)
+    {
+        entityUid = null;
+        if (!Resolve(uid, ref inventoryComponent, ref containerManagerComponent) || !TryGetSlotContainer(uid, slot,
+                out var container, out _, inventoryComponent, containerManagerComponent))
+            return false;
+
+        entityUid = container.ContainedEntity;
+        return entityUid != null;
+    }
 }

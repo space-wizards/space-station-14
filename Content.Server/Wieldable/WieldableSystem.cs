@@ -1,11 +1,11 @@
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
 using Content.Server.Hands.Systems;
-using Content.Server.Items;
 using Content.Server.Weapon.Melee;
 using Content.Server.Wieldable.Components;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
+using Content.Shared.Item;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
@@ -156,7 +156,7 @@ namespace Content.Server.Wieldable
             if (!CanWield(uid, component, args.User) || component.Wielded)
                 return;
 
-            if (EntityManager.TryGetComponent<ItemComponent>(uid, out var item))
+            if (TryComp<SharedItemComponent>(uid, out var item))
             {
                 component.OldInhandPrefix = item.EquippedPrefix;
                 item.EquippedPrefix = component.WieldedInhandPrefix;
@@ -185,7 +185,7 @@ namespace Content.Server.Wieldable
             if (!component.Wielded)
                 return;
 
-            if (EntityManager.TryGetComponent<ItemComponent>(uid, out var item))
+            if (TryComp<SharedItemComponent>(uid, out var item))
             {
                 item.EquippedPrefix = component.OldInhandPrefix;
             }
