@@ -143,11 +143,11 @@ namespace Content.Shared.Actions
     {
         private readonly ItemActionPrototype _action;
         private readonly EntityUid _item;
-        private readonly ItemActionsComponent _itemActions;
+        private readonly SharedActionSystem _itemActions;
 
         public BaseActionPrototype Action => _action;
 
-        public ItemActionAttempt(ItemActionPrototype action, EntityUid item, ItemActionsComponent itemActions)
+        public ItemActionAttempt(ItemActionPrototype action, EntityUid item, SharedActionSystem itemActions)
         {
             _action = action;
             _item = item;
@@ -183,7 +183,7 @@ namespace Content.Shared.Actions
 
         public void ToggleAction(SharedActionsComponent actionsComponent, bool toggleOn)
         {
-            _itemActions.Toggle(_action.ActionType, toggleOn);
+            _itemActions.Toggle(_item, _action.ActionType, toggleOn);
         }
 
 #pragma warning disable 618

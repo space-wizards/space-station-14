@@ -41,6 +41,16 @@ namespace Content.Shared.Actions
             component.GrantOrUpdateAllToHolder();
         }
 
+        /// <summary>
+        /// Toggle the action on / off
+        /// </summary>
+        public void Toggle(EntityUid uid, ItemActionType actionType, bool toggleOn, ItemActionsComponent? component = null)
+        {
+            if(!Resolve(uid, ref component))
+                return;
+            component.GrantOrUpdate(actionType, toggleOn: toggleOn);
+        }
+
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
