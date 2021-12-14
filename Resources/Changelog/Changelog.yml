@@ -1,10 +1,4 @@
 Entries:
-- author: TaralGit
-  changes:
-  - {message: claymore as a melee weapon, type: Add}
-  - {message: 'fixed the combat knife, laser gun and machete sprites', type: Fix}
-  id: 233
-  time: '2021-06-09T05:21:09.0000000+00:00'
 - author: DogZeroX
   changes:
   - {message: You can now see what players have on their hands with shift-click(examine),
@@ -2861,3 +2855,8 @@ Entries:
   - {message: Buffed some secure lockers too., type: Tweak}
   id: 734
   time: '2021-12-14T00:44:59.0000000+00:00'
+- author: Venomii
+  changes:
+  - {message: Added automatic laugh emote when saying "lol" or "lmao"., type: Add}
+  id: 735
+  time: '2021-12-14T01:33:46.0000000+00:00'
