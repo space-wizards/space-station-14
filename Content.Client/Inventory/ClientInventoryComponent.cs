@@ -2,14 +2,19 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Client.Clothing;
+using Content.Client.Items.UI;
 using Content.Shared.CharacterAppearance;
 using Content.Shared.Chemistry;
 using Content.Shared.Inventory;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.EntitySystems;
 using Robust.Client.GameObjects;
+using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.CustomControls;
+using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Reflection;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.Inventory.EquipmentSlotDefines;
@@ -21,9 +26,21 @@ namespace Content.Client.Inventory
     /// A character UI which shows items the user has equipped within his inventory
     /// </summary>
     [RegisterComponent]
-    [ComponentReference(typeof(SharedInventoryComponent))]
-    public class ClientInventoryComponent : SharedInventoryComponent
+    [ComponentReference(typeof(InventoryComponent))]
+    [Friend(typeof(ClientInventorySystem))]
+    public class ClientInventoryComponent : InventoryComponent
     {
+        public Control? BottomLeftButtons;
+        public Control? BottomRightButtons;
+        public Control? TopQuickButtons;
+
+        public SS14Window InventoryWindow = default!;
+
+        public readonly List<ItemSlotButton> SlotButtons = new();
+
+
+
+
         private readonly Dictionary<Slots, IEntity> _slots = new();
 
         public IReadOnlyDictionary<Slots, IEntity> AllSlots => _slots;

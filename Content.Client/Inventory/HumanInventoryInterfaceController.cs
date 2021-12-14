@@ -10,6 +10,7 @@ using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
+using Robust.Client.Utility;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -268,8 +269,7 @@ namespace Content.Client.Inventory
             {
                 foreach (var button in list)
                 {
-                    button.Button.Texture = _gameHud.GetHudTexture($"{button.TextureName}.png");
-                    button.StorageButton.TextureNormal = _gameHud.GetHudTexture("back.png");
+                    button.RefreshTextures(_gameHud);
                 }
             }
         }

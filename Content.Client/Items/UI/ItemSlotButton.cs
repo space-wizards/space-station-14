@@ -1,14 +1,17 @@
 ﻿using System;
 using Content.Client.Cooldown;
+using Content.Client.HUD;
 using Content.Client.Items.Managers;
 using Content.Client.Stylesheets;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Client.Utility;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Items.UI
 {
@@ -34,19 +37,19 @@ namespace Content.Client.Items.UI
 
         private readonly PanelContainer _highlightRect;
 
-        public string TextureName { get; set; }
+        private string _textureName;
+        private string _storageTextureName;
 
-        public ItemSlotButton(Texture texture, Texture storageTexture, string textureName)
+        public ItemSlotButton(int size, string textureName, string storageTextureName, IGameHud gameHud)
         {
+            _textureName = textureName;
+            _storageTextureName = storageTextureName;
             IoCManager.InjectDependencies(this);
 
-            MinSize = (64, 64);
-
-            TextureName = textureName;
+            MinSize = (size, size);
 
             AddChild(Button = new TextureRect
             {
-                Texture = texture,
                 TextureScale = (2, 2),
                 MouseFilter = MouseFilterMode.Stop
             });
@@ -74,7 +77,6 @@ namespace Content.Client.Items.UI
 
             AddChild(StorageButton = new TextureButton
             {
-                TextureNormal = storageTexture,
                 Scale = (0.75f, 0.75f),
                 HorizontalAlignment = HAlignment.Right,
                 VerticalAlignment = VAlignment.Bottom,
@@ -107,6 +109,14 @@ namespace Content.Client.Items.UI
             {
                 Visible = false,
             });
+
+            RefreshTextures(gameHud);
+        }
+
+        public void RefreshTextures(IGameHud gameHud)
+        {
+            Button.Texture = gameHud.GetHudTexture(_textureName);
+            StorageButton.TextureNormal = gameHud.GetHudTexture(_storageTextureName);
         }
 
         protected override void EnteredTree()

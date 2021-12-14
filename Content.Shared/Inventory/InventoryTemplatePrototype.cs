@@ -1,4 +1,5 @@
 ﻿using System;
+using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
@@ -24,10 +25,21 @@ public class SlotDefinition
     [DataField("displayName")]
     public string? DisplayName { get; }
 
-    [DataField("slotTexture")]
-    public SpriteSpecifier? Texture;
+    [DataField("slotTexture")] public string TextureName { get; } = "pocket";
 
     //todo paul is this how you serialize flags?
-    [DataField("SlotFlags")]
-    public SlotFlags SlotFlags;
+    [DataField("slotFlags")] public SlotFlags SlotFlags { get; } = SlotFlags.PREVENTEQUIP;
+
+    [DataField("uiContainer")]
+    public SlotUIContainer UIContainer { get; }
+
+    [DataField("uiWindowPos")]
+    public Vector2i UIWindowPosition { get; }
+}
+
+public enum SlotUIContainer
+{
+    BottomLeft,
+    BottomRight,
+    TopQuick
 }
