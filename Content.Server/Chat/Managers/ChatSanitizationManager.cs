@@ -59,6 +59,8 @@ public class ChatSanitizationManager : IChatSanitizationManager
         { "^^/", "chatsan-waves" },
         { ":/", "chatsan-uncertain" },
         { ":\\", "chatsan-uncertain" },
+        { "lmao", "chatsan-laughs" },
+        { "lol", "chatsan-laughs" },
     };
 
     private bool doSanitize = false;

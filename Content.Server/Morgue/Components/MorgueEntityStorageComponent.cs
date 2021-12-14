@@ -21,6 +21,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
+using Robust.Shared.Utility.Markup;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Morgue.Components
@@ -42,7 +43,7 @@ namespace Content.Server.Morgue.Components
         private string? _trayPrototypeId;
 
         [ViewVariables]
-        private EntityUid _tray;
+        private EntityUid? _tray;
 
         [ViewVariables]
         public ContainerSlot? TrayContainer { get; private set; }
@@ -67,7 +68,7 @@ namespace Content.Server.Morgue.Components
         public override Vector2 ContentsDumpPosition()
         {
             if (_tray != null)
-                return _entMan.GetComponent<TransformComponent>(_tray).WorldPosition;
+                return _entMan.GetComponent<TransformComponent>(_tray.Value).WorldPosition;
             return base.ContentsDumpPosition();
         }
 
@@ -103,15 +104,15 @@ namespace Content.Server.Morgue.Components
             if (_tray == null)
             {
                 _tray = _entMan.SpawnEntity(_trayPrototypeId, _entMan.GetComponent<TransformComponent>(Owner).Coordinates);
-                var trayComp = _tray.EnsureComponent<MorgueTrayComponent>();
+                var trayComp = _tray.Value.EnsureComponent<MorgueTrayComponent>();
                 trayComp.Morgue = Owner;
             }
             else
             {
-                TrayContainer?.Remove(_tray);
+                TrayContainer?.Remove(_tray.Value);
             }
 
-            _entMan.GetComponent<TransformComponent>(_tray).Coordinates = new EntityCoordinates(Owner, 0, -1);
+            _entMan.GetComponent<TransformComponent>(_tray.Value).Coordinates = new EntityCoordinates(Owner, 0, -1);
 
             base.OpenStorage();
         }
@@ -143,7 +144,7 @@ namespace Content.Server.Morgue.Components
 
             if (_tray != null)
             {
-                TrayContainer?.Insert(_tray);
+                TrayContainer?.Insert(_tray.Value);
             }
         }
 
@@ -155,7 +156,7 @@ namespace Content.Server.Morgue.Components
             }
 
             var entityLookup = IoCManager.Resolve<IEntityLookup>();
-            foreach (var entity in entityLookup.GetEntitiesIntersecting(_tray, flags: LookupFlags.None))
+            foreach (var entity in entityLookup.GetEntitiesIntersecting(_tray.Value, flags: LookupFlags.None))
             {
                 yield return entity;
             }
@@ -172,7 +173,7 @@ namespace Content.Server.Morgue.Components
             }
         }
 
-        void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
+        void IExamine.Examine(FormattedMessage.Builder message, bool inDetailsRange)
         {
             if (Appearance == null) return;
 

@@ -86,7 +86,7 @@ namespace Content.Server.Headset
             RadioRequested = false;
         }
 
-        public void Examine(FormattedMessage message, bool inDetailsRange)
+        public void Examine(FormattedMessage.Builder message, bool inDetailsRange)
         {
             message.AddText(Loc.GetString("examine-radio-frequency", ("frequency", BroadcastFrequency)));
             message.AddText("\n");

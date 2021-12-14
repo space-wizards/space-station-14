@@ -10,6 +10,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
+using Robust.Shared.Utility.Markup;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Radio.Components
@@ -108,7 +109,7 @@ namespace Content.Server.Radio.Components
             Use(eventArgs.User);
         }
 
-        public void Examine(FormattedMessage message, bool inDetailsRange)
+        public void Examine(FormattedMessage.Builder message, bool inDetailsRange)
         {
             message.AddText(Loc.GetString("handheld-radio-component-on-examine",("frequency", BroadcastFrequency)));
         }

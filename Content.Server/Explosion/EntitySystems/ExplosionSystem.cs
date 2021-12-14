@@ -343,20 +343,20 @@ namespace Content.Server.Explosion.EntitySystems
             }
 
             // logging
-            var text = $"{epicenter} with range {devastationRange}/{heavyImpactRange}/{lightImpactRange}/{flashRange}";
+            var range = $"{devastationRange}/{heavyImpactRange}/{lightImpactRange}/{flashRange}";
             if (entity == null || !entity.Value.IsValid())
             {
-                _logSystem.Add(LogType.Explosion, LogImpact.High, $"Explosion spawned at {text}");
+                _logSystem.Add(LogType.Explosion, LogImpact.High, $"Explosion spawned at {epicenter:coordinates} with range {range}");
             }
             else if (user == null || !user.Value.IsValid())
             {
                 _logSystem.Add(LogType.Explosion, LogImpact.High,
-                    $"{ToPrettyString(entity.Value)} exploded at {text}");
+                    $"{ToPrettyString(entity.Value):entity} exploded at {epicenter:coordinates} with range {range}");
             }
             else
             {
                 _logSystem.Add(LogType.Explosion, LogImpact.High,
-                    $"{ToPrettyString(user.Value)} caused {ToPrettyString(entity.Value)} to explode at {text}");
+                    $"{ToPrettyString(user.Value):user} caused {ToPrettyString(entity.Value):entity} to explode at {epicenter:coordinates} with range {range}");
             }
 
             var maxRange = MathHelper.Max(devastationRange, heavyImpactRange, lightImpactRange, 0);

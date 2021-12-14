@@ -520,8 +520,10 @@ namespace Content.Shared.Hands.Components
             var finalPosition = _entMan.GetComponent<TransformComponent>(Owner).LocalPosition;
 
             handSys.PickupAnimation(entity, initialPosition, finalPosition, animateUser ? null : Owner);
-
             handSys.PutEntityIntoHand(Owner, hand, entity, this);
+            
+            EntitySystem.Get<SharedAdminLogSystem>().Add(LogType.Pickup, LogImpact.Low, $"{_entMan.ToPrettyString(Owner):user} picked up {_entMan.ToPrettyString(entity):entity}");
+            
             return true;
         }
 
@@ -743,6 +745,7 @@ namespace Content.Shared.Hands.Components
         [ViewVariables, NonSerialized]
         public ContainerSlot? Container;
 
+        // TODO: Make this a nullable EntityUid...
         [ViewVariables]
         public EntityUid? HeldEntity => Container?.ContainedEntity;
 

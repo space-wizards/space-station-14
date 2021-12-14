@@ -77,7 +77,7 @@ namespace Content.Server.Hands.Systems
 
         private void GetComponentState(EntityUid uid, HandsComponent hands, ref ComponentGetState args)
         {
-            args.State = new HandsComponentState(hands.Hands, hands.ActiveHand);
+            args.State = new HandsComponentState(hands.Hands, hands.ActiveHand)
         }
 
         #region EntityInsertRemove
@@ -125,6 +125,9 @@ namespace Content.Server.Hands.Systems
         #region pulling
         private static void HandlePullAttempt(EntityUid uid, HandsComponent component, PullAttemptMessage args)
         {
+            if (args.Puller.Owner != uid)
+                return;
+            
             // Cancel pull if all hands full.
             if (component.Hands.All(hand => !hand.IsEmpty))
                 args.Cancelled = true;
@@ -133,6 +136,9 @@ namespace Content.Server.Hands.Systems
 
         private void HandlePullStarted(EntityUid uid, HandsComponent component, PullStartedMessage args)
         {
+            if (args.Puller.Owner != uid)
+                return;
+            
             if (!_virtualItemSystem.TrySpawnVirtualItemInHand(args.Pulled.Owner, uid))
             {
                 DebugTools.Assert("Unable to find available hand when starting pulling??");
@@ -141,6 +147,9 @@ namespace Content.Server.Hands.Systems
 
         private void HandlePullStopped(EntityUid uid, HandsComponent component, PullStoppedMessage args)
         {
+            if (args.Puller.Owner != uid)
+                return;
+            
             // Try find hand that is doing this pull.
             // and clear it.
             foreach (var hand in component.Hands)

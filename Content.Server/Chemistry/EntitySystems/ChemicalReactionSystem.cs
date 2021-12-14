@@ -18,7 +18,7 @@ namespace Content.Server.Chemistry.EntitySystems
             var coordinates = Transform(Owner).Coordinates;
 
             _logSystem.Add(LogType.ChemicalReaction, reaction.Impact,
-                $"Chemical reaction {reaction.ID} occurred with strength {unitReactions:strength} on entity {ToPrettyString(Owner)} at {coordinates}");
+                $"Chemical reaction {reaction.ID:reaction} occurred with strength {unitReactions:strength} on entity {ToPrettyString(Owner):metabolizer} at {coordinates}");
 
             SoundSystem.Play(Filter.Pvs(Owner, entityManager:EntityManager), reaction.Sound.GetSound(), Owner);
         }

@@ -128,7 +128,7 @@ namespace Content.Shared.Throwing
 
             // Assume it's uninteresting if it has no thrower. For now anyway.
             if (thrownItem.Thrower is not null)
-                _adminLogSystem.Add(LogType.Landed, LogImpact.Low, $"{ToPrettyString(landing)} thrown by {ToPrettyString(thrownItem.Thrower.Value):thrower} landed.");
+                _adminLogSystem.Add(LogType.Landed, LogImpact.Low, $"{ToPrettyString(landing):entity} thrown by {ToPrettyString(thrownItem.Thrower.Value):thrower} landed.");
 
             var landMsg = new LandEvent {User = thrownItem.Thrower};
             RaiseLocalEvent(landing, landMsg, false);
