@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Robust.Shared.Containers;
@@ -521,8 +523,6 @@ namespace Content.Shared.Hands.Components
 
             handSys.PickupAnimation(entity, initialPosition, finalPosition, animateUser ? null : Owner);
             handSys.PutEntityIntoHand(Owner, hand, entity, this);
-            
-            EntitySystem.Get<SharedAdminLogSystem>().Add(LogType.Pickup, LogImpact.Low, $"{_entMan.ToPrettyString(Owner):user} picked up {_entMan.ToPrettyString(entity):entity}");
             
             return true;
         }

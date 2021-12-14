@@ -126,7 +126,7 @@ namespace Content.Client.Hands
         {
             var player = _playerManager.LocalPlayer?.ControlledEntity;
             hands = null;
-            return player != null && EntityManager.TryGetComponent(player.Value, out hands);
+            return player != null && TryComp(player.Value, out hands);
         }
 
         /// <summary>

@@ -1,6 +1,7 @@
+using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.Input;
-using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -16,7 +17,7 @@ namespace Content.Shared.Hands
 {
     public abstract class SharedHandsSystem : EntitySystem
     {
-        [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+        [Dependency] private readonly SharedAdminLogSystem _adminLogSystem = default!;
 
         public override void Initialize()
         {
@@ -80,7 +81,7 @@ namespace Content.Shared.Hands
                 return;
             }
 
-            if (EntityManager.TryGetComponent(entity, out SharedSpriteComponent? component))
+            if (TryComp(entity, out SharedSpriteComponent? component))
                 component.Visible = true;
 
             hands.Dirty();
@@ -112,7 +113,9 @@ namespace Content.Shared.Hands
                 return;
             }
 
-            if (EntityManager.TryGetComponent(entity, out SharedSpriteComponent? component))
+            _adminLogSystem.Add(LogType.Pickup, LogImpact.Low, $"{ToPrettyString(uid):user} picked up {ToPrettyString(entity):entity}");
+
+            if (TryComp(entity, out SharedSpriteComponent? component))
                 component.Visible = false;
 
             hands.Dirty();
@@ -152,7 +155,7 @@ namespace Content.Shared.Hands
                 if (hand.HeldEntity == null)
                     continue;
 
-                if (!EntityManager.TryGetComponent(hand.HeldEntity.Value, out SharedItemComponent? item) || item.RsiPath == null)
+                if (!TryComp(hand.HeldEntity.Value, out SharedItemComponent? item) || item.RsiPath == null)
                     continue;
 
                 var handState = new HandVisualState(item.RsiPath, item.EquippedPrefix, hand.Location, item.Color);
