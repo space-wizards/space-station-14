@@ -1,10 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Fire extinguisher cabinets have been mapped in around the station.,
-    type: Add}
-  id: 232
-  time: '2021-06-09T02:10:29.0000000+00:00'
 - author: TaralGit
   changes:
   - {message: claymore as a melee weapon, type: Add}
@@ -2860,3 +2854,10 @@ Entries:
   - {message: Added a decorated tree and presents!, type: Add}
   id: 733
   time: '2021-12-13T21:21:15.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Cargonia didn't learn. Crates are now buffed harder so no more cargo
+      AME or laser crates., type: Tweak}
+  - {message: Buffed some secure lockers too., type: Tweak}
+  id: 734
+  time: '2021-12-14T00:44:59.0000000+00:00'
