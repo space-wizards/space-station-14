@@ -2,6 +2,7 @@
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Inventory;
@@ -22,9 +23,6 @@ public class SlotDefinition
     [DataField("name", required: true)]
     public string Name { get; } = string.Empty;
 
-    [DataField("displayName")]
-    public string? DisplayName { get; }
-
     [DataField("slotTexture")] public string TextureName { get; } = "pocket";
 
     //todo paul is this how you serialize flags?
@@ -39,7 +37,8 @@ public class SlotDefinition
 
 public enum SlotUIContainer
 {
+    None,
     BottomLeft,
     BottomRight,
-    TopQuick
+    Top
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Content.Client.HUD;
 using Content.Shared.Input;
 using Content.Client.Items.Components;
@@ -10,6 +11,7 @@ using Content.Shared.Movement.EntitySystems;
 using Content.Shared.Slippery;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Configuration;
@@ -32,6 +34,13 @@ namespace Content.Client.Inventory
         private const int ButtonSize = 64;
         private const int ButtonSeparation = 4;
         private const int RightSeparation = 2;
+
+        /// <summary>
+        /// Stores delegates used to create controls for a given <see cref="InventoryTemplatePrototype"/>.
+        /// </summary>
+        private readonly
+            Dictionary<string, Func<(SS14Window window, Control bottomLeft, Control bottomRight, Control topQuick)>>
+            _uiGenerateDelegates = new();
 
         public override void Initialize()
         {
@@ -77,52 +86,107 @@ namespace Content.Client.Inventory
 
         private void OnInit(EntityUid uid, ClientInventoryComponent component, ComponentInit args)
         {
-            if(!_prototypeManager.TryIndex<InventoryTemplatePrototype>(component.TemplateId, out var template))
+            if(!TryGetUIElements(component.TemplateId, out var window, out var bottomLeft, out var bottomRight, out var topQuick))
                 return;
 
-            var window = new SS14Window()
-            {
-                Title = Loc.GetString("human-inventory-window-title"),
-                Resizable = false
-            };
-            var windowContents = new LayoutContainer
-            {
-                MinSize = (ButtonSize * 4 + ButtonSeparation * 3 + RightSeparation,
-                    ButtonSize * 4 + ButtonSeparation * 3)
-            };
-            window.Contents.AddChild(windowContents);
+            component.InventoryWindow = window;
+            component.BottomLeftButtons = bottomLeft;
+            component.BottomRightButtons = bottomRight;
+            component.TopQuickButtons = topQuick;
+        }
 
-            void AddButton(string textureName, Vector2i position)
-            {
-                var button = new ItemSlotButton(ButtonSize, $"{textureName}.png", "back.png", _gameHud);
-                LayoutContainer.SetPosition(button, position);
-                windowContents.AddChild(button);
-            }
+        private bool TryGetUIElements(string templateId, [NotNullWhen(true)] out SS14Window? invWindow,
+            [NotNullWhen(true)] out Control? invBottomLeft, [NotNullWhen(true)] out Control? invBottomRight,
+            [NotNullWhen(true)] out Control? invTopQuick)
+        {
+            invWindow = null;
+            invBottomLeft = null;
+            invBottomRight = null;
+            invTopQuick = null;
+            if(!_prototypeManager.TryIndex<InventoryTemplatePrototype>(templateId, out var template))
+                return false;
 
-            const int sizep = (ButtonSize + ButtonSeparation);
-
-            //todo only generate for local player
-            var bottomLeftSet = new HashSet<SlotDefinition>();
-            var bottomRightSet = new HashSet<SlotDefinition>();
-            var topQuickSet = new HashSet<SlotDefinition>();
-            foreach (var slotDefinition in template.Slots)
+            if (!_uiGenerateDelegates.TryGetValue(templateId, out var genfunc))
             {
-                switch (slotDefinition.UIContainer)
+                genfunc = () =>
                 {
-                    case SlotUIContainer.BottomLeft:
-                        bottomLeftSet.Add(slotDefinition);
-                        break;
-                    case SlotUIContainer.BottomRight:
-                        bottomRightSet.Add(slotDefinition);
-                        break;
-                    case SlotUIContainer.TopQuick:
-                        topQuickSet.Add(slotDefinition);
-                        break;
-                }
-                AddButton(slotDefinition.TextureName, slotDefinition.UIWindowPosition*sizep);
+                    var window = new SS14Window()
+                    {
+                        Title = Loc.GetString("human-inventory-window-title"),
+                        Resizable = false
+                    };
+                    var windowContents = new LayoutContainer
+                    {
+                        MinSize = (ButtonSize * 4 + ButtonSeparation * 3 + RightSeparation,
+                            ButtonSize * 4 + ButtonSeparation * 3)
+                    };
+                    window.Contents.AddChild(windowContents);
+
+                    void AddButton(string textureName, Vector2i position)
+                    {
+                        var button = new ItemSlotButton(ButtonSize, $"{textureName}.png", "back.png", _gameHud);
+                        LayoutContainer.SetPosition(button, position);
+                        windowContents.AddChild(button);
+                    }
+
+                    void AddHUDButton(BoxContainer container, SlotDefinition definition)
+                    {
+                        var button = new ItemSlotButton(ButtonSize, $"{definition.TextureName}.png", "back.png",
+                            _gameHud)
+                        {
+                            /*OnPressed = (e) => AddToInventory(e, slot),
+                            OnStoragePressed = (e) => OpenStorage(e, slot),
+                            OnHover = (_) => RequestItemHover(slot)*/
+                        };
+                        container.AddChild(button);
+                    }
+
+                    var topQuick = new BoxContainer
+                    {
+                        Orientation = BoxContainer.LayoutOrientation.Horizontal,
+                        SeparationOverride = 5
+                    };
+                    var bottomRight = new BoxContainer
+                    {
+                        Orientation = BoxContainer.LayoutOrientation.Horizontal,
+                        SeparationOverride = 5
+                    };
+                    var bottomLeft = new BoxContainer
+                    {
+                        Orientation = BoxContainer.LayoutOrientation.Horizontal,
+                        SeparationOverride = 5
+                    };
+
+                    const int sizep = (ButtonSize + ButtonSeparation);
+
+                    foreach (var slotDefinition in template.Slots)
+                    {
+                        switch (slotDefinition.UIContainer)
+                        {
+                            case SlotUIContainer.BottomLeft:
+                                AddHUDButton(bottomLeft, slotDefinition);
+                                break;
+                            case SlotUIContainer.BottomRight:
+                                AddHUDButton(bottomRight, slotDefinition);
+                                break;
+                            case SlotUIContainer.Top:
+                                AddHUDButton(topQuick, slotDefinition);
+                                break;
+                        }
+
+                        AddButton(slotDefinition.TextureName, slotDefinition.UIWindowPosition * sizep);
+                    }
+
+                    return (window, bottomLeft, bottomRight, topQuick);
+                };
             }
 
-
+            var res = genfunc();
+            invWindow = res.window;
+            invBottomLeft = res.bottomLeft;
+            invBottomRight = res.bottomRight;
+            invTopQuick = res.topQuick;
+            return true;
         }
 
         // jesus christ, this is duplicated to server/client, should really just be shared..

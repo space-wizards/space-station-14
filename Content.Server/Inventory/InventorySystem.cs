@@ -18,6 +18,7 @@ namespace Content.Server.Inventory
         {
             base.Initialize();
 
+            //todo paul move all these to shared
             SubscribeLocalEvent<HumanInventoryControllerComponent, EntRemovedFromContainerMessage>(HandleRemovedFromContainer);
             SubscribeLocalEvent<InventoryComponent, EntRemovedFromContainerMessage>(HandleInvRemovedFromContainer);
 
