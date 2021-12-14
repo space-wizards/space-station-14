@@ -12,7 +12,7 @@ namespace Content.Shared.Roles
     public class StartingGearPrototype : IPrototype
     {
         // TODO: Custom TypeSerializer for dictionary value prototype IDs
-        [DataField("equipment")] private Dictionary<Slots, string> _equipment = new();
+        [DataField("equipment")] private Dictionary<string, string> _equipment = new();
 
         /// <summary>
         /// if empty, there is no skirt override - instead the uniform provided in equipment is added.
