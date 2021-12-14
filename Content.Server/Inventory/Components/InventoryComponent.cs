@@ -131,40 +131,5 @@ namespace Content.Server.Inventory.Components
 
             return new InventoryComponentState(list, hover);
         }
-
-        void IExAct.OnExplosion(ExplosionEventArgs eventArgs)
-        {
-            if (eventArgs.Severity < ExplosionSeverity.Heavy)
-            {
-                return;
-            }
-
-            foreach (var slot in _slotContainers.Values.ToList())
-            {
-                foreach (var entity in slot.ContainedEntities)
-                {
-                    var exActs = _entities.GetComponents<IExAct>(entity).ToList();
-                    foreach (var exAct in exActs)
-                    {
-                        exAct.OnExplosion(eventArgs);
-                    }
-                }
-            }
-        }
-
-        public override bool IsEquipped(EntityUid item)
-        {
-            if (item == default) return false;
-            foreach (var containerSlot in _slotContainers.Values)
-            {
-                // we don't want a recursive check here
-                if (containerSlot.Contains(item))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
     }
 }
