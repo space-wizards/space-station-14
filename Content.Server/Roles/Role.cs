@@ -1,6 +1,8 @@
 ﻿// Hey look,
 // Antag Datums.
 
+using Robust.Shared.ViewVariables;
+
 namespace Content.Server.Roles
 {
     /// <summary>
@@ -13,16 +15,19 @@ namespace Content.Server.Roles
         /// <summary>
         ///     The mind owning this role instance.
         /// </summary>
+        [ViewVariables]
         public Mind.Mind Mind { get; }
 
         /// <summary>
         ///     A friendly name for this role type.
         /// </summary>
+        [ViewVariables]
         public abstract string Name { get; }
 
         /// <summary>
         ///     Whether this role should be considered antagonistic or not.
         /// </summary>
+        [ViewVariables]
         public abstract bool Antagonist { get; }
 
         protected Role(Mind.Mind mind)

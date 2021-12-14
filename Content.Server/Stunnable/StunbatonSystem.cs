@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using Content.Server.Items;
-using Content.Server.Jittering;
 using Content.Server.PowerCell.Components;
 using Content.Server.Speech.EntitySystems;
 using Content.Server.Stunnable.Components;
@@ -53,7 +52,7 @@ namespace Content.Server.Stunnable
             if (!EntityManager.TryGetComponent<PowerCellSlotComponent>(uid, out var slot) || slot.Cell == null || !slot.Cell.TryUseCharge(comp.EnergyPerUse))
                 return;
 
-            foreach (IEntity entity in args.HitEntities)
+            foreach (EntityUid entity in args.HitEntities)
             {
                 StunEntity(entity, comp);
             }
@@ -73,7 +72,7 @@ namespace Content.Server.Stunnable
 
         private void OnUseInHand(EntityUid uid, StunbatonComponent comp, UseInHandEvent args)
         {
-            if (!Get<ActionBlockerSystem>().CanUse(args.User.Uid))
+            if (!Get<ActionBlockerSystem>().CanUse(args.User))
                 return;
 
             if (comp.Activated)
@@ -104,7 +103,7 @@ namespace Content.Server.Stunnable
 
         private void OnInteractUsing(EntityUid uid, StunbatonComponent comp, InteractUsingEvent args)
         {
-            if (!Get<ActionBlockerSystem>().CanInteract(args.User.Uid))
+            if (!Get<ActionBlockerSystem>().CanInteract(args.User))
                 return;
 
             if (EntityManager.TryGetComponent<PowerCellSlotComponent>(uid, out var cellslot))
@@ -119,33 +118,33 @@ namespace Content.Server.Stunnable
             args.PushMarkup(msg);
         }
 
-        private void StunEntity(IEntity entity, StunbatonComponent comp)
+        private void StunEntity(EntityUid entity, StunbatonComponent comp)
         {
-            if (!entity.TryGetComponent(out StatusEffectsComponent? status) || !comp.Activated) return;
+            if (!EntityManager.TryGetComponent(entity, out StatusEffectsComponent? status) || !comp.Activated) return;
 
             // TODO: Make slowdown inflicted customizable.
 
             SoundSystem.Play(Filter.Pvs(comp.Owner), comp.StunSound.GetSound(), comp.Owner, AudioHelpers.WithVariation(0.25f));
-            if (!EntityManager.HasComponent<SlowedDownComponent>(entity.Uid))
+            if (!EntityManager.HasComponent<SlowedDownComponent>(entity))
             {
                 if (_robustRandom.Prob(comp.ParalyzeChanceNoSlowdown))
-                    _stunSystem.TryParalyze(entity.Uid, TimeSpan.FromSeconds(comp.ParalyzeTime), status);
+                    _stunSystem.TryParalyze(entity, TimeSpan.FromSeconds(comp.ParalyzeTime), true, status);
                 else
-                    _stunSystem.TrySlowdown(entity.Uid, TimeSpan.FromSeconds(comp.SlowdownTime), 0.5f, 0.5f, status);
+                    _stunSystem.TrySlowdown(entity, TimeSpan.FromSeconds(comp.SlowdownTime), true,  0.5f, 0.5f, status);
             }
             else
             {
                 if (_robustRandom.Prob(comp.ParalyzeChanceWithSlowdown))
-                    _stunSystem.TryParalyze(entity.Uid, TimeSpan.FromSeconds(comp.ParalyzeTime), status);
+                    _stunSystem.TryParalyze(entity, TimeSpan.FromSeconds(comp.ParalyzeTime), true, status);
                 else
-                    _stunSystem.TrySlowdown(entity.Uid, TimeSpan.FromSeconds(comp.SlowdownTime), 0.5f, 0.5f, status);
+                    _stunSystem.TrySlowdown(entity, TimeSpan.FromSeconds(comp.SlowdownTime), true,  0.5f, 0.5f, status);
             }
 
             var slowdownTime = TimeSpan.FromSeconds(comp.SlowdownTime);
-            _jitterSystem.DoJitter(entity.Uid, slowdownTime, status:status);
-            _stutteringSystem.DoStutter(entity.Uid, slowdownTime, status);
+            _jitterSystem.DoJitter(entity, slowdownTime, true, status:status);
+            _stutteringSystem.DoStutter(entity, slowdownTime, true, status);
 
-            if (!comp.Owner.TryGetComponent<PowerCellSlotComponent>(out var slot) || slot.Cell == null || !(slot.Cell.CurrentCharge < comp.EnergyPerUse))
+            if (!EntityManager.TryGetComponent<PowerCellSlotComponent?>(comp.Owner, out var slot) || slot.Cell == null || !(slot.Cell.CurrentCharge < comp.EnergyPerUse))
                 return;
 
             SoundSystem.Play(Filter.Pvs(comp.Owner), comp.SparksSound.GetSound(), comp.Owner, AudioHelpers.WithVariation(0.25f));
@@ -159,8 +158,8 @@ namespace Content.Server.Stunnable
                 return;
             }
 
-            if (!comp.Owner.TryGetComponent<SpriteComponent>(out var sprite) ||
-                !comp.Owner.TryGetComponent<ItemComponent>(out var item)) return;
+            if (!EntityManager.TryGetComponent<SpriteComponent?>(comp.Owner, out var sprite) ||
+                !EntityManager.TryGetComponent<ItemComponent?>(comp.Owner, out var item)) return;
 
             SoundSystem.Play(Filter.Pvs(comp.Owner), comp.SparksSound.GetSound(), comp.Owner, AudioHelpers.WithVariation(0.25f));
             item.EquippedPrefix = "off";
@@ -169,19 +168,19 @@ namespace Content.Server.Stunnable
             comp.Activated = false;
         }
 
-        private void TurnOn(StunbatonComponent comp, IEntity user)
+        private void TurnOn(StunbatonComponent comp, EntityUid user)
         {
             if (comp.Activated)
             {
                 return;
             }
 
-            if (!comp.Owner.TryGetComponent<SpriteComponent>(out var sprite) ||
-                !comp.Owner.TryGetComponent<ItemComponent>(out var item))
+            if (!EntityManager.TryGetComponent<SpriteComponent?>(comp.Owner, out var sprite) ||
+                !EntityManager.TryGetComponent<ItemComponent?>(comp.Owner, out var item))
                 return;
 
             var playerFilter = Filter.Pvs(comp.Owner);
-            if (!comp.Owner.TryGetComponent<PowerCellSlotComponent>(out var slot))
+            if (!EntityManager.TryGetComponent<PowerCellSlotComponent?>(comp.Owner, out var slot))
                 return;
 
             if (slot.Cell == null)

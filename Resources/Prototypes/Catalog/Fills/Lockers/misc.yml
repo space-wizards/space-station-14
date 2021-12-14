@@ -32,6 +32,8 @@
           prob: 0.6
         - id: ClothingOuterSuitFire
           prob: 0.75
+        - id: ClothingMaskGas
+          prob: 0.75
 
 - type: entity
   id: ClosetMaintenanceFilledRandom

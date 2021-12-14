@@ -245,7 +245,3 @@
 
 - type: Tag
   id: Write
-  
-# for head wear & masks that cover the face.
-- type: Tag
-  id: ConcealsFace

@@ -65,7 +65,7 @@ namespace Content.Client.Suspicion
                 return false;
             }
 
-            return _playerManager.LocalPlayer.ControlledEntity.TryGetComponent(out suspicion);
+            return IoCManager.Resolve<IEntityManager>().TryGetComponent(_playerManager.LocalPlayer.ControlledEntity, out suspicion);
         }
 
         public void UpdateLabel()

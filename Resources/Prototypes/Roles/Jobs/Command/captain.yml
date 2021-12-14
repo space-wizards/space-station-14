@@ -17,6 +17,10 @@
   # Guys please don't fight
   - Captain
   - HeadOfPersonnel
+  - ChiefEngineer
+  - ChiefMedicalOfficer
+  - HeadOfSecurity
+  - ResearchDirector
   - Command
   - Security
   - Armory
@@ -24,7 +28,6 @@
   - Engineering
   - Medical
   - Cargo
- # - ResearchDirector
   - Research
   - Service
   - Maintenance
@@ -33,7 +36,10 @@
   - Theatre
   - Bar
   - Chemistry
-
+  - Kitchen
+  - Chapel
+  - Hydroponics
+  
 - type: startingGear
   id: CaptainGear
   equipment:

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Content.Server.Administration;
 using Content.Server.Roles;
 using Content.Server.Station;
+using Content.Shared.Administration;
 using Content.Shared.Roles;
 using Content.Shared.Station;
 using Robust.Server.Player;

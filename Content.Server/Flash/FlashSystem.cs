@@ -3,7 +3,6 @@ using Content.Server.Flash.Components;
 using Content.Server.Inventory.Components;
 using Content.Server.Items;
 using Content.Server.Stunnable;
-using Content.Server.Stunnable.Components;
 using Content.Server.Weapon.Melee;
 using Content.Shared.Examine;
 using Content.Shared.Flash;
@@ -13,7 +12,6 @@ using Content.Shared.Inventory;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
-using Content.Shared.Stunnable;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -50,9 +48,9 @@ namespace Content.Server.Flash
             }
 
             args.Handled = true;
-            foreach (IEntity e in args.HitEntities)
+            foreach (var e in args.HitEntities)
             {
-                Flash(e.Uid, args.User.Uid, uid, comp.FlashDuration, comp.SlowTo);
+                Flash(e, args.User, uid, comp.FlashDuration, comp.SlowTo);
             }
         }
 
@@ -63,10 +61,10 @@ namespace Content.Server.Flash
                 return;
             }
 
-            if (args.Entity.HasComponent<FlashableComponent>())
+            if (EntityManager.HasComponent<FlashableComponent>(args.Entity))
             {
                 args.CanInteract = true;
-                Flash(args.Entity.Uid, args.User.Uid, uid, comp.FlashDuration, comp.SlowTo);
+                Flash(args.Entity, args.User, uid, comp.FlashDuration, comp.SlowTo);
             }
         }
 
@@ -77,18 +75,18 @@ namespace Content.Server.Flash
                 return;
             }
 
-            foreach (var entity in _entityLookup.GetEntitiesInRange(comp.Owner.Transform.Coordinates, comp.Range))
+            foreach (var entity in _entityLookup.GetEntitiesInRange(EntityManager.GetComponent<TransformComponent>(comp.Owner).Coordinates, comp.Range))
             {
-                Flash(entity.Uid, args.User.Uid, uid, comp.AoeFlashDuration, comp.SlowTo);
+                Flash(entity, args.User, uid, comp.AoeFlashDuration, comp.SlowTo);
             }
         }
 
-        private bool UseFlash(FlashComponent comp, IEntity user)
+        private bool UseFlash(FlashComponent comp, EntityUid user)
         {
             if (comp.HasUses)
             {
                 // TODO flash visualizer
-                if (!comp.Owner.TryGetComponent<SpriteComponent>(out var sprite))
+                if (!EntityManager.TryGetComponent<SpriteComponent?>(comp.Owner, out var sprite))
                     return false;
 
                 if (--comp.Uses == 0)
@@ -131,21 +129,17 @@ namespace Content.Server.Flash
                 flashable.Dirty();
             }
 
-            _stunSystem.TrySlowdown(target, TimeSpan.FromSeconds(flashDuration/1000f),
+            _stunSystem.TrySlowdown(target, TimeSpan.FromSeconds(flashDuration/1000f), true,
                 slowTo, slowTo);
 
             if (displayPopup && user != null && target != user)
             {
-                // TODO Resolving the IEntity here bad.
-                if(EntityManager.TryGetEntity(user.Value, out var userEntity)
-                && EntityManager.TryGetEntity(target, out var targetEntity))
-
-                userEntity.PopupMessage(targetEntity,
-                    Loc.GetString(
-                        "flash-component-user-blinds-you",
-                        ("user", userEntity)
-                    )
-                );
+                // TODO Resolving the EntityUidhere bad.
+                if (EntityManager.EntityExists(user.Value) && EntityManager.EntityExists(target))
+                {
+                    user.Value.PopupMessage(target, Loc.GetString("flash-component-user-blinds-you",
+                        ("user", user.Value)));
+                }
             }
         }
 
@@ -155,10 +149,10 @@ namespace Content.Server.Flash
 
             foreach (var entity in _entityLookup.GetEntitiesInRange(transform.Coordinates, range))
             {
-                if (!entity.HasComponent<FlashableComponent>() ||
+                if (!EntityManager.HasComponent<FlashableComponent>(entity) ||
                     !transform.InRangeUnobstructed(entity, range, CollisionGroup.Opaque)) continue;
 
-                Flash(entity.Uid, user, source, duration, slowTo, displayPopup);
+                Flash(entity, user, source, duration, slowTo, displayPopup);
             }
 
             if (sound != null)
@@ -191,7 +185,7 @@ namespace Content.Server.Flash
         {
             // Forward the event to the glasses, if any.
             if(component.TryGetSlotItem(EquipmentSlotDefines.Slots.EYES, out ItemComponent? glasses))
-                RaiseLocalEvent(glasses.Owner.Uid, args);
+                RaiseLocalEvent(glasses.Owner, args);
         }
 
         private void OnFlashImmunityFlashAttempt(EntityUid uid, FlashImmunityComponent component, FlashAttemptEvent args)

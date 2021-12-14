@@ -1,0 +1,104 @@
+# TODO once tiles can be smoothed and carpets ported over to that, add them to the FloorTile outputs
+- type: entity
+  name: red carpet
+  parent: FloorTileItemBase
+  id: FloorCarpetItemRed
+  components:
+  - type: Sprite
+    state: carpet-red
+  - type: Item
+    HeldPrefix: carpet-red
+  - type: FloorTile
+    outputs:
+      - plating
+
+- type: entity
+  name: black carpet
+  parent: FloorTileItemBase
+  id: FloorCarpetItemBlack
+  components:
+  - type: Sprite
+    state: carpet-black
+  - type: Item
+    HeldPrefix: carpet-black
+  - type: FloorTile
+    outputs:
+      - plating
+
+- type: entity
+  name: blue carpet
+  parent: FloorTileItemBase
+  id: FloorCarpetItemBlue
+  components:
+  - type: Sprite
+    state: carpet-blue
+  - type: Item
+    HeldPrefix: carpet-blue
+  - type: FloorTile
+    outputs:
+      - plating
+
+- type: entity
+  name: green carpet
+  parent: FloorTileItemBase
+  id: FloorCarpetItemGreen
+  components:
+  - type: Sprite
+    state: carpet-green
+  - type: Item
+    HeldPrefix: carpet-green
+  - type: FloorTile
+    outputs:
+      - plating
+
+- type: entity
+  name: orange carpet
+  parent: FloorTileItemBase
+  id: FloorCarpetItemOrange
+  components:
+  - type: Sprite
+    state: carpet-orange
+  - type: Item
+    HeldPrefix: carpet-orange
+  - type: FloorTile
+    outputs:
+      - plating
+
+- type: entity
+  name: sky blue carpet
+  parent: FloorTileItemBase
+  id: FloorCarpetItemSkyBlue
+  components:
+  - type: Sprite
+    state: carpet-skyblue
+  - type: Item
+    HeldPrefix: carpet-skyblue
+  - type: FloorTile
+    outputs:
+      - plating
+
+- type: entity
+  name: purple carpet
+  parent: FloorTileItemBase
+  id: FloorCarpetItemPurple
+  components:
+  - type: Sprite
+    state: carpet-purple
+  - type: Item
+    HeldPrefix: carpet-purple
+  - type: FloorTile
+    outputs:
+      - plating
+
+- type: entity
+  name: pink carpet
+  parent: FloorTileItemBase
+  id: FloorCarpetItemPink
+  components:
+  - type: Sprite
+    state: carpet-pink
+  - type: Item
+    HeldPrefix: carpet-pink
+  - type: FloorTile
+    outputs:
+      - plating

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Content.Server.Power.Components;
 using Content.Shared.Research.Prototypes;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -73,7 +74,7 @@ namespace Content.Server.Research.Components
             Id = ServerCount++;
             EntitySystem.Get<ResearchSystem>()?.RegisterServer(this);
             Database = Owner.EnsureComponent<TechnologyDatabaseComponent>();
-            Owner.TryGetComponent(out _powerReceiver);
+            IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out _powerReceiver);
         }
 
         /// <inheritdoc />
