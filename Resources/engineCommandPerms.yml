@@ -4,12 +4,15 @@
   - help
   - list
   - quit
+  - cvar
+  - devwindow
 
 - Flags: VAREDIT
   Commands:
   - addcomp
   - rmcomp
   - vv
+  - scale
 
 - Flags: DEBUG
   Commands:
@@ -30,6 +33,10 @@
   - toggleshadows
   - testbed
   - vv
+  - szr_stats
+  - addview
+  - removeview
+
 
 - Flags: MAPPING
   Commands:
@@ -74,6 +81,8 @@
   - saveconfig
   - testlog
   - sudo
+  - scsi
+  - lsasm
 
 - Flags: QUERY
   Commands:
