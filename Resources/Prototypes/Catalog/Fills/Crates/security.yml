@@ -81,4 +81,17 @@
 #      - SecGasmask
 #      - SpacelawBook
 
+- type: entity
+  id: CrateRestraints
+  name: restraints crate
+  parent: CrateSecgear
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxHandcuff
+        amount: 2
+      - id: BoxZiptie
+        amount: 2
+
+
 # Cosmetic Crates

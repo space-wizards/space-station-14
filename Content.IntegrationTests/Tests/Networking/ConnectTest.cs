@@ -56,9 +56,9 @@ namespace Content.IntegrationTests.Tests.Networking
             var svEntityManager = server.ResolveDependency<IEntityManager>();
 
             var lastSvEntity = svEntityManager.GetEntities().Last();
-            var lastClEntity = clEntityManager.GetEntity(lastSvEntity.Uid);
 
-            Assert.That(lastClEntity.Transform.Coordinates, Is.EqualTo(lastSvEntity.Transform.Coordinates));
+            Assert.That(clEntityManager.GetComponent<TransformComponent>(lastSvEntity).Coordinates,
+                Is.EqualTo(svEntityManager.GetComponent<TransformComponent>(lastSvEntity).Coordinates));
         }
     }
 }

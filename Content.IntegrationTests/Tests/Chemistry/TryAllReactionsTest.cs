@@ -43,18 +43,18 @@ namespace Content.IntegrationTests.Tests.Chemistry
                 //since i have no clue how to isolate each loop assert-wise im just gonna throw this one in for good measure
                 Console.WriteLine($"Testing {reactionPrototype.ID}");
 
-                IEntity beaker;
+                EntityUid beaker;
                 Solution component = null;
 
                 server.Assert(() =>
                 {
                     beaker = entityManager.SpawnEntity("TestSolutionContainer", coordinates);
                     Assert.That(EntitySystem.Get<SolutionContainerSystem>()
-                        .TryGetSolution(beaker.Uid, "beaker", out component));
+                        .TryGetSolution(beaker, "beaker", out component));
                     foreach (var (id, reactant) in reactionPrototype.Reactants)
                     {
                         Assert.That(EntitySystem.Get<SolutionContainerSystem>()
-                            .TryAddReagent(beaker.Uid, component, id, reactant.Amount, out var quantity));
+                            .TryAddReagent(beaker, component, id, reactant.Amount, out var quantity));
                         Assert.That(reactant.Amount, Is.EqualTo(quantity));
                     }
                 });
@@ -67,7 +67,7 @@ namespace Content.IntegrationTests.Tests.Chemistry
                     //(i'm sorry)
                     var foundProductsMap = reactionPrototype.Products
                         .Concat(reactionPrototype.Reactants.Where(x => x.Value.Catalyst).ToDictionary(x => x.Key, x => x.Value.Amount))
-                        .ToDictionary(x => x, x => false);
+                        .ToDictionary(x => x, _ => false);
                     foreach (var reagent in component.Contents)
                     {
                         Assert.That(foundProductsMap.TryFirstOrNull(x => x.Key.Key == reagent.ReagentId && x.Key.Value == reagent.Quantity, out var foundProduct));

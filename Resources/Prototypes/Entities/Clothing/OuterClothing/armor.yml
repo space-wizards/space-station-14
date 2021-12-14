@@ -16,7 +16,7 @@
         Blunt: 0.9
         Slash: 0.9
         Piercing: 0.9
-        Heat: 0.4 # this technically means it protects against fires pretty well?
+        Heat: 0.4 # this technically means it protects against fires pretty well? -heat is just for lasers and stuff, not atmos temperature
 
 - type: entity
   parent: ClothingOuterBase
@@ -98,7 +98,7 @@
 - type: entity
   parent: ClothingOuterArmorHeavy
   id: ClothingOuterArmorMagusblue
-  name: magus blue
+  name: blue magus armor
   description: An blue armored suit that provides good protection.
   components:
   - type: Sprite
@@ -109,7 +109,7 @@
 - type: entity
   parent: ClothingOuterArmorHeavy
   id: ClothingOuterArmorMagusred
-  name: magus red
+  name: red magus armor
   description: A red armored suit that provides good protection.
   components:
   - type: Sprite
@@ -127,6 +127,13 @@
     sprite: Clothing/OuterClothing/Armor/riot.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Armor/riot.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.4
+        Slash: 0.4
+        Piercing: 0.9
+        Heat: 0.9
 
 - type: entity
   parent: ClothingOuterBase
@@ -138,3 +145,10 @@
     sprite: Clothing/OuterClothing/Armor/scaf.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Armor/scaf.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.7
+        Piercing: 0.4
+        Heat: 0.9

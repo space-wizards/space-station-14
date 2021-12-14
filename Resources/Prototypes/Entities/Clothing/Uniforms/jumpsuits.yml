@@ -63,6 +63,11 @@
     sprite: Clothing/Uniforms/Jumpsuit/ce.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/ce.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Radiation: 0.8
+
 
 - type: entity
   parent: ClothingUniformBase

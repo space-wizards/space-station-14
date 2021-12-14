@@ -22,7 +22,7 @@ namespace Content.Shared.Construction.Conditions
         [DataField("guideIcon")]
         public SpriteSpecifier? GuideIcon = null;
 
-        public bool Condition(IEntity user, EntityCoordinates location, Direction direction)
+        public bool Condition(EntityUid user, EntityCoordinates location, Direction direction)
         {
             if (TargetTiles == null) return true;
 

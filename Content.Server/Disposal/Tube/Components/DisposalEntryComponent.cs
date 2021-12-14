@@ -15,14 +15,16 @@ namespace Content.Server.Disposal.Tube.Components
     [ComponentReference(typeof(IDisposalTubeComponent))]
     public class DisposalEntryComponent : DisposalTubeComponent
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         private const string HolderPrototypeId = "DisposalHolder";
 
         public override string Name => "DisposalEntry";
 
         public bool TryInsert(DisposalUnitComponent from)
         {
-            var holder = Owner.EntityManager.SpawnEntity(HolderPrototypeId, Owner.Transform.MapPosition);
-            var holderComponent = holder.GetComponent<DisposalHolderComponent>();
+            var holder = _entMan.SpawnEntity(HolderPrototypeId, _entMan.GetComponent<TransformComponent>(Owner).MapPosition);
+            var holderComponent = _entMan.GetComponent<DisposalHolderComponent>(holder);
 
             foreach (var entity in from.ContainedEntities.ToArray())
             {
@@ -32,12 +34,12 @@ namespace Content.Server.Disposal.Tube.Components
             EntitySystem.Get<AtmosphereSystem>().Merge(holderComponent.Air, from.Air);
             from.Air.Clear();
 
-            return EntitySystem.Get<DisposableSystem>().EnterTube(holderComponent.OwnerUid, OwnerUid, holderComponent, null, this);
+            return EntitySystem.Get<DisposableSystem>().EnterTube((holderComponent).Owner, Owner, holderComponent, null, this);
         }
 
         protected override Direction[] ConnectableDirections()
         {
-            return new[] {Owner.Transform.LocalRotation.GetDir()};
+            return new[] {_entMan.GetComponent<TransformComponent>(Owner).LocalRotation.GetDir()};
         }
 
         /// <summary>

@@ -3,6 +3,7 @@ using Content.Shared.Chemistry;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -25,7 +26,8 @@ namespace Content.Client.Chemistry.Visualizers
             if (!component.TryGetData(SolutionContainerVisuals.VisualState,
                 out SolutionContainerVisualState state)) return;
 
-            if (!component.Owner.TryGetComponent(out ISpriteComponent? sprite)) return;
+            var entities = IoCManager.Resolve<IEntityManager>();
+            if (!entities.TryGetComponent(component.Owner, out ISpriteComponent? sprite)) return;
             if (!sprite.LayerMapTryGet(_layer, out var fillLayer)) return;
 
             var fillPercent = state.FilledVolumePercent;

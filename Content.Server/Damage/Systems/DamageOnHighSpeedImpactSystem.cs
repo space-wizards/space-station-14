@@ -51,14 +51,14 @@ namespace Content.Server.Damage.Systems
             component.LastHit = _gameTiming.CurTime;
 
             if (_robustRandom.Prob(component.StunChance))
-                _stunSystem.TryStun(uid, TimeSpan.FromSeconds(component.StunSeconds));
+                _stunSystem.TryStun(uid, TimeSpan.FromSeconds(component.StunSeconds), true);
 
             var damageScale = (speed / component.MinimumSpeed) * component.Factor;
 
             var dmg = _damageableSystem.TryChangeDamage(uid, component.Damage * damageScale);
 
             if (dmg != null)
-                _logSystem.Add(LogType.Damaged, $"{component.Owner} took {dmg.Total} damage from a high speed collision");
+                _logSystem.Add(LogType.Damaged, $"{ToPrettyString(component.Owner):entity} took {dmg.Total:damage} damage from a high speed collision");
         }
     }
 }

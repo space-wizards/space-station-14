@@ -6,9 +6,10 @@
   - Security
   icon: "Warden"
   supervisors: "the head of security"
+  canBeAntag: false
   access:
   - Security
- # - Brig
+  - Armory
   - Maintenance
   - Service
 

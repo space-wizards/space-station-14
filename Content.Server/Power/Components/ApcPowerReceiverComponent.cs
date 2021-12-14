@@ -11,6 +11,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
+using Robust.Shared.Utility.Markup;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Power.Components
@@ -24,6 +25,8 @@ namespace Content.Server.Power.Components
     public class ApcPowerReceiverComponent : Component, IExamine
 #pragma warning restore 618
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "ApcPowerReceiver";
 
         [ViewVariables]
@@ -85,9 +88,9 @@ namespace Content.Server.Power.Components
 #pragma warning disable 618
             SendMessage(new PowerChangedMessage(Powered));
 #pragma warning restore 618
-            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new PowerChangedEvent(Powered, NetworkLoad.ReceivingPower));
+            _entMan.EventBus.RaiseLocalEvent(Owner, new PowerChangedEvent(Powered, NetworkLoad.ReceivingPower));
 
-            if (Owner.TryGetComponent<AppearanceComponent>(out var appearance))
+            if (_entMan.TryGetComponent<AppearanceComponent?>(Owner, out var appearance))
             {
                 appearance.SetData(PowerDeviceVisuals.Powered, Powered);
             }
@@ -96,7 +99,7 @@ namespace Content.Server.Power.Components
         ///<summary>
         ///Adds some markup to the examine text of whatever object is using this component to tell you if it's powered or not, even if it doesn't have an icon state to do this for you.
         ///</summary>
-        public void Examine(FormattedMessage message, bool inDetailsRange)
+        public void Examine(FormattedMessage.Builder message, bool inDetailsRange)
         {
             message.AddMarkup(Loc.GetString("power-receiver-component-on-examine-main",
                                             ("stateText", Loc.GetString( Powered ? "power-receiver-component-on-examine-powered" :

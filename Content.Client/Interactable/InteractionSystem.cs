@@ -9,13 +9,13 @@ namespace Content.Client.Interactable
     {
         public override bool CanAccessViaStorage(EntityUid user, EntityUid target)
         {
-            if (!EntityManager.TryGetEntity(target, out var entity))
+            if (!EntityManager.EntityExists(target))
                 return false;
 
-            if (!entity.TryGetContainer(out var container))
+            if (!target.TryGetContainer(out var container))
                 return false;
 
-            if (!EntityManager.TryGetComponent(container.Owner.Uid, out ClientStorageComponent storage))
+            if (!EntityManager.TryGetComponent(container.Owner, out ClientStorageComponent storage))
                 return false;
 
             // we don't check if the user can access the storage entity itself. This should be handed by the UI system.

@@ -1,6 +1,7 @@
 ﻿using System;
 using Content.Shared.Actions.Components;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Shared.Actions.Behaviors
 {
@@ -20,7 +21,7 @@ namespace Content.Shared.Actions.Behaviors
         /// <summary>
         /// Entity performing the action.
         /// </summary>
-        public readonly IEntity Performer;
+        public readonly EntityUid Performer;
         /// <summary>
         /// Action being performed
         /// </summary>
@@ -30,13 +31,13 @@ namespace Content.Shared.Actions.Behaviors
         /// </summary>
         public readonly SharedActionsComponent? PerformerActions;
 
-        public ActionEventArgs(IEntity performer, ActionType actionType)
+        public ActionEventArgs(EntityUid performer, ActionType actionType)
         {
             Performer = performer;
             ActionType = actionType;
-            if (!Performer.TryGetComponent(out PerformerActions))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Performer, out PerformerActions))
             {
-                throw new InvalidOperationException($"performer {performer.Name} tried to perform action {actionType} " +
+                throw new InvalidOperationException($"performer {IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(performer).EntityName} tried to perform action {actionType} " +
                                                     $" but the performer had no actions component," +
                                                     " which should never occur");
             }

@@ -1,6 +1,7 @@
 using Content.Shared.Hands.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Client.Hands
 {
@@ -37,7 +38,7 @@ namespace Content.Client.Hands
 
         public void UpdateHandContainers()
         {
-            if (!Owner.TryGetComponent<ContainerManagerComponent>(out var containerMan))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ContainerManagerComponent?>(Owner, out var containerMan))
                 return;
 
             foreach (var hand in Hands)

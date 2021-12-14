@@ -67,7 +67,7 @@ namespace Content.Shared.Movement
         {
             var (walkDir, sprintDir) = mover.VelocityDir;
 
-            var transform = mover.Owner.Transform;
+            var transform = EntityManager.GetComponent<TransformComponent>(mover.Owner);
             var parentRotation = transform.Parent!.WorldRotation;
 
             // Regular movement.
@@ -96,16 +96,16 @@ namespace Content.Shared.Movement
         protected void HandleMobMovement(IMoverComponent mover, PhysicsComponent physicsComponent,
             IMobMoverComponent mobMover)
         {
-            DebugTools.Assert(!UsedMobMovement.ContainsKey(mover.OwnerUid));
+            DebugTools.Assert(!UsedMobMovement.ContainsKey(mover.Owner));
 
             if (!UseMobMovement(physicsComponent))
             {
-                UsedMobMovement[mover.OwnerUid] = false;
+                UsedMobMovement[mover.Owner] = false;
                 return;
             }
 
-            UsedMobMovement[mover.OwnerUid] = true;
-            var transform = mover.Owner.Transform;
+            UsedMobMovement[mover.Owner] = true;
+            var transform = EntityManager.GetComponent<TransformComponent>(mover.Owner);
             var weightless = mover.Owner.IsWeightless(physicsComponent, mapManager: _mapManager, entityManager: _entityManager);
             var (walkDir, sprintDir) = mover.VelocityDir;
 
@@ -164,10 +164,10 @@ namespace Content.Shared.Movement
         protected bool UseMobMovement(PhysicsComponent body)
         {
             return body.BodyStatus == BodyStatus.OnGround &&
-                   body.Owner.HasComponent<MobStateComponent>() &&
+                   EntityManager.HasComponent<MobStateComponent>(body.Owner) &&
                    // If we're being pulled then don't mess with our velocity.
-                   (!body.Owner.TryGetComponent(out SharedPullableComponent? pullable) || !pullable.BeingPulled) &&
-                   _blocker.CanMove(body.OwnerUid);
+                   (!EntityManager.TryGetComponent(body.Owner, out SharedPullableComponent? pullable) || !pullable.BeingPulled) &&
+                   _blocker.CanMove((body).Owner);
         }
 
         /// <summary>
@@ -186,7 +186,7 @@ namespace Content.Shared.Movement
                     !otherCollider.CanCollide ||
                     ((collider.CollisionMask & otherCollider.CollisionLayer) == 0 &&
                     (otherCollider.CollisionMask & collider.CollisionLayer) == 0) ||
-                    (otherCollider.Owner.TryGetComponent(out SharedPullableComponent? pullable) && pullable.BeingPulled))
+                    (IoCManager.Resolve<IEntityManager>().TryGetComponent(otherCollider.Owner, out SharedPullableComponent? pullable) && pullable.BeingPulled))
                 {
                     continue;
                 }

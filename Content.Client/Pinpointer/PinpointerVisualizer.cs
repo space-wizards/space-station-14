@@ -2,6 +2,7 @@ using Content.Shared.Pinpointer;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 
 namespace Content.Client.Pinpointer
@@ -13,7 +14,8 @@ namespace Content.Client.Pinpointer
         {
             base.OnChangeData(component);
 
-            if (!component.Owner.TryGetComponent<SpriteComponent>(out var sprite))
+            var entities = IoCManager.Resolve<IEntityManager>();
+            if (!entities.TryGetComponent(component.Owner, out SpriteComponent sprite))
                 return;
 
             // check if pinpointer screen is active

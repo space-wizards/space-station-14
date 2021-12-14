@@ -13,7 +13,7 @@ namespace Content.Shared.Projectiles
 
         private void PreventCollision(EntityUid uid, SharedProjectileComponent component, PreventCollideEvent args)
         {
-            if (component.IgnoreShooter && args.BodyB.OwnerUid == component.Shooter)
+            if (component.IgnoreShooter && args.BodyB.Owner == component.Shooter)
             {
                 args.Cancel();
                 return;
