@@ -1,5 +1,4 @@
 using Content.Server.Hands.Components;
-using Content.Server.Items;
 using Content.Shared.Acts;
 using Content.Shared.Item;
 using Content.Shared.Popups;
@@ -52,7 +51,7 @@ namespace Content.Server.Storage.Components
                 return false;
             }
 
-            if (!_entMan.TryGetComponent(itemToHide, out ItemComponent? item))
+            if (!_entMan.TryGetComponent(itemToHide, out SharedItemComponent? item))
                 return false;
 
             if (item.Size > _maxItemSize)
@@ -87,7 +86,7 @@ namespace Content.Server.Storage.Components
 
             if (_entMan.TryGetComponent(user, out HandsComponent? hands))
             {
-                if (!_entMan.TryGetComponent(contained, out ItemComponent? item))
+                if (!_entMan.TryGetComponent(contained, out SharedItemComponent? item))
                     return false;
                 hands.PutInHandOrDrop(item);
             }

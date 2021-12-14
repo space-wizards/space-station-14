@@ -4,7 +4,6 @@ using Content.Server.Cuffs.Components;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
 using Content.Server.Inventory.Components;
-using Content.Server.Items;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.DragDrop;
@@ -17,7 +16,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.ViewVariables;
-using static Content.Shared.Inventory.EquipmentSlotDefines;
 
 namespace Content.Server.Strip
 {

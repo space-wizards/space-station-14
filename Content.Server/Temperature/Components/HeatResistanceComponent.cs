@@ -1,8 +1,7 @@
 using Content.Server.Clothing.Components;
-using Content.Server.Inventory.Components;
-using Content.Shared.Inventory;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using InventoryComponent = Content.Shared.Inventory.InventoryComponent;
 
 namespace Content.Server.Temperature.Components
 {

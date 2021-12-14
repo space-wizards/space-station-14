@@ -68,6 +68,16 @@ public partial class InventorySystem : EntitySystem
         return true;
     }
 
+    public bool TryGetContainerSlotEnumerator(EntityUid uid, [NotNullWhen(true)] out ContainerSlotEnumerator? containerSlotEnumerator, InventoryComponent? component = null)
+    {
+        containerSlotEnumerator = default;
+        if (!Resolve(uid, ref component))
+            return false;
+
+        containerSlotEnumerator = new ContainerSlotEnumerator(uid, component.TemplateId, _prototypeManager, this);
+        return true;
+    }
+
     public struct ContainerSlotEnumerator
     {
         private readonly InventorySystem _inventorySystem;

@@ -1,9 +1,10 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Content.Server.Access.Components;
 using Content.Server.Hands.Components;
-using Content.Server.Inventory.Components;
+using Content.Shared.Inventory;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using InventoryComponent = Content.Server.Inventory.Components.InventoryComponent;
 
 namespace Content.Server.PDA
 {
@@ -46,18 +47,22 @@ namespace Content.Server.PDA
 
             IdCardComponent? firstIdInInventory = null;
 
-            if (entMan.TryGetComponent(player, out InventoryComponent? inventory))
+            var invSystem = EntitySystem.Get<InventorySystem>();
+
+            if (invSystem.TryGetContainerSlotEnumerator(player, out var enumerator))
             {
-                foreach (var item in inventory.GetAllHeldItems())
+                while (enumerator.Value.MoveNext(out var containerSlot))
                 {
+                    if(!containerSlot.ContainedEntity.HasValue) continue;
+
                     if (firstIdInInventory == null &&
-                        entMan.TryGetComponent(item, out PDAComponent? pda) &&
+                        entMan.TryGetComponent(containerSlot.ContainedEntity.Value, out PDAComponent? pda) &&
                         pda.ContainedID != null)
                     {
                         firstIdInInventory = pda.ContainedID;
                     }
 
-                    if (entMan.TryGetComponent(item, out IdCardComponent? card))
+                    if (entMan.TryGetComponent(containerSlot.ContainedEntity.Value, out IdCardComponent? card))
                     {
                         return card;
                     }

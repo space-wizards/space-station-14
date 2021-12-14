@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using Content.Server.Items;
 using Content.Server.PowerCell.Components;
 using Content.Server.Speech.EntitySystems;
 using Content.Server.Stunnable.Components;
@@ -9,6 +8,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Item;
 using Content.Shared.Jittering;
 using Content.Shared.Popups;
 using Content.Shared.StatusEffect;
@@ -159,7 +159,7 @@ namespace Content.Server.Stunnable
             }
 
             if (!EntityManager.TryGetComponent<SpriteComponent?>(comp.Owner, out var sprite) ||
-                !EntityManager.TryGetComponent<ItemComponent?>(comp.Owner, out var item)) return;
+                !EntityManager.TryGetComponent<SharedItemComponent?>(comp.Owner, out var item)) return;
 
             SoundSystem.Play(Filter.Pvs(comp.Owner), comp.SparksSound.GetSound(), comp.Owner, AudioHelpers.WithVariation(0.25f));
             item.EquippedPrefix = "off";
@@ -176,7 +176,7 @@ namespace Content.Server.Stunnable
             }
 
             if (!EntityManager.TryGetComponent<SpriteComponent?>(comp.Owner, out var sprite) ||
-                !EntityManager.TryGetComponent<ItemComponent?>(comp.Owner, out var item))
+                !EntityManager.TryGetComponent<SharedItemComponent?>(comp.Owner, out var item))
                 return;
 
             var playerFilter = Filter.Pvs(comp.Owner);

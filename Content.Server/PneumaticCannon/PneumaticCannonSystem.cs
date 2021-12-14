@@ -5,7 +5,6 @@ using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Camera;
 using Content.Server.Hands.Components;
-using Content.Server.Items;
 using Content.Server.Nutrition.Components;
 using Content.Server.Storage.Components;
 using Content.Server.Stunnable;
@@ -13,6 +12,7 @@ using Content.Server.Throwing;
 using Content.Server.Tools.Components;
 using Content.Shared.CombatMode;
 using Content.Shared.Interaction;
+using Content.Shared.Item;
 using Content.Shared.PneumaticCannon;
 using Content.Shared.Popups;
 using Content.Shared.StatusEffect;
@@ -133,7 +133,7 @@ namespace Content.Server.PneumaticCannon
             // this overrides the ServerStorageComponent's insertion stuff because
             // it's not event-based yet and I can't cancel it, so tools and stuff
             // will modify mode/power then get put in anyway
-            if (EntityManager.TryGetComponent<ItemComponent?>(args.Used, out var item)
+            if (EntityManager.TryGetComponent<SharedItemComponent?>(args.Used, out var item)
                 && EntityManager.TryGetComponent<ServerStorageComponent?>(component.Owner, out var storage))
             {
                 if (storage.CanInsert(args.Used))
