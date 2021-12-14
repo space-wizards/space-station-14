@@ -1,9 +1,4 @@
 Entries:
-- author: Seth
-  changes:
-  - {message: Made RCDs unable to destroy reinforced walls and airlocks., type: Tweak}
-  id: 236
-  time: '2021-06-16T03:36:13.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix uncuffing yourself, type: Fix}
@@ -2860,3 +2855,10 @@ Entries:
       restraints crate.', type: Add}
   id: 737
   time: '2021-12-14T05:17:27.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: NanoTrasen has supplied its stations with t-ray scanners. No longer
+      will engineers (or other curious crewmembers) have to rip up floor tiles to
+      reveal what is underneath., type: Add}
+  id: 738
+  time: '2021-12-14T07:46:47.0000000+00:00'
