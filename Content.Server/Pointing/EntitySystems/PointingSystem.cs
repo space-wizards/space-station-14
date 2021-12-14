@@ -101,7 +101,7 @@ namespace Content.Server.Pointing.EntitySystems
                 return false;
             }
 
-            if (Exists(pointed) && HasComp<PointingArrowComponent>(pointed))
+            if (HasComp<PointingArrowComponent>(pointed))
             {
                 // this is a pointing arrow. no pointing here...
                 return false;
