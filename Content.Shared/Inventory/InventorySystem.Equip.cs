@@ -18,16 +18,6 @@ public partial class InventorySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeed = default!;
 
-    public void InitializeEquip()
-    {
-
-    }
-
-    public void ShutdownEquip()
-    {
-
-    }
-
     public bool TryEquip(EntityUid uid, EntityUid itemUid, string slot, bool silent = false, bool force = false, InventoryComponent? inventory = null, SharedItemComponent? item = null)
     {
         if (!Resolve(uid, ref inventory) || !Resolve(uid, ref item))
@@ -48,7 +38,7 @@ public partial class InventorySystem
             return false;
         }
 
-        if (!slotContainer.Insert(EntityManager.GetEntity(itemUid)))
+        if (!slotContainer.Insert(itemUid))
         {
             if(!silent)  _popup.PopupCursor(Loc.GetString("inventory-component-can-unequip-cannot"), Filter.Local());
             return false;
@@ -121,7 +111,7 @@ public partial class InventorySystem
 
         var entity = slotContainer.ContainedEntity;
 
-        if (entity == null) return false;
+        if (!entity.HasValue) return false;
 
         if (!force && !CanUnequip(uid, slot, out var reason, slotContainer, inventory))
         {
@@ -131,28 +121,27 @@ public partial class InventorySystem
 
         if (force)
         {
-            slotContainer.ForceRemove(entity);
+            slotContainer.ForceRemove(entity.Value);
         }
         else
         {
-            if (!slotContainer.Remove(entity))
+            if (!slotContainer.Remove(entity.Value))
             {
                 return false;
             }
         }
 
-        entity.GetComponent<TransformComponent>().Coordinates =
-            EntityManager.GetComponent<TransformComponent>(uid).Coordinates;
+        Transform(entity.Value).Coordinates = EntityManager.GetComponent<TransformComponent>(uid).Coordinates;
 
         inventory.Dirty();
 
         _movementSpeed.RefreshMovementSpeedModifiers(uid);
 
-        var unequippedEvent = new DidUnequipEvent(uid, entity.Uid);
+        var unequippedEvent = new DidUnequipEvent(uid, entity.Value);
         RaiseLocalEvent(uid, unequippedEvent);
 
-        var gotUnequippedEvent = new GotUnequippedEvent(uid, entity.Uid);
-        RaiseLocalEvent(entity.Uid, gotUnequippedEvent);
+        var gotUnequippedEvent = new GotUnequippedEvent(uid, entity.Value);
+        RaiseLocalEvent(entity.Value, gotUnequippedEvent);
 
 
         return true;
@@ -170,10 +159,10 @@ public partial class InventorySystem
         if (containerSlot.ContainedEntity == null)
             return false;
 
-        if (!containerSlot.CanRemove(containerSlot.ContainedEntity))
+        if (!containerSlot.ContainedEntity.HasValue || !containerSlot.CanRemove(containerSlot.ContainedEntity.Value))
             return false;
 
-        var itemUid = containerSlot.ContainedEntity.Uid;
+        var itemUid = containerSlot.ContainedEntity.Value;
 
         var attemptEvent = new IsUnequippingAttemptEvent(uid, itemUid);
         RaiseLocalEvent(uid, attemptEvent);

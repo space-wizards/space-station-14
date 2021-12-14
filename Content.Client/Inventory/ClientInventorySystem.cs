@@ -54,8 +54,6 @@ namespace Content.Client.Inventory
             SubscribeLocalEvent<ClientInventoryComponent, PlayerAttachedEvent>((_, component, _) => component.PlayerAttached());
             SubscribeLocalEvent<ClientInventoryComponent, PlayerDetachedEvent>((_, component, _) => component.PlayerDetached());
 
-            SubscribeLocalEvent<ClientInventoryComponent, SlipAttemptEvent>(OnSlipAttemptEvent);
-            SubscribeLocalEvent<ClientInventoryComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
             SubscribeLocalEvent<ClientInventoryComponent, ComponentInit>(OnInit);
 
             _config.OnValueChanged(CCVars.HudTheme, UpdateHudTheme);
@@ -189,25 +187,6 @@ namespace Content.Client.Inventory
             return true;
         }
 
-        // jesus christ, this is duplicated to server/client, should really just be shared..
-        private void OnSlipAttemptEvent(EntityUid uid, ClientInventoryComponent component, SlipAttemptEvent args)
-        {
-            if (component.TryGetSlot(EquipmentSlotDefines.Slots.SHOES, out EntityUid shoes))
-            {
-                RaiseLocalEvent(shoes, args, false);
-            }
-        }
-
-        private void OnRefreshMovespeed(EntityUid uid, ClientInventoryComponent component, RefreshMovementSpeedModifiersEvent args)
-        {
-            foreach (var (_, ent) in component.AllSlots)
-            {
-                if (ent != default)
-                {
-                    RaiseLocalEvent(ent, args, false);
-                }
-            }
-        }
 
         private void HandleOpenInventoryMenu()
         {

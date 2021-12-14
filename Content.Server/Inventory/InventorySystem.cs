@@ -1,87 +1,26 @@
 using Content.Server.Atmos;
 using Content.Server.Inventory.Components;
-using Content.Server.Items;
 using Content.Server.Temperature.Systems;
 using Content.Shared.Inventory;
-using Content.Shared.Slippery;
-using Content.Shared.Damage;
-using Content.Shared.Electrocution;
-using Content.Shared.Movement.EntitySystems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using InventoryComponent = Content.Shared.Inventory.InventoryComponent;
 
 namespace Content.Server.Inventory
 {
-    class InventorySystem : EntitySystem
+    class ServerInventorySystem : InventorySystem
     {
         public override void Initialize()
         {
             base.Initialize();
 
-            //todo paul move all these to shared
             SubscribeLocalEvent<HumanInventoryControllerComponent, EntRemovedFromContainerMessage>(HandleRemovedFromContainer);
-            SubscribeLocalEvent<InventoryComponent, EntRemovedFromContainerMessage>(HandleInvRemovedFromContainer);
 
-            SubscribeLocalEvent<InventoryComponent, HighPressureEvent>(OnHighPressureEvent);
-            SubscribeLocalEvent<InventoryComponent, LowPressureEvent>(OnLowPressureEvent);
-            SubscribeLocalEvent<InventoryComponent, DamageModifyEvent>(OnDamageModify);
-            SubscribeLocalEvent<InventoryComponent, ElectrocutionAttemptEvent>(OnElectrocutionAttempt);
-            SubscribeLocalEvent<InventoryComponent, SlipAttemptEvent>(OnSlipAttemptEvent);
-            SubscribeLocalEvent<InventoryComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
-            SubscribeLocalEvent<InventoryComponent, ModifyChangedTemperatureEvent>(OnModifyTemperature);
-
-
+            SubscribeLocalEvent<InventoryComponent, EntRemovedFromContainerMessage>(RelayInventoryEvent);
+            SubscribeLocalEvent<InventoryComponent, HighPressureEvent>(RelayInventoryEvent);
+            SubscribeLocalEvent<InventoryComponent, LowPressureEvent>(RelayInventoryEvent);
+            SubscribeLocalEvent<InventoryComponent, ModifyChangedTemperatureEvent>(RelayInventoryEvent);
         }
-
-        #region EventRelay
-
-        private void OnModifyTemperature(EntityUid uid, InventoryComponent component, ModifyChangedTemperatureEvent args)
-        {
-            RelayInventoryEvent(component, args);
-        }
-
-        private void OnSlipAttemptEvent(EntityUid uid, InventoryComponent component, SlipAttemptEvent args)
-        {
-            if (component.TryGetSlotItem(EquipmentSlotDefines.Slots.SHOES, out ItemComponent? shoes))
-            {
-                RaiseLocalEvent(shoes.Owner, args, false);
-            }
-        }
-
-        private void OnRefreshMovespeed(EntityUid uid, InventoryComponent component, RefreshMovementSpeedModifiersEvent args)
-        {
-            RelayInventoryEvent(component, args);
-        }
-
-        private void OnHighPressureEvent(EntityUid uid, InventoryComponent component, HighPressureEvent args)
-        {
-            RelayInventoryEvent(component, args);
-        }
-
-        private void OnLowPressureEvent(EntityUid uid, InventoryComponent component, LowPressureEvent args)
-        {
-            RelayInventoryEvent(component, args);
-        }
-
-        private void OnElectrocutionAttempt(EntityUid uid, InventoryComponent component, ElectrocutionAttemptEvent args)
-        {
-            RelayInventoryEvent(component, args);
-        }
-
-        private void OnDamageModify(EntityUid uid, InventoryComponent component, DamageModifyEvent args)
-        {
-            RelayInventoryEvent(component, args);
-        }
-
-        private void RelayInventoryEvent<T>(InventoryComponent component, T args) where T : EntityEventArgs
-        {
-            foreach (var equipped in component.GetAllHeldItems())
-            {
-                RaiseLocalEvent(equipped, args, false);
-            }
-        }
-
-        #endregion
 
         private void HandleRemovedFromContainer(EntityUid uid, HumanInventoryControllerComponent component, EntRemovedFromContainerMessage args)
         {

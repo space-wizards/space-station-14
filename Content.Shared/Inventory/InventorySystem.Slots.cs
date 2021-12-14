@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -10,18 +11,6 @@ namespace Content.Shared.Inventory;
 public partial class InventorySystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-
-    public override void Initialize()
-    {
-        base.Initialize();
-        InitializeEquip();
-    }
-
-    public override void Shutdown()
-    {
-        base.Shutdown();
-        ShutdownEquip();
-    }
 
     public bool TryGetSlotContainer(EntityUid uid, string slot, [NotNullWhen(true)] out ContainerSlot? containerSlot, [NotNullWhen(true)] out SlotDefinition? slotDefinition,
         InventoryComponent? inventory = null, ContainerManagerComponent? containerComp = null)
@@ -77,5 +66,39 @@ public partial class InventorySystem : EntitySystem
 
         containerString = $"{inventory.Name}_{slotDefinition.Name}";
         return true;
+    }
+
+    public struct ContainerSlotEnumerator
+    {
+        private readonly InventorySystem _inventorySystem;
+        private readonly EntityUid _uid;
+        private readonly SlotDefinition[] _slots;
+        private int _nextIdx = -1;
+
+        public ContainerSlotEnumerator(EntityUid uid, string prototypeId, IPrototypeManager prototypeManager, InventorySystem inventorySystem)
+        {
+            _uid = uid;
+            _inventorySystem = inventorySystem;
+            if (prototypeManager.TryIndex<InventoryTemplatePrototype>(prototypeId, out var prototype))
+            {
+                _slots = prototype.Slots;
+                if(_slots.Length > 0)
+                    _nextIdx = 0;
+            }
+            else
+            {
+                _slots = Array.Empty<SlotDefinition>();
+            }
+        }
+
+        public bool MoveNext([NotNullWhen(true)] out ContainerSlot? container)
+        {
+            container = null;
+            if (_nextIdx == -1 || _nextIdx >= _slots.Length) return false;
+
+            while (_nextIdx < _slots.Length && !_inventorySystem.TryGetSlotContainer(_uid, _slots[_nextIdx++].Name, out container, out _)) { }
+
+            return container != null;
+        }
     }
 }
