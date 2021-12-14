@@ -28,7 +28,7 @@ namespace Content.Shared.Hands
         }
 
         public readonly HandState Hand;
-        public readonly IEntity User;
+        public readonly EntityUid User;
     }
 
     /// <summary>
