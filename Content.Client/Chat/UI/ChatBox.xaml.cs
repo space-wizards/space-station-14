@@ -18,6 +18,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
+using Robust.Shared.Utility.Markup;
 
 namespace Content.Client.Chat.UI
 {
@@ -395,7 +396,7 @@ namespace Content.Client.Chat.UI
 
         private void WriteChatMessage(StoredChatMessage message)
         {
-            var messageText = FormattedMessage.EscapeText(message.Message);
+            var messageText = Basic.EscapeText(message.Message);
             if (!string.IsNullOrEmpty(message.MessageWrap))
             {
                 messageText = string.Format(message.MessageWrap, messageText);
@@ -502,11 +503,7 @@ namespace Content.Client.Chat.UI
         {
             DebugTools.Assert(!Disposed);
 
-            var formatted = new FormattedMessage(3);
-            formatted.PushColor(color);
-            formatted.AddMarkup(message);
-            formatted.Pop();
-            Contents.AddMessage(formatted);
+            Contents.AddMessage(Basic.RenderMarkup(message, new Section{Color=color.ToArgb()}));
         }
 
         private void Input_OnTextEntered(LineEdit.LineEditEventArgs args)

@@ -95,6 +95,8 @@
       - id: ClothingMaskBreath
       - id: EmergencyOxygenTankFilled
       - id: EpinephrineMedipen
+      - id: Flare
+      - id: FoodSnackChocolate
   - type: Sprite
     layers:
       - state: box
@@ -102,8 +104,8 @@
   - type: Item
     size: 20
   - type: Storage
-    capacity: 20
-    size: 25
+    capacity: 30
+    size: 30
 
 - type: entity
   name: box of hugs

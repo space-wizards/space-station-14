@@ -12,7 +12,6 @@ namespace Content.Client.MobState.Overlays
     public class CritOverlay : Overlay
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IEntityManager _entities = default!;
 
@@ -51,7 +50,7 @@ namespace Content.Client.MobState.Overlays
                 return;
 
             var worldHandle = args.WorldHandle;
-            var viewport = _eyeManager.GetWorldViewport();
+            var viewport = args.WorldAABB;
             worldHandle.UseShader(_gradientCircleShader);
             worldHandle.DrawRect(viewport, Color.White);
         }

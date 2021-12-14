@@ -128,7 +128,7 @@ namespace Content.Shared.Throwing
 
             // Assume it's uninteresting if it has no thrower. For now anyway.
             if (thrownItem.Thrower is not null)
-                _adminLogSystem.Add(LogType.Landed, LogImpact.Low, $"{landing} thrown by {thrownItem.Thrower:thrower} landed.");
+                _adminLogSystem.Add(LogType.Landed, LogImpact.Low, $"{ToPrettyString(landing):entity} thrown by {ToPrettyString(thrownItem.Thrower.Value):thrower} landed.");
 
             var landMsg = new LandEvent {User = thrownItem.Thrower};
             RaiseLocalEvent(landing, landMsg, false);
@@ -141,7 +141,7 @@ namespace Content.Shared.Throwing
         {
             if (user is not null)
                 _adminLogSystem.Add(LogType.ThrowHit, LogImpact.Low,
-                    $"{thrown.Owner:thrown} thrown by {user:thrower} hit {target.Owner:target}.");
+                    $"{ToPrettyString(thrown.Owner):thrown} thrown by {ToPrettyString(user.Value):thrower} hit {ToPrettyString(target.Owner):target}.");
             // TODO: Just pass in the bodies directly
             RaiseLocalEvent(target.Owner, new ThrowHitByEvent(user, thrown.Owner, target.Owner));
             RaiseLocalEvent(thrown.Owner, new ThrowDoHitEvent(user, thrown.Owner, target.Owner));

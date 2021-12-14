@@ -36,6 +36,9 @@
   - Theatre
   - Bar
   - Chemistry
+  - Kitchen
+  - Chapel
+  - Hydroponics
   
 - type: startingGear
   id: CaptainGear

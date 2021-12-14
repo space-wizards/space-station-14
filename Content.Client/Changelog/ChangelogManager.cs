@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -43,8 +43,7 @@ namespace Content.Client.Changelog
             NewChangelogEntries = false;
             NewChangelogEntriesChanged?.Invoke();
 
-            using var file = _resource.UserData.Create(new ResourcePath($"/changelog_last_seen_{_configManager.GetCVar(CCVars.ServerId)}"));
-            using var sw = new StreamWriter(file);
+            using var sw = _resource.UserData.OpenWriteText(new ResourcePath($"/changelog_last_seen_{_configManager.GetCVar(CCVars.ServerId)}"));
 
             sw.Write(MaxId.ToString());
         }
@@ -62,9 +61,9 @@ namespace Content.Client.Changelog
             MaxId = changelog.Max(c => c.Id);
 
             var path = new ResourcePath($"/changelog_last_seen_{_configManager.GetCVar(CCVars.ServerId)}");
-            if (_resource.UserData.Exists(path))
+            if(_resource.UserData.TryReadAllText(path, out var lastReadIdText))
             {
-                LastReadId = int.Parse(_resource.UserData.ReadAllText(path));
+                LastReadId = int.Parse(lastReadIdText);
             }
 
             NewChangelogEntries = LastReadId < MaxId;

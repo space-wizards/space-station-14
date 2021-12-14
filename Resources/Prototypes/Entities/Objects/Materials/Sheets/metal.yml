@@ -38,7 +38,7 @@
       - steel_3
   - type: FloorTile
     outputs:
-    - underplating
+    - plating
 
 - type: entity
   parent: SheetSteel
