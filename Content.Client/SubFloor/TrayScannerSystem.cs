@@ -112,7 +112,7 @@ public class TrayScannerSystem : SharedTrayScannerSystem
             {
                 var gpTransform = transform.Parent.Parent;
                 if (gpTransform != null
-                    && _containerSystem.ContainsEntity(gpTransform.Owner.Uid, transform.ParentUid))
+                    && _containerSystem.ContainsEntity(gpTransform.Owner, transform.ParentUid))
                 {
                     flooredPos = gpTransform.LocalPosition.Rounded();
                 }
@@ -138,17 +138,13 @@ public class TrayScannerSystem : SharedTrayScannerSystem
             return true;
 
         scanner.LastLocation = flooredPos;
-        // Logger.DebugS("TrayScannerSystem", $"newPos: {flooredPos}");
-
-        if (!EntityManager.TryGetEntity(uid, out var entity))
-            return true;
 
         // get all entities in range by uid
         // but without using LINQ
         HashSet<EntityUid> nearby = new();
 
-        foreach (var entityInRange in _entityLookup.GetEntitiesInRange(entity, scanner.Range))
-            if (FilterAnchored(entityInRange.Uid)) nearby.Add(entityInRange.Uid);
+        foreach (var entityInRange in _entityLookup.GetEntitiesInRange(uid, scanner.Range))
+            if (FilterAnchored(entityInRange)) nearby.Add(entityInRange);
 
         // get all the old elements that are no longer detected
         scanner.RevealedSubfloors.ExceptWith(nearby);

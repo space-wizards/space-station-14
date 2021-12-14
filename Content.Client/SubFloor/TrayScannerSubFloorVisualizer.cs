@@ -1,16 +1,26 @@
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 
 namespace Content.Client.SubFloor;
 
 public class TrayScannerSubFloorVisualizer : AppearanceVisualizer
 {
+    [Dependency] IEntityManager _entityManager = default!;
+
+    public override void InitializeEntity(EntityUid uid)
+    {
+        base.InitializeEntity(uid);
+
+        IoCManager.InjectDependencies(this);
+    }
+
     public override void OnChangeData(AppearanceComponent component)
     {
         base.OnChangeData(component);
 
-        if (!component.Owner.TryGetComponent(out SpriteComponent? sprite))
+        if (!_entityManager.TryGetComponent(component.Owner, out SpriteComponent? sprite))
             return;
 
         if (!component.TryGetData(TrayScannerTransparency.Key, out bool transparent))
