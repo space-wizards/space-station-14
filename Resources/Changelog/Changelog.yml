@@ -1,10 +1,4 @@
 Entries:
-- author: DogZeroX
-  changes:
-  - {message: You can now see what players have on their hands with shift-click(examine),
-    type: Add}
-  id: 234
-  time: '2021-06-09T08:39:31.0000000+00:00'
 - author: Seth
   changes:
   - {message: Made windows and walls immune to punches and low damaging tools, type: Tweak}
@@ -2860,3 +2854,8 @@ Entries:
   - {message: Added automatic laugh emote when saying "lol" or "lmao"., type: Add}
   id: 735
   time: '2021-12-14T01:33:46.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Pointing at entities works again., type: Fix}
+  id: 736
+  time: '2021-12-14T02:21:55.0000000+00:00'
