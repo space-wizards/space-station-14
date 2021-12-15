@@ -15,10 +15,11 @@ using Robust.Shared.Physics.Dynamics;
 namespace Content.Server.Singularity.EntitySystems
 {
     [UsedImplicitly]
-    public class SingularitySystem : SharedSingularitySystem
+    public sealed class SingularitySystem : SharedSingularitySystem
     {
         [Dependency] private readonly IEntityLookup _lookup = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly SharedContainerSystem _container = default!;
 
         /// <summary>
         /// How much energy the singulo gains from destroying a tile.
@@ -41,7 +42,7 @@ namespace Content.Server.Singularity.EntitySystems
         {
             if (base.PreventCollide(uid, component, args)) return true;
 
-            var otherUid = args.BodyB.OwnerUid;
+            var otherUid = args.BodyB.Owner;
 
             if (args.Cancelled) return true;
 
@@ -64,7 +65,7 @@ namespace Content.Server.Singularity.EntitySystems
             if (component.BeingDeletedByAnotherSingularity)
                 return;
 
-            var otherUid = args.OtherFixture.Body.OwnerUid;
+            var otherUid = args.OtherFixture.Body.Owner;
 
             // HandleDestroy will also check CanDestroy for us
             HandleDestroy(component, otherUid);
@@ -163,7 +164,7 @@ namespace Content.Server.Singularity.EntitySystems
 
             foreach (var entity in _lookup.GetEntitiesInRange(xform.MapID, worldPos, destroyRange))
             {
-                HandleDestroy(component, entity.Uid);
+                HandleDestroy(component, entity);
             }
         }
 
@@ -173,7 +174,7 @@ namespace Content.Server.Singularity.EntitySystems
                    EntityManager.HasComponent<IMapGridComponent>(entity) ||
                    EntityManager.HasComponent<MapComponent>(entity) ||
                    EntityManager.HasComponent<ServerSingularityComponent>(entity) ||
-                   entity.IsInContainer());
+                   _container.IsEntityInContainer(entity));
         }
 
         /// <summary>

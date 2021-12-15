@@ -61,7 +61,7 @@ namespace Content.Shared.Singularity
         protected virtual bool PreventCollide(EntityUid uid, SharedSingularityComponent component,
             PreventCollideEvent args)
         {
-            var otherUid = args.BodyB.OwnerUid;
+            var otherUid = args.BodyB.Owner;
 
             // For prediction reasons always want the client to ignore these.
             if (EntityManager.HasComponent<IMapGridComponent>(otherUid) ||
