@@ -43,28 +43,16 @@ namespace Content.Client.Info
 
         private void PopulateRules(Info rulesList)
         {
-            void AddSection(string title, string path, bool markup = false)
-            {
-                rulesList.InfoContainer.AddChild(new InfoSection(title,
-                    _resourceManager.ContentFileReadAllText($"/Server Info/{path}"), markup));
-            }
-
-            AddSection(Loc.GetString("ui-info-header-rules"), "Rules.txt", true);
+            AddSection(rulesList, Loc.GetString("ui-info-header-rules"), "Rules.txt", true);
         }
 
         private void PopulateTutorial(Info tutorialList)
         {
-            void AddSection(string title, string path, bool markup = false)
-            {
-                tutorialList.InfoContainer.AddChild(new InfoSection(title,
-                    _resourceManager.ContentFileReadAllText($"/Server Info/{path}"), markup));
-            }
-
-            AddSection(Loc.GetString("ui-info-header-intro"), "Intro.txt");
+            AddSection(tutorialList, Loc.GetString("ui-info-header-intro"), "Intro.txt");
             var infoControlSection = new InfoControlsSection();
             tutorialList.InfoContainer.AddChild(infoControlSection);
-            AddSection(Loc.GetString("ui-info-header-gameplay"), "Gameplay.txt", true);
-            AddSection(Loc.GetString("ui-info-header-sandbox"), "Sandbox.txt", true);
+            AddSection(tutorialList, Loc.GetString("ui-info-header-gameplay"), "Gameplay.txt", true);
+            AddSection(tutorialList, Loc.GetString("ui-info-header-sandbox"), "Sandbox.txt", true);
 
             infoControlSection.ControlsButton.OnPressed += _ => optionsMenu.OpenCentered();
         }
