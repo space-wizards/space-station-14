@@ -18,7 +18,7 @@ public sealed class MonkeyAccentSystem : EntitySystem
     public string Accentuate(string message)
     {
         var words = message.Split();
-        var accentedMessage = new StringBuilder();
+        var accentedMessage = new StringBuilder(message.Length);
 
         for (var i = 0; i < words.Length; i++)
         {
