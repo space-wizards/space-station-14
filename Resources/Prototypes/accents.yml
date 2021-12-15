@@ -6,3 +6,12 @@
   - Mrrrow!
   - Hhsss!
   - Brrow
+
+- type: accent
+  id: dog
+  words:
+    - Bark!
+    - Bork!
+    - Woof!
+    - Arf.
+    - Grrr.

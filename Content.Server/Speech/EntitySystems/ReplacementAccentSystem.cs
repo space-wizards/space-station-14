@@ -1,6 +1,7 @@
 using Content.Server.Speech.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.Speech.EntitySystems
@@ -11,6 +12,7 @@ namespace Content.Server.Speech.EntitySystems
     /// </summary>
     public class ReplacementAccentSystem : EntitySystem
     {
+        [Dependency] private readonly IPrototypeManager _proto = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
         public override void Initialize()
@@ -20,12 +22,9 @@ namespace Content.Server.Speech.EntitySystems
 
         private void OnAccent(EntityUid uid, ReplacementAccentComponent component, AccentGetEvent args)
         {
-            var words = component.Accent.Words;
+            var words = _proto.Index<ReplacementAccentPrototype>(component.Accent).Words;
 
-            if (words.Length != 0)
-                args.Message = _random.Pick(words);
-            else
-                args.Message = "";
+            args.Message = words.Length != 0 ? _random.Pick(words) : "";
         }
     }
 }

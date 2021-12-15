@@ -1,6 +1,7 @@
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Speech.Components
@@ -20,11 +21,10 @@ namespace Content.Server.Speech.Components
     /// Replaces any spoken sentences with a random word.
     /// </summary>
     [RegisterComponent]
+    [ComponentProtoName("ReplacementAccent")]
     public class ReplacementAccentComponent : Component
     {
-        public override string Name => "ReplacementAccent";
-
-        [DataField("accent", required: true)]
-        public ReplacementAccentPrototype Accent = default!;
+        [DataField("accent", customTypeSerializer: typeof(PrototypeIdSerializer<ReplacementAccentPrototype>), required: true)]
+        public string Accent = default!;
     }
 }
