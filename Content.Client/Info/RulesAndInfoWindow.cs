@@ -4,13 +4,6 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-<<<<<<< HEAD
-=======
-using Robust.Shared.Maths;
-using Robust.Shared.Utility;
-using Robust.Shared.Utility.Markup;
-using static Robust.Client.UserInterface.Controls.BoxContainer;
->>>>>>> master
 
 namespace Content.Client.Info
 {
