@@ -1,4 +1,4 @@
-using Content.Shared.Access;
+using Content.Shared.Access.Components;
 using Content.Shared.Containers.ItemSlots;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;

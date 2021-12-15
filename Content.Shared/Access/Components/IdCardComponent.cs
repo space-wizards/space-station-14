@@ -1,7 +1,7 @@
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Shared.Access
+namespace Content.Shared.Access.Components
 {
     // TODO BUI NETWORKING if ever clients can open their own BUI's (id card console, pda), then this data should be
     // networked.

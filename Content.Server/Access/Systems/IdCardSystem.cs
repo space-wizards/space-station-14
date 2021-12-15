@@ -1,15 +1,12 @@
-using Content.Server.Access.Components;
 using Content.Server.Inventory.Components;
 using Content.Server.Items;
-using Content.Server.PDA;
-using Content.Shared.Access;
 using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using System.Diagnostics.CodeAnalysis;
-using Robust.Shared.IoC;
+using Content.Shared.Access.Components;
 
 namespace Content.Server.Access.Systems
 {
