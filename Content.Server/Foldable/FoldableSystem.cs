@@ -1,41 +1,45 @@
-using System;
 using System.Linq;
 using Content.Server.Buckle.Components;
-using Content.Server.Hands.Components;
-using Content.Server.Interaction;
-using Content.Shared.ActionBlocker;
-using Content.Shared.Coordinates;
+using Content.Server.Storage.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
-using Content.Shared.Physics;
-using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Log;
-using Robust.Shared.Map;
-using Robust.Shared.Maths;
 
 namespace Content.Server.Foldable
 {
     [UsedImplicitly]
     public sealed class FoldableSystem : EntitySystem
     {
-        [Dependency] private readonly InteractionSystem _interactionSystem = default!;
+        [Dependency] private SharedContainerSystem _container = default!;
+
+        private const string FoldKey = "FoldedState";
 
         public override void Initialize()
         {
             base.Initialize();
 
+            SubscribeLocalEvent<FoldableComponent, ComponentInit>(OnFoldableInit);
+            SubscribeLocalEvent<FoldableComponent, StorageOpenAttemptEvent>(OnFoldableOpenAttempt);
             SubscribeLocalEvent<FoldableComponent, InteractHandEvent>(OnInteract);
             SubscribeLocalEvent<FoldableComponent, AttemptItemPickupEvent>(OnPickedUpAttempt);
 
             SubscribeLocalEvent<FoldableComponent, GetInteractionVerbsEvent>(AddFoldVerb);
+        }
+
+        private void OnFoldableOpenAttempt(EntityUid uid, FoldableComponent component, StorageOpenAttemptEvent args)
+        {
+            if (component.IsFolded)
+                args.Cancel();
+        }
+
+        private void OnFoldableInit(EntityUid uid, FoldableComponent component, ComponentInit args)
+        {
+            SetFolded(component, component.IsFolded);
         }
 
         private bool TryToggleFold(FoldableComponent comp)
@@ -54,7 +58,7 @@ namespace Content.Server.Foldable
             if (state == comp.IsFolded)
                 return false;
 
-            if (comp.Owner.IsInContainer())
+            if (_container.IsEntityInContainer(comp.Owner))
                 return false;
 
             // First we check if the foldable object has a strap component
@@ -77,7 +81,7 @@ namespace Content.Server.Foldable
         private void SetFolded(FoldableComponent component, bool folded)
         {
             component.IsFolded = folded;
-            component.CanBeFolded = !component.Owner.IsInContainer();
+            component.CanBeFolded = !_container.IsEntityInContainer(component.Owner);
 
             // You can't buckle an entity to a folded object
             if (EntityManager.TryGetComponent(component.Owner, out StrapComponent? strap))
@@ -85,7 +89,7 @@ namespace Content.Server.Foldable
 
             // Update visuals only if the value has changed
             if (EntityManager.TryGetComponent(component.Owner, out AppearanceComponent? appearance))
-                appearance.SetData("FoldedState", folded);
+                appearance.SetData(FoldKey, folded);
         }
 
         #region Event handlers
@@ -98,7 +102,8 @@ namespace Content.Server.Foldable
         /// <param name="args"></param>
         private void OnInteract(EntityUid uid, FoldableComponent component, InteractHandEvent args)
         {
-            if (args.Handled) return;
+            // TODO: Storage check only exists for bodybag and coz no priority on the event.
+            if (args.Handled || EntityManager.HasComponent<EntityStorageComponent>(uid)) return;
 
             // Try to fold, if succeeded prevent from being picked up
             if (TrySetFolded(component, true))

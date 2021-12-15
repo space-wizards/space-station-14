@@ -177,12 +177,18 @@ namespace Content.Server.Storage.Components
                 return false;
             }
 
-            return true;
+            var @event = new StorageOpenAttemptEvent();
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, @event);
+
+            return !@event.Cancelled;
         }
 
         public virtual bool CanClose(EntityUid user, bool silent = false)
         {
-            return true;
+            var @event = new StorageCloseAttemptEvent();
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, @event);
+
+            return !@event.Cancelled;
         }
 
         public void ToggleOpen(EntityUid user)
@@ -462,5 +468,15 @@ namespace Content.Server.Storage.Components
                 }
             }
         }
+    }
+
+    public sealed class StorageOpenAttemptEvent : CancellableEntityEventArgs
+    {
+
+    }
+
+    public sealed class StorageCloseAttemptEvent : CancellableEntityEventArgs
+    {
+
     }
 }

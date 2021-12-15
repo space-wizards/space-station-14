@@ -2,15 +2,16 @@
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.Visualizer
 {
-    /// <summary>
-    /// General purpose appearance visualizer used to toggle back and forth between two states
-    /// </summary>
     [UsedImplicitly]
-    public class RollerbedVisualizer : AppearanceVisualizer
+    public sealed class RollerbedVisualizer : AppearanceVisualizer
     {
+        [DataField("key")]
+        private string _key = default!;
+
         public override void OnChangeData(AppearanceComponent appearance)
         {
             base.OnChangeData(appearance);
@@ -21,15 +22,7 @@ namespace Content.Client.Visualizer
 
             if (appearance.TryGetData("StrapState", out bool strapped) && strapped)
             {
-                sprite.LayerSetState(0, "rollerbed_buckled");
-            }
-            else if (appearance.TryGetData("FoldedState", out bool folded) && folded)
-            {
-                sprite.LayerSetState(0, "rollerbed_folded");
-            }
-            else
-            {
-                sprite.LayerSetState(0, "rollerbed");
+                sprite.LayerSetState(0, $"{_key}_buckled");
             }
         }
     }

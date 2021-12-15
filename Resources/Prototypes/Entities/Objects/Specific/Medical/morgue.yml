@@ -9,6 +9,7 @@
     sprite: Objects/Specific/Medical/Morgue/bodybags.rsi
     layers:
     - state: bag
+      map: ["enum.FoldableVisualLayers.Base"]
     - state: open_overlay
       map: ["enum.StorageVisualLayers.Door"]
     - state: label_overlay
@@ -27,9 +28,13 @@
         !type:PhysShapeAabb
           bounds: "-0.5,-0.45,0.5,0.1"
       mass: 5
+      mask:
+      - Impassable
+      - SmallImpassable
   - type: BodyBagEntityStorage
     CanWeldShut: false
     Capacity: 1
+    IsCollidableWhenOpen: true
     closeSound:
       path: /Audio/Misc/zip.ogg
     openSound:
@@ -46,7 +51,8 @@
     visuals:
     - type: StorageVisualizer
       state_open: open_overlay
-      state_closed: bag
+    - type: FoldableVisualizer
+      key: bag
     - type: BodyBagVisualizer
   - type: Pullable
 
@@ -54,12 +60,11 @@
   id: BodyBag_Item
   name: body bag
   description: A plastic bag designed for the storage and transportation of cadavers.
-  parent: BaseItem
+  parent: BodyBag_Container
+  suffix: Folded
   components:
-  - type: Sprite
-    netsync: false
-    sprite: Objects/Specific/Medical/Morgue/bodybags.rsi
-    state: item
+  - type: Foldable
+    folded: true
 #  - type: BodyBagItem #TODO: we need some kind of generic placable, like thus:
 # - type: Placeable
 #   prototype: someId

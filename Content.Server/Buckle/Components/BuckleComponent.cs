@@ -321,7 +321,7 @@ namespace Content.Server.Buckle.Components
             var xform = entManager.GetComponent<TransformComponent>(Owner);
             var oldBuckledXform = entManager.GetComponent<TransformComponent>(oldBuckledTo.Owner);
 
-            if (xform.Parent == oldBuckledXform)
+            if (xform.ParentUid == oldBuckledXform.Owner)
             {
                 xform.AttachParentToContainerOrGrid();
                 xform.WorldRotation = oldBuckledXform.WorldRotation;

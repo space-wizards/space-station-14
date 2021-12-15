@@ -10,9 +10,11 @@
       size: 5
     - type: Sprite
       sprite: Structures/Furniture/rollerbeds.rsi
-      state: rollerbed
       netsync: false
       noRot: true
+      layers:
+      - state: rollerbed
+        map: ["enum.FoldableVisualLayers.Base"]
     - type: MovedByPressure
     - type: DamageOnHighSpeedImpact
       soundHit: /Audio/Effects/bang.ogg
@@ -48,24 +50,39 @@
       position: Down
       rotation: -90
       buckleOffset: "0,0.15"
-      unbuckleOffset: "0,0.3"
+      unbuckleOffset: "0,0.15"
     - type: Foldable
     - type: Appearance
       visuals:
-        - type: RollerbedVisualizer
+      - type: FoldableVisualizer
+        key: rollerbed
+      - type: RollerbedVisualizer
+        key: rollerbed
 
 - type: entity
   id: CheapRollerBed
   parent: RollerBed
   description: A crappy looking roller bed, used to carry patients around.
   components:
-    - type: Sprite
-      state: cheap_rollerbed
+  - type: Sprite
+    state: cheap_rollerbed
+  - type: Appearance
+    visuals:
+    - type: FoldableVisualizer
+      key: cheap_rollerbed
+    - type: RollerbedVisualizer
+      key: cheap_rollerbed
 
 - type: entity
   id: EmergencyRollerBed
   parent: RollerBed
   description: A robust looking rollerbed used for emergencies.
   components:
-    - type: Sprite
-      state: emergency_rollerbed
+  - type: Sprite
+    state: emergency_rollerbed
+  - type: Appearance
+    visuals:
+      - type: FoldableVisualizer
+        key: emergency_rollerbed
+      - type: RollerbedVisualizer
+        key: emergency_rollerbed

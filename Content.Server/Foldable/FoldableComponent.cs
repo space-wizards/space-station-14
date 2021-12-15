@@ -2,6 +2,7 @@
 
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Foldable
@@ -15,6 +16,7 @@ namespace Content.Server.Foldable
     {
         public override string Name => "Foldable";
 
+        [DataField("folded")]
         [ViewVariables]
         public bool IsFolded = false;
 
