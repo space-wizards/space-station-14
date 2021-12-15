@@ -61,8 +61,8 @@ namespace Content.IntegrationTests.Tests
                 var invSystem = systemMan.GetEntitySystem<InventorySystem>();
 
                 // Can't do the test if this human doesn't have the slots for it.
-                Assert.That(invSystem.SlotExists(human, "jumpsuit"));
-                Assert.That(invSystem.SlotExists(human, "id"));
+                Assert.That(invSystem.HasSlot(human, "jumpsuit"));
+                Assert.That(invSystem.HasSlot(human, "id"));
 
                 Assert.That(invSystem.SpawnItemInSlot(human, "jumpsuit", "InventoryJumpsuitJanitorDummy", true));
 

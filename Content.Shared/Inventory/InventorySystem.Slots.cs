@@ -20,7 +20,7 @@ public partial class InventorySystem : EntitySystem
         if (!Resolve(uid, ref inventory, ref containerComp))
             return false;
 
-        if (!TryGetSlot(uid, slot, out slotDefinition, inventory))
+        if (!TryGetSlot(uid, slot, out slotDefinition, inventory: inventory))
             return false;
 
         if (!TryGetSlotContainerString(uid, slot, out var containerString, slotDefinition, inventory))
@@ -38,10 +38,13 @@ public partial class InventorySystem : EntitySystem
         return true;
     }
 
-    public bool TryGetSlot(EntityUid uid, string slot, [NotNullWhen(true)] out SlotDefinition? slotDefinition, InventoryComponent? inventory = null)
+    public bool HasSlot(EntityUid uid, string slot, InventoryComponent? component = null) =>
+        TryGetSlot(uid, slot, out _, true, component);
+
+    public bool TryGetSlot(EntityUid uid, string slot, [NotNullWhen(true)] out SlotDefinition? slotDefinition, bool silent = false, InventoryComponent? inventory = null)
     {
         slotDefinition = null;
-        if (!Resolve(uid, ref inventory))
+        if (!Resolve(uid, ref inventory, silent))
             return false;
 
         if (!_prototypeManager.TryIndex<InventoryTemplatePrototype>(inventory.TemplateId, out var templatePrototype))
@@ -51,9 +54,6 @@ public partial class InventorySystem : EntitySystem
         return slotDefinition != default;
     }
 
-    public bool SlotExists(EntityUid uid, string slot, InventoryComponent? inventory = null) =>
-        TryGetSlot(uid, slot, out _, inventory);
-
     public bool TryGetSlotContainerString(EntityUid uid, string slot, [NotNullWhen(true)] out string? containerString, SlotDefinition? slotDefinition = null, InventoryComponent? inventory = null)
     {
         containerString = string.Empty;
@@ -61,7 +61,7 @@ public partial class InventorySystem : EntitySystem
         if (!Resolve(uid, ref inventory))
             return false;
 
-        if (slotDefinition == null && !TryGetSlot(uid, slot, out slotDefinition, inventory))
+        if (slotDefinition == null && !TryGetSlot(uid, slot, out slotDefinition, inventory: inventory))
             return false;
 
         containerString = $"{inventory.Name}_{slotDefinition.Name}";

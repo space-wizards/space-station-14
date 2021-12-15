@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Hands.Components;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.Movement.EntitySystems;
@@ -17,6 +18,18 @@ public partial class InventorySystem
 {
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeed = default!;
+
+    public bool TryEquipActiveHandTo(EntityUid uid, string slot, bool silent = false, bool force = false,
+        InventoryComponent? component = null, SharedHandsComponent? hands = null)
+    {
+        if (!Resolve(uid, ref component, ref hands))
+            return false;
+
+        if (!hands.TryGetActiveHeldEntity(out var heldEntity))
+            return false;
+
+        return TryEquip(uid, heldEntity, slot, silent, force, component);
+    }
 
     public bool TryEquip(EntityUid uid, EntityUid itemUid, string slot, bool silent = false, bool force = false, InventoryComponent? inventory = null, SharedItemComponent? item = null)
     {
@@ -66,7 +79,7 @@ public partial class InventorySystem
         if (!Resolve(uid, ref inventory) || !Resolve(itemUid, ref item))
             return false;
 
-        if (slotDefinition == null && !TryGetSlot(uid, slot, out slotDefinition, inventory))
+        if (slotDefinition == null && !TryGetSlot(uid, slot, out slotDefinition, inventory: inventory))
             return false;
 
         if(!item.SlotFlags.HasFlag(slotDefinition.SlotFlags))

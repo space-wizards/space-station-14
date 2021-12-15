@@ -9,10 +9,8 @@ namespace Content.Shared.Inventory;
 
 public partial class InventorySystem
 {
-    public override void Initialize()
+    public void InitializeRelay()
     {
-        base.Initialize();
-
         SubscribeLocalEvent<InventoryComponent, DamageModifyEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, ElectrocutionAttemptEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, SlipAttemptEvent>(RelayInventoryEvent);

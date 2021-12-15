@@ -12,7 +12,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Client.Inventory
 {
-    public abstract class InventoryInterfaceController : IDisposable
+    public abstract class InventoryInterfaceController
     {
         [Dependency] protected readonly IGameHud GameHud = default!;
 
@@ -28,19 +28,6 @@ namespace Content.Client.Inventory
         public abstract SS14Window? Window { get; }
         protected ClientInventoryComponent Owner { get; }
 
-        public virtual void PlayerAttached()
-        {
-            GameHud.InventoryButtonVisible = true;
-        }
-
-        public virtual void PlayerDetached()
-        {
-            GameHud.InventoryButtonVisible = false;
-        }
-
-        public virtual void Dispose()
-        {
-        }
 
         /// <returns>the button controls associated with the
         /// specified slot, if any. Empty if none.</returns>

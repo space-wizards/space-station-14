@@ -29,24 +29,6 @@ namespace Content.Server.Clothing.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public int HeatResistance => _heatResistance;
 
-        [DataField("ClothingPrefix")]
-        private string? _clothingEquippedPrefix;
-        [ViewVariables(VVAccess.ReadWrite)]
-        public string? ClothingEquippedPrefix
-        {
-            get => _clothingEquippedPrefix;
-            set
-            {
-                Dirty();
-                _clothingEquippedPrefix = value;
-            }
-        }
-
-        public override ComponentState GetComponentState()
-        {
-            return new ClothingComponentState(ClothingEquippedPrefix);
-        }
-
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
             if (!_quickEquipEnabled) return false;

@@ -26,7 +26,7 @@ namespace Content.Server.AI.WorldState.States.Clothing
 
             foreach (var slot in slotDefinitions)
             {
-                if (!invSystem.SlotExists(Owner, slot.Name)) continue;
+                if (!invSystem.HasSlot(Owner, slot.Name)) continue;
 
                 if (invSystem.TryGetSlotEntity(Owner, slot.Name, out var entityUid))
                 {

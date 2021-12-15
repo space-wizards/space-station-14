@@ -46,6 +46,7 @@ namespace Content.Shared.Item
         /// <summary>
         ///     Part of the state of the sprite shown on the player when this item is in their hands.
         /// </summary>
+        // todo paul make this update slotvisuals on client on change
         [ViewVariables(VVAccess.ReadWrite)]
         public string? EquippedPrefix
         {

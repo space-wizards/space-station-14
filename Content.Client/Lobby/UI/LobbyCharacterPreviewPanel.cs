@@ -149,9 +149,7 @@ namespace Content.Client.Lobby.UI
 
             // ReSharper disable once ConstantNullCoalescingCondition
             var job = protoMan.Index<JobPrototype>(highPriorityJob ?? SharedGameTicker.FallbackOverflowJob);
-
-            inventory.ClearAllSlotVisuals();
-
+            
             if (job.StartingGear != null)
             {
                 var gear = protoMan.Index<StartingGearPrototype>(job.StartingGear);
