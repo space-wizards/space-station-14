@@ -17,8 +17,20 @@ public class ClothingSystem : EntitySystem
     /// </summary>
     private static readonly Dictionary<string, string> TemporarySuffixMap = new()
     {
-        { "BACKPACK", "back" },
-        { "test2", "val2" }
+        {"head", "HEAD"},
+        {"eyes", "EYES"},
+        {"ears", "EARS"},
+        {"mask", "MASK"},
+        {"outerClothing", "OUTERCLOTHING"},
+        {"jumpsuit", "INNERCLOTHING"},
+        {"neck", "NECK"},
+        {"back", "BACKPACK"},
+        {"belt", "BELT"},
+        {"gloves", "GLOVES"},
+        {"shoes", "SHOES"},
+        {"id", "IDCARD"},
+        {"pocket1", "POCKET1"},
+        {"pocket2", "POCKET2"},
     };
 
     [Dependency] private IResourceCache _cache = default!;
