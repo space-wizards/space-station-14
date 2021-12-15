@@ -38,10 +38,10 @@ namespace Content.Server.Plants.Systems
                 return;
 
             // standard interaction checks
-            if (!_blocker.CanInteract(args.UserUid)) return;
+            if (!_blocker.CanInteract(args.User)) return;
 
             Rustle(uid, component);
-            args.Handled = _stashSystem.TryHideItem(uid, args.UserUid, args.UsedUid);
+            args.Handled = _stashSystem.TryHideItem(uid, args.User, args.Used);
         }
 
         private void OnInteractHand(EntityUid uid, PottedPlantHideComponent component, InteractHandEvent args)
@@ -50,15 +50,15 @@ namespace Content.Server.Plants.Systems
                 return;
 
             // standard interaction checks
-            if (!_blocker.CanInteract(args.UserUid)) return;
+            if (!_blocker.CanInteract(args.User)) return;
 
             Rustle(uid, component);
 
-            var gotItem = _stashSystem.TryGetItem(uid, args.UserUid);
+            var gotItem = _stashSystem.TryGetItem(uid, args.User);
             if (!gotItem)
             {
                 var msg = Loc.GetString("potted-plant-hide-component-interact-hand-got-no-item-message");
-                _popupSystem.PopupEntity(msg, uid, Filter.Entities(args.UserUid));
+                _popupSystem.PopupEntity(msg, uid, Filter.Entities(args.User));
             }
 
             args.Handled = gotItem;

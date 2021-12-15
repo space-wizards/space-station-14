@@ -32,9 +32,7 @@ namespace Content.Server.Storage.EntitySystems
                 component.SecretPartName = entityName;
             }
 
-            // todo: change this to uid
-            var ent = EntityManager.GetEntity(uid);
-            component.ItemContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(ent, "stash", out _);
+            component.ItemContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(uid, "stash", out _);
         }
 
         private void OnDestroyed(EntityUid uid, SecretStashComponent component, DestructionEventArgs args)
@@ -87,8 +85,7 @@ namespace Content.Server.Storage.EntitySystems
             }
 
             // try to move item from hands to stash container
-            var itemEnt = EntityManager.GetEntity(itemToHideUid);
-            if (!hands.Drop(itemEnt, container))
+            if (!hands.Drop(itemToHideUid, container))
             {
                 return false;
             }
@@ -121,7 +118,7 @@ namespace Content.Server.Storage.EntitySystems
             }
 
             // get item inside container
-            var itemUid = container.ContainedEntity.Uid;
+            var itemUid = container.ContainedEntity;
             if (!EntityManager.TryGetComponent(itemUid, out ItemComponent? item))
             {
                 return false;

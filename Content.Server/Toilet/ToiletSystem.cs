@@ -57,7 +57,7 @@ namespace Content.Server.Toilet
                 return;
 
             // are player trying place or lift of cistern lid?
-            if (EntityManager.TryGetComponent(args.UsedUid, out ToolComponent? tool)
+            if (EntityManager.TryGetComponent(args.Used, out ToolComponent? tool)
                 && tool.Qualities.Contains(component.PryingQuality))
             {
                 // check if someone is already prying this toilet
@@ -66,7 +66,7 @@ namespace Content.Server.Toilet
                 component.IsPrying = true;
 
                 // try to pry toilet cistern
-                if (!_toolSystem.UseTool(args.UsedUid, args.UserUid, uid, 0f,
+                if (!_toolSystem.UseTool(args.Used, args.User, uid, 0f,
                     component.PryLidTime, component.PryingQuality,
                     new ToiletPryFinished(uid), new ToiletPryInterrupted(uid)))
                 {
@@ -79,7 +79,7 @@ namespace Content.Server.Toilet
             // maybe player trying to hide something inside cistern?
             else if (component.LidOpen)
             {
-                args.Handled = _secretStash.TryHideItem(uid, args.UserUid, args.UsedUid);
+                args.Handled = _secretStash.TryHideItem(uid, args.User, args.Used);
             }
         }
 
@@ -91,7 +91,7 @@ namespace Content.Server.Toilet
             // trying get something from stash?
             if (component.LidOpen)
             {
-                var gotItem = _secretStash.TryGetItem(uid, args.UserUid);
+                var gotItem = _secretStash.TryGetItem(uid, args.User);
                 if (gotItem)
                 {
                     args.Handled = true;

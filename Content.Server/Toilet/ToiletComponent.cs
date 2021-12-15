@@ -28,9 +28,9 @@ namespace Content.Server.Toilet
         public bool IsPrying = false;
 
         // todo: move me to ECS
-        SuicideKind ISuicideAct.Suicide(IEntity victim, IChatManager chat)
+        SuicideKind ISuicideAct.Suicide(EntityUid victim, IChatManager chat)
         {
-            return EntitySystem.Get<ToiletSystem>().Suicide(OwnerUid, victim.Uid, this);
+            return EntitySystem.Get<ToiletSystem>().Suicide(Owner, victim, this);
         }
 
     }
