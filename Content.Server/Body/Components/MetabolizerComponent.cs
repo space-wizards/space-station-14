@@ -32,7 +32,7 @@ namespace Content.Server.Body.Components
         ///     From which solution will this metabolizer attempt to metabolize chemicals
         /// </summary>
         [DataField("solution")]
-        public string SolutionName { get; set; } = SharedBloodstreamComponent.DefaultSolutionName;
+        public string SolutionName { get; set; } = BloodstreamSystem.DefaultSolutionName;
 
         /// <summary>
         ///     Does this component use a solution on it's parent entity (the body) or itself

@@ -3,11 +3,13 @@
   - disconnect
   - help
   - list
+  - quit
 
 - Flags: VAREDIT
   Commands:
   - addcomp
   - rmcomp
+  - vv
 
 - Flags: DEBUG
   Commands:
@@ -27,6 +29,7 @@
   - togglelight
   - toggleshadows
   - testbed
+  - vv
 
 - Flags: MAPPING
   Commands:
@@ -50,7 +53,6 @@
   - tp
   - tpto
   - respawn
-  - forall
 
 - Flags: SERVER
   Commands:
@@ -72,3 +74,7 @@
   - saveconfig
   - testlog
   - sudo
+
+- Flags: QUERY
+  Commands:
+  - forall

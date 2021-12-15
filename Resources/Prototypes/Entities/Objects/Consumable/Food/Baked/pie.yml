@@ -13,10 +13,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 24
         reagents:
         - ReagentId: Nutriment
-          Quantity: 15
+          Quantity: 20
   - type: SliceableFood
     count: 4
   - type: Tag
@@ -24,13 +24,16 @@
     - NoSpinOnThrow
 
 - type: entity
-  parent: FoodPieBase
+  parent: FoodInjectableBase # Not sliceable
   id: FoodPieSliceBase
   abstract: true
   description: A slice of pie. Tasty!
   components:
   - type: Food
     trash: FoodPlateSmall
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Baked/pie.rsi
+    netsync: false
   - type: SolutionContainerManager
     solutions:
       food:
@@ -38,6 +41,9 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
+  - type: Tag
+    tags:
+    - NoSpinOnThrow
 
 # Pie
 

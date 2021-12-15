@@ -33,7 +33,10 @@ namespace Content.IntegrationTests.Tests
             var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
             var server = StartServer(options);
 
-            IEntity generator = null;
+            await server.WaitIdleAsync();
+
+            EntityUid generator = default;
+            var entityMan = server.ResolveDependency<IEntityManager>();
 
             IMapGrid grid1 = null;
             IMapGrid grid2 = null;
@@ -47,30 +50,27 @@ namespace Content.IntegrationTests.Tests
                 grid1 = mapMan.CreateGrid(mapId);
                 grid2 = mapMan.CreateGrid(mapId);
 
-                var entityMan = IoCManager.Resolve<IEntityManager>();
-
                 generator = entityMan.SpawnEntity("GravityGeneratorDummy", grid2.ToCoordinates());
-                Assert.That(generator.HasComponent<GravityGeneratorComponent>());
-                Assert.That(generator.HasComponent<ApcPowerReceiverComponent>());
+                Assert.That(entityMan.HasComponent<GravityGeneratorComponent>(generator));
+                Assert.That(entityMan.HasComponent<ApcPowerReceiverComponent>(generator));
 
-                var powerComponent = generator.GetComponent<ApcPowerReceiverComponent>();
+                var powerComponent = entityMan.GetComponent<ApcPowerReceiverComponent>(generator);
                 powerComponent.NeedsPower = false;
             });
             server.RunTicks(1);
 
             server.Assert(() =>
             {
-                var generatorComponent = generator.GetComponent<GravityGeneratorComponent>();
-                var powerComponent = generator.GetComponent<ApcPowerReceiverComponent>();
+                var generatorComponent = entityMan.GetComponent<GravityGeneratorComponent>(generator);
+                var powerComponent = entityMan.GetComponent<ApcPowerReceiverComponent>(generator);
 
                 Assert.That(generatorComponent.GravityActive, Is.True);
 
-                var entityMan = IoCManager.Resolve<IEntityManager>();
-                var grid1Entity = entityMan.GetEntity(grid1.GridEntityId);
-                var grid2Entity = entityMan.GetEntity(grid2.GridEntityId);
+                var grid1Entity = grid1.GridEntityId;
+                var grid2Entity = grid2.GridEntityId;
 
-                Assert.That(!grid1Entity.GetComponent<GravityComponent>().Enabled);
-                Assert.That(grid2Entity.GetComponent<GravityComponent>().Enabled);
+                Assert.That(!entityMan.GetComponent<GravityComponent>(grid1Entity).Enabled);
+                Assert.That(entityMan.GetComponent<GravityComponent>(grid2Entity).Enabled);
 
                 // Re-enable needs power so it turns off again.
                 // Charge rate is ridiculously high so it finishes in one tick.
@@ -79,14 +79,13 @@ namespace Content.IntegrationTests.Tests
             server.RunTicks(1);
             server.Assert(() =>
             {
-                var generatorComponent = generator.GetComponent<GravityGeneratorComponent>();
+                var generatorComponent = entityMan.GetComponent<GravityGeneratorComponent>(generator);
 
                 Assert.That(generatorComponent.GravityActive, Is.False);
 
-                var entityMan = IoCManager.Resolve<IEntityManager>();
-                var grid2Entity = entityMan.GetEntity(grid2.GridEntityId);
+                var grid2Entity = grid2.GridEntityId;
 
-                Assert.That(grid2Entity.GetComponent<GravityComponent>().Enabled, Is.False);
+                Assert.That(entityMan.GetComponent<GravityComponent>(grid2Entity).Enabled, Is.False);
             });
 
             await server.WaitIdleAsync();

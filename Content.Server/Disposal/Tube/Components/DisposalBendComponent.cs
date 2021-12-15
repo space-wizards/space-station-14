@@ -1,5 +1,6 @@
 ﻿using Content.Server.Disposal.Unit.Components;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -16,7 +17,7 @@ namespace Content.Server.Disposal.Tube.Components
 
         protected override Direction[] ConnectableDirections()
         {
-            var direction = Owner.Transform.LocalRotation;
+            var direction = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).LocalRotation;
             var side = new Angle(MathHelper.DegreesToRadians(direction.Degrees + _sideDegrees));
 
             return new[] {direction.GetDir(), side.GetDir()};

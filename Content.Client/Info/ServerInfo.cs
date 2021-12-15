@@ -6,6 +6,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Utility;
+using Robust.Shared.Utility.Markup;
 
 namespace Content.Client.Info
 {
@@ -32,7 +33,7 @@ namespace Content.Client.Info
             var uriOpener = IoCManager.Resolve<IUriOpener>();
 
             var rulesButton = new Button() { Text = Loc.GetString("server-info-rules-button") };
-            rulesButton.OnPressed += args => new InfoWindow().Open();
+            rulesButton.OnPressed += args => new RulesAndInfoWindow().Open();
 
             var discordButton = new Button {Text = Loc.GetString("server-info-discord-button") };
             discordButton.OnPressed += args => uriOpener.OpenUri(UILinks.Discord);
@@ -62,7 +63,7 @@ namespace Content.Client.Info
 
         public void SetInfoBlob(string markup)
         {
-            _richTextLabel.SetMessage(FormattedMessage.FromMarkup(markup));
+            _richTextLabel.SetMessage(Basic.RenderMarkup(markup));
         }
     }
 }

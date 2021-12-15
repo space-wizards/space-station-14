@@ -5,9 +5,11 @@
   components:
   - type: Clickable
   - type: InteractionOutline
+  - type: Rotatable
   - type: Physics
     bodyType: Static
     canCollide: false
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb {}

@@ -24,6 +24,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using Robust.Shared.Utility.Markup;
 using static Robust.Client.Input.Keyboard.Key;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 using Control = Robust.Client.UserInterface.Control;
@@ -104,7 +105,7 @@ namespace Content.Client.HUD
         private TopButton _buttonActionsMenu = default!;
         private TopButton _buttonAdminMenu = default!;
         private TopButton _buttonSandboxMenu = default!;
-        private InfoWindow _infoWindow = default!;
+        private RulesAndInfoWindow _rulesAndInfoWindow = default!;
         private TargetingDoll _targetingDoll = default!;
         private BoxContainer _combatPanelContainer = default!;
         private BoxContainer _topNotificationContainer = default!;
@@ -301,9 +302,11 @@ namespace Content.Client.HUD
 
             _buttonInfo.OnToggled += a => ButtonInfoOnOnToggled();
 
-            _infoWindow = new InfoWindow();
+            _rulesAndInfoWindow = new RulesAndInfoWindow();
 
-            _infoWindow.OnClose += () => _buttonInfo.Pressed = false;
+            IoCManager.Resolve<RulesManager>().OpenRulesAndInfoWindow += OpenRulesAndInfoWindow;
+
+            _rulesAndInfoWindow.OnClose += () => _buttonInfo.Pressed = false;
 
             _inputManager.SetInputCommand(ContentKeyFunctions.OpenInfo,
                 InputCmdHandler.FromDelegate(s => ButtonInfoOnOnToggled()));
@@ -428,25 +431,31 @@ namespace Content.Client.HUD
             LC.SetGrowVertical(VoteContainer, LC.GrowDirection.End);
         }
 
+        private void OpenRulesAndInfoWindow()
+        {
+            _rulesAndInfoWindow.OpenCentered();
+            _buttonInfo.Pressed = true;
+        }
+
         private void ButtonInfoOnOnToggled()
         {
             _buttonInfo.StyleClasses.Remove(TopButton.StyleClassRedTopButton);
-            if (_infoWindow.IsOpen)
+            if (_rulesAndInfoWindow.IsOpen)
             {
-                if (!_infoWindow.IsAtFront())
+                if (!_rulesAndInfoWindow.IsAtFront())
                 {
-                    _infoWindow.MoveToFront();
+                    _rulesAndInfoWindow.MoveToFront();
                     _buttonInfo.Pressed = true;
                 }
                 else
                 {
-                    _infoWindow.Close();
+                    _rulesAndInfoWindow.Close();
                     _buttonInfo.Pressed = false;
                 }
             }
             else
             {
-                _infoWindow.OpenCentered();
+                _rulesAndInfoWindow.OpenCentered();
                 _buttonInfo.Pressed = true;
             }
         }
@@ -719,7 +728,7 @@ namespace Content.Client.HUD
 
             private string? DefaultShortKeyName(BoundKeyFunction keyFunction)
             {
-                var name = FormattedMessage.EscapeText(_inputManager.GetKeyFunctionButtonString(keyFunction));
+                var name = Basic.EscapeText(_inputManager.GetKeyFunctionButtonString(keyFunction));
                 return name.Length > 3 ? null : name;
             }
 

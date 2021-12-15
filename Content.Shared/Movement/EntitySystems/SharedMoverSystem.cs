@@ -5,6 +5,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
 
@@ -49,15 +50,15 @@ namespace Content.Shared.Movement.EntitySystems
 
             if (owner != null && session != null)
             {
-                EntityManager.EventBus.RaiseLocalEvent(owner.Uid, new RelayMoveInputEvent(session));
+                EntityManager.EventBus.RaiseLocalEvent(owner.Value, new RelayMoveInputEvent(session));
 
                 // For stuff like "Moving out of locker" or the likes
-                if (owner.IsInContainer() &&
-                    (!owner.TryGetComponent(out MobStateComponent? mobState) ||
+                if (owner.Value.IsInContainer() &&
+                    (!EntityManager.TryGetComponent(owner.Value, out MobStateComponent? mobState) ||
                      mobState.IsAlive()))
                 {
-                    var relayMoveEvent = new RelayMovementEntityEvent(owner);
-                    owner.EntityManager.EventBus.RaiseLocalEvent(owner.Transform.ParentUid, relayMoveEvent);
+                    var relayMoveEvent = new RelayMovementEntityEvent(owner.Value);
+                    EntityManager.EventBus.RaiseLocalEvent(EntityManager.GetComponent<TransformComponent>(owner.Value).ParentUid, relayMoveEvent);
                 }
             }
 
@@ -81,10 +82,12 @@ namespace Content.Shared.Movement.EntitySystems
 
             var ent = session?.AttachedEntity;
 
-            if (ent == null || !ent.IsValid())
+            var entMan = IoCManager.Resolve<IEntityManager>();
+
+            if (ent == null || !entMan.EntityExists(ent.Value))
                 return false;
 
-            if (!ent.TryGetComponent(out T? comp))
+            if (!entMan.TryGetComponent(ent.Value, out T? comp))
                 return false;
 
             component = comp;

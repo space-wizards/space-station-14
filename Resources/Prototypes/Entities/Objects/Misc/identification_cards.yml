@@ -312,23 +312,23 @@
     tags:
     - Maintenance
     - Cargo
-    - Quartermaster
+  #  - Quartermaster
     - Engineering
-    - ChiefEngineer
+  #  - ChiefEngineer
     - Medical
-    - ChiefMedicalOfficer
+  #  - ChiefMedicalOfficer
     - Research
-    - ResearchDirector
+  #  - ResearchDirector
     - Security
     - Service
     - Captain
     - Command
     - External
-    - HeadOfSecurity
+    #- HeadOfSecurity
     - HeadOfPersonnel
     - Bar
-    - Hydroponics
-    - Kitchen
+    #- Hydroponics
+    #- Kitchen
     - Janitor
     - Theatre
 

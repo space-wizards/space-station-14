@@ -1,9 +1,7 @@
 using System.Linq;
 using Content.Client.Info;
 using Content.Client.Lobby.UI;
-using Content.Client.Parallax;
 using Content.Client.Resources;
-using Content.Client.Stylesheets;
 using Content.Shared.CharacterAppearance.Systems;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
@@ -69,7 +67,7 @@ namespace Content.Client.Preferences.UI
 
             UpdateUI();
 
-            RulesButton.OnPressed += _ => new InfoWindow().Open();
+            RulesButton.OnPressed += _ => new RulesAndInfoWindow().Open();
             preferencesManager.OnServerDataLoaded += UpdateUI;
         }
 
@@ -138,7 +136,7 @@ namespace Content.Client.Preferences.UI
 
         private class CharacterPickerButton : ContainerButton
         {
-            private IEntity _previewDummy;
+            private EntityUid _previewDummy;
 
             public CharacterPickerButton(
                 IEntityManager entityManager,
@@ -151,7 +149,7 @@ namespace Content.Client.Preferences.UI
                 Group = group;
 
                 _previewDummy = entityManager.SpawnEntity("MobHumanDummy", MapCoordinates.Nullspace);
-                EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(_previewDummy.Uid, profile);
+                EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(_previewDummy, profile);
                 var humanoid = profile as HumanoidCharacterProfile;
                 if (humanoid != null)
                 {
@@ -165,7 +163,7 @@ namespace Content.Client.Preferences.UI
 
                 var view = new SpriteView
                 {
-                    Sprite = _previewDummy.GetComponent<SpriteComponent>(),
+                    Sprite = entityManager.GetComponent<SpriteComponent>(_previewDummy),
                     Scale = (2, 2),
                     OverrideDirection = Direction.South
                 };
@@ -218,8 +216,8 @@ namespace Content.Client.Preferences.UI
                 if (!disposing)
                     return;
 
-                _previewDummy.Delete();
-                _previewDummy = null!;
+                IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) _previewDummy);
+                _previewDummy = default;
             }
         }
     }

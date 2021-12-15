@@ -13,6 +13,7 @@
   - type: InteractionOutline
   - type: Physics
     bodyType: Static
+  - type: Fixtures
   - type: Transform
     anchored: true
   - type: Anchorable
@@ -52,11 +53,14 @@
   - type: DisposalTransit
   - type: Appearance
     visuals:
+    - type: TrayScannerSubFloorVisualizer
+    - type: SubFloorShowLayerVisualizer
     - type: DisposalVisualizer
       state_free: conpipe-s
       state_anchored: pipe-s
       state_broken: pipe-b
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -76,6 +80,8 @@
   - type: DisposalTagger
   - type: Appearance
     visuals:
+    - type: TrayScannerSubFloorVisualizer
+    - type: SubFloorShowLayerVisualizer
     - type: DisposalVisualizer
       state_free: conpipe-tagger
       state_anchored: pipe-tagger
@@ -85,6 +91,7 @@
     - key: enum.DisposalTaggerUiKey.Key
       type: DisposalTaggerBoundUserInterface
   - type: Physics
+  - type: Fixtures
     fixtures:
       - shape:
           !type:PhysShapeAabb
@@ -104,11 +111,14 @@
   - type: DisposalEntry
   - type: Appearance
     visuals:
+    - type: TrayScannerSubFloorVisualizer
+    - type: SubFloorShowLayerVisualizer
     - type: DisposalVisualizer
       state_free: conpipe-t
       state_anchored: pipe-t
       state_broken: pipe-b
   - type: Physics
+  - type: Fixtures
     fixtures:
       - shape:
           !type:PhysShapeAabb
@@ -132,6 +142,8 @@
     - 180
   - type: Appearance
     visuals:
+    - type: TrayScannerSubFloorVisualizer
+    - type: SubFloorShowLayerVisualizer
     - type: DisposalVisualizer
       state_free: conpipe-j1s
       state_anchored: pipe-j1s
@@ -143,6 +155,7 @@
     - key: enum.DisposalRouterUiKey.Key
       type: DisposalRouterBoundUserInterface
   - type: Physics
+  - type: Fixtures
     fixtures:
       - shape:
           !type:PhysShapeAabb
@@ -165,6 +178,8 @@
     - 180
   - type: Appearance
     visuals:
+    - type: TrayScannerSubFloorVisualizer
+    - type: SubFloorShowLayerVisualizer
     - type: DisposalVisualizer
       state_free: conpipe-j2s
       state_anchored: pipe-j2s
@@ -172,6 +187,7 @@
   - type: Flippable
     mirrorEntity: DisposalRouter
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -195,6 +211,8 @@
     - 180
   - type: Appearance
     visuals:
+    - type: TrayScannerSubFloorVisualizer
+    - type: SubFloorShowLayerVisualizer
     - type: DisposalVisualizer
       state_free: conpipe-j1
       state_anchored: pipe-j1
@@ -202,6 +220,7 @@
   - type: Flippable
     mirrorEntity: DisposalJunctionFlipped
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -224,6 +243,8 @@
     - 180
   - type: Appearance
     visuals:
+    - type: TrayScannerSubFloorVisualizer
+    - type: SubFloorShowLayerVisualizer
     - type: DisposalVisualizer
       state_free: conpipe-j2
       state_anchored: pipe-j2
@@ -231,6 +252,7 @@
   - type: Flippable
     mirrorEntity: DisposalJunction
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -254,11 +276,14 @@
     - -90
   - type: Appearance
     visuals:
+    - type: TrayScannerSubFloorVisualizer
+    - type: SubFloorShowLayerVisualizer
     - type: DisposalVisualizer
       state_free: conpipe-y
       state_anchored: pipe-y
       state_broken: pipe-b
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -278,11 +303,14 @@
   - type: DisposalBend
   - type: Appearance
     visuals:
+    - type: TrayScannerSubFloorVisualizer
+    - type: SubFloorShowLayerVisualizer
     - type: DisposalVisualizer
       state_free: conpipe-c
       state_anchored: pipe-c
       state_broken: pipe-b
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb

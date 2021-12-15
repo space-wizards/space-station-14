@@ -1,7 +1,7 @@
 - type: entity
   parent: ClothingOuterBase
   id: ClothingOuterCoatBomber
-  name: bomber
+  name: bomber jacket
   description: A thick, well-worn WW2 leather bomber jacket.
   components:
   - type: Sprite
@@ -14,7 +14,7 @@
 - type: entity
   parent: ClothingOuterBase
   id: ClothingOuterCoatDetective
-  name: detective
+  name: detective trenchcoat
   description: A rugged canvas trenchcoat, designed and created by TX Fabrication Corp. The coat is externally impact resistant - perfect for your next act of autodefenestration!
   components:
   - type: Sprite
@@ -54,13 +54,13 @@
       coefficients:
         Blunt: 0.7
         Slash: 0.7
-        Piercing: 0.7
+        Piercing: 0.4
         Heat: 0.7
 
 - type: entity
   parent: ClothingOuterBase
   id: ClothingOuterCoatInspector
-  name: inspector coat
+  name: inspectors coat
   description: A strict inspector coat for being intimidating during inspections.
   components:
   - type: Sprite
@@ -125,7 +125,7 @@
 - type: entity
   parent: ClothingOuterBase
   id: ClothingOuterCoatPirate
-  name: pirate
+  name: pirate garb
   description: Yarr.
   components:
   - type: Sprite

@@ -9,7 +9,7 @@ using Robust.Shared.Localization;
 
 namespace Content.Server.Administration.Commands
 {
-    [AdminCommand(AdminFlags.Server)]
+    [AdminCommand(AdminFlags.Round)]
     public class CallShuttleCommand : IConsoleCommand
     {
         public string Command => "callshuttle";
@@ -36,7 +36,7 @@ namespace Content.Server.Administration.Commands
         }
     }
 
-    [AdminCommand(AdminFlags.Server)]
+    [AdminCommand(AdminFlags.Round)]
     public class RecallShuttleCommand : IConsoleCommand
     {
         public string Command => "recallshuttle";

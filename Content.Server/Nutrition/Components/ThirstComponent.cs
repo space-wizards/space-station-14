@@ -23,6 +23,7 @@ namespace Content.Server.Nutrition.Components
     [RegisterComponent]
     public sealed class ThirstComponent : SharedThirstComponent
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
         private float _accumulatedFrameTime;
@@ -87,13 +88,13 @@ namespace Content.Server.Nutrition.Components
             {
                 // Revert slow speed if required
                 if (_lastThirstThreshold == ThirstThreshold.Parched && _currentThirstThreshold != ThirstThreshold.Dead &&
-                    Owner.TryGetComponent(out MovementSpeedModifierComponent? movementSlowdownComponent))
+                    _entMan.TryGetComponent(Owner, out MovementSpeedModifierComponent? movementSlowdownComponent))
                 {
-                    EntitySystem.Get<MovementSpeedModifierSystem>().RefreshMovementSpeedModifiers(OwnerUid);
+                    EntitySystem.Get<MovementSpeedModifierSystem>().RefreshMovementSpeedModifiers(Owner);
                 }
 
                 // Update UI
-                Owner.TryGetComponent(out ServerAlertsComponent? alertsComponent);
+                _entMan.TryGetComponent(Owner, out ServerAlertsComponent? alertsComponent);
 
                 if (ThirstThresholdAlertTypes.TryGetValue(_currentThirstThreshold, out var alertId))
                 {
@@ -123,7 +124,7 @@ namespace Content.Server.Nutrition.Components
                         return;
 
                     case ThirstThreshold.Parched:
-                        EntitySystem.Get<MovementSpeedModifierSystem>().RefreshMovementSpeedModifiers(OwnerUid);
+                        EntitySystem.Get<MovementSpeedModifierSystem>().RefreshMovementSpeedModifiers(Owner);
                         _lastThirstThreshold = _currentThirstThreshold;
                         _actualDecayRate = _baseDecayRate * 0.6f;
                         return;
@@ -182,7 +183,7 @@ namespace Content.Server.Nutrition.Components
                 return;
             // --> Current Hunger is below dead threshold
 
-            if (!Owner.TryGetComponent(out MobStateComponent? mobState))
+            if (!_entMan.TryGetComponent(Owner, out MobStateComponent? mobState))
                 return;
 
             if (!mobState.IsDead())
@@ -191,7 +192,7 @@ namespace Content.Server.Nutrition.Components
                 _accumulatedFrameTime += frametime;
                 if (_accumulatedFrameTime >= 1)
                 {
-                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner.Uid, Damage * (int) _accumulatedFrameTime, true);
+                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner, Damage * (int) _accumulatedFrameTime, true);
                     _accumulatedFrameTime -= (int) _accumulatedFrameTime;
                 }
             }
@@ -204,9 +205,9 @@ namespace Content.Server.Nutrition.Components
             if (calculatedThirstThreshold != _currentThirstThreshold)
             {
                 if (_currentThirstThreshold == ThirstThreshold.Dead)
-                    EntitySystem.Get<AdminLogSystem>().Add(LogType.Thirst, $"{Owner} has stopped taking dehydration damage");
+                    EntitySystem.Get<AdminLogSystem>().Add(LogType.Thirst, $"{_entMan.ToPrettyString(Owner):entity} has stopped taking dehydration damage");
                 else if (calculatedThirstThreshold == ThirstThreshold.Dead)
-                    EntitySystem.Get<AdminLogSystem>().Add(LogType.Thirst, $"{Owner} has started taking dehydration damage");
+                    EntitySystem.Get<AdminLogSystem>().Add(LogType.Thirst, $"{_entMan.ToPrettyString(Owner):entity} has started taking dehydration damage");
 
                 _currentThirstThreshold = calculatedThirstThreshold;
                 ThirstThresholdEffect();
@@ -220,7 +221,7 @@ namespace Content.Server.Nutrition.Components
             UpdateCurrentThreshold();
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new ThirstComponentState(_currentThirstThreshold);
         }

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Content.Server.Shuttles.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Physics;
 
 namespace Content.Server.Shuttles.EntitySystems
@@ -10,6 +11,12 @@ namespace Content.Server.Shuttles.EntitySystems
     internal sealed class ShuttleSystem : EntitySystem
     {
         private const float TileMassMultiplier = 4f;
+
+        public float ShuttleIdleLinearDamping = 0.1f;
+        public float ShuttleIdleAngularDamping = 0.2f;
+
+        public float ShuttleMovingLinearDamping = 0.05f;
+        public float ShuttleMovingAngularDamping = 0.05f;
 
         public override void Initialize()
         {
@@ -45,17 +52,17 @@ namespace Content.Server.Shuttles.EntitySystems
 
         private void OnGridInit(GridInitializeEvent ev)
         {
-            EntityManager.GetEntity(ev.EntityUid).EnsureComponent<ShuttleComponent>();
+            EntityManager.EnsureComponent<ShuttleComponent>(ev.EntityUid);
         }
 
         private void OnShuttleStartup(EntityUid uid, ShuttleComponent component, ComponentStartup args)
         {
-            if (!component.Owner.HasComponent<IMapGridComponent>())
+            if (!EntityManager.HasComponent<IMapGridComponent>(component.Owner))
             {
                 return;
             }
 
-            if (!component.Owner.TryGetComponent(out PhysicsComponent? physicsComponent))
+            if (!EntityManager.TryGetComponent(component.Owner, out PhysicsComponent? physicsComponent))
             {
                 return;
             }
@@ -68,7 +75,7 @@ namespace Content.Server.Shuttles.EntitySystems
 
         public void Toggle(ShuttleComponent component)
         {
-            if (!component.Owner.TryGetComponent(out PhysicsComponent? physicsComponent)) return;
+            if (!EntityManager.TryGetComponent(component.Owner, out PhysicsComponent? physicsComponent)) return;
 
             component.Enabled = !component.Enabled;
 
@@ -88,8 +95,8 @@ namespace Content.Server.Shuttles.EntitySystems
             component.BodyStatus = BodyStatus.InAir;
             //component.FixedRotation = false; TODO WHEN ROTATING SHUTTLES FIXED.
             component.FixedRotation = false;
-            component.LinearDamping = 0.2f;
-            component.AngularDamping = 0.3f;
+            component.LinearDamping = ShuttleIdleLinearDamping;
+            component.AngularDamping = ShuttleIdleAngularDamping;
         }
 
         private void Disable(PhysicsComponent component)
@@ -101,7 +108,10 @@ namespace Content.Server.Shuttles.EntitySystems
 
         private void OnShuttleShutdown(EntityUid uid, ShuttleComponent component, ComponentShutdown args)
         {
-            if (!component.Owner.TryGetComponent(out PhysicsComponent? physicsComponent))
+            // None of the below is necessary for any cleanup if we're just deleting.
+            if (EntityManager.GetComponent<MetaDataComponent>(uid).EntityLifeStage >= EntityLifeStage.Terminating) return;
+
+            if (!EntityManager.TryGetComponent(component.Owner, out PhysicsComponent? physicsComponent))
             {
                 return;
             }
