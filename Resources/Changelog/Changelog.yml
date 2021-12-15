@@ -1,10 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: 'Lights have been dimmed around the station for budgetary purposes.
-      Also, our incandescents are actually incandescents now.', type: Tweak}
-  id: 239
-  time: '2021-06-16T22:55:55.0000000+00:00'
 - author: Swept
   changes:
   - {message: Removes Warden, type: Remove}
@@ -2861,3 +2855,9 @@ Entries:
       toolboxes and lockers., type: Add}
   id: 740
   time: '2021-12-14T20:21:41.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Nanotrasen has thrown a clown into the singularity to improve stability
+      by 20%., type: Fix}
+  id: 741
+  time: '2021-12-15T02:47:13.0000000+00:00'
