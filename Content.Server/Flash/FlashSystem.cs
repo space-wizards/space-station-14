@@ -131,14 +131,10 @@ namespace Content.Server.Flash
                 _stunSystem.TrySlowdown(target, TimeSpan.FromSeconds(flashDuration/1000f), true,
                     slowTo, slowTo);
 
-                if (displayPopup && user != null && target != user)
+                if (displayPopup && user != null && target != user && EntityManager.EntityExists(user.Value))
                 {
-                    // TODO Resolving the EntityUidhere bad.
-                    if (EntityManager.EntityExists(user.Value) && EntityManager.EntityExists(target))
-                    {
-                        user.Value.PopupMessage(target, Loc.GetString("flash-component-user-blinds-you",
-                            ("user", user.Value)));
-                    }
+                    user.Value.PopupMessage(target, Loc.GetString("flash-component-user-blinds-you",
+                        ("user", user.Value)));
                 }
             }
         }
