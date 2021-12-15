@@ -201,12 +201,12 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         {
             if (BoltOpen)
             {
-                return default;
+                return null;
             }
-            var entity = _chamberContainer.ContainedEntity ?? default;
+            var entity = _chamberContainer.ContainedEntity;
 
             Cycle();
-            return entity != default ? _entities.GetComponent<AmmoComponent>(entity).TakeBullet(spawnAt) : null;
+            return entity != null ? _entities.GetComponent<AmmoComponent>(entity.Value).TakeBullet(spawnAt) : null;
         }
 
         private void Cycle(bool manual = false)

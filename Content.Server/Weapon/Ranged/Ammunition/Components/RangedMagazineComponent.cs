@@ -121,7 +121,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
 
         public EntityUid? TakeAmmo()
         {
-            EntityUid ammo = default;
+            EntityUid? ammo = null;
             // If anything's spawned use that first, otherwise use the fill prototype as a fallback (if we have spawn count left)
             if (_spawnedAmmo.TryPop(out var entity))
             {

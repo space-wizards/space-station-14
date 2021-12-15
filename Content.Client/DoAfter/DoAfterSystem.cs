@@ -118,8 +118,8 @@ namespace Content.Client.DoAfter
 
                     if (doAfter.BreakOnTargetMove)
                     {
-                        if (EntityManager.EntityExists(doAfter.TargetUid) &&
-                            !Transform(doAfter.TargetUid).Coordinates.InRange(EntityManager, doAfter.TargetGrid,
+                        if (doAfter.Target != null &&
+                            !Transform(doAfter.Target.Value).Coordinates.InRange(EntityManager, doAfter.TargetGrid,
                                 doAfter.MovementThreshold))
                         {
                             comp.Cancel(id, currentTime);
