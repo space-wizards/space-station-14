@@ -19,7 +19,7 @@ SERVER_FILES = [
 
 VERSION = os.environ['GITHUB_SHA']
 FORK_ID = "syndicate"
-BUILD_URL = f"https://builds.corvax.xyz/{FORK_ID}/builds/{VERSION}/{FILE}"
+BUILD_URL = f"https://builds.corvax.xyz/syndicate/builds/{VERSION}/{FILE}"
 
 def main() -> None:
     manifest = generate_manifest("release")

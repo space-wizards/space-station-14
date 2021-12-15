@@ -42,7 +42,7 @@ jobs:
         username: deployer
         key: ${{ secrets.BUILDS_SSH_KEY }}
         source: "release/${{ github.sha }}"
-        target: "/var/www/builds.corvax.xyz/syndie/builds/"
+        target: "/var/www/builds.corvax.xyz/syndicate/builds/"
         strip_components: 1
 
     - name: Update manifest JSON
@@ -51,5 +51,5 @@ jobs:
         host: 45.76.82.67
         username: deployer
         key: ${{ secrets.BUILDS_SSH_KEY }}
-        script: node ~/scripts/push_to_manifest.js -bn syndie -bi ${{ github.sha }}
+        script: node ~/scripts/push_to_manifest.js -bn syndicate -bi ${{ github.sha }}
 
