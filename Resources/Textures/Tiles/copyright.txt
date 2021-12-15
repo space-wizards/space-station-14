@@ -1,6 +1,6 @@
 Alright because tiles don't use RSIs (yet) I gotta write this out.
 
-steel.png taken from CEV-Eris commit 28e589f0ff72a009adf17db767e90be39054f0f2
+steel.png, steel_dirty.png, white.png, dark.png, hydro.png taken from Baystation12 commit c333c682c49202eb10eeb6554ccd5eb0998523e7
 
 bar.png, laundry.png, mime.png, clown.png and kitchen.png are under CC-BY-SA-3.0
 snow.png taken from TG at commit 67a5373b4649937dd63dd94153e05e8506f40a5d
