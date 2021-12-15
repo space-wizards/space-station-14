@@ -8,6 +8,9 @@
     visuals:
     - type: StorageVisualizer
       state: cabinet
+      state_open: cabinet_open
+      state_closed: cabinet_door
+
   - type: AccessReader
     access: [["Bar"]]
   - type: EntityStorage
@@ -26,6 +29,8 @@
     visuals:
     - type: StorageVisualizer
       state: qm
+      state_open: qm_open
+      state_closed: qm_door
   - type: AccessReader
     access: [["Cargo"]] # TODO access [["Quartermaster"]]
 
@@ -39,6 +44,8 @@
     visuals:
     - type: StorageVisualizer
       state: cap
+      state_open: cap_open
+      state_closed: cap_door
   - type: AccessReader
     access: [["Captain"]]
 
@@ -51,6 +58,8 @@
     visuals:
     - type: StorageVisualizer
       state: hop
+      state_open: hop_open
+      state_closed: hop_door
   - type: AccessReader
     access: [["HeadOfPersonnel"]]
 
@@ -64,6 +73,8 @@
     visuals:
     - type: StorageVisualizer
       state: ce
+      state_open: ce_open
+      state_closed: ce_door
   - type: AccessReader
     access: [ [ "Engineering", "Command" ] ]
 
@@ -77,6 +88,7 @@
     visuals:
     - type: StorageVisualizer
       state: eng
+      state_open: eng_open
       state_closed: eng_elec_door
   - type: AccessReader
     access: [ [ "Engineering" ] ]
@@ -91,6 +103,7 @@
     visuals:
     - type: StorageVisualizer
       state: eng
+      state_open: eng_open
       state_closed: eng_weld_door
   - type: AccessReader
     access: [ [ "Engineering" ] ]
@@ -105,6 +118,8 @@
     visuals:
     - type: StorageVisualizer
       state: atmos
+      state_open: atmos_open
+      state_closed: atmos_door
   - type: AccessReader
     access: [ [ "Engineering" ] ]
 
@@ -118,6 +133,8 @@
     visuals:
     - type: StorageVisualizer
       state: eng_secure
+      state_open: eng_secure_open
+      state_closed: eng_secure_door
   - type: AccessReader
     access: [ [ "Engineering" ] ]
 
@@ -131,6 +148,8 @@
     visuals:
     - type: StorageVisualizer
       state: freezer
+      state_open: freezer_open
+      state_closed: freezer_door
   - type: AccessReader
     access: [ [ "Service" ] ]
 
@@ -144,6 +163,8 @@
     visuals:
     - type: StorageVisualizer
       state: hydro
+      state_open: hydro_open
+      state_closed: hydro_door
   - type: AccessReader
     access: [ [ "Service" ] ]
 
@@ -158,6 +179,8 @@
     visuals:
     - type: StorageVisualizer
       state: med
+      state_open: med_open
+      state_closed: med_door
   - type: AccessReader
     access: [ [ "Medical" ] ]
 
@@ -171,6 +194,8 @@
     visuals:
     - type: StorageVisualizer
       state: med_secure
+      state_open: med_secure_open
+      state_closed: med_secure_door
   - type: AccessReader
     access: [ [ "Medical" ] ]
 
@@ -184,6 +209,7 @@
     visuals:
     - type: StorageVisualizer
       state: med
+      state_open: med_open
       state_closed: chemical_door
   - type: AccessReader
     access: [ [ "Chemistry" ] ]
@@ -198,6 +224,8 @@
     visuals:
     - type: StorageVisualizer
       state: cmo
+      state_open: cmo_open
+      state_closed: cmo_door
   - type: AccessReader
     access: [ [ "Medical", "Command" ] ]
 
@@ -211,6 +239,8 @@
     visuals:
     - type: StorageVisualizer
       state: rd
+      state_open: rd_open
+      state_closed: rd_door
   - type: AccessReader
     access: [ [ "Research", "Command" ] ]
 
@@ -223,6 +253,8 @@
       visuals:
         - type: StorageVisualizer
           state: science
+          state_open: science_open
+          state_closed: science_door
     - type: AccessReader
       access: [ [ "Research" ] ]
 
@@ -236,6 +268,8 @@
     visuals:
     - type: StorageVisualizer
       state: hos
+      state_open: hos_open
+      state_closed: hos_door
   - type: AccessReader
     access: [["Security", "Command"]]
 
@@ -249,6 +283,8 @@
     visuals:
     - type: StorageVisualizer
       state: warden
+      state_open: warden_open
+      state_closed: warden_door
   - type: AccessReader
     access: [["Security", "Armory"]] # TODO access [["Brig"]]
 
@@ -262,6 +298,8 @@
     visuals:
     - type: StorageVisualizer
       state: sec
+      state_open: sec_open
+      state_closed: sec_door
   - type: AccessReader
     access: [["Security"]]
 
@@ -286,3 +324,5 @@
     visuals:
     - type: StorageVisualizer
       state: syndicate
+      state_open: syndicate_open
+      state_closed: syndicate_door
