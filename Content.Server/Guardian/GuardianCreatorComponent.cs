@@ -1,31 +1,31 @@
-using Content.Server.Construction.Components;
-using Content.Server.Power.Components;
-using Content.Shared.Computer;
-using Robust.Server.GameObjects;
-using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Log;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Guardian
 {
     /// <summary>
-    /// Allows user to create a guardian link with a specific entity at a certain max distance
+    /// Creates a GuardianComponent attached to the user's GuardianHost.
     /// </summary>
     [RegisterComponent]
-    public class GuardianCreatorComponent : Component
+    [ComponentProtoName("GuardianCreator")]
+    public sealed class GuardianCreatorComponent : Component
     {
-        public override string Name => "GuardianCreator";
-
         /// <summary>
         /// Counts as spent upon exhausting the injection
         /// </summary>
+        /// <remarks>
+        /// We don't mark as deleted as examine depends on this.
+        /// </remarks>
         public bool Used = false;
 
         /// <summary>
         /// The prototype of the guardian entity which will be created
         /// </summary>
-        [ViewVariables] [DataField("guardianID")] public string GuardianType { get; set; } = default!;
+        [ViewVariables]
+        [DataField("guardianProto", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>), required: true)]
+        public string GuardianProto { get; set; } = default!;
     }
 }
