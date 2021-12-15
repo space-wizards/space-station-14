@@ -1,0 +1,24 @@
+game-ticker-restart-round-server-update = Обновление получено, сервер автоматически перезапустится для обновления в конце этого раунда.
+game-ticker-shutdown-server-update = Сервер выключается для обновления и будет автоматически перезапущен.
+game-ticker-restart-round = Перезапуск раунда...
+game-ticker-start-round = Раунд начинается...
+game-ticker-start-round-cannot-start-game-mode-fallback = Не удалось запустить режим {$failedGameMode}! Запускаем {$fallbackMode}...
+game-ticker-start-round-cannot-start-game-mode-restart = Не удалось запустить режим {$failedGameMode}! Перезапуск раунда...
+game-ticker-unknown-role = Неизвестный
+game-ticker-delay-start = Начало раунда было отложено на {$seconds} секунд.
+game-ticker-pause-start = Начало раунда было приостановлено.
+game-ticker-pause-start-resumed = Отсчет начала раунда возобновлен.
+game-ticker-player-join-game-message = Добро пожаловать на Space Station 14! Если вы играете впервые, обязательно нажмите F1 на клавиатуре и прочитайте правила игры, а также не бойтесь просить помощи в OOC.
+game-ticker-get-info-text = Привет и добро пожаловать в [color=white]Space Station 14![/color]
+                            Текущий режим игры: [color=white]{$gmTitle}[/color].
+                            >[color=yellow]{$desc}[/color]
+game-ticker-player-no-jobs-available-when-joining = При попытке присоединиться к игре ни одной роли не было доступно.
+
+# Displayed in chat to admins when a player joins
+player-join-message = Игрок {$name} присоединился к серверу!
+
+# Displayed in chat to admins when a player leaves
+player-leave-message = Игрок {$name} покинул сервер!
+
+latejoin-arrival-announcement = {$character} ({$job}) прибыл на станцию!
+latejoin-arrival-sender = Станции
