@@ -13,7 +13,6 @@ namespace Content.Client.Atmos.Overlays
         private readonly GasTileOverlaySystem _gasTileOverlaySystem;
 
         [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly IEyeManager _eyeManager = default!;
 
         public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
 
@@ -28,8 +27,8 @@ namespace Content.Client.Atmos.Overlays
         {
             var drawHandle = args.WorldHandle;
 
-            var mapId = _eyeManager.CurrentMap;
-            var worldBounds = _eyeManager.GetWorldViewbounds();
+            var mapId = args.Viewport.Eye!.Position.MapId;
+            var worldBounds = args.WorldBounds;
 
             foreach (var mapGrid in _mapManager.FindGridsIntersecting(mapId, worldBounds))
             {

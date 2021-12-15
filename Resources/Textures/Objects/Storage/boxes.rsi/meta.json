@@ -112,6 +112,9 @@
     {
       "name": "hug-inhand-right",
       "directions": 4
+    },
+    {
+      "name": "ziptie"
     }
   ]
 }

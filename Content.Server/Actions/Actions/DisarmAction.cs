@@ -97,7 +97,7 @@ namespace Content.Server.Actions.Actions
 
             entMan.EventBus.RaiseLocalEvent(args.Target, eventArgs);
 
-            EntitySystem.Get<AdminLogSystem>().Add(LogType.DisarmedAction, LogImpact.Low, $"{args.Performer:performer} used disarm on {args.Target:target}");
+            EntitySystem.Get<AdminLogSystem>().Add(LogType.DisarmedAction, LogImpact.Low, $"{entMan.ToPrettyString(args.Performer):user} used disarm on {entMan.ToPrettyString(args.Target):target}");
 
             // Check if the event has been handled, and if so, do nothing else!
             if (eventArgs.Handled)

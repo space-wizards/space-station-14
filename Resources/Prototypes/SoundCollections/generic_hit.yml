@@ -1,0 +1,6 @@
+- type: soundCollection
+  id: GenericHit
+  files:
+    - /Audio/Weapons/genhit1.ogg
+    - /Audio/Weapons/genhit2.ogg
+    - /Audio/Weapons/genhit3.ogg

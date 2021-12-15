@@ -1,4 +1,5 @@
 ﻿using System;
+using Content.Shared.Ghost;
 using Content.Shared.Radiation;
 using Content.Shared.Singularity.Components;
 using Robust.Shared.GameObjects;
@@ -46,6 +47,46 @@ namespace Content.Shared.Singularity
             };
         }
 
+        public override void Initialize()
+        {
+            base.Initialize();
+            SubscribeLocalEvent<SharedSingularityComponent, PreventCollideEvent>(OnPreventCollide);
+        }
+
+        protected void OnPreventCollide(EntityUid uid, SharedSingularityComponent component, PreventCollideEvent args)
+        {
+            PreventCollide(uid, component, args);
+        }
+
+        protected virtual bool PreventCollide(EntityUid uid, SharedSingularityComponent component,
+            PreventCollideEvent args)
+        {
+            var otherUid = args.BodyB.Owner;
+
+            // For prediction reasons always want the client to ignore these.
+            if (EntityManager.HasComponent<IMapGridComponent>(otherUid) ||
+                EntityManager.HasComponent<SharedGhostComponent>(otherUid))
+            {
+                args.Cancel();
+                return true;
+            }
+
+            // If we're above 4 then breach containment
+            // otherwise, check if it's containment and just keep the collision
+            if (EntityManager.HasComponent<SharedContainmentFieldComponent>(otherUid) ||
+                EntityManager.HasComponent<SharedContainmentFieldGeneratorComponent>(otherUid))
+            {
+                if (component.Level > 4)
+                {
+                    args.Cancel();
+                }
+
+                return true;
+            }
+
+            return false;
+        }
+
         public void ChangeSingularityLevel(SharedSingularityComponent singularity, int value)
         {
             if (value == singularity.Level)
@@ -90,25 +131,6 @@ namespace Content.Shared.Singularity
             }
 
             singularity.Dirty();
-        }
-
-        public override void Initialize()
-        {
-            base.Initialize();
-            SubscribeLocalEvent<SharedSingularityComponent, PreventCollideEvent>(HandleFieldCollision);
-        }
-
-        private void HandleFieldCollision(EntityUid uid, SharedSingularityComponent component, PreventCollideEvent args)
-        {
-            var other = args.BodyB.Owner;
-
-            if ((!EntityManager.HasComponent<SharedContainmentFieldComponent>(other) &&
-                !EntityManager.HasComponent<SharedContainmentFieldGeneratorComponent>(other)) ||
-                component.Level >= 4)
-            {
-                args.Cancel();
-                return;
-            }
         }
     }
 }

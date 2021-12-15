@@ -7,6 +7,7 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Localization;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Robust.Shared.Utility.Markup;
 
 namespace Content.Client.Ghost.Roles.UI
 {
@@ -17,7 +18,9 @@ namespace Content.Client.Ghost.Roles.UI
         public GhostRoleRulesWindow(string rules, Action<BaseButton.ButtonEventArgs> requestAction)
         {
             RobustXamlLoader.Load(this);
-            Title.SetMessage(FormattedMessage.FromMarkupPermissive(rules + "\n" + Loc.GetString("ghost-roles-window-rules-footer")));
+            var b = new Basic();
+            b.AddMarkupPermissive(rules + "\n" + Loc.GetString("ghost-roles-window-rules-footer"));
+            Title.SetMessage(b.Render());
             RequestButton.OnPressed += requestAction;
         }
 

@@ -55,4 +55,9 @@ public enum LogType
     Thirst = 51,
     Electrocution = 52,
     CrayonDraw = 39,
+    AtmosPressureChanged = 54,
+    AtmosPowerChanged = 55,
+    AtmosVolumeChanged = 56,
+    AtmosFilterChanged = 57,
+    AtmosRatioChanged = 58,
 }

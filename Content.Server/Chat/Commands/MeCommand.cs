@@ -1,6 +1,7 @@
 using Content.Server.Administration;
 using Content.Server.Chat.Managers;
 using Content.Server.Players;
+using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
