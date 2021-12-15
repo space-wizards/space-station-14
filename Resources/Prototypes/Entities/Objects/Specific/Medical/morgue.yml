@@ -57,7 +57,7 @@
   - type: Pullable
 
 - type: entity
-  id: BodyBag_Item
+  id: BodyBag_Folded
   name: body bag
   description: A plastic bag designed for the storage and transportation of cadavers.
   parent: BodyBag_Container
