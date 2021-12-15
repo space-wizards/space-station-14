@@ -175,22 +175,21 @@ namespace Content.Shared.Interaction
             }
         }
 
-
         public virtual void InteractHand(EntityUid user, EntityUid target)
         {
-            // TODO move to shared
+            // TODO PREDICTION move server-side interaction logic into the shared system for interaction prediction.
         }
 
         public virtual void DoAttack(EntityUid user, EntityCoordinates coordinates, bool wideAttack,
             EntityUid? targetUid = null)
         {
-            // TODO move to shared
+            // TODO PREDICTION move server-side interaction logic into the shared system for interaction prediction.
         }
 
         public virtual async Task<bool> InteractUsingRanged(EntityUid user, EntityUid used, EntityUid? target,
             EntityCoordinates clickLocation, bool inRangeUnobstructed)
         {
-            // TODO move to shared
+            // TODO PREDICTION move server-side interaction logic into the shared system for interaction prediction.
             return await Task.FromResult(true);
         }
 

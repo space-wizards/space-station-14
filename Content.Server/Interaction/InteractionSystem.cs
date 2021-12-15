@@ -225,6 +225,7 @@ namespace Content.Server.Interaction
         /// </summary>
         public override void InteractHand(EntityUid user, EntityUid target)
         {
+            // TODO PREDICTION move server-side interaction logic into the shared system for interaction prediction.
             if (!_actionBlockerSystem.CanInteract(user))
                 return;
 
@@ -257,6 +258,7 @@ namespace Content.Server.Interaction
         /// </summary>
         public override async Task<bool> InteractUsingRanged(EntityUid user, EntityUid used, EntityUid? target, EntityCoordinates clickLocation, bool inRangeUnobstructed)
         {
+            // TODO PREDICTION move server-side interaction logic into the shared system for interaction prediction.
             if (InteractDoBefore(user, used, inRangeUnobstructed ? target : null, clickLocation, false))
                 return true;
 
@@ -286,6 +288,7 @@ namespace Content.Server.Interaction
 
         public override void DoAttack(EntityUid user, EntityCoordinates coordinates, bool wideAttack, EntityUid? target = null)
         {
+            // TODO PREDICTION move server-side interaction logic into the shared system for interaction prediction.
             if (!ValidateInteractAndFace(user, coordinates))
                 return;
 
