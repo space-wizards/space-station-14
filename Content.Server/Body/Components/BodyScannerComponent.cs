@@ -3,6 +3,7 @@ using Content.Shared.Body.Components;
 using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Body.Components
@@ -12,23 +13,25 @@ namespace Content.Server.Body.Components
     [ComponentReference(typeof(SharedBodyScannerComponent))]
     public class BodyScannerComponent : SharedBodyScannerComponent, IActivate
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(BodyScannerUiKey.Key);
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
+            if (!_entMan.TryGetComponent(eventArgs.User, out ActorComponent? actor))
             {
                 return;
             }
 
             var session = actor.PlayerSession;
 
-            if (session.AttachedEntity == null)
+            if (session.AttachedEntity == default)
             {
                 return;
             }
 
-            if (session.AttachedEntity.TryGetComponent(out SharedBodyComponent? body))
+            if (_entMan.TryGetComponent(session.AttachedEntity, out SharedBodyComponent? body))
             {
                 var state = InterfaceState(body);
                 UserInterface?.SetState(state);
@@ -56,7 +59,7 @@ namespace Content.Server.Body.Components
         /// </summary>
         private BodyScannerUIState InterfaceState(SharedBodyComponent body)
         {
-            return new(body.Owner.Uid);
+            return new(body.Owner);
         }
     }
 }

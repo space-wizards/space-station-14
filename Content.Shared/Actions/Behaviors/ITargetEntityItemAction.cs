@@ -20,9 +20,9 @@ namespace Content.Shared.Actions.Behaviors
         /// <summary>
         /// Entity being targeted
         /// </summary>
-        public readonly IEntity Target;
+        public readonly EntityUid Target;
 
-        public TargetEntityItemActionEventArgs(IEntity performer, IEntity target, IEntity item,
+        public TargetEntityItemActionEventArgs(EntityUid performer, EntityUid target, EntityUid item,
             ItemActionType actionType) : base(performer, item, actionType)
         {
             Target = target;

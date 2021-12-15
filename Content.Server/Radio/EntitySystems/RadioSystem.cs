@@ -11,7 +11,7 @@ namespace Content.Server.Radio.EntitySystems
     {
         private readonly List<string> _messages = new();
 
-        public void SpreadMessage(IRadio source, IEntity speaker, string message, int channel)
+        public void SpreadMessage(IRadio source, EntityUid speaker, string message, int channel)
         {
             if (_messages.Contains(message)) return;
 

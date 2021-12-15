@@ -59,7 +59,7 @@ namespace Content.Server.Temperature.Systems
                 if (comp.Deleted || comp.Paused)
                     continue;
 
-                ChangeDamage(comp.OwnerUid, comp);
+                ChangeDamage((comp).Owner, comp);
             }
 
             ShouldUpdateDamage.Clear();
@@ -166,7 +166,7 @@ namespace Content.Server.Temperature.Systems
             {
                 if (!temperature.TakingDamage)
                 {
-                    _logSystem.Add(LogType.Temperature, $"{temperature.Owner} started taking high temperature damage");
+                    _logSystem.Add(LogType.Temperature, $"{ToPrettyString(temperature.Owner):entity} started taking high temperature damage");
                     temperature.TakingDamage = true;
                 }
 
@@ -178,7 +178,7 @@ namespace Content.Server.Temperature.Systems
             {
                 if (!temperature.TakingDamage)
                 {
-                    _logSystem.Add(LogType.Temperature, $"{temperature.Owner} started taking low temperature damage");
+                    _logSystem.Add(LogType.Temperature, $"{ToPrettyString(temperature.Owner):entity} started taking low temperature damage");
                     temperature.TakingDamage = true;
                 }
 
@@ -189,7 +189,7 @@ namespace Content.Server.Temperature.Systems
             }
             else if (temperature.TakingDamage)
             {
-                _logSystem.Add(LogType.Temperature, $"{temperature.Owner} stopped taking temperature damage");
+                _logSystem.Add(LogType.Temperature, $"{ToPrettyString(temperature.Owner):entity} stopped taking temperature damage");
                 temperature.TakingDamage = false;
             }
         }

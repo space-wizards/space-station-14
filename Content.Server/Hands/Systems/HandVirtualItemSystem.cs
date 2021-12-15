@@ -1,5 +1,4 @@
 ﻿using Content.Server.Hands.Components;
-using Content.Server.Pulling;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
@@ -31,9 +30,9 @@ namespace Content.Server.Hands.Systems
                     if (!hand.IsEmpty)
                         continue;
 
-                    var pos = hands.Owner.Transform.Coordinates;
+                    var pos = EntityManager.GetComponent<TransformComponent>(hands.Owner).Coordinates;
                     var virtualItem = EntityManager.SpawnEntity("HandVirtualItem", pos);
-                    var virtualItemComp = virtualItem.GetComponent<HandVirtualItemComponent>();
+                    var virtualItemComp = EntityManager.GetComponent<HandVirtualItemComponent>(virtualItem);
                     virtualItemComp.BlockingEntity = blockingEnt;
                     hands.PutEntityIntoHand(hand, virtualItem);
                     return true;
@@ -55,7 +54,7 @@ namespace Content.Server.Hands.Systems
         // If the virtual item gets removed from the hands for any reason, cancel the pull and delete it.
         private void HandleItemUnequipped(EntityUid uid, HandVirtualItemComponent component, UnequippedHandEvent args)
         {
-            Delete(component, args.User.Uid);
+            Delete(component, args.User);
         }
 
         private void HandleItemDropped(EntityUid uid, HandVirtualItemComponent component, DroppedEvent args)
@@ -73,7 +72,7 @@ namespace Content.Server.Hands.Systems
             var targEv = new VirtualItemDeletedEvent(comp.BlockingEntity, user);
             RaiseLocalEvent(comp.BlockingEntity, targEv, false);
 
-            comp.Owner.QueueDelete();
+            EntityManager.QueueDeleteEntity(comp.Owner);
         }
 
         /// <summary>
@@ -82,23 +81,22 @@ namespace Content.Server.Hands.Systems
         /// </summary>
         public void DeleteInHandsMatching(EntityUid user, EntityUid matching)
         {
-            if (EntityManager.TryGetComponent<HandsComponent>(user, out var hands))
-            {
-                foreach (var handName in hands.ActivePriorityEnumerable())
-                {
-                    var hand = hands.GetHand(handName);
-                    if (hand.IsEmpty)
-                        continue;
+            if (!EntityManager.TryGetComponent<HandsComponent>(user, out var hands))
+                return;
 
-                    if (hand.HeldEntity != null)
-                    {
-                        if (EntityManager.TryGetComponent<HandVirtualItemComponent>(hand.HeldEntity.Uid,
-                                out var virt)
-                            && virt.BlockingEntity == matching)
-                        {
-                            Delete(virt, user);
-                        }
-                    }
+            foreach (var handName in hands.ActivePriorityEnumerable())
+            {
+                var hand = hands.GetHand(handName);
+                if (hand.IsEmpty)
+                    continue;
+
+                if (hand.HeldEntity == default)
+                    continue;
+
+                if (EntityManager.TryGetComponent<HandVirtualItemComponent>(hand.HeldEntity, out var virt)
+                    && virt.BlockingEntity == matching)
+                {
+                    Delete(virt, user);
                 }
             }
         }

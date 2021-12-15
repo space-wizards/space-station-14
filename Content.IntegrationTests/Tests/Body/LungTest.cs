@@ -66,11 +66,11 @@ namespace Content.IntegrationTests.Tests.Body
                 var bodySys = EntitySystem.Get<BodySystem>();
                 var lungSys = EntitySystem.Get<LungSystem>();
 
-                Assert.That(human.TryGetComponent(out SharedBodyComponent body));
+                Assert.That(entityManager.TryGetComponent(human, out SharedBodyComponent body));
 
-                var lungs = bodySys.GetComponentsOnMechanisms<LungComponent>(human.Uid, body).ToArray();
+                var lungs = bodySys.GetComponentsOnMechanisms<LungComponent>(human, body).ToArray();
                 Assert.That(lungs.Count, Is.EqualTo(1));
-                Assert.That(human.TryGetComponent(out BloodstreamComponent bloodstream));
+                Assert.That(entityManager.TryGetComponent(human, out BloodstreamComponent bloodstream));
 
                 var gas = new GasMixture(1);
 
@@ -82,7 +82,7 @@ namespace Content.IntegrationTests.Tests.Body
                 gas.AdjustMoles(Gas.Nitrogen, originalNitrogen);
 
                 var (lung, _) = lungs[0];
-                lungSys.TakeGasFrom(lung.OwnerUid, 1, gas, lung);
+                lungSys.TakeGasFrom(((IComponent) lung).Owner, 1, gas, lung);
 
                 var lungOxygen = originalOxygen * breathedPercentage;
                 var lungNitrogen = originalNitrogen * breathedPercentage;
@@ -103,7 +103,7 @@ namespace Content.IntegrationTests.Tests.Body
                 Assert.Zero(lungOxygenBeforeExhale);
                 Assert.Zero(lungNitrogenBeforeExhale);
 
-                lungSys.PushGasTo(lung.OwnerUid, gas, lung);
+                lungSys.PushGasTo(((IComponent) lung).Owner, gas, lung);
 
                 var lungOxygenAfterExhale = lung.Air.GetMoles(Gas.Oxygen);
                 var exhaledOxygen = Math.Abs(lungOxygenBeforeExhale - lungOxygenAfterExhale);
@@ -153,7 +153,7 @@ namespace Content.IntegrationTests.Tests.Body
             MapId mapId;
             IMapGrid grid = null;
             RespiratorComponent respirator = null;
-            IEntity human = null;
+            EntityUid human = default;
 
             var testMapName = "Maps/Test/Breathing/3by3-20oxy-80nit.yml";
 
@@ -171,8 +171,8 @@ namespace Content.IntegrationTests.Tests.Body
                 var coordinates = new EntityCoordinates(grid.GridEntityId, center);
                 human = entityManager.SpawnEntity("HumanBodyAndBloodstreamDummy", coordinates);
 
-                Assert.True(human.HasComponent<SharedBodyComponent>());
-                Assert.True(human.TryGetComponent(out respirator));
+                Assert.True(entityManager.HasComponent<SharedBodyComponent>(human));
+                Assert.True(entityManager.TryGetComponent(human, out respirator));
                 Assert.False(respirator.Suffocating);
             });
 
@@ -184,7 +184,7 @@ namespace Content.IntegrationTests.Tests.Body
                 await server.WaitRunTicks(increment);
                 await server.WaitAssertion(() =>
                 {
-                    Assert.False(respirator.Suffocating, $"Entity {human.Name} is suffocating on tick {tick}");
+                    Assert.False(respirator.Suffocating, $"Entity {entityManager.GetComponent<MetaDataComponent>(human).EntityName} is suffocating on tick {tick}");
                 });
             }
 

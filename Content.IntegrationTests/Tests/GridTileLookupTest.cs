@@ -32,7 +32,7 @@ namespace Content.IntegrationTests.Tests
 
             server.Assert(() =>
             {
-                List<IEntity> entities;
+                List<EntityUid> entities;
                 var mapOne = mapManager.CreateMap();
                 var gridOne = mapManager.CreateGrid(mapOne);
 

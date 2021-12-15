@@ -36,7 +36,7 @@ namespace Content.Server.Administration.Commands
 
             if (entityManager.TryGetComponent<EntityStorageComponent>(parent, out var storage))
             {
-                storage.Remove(entityManager.GetEntity(entityUid));
+                storage.Remove(entityUid);
             }
             else
             {

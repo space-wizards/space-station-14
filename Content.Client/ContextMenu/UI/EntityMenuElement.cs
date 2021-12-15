@@ -1,7 +1,7 @@
-using Content.Client.Stylesheets;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 
 namespace Content.Client.ContextMenu.UI
@@ -10,10 +10,12 @@ namespace Content.Client.ContextMenu.UI
     {
         public const string StyleClassEntityMenuCountText = "contextMenuCount";
 
+        [Dependency] private IEntityManager _entityManager = default!;
+
         /// <summary>
         ///     The entity that can be accessed by interacting with this element.
         /// </summary>
-        public IEntity? Entity;
+        public EntityUid Entity;
 
         /// <summary>
         ///     How many entities are accessible through this element's sub-menus.
@@ -23,11 +25,13 @@ namespace Content.Client.ContextMenu.UI
         /// </remarks>
         public int Count;
 
-        public Label CountLabel;
-        public SpriteView EntityIcon = new SpriteView { OverrideDirection = Direction.South};
+        public readonly Label CountLabel;
+        public readonly SpriteView EntityIcon = new() { OverrideDirection = Direction.South};
 
-        public EntityMenuElement(IEntity? entity = null) : base()
+        public EntityMenuElement(EntityUid entity = default)
         {
+            IoCManager.InjectDependencies(this);
+
             CountLabel = new Label { StyleClasses = { StyleClassEntityMenuCountText } };
             Icon.AddChild(new LayoutContainer() { Children = { EntityIcon, CountLabel } });
 
@@ -36,7 +40,7 @@ namespace Content.Client.ContextMenu.UI
             LayoutContainer.SetGrowVertical(CountLabel, LayoutContainer.GrowDirection.Begin);
 
             Entity = entity;
-            if (Entity != null)
+            if (Entity != default)
             {
                 Count = 1;
                 CountLabel.Visible = false;
@@ -47,7 +51,7 @@ namespace Content.Client.ContextMenu.UI
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
-            Entity = null;
+            Entity = default;
             Count = 0;
         }
 
@@ -55,17 +59,23 @@ namespace Content.Client.ContextMenu.UI
         ///     Update the icon and text of this element based on the given entity or this element's own entity if none
         ///     is provided.
         /// </summary>
-        public void UpdateEntity(IEntity? entity = null)
+        public void UpdateEntity(EntityUid entity = default)
         {
-            if (Entity != null && !Entity.Deleted)
-                entity ??= Entity;
+            if (Entity != default && _entityManager.EntityExists(Entity) && !entity.Valid)
+                entity = Entity;
 
-            EntityIcon.Sprite = entity?.GetComponentOrNull<ISpriteComponent>();
+            if (entity == default)
+            {
+                Text = string.Empty;
+                return;
+            }
+
+            EntityIcon.Sprite = _entityManager.GetComponentOrNull<ISpriteComponent>(entity);
 
             if (UserInterfaceManager.DebugMonitors.Visible)
-                Text = $"{entity?.Name} ({entity?.Uid})";
+                Text = $"{_entityManager.GetComponent<MetaDataComponent>(entity!).EntityName} ({entity})";
             else
-                Text = entity?.Name ?? string.Empty;
+                Text = _entityManager.GetComponent<MetaDataComponent>(entity!).EntityName;
         }
     }
 }
