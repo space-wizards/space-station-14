@@ -23,7 +23,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 300
+        damage: 150
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
@@ -35,3 +35,12 @@
           SheetSteel1:
             min: 1
             max: 2
+
+- type: entity
+  id: LockerBaseSecure
+  parent: LockerBase
+  abstract: true
+  components:
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: StrongMetallic

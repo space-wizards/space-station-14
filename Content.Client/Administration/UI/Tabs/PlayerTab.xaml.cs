@@ -107,8 +107,9 @@ namespace Content.Client.Administration.UI.Tabs
                             ClipText = true
                         },
                         new VSeparator(),
-                        new Label
+                        new CommandButton()
                         {
+                            Command = $"vv {player.EntityUid}",
                             Text = player.CharacterName,
                             SizeFlagsStretchRatio = 2f,
                             HorizontalExpand = true,
