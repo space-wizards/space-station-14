@@ -1,10 +1,11 @@
 #nullable enable annotations
 using System.Threading.Tasks;
+using Content.Client.Items.Components;
 using Content.Server.Hands.Components;
 using Content.Server.Interaction;
-using Content.Server.Items;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Item;
 using Content.Shared.Weapons.Melee;
 using NUnit.Framework;
 using Robust.Shared.Containers;
@@ -72,7 +73,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 user.EnsureComponent<HandsComponent>().AddHand("hand", HandLocation.Left);
                 target = sEntities.SpawnEntity(null, coords);
                 item = sEntities.SpawnEntity(null, coords);
-                item.EnsureComponent<ItemComponent>();
+                item.EnsureComponent<SharedItemComponent>();
             });
 
             await server.WaitRunTicks(1);
@@ -97,7 +98,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 Assert.That(interactHand);
 
                 Assert.That(sEntities.TryGetComponent<HandsComponent>(user, out var hands));
-                Assert.That(hands.PutInHand(sEntities.GetComponent<ItemComponent>(item)));
+                Assert.That(hands.PutInHand(sEntities.GetComponent<SharedItemComponent>(item)));
 
                 interactionSystem.UserInteraction(user, sEntities.GetComponent<TransformComponent>(target).Coordinates, target);
                 Assert.That(interactUsing);
@@ -143,7 +144,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 user.EnsureComponent<HandsComponent>().AddHand("hand", HandLocation.Left);
                 target = sEntities.SpawnEntity(null, new MapCoordinates((1.9f, 0), mapId));
                 item = sEntities.SpawnEntity(null, coords);
-                item.EnsureComponent<ItemComponent>();
+                item.EnsureComponent<SharedItemComponent>();
                 wall = sEntities.SpawnEntity("DummyDebugWall", new MapCoordinates((1, 0), sEntities.GetComponent<TransformComponent>(user).MapID));
             });
 
@@ -169,7 +170,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 Assert.That(interactHand, Is.False);
 
                 Assert.That(sEntities.TryGetComponent<HandsComponent?>(user, out var hands));
-                Assert.That(hands.PutInHand(sEntities.GetComponent<ItemComponent>(item)));
+                Assert.That(hands.PutInHand(sEntities.GetComponent<SharedItemComponent>(item)));
 
                 interactionSystem.UserInteraction(user, sEntities.GetComponent<TransformComponent>(target).Coordinates, target);
                 Assert.That(interactUsing, Is.False);
@@ -213,7 +214,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 user.EnsureComponent<HandsComponent>().AddHand("hand", HandLocation.Left);
                 target = sEntities.SpawnEntity(null, new MapCoordinates((InteractionSystem.InteractionRange - 0.1f, 0), mapId));
                 item = sEntities.SpawnEntity(null, coords);
-                item.EnsureComponent<ItemComponent>();
+                item.EnsureComponent<SharedItemComponent>();
             });
 
             await server.WaitRunTicks(1);
@@ -238,7 +239,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 Assert.That(interactHand);
 
                 Assert.That(sEntities.TryGetComponent<HandsComponent>(user, out var hands));
-                Assert.That(hands.PutInHand(sEntities.GetComponent<ItemComponent>(item)));
+                Assert.That(hands.PutInHand(sEntities.GetComponent<SharedItemComponent>(item)));
 
                 interactionSystem.UserInteraction(user, sEntities.GetComponent<TransformComponent>(target).Coordinates, target);
                 Assert.That(interactUsing);
@@ -283,7 +284,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 user.EnsureComponent<HandsComponent>().AddHand("hand", HandLocation.Left);
                 target = sEntities.SpawnEntity(null, new MapCoordinates((InteractionSystem.InteractionRange, 0), mapId));
                 item = sEntities.SpawnEntity(null, coords);
-                item.EnsureComponent<ItemComponent>();
+                item.EnsureComponent<SharedItemComponent>();
             });
 
             await server.WaitRunTicks(1);
@@ -308,7 +309,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 Assert.That(interactHand, Is.False);
 
                 Assert.That(sEntities.TryGetComponent<HandsComponent?>(user, out var hands));
-                Assert.That(hands.PutInHand(sEntities.GetComponent<ItemComponent>(item)));
+                Assert.That(hands.PutInHand(sEntities.GetComponent<SharedItemComponent>(item)));
 
                 interactionSystem.UserInteraction(user, sEntities.GetComponent<TransformComponent>(target).Coordinates, target);
                 Assert.That(interactUsing, Is.False);
@@ -355,7 +356,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 user.EnsureComponent<HandsComponent>().AddHand("hand", HandLocation.Left);
                 target = sEntities.SpawnEntity(null, coords);
                 item = sEntities.SpawnEntity(null, coords);
-                item.EnsureComponent<ItemComponent>();
+                item.EnsureComponent<SharedItemComponent>();
                 containerEntity = sEntities.SpawnEntity(null, coords);
                 container = containerEntity.EnsureContainer<Container>("InteractionTestContainer");
             });
@@ -393,7 +394,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 Assert.That(interactHand);
 
                 Assert.That(sEntities.TryGetComponent<HandsComponent?>(user, out var hands));
-                Assert.That(hands.PutInHand(sEntities.GetComponent<ItemComponent>(item)));
+                Assert.That(hands.PutInHand(sEntities.GetComponent<SharedItemComponent>(item)));
 
                 interactionSystem.UserInteraction(user, sEntities.GetComponent<TransformComponent>(target).Coordinates, target);
                 Assert.That(interactUsing, Is.False);

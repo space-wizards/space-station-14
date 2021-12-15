@@ -3,19 +3,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using Content.Client.Actions;
 using Content.Client.Actions.UI;
+using Content.Client.Items.Components;
 using Content.Server.Actions;
 using Content.Server.Hands.Components;
-using Content.Server.Items;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
 using Content.Shared.Actions.Prototypes;
 using Content.Shared.Cooldown;
+using Content.Shared.Item;
 using NUnit.Framework;
 using Robust.Client.UserInterface;
 using Robust.Server.Player;
 using Robust.Shared;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -268,7 +268,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
 
                 // grant an extra item action, before pickup, initially disabled
                 itemActions.GrantOrUpdate(ItemActionType.DebugToggle, false);
-                serverEntManager.GetComponent<HandsComponent>(serverPlayerEnt).PutInHand(serverEntManager.GetComponent<ItemComponent>(serverFlashlight), false);
+                serverEntManager.GetComponent<HandsComponent>(serverPlayerEnt).PutInHand(serverEntManager.GetComponent<SharedItemComponent>(serverFlashlight), false);
                 // grant an extra item action, after pickup, with a cooldown
                 itemActions.GrantOrUpdate(ItemActionType.DebugInstant, cooldown: cooldown);
 

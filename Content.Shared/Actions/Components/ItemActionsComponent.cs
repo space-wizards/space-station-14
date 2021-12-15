@@ -24,7 +24,6 @@ namespace Content.Shared.Actions.Components
     /// Currently only maintained server side and not synced to client, as are all the equip/unequip events.
     /// </summary>
     [RegisterComponent]
-    [Friend(typeof(SharedActionSystem))]
     public class ItemActionsComponent : Component, IEquippedHand, IUnequippedHand
     {
         public override string Name => "ItemActions";

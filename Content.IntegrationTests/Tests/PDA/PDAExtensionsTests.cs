@@ -1,14 +1,16 @@
 using System.Linq;
 using System.Threading.Tasks;
+using Content.Client.Items.Components;
 using Content.Server.Access.Components;
 using Content.Server.Hands.Components;
-using Content.Server.Inventory.Components;
-using Content.Server.Items;
 using Content.Server.PDA;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Inventory;
+using Content.Shared.Item;
 using NUnit.Framework;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
+using InventoryComponent = Content.Server.Inventory.Components.InventoryComponent;
 
 namespace Content.IntegrationTests.Tests.PDA
 {
@@ -57,6 +59,8 @@ namespace Content.IntegrationTests.Tests.PDA
             var sPlayerManager = server.ResolveDependency<IPlayerManager>();
             var sEntityManager = server.ResolveDependency<IEntityManager>();
 
+            var invSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<InventorySystem>();
+
             await server.WaitAssertion(() =>
             {
                 var player = sPlayerManager.Sessions.Single().AttachedEntity.GetValueOrDefault();
@@ -70,7 +74,7 @@ namespace Content.IntegrationTests.Tests.PDA
 
                 // Put PDA in hand
                 var dummyPda = sEntityManager.SpawnEntity(PdaDummy, sEntityManager.GetComponent<TransformComponent>(player).MapPosition);
-                var pdaItemComponent = sEntityManager.GetComponent<ItemComponent>(dummyPda);
+                var pdaItemComponent = sEntityManager.GetComponent<SharedItemComponent>(dummyPda);
                 sEntityManager.GetComponent<HandsComponent>(player).PutInHand(pdaItemComponent);
 
                 var pdaComponent = sEntityManager.GetComponent<PDAComponent>(dummyPda);
@@ -102,20 +106,16 @@ namespace Content.IntegrationTests.Tests.PDA
                 Assert.That(id, Is.EqualTo(idCardComponent));
 
                 // Remove all IDs and PDAs
-                var inventory = sEntityManager.GetComponent<InventoryComponent>(player);
+                Assert.That(invSystem.TryGetSlots(player, out var slots));
 
-                foreach (var slot in inventory.Slots)
+                foreach (var slot in slots)
                 {
-                    var item = inventory.GetSlotItem(slot);
-
-                    if (item == null)
-                    {
+                    if(!invSystem.TryGetSlotEntity(player, slot.Name, out var item))
                         continue;
-                    }
 
-                    if (sEntityManager.HasComponent<PDAComponent>(item.Owner))
+                    if (sEntityManager.HasComponent<PDAComponent>(item))
                     {
-                        inventory.ForceUnequip(slot);
+                        invSystem.TryUnequip(player, slot.Name, force: true);
                     }
                 }
 
