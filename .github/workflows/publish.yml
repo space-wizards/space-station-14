@@ -22,7 +22,7 @@ jobs:
         cd RobustToolbox
         git fetch --depth=1
 
-    - name: Package client
+    - name: Package all
       run: |
         Tools/package_server_build.py -p win-x64 linux-x64 osx-x64 linux-arm64
         Tools/package_client_build.py
@@ -35,21 +35,21 @@ jobs:
         mkdir "release/${{ github.sha }}"
         mv release/*.zip "release/${{ github.sha }}"
 
-    - name: Upload files to centcomm
+    - name: Upload files to mothership
       uses: appleboy/scp-action@master
       with:
-        host: centcomm.spacestation14.io
-        username: wizards-build-push
-        key: ${{ secrets.CENTCOMM_WIZARDS_BUILDS_PUSH_KEY }}
+        host: 45.76.82.67
+        username: deployer
+        key: ${{ secrets.BUILDS_SSH_KEY }}
         source: "release/${{ github.sha }}"
-        target: "/home/wizards-build-push/builds_dir/builds/"
+        target: "/var/www/builds.corvax.xyz/syndie/builds/"
         strip_components: 1
 
     - name: Update manifest JSON
       uses: appleboy/ssh-action@master
       with:
-        host: centcomm.spacestation14.io
-        username: wizards-build-push
-        key: ${{ secrets.CENTCOMM_WIZARDS_BUILDS_PUSH_KEY }}
-        script: /home/wizards-build-push/push.ps1 ${{ github.sha }}
+        host: 45.76.82.67
+        username: deployer
+        key: ${{ secrets.BUILDS_SSH_KEY }}
+        script: node ~/scripts/push_to_manifest.js -bn syndie -bi ${{ github.sha }}
 

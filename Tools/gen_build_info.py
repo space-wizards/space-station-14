@@ -18,8 +18,8 @@ SERVER_FILES = [
 ]
 
 VERSION = os.environ['GITHUB_SHA']
-FORK_ID = "wizards"
-BUILD_URL = f"http://centcomm.spacestation14.io/builds/wizards/builds/{VERSION}/{FILE}"
+FORK_ID = "syndicate"
+BUILD_URL = f"https://builds.corvax.xyz/{FORK_ID}/builds/{VERSION}/{FILE}"
 
 def main() -> None:
     manifest = generate_manifest("release")
