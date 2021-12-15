@@ -5,6 +5,7 @@ using Content.Shared.Power;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Log;
 
 namespace Content.Client.Kitchen.Visualizers
@@ -15,9 +16,10 @@ namespace Content.Client.Kitchen.Visualizers
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
-            var sprite = component.Owner.GetComponent<ISpriteComponent>();
+            var entMan = IoCManager.Resolve<IEntityManager>();
+            var sprite = entMan.GetComponent<ISpriteComponent>(component.Owner);
 
-            var microwaveComponent = component.Owner.GetComponentOrNull<MicrowaveComponent>();
+            var microwaveComponent = entMan.GetComponentOrNull<MicrowaveComponent>(component.Owner);
 
             if (!component.TryGetData(PowerDeviceVisuals.VisualState, out MicrowaveVisualState state))
             {

@@ -6,9 +6,11 @@ using Content.Shared.Paper;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
+using Robust.Shared.Utility.Markup;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Paper
@@ -18,6 +20,8 @@ namespace Content.Server.Paper
     public class PaperComponent : SharedPaperComponent, IExamine, IInteractUsing, IUse
 #pragma warning restore 618
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         private PaperAction _mode;
         [DataField("content")]
         public string Content { get; set; } = "";
@@ -42,7 +46,7 @@ namespace Content.Server.Paper
             Content = content + '\n';
             UpdateUserInterface();
 
-            if (!Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (!_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
                 return;
 
             var status = string.IsNullOrWhiteSpace(content)
@@ -57,7 +61,7 @@ namespace Content.Server.Paper
             UserInterface?.SetState(new PaperBoundUserInterfaceState(Content, _mode));
         }
 
-        public void Examine(FormattedMessage message, bool inDetailsRange)
+        public void Examine(FormattedMessage.Builder message, bool inDetailsRange)
         {
             if (!inDetailsRange)
                 return;
@@ -73,7 +77,7 @@ namespace Content.Server.Paper
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
+            if (!_entMan.TryGetComponent(eventArgs.User, out ActorComponent? actor))
                 return false;
 
             _mode = PaperAction.Read;
@@ -90,12 +94,12 @@ namespace Content.Server.Paper
 
             Content += msg.Text + '\n';
 
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
             {
                 appearance.SetData(PaperVisuals.Status, PaperStatus.Written);
             }
 
-            Owner.Description = "";
+            _entMan.GetComponent<MetaDataComponent>(Owner).EntityDescription = "";
             UpdateUserInterface();
         }
 
@@ -103,7 +107,7 @@ namespace Content.Server.Paper
         {
             if (!eventArgs.Using.HasTag("Write"))
                 return false;
-            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
+            if (!_entMan.TryGetComponent(eventArgs.User, out ActorComponent? actor))
                 return false;
 
             _mode = PaperAction.Write;

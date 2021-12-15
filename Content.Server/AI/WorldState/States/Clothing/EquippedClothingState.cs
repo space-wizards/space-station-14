@@ -3,19 +3,20 @@ using Content.Server.Inventory.Components;
 using Content.Shared.Inventory;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.AI.WorldState.States.Clothing
 {
     [UsedImplicitly]
-    public sealed class EquippedClothingState : StateData<Dictionary<EquipmentSlotDefines.Slots, IEntity>>
+    public sealed class EquippedClothingState : StateData<Dictionary<EquipmentSlotDefines.Slots, EntityUid>>
     {
         public override string Name => "EquippedClothing";
 
-        public override Dictionary<EquipmentSlotDefines.Slots, IEntity> GetValue()
+        public override Dictionary<EquipmentSlotDefines.Slots, EntityUid> GetValue()
         {
-            var result = new Dictionary<EquipmentSlotDefines.Slots, IEntity>();
+            var result = new Dictionary<EquipmentSlotDefines.Slots, EntityUid>();
 
-            if (!Owner.TryGetComponent(out InventoryComponent? inventoryComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out InventoryComponent? inventoryComponent))
             {
                 return result;
             }

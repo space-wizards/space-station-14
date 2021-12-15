@@ -140,3 +140,5 @@
     sprite: Clothing/Hands/Gloves/Color/black.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/Color/black.rsi
+    HeatResistance: 1400
+  - type: Insulated

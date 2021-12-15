@@ -2,7 +2,7 @@
 
 namespace Content.Client.Singularity
 {
-    public class SingularitySystem : SharedSingularitySystem
+    public sealed class SingularitySystem : SharedSingularitySystem
     {
     }
 }

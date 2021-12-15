@@ -3,6 +3,7 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Alert;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Alert.Click
@@ -16,9 +17,9 @@ namespace Content.Server.Alert.Click
     {
         public void AlertClicked(ClickAlertEventArgs args)
         {
-            if (args.Player.TryGetComponent(out FlammableComponent? flammable))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(args.Player, out FlammableComponent? flammable))
             {
-                EntitySystem.Get<FlammableSystem>().Resist(args.Player.Uid, flammable);
+                EntitySystem.Get<FlammableSystem>().Resist(args.Player, flammable);
             }
         }
     }

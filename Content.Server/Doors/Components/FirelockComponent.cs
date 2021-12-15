@@ -2,6 +2,7 @@ using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Doors;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Doors.Components
@@ -13,6 +14,8 @@ namespace Content.Server.Doors.Components
     [RegisterComponent]
     public class FirelockComponent : Component
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "Firelock";
 
         [ComponentDependency]
@@ -30,7 +33,7 @@ namespace Content.Server.Doors.Components
             if (DoorComponent != null && DoorComponent.State == SharedDoorComponent.DoorState.Open && DoorComponent.CanCloseGeneric())
             {
                 DoorComponent.Close();
-                if (Owner.TryGetComponent(out AirtightComponent? airtight))
+                if (_entMan.TryGetComponent(Owner, out AirtightComponent? airtight))
                 {
                     EntitySystem.Get<AirtightSystem>().SetAirblocked(airtight, true);
                 }
@@ -46,7 +49,7 @@ namespace Content.Server.Doors.Components
             var minMoles = float.MaxValue;
             var maxMoles = 0f;
 
-            foreach (var adjacent in atmosphereSystem.GetAdjacentTileMixtures(Owner.Transform.Coordinates))
+            foreach (var adjacent in atmosphereSystem.GetAdjacentTileMixtures(_entMan.GetComponent<TransformComponent>(Owner).Coordinates))
             {
                 var moles = adjacent.TotalMoles;
                 if (moles < minMoles)
@@ -62,7 +65,7 @@ namespace Content.Server.Doors.Components
         {
             var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
 
-            if (!atmosphereSystem.TryGetGridAndTile(Owner.Transform.Coordinates, out var tuple))
+            if (!atmosphereSystem.TryGetGridAndTile(_entMan.GetComponent<TransformComponent>(Owner).Coordinates, out var tuple))
                 return false;
 
             if (atmosphereSystem.GetTileMixture(tuple.Value.Grid, tuple.Value.Tile) == null)
@@ -71,7 +74,7 @@ namespace Content.Server.Doors.Components
             if (atmosphereSystem.IsHotspotActive(tuple.Value.Grid, tuple.Value.Tile))
                 return true;
 
-            foreach (var adjacent in atmosphereSystem.GetAdjacentTiles(Owner.Transform.Coordinates))
+            foreach (var adjacent in atmosphereSystem.GetAdjacentTiles(_entMan.GetComponent<TransformComponent>(Owner).Coordinates))
             {
                 if (atmosphereSystem.IsHotspotActive(tuple.Value.Grid, adjacent))
                     return true;

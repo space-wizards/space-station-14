@@ -1,16 +1,15 @@
 using Content.Server.Act;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
-using Content.Server.Mind.Components;
 using Content.Server.Players;
 using Content.Server.Popups;
 using Content.Shared.Body.Components;
 using Content.Shared.Popups;
 using Content.Shared.Recycling;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -22,6 +21,8 @@ namespace Content.Server.Recycling.Components
     [Friend(typeof(RecyclerSystem))]
     public class RecyclerComponent : Component, ISuicideAct
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "Recycler";
 
         /// <summary>
@@ -40,15 +41,15 @@ namespace Content.Server.Recycling.Components
 
         private void Clean()
         {
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
             {
                 appearance.SetData(RecyclerVisuals.Bloody, false);
             }
         }
 
-        SuicideKind ISuicideAct.Suicide(IEntity victim, IChatManager chat)
+        SuicideKind ISuicideAct.Suicide(EntityUid victim, IChatManager chat)
         {
-            if (victim.TryGetComponent(out ActorComponent? actor) && actor.PlayerSession.ContentData()?.Mind is {} mind)
+            if (_entMan.TryGetComponent(victim, out ActorComponent? actor) && actor.PlayerSession.ContentData()?.Mind is {} mind)
             {
                 EntitySystem.Get<GameTicker>().OnGhostAttempt(mind, false);
                 mind.OwnedEntity?.PopupMessage(Loc.GetString("recycler-component-suicide-message"));
@@ -56,7 +57,7 @@ namespace Content.Server.Recycling.Components
 
             victim.PopupMessageOtherClients(Loc.GetString("recycler-component-suicide-message-others", ("victim",victim)));
 
-            if (victim.TryGetComponent<SharedBodyComponent>(out var body))
+            if (_entMan.TryGetComponent<SharedBodyComponent?>(victim, out var body))
             {
                 body.Gib(true);
             }
