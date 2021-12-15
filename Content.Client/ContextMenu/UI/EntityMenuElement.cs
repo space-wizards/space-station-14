@@ -63,9 +63,10 @@ namespace Content.Client.ContextMenu.UI
         {
             // Deleted() automatically checks for null & existence.
             if (!_entityManager.Deleted(Entity))
+            {
                 entity = Entity;
-
-            if (_entityManager.Deleted(entity))
+            }
+            else if (_entityManager.Deleted(entity))
             {
                 Text = string.Empty;
                 return;
