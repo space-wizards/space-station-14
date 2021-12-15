@@ -27,5 +27,20 @@ namespace Content.Shared.CharacterAppearance
                     throw new ArgumentOutOfRangeException(nameof(sex), sex, null);
             }
         }
+
+        public static DatasetPrototype LastNames(this Sex sex, IPrototypeManager? prototypeManager = null)
+        {
+            prototypeManager ??= IoCManager.Resolve<IPrototypeManager>();
+
+            switch (sex)
+            {
+                case Sex.Male:
+                    return prototypeManager.Index<DatasetPrototype>("names_last_male");
+                case Sex.Female:
+                    return prototypeManager.Index<DatasetPrototype>("names_last_female");
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(sex), sex, null);
+            }
+        }
     }
 }

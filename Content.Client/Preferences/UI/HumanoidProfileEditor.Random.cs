@@ -30,7 +30,7 @@ namespace Content.Client.Preferences.UI
         {
             if (Profile == null) return;
             var firstName = _random.Pick(Profile.Sex.FirstNames(_prototypeManager).Values);
-            var lastName = _random.Pick(_prototypeManager.Index<DatasetPrototype>("names_last"));
+            var lastName = _random.Pick(Profile.Sex.LastNames(_prototypeManager).Values);
             SetName($"{firstName} {lastName}");
             UpdateNameEdit();
         }

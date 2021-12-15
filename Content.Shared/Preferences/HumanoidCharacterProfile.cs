@@ -113,7 +113,7 @@ namespace Content.Shared.Preferences
 
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             var firstName = random.Pick(sex.FirstNames(prototypeManager).Values);
-            var lastName = random.Pick(prototypeManager.Index<DatasetPrototype>("names_last"));
+            var lastName = random.Pick(sex.LastNames(prototypeManager).Values);
             var name = $"{firstName} {lastName}";
             var age = random.Next(MinimumAge, MaximumAge);
 
@@ -352,7 +352,7 @@ namespace Content.Shared.Preferences
                 var random = IoCManager.Resolve<IRobustRandom>();
                 var protoMan = IoCManager.Resolve<IPrototypeManager>();
                 var firstName = random.Pick(Sex.FirstNames(protoMan).Values);
-                var lastName = random.Pick(protoMan.Index<DatasetPrototype>("names_last"));
+                var lastName = random.Pick(Sex.LastNames(protoMan).Values);
                 return $"{firstName} {lastName}";
             }
         }
