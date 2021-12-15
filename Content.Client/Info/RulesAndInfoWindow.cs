@@ -57,6 +57,12 @@ namespace Content.Client.Info
             infoControlSection.ControlsButton.OnPressed += _ => optionsMenu.OpenCentered();
         }
 
+        private void AddSection(Info info, string title, string path, bool markup = false)
+        {
+            info.InfoContainer.AddChild(new InfoSection(title,
+                _resourceManager.ContentFileReadAllText($"/Server Info/{path}"), markup));
+        }
+
         protected override void Opened()
         {
             base.Opened();
