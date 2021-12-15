@@ -1,12 +1,10 @@
 ﻿using System.Threading.Tasks;
-using Content.Server.Clothing.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Item;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using InventoryComponent = Content.Server.Inventory.Components.InventoryComponent;
 
 namespace Content.IntegrationTests.Tests
 {
@@ -30,7 +28,7 @@ namespace Content.IntegrationTests.Tests
 
                 var entMgr = IoCManager.Resolve<IEntityManager>();
                 var container = entMgr.SpawnEntity(null, MapCoordinates.Nullspace);
-                entMgr.AddComponent<Inventory>(container);
+                entMgr.AddComponent<InventoryComponent>(container);
 
                 var child = entMgr.SpawnEntity(null, MapCoordinates.Nullspace);
                 var item = entMgr.AddComponent<SharedItemComponent>(child);
