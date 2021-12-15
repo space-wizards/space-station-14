@@ -19,7 +19,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.ViewVariables;
-using InventoryComponent = Content.Server.Inventory.Components.InventoryComponent;
 
 namespace Content.Server.Sandbox
 {

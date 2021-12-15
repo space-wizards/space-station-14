@@ -14,7 +14,7 @@ namespace Content.Server.Inventory.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedInventoryComponent))]
-    public class InventoryComponent : SharedInventoryComponent
+    public class ServerInventoryComponent : SharedInventoryComponent
     {
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
         [Dependency] private readonly IEntityManager _entities = default!;

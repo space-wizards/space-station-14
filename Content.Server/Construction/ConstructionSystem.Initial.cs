@@ -22,7 +22,6 @@ using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
 using Robust.Shared.Timing;
-using InventoryComponent = Content.Server.Inventory.Components.InventoryComponent;
 
 namespace Content.Server.Construction
 {

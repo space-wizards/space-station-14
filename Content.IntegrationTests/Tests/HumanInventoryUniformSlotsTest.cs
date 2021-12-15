@@ -5,7 +5,6 @@ using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using InventoryComponent = Content.Server.Inventory.Components.InventoryComponent;
 
 namespace Content.IntegrationTests.Tests
 {
@@ -66,7 +65,7 @@ namespace Content.IntegrationTests.Tests
             EntityUid uniform = default;
             EntityUid idCard = default;
             EntityUid pocketItem = default;
-            InventoryComponent inventory = null;
+            ServerInventoryComponent inventory = null;
 
             var invSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<InventorySystem>();
 

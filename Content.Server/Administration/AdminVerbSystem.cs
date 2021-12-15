@@ -160,7 +160,7 @@ namespace Content.Server.Administration
 
             // Set clothing verb
             if (_groupController.CanCommand(player, "setoutfit") &&
-                EntityManager.HasComponent<InventoryComponent>(args.Target))
+                EntityManager.HasComponent<ServerInventoryComponent>(args.Target))
             {
                 Verb verb = new();
                 verb.Text = Loc.GetString("set-outfit-verb-get-data-text");

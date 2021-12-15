@@ -1,10 +1,7 @@
 using Content.Client.Inventory;
 using Content.Client.Items.Components;
 using Content.Shared.Clothing;
-using Content.Shared.Inventory;
 using Content.Shared.Item;
-using Robust.Client.Graphics;
-using Robust.Client.ResourceManagement;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
@@ -20,8 +17,7 @@ namespace Content.Client.Clothing
     [NetworkedComponent()]
     public class ClothingComponent : ItemComponent
     {
-        [DataField("femaleMask")]
-        private FemaleClothingMask _femaleMask = FemaleClothingMask.UniformFull;
+        [DataField("femaleMask")] private FemaleClothingMask _femaleMask = FemaleClothingMask.UniformFull;
         public override string Name => "Clothing";
 
         private string? _clothingEquippedPrefix;
@@ -62,42 +58,6 @@ namespace Content.Client.Clothing
         {
             get => _femaleMask;
             set => _femaleMask = value;
-        }
-
-        public (RSI rsi, RSI.StateId stateId)? GetEquippedStateInfo(EquipmentSlotDefines.SlotFlags slot, string? speciesId=null)
-        {
-            if (RsiPath == null)
-                return null;
-
-            var rsi = IoCManager.Resolve<IResourceCache>().GetResource<RSIResource>(SharedSpriteComponent.TextureRoot / RsiPath).RSI;
-            var prefix = ClothingEquippedPrefix ?? EquippedPrefix;
-            var stateId = prefix != null ? $"{prefix}-equipped-{slot}" : $"equipped-{slot}";
-            if (speciesId != null)
-            {
-                var speciesState = $"{stateId}-{speciesId}";
-                if (rsi.TryGetState(speciesState, out _))
-                {
-                    return (rsi, speciesState);
-                }
-            }
-
-            if (rsi.TryGetState(stateId, out _))
-            {
-                return (rsi, stateId);
-            }
-
-            return null;
-        }
-
-        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
-        {
-            if (curState is not ClothingComponentState state)
-            {
-                return;
-            }
-
-            ClothingEquippedPrefix = state.ClothingEquippedPrefix;
-            EquippedPrefix = state.EquippedPrefix;
         }
     }
 

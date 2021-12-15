@@ -74,7 +74,7 @@ namespace Content.Shared.Item
         public Color Color
         {
             get => _color;
-            protected set
+            set
             {
                 _color = value;
                 Dirty();
@@ -98,24 +98,6 @@ namespace Content.Shared.Item
         }
         [DataField("sprite")]
         private string? _rsiPath;
-
-        public override ComponentState GetComponentState()
-        {
-            return new ItemComponentState(Size, EquippedPrefix, Color, RsiPath);
-        }
-
-        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
-        {
-            base.HandleComponentState(curState, nextState);
-
-            if (curState is not ItemComponentState state)
-                return;
-
-            Size = state.Size;
-            EquippedPrefix = state.EquippedPrefix;
-            Color = state.Color;
-            RsiPath = state.RsiPath;
-        }
 
         /// <summary>
         ///     If a player can pick up this item.

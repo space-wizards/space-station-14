@@ -41,7 +41,7 @@ namespace Content.Server.Strip
                 UserInterface.OnReceiveMessage += HandleUserInterfaceMessage;
             }
 
-            Owner.EnsureComponentWarn<InventoryComponent>();
+            Owner.EnsureComponentWarn<ServerInventoryComponent>();
             Owner.EnsureComponentWarn<HandsComponent>();
             Owner.EnsureComponentWarn<CuffableComponent>();
 
@@ -50,7 +50,7 @@ namespace Content.Server.Strip
                 cuffed.OnCuffedStateChanged += UpdateSubscribed;
             }
 
-            if (_entities.TryGetComponent(Owner, out InventoryComponent? inventory))
+            if (_entities.TryGetComponent(Owner, out ServerInventoryComponent? inventory))
             {
                 inventory.OnItemChanged += UpdateSubscribed;
             }
@@ -108,7 +108,7 @@ namespace Content.Server.Strip
         {
             var dictionary = new Dictionary<Slots, string>();
 
-            if (!_entities.TryGetComponent(Owner, out InventoryComponent? inventory))
+            if (!_entities.TryGetComponent(Owner, out ServerInventoryComponent? inventory))
             {
                 return dictionary;
             }
@@ -161,7 +161,7 @@ namespace Content.Server.Strip
         /// </summary>
         private async void PlaceActiveHandItemInInventory(EntityUid user, Slots slot)
         {
-            var inventory = _entities.GetComponent<InventoryComponent>(Owner);
+            var inventory = _entities.GetComponent<ServerInventoryComponent>(Owner);
             var userHands = _entities.GetComponent<HandsComponent>(user);
             var item = userHands.GetActiveHand;
 
@@ -292,7 +292,7 @@ namespace Content.Server.Strip
         /// </summary>
         private async void TakeItemFromInventory(EntityUid user, Slots slot)
         {
-            var inventory = _entities.GetComponent<InventoryComponent>(Owner);
+            var inventory = _entities.GetComponent<ServerInventoryComponent>(Owner);
             var userHands = _entities.GetComponent<HandsComponent>(user);
 
             bool Check()
@@ -409,7 +409,7 @@ namespace Content.Server.Strip
             {
                 case StrippingInventoryButtonPressed inventoryMessage:
 
-                    if (_entities.TryGetComponent<InventoryComponent?>(Owner, out var inventory))
+                    if (_entities.TryGetComponent<ServerInventoryComponent?>(Owner, out var inventory))
                     {
                         if (inventory.TryGetSlotItem(inventoryMessage.Slot, out ItemComponent? _))
                             placingItem = false;

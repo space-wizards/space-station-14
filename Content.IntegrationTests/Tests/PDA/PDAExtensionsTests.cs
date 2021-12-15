@@ -10,7 +10,6 @@ using Content.Shared.Item;
 using NUnit.Framework;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
-using InventoryComponent = Content.Server.Inventory.Components.InventoryComponent;
 
 namespace Content.IntegrationTests.Tests.PDA
 {

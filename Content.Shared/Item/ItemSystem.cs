@@ -2,6 +2,7 @@ using Content.Shared.Inventory.Events;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Localization;
 
 namespace Content.Shared.Item
@@ -15,6 +16,25 @@ namespace Content.Shared.Item
 
             SubscribeLocalEvent<SharedSpriteComponent, GotEquippedEvent>(OnEquipped);
             SubscribeLocalEvent<SharedSpriteComponent, GotUnequippedEvent>(OnUnequipped);
+
+            SubscribeLocalEvent<SharedItemComponent, ComponentGetState>(OnGetState);
+            SubscribeLocalEvent<SharedItemComponent, ComponentHandleState>(OnHandleState);
+        }
+
+        private void OnHandleState(EntityUid uid, SharedItemComponent component, ComponentHandleState args)
+        {
+            if (args.Current is not ItemComponentState state)
+                return;
+
+            component.Size = state.Size;
+            component.EquippedPrefix = state.EquippedPrefix;
+            component.Color = state.Color;
+            component.RsiPath = state.RsiPath;
+        }
+
+        private void OnGetState(EntityUid uid, SharedItemComponent component, ref ComponentGetState args)
+        {
+            args.State = new ItemComponentState(component.Size, component.EquippedPrefix, component.Color, component.RsiPath);
         }
 
         private void OnUnequipped(EntityUid uid, SharedSpriteComponent component, GotUnequippedEvent args)

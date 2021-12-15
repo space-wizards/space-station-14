@@ -4,7 +4,6 @@ using Content.Server.Hands.Components;
 using Content.Shared.Inventory;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using InventoryComponent = Content.Server.Inventory.Components.InventoryComponent;
 
 namespace Content.Server.PDA
 {

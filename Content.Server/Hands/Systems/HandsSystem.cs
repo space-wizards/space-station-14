@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Hands.Components;
 using Content.Server.Interaction;
+using Content.Server.Inventory.Components;
 using Content.Server.Stack;
 using Content.Server.Storage.Components;
 using Content.Server.Throwing;
@@ -25,7 +26,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
 using Robust.Shared.Utility;
-using InventoryComponent = Content.Server.Inventory.Components.InventoryComponent;
 
 namespace Content.Server.Hands.Systems
 {
@@ -277,7 +277,7 @@ namespace Content.Server.Hands.Systems
                 return;
 
             if (!EntityManager.TryGetComponent(plyEnt, out SharedHandsComponent? hands) ||
-                !EntityManager.TryGetComponent(plyEnt, out InventoryComponent? inventory))
+                !EntityManager.TryGetComponent(plyEnt, out ServerInventoryComponent? inventory))
                 return;
 
             if (!_inventorySystem.TryGetSlotEntity(plyEnt, equipmentSlot, out var slotEntity) ||

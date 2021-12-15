@@ -15,13 +15,13 @@ namespace Content.Server.Inventory.Components
     {
         public override string Name => "HumanInventoryController";
 
-        private InventoryComponent _inventory = default!;
+        private ServerInventoryComponent _inventory = default!;
 
         protected override void Initialize()
         {
             base.Initialize();
 
-            _inventory = Owner.EnsureComponent<InventoryComponent>();
+            _inventory = Owner.EnsureComponent<ServerInventoryComponent>();
         }
 
         bool IInventoryController.CanEquip(Slots slot, EntityUid entity, bool flagsCheck, [NotNullWhen(false)] out string? reason)

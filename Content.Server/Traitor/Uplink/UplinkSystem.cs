@@ -17,7 +17,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Player;
-using InventoryComponent = Content.Server.Inventory.Components.InventoryComponent;
 
 namespace Content.Server.Traitor.Uplink
 {
