@@ -3,7 +3,6 @@ using Content.Client.Administration.Managers;
 using Content.Client.Changelog;
 using Content.Client.CharacterInterface;
 using Content.Client.Chat.Managers;
-using Content.Client.DistortionMap;
 using Content.Client.EscapeMenu;
 using Content.Client.Eui;
 using Content.Client.Flash;
@@ -167,8 +166,6 @@ namespace Content.Client.Entry
             ContentContexts.SetupContexts(inputMan.Contexts);
 
             IoCManager.Resolve<IGameHud>().Initialize();
-            IoCManager.Register<DistortionMapOverlay>();
-            IoCManager.BuildGraph();
 
             var overlayMgr = IoCManager.Resolve<IOverlayManager>();
             overlayMgr.AddOverlay(new ParallaxOverlay());
@@ -177,7 +174,7 @@ namespace Content.Client.Entry
             overlayMgr.AddOverlay(new CircleMaskOverlay());
             overlayMgr.AddOverlay(new FlashOverlay());
             overlayMgr.AddOverlay(new RadiationPulseOverlay());
-            overlayMgr.AddOverlay(IoCManager.Resolve<DistortionMapOverlay>());
+            overlayMgr.AddOverlay(new DistortionMapOverlay());
 
             IoCManager.Resolve<IChatManager>().Initialize();
             IoCManager.Resolve<ISandboxManager>().Initialize();
