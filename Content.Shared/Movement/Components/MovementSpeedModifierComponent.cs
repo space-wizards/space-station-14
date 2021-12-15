@@ -13,7 +13,7 @@ namespace Content.Shared.Movement.Components
     public sealed class MovementSpeedModifierComponent : Component
     {
         public const float DefaultBaseWalkSpeed = 3.0f;
-        public const float DefaultBaseSprintSpeed = 5.0f;
+        public const float DefaultBaseSprintSpeed = 5.5f;
 
         public override string Name => "MovementSpeedModifier";
 
