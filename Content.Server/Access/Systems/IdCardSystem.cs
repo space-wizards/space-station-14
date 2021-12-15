@@ -7,10 +7,11 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Access.Components;
+using Content.Shared.Access.Systems;
 
 namespace Content.Server.Access.Systems
 {
-    public class IdCardSystem : EntitySystem
+    public class IdCardSystem : SharedIdCardSystem
     {
         public override void Initialize()
         {
