@@ -1,3 +1,24 @@
+# Bun
+
+- type: entity
+  name: bun
+  parent: FoodBreadSliceBase
+  id: FoodBreadBun
+  description: A hamburger bun. Round and convenient to hold.
+  components:
+  - type: Food
+  - type: Sprite
+    sprite: Objects/Consumable/Food/burger.rsi
+    layers:
+    - state: bun
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6.66 # 1/3 of a loaf of bread, technically losing 0.01 nutriment per batch of three buns over making bread loaves/slices
+
 # Base
 
 - type: entity
