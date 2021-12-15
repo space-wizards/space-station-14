@@ -14,6 +14,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
+using Robust.Shared.Utility.Markup;
 
 namespace Content.Server.Weapon.Ranged.Ammunition.Components
 {
@@ -214,7 +215,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             return TryUse(eventArgs.User);
         }
 
-        public void Examine(FormattedMessage message, bool inDetailsRange)
+        public void Examine(FormattedMessage.Builder message, bool inDetailsRange)
         {
             message.AddMarkup("\n" + Loc.GetString("ammo-box-component-on-examine-caliber-description", ("caliber", _caliber)));
             message.AddMarkup("\n" + Loc.GetString("ammo-box-component-on-examine-remaining-ammo-description", ("ammoLeft",AmmoLeft),("capacity", _capacity)));

@@ -1,4 +1,4 @@
-﻿- type: vendingMachineInventory
+- type: vendingMachineInventory
   id: YouToolInventory
   name: YouTool
   animationDuration: 1.1
@@ -10,4 +10,5 @@
     Wirecutter: 5
     Wrench: 5
     Screwdriver: 5
+    trayScanner: 5
     ClothingHandsGlovesColorYellowBudget: 5

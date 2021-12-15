@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Administration;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
@@ -24,6 +25,7 @@ namespace Content.Shared.Chemistry.Reaction
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] protected readonly SharedAdminLogSystem _logSystem = default!;
+        [Dependency] private readonly IGamePrototypeLoadManager _gamePrototypeLoadManager = default!;
 
         /// <summary>
         ///     A cache of all existant chemical reactions indexed by one of their
@@ -37,6 +39,7 @@ namespace Content.Shared.Chemistry.Reaction
 
             InitializeReactionCache();
             _prototypeManager.PrototypesReloaded += OnPrototypesReloaded;
+            _gamePrototypeLoadManager.GamePrototypeLoaded += InitializeReactionCache;
         }
 
         /// <summary>
@@ -187,7 +190,7 @@ namespace Content.Shared.Chemistry.Reaction
                 {
                     var entity = args.SolutionEntity;
                     _logSystem.Add(LogType.ReagentEffect, effect.LogImpact,
-                        $"Reaction effect {effect.GetType().Name} of reaction ${reaction.ID:reaction} applied on entity {ToPrettyString(entity)} at {Transform(entity).Coordinates}");
+                        $"Reaction effect {effect.GetType().Name:effect} of reaction ${reaction.ID:reaction} applied on entity {ToPrettyString(entity):entity} at {Transform(entity).Coordinates:coordinates}");
                 }
 
                 effect.Effect(args);

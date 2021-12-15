@@ -165,7 +165,7 @@ namespace Content.Server.Body.Systems
                         {
                             var entity = args.SolutionEntity;
                             _logSystem.Add(LogType.ReagentEffect, effect.LogImpact,
-                                $"Metabolism effect {effect.GetType().Name} of reagent {args.Reagent.Name:reagent} applied on entity {entity} at {Transform(entity).Coordinates}");
+                                $"Metabolism effect {effect.GetType().Name:effect} of reagent {args.Reagent.Name:reagent} applied on entity {entity} at {Transform(entity).Coordinates:coordinates}");
                         }
 
                         effect.Effect(args);

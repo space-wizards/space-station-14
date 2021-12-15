@@ -17,6 +17,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Robust.Shared.Utility.Markup;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Window
@@ -42,7 +43,7 @@ namespace Content.Server.Window
         [DataField("knockSound")]
         private SoundSpecifier _knockSound = new SoundPathSpecifier("/Audio/Effects/glass_knock.ogg");
 
-        void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
+        void IExamine.Examine(FormattedMessage.Builder message, bool inDetailsRange)
         {
             if (!_entMan.TryGetComponent(Owner, out DamageableComponent? damageable) ||
                 !_entMan.TryGetComponent(Owner, out DestructibleComponent? destructible))

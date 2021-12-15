@@ -705,36 +705,31 @@ namespace Content.Server.Doors.Components
                     {
                         Close();
                     }
-                    return true;
                 }
+
+                // regardless of whether this action actually succeeded, it generated a do-after bar. So prevent other
+                // interactions from happening afterwards by returning true.
+                return true;
             }
 
             // for welding doors
-            if (CanWeldShut && _entMan.TryGetComponent(tool.Owner, out WelderComponent? welder) && welder.Lit)
+            if (_beingWelded || !CanWeldShut || !_entMan.TryGetComponent(tool.Owner, out WelderComponent? welder) || !welder.Lit)
             {
-                if(!_beingWelded)
-                {
-                    _beingWelded = true;
-                    if(await toolSystem.UseTool(eventArgs.Using, eventArgs.User, Owner, 3f, 3f, _weldingQuality, () => CanWeldShut))
-                    {
-                        // just in case
-                        if (!CanWeldShut)
-                        {
-                            return false;
-                        }
+                // no interaction occurred
+                return false;
+            }
+            
+            _beingWelded = true;
 
-                        _beingWelded = false;
-                        IsWeldedShut = !IsWeldedShut;
-                        return true;
-                    }
-                    _beingWelded = false;
-                }
-            }
-            else
-            {
-                _beingWelded = false;
-            }
-            return false;
+            // perform a do-after delay
+            var result = await toolSystem.UseTool(eventArgs.Using, eventArgs.User, Owner, 3f, 3f, _weldingQuality, () => CanWeldShut);
+
+            // if successful, toggle the weld-status (while also ensuring that it can still be welded shut after the delay)
+            if (result)
+                IsWeldedShut = CanWeldShut && !IsWeldedShut;
+
+            _beingWelded = false;
+            return true;
         }
 
         /// <summary>

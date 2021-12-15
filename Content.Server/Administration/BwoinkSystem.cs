@@ -1,19 +1,14 @@
 ﻿#nullable enable
 using System.Linq;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using Content.Server.Administration.Managers;
 using Content.Shared.Administration;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.Map;
-using Robust.Shared.Players;
-using Robust.Shared.Network;
 using Robust.Shared.Localization;
 using Robust.Server.Player;
 using Robust.Shared.IoC;
 using Robust.Shared.Utility;
+using Robust.Shared.Utility.Markup;
 
 namespace Content.Server.Administration
 {
@@ -31,19 +26,26 @@ namespace Content.Server.Administration
             // TODO: Sanitize text?
             // Confirm that this person is actually allowed to send a message here.
             var senderPersonalChannel = senderSession.UserId == message.ChannelId;
-            var senderAdmin = _adminManager.GetAdminData(senderSession) != null;
-            var authorized = senderPersonalChannel || senderAdmin;
+            var senderAdmin = _adminManager.GetAdminData(senderSession);
+            var authorized = senderPersonalChannel || senderAdmin != null;
             if (!authorized)
             {
                 // Unauthorized bwoink (log?)
                 return;
             }
 
-            var escapedText = FormattedMessage.EscapeText(message.Text);
+            var escapedText = Basic.EscapeText(message.Text);
 
-            var bwoinkText = senderAdmin
-                ? $"[color=red]{senderSession.Name}[/color]: {escapedText}"
-                : $"{senderSession.Name}: {escapedText}";
+
+            var bwoinkText = senderAdmin switch
+            {
+                var x when x is not null && x.Flags == AdminFlags.Adminhelp =>
+                    $"[color=purple]{senderSession.Name}[/color]: {escapedText}",
+                var x when x is not null && x.HasFlag(AdminFlags.Adminhelp) =>
+                    $"[color=red]{senderSession.Name}[/color]: {escapedText}",
+                _ => $"{senderSession.Name}: {escapedText}",
+            };
+
             var msg = new BwoinkTextMessage(message.ChannelId, senderSession.UserId, bwoinkText);
 
             LogBwoink(msg);
