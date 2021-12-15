@@ -1,6 +1,7 @@
 ﻿using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Client.Visualizer
 {
@@ -14,7 +15,9 @@ namespace Content.Client.Visualizer
         {
             base.OnChangeData(appearance);
 
-            if (!appearance.Owner.TryGetComponent(out SpriteComponent? sprite)) return;
+            var entManager = IoCManager.Resolve<IEntityManager>();
+
+            if (!entManager.TryGetComponent(appearance.Owner, out SpriteComponent? sprite)) return;
 
             if (appearance.TryGetData("StrapState", out bool strapped) && strapped)
             {

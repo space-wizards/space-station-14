@@ -58,7 +58,7 @@ namespace Content.Server.Foldable
                 return false;
 
             // First we check if the foldable object has a strap component
-            if (EntityManager.TryGetComponent(comp.OwnerUid, out StrapComponent? strap))
+            if (EntityManager.TryGetComponent(comp.Owner, out StrapComponent? strap))
             {
                 // If an entity is buckled to the object we can't pick it up or fold it
                 if (strap.BuckledEntities.Any())
@@ -80,11 +80,11 @@ namespace Content.Server.Foldable
             component.CanBeFolded = !component.Owner.IsInContainer();
 
             // You can't buckle an entity to a folded object
-            if (EntityManager.TryGetComponent(component.OwnerUid, out StrapComponent? strap))
+            if (EntityManager.TryGetComponent(component.Owner, out StrapComponent? strap))
                 strap.Enabled = !component.IsFolded;
 
             // Update visuals only if the value has changed
-            if (EntityManager.TryGetComponent(component.OwnerUid, out AppearanceComponent? appearance))
+            if (EntityManager.TryGetComponent(component.Owner, out AppearanceComponent? appearance))
                 appearance.SetData("FoldedState", folded);
         }
 

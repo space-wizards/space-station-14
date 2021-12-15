@@ -317,9 +317,9 @@ namespace Content.Server.Buckle.Components
 
             BuckledTo = null;
 
-            var entManager = Owner.EntityManager;
-            var xform = entManager.GetComponent<TransformComponent>(OwnerUid);
-            var oldBuckledXform = entManager.GetComponent<TransformComponent>(oldBuckledTo.OwnerUid);
+            var entManager = IoCManager.Resolve<IEntityManager>();
+            var xform = entManager.GetComponent<TransformComponent>(Owner);
+            var oldBuckledXform = entManager.GetComponent<TransformComponent>(oldBuckledTo.Owner);
 
             if (xform.Parent == oldBuckledXform)
             {

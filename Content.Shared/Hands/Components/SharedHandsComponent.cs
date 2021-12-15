@@ -620,7 +620,7 @@ namespace Content.Shared.Hands.Components
             if (!handContainer.CanInsert(entity)) return false;
 
             var @event = new AttemptItemPickupEvent();
-            Owner.EntityManager.EventBus.RaiseLocalEvent(entity.Uid, @event);
+            _entMan.EventBus.RaiseLocalEvent(entity, @event);
 
             if (@event.Cancelled) return false;
 

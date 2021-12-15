@@ -10,6 +10,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
@@ -24,7 +25,7 @@ namespace Content.Server.Buckle.Components
     {
         [ComponentDependency] public readonly SpriteComponent? SpriteComponent = null;
 
-        private readonly HashSet<IEntity> _buckledEntities = new();
+        private readonly HashSet<EntityUid> _buckledEntities = new();
 
         /// <summary>
         /// The angle in degrees to rotate the player by when they get strapped
@@ -85,7 +86,7 @@ namespace Content.Server.Buckle.Components
         /// <summary>
         /// The entity that is currently buckled here, synced from <see cref="BuckleComponent.BuckledTo"/>
         /// </summary>
-        public IReadOnlyCollection<IEntity> BuckledEntities => _buckledEntities;
+        public IReadOnlyCollection<EntityUid> BuckledEntities => _buckledEntities;
 
         /// <summary>
         /// The change in position to the strapped mob
@@ -158,7 +159,7 @@ namespace Content.Server.Buckle.Components
             buckle.Appearance?.SetData(StrapVisuals.RotationAngle, _rotation);
 
             // Update the visuals of the strap object
-            if (Owner.TryGetComponent<AppearanceComponent>(out var appearance))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<AppearanceComponent>(Owner, out var appearance))
             {
                 appearance.SetData("StrapState", true);
             }
@@ -179,7 +180,7 @@ namespace Content.Server.Buckle.Components
         {
             if (_buckledEntities.Remove(buckle.Owner))
             {
-                if (Owner.TryGetComponent<AppearanceComponent>(out var appearance))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<AppearanceComponent>(Owner, out var appearance))
                 {
                     appearance.SetData("StrapState", false);
                 }
@@ -205,9 +206,11 @@ namespace Content.Server.Buckle.Components
 
         private void RemoveAll()
         {
+            var entManager = IoCManager.Resolve<IEntityManager>();
+
             foreach (var entity in _buckledEntities.ToArray())
             {
-                if (entity.TryGetComponent<BuckleComponent>(out var buckle))
+                if (entManager.TryGetComponent<BuckleComponent>(entity, out var buckle))
                 {
                     buckle.TryUnbuckle(entity, true);
                 }
@@ -224,7 +227,9 @@ namespace Content.Server.Buckle.Components
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent<BuckleComponent>(out var buckle))
+            var entManager = IoCManager.Resolve<IEntityManager>();
+
+            if (!entManager.TryGetComponent<BuckleComponent>(eventArgs.User, out var buckle))
             {
                 return false;
             }
@@ -234,7 +239,9 @@ namespace Content.Server.Buckle.Components
 
         public override bool DragDropOn(DragDropEvent eventArgs)
         {
-            if (!eventArgs.Dragged.TryGetComponent(out BuckleComponent? buckleComponent)) return false;
+            var entManager = IoCManager.Resolve<IEntityManager>();
+
+            if (!entManager.TryGetComponent(eventArgs.Dragged, out BuckleComponent? buckleComponent)) return false;
             return buckleComponent.TryBuckle(eventArgs.User, Owner);
         }
     }
