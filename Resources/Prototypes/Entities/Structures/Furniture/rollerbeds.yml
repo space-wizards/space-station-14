@@ -65,7 +65,9 @@
   description: A crappy looking roller bed, used to carry patients around.
   components:
   - type: Sprite
-    state: cheap_rollerbed
+    layers:
+    - state: cheap_rollerbed
+      map: [ "enum.FoldableVisualLayers.Base" ]
   - type: Appearance
     visuals:
     - type: FoldableVisualizer
@@ -79,7 +81,9 @@
   description: A robust looking rollerbed used for emergencies.
   components:
   - type: Sprite
-    state: emergency_rollerbed
+    layers:
+    - state: emergency_rollerbed
+      map: [ "enum.FoldableVisualLayers.Base" ]
   - type: Appearance
     visuals:
       - type: FoldableVisualizer
