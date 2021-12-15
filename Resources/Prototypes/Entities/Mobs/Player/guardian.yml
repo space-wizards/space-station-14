@@ -29,6 +29,7 @@
   - type: InteractionOutline
   - type: Physics
     bodyType: KinematicController
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle
@@ -65,4 +66,3 @@
   - type: Guardian
     distanceAllowed: 10
     damageShare: 0.85
-    
