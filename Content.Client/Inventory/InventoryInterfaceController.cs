@@ -46,11 +46,11 @@ namespace Content.Client.Inventory
         /// specified slot, if any. Empty if none.</returns>
         public abstract IEnumerable<ItemSlotButton> GetItemSlotButtons(EquipmentSlotDefines.Slots slot);
 
-        public virtual void AddToSlot(EquipmentSlotDefines.Slots slot, IEntity entity)
+        public virtual void AddToSlot(EquipmentSlotDefines.Slots slot, EntityUid entity)
         {
         }
 
-        public virtual void HoverInSlot(EquipmentSlotDefines.Slots slot, IEntity entity, bool fits)
+        public virtual void HoverInSlot(EquipmentSlotDefines.Slots slot, EntityUid entity, bool fits)
         {
         }
 

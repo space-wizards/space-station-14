@@ -4,6 +4,7 @@ using Content.Shared.Construction;
 using Content.Shared.Examine;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -25,7 +26,7 @@ namespace Content.Server.Construction.Conditions
         {
             var entity = args.Examined;
 
-            if (!entity.TryGetComponent(out ToiletComponent? toilet)) return false;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out ToiletComponent? toilet)) return false;
             if (!toilet.LidOpen) return false;
 
             args.PushMarkup(Loc.GetString("construction-examine-condition-toilet-lid-closed") + "\n");

@@ -3,6 +3,8 @@ using Content.Client.Disposal.Components;
 using Content.Client.Disposal.UI;
 using Content.Shared.Disposal;
 using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Client.Disposal.Systems
 {
@@ -38,7 +40,7 @@ namespace Content.Client.Disposal.Systems
         {
             if (component.Deleted) return true;
 
-            if (!component.Owner.TryGetComponent(out ClientUserInterfaceComponent? userInterface)) return true;
+            if (!EntityManager.TryGetComponent(component.Owner, out ClientUserInterfaceComponent? userInterface)) return true;
 
             var state = component.UiState;
             if (state == null) return true;

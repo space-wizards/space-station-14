@@ -12,7 +12,9 @@
         amount: 2
       - id: FoodSnackChocolate
       - id: FlashlightLantern
-        amount: 2
+        amount: 1
+      - id: FlashlightLantern
+        prob: 0.5
       - id: HarmonicaInstrument
         prob: 0.15
         orGroup: HarmonicaOrChocolate
@@ -32,6 +34,8 @@
       - id: Wirecutter
       - id: CableApcStack
       - id: CableMVStack
+      - id: trayScanner
+        prob: 0.9
       - id: ClothingHandsGlovesColorYellow
         prob: 0.05
         orGroup: GlovesOrWires

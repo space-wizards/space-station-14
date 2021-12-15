@@ -2,13 +2,13 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.UserInterface;
 using Content.Shared.Body.Components;
-using Content.Shared.Body.Part;
 using Content.Shared.Body.Surgery;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -19,6 +19,8 @@ namespace Content.Server.Body.Components
     [ComponentReference(typeof(SharedMechanismComponent))]
     public class MechanismComponent : SharedMechanismComponent, IAfterInteract
     {
+        [Dependency] private readonly IEntityManager _entities = default!;
+
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(SurgeryUIKey.Key);
 
         protected override void Initialize()
@@ -43,17 +45,17 @@ namespace Content.Server.Body.Components
             PerformerCache = null;
             BodyCache = null;
 
-            if (eventArgs.Target.TryGetComponent(out SharedBodyComponent? body))
+            if (_entities.TryGetComponent(eventArgs.Target.Value, out SharedBodyComponent? body))
             {
                 SendBodyPartListToUser(eventArgs, body);
             }
-            else if (eventArgs.Target.TryGetComponent<SharedBodyPartComponent>(out var part))
+            else if (_entities.TryGetComponent<SharedBodyPartComponent?>(eventArgs.Target.Value, out var part))
             {
                 DebugTools.AssertNotNull(part);
 
                 if (!part.TryAddMechanism(this))
                 {
-                    eventArgs.Target.PopupMessage(eventArgs.User, Loc.GetString("mechanism-component-cannot-fit-message"));
+                    eventArgs.Target.Value.PopupMessage(eventArgs.User, Loc.GetString("mechanism-component-cannot-fit-message"));
                 }
             }
 
@@ -76,7 +78,7 @@ namespace Content.Server.Body.Components
             }
 
             if (OptionsCache.Count > 0 &&
-                eventArgs.User.TryGetComponent(out ActorComponent? actor))
+                _entities.TryGetComponent(eventArgs.User, out ActorComponent? actor))
             {
                 OpenSurgeryUI(actor.PlayerSession);
                 UpdateSurgeryUIBodyPartRequest(actor.PlayerSession, toSend);
@@ -86,7 +88,7 @@ namespace Content.Server.Body.Components
             else // If surgery cannot be performed, show message saying so.
             {
                 eventArgs.Target?.PopupMessage(eventArgs.User,
-                    Loc.GetString("mechanism-component-no-way-to-install-message", ("partName", Owner.Name)));
+                    Loc.GetString("mechanism-component-no-way-to-install-message", ("partName", Name: _entities.GetComponent<MetaDataComponent>(Owner).EntityName)));
             }
         }
 
@@ -96,7 +98,7 @@ namespace Content.Server.Body.Components
         private void HandleReceiveBodyPart(int key)
         {
             if (PerformerCache == null ||
-                !PerformerCache.TryGetComponent(out ActorComponent? actor))
+                !_entities.TryGetComponent(PerformerCache.Value, out ActorComponent? actor))
             {
                 return;
             }
@@ -111,8 +113,8 @@ namespace Content.Server.Body.Components
             // TODO: sanity checks to see whether user is in range, user is still able-bodied, target is still the same, etc etc
             if (!OptionsCache.TryGetValue(key, out var targetObject))
             {
-                BodyCache.Owner.PopupMessage(PerformerCache,
-                    Loc.GetString("mechanism-component-no-useful-way-to-use-message",("partName", Owner.Name)));
+                BodyCache.Owner.PopupMessage(PerformerCache.Value,
+                    Loc.GetString("mechanism-component-no-useful-way-to-use-message",("partName", Name: _entities.GetComponent<MetaDataComponent>(Owner).EntityName)));
                 return;
             }
 
@@ -121,7 +123,7 @@ namespace Content.Server.Body.Components
                 ? Loc.GetString("mechanism-component-jam-inside-message",("ownerName", Owner),("them", PerformerCache))
                 : Loc.GetString("mechanism-component-cannot-fit-message");
 
-            BodyCache.Owner.PopupMessage(PerformerCache, message);
+            BodyCache.Owner.PopupMessage(PerformerCache.Value, message);
 
             // TODO: {1:theName}
         }

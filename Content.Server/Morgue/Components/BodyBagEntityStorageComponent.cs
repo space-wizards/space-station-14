@@ -1,20 +1,9 @@
-using System.Threading.Tasks;
-using Content.Server.Hands.Components;
-using Content.Server.Items;
-using Content.Server.Paper;
 using Content.Server.Storage.Components;
 using Content.Shared.Body.Components;
-using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Content.Shared.Morgue;
-using Content.Shared.Popups;
 using Content.Shared.Standing;
-using Robust.Server.GameObjects;
-using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
-using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Morgue.Components
 {
@@ -26,9 +15,9 @@ namespace Content.Server.Morgue.Components
     {
         public override string Name => "BodyBagEntityStorage";
 
-        protected override bool AddToContents(IEntity entity)
+        protected override bool AddToContents(EntityUid entity)
         {
-            if (entity.HasComponent<SharedBodyComponent>() && !EntitySystem.Get<StandingStateSystem>().IsDown(entity.Uid)) return false;
+            if (IoCManager.Resolve<IEntityManager>().HasComponent<SharedBodyComponent>(entity) && !EntitySystem.Get<StandingStateSystem>().IsDown(entity)) return false;
             return base.AddToContents(entity);
         }
     }

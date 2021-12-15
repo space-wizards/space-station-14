@@ -1,6 +1,5 @@
 using Content.Server.Ghost;
 using Content.Shared.Audio;
-using Content.Shared.Body;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Random.Helpers;
@@ -8,6 +7,7 @@ using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -19,6 +19,8 @@ namespace Content.Server.Body.Components
     [ComponentReference(typeof(IGhostOnMove))]
     public class BodyComponent : SharedBodyComponent, IGhostOnMove
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         private Container _partContainer = default!;
 
         [DataField("gibSound")] private SoundSpecifier _gibSound = new SoundCollectionSpecifier("gib");
@@ -57,9 +59,9 @@ namespace Content.Server.Body.Components
                 {
                     // Using MapPosition instead of Coordinates here prevents
                     // a crash within the character preview menu in the lobby
-                    var entity = Owner.EntityManager.SpawnEntity(preset.PartIDs[slot.Id], Owner.Transform.MapPosition);
+                    var entity = _entMan.SpawnEntity(preset.PartIDs[slot.Id], _entMan.GetComponent<TransformComponent>(Owner).MapPosition);
 
-                    if (!entity.TryGetComponent(out SharedBodyPartComponent? part))
+                    if (!_entMan.TryGetComponent(entity, out SharedBodyPartComponent? part))
                     {
                         Logger.Error($"Entity {slot.Id} does not have a {nameof(SharedBodyPartComponent)} component.");
                         continue;
@@ -87,22 +89,22 @@ namespace Content.Server.Body.Components
         {
             base.Gib(gibParts);
 
-            SoundSystem.Play(Filter.Pvs(Owner), _gibSound.GetSound(), Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.025f));
+            SoundSystem.Play(Filter.Pvs(Owner), _gibSound.GetSound(), _entMan.GetComponent<TransformComponent>(Owner).Coordinates, AudioHelpers.WithVariation(0.025f));
 
-            if (Owner.TryGetComponent(out ContainerManagerComponent? container))
+            if (_entMan.TryGetComponent(Owner, out ContainerManagerComponent? container))
             {
                 foreach (var cont in container.GetAllContainers())
                 {
                     foreach (var ent in cont.ContainedEntities)
                     {
                         cont.ForceRemove(ent);
-                        ent.Transform.Coordinates = Owner.Transform.Coordinates;
+                        _entMan.GetComponent<TransformComponent>(ent).Coordinates = _entMan.GetComponent<TransformComponent>(Owner).Coordinates;
                         ent.RandomOffset(0.25f);
                     }
                 }
             }
 
-            Owner.QueueDelete();
+            _entMan.QueueDeleteEntity(Owner);
         }
     }
 }

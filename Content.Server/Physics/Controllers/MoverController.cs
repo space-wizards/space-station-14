@@ -10,7 +10,6 @@ using Content.Shared.Inventory;
 using Content.Shared.Maps;
 using Content.Shared.Movement;
 using Content.Shared.Movement.Components;
-using Content.Shared.Shuttles;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Tag;
 using Robust.Shared.Audio;
@@ -53,7 +52,7 @@ namespace Content.Server.Physics.Controllers
 
             foreach (var (mobMover, mover, physics) in EntityManager.EntityQuery<IMobMoverComponent, IMoverComponent, PhysicsComponent>())
             {
-                _excludedMobs.Add(mover.Owner.Uid);
+                _excludedMobs.Add(mover.Owner);
                 HandleMobMovement(mover, physics, mobMover);
             }
 
@@ -61,7 +60,7 @@ namespace Content.Server.Physics.Controllers
 
             foreach (var (mover, physics) in EntityManager.EntityQuery<IMoverComponent, PhysicsComponent>(true))
             {
-                if (_excludedMobs.Contains(mover.Owner.Uid)) continue;
+                if (_excludedMobs.Contains(mover.Owner)) continue;
 
                 HandleKinematicMovement(mover, physics);
             }
@@ -75,7 +74,7 @@ namespace Content.Server.Physics.Controllers
             foreach (var (pilot, mover, xform) in EntityManager.EntityQuery<PilotComponent, SharedPlayerInputMoverComponent, TransformComponent>())
             {
                 if (pilot.Console == null) continue;
-                _excludedMobs.Add(mover.Owner.Uid);
+                _excludedMobs.Add(mover.Owner);
 
                 var gridId = xform.GridID;
 
@@ -108,7 +107,7 @@ namespace Content.Server.Physics.Controllers
             // then do the movement input once for it.
             foreach (var (shuttle, pilots) in _shuttlePilots)
             {
-                if (shuttle.Paused || !EntityManager.TryGetComponent(shuttle.OwnerUid, out PhysicsComponent? body)) continue;
+                if (shuttle.Paused || !EntityManager.TryGetComponent((shuttle).Owner, out PhysicsComponent? body)) continue;
 
                 // Collate movement linear and angular inputs together
                 var linearInput = Vector2.Zero;
@@ -131,7 +130,7 @@ namespace Content.Server.Physics.Controllers
 
                             if (sprint.Equals(Vector2.Zero)) continue;
 
-                            var offsetRotation = EntityManager.GetComponent<TransformComponent>(console.OwnerUid).LocalRotation;
+                            var offsetRotation = EntityManager.GetComponent<TransformComponent>((console).Owner).LocalRotation;
 
                             linearInput += offsetRotation.RotateVec(new Vector2(0f, sprint.Y));
                             angularInput += sprint.X;
@@ -153,7 +152,7 @@ namespace Content.Server.Physics.Controllers
 
                             if (sprint.Equals(Vector2.Zero)) continue;
 
-                            var offsetRotation = EntityManager.GetComponent<TransformComponent>(console.OwnerUid).LocalRotation;
+                            var offsetRotation = EntityManager.GetComponent<TransformComponent>((console).Owner).LocalRotation;
                             sprint = offsetRotation.RotateVec(sprint);
 
                             linearInput += sprint;
@@ -180,7 +179,7 @@ namespace Content.Server.Physics.Controllers
                     var angle = linearInput.ToWorldAngle();
                     var linearDir = angle.GetDir();
                     var dockFlag = linearDir.AsFlag();
-                    var shuttleNorth = EntityManager.GetComponent<TransformComponent>(body.OwnerUid).WorldRotation.ToWorldVec();
+                    var shuttleNorth = EntityManager.GetComponent<TransformComponent>((body).Owner).WorldRotation.ToWorldVec();
 
                     // Won't just do cardinal directions.
                     foreach (DirectionFlag dir in Enum.GetValues(typeof(DirectionFlag)))
@@ -271,7 +270,7 @@ namespace Content.Server.Physics.Controllers
         {
             if (!mover.Owner.HasTag("FootstepSound")) return;
 
-            var transform = mover.Owner.Transform;
+            var transform = EntityManager.GetComponent<TransformComponent>(mover.Owner);
             var coordinates = transform.Coordinates;
             var gridId = coordinates.GetGridId(EntityManager);
             var distanceNeeded = mover.Sprinting ? StepSoundMoveDistanceRunning : StepSoundMoveDistanceWalking;
@@ -303,9 +302,9 @@ namespace Content.Server.Physics.Controllers
 
             mobMover.StepSoundDistance -= distanceNeeded;
 
-            if (mover.Owner.TryGetComponent<InventoryComponent>(out var inventory)
+            if (EntityManager.TryGetComponent<InventoryComponent?>(mover.Owner, out var inventory)
                 && inventory.TryGetSlotItem<ItemComponent>(EquipmentSlotDefines.Slots.SHOES, out var item)
-                && item.Owner.TryGetComponent<FootstepModifierComponent>(out var modifier))
+                && EntityManager.TryGetComponent<FootstepModifierComponent?>(item.Owner, out var modifier))
             {
                 modifier.PlayFootstep();
             }
@@ -315,7 +314,7 @@ namespace Content.Server.Physics.Controllers
             }
         }
 
-        private void PlayFootstepSound(IEntity mover, GridId gridId, EntityCoordinates coordinates, bool sprinting)
+        private void PlayFootstepSound(EntityUid mover, GridId gridId, EntityCoordinates coordinates, bool sprinting)
         {
             var grid = _mapManager.GetGrid(gridId);
             var tile = grid.GetTileRef(coordinates);
@@ -352,7 +351,7 @@ namespace Content.Server.Physics.Controllers
             SoundSystem.Play(
                 Filter.Pvs(coordinates),
                 soundToPlay,
-                mover.Transform.Coordinates,
+                EntityManager.GetComponent<TransformComponent>(mover).Coordinates,
                 sprinting ? AudioParams.Default.WithVolume(0.75f) : null);
         }
     }

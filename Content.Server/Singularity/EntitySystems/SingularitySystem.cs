@@ -120,7 +120,7 @@ namespace Content.Server.Singularity.EntitySystems
 
         private bool CanDestroy(SharedSingularityComponent component, EntityUid entity)
         {
-            return entity != component.OwnerUid &&
+            return entity != component.Owner &&
                    !EntityManager.HasComponent<IMapGridComponent>(entity) &&
                    !EntityManager.HasComponent<GhostComponent>(entity) &&
                    (component.Level > 4 ||
@@ -134,7 +134,7 @@ namespace Content.Server.Singularity.EntitySystems
             if (!CanDestroy(component, entity)) return;
 
             // Singularity priority management / etc.
-            if (EntityManager.TryGetComponent<ServerSingularityComponent>(entity, out var otherSingulo))
+            if (EntityManager.TryGetComponent<ServerSingularityComponent?>(entity, out var otherSingulo))
             {
                 // MERGE
                 if (!otherSingulo.BeingDeletedByAnotherSingularity)
@@ -145,7 +145,7 @@ namespace Content.Server.Singularity.EntitySystems
                 otherSingulo.BeingDeletedByAnotherSingularity = true;
             }
 
-            if (EntityManager.TryGetComponent<SinguloFoodComponent>(entity, out var singuloFood))
+            if (EntityManager.TryGetComponent<SinguloFoodComponent?>(entity, out var singuloFood))
                 component.Energy += singuloFood.Energy;
             else
                 component.Energy++;
@@ -167,12 +167,12 @@ namespace Content.Server.Singularity.EntitySystems
             }
         }
 
-        private bool CanPull(IEntity entity)
+        private bool CanPull(EntityUid entity)
         {
-            return !(entity.HasComponent<GhostComponent>() ||
-                   entity.HasComponent<IMapGridComponent>() ||
-                   entity.HasComponent<MapComponent>() ||
-                   entity.HasComponent<ServerSingularityComponent>() ||
+            return !(EntityManager.HasComponent<GhostComponent>(entity) ||
+                   EntityManager.HasComponent<IMapGridComponent>(entity) ||
+                   EntityManager.HasComponent<MapComponent>(entity) ||
+                   EntityManager.HasComponent<ServerSingularityComponent>(entity) ||
                    entity.IsInContainer());
         }
 
@@ -190,12 +190,12 @@ namespace Content.Server.Singularity.EntitySystems
             {
                 // I tried having it so level 6 can de-anchor. BAD IDEA, MASSIVE LAG.
                 if (entity == component.Owner ||
-                    !entity.TryGetComponent<PhysicsComponent>(out var collidableComponent) ||
+                    !EntityManager.TryGetComponent<PhysicsComponent?>(entity, out var collidableComponent) ||
                     collidableComponent.BodyType == BodyType.Static) continue;
 
                 if (!CanPull(entity)) continue;
 
-                var vec = worldPos - entity.Transform.WorldPosition;
+                var vec = worldPos - EntityManager.GetComponent<TransformComponent>(entity).WorldPosition;
 
                 if (vec.Length < destroyRange - 0.01f) continue;
 

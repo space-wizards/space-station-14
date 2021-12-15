@@ -2,6 +2,7 @@
 using Content.Shared.Body.Events;
 using Content.Shared.Body.Part;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -9,12 +10,14 @@ namespace Content.Shared.Body.Components
 {
     public abstract class SharedMechanismComponent : Component, ISerializationHooks
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "Mechanism";
 
         protected readonly Dictionary<int, object> OptionsCache = new();
         protected SharedBodyComponent? BodyCache;
         protected int IdHash;
-        protected IEntity? PerformerCache;
+        protected EntityUid? PerformerCache;
         private SharedBodyPartComponent? _part;
 
         public SharedBodyComponent? Body => Part?.Body;
@@ -36,11 +39,11 @@ namespace Content.Shared.Body.Components
                 {
                     if (old.Body == null)
                     {
-                        Owner.EntityManager.EventBus.RaiseLocalEvent(OwnerUid, new RemovedFromPartEvent(old));
+                        _entMan.EventBus.RaiseLocalEvent(Owner, new RemovedFromPartEvent(old));
                     }
                     else
                     {
-                        Owner.EntityManager.EventBus.RaiseLocalEvent(OwnerUid, new RemovedFromPartInBodyEvent(old.Body, old));
+                        _entMan.EventBus.RaiseLocalEvent(Owner, new RemovedFromPartInBodyEvent(old.Body, old));
                     }
                 }
 
@@ -48,11 +51,11 @@ namespace Content.Shared.Body.Components
                 {
                     if (value.Body == null)
                     {
-                        Owner.EntityManager.EventBus.RaiseLocalEvent(OwnerUid, new AddedToPartEvent(value));
+                        _entMan.EventBus.RaiseLocalEvent(Owner, new AddedToPartEvent(value));
                     }
                     else
                     {
-                        Owner.EntityManager.EventBus.RaiseLocalEvent(OwnerUid, new AddedToPartInBodyEvent(value.Body, value));
+                        _entMan.EventBus.RaiseLocalEvent(Owner, new AddedToPartInBodyEvent(value.Body, value));
                     }
                 }
             }

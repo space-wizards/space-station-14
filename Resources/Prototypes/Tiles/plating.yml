@@ -1,13 +1,15 @@
 ﻿- type: tile
   name: plating
-  display_name: Plating
+  display_name: plating
   texture: plating
   base_turfs:
-  - underplating
+  - lattice
   is_subfloor: true
   footstep_sounds:
     collection: footstep_plating
   friction: 0.5
+  thermalConductivity: 0.04
+  heatCapacity: 10000
 
 - type: tile
   name: lattice
@@ -20,10 +22,13 @@
     collection: footstep_plating
   friction: 0.5
   is_space: true
+  thermalConductivity: 0.04
+  heatCapacity: 10000
 
+# TODO kill underplating and all its usages since it is deprecated
 - type: tile
   name: underplating
-  display_name: Underplating
+  display_name: underplating
   texture: underplating
   base_turfs:
   - lattice

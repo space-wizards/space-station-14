@@ -305,10 +305,10 @@ namespace Content.Server.Decals
         private HashSet<EntityUid> GetSessionViewers(IPlayerSession session)
         {
             var viewers = new HashSet<EntityUid>();
-            if (session.Status != SessionStatus.InGame || session.AttachedEntityUid is null)
+            if (session.Status != SessionStatus.InGame || session.AttachedEntity is null)
                 return viewers;
 
-            viewers.Add(session.AttachedEntityUid.Value);
+            viewers.Add(session.AttachedEntity.Value);
 
             foreach (var uid in session.ViewSubscriptions)
             {

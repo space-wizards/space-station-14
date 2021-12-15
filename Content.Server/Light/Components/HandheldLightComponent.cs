@@ -12,17 +12,17 @@ using Content.Shared.Light.Component;
 using Content.Shared.Popups;
 using Content.Shared.Rounding;
 using Content.Shared.Sound;
-using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Player;
-using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
+using Robust.Shared.Utility.Markup;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Light.Components
@@ -35,6 +35,8 @@ namespace Content.Server.Light.Components
     internal sealed class HandheldLightComponent : SharedHandheldLightComponent, IUse, IExamine, IInteractUsing
 #pragma warning restore 618
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         [ViewVariables(VVAccess.ReadWrite)] [DataField("wattage")] public float Wattage { get; set; } = 3f;
         [ViewVariables] private PowerCellSlotComponent _cellSlot = default!;
         private PowerCellComponent? Cell => _cellSlot.Cell;
@@ -71,18 +73,18 @@ namespace Content.Server.Light.Components
         protected override void OnRemove()
         {
             base.OnRemove();
-            Owner.EntityManager.EventBus.QueueEvent(EventSource.Local, new DeactivateHandheldLightMessage(this));
+            _entMan.EventBus.QueueEvent(EventSource.Local, new DeactivateHandheldLightMessage(this));
         }
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User.Uid)) return false;
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User)) return false;
             if (!_cellSlot.InsertCell(eventArgs.Using)) return false;
             Dirty();
             return true;
         }
 
-        void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
+        void IExamine.Examine(FormattedMessage.Builder message, bool inDetailsRange)
         {
             if (Activated)
             {
@@ -103,9 +105,9 @@ namespace Content.Server.Light.Components
         ///     Illuminates the light if it is not active, extinguishes it if it is active.
         /// </summary>
         /// <returns>True if the light's status was toggled, false otherwise.</returns>
-        public bool ToggleStatus(IEntity user)
+        public bool ToggleStatus(EntityUid user)
         {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanUse(user.Uid)) return false;
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanUse(user)) return false;
             return Activated ? TurnOff() : TurnOn(user);
         }
 
@@ -119,7 +121,7 @@ namespace Content.Server.Light.Components
             SetState(false);
             Activated = false;
             UpdateLightAction();
-            Owner.EntityManager.EventBus.QueueEvent(EventSource.Local, new DeactivateHandheldLightMessage(this));
+            _entMan.EventBus.QueueEvent(EventSource.Local, new DeactivateHandheldLightMessage(this));
 
             if (makeNoise)
             {
@@ -129,7 +131,7 @@ namespace Content.Server.Light.Components
             return true;
         }
 
-        public bool TurnOn(IEntity user)
+        public bool TurnOn(EntityUid user)
         {
             if (Activated)
             {
@@ -158,7 +160,7 @@ namespace Content.Server.Light.Components
             Activated = true;
             UpdateLightAction();
             SetState(true);
-            Owner.EntityManager.EventBus.QueueEvent(EventSource.Local, new ActivateHandheldLightMessage(this));
+            _entMan.EventBus.QueueEvent(EventSource.Local, new ActivateHandheldLightMessage(this));
 
             SoundSystem.Play(Filter.Pvs(Owner), TurnOnSound.GetSound(), Owner);
             return true;
@@ -166,22 +168,22 @@ namespace Content.Server.Light.Components
 
         private void SetState(bool on)
         {
-            if (Owner.TryGetComponent(out SpriteComponent? sprite))
+            if (_entMan.TryGetComponent(Owner, out SpriteComponent? sprite))
             {
                 sprite.LayerSetVisible(1, on);
             }
 
-            if (Owner.TryGetComponent(out PointLightComponent? light))
+            if (_entMan.TryGetComponent(Owner, out PointLightComponent? light))
             {
                 light.Enabled = on;
             }
 
-            if (Owner.TryGetComponent(out ClothingComponent? clothing))
+            if (_entMan.TryGetComponent(Owner, out ClothingComponent? clothing))
             {
                 clothing.ClothingEquippedPrefix = Loc.GetString(on ? "on" : "off");
             }
 
-            if (Owner.TryGetComponent(out ItemComponent? item))
+            if (_entMan.TryGetComponent(Owner, out ItemComponent? item))
             {
                 item.EquippedPrefix = Loc.GetString(on ? "on" : "off");
             }
@@ -200,7 +202,7 @@ namespace Content.Server.Light.Components
                 return;
             }
 
-            var appearanceComponent = Owner.GetComponent<AppearanceComponent>();
+            var appearanceComponent = _entMan.GetComponent<AppearanceComponent>(Owner);
 
             if (Cell.MaxCharge - Cell.CurrentCharge < Cell.MaxCharge * 0.70)
             {
@@ -253,7 +255,7 @@ namespace Content.Server.Light.Components
     {
         public bool DoToggleAction(ToggleItemActionEventArgs args)
         {
-            if (!args.Item.TryGetComponent<HandheldLightComponent>(out var lightComponent)) return false;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<HandheldLightComponent?>(args.Item, out var lightComponent)) return false;
             if (lightComponent.Activated == args.ToggledOn) return false;
             return lightComponent.ToggleStatus(args.Performer);
         }

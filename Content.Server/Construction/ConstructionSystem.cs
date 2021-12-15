@@ -51,13 +51,13 @@ namespace Content.Server.Construction
         {
             if (GetCurrentGraph(uid, construction) is not {} graph)
             {
-                _sawmill.Warning($"Prototype {construction.Owner.Prototype?.ID}'s construction component has an invalid graph specified.");
+                _sawmill.Warning($"Prototype {EntityManager.GetComponent<MetaDataComponent>(construction.Owner).EntityPrototype?.ID}'s construction component has an invalid graph specified.");
                 return;
             }
 
             if (GetNodeFromGraph(graph, construction.Node) is not {} node)
             {
-                _sawmill.Warning($"Prototype {construction.Owner.Prototype?.ID}'s construction component has an invalid node specified.");
+                _sawmill.Warning($"Prototype {EntityManager.GetComponent<MetaDataComponent>(construction.Owner).EntityPrototype?.ID}'s construction component has an invalid node specified.");
                 return;
             }
 
@@ -66,7 +66,7 @@ namespace Content.Server.Construction
             {
                 if (GetEdgeFromNode(node, edgeIndex) is not {} currentEdge)
                 {
-                    _sawmill.Warning($"Prototype {construction.Owner.Prototype?.ID}'s construction component has an invalid edge index specified.");
+                    _sawmill.Warning($"Prototype {EntityManager.GetComponent<MetaDataComponent>(construction.Owner).EntityPrototype?.ID}'s construction component has an invalid edge index specified.");
                     return;
                 }
 
@@ -77,7 +77,7 @@ namespace Content.Server.Construction
             {
                 if (GetNodeFromGraph(graph, targetNodeId) is not { } targetNode)
                 {
-                    _sawmill.Warning($"Prototype {construction.Owner.Prototype?.ID}'s construction component has an invalid target node specified.");
+                    _sawmill.Warning($"Prototype {EntityManager.GetComponent<MetaDataComponent>(construction.Owner).EntityPrototype?.ID}'s construction component has an invalid target node specified.");
                     return;
                 }
 

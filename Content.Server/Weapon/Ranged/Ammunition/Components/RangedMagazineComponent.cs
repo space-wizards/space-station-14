@@ -10,9 +10,11 @@ using Content.Shared.Popups;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
+using Robust.Shared.Utility.Markup;
 
 namespace Content.Server.Weapon.Ranged.Ammunition.Components
 {
@@ -21,9 +23,11 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
     public class RangedMagazineComponent : Component, IMapInit, IInteractUsing, IUse, IExamine
 #pragma warning restore 618
     {
+        [Dependency] private readonly IEntityManager _entities = default!;
+
         public override string Name => "RangedMagazine";
 
-        private readonly Stack<IEntity> _spawnedAmmo = new();
+        private readonly Stack<EntityUid> _spawnedAmmo = new();
         private Container _ammoContainer = default!;
 
         public int ShotsLeft => _spawnedAmmo.Count + _unspawnedCount;
@@ -76,7 +80,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
                 }
             }
 
-            if (Owner.TryGetComponent(out AppearanceComponent? appearanceComponent))
+            if (_entities.TryGetComponent(Owner, out AppearanceComponent? appearanceComponent))
             {
                 _appearanceComponent = appearanceComponent;
             }
@@ -90,9 +94,9 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             _appearanceComponent?.SetData(AmmoVisuals.AmmoMax, Capacity);
         }
 
-        public bool TryInsertAmmo(IEntity user, IEntity ammo)
+        public bool TryInsertAmmo(EntityUid user, EntityUid ammo)
         {
-            if (!ammo.TryGetComponent(out AmmoComponent? ammoComponent))
+            if (!_entities.TryGetComponent(ammo, out AmmoComponent? ammoComponent))
             {
                 return false;
             }
@@ -115,9 +119,9 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             return true;
         }
 
-        public IEntity? TakeAmmo()
+        public EntityUid? TakeAmmo()
         {
-            IEntity? ammo = null;
+            EntityUid ammo = default;
             // If anything's spawned use that first, otherwise use the fill prototype as a fallback (if we have spawn count left)
             if (_spawnedAmmo.TryPop(out var entity))
             {
@@ -127,7 +131,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             else if (_unspawnedCount > 0)
             {
                 _unspawnedCount--;
-                ammo = Owner.EntityManager.SpawnEntity(_fillPrototype, Owner.Transform.Coordinates);
+                ammo = _entities.SpawnEntity(_fillPrototype, _entities.GetComponent<TransformComponent>(Owner).Coordinates);
             }
 
             UpdateAppearance();
@@ -141,21 +145,20 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out HandsComponent? handsComponent))
+            if (!_entities.TryGetComponent(eventArgs.User, out HandsComponent? handsComponent))
             {
                 return false;
             }
 
-            var ammo = TakeAmmo();
-            if (ammo == null)
+            if (TakeAmmo() is not {Valid: true} ammo)
             {
                 return false;
             }
 
-            var itemComponent = ammo.GetComponent<ItemComponent>();
+            var itemComponent = _entities.GetComponent<ItemComponent>(ammo);
             if (!handsComponent.CanPutInHand(itemComponent))
             {
-                ammo.Transform.Coordinates = eventArgs.User.Transform.Coordinates;
+                _entities.GetComponent<TransformComponent>(ammo).Coordinates = _entities.GetComponent<TransformComponent>(eventArgs.User).Coordinates;
                 ServerRangedBarrelComponent.EjectCasing(ammo);
             }
             else
@@ -166,7 +169,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             return true;
         }
 
-        public void Examine(FormattedMessage message, bool inDetailsRange)
+        public void Examine(FormattedMessage.Builder message, bool inDetailsRange)
         {
             var text = Loc.GetString("ranged-magazine-component-on-examine", ("magazineType", MagazineType),("caliber", Caliber));
             message.AddMarkup(text);
