@@ -55098,14 +55098,6 @@ entities:
       storagebase: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 5731
-  type: CarvingHello
-  components:
-  - pos: 89.49635,-12.434606
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 5732
   type: Bed
   components:
@@ -55460,14 +55452,6 @@ entities:
   type: AccordionInstrument
   components:
   - pos: 49.5,-10.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 5773
-  type: CarvingHelpMe
-  components:
-  - pos: 49.5,-15.5
     parent: 0
     type: Transform
   - canCollide: False
@@ -64927,14 +64911,6 @@ entities:
   - pos: 43.5,-2.5
     parent: 0
     type: Transform
-- uid: 6816
-  type: CarvingThankYou
-  components:
-  - pos: 76.450966,-13.440164
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 6817
   type: WindowDirectional
   components:
@@ -72046,14 +72022,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 7442
-  type: CarvingVeryGood
-  components:
-  - pos: 11.510399,-10.47184
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 7443
   type: PoweredSmallLight
   components:
@@ -72068,14 +72036,6 @@ entities:
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
-- uid: 7444
-  type: CarvingImSorry
-  components:
-  - pos: 74.47542,-5.540069
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 7445
   type: CableHV
   components:
