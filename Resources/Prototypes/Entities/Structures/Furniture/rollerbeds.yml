@@ -61,8 +61,9 @@
 
 - type: entity
   id: CheapRollerBed
+  name: rollerbed
   parent: RollerBed
-  description: A crappy looking roller bed, used to carry patients around.
+  description: A run-down rollerbed. Used to carry patients around.
   components:
   - type: Sprite
     layers:
@@ -77,6 +78,7 @@
 
 - type: entity
   id: EmergencyRollerBed
+  name: rollerbed
   parent: RollerBed
   description: A robust looking rollerbed used for emergencies.
   components:
@@ -86,7 +88,7 @@
       map: [ "enum.FoldableVisualLayers.Base" ]
   - type: Appearance
     visuals:
-      - type: FoldableVisualizer
-        key: emergency_rollerbed
-      - type: RollerbedVisualizer
-        key: emergency_rollerbed
+    - type: FoldableVisualizer
+      key: emergency_rollerbed
+    - type: RollerbedVisualizer
+      key: emergency_rollerbed

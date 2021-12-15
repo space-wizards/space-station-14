@@ -133,7 +133,7 @@ namespace Content.Server.Buckle.Components
                     break;
             }
 
-            ownTransform.LocalPosition = Vector2.Zero + BuckleOffset;
+            ownTransform.LocalPosition = Vector2.Zero + strap.BuckleOffset;
         }
 
         public bool CanBuckle(EntityUid user, EntityUid to, [NotNullWhen(true)] out StrapComponent? strap)
