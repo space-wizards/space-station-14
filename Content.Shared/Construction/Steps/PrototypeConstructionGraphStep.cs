@@ -2,6 +2,7 @@
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Utility.Markup;
 
 namespace Content.Shared.Construction.Steps
 {
@@ -17,7 +18,8 @@ namespace Content.Shared.Construction.Steps
 
         public override void DoExamine(ExaminedEvent examinedEvent)
         {
-            examinedEvent.Message.AddMarkup(string.IsNullOrEmpty(Name)
+            var nb = new Basic();
+            nb.AddMarkup(string.IsNullOrEmpty(Name)
                 ? Loc.GetString(
                     "construction-insert-prototype-no-name",
                     ("prototypeName", Prototype) // Terrible.
@@ -26,6 +28,8 @@ namespace Content.Shared.Construction.Steps
                     "construction-insert-prototype",
                     ("entityName", Name)
                 ));
+
+            examinedEvent.Message.AddMessage(nb.Render());
         }
     }
 }

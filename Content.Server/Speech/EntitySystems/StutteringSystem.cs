@@ -28,13 +28,13 @@ namespace Content.Server.Speech.EntitySystems
             SubscribeLocalEvent<StutteringAccentComponent, AccentGetEvent>(OnAccent);
         }
 
-        public override void DoStutter(EntityUid uid, TimeSpan time, StatusEffectsComponent? status = null, SharedAlertsComponent? alerts = null)
+        public override void DoStutter(EntityUid uid, TimeSpan time, bool refresh, StatusEffectsComponent? status = null, SharedAlertsComponent? alerts = null)
         {
             if (!Resolve(uid, ref status, false))
                 return;
 
             if (!_statusEffectsSystem.HasStatusEffect(uid, StutterKey, status))
-                _statusEffectsSystem.TryAddStatusEffect<StutteringAccentComponent>(uid, StutterKey, time, status, alerts);
+                _statusEffectsSystem.TryAddStatusEffect<StutteringAccentComponent>(uid, StutterKey, time, refresh, status, alerts);
             else
                 _statusEffectsSystem.TryAddTime(uid, StutterKey, time, status);
         }

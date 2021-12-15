@@ -1,6 +1,7 @@
 using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Operators.Inventory
 {
@@ -9,10 +10,10 @@ namespace Content.Server.AI.Operators.Inventory
     /// </summary>
     public class UseItemInInventoryOperator : AiOperator
     {
-        private readonly IEntity _owner;
-        private readonly IEntity _target;
+        private readonly EntityUid _owner;
+        private readonly EntityUid _target;
 
-        public UseItemInInventoryOperator(IEntity owner, IEntity target)
+        public UseItemInInventoryOperator(EntityUid owner, EntityUid target)
         {
             _owner = owner;
             _target = target;
@@ -20,13 +21,15 @@ namespace Content.Server.AI.Operators.Inventory
 
         public override Outcome Execute(float frameTime)
         {
+            var entMan = IoCManager.Resolve<IEntityManager>();
+
             // TODO: Also have this check storage a la backpack etc.
-            if (!_owner.TryGetComponent(out HandsComponent? handsComponent))
+            if (!entMan.TryGetComponent(_owner, out HandsComponent? handsComponent))
             {
                 return Outcome.Failed;
             }
 
-            if (!_target.TryGetComponent(out ItemComponent? itemComponent))
+            if (!entMan.TryGetComponent(_target, out ItemComponent? itemComponent))
             {
                 return Outcome.Failed;
             }

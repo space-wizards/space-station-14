@@ -3,6 +3,7 @@ using Content.Shared.Tabletop.Events;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
@@ -72,7 +73,7 @@ namespace Content.Server.Tabletop
         /// <param name="uid">The UID of the tabletop game entity.</param>
         public void OpenSessionFor(IPlayerSession player, EntityUid uid)
         {
-            if (!EntityManager.TryGetComponent(uid, out TabletopGameComponent? tabletop) || player.AttachedEntity is not {} attachedEntity)
+            if (!EntityManager.TryGetComponent(uid, out TabletopGameComponent? tabletop) || player.AttachedEntity is not {Valid: true} attachedEntity)
                 return;
 
             // Make sure we have a session, and add the player to it if not added already.
@@ -81,7 +82,7 @@ namespace Content.Server.Tabletop
             if (session.Players.ContainsKey(player))
                 return;
 
-            if(attachedEntity.TryGetComponent<TabletopGamerComponent>(out var gamer))
+            if(EntityManager.TryGetComponent<TabletopGamerComponent?>(attachedEntity, out var gamer))
                 CloseSessionFor(player, gamer.Tabletop, false);
 
             // Set the entity as an absolute GAMER.
@@ -110,13 +111,13 @@ namespace Content.Server.Tabletop
             if (!session.Players.TryGetValue(player, out var data))
                 return;
 
-            if(removeGamerComponent && player.AttachedEntity is {} attachedEntity && attachedEntity.TryGetComponent(out TabletopGamerComponent? gamer))
+            if(removeGamerComponent && player.AttachedEntity is {} attachedEntity && EntityManager.TryGetComponent(attachedEntity, out TabletopGamerComponent? gamer))
             {
                 // We invalidate this to prevent an infinite feedback from removing the component.
                 gamer.Tabletop = EntityUid.Invalid;
 
                 // You stop being a gamer.......
-                attachedEntity.RemoveComponent<TabletopGamerComponent>();
+                EntityManager.RemoveComponent<TabletopGamerComponent>(attachedEntity);
             }
 
             session.Players.Remove(player);
@@ -148,9 +149,9 @@ namespace Content.Server.Tabletop
             eyeComponent.Zoom = tabletop.CameraZoom;
 
             // Add the user to the view subscribers. If there is no player session, just skip this step
-            _viewSubscriberSystem.AddViewSubscriber(camera.Uid, player);
+            _viewSubscriberSystem.AddViewSubscriber(camera, player);
 
-            return camera.Uid;
+            return camera;
         }
     }
 }

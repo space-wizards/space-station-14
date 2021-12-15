@@ -2,13 +2,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.UserInterface;
 using Content.Shared.Body.Components;
-using Content.Shared.Body.Part;
 using Content.Shared.Body.Surgery;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Random.Helpers;
-using Content.Shared.Verbs;
-using Robust.Server.Console;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Containers;
@@ -24,10 +21,12 @@ namespace Content.Server.Body.Components
     [ComponentReference(typeof(SharedBodyPartComponent))]
     public class BodyPartComponent : SharedBodyPartComponent, IAfterInteract
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         private readonly Dictionary<int, object> _optionsCache = new();
         private SharedBodyComponent? _owningBodyCache;
         private int _idHash;
-        private IEntity? _surgeonCache;
+        private EntityUid? _surgeonCache;
         private Container _mechanismContainer = default!;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(SurgeryUIKey.Key);
@@ -64,9 +63,9 @@ namespace Content.Server.Body.Components
             // identical on it
             foreach (var mechanismId in MechanismIds)
             {
-                var entity = Owner.EntityManager.SpawnEntity(mechanismId, Owner.Transform.MapPosition);
+                var entity = _entMan.SpawnEntity(mechanismId, _entMan.GetComponent<TransformComponent>(Owner).MapPosition);
 
-                if (!entity.TryGetComponent(out SharedMechanismComponent? mechanism))
+                if (!_entMan.TryGetComponent(entity, out SharedMechanismComponent? mechanism))
                 {
                     Logger.Error($"Entity {mechanismId} does not have a {nameof(SharedMechanismComponent)} component.");
                     continue;
@@ -104,7 +103,7 @@ namespace Content.Server.Body.Components
             _surgeonCache = null;
             _owningBodyCache = null;
 
-            if (eventArgs.Target.TryGetComponent(out SharedBodyComponent? body))
+            if (_entMan.TryGetComponent(eventArgs.Target.Value, out SharedBodyComponent? body))
             {
                 SendSlots(eventArgs, body);
             }
@@ -141,8 +140,8 @@ namespace Content.Server.Body.Components
 
             if (_optionsCache.Count > 0)
             {
-                OpenSurgeryUI(eventArgs.User.GetComponent<ActorComponent>().PlayerSession);
-                BodyPartSlotRequest(eventArgs.User.GetComponent<ActorComponent>().PlayerSession,
+                OpenSurgeryUI(_entMan.GetComponent<ActorComponent>(eventArgs.User).PlayerSession);
+                BodyPartSlotRequest(_entMan.GetComponent<ActorComponent>(eventArgs.User).PlayerSession,
                     toSend);
                 _surgeonCache = eventArgs.User;
                 _owningBodyCache = body;
@@ -161,7 +160,7 @@ namespace Content.Server.Body.Components
         private void ReceiveBodyPartSlot(int key)
         {
             if (_surgeonCache == null ||
-                !_surgeonCache.TryGetComponent(out ActorComponent? actor))
+                !_entMan.TryGetComponent(_surgeonCache.Value, out ActorComponent? actor))
             {
                 return;
             }
@@ -176,7 +175,7 @@ namespace Content.Server.Body.Components
             // TODO: sanity checks to see whether user is in range, user is still able-bodied, target is still the same, etc etc
             if (!_optionsCache.TryGetValue(key, out var targetObject))
             {
-                _owningBodyCache.Owner.PopupMessage(_surgeonCache,
+                _owningBodyCache.Owner.PopupMessage(_surgeonCache.Value,
                     Loc.GetString("bodypart-component-no-way-to-attach-message", ("partName", Owner)));
             }
 
@@ -185,7 +184,7 @@ namespace Content.Server.Body.Components
                 ? Loc.GetString("bodypart-component-attach-success-message",("partName", Owner))
                 : Loc.GetString("bodypart-component-attach-fail-message",("partName", Owner));
 
-            _owningBodyCache.Owner.PopupMessage(_surgeonCache, message);
+            _owningBodyCache.Owner.PopupMessage(_surgeonCache.Value, message);
         }
 
         private void OpenSurgeryUI(IPlayerSession session)

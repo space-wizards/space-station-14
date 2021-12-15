@@ -13,14 +13,15 @@ namespace Content.Server.Administration.Commands
     [AdminCommand(AdminFlags.Admin)]
     class ControlMob : IConsoleCommand
     {
+        [Dependency] private readonly IEntityManager _entities = default!;
+
         public string Command => "controlmob";
         public string Description => Loc.GetString("control-mob-command-description");
         public string Help => Loc.GetString("control-mob-command-help-text");
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var player = shell.Player as IPlayerSession;
-            if (player == null)
+            if (shell.Player is not IPlayerSession player)
             {
                 shell.WriteLine("shell-server-cannot");
                 return;
@@ -32,25 +33,21 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-
             if (!int.TryParse(args[0], out var targetId))
             {
                 shell.WriteLine(Loc.GetString("shell-argument-must-be-number"));
                 return;
             }
 
-            var eUid = new EntityUid(targetId);
+            var target = new EntityUid(targetId);
 
-            if (!eUid.IsValid() || !entityManager.EntityExists(eUid))
+            if (!target.IsValid() || !_entities.EntityExists(target))
             {
                 shell.WriteLine(Loc.GetString("shell-invalid-entity-id"));
                 return;
             }
 
-            var target = entityManager.GetEntity(eUid);
-            if (!target.TryGetComponent(out MindComponent? mindComponent))
+            if (!_entities.HasComponent<MindComponent>(target))
             {
                 shell.WriteLine(Loc.GetString("shell-entity-is-not-mob"));
                 return;
@@ -60,7 +57,7 @@ namespace Content.Server.Administration.Commands
 
             DebugTools.AssertNotNull(mind);
 
-            mind!.TransferTo(target.Uid);
+            mind!.TransferTo(target);
         }
     }
 }

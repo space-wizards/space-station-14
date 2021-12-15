@@ -4,6 +4,7 @@ using Content.Shared.Construction;
 using Content.Shared.Examine;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -28,14 +29,16 @@ namespace Content.Server.Construction.Conditions
         {
             var entity = args.Examined;
 
-            if (!entity.TryGetComponent(out ServerDoorComponent? door)) return false;
+            var entMan = IoCManager.Resolve<IEntityManager>();
+
+            if (!entMan.TryGetComponent(entity, out ServerDoorComponent? door)) return false;
 
             if (door.IsWeldedShut != Welded)
             {
                 if (Welded == true)
-                    args.PushMarkup(Loc.GetString("construction-examine-condition-door-weld", ("entityName", entity.Name)) + "\n");
+                    args.PushMarkup(Loc.GetString("construction-examine-condition-door-weld", ("entityName", Name: entMan.GetComponent<MetaDataComponent>(entity).EntityName)) + "\n");
                 else
-                    args.PushMarkup(Loc.GetString("construction-examine-condition-door-unweld", ("entityName", entity.Name)) + "\n");
+                    args.PushMarkup(Loc.GetString("construction-examine-condition-door-unweld", ("entityName", Name: entMan.GetComponent<MetaDataComponent>(entity).EntityName)) + "\n");
                 return true;
             }
 

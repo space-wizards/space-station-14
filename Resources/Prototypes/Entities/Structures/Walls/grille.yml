@@ -85,6 +85,7 @@
       graph: grille
       node: grilleBroken
       deconstructionTarget: start
+    - type: Fixtures # overwrite BaseStructure parent.
     - type: Damageable
       damageContainer: Inorganic
       damageModifierSet: FlimsyMetallic

@@ -7,6 +7,7 @@ using Content.Server.Power.EntitySystems;
 using Content.Server.Power.Pow3r;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
@@ -66,7 +67,7 @@ namespace Content.Server.Power.NodeGroups
 
         public void AddApc(ApcComponent apc)
         {
-            if (apc.Owner.TryGetComponent(out PowerNetworkBatteryComponent? netBattery))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(apc.Owner, out PowerNetworkBatteryComponent? netBattery))
                 netBattery.NetworkBattery.LinkedNetworkDischarging = default;
 
             QueueNetworkReconnect();
@@ -75,7 +76,7 @@ namespace Content.Server.Power.NodeGroups
 
         public void RemoveApc(ApcComponent apc)
         {
-            if (apc.Owner.TryGetComponent(out PowerNetworkBatteryComponent? netBattery))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(apc.Owner, out PowerNetworkBatteryComponent? netBattery))
                 netBattery.NetworkBattery.LinkedNetworkDischarging = default;
 
             QueueNetworkReconnect();
