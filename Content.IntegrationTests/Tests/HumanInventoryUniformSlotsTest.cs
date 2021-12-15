@@ -1,10 +1,11 @@
 using System.Threading.Tasks;
 using Content.Server.Inventory.Components;
+using Content.Shared.Inventory;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using static Content.Shared.Inventory.EquipmentSlotDefines;
+using InventoryComponent = Content.Server.Inventory.Components.InventoryComponent;
 
 namespace Content.IntegrationTests.Tests
 {
@@ -67,6 +68,8 @@ namespace Content.IntegrationTests.Tests
             EntityUid pocketItem = default;
             InventoryComponent inventory = null;
 
+            var invSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<InventorySystem>();
+
             server.Assert(() =>
             {
                 var mapMan = IoCManager.Resolve<IMapManager>();
@@ -81,26 +84,25 @@ namespace Content.IntegrationTests.Tests
                 pocketItem = entityMan.SpawnEntity("FlashlightDummy", MapCoordinates.Nullspace);
                 var tooBigItem = entityMan.SpawnEntity("ToolboxDummy", MapCoordinates.Nullspace);
 
-                inventory = entityMan.GetComponent<InventoryComponent>(human);
 
-                Assert.That(inventory.CanEquip(Slots.INNERCLOTHING, uniform));
+                Assert.That(invSystem.CanEquip(human, uniform, "jumpsuit", out _));
 
                 // Can't equip any of these since no uniform!
-                Assert.That(inventory.CanEquip(Slots.IDCARD, idCard), Is.False);
-                Assert.That(inventory.CanEquip(Slots.POCKET1, pocketItem), Is.False);
-                Assert.That(inventory.CanEquip(Slots.POCKET1, tooBigItem), Is.False); // This one fails either way.
+                Assert.That(invSystem.CanEquip(human, idCard, "id", out _), Is.False);
+                Assert.That(invSystem.CanEquip(human, pocketItem, "pocket1", out _), Is.False);
+                Assert.That(invSystem.CanEquip(human, tooBigItem, "pocket2", out _), Is.False); // This one fails either way.
 
-                inventory.Equip(Slots.INNERCLOTHING, uniform);
+                Assert.That(invSystem.TryEquip(human, uniform, "jumpsuit"));
 
-                Assert.That(inventory.Equip(Slots.IDCARD, idCard));
-                Assert.That(inventory.Equip(Slots.POCKET1, pocketItem));
-                Assert.That(inventory.CanEquip(Slots.POCKET1, tooBigItem), Is.False); // Still failing!
+                Assert.That(invSystem.TryEquip(human, idCard, "id"));
+                Assert.That(invSystem.CanEquip(human, tooBigItem, "pocket1", out _), Is.False); // Still failing!
+                Assert.That(invSystem.TryEquip(human, pocketItem, "pocket1"));
 
                 Assert.That(IsDescendant(idCard, human));
                 Assert.That(IsDescendant(pocketItem, human));
 
                 // Now drop the jumpsuit.
-                inventory.Unequip(Slots.INNERCLOTHING);
+                Assert.That(invSystem.TryUnequip(human, "jumpsuit"));
             });
 
             server.RunTicks(2);
@@ -113,9 +115,9 @@ namespace Content.IntegrationTests.Tests
                 Assert.That(IsDescendant(pocketItem, human), Is.False);
 
                 // Ensure everything null here.
-                Assert.That(inventory.GetSlotItem(Slots.INNERCLOTHING), Is.Null);
-                Assert.That(inventory.GetSlotItem(Slots.IDCARD), Is.Null);
-                Assert.That(inventory.GetSlotItem(Slots.POCKET1), Is.Null);
+                Assert.That(invSystem.TryGetSlotEntity(human, "jumpsuit", out _));
+                Assert.That(invSystem.TryGetSlotEntity(human, "id", out _));
+                Assert.That(invSystem.TryGetSlotEntity(human, "pocket1", out _));
             });
 
             await server.WaitIdleAsync();

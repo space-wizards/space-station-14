@@ -1,11 +1,12 @@
 ﻿using System.Threading.Tasks;
 using Content.Server.Clothing.Components;
-using Content.Server.Inventory.Components;
+using Content.Shared.Inventory;
+using Content.Shared.Item;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using static Content.Shared.Inventory.EquipmentSlotDefines;
+using InventoryComponent = Content.Server.Inventory.Components.InventoryComponent;
 
 namespace Content.IntegrationTests.Tests
 {
@@ -23,19 +24,20 @@ namespace Content.IntegrationTests.Tests
             {
                 // Spawn everything.
                 var mapMan = IoCManager.Resolve<IMapManager>();
+                var invSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<InventorySystem>();
 
                 mapMan.CreateNewMapEntity(MapId.Nullspace);
 
                 var entMgr = IoCManager.Resolve<IEntityManager>();
                 var container = entMgr.SpawnEntity(null, MapCoordinates.Nullspace);
-                var inv = entMgr.AddComponent<InventoryComponent>(container);
+                entMgr.AddComponent<Inventory>(container);
 
                 var child = entMgr.SpawnEntity(null, MapCoordinates.Nullspace);
-                var item = entMgr.AddComponent<ClothingComponent>(child);
+                var item = entMgr.AddComponent<SharedItemComponent>(child);
                 item.SlotFlags = SlotFlags.HEAD;
 
                 // Equip item.
-                Assert.That(inv.Equip(Slots.HEAD, item, false), Is.True);
+                Assert.That(invSystem.TryEquip(container, child, "head"), Is.True);
 
                 // Delete parent.
                 entMgr.DeleteEntity(container);

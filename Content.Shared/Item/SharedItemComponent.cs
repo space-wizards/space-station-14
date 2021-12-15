@@ -21,7 +21,7 @@ namespace Content.Shared.Item
     ///    Players can pick up, drop, and put items in bags, and they can be seen in player's hands.
     /// </summary>
     [NetworkedComponent()]
-    public abstract class SharedItemComponent : Component, IInteractHand
+    public class SharedItemComponent : Component, IInteractHand
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 

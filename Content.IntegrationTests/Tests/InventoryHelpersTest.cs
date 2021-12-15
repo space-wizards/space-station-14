@@ -11,7 +11,6 @@ using Robust.Shared.Map;
 namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
-    [TestOf(typeof(InventoryHelpers))]
     public class InventoryHelpersTest : ContentIntegrationTest
     {
         private const string Prototypes = @"
