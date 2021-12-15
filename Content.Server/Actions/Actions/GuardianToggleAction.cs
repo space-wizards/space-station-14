@@ -1,11 +1,10 @@
 using Content.Server.Guardian;
-using Content.Server.Popups;
 using Content.Shared.Actions.Behaviors;
-using Content.Shared.Actions.Behaviors.Item;
 using Content.Shared.Cooldown;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -18,20 +17,22 @@ namespace Content.Server.Actions.Actions
    [DataDefinition]
     public class ToggleGuardianAction : IInstantAction
     {
-       [DataField("cooldown")] public float Cooldown { get; [UsedImplicitly] private set; }
+        [DataField("cooldown")] public float Cooldown { get; [UsedImplicitly] private set; }
 
         public void DoInstantAction(InstantActionEventArgs args)
         {
-           if (args.Performer.TryGetComponent<GuardianHostComponent>(out GuardianHostComponent? comp))
-           {
-                var actionguardian = comp.HostedGuardian;
-                EntitySystem.Get<GuardianSystem>().OnGuardianManifestAction(actionguardian, args.Performer.Uid);
+            var entManager = IoCManager.Resolve<IEntityManager>();
+
+            if (entManager.TryGetComponent(args.Performer, out GuardianHostComponent? hostComponent) &&
+                hostComponent.HostedGuardian.IsValid())
+            {
+                EntitySystem.Get<GuardianSystem>().ToggleGuardian(hostComponent);
                 args.PerformerActions?.Cooldown(args.ActionType, Cooldowns.SecondsFromNow(Cooldown));
-           }
-           else
-           {
+            }
+            else
+            {
                 args.Performer.PopupMessage(Loc.GetString("guardian-missing-invalid-action"));
-           }
+            }
         }
     }
 }

@@ -17,6 +17,9 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Guardian
 {
+    /// <summary>
+    /// A guardian has a host it's attached to that it fights for. A fighting spirit.
+    /// </summary>
     public sealed class GuardianSystem : EntitySystem
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
@@ -37,15 +40,30 @@ namespace Content.Server.Guardian
             SubscribeLocalEvent<GuardianHostComponent, ComponentShutdown>(OnHostShutdown);
         }
 
+        private void OnHostInit(EntityUid uid, GuardianHostComponent component, ComponentInit args)
+        {
+            component.GuardianContainer = uid.EnsureContainer<ContainerSlot>("GuardianContainer");
+        }
+
         private void OnHostShutdown(EntityUid uid, GuardianHostComponent component, ComponentShutdown args)
         {
             if (!component.HostedGuardian.IsValid()) return;
             EntityManager.QueueDeleteEntity(component.HostedGuardian);
         }
 
-        private void OnHostInit(EntityUid uid, GuardianHostComponent component, ComponentInit args)
+        public void ToggleGuardian(GuardianHostComponent hostComponent)
         {
-            component.GuardianContainer = uid.EnsureContainer<ContainerSlot>("GuardianContainer");
+            if (!hostComponent.HostedGuardian.IsValid() ||
+                !EntityManager.TryGetComponent(hostComponent.HostedGuardian, out GuardianComponent? guardianComponent)) return;
+
+            if (guardianComponent.GuardianLoose)
+            {
+                RetractGuardian(hostComponent, guardianComponent);
+            }
+            else
+            {
+                ReleaseGuardian(hostComponent, guardianComponent);
+            }
         }
 
         /// <summary>
