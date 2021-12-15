@@ -10,6 +10,13 @@
   - bind
   - exec # macro moment
   - clear
+  - vram
+  - monitor
+  - setmonitor
+  - keyinfo
+  - setclipboard
+  - getclipboard
+  - gcf
 
 - Flags: VAREDIT
   Commands:
@@ -51,7 +58,6 @@
   - fill
   - dumpentities
   - getcomponentregistration
-  - monitor
   - fuck
   - showpos
   - showray
@@ -64,16 +70,12 @@
   - rldloc
   - guidump
   - uitest
-  - setclipboard
-  - getclipboard
   - chunkinfo
-  - keyinfo
   - showanchored
   - dmetamem
   - launchauth
   - lsmonitor
   - monitorinfo
-  - setmonitor
   - watch
   - sendgarbage
   - setinputcontext
@@ -83,7 +85,6 @@
   - net_graph
   - net_watchent
   - net_draw_interp
-  - vram
   - devwindow
   - scene
 
@@ -129,7 +130,6 @@
   Commands:
   - gc_mode
   - gc
-  - gcf
   - loglevel
   - saveconfig
   - testlog
