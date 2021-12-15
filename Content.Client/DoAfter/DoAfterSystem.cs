@@ -118,7 +118,7 @@ namespace Content.Client.DoAfter
 
                     if (doAfter.BreakOnTargetMove)
                     {
-                        if (doAfter.Target != null &&
+                        if (!EntityManager.Deleted(doAfter.Target) &&
                             !Transform(doAfter.Target.Value).Coordinates.InRange(EntityManager, doAfter.TargetGrid,
                                 doAfter.MovementThreshold))
                         {

@@ -102,8 +102,9 @@ namespace Content.Client.ContextMenu.UI
             // get an entity associated with this element
             var entity = entityElement.Entity;
             entity ??= GetFirstEntityOrNull(element.SubMenu);
-            
-            if (entity == null)
+
+            // Deleted() automatically checks for null & existence.
+            if (_entityManager.Deleted(entity))
                 return;
 
             // open verb menu?

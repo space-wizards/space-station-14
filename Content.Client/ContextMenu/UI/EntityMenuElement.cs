@@ -61,10 +61,11 @@ namespace Content.Client.ContextMenu.UI
         /// </summary>
         public void UpdateEntity(EntityUid? entity = null)
         {
-            if (Entity != null && _entityManager.EntityExists(Entity.Value))
+            // Deleted() automatically checks for null & existence.
+            if (!_entityManager.Deleted(Entity))
                 entity = Entity;
 
-            if (entity == null)
+            if (_entityManager.Deleted(entity))
             {
                 Text = string.Empty;
                 return;
