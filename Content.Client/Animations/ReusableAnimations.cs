@@ -15,6 +15,10 @@ namespace Content.Client.Animations
         public static void AnimateEntityPickup(EntityUid entity, EntityCoordinates initialPosition, Vector2 finalPosition, IEntityManager? entMan = null)
         {
             IoCManager.Resolve(ref entMan);
+
+            if (entMan.Deleted(entity) || !initialPosition.IsValid(entMan))
+                return;
+
             var animatableClone = entMan.SpawnEntity("clientsideclone", initialPosition);
             string val = entMan.GetComponent<MetaDataComponent>(entity).EntityName;
             entMan.GetComponent<MetaDataComponent>(animatableClone).EntityName = val;

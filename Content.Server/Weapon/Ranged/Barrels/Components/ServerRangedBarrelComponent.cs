@@ -27,6 +27,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Robust.Shared.Utility.Markup;
 
 namespace Content.Server.Weapon.Ranged.Barrels.Components
 {
@@ -398,7 +399,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 var dmg = EntitySystem.Get<DamageableSystem>().TryChangeDamage(result.HitEntity, hitscan.Damage);
                 if (dmg != null)
                     EntitySystem.Get<AdminLogSystem>().Add(LogType.HitScanHit,
-                        $"{shooter} hit {result.HitEntity} using {hitscan.Owner} and dealt {dmg.Total} damage");
+                        $"{_entities.ToPrettyString(shooter):user} hit {_entities.ToPrettyString(result.HitEntity):target} using {_entities.ToPrettyString(hitscan.Owner):used} and dealt {dmg.Total:damage} damage");
             }
             else
             {
@@ -407,7 +408,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         }
         #endregion
 
-        public virtual void Examine(FormattedMessage message, bool inDetailsRange)
+        public virtual void Examine(FormattedMessage.Builder message, bool inDetailsRange)
         {
             var fireRateMessage = Loc.GetString(FireRateSelector switch
             {

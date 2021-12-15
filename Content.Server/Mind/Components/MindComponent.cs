@@ -10,6 +10,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Robust.Shared.Utility.Markup;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Mind.Components
@@ -125,7 +126,7 @@ namespace Content.Server.Mind.Components
             }
         }
 
-        public void Examine(FormattedMessage message, bool inDetailsRange)
+        public void Examine(FormattedMessage.Builder message, bool inDetailsRange)
         {
             if (!ShowExamineInfo || !inDetailsRange)
             {

@@ -673,7 +673,7 @@ namespace Content.Shared.Hands.Components
 
             HandlePickupAnimation(entity);
             PutEntityIntoHand(hand, entity);
-            EntitySystem.Get<SharedAdminLogSystem>().Add(LogType.Pickup, LogImpact.Low, $"{Owner} picked up {entity}");
+            EntitySystem.Get<SharedAdminLogSystem>().Add(LogType.Pickup, LogImpact.Low, $"{_entMan.ToPrettyString(Owner):user} picked up {_entMan.ToPrettyString(entity):entity}");
             return true;
         }
 
@@ -892,6 +892,7 @@ namespace Content.Shared.Hands.Components
         [ViewVariables]
         public IContainer? Container { get; set; }
 
+        // TODO: Make this a nullable EntityUid...
         [ViewVariables]
         public EntityUid HeldEntity => Container?.ContainedEntities.FirstOrDefault() ?? EntityUid.Invalid;
 
