@@ -50,13 +50,13 @@ public interface IGameMapManager
     /// Gets the currently selected map, without double-checking if it can be used.
     /// </summary>
     /// <returns>selected map</returns>
-    GameMapPrototype GetSelectedMap();
+    GameMapPrototype? GetSelectedMap();
 
     /// <summary>
     /// Gets the currently selected map, double-checking if it can be used.
     /// </summary>
     /// <returns>selected map</returns>
-    GameMapPrototype GetSelectedMapChecked(bool loud = false);
+    GameMapPrototype? GetSelectedMapChecked(bool loud = false);
 
     /// <summary>
     /// Checks if the given map exists

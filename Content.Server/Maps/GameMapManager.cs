@@ -21,21 +21,24 @@ public class GameMapManager : IGameMapManager
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
-    [Dependency] private readonly IMapLoader _mapLoader = default!;
 
-    private GameMapPrototype _currentMap = default!;
+    private GameMapPrototype? _currentMap;
     private bool _currentMapForced;
 
     public void Initialize()
     {
-        _configurationManager.OnValueChanged(CCVars.GameMap, value =>
-        {
-            if (TryLookupMap(value, out var map))
-                _currentMap = map;
-            else
-                throw new ArgumentException($"Unknown map prototype {value} was selected!");
-        }, true);
+        _configurationManager.OnValueChanged(CCVars.GameMap, SetMap, true);
         _configurationManager.OnValueChanged(CCVars.GameMapForced, value => _currentMapForced = value, true);
+    }
+
+    private void SetMap(string value)
+    {
+        if (string.IsNullOrEmpty(value)) return;
+
+        if (TryLookupMap(value, out var map))
+            _currentMap = map;
+        else
+            throw new ArgumentException($"Unknown map prototype {value} was selected!");
     }
 
     public IEnumerable<GameMapPrototype> CurrentlyEligibleMaps()
@@ -81,27 +84,29 @@ public class GameMapManager : IGameMapManager
         _currentMapForced = false;
     }
 
-    public GameMapPrototype GetSelectedMap()
+    public GameMapPrototype? GetSelectedMap()
     {
         return _currentMap;
     }
 
-    public GameMapPrototype GetSelectedMapChecked(bool loud = false)
+    public GameMapPrototype? GetSelectedMapChecked(bool loud = false)
     {
-        if (!_currentMapForced && !IsMapEligible(GetSelectedMap()))
+        var map = GetSelectedMap();
+
+        if (map != null && !_currentMapForced && !IsMapEligible(map))
         {
-            var oldMap = GetSelectedMap().MapName;
+            var oldMap = map.MapName;
             SelectRandomMap();
             if (loud)
             {
                 _chatManager.DispatchServerAnnouncement(
                     Loc.GetString("gamemap-could-not-use-map-error",
-                        ("oldMap", oldMap), ("newMap", GetSelectedMap().MapName)
+                        ("oldMap", oldMap), ("newMap", map.MapName)
                     ));
             }
         }
 
-        return GetSelectedMap();
+        return map;
     }
 
     public bool CheckMapExists(string gameMap)
@@ -109,9 +114,9 @@ public class GameMapManager : IGameMapManager
         return TryLookupMap(gameMap, out _);
     }
 
-    private bool IsMapEligible(GameMapPrototype map)
+    private bool IsMapEligible(GameMapPrototype? map)
     {
-        return map.MaxPlayers >= _playerManager.PlayerCount && map.MinPlayers <= _playerManager.PlayerCount;
+        return map != null && map.MaxPlayers >= _playerManager.PlayerCount && map.MinPlayers <= _playerManager.PlayerCount;
     }
 
     private bool TryLookupMap(string gameMap, [NotNullWhen(true)] out GameMapPrototype? map)

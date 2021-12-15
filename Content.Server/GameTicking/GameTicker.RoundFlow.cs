@@ -66,32 +66,34 @@ namespace Content.Server.GameTicking
             DefaultMap = _mapManager.CreateMap();
             var startTime = _gameTiming.RealTime;
             var map = _gameMapManager.GetSelectedMapChecked(true);
-            var grid = _mapLoader.LoadBlueprint(DefaultMap, map.MapPath);
 
-
-            if (grid == null)
+            if (map != null)
             {
-                throw new InvalidOperationException($"No grid found for map {map.MapName}");
+                var grid = _mapLoader.LoadBlueprint(DefaultMap, map.MapPath);
+                if (grid == null)
+                {
+                    throw new InvalidOperationException($"No grid found for map {map.MapName}");
+                }
+
+                _stationSystem.InitialSetupStationGrid(grid.GridEntityId, map);
+
+                var stationXform = EntityManager.GetComponent<TransformComponent>(grid.GridEntityId);
+
+                if (StationOffset)
+                {
+                    // Apply a random offset to the station grid entity.
+                    var x = _robustRandom.NextFloat() * MaxStationOffset * 2 - MaxStationOffset;
+                    var y = _robustRandom.NextFloat() * MaxStationOffset * 2 - MaxStationOffset;
+                    stationXform.LocalPosition = new Vector2(x, y);
+                }
+
+                if (StationRotation)
+                {
+                    stationXform.LocalRotation = _robustRandom.NextFloat(MathF.Tau);
+                }
+
+                _spawnPoint = grid.ToCoordinates();
             }
-
-            _stationSystem.InitialSetupStationGrid(grid.GridEntityId, map);
-
-            var stationXform = EntityManager.GetComponent<TransformComponent>(grid.GridEntityId);
-
-            if (StationOffset)
-            {
-                // Apply a random offset to the station grid entity.
-                var x = _robustRandom.NextFloat() * MaxStationOffset * 2 - MaxStationOffset;
-                var y = _robustRandom.NextFloat() * MaxStationOffset * 2 - MaxStationOffset;
-                stationXform.LocalPosition = new Vector2(x, y);
-            }
-
-            if (StationRotation)
-            {
-                stationXform.LocalRotation = _robustRandom.NextFloat(MathF.Tau);
-            }
-
-            _spawnPoint = grid.ToCoordinates();
 
             var timeSpan = _gameTiming.RealTime - startTime;
             Logger.InfoS("ticker", $"Loaded map in {timeSpan.TotalMilliseconds:N2}ms.");

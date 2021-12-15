@@ -19,7 +19,6 @@ using Content.Shared.Administration;
 using Content.Shared.Alert;
 using Content.Shared.Kitchen;
 using Robust.Server.Bql;
-using Robust.Server.Player;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -63,8 +62,6 @@ namespace Content.Server.Entry
 
             IoCManager.Resolve<IChatSanitizationManager>().Initialize();
             IoCManager.Resolve<IChatManager>().Initialize();
-
-            var playerManager = IoCManager.Resolve<IPlayerManager>();
 
             var logManager = IoCManager.Resolve<ILogManager>();
             logManager.GetSawmill("Storage").Level = LogLevel.Info;
