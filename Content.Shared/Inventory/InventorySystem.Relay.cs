@@ -1,5 +1,4 @@
-﻿using Content.Shared.Acts;
-using Content.Shared.Damage;
+﻿using Content.Shared.Damage;
 using Content.Shared.Electrocution;
 using Content.Shared.Movement.EntitySystems;
 using Content.Shared.Slippery;

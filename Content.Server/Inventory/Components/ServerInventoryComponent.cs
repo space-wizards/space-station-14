@@ -65,22 +65,6 @@ namespace Content.Server.Inventory.Components
 
                     break;
                 }
-                case ClientInventoryUpdate.Hover:
-                {
-                    var hands = _entities.GetComponent<HandsComponent>(Owner);
-                    var activeHand = hands.GetActiveHand;
-                    if (activeHand != null && GetSlotItem(msg.Inventoryslot) == null)
-                    {
-                        var canEquip = CanEquip(msg.Inventoryslot, activeHand, true, out var reason);
-                        _hoverEntity =
-                            new KeyValuePair<Slots, (EntityUid entity, bool fits)>(msg.Inventoryslot,
-                                (Uid: activeHand.Owner, canEquip));
-
-                        Dirty();
-                    }
-
-                    break;
-                }
             }
         }
 

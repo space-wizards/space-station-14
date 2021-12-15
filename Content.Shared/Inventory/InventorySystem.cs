@@ -1,4 +1,6 @@
-﻿namespace Content.Shared.Inventory;
+﻿using Content.Shared.Inventory.Events;
+
+namespace Content.Shared.Inventory;
 
 public partial class InventorySystem
 {
@@ -7,5 +9,6 @@ public partial class InventorySystem
     {
         base.Initialize();
         InitializeRelay();
+        InitializeEquip();
     }
 }

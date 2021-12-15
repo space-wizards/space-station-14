@@ -29,15 +29,13 @@ namespace Content.Client.Inventory
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public Control? BottomLeftButtons;
-        public Control? BottomRightButtons;
-        public Control? TopQuickButtons;
+        public Control BottomLeftButtons = default!;
+        public Control BottomRightButtons = default!;
+        public Control TopQuickButtons = default!;
 
         public SS14Window InventoryWindow = default!;
 
-        public readonly List<ItemSlotButton> SlotButtons = new();
-
-        [ViewVariables] public InventoryInterfaceController InterfaceController { get; private set; } = default!;
+        public readonly Dictionary<string, List<ItemSlotButton>> SlotButtons = new();
 
         [ViewVariables]
         [DataField("speciesId")] public string? SpeciesId { get; set; }
@@ -58,30 +56,11 @@ namespace Content.Client.Inventory
 #pragma warning restore 618
         }
 
-        public void SendHoverMessage(Slots slot)
-        {
-#pragma warning disable 618
-            SendNetworkMessage(new ClientInventoryMessage(slot, ClientInventoryUpdate.Hover));
-#pragma warning restore 618
-        }
-
         public void SendOpenStorageUIMessage(Slots slot)
         {
 #pragma warning disable 618
             SendNetworkMessage(new OpenSlotStorageUIMessage(slot));
 #pragma warning restore 618
-        }
-
-        public void PlayerDetached()
-        {
-            InterfaceController.PlayerDetached();
-            _playerAttached = false;
-        }
-
-        public void PlayerAttached()
-        {
-            InterfaceController.PlayerAttached();
-            _playerAttached = true;
         }
     }
 }

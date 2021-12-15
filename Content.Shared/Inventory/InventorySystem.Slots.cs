@@ -23,12 +23,9 @@ public partial class InventorySystem : EntitySystem
         if (!TryGetSlot(uid, slot, out slotDefinition, inventory: inventory))
             return false;
 
-        if (!TryGetSlotContainerString(uid, slot, out var containerString, slotDefinition, inventory))
-            return false;
-
-        if (!containerComp.TryGetContainer(containerString, out var container))
+        if (!containerComp.TryGetContainer(slotDefinition.Name, out var container))
         {
-            containerSlot = containerComp.MakeContainer<ContainerSlot>(containerString);
+            containerSlot = containerComp.MakeContainer<ContainerSlot>(slotDefinition.Name);
             return true;
         }
 
@@ -52,20 +49,6 @@ public partial class InventorySystem : EntitySystem
 
         slotDefinition = templatePrototype.Slots.FirstOrDefault(x => x.Name == slot);
         return slotDefinition != default;
-    }
-
-    public bool TryGetSlotContainerString(EntityUid uid, string slot, [NotNullWhen(true)] out string? containerString, SlotDefinition? slotDefinition = null, InventoryComponent? inventory = null)
-    {
-        containerString = string.Empty;
-
-        if (!Resolve(uid, ref inventory))
-            return false;
-
-        if (slotDefinition == null && !TryGetSlot(uid, slot, out slotDefinition, inventory: inventory))
-            return false;
-
-        containerString = $"{inventory.Name}_{slotDefinition.Name}";
-        return true;
     }
 
     public bool TryGetContainerSlotEnumerator(EntityUid uid, out ContainerSlotEnumerator containerSlotEnumerator, InventoryComponent? component = null)

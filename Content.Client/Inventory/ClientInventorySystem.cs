@@ -5,9 +5,11 @@ using Content.Client.Clothing;
 using Content.Client.HUD;
 using Content.Shared.Input;
 using Content.Client.Items.Components;
+using Content.Client.Items.Managers;
 using Content.Client.Items.UI;
 using Content.Shared.CCVar;
 using Content.Shared.CharacterAppearance;
+using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Movement.EntitySystems;
@@ -34,6 +36,7 @@ namespace Content.Client.Inventory
         [Dependency] private readonly IGameHud _gameHud = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IConfigurationManager _config = default!;
+        [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
 
         public const int ButtonSize = 64;
         private const int ButtonSeparation = 4;
@@ -43,7 +46,7 @@ namespace Content.Client.Inventory
         /// Stores delegates used to create controls for a given <see cref="InventoryTemplatePrototype"/>.
         /// </summary>
         private readonly
-            Dictionary<string, Func<EntityUid, List<ItemSlotButton>, (SS14Window window, Control bottomLeft, Control bottomRight, Control
+            Dictionary<string, Func<EntityUid, Dictionary<string, List<ItemSlotButton>>, (SS14Window window, Control bottomLeft, Control bottomRight, Control
                 topQuick)>>
             _uiGenerateDelegates = new();
 
@@ -62,18 +65,40 @@ namespace Content.Client.Inventory
             SubscribeLocalEvent<ClientInventoryComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<ClientInventoryComponent, ComponentShutdown>(OnShutdown);
 
+            SubscribeLocalEvent<ClientInventoryComponent, DidEquipEvent>(OnDidEquip);
+            SubscribeLocalEvent<ClientInventoryComponent, DidUnequipEvent>(OnDidUnequip);
+
             _config.OnValueChanged(CCVars.HudTheme, UpdateHudTheme);
+        }
+
+        private void OnDidUnequip(EntityUid uid, ClientInventoryComponent component, DidUnequipEvent args)
+        {
+            if (component.SlotButtons.TryGetValue(args.Slot, out var buttons))
+            {
+                foreach (var button in buttons)
+                {
+                    _itemSlotManager.SetItemSlot(button, default);
+                }
+            }
+        }
+
+        private void OnDidEquip(EntityUid uid, ClientInventoryComponent component, DidEquipEvent args)
+        {
+            if (component.SlotButtons.TryGetValue(args.Slot, out var buttons))
+            {
+                foreach (var button in buttons)
+                {
+                    _itemSlotManager.SetItemSlot(button, args.Equipment);
+                }
+            }
         }
 
         private void OnPlayerDetached(EntityUid uid, ClientInventoryComponent component, PlayerDetachedEvent? args = null)
         {
             _gameHud.InventoryButtonVisible = false;
-            if (component.BottomLeftButtons != null)
-                _gameHud.BottomLeftInventoryQuickButtonContainer.RemoveChild(component.BottomLeftButtons);
-            if (component.BottomRightButtons != null)
-                _gameHud.BottomRightInventoryQuickButtonContainer.RemoveChild(component.BottomRightButtons);
-            if (component.TopQuickButtons != null)
-                _gameHud.TopInventoryQuickButtonContainer.RemoveChild(component.TopQuickButtons);
+            _gameHud.BottomLeftInventoryQuickButtonContainer.RemoveChild(component.BottomLeftButtons);
+            _gameHud.BottomRightInventoryQuickButtonContainer.RemoveChild(component.BottomRightButtons);
+            _gameHud.TopInventoryQuickButtonContainer.RemoveChild(component.TopQuickButtons);
         }
 
         private void OnShutdown(EntityUid uid, ClientInventoryComponent component, ComponentShutdown args)
@@ -85,12 +110,9 @@ namespace Content.Client.Inventory
         private void OnPlayerAttached(EntityUid uid, ClientInventoryComponent component, PlayerAttachedEvent args)
         {
             _gameHud.InventoryButtonVisible = true;
-            if (component.BottomLeftButtons != null)
-                _gameHud.BottomLeftInventoryQuickButtonContainer.AddChild(component.BottomLeftButtons);
-            if (component.BottomRightButtons != null)
-                _gameHud.BottomRightInventoryQuickButtonContainer.AddChild(component.BottomRightButtons);
-            if (component.TopQuickButtons != null)
-                _gameHud.TopInventoryQuickButtonContainer.AddChild(component.TopQuickButtons);
+            _gameHud.BottomLeftInventoryQuickButtonContainer.AddChild(component.BottomLeftButtons);
+            _gameHud.BottomRightInventoryQuickButtonContainer.AddChild(component.BottomRightButtons);
+            _gameHud.TopInventoryQuickButtonContainer.AddChild(component.TopQuickButtons);
         }
 
         private void UpdateHudTheme(int obj)
@@ -104,7 +126,10 @@ namespace Content.Client.Inventory
             {
                 foreach (var slotButton in inventoryComponent.SlotButtons)
                 {
-                    slotButton.RefreshTextures(_gameHud);
+                    foreach (var btn in slotButton.Value)
+                    {
+                        btn.RefreshTextures(_gameHud);
+                    }
                 }
             }
         }
@@ -128,11 +153,38 @@ namespace Content.Client.Inventory
             component.TopQuickButtons = topQuick;
         }
 
+        private void HoverInSlotButton(EntityUid uid, string slot, ItemSlotButton button, InventoryComponent? inventoryComponent = null, SharedHandsComponent? hands = null)
+        {
+            if (!Resolve(uid, ref inventoryComponent))
+                return;
+
+            if (!Resolve(uid, ref hands, false))
+                return;
+
+            if (!hands.TryGetActiveHeldEntity(out var heldEntity))
+                return;
+
+            _itemSlotManager.HoverInSlot(button, heldEntity,
+                CanEquip(uid, heldEntity, slot, out _, inventory: inventoryComponent));
+        }
+
+        private void HandleSlotButtonPressed(EntityUid uid, string slot, ItemSlotButton button,
+            GUIBoundKeyEventArgs args)
+        {
+            if (TryGetSlotEntity(uid, slot, out var itemUid))
+            {
+                _itemSlotManager.OnButtonPressed(args, itemUid.Value);
+                return;
+            }
+
+            if (args.Function != EngineKeyFunctions.UIClick) return;
+            TryEquipActiveHandTo(uid, slot);
+        }
+
         private bool TryGetUIElements(EntityUid uid, [NotNullWhen(true)] out SS14Window? invWindow,
             [NotNullWhen(true)] out Control? invBottomLeft, [NotNullWhen(true)] out Control? invBottomRight,
             [NotNullWhen(true)] out Control? invTopQuick, ClientInventoryComponent? component = null)
         {
-
             invWindow = null;
             invBottomLeft = null;
             invBottomRight = null;
@@ -163,14 +215,9 @@ namespace Content.Client.Inventory
 
                     ItemSlotButton GetButton(SlotDefinition definition, string textureBack)
                     {
-                        return new ItemSlotButton(ButtonSize, $"{definition.TextureName}.png", textureBack,
+                        var btn = new ItemSlotButton(ButtonSize, $"{definition.TextureName}.png", textureBack,
                             _gameHud)
                         {
-                            OnPressed = (e) =>
-                            {
-                                if(e.Function != EngineKeyFunctions.UIClick) return;
-                                TryEquipActiveHandTo(entityUid, definition.Name);
-                            },
                             OnStoragePressed = (e) =>
                             {
                                 if (e.Function != EngineKeyFunctions.UIClick &&
@@ -178,12 +225,17 @@ namespace Content.Client.Inventory
                                     return;
                                 //todo paul open storagewindow
                                 //ServerStorageComponent.OpenStorageUI
-                            },
-                            OnHover = (_) =>
-                            {
-                                //todo paul hover
                             }
                         };
+                        btn.OnHover = (_) =>
+                        {
+                            HoverInSlotButton(entityUid, definition.Name, btn);
+                        };
+                        btn.OnPressed = (e) =>
+                        {
+                            HandleSlotButtonPressed(entityUid, definition.Name, btn, e);
+                        };
+                        return btn;
                     }
 
                     void AddButton(SlotDefinition definition, Vector2i position)
@@ -191,14 +243,18 @@ namespace Content.Client.Inventory
                         var button = GetButton(definition, "back.png");
                         LayoutContainer.SetPosition(button, position);
                         windowContents.AddChild(button);
-                        list.Add(button);
+                        if (!list.ContainsKey(definition.Name))
+                            list[definition.Name] = new();
+                        list[definition.Name].Add(button);
                     }
 
                     void AddHUDButton(BoxContainer container, SlotDefinition definition)
                     {
                         var button = GetButton(definition, "back.png");
                         container.AddChild(button);
-                        list.Add(button);
+                        if (!list.ContainsKey(definition.Name))
+                            list[definition.Name] = new();
+                        list[definition.Name].Add(button);
                     }
 
                     var topQuick = new BoxContainer

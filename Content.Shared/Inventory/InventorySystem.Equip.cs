@@ -19,10 +19,23 @@ public partial class InventorySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeed = default!;
 
+    public void InitializeEquip()
+    {
+        SubscribeLocalEvent<InventoryComponent, ContainerIsInsertingAttemptEvent>(OnContainerInsertion);
+    }
+
+    private void OnContainerInsertion(EntityUid uid, InventoryComponent component, ContainerIsInsertingAttemptEvent args)
+    {
+        throw new System.NotImplementedException();
+    }
+
     public bool TryEquipActiveHandTo(EntityUid uid, string slot, bool silent = false, bool force = false,
         InventoryComponent? component = null, SharedHandsComponent? hands = null)
     {
-        if (!Resolve(uid, ref component, ref hands))
+        if (!Resolve(uid, ref component))
+            return false;
+
+        if (!Resolve(uid, ref hands, false))
             return false;
 
         if (!hands.TryGetActiveHeldEntity(out var heldEntity))
@@ -155,7 +168,6 @@ public partial class InventorySystem
 
         var gotUnequippedEvent = new GotUnequippedEvent(uid, entity.Value, slotDefinition);
         RaiseLocalEvent(entity.Value, gotUnequippedEvent);
-
 
         return true;
     }
