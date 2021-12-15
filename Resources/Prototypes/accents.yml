@@ -10,8 +10,8 @@
 - type: accent
   id: dog
   words:
-    - Bark!
-    - Bork!
-    - Woof!
-    - Arf.
-    - Grrr.
+  - Bark!
+  - Bork!
+  - Woof!
+  - Arf.
+  - Grrr.
