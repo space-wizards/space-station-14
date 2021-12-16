@@ -16,11 +16,11 @@ namespace Content.Shared.Atmos.Monitor.Components
     [Serializable, NetSerializable]
     public enum AirAlarmMode
     {
+        None,
         Filtering,
         Fill,
         Panic,
-        Replace,
-        None
+        Replace
     }
 
     [Serializable, NetSerializable]

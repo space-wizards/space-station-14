@@ -18,7 +18,6 @@ using Content.Shared.Atmos.Visuals;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 {
@@ -146,7 +145,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                     payload.Add(DeviceNetworkConstants.Command, AirAlarmSystem.AirAlarmSyncData);
                     payload.Add(AirAlarmSystem.AirAlarmSyncData, component.ToAirAlarmData());
 
-                    Logger.DebugS("GasVentPumpSystem", $"Sending sync to {args.SenderAddress}.");
                     _deviceNetSystem.QueuePacket(uid, args.SenderAddress, AirAlarmSystem.Freq, payload);
 
                     return;

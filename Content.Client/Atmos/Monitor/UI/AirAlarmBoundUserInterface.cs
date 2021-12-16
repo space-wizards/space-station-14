@@ -54,7 +54,8 @@ namespace Content.Client.Atmos.Monitor.UI
 
         protected override void ReceiveMessage(BoundUserInterfaceMessage message)
         {
-            if (_window == null) return;
+            if (_window == null)
+                return;
 
             switch (message)
             {

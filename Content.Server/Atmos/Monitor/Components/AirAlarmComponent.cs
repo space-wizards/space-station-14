@@ -104,10 +104,10 @@ namespace Content.Server.Atmos.Monitor.Components
             var syncLightState = StatusLightState.BlinkingSlow;
 
             if (AtmosMonitorComponent != null && !AtmosMonitorComponent.NetEnabled)
-                syncLight = StatusLightState.Off;
+                syncLightState = StatusLightState.Off;
             else if (DeviceData.Count != 0)
                 syncLightState = StatusLightState.On;
-            
+
             var syncLight = new StatusLightData(Color.Orange, syncLightState, "NET");
 
             WiresComponent.SetStatus(AirAlarmWireStatus.Power, powerLight);
