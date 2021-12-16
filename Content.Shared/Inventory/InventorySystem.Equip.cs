@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Hands.Components;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
@@ -34,7 +33,7 @@ public partial class InventorySystem
         return TryEquip(uid, heldEntity, slot, silent, force, component);
     }
 
-    public bool TryEquip(EntityUid uid, EntityUid itemUid, string slot, bool silent = false, bool force = false, InventoryComponent? inventory = null, SharedItemComponent? item = null)
+    public virtual bool TryEquip(EntityUid uid, EntityUid itemUid, string slot, bool silent = false, bool force = false, InventoryComponent? inventory = null, SharedItemComponent? item = null)
     {
         if (!Resolve(uid, ref inventory) || !Resolve(uid, ref item))
         {
@@ -110,7 +109,7 @@ public partial class InventorySystem
         return true;
     }
 
-    public bool TryUnequip(EntityUid uid, string slot, bool silent = false, bool force = false,
+    public virtual bool TryUnequip(EntityUid uid, string slot, bool silent = false, bool force = false,
         InventoryComponent? inventory = null)
     {
         if (!Resolve(uid, ref inventory))

@@ -9,6 +9,5 @@ public partial class InventorySystem
     {
         base.Initialize();
         InitializeRelay();
-        InitializeEquip();
     }
 }

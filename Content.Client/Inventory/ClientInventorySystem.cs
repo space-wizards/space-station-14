@@ -1,19 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using Content.Client.Clothing;
 using Content.Client.HUD;
 using Content.Shared.Input;
-using Content.Client.Items.Components;
 using Content.Client.Items.Managers;
 using Content.Client.Items.UI;
 using Content.Shared.CCVar;
-using Content.Shared.CharacterAppearance;
 using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
-using Content.Shared.Movement.EntitySystems;
-using Content.Shared.Slippery;
+using Content.Shared.Item;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
@@ -69,6 +65,20 @@ namespace Content.Client.Inventory
             SubscribeLocalEvent<ClientInventoryComponent, DidUnequipEvent>(OnDidUnequip);
 
             _config.OnValueChanged(CCVars.HudTheme, UpdateHudTheme);
+        }
+
+        public override bool TryEquip(EntityUid uid, EntityUid itemUid, string slot, bool silent = false, bool force = false,
+            InventoryComponent? inventory = null, SharedItemComponent? item = null)
+        {
+            RaiseNetworkEvent(new TryEquipNetworkMessage(uid, itemUid, slot, silent, force));
+            return base.TryEquip(uid, itemUid, slot, silent, force, inventory, item);
+        }
+
+        public override bool TryUnequip(EntityUid uid, string slot, bool silent = false, bool force = false,
+            InventoryComponent? inventory = null)
+        {
+            RaiseNetworkEvent(new TryUnequipNetworkMessage(uid, slot, silent, force));
+            return base.TryUnequip(uid, slot, silent, force, inventory);
         }
 
         private void OnDidUnequip(EntityUid uid, ClientInventoryComponent component, DidUnequipEvent args)
