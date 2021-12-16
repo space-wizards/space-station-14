@@ -7,7 +7,6 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Shared.Inventory;
 
-[RegisterComponent]
 public class InventoryComponent : Component, IExAct
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
