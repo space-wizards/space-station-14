@@ -68,11 +68,8 @@ namespace Content.Server.Atmos.Monitor.Components
 
         public void RegisterWires(WiresComponent.WiresBuilder builder)
         {
-            builder.CreateWire(Wires.Power);
-            builder.CreateWire(Wires.Access);
-            builder.CreateWire(Wires.Panic);
-            builder.CreateWire(Wires.DeviceSync);
-            builder.CreateWire(Wires.Dummy);
+            foreach (var wire in Enum.GetValues<Wires>())
+                builder.CreateWire(wire);
 
             UpdateWires();
         }
@@ -84,29 +81,34 @@ namespace Content.Server.Atmos.Monitor.Components
 
             if (WiresComponent == null) return;
 
-            var powerLight = new StatusLightData(Color.Yellow, StatusLightState.On, "POWR");
+            var pwrLightState = (PowerPulsed, PowerCut) switch {
+                (true, false) => StatusLightState.BlinkingFast,
+                (_, true) => StatusLightState.Off,
+                (_, _) => StatusLightState.On
+            };
 
-            if (PowerPulsed)
-                powerLight = new StatusLightData(Color.Yellow, StatusLightState.BlinkingFast, "POWR");
-            else if (PowerCut)
-                powerLight = new StatusLightData(Color.Yellow, StatusLightState.Off, "POWR");
+            var powerLight = new StatusLightData(Color.Yellow, pwrLightState, "POWR");
 
-            var accessLight = new StatusLightData(Color.Green, StatusLightState.On, "ACC");
+            var accessLight = new StatusLightData(
+                Color.Green,
+                WiresComponent.IsWireCut(Wires.Access) ? StatusLightState.Off : StatusLightState.On,
+                "ACC"
+            );
 
-            if (WiresComponent.IsWireCut(Wires.Access))
-                accessLight = new StatusLightData(Color.Green, StatusLightState.Off, "ACC");
+            var panicLight = new StatusLightData(
+                Color.Red,
+                CurrentMode == AirAlarmMode.Panic ? StatusLightState.On : StatusLightState.Off,
+                "PAN"
+            );
 
-            var panicLight = new StatusLightData(Color.Red, StatusLightState.Off, "PAN");
-
-            if (CurrentMode == AirAlarmMode.Panic)
-                panicLight = new StatusLightData(Color.Red, StatusLightState.BlinkingFast, "PAN");
-
-            var syncLight = new StatusLightData(Color.Orange, StatusLightState.BlinkingSlow, "NET");
+            var syncLightState = StatusLightState.BlinkingSlow;
 
             if (AtmosMonitorComponent != null && !AtmosMonitorComponent.NetEnabled)
-                syncLight = new StatusLightData(Color.Orange, StatusLightState.Off, "NET");
+                syncLight = StatusLightState.Off;
             else if (DeviceData.Count != 0)
-                syncLight = new StatusLightData(Color.Orange, StatusLightState.On, "NET");
+                syncLightState = StatusLightState.On;
+            
+            var syncLight = new StatusLightData(Color.Orange, syncLightState, "NET");
 
             WiresComponent.SetStatus(AirAlarmWireStatus.Power, powerLight);
             WiresComponent.SetStatus(AirAlarmWireStatus.Access, accessLight);

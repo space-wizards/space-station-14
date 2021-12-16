@@ -67,24 +67,15 @@ namespace Content.Server.Atmos.Monitor
 
         // still not a fan since ReplaceMode must have an allocation
         // but it's whatever
-        public static IAirAlarmMode? ModeToExecutor(AirAlarmMode mode)
+        public static IAirAlarmMode? ModeToExecutor(AirAlarmMode mode) => mode switch 
         {
-            switch (mode)
-            {
-                case AirAlarmMode.Filtering:
-                    return _filterMode;
-                case AirAlarmMode.Fill:
-                    return _fillMode;
-                case AirAlarmMode.Panic:
-                    return _panicMode;
-                case AirAlarmMode.None:
-                    return _noneMode;
-                case AirAlarmMode.Replace:
-                    return new AirAlarmReplaceMode();
-            }
-
-            return null;
-        }
+            AirAlarmMode.Filtering => _filterMode,
+            AirAlarmMode.Fill => _fillMode,
+            AirAlarmMode.Panic => _panicMode,
+            AirAlarmMode.None => _noneMode,
+            AirAlarmMode.Replace => new AirAlarmReplaceMode(),
+            _ => null
+        };
     }
 
     // like a tiny little EntitySystem

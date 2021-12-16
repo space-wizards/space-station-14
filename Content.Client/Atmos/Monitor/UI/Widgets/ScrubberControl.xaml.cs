@@ -61,12 +61,7 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets
                 _data.VolumeRate = _volumeRate.Value;
                 ScrubberDataChanged?.Invoke(_address, _data);
             };
-            _volumeRate.IsValid += value =>
-            {
-                if (value < 0) return false;
-
-                return true;
-            };
+            _volumeRate.IsValid += value => value >= 0;
 
             foreach (var value in Enum.GetValues<ScrubberPumpDirection>())
                 _pumpDirection.AddItem(Loc.GetString($"{value}"), (int) value);
@@ -91,8 +86,10 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets
                 };
                 gasButton.OnToggled += args =>
                 {
-                    if (args.Pressed) _data.FilterGases.Add(value);
-                    else              _data.FilterGases.Remove(value);
+                    if (args.Pressed)
+                        _data.FilterGases.Add(value);
+                    else
+                        _data.FilterGases.Remove(value);
 
                     ScrubberDataChanged?.Invoke(_address, _data);
                 };

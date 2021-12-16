@@ -128,10 +128,8 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             }
         }
 
-        private void OnPowerChanged(EntityUid uid, GasVentScrubberComponent component, PowerChangedEvent args)
-        {
+        private void OnPowerChanged(EntityUid uid, GasVentScrubberComponent component, PowerChangedEvent args) =>
             component.Enabled = args.Powered;
-        }
 
         private void OnPacketRecv(EntityUid uid, GasVentScrubberComponent component, PacketSentEvent args)
         {

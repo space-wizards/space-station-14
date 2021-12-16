@@ -49,12 +49,7 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets
                 _data.InternalPressureBound = _internalBound.Value;
                 PumpDataChanged?.Invoke(_address, _data);
             };
-            _internalBound.IsValid += value =>
-            {
-                if (value < 0) return false;
-
-                return true;
-            };
+            _internalBound.IsValid += value => value >= 0;
 
             _externalBound.Value = (float) _data.ExternalPressureBound!;
             _externalBound.OnValueChanged += _ =>
@@ -62,12 +57,7 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets
                 _data.ExternalPressureBound = _externalBound.Value;
                 PumpDataChanged?.Invoke(_address, _data);
             };
-            _externalBound.IsValid += value =>
-            {
-                if (value < 0) return false;
-
-                return true;
-            };
+            _externalBound.IsValid += value => value >= 0;
 
             foreach (var value in Enum.GetValues<VentPumpDirection>())
                 _pumpDirection.AddItem(Loc.GetString($"{value}"), (int) value);

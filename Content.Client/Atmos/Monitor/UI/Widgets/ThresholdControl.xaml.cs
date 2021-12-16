@@ -56,8 +56,10 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets
             {
                 var value = 0f;
 
-                if (_threshold.LowerWarningBound != null) value = (float) _threshold.LowerWarningBound + 0.1f;
-                else if (_threshold.LowerBound != null)   value = (float) _threshold.LowerBound + 0.1f;
+                if (_threshold.LowerWarningBound != null)
+                    value = (float) _threshold.LowerWarningBound + 0.1f;
+                else if (_threshold.LowerBound != null)
+                    value = (float) _threshold.LowerBound + 0.1f;
 
                 return value;
             };
@@ -77,15 +79,15 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets
             {
                 var value = 0f;
 
-                if (_threshold.UpperWarningBound != null) value = (float) _threshold.UpperWarningBound - 0.1f;
-                else if (_threshold.UpperBound != null)   value = (float) _threshold.UpperBound - 0.1f;
+                if (_threshold.UpperWarningBound != null)
+                    value = (float) _threshold.UpperWarningBound - 0.1f;
+                else if (_threshold.UpperBound != null)
+                    value = (float) _threshold.UpperBound - 0.1f;
 
                 return value;
             };
             _lowerBoundControl.OnValidBoundChanged += () =>
-            {
                 ThresholdDataChanged!.Invoke(_type, _threshold, _gas);
-            };
             _dangerBounds.AddChild(_lowerBoundControl);
 
             _upperWarningBoundControl = new ThresholdBoundControl("upper-warning-bound", _threshold.UpperWarningBound, modifier);
@@ -98,15 +100,15 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets
             {
                 var value = 0f;
 
-                if (_threshold.LowerWarningBound != null) value = (float) _threshold.LowerWarningBound + 0.1f;
-                else if (_threshold.LowerBound != null)   value = (float) _threshold.LowerBound + 0.1f;
+                if (_threshold.LowerWarningBound != null)
+                    value = (float) _threshold.LowerWarningBound + 0.1f;
+                else if (_threshold.LowerBound != null)
+                    value = (float) _threshold.LowerBound + 0.1f;
 
                 return value;
             };
             _upperWarningBoundControl.OnValidBoundChanged += () =>
-            {
                 ThresholdDataChanged!.Invoke(_type, _threshold, _gas);
-            };
             _warningBounds.AddChild(_upperWarningBoundControl);
 
             _lowerWarningBoundControl = new ThresholdBoundControl("lower-warning-bound", _threshold.LowerWarningBound, modifier);
@@ -119,15 +121,16 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets
             {
                 var value = 0f;
 
-                if (_threshold.UpperWarningBound != null) value = (float) _threshold.UpperWarningBound - 0.1f;
-                else if (_threshold.UpperBound != null)   value = (float) _threshold.UpperBound - 0.1f;
+                if (_threshold.UpperWarningBound != null)
+                    value = (float) _threshold.UpperWarningBound - 0.1f;
+                else if (_threshold.UpperBound != null)
+                    value = (float) _threshold.UpperBound - 0.1f;
 
                 return value;
             };
             _lowerWarningBoundControl.OnValidBoundChanged += () =>
-            {
                 ThresholdDataChanged!.Invoke(_type, _threshold, _gas);
-            };
+
             _warningBounds.AddChild(_lowerWarningBoundControl);
 
             _ignore.OnToggled += args =>
@@ -284,13 +287,7 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets
                 OnValidBoundChanged!.Invoke();
             }
 
-            private bool ValidateThreshold(float value)
-            {
-                if (_value == null) return false;
-                if (value < 0) return false;
-
-                return true;
-            }
+            private bool ValidateThreshold(float value) => (_value != null) && (value >= 0);
 
         }
     }

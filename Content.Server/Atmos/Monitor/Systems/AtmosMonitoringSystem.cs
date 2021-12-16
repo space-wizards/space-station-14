@@ -368,10 +368,8 @@ namespace Content.Server.Atmos.Monitor.Systems
         /// <summary>
         ///     Resets a single monitor's alarm.
         /// </summary>
-        public void Reset(EntityUid uid)
-        {
+        public void Reset(EntityUid uid) =>
             Alert(uid, AtmosMonitorAlarmType.Normal);
-        }
 
         /// <summary>
         ///     Resets a network's alarms, using this monitor as a source.
