@@ -60,7 +60,6 @@ namespace Content.Client.Entry
             "MagicMirror",
             "FloorTile",
             "ShuttleController",
-            "HumanInventoryController",
             "RandomInsulation",
             "Electrified",
             "Electrocution",

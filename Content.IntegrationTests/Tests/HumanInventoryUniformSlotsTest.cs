@@ -8,7 +8,7 @@ using Robust.Shared.Map;
 
 namespace Content.IntegrationTests.Tests
 {
-    // Tests the behavior of HumanInventoryControllerComponent.
+    // Tests the behavior of InventoryComponent.
     // i.e. the interaction between uniforms and the pocket/ID slots.
     // and also how big items don't fit in pockets.
     [TestFixture]
@@ -20,7 +20,6 @@ namespace Content.IntegrationTests.Tests
   id: HumanDummy
   components:
   - type: Inventory
-  - type: HumanInventoryController
 
 - type: entity
   name: UniformDummy

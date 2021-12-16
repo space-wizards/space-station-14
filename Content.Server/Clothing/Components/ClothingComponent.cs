@@ -13,9 +13,13 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Clothing.Components
 {
     [RegisterComponent]
+    [ComponentReference(typeof(SharedItemComponent))]
+    public class ItemComponent : SharedItemComponent{}
+
+    [RegisterComponent]
     [NetworkedComponent]
     [ComponentReference(typeof(SharedItemComponent))]
-    public class ClothingComponent : SharedItemComponent, IUse
+    public class ClothingComponent : ItemComponent, IUse
     {
         [Dependency] private readonly IEntityManager _entities = default!;
         [Dependency] private readonly IPrototypeManager _prototype = default!;
