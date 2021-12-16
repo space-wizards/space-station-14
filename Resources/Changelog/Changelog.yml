@@ -1,10 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: Gas canisters and their UI have been reworked completely., type: Tweak}
-  - {message: You can now insert gas tanks in gas canisters., type: Add}
-  id: 242
-  time: '2021-06-19T11:25:05.0000000+00:00'
 - author: DogZeroX
   changes:
   - {message: Added a vox plushie., type: Add}
@@ -2867,3 +2861,10 @@ Entries:
   - {message: Blunts can be made with a dried tobacco leaf., type: Add}
   id: 743
   time: '2021-12-15T10:07:58.0000000+00:00'
+- author: buletsponge
+  changes:
+  - {message: Added DrozdRiot, type: Add}
+  - {message: Changed packedstation armory to spawn with non-lethal magazines and
+      SMGs, type: Tweak}
+  id: 744
+  time: '2021-12-16T12:00:09.0000000+00:00'
