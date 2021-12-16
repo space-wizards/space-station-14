@@ -130,7 +130,7 @@ namespace Content.Server.Light.Components
 
             if (_entMan.TryGetComponent(Owner, out ClothingComponent? clothing))
             {
-                clothing.ClothingEquippedPrefix = on ? "Activated" : string.Empty;
+                clothing.EquippedPrefix = on ? "Activated" : string.Empty;
             }
         }
 

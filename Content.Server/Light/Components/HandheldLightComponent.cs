@@ -178,11 +178,6 @@ namespace Content.Server.Light.Components
                 light.Enabled = on;
             }
 
-            if (_entMan.TryGetComponent(Owner, out ClothingComponent? clothing))
-            {
-                clothing.ClothingEquippedPrefix = Loc.GetString(on ? "on" : "off");
-            }
-
             if (_entMan.TryGetComponent(Owner, out SharedItemComponent? item))
             {
                 item.EquippedPrefix = Loc.GetString(on ? "on" : "off");

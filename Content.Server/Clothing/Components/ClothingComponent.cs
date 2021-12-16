@@ -2,6 +2,7 @@ using Content.Server.Hands.Components;
 using Content.Shared.Clothing;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
+using Content.Shared.Item;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
@@ -13,7 +14,8 @@ namespace Content.Server.Clothing.Components
 {
     [RegisterComponent]
     [NetworkedComponent]
-    public class ClothingComponent : Component, IUse
+    [ComponentReference(typeof(SharedItemComponent))]
+    public class ClothingComponent : SharedItemComponent, IUse
     {
         [Dependency] private readonly IEntityManager _entities = default!;
         [Dependency] private readonly IPrototypeManager _prototype = default!;
