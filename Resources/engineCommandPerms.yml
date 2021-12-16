@@ -9,6 +9,7 @@
   Commands:
   - addcomp
   - rmcomp
+  - vv
 
 - Flags: DEBUG
   Commands:
@@ -28,6 +29,7 @@
   - togglelight
   - toggleshadows
   - testbed
+  - vv
 
 - Flags: MAPPING
   Commands:

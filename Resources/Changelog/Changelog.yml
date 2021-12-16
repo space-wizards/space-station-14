@@ -1,37 +1,4 @@
 Entries:
-- author: Seth
-  changes:
-  - {message: Made RCDs unable to destroy reinforced walls and airlocks., type: Tweak}
-  id: 236
-  time: '2021-06-16T03:36:13.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix uncuffing yourself, type: Fix}
-  - {message: Can no longer break pulling when cuffed, type: Fix}
-  id: 237
-  time: '2021-06-16T14:37:06.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: 'Solar control computers UI scale properly, better prediction, unusable
-      by ghosts', type: Fix}
-  id: 238
-  time: '2021-06-16T14:49:02.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Lights have been dimmed around the station for budgetary purposes.
-      Also, our incandescents are actually incandescents now.', type: Tweak}
-  id: 239
-  time: '2021-06-16T22:55:55.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: Removes Warden, type: Remove}
-  id: 240
-  time: '2021-06-17T22:35:37.577392+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed ghosts not being able to warp to players., type: Fix}
-  id: 241
-  time: '2021-06-18T07:56:23.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: Gas canisters and their UI have been reworked completely., type: Tweak}
@@ -2860,3 +2827,43 @@ Entries:
       restraints crate.', type: Add}
   id: 737
   time: '2021-12-14T05:17:27.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: NanoTrasen has supplied its stations with t-ray scanners. No longer
+      will engineers (or other curious crewmembers) have to rip up floor tiles to
+      reveal what is underneath., type: Add}
+  id: 738
+  time: '2021-12-14T07:46:47.0000000+00:00'
+- author: zlodo
+  changes:
+  - {message: Combat gloves now actually work., type: Fix}
+  id: 739
+  time: '2021-12-14T13:08:19.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: T-Ray Scanner can now be obtained from Youtool! As well as some engineering
+      toolboxes and lockers., type: Add}
+  id: 740
+  time: '2021-12-14T20:21:41.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Nanotrasen has thrown a clown into the singularity to improve stability
+      by 20%., type: Fix}
+  id: 741
+  time: '2021-12-15T02:47:13.0000000+00:00'
+- author: Matz05
+  changes:
+  - {message: Added burger buns! Craftable using one dough slice in the microwave
+      for 5 seconds., type: Add}
+  - {message: Changed burger recipes to use one bun instead of two bread slices.,
+    type: Tweak}
+  id: 742
+  time: '2021-12-15T09:24:27.0000000+00:00'
+- author: Pancake
+  changes:
+  - {message: Rolling paper packs with filters added to cigarette vending machines.,
+    type: Tweak}
+  - {message: Joints/Blunts have been renamed from rollies., type: Tweak}
+  - {message: Blunts can be made with a dried tobacco leaf., type: Add}
+  id: 743
+  time: '2021-12-15T10:07:58.0000000+00:00'
