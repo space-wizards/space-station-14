@@ -10,6 +10,7 @@
     tags:
     - CanPilot
     - FootstepSound
+    - DoorBumpOpener
   - type: Reactive
     groups:
       Flammable: [ Touch ]
@@ -293,7 +294,6 @@
     attributes:
       proper: true
   - type: StandingState
-  - type: DoorBumpOpener
 - type: entity
   save: false
   name: Urist McHands

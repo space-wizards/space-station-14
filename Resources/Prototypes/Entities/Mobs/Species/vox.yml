@@ -113,4 +113,3 @@
     categoriesFacialHair: VoxFacialHair
   - type: Inventory
     speciesId: vox
-  - type: DoorBumpOpener

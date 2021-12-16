@@ -8,6 +8,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
+using static Content.Shared.Doors.DoorComponent;
 
 namespace Content.Client.Doors
 {
@@ -126,9 +127,9 @@ namespace Content.Client.Doors
 
             var sprite = _entMan.GetComponent<ISpriteComponent>(component.Owner);
             var animPlayer = _entMan.GetComponent<AnimationPlayerComponent>(component.Owner);
-            if (!component.TryGetData(DoorVisuals.VisualState, out DoorVisualState state))
+            if (!component.TryGetData(DoorVisuals.State, out DoorState state))
             {
-                state = DoorVisualState.Closed;
+                state = DoorState.Closed;
             }
 
             var unlitVisible = true;
@@ -141,7 +142,7 @@ namespace Content.Client.Doors
             }
             switch (state)
             {
-                case DoorVisualState.Open:
+                case DoorState.Open:
                     sprite.LayerSetState(DoorVisualLayers.Base, "open");
                     unlitVisible = _openUnlitVisible;
                     if (_openUnlitVisible && !_simpleVisuals)
@@ -149,7 +150,7 @@ namespace Content.Client.Doors
                         sprite.LayerSetState(DoorVisualLayers.BaseUnlit, "open_unlit");
                     }
                     break;
-                case DoorVisualState.Closed:
+                case DoorState.Closed:
                     sprite.LayerSetState(DoorVisualLayers.Base, "closed");
                     if (!_simpleVisuals)
                     {
@@ -157,17 +158,17 @@ namespace Content.Client.Doors
                         sprite.LayerSetState(DoorVisualLayers.BaseBolted, "bolted_unlit");
                     }
                     break;
-                case DoorVisualState.Opening:
+                case DoorState.Opening:
                     animPlayer.Play(OpenAnimation, AnimationKey);
                     break;
-                case DoorVisualState.Closing:
+                case DoorState.Closing:
                     animPlayer.Play(CloseAnimation, AnimationKey);
                     break;
-                case DoorVisualState.Deny:
+                case DoorState.Denying:
                     if (!animPlayer.HasRunningAnimation(AnimationKey))
                         animPlayer.Play(DenyAnimation, AnimationKey);
                     break;
-                case DoorVisualState.Welded:
+                case DoorState.Welded:
                     weldedVisible = true;
                     break;
                 default:
@@ -185,7 +186,7 @@ namespace Content.Client.Doors
 
             if (!_simpleVisuals)
             {
-                sprite.LayerSetVisible(DoorVisualLayers.BaseUnlit, unlitVisible && state != DoorVisualState.Closed);
+                sprite.LayerSetVisible(DoorVisualLayers.BaseUnlit, unlitVisible && state != DoorState.Closed);
                 sprite.LayerSetVisible(DoorVisualLayers.BaseWelded, weldedVisible);
                 sprite.LayerSetVisible(DoorVisualLayers.BaseBolted, unlitVisible && boltedVisible);
             }

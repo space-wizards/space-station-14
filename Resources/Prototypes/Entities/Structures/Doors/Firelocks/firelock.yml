@@ -32,8 +32,6 @@
           map: ["enum.DoorVisualLayers.BaseBolted"]
         - state: panel_open
           map: ["enum.WiresVisualLayers.MaintenancePanel"]
-    - type: Physics
-      canCollide: false
     - type: Fixtures
       fixtures:
       - shape:
@@ -55,7 +53,8 @@
       openTimeTwo: 0.6
       startOpen: true
       bumpOpen: false
-      inhibitCrush: false
+      clickOpen: false
+      autoClose: false
       crushDamage:
         types:
           Blunt: 15
@@ -80,8 +79,6 @@
           type: WiresBoundUserInterface
     - type: Airtight
       fixVacuum: true
-    - type: Occluder
-      enabled: false
     - type: Construction
       graph: Firelock
       node: Firelock
@@ -91,14 +88,6 @@
   parent: Firelock
   name: glass firelock
   components:
-    - type: Door
-      occludes: false
-      inhibitCrush: false
-      crushDamage:
-        types:
-          Blunt: 15
-    - type: Occluder
-      enabled: false
     - type: Sprite
       sprite: Structures/Doors/Airlocks/Glass/firelock.rsi
 
@@ -107,12 +96,6 @@
   parent: Firelock
   name: firelock
   components:
-    - type: Door
-      occludes: false
-      inhibitCrush: false
-      crushDamage:
-        types:
-          Blunt: 15
     - type: Sprite
       sprite: Structures/Doors/edge_door_hazard.rsi
     - type: Airtight
@@ -120,7 +103,6 @@
       noAirWhenFullyAirBlocked: false
       airBlockedDirection:
         - South
-    - type: Physics
     - type: Fixtures
       fixtures:
       - shape:

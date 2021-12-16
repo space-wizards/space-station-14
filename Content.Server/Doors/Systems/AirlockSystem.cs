@@ -1,29 +1,37 @@
-﻿using Content.Server.Doors.Components;
+using Content.Server.Doors.Components;
 using Content.Server.Power.Components;
 using Content.Shared.Doors;
+using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using System.Linq;
+using static Content.Shared.Doors.DoorComponent;
 
 namespace Content.Server.Doors.Systems
 {
     public class AirlockSystem : EntitySystem
     {
+        [Dependency] private readonly DoorSystem _doorSystem = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
+
+        /// <summary>
+        ///     Adjustment for the door-safety collision check.
+        /// </summary>
+        public const float CollideAdjust = -0.015f;
+
         public override void Initialize()
         {
             base.Initialize();
 
             SubscribeLocalEvent<AirlockComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<AirlockComponent, DoorStateChangedEvent>(OnStateChanged);
-            SubscribeLocalEvent<AirlockComponent, BeforeDoorOpenedEvent>(OnBeforeDoorOpened);
-            SubscribeLocalEvent<AirlockComponent, BeforeDoorClosedEvent>(OnBeforeDoorClosed);
+            SubscribeLocalEvent<AirlockComponent, DoorOpenAttemptEvent>(OnBeforeDoorOpened);
+            SubscribeLocalEvent<AirlockComponent, DoorCloseAttemptEvent>(OnBeforeDoorClosed);
             SubscribeLocalEvent<AirlockComponent, BeforeDoorDeniedEvent>(OnBeforeDoorDenied);
-            SubscribeLocalEvent<AirlockComponent, DoorSafetyEnabledEvent>(OnDoorSafetyCheck);
-            SubscribeLocalEvent<AirlockComponent, BeforeDoorAutoCloseEvent>(OnDoorAutoCloseCheck);
-            SubscribeLocalEvent<AirlockComponent, DoorGetCloseTimeModifierEvent>(OnDoorCloseTimeModifier);
-            SubscribeLocalEvent<AirlockComponent, DoorClickShouldActivateEvent>(OnDoorClickShouldActivate);
+            SubscribeLocalEvent<AirlockComponent, ActivateInWorldEvent>(OnActivate, before: new [] {typeof(DoorSystem)});
             SubscribeLocalEvent<AirlockComponent, BeforeDoorPryEvent>(OnDoorPry);
         }
 
@@ -33,6 +41,10 @@ namespace Content.Server.Doors.Systems
             {
                 component.AppearanceComponent.SetData(DoorVisuals.Powered, args.Powered);
             }
+
+            // stop any scheduled auto-closing
+            if (!args.Powered)
+                _doorSystem.QueueAutoClose(uid, 0);
 
             // BoltLights also got out
             component.UpdateBoltLightStatus();
@@ -45,19 +57,58 @@ namespace Content.Server.Doors.Systems
             {
                 component.WiresComponent.IsPanelVisible =
                     component.OpenPanelVisible
-                    ||  args.State != SharedDoorComponent.DoorState.Open;
+                    ||  args.State != DoorState.Open;
             }
             // If the door is closed, we should look if the bolt was locked while closing
             component.UpdateBoltLightStatus();
+
+            UpdateAutoClose(uid, component);
         }
 
-        private void OnBeforeDoorOpened(EntityUid uid, AirlockComponent component, BeforeDoorOpenedEvent args)
+        /// <summary>
+        /// Updates the auto close timer.
+        /// </summary>
+        public void UpdateAutoClose(EntityUid uid, AirlockComponent? airlock = null, DoorComponent? door = null)
+        {
+            if (!Resolve(uid, ref airlock, ref door))
+                return;
+
+            if (door.State != DoorState.Open)
+                return;
+
+            if (airlock.AutoCloseDelay <= 0)
+                return;
+
+            var autoev = new BeforeDoorAutoCloseEvent();
+            RaiseLocalEvent(uid, autoev, false);
+            if (autoev.Cancelled)
+                return;
+
+            _doorSystem.QueueAutoClose(uid, airlock.AutoCloseDelay * airlock.AutoCloseDelayModifier);
+        }
+
+        public bool SafetyCheck(EntityUid uid,
+            AirlockComponent? airlock = null,
+            DoorComponent? door = null,
+            PhysicsComponent? physics = null)
+        {
+            if (!Resolve(uid, ref airlock, ref door, ref physics, false))
+                return true;
+
+            if (!airlock.Safety)
+                return true;
+
+            // are there any colliding entities?
+            return !_physicsSystem.GetCollidingEntities(physics, CollideAdjust).Any();
+        }
+
+        private void OnBeforeDoorOpened(EntityUid uid, AirlockComponent component, DoorOpenAttemptEvent args)
         {
             if (!component.CanChangeState())
                 args.Cancel();
         }
 
-        private void OnBeforeDoorClosed(EntityUid uid, AirlockComponent component, BeforeDoorClosedEvent args)
+        private void OnBeforeDoorClosed(EntityUid uid, AirlockComponent component, DoorCloseAttemptEvent args)
         {
             if (!component.CanChangeState())
                 args.Cancel();
@@ -69,26 +120,11 @@ namespace Content.Server.Doors.Systems
                 args.Cancel();
         }
 
-        private void OnDoorSafetyCheck(EntityUid uid, AirlockComponent component, DoorSafetyEnabledEvent args)
+        private void OnActivate(EntityUid uid, AirlockComponent component, ActivateInWorldEvent args)
         {
-            args.Safety = component.Safety;
-        }
-
-        private void OnDoorAutoCloseCheck(EntityUid uid, AirlockComponent component, BeforeDoorAutoCloseEvent args)
-        {
-            if (!component.AutoClose)
-                args.Cancel();
-        }
-
-        private void OnDoorCloseTimeModifier(EntityUid uid, AirlockComponent component, DoorGetCloseTimeModifierEvent args)
-        {
-            args.CloseTimeModifier *= component.AutoCloseDelayModifier;
-        }
-
-        private void OnDoorClickShouldActivate(EntityUid uid, AirlockComponent component, DoorClickShouldActivateEvent args)
-        {
-            if (component.WiresComponent != null && component.WiresComponent.IsPanelOpen &&
-                EntityManager.TryGetComponent(args.Args.User, out ActorComponent? actor))
+            if (component.WiresComponent != null &&
+                component.WiresComponent.IsPanelOpen &&
+                TryComp(args.User, out ActorComponent? actor))
             {
                 component.WiresComponent.OpenInterface(actor.PlayerSession);
                 args.Handled = true;
@@ -99,12 +135,12 @@ namespace Content.Server.Doors.Systems
         {
             if (component.IsBolted())
             {
-                component.Owner.PopupMessage(args.Args.User, Loc.GetString("airlock-component-cannot-pry-is-bolted-message"));
+                component.Owner.PopupMessage(args.User, Loc.GetString("airlock-component-cannot-pry-is-bolted-message"));
                 args.Cancel();
             }
             if (component.IsPowered())
             {
-                component.Owner.PopupMessage(args.Args.User, Loc.GetString("airlock-component-cannot-pry-is-powered-message"));
+                component.Owner.PopupMessage(args.User, Loc.GetString("airlock-component-cannot-pry-is-powered-message"));
                 args.Cancel();
             }
         }

@@ -1,4 +1,5 @@
 using Content.Server.Doors.Components;
+using Content.Server.Doors.Systems;
 using Content.Server.Power.Components;
 using Content.Server.Shuttles.Components;
 using Content.Shared.Doors;
@@ -21,6 +22,7 @@ namespace Content.Server.Shuttles.EntitySystems
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly FixtureSystem _fixtureSystem = default!;
         [Dependency] private readonly SharedJointSystem _jointSystem = default!;
+        [Dependency] private readonly DoorSystem _doorSystem = default!;
 
         private const string DockingFixture = "docking";
         private const string DockingJoint = "docking";
@@ -344,16 +346,16 @@ namespace Content.Server.Shuttles.EntitySystems
             dockA.DockJoint = joint;
             dockB.DockJoint = joint;
 
-            if (EntityManager.TryGetComponent((dockA).Owner, out ServerDoorComponent? doorA))
+            if (EntityManager.TryGetComponent((dockA).Owner, out DoorComponent? doorA))
             {
                 doorA.ChangeAirtight = false;
-                doorA.Open();
+                _doorSystem.StartOpening(doorA.Owner, doorA);
             }
 
-            if (EntityManager.TryGetComponent((dockB).Owner, out ServerDoorComponent? doorB))
+            if (EntityManager.TryGetComponent((dockB).Owner, out DoorComponent? doorB))
             {
                 doorB.ChangeAirtight = false;
-                doorB.Open();
+                _doorSystem.StartOpening(doorB.Owner, doorB);
             }
 
             var msg = new DockEvent
@@ -425,16 +427,16 @@ namespace Content.Server.Shuttles.EntitySystems
                 return;
             }
 
-            if (EntityManager.TryGetComponent((dock).Owner, out ServerDoorComponent? doorA))
+            if (EntityManager.TryGetComponent((dock).Owner, out DoorComponent? doorA))
             {
                 doorA.ChangeAirtight = true;
-                doorA.Close();
+                _doorSystem.TryClose(doorA.Owner, doorA);
             }
 
-            if (EntityManager.TryGetComponent((dock.DockedWith).Owner, out ServerDoorComponent? doorB))
+            if (EntityManager.TryGetComponent((dock.DockedWith).Owner, out DoorComponent? doorB))
             {
                 doorB.ChangeAirtight = true;
-                doorB.Close();
+                _doorSystem.TryClose(doorB.Owner, doorB);
             }
 
             // Could maybe give the shuttle a light push away, or at least if there's no other docks left?

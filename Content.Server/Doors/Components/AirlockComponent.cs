@@ -1,5 +1,6 @@
 using System;
 using System.Threading;
+using Content.Server.Doors.Systems;
 using Content.Server.Power.Components;
 using Content.Server.VendingMachines;
 using Content.Server.WireHacking;
@@ -26,7 +27,7 @@ namespace Content.Server.Doors.Components
         public override string Name => "Airlock";
 
         [ComponentDependency]
-        public readonly ServerDoorComponent? DoorComponent = null;
+        public readonly DoorComponent? DoorComponent = null;
 
         [ComponentDependency]
         public readonly AppearanceComponent? AppearanceComponent = null;
@@ -98,7 +99,7 @@ namespace Content.Server.Doors.Components
         private bool BoltLightsVisible
         {
             get => _boltLightsWirePulsed && BoltsDown && IsPowered()
-                && DoorComponent != null && DoorComponent.State == SharedDoorComponent.DoorState.Closed;
+                && DoorComponent != null && DoorComponent.State == DoorState.Closed;
             set
             {
                 _boltLightsWirePulsed = value;
@@ -106,14 +107,22 @@ namespace Content.Server.Doors.Components
             }
         }
 
+        /// <summary>
+        /// Delay until an open door automatically closes (in seconds). Set zero to prevent auto closing.
+        /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("autoClose")]
-        public bool AutoClose = true;
+        [DataField("autoCloseDelay")]
+        public float AutoCloseDelay = 5f;
 
+        /// <summary>
+        /// Multiplicative modifier for the auto-close delay.
+        /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("autoCloseDelayModifier")]
         public float AutoCloseDelayModifier = 1.0f;
 
+        /// <summary>
+        /// Whether the airlock will check for colliding entities before closing.
+        /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("safety")]
         public bool Safety = true;
@@ -175,12 +184,9 @@ namespace Content.Server.Doors.Components
             var boltLightsStatus = new StatusLightData(Color.Lime,
                 _boltLightsWirePulsed ? StatusLightState.On : StatusLightState.Off, "BLTL");
 
-            var ev = new DoorGetCloseTimeModifierEvent();
-            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, ev, false);
-
             var timingStatus =
-                new StatusLightData(Color.Orange, !AutoClose ? StatusLightState.Off :
-                                                    !MathHelper.CloseToPercent(ev.CloseTimeModifier, 1.0f) ? StatusLightState.BlinkingSlow :
+                new StatusLightData(Color.Orange, (AutoCloseDelayModifier <= 0) ? StatusLightState.Off :
+                                                    !MathHelper.CloseToPercent(AutoCloseDelayModifier, 1.0f) ? StatusLightState.BlinkingSlow :
                                                     StatusLightState.On,
                                                     "TIME");
 
@@ -223,17 +229,6 @@ namespace Content.Server.Doors.Components
                 WiresComponent.IsWireCut(Wires.BackupPower);
         }
 
-        private void PowerDeviceOnOnPowerStateChanged(PowerChangedMessage e)
-        {
-            if (AppearanceComponent != null)
-            {
-                AppearanceComponent.SetData(DoorVisuals.Powered, e.Powered);
-            }
-
-            // BoltLights also got out
-            UpdateBoltLightStatus();
-        }
-
         private enum Wires
         {
             /// <summary>
@@ -261,6 +256,7 @@ namespace Content.Server.Doors.Components
             BoltLight,
 
             // Placeholder for when AI is implemented
+            // aaaaany day now.
             AIControl,
 
             /// <summary>
@@ -329,8 +325,9 @@ namespace Content.Server.Doors.Components
                         BoltLightsVisible = !_boltLightsWirePulsed;
                         break;
                     case Wires.Timing:
-                        AutoCloseDelayModifier = 0.5f;
-                        DoorComponent.RefreshAutoClose();
+                        // This is permanent, until the wire gets cut & mended. Is this intentional?
+                        AutoCloseDelayModifier = 0.5f; 
+                        EntitySystem.Get<AirlockSystem>().UpdateAutoClose(Owner, this);
                         break;
                     case Wires.Safety:
                         Safety = !Safety;
@@ -352,8 +349,8 @@ namespace Content.Server.Doors.Components
                         BoltLightsVisible = true;
                         break;
                     case Wires.Timing:
-                        AutoClose = true;
-                        DoorComponent.RefreshAutoClose();
+                        AutoCloseDelayModifier = 1;
+                        EntitySystem.Get<AirlockSystem>().UpdateAutoClose(Owner, this);
                         break;
                     case Wires.Safety:
                         Safety = true;
@@ -372,8 +369,8 @@ namespace Content.Server.Doors.Components
                         BoltLightsVisible = false;
                         break;
                     case Wires.Timing:
-                        AutoClose = false;
-                        DoorComponent.RefreshAutoClose();
+                        AutoCloseDelayModifier = 0; // disable auto close
+                        EntitySystem.Get<AirlockSystem>().UpdateAutoClose(Owner, this);
                         break;
                     case Wires.Safety:
                         Safety = false;

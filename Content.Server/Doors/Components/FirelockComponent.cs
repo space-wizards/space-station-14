@@ -1,5 +1,6 @@
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Doors.Systems;
 using Content.Shared.Doors;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -19,7 +20,7 @@ namespace Content.Server.Doors.Components
         public override string Name => "Firelock";
 
         [ComponentDependency]
-        public readonly ServerDoorComponent? DoorComponent = null;
+        public readonly DoorComponent? DoorComponent = null;
 
         /// <summary>
         /// Pry time modifier to be used when the firelock is currently closed due to fire or pressure.
@@ -30,9 +31,14 @@ namespace Content.Server.Doors.Components
 
         public bool EmergencyPressureStop()
         {
-            if (DoorComponent != null && DoorComponent.State == SharedDoorComponent.DoorState.Open && DoorComponent.CanCloseGeneric())
+            var doorSys = EntitySystem.Get<DoorSystem>();
+            if (DoorComponent != null &&
+                DoorComponent.State == DoorState.Open &&
+                doorSys.CanClose(Owner, DoorComponent))
             {
-                DoorComponent.Close();
+                doorSys.StartClosing(Owner, DoorComponent);
+
+                // door system also sets airtight, but after a delay. This is immediate.
                 if (_entMan.TryGetComponent(Owner, out AirtightComponent? airtight))
                 {
                     EntitySystem.Get<AirtightSystem>().SetAirblocked(airtight, true);

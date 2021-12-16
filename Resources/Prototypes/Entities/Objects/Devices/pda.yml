@@ -47,7 +47,9 @@
       whitelist:
         components:
         - IdCard
-  - type: DoorBumpOpener
+  - type: Tag
+    tags:
+    - DoorBumpOpener
 
 - type: entity
   parent: BasePDA

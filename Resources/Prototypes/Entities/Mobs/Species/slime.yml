@@ -93,4 +93,3 @@
     - type: Body
       template: HumanoidTemplate
       preset: SlimePreset
-    - type: DoorBumpOpener

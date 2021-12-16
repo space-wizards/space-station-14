@@ -85,7 +85,6 @@ namespace Content.Client.Entry
             "CommunicationsConsole",
             "BarSign",
             "DroppedBodyPart",
-            "DoorBumpOpener",
             "DroppedMechanism",
             "SolarPanel",
             "BodyScanner",
