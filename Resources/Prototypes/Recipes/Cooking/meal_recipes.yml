@@ -1,3 +1,12 @@
+#Burger bun
+- type: microwaveMealRecipe
+  id: RecipeBun
+  name: bun recipe
+  result: FoodBreadBun
+  time: 5
+  solids:
+    FoodDoughSlice: 1 # one third of a standard bread dough recipe
+
 #Burgers
 - type: microwaveMealRecipe
   id: RecipeCheeseburger
@@ -5,7 +14,7 @@
   result: FoodBurgerCheese
   time: 5
   solids:
-    FoodBreadPlainSlice: 2 # its not a burger bun, but its good enough
+    FoodBreadBun: 1
     FoodMeat: 1
     FoodCheeseSlice: 1
 
@@ -15,7 +24,7 @@
   result: FoodBurgerClown
   time: 5
   solids:
-    FoodBreadPlainSlice: 2
+    FoodBreadBun: 1
     ClothingMaskClown: 1
 
 # - type: microwaveMealRecipe
@@ -34,7 +43,7 @@
   result: FoodBurgerXeno
   time: 5
   solids:
-    FoodBreadPlainSlice: 2
+    FoodBreadBun: 1
     FoodMeatXeno: 1
 
 #- type: microwaveMealRecipe
