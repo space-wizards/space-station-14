@@ -11,7 +11,7 @@ disposal-mailing-unit-power-button = Power
 disposal-mailing-unit-destination-select-label = Select a destination:
 disposal-mailing-unit-unit-self-reference = This unit:
 disposal-mailing-unit-is-valid-interaction-cannot-interact = You can't do that!
-disposal-mailing-unit-is-valid-interaction-cannot-reach = You can't reach there!
+disposal-mailing-unit-is-valid-interaction-cannot-reach = Вы не можете туда достать!
 disposal-mailing-unit-is-valid-interaction-no-hands = У вас нет рук.
 
 ## SelfInsertVerb

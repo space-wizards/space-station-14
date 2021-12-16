@@ -1,6 +1,6 @@
 ## PointingSystem
 
-pointing-system-try-point-cannot-reach = You can't reach there!
+pointing-system-try-point-cannot-reach = Вы не можете туда достать!
 pointing-system-point-at-self = You point at yourself.
 pointing-system-point-at-other = You point at {$other}.
 pointing-system-point-at-self-others = {$otherName} points at {$other}.

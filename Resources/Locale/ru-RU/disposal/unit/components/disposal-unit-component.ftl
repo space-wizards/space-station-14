@@ -11,5 +11,5 @@ ui-disposal-unit-button-eject = Eject Contents
 ui-disposal-unit-button-power = Power
 
 ui-disposal-unit-is-valid-interaction-cannot=interact = You can't do that!
-ui-disposal-unit-is-valid-interaction-cannot-reach = You can't reach there!
+ui-disposal-unit-is-valid-interaction-cannot-reach = Вы не можете туда достать!
 ui-disposal-unit-is-valid-interaction-no-hands = У вас нет рук.

@@ -19,7 +19,7 @@ comp-climbable-user-climbs-force = You force { CAPITALIZE(THE($moved-user)) } on
 comp-climbable-user-climbs-force-other = { CAPITALIZE(THE($user)) } forces { THE($moved-user) } onto { THE($climbable) }!
 
 # Shown to you when your character is far away from climbable
-comp-climbable-cant-reach = You can't reach there!
+comp-climbable-cant-reach = Вы не можете туда достать!
 
 # Shown to you when your character can't interact with climbable for some reason
 comp-climbable-cant-interact = You can't do that!
