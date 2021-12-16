@@ -1,6 +1,8 @@
 using Content.Shared.DragDrop;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Nutrition.Components
@@ -15,8 +17,8 @@ namespace Content.Shared.Nutrition.Components
 
         //TODO: List for sub-products like animal-hides, organs and etc?
         [ViewVariables]
-        [DataField("meat")]
-        public string? MeatPrototype;
+        [DataField("meat", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
+        public string MeatPrototype = "FoodMeat";
 
         [ViewVariables]
         [DataField("pieces")]

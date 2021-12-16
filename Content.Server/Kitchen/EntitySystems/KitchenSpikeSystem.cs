@@ -11,6 +11,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
+using System;
 using static Content.Shared.Kitchen.Components.SharedKitchenSpikeComponent;
 
 namespace Content.Server.Kitchen.EntitySystems
@@ -25,6 +26,7 @@ namespace Content.Server.Kitchen.EntitySystems
             base.Initialize();
 
             SubscribeLocalEvent<KitchenSpikeComponent, InteractUsingEvent>(OnInteractUsing);
+            SubscribeLocalEvent<KitchenSpikeComponent, InteractHandEvent>(OnInteractHand);
             SubscribeLocalEvent<KitchenSpikeComponent, DragDropEvent>(OnDragDrop);
 
             //DoAfter
@@ -63,6 +65,16 @@ namespace Content.Server.Kitchen.EntitySystems
 
             if (TrySpike(uid, args.User, args.Dragged, component))
                 args.Handled = true;
+        }
+        private void OnInteractHand(EntityUid uid, KitchenSpikeComponent component, InteractHandEvent args)
+        {
+            if (args.Handled)
+                return;
+
+            if (component.MeatParts > 0) {
+                _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-knife-needed"), uid, Filter.Entities(args.User));
+                args.Handled = true;
+            }
         }
 
         private void OnInteractUsing(EntityUid uid, KitchenSpikeComponent component, InteractUsingEvent args)
@@ -108,8 +120,7 @@ namespace Content.Server.Kitchen.EntitySystems
             // Is using knife
             if (!Resolve(used, ref utensil, false) || (utensil.Types & UtensilType.Knife) == 0)
             {
-                _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-knife-needed"), uid, Filter.Entities(user));
-                return true;
+                return false;
             }
 
             component.MeatParts--;
@@ -183,8 +194,9 @@ namespace Content.Server.Kitchen.EntitySystems
             {
                 _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-begin-hook-victim", ("user", userUid), ("this", uid)), victimUid, Filter.Entities(victimUid));
             }
-            else
-                _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-begin-hook-self", ("this", uid)), victimUid, Filter.Pvs(uid)); // This is actually unreachable and should be in SuicideEvent
+            // TODO: make it work when SuicideEvent is implemented
+            // else
+            //    _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-begin-hook-self", ("this", uid)), victimUid, Filter.Pvs(uid)); // This is actually unreachable and should be in SuicideEvent
 
             butcherable.BeingButchered = true;
             component.InUse = true;
