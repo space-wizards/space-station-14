@@ -24,6 +24,7 @@ using Content.Shared.Verbs;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -38,6 +39,7 @@ namespace Content.Server.Administration
     public class AdminVerbSystem : EntitySystem
     {
         [Dependency] private readonly IConGroupController _groupController = default!;
+        [Dependency] private readonly IConsoleHost _console = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly EuiManager _euiManager = default!;
@@ -48,9 +50,49 @@ namespace Content.Server.Administration
 
         public override void Initialize()
         {
+            SubscribeLocalEvent<GetOtherVerbsEvent>(AddAdminVerbs);
             SubscribeLocalEvent<GetOtherVerbsEvent>(AddDebugVerbs);
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<SolutionContainerManagerComponent, SolutionChangedEvent>(OnSolutionChanged);
+        }
+
+        private void AddAdminVerbs(GetOtherVerbsEvent args)
+        {
+            if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
+                return;
+
+            var player = actor.PlayerSession;
+
+            // Ahelp
+            if (_adminManager.IsAdmin(player) && TryComp(args.Target, out ActorComponent? targetActor))
+            {
+                Verb verb = new();
+                verb.Text = Loc.GetString("ahelp-verb-get-data-text");
+                verb.Category = VerbCategory.Admin;
+                verb.IconTexture = "/Textures/Interface/gavel.svg.192dpi.png";
+                verb.Act = () => _console.RemoteExecuteCommand(player, $"openahelp \"{targetActor.PlayerSession.UserId}\"");;
+                verb.Impact = LogImpact.Low;
+                args.Verbs.Add(verb);
+            }
+
+            // Atillery
+            if (_adminManager.HasAdminFlag(player, AdminFlags.Fun))
+            {
+                Verb verb = new();
+                verb.Text = Loc.GetString("explode-verb-get-data-text");
+                verb.Category = VerbCategory.Admin;
+                verb.Act = () =>
+                {
+                    var coords = Transform(args.Target).Coordinates;
+                    Timer.Spawn(_gameTiming.TickPeriod, () => _explosions.SpawnExplosion(coords, 0, 1, 2, 1), CancellationToken.None);
+                    if (TryComp(args.Target, out SharedBodyComponent? body))
+                    {
+                        body.Gib();
+                    }
+                };
+                verb.Impact = LogImpact.Extreme; // if you're just outright killing a person, I guess that deserves to be extreme?
+                args.Verbs.Add(verb);
+            }
         }
 
         private void AddDebugVerbs(GetOtherVerbsEvent args)
@@ -113,25 +155,6 @@ namespace Content.Server.Administration
                 verb.IconTexture = "/Textures/Interface/VerbIcons/sentient.svg.192dpi.png";
                 verb.Act = () => MakeSentientCommand.MakeSentient(args.Target, EntityManager);
                 verb.Impact = LogImpact.Medium;
-                args.Verbs.Add(verb);
-            }
-
-            // Atillery
-            if (_adminManager.HasAdminFlag(player, AdminFlags.Fun))
-            {
-                Verb verb = new();
-                verb.Text = Loc.GetString("explode-verb-get-data-text");
-                verb.Category = VerbCategory.Debug;
-                verb.Act = () =>
-                {
-                    var coords = Transform(args.Target).Coordinates;
-                    Timer.Spawn(_gameTiming.TickPeriod, () => _explosions.SpawnExplosion(coords, 0, 1, 2, 1), CancellationToken.None);
-                    if (TryComp(args.Target, out SharedBodyComponent? body))
-                    {
-                        body.Gib();
-                    }
-                };
-                verb.Impact = LogImpact.Extreme; // if you're just outright killing a person, I guess that deserves to be extreme?
                 args.Verbs.Add(verb);
             }
 

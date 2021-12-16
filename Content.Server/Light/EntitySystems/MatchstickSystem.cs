@@ -24,6 +24,12 @@ namespace Content.Server.Light.EntitySystems
             base.Initialize();
             SubscribeLocalEvent<MatchstickComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<MatchstickComponent, IsHotEvent>(OnIsHotEvent);
+            SubscribeLocalEvent<MatchstickComponent, ComponentShutdown>(OnShutdown);
+        }
+
+        private void OnShutdown(EntityUid uid, MatchstickComponent component, ComponentShutdown args)
+        {
+            _litMatches.Remove(component);
         }
 
         public override void Update(float frameTime)
@@ -31,7 +37,7 @@ namespace Content.Server.Light.EntitySystems
             base.Update(frameTime);
             foreach (var match in _litMatches)
             {
-                if (match.CurrentState != SmokableState.Lit)
+                if (match.CurrentState != SmokableState.Lit || Paused(match.Owner) || match.Deleted)
                     continue;
 
                 _atmosphereSystem.HotspotExpose(EntityManager.GetComponent<TransformComponent>(match.Owner).Coordinates, 400, 50, true);

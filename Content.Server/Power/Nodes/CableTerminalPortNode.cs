@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Server.NodeContainer.Nodes;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -12,6 +12,9 @@ namespace Content.Server.Power.Nodes
     {
         public override IEnumerable<Node> GetReachableNodes()
         {
+            if (!Anchored)
+                yield break;
+
             if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).GridID == GridId.Invalid)
                 yield break; // No funny nodes in spess.
 

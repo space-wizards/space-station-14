@@ -21,6 +21,7 @@ using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Content.Shared.Ghost;
 using Content.Shared.Inventory;
+using Content.Shared.PDA;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Content.Shared.Station;
@@ -138,9 +139,9 @@ namespace Content.Server.GameTicking
             _stationSystem.TryAssignJobToStation(station, jobPrototype);
 
             if (lateJoin)
-                _adminLogSystem.Add(LogType.LateJoin, LogImpact.Medium, $"Player {player.Name} late joined as {character.Name:characterName} on station {_stationSystem.StationInfo[station].Name:stationName} with {mob} as a {job.Name:jobName}.");
+                _adminLogSystem.Add(LogType.LateJoin, LogImpact.Medium, $"Player {player.Name} late joined as {character.Name:characterName} on station {_stationSystem.StationInfo[station].Name:stationName} with {ToPrettyString(mob):entity} as a {job.Name:jobName}.");
             else
-                _adminLogSystem.Add(LogType.RoundStartJoin, LogImpact.Medium, $"Player {player.Name} joined as {character.Name:characterName} on station {_stationSystem.StationInfo[station].Name:stationName} with {mob} as a {job.Name:jobName}.");
+                _adminLogSystem.Add(LogType.RoundStartJoin, LogImpact.Medium, $"Player {player.Name} joined as {character.Name:characterName} on station {_stationSystem.StationInfo[station].Name:stationName} with {ToPrettyString(mob):entity} as a {job.Name:jobName}.");
 
             Preset?.OnSpawnPlayerCompleted(player, mob, lateJoin);
         }

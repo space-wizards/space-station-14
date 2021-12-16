@@ -5,6 +5,7 @@ using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
 namespace Content.Client.DoAfter
@@ -55,28 +56,29 @@ namespace Content.Client.DoAfter
                 return;
 
             var viewbox = _eyeManager.GetWorldViewport().Enlarged(2.0f);
+            var entXform = Transform(entity);
+            var playerPos = entXform.MapPosition;
 
-            foreach (var comp in EntityManager.EntityQuery<DoAfterComponent>(true))
+            foreach (var (comp, xform) in EntityManager.EntityQuery<DoAfterComponent, TransformComponent>(true))
             {
                 var doAfters = comp.DoAfters.ToList();
-                var compPos = EntityManager.GetComponent<TransformComponent>(comp.Owner).WorldPosition;
+                var compPos = xform.MapPosition;
 
                 if (doAfters.Count == 0 ||
-                    EntityManager.GetComponent<TransformComponent>(comp.Owner).MapID != EntityManager.GetComponent<TransformComponent>(entity).MapID ||
-                    !viewbox.Contains(compPos))
+                    compPos.MapId != entXform.MapID ||
+                    !viewbox.Contains(compPos.Position))
                 {
                     comp.Disable();
                     continue;
                 }
 
-                var range = (compPos - EntityManager.GetComponent<TransformComponent>(entity).WorldPosition).Length +
-                            0.01f;
+                var range = (compPos.Position - playerPos.Position).Length + 0.01f;
 
                 if (comp.Owner != _attachedEntity &&
                     !ExamineSystemShared.InRangeUnOccluded(
-                        EntityManager.GetComponent<TransformComponent>(entity).MapPosition,
-                        EntityManager.GetComponent<TransformComponent>(comp.Owner).MapPosition, range,
-                        entity => entity == comp.Owner || entity == _attachedEntity))
+                        playerPos,
+                        compPos, range,
+                        ent => ent == comp.Owner || ent == _attachedEntity))
                 {
                     comp.Disable();
                     continue;
@@ -84,7 +86,7 @@ namespace Content.Client.DoAfter
 
                 comp.Enable();
 
-                var userGrid = EntityManager.GetComponent<TransformComponent>(comp.Owner).Coordinates;
+                var userGrid = xform.Coordinates;
 
                 // Check cancellations / finishes
                 foreach (var (id, doAfter) in doAfters)
@@ -117,7 +119,7 @@ namespace Content.Client.DoAfter
                     if (doAfter.BreakOnTargetMove)
                     {
                         if (EntityManager.EntityExists(doAfter.TargetUid) &&
-                            !EntityManager.GetComponent<TransformComponent>(doAfter.TargetUid).Coordinates.InRange(EntityManager, doAfter.TargetGrid,
+                            !Transform(doAfter.TargetUid).Coordinates.InRange(EntityManager, doAfter.TargetGrid,
                                 doAfter.MovementThreshold))
                         {
                             comp.Cancel(id, currentTime);

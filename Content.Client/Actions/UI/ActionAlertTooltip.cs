@@ -4,6 +4,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.IoC;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Robust.Shared.Utility.Markup;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Actions.UI
@@ -68,7 +69,7 @@ namespace Content.Client.Actions.UI
                     MaxWidth = TooltipTextMaxWidth,
                     StyleClasses = {StyleNano.StyleClassTooltipActionRequirements}
                 };
-                requiresLabel.SetMessage(FormattedMessage.FromMarkup("[color=#635c5c]" +
+                requiresLabel.SetMessage(Basic.RenderMarkup("[color=#635c5c]" +
                                                                      requires +
                                                                      "[/color]"));
                 vbox.AddChild(requiresLabel);
@@ -88,7 +89,7 @@ namespace Content.Client.Actions.UI
             if (timeLeft > TimeSpan.Zero)
             {
                 var duration = Cooldown.Value.End - Cooldown.Value.Start;
-                _cooldownLabel.SetMessage(FormattedMessage.FromMarkup(
+                _cooldownLabel.SetMessage(Basic.RenderMarkup(
                     $"[color=#a10505]{duration.Seconds} sec cooldown ({timeLeft.Seconds + 1} sec remaining)[/color]"));
                 _cooldownLabel.Visible = true;
             }

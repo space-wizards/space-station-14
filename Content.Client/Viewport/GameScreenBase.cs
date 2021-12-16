@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
@@ -175,7 +176,7 @@ namespace Content.Client.Viewport
             }
 
             if (foundEntities.Count == 0)
-                return new List<EntityUid>();
+                return Array.Empty<EntityUid>();
 
             foundEntities.Sort(new ClickableEntityComparer(_entityManager));
             // 0 is the top element.

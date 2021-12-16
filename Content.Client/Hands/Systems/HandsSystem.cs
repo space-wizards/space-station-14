@@ -56,7 +56,7 @@ namespace Content.Client.Hands
 
         private void HandlePickupAnimation(PickupAnimationMessage msg)
         {
-            if (!msg.EntityUid.IsValid())
+            if (!EntityManager.EntityExists(msg.EntityUid))
                 return;
 
             if (!_gameTiming.IsFirstTimePredicted)
