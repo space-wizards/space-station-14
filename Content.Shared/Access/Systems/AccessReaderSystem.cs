@@ -2,19 +2,17 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Server.Access.Components;
-using Content.Server.Inventory.Components;
-using Content.Server.Items;
-using Content.Shared.Access;
+using Content.Shared.Access.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
+using Content.Shared.Item;
 using Content.Shared.PDA;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Access.Systems
+namespace Content.Shared.Access.Systems
 {
     public class AccessReaderSystem : EntitySystem
     {
@@ -23,10 +21,10 @@ namespace Content.Server.Access.Systems
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<AccessReader, ComponentInit>(OnInit);
+            SubscribeLocalEvent<AccessReaderComponent, ComponentInit>(OnInit);
         }
 
-        private void OnInit(EntityUid uid, AccessReader reader, ComponentInit args)
+        private void OnInit(EntityUid uid, AccessReaderComponent reader, ComponentInit args)
         {
             var allTags = reader.AccessLists.SelectMany(c => c).Union(reader.DenyTags);
             foreach (var level in allTags)
@@ -46,13 +44,13 @@ namespace Content.Server.Access.Systems
         ///     If no access is found, an empty set is used instead.
         /// </remarks>
         /// <param name="entity">The entity to be searched for access.</param>
-        public bool IsAllowed(AccessReader reader, EntityUid entity)
+        public bool IsAllowed(AccessReaderComponent reader, EntityUid entity)
         {
             var tags = FindAccessTags(entity);
             return IsAllowed(reader, tags);
         }
 
-        public bool IsAllowed(AccessReader reader, ICollection<string> accessTags)
+        public bool IsAllowed(AccessReaderComponent reader, ICollection<string> accessTags)
         {
             if (reader.DenyTags.Overlaps(accessTags))
             {
@@ -80,11 +78,10 @@ namespace Content.Server.Access.Systems
             }
 
             // maybe its inside an inventory slot?
-            if (EntityManager.TryGetComponent(uid, out InventoryComponent? inventoryComponent))
+            if (EntityManager.TryGetComponent(uid, out SharedInventoryComponent? inventoryComponent))
             {
-                if (inventoryComponent.HasSlot(EquipmentSlotDefines.Slots.IDCARD) &&
-                    inventoryComponent.TryGetSlotItem(EquipmentSlotDefines.Slots.IDCARD, out ItemComponent? item) &&
-                    FindAccessTagsItem(item.Owner, out tags)
+                if (inventoryComponent.TryGetSlot(EquipmentSlotDefines.Slots.IDCARD, out var entity) &&
+                    FindAccessTagsItem(entity.Value, out tags)
                 )
                 {
                     return tags;

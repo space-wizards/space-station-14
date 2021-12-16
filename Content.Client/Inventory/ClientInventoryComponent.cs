@@ -228,9 +228,17 @@ namespace Content.Client.Inventory
             _playerAttached = true;
         }
 
-        public bool TryGetSlot(Slots slot, [NotNullWhen(true)] out EntityUid item)
+        public override bool TryGetSlot(Slots slot, [NotNullWhen(true)] out EntityUid? item)
         {
-            return _slots.TryGetValue(slot, out item);
+            // dict TryGetValue uses default EntityUid, not null.
+            if (!_slots.ContainsKey(slot))
+            {
+                item = null;
+                return false;
+            }
+
+            item = _slots[slot];
+            return item != null;
         }
 
         public bool TryFindItemSlots(EntityUid item, [NotNullWhen(true)] out Slots? slots)
