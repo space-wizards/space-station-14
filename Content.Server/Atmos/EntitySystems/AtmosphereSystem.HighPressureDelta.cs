@@ -1,10 +1,10 @@
 using Content.Server.Atmos.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Audio;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
@@ -33,12 +33,12 @@ namespace Content.Server.Atmos.EntitySystems
 
             foreach (var entity in _gridtileLookupSystem.GetEntitiesIntersecting(tile.GridIndex, tile.GridIndices))
             {
-                if (!entity.TryGetComponent(out IPhysBody? physics)
+                if (!HasComp<IPhysBody>(entity)
                     || !entity.IsMovedByPressure(out var pressure)
                     || entity.IsInContainer())
                     continue;
 
-                var pressureMovements = physics.Owner.EnsureComponent<MovedByPressureComponent>();
+                var pressureMovements = EnsureComp<MovedByPressureComponent>(entity);
                 if (pressure.LastHighPressureMovementAirCycle < gridAtmosphere.UpdateCounter)
                 {
                     pressureMovements.ExperiencePressureDifference(gridAtmosphere.UpdateCounter, tile.PressureDifference, tile.PressureDirection, 0, tile.PressureSpecificTarget?.GridIndices.ToEntityCoordinates(tile.GridIndex, _mapManager) ?? EntityCoordinates.Invalid);
@@ -62,7 +62,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (difference > tile.PressureDifference)
             {
                 tile.PressureDifference = difference;
-                tile.PressureDirection = ((Vector2i)(tile.GridIndices - other.GridIndices)).GetDir().ToAtmosDirection();
+                tile.PressureDirection = (tile.GridIndices - other.GridIndices).GetDir().ToAtmosDirection();
             }
         }
     }

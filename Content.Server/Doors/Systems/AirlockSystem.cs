@@ -4,6 +4,7 @@ using Content.Shared.Doors;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 
 namespace Content.Server.Doors.Systems
@@ -87,7 +88,7 @@ namespace Content.Server.Doors.Systems
         private void OnDoorClickShouldActivate(EntityUid uid, AirlockComponent component, DoorClickShouldActivateEvent args)
         {
             if (component.WiresComponent != null && component.WiresComponent.IsPanelOpen &&
-                args.Args.User.TryGetComponent(out ActorComponent? actor))
+                EntityManager.TryGetComponent(args.Args.User, out ActorComponent? actor))
             {
                 component.WiresComponent.OpenInterface(actor.PlayerSession);
                 args.Handled = true;

@@ -76,14 +76,14 @@ namespace Content.Server.Weapon.Ranged.Barrels
                 !args.CanAccess ||
                 !args.CanInteract ||
                 !component.HasMagazine ||
-                !_actionBlockerSystem.CanPickup(args.User.Uid))
+                !_actionBlockerSystem.CanPickup(args.User))
                 return;
 
             if (component.MagNeedsOpenBolt && !component.BoltOpen)
                 return;
 
             Verb verb = new();
-            verb.Text = component.MagazineContainer.ContainedEntity!.Name;
+            verb.Text = EntityManager.GetComponent<MetaDataComponent>(component.MagazineContainer.ContainedEntity!.Value).EntityName;
             verb.Category = VerbCategory.Eject;
             verb.Act = () => component.RemoveMagazine(args.User);
             args.Verbs.Add(verb);
@@ -105,16 +105,16 @@ namespace Content.Server.Weapon.Ranged.Barrels
             args.Verbs.Add(toggleBolt);
 
             // Are we holding a mag that we can insert?
-            if (args.Using == null ||
-                !component.CanInsertMagazine(args.User, args.Using) ||
-                !_actionBlockerSystem.CanDrop(args.User.Uid))
+            if (args.Using is not {Valid: true} @using ||
+                !component.CanInsertMagazine(args.User, @using) ||
+                !_actionBlockerSystem.CanDrop(args.User))
                 return;
 
             // Insert mag verb
             Verb insert = new();
-            insert.Text = args.Using.Name;
+            insert.Text = EntityManager.GetComponent<MetaDataComponent>(@using).EntityName;
             insert.Category = VerbCategory.Insert;
-            insert.Act = () => component.InsertMagazine(args.User, args.Using);
+            insert.Act = () => component.InsertMagazine(args.User, @using);
             args.Verbs.Add(insert);
         }
     }

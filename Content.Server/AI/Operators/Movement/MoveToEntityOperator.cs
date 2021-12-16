@@ -8,9 +8,9 @@ namespace Content.Server.AI.Operators.Movement
     public sealed class MoveToEntityOperator : AiOperator
     {
         // TODO: This and steering need to support InRangeUnobstructed now
-        private readonly IEntity _owner;
+        private readonly EntityUid _owner;
         private EntityTargetSteeringRequest? _request;
-        private readonly IEntity _target;
+        private readonly EntityUid _target;
         // For now we'll just get as close as we can because we're not doing LOS checks to be able to pick up at the max interaction range
         public float ArrivalDistance { get; }
         public float PathfindingProximity { get; }
@@ -18,8 +18,8 @@ namespace Content.Server.AI.Operators.Movement
         private readonly bool _requiresInRangeUnobstructed;
 
         public MoveToEntityOperator(
-            IEntity owner,
-            IEntity target,
+            EntityUid owner,
+            EntityUid target,
             float arrivalDistance = 1.0f,
             float pathfindingProximity = 1.5f,
             bool requiresInRangeUnobstructed = false)

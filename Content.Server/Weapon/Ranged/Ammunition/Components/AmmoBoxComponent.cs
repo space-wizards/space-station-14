@@ -10,9 +10,11 @@ using Content.Shared.Popups;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
+using Robust.Shared.Utility.Markup;
 
 namespace Content.Server.Weapon.Ranged.Ammunition.Components
 {
@@ -21,6 +23,8 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
     public sealed class AmmoBoxComponent : Component, IInteractUsing, IUse, IInteractHand, IMapInit, IExamine
 #pragma warning restore 618
     {
+        [Dependency] private readonly IEntityManager _entities = default!;
+
         public override string Name => "AmmoBox";
 
         [DataField("caliber")]
@@ -33,14 +37,14 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             set
             {
                 _capacity = value;
-                _spawnedAmmo = new Stack<IEntity>(value);
+                _spawnedAmmo = new Stack<EntityUid>(value);
             }
         }
 
         private int _capacity = 30;
 
         public int AmmoLeft => _spawnedAmmo.Count + _unspawnedCount;
-        private Stack<IEntity> _spawnedAmmo = new();
+        private Stack<EntityUid> _spawnedAmmo = new();
         private Container _ammoContainer = default!;
         private int _unspawnedCount;
 
@@ -72,7 +76,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
 
         private void UpdateAppearance()
         {
-            if (Owner.TryGetComponent(out AppearanceComponent? appearanceComponent))
+            if (_entities.TryGetComponent(Owner, out AppearanceComponent? appearanceComponent))
             {
                 appearanceComponent.SetData(MagazineBarrelVisuals.MagLoaded, true);
                 appearanceComponent.SetData(AmmoVisuals.AmmoCount, AmmoLeft);
@@ -80,7 +84,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             }
         }
 
-        public IEntity? TakeAmmo()
+        public EntityUid? TakeAmmo()
         {
             if (_spawnedAmmo.TryPop(out var ammo))
             {
@@ -90,10 +94,10 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
 
             if (_unspawnedCount > 0)
             {
-                ammo = Owner.EntityManager.SpawnEntity(_fillPrototype, Owner.Transform.Coordinates);
+                ammo = _entities.SpawnEntity(_fillPrototype, _entities.GetComponent<TransformComponent>(Owner).Coordinates);
 
                 // when dumping from held ammo box, this detaches the spawned ammo from the player.
-                ammo.Transform.AttachParentToContainerOrGrid();
+                _entities.GetComponent<TransformComponent>(ammo).AttachParentToContainerOrGrid();
 
                 _unspawnedCount--;
             }
@@ -101,9 +105,9 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             return ammo;
         }
 
-        public bool TryInsertAmmo(IEntity user, IEntity entity)
+        public bool TryInsertAmmo(EntityUid user, EntityUid entity)
         {
-            if (!entity.TryGetComponent(out AmmoComponent? ammoComponent))
+            if (!_entities.TryGetComponent(entity, out AmmoComponent? ammoComponent))
             {
                 return false;
             }
@@ -128,18 +132,16 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (eventArgs.Using.HasComponent<AmmoComponent>())
+            if (_entities.HasComponent<AmmoComponent>(eventArgs.Using))
             {
                 return TryInsertAmmo(eventArgs.User, eventArgs.Using);
             }
 
-            if (eventArgs.Using.TryGetComponent(out RangedMagazineComponent? rangedMagazine))
+            if (_entities.TryGetComponent(eventArgs.Using, out RangedMagazineComponent? rangedMagazine))
             {
                 for (var i = 0; i < Math.Max(10, rangedMagazine.ShotsLeft); i++)
                 {
-                    var ammo = rangedMagazine.TakeAmmo();
-
-                    if (ammo == null)
+                    if (rangedMagazine.TakeAmmo() is not {Valid: true} ammo)
                     {
                         continue;
                     }
@@ -157,21 +159,19 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             return false;
         }
 
-        private bool TryUse(IEntity user)
+        private bool TryUse(EntityUid user)
         {
-            if (!user.TryGetComponent(out HandsComponent? handsComponent))
+            if (!_entities.TryGetComponent(user, out HandsComponent? handsComponent))
             {
                 return false;
             }
 
-            var ammo = TakeAmmo();
-
-            if (ammo == null)
+            if (TakeAmmo() is not { } ammo)
             {
                 return false;
             }
 
-            if (ammo.TryGetComponent(out ItemComponent? item))
+            if (_entities.TryGetComponent(ammo, out ItemComponent? item))
             {
                 if (!handsComponent.CanPutInHand(item))
                 {
@@ -189,12 +189,11 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
         public void EjectContents(int count)
         {
             var ejectCount = Math.Min(count, Capacity);
-            var ejectAmmo = new List<IEntity>(ejectCount);
+            var ejectAmmo = new List<EntityUid>(ejectCount);
 
             for (var i = 0; i < Math.Min(count, Capacity); i++)
             {
-                var ammo = TakeAmmo();
-                if (ammo == null)
+                if (TakeAmmo() is not { } ammo)
                 {
                     break;
                 }
@@ -216,7 +215,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             return TryUse(eventArgs.User);
         }
 
-        public void Examine(FormattedMessage message, bool inDetailsRange)
+        public void Examine(FormattedMessage.Builder message, bool inDetailsRange)
         {
             message.AddMarkup("\n" + Loc.GetString("ammo-box-component-on-examine-caliber-description", ("caliber", _caliber)));
             message.AddMarkup("\n" + Loc.GetString("ammo-box-component-on-examine-remaining-ammo-description", ("ammoLeft",AmmoLeft),("capacity", _capacity)));
