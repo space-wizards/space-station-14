@@ -59,8 +59,6 @@ namespace Content.Server.Cabinet
 
         private void OnContainerModified(EntityUid uid, ItemCabinetComponent cabinet, ContainerModifiedMessage args)
         {
-            if (!cabinet.Initialized) return;
-
             if (args.Container.ID == cabinet.CabinetSlot.ID)
                 UpdateAppearance(uid, cabinet);
         }

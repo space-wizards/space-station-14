@@ -1,4 +1,20 @@
 Entries:
+- author: Swept
+  changes:
+  - {message: Removes Warden, type: Remove}
+  id: 240
+  time: '2021-06-17T22:35:37.577392+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed ghosts not being able to warp to players., type: Fix}
+  id: 241
+  time: '2021-06-18T07:56:23.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Gas canisters and their UI have been reworked completely., type: Tweak}
+  - {message: You can now insert gas tanks in gas canisters., type: Add}
+  id: 242
+  time: '2021-06-19T11:25:05.0000000+00:00'
 - author: DogZeroX
   changes:
   - {message: Added a vox plushie., type: Add}
@@ -2845,26 +2861,3 @@ Entries:
       by 20%., type: Fix}
   id: 741
   time: '2021-12-15T02:47:13.0000000+00:00'
-- author: Matz05
-  changes:
-  - {message: Added burger buns! Craftable using one dough slice in the microwave
-      for 5 seconds., type: Add}
-  - {message: Changed burger recipes to use one bun instead of two bread slices.,
-    type: Tweak}
-  id: 742
-  time: '2021-12-15T09:24:27.0000000+00:00'
-- author: Pancake
-  changes:
-  - {message: Rolling paper packs with filters added to cigarette vending machines.,
-    type: Tweak}
-  - {message: Joints/Blunts have been renamed from rollies., type: Tweak}
-  - {message: Blunts can be made with a dried tobacco leaf., type: Add}
-  id: 743
-  time: '2021-12-15T10:07:58.0000000+00:00'
-- author: buletsponge
-  changes:
-  - {message: Added DrozdRiot, type: Add}
-  - {message: Changed packedstation armory to spawn with non-lethal magazines and
-      SMGs, type: Tweak}
-  id: 744
-  time: '2021-12-16T12:00:09.0000000+00:00'

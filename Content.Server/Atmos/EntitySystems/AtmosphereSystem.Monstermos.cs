@@ -477,7 +477,7 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 var direction = ((Vector2)_depressurizeTiles[tileCount - 1].GridIndices - tile.GridIndices).Normalized;
 
-                var gridPhysics = Comp<PhysicsComponent>(mapGrid.GridEntityId);
+                var gridPhysics = EntityManager.GetComponent<PhysicsComponent>(mapGrid.GridEntityId);
 
                 // TODO ATMOS: Come up with better values for these.
                 gridPhysics.ApplyLinearImpulse(direction * totalMolesRemoved * gridPhysics.Mass);
@@ -502,7 +502,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             foreach (var entity in mapGrid.GetAnchoredEntities(tile.GridIndices))
             {
-                if (!TryComp(entity, out FirelockComponent? firelock))
+                if (!EntityManager.TryGetComponent(entity, out FirelockComponent firelock))
                     continue;
 
                 reconsiderAdjacent |= firelock.EmergencyPressureStop();
@@ -510,7 +510,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             foreach (var entity in mapGrid.GetAnchoredEntities(other.GridIndices))
             {
-                if (!TryComp(entity, out FirelockComponent? firelock))
+                if (!EntityManager.TryGetComponent(entity, out FirelockComponent firelock))
                     continue;
 
                 reconsiderAdjacent |= firelock.EmergencyPressureStop();

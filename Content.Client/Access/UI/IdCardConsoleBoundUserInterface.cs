@@ -1,9 +1,10 @@
 using System.Collections.Generic;
+using Content.Shared.Access;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
-using static Content.Shared.Access.Components.SharedIdCardConsoleComponent;
+using static Content.Shared.Access.SharedIdCardConsoleComponent;
 
 namespace Content.Client.Access.UI
 {

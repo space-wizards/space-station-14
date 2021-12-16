@@ -197,8 +197,6 @@ namespace Content.Server.Chemistry.Components
 
         public void UpdateUserInterface()
         {
-            if (!Initialized) return;
-
             var state = GetUserInterfaceState();
             UserInterface?.SetState(state);
         }

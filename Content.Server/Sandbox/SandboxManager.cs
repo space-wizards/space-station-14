@@ -5,10 +5,9 @@ using Content.Server.GameTicking;
 using Content.Server.Hands.Components;
 using Content.Server.Inventory.Components;
 using Content.Server.Items;
+using Content.Server.PDA;
 using Content.Shared.Access;
-using Content.Shared.Access.Components;
 using Content.Shared.Containers.ItemSlots;
-using Content.Shared.PDA;
 using Content.Shared.Sandbox;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
@@ -140,7 +139,7 @@ namespace Content.Server.Sandbox
                         if (_entityManager.TryGetComponent(pda.Owner, out ItemSlotsComponent? itemSlots))
                         {
                             _entityManager.EntitySysManager.GetEntitySystem<ItemSlotsSystem>().
-                                TryInsert(wornItem.Owner, pda.IdSlot, newID, null);
+                                TryInsert(wornItem.Owner, pda.IdSlot, newID);
                         }
                     }
                     else

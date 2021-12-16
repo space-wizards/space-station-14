@@ -1,8 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using Content.Server.Access.Components;
 using Content.Server.Hands.Components;
 using Content.Server.Inventory.Components;
-using Content.Shared.Access.Components;
-using Content.Shared.PDA;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 

@@ -5,7 +5,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Shared.Access.Components
+namespace Content.Shared.Access
 {
     public class SharedIdCardConsoleComponent : Component
     {

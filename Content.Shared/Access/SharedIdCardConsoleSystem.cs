@@ -1,10 +1,9 @@
-using Content.Shared.Access.Components;
 using Content.Shared.Containers.ItemSlots;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
-namespace Content.Shared.Access.Systems
+namespace Content.Shared.Access
 {
     [UsedImplicitly]
     public abstract class SharedIdCardConsoleSystem : EntitySystem

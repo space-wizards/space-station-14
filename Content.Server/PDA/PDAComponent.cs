@@ -1,4 +1,6 @@
-using Content.Shared.Access.Components;
+using System;
+using System.Collections.Generic;
+using Content.Server.Access.Components;
 using Content.Shared.Containers.ItemSlots;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
@@ -6,7 +8,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.PDA
+namespace Content.Server.PDA
 {
     [RegisterComponent]
     public class PDAComponent : Component

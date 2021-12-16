@@ -71,18 +71,18 @@ namespace Content.Server.Atmos.EntitySystems
 
             _exposedTimer += frameTime;
 
-            if (_exposedTimer < ExposedUpdateDelay)
-                return;
-
-            foreach (var (exposed, transform) in EntityManager.EntityQuery<AtmosExposedComponent, TransformComponent>())
+            if (_exposedTimer >= ExposedUpdateDelay)
             {
-                var tile = GetTileMixture(transform.Coordinates);
-                if (tile == null) continue;
-                var updateEvent = new AtmosExposedUpdateEvent(transform.Coordinates, tile);
-                RaiseLocalEvent(exposed.Owner, ref updateEvent);
-            }
+                foreach (var exposed in EntityManager.EntityQuery<AtmosExposedComponent>())
+                {
+                    var tile = GetTileMixture(EntityManager.GetComponent<TransformComponent>(exposed.Owner).Coordinates);
+                    if (tile == null) continue;
+                    var updateEvent = new AtmosExposedUpdateEvent(EntityManager.GetComponent<TransformComponent>(exposed.Owner).Coordinates, tile);
+                    RaiseLocalEvent(exposed.Owner, ref updateEvent);
+                }
 
-            _exposedTimer -= ExposedUpdateDelay;
+                _exposedTimer -= ExposedUpdateDelay;
+            }
         }
     }
 }

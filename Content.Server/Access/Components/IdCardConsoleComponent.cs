@@ -4,7 +4,6 @@ using Content.Server.Access.Systems;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Access;
-using Content.Shared.Access.Components;
 using Content.Shared.Containers.ItemSlots;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
@@ -116,9 +115,6 @@ namespace Content.Server.Access.Components
 
         public void UpdateUserInterface()
         {
-            if (!Initialized)
-                return;
-
             IdCardConsoleBoundUserInterfaceState newState;
             // this could be prettier
             if (TargetIdSlot.Item is not {Valid: true} targetIdEntity)

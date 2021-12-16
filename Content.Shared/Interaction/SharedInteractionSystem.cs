@@ -1,16 +1,12 @@
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
-using Content.Shared.CombatMode;
 using Content.Shared.Database;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
-using Content.Shared.Input;
-using Content.Shared.Interaction.Helpers;
 using Content.Shared.Inventory;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
@@ -20,14 +16,13 @@ using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Players;
+using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 
 #pragma warning disable 618
@@ -44,165 +39,11 @@ namespace Content.Shared.Interaction
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly SharedVerbSystem _verbSystem = default!;
         [Dependency] private readonly SharedAdminLogSystem _adminLogSystem = default!;
-        [Dependency] private readonly RotateToFaceSystem _rotateToFaceSystem = default!;
 
         public const float InteractionRange = 2;
         public const float InteractionRangeSquared = InteractionRange * InteractionRange;
 
         public delegate bool Ignored(EntityUid entity);
-
-        public override void Initialize()
-        {
-            SubscribeAllEvent<InteractInventorySlotEvent>(HandleInteractInventorySlotEvent);
-
-            CommandBinds.Builder
-                .Bind(ContentKeyFunctions.AltActivateItemInWorld,
-                    new PointerInputCmdHandler(HandleAltUseInteraction))
-                .Register<SharedInteractionSystem>();
-        }
-
-        public override void Shutdown()
-        {
-            CommandBinds.Unregister<SharedInteractionSystem>();
-            base.Shutdown();
-        }
-
-        /// <summary>
-        ///     Handles the event were a client uses an item in their inventory or in their hands, either by
-        ///     alt-clicking it or pressing 'E' while hovering over it.
-        /// </summary>
-        private void HandleInteractInventorySlotEvent(InteractInventorySlotEvent msg, EntitySessionEventArgs args)
-        {
-            var coords = Transform(msg.ItemUid).Coordinates;
-            // client sanitization
-            if (!ValidateClientInput(args.SenderSession, coords, msg.ItemUid, out var user))
-            {
-                Logger.InfoS("system.interaction", $"Inventory interaction validation failed.  Session={args.SenderSession}");
-                return;
-            }
-
-            if (msg.AltInteract)
-                // Use 'UserInteraction' function - behaves as if the user alt-clicked the item in the world.
-                UserInteraction(user.Value, coords, msg.ItemUid, msg.AltInteract);
-            else
-                // User used 'E'. We want to activate it, not simulate clicking on the item
-                InteractionActivate(user.Value, msg.ItemUid);
-        }
-
-        public bool HandleAltUseInteraction(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
-        {
-            // client sanitization
-            if (!ValidateClientInput(session, coords, uid, out var user))
-            {
-                Logger.InfoS("system.interaction", $"Alt-use input validation failed");
-                return true;
-            }
-
-            UserInteraction(user.Value, coords, uid, altInteract: true);
-
-            return false;
-        }
-
-        /// <summary>
-        ///     Resolves user interactions with objects.
-        /// </summary>
-        /// <remarks>
-        ///     Checks Whether combat mode is enabled and whether the user can actually interact with the given entity.
-        /// </remarks>
-        /// <param name="altInteract">Whether to use default or alternative interactions (usually as a result of
-        /// alt+clicking). If combat mode is enabled, the alternative action is to perform the default non-combat
-        /// interaction. Having an item in the active hand also disables alternative interactions.</param>
-        public async void UserInteraction(EntityUid user, EntityCoordinates coordinates, EntityUid? target, bool altInteract = false)
-        {
-            if (target != null && Deleted(target.Value))
-                return;
-
-            // TODO COMBAT Consider using alt-interact for advanced combat? maybe alt-interact disarms?
-            if (!altInteract && TryComp(user, out SharedCombatModeComponent? combatMode) && combatMode.IsInCombatMode)
-            {
-                DoAttack(user, coordinates, false, target);
-                return;
-            }
-
-            if (!ValidateInteractAndFace(user, coordinates))
-                return;
-
-            if (!_actionBlockerSystem.CanInteract(user))
-                return;
-
-            // Check if interacted entity is in the same container, the direct child, or direct parent of the user.
-            // This is bypassed IF the interaction happened through an item slot (e.g., backpack UI)
-            if (target != null && !user.IsInSameOrParentContainer(target.Value) && !CanAccessViaStorage(user, target.Value))
-                return;
-
-            // Verify user has a hand, and find what object they are currently holding in their active hand
-            if (!TryComp(user, out SharedHandsComponent? hands))
-                return;
-
-            // TODO remove invalid/default uid and use nullable.
-            hands.TryGetActiveHeldEntity(out var heldEntity);
-            EntityUid? held = heldEntity.Valid ? heldEntity : null;
-
-            // TODO: Replace with body interaction range when we get something like arm length or telekinesis or something.
-            var inRangeUnobstructed = user.InRangeUnobstructed(coordinates, ignoreInsideBlocker: true);
-            if (target == null || !inRangeUnobstructed)
-            {
-                if (held == null)
-                    return;
-
-                if (!await InteractUsingRanged(user, held.Value, target, coordinates, inRangeUnobstructed) &&
-                    !inRangeUnobstructed)
-                {
-                    var message = Loc.GetString("interaction-system-user-interaction-cannot-reach");
-                    user.PopupMessage(message);
-                }
-
-                return;
-            }
-            else
-            {
-                // We are close to the nearby object.
-                if (altInteract)
-                    // Perform alternative interactions, using context menu verbs.
-                    AltInteract(user, target.Value);
-                else if (held != null && held != target)
-                    // We are performing a standard interaction with an item, and the target isn't the same as the item
-                    // currently in our hand. We will use the item in our hand on the nearby object via InteractUsing
-                    await InteractUsing(user, held.Value, target.Value, coordinates);
-                else if (held == null)
-                    // Since our hand is empty we will use InteractHand/Activate
-                    InteractHand(user, target.Value);
-            }
-        }
-
-        public virtual void InteractHand(EntityUid user, EntityUid target)
-        {
-            // TODO PREDICTION move server-side interaction logic into the shared system for interaction prediction.
-        }
-
-        public virtual void DoAttack(EntityUid user, EntityCoordinates coordinates, bool wideAttack,
-            EntityUid? targetUid = null)
-        {
-            // TODO PREDICTION move server-side interaction logic into the shared system for interaction prediction.
-        }
-
-        public virtual async Task<bool> InteractUsingRanged(EntityUid user, EntityUid used, EntityUid? target,
-            EntityCoordinates clickLocation, bool inRangeUnobstructed)
-        {
-            // TODO PREDICTION move server-side interaction logic into the shared system for interaction prediction.
-            return await Task.FromResult(true);
-        }
-
-        protected bool ValidateInteractAndFace(EntityUid user, EntityCoordinates coordinates)
-        {
-            // Verify user is on the same map as the entity they clicked on
-            if (coordinates.GetMapId(EntityManager) != Transform(user).MapID)
-                return false;
-
-            _rotateToFaceSystem.TryFaceCoordinates(user, coordinates.ToMapPos(EntityManager));
-
-            return true;
-        }
 
         /// <summary>
         ///     Traces a ray from coords to otherCoords and returns the length
@@ -313,7 +154,7 @@ namespace Content.Shared.Interaction
 
             foreach (var result in rayResults)
             {
-                if (!TryComp(result.HitEntity, out IPhysBody? p))
+                if (!EntityManager.TryGetComponent(result.HitEntity, out IPhysBody? p))
                 {
                     continue;
                 }
@@ -372,7 +213,7 @@ namespace Content.Shared.Interaction
             bool popup = false)
         {
             predicate ??= e => e == origin || e == other;
-            return InRangeUnobstructed(origin, Transform(other).MapPosition, range, collisionMask, predicate, ignoreInsideBlocker, popup);
+            return InRangeUnobstructed(origin, EntityManager.GetComponent<TransformComponent>(other).MapPosition, range, collisionMask, predicate, ignoreInsideBlocker, popup);
         }
 
         /// <summary>
@@ -504,7 +345,7 @@ namespace Content.Shared.Interaction
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {
-            var originPosition = Transform(origin).MapPosition;
+            var originPosition = EntityManager.GetComponent<TransformComponent>(origin).MapPosition;
             predicate ??= e => e == origin;
 
             var inRange = InRangeUnobstructed(originPosition, other, range, collisionMask, predicate, ignoreInsideBlocker);
@@ -551,7 +392,7 @@ namespace Content.Shared.Interaction
 
             var interactUsingEventArgs = new InteractUsingEventArgs(user, clickLocation, used, target);
 
-            var interactUsings = AllComps<IInteractUsing>(target).OrderByDescending(x => x.Priority);
+            var interactUsings = EntityManager.GetComponents<IInteractUsing>(target).OrderByDescending(x => x.Priority);
             foreach (var interactUsing in interactUsings)
             {
                 // If an InteractUsing returns a status completion we finish our interaction
@@ -577,7 +418,7 @@ namespace Content.Shared.Interaction
                 return true;
 
             var afterInteractEventArgs = new AfterInteractEventArgs(user, clickLocation, target, canReach);
-            var afterInteracts = AllComps<IAfterInteract>(used).OrderByDescending(x => x.Priority).ToList();
+            var afterInteracts = EntityManager.GetComponents<IAfterInteract>(used).OrderByDescending(x => x.Priority).ToList();
 
             foreach (var afterInteract in afterInteracts)
             {
@@ -603,7 +444,7 @@ namespace Content.Shared.Interaction
 
         protected void InteractionActivate(EntityUid user, EntityUid used)
         {
-            if (TryComp(used, out UseDelayComponent? delayComponent))
+            if (EntityManager.TryGetComponent<UseDelayComponent?>(used, out var delayComponent))
             {
                 if (delayComponent.ActiveDelay)
                     return;
@@ -631,7 +472,7 @@ namespace Content.Shared.Interaction
                 return;
             }
 
-            if (!TryComp(used, out IActivate? activateComp))
+            if (!EntityManager.TryGetComponent(used, out IActivate? activateComp))
                 return;
 
             var activateEventArgs = new ActivateEventArgs(user, used);
@@ -665,7 +506,7 @@ namespace Content.Shared.Interaction
         /// </summary>
         public void UseInteraction(EntityUid user, EntityUid used)
         {
-            if (TryComp(used, out UseDelayComponent? delayComponent))
+            if (EntityManager.TryGetComponent<UseDelayComponent?>(used, out var delayComponent))
             {
                 if (delayComponent.ActiveDelay)
                     return;
@@ -678,7 +519,7 @@ namespace Content.Shared.Interaction
             if (useMsg.Handled)
                 return;
 
-            var uses = AllComps<IUse>(used).ToList();
+            var uses = EntityManager.GetComponents<IUse>(used).ToList();
 
             // Try to use item on any components which have the interface
             foreach (var use in uses)
@@ -719,7 +560,7 @@ namespace Content.Shared.Interaction
                 return;
             }
 
-            var comps = AllComps<IThrown>(thrown).ToList();
+            var comps = EntityManager.GetComponents<IThrown>(thrown).ToList();
             var args = new ThrownEventArgs(user);
 
             // Call Thrown on all components that implement the interface
@@ -743,7 +584,7 @@ namespace Content.Shared.Interaction
             if (equipMsg.Handled)
                 return;
 
-            var comps = AllComps<IEquipped>(equipped).ToList();
+            var comps = EntityManager.GetComponents<IEquipped>(equipped).ToList();
 
             // Call Thrown on all components that implement the interface
             foreach (var comp in comps)
@@ -763,7 +604,7 @@ namespace Content.Shared.Interaction
             if (unequipMsg.Handled)
                 return;
 
-            var comps = AllComps<IUnequipped>(equipped).ToList();
+            var comps = EntityManager.GetComponents<IUnequipped>(equipped).ToList();
 
             // Call Thrown on all components that implement the interface
             foreach (var comp in comps)
@@ -784,7 +625,7 @@ namespace Content.Shared.Interaction
             if (equippedHandMessage.Handled)
                 return;
 
-            var comps = AllComps<IEquippedHand>(item).ToList();
+            var comps = EntityManager.GetComponents<IEquippedHand>(item).ToList();
 
             foreach (var comp in comps)
             {
@@ -803,7 +644,7 @@ namespace Content.Shared.Interaction
             if (unequippedHandMessage.Handled)
                 return;
 
-            var comps = AllComps<IUnequippedHand>(item).ToList();
+            var comps = EntityManager.GetComponents<IUnequippedHand>(item).ToList();
 
             foreach (var comp in comps)
             {
@@ -840,9 +681,9 @@ namespace Content.Shared.Interaction
                 return;
             }
 
-            Transform(item).LocalRotation = Angle.Zero;
+            EntityManager.GetComponent<TransformComponent>(item).LocalRotation = Angle.Zero;
 
-            var comps = AllComps<IDropped>(item).ToList();
+            var comps = EntityManager.GetComponents<IDropped>(item).ToList();
 
             // Call Land on all components that implement the interface
             foreach (var comp in comps)
@@ -865,7 +706,7 @@ namespace Content.Shared.Interaction
             if (handSelectedMsg.Handled)
                 return;
 
-            var comps = AllComps<IHandSelected>(item).ToList();
+            var comps = EntityManager.GetComponents<IHandSelected>(item).ToList();
 
             // Call Land on all components that implement the interface
             foreach (var comp in comps)
@@ -885,7 +726,7 @@ namespace Content.Shared.Interaction
             if (handDeselectedMsg.Handled)
                 return;
 
-            var comps = AllComps<IHandDeselected>(item).ToList();
+            var comps = EntityManager.GetComponents<IHandDeselected>(item).ToList();
 
             // Call Land on all components that implement the interface
             foreach (var comp in comps)
@@ -900,36 +741,6 @@ namespace Content.Shared.Interaction
         ///     checks if the user can access the item in these situations.
         /// </summary>
         public abstract bool CanAccessViaStorage(EntityUid user, EntityUid target);
-
-        protected bool ValidateClientInput(ICommonSession? session, EntityCoordinates coords,
-            EntityUid uid, [NotNullWhen(true)] out EntityUid? userEntity)
-        {
-            userEntity = null;
-
-            if (!coords.IsValid(EntityManager))
-            {
-                Logger.InfoS("system.interaction", $"Invalid Coordinates: client={session}, coords={coords}");
-                return false;
-            }
-
-            if (uid.IsClientSide())
-            {
-                Logger.WarningS("system.interaction",
-                    $"Client sent interaction with client-side entity. Session={session}, Uid={uid}");
-                return false;
-            }
-
-            userEntity = session?.AttachedEntity;
-
-            if (userEntity == null || !userEntity.Value.Valid)
-            {
-                Logger.WarningS("system.interaction",
-                    $"Client sent interaction with no attached entity. Session={session}");
-                return false;
-            }
-
-            return true;
-        }
 
         #endregion
     }

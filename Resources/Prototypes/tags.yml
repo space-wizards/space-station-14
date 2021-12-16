@@ -40,9 +40,6 @@
   id: CaptainSabre
 
 - type: Tag
-  id: CigFilter
-
-- type: Tag
   id: CigPack
 
 - type: Tag

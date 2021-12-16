@@ -1,10 +1,10 @@
 ﻿- type: constructionGraph
-  id: smokeableJoint
+  id: smokeableRollie
   start: start
   graph:
     - node: start
       edges:
-        - to: joint
+        - to: rollie
           steps:
             - prototype: PaperRolling
               icon:
@@ -23,36 +23,8 @@
 #                color: darkgreen
               name: ground cannabis
               doAfter: 2
-    - node: joint
-      entity: Joint
-
-- type: constructionGraph
-  id: smokeableBlunt
-  start: start
-  graph:
-    - node: start
-      edges:
-        - to: blunt
-          steps:
-            - prototype: LeavesTobaccoDried
-              icon:
-                sprite: Objects/Specific/Hydroponics/tobacco.rsi
-                state: dried
-              name: dried tobacco leaves
-            - prototype: CigaretteFilter
-              icon:
-                sprite: Objects/Consumable/Smokeables/Cigarettes/paper.rsi
-                state: cigfilter
-              name: cigarette filter
-            - prototype: GroundCannabis
-              icon:
-                sprite: Objects/Misc/reageant_fillings.rsi
-                state: powderpile
-#                color: darkgreen
-              name: ground cannabis
-              doAfter: 2
-    - node: blunt
-      entity: Blunt
+    - node: rollie
+      entity: Rollie
 
 - type: constructionGraph
   id: smokeableCigarette

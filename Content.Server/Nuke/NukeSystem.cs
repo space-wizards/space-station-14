@@ -62,9 +62,6 @@ namespace Content.Server.Nuke
         {
             component.RemainingTime = component.Timer;
             _itemSlots.AddItemSlot(uid, component.Name, component.DiskSlot);
-
-            UpdateStatus(uid, component);
-            UpdateUserInterface(uid, component);
         }
 
         public override void Update(float frameTime)
@@ -104,8 +101,6 @@ namespace Content.Server.Nuke
 
         private void OnItemSlotChanged(EntityUid uid, NukeComponent component, ContainerModifiedMessage args)
         {
-            if (!component.Initialized) return;
-
             if (args.Container.ID != component.DiskSlot.ID)
                 return;
 

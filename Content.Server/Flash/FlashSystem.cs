@@ -127,11 +127,15 @@ namespace Content.Server.Flash
                 flashable.LastFlash = _gameTiming.CurTime;
                 flashable.Duration = flashDuration / 1000f; // TODO: Make this sane...
                 flashable.Dirty();
+            }
 
-                _stunSystem.TrySlowdown(target, TimeSpan.FromSeconds(flashDuration/1000f), true,
-                    slowTo, slowTo);
+            _stunSystem.TrySlowdown(target, TimeSpan.FromSeconds(flashDuration/1000f), true,
+                slowTo, slowTo);
 
-                if (displayPopup && user != null && target != user && EntityManager.EntityExists(user.Value))
+            if (displayPopup && user != null && target != user)
+            {
+                // TODO Resolving the EntityUidhere bad.
+                if (EntityManager.EntityExists(user.Value) && EntityManager.EntityExists(target))
                 {
                     user.Value.PopupMessage(target, Loc.GetString("flash-component-user-blinds-you",
                         ("user", user.Value)));

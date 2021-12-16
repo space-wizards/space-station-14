@@ -3,7 +3,6 @@ using Content.Shared.Acts;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
-using Content.Shared.Sound;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -13,7 +12,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Player;
-using Robust.Shared.Timing;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
@@ -26,7 +24,6 @@ namespace Content.Shared.Containers.ItemSlots
     {
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         public override void Initialize()
         {
@@ -177,7 +174,7 @@ namespace Content.Shared.Containers.ItemSlots
                 if (slot.Item != null)
                     hands.TryPutInAnyHand(slot.Item.Value);
 
-                Insert(uid, slot, args.Used, args.User, true);
+                Insert(uid, slot, args.Used);
                 args.Handled = true;
                 return;
             }
@@ -189,32 +186,13 @@ namespace Content.Shared.Containers.ItemSlots
         ///     Insert an item into a slot. This does not perform checks, so make sure to also use <see
         ///     cref="CanInsert"/> or just use <see cref="TryInsert"/> instead.
         /// </summary>
-        private void Insert(EntityUid uid, ItemSlot slot, EntityUid item, EntityUid? user, bool userAudio = false)
+        private void Insert(EntityUid uid, ItemSlot slot, EntityUid item)
         {
             slot.ContainerSlot.Insert(item);
             // ContainerSlot automatically raises a directed EntInsertedIntoContainerMessage
 
-            PlaySound(uid, slot.InsertSound, slot.SoundOptions, userAudio ? null : user);
-        }
-
-        /// <summary>
-        ///     Plays a sound
-        /// </summary>
-        /// <param name="uid">Source of the sound</param>
-        /// <param name="sound">The sound</param>
-        /// <param name="excluded">Optional (server-side) argument used to prevent sending the audio to a specific
-        /// user.</param>
-        private void PlaySound(EntityUid uid, SoundSpecifier? sound, AudioParams audioParams, EntityUid? excluded)
-        {
-            if (sound == null || !_gameTiming.IsFirstTimePredicted)
-                return;
-
-            var filter = Filter.Pvs(uid);
-
-            if (excluded != null)
-                filter = filter.RemoveWhereAttachedEntity(entity => entity == excluded.Value);
-
-            SoundSystem.Play(filter, sound.GetSound(), uid, audioParams);
+            if (slot.InsertSound != null)
+                SoundSystem.Play(Filter.Pvs(uid), slot.InsertSound.GetSound(), uid, slot.SoundOptions);
         }
 
         /// <summary>
@@ -250,7 +228,7 @@ namespace Content.Shared.Containers.ItemSlots
         ///     Tries to insert item into a specific slot.
         /// </summary>
         /// <returns>False if failed to insert item</returns>
-        public bool TryInsert(EntityUid uid, string id, EntityUid item, EntityUid? user, ItemSlotsComponent? itemSlots = null)
+        public bool TryInsert(EntityUid uid, string id, EntityUid item, ItemSlotsComponent? itemSlots = null)
         {
             if (!Resolve(uid, ref itemSlots))
                 return false;
@@ -258,19 +236,19 @@ namespace Content.Shared.Containers.ItemSlots
             if (!itemSlots.Slots.TryGetValue(id, out var slot))
                 return false;
 
-            return TryInsert(uid, slot, item, user);
+            return TryInsert(uid, slot, item);
         }
 
         /// <summary>
         ///     Tries to insert item into a specific slot.
         /// </summary>
         /// <returns>False if failed to insert item</returns>
-        public bool TryInsert(EntityUid uid, ItemSlot slot, EntityUid item, EntityUid? user)
+        public bool TryInsert(EntityUid uid, ItemSlot slot, EntityUid item)
         {
             if (!CanInsert(uid, item, slot))
                 return false;
 
-            Insert(uid, slot, item, user);
+            Insert(uid, slot, item);
             return true;
         }
 
@@ -293,7 +271,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (!_actionBlockerSystem.CanInteract(user) && hands.Drop(item))
                 return false;
 
-            Insert(uid, slot, item, user);
+            Insert(uid, slot, item);
             return true;
         }
         #endregion
@@ -303,19 +281,20 @@ namespace Content.Shared.Containers.ItemSlots
         ///     Eject an item into a slot. This does not perform checks (e.g., is the slot locked?), so you should
         ///     probably just use <see cref="TryEject"/> instead.
         /// </summary>
-        private void Eject(EntityUid uid, ItemSlot slot, EntityUid item, EntityUid? user)
+        private void Eject(EntityUid uid, ItemSlot slot, EntityUid item)
         {
             slot.ContainerSlot.Remove(item);
             // ContainerSlot automatically raises a directed EntRemovedFromContainerMessage
 
-            PlaySound(uid, slot.EjectSound, slot.SoundOptions, user);
+            if (slot.EjectSound != null)
+                SoundSystem.Play(Filter.Pvs(uid), slot.EjectSound.GetSound(), uid, slot.SoundOptions);
         }
 
         /// <summary>
         ///     Try to eject an item from a slot.
         /// </summary>
         /// <returns>False if item slot is locked or has no item inserted</returns>
-        public bool TryEject(EntityUid uid, ItemSlot slot, EntityUid? user, [NotNullWhen(true)] out EntityUid? item)
+        public bool TryEject(EntityUid uid, ItemSlot slot, [NotNullWhen(true)] out EntityUid? item)
         {
             item = null;
 
@@ -323,7 +302,7 @@ namespace Content.Shared.Containers.ItemSlots
                 return false;
 
             item = slot.Item;
-            Eject(uid, slot, item.Value, user);
+            Eject(uid, slot, item.Value);
             return true;
         }
 
@@ -331,8 +310,7 @@ namespace Content.Shared.Containers.ItemSlots
         ///     Try to eject item from a slot.
         /// </summary>
         /// <returns>False if the id is not valid, the item slot is locked, or it has no item inserted</returns>
-        public bool TryEject(EntityUid uid, string id, EntityUid user,
-            [NotNullWhen(true)] out EntityUid? item, ItemSlotsComponent? itemSlots = null)
+        public bool TryEject(EntityUid uid, string id, [NotNullWhen(true)] out EntityUid? item, ItemSlotsComponent? itemSlots = null)
         {
             item = null;
 
@@ -342,7 +320,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (!itemSlots.Slots.TryGetValue(id, out var slot))
                 return false;
 
-            return TryEject(uid, slot, user, out item);
+            return TryEject(uid, slot, out item);
         }
 
         /// <summary>
@@ -355,7 +333,7 @@ namespace Content.Shared.Containers.ItemSlots
         /// </returns>
         public bool TryEjectToHands(EntityUid uid, ItemSlot slot, EntityUid? user)
         {
-            if (!TryEject(uid, slot, user, out var item))
+            if (!TryEject(uid, slot, out var item))
                 return false;
 
             if (user != null && EntityManager.TryGetComponent(user.Value, out SharedHandsComponent? hands))
@@ -450,7 +428,7 @@ namespace Content.Shared.Containers.ItemSlots
                     : EntityManager.GetComponent<MetaDataComponent>(args.Using.Value).EntityName ?? string.Empty;
 
                 Verb insertVerb = new();
-                insertVerb.Act = () => Insert(uid, slot, args.Using.Value, args.User);
+                insertVerb.Act = () => Insert(uid, slot, args.Using.Value);
 
                 if (slot.InsertVerbText != null)
                 {
@@ -483,7 +461,7 @@ namespace Content.Shared.Containers.ItemSlots
             foreach (var slot in component.Slots.Values)
             {
                 if (slot.EjectOnBreak && slot.HasItem)
-                    TryEject(uid, slot, null, out var _);
+                    TryEject(uid, slot, out var _);
             }
         }
 

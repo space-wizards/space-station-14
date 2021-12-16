@@ -4,7 +4,7 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Server.Radio.Components
 {
-    public interface IRadio : IComponent
+    public interface IRadio
     {
         IReadOnlyList<int> Channels { get; }
 

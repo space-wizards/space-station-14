@@ -1,5 +1,5 @@
 using Content.Server.Access.Components;
-using Content.Shared.Access.Systems;
+using Content.Shared.Access;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;

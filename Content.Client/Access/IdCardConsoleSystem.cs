@@ -1,4 +1,4 @@
-using Content.Shared.Access.Systems;
+using Content.Shared.Access;
 using JetBrains.Annotations;
 
 namespace Content.Client.Access
