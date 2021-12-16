@@ -73012,6 +73012,127 @@ entities:
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
+- uid: 7557
+  type: SmgDrozdRiot
+  components:
+  - pos: 38.61274,27.452318
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      MagazineBarrel-chamber: !type:ContainerSlot {}
+      MagazineBarrel-magazine: !type:ContainerSlot
+        ent: 7558
+    type: ContainerContainer
+- uid: 7558
+  type: MagazineMagnumSmgRubber
+  components:
+  - parent: 7557
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      RangedMagazine-magazine: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 7559
+  type: SmgDrozdRiot
+  components:
+  - pos: 38.597115,27.702318
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      MagazineBarrel-chamber: !type:ContainerSlot {}
+      MagazineBarrel-magazine: !type:ContainerSlot
+        ent: 7560
+    type: ContainerContainer
+- uid: 7560
+  type: MagazineMagnumSmgRubber
+  components:
+  - parent: 7559
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      RangedMagazine-magazine: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 7561
+  type: MagazineMagnumSmgRubber
+  components:
+  - pos: 38.784615,26.467943
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      RangedMagazine-magazine: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 7562
+  type: MagazineMagnumSmgRubber
+  components:
+  - pos: 38.440865,26.499193
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      RangedMagazine-magazine: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 7563
+  type: MagazineMagnumSmgRubber
+  components:
+  - rot: 2.006034628720954E-05 rad
+    pos: 38.26498,26.51372
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      RangedMagazine-magazine: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 7564
+  type: MagazineMagnumSmgRubber
+  components:
+  - pos: 38.534615,26.483568
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      RangedMagazine-magazine: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 7565
+  type: MagazineMagnumSmgRubber
+  components:
+  - pos: 38.597115,26.483568
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      RangedMagazine-magazine: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 7566
+  type: MagazineMagnumSmgRubber
+  components:
+  - pos: 38.73774,26.483568
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      RangedMagazine-magazine: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 7608
   type: DisposalTrunk
   components:
@@ -108679,54 +108800,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 11104
-  type: SmgDrozd
-  components:
-  - pos: 38.4964,27.729683
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      MagazineBarrel-chamber: !type:ContainerSlot {}
-      MagazineBarrel-magazine: !type:ContainerSlot
-        ent: 11105
-    type: ContainerContainer
-- uid: 11105
-  type: MagazineMagnumSmg
-  components:
-  - parent: 11104
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      RangedMagazine-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 11106
-  type: SmgDrozd
-  components:
-  - pos: 38.512024,27.573433
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      MagazineBarrel-chamber: !type:ContainerSlot {}
-      MagazineBarrel-magazine: !type:ContainerSlot
-        ent: 11107
-    type: ContainerContainer
-- uid: 11107
-  type: MagazineMagnumSmg
-  components:
-  - parent: 11106
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      RangedMagazine-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 11108
   type: PowerCellMediumStandard
   components:
@@ -108896,79 +108969,6 @@ entities:
     type: Physics
   - containers:
       storagebase: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 11126
-  type: MagazineMagnumSmg
-  components:
-  - rot: 1.7662936443230137E-05 rad
-    pos: 38.26498,26.539928
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      RangedMagazine-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 11127
-  type: MagazineMagnumSmg
-  components:
-  - pos: 38.440334,26.55563
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      RangedMagazine-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 11128
-  type: MagazineMagnumSmg
-  components:
-  - pos: 38.64346,26.52438
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      RangedMagazine-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 11129
-  type: MagazineMagnumSmg
-  components:
-  - pos: 38.79971,26.52438
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      RangedMagazine-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 11130
-  type: MagazineMagnumSmg
-  components:
-  - pos: 38.534084,26.52438
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      RangedMagazine-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 11131
-  type: MagazineMagnumSmg
-  components:
-  - pos: 38.377834,26.508755
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      RangedMagazine-magazine: !type:Container
         ents: []
     type: ContainerContainer
 - uid: 11132

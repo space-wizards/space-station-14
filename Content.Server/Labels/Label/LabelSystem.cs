@@ -85,9 +85,10 @@ namespace Content.Server.Labels
             args.PushMarkup(text.TrimEnd());
         }
 
-
         private void OnContainerModified(EntityUid uid, PaperLabelComponent label, ContainerModifiedMessage args)
         {
+            if (!label.Initialized) return;
+
             if (args.Container.ID != label.LabelSlot.ID)
                 return;
 

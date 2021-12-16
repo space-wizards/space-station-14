@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Administration.Logs;
-using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Robust.Shared.Containers;
@@ -12,9 +10,34 @@ namespace Content.Shared.Verbs
 {
     public abstract class SharedVerbSystem : EntitySystem
     {
-        [Dependency] private readonly SharedAdminLogSystem _logSystem = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            SubscribeAllEvent<ExecuteVerbEvent>(HandleExecuteVerb);
+        }
+
+        private void HandleExecuteVerb(ExecuteVerbEvent args, EntitySessionEventArgs eventArgs)
+        {
+            var user = eventArgs.SenderSession.AttachedEntity;
+            if (user == null)
+                return;
+
+            // Get the list of verbs. This effectively also checks that the requested verb is in fact a valid verb that
+            // the user can perform.
+            var verbs = GetLocalVerbs(args.Target, user.Value, args.Type)[args.Type];
+
+            // Note that GetLocalVerbs might waste time checking & preparing unrelated verbs even though we know
+            // precisely which one we want to run. However, MOST entities will only have 1 or 2 verbs of a given type.
+            // The one exception here is the "other" verb type, which has 3-4 verbs + all the debug verbs.
+
+            // Find the requested verb.
+            if (verbs.TryGetValue(args.RequestedVerb, out var verb))
+                ExecuteVerb(verb, user.Value, args.Target);
+        }
 
         /// <summary>
         ///     Raises a number of events in order to get all verbs of the given type(s) defined in local systems. This
@@ -92,60 +115,6 @@ namespace Content.Shared.Verbs
         /// <remarks>
         ///     This will try to call the action delegates and raise the local events for the given verb.
         /// </remarks>
-        public void ExecuteVerb(Verb verb, EntityUid user, EntityUid target, bool forced = false)
-        {
-            // first, lets log the verb. Just in case it ends up crashing the server or something.
-            LogVerb(verb, user, target, forced);
-
-            // then invoke any relevant actions
-            verb.Act?.Invoke();
-
-            // Maybe raise a local event
-            if (verb.ExecutionEventArgs != null)
-            {
-                if (verb.EventTarget.IsValid())
-                    RaiseLocalEvent(verb.EventTarget, verb.ExecutionEventArgs);
-                else
-                    RaiseLocalEvent(verb.ExecutionEventArgs);
-            }
-        }
-
-        public void LogVerb(Verb verb, EntityUid user, EntityUid target, bool forced)
-        {
-            // first get the held item. again.
-            EntityUid usedUid = default;
-            if (EntityManager.TryGetComponent(user, out SharedHandsComponent? hands) &&
-                hands.TryGetActiveHeldEntity(out var heldEntity))
-            {
-                usedUid = heldEntity;
-                if (usedUid != default && EntityManager.TryGetComponent(usedUid, out HandVirtualItemComponent? pull))
-                    usedUid = pull.BlockingEntity;
-            }
-
-            // get all the entities
-            if (!user.IsValid() || !target.IsValid())
-                return;
-
-            EntityUid? used = null;
-            if (usedUid != default)
-                EntityManager.EntityExists(usedUid);
-
-            var verbText = $"{verb.Category?.Text} {verb.Text}".Trim();
-
-            // lets not frame people, eh?
-            var executionText = forced ? "was forced to execute" : "executed";
-
-            if (used == null)
-            {
-                _logSystem.Add(LogType.Verb, verb.Impact,
-                        $"{ToPrettyString(user):user} {executionText} the [{verbText:verb}] verb targeting {ToPrettyString(target):target}");
-            }
-            else
-            {
-                _logSystem.Add(LogType.Verb, verb.Impact,
-                       $"{ToPrettyString(user):user} {executionText} the [{verbText:verb}] verb targeting {ToPrettyString(target):target} while holding {ToPrettyString(used.Value):held}");
-            }
-                
-        }
+        public abstract void ExecuteVerb(Verb verb, EntityUid user, EntityUid target, bool forced = false);
     }
 }
