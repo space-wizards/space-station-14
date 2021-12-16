@@ -1,10 +1,11 @@
+#POWER
 - type: construction
   name: APC
   id: apc
   graph: apc
   startNode: start
   targetNode: apc
-  category: Utility
+  category: Utilities
   description: "Area Power Controller (APC). Controls power. In an area."
   icon:
     sprite: Structures/Power/apc.rsi
@@ -19,7 +20,7 @@
   graph: solarpanel
   startNode: start
   targetNode: solarpanel
-  category: Utility
+  category: Utilities
   description: "Can be turned into a solar panel or solar tracker."
   icon:
     sprite: Structures/Power/Generation/solar_panel.rsi
@@ -36,7 +37,7 @@
   graph: cable_terminal
   startNode: start
   targetNode: cable_terminal
-  category: Utility
+  category: Utilities
   description: "Input of devices such as the SMES. The red cables needs to face the device."
   icon:
     sprite: Structures/Power/cable_terminal.rsi
@@ -44,3 +45,21 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
+
+
+#DISPOSALS
+- type: construction
+  name: disposal unit
+  id: DisposalUnit
+  graph: disposalMachine
+  startNode: start
+  targetNode: disposal_unit
+  category: Utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/disposal.rsi
+    state: "disposal"
+
+
+#ATMOS
