@@ -8,7 +8,7 @@ public partial class InventorySystem
 {
     public bool SpawnItemInSlot(EntityUid uid, string slot, string prototype, bool silent = false, bool force = false, InventoryComponent? inventory = null)
     {
-        if (!Resolve(uid, ref inventory))
+        if (!Resolve(uid, ref inventory, false))
             return false;
 
         // Let's do nothing if the owner of the inventory has been deleted.

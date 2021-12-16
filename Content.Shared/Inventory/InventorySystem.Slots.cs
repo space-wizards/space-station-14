@@ -17,7 +17,7 @@ public partial class InventorySystem : EntitySystem
     {
         containerSlot = null;
         slotDefinition = null;
-        if (!Resolve(uid, ref inventory, ref containerComp))
+        if (!Resolve(uid, ref inventory, ref containerComp, false))
             return false;
 
         if (!TryGetSlot(uid, slot, out slotDefinition, inventory: inventory))
@@ -36,12 +36,12 @@ public partial class InventorySystem : EntitySystem
     }
 
     public bool HasSlot(EntityUid uid, string slot, InventoryComponent? component = null) =>
-        TryGetSlot(uid, slot, out _, true, component);
+        TryGetSlot(uid, slot, out _, component);
 
-    public bool TryGetSlot(EntityUid uid, string slot, [NotNullWhen(true)] out SlotDefinition? slotDefinition, bool silent = false, InventoryComponent? inventory = null)
+    public bool TryGetSlot(EntityUid uid, string slot, [NotNullWhen(true)] out SlotDefinition? slotDefinition, InventoryComponent? inventory = null)
     {
         slotDefinition = null;
-        if (!Resolve(uid, ref inventory, silent))
+        if (!Resolve(uid, ref inventory, false))
             return false;
 
         if (!_prototypeManager.TryIndex<InventoryTemplatePrototype>(inventory.TemplateId, out var templatePrototype))
@@ -54,7 +54,7 @@ public partial class InventorySystem : EntitySystem
     public bool TryGetContainerSlotEnumerator(EntityUid uid, out ContainerSlotEnumerator containerSlotEnumerator, InventoryComponent? component = null)
     {
         containerSlotEnumerator = default;
-        if (!Resolve(uid, ref component))
+        if (!Resolve(uid, ref component, false))
             return false;
 
         containerSlotEnumerator = new ContainerSlotEnumerator(uid, component.TemplateId, _prototypeManager, this);
@@ -64,7 +64,7 @@ public partial class InventorySystem : EntitySystem
     public bool TryGetSlots(EntityUid uid, [NotNullWhen(true)] out SlotDefinition[]? slotDefinitions, InventoryComponent? inventoryComponent = null)
     {
         slotDefinitions = null;
-        if (!Resolve(uid, ref inventoryComponent))
+        if (!Resolve(uid, ref inventoryComponent, false))
             return false;
 
         if (!_prototypeManager.TryIndex<InventoryTemplatePrototype>(inventoryComponent.TemplateId, out var templatePrototype))
@@ -76,7 +76,7 @@ public partial class InventorySystem : EntitySystem
 
     public SlotDefinition[] GetSlots(EntityUid uid, InventoryComponent? inventoryComponent = null)
     {
-        if (!Resolve(uid, ref inventoryComponent)) throw new InvalidOperationException();
+        if (!Resolve(uid, ref inventoryComponent, false)) throw new InvalidOperationException();
         return _prototypeManager.Index<InventoryTemplatePrototype>(inventoryComponent.TemplateId).Slots;
     }
 

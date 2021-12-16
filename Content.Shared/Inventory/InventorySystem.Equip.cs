@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Hands.Components;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
@@ -13,7 +14,7 @@ using Robust.Shared.Player;
 
 namespace Content.Shared.Inventory;
 
-public partial class InventorySystem
+public abstract partial class InventorySystem
 {
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeed = default!;
@@ -52,7 +53,7 @@ public partial class InventorySystem
     public bool TryEquipActiveHandTo(EntityUid uid, string slot, bool silent = false, bool force = false,
         InventoryComponent? component = null, SharedHandsComponent? hands = null)
     {
-        if (!Resolve(uid, ref component))
+        if (!Resolve(uid, ref component, false))
             return false;
 
         if (!Resolve(uid, ref hands, false))
@@ -66,7 +67,7 @@ public partial class InventorySystem
 
     public virtual bool TryEquip(EntityUid uid, EntityUid itemUid, string slot, bool silent = false, bool force = false, InventoryComponent? inventory = null, SharedItemComponent? item = null)
     {
-        if (!Resolve(uid, ref inventory) || !Resolve(uid, ref item))
+        if (!Resolve(uid, ref inventory, false) || !Resolve(uid, ref item, false))
         {
             if(!silent) _popup.PopupCursor(Loc.GetString("inventory-component-can-equip-cannot"), Filter.Local());
             return false;
@@ -103,7 +104,7 @@ public partial class InventorySystem
     public bool CanEquip(EntityUid uid, EntityUid itemUid, string slot, [NotNullWhen(false)] out string? reason, SlotDefinition? slotDefinition = null, InventoryComponent? inventory = null, SharedItemComponent? item = null)
     {
         reason = "inventory-component-can-equip-cannot";
-        if (!Resolve(uid, ref inventory) || !Resolve(itemUid, ref item))
+        if (!Resolve(uid, ref inventory, false) || !Resolve(itemUid, ref item, false))
             return false;
 
         if (slotDefinition == null && !TryGetSlot(uid, slot, out slotDefinition, inventory: inventory))
@@ -140,7 +141,7 @@ public partial class InventorySystem
     public virtual bool TryUnequip(EntityUid uid, string slot, bool silent = false, bool force = false,
         InventoryComponent? inventory = null)
     {
-        if (!Resolve(uid, ref inventory))
+        if (!Resolve(uid, ref inventory, false))
         {
             if(!silent) _popup.PopupCursor(Loc.GetString("inventory-component-can-unequip-cannot"), Filter.Local());
             return false;
@@ -199,7 +200,7 @@ public partial class InventorySystem
     public bool CanUnequip(EntityUid uid, string slot, [NotNullWhen(false)] out string? reason, ContainerSlot? containerSlot = null, SlotDefinition? slotDefinition = null, InventoryComponent? inventory = null)
     {
         reason = "inventory-component-can-unequip-cannot";
-        if (!Resolve(uid, ref inventory))
+        if (!Resolve(uid, ref inventory, false))
             return false;
 
         if ((containerSlot == null || slotDefinition == null) && !TryGetSlotContainer(uid, slot, out containerSlot, out slotDefinition, inventory))
@@ -235,7 +236,7 @@ public partial class InventorySystem
     public bool TryGetSlotEntity(EntityUid uid, string slot, [NotNullWhen(true)] out EntityUid? entityUid, InventoryComponent? inventoryComponent = null, ContainerManagerComponent? containerManagerComponent = null)
     {
         entityUid = null;
-        if (!Resolve(uid, ref inventoryComponent, ref containerManagerComponent) || !TryGetSlotContainer(uid, slot,
+        if (!Resolve(uid, ref inventoryComponent, ref containerManagerComponent, false) || !TryGetSlotContainer(uid, slot,
                 out var container, out _, inventoryComponent, containerManagerComponent))
             return false;
 

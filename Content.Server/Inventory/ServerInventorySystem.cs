@@ -21,7 +21,6 @@ namespace Content.Server.Inventory
         {
             base.Initialize();
 
-            SubscribeLocalEvent<InventoryComponent, EntRemovedFromContainerMessage>(RelayInventoryEvent);
             SubscribeLocalEvent<InventoryComponent, HighPressureEvent>(RelayInventoryEvent);
             SubscribeLocalEvent<InventoryComponent, LowPressureEvent>(RelayInventoryEvent);
             SubscribeLocalEvent<InventoryComponent, ModifyChangedTemperatureEvent>(RelayInventoryEvent);

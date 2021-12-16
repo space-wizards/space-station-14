@@ -21,7 +21,7 @@ namespace Content.Shared.Item
             SubscribeLocalEvent<SharedItemComponent, ComponentHandleState>(OnHandleState);
         }
 
-        private void OnHandleState(EntityUid uid, SharedItemComponent component, ComponentHandleState args)
+        private void OnHandleState(EntityUid uid, SharedItemComponent component, ref ComponentHandleState args)
         {
             if (args.Current is not ItemComponentState state)
                 return;
