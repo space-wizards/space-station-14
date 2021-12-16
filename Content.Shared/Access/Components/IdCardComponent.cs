@@ -1,13 +1,15 @@
-using Content.Server.Access.Systems;
-using Content.Server.PDA;
+using Content.Shared.Access.Systems;
+using Content.Shared.PDA;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.Access.Components
+namespace Content.Shared.Access.Components
 {
+    // TODO BUI NETWORKING if ever clients can open their own BUI's (id card console, pda), then this data should be
+    // networked.
     [RegisterComponent]
-    [Friend(typeof(IdCardSystem), typeof(PDASystem))]
+    [Friend(typeof(SharedIdCardSystem), typeof(SharedPDASystem))]
     public class IdCardComponent : Component
     {
         public override string Name => "IdCard";
