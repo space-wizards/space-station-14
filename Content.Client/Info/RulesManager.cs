@@ -27,7 +27,7 @@ public sealed class RulesManager
 
     private void OnStateChanged(StateChangedEventArgs args)
     {
-        if (args.NewState is not GameScreen || args.NewState is not LobbyState)
+        if (args.NewState is not (GameScreen or LobbyState))
             return;
         _stateManager.OnStateChanged -= OnStateChanged;
 
