@@ -183,7 +183,10 @@ namespace Content.Client.Inventory
         {
             if (TryGetSlotEntity(uid, slot, out var itemUid))
             {
-                _itemSlotManager.OnButtonPressed(args, itemUid.Value);
+                if (!_itemSlotManager.OnButtonPressed(args, itemUid.Value) && args.Function == EngineKeyFunctions.UIClick)
+                {
+                    RaiseNetworkEvent(new UseSlotNetworkMessage(uid, slot));
+                }
                 return;
             }
 

@@ -786,6 +786,14 @@ namespace Content.Shared.Hands.Components
         }
 
         /// <summary>
+        ///     Tries to pick up an entity into the active hand. If it cannot, tries to pick up the entity into each other hand.
+        /// </summary>
+        public bool PutInHand(EntityUid uid, bool checkActionBlocker = true)
+        {
+            return TryPutInActiveHandOrAny(uid, checkActionBlocker);
+        }
+
+        /// <summary>
         ///     Puts an item any hand, prefering the active hand, or puts it on the floor under the player.
         /// </summary>
         public void PutInHandOrDrop(SharedItemComponent item, bool checkActionBlocker = true) =>

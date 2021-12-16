@@ -1,7 +1,10 @@
-﻿using Robust.Shared.GameObjects;
+﻿using System;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Inventory.Events;
 
+[NetSerializable, Serializable]
 public class TryEquipNetworkMessage : EntityEventArgs
 {
     public readonly EntityUid Uid;

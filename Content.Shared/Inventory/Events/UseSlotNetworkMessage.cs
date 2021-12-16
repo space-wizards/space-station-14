@@ -5,18 +5,14 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Inventory.Events;
 
 [NetSerializable, Serializable]
-public class TryUnequipNetworkMessage : EntityEventArgs
+public class UseSlotNetworkMessage : EntityEventArgs
 {
     public readonly EntityUid Uid;
     public readonly string Slot;
-    public readonly bool Silent;
-    public readonly bool Force;
 
-    public TryUnequipNetworkMessage(EntityUid uid, string slot, bool silent, bool force)
+    public UseSlotNetworkMessage(EntityUid uid, string slot)
     {
         Uid = uid;
         Slot = slot;
-        Silent = silent;
-        Force = force;
     }
 }
