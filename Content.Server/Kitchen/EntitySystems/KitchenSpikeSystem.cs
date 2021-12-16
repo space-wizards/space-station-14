@@ -109,7 +109,7 @@ namespace Content.Server.Kitchen.EntitySystems
             if (!Resolve(used, ref utensil, false) || (utensil.Types & UtensilType.Knife) == 0)
             {
                 _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-knife-needed"), uid, Filter.Entities(user));
-                return false;
+                return true;
             }
 
             component.MeatParts--;
@@ -176,7 +176,7 @@ namespace Content.Server.Kitchen.EntitySystems
             {
                 _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-deny-not-dead", ("victim", victimUid)),
                     victimUid, Filter.Entities(userUid));
-                return false;
+                return true;
             }
 
             if (userUid != victimUid)
