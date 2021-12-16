@@ -37,7 +37,7 @@ namespace Content.Server.Light.EntitySystems
             base.Update(frameTime);
             foreach (var match in _litMatches)
             {
-                if (match.CurrentState != SmokableState.Lit || match.Paused || match.Deleted)
+                if (match.CurrentState != SmokableState.Lit || Paused(match.Owner) || match.Deleted)
                     continue;
 
                 _atmosphereSystem.HotspotExpose(EntityManager.GetComponent<TransformComponent>(match.Owner).Coordinates, 400, 50, true);

@@ -179,17 +179,6 @@
 
 - type: entity
   parent: ClothingOuterBase
-  id: ClothingOuterXenos
-  name: xenos suit
-  description: A suit made out of chitinous alien hide.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Misc/xenos.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Misc/xenos.rsi
-
-- type: entity
-  parent: ClothingOuterBase
   id: ClothingOuterWizardRed
   name: red wizard robes
   description: Strange-looking, red, hat-wear that most certainly belongs to a real magic user.
