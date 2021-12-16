@@ -1,1 +1,1 @@
-telecrystal-component-sucs-inserted = You slot {$source} into the {$target}.
+telecrystal-component-sucs-inserted = Вы вставляете {$source} в {$target}.
