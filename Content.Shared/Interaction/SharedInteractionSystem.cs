@@ -139,9 +139,7 @@ namespace Content.Shared.Interaction
             if (!TryComp(user, out SharedHandsComponent? hands))
                 return;
 
-            // TODO remove invalid/default uid and use nullable.
-            hands.TryGetActiveHeldEntity(out var heldEntity);
-            EntityUid? held = heldEntity.Valid ? heldEntity : null;
+            hands.TryGetActiveHeldEntity(out var held);
 
             // TODO: Replace with body interaction range when we get something like arm length or telekinesis or something.
             var inRangeUnobstructed = user.InRangeUnobstructed(coordinates, ignoreInsideBlocker: true);
