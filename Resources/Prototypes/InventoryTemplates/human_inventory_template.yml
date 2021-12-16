@@ -51,16 +51,19 @@
       slotFlags: POCKET
       uiContainer: BottomRight
       uiWindowPos: (0,3)
+      dependsOn: jumpsuit
     - name: pocket2
       slotTexture: pocket
       slotFlags: POCKET
       uiContainer: BottomRight
       uiWindowPos: (2,3)
+      dependsOn: jumpsuit
     - name: id
       slotTexture: id
       slotFlags: IDCARD
       uiContainer: BottomRight
       uiWindowPos: (2,1)
+      dependsOn: jumpsuit
     - name: belt
       slotTexture: belt
       slotFlags: BELT

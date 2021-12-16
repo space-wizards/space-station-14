@@ -84,7 +84,10 @@ public partial class InventorySystem
         if (slotDefinition == null && !TryGetSlot(uid, slot, out slotDefinition, inventory: inventory))
             return false;
 
-        if(!item.SlotFlags.HasFlag(slotDefinition.SlotFlags))
+        if (slotDefinition.DependsOn != null && !TryGetSlotEntity(uid, slotDefinition.DependsOn, out _, inventory))
+            return false;
+
+        if(!item.SlotFlags.HasFlag(slotDefinition.SlotFlags) && (!slotDefinition.SlotFlags.HasFlag(SlotFlags.POCKET) || item.Size > (int) ReferenceSizes.Pocket))
         {
             reason = "inventory-component-can-equip-does-not-fit";
             return false;
@@ -134,6 +137,18 @@ public partial class InventorySystem
             return false;
         }
 
+        //we need to do this to make sure we are 100% removing this entity, since we are now dropping dependant slots
+        if (!force && !slotContainer.CanRemove(entity.Value))
+            return false;
+
+        foreach (var slotDef in GetSlots(uid, inventory))
+        {
+            if (slotDef != slotDefinition && slotDef.DependsOn == slotDefinition.Name)
+            {
+                TryUnequip(uid, slotDef.Name, true, true, inventory);
+            }
+        }
+
         if (force)
         {
             slotContainer.ForceRemove(entity.Value);
@@ -142,6 +157,7 @@ public partial class InventorySystem
         {
             if (!slotContainer.Remove(entity.Value))
             {
+                //should never happen bc of the cabut lets just keep in just in case
                 return false;
             }
         }

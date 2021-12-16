@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using Content.Server.Hands.Components;
 using Content.Server.Interaction;
 using Content.Server.Storage.Components;
-using Content.Shared.Acts;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Players;
 
-namespace Content.Server.Inventory.Components
+namespace Content.Server.Inventory
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedInventoryComponent))]

@@ -10,7 +10,7 @@ using Content.Server.Disposal.Tube.Components;
 using Content.Server.EUI;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Ghost.Roles;
-using Content.Server.Inventory.Components;
+using Content.Server.Inventory;
 using Content.Server.Mind.Commands;
 using Content.Server.Mind.Components;
 using Content.Server.Players;

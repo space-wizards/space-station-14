@@ -74,6 +74,12 @@ public partial class InventorySystem : EntitySystem
         return true;
     }
 
+    public SlotDefinition[] GetSlots(EntityUid uid, InventoryComponent? inventoryComponent = null)
+    {
+        if (!Resolve(uid, ref inventoryComponent)) throw new InvalidOperationException();
+        return _prototypeManager.Index<InventoryTemplatePrototype>(inventoryComponent.TemplateId).Slots;
+    }
+
     public struct ContainerSlotEnumerator
     {
         private readonly InventorySystem _inventorySystem;

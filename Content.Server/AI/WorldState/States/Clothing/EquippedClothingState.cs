@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Content.Server.Inventory.Components;
 using Content.Shared.Inventory;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;

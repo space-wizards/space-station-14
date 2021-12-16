@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Hands.Components;
 using Content.Server.Interaction;
-using Content.Server.Inventory.Components;
+using Content.Server.Inventory;
 using Content.Server.Stack;
 using Content.Server.Storage.Components;
 using Content.Server.Throwing;

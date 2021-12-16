@@ -3,7 +3,7 @@ using System.Threading;
 using Content.Server.Cuffs.Components;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
-using Content.Server.Inventory.Components;
+using Content.Server.Inventory;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.DragDrop;

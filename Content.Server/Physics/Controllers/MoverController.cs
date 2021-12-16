@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Content.Server.Inventory.Components;
 using Content.Server.Movement.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.EntitySystems;

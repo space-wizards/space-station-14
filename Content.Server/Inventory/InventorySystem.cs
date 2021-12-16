@@ -1,5 +1,4 @@
 using Content.Server.Atmos;
-using Content.Server.Inventory.Components;
 using Content.Server.Temperature.Systems;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
