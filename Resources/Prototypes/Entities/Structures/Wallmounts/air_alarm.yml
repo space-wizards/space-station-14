@@ -35,6 +35,7 @@
     BoardName: "Air Alarm"
     LayoutId: AirAlarm
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
