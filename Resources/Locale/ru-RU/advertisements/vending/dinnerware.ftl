@@ -1,7 +1,7 @@
-﻿advertisement-dinnerware-1 = Mm, food stuffs!
-advertisement-dinnerware-2 = Food and food accessories.
-advertisement-dinnerware-3 = Get your plates!
-advertisement-dinnerware-4 = You like forks?
-advertisement-dinnerware-5 = I like forks.
-advertisement-dinnerware-6 = Woo, utensils.
-advertisement-dinnerware-7 = You don't really need these...
+﻿advertisement-dinnerware-1 = Мм, продукты питания!
+advertisement-dinnerware-2 = Продукты питания и пищевые аксессуары.
+advertisement-dinnerware-3 = Берите тарелки!
+advertisement-dinnerware-4 = Вам нравятся вилки?
+advertisement-dinnerware-5 = Мне нравятся вилки.
+advertisement-dinnerware-6 = Ууу, посуда.
+advertisement-dinnerware-7 = На самом деле они вам не нужны...

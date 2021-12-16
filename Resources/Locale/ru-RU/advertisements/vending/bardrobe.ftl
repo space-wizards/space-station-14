@@ -1,1 +1,1 @@
-﻿advertisement-bardrobe-1 = Guaranteed to prevent stains from spilled drinks!
+﻿advertisement-bardrobe-1 = Гарантированно предотвращает появление пятен от пролитых напитков!
