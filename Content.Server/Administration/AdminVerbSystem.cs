@@ -19,6 +19,7 @@ using Content.Shared.Body.Components;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Content.Shared.Interaction.Helpers;
+using Content.Shared.Inventory;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Server.Console;
@@ -160,7 +161,7 @@ namespace Content.Server.Administration
 
             // Set clothing verb
             if (_groupController.CanCommand(player, "setoutfit") &&
-                EntityManager.HasComponent<ServerInventoryComponent>(args.Target))
+                EntityManager.HasComponent<InventoryComponent>(args.Target))
             {
                 Verb verb = new();
                 verb.Text = Loc.GetString("set-outfit-verb-get-data-text");

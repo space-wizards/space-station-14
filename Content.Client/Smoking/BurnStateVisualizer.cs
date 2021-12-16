@@ -46,17 +46,17 @@ namespace Content.Client.Smoking
                 {
                     case SmokableState.Lit:
                         if (clothing != null)
-                            clothing.ClothingEquippedPrefix = _litPrefix;
+                            clothing.EquippedPrefix = _litPrefix;
                         sprite.LayerSetState(0, _litIcon);
                         break;
                     case SmokableState.Burnt:
                         if (clothing != null)
-                            clothing.ClothingEquippedPrefix = _burntPrefix;
+                            clothing.EquippedPrefix = _burntPrefix;
                         sprite.LayerSetState(0, _burntIcon);
                         break;
                     case SmokableState.Unlit:
                         if (clothing != null)
-                            clothing.ClothingEquippedPrefix = _unlitPrefix;
+                            clothing.EquippedPrefix = _unlitPrefix;
                         sprite.LayerSetState(0, _unlitIcon);
                         break;
                 }

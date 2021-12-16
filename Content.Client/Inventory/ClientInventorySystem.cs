@@ -70,14 +70,14 @@ namespace Content.Client.Inventory
         public override bool TryEquip(EntityUid uid, EntityUid itemUid, string slot, bool silent = false, bool force = false,
             InventoryComponent? inventory = null, SharedItemComponent? item = null)
         {
-            RaiseNetworkEvent(new TryEquipNetworkMessage(uid, itemUid, slot, silent, force));
+            if(!uid.IsClientSide()) RaiseNetworkEvent(new TryEquipNetworkMessage(uid, itemUid, slot, silent, force));
             return base.TryEquip(uid, itemUid, slot, silent, force, inventory, item);
         }
 
         public override bool TryUnequip(EntityUid uid, string slot, bool silent = false, bool force = false,
             InventoryComponent? inventory = null)
         {
-            RaiseNetworkEvent(new TryUnequipNetworkMessage(uid, slot, silent, force));
+            if(!uid.IsClientSide()) RaiseNetworkEvent(new TryUnequipNetworkMessage(uid, slot, silent, force));
             return base.TryUnequip(uid, slot, silent, force, inventory);
         }
 

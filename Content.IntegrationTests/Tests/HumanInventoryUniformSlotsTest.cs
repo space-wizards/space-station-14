@@ -12,7 +12,6 @@ namespace Content.IntegrationTests.Tests
     // i.e. the interaction between uniforms and the pocket/ID slots.
     // and also how big items don't fit in pockets.
     [TestFixture]
-    [TestOf(typeof(HumanInventoryControllerComponent))]
     public class HumanInventoryUniformSlotsTest : ContentIntegrationTest
     {
         private const string Prototypes = @"
@@ -65,7 +64,7 @@ namespace Content.IntegrationTests.Tests
             EntityUid uniform = default;
             EntityUid idCard = default;
             EntityUid pocketItem = default;
-            ServerInventoryComponent inventory = null;
+            InventoryComponent inventory = null;
 
             var invSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<InventorySystem>();
 

@@ -277,7 +277,7 @@ namespace Content.Server.Hands.Systems
                 return;
 
             if (!EntityManager.TryGetComponent(plyEnt, out SharedHandsComponent? hands) ||
-                !EntityManager.TryGetComponent(plyEnt, out ServerInventoryComponent? inventory))
+                !EntityManager.TryGetComponent(plyEnt, out InventoryComponent? inventory))
                 return;
 
             if (!_inventorySystem.TryGetSlotEntity(plyEnt, equipmentSlot, out var slotEntity) ||
