@@ -18,6 +18,37 @@ public partial class InventorySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeed = default!;
 
+    private void InitializeEquip()
+    {
+        //these events ensure that the client also gets its proper events raised when getting its containerstate updated
+        SubscribeLocalEvent<InventoryComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
+        SubscribeLocalEvent<InventoryComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
+    }
+
+    private void OnEntRemoved(EntityUid uid, InventoryComponent component, EntRemovedFromContainerMessage args)
+    {
+        if(!TryGetSlot(uid, args.Container.ID, out var slotDef, inventory: component))
+            return;
+
+        var unequippedEvent = new DidUnequipEvent(uid, args.Entity, slotDef);
+        RaiseLocalEvent(uid, unequippedEvent);
+
+        var gotUnequippedEvent = new GotUnequippedEvent(uid, args.Entity, slotDef);
+        RaiseLocalEvent(args.Entity, gotUnequippedEvent);
+    }
+
+    private void OnEntInserted(EntityUid uid, InventoryComponent component, EntInsertedIntoContainerMessage args)
+    {
+        if(!TryGetSlot(uid, args.Container.ID, out var slotDef, inventory: component))
+           return;
+
+        var equippedEvent = new DidEquipEvent(uid, args.Entity, slotDef);
+        RaiseLocalEvent(uid, equippedEvent);
+
+        var gotEquippedEvent = new GotEquippedEvent(uid, args.Entity, slotDef);
+        RaiseLocalEvent(args.Entity, gotEquippedEvent);
+    }
+
     public bool TryEquipActiveHandTo(EntityUid uid, string slot, bool silent = false, bool force = false,
         InventoryComponent? component = null, SharedHandsComponent? hands = null)
     {
@@ -65,12 +96,6 @@ public partial class InventorySystem
         inventory.Dirty();
 
         _movementSpeed.RefreshMovementSpeedModifiers(uid);
-
-        var equippedEvent = new DidEquipEvent(uid, itemUid, slotDefinition);
-        RaiseLocalEvent(uid, equippedEvent);
-
-        var gotEquippedEvent = new GotEquippedEvent(uid, itemUid, slotDefinition);
-        RaiseLocalEvent(itemUid, gotEquippedEvent);
 
         return true;
     }
@@ -167,12 +192,6 @@ public partial class InventorySystem
         inventory.Dirty();
 
         _movementSpeed.RefreshMovementSpeedModifiers(uid);
-
-        var unequippedEvent = new DidUnequipEvent(uid, entity.Value, slotDefinition);
-        RaiseLocalEvent(uid, unequippedEvent);
-
-        var gotUnequippedEvent = new GotUnequippedEvent(uid, entity.Value, slotDefinition);
-        RaiseLocalEvent(entity.Value, gotUnequippedEvent);
 
         return true;
     }

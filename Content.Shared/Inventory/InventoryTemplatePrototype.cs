@@ -21,22 +21,20 @@ public class InventoryTemplatePrototype : IPrototype
 [DataDefinition]
 public class SlotDefinition
 {
-    [DataField("name", required: true)]
-    public string Name { get; } = string.Empty;
+    [DataField("name", required: true)] public string Name { get; } = string.Empty;
 
     [DataField("slotTexture")] public string TextureName { get; } = "pocket";
 
     //todo paul is this how you serialize flags?
     [DataField("slotFlags")] public SlotFlags SlotFlags { get; } = SlotFlags.PREVENTEQUIP;
 
-    [DataField("uiContainer")]
-    public SlotUIContainer UIContainer { get; }
+    [DataField("uiContainer")] public SlotUIContainer UIContainer { get; } = SlotUIContainer.None;
 
-    [DataField("uiWindowPos")]
-    public Vector2i UIWindowPosition { get; }
+    [DataField("uiWindowPos", required: true)] public Vector2i UIWindowPosition { get; }
 
-    [DataField("dependsOn")]
-    public string? DependsOn { get; }
+    [DataField("dependsOn")] public string? DependsOn { get; }
+
+    [DataField("displayName", required: true)] public string DisplayName { get; } = string.Empty;
 }
 
 public enum SlotUIContainer
