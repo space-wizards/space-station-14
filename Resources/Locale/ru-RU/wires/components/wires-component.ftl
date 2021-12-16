@@ -1,4 +1,4 @@
-wires-component-ui-on-receive-message-no-hands = You have no hands.
+wires-component-ui-on-receive-message-no-hands = У вас нет рук.
 wires-component-ui-on-receive-message-cannot-reach = You can't reach there!
 wires-component-ui-on-receive-message-need-wirecutters = You need to hold a wirecutter in your hand!
 wires-component-ui-on-receive-message-cannot-pulse-cut-wire = You can't pulse a wire that's been cut!

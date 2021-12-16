@@ -1,5 +1,5 @@
-ame-controller-component-interact-no-hands-text = You have no hands.
-ame-controller-component-interact-using-no-hands-text = You have no hands.
+ame-controller-component-interact-no-hands-text = У вас нет рук.
+ame-controller-component-interact-using-no-hands-text = У вас нет рук.
 ame-controller-component-interact-using-nothing-in-hands-text = You have nothing in your hand!
 ame-controller-component-interact-using-already-has-jar = The controller already has a jar loaded.
 ame-controller-component-interact-using-success = You insert the jar into the fuel slot.
