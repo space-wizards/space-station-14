@@ -19,16 +19,6 @@ public partial class InventorySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeed = default!;
 
-    public void InitializeEquip()
-    {
-        SubscribeLocalEvent<InventoryComponent, ContainerIsInsertingAttemptEvent>(OnContainerInsertion);
-    }
-
-    private void OnContainerInsertion(EntityUid uid, InventoryComponent component, ContainerIsInsertingAttemptEvent args)
-    {
-        throw new System.NotImplementedException();
-    }
-
     public bool TryEquipActiveHandTo(EntityUid uid, string slot, bool silent = false, bool force = false,
         InventoryComponent? component = null, SharedHandsComponent? hands = null)
     {
