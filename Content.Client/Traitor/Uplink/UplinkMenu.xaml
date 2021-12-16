@@ -13,7 +13,7 @@
                                HorizontalExpand="True"
                                HorizontalAlignment="Left" />
                 <Button Name="WithdrawButton"
-                        Text="Withdraw"
+                        Text="{Loc 'uplink-user-interface-withdraw-button'}"
                         HorizontalAlignment="Right"
                         MinWidth="64"/>
             </BoxContainer>
