@@ -1,9 +1,4 @@
 Entries:
-- author: Swept
-  changes:
-  - {message: More machines and station equipment is destructible, type: Tweak}
-  id: 244
-  time: '2021-06-19T19:34:01.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Add cvar to specify discrete gas overlay thresholds, type: Add}
@@ -2868,3 +2863,8 @@ Entries:
   - {message: Crate deconstruction no longer deletes all of its contents., type: Fix}
   id: 745
   time: '2021-12-17T00:26:01.716131+00:00'
+- author: moonheart08
+  changes:
+  - {message: The singularity is no longer weightless., type: Tweak}
+  id: 746
+  time: '2021-12-17T05:56:38.0000000+00:00'
