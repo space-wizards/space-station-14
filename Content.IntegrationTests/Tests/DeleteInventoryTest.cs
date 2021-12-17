@@ -1,7 +1,10 @@
 ﻿using System.Threading.Tasks;
+using Content.Server.Clothing.Components;
+using Content.Server.Inventory;
 using Content.Shared.Inventory;
 using Content.Shared.Item;
 using NUnit.Framework;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -18,7 +21,7 @@ namespace Content.IntegrationTests.Tests
         {
             var server = StartServer();
 
-            server.Assert(() =>
+            await server.WaitAssertion(() =>
             {
                 // Spawn everything.
                 var mapMan = IoCManager.Resolve<IMapManager>();
@@ -28,10 +31,11 @@ namespace Content.IntegrationTests.Tests
 
                 var entMgr = IoCManager.Resolve<IEntityManager>();
                 var container = entMgr.SpawnEntity(null, MapCoordinates.Nullspace);
-                entMgr.AddComponent<InventoryComponent>(container);
+                entMgr.AddComponent<ServerInventoryComponent>(container);
+                entMgr.AddComponent<ContainerManagerComponent>(container);
 
                 var child = entMgr.SpawnEntity(null, MapCoordinates.Nullspace);
-                var item = entMgr.AddComponent<SharedItemComponent>(child);
+                var item = entMgr.AddComponent<ItemComponent>(child);
                 item.SlotFlags = SlotFlags.HEAD;
 
                 // Equip item.
@@ -43,8 +47,6 @@ namespace Content.IntegrationTests.Tests
                 // Assert that child item was also deleted.
                 Assert.That(item.Deleted, Is.True);
             });
-
-            await server.WaitIdleAsync();
         }
     }
 }

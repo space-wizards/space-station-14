@@ -14,6 +14,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Reflection;
+using ItemComponent = Content.Server.Clothing.Components.ItemComponent;
 
 namespace Content.IntegrationTests.Tests.Interaction.Click
 {
@@ -73,7 +74,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 user.EnsureComponent<HandsComponent>().AddHand("hand", HandLocation.Left);
                 target = sEntities.SpawnEntity(null, coords);
                 item = sEntities.SpawnEntity(null, coords);
-                item.EnsureComponent<SharedItemComponent>();
+                item.EnsureComponent<ItemComponent>();
             });
 
             await server.WaitRunTicks(1);
@@ -144,7 +145,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 user.EnsureComponent<HandsComponent>().AddHand("hand", HandLocation.Left);
                 target = sEntities.SpawnEntity(null, new MapCoordinates((1.9f, 0), mapId));
                 item = sEntities.SpawnEntity(null, coords);
-                item.EnsureComponent<SharedItemComponent>();
+                item.EnsureComponent<ItemComponent>();
                 wall = sEntities.SpawnEntity("DummyDebugWall", new MapCoordinates((1, 0), sEntities.GetComponent<TransformComponent>(user).MapID));
             });
 
@@ -214,7 +215,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 user.EnsureComponent<HandsComponent>().AddHand("hand", HandLocation.Left);
                 target = sEntities.SpawnEntity(null, new MapCoordinates((InteractionSystem.InteractionRange - 0.1f, 0), mapId));
                 item = sEntities.SpawnEntity(null, coords);
-                item.EnsureComponent<SharedItemComponent>();
+                item.EnsureComponent<ItemComponent>();
             });
 
             await server.WaitRunTicks(1);
@@ -284,7 +285,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 user.EnsureComponent<HandsComponent>().AddHand("hand", HandLocation.Left);
                 target = sEntities.SpawnEntity(null, new MapCoordinates((InteractionSystem.InteractionRange, 0), mapId));
                 item = sEntities.SpawnEntity(null, coords);
-                item.EnsureComponent<SharedItemComponent>();
+                item.EnsureComponent<ItemComponent>();
             });
 
             await server.WaitRunTicks(1);
@@ -356,7 +357,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 user.EnsureComponent<HandsComponent>().AddHand("hand", HandLocation.Left);
                 target = sEntities.SpawnEntity(null, coords);
                 item = sEntities.SpawnEntity(null, coords);
-                item.EnsureComponent<SharedItemComponent>();
+                item.EnsureComponent<ItemComponent>();
                 containerEntity = sEntities.SpawnEntity(null, coords);
                 container = containerEntity.EnsureContainer<Container>("InteractionTestContainer");
             });

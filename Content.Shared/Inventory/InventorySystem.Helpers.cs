@@ -16,7 +16,7 @@ public partial class InventorySystem
             return false;
 
         // If we don't have that slot or there's already an item there, we do nothing.
-        if (!TryGetSlotEntity(uid, slot, out var slotEnt, inventory))
+        if (!HasSlot(uid, slot) || TryGetSlotEntity(uid, slot, out _, inventory))
             return false;
 
         // If the prototype in question doesn't exist, we do nothing.

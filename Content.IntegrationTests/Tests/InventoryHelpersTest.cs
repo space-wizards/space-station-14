@@ -19,6 +19,7 @@ namespace Content.IntegrationTests.Tests
   id: InventoryStunnableDummy
   components:
   - type: Inventory
+  - type: ContainerContainer
   - type: StatusEffects
     allowed:
     - Stun
@@ -82,7 +83,7 @@ namespace Content.IntegrationTests.Tests
                 Assert.That(invSystem.TryGetSlotEntity(human, "item", out _), Is.False);
 
                 // Let's try skipping the interaction check and see if it equips it!
-                Assert.That(invSystem.SpawnItemInSlot(human, "id", "InventoryIDCardDummy", true));
+                Assert.That(invSystem.SpawnItemInSlot(human, "id", "InventoryIDCardDummy", true, true));
                 Assert.That(invSystem.TryGetSlotEntity(human, "id", out var idUid));
                 Assert.That(sEntities.GetComponent<MetaDataComponent>(idUid.Value).EntityPrototype is
                 {

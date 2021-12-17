@@ -20,6 +20,7 @@ namespace Content.IntegrationTests.Tests
   id: HumanDummy
   components:
   - type: Inventory
+  - type: ContainerContainer
 
 - type: entity
   name: UniformDummy
@@ -65,10 +66,11 @@ namespace Content.IntegrationTests.Tests
             EntityUid pocketItem = default;
             InventoryComponent inventory = null;
 
-            var invSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<InventorySystem>();
+            InventorySystem invSystem = default!;
 
             server.Assert(() =>
             {
+                invSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<InventorySystem>();
                 var mapMan = IoCManager.Resolve<IMapManager>();
 
                 mapMan.CreateNewMapEntity(MapId.Nullspace);
@@ -112,9 +114,9 @@ namespace Content.IntegrationTests.Tests
                 Assert.That(IsDescendant(pocketItem, human), Is.False);
 
                 // Ensure everything null here.
-                Assert.That(invSystem.TryGetSlotEntity(human, "jumpsuit", out _));
-                Assert.That(invSystem.TryGetSlotEntity(human, "id", out _));
-                Assert.That(invSystem.TryGetSlotEntity(human, "pocket1", out _));
+                Assert.That(!invSystem.TryGetSlotEntity(human, "jumpsuit", out _));
+                Assert.That(!invSystem.TryGetSlotEntity(human, "id", out _));
+                Assert.That(!invSystem.TryGetSlotEntity(human, "pocket1", out _));
             });
 
             await server.WaitIdleAsync();
