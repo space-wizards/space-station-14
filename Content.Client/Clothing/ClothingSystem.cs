@@ -45,8 +45,8 @@ public class ClothingSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ClientInventoryComponent, DidEquipEvent>(OnDidEquip);
-        SubscribeLocalEvent<ClientInventoryComponent, DidUnequipEvent>(OnDidUnequip);
+        SubscribeLocalEvent<ClothingComponent, GotEquippedEvent>(OnDidEquip);
+        SubscribeLocalEvent<ClothingComponent, GotUnequippedEvent>(OnDidUnequip);
         SubscribeLocalEvent<ClientInventoryComponent, ComponentInit>(OnInit);
     }
 
@@ -66,10 +66,10 @@ public class ClothingSystem : EntitySystem
         }
     }
 
-    private void OnDidUnequip(EntityUid uid, ClientInventoryComponent component, DidUnequipEvent args)
+    private void OnDidUnequip(EntityUid uid, ClothingComponent component, GotUnequippedEvent args)
     {
         SpriteComponent? sprite = null;
-        if (!Resolve(uid, ref sprite))
+        if (!Resolve(args.Equipee, ref sprite))
         {
             return;
         }
@@ -77,17 +77,16 @@ public class ClothingSystem : EntitySystem
         sprite.LayerSetVisible(args.Slot, false);
     }
 
-    private void OnDidEquip(EntityUid uid, ClientInventoryComponent component, DidEquipEvent args)
+    private void OnDidEquip(EntityUid uid, ClothingComponent component, GotEquippedEvent args)
     {
-        SpriteComponent? sprite = null;
-        if (!Resolve(uid, ref sprite))
+        if (!TryComp<SpriteComponent>(args.Equipee, out var sprite) || !TryComp<ClientInventoryComponent>(args.Equipee, out var invComp))
         {
             return;
         }
 
         if (TryComp(args.Equipment, out ClothingComponent? clothing))
         {
-            var data = GetEquippedStateInfo(args.Equipment, args.Slot, component.SpeciesId, clothing);
+            var data = GetEquippedStateInfo(args.Equipment, args.Slot, invComp.SpeciesId, clothing);
             if (data != null)
             {
                 var (rsi, state) = data.Value;
