@@ -245,8 +245,7 @@ namespace Content.Client.Inventory
                                 if (e.Function != EngineKeyFunctions.UIClick &&
                                     e.Function != ContentKeyFunctions.ActivateItemInWorld)
                                     return;
-                                //todo paul open storagewindow
-                                //ServerStorageComponent.OpenStorageUI
+                                RaiseNetworkEvent(new OpenSlotStorageNetworkMessage(entityUid, definition.Name));
                             }
                         };
                         btn.OnHover = (_) =>

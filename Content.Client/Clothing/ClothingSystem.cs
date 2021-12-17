@@ -22,7 +22,7 @@ public class ClothingSystem : EntitySystem
     /// </summary>
     private static readonly Dictionary<string, string> TemporarySlotMap = new()
     {
-        {"head", "HEAD"},
+        {"head", "HELMET"},
         {"eyes", "EYES"},
         {"ears", "EARS"},
         {"mask", "MASK"},
@@ -31,8 +31,8 @@ public class ClothingSystem : EntitySystem
         {"neck", "NECK"},
         {"back", "BACKPACK"},
         {"belt", "BELT"},
-        {"gloves", "GLOVES"},
-        {"shoes", "SHOES"},
+        {"gloves", "HAND"},
+        {"shoes", "FEET"},
         {"id", "IDCARD"},
         {"pocket1", "POCKET1"},
         {"pocket2", "POCKET2"},
