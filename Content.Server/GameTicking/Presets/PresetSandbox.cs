@@ -5,8 +5,8 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.GameTicking.Presets
 {
-    [GamePreset("sandbox")]
-    public sealed class PresetSandbox : GamePreset
+    [GamePresetPrototype("sandbox")]
+    public sealed class PresetSandbox : GamePresetPrototype
     {
         [Dependency] private readonly ISandboxManager _sandboxManager = default!;
 

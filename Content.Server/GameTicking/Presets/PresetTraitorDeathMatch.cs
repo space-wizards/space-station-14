@@ -34,8 +34,8 @@ using Robust.Shared.Random;
 
 namespace Content.Server.GameTicking.Presets
 {
-    [GamePreset("traitordm", "traitordeathmatch")]
-    public sealed class PresetTraitorDeathMatch : GamePreset
+    [GamePresetPrototype("traitordm", "traitordeathmatch")]
+    public sealed class PresetTraitorDeathMatch : GamePresetPrototype
     {
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;

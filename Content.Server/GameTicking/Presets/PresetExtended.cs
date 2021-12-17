@@ -3,8 +3,8 @@ using Robust.Server.Player;
 
 namespace Content.Server.GameTicking.Presets
 {
-    [GamePreset("extended")]
-    public class PresetExtended : GamePreset
+    [GamePresetPrototype("extended")]
+    public class PresetExtended : GamePresetPrototype
     {
         public override string Description => "No antagonists, have fun!";
         public override string ModeTitle => "Extended";

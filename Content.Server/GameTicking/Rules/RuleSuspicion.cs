@@ -25,7 +25,7 @@ namespace Content.Server.GameTicking.Rules
     /// <summary>
     ///     Simple GameRule that will do a TTT-like gamemode with traitors.
     /// </summary>
-    public sealed class RuleSuspicion : GameRule
+    public sealed class RuleSuspicion : GameRuleSystem
     {
         private static readonly TimeSpan DeadCheckDelay = TimeSpan.FromSeconds(1);
 

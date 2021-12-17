@@ -1,39 +1,30 @@
-#nullable enable annotations
-using System.Collections.Generic;
-using Content.Server.Ghost.Components;
-using Content.Shared.Damage;
-using Content.Shared.Damage.Prototypes;
-using Content.Shared.Ghost;
-using Content.Shared.MobState.Components;
-using Content.Shared.Preferences;
-using Robust.Server.Player;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Network;
+using System;
+using Content.Server.GameTicking.Rules;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Server.GameTicking.Presets
 {
     /// <summary>
     ///     A round-start setup preset, such as which antagonists to spawn.
     /// </summary>
-    public abstract class GamePreset
+    [Prototype("gamePreset")]
+    public class GamePresetPrototype : IPrototype
     {
-        [Dependency] private readonly IEntityManager _entities = default!;
+        [DataField("id", required:true)]
+        public string ID { get; } = default!;
 
-        public abstract bool Start(IReadOnlyList<IPlayerSession> readyPlayers, bool force = false);
-        public virtual string ModeTitle => "Sandbox";
-        public virtual string Description => "Secret!";
-        public virtual bool DisallowLateJoin => false;
-        public Dictionary<NetUserId, HumanoidCharacterProfile> ReadyProfiles = new();
+        [DataField("name")]
+        public string ModeTitle { get; } = "????";
 
-        public virtual void OnGameStarted() { }
+        [DataField("description")]
+        public string Description { get; } = string.Empty;
 
-        /// <summary>
-        /// Called when a player is spawned in (this includes, but is not limited to, before Start)
-        /// </summary>
-        public virtual void OnSpawnPlayerCompleted(IPlayerSession session, EntityUid mob, bool lateJoin) { }
+        [DataField("rules", customTypeSerializer:typeof(PrototypeIdListSerializer<GameRulePrototype>))]
+        public string[] Rules { get; } = Array.Empty<string>();
 
+        /*
         /// <summary>
         /// Called when a player attempts to ghost.
         /// </summary>
@@ -100,8 +91,6 @@ namespace Content.Server.GameTicking.Presets
             else
                 mind.TransferTo(ghost);
             return true;
-        }
-
-        public virtual string GetRoundEndDescription() => string.Empty;
+        }*/
     }
 }

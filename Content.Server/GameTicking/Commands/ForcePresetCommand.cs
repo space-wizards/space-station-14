@@ -1,4 +1,5 @@
 ﻿using Content.Server.Administration;
+using Content.Server.GameTicking.Presets;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
@@ -35,7 +36,7 @@ namespace Content.Server.GameTicking.Commands
                 return;
             }
 
-            ticker.SetStartPreset(type, true);
+            ticker.SetGamePreset((GamePresetPrototype) type, true);
             shell.WriteLine($"Forced the game to start with preset {name}.");
         }
     }

@@ -8,7 +8,7 @@ using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.GameTicking.Rules
 {
-    public sealed class RuleMaxTimeRestart : GameRule
+    public sealed class RuleMaxTimeRestart : GameRuleSystem
     {
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;

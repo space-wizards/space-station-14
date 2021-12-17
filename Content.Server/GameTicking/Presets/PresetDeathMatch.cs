@@ -6,12 +6,12 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.GameTicking.Presets
 {
-    [GamePreset("deathmatch")]
-    public sealed class PresetDeathMatch : GamePreset
+    [GamePresetPrototype("deathmatch")]
+    public sealed class PresetDeathMatch : GamePresetPrototype
     {
         public override bool Start(IReadOnlyList<IPlayerSession> readyPlayers, bool force = false)
         {
-            EntitySystem.Get<GameTicker>().AddGameRule<RuleDeathMatch>();
+            EntitySystem.Get<GameTicker>().AddGameRule<DeathMatchRuleSystem>();
             return true;
         }
 

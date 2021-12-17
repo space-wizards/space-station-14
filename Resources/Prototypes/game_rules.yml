@@ -1,0 +1,17 @@
+- type: GameRule
+  id: DeathMatch
+
+- type: GameRule
+  id: InactivityTimeRestart
+
+- type: GameRule
+  id: MaxTimeRestart
+
+- type: GameRule
+  id: Suspicion
+
+- type: GameRule
+  id: Traitor
+
+- type: GameRule
+  id: TraitorDeathMatch

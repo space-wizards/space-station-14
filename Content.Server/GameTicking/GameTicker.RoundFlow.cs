@@ -18,6 +18,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
+using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
@@ -108,6 +109,8 @@ namespace Content.Server.GameTicking
 
             SendServerMessage(Loc.GetString("game-ticker-start-round"));
 
+            AddGamePresetRules();
+
             List<IPlayerSession> readyPlayers;
             if (LobbyEnabled)
             {
@@ -117,9 +120,6 @@ namespace Content.Server.GameTicking
             {
                 readyPlayers = _playersInLobby.Keys.ToList();
             }
-
-            _roundStartDateTime = DateTime.UtcNow;
-            RunLevel = GameRunLevel.InRound;
 
             RoundLengthMetric.Set(0);
 
@@ -142,6 +142,50 @@ namespace Content.Server.GameTicking
                     profiles.Add(readyPlayer.UserId, HumanoidCharacterProfile.Random());
                 }
             }
+
+            var startAttempt = new RoundStartAttemptEvent(readyPlayers.ToArray(), force);
+            RaiseLocalEvent(startAttempt);
+
+            void FailedPresetRestart()
+            {
+                SendServerMessage(Loc.GetString("game-ticker-start-round-cannot-start-game-mode-restart", ("failedGameMode", _preset?.ModeTitle ?? string.Empty)));
+                RestartRound();
+                DelayStart(TimeSpan.FromSeconds(PresetFailedCooldownIncrease));
+            }
+
+            if (startAttempt.Cancelled)
+            {
+                if (_configurationManager.GetCVar(CCVars.GameLobbyFallbackEnabled))
+                {
+                    var oldPreset = _preset;
+                    ClearGameRules();
+                    SetGamePreset(_configurationManager.GetCVar(CCVars.GameLobbyFallbackPreset));
+                    AddGamePresetRules();
+
+                    startAttempt.Uncancel();
+                    RaiseLocalEvent(startAttempt);
+
+                    _chatManager.DispatchServerAnnouncement(
+                        Loc.GetString("game-ticker-start-round-cannot-start-game-mode-fallback",
+                            ("failedGameMode", _preset?.ModeTitle ?? string.Empty),
+                            ("fallbackMode", _preset?.ModeTitle ?? string.Empty)));
+
+                    if (startAttempt.Cancelled)
+                    {
+                        FailedPresetRestart();
+                    }
+
+                    // TODO Latejoin Disallow here
+                }
+                else
+                {
+                    FailedPresetRestart();
+                    return;
+                }
+            }
+
+            // Allow game rules to spawn players by themselves if needed. (For example, nuke ops or wizard)
+            RaiseLocalEvent(new RulePlayerSpawningEvent(readyPlayers, profiles, force));
 
             var assignedJobs = AssignJobs(readyPlayers, profiles);
 
@@ -188,39 +232,13 @@ namespace Content.Server.GameTicking
                 SpawnPlayer(player, profiles[player.UserId], station, job, false);
             }
 
-            // Time to start the preset.
-            Preset = MakeGamePreset(profiles);
+            // TODO Disallow Latejoin here
 
-            DisallowLateJoin |= Preset.DisallowLateJoin;
+            // Allow rules to add roles to players who have been spawned in. (For example, on-station traitors)
+            RaiseLocalEvent(new RulePlayerJobsAssignedEvent(assignedJobs.Keys.ToArray(), profiles, force));
 
-            if (!Preset.Start(assignedJobs.Keys.ToList(), force))
-            {
-                if (_configurationManager.GetCVar(CCVars.GameLobbyFallbackEnabled))
-                {
-                    SetStartPreset(_configurationManager.GetCVar(CCVars.GameLobbyFallbackPreset));
-                    var newPreset = MakeGamePreset(profiles);
-                    _chatManager.DispatchServerAnnouncement(
-                        Loc.GetString("game-ticker-start-round-cannot-start-game-mode-fallback",
-                                      ("failedGameMode", Preset.ModeTitle),
-                                      ("fallbackMode", newPreset.ModeTitle)));
-                    if (!newPreset.Start(readyPlayers, force))
-                    {
-                        throw new ApplicationException("Fallback preset failed to start!");
-                    }
-
-                    DisallowLateJoin = false;
-                    DisallowLateJoin |= newPreset.DisallowLateJoin;
-                    Preset = newPreset;
-                }
-                else
-                {
-                    SendServerMessage(Loc.GetString("game-ticker-start-round-cannot-start-game-mode-restart", ("failedGameMode", Preset.ModeTitle)));
-                    RestartRound();
-                    DelayStart(TimeSpan.FromSeconds(PresetFailedCooldownIncrease));
-                    return;
-                }
-            }
-            Preset.OnGameStarted();
+            _roundStartDateTime = DateTime.UtcNow;
+            RunLevel = GameRunLevel.InRound;
 
             _roundStartTimeSpan = _gameTiming.RealTime;
             SendStatusToAll();
@@ -241,8 +259,10 @@ namespace Content.Server.GameTicking
             RunLevel = GameRunLevel.PostRound;
 
             //Tell every client the round has ended.
-            var gamemodeTitle = Preset?.ModeTitle ?? string.Empty;
-            var roundEndText = text + $"\n{Preset?.GetRoundEndDescription() ?? string.Empty}";
+            var gamemodeTitle = _preset?.ModeTitle ?? string.Empty;
+
+            // TODO Event for roundend text rule modifying.
+            var roundEndText = text;
 
             //Get the timespan of the round.
             var roundDuration = RoundDuration();
@@ -332,7 +352,7 @@ namespace Content.Server.GameTicking
             }
             else
             {
-                Preset = null;
+                // TODO Set preset here or something, check git history??
 
                 if (_playerManager.PlayerCount == 0)
                     _roundStartCountdownHasNotStartedYetDueToNoPlayers = true;
@@ -375,10 +395,7 @@ namespace Content.Server.GameTicking
             _mapManager.Restart();
 
             // Clear up any game rules.
-            foreach (var rule in _gameRules)
-            {
-                rule.Removed();
-            }
+            ClearGameRules();
 
             _gameRules.Clear();
 
@@ -450,6 +467,46 @@ namespace Content.Server.GameTicking
         {
             Old = old;
             New = @new;
+        }
+    }
+
+    public class RoundStartAttemptEvent : CancellableEntityEventArgs
+    {
+        public IPlayerSession[] Players { get; }
+        public bool Forced { get; }
+
+        public RoundStartAttemptEvent(IPlayerSession[] players, bool forced)
+        {
+            Players = players;
+            Forced = forced;
+        }
+    }
+
+    public class RulePlayerSpawningEvent
+    {
+        public List<IPlayerSession> PlayerPool { get; }
+        public IReadOnlyDictionary<NetUserId, HumanoidCharacterProfile> Profiles { get; }
+        public bool Forced { get; }
+
+        public RulePlayerSpawningEvent(List<IPlayerSession> playerPool, IReadOnlyDictionary<NetUserId, HumanoidCharacterProfile> profiles, bool forced)
+        {
+            PlayerPool = playerPool;
+            Profiles = profiles;
+            Forced = forced;
+        }
+    }
+
+    public class RulePlayerJobsAssignedEvent
+    {
+        public IPlayerSession[] Players { get; }
+        public IReadOnlyDictionary<NetUserId, HumanoidCharacterProfile> Profiles { get; }
+        public bool Forced { get; }
+
+        public RulePlayerJobsAssignedEvent(IPlayerSession[] players, IReadOnlyDictionary<NetUserId, HumanoidCharacterProfile> profiles, bool forced)
+        {
+            Players = players;
+            Profiles = profiles;
+            Forced = forced;
         }
     }
 }

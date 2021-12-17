@@ -150,7 +150,7 @@ namespace Content.Server.Voting.Managers
                         Loc.GetString("ui-vote-gamemode-win", ("winner", Loc.GetString(presets[picked]))));
                 }
 
-                EntitySystem.Get<GameTicker>().SetStartPreset(picked);
+                EntitySystem.Get<GameTicker>().SetGamePreset(picked);
             };
         }
 

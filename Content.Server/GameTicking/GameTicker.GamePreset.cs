@@ -1,14 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Diagnostics.CodeAnalysis;
-using System.Reflection;
 using Content.Server.GameTicking.Presets;
+using Content.Server.GameTicking.Rules;
 using Content.Shared.CCVar;
-using Content.Shared.Preferences;
-using Robust.Shared.Network;
-using Robust.Shared.ViewVariables;
-using Robust.Shared.IoC;
 
 namespace Content.Server.GameTicking
 {
@@ -16,38 +8,27 @@ namespace Content.Server.GameTicking
     {
         public const float PresetFailedCooldownIncrease = 30f;
 
-        [ViewVariables] private Type? _presetType;
-
-        [ViewVariables]
-        public GamePreset? Preset
-        {
-            get => _preset ?? MakeGamePreset(new Dictionary<NetUserId, HumanoidCharacterProfile>());
-            set => _preset = value;
-        }
-
-        public ImmutableDictionary<string, Type> Presets { get; private set; } = default!;
-
-        private GamePreset? _preset;
+        private GamePresetPrototype? _preset;
 
         private void InitializeGamePreset()
         {
-            var presets = new Dictionary<string, Type>();
+            SetGamePreset(_configurationManager.GetCVar(CCVars.GameLobbyDefaultPreset));
+        }
 
-            foreach (var type in _reflectionManager.FindTypesWithAttribute<GamePresetAttribute>())
+        private bool AddGamePresetRules()
+        {
+            if (_preset == null)
+                return false;
+
+            foreach (var rule in _preset.Rules)
             {
-                var attribute = type.GetCustomAttribute<GamePresetAttribute>();
+                if (!_prototypeManager.TryIndex(rule, out GameRulePrototype? ruleProto))
+                    continue;
 
-                presets.Add(attribute!.Id.ToLowerInvariant(), type);
-
-                foreach (var alias in attribute.Aliases)
-                {
-                    presets.Add(alias.ToLowerInvariant(), type);
-                }
+                AddGameRule(ruleProto);
             }
 
-            Presets = presets.ToImmutableDictionary();
-
-            SetStartPreset(_configurationManager.GetCVar(CCVars.GameLobbyDefaultPreset));
+            return true;
         }
 
         public bool OnGhostAttempt(Mind.Mind mind, bool canReturnGlobal)
@@ -55,21 +36,13 @@ namespace Content.Server.GameTicking
             return Preset?.OnGhostAttempt(mind, canReturnGlobal) ?? false;
         }
 
-        public bool TryGetPreset(string name, [NotNullWhen(true)] out Type? type)
-        {
-            name = name.ToLowerInvariant();
-            return Presets.TryGetValue(name, out type);
-        }
-
-        public void SetStartPreset(Type type, bool force = false)
+        public void SetGamePreset(GamePresetPrototype preset, bool force = false)
         {
             // Do nothing if this game ticker is a dummy!
             if (DummyTicker)
                 return;
 
-            if (!typeof(GamePreset).IsAssignableFrom(type)) throw new ArgumentException("type must inherit GamePreset");
-
-            _presetType = type;
+            _preset = preset;
             UpdateInfoText();
 
             if (force)
@@ -78,21 +51,9 @@ namespace Content.Server.GameTicking
             }
         }
 
-        public void SetStartPreset(string name, bool force = false)
+        public void SetGamePreset(string preset, bool force = false)
         {
-            if (!TryGetPreset(name, out var type))
-            {
-                throw new NotSupportedException($"No preset found with name {name}");
-            }
-
-            SetStartPreset(type, force);
-        }
-
-        private GamePreset MakeGamePreset(Dictionary<NetUserId, HumanoidCharacterProfile> readyProfiles)
-        {
-            var preset = _dynamicTypeFactory.CreateInstance<GamePreset>(_presetType ?? typeof(PresetSandbox));
-            preset.ReadyProfiles = readyProfiles;
-            return preset;
+            SetGamePreset(_prototypeManager.Index<GamePresetPrototype>(preset), force);
         }
     }
 }

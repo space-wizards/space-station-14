@@ -25,8 +25,8 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.GameTicking.Presets
 {
-    [GamePreset("traitor")]
-    public class PresetTraitor : GamePreset
+    [GamePresetPrototype("traitor")]
+    public class PresetTraitor : GamePresetPrototype
     {
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
@@ -44,116 +44,8 @@ namespace Content.Server.GameTicking.Presets
         private float MaxDifficulty { get; set; }
         private int MaxPicks { get; set; }
 
-        private readonly List<TraitorRole> _traitors = new ();
 
-        public override bool Start(IReadOnlyList<IPlayerSession> readyPlayers, bool force = false)
-        {
-            MinPlayers = _cfg.GetCVar(CCVars.TraitorMinPlayers);
-            PlayersPerTraitor = _cfg.GetCVar(CCVars.TraitorPlayersPerTraitor);
-            MaxTraitors = _cfg.GetCVar(CCVars.TraitorMaxTraitors);
-            CodewordCount = _cfg.GetCVar(CCVars.TraitorCodewordCount);
-            StartingBalance = _cfg.GetCVar(CCVars.TraitorStartingBalance);
-            MaxDifficulty = _cfg.GetCVar(CCVars.TraitorMaxDifficulty);
-            MaxPicks = _cfg.GetCVar(CCVars.TraitorMaxPicks);
-
-            if (!force && readyPlayers.Count < MinPlayers)
-            {
-                _chatManager.DispatchServerAnnouncement(Loc.GetString("traitor-not-enough-ready-players", ("readyPlayersCount", readyPlayers.Count), ("minimumPlayers", MinPlayers)));
-                return false;
-            }
-
-            if (readyPlayers.Count == 0)
-            {
-                _chatManager.DispatchServerAnnouncement(Loc.GetString("traitor-no-one-ready"));
-                return false;
-            }
-
-            var list = new List<IPlayerSession>(readyPlayers).Where(x =>
-                x.Data.ContentData()?.Mind?.AllRoles.All(role => role is not Job {CanBeAntag: false}) ?? false
-            ).ToList();
-
-            var prefList = new List<IPlayerSession>();
-
-            foreach (var player in list)
-            {
-                if (!ReadyProfiles.ContainsKey(player.UserId))
-                {
-                    continue;
-                }
-                var profile = ReadyProfiles[player.UserId];
-                if (profile.AntagPreferences.Contains("Traitor"))
-                {
-                    prefList.Add(player);
-                }
-            }
-
-            var numTraitors = MathHelper.Clamp(readyPlayers.Count / PlayersPerTraitor,
-                1, MaxTraitors);
-
-            for (var i = 0; i < numTraitors; i++)
-            {
-                IPlayerSession traitor;
-                if(prefList.Count < numTraitors)
-                {
-                    if (list.Count == 0)
-                    {
-                        Logger.InfoS("preset", "Insufficient ready players to fill up with traitors, stopping the selection.");
-                        break;
-                    }
-                    traitor = _random.PickAndTake(list);
-                    Logger.InfoS("preset", "Insufficient preferred traitors, picking at random.");
-                }
-                else
-                {
-                    traitor = _random.PickAndTake(prefList);
-                    list.Remove(traitor);
-                    Logger.InfoS("preset", "Selected a preferred traitor.");
-                }
-                var mind = traitor.Data.ContentData()?.Mind;
-                if (mind == null)
-                {
-                    Logger.ErrorS("preset", "Failed getting mind for picked traitor.");
-                    continue;
-                }
-
-                // creadth: we need to create uplink for the antag.
-                // PDA should be in place already, so we just need to
-                // initiate uplink account.
-                DebugTools.AssertNotNull(mind.OwnedEntity);
-
-                var uplinkAccount = new UplinkAccount(StartingBalance, mind.OwnedEntity!);
-                var accounts = EntityManager.EntitySysManager.GetEntitySystem<UplinkAccountsSystem>();
-                accounts.AddNewAccount(uplinkAccount);
-
-                if (!EntityManager.EntitySysManager.GetEntitySystem<UplinkSystem>()
-                    .AddUplink(mind.OwnedEntity!.Value, uplinkAccount))
-                    continue;
-
-                var traitorRole = new TraitorRole(mind);
-                mind.AddRole(traitorRole);
-                _traitors.Add(traitorRole);
-            }
-
-            var adjectives = _prototypeManager.Index<DatasetPrototype>("adjectives").Values;
-            var verbs = _prototypeManager.Index<DatasetPrototype>("verbs").Values;
-
-            var codewordPool = adjectives.Concat(verbs).ToList();
-            var finalCodewordCount = Math.Min(CodewordCount, codewordPool.Count);
-            var codewords = new string[finalCodewordCount];
-            for (var i = 0; i < finalCodewordCount; i++)
-            {
-                codewords[i] = _random.PickAndTake(codewordPool);
-            }
-
-            foreach (var traitor in _traitors)
-            {
-                traitor.GreetTraitor(codewords);
-            }
-
-            EntitySystem.Get<GameTicker>().AddGameRule<RuleTraitor>();
-            return true;
-        }
-
+        // TODO: Move this over.
         public override void OnGameStarted()
         {
             var objectivesMgr = IoCManager.Resolve<IObjectivesManager>();
@@ -171,6 +63,7 @@ namespace Content.Server.GameTicking.Presets
             }
         }
 
+        // TODO: Move this over.
         public override string GetRoundEndDescription()
         {
             var result = Loc.GetString("traitor-round-end-result", ("traitorCount", _traitors.Count));

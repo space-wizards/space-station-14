@@ -39,7 +39,7 @@ namespace Content.Server.GameTicking.Commands
 
             if (preset != null)
             {
-                ticker.SetStartPreset(preset);
+                ticker.SetGamePreset(preset);
             }
 
             shell.WriteLine($"Enabling the lobby and restarting the round.{(preset == null ? "" : $"\nPreset set to {presetName}")}");
