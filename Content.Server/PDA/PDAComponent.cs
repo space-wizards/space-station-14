@@ -15,7 +15,7 @@ namespace Content.Server.PDA
     {
         public override string Name => "PDA";
 
-        [DataField("idSlot")]
+        [DataField("id")]
         public ItemSlot IdSlot = new();
 
         [DataField("penSlot")]
