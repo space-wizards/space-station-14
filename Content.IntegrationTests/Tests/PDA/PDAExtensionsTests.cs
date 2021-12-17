@@ -1,11 +1,12 @@
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.Access.Components;
 using Content.Server.Hands.Components;
 using Content.Server.PDA;
+using Content.Shared.Access.Components;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Inventory;
 using Content.Shared.Item;
+using Content.Shared.PDA;
 using NUnit.Framework;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
@@ -80,7 +81,7 @@ namespace Content.IntegrationTests.Tests.PDA
 
                 var itemSlots = sEntityManager.GetComponent<ItemSlotsComponent>(dummyPda);
                 sEntityManager.EntitySysManager.GetEntitySystem<ItemSlotsSystem>()
-                    .TryInsert(dummyPda, pdaComponent.IdSlot, pdaIdCard);
+                    .TryInsert(dummyPda, pdaComponent.IdSlot, pdaIdCard, null);
                 var pdaContainedId = pdaComponent.ContainedID;
 
                 // The PDA in the hand should be found first

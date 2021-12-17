@@ -1,9 +1,9 @@
 using Content.Server.Administration.UI;
 using Content.Server.EUI;
-using Content.Server.PDA;
 using Content.Server.Preferences.Managers;
 using Content.Shared.Administration;
 using Content.Shared.Inventory;
+using Content.Shared.PDA;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Server.GameObjects;
