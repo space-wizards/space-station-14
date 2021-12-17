@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Add cvar to specify discrete gas overlay thresholds, type: Add}
-  id: 245
-  time: '2021-06-21T07:08:37.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Throw no longer pushes you back if you are buckled, type: Fix}
   id: 246
   time: '2021-06-28T04:17:09.0000000+00:00'
@@ -2868,3 +2863,8 @@ Entries:
   - {message: The singularity is no longer weightless., type: Tweak}
   id: 746
   time: '2021-12-17T05:56:38.0000000+00:00'
+- author: Your_Name_Here
+  changes:
+  - {message: Deconstructing a disposal unit no longer deletes its contents., type: Fix}
+  id: 747
+  time: '2021-12-17T09:47:15.887932+00:00'
