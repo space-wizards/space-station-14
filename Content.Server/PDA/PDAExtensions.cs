@@ -17,6 +17,8 @@ namespace Content.Server.PDA
         /// <returns>The id card component.</returns>
         public static IdCardComponent? GetHeldId(this EntityUid player)
         {
+            IdCardComponent? foundPDAId = null;
+
             var entMan = IoCManager.Resolve<IEntityManager>();
 
             if (entMan.TryGetComponent(player, out HandsComponent? hands))
@@ -26,7 +28,7 @@ namespace Content.Server.PDA
                     if (entMan.TryGetComponent(item.Owner, out PDAComponent? pda) &&
                         pda.ContainedID != null)
                     {
-                        return pda.ContainedID;
+                        foundPDAId = pda.ContainedID;
                     }
 
                     if (entMan.TryGetComponent(item.Owner, out IdCardComponent? card))
@@ -35,6 +37,8 @@ namespace Content.Server.PDA
                     }
                 }
             }
+
+            if (foundPDAId != null) return foundPDAId;
 
             var invSystem = EntitySystem.Get<InventorySystem>();
 
@@ -47,7 +51,7 @@ namespace Content.Server.PDA
                     if (entMan.TryGetComponent(containerSlot.ContainedEntity.Value, out PDAComponent? pda) &&
                         pda.ContainedID != null)
                     {
-                        return pda.ContainedID;
+                        foundPDAId = pda.ContainedID;
                     }
 
                     if (entMan.TryGetComponent(containerSlot.ContainedEntity.Value, out IdCardComponent? card))
@@ -56,6 +60,8 @@ namespace Content.Server.PDA
                     }
                 }
             }
+
+            if (foundPDAId != null) return foundPDAId;
 
             return null;
         }

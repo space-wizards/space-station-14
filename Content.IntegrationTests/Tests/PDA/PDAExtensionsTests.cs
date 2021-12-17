@@ -1,6 +1,5 @@
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Client.Items.Components;
 using Content.Server.Access.Components;
 using Content.Server.Hands.Components;
 using Content.Server.PDA;
@@ -93,7 +92,7 @@ namespace Content.IntegrationTests.Tests.PDA
 
                 // Put ID card in hand
                 var idDummy = sEntityManager.SpawnEntity(IdCardDummy, sEntityManager.GetComponent<TransformComponent>(player).MapPosition);
-                var idItemComponent = sEntityManager.GetComponent<ItemComponent>(idDummy);
+                var idItemComponent = sEntityManager.GetComponent<SharedItemComponent>(idDummy);
                 sEntityManager.GetComponent<HandsComponent>(player).PutInHand(idItemComponent);
 
                 var idCardComponent = sEntityManager.GetComponent<IdCardComponent>(idDummy);
