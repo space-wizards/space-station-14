@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using Content.Client.Clothing;
 using Content.Client.HUD;
 using Content.Shared.Input;
 using Content.Client.Items.Managers;
@@ -33,6 +34,7 @@ namespace Content.Client.Inventory
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IConfigurationManager _config = default!;
         [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
+        [Dependency] private readonly ClothingSystem _clothingSystem = default!;
 
         public const int ButtonSize = 64;
         private const int ButtonSeparation = 4;
@@ -105,24 +107,29 @@ namespace Content.Client.Inventory
 
         private void OnPlayerDetached(EntityUid uid, ClientInventoryComponent component, PlayerDetachedEvent? args = null)
         {
+            if(!component.AttachedToGameHud) return;
+
             _gameHud.InventoryButtonVisible = false;
             _gameHud.BottomLeftInventoryQuickButtonContainer.RemoveChild(component.BottomLeftButtons);
             _gameHud.BottomRightInventoryQuickButtonContainer.RemoveChild(component.BottomRightButtons);
             _gameHud.TopInventoryQuickButtonContainer.RemoveChild(component.TopQuickButtons);
+            component.AttachedToGameHud = false;
         }
 
         private void OnShutdown(EntityUid uid, ClientInventoryComponent component, ComponentShutdown args)
         {
-            if (_gameHud.InventoryButtonVisible)
-                OnPlayerDetached(uid, component);
+            OnPlayerDetached(uid, component);
         }
 
         private void OnPlayerAttached(EntityUid uid, ClientInventoryComponent component, PlayerAttachedEvent args)
         {
+            if(component.AttachedToGameHud) return;
+
             _gameHud.InventoryButtonVisible = true;
             _gameHud.BottomLeftInventoryQuickButtonContainer.AddChild(component.BottomLeftButtons);
             _gameHud.BottomRightInventoryQuickButtonContainer.AddChild(component.BottomRightButtons);
             _gameHud.TopInventoryQuickButtonContainer.AddChild(component.TopQuickButtons);
+            component.AttachedToGameHud = true;
         }
 
         private void UpdateHudTheme(int obj)
@@ -153,6 +160,8 @@ namespace Content.Client.Inventory
 
         private void OnInit(EntityUid uid, ClientInventoryComponent component, ComponentInit args)
         {
+            _clothingSystem.InitClothing(uid, component);
+
             if (!TryGetUIElements(uid, out var window, out var bottomLeft, out var bottomRight, out var topQuick,
                     component))
                 return;

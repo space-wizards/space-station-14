@@ -31,5 +31,7 @@ namespace Content.Client.Inventory
 
         [ViewVariables]
         [DataField("speciesId")] public string? SpeciesId { get; set; }
+
+        public bool AttachedToGameHud;
     }
 }

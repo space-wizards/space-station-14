@@ -47,13 +47,11 @@ public class ClothingSystem : EntitySystem
 
         SubscribeLocalEvent<ClothingComponent, GotEquippedEvent>(OnDidEquip);
         SubscribeLocalEvent<ClothingComponent, GotUnequippedEvent>(OnDidUnequip);
-        SubscribeLocalEvent<ClientInventoryComponent, ComponentInit>(OnInit);
     }
 
-    private void OnInit(EntityUid uid, ClientInventoryComponent component, ComponentInit args)
+    public void InitClothing(EntityUid uid, ClientInventoryComponent? component = null, SpriteComponent? sprite = null)
     {
-        SpriteComponent? sprite = null;
-        if (!_inventorySystem.TryGetSlots(uid, out var slots, component) || !Resolve(uid, ref sprite)) return;
+        if (!_inventorySystem.TryGetSlots(uid, out var slots, component) || !Resolve(uid, ref sprite, ref component)) return;
 
         foreach (var slot in slots)
         {
