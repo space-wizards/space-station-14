@@ -1,23 +1,23 @@
 ### Info Window
 
 ## General stuff
-ui-info-title = Information
-ui-info-tab-rules = Server Rules
-ui-info-tab-tutorial = Tutorial
+ui-info-title = Информация
+ui-info-tab-rules = Правила сервера
+ui-info-tab-tutorial = Руководство
 
 ## Rules tab
 
-ui-info-header-rules = SS14 Official Server Rules
+ui-info-header-rules = SS14 RU Правила сервера
 
 ## Tutorial tab
-ui-info-text-controls = You can review and rebind SS14s controls in the
+ui-info-text-controls = Вы можете переопределять кнопки управления в
 
-ui-info-header-intro = Introduction
-ui-info-header-controls = Controls
-ui-info-header-gameplay = Gameplay
-ui-info-header-sandbox = Sandbox Spawner
-ui-info-subheader-entityoptions = Entity spawn panel options:
-ui-info-subheader-gridoptions = Grid aligned options:
-ui-info-header-feedback = Feedback
+ui-info-header-intro = Введение
+ui-info-header-controls = Управление
+ui-info-header-gameplay = Геймплей
+ui-info-header-sandbox = Спавн вещей в режиме Песочницы
+ui-info-subheader-entityoptions = Опции панели спавна сущностей:
+ui-info-subheader-gridoptions = Варианты выравнивания по сетке:
+ui-info-header-feedback = Обратная связь
 
-ui-info-button-controls = Options Menu
+ui-info-button-controls = Меню настроек
