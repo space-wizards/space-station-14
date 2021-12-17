@@ -33,6 +33,9 @@
     {
       "name": "radio"
     },
+	{
+      "name": "encryptionkey"
+    },
     {
       "name": "radio-inhand-right",
       "directions": 4
