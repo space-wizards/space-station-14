@@ -53,10 +53,7 @@ public abstract partial class InventorySystem
     public bool TryEquipActiveHandTo(EntityUid uid, string slot, bool silent = false, bool force = false,
         InventoryComponent? component = null, SharedHandsComponent? hands = null)
     {
-        if (!Resolve(uid, ref component, false))
-            return false;
-
-        if (!Resolve(uid, ref hands, false))
+        if (!Resolve(uid, ref component, false) || !Resolve(uid, ref hands, false))
             return false;
 
         if (!hands.TryGetActiveHeldEntity(out var heldEntity))
@@ -67,7 +64,7 @@ public abstract partial class InventorySystem
 
     public virtual bool TryEquip(EntityUid uid, EntityUid itemUid, string slot, bool silent = false, bool force = false, InventoryComponent? inventory = null, SharedItemComponent? item = null)
     {
-        if (!Resolve(uid, ref inventory, false) || !Resolve(uid, ref item, false))
+        if (!Resolve(uid, ref inventory, false) || !Resolve(itemUid, ref item, false))
         {
             if(!silent) _popup.PopupCursor(Loc.GetString("inventory-component-can-equip-cannot"), Filter.Local());
             return false;
@@ -171,6 +168,7 @@ public abstract partial class InventorySystem
         {
             if (slotDef != slotDefinition && slotDef.DependsOn == slotDefinition.Name)
             {
+                //this recursive call might be risky
                 TryUnequip(uid, slotDef.Name, true, true, inventory);
             }
         }
