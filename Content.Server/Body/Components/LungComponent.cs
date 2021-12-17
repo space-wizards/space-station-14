@@ -2,6 +2,7 @@
 using Content.Server.Atmos;
 using Content.Server.Body.Systems;
 using Content.Shared.Atmos;
+using Content.Shared.Chemistry.Components;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -31,6 +32,9 @@ public class LungComponent : Component
 
     [ViewVariables]
     public LungStatus Status { get; set; }
+
+    [ViewVariables]
+    public Solution LungSolution = default!;
 
     [DataField("cycleDelay")]
     public float CycleDelay { get; set; } = 2;

@@ -83,6 +83,12 @@
     size: 1
     compatibility: Biological
   - type: Lung
+  - type: Metabolizer
+    solutionOnBody: false
+    solution: "Lung"
+    metabolizerTypes: [ Human ]
+    groups:
+    - id: Gas
 
 - type: entity
   id: OrganAnimalStomach

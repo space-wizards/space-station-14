@@ -25,12 +25,20 @@ namespace Content.Server.Body.Systems
         [Dependency] private readonly BodySystem _bodySystem = default!;
         [Dependency] private readonly LungSystem _lungSystem = default!;
 
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            // We want to process lung reagents before we inhale new reagents.
+            UpdatesAfter.Add(typeof(MetabolizerSystem));
+        }
+
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
 
-            foreach (var (respirator, blood, body) in
-                     EntityManager.EntityQuery<RespiratorComponent, BloodstreamComponent, SharedBodyComponent>())
+            foreach (var (respirator, body) in
+                     EntityManager.EntityQuery<RespiratorComponent, SharedBodyComponent>())
             {
                 var uid = respirator.Owner;
                 if (!EntityManager.TryGetComponent<MobStateComponent>(uid, out var state) ||
@@ -46,7 +54,7 @@ namespace Content.Server.Body.Systems
                     continue;
                 }
 
-                ProcessGases(uid, respirator, blood, body);
+                ProcessGases(uid, respirator, body);
 
                 respirator.AccumulatedFrametime -= 1;
 
@@ -70,25 +78,6 @@ namespace Content.Server.Body.Systems
             }
 
             return needs;
-        }
-
-        private void ClampDeficit(RespiratorComponent respirator)
-        {
-            var deficitGases = new Dictionary<Gas, float>(respirator.DeficitGases);
-
-            foreach (var (gas, deficit) in deficitGases)
-            {
-                if (!respirator.NeedsGases.TryGetValue(gas, out var need))
-                {
-                    respirator.DeficitGases.Remove(gas);
-                    continue;
-                }
-
-                if (deficit > need)
-                {
-                    respirator.DeficitGases[gas] = need;
-                }
-            }
         }
 
         private float SuffocatingPercentage(RespiratorComponent respirator)
@@ -172,7 +161,7 @@ namespace Content.Server.Body.Systems
                     }
                     else
                     {
-                        bloodstream.Air.AdjustMoles(gas, -amountNeeded);
+                        bloodstream. Air.AdjustMoles(gas, -amountNeeded);
                     }
                 }
                 else

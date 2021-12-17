@@ -3,6 +3,7 @@ using Content.Server.Atmos;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Popups;
 using Content.Shared.Atmos;
 using Content.Shared.Body.Components;
@@ -21,12 +22,21 @@ public class LungSystem : EntitySystem
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly AtmosphereSystem _atmosSys = default!;
     [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
+    [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
+
+    public static string LungSolutionName = "Lung";
 
     public override void Initialize()
     {
         base.Initialize();
+        SubscribeLocalEvent<LungComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<LungComponent, AddedToBodyEvent>(OnAddedToBody);
+    }
+
+    private void OnComponentInit(EntityUid uid, LungComponent component, ComponentInit args)
+    {
+        component.LungSolution = _solutionContainerSystem.EnsureSolution(uid, LungSolutionName);
     }
 
     private void OnAddedToBody(EntityUid uid, LungComponent component, AddedToBodyEvent args)

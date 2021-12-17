@@ -44,34 +44,4 @@ public class BloodstreamSystem : EntitySystem
 
         return _solutionContainerSystem.TryAddSolution(uid, component.Solution, solution);
     }
-
-    public void PumpToxins(EntityUid uid, GasMixture to, BloodstreamComponent? blood=null, RespiratorComponent? respiration=null)
-    {
-        if (!Resolve(uid, ref blood))
-            return;
-
-        if(!Resolve(uid, ref respiration, false))
-        {
-            _atmosSystem.Merge(to, blood.Air);
-            blood.Air.Clear();
-            return;
-        }
-
-        var toxins = _respiratorSystem.Clean(uid, respiration, blood);
-        var toOld = new float[to.Moles.Length];
-        Array.Copy(to.Moles, toOld, toOld.Length);
-
-        _atmosSystem.Merge(to, toxins);
-
-        for (var i = 0; i < toOld.Length; i++)
-        {
-            var newAmount = to.GetMoles(i);
-            var oldAmount = toOld[i];
-            var delta = newAmount - oldAmount;
-
-            toxins.AdjustMoles(i, -delta);
-        }
-
-        _atmosSystem.Merge(blood.Air, toxins);
-    }
 }
