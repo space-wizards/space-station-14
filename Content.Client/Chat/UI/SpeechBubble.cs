@@ -126,7 +126,7 @@ namespace Content.Client.Chat.UI
             }
 
 
-            var worldPos = _entityManager.GetComponent<TransformComponent>(_senderEntity).WorldPosition;
+            var worldPos = xform.WorldPosition;
             var scale = _eyeManager.MainViewport.GetRenderScale();
             var offset = new Vector2(0, EntityVerticalOffset * EyeManager.PixelsPerMeter * scale);
             var lowerCenter = (_eyeManager.WorldToScreen(worldPos) - offset) / UIScale;
