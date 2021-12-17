@@ -276,8 +276,7 @@ namespace Content.Server.Hands.Systems
             if (playerSession.AttachedEntity is not {Valid: true} plyEnt || !EntityManager.EntityExists(plyEnt))
                 return;
 
-            if (!EntityManager.TryGetComponent(plyEnt, out SharedHandsComponent? hands) ||
-                !EntityManager.TryGetComponent(plyEnt, out InventoryComponent? inventory))
+            if (!EntityManager.TryGetComponent(plyEnt, out SharedHandsComponent? hands))
                 return;
 
             if (!_inventorySystem.TryGetSlotEntity(plyEnt, equipmentSlot, out var slotEntity) ||
