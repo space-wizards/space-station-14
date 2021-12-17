@@ -1,4 +1,0 @@
-author: Zumorica
-changes:
-  - type: Fix # One of the following: Add, Remove, Tweak, Fix
-    message: Fixes various bugs relating to MIDI and instruments. Others should be able to hear them again reliably.
