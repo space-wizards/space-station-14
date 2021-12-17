@@ -90,6 +90,12 @@ namespace Content.Client.Chat.UI
             base.FrameUpdate(args);
 
             _timeLeft -= args.DeltaSeconds;
+            if (_entityManager.Deleted(_senderEntity) || _timeLeft <= 0)
+            {
+                // Timer spawn to prevent concurrent modification exception.
+                Timer.Spawn(0, Die);
+                return;
+            }
 
             // Lerp to our new vertical offset if it's been modified.
             if (MathHelper.CloseToPercent(_verticalOffsetAchieved - VerticalOffset, 0, 0.1))
@@ -101,7 +107,8 @@ namespace Content.Client.Chat.UI
                 _verticalOffsetAchieved = MathHelper.Lerp(_verticalOffsetAchieved, VerticalOffset, 10 * args.DeltaSeconds);
             }
 
-            if (!_entityManager.GetComponent<TransformComponent>(_senderEntity).Coordinates.IsValid(_entityManager))
+            if (!_entityManager.TryGetComponent<TransformComponent>(_senderEntity, out var xform)
+                    || !xform.Coordinates.IsValid(_entityManager))
             {
                 Modulate = Color.White.WithAlpha(0);
                 return;
@@ -118,12 +125,6 @@ namespace Content.Client.Chat.UI
                 Modulate = Color.White;
             }
 
-            if (_entityManager.Deleted(_senderEntity) || _timeLeft <= 0)
-            {
-                // Timer spawn to prevent concurrent modification exception.
-                Timer.Spawn(0, Die);
-                return;
-            }
 
             var worldPos = _entityManager.GetComponent<TransformComponent>(_senderEntity).WorldPosition;
             var scale = _eyeManager.MainViewport.GetRenderScale();
