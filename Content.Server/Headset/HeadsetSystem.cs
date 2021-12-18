@@ -1,6 +1,6 @@
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Interaction;
-using Robust.Shared.Containers;
+using Content.Shared.Headset;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 

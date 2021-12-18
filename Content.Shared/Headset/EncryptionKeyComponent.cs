@@ -1,6 +1,6 @@
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.Headset
+namespace Content.Shared.Headset
 {
     [RegisterComponent]
     public class EncryptionKeyComponent : Component

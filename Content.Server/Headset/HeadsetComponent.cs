@@ -3,6 +3,7 @@ using Content.Server.Radio.Components;
 using Content.Server.Radio.EntitySystems;
 using Content.Shared.Chat;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Headset;
 using Content.Shared.Examine;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
@@ -33,7 +34,7 @@ namespace Content.Server.Headset
         [DataField("channels")]
         private List<int> _channels = new(){1459};
 
-        [DataField("keySlot1")]
+        [DataField("keySlot")]
         public ItemSlot keySlot = new();
 
         [ViewVariables] public EncryptionKeyComponent? ContainedKey;
