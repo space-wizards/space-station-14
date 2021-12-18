@@ -1,0 +1,74 @@
+- type: entity
+  parent: BaseMachinePowered
+  id: Pipedistrubutor
+  name: pipedistributor
+  description: It produces items using metal and glass.
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/pipedistributor.rsi
+    layers:
+    - state: icon
+      map: ["enum.AutolatheVisualLayers.Base"]
+    - state: icon
+      map: ["enum.AutolatheVisualLayers.AnimationLayer"]
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
+      mass: 25
+      mask:
+      - Impassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
+  - type: Construction
+    graph: machine
+    node: machine
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Machine
+    board: Pipedistrubutorboard
+  - type: MaterialStorage
+  - type: Wires
+    BoardName: "Pipedistrubutor"
+    LayoutId: Pipedistrubutor
+  - type: AutolatheDatabase
+    static: true
+    recipes:
+      - Brutepack
+      - Ointment
+      - Wirecutter
+      - Screwdriver
+      - Welder
+      - Wrench
+      - Crowbar
+      - Multitool
+      - MiniHoe
+      - Shovel
+      - Spade
+      - CableStack
+  - type: Appearance
+    visuals:
+    - type: AutolatheVisualizer
+    - type: WiresVisualizer
+  - type: UserInterface
+    interfaces:
+    - key: enum.LatheUiKey.Key
+      type: LatheBoundUserInterface
+  - type: Transform
+    anchored: true
+  - type: Pullable
+  - type: Lathe
