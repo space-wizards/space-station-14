@@ -33,7 +33,7 @@ namespace Content.Server.Headset
         [DataField("channels")]
         private List<int> _channels = new(){1459};
 
-        [DataField("keySlot")]
+        [DataField("keySlot1")]
         public ItemSlot keySlot = new();
 
         [ViewVariables] public EncryptionKeyComponent? ContainedKey;
