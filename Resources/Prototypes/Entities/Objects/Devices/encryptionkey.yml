@@ -7,3 +7,4 @@
   - type: Sprite
     sprite: Objects/Devices/communication.rsi
     state: encryptionkey
+  - type: EncryptionKey

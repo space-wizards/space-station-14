@@ -5,6 +5,6 @@ namespace Content.Server.Headset
     [RegisterComponent]
     public class EncryptionKeyComponent : Component
     {
-        public override string Name => "Encryption Key";
+        public override string Name => "EncryptionKey";
     }
 }

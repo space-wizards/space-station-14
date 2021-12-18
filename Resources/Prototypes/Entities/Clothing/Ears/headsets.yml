@@ -7,6 +7,9 @@
   components:
   - type: Headset
     keySlot:
+      whitelist:
+        components:
+        - EncryptionKey
   - type: Sprite
     state: icon
   - type: Clothing
