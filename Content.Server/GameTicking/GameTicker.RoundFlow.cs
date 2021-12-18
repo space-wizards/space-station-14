@@ -480,6 +480,10 @@ namespace Content.Server.GameTicking
         }
     }
 
+    /// <summary>
+    ///     Event raised to refresh the late join status.
+    ///     If you want to disallow late joins, listen to this and call Disallow.
+    /// </summary>
     public class RefreshLateJoinAllowedEvent
     {
         public bool DisallowLateJoin { get; private set; } = false;
@@ -490,6 +494,10 @@ namespace Content.Server.GameTicking
         }
     }
 
+    /// <summary>
+    ///     Attempt event raised on round start.
+    ///     This can be listened to by GameRule systems to cancel round start if some condition is not met, like player count.
+    /// </summary>
     public class RoundStartAttemptEvent : CancellableEntityEventArgs
     {
         public IPlayerSession[] Players { get; }
@@ -502,8 +510,17 @@ namespace Content.Server.GameTicking
         }
     }
 
+    /// <summary>
+    ///     Event raised before readied up players are spawned and given jobs by the GameTicker.
+    ///     You can use this to spawn people off-station, like in the case of nuke ops or wizard.
+    ///     Remove the players you spawned from the PlayerPool.
+    /// </summary>
     public class RulePlayerSpawningEvent
     {
+        /// <summary>
+        ///     Pool of players to be spawned.
+        ///     If you want to handle a specific player being spawned, remove it from this list and do what you need.
+        /// </summary>
         public List<IPlayerSession> PlayerPool { get; }
         public IReadOnlyDictionary<NetUserId, HumanoidCharacterProfile> Profiles { get; }
         public bool Forced { get; }
@@ -516,6 +533,10 @@ namespace Content.Server.GameTicking
         }
     }
 
+    /// <summary>
+    ///     Event raised after players were assigned jobs by the GameTicker.
+    ///     You can give on-station people special roles by listening to this event.
+    /// </summary>
     public class RulePlayerJobsAssignedEvent
     {
         public IPlayerSession[] Players { get; }
@@ -530,12 +551,22 @@ namespace Content.Server.GameTicking
         }
     }
 
+    /// <summary>
+    ///     Event raised to allow subscribers to add text to the round end summary screen.
+    /// </summary>
     public class RoundEndTextAppendEvent
     {
         private bool _doNewLine;
 
+        /// <summary>
+        ///     Text to display in the round end summary screen.
+        /// </summary>
         public string Text { get; private set; } = string.Empty;
 
+        /// <summary>
+        ///     Invoke this method to add text to the round end summary screen.
+        /// </summary>
+        /// <param name="text"></param>
         public void AddLine(string text)
         {
             if (_doNewLine)

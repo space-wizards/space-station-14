@@ -358,6 +358,11 @@ namespace Content.Server.GameTicking
         #endregion
     }
 
+    /// <summary>
+    ///     Event raised both directed and broadcast when a player has been spawned by the GameTicker.
+    ///     You can use this to handle people late-joining, or to handle people being spawned at round start.
+    ///     Can be used to give random players a role, modify their equipment, etc.
+    /// </summary>
     public class PlayerSpawnCompleteEvent : EntityEventArgs
     {
         public EntityUid Mob { get; }
