@@ -8,122 +8,120 @@ using Robust.Shared.Enums;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 
-namespace Content.Server.GameTicking.Rules
+namespace Content.Server.GameTicking.Rules;
+
+/// <summary>
+///     Simple GameRule that will do a free-for-all death match.
+///     Kill everybody else to win.
+/// </summary>
+public sealed class DeathMatchRuleSystem : GameRuleSystem
 {
-    /// <summary>
-    ///     Simple GameRule that will do a free-for-all death match.
-    ///     Kill everybody else to win.
-    /// </summary>
-    public sealed class DeathMatchRuleSystem : GameRuleSystem
+    public override string Prototype => "DeathMatch";
+
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly IChatManager _chatManager = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
+
+    private const float RestartDelay = 10f;
+    private const float DeadCheckDelay = 5f;
+
+    private float? _deadCheckTimer = null;
+    private float? _restartTimer = null;
+
+    public override void Initialize()
     {
-        public override string Prototype => "DeathMatch";
+        base.Initialize();
 
-        [Dependency] private readonly GameTicker _gameTicker = default!;
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IChatManager _chatManager = default!;
-        [Dependency] private readonly IConfigurationManager _cfg = default!;
+        SubscribeLocalEvent<DamageChangedEvent>(OnHealthChanged);
+    }
 
-        private const float RestartDelay = 10f;
-        private const float DeadCheckDelay = 5f;
+    public override void Added()
+    {
+        _chatManager.DispatchServerAnnouncement(Loc.GetString("rule-death-match-added-announcement"));
 
-        private float? _deadCheckTimer = null;
-        private float? _restartTimer = null;
+        _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
+    }
 
-        public override void Initialize()
-        {
-            base.Initialize();
+    public override void Removed()
+    {
+        _deadCheckTimer = null;
+        _restartTimer = null;
 
-            SubscribeLocalEvent<DamageChangedEvent>(OnHealthChanged);
-        }
+        _playerManager.PlayerStatusChanged -= OnPlayerStatusChanged;
+    }
 
-        public override void Added()
-        {
-            _chatManager.DispatchServerAnnouncement(Loc.GetString("rule-death-match-added-announcement"));
+    private void OnHealthChanged(DamageChangedEvent _)
+    {
+        RunDelayedCheck();
+    }
 
-            _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
-        }
-
-        public override void Removed()
-        {
-            _deadCheckTimer = null;
-            _restartTimer = null;
-
-            _playerManager.PlayerStatusChanged -= OnPlayerStatusChanged;
-        }
-
-        private void OnHealthChanged(DamageChangedEvent _)
+    private void OnPlayerStatusChanged(object? _, SessionStatusEventArgs e)
+    {
+        if (e.NewStatus == SessionStatus.Disconnected)
         {
             RunDelayedCheck();
         }
+    }
 
-        private void OnPlayerStatusChanged(object? _, SessionStatusEventArgs e)
+    private void RunDelayedCheck()
+    {
+        if (!Enabled || _deadCheckTimer != null)
+            return;
+
+        _deadCheckTimer = DeadCheckDelay;
+    }
+
+    public override void Update(float frameTime)
+    {
+        if (!Enabled)
+            return;
+
+        // If the restart timer is active, that means the round is ending soon, no need to check for winners.
+        // TODO: We probably want a sane, centralized round end thingie in GameTicker, RoundEndSystem is no good...
+        if (_restartTimer != null)
         {
-            if (e.NewStatus == SessionStatus.Disconnected)
-            {
-                RunDelayedCheck();
-            }
+            _restartTimer -= frameTime;
+
+            if (_restartTimer > 0f)
+                return;
+
+            GameTicker.EndRound();
+            GameTicker.RestartRound();
+            return;
         }
 
-        private void RunDelayedCheck()
+        if (!_cfg.GetCVar(CCVars.GameLobbyEnableWin) || _deadCheckTimer == null)
+            return;
+
+        _deadCheckTimer -= frameTime;
+
+        if (_deadCheckTimer > 0)
+            return;
+
+        _deadCheckTimer = null;
+
+        IPlayerSession? winner = null;
+        foreach (var playerSession in _playerManager.ServerSessions)
         {
-            if (!Enabled || _deadCheckTimer != null)
+            if (playerSession.AttachedEntity is not {Valid: true} playerEntity
+                || !TryComp(playerEntity, out MobStateComponent? state))
+                continue;
+
+            if (!state.IsAlive())
+                continue;
+
+            // Found a second person alive, nothing decided yet!
+            if (winner != null)
                 return;
 
-            _deadCheckTimer = DeadCheckDelay;
+            winner = playerSession;
         }
 
-        public override void Update(float frameTime)
-        {
-            if (!Enabled)
-                return;
+        _chatManager.DispatchServerAnnouncement(winner == null
+            ? Loc.GetString("rule-death-match-check-winner-stalemate")
+            : Loc.GetString("rule-death-match-check-winner",("winner", winner)));
 
-            // If the restart timer is active, that means the round is ending soon, no need to check for winners.
-            // TODO: We probably want a sane, centralized round end thingie in GameTicker, RoundEndSystem is no good...
-            if (_restartTimer != null)
-            {
-                _restartTimer -= frameTime;
-
-                if (_restartTimer > 0f)
-                    return;
-
-                _gameTicker.EndRound();
-                _gameTicker.RestartRound();
-                return;
-            }
-
-            if (!_cfg.GetCVar(CCVars.GameLobbyEnableWin) || _deadCheckTimer == null)
-                return;
-
-            _deadCheckTimer -= frameTime;
-
-            if (_deadCheckTimer > 0)
-                return;
-
-            _deadCheckTimer = null;
-
-            IPlayerSession? winner = null;
-            foreach (var playerSession in _playerManager.ServerSessions)
-            {
-                if (playerSession.AttachedEntity is not {Valid: true} playerEntity
-                    || !TryComp(playerEntity, out MobStateComponent? state))
-                    continue;
-
-                if (!state.IsAlive())
-                    continue;
-
-                // Found a second person alive, nothing decided yet!
-                if (winner != null)
-                    return;
-
-                winner = playerSession;
-            }
-
-            _chatManager.DispatchServerAnnouncement(winner == null
-                ? Loc.GetString("rule-death-match-check-winner-stalemate")
-                : Loc.GetString("rule-death-match-check-winner",("winner", winner)));
-
-            _chatManager.DispatchServerAnnouncement(Loc.GetString("rule-restarting-in-seconds", ("seconds", RestartDelay)));
-            _restartTimer = RestartDelay;
-        }
+        _chatManager.DispatchServerAnnouncement(Loc.GetString("rule-restarting-in-seconds", ("seconds", RestartDelay)));
+        _restartTimer = RestartDelay;
     }
 }

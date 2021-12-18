@@ -57,3 +57,4 @@
   description: traitor-death-match-description
   rules:
     - TraitorDeathMatch
+    - MaxTimeRestart
