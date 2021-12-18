@@ -91,6 +91,7 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly IBaseServer _baseServer = default!;
         [Dependency] private readonly IWatchdogApi _watchdogApi = default!;
         [Dependency] private readonly IGameMapManager _gameMapManager = default!;
+        [Dependency] private readonly IPauseManager _pauseManager = default!;
         [Dependency] private readonly StationSystem _stationSystem = default!;
         [Dependency] private readonly AdminLogSystem _adminLogSystem = default!;
         [Dependency] private readonly HumanoidAppearanceSystem _humanoidAppearanceSystem = default!;

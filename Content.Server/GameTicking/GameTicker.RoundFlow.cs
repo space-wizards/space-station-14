@@ -65,6 +65,7 @@ namespace Content.Server.GameTicking
         private void PreRoundSetup()
         {
             DefaultMap = _mapManager.CreateMap();
+            _pauseManager.AddUninitializedMap(DefaultMap);
             var startTime = _gameTiming.RealTime;
             var map = _gameMapManager.GetSelectedMapChecked(true);
             var grid = _mapLoader.LoadBlueprint(DefaultMap, map.MapPath);
@@ -238,6 +239,8 @@ namespace Content.Server.GameTicking
 
             // Allow rules to add roles to players who have been spawned in. (For example, on-station traitors)
             RaiseLocalEvent(new RulePlayerJobsAssignedEvent(assignedJobs.Keys.ToArray(), profiles, force));
+
+            _pauseManager.DoMapInitialize(DefaultMap);
 
             _roundStartDateTime = DateTime.UtcNow;
             RunLevel = GameRunLevel.InRound;
