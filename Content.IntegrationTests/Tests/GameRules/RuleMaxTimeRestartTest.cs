@@ -23,6 +23,7 @@ namespace Content.IntegrationTests.Tests.GameRules
                 {
                     ["game.lobbyenabled"] = "true",
                     ["game.dummyticker"] = "false",
+                    ["game.defaultpreset"] = "", // No preset.
                 }
             };
             var server = StartServer(options);

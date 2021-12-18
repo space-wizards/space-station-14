@@ -28,6 +28,8 @@ public sealed class MaxTimeRestartRuleSystem : GameRuleSystem
 
     public override void Added()
     {
+        if(GameTicker.RunLevel == GameRunLevel.InRound)
+            RestartTimer();
     }
 
     public override void Removed()
