@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Content.Server.Radio.Components;
 using Content.Server.Radio.EntitySystems;
 using Content.Shared.Chat;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Examine;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
@@ -32,12 +33,18 @@ namespace Content.Server.Headset
         [DataField("channels")]
         private List<int> _channels = new(){1459};
 
+        [DataField("keySlot")]
+        public ItemSlot keySlot = new();
+
+        [ViewVariables] public EncryptionKeyComponent? ContainedKey;
+
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("broadcastChannel")]
         private int BroadcastFrequency { get; set; } = 1459;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("listenRange")]
+
         public int ListenRange { get; private set; }
 
         public IReadOnlyList<int> Channels => _channels;
