@@ -21,6 +21,7 @@ using Content.Shared.Administration;
 using Content.Shared.Alert;
 using Content.Shared.CCVar;
 using Content.Shared.Kitchen;
+using Robust.Server;
 using Robust.Server.Bql;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
@@ -62,25 +63,30 @@ namespace Content.Server.Entry
 
             IoCManager.BuildGraph();
             factory.GenerateNetIds();
+            var configManager = IoCManager.Resolve<IConfigurationManager>();
+            var target = configManager.GetCVar(CCVars.AutogenerateTarget);
+            var dest = configManager.GetCVar(CCVars.DestinationFile);
+            if (target == "" || dest == "") //hacky but it keeps load times for the generator down.
+            {
+                _euiManager = IoCManager.Resolve<EuiManager>();
+                _voteManager = IoCManager.Resolve<IVoteManager>();
 
-            _euiManager = IoCManager.Resolve<EuiManager>();
-            _voteManager = IoCManager.Resolve<IVoteManager>();
+                IoCManager.Resolve<IChatSanitizationManager>().Initialize();
+                IoCManager.Resolve<IChatManager>().Initialize();
 
-            IoCManager.Resolve<IChatSanitizationManager>().Initialize();
-            IoCManager.Resolve<IChatManager>().Initialize();
+                var playerManager = IoCManager.Resolve<IPlayerManager>();
 
-            var playerManager = IoCManager.Resolve<IPlayerManager>();
+                var logManager = IoCManager.Resolve<ILogManager>();
+                logManager.GetSawmill("Storage").Level = LogLevel.Info;
+                logManager.GetSawmill("db.ef").Level = LogLevel.Info;
 
-            var logManager = IoCManager.Resolve<ILogManager>();
-            logManager.GetSawmill("Storage").Level = LogLevel.Info;
-            logManager.GetSawmill("db.ef").Level = LogLevel.Info;
-
-            IoCManager.Resolve<IConnectionManager>().Initialize();
-            IoCManager.Resolve<IServerDbManager>().Init();
-            IoCManager.Resolve<IServerPreferencesManager>().Init();
-            IoCManager.Resolve<INodeGroupFactory>().Initialize();
-            IoCManager.Resolve<IGamePrototypeLoadManager>().Initialize();
-            _voteManager.Initialize();
+                IoCManager.Resolve<IConnectionManager>().Initialize();
+                IoCManager.Resolve<IServerDbManager>().Init();
+                IoCManager.Resolve<IServerPreferencesManager>().Init();
+                IoCManager.Resolve<INodeGroupFactory>().Initialize();
+                IoCManager.Resolve<IGamePrototypeLoadManager>().Initialize();
+                _voteManager.Initialize();
+            }
         }
 
         public override void PostInit()
@@ -94,16 +100,13 @@ namespace Content.Server.Entry
             var resPath = new ResourcePath(dest).ToRootedPath();
             if (target != "" && dest != "")
             {
-                switch (target)
-                {
-                    case "chemistry":
-                        var file = resourceManager.UserData.OpenWriteText(resPath);
-                        ChemistryJsonGenerator.PublishJson(file);
-                        file.Flush();
-                        break;
-                    default:
-                        break;
-                }
+                var file = resourceManager.UserData.OpenWriteText(resPath.WithName("chem_"+dest));
+                ChemistryJsonGenerator.PublishJson(file);
+                file.Flush();
+                file = resourceManager.UserData.OpenWriteText(resPath.WithName("react_"+dest));
+                ReactionJsonGenerator.PublishJson(file);
+                file.Flush();
+                IoCManager.Resolve<IBaseServer>().Shutdown("Data generation done");
             }
 
             IoCManager.Resolve<ISandboxManager>().Initialize();

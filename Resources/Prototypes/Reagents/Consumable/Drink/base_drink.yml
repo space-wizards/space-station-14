@@ -38,6 +38,7 @@
 
 - type: reagent
   id: BaseAlcohol
+  group: Drinks
   abstract: true
   metabolisms:
     Drink:
