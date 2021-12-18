@@ -1,6 +1,7 @@
 ﻿- type: reagent
   id: Carpetium
   name: carpetium
+  group: Special
   desc: A mystical chemical, usually outsourced from the Clown Planet, that covers everything it touches in carpet.
   physicalDesc: fibrous
   color: "#800000"
@@ -27,6 +28,7 @@
 - type: reagent
   id: BuzzochloricBees
   name: Buzzochloric Bees
+  group: Toxins
   desc: "Liquid bees. Oh god it's LIQUID BEES NO-"
   physicalDesc: buzzy
   color: "#FFD35D"
@@ -130,6 +132,7 @@
 - type: reagent
   id: Licoxide
   name: Licoxide
+  group: Toxins
   desc: It looks... electrifying.
   physicalDesc: electric
   color: "#FDD023"

@@ -1,6 +1,7 @@
 ﻿- type: reagent
   id: Nutriment
   name: nutriment
+  group: Foods
   desc: All the vitamins, minerals, and carbohydrates the body needs in pure form.
   physicalDesc: opaque
   color: "#664330"

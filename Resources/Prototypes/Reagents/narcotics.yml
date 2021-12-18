@@ -1,6 +1,7 @@
 ﻿- type: reagent
   id: Desoxyephedrine
   name: desoxyephedrine
+  group: Narcotics
   desc: Desoxyephedrine is a potent stimulant with dangerous side-effects if too much is consumed.
   physicalDesc: translucent
   color: "#FAFAFA"
@@ -42,6 +43,7 @@
 - type: reagent
   id: Ephedrine
   name: ephedrine
+  group: Narcotics
   desc: Increases stun resistance and movement speed, giving you hand cramps. Overdose deals toxin damage and inhibits breathing.
   physicalDesc: Bone white
   color: "#D2FFFA"
@@ -78,6 +80,7 @@
 - type: reagent
   id: THC
   name: THC
+  group: Narcotics
   desc: The main psychoactive compound in cannabis.
   color: "#808080"
   physicalDesc: crystalline
@@ -90,6 +93,7 @@
 - type: reagent
   id: THCOil
   name: THC oil
+  group: Narcotics
   desc: Pure THC oil, extracted from the leaves of the cannabis plant. Much stronger than in it's natural form and can be used to numb chronic pain in patients.
   physicalDesc: skunky
   color: "#DAA520"
@@ -97,6 +101,7 @@
 - type: reagent
   id: Nicotine
   name: Nicotine
+  group: Narcotics
   desc: Dangerous and highly addictive.
   color: "#C0C0C0"
   physicalDesc: strong smelling
@@ -107,6 +112,7 @@
 - type: reagent
   id: Impedrezene
   name: impedrezene
+  group: Narcotics
   desc: A narcotic that impedes one's ability by slowing down the higher brain cell functions. Causes massive brain damage.
   physicalDesc: acrid
   color: "#215263"
@@ -114,6 +120,7 @@
 - type: reagent
   id: SpaceDrugs
   name: space drugs
+  group: Narcotics
   desc: An illegal compound which induces a number of effects such as loss of balance and visual artefacts.
   physicalDesc: syrupy
   color: "#63806e"
