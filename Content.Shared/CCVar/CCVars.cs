@@ -591,9 +591,6 @@ namespace Content.Shared.CCVar
          * Autogeneration
          */
 
-        public static readonly CVarDef<string> AutogenerateTarget =
-            CVarDef.Create("autogen.autogenerate_target", "", CVar.SERVER | CVar.SERVERONLY);
-
         public static readonly CVarDef<string> DestinationFile =
             CVarDef.Create("autogen.destination_file", "", CVar.SERVER | CVar.SERVERONLY);
     }

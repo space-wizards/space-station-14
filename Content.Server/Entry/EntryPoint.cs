@@ -64,9 +64,8 @@ namespace Content.Server.Entry
             IoCManager.BuildGraph();
             factory.GenerateNetIds();
             var configManager = IoCManager.Resolve<IConfigurationManager>();
-            var target = configManager.GetCVar(CCVars.AutogenerateTarget);
             var dest = configManager.GetCVar(CCVars.DestinationFile);
-            if (target == "" || dest == "") //hacky but it keeps load times for the generator down.
+            if (dest == "") //hacky but it keeps load times for the generator down.
             {
                 _euiManager = IoCManager.Resolve<EuiManager>();
                 _voteManager = IoCManager.Resolve<IVoteManager>();
@@ -95,10 +94,9 @@ namespace Content.Server.Entry
 
             var configManager = IoCManager.Resolve<IConfigurationManager>();
             var resourceManager = IoCManager.Resolve<IResourceManager>();
-            var target = configManager.GetCVar(CCVars.AutogenerateTarget);
             var dest = configManager.GetCVar(CCVars.DestinationFile);
             var resPath = new ResourcePath(dest).ToRootedPath();
-            if (target != "" && dest != "")
+            if (dest != "")
             {
                 var file = resourceManager.UserData.OpenWriteText(resPath.WithName("chem_"+dest));
                 ChemistryJsonGenerator.PublishJson(file);
