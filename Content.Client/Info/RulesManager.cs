@@ -21,8 +21,6 @@ public sealed class RulesManager
     [Dependency] private readonly IStateManager _stateManager = default!;
     [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
 
-    private RulesPopup? _rulesPopup;
-
     public void Initialize()
     {
         _stateManager.OnStateChanged += OnStateChanged;
@@ -60,13 +58,13 @@ public sealed class RulesManager
 
     private void ShowRules(float time)
     {
-        _rulesPopup = new RulesPopup
+        var rulesPopup = new RulesPopup
         {
             Timer = time
         };
-        _rulesPopup.OnQuitPressed += OnQuitPressed;
-        _rulesPopup.OnAcceptPressed += OnAcceptPressed;
-        _userInterfaceManager.RootControl.AddChild(_rulesPopup);
+        rulesPopup.OnQuitPressed += OnQuitPressed;
+        rulesPopup.OnAcceptPressed += OnAcceptPressed;
+        _userInterfaceManager.RootControl.AddChild(rulesPopup);
     }
 
     private void OnQuitPressed()
