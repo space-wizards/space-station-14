@@ -462,7 +462,7 @@ namespace Content.Client.Stylesheets
             FontLib.AddFont("box",
                     new FontVariant
                     (
-                        (FontStyle) default,
+                        default,
                         new []
                         {
                             resCache.GetResource<FontResource>("/Fonts/Boxfont-round/Boxfont Round.ttf")
@@ -652,7 +652,7 @@ namespace Content.Client.Stylesheets
                     .Prop(Label.StylePropertyFont, new FontClass("notosans", FontStyle.Italic, (FontSize) 12)),
 
                 Element<RichTextLabel>().Class(VerbMenuElement.StyleClassVerbOtherText)
-                    .Prop(Label.StylePropertyFont, new FontClass("notosans", (FontStyle) default, (FontSize) 12)),
+                    .Prop(Label.StylePropertyFont, new FontClass("notosans", default, (FontSize) 12)),
 
                 // Thin buttons (No padding nor vertical margin)
                 Element<EntityContainerButton>().Class(StyleClassStorageButton)
@@ -833,11 +833,11 @@ namespace Content.Client.Stylesheets
                 }),
                 new StyleRule(new SelectorElement(typeof(RichTextLabel), new[] {StyleClassTooltipAlertDescription}, null, null), new[]
                 {
-                    new StyleProperty("font", new FontClass("notosans", (FontStyle) default, (FontSize) 16))
+                    new StyleProperty("font", new FontClass("notosans", default, (FontSize) 16))
                 }),
                 new StyleRule(new SelectorElement(typeof(RichTextLabel), new[] {StyleClassTooltipAlertCooldown}, null, null), new[]
                 {
-                    new StyleProperty("font", new FontClass("notosans", (FontStyle) default, (FontSize) 16))
+                    new StyleProperty("font", new FontClass("notosans", default, (FontSize) 16))
                 }),
 
                 // action tooltip
@@ -847,21 +847,21 @@ namespace Content.Client.Stylesheets
                 }),
                 new StyleRule(new SelectorElement(typeof(RichTextLabel), new[] {StyleClassTooltipActionDescription}, null, null), new[]
                 {
-                    new StyleProperty("font", new FontClass("notosans", (FontStyle) default, (FontSize) 15))
+                    new StyleProperty("font", new FontClass("notosans", default, (FontSize) 15))
                 }),
                 new StyleRule(new SelectorElement(typeof(RichTextLabel), new[] {StyleClassTooltipActionCooldown}, null, null), new[]
                 {
-                    new StyleProperty("font", new FontClass("notosans", (FontStyle) default, (FontSize) 15))
+                    new StyleProperty("font", new FontClass("notosans", default, (FontSize) 15))
                 }),
                 new StyleRule(new SelectorElement(typeof(RichTextLabel), new[] {StyleClassTooltipActionRequirements}, null, null), new[]
                 {
-                    new StyleProperty("font", new FontClass("notosans", (FontStyle) default, (FontSize) 15))
+                    new StyleProperty("font", new FontClass("notosans", default, (FontSize) 15))
                 }),
 
                 // small number for the entity counter in the entity menu
                 new StyleRule(new SelectorElement(typeof(Label), new[] {EntityMenuElement.StyleClassEntityMenuCountText}, null, null), new[]
                 {
-                    new StyleProperty("font", new FontClass("notosans", (FontStyle) default, (FontSize) 10)),
+                    new StyleProperty("font", new FontClass("notosans", default, (FontSize) 10)),
                     new StyleProperty(Label.StylePropertyAlignMode, Label.AlignMode.Right),
                 }),
 
@@ -925,7 +925,7 @@ namespace Content.Client.Stylesheets
                 new StyleRule(
                     new SelectorElement(typeof(Label), new[] {Placeholder.StyleClassPlaceholderText}, null, null), new[]
                     {
-                        new StyleProperty(Label.StylePropertyFont, new FontClass("notosans", (FontStyle) default, (FontSize) 16)),
+                        new StyleProperty(Label.StylePropertyFont, new FontClass("notosans", default, (FontSize) 16)),
                         new StyleProperty(Label.StylePropertyFontColor, new Color(103, 103, 103, 128)),
                     }),
 
@@ -947,7 +947,7 @@ namespace Content.Client.Stylesheets
                 // Small Label
                 new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassLabelSubText}, null, null), new[]
                 {
-                    new StyleProperty(Label.StylePropertyFont, new FontClass("notosans", (FontStyle) default, (FontSize) 10)),
+                    new StyleProperty(Label.StylePropertyFont, new FontClass("notosans", default, (FontSize) 10)),
                     new StyleProperty(Label.StylePropertyFontColor, Color.DarkGray),
                 }),
 
@@ -961,7 +961,7 @@ namespace Content.Client.Stylesheets
                 new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassLabelSecondaryColor}, null, null),
                     new[]
                     {
-                        new StyleProperty(Label.StylePropertyFont, new FontClass("notosans", (FontStyle) default, (FontSize) 12)),
+                        new StyleProperty(Label.StylePropertyFont, new FontClass("notosans", default, (FontSize) 12)),
                         new StyleProperty(Label.StylePropertyFontColor, Color.DarkGray),
                     }),
 
@@ -971,7 +971,7 @@ namespace Content.Client.Stylesheets
                     new SelectorElement(typeof(Label), null, null, null)),
                     new[]
                     {
-                        new StyleProperty("font", new FontClass("notosans", (FontStyle) default, (FontSize) 16))
+                        new StyleProperty("font", new FontClass("notosans", default, (FontSize) 16))
                     }),
 
                 // Popup messages
@@ -1119,13 +1119,13 @@ namespace Content.Client.Stylesheets
                     SelectorElement.Class(StyleClassLabelBig),
                     new[]
                     {
-                        new StyleProperty("font", new FontClass("notosans", (FontStyle) default, (FontSize) 16)),
+                        new StyleProperty("font", new FontClass("notosans", default, (FontSize) 16)),
                     }),
 
                 // StyleClassItemStatus
                 new StyleRule(SelectorElement.Class(StyleClassItemStatus), new[]
                 {
-                    new StyleProperty("font", new FontClass("notosans", (FontStyle) default, (FontSize) 10)),
+                    new StyleProperty("font", new FontClass("notosans", default, (FontSize) 10)),
                 }),
 
                 // Slider
@@ -1230,7 +1230,7 @@ namespace Content.Client.Stylesheets
                     }),
 
                 Element<Label>().Class("FancyWindowTitle")
-                    .Prop("font", new FontClass("boxfont", (FontStyle) default, (FontSize) 13))
+                    .Prop("font", new FontClass("boxfont", default, (FontSize) 13))
                     .Prop("font-color", NanoGold),
 
                 Element<PanelContainer>().Class("WindowHeadingBackground")

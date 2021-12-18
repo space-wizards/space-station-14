@@ -1,19 +1,4 @@
 Entries:
-- author: Swept
-  changes:
-  - {message: More machines and station equipment is destructible, type: Tweak}
-  id: 244
-  time: '2021-06-19T19:34:01.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Add cvar to specify discrete gas overlay thresholds, type: Add}
-  id: 245
-  time: '2021-06-21T07:08:37.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Throw no longer pushes you back if you are buckled, type: Fix}
-  id: 246
-  time: '2021-06-28T04:17:09.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: You can no longer start pulling something while incapacitated., type: Fix}
@@ -808,7 +793,7 @@ Entries:
   - {message: Fixed radiation dealing wrong damage type., type: Fix}
   id: 390
   time: '2021-10-02T01:47:54.0000000+00:00'
-- author: Your_Name_Here
+- author: Zumorica
   changes:
   - {message: Dice now have a roll cooldown., type: Tweak}
   id: 391
@@ -2868,3 +2853,19 @@ Entries:
   - {message: Crate deconstruction no longer deletes all of its contents., type: Fix}
   id: 745
   time: '2021-12-17T00:26:01.716131+00:00'
+- author: moonheart08
+  changes:
+  - {message: The singularity is no longer weightless., type: Tweak}
+  id: 746
+  time: '2021-12-17T05:56:38.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Deconstructing a disposal unit no longer deletes its contents., type: Fix}
+  id: 747
+  time: '2021-12-17T09:47:15.887932+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes various bugs relating to MIDI and instruments. Others should be
+      able to hear them again reliably., type: Fix}
+  id: 748
+  time: '2021-12-17T22:45:31.490867+00:00'
