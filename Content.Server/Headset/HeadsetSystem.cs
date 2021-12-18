@@ -16,7 +16,6 @@ namespace Content.Server.Headset
             SubscribeLocalEvent<HeadsetComponent, ComponentInit>(OnComponentInit);
 
             SubscribeLocalEvent<HeadsetComponent, InteractUsingEvent>(OnInteractUsingEvent);
-            //SubscribeLocalEvent<HeadsetComponent, EntInsertedIntoContainerMessage>(OnItemInserted);
 
         }
 
@@ -33,13 +32,5 @@ namespace Content.Server.Headset
             headset.ContainedKey = CompOrNull<EncryptionKeyComponent>(args.Used);
             
         }
-
-        //protected virtual void OnItemInserted(EntityUid uid, HeadsetComponent headset, EntInsertedIntoContainerMessage args)
-        //{
-
-        //    if (args.Container.ID == headset.keySlot.ID)
-        //        headset.ContainedKey = CompOrNull<EncryptionKeyComponent>(args.Entity);
-
-        //}
     }
 }

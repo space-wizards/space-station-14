@@ -36,6 +36,45 @@
 	{
       "name": "encryptionkey"
     },
+	{
+      "name": "sec_encryptionkey"
+    },
+	{
+      "name": "cap_encryptionkey"
+    },
+	{
+      "name": "cargo_encryptionkey"
+    },
+	{
+      "name": "ce_encryptionkey"
+    },
+	{
+      "name": "cmo_encryptionkey"
+    },
+	{
+      "name": "eng_encryptionkey"
+    },
+	{
+      "name": "hop_encryptionkey"
+    },
+	{
+      "name": "hos_encryptionkey"
+    },
+	{
+      "name": "med_encryptionkey"
+    },
+	{
+      "name": "qm_encryptionkey"
+    },
+	{
+      "name": "rd_encryptionkey"
+    },
+	{
+      "name": "sci_encryptionkey"
+    },
+	{
+      "name": "syn_encryptionkey"
+    },
     {
       "name": "radio-inhand-right",
       "directions": 4
