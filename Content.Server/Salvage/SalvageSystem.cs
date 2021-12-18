@@ -224,12 +224,13 @@ namespace Content.Server.Salvage
             for (var i = 0; i < allSalvageMaps.Count; i++)
             {
                 map = _random.PickAndTake(allSalvageMaps);
-
                 var box2 = Box2.CenteredAround(spl.Position, new Vector2(map.Size * 2.0f, map.Size * 2.0f));
                 var box2rot = new Box2Rotated(box2, spAngle, spl.Position);
-                if (_physicsSystem.GetCollidingEntities(spl.MapId, in box2rot).Select(x => EntityManager.HasComponent<IMapGridComponent>(x.Owner)).Count() > 0)
+
+                // This doesn't stop it from spawning on top of random things in space
+                // Might be better like this, ghosts could stop it before
+                if (_mapManager.FindGridsIntersecting(spl.MapId, box2rot).Any())
                 {
-                    // collided: set map to null so we don't spawn it
                     map = null;
                 }
                 else
@@ -243,7 +244,6 @@ namespace Content.Server.Salvage
                 Report("salvage-system-announcement-spawn-no-debris-available");
                 return false;
             }
-
             var bp = _mapLoader.LoadBlueprint(spl.MapId, map.MapPath);
             if (bp == null)
             {
