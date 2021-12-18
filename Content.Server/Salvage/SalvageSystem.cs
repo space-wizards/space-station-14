@@ -194,12 +194,12 @@ namespace Content.Server.Salvage
         private IEnumerable<SalvageMapPrototype> GetAllSalvageMaps() =>
             _prototypeManager.EnumeratePrototypes<SalvageMapPrototype>();
 
-        private void SpawnSalvage(SalvageMagnetComponent component)
+        private bool SpawnSalvage(SalvageMagnetComponent component)
         {
             if (!TryGetSalvagePlacementLocation(out var spl, out var spAngle))
             {
                 Report("salvage-system-announcement-spawn-magnet-lost");
-                return;
+                return false;
             }
 
             SalvageMapPrototype? map = null;
@@ -242,14 +242,14 @@ namespace Content.Server.Salvage
             if (map == null)
             {
                 Report("salvage-system-announcement-spawn-no-debris-available");
-                return;
+                return false;
             }
 
             var bp = _mapLoader.LoadBlueprint(spl.MapId, map.MapPath);
             if (bp == null)
             {
                 Report("salvage-system-announcement-spawn-debris-disintegrated");
-                return;
+                return false;
             }
             var salvageEntityId = bp.GridEntityId;
             component.AttachedEntity = salvageEntityId;
@@ -259,6 +259,7 @@ namespace Content.Server.Salvage
             pulledTransform.WorldRotation = spAngle;
 
             Report("salvage-system-announcement-arrived", ("timeLeft", HoldTime.TotalSeconds));
+            return true;
         }
         private void Report(string messageKey) =>
             _chatManager.DispatchStationAnnouncement(Loc.GetString(messageKey), Loc.GetString("salvage-system-announcement-source"));
@@ -271,8 +272,14 @@ namespace Content.Server.Salvage
             switch (magnet.MagnetState.StateType)
             {
                 case MagnetStateType.Attaching:
-                    SpawnSalvage(magnet);
-                    magnet.MagnetState = new MagnetState(MagnetStateType.Holding, currentTime + HoldTime);
+                    if (SpawnSalvage(magnet))
+                    {
+                        magnet.MagnetState = new MagnetState(MagnetStateType.Holding, currentTime + HoldTime);
+                    }
+                    else
+                    {
+                        magnet.MagnetState = new MagnetState(MagnetStateType.CoolingDown, currentTime + CooldownTime);
+                    }
                     break;
                 case MagnetStateType.Holding:
                     Report("salvage-system-announcement-losing", ("timeLeft", DetachingTime.TotalSeconds));
