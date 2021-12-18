@@ -1,10 +1,10 @@
 using System;
 using System.Globalization;
-using System.IO;
 using Content.Client.Lobby;
 using Content.Client.Viewport;
 using Content.Shared.CCVar;
 using Robust.Client.State;
+using Robust.Client.UserInterface;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 using Robust.Shared.IoC;
@@ -16,9 +16,10 @@ public sealed class RulesManager
 {
     [Dependency] private readonly IResourceManager _resource = default!;
     [Dependency] private readonly IConfigurationManager _configManager = default!;
+    [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
     [Dependency] private readonly IStateManager _stateManager = default!;
 
-    public event Action? OpenRulesAndInfoWindow;
+    private RulesPopup? _rulesPopup;
 
     public void Initialize()
     {
@@ -39,8 +40,11 @@ public sealed class RulesManager
         else
             SaveLastReadTime();
 
-        if (showRules)
-            OpenRulesAndInfoWindow?.Invoke();
+        if (!showRules)
+            return;
+
+        _rulesPopup = new RulesPopup();
+        _userInterfaceManager.RootControl.AddChild(_rulesPopup);
     }
 
     /// <summary>

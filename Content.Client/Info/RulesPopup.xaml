@@ -1,0 +1,19 @@
+﻿<Control xmlns="https://spacestation14.io"
+              xmlns:parallax="clr-namespace:Content.Client.Parallax"
+              xmlns:info="clr-namespace:Content.Client.Info"
+              VerticalExpand="True" HorizontalExpand="True" MouseFilter="Stop">
+    <parallax:ParallaxControl />
+    <Control VerticalExpand="True" MaxWidth="650">
+        <PanelContainer StyleClasses="windowPanel" />
+        <BoxContainer Orientation="Vertical" SeparationOverride="0">
+            <PanelContainer Name="WindowHeader" StyleClasses="windowHeader">
+                <BoxContainer Orientation="Horizontal">
+                    <Label Margin="5 0 0 0" HorizontalExpand="True" Name="TitleLabel" StyleIdentifier="foo"
+                           Text="{Loc 'ui-info-header-rules'}" VAlign="Center" StyleClasses="windowTitle" />
+                    <TextureButton Name="CloseButton" StyleClasses="windowCloseButton" VerticalAlignment="Center" />
+                </BoxContainer>
+            </PanelContainer>
+            <info:RulesControl/>
+        </BoxContainer>
+    </Control>
+</Control>
