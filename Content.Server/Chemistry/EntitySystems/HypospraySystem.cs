@@ -1,4 +1,4 @@
-﻿using Content.Server.Chemistry.Components;
+using Content.Server.Chemistry.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Weapons.Melee;
 using JetBrains.Annotations;
@@ -35,10 +35,10 @@ namespace Content.Server.Chemistry.EntitySystems
 
         public void OnClickAttack(EntityUid uid, HyposprayComponent comp, ClickAttackEvent args)
         {
-            var target = args.TargetEntity;
-            var user = args.User;
+            if (args.Target == null)
+                return;
 
-            comp.TryDoInject(target, user);
+            comp.TryDoInject(args.Target.Value, args.User);
         }
     }
 }

@@ -45,7 +45,7 @@ namespace Content.Client.Stylesheets
         protected StyleBase(IResourceCache resCache)
         {
             FontLib = new FontLibrary(
-                new FontClass(Id: "notosans", Style: (FontStyle) default, Size: (FontSize) 12)
+                new FontClass(Id: "notosans", Style: default, Size: (FontSize) 12)
             ) as IFontLibrary;
 
             FontLib.AddFont("notosans",
@@ -182,7 +182,7 @@ namespace Content.Client.Stylesheets
                     new[]
                     {
                         new StyleProperty("font-library", FontLib),
-                        new StyleProperty("font", new FontClass("notosans", (FontStyle) default, (FontSize) 12)),
+                        new StyleProperty("font", new FontClass("notosans", default, (FontSize) 12)),
                     }),
 
                 // Default font.

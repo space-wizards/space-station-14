@@ -443,7 +443,7 @@ namespace Content.Server.Administration.Managers
 
         public bool CanViewVar(IPlayerSession session)
         {
-            return GetAdminData(session)?.CanViewVar() ?? false;
+            return CanCommand(session, "vv");
         }
 
         public bool CanAdminPlace(IPlayerSession session)
