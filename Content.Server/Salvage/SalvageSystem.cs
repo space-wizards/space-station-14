@@ -37,7 +37,6 @@ namespace Content.Server.Salvage
         private static readonly TimeSpan HoldTime = TimeSpan.FromMinutes(4);
         private static readonly TimeSpan DetachingTime = TimeSpan.FromSeconds(30);
         private static readonly TimeSpan CooldownTime = TimeSpan.FromMinutes(1);
-        public const float AngularVelocityRangeRadians = 0.25f;
 
         private readonly Dictionary<GridId, SalvageGridState> _salvageGridStates = new();
 
@@ -268,7 +267,6 @@ namespace Content.Server.Salvage
 
         private void Transition(SalvageMagnetComponent magnet, TimeSpan currentTime)
         {
-            //Add announces/actions
             switch (magnet.MagnetState.StateType)
             {
                 case MagnetStateType.Attaching:
