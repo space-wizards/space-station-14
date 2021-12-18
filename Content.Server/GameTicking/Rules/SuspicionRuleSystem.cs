@@ -61,7 +61,7 @@ namespace Content.Server.GameTicking.Rules
 
         [DataField("addedSound")] private SoundSpecifier _addedSound = new SoundPathSpecifier("/Audio/Misc/tatoralert.ogg");
 
-        private readonly CancellationTokenSource _checkTimerCancel = new();
+        private CancellationTokenSource _checkTimerCancel = new();
         private TimeSpan? _endTime;
 
         public TimeSpan? EndTime
@@ -219,6 +219,7 @@ namespace Content.Server.GameTicking.Rules
 
             _doorSystem.AccessType = DoorSystem.AccessTypes.AllowAllNoExternal;
 
+            _checkTimerCancel = new CancellationTokenSource();
             Timer.SpawnRepeating(DeadCheckDelay, CheckWinConditions, _checkTimerCancel.Token);
         }
 

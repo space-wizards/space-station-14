@@ -19,7 +19,7 @@
         - RifleCalico
       chance: 0.75
       gameRules:
-        - RuleSuspicion
+        - Suspicion
 
 - type: entity
   name: Suspicion Pistol Spawner

@@ -364,8 +364,6 @@ namespace Content.Server.GameTicking
             }
             else
             {
-                // TODO Set preset here or something, check git history??
-
                 if (_playerManager.PlayerCount == 0)
                     _roundStartCountdownHasNotStartedYetDueToNoPlayers = true;
                 else
