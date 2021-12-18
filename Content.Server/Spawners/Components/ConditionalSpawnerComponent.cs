@@ -35,7 +35,7 @@ namespace Content.Server.Spawners.Components
 
         public void RuleAdded(GameRuleAddedEvent obj)
         {
-            if(_gameRules.Contains(obj.Rule.GetType().Name))
+            if(_gameRules.Contains(obj.Rule.ID))
                 Spawn();
         }
 
