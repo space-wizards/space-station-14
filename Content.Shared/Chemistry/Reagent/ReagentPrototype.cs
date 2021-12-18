@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Prototypes;
@@ -29,6 +29,9 @@ namespace Content.Shared.Chemistry.Reagent
 
         [DataField("name")]
         public string Name { get; } = string.Empty;
+
+        [DataField("group")]
+        public string Group { get; } = "Unknown";
 
         [DataField("parent", customTypeSerializer:typeof(PrototypeIdSerializer<ReagentPrototype>))]
         public string? Parent { get; private set; }

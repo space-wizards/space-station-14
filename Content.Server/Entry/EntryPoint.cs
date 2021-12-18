@@ -1,3 +1,4 @@
+using System.IO;
 using Content.Server.Administration.Managers;
 using Content.Server.Afk;
 using Content.Server.AI.Utility;
@@ -8,6 +9,7 @@ using Content.Server.Connection;
 using Content.Server.Database;
 using Content.Server.EUI;
 using Content.Server.GameTicking;
+using Content.Server.GuideGenerator;
 using Content.Server.IoC;
 using Content.Server.Maps;
 using Content.Server.NodeContainer.NodeGroups;
@@ -17,14 +19,17 @@ using Content.Server.Voting.Managers;
 using Content.Shared.Actions;
 using Content.Shared.Administration;
 using Content.Shared.Alert;
+using Content.Shared.CCVar;
 using Content.Shared.Kitchen;
 using Robust.Server.Bql;
 using Robust.Server.Player;
+using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Entry
 {
@@ -81,6 +86,25 @@ namespace Content.Server.Entry
         public override void PostInit()
         {
             base.PostInit();
+
+            var configManager = IoCManager.Resolve<IConfigurationManager>();
+            var resourceManager = IoCManager.Resolve<IResourceManager>();
+            var target = configManager.GetCVar(CCVars.AutogenerateTarget);
+            var dest = configManager.GetCVar(CCVars.DestinationFile);
+            var resPath = new ResourcePath(dest).ToRootedPath();
+            if (target != "" && dest != "")
+            {
+                switch (target)
+                {
+                    case "chemistry":
+                        var file = resourceManager.UserData.OpenWriteText(resPath);
+                        ChemistryJsonGenerator.PublishJson(file);
+                        file.Flush();
+                        break;
+                    default:
+                        break;
+                }
+            }
 
             IoCManager.Resolve<ISandboxManager>().Initialize();
             IoCManager.Resolve<RecipeManager>().Initialize();
