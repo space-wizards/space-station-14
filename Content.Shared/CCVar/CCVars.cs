@@ -586,5 +586,15 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool> RestrictedNames =
             CVarDef.Create("ic.restricted_names", true, CVar.SERVER | CVar.REPLICATED);
+
+        /*
+         * Rules
+         */
+
+        /// <summary>
+        /// Time that players have to wait before rules can be accepted.
+        /// </summary>
+        public static readonly CVarDef<float> RulesWaitTime =
+            CVarDef.Create("rules.time", 45f, CVar.SERVER | CVar.REPLICATED);
     }
 }

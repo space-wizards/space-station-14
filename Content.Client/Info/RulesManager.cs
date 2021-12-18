@@ -45,10 +45,7 @@ public sealed class RulesManager
         if (!showRules)
             return;
 
-        _rulesPopup = new RulesPopup();
-        _rulesPopup.OnQuitPressed += OnQuitPressed;
-        _rulesPopup.OnAcceptPressed += OnAcceptPressed;
-        _userInterfaceManager.RootControl.AddChild(_rulesPopup);
+        ShowRules(_configManager.GetCVar(CCVars.RulesWaitTime));
     }
 
     /// <summary>
@@ -59,6 +56,17 @@ public sealed class RulesManager
         using var sw = _resource.UserData.OpenWriteText(new ResourcePath($"/rules_last_seen_{_configManager.GetCVar(CCVars.ServerId)}"));
 
         sw.Write(DateTime.UtcNow.ToUniversalTime());
+    }
+
+    private void ShowRules(float time)
+    {
+        _rulesPopup = new RulesPopup
+        {
+            Timer = time
+        };
+        _rulesPopup.OnQuitPressed += OnQuitPressed;
+        _rulesPopup.OnAcceptPressed += OnAcceptPressed;
+        _userInterfaceManager.RootControl.AddChild(_rulesPopup);
     }
 
     private void OnQuitPressed()
