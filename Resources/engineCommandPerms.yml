@@ -17,6 +17,14 @@
   - setclipboard
   - getclipboard
   - gcf
+  - net_graph
+  - net_watchent
+  - net_draw_interp
+  - devwindow
+  - fill
+  - dumpentities
+  - getcomponentregistration
+  - fuck
 
 - Flags: VAREDIT
   Commands:
@@ -55,10 +63,6 @@
   - addview
   - removeview
   - hwid
-  - fill
-  - dumpentities
-  - getcomponentregistration
-  - fuck
   - showpos
   - showray
   - showchunkbb
@@ -82,10 +86,6 @@
   - showvelocities
   - tilelookup
   - net_entityreport
-  - net_graph
-  - net_watchent
-  - net_draw_interp
-  - devwindow
   - scene
 
 
