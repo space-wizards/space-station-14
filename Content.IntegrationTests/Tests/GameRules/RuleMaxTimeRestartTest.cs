@@ -21,7 +21,8 @@ namespace Content.IntegrationTests.Tests.GameRules
             {
                 CVarOverrides =
                 {
-                    ["game.lobbyenabled"] = "true"
+                    ["game.lobbyenabled"] = "true",
+                    ["game.dummyticker"] = "false",
                 }
             };
             var server = StartServer(options);

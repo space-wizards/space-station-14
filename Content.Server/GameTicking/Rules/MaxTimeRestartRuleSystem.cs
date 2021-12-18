@@ -20,15 +20,19 @@ namespace Content.Server.GameTicking.Rules
         public TimeSpan RoundMaxTime { get; set; } = TimeSpan.FromMinutes(5);
         public TimeSpan RoundEndDelay { get; set; } = TimeSpan.FromSeconds(10);
 
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            SubscribeLocalEvent<GameRunLevelChangedEvent>(RunLevelChanged);
+        }
+
         public override void Added()
         {
-            EntityManager.EventBus.SubscribeEvent<GameRunLevelChangedEvent>(EventSource.Local, this, RunLevelChanged);
         }
 
         public override void Removed()
         {
-            EntityManager.EventBus.UnsubscribeEvents(this);
-
             RoundMaxTime = TimeSpan.FromMinutes(5);
             RoundEndDelay = TimeSpan.FromMinutes(10);
 
@@ -58,6 +62,9 @@ namespace Content.Server.GameTicking.Rules
 
         private void RunLevelChanged(GameRunLevelChangedEvent args)
         {
+            if (!Enabled)
+                return;
+
             switch (args.New)
             {
                 case GameRunLevel.InRound:
