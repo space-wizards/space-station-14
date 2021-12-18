@@ -1,7 +1,7 @@
 - type: entity
-  name: security encryption key
+  name: base encryption key
   parent: BaseItem
-  id: SecEncryptionKey
+  id: BaseEncryptionKey
   description: A key that, when inserted into a headset, allows it to connect to a specific departmental channel.
   components:
   - type: Sprite
@@ -11,132 +11,141 @@
   
 - type: entity
   name: captain encryption key
-  parent: BaseItem
+  parent: BaseEncryptionKey
   id: CapEncryptionKey
   description: A key that, when inserted into a headset, allows it to connect to a specific departmental channel.
   components:
   - type: Sprite
     sprite: Objects/Devices/communication.rsi
     state: cap_encryptionkey
-  - type: EncryptionKey
   
 - type: entity
+  name: security encryption key
+  parent: BaseEncryptionKey
+  id: SecEncryptionKey
+  description: A key that, when inserted into a headset, allows it to connect to a specific departmental channel.
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/communication.rsi
+    state: sec_encryptionkey
+    
+- type: entity
   name: cargo encryption key
-  parent: BaseItem
+  parent: BaseEncryptionKey
   id: CargoEncryptionKey
   description: A key that, when inserted into a headset, allows it to connect to a specific departmental channel.
   components:
   - type: Sprite
     sprite: Objects/Devices/communication.rsi
     state: cargo_encryptionkey
-  - type: EncryptionKey
+  
   
 - type: entity
   name: CE encryption key
-  parent: BaseItem
+  parent: BaseEncryptionKey
   id: CeEncryptionKey
   description: A key that, when inserted into a headset, allows it to connect to a specific departmental channel.
   components:
   - type: Sprite
     sprite: Objects/Devices/communication.rsi
     state: ce_encryptionkey
-  - type: EncryptionKey
+  
 
 - type: entity
   name: CMO encryption key
-  parent: BaseItem
+  parent: BaseEncryptionKey
   id: CmoEncryptionKey
   description: A key that, when inserted into a headset, allows it to connect to a specific departmental channel.
   components:
   - type: Sprite
     sprite: Objects/Devices/communication.rsi
     state: cmo_encryptionkey
-  - type: EncryptionKey
+  
 
 - type: entity
   name: engineering encryption key
-  parent: BaseItem
+  parent: BaseEncryptionKey
   id: EngEncryptionKey
   description: A key that, when inserted into a headset, allows it to connect to a specific departmental channel.
   components:
   - type: Sprite
     sprite: Objects/Devices/communication.rsi
     state: eng_encryptionkey
-  - type: EncryptionKey
+  
 
 - type: entity
   name: HOP encryption key
-  parent: BaseItem
+  parent: BaseEncryptionKey
   id: HopEncryptionKey
   description: A key that, when inserted into a headset, allows it to connect to a specific departmental channel.
   components:
   - type: Sprite
     sprite: Objects/Devices/communication.rsi
     state: hop_encryptionkey
-  - type: EncryptionKey
+  
 
 - type: entity
   name: HOS encryption key
-  parent: BaseItem
+  parent: BaseEncryptionKey
   id: HosEncryptionKey
   description: A key that, when inserted into a headset, allows it to connect to a specific departmental channel.
   components:
   - type: Sprite
     sprite: Objects/Devices/communication.rsi
     state: hos_encryptionkey
-  - type: EncryptionKey
+  
 
 - type: entity
   name: medical encryption key
-  parent: BaseItem
+  parent: BaseEncryptionKey
   id: MedEncryptionKey
   description: A key that, when inserted into a headset, allows it to connect to a specific departmental channel.
   components:
   - type: Sprite
     sprite: Objects/Devices/communication.rsi
     state: med_encryptionkey
-  - type: EncryptionKey
+  
 
 - type: entity
   name: QM encryption key
-  parent: BaseItem
+  parent: BaseEncryptionKey
   id: QmEncryptionKey
   description: A key that, when inserted into a headset, allows it to connect to a specific departmental channel.
   components:
   - type: Sprite
     sprite: Objects/Devices/communication.rsi
     state: qm_encryptionkey
-  - type: EncryptionKey
+  
 
 - type: entity
   name: RD encryption key
-  parent: BaseItem
+  parent: BaseEncryptionKey
   id: RdEncryptionKey
   description: A key that, when inserted into a headset, allows it to connect to a specific departmental channel.
   components:
   - type: Sprite
     sprite: Objects/Devices/communication.rsi
     state: rd_encryptionkey
-  - type: EncryptionKey
+  
 
 - type: entity
   name: science encryption key
-  parent: BaseItem
+  parent: BaseEncryptionKey
   id: SciEncryptionKey
   description: A key that, when inserted into a headset, allows it to connect to a specific departmental channel.
   components:
   - type: Sprite
     sprite: Objects/Devices/communication.rsi
     state: sci_encryptionkey
-  - type: EncryptionKey
+  
 
 - type: entity
   name: syndicate encryption key
-  parent: BaseItem
+  parent: BaseEncryptionKey
   id: SynEncryptionKey
   description: A key that, when inserted into a headset, allows it to connect to a specific departmental channel.
   components:
   - type: Sprite
     sprite: Objects/Devices/communication.rsi
     state: syn_encryptionkey
-  - type: EncryptionKey
+  
