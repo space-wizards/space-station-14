@@ -8,6 +8,7 @@
       - state: red
       - texture: Structures/Wallmounts/posters.rsi/random_anything.png
   - type: RandomSpawner
+    offset: 0
     prototypes:
       - RandomPosterContraband
       - RandomPosterLegit
@@ -26,6 +27,7 @@
       - state: red
       - texture: Structures/Wallmounts/posters.rsi/random_contraband.png
   - type: RandomSpawner
+    offset: 0
     prototypes:
       - PosterContrabandFreeTonto
       - PosterContrabandAtmosiaDeclarationIndependence
@@ -88,6 +90,7 @@
       - state: red
       - texture: Structures/Wallmounts/posters.rsi/random_legit.png
   - type: RandomSpawner
+    offset: 0
     prototypes:
       - PosterLegitHereForYourSafety
       - PosterLegitNanotrasenLogo
