@@ -5,15 +5,14 @@
     <parallax:ParallaxControl />
     <Control VerticalExpand="True" MaxWidth="650">
         <PanelContainer StyleClasses="windowPanel" />
-        <BoxContainer Orientation="Vertical" SeparationOverride="0">
-            <PanelContainer Name="WindowHeader" StyleClasses="windowHeader">
+        <ScrollContainer HScrollEnabled="False">
+            <BoxContainer Orientation="Vertical">
+                <info:RulesControl/>
                 <BoxContainer Orientation="Horizontal">
-                    <Label Margin="5 0 0 0" HorizontalExpand="True" Name="TitleLabel" StyleIdentifier="foo"
-                           Text="{Loc 'ui-info-header-rules'}" VAlign="Center" StyleClasses="windowTitle" />
-                    <TextureButton Name="CloseButton" StyleClasses="windowCloseButton" VerticalAlignment="Center" />
+                    <Button Name="ButtonAccept" Text="{Loc 'ui-rules-accept'}"/>
+                    <Button Name="ButtonQuit" Text="{Loc 'ui-escape-quit'}"/>
                 </BoxContainer>
-            </PanelContainer>
-            <info:RulesControl/>
-        </BoxContainer>
+            </BoxContainer>
+        </ScrollContainer>
     </Control>
 </Control>

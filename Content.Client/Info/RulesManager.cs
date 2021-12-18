@@ -3,6 +3,7 @@ using System.Globalization;
 using Content.Client.Lobby;
 using Content.Client.Viewport;
 using Content.Shared.CCVar;
+using Robust.Client.Console;
 using Robust.Client.State;
 using Robust.Client.UserInterface;
 using Robust.Shared.Configuration;
@@ -18,6 +19,7 @@ public sealed class RulesManager
     [Dependency] private readonly IConfigurationManager _configManager = default!;
     [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
     [Dependency] private readonly IStateManager _stateManager = default!;
+    [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
 
     private RulesPopup? _rulesPopup;
 
@@ -44,6 +46,8 @@ public sealed class RulesManager
             return;
 
         _rulesPopup = new RulesPopup();
+        _rulesPopup.OnQuitPressed += OnQuitPressed;
+        _rulesPopup.OnAcceptPressed += OnAcceptPressed;
         _userInterfaceManager.RootControl.AddChild(_rulesPopup);
     }
 
@@ -55,5 +59,15 @@ public sealed class RulesManager
         using var sw = _resource.UserData.OpenWriteText(new ResourcePath($"/rules_last_seen_{_configManager.GetCVar(CCVars.ServerId)}"));
 
         sw.Write(DateTime.UtcNow.ToUniversalTime());
+    }
+
+    private void OnQuitPressed()
+    {
+        _consoleHost.ExecuteCommand("quit");
+    }
+
+    private void OnAcceptPressed()
+    {
+        SaveLastReadTime();
     }
 }
