@@ -33,12 +33,12 @@ namespace Content.Server.Atmos.EntitySystems
 
             foreach (var entity in _gridtileLookupSystem.GetEntitiesIntersecting(tile.GridIndex, tile.GridIndices))
             {
-                if (!EntityManager.TryGetComponent(entity, out IPhysBody? physics)
+                if (!HasComp<IPhysBody>(entity)
                     || !entity.IsMovedByPressure(out var pressure)
                     || entity.IsInContainer())
                     continue;
 
-                var pressureMovements = physics.Owner.EnsureComponent<MovedByPressureComponent>();
+                var pressureMovements = EnsureComp<MovedByPressureComponent>(entity);
                 if (pressure.LastHighPressureMovementAirCycle < gridAtmosphere.UpdateCounter)
                 {
                     pressureMovements.ExperiencePressureDifference(gridAtmosphere.UpdateCounter, tile.PressureDifference, tile.PressureDirection, 0, tile.PressureSpecificTarget?.GridIndices.ToEntityCoordinates(tile.GridIndex, _mapManager) ?? EntityCoordinates.Invalid);

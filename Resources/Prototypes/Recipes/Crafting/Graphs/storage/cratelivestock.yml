@@ -1,0 +1,26 @@
+- type: constructionGraph
+  id: CrateLivestock
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: cratelivestock
+          steps:
+            - material: WoodPlank
+              amount: 5
+              doAfter: 5
+
+
+    - node: cratelivestock
+      entity: CrateLivestock
+      edges:
+        - to: start
+          steps:
+            - tool: Prying
+              doAfter: 5
+          completed:
+            - !type:SpawnPrototype
+              prototype: MaterialWoodPlank1
+              amount: 5
+            - !type:EmptyAllContainers
+            - !type:DeleteEntity
