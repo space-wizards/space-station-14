@@ -8,10 +8,12 @@ using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.GameTicking.Rules
 {
-    public sealed class RuleMaxTimeRestart : GameRuleSystem
+    public sealed class MaxTimeRestartRuleSystem : GameRuleSystem
     {
+        [Dependency] private readonly GameTicker _gameTicker = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
+
+        public override string Prototype => "MaxTimeRestart";
 
         private CancellationTokenSource _timerCancel = new();
 
@@ -20,16 +22,16 @@ namespace Content.Server.GameTicking.Rules
 
         public override void Added()
         {
-            base.Added();
-
-            _entityManager.EventBus.SubscribeEvent<GameRunLevelChangedEvent>(EventSource.Local, this, RunLevelChanged);
+            EntityManager.EventBus.SubscribeEvent<GameRunLevelChangedEvent>(EventSource.Local, this, RunLevelChanged);
         }
 
         public override void Removed()
         {
-            base.Removed();
+            EntityManager.EventBus.UnsubscribeEvents(this);
 
-            _entityManager.EventBus.UnsubscribeEvents(this);
+            RoundMaxTime = TimeSpan.FromMinutes(5);
+            RoundEndDelay = TimeSpan.FromMinutes(10);
+
             StopTimer();
         }
 
@@ -47,11 +49,11 @@ namespace Content.Server.GameTicking.Rules
 
         private void TimerFired()
         {
-            EntitySystem.Get<GameTicker>().EndRound(Loc.GetString("rule-time-has-run-out"));
+            _gameTicker.EndRound(Loc.GetString("rule-time-has-run-out"));
 
             _chatManager.DispatchServerAnnouncement(Loc.GetString("rule-restarting-in-seconds",("seconds", (int) RoundEndDelay.TotalSeconds)));
 
-            Timer.Spawn(RoundEndDelay, () => EntitySystem.Get<GameTicker>().RestartRound());
+            Timer.Spawn(RoundEndDelay, () => _gameTicker.RestartRound());
         }
 
         private void RunLevelChanged(GameRunLevelChangedEvent args)

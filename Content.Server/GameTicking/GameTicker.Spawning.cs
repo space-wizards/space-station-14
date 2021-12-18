@@ -143,7 +143,9 @@ namespace Content.Server.GameTicking
             else
                 _adminLogSystem.Add(LogType.RoundStartJoin, LogImpact.Medium, $"Player {player.Name} joined as {character.Name:characterName} on station {_stationSystem.StationInfo[station].Name:stationName} with {ToPrettyString(mob):entity} as a {job.Name:jobName}.");
 
-            Preset?.OnSpawnPlayerCompleted(player, mob, lateJoin);
+            // We raise this event directed to the mob, but also broadcast it so game rules can do something now.
+            var ev = new PlayerSpawnCompleteEvent(mob, player, jobId, lateJoin, station, character);
+            RaiseLocalEvent(mob, ev);
         }
 
         public void Respawn(IPlayerSession player)
@@ -354,5 +356,25 @@ namespace Content.Server.GameTicking
             return location;
         }
         #endregion
+    }
+
+    public class PlayerSpawnCompleteEvent : EntityEventArgs
+    {
+        public EntityUid Mob { get; }
+        public IPlayerSession Player { get; }
+        public string? JobId { get; }
+        public bool LateJoin { get; }
+        public StationId Station { get; }
+        public HumanoidCharacterProfile Profile { get; }
+
+        public PlayerSpawnCompleteEvent(EntityUid mob, IPlayerSession player, string? jobId, bool lateJoin, StationId station, HumanoidCharacterProfile profile)
+        {
+            Mob = mob;
+            Player = player;
+            JobId = jobId;
+            LateJoin = lateJoin;
+            Station = station;
+            Profile = profile;
+        }
     }
 }

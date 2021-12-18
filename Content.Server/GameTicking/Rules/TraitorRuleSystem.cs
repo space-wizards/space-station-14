@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Chat.Managers;
+using Content.Server.Objectives.Interfaces;
 using Content.Server.Players;
 using Content.Server.Roles;
 using Content.Server.Traitor;
@@ -30,6 +31,7 @@ namespace Content.Server.GameTicking.Rules
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
+        [Dependency] private readonly IObjectivesManager _objectivesManager = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
 
         public override string Prototype => "Traitor";
@@ -43,6 +45,7 @@ namespace Content.Server.GameTicking.Rules
 
             SubscribeLocalEvent<RoundStartAttemptEvent>(OnStartAttempt);
             SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnPlayersSpawned);
+            SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
         }
 
         public override void Added()
@@ -169,9 +172,92 @@ namespace Content.Server.GameTicking.Rules
             foreach (var traitor in _traitors)
             {
                 traitor.GreetTraitor(codewords);
+
+                //give traitors their objectives
+                var difficulty = 0f;
+                for (var pick = 0; pick < maxPicks && maxDifficulty > difficulty; pick++)
+                {
+                    var objective = _objectivesManager.GetRandomObjective(traitor.Mind);
+                    if (objective == null) continue;
+                    if (traitor.Mind.TryAddObjective(objective))
+                        difficulty += objective.Difficulty;
+                }
             }
 
             SoundSystem.Play(Filter.Empty().AddPlayers(_traitors.Select(t => t.Mind.Session!)), _addedSound.GetSound(), AudioParams.Default);
+        }
+
+                private void OnRoundEndText(RoundEndTextAppendEvent ev)
+        {
+            if (!Enabled)
+                return;
+
+            var result = Loc.GetString("traitor-round-end-result", ("traitorCount", _traitors.Count));
+
+            foreach (var traitor in _traitors)
+            {
+                var name = traitor.Mind.CharacterName;
+                traitor.Mind.TryGetSession(out var session);
+                var username = session?.Name;
+
+                var objectives = traitor.Mind.AllObjectives.ToArray();
+                if (objectives.Length == 0)
+                {
+                    if (username != null)
+                    {
+                        if (name == null)
+                            result += "\n" + Loc.GetString("traitor-user-was-a-traitor", ("user", username));
+                        else
+                            result += "\n" + Loc.GetString("traitor-user-was-a-traitor-named", ("user", username), ("name", name));
+                    }
+                    else if (name != null)
+                        result += "\n" + Loc.GetString("traitor-was-a-traitor-named", ("name", name));
+
+                    continue;
+                }
+
+                if (username != null)
+                {
+                    if (name == null)
+                        result += "\n" + Loc.GetString("traitor-user-was-a-traitor-with-objectives", ("user", username));
+                    else
+                        result += "\n" + Loc.GetString("traitor-user-was-a-traitor-with-objectives-named", ("user", username), ("name", name));
+                }
+                else if (name != null)
+                    result += "\n" + Loc.GetString("traitor-was-a-traitor-with-objectives-named", ("name", name));
+
+                foreach (var objectiveGroup in objectives.GroupBy(o => o.Prototype.Issuer))
+                {
+                    result += "\n" + Loc.GetString($"preset-traitor-objective-issuer-{objectiveGroup.Key}");
+
+                    foreach (var objective in objectiveGroup)
+                    {
+                        foreach (var condition in objective.Conditions)
+                        {
+                            var progress = condition.Progress;
+                            if (progress > 0.99f)
+                            {
+                                result += "\n- " + Loc.GetString(
+                                    "traitor-objective-condition-success",
+                                    ("condition", condition.Title),
+                                    ("markupColor", "green")
+                                );
+                            }
+                            else
+                            {
+                                result += "\n- " + Loc.GetString(
+                                    "traitor-objective-condition-fail",
+                                    ("condition", condition.Title),
+                                    ("progress", (int) (progress * 100)),
+                                    ("markupColor", "red")
+                                );
+                            }
+                        }
+                    }
+                }
+            }
+
+            ev.AddLine(result);
         }
     }
 }

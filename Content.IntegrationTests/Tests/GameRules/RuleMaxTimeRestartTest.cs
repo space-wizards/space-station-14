@@ -4,12 +4,14 @@ using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.IntegrationTests.Tests.GameRules
 {
     [TestFixture]
-    [TestOf(typeof(RuleMaxTimeRestart))]
+    [TestOf(typeof(MaxTimeRestartRuleSystem))]
     public class RuleMaxTimeRestartTest : ContentIntegrationTest
     {
         [Test]
@@ -27,16 +29,15 @@ namespace Content.IntegrationTests.Tests.GameRules
             await server.WaitIdleAsync();
 
             var sGameTicker = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<GameTicker>();
+            var maxTimeMaxTimeRestartRuleSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<MaxTimeRestartRuleSystem>();
             var sGameTiming = server.ResolveDependency<IGameTiming>();
-
-            RuleMaxTimeRestart maxTimeRule = null;
 
             await server.WaitAssertion(() =>
             {
                 Assert.That(sGameTicker.RunLevel, Is.EqualTo(GameRunLevel.PreRoundLobby));
 
-                maxTimeRule = sGameTicker.AddGameRule<RuleMaxTimeRestart>();
-                maxTimeRule.RoundMaxTime = TimeSpan.FromSeconds(3);
+                sGameTicker.AddGameRule(IoCManager.Resolve<IPrototypeManager>().Index<GameRulePrototype>(maxTimeMaxTimeRestartRuleSystem.Prototype));
+                maxTimeMaxTimeRestartRuleSystem.RoundMaxTime = TimeSpan.FromSeconds(3);
 
                 sGameTicker.StartRound();
             });
@@ -46,7 +47,7 @@ namespace Content.IntegrationTests.Tests.GameRules
                 Assert.That(sGameTicker.RunLevel, Is.EqualTo(GameRunLevel.InRound));
             });
 
-            var ticks = sGameTiming.TickRate * (int) Math.Ceiling(maxTimeRule.RoundMaxTime.TotalSeconds * 1.1f);
+            var ticks = sGameTiming.TickRate * (int) Math.Ceiling(maxTimeMaxTimeRestartRuleSystem.RoundMaxTime.TotalSeconds * 1.1f);
             await server.WaitRunTicks(ticks);
 
             await server.WaitAssertion(() =>
@@ -54,7 +55,7 @@ namespace Content.IntegrationTests.Tests.GameRules
                 Assert.That(sGameTicker.RunLevel, Is.EqualTo(GameRunLevel.PostRound));
             });
 
-            ticks = sGameTiming.TickRate * (int) Math.Ceiling(maxTimeRule.RoundEndDelay.TotalSeconds * 1.1f);
+            ticks = sGameTiming.TickRate * (int) Math.Ceiling(maxTimeMaxTimeRestartRuleSystem.RoundEndDelay.TotalSeconds * 1.1f);
             await server.WaitRunTicks(ticks);
 
             await server.WaitAssertion(() =>

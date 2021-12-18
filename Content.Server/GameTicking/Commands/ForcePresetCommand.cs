@@ -30,13 +30,13 @@ namespace Content.Server.GameTicking.Commands
             }
 
             var name = args[0];
-            if (!ticker.TryGetPreset(name, out var type))
+            if (!ticker.TryFindGamePreset(name, out var type))
             {
                 shell.WriteLine($"No preset exists with name {name}.");
                 return;
             }
 
-            ticker.SetGamePreset((GamePresetPrototype) type, true);
+            ticker.SetGamePreset(type, true);
             shell.WriteLine($"Forced the game to start with preset {name}.");
         }
     }

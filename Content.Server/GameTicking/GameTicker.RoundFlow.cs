@@ -146,9 +146,11 @@ namespace Content.Server.GameTicking
             var startAttempt = new RoundStartAttemptEvent(readyPlayers.ToArray(), force);
             RaiseLocalEvent(startAttempt);
 
+            var presetTitle = _preset != null ? Loc.GetString(_preset.ModeTitle) : string.Empty;
+
             void FailedPresetRestart()
             {
-                SendServerMessage(Loc.GetString("game-ticker-start-round-cannot-start-game-mode-restart", ("failedGameMode", _preset?.ModeTitle ?? string.Empty)));
+                SendServerMessage(Loc.GetString("game-ticker-start-round-cannot-start-game-mode-restart", ("failedGameMode", presetTitle)));
                 RestartRound();
                 DelayStart(TimeSpan.FromSeconds(PresetFailedCooldownIncrease));
             }
@@ -167,15 +169,15 @@ namespace Content.Server.GameTicking
 
                     _chatManager.DispatchServerAnnouncement(
                         Loc.GetString("game-ticker-start-round-cannot-start-game-mode-fallback",
-                            ("failedGameMode", _preset?.ModeTitle ?? string.Empty),
-                            ("fallbackMode", _preset?.ModeTitle ?? string.Empty)));
+                            ("failedGameMode", presetTitle),
+                            ("fallbackMode", Loc.GetString(_preset!.ModeTitle))));
 
                     if (startAttempt.Cancelled)
                     {
                         FailedPresetRestart();
                     }
 
-                    // TODO Latejoin Disallow here
+                    RefreshLateJoinAllowed();
                 }
                 else
                 {
@@ -232,7 +234,7 @@ namespace Content.Server.GameTicking
                 SpawnPlayer(player, profiles[player.UserId], station, job, false);
             }
 
-            // TODO Disallow Latejoin here
+            RefreshLateJoinAllowed();
 
             // Allow rules to add roles to players who have been spawned in. (For example, on-station traitors)
             RaiseLocalEvent(new RulePlayerJobsAssignedEvent(assignedJobs.Keys.ToArray(), profiles, force));
@@ -247,6 +249,13 @@ namespace Content.Server.GameTicking
             UpdateJobsAvailable();
         }
 
+        private void RefreshLateJoinAllowed()
+        {
+            var refresh = new RefreshLateJoinAllowedEvent();
+            RaiseLocalEvent(refresh);
+            DisallowLateJoin = refresh.DisallowLateJoin;
+        }
+
         public void EndRound(string text = "")
         {
             // If this game ticker is a dummy, do nothing!
@@ -259,10 +268,13 @@ namespace Content.Server.GameTicking
             RunLevel = GameRunLevel.PostRound;
 
             //Tell every client the round has ended.
-            var gamemodeTitle = _preset?.ModeTitle ?? string.Empty;
+            var gamemodeTitle = _preset != null ? Loc.GetString(_preset.ModeTitle) : string.Empty;
 
-            // TODO Event for roundend text rule modifying.
-            var roundEndText = text;
+            // Let things add text here.
+            var textEv = new RoundEndTextAppendEvent();
+            RaiseLocalEvent(textEv);
+
+            var roundEndText = $"{text}\n{textEv.Text}";
 
             //Get the timespan of the round.
             var roundDuration = RoundDuration();
@@ -470,6 +482,16 @@ namespace Content.Server.GameTicking
         }
     }
 
+    public class RefreshLateJoinAllowedEvent
+    {
+        public bool DisallowLateJoin { get; private set; } = false;
+
+        public void Disallow()
+        {
+            DisallowLateJoin = true;
+        }
+    }
+
     public class RoundStartAttemptEvent : CancellableEntityEventArgs
     {
         public IPlayerSession[] Players { get; }
@@ -507,6 +529,22 @@ namespace Content.Server.GameTicking
             Players = players;
             Profiles = profiles;
             Forced = forced;
+        }
+    }
+
+    public class RoundEndTextAppendEvent
+    {
+        private bool _doNewLine;
+
+        public string Text { get; private set; } = string.Empty;
+
+        public void AddLine(string text)
+        {
+            if (_doNewLine)
+                Text += "\n";
+
+            Text += text;
+            _doNewLine = true;
         }
     }
 }

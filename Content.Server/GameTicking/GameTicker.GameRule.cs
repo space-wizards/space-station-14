@@ -34,6 +34,17 @@ namespace Content.Server.GameTicking
             return _gameRules.Contains(rule);
         }
 
+        public bool HasGameRule(string rule)
+        {
+            foreach (var ruleProto in _gameRules)
+            {
+                if (ruleProto.ID.Equals(rule))
+                    return true;
+            }
+
+            return false;
+        }
+
         public void ClearGameRules()
         {
             foreach (var rule in _gameRules.ToArray())

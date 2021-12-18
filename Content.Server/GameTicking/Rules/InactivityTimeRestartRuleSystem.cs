@@ -9,11 +9,13 @@ using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.GameTicking.Rules
 {
-    public class RuleInactivityTimeRestart : GameRuleSystem
+    public class InactivityTimeRestartRuleSystem : GameRuleSystem
     {
+        [Dependency] private readonly GameTicker _gameTicker = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
+
+        public override string Prototype => "InactivityTimeRestart";
 
         private CancellationTokenSource _timerCancel = new();
 
@@ -22,17 +24,13 @@ namespace Content.Server.GameTicking.Rules
 
         public override void Added()
         {
-            base.Added();
-
-            _entityManager.EventBus.SubscribeEvent<GameRunLevelChangedEvent>(EventSource.Local, this, RunLevelChanged);
+            EntityManager.EventBus.SubscribeEvent<GameRunLevelChangedEvent>(EventSource.Local, this, RunLevelChanged);
             _playerManager.PlayerStatusChanged += PlayerStatusChanged;
         }
 
         public override void Removed()
         {
-            base.Removed();
-
-            _entityManager.EventBus.UnsubscribeEvents(this);
+            EntityManager.EventBus.UnsubscribeEvents(this);
             _playerManager.PlayerStatusChanged -= PlayerStatusChanged;
 
             StopTimer();
@@ -52,12 +50,11 @@ namespace Content.Server.GameTicking.Rules
 
         private void TimerFired()
         {
-            var gameticker = EntitySystem.Get<GameTicker>();
-            gameticker.EndRound(Loc.GetString("rule-time-has-run-out"));
+            _gameTicker.EndRound(Loc.GetString("rule-time-has-run-out"));
 
             _chatManager.DispatchServerAnnouncement(Loc.GetString("rule-restarting-in-seconds", ("seconds",(int) RoundEndDelay.TotalSeconds)));
 
-            Timer.Spawn(RoundEndDelay, () => gameticker.RestartRound());
+            Timer.Spawn(RoundEndDelay, () => _gameTicker.RestartRound());
         }
 
         private void RunLevelChanged(GameRunLevelChangedEvent args)
@@ -76,7 +73,7 @@ namespace Content.Server.GameTicking.Rules
 
         private void PlayerStatusChanged(object? sender, SessionStatusEventArgs e)
         {
-            if (EntitySystem.Get<GameTicker>().RunLevel != GameRunLevel.InRound)
+            if (_gameTicker.RunLevel != GameRunLevel.InRound)
             {
                 return;
             }

@@ -37,13 +37,13 @@ namespace Content.Server.GameTicking
 
         private string GetInfoText()
         {
-            if (Preset == null)
+            if (_preset == null)
             {
                 return string.Empty;
             }
 
-            var gmTitle = Preset.ModeTitle;
-            var desc = Preset.Description;
+            var gmTitle = Loc.GetString(_preset.ModeTitle);
+            var desc = Loc.GetString(_preset.Description);
             return Loc.GetString("game-ticker-get-info-text",("gmTitle", gmTitle),("desc", desc));
         }
 
