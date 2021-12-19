@@ -1,4 +1,5 @@
 using Content.Server.Chat.Managers;
+using Content.Server.GameTicking;
 using Content.Shared.CCVar;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
@@ -48,6 +49,15 @@ namespace Content.Server.Salvage
             SubscribeLocalEvent<SalvageMagnetComponent, InteractHandEvent>(OnInteractHand);
             SubscribeLocalEvent<SalvageMagnetComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<SalvageMagnetComponent, ComponentShutdown>(OnMagnetRemoval);
+            SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRoundEnd);
+        }
+
+        private void OnRoundEnd(GameRunLevelChangedEvent ev)
+        {
+            if(ev.New == GameRunLevel.PostRound)
+            {
+                _salvageGridStates.Clear();
+            }
         }
 
         private void OnMagnetRemoval(EntityUid uid, SalvageMagnetComponent component, ComponentShutdown args)
