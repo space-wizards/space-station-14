@@ -29,7 +29,8 @@ namespace Content.Server.Damage.Systems
 
             if (component.WeldingDamage is {} weldingDamage
                 && EntityManager.TryGetComponent<WelderComponent?>(args.Used, out var welder)
-                && welder.Lit)
+                && welder.Lit
+                &! welder.TankSafe) //for lighters
             {
                 var dmg = _damageableSystem.TryChangeDamage(args.Target, weldingDamage);
 
