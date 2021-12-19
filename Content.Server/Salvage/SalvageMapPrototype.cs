@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Objectives.Interfaces;
 using Robust.Shared.Prototypes;
@@ -26,7 +26,7 @@ namespace Content.Server.Salvage
         /// </summary>
         [ViewVariables]
         [DataField("size", required: true)]
-        public float Size { get; } = 1.0f;
+        public float Size { get; } = 1.0f; // TODO: Find a way to figure out the size automatically
 
         /// <summary>
         /// Name for admin use

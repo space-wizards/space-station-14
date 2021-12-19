@@ -19,7 +19,7 @@ namespace Content.Server.Salvage
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("offset")]
-        public Vector2 Offset = Vector2.Zero;
+        public Vector2 Offset = Vector2.Zero; // TODO: Maybe specify a direction, and find the nearest edge of the magnets grid the salvage can fit at
 
 
         /// <summary>
