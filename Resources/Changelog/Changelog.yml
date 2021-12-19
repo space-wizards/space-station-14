@@ -1,11 +1,6 @@
 Entries:
 - author: CrudeWax
   changes:
-  - {message: Theatre is again accessible by clowns and mimes, type: Fix}
-  id: 249
-  time: '2021-07-01T11:07:19.0000000+00:00'
-- author: CrudeWax
-  changes:
   - {message: added an item-spawning spell template, type: Add}
   - {message: added a pie-spawning spell. Honk!, type: Add}
   id: 250
@@ -2872,3 +2867,8 @@ Entries:
       the body is still being occupied by a ghost., type: Add}
   id: 750
   time: '2021-12-19T22:45:47.0000000+00:00'
+- author: pointer-to-null
+  changes:
+  - {message: Fixed accumulation of stuttering time., type: Fix}
+  id: 751
+  time: '2021-12-19T23:27:07.0000000+00:00'
