@@ -1,4 +1,4 @@
-﻿using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -48,5 +48,19 @@ namespace Content.Shared.Chemistry.Components
 
         [ViewVariables]
         public FixedPoint2 CurrentVolume => TotalVolume;
+
+        /// <summary>
+        ///     The average specific heat of all reagents in the solution.
+        /// </summary>
+        [ViewVariables]
+        public double SpecificHeat => HeatCapacity / (double) TotalVolume;
+
+        /// <summary>
+        ///     The total thermal energy of the reagents in the solution.
+        /// </summary>
+        public double ThermalEnergy {
+            get { return Temperature * HeatCapacity; }
+            set { Temperature = value / HeatCapacity; }
+        }
     }
 }

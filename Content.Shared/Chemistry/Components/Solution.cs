@@ -35,6 +35,19 @@ namespace Content.Shared.Chemistry.Components
         [ViewVariables]
         public FixedPoint2 TotalVolume { get; set; }
 
+        /// <summary>
+        ///     The temperature of the reagents in the solution.
+        /// </summary>
+        [ViewVariables]
+        [DataField("temperature")]
+        public double Temperature { get; set; }
+
+        /// <summary>
+        ///     The total heat capacity of all reagents in the solution.
+        /// </summary>
+        [ViewVariables]
+        public double HeatCapacity { get; private set; } = 0.0d;
+
         public Color Color => GetColor();
 
         /// <summary>
@@ -94,10 +107,16 @@ namespace Content.Shared.Chemistry.Components
         /// </summary>
         /// <param name="reagentId">The prototype ID of the reagent to add.</param>
         /// <param name="quantity">The quantity in milli-units.</param>
-        public void AddReagent(string reagentId, FixedPoint2 quantity)
+        public void AddReagent(string reagentId, FixedPoint2 quantity, double? temperature = null)
         {
             if (quantity <= 0)
                 return;
+            if (!IoCManager.Resolve<IPrototypeManager>().TryIndex(reagentId, out ReagentPrototype? proto))
+                return;
+
+            if (temperature == null)
+                temperature = Temperature;
+            var addedHeatCapacity = (double) quantity * proto.SpecificHeat;
 
             for (var i = 0; i < Contents.Count; i++)
             {
@@ -106,12 +125,18 @@ namespace Content.Shared.Chemistry.Components
                     continue;
 
                 Contents[i] = new ReagentQuantity(reagentId, reagent.Quantity + quantity);
+
                 TotalVolume += quantity;
+                HeatCapacity += addedHeatCapacity;
+                ThermalEnergy += (double) temperature * addedHeatCapacity;
                 return;
             }
 
             Contents.Add(new ReagentQuantity(reagentId, quantity));
+
             TotalVolume += quantity;
+            HeatCapacity += (double) quantity * proto.SpecificHeat;
+            ThermalEnergy += (double) temperature * addedHeatCapacity;
         }
 
         /// <summary>
@@ -161,6 +186,8 @@ namespace Content.Shared.Chemistry.Components
                 var reagent = Contents[i];
                 if(reagent.ReagentId != reagentId)
                     continue;
+                if (!IoCManager.Resolve<IPrototypeManager>().TryIndex(reagentId, out ReagentPrototype? proto))
+                    continue; // TODO: Invalid prototype fix.
 
                 var curQuantity = reagent.Quantity;
 
@@ -169,11 +196,13 @@ namespace Content.Shared.Chemistry.Components
                 {
                     Contents.RemoveSwap(i);
                     TotalVolume -= curQuantity;
+                    HeatCapacity -= (double)curQuantity * proto.SpecificHeat;
                 }
                 else
                 {
                     Contents[i] = new ReagentQuantity(reagentId, newQuantity);
                     TotalVolume -= quantity;
+                    HeatCapacity -= (double)quantity * proto.SpecificHeat;
                 }
 
                 return;
@@ -210,12 +239,14 @@ namespace Content.Shared.Chemistry.Components
             }
 
             TotalVolume = TotalVolume * ratio;
+            HeatCapacity = HeatCapacity * ratio;
         }
 
         public void RemoveAllSolution()
         {
             Contents.Clear();
             TotalVolume = FixedPoint2.New(0);
+            HeatCapacity = 0.0d;
         }
 
         public Solution SplitSolution(FixedPoint2 quantity)
@@ -234,7 +265,9 @@ namespace Content.Shared.Chemistry.Components
 
             newSolution = new Solution();
             var newTotalVolume = FixedPoint2.New(0);
+            var newHeatCapacity = 0.0d;
             var remainingVolume = TotalVolume;
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
 
             for (var i = Contents.Count - 1; i >= 0; i--)
             {
@@ -244,6 +277,9 @@ namespace Content.Shared.Chemistry.Components
 
                 var reagent = Contents[i];
                 var ratio = (remainingVolume - quantity).Double() / remainingVolume.Double();
+                if(!prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype? proto))
+                    proto = new ReagentPrototype();
+
                 remainingVolume -= reagent.Quantity;
 
                 var newQuantity = reagent.Quantity * ratio;
@@ -258,11 +294,15 @@ namespace Content.Shared.Chemistry.Components
                     newSolution.Contents.Add(new ReagentQuantity(reagent.ReagentId, splitQuantity));
 
                 newTotalVolume += splitQuantity;
+                newHeatCapacity += (double)splitQuantity * proto.SpecificHeat;
                 quantity -= splitQuantity;
             }
 
             newSolution.TotalVolume = newTotalVolume;
+            newSolution.HeatCapacity = newHeatCapacity;
+            newSolution.Temperature = Temperature;
             TotalVolume -= newTotalVolume;
+            HeatCapacity -= newHeatCapacity;
 
             return newSolution;
         }
@@ -292,6 +332,8 @@ namespace Content.Shared.Chemistry.Components
             }
 
             TotalVolume += otherSolution.TotalVolume;
+            HeatCapacity += otherSolution.HeatCapacity;
+            ThermalEnergy += otherSolution.ThermalEnergy;
         }
 
         private Color GetColor()
@@ -329,16 +371,24 @@ namespace Content.Shared.Chemistry.Components
         public Solution Clone()
         {
             var volume = FixedPoint2.New(0);
+            var heatCapacity = 0.0d;
             var newSolution = new Solution();
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
 
             for (var i = 0; i < Contents.Count; i++)
             {
                 var reagent = Contents[i];
+                if (!prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype? proto))
+                    proto = new ReagentPrototype();
+
                 newSolution.Contents.Add(reagent);
                 volume += reagent.Quantity;
+                heatCapacity += (double)reagent.Quantity * proto.SpecificHeat;
             }
 
             newSolution.TotalVolume = volume;
+            newSolution.HeatCapacity = heatCapacity;
+            newSolution.Temperature = Temperature;
             return newSolution;
         }
 

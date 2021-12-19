@@ -163,10 +163,10 @@ namespace Content.Server.Chemistry.EntitySystems
         /// <param name="acceptedQuantity">The amount of reagent successfully added.</param>
         /// <returns>If all the reagent could be added.</returns>
         public bool TryAddReagent(EntityUid targetUid, Solution targetSolution, string reagentId, FixedPoint2 quantity,
-            out FixedPoint2 acceptedQuantity)
+            out FixedPoint2 acceptedQuantity, double? temperature = null)
         {
             acceptedQuantity = targetSolution.AvailableVolume > quantity ? quantity : targetSolution.AvailableVolume;
-            targetSolution.AddReagent(reagentId, acceptedQuantity);
+            targetSolution.AddReagent(reagentId, acceptedQuantity, temperature);
 
             if (acceptedQuantity > 0)
                 UpdateChemicals(targetUid, targetSolution, true);
@@ -302,5 +302,56 @@ namespace Content.Server.Chemistry.EntitySystems
 
             return reagentQuantity;
         }
+
+
+        // Thermal energy and temperature management.
+        #region Thermal Energy and Temperature
+
+        /// <summary>
+        ///     Sets the temperature of a solution to a new value and then checks for reaction processing.
+        /// </summary>
+        /// <param name="owner">The entity in which the solution is located.</param>
+        /// <param name="solution">The solution to set the temperature of.</param>
+        /// <param name="temperature">The new value to set the temperature to.</param>
+        public void SetSolutionTemperature(EntityUid owner, Solution solution, double temperature)
+        {
+            if (temperature == solution.Temperature)
+                return;
+
+            solution.Temperature = temperature;
+            UpdateChemicals(owner, solution, true);
+        }
+
+        /// <summary>
+        ///     Sets the thermal energy of a solution to a new value and then checks for reaction processing.
+        /// </summary>
+        /// <param name="owner">The entity in which the solution is located.</param>
+        /// <param name="solution">The solution to set the thermal energy of.</param>
+        /// <param name="thermalEnergy">The new value to set the thermal energy to.</param>
+        public void SetThermalEnergy(EntityUid owner, Solution solution, double thermalEnergy)
+        {
+            if (thermalEnergy == solution.ThermalEnergy)
+                return;
+
+            solution.ThermalEnergy = thermalEnergy;
+            UpdateChemicals(owner, solution, true);
+        }
+
+        /// <summary>
+        ///     Adds some thermal energy to a solution and then checks for reaction processing.
+        /// </summary>
+        /// <param name="owner">The entity in which the solution is located.</param>
+        /// <param name="solution">The solution to set the thermal energy of.</param>
+        /// <param name="thermalEnergy">The new value to set the thermal energy to.</param>
+        public void AddThermalEnergy(EntityUid owner, Solution solution, double thermalEnergy = 0.0d)
+        {
+            if (thermalEnergy == 0.0d)
+                return;
+
+            solution.ThermalEnergy += thermalEnergy;
+            UpdateChemicals(owner, solution, true);
+        }
+
+        #endregion Thermal Energy and Temperature
     }
 }
