@@ -52,6 +52,12 @@ namespace Content.Shared.Chemistry.Components
         public FixedPoint2 CurrentVolume => TotalVolume;
 
         /// <summary>
+        ///     The total heat capacity of all reagents in the solution.
+        /// </summary>
+        [ViewVariables]
+        public double HeatCapacity => GetHeatCapacity();
+
+        /// <summary>
         ///     The average specific heat of all reagents in the solution.
         /// </summary>
         [ViewVariables]
@@ -63,14 +69,14 @@ namespace Content.Shared.Chemistry.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public double ThermalEnergy {
             get { return Temperature * HeatCapacity; }
-            set { Temperature = HeatCapacity != 0.0d ? value / HeatCapacity : 0.0d; }
+            set { Temperature = ((HeatCapacity == 0.0d) ? 0.0d : (value / HeatCapacity)); }
         }
 
         /// <summary>
         ///     Returns the total heat capacity of the reagents in this solution.
         /// </summary>
         /// <returns>The total heat capacity of the reagents in this solution.</returns>
-        public double GetHeatCapacity()
+        private double GetHeatCapacity()
         {
             var heatCapacity = 0.0d;
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();

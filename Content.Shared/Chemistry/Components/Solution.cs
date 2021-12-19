@@ -42,12 +42,6 @@ namespace Content.Shared.Chemistry.Components
         [DataField("temperature")]
         public double Temperature { get; set; } = 293.15;
 
-        /// <summary>
-        ///     The total heat capacity of all reagents in the solution.
-        /// </summary>
-        [ViewVariables]
-        public double HeatCapacity => GetHeatCapacity();
-
         public Color Color => GetColor();
 
         /// <summary>
@@ -116,8 +110,9 @@ namespace Content.Shared.Chemistry.Components
 
             if (temperature == null)
                 temperature = Temperature;
-            var addedHeatCapacity = (double) quantity * proto.SpecificHeat;
 
+            var oldThermalEnergy = Temperature * GetHeatCapacity();
+            var addedThermalEnergy = (double) quantity * proto.SpecificHeat * (double) temperature;
             for (var i = 0; i < Contents.Count; i++)
             {
                 var reagent = Contents[i];
@@ -127,14 +122,14 @@ namespace Content.Shared.Chemistry.Components
                 Contents[i] = new ReagentQuantity(reagentId, reagent.Quantity + quantity);
 
                 TotalVolume += quantity;
-                ThermalEnergy += (double) temperature * addedHeatCapacity;
+                ThermalEnergy = oldThermalEnergy + addedThermalEnergy;
                 return;
             }
 
             Contents.Add(new ReagentQuantity(reagentId, quantity));
 
             TotalVolume += quantity;
-            ThermalEnergy += (double) temperature * addedHeatCapacity;
+            ThermalEnergy = oldThermalEnergy + addedThermalEnergy;
         }
 
         /// <summary>
@@ -300,6 +295,8 @@ namespace Content.Shared.Chemistry.Components
 
         public void AddSolution(Solution otherSolution)
         {
+            var oldThermalEnergy = Temperature * GetHeatCapacity();
+            var addedThermalEnergy = otherSolution.Temperature * otherSolution.GetHeatCapacity();
             for (var i = 0; i < otherSolution.Contents.Count; i++)
             {
                 var otherReagent = otherSolution.Contents[i];
@@ -323,7 +320,7 @@ namespace Content.Shared.Chemistry.Components
             }
 
             TotalVolume += otherSolution.TotalVolume;
-            ThermalEnergy += otherSolution.ThermalEnergy;
+            ThermalEnergy = oldThermalEnergy + addedThermalEnergy;
         }
 
         private Color GetColor()
