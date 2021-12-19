@@ -38,7 +38,7 @@ public class LungSystem : EntitySystem
         LungComponent? lung=null,
         SharedMechanismComponent? mech=null)
     {
-        if (!Resolve(uid, ref lung))
+        if (!Resolve(uid, ref lung, ref mech))
             return;
 
         if (_gameTiming.CurTime >= lung.LastGaspPopupTime + lung.GaspPopupCooldown)
@@ -46,6 +46,9 @@ public class LungSystem : EntitySystem
             lung.LastGaspPopupTime = _gameTiming.CurTime;
             _popupSystem.PopupEntity(Loc.GetString("lung-behavior-gasp"), uid, Filter.Pvs(uid));
         }
+
+        if (mech.Body != null && TryComp((mech.Body).Owner, out MobStateComponent? mobState) && !mobState.IsAlive())
+            return;
 
         Inhale(uid, lung.CycleDelay);
     }
