@@ -1,7 +1,9 @@
+using System;
 using Content.Client.Administration;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Network;
 
 namespace Content.Client.Commands
 {
@@ -25,7 +27,14 @@ namespace Content.Client.Commands
             }
             else
             {
-                EntitySystem.Get<BwoinkSystem>().EnsureWindow(args[0]);
+                if (Guid.TryParse(args[0], out var guid))
+                {
+                    EntitySystem.Get<BwoinkSystem>().EnsureWindow(new NetUserId(guid));
+                }
+                else
+                {
+                    shell.WriteError("Bad guid!");
+                }
             }
         }
     }

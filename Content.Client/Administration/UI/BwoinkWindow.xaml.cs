@@ -6,6 +6,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.IoC;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Network;
 using Robust.Shared.Utility.Markup;
 
 namespace Content.Client.Administration.UI
@@ -19,15 +20,15 @@ namespace Content.Client.Administration.UI
         [Dependency] private readonly IEntitySystemManager _systemManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
 
-        private readonly string _channelName;
+        private readonly NetUserId _channelId;
 
-        public BwoinkWindow(string channelName)
+        public BwoinkWindow(NetUserId userId, string channelName)
         {
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
 
-            _channelName = channelName;
-            Title = (_playerManager.LocalPlayer?.Name == _channelName) ? "Admin Message" : channelName;
+            _channelId = userId;
+            Title = (_playerManager.LocalPlayer?.UserId == _channelId) ? "Admin Message" : channelName;
 
             SenderLineEdit.OnTextEntered += Input_OnTextEntered;
         }
@@ -37,7 +38,7 @@ namespace Content.Client.Administration.UI
             if (!string.IsNullOrWhiteSpace(args.Text))
             {
                 var bwoink = _systemManager.GetEntitySystem<BwoinkSystem>();
-                bwoink.Send(_channelName, args.Text);
+                bwoink.Send(_channelId, args.Text);
             }
 
             SenderLineEdit.Clear();

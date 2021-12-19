@@ -9,6 +9,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.IoC;
+using Robust.Shared.Network;
 
 namespace Content.Client.Administration
 {
@@ -18,14 +19,14 @@ namespace Content.Client.Administration
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IClyde _clyde = default!;
 
-        private readonly Dictionary<string, BwoinkWindow> _activeWindowMap = new();
+        private readonly Dictionary<NetUserId, BwoinkWindow> _activeWindowMap = new();
 
         protected override void OnBwoinkTextMessage(BwoinkTextMessage message, EntitySessionEventArgs eventArgs)
         {
             base.OnBwoinkTextMessage(message, eventArgs);
             LogBwoink(message);
             // Actual line
-            var window = EnsureWindow(message.ChannelName);
+            var window = EnsureWindow(message.ChannelId);
             window.ReceiveLine(message.Text);
             // Play a sound if we didn't send it
             var localPlayer = _playerManager.LocalPlayer;
@@ -36,11 +37,14 @@ namespace Content.Client.Administration
             }
         }
 
-        public BwoinkWindow EnsureWindow(string channelName)
+        public BwoinkWindow EnsureWindow(NetUserId channelId)
         {
-            if (!_activeWindowMap.TryGetValue(channelName, out var existingWindow))
+            if (!_activeWindowMap.TryGetValue(channelId, out var existingWindow))
             {
-                _activeWindowMap[channelName] = existingWindow = new BwoinkWindow(channelName);
+                _activeWindowMap[channelId] = existingWindow = new BwoinkWindow(channelId,
+                    _playerManager.SessionsDict.TryGetValue(channelId, out var otherSession)
+                        ? otherSession.Name
+                        : channelId.ToString());
             }
 
             existingWindow.Open();
@@ -51,16 +55,14 @@ namespace Content.Client.Administration
         {
             var localPlayer = _playerManager.LocalPlayer;
             if (localPlayer != null)
-                EnsureWindow(localPlayer.Name);
+                EnsureWindow(localPlayer.UserId);
         }
 
-        public void Send(string channelName, string text)
+        public void Send(NetUserId channelId, string text)
         {
             // Reuse the channel ID as the 'true sender'.
             // Server will ignore this and if someone makes it not ignore this (which is bad, allows impersonation!!!), that will help.
-            var uid = _playerManager.LocalPlayer?.UserId;
-            if(uid.HasValue)
-                RaiseNetworkEvent(new BwoinkTextMessage(channelName, uid.Value, text));
+            RaiseNetworkEvent(new BwoinkTextMessage(channelId, channelId, text));
         }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
@@ -11,6 +12,7 @@ using Newtonsoft.Json;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Server.Player;
+using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -24,21 +26,22 @@ namespace Content.Server.Administration
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
         [Dependency] private readonly IConfigurationManager _config = default!;
+        [Dependency] private readonly IPlayerLocator _playerLocator = default!;
 
         private readonly HttpClient _httpClient = new();
         private string _webhookUrl = string.Empty;
-        private string _serverId = String.Empty;
+        private string _serverName = string.Empty;
 
         public override void Initialize()
         {
             base.Initialize();
             _config.OnValueChanged(CCVars.DiscordAHelpWebhook, OnWebhookChanged, true);
-            _config.OnValueChanged(CCVars.ServerId, OnServerIdChanged, true);
+            _config.OnValueChanged(CVars.GameHostName, OnServerNameChanged, true);
         }
 
-        private void OnServerIdChanged(string obj)
+        private void OnServerNameChanged(string obj)
         {
-            _serverId = obj;
+            _serverName = obj;
         }
 
         public override void Shutdown()
@@ -60,7 +63,7 @@ namespace Content.Server.Administration
             // TODO: Sanitize text?
             // Confirm that this person is actually allowed to send a message here.
             var senderAdmin = _adminManager.GetAdminData(senderSession);
-            var authorized = senderSession.Name == message.ChannelName || senderAdmin != null;
+            var authorized = senderSession.UserId == message.ChannelId || senderAdmin != null;
             if (!authorized)
             {
                 // Unauthorized bwoink (log?)
@@ -79,7 +82,7 @@ namespace Content.Server.Administration
                 _ => $"{senderSession.Name}: {escapedText}",
             };
 
-            var msg = new BwoinkTextMessage(message.ChannelName, senderSession.UserId, bwoinkText);
+            var msg = new BwoinkTextMessage(message.ChannelId, senderSession.UserId, bwoinkText);
 
             LogBwoink(msg);
 
@@ -87,7 +90,7 @@ namespace Content.Server.Administration
             var targets = _adminManager.ActiveAdmins.Select(p => p.ConnectedClient).ToList();
 
             // And involved player
-            if (_playerManager.TryGetSessionByUsername(message.ChannelName, out var session))
+            if (_playerManager.TryGetSessionById(message.ChannelId, out var session))
                 if (!targets.Contains(session.ConnectedClient))
                     targets.Add(session.ConnectedClient);
 
@@ -97,22 +100,34 @@ namespace Content.Server.Administration
             var sendsWebhook = _webhookUrl != string.Empty;
             if (sendsWebhook)
             {
-                var payload = new WebhookPayload()
-                {
-                    Username = _serverId,
-                    Content = $"`[{msg.ChannelName}]` {senderSession.Name}: \"{escapedText}\""
-                };
-                var request = _httpClient.PostAsync(_webhookUrl,
-                    new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json"));
-
                 var sawmill = IoCManager.Resolve<ILogManager>().GetSawmill("AHELP");
-                request.ContinueWith(task =>
+
+                void LookupFinished(Task<LocatedPlayerData?> finishedTask)
                 {
-                    if (!task.Result.IsSuccessStatusCode)
+                    if (finishedTask.Result == null)
                     {
-                        sawmill.Log(LogLevel.Error, $"Discord returned bad status code: {task.Result.StatusCode}");
+                        sawmill.Log(LogLevel.Error, $"Unable to find player for netuserid {msg.ChannelId} when sending discord webhook.");
+                        return;
                     }
-                });
+
+                    var payload = new WebhookPayload()
+                    {
+                        Username = _serverName,
+                        Content = $"`[{finishedTask.Result.Username}]` {senderSession.Name}: \"{escapedText}\""
+                    };
+                    var request = _httpClient.PostAsync(_webhookUrl,
+                        new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json"));
+
+                    request.ContinueWith(task =>
+                    {
+                        if (!task.Result.IsSuccessStatusCode)
+                        {
+                            sawmill.Log(LogLevel.Error, $"Discord returned bad status code: {task.Result.StatusCode}");
+                        }
+                    });
+                }
+
+                _playerLocator.LookupIdAsync(msg.ChannelId).ContinueWith(LookupFinished);
             }
 
             if (targets.Count == 1)
@@ -120,7 +135,7 @@ namespace Content.Server.Administration
                 var systemText = sendsWebhook ?
                     Loc.GetString("bwoink-system-starmute-message-no-other-users-webhook") :
                     Loc.GetString("bwoink-system-starmute-message-no-other-users");
-                var starMuteMsg = new BwoinkTextMessage(message.ChannelName, SystemUserId, systemText);
+                var starMuteMsg = new BwoinkTextMessage(message.ChannelId, SystemUserId, systemText);
                 RaiseNetworkEvent(starMuteMsg, senderSession.ConnectedClient);
             }
         }
