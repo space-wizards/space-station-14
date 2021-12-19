@@ -184,7 +184,7 @@ namespace Content.Server.Salvage
                 if (grid != GridId.Invalid)
                 {
                     // Has a valid grid - synchronize angle so that salvage doesn't have to deal with cross-grid manipulation issues
-                    angle = _mapManager.GetGrid(grid).WorldRotation;
+                    angle = tsc.WorldRotation;
                 }
                 return true;
             }
