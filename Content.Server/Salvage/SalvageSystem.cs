@@ -15,6 +15,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -303,6 +304,8 @@ namespace Content.Server.Salvage
 
         public override void Update(float frameTime)
         {
+            var secondsPassed = TimeSpan.FromSeconds(frameTime);
+            // Keep track of time, and state per grid
             foreach (var gridIdAndState in _salvageGridStates)
             {
                 var state = gridIdAndState.Value;
@@ -311,25 +314,22 @@ namespace Content.Server.Salvage
                 // Not handling the case where the salvage we spawned got paused
                 // They both need to be paused, or it doesn't make sense
                 if (_pauseManager.IsGridPaused(gridId)) continue;
-                state.CurrentTime += TimeSpan.FromSeconds(frameTime);
-                var currentMagnet = 0;
-                while (currentMagnet < state.ActiveMagnets.Count)
+                state.CurrentTime += secondsPassed;
+
+                var deleteQueue = new RemQueue<SalvageMagnetComponent>();
+                foreach(var magnet in state.ActiveMagnets)
                 {
-                    var magnet = state.ActiveMagnets[currentMagnet];
-                    if (magnet.MagnetState.Until > state.CurrentTime)
-                    {
-                        currentMagnet++;
-                        continue;
-                    }
+                    if (magnet.MagnetState.Until > state.CurrentTime) continue;
                     Transition(magnet, state.CurrentTime);
                     if (magnet.MagnetState.StateType == MagnetStateType.Inactive)
                     {
-                        state.ActiveMagnets.RemoveAt(currentMagnet);
+                        deleteQueue.Add(magnet);
                     }
-                    else
-                    {
-                        currentMagnet++;
-                    }
+                }
+
+                foreach(var magnet in deleteQueue)
+                {
+                    state.ActiveMagnets.Remove(magnet);
                 }
             }
         }
