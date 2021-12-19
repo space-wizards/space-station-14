@@ -137,22 +137,23 @@ namespace Content.Server.Mind.Components
                 _entMan.TryGetComponent<MobStateComponent?>(Owner, out var state) &&
                 state.IsDead();
 
-            if (!HasMind)
+            if (dead)
             {
-                var aliveText =
-                    $"[color=purple]{Loc.GetString("comp-mind-examined-catatonic", ("ent", Owner))}[/color]";
-                var deadText = $"[color=red]{Loc.GetString("comp-mind-examined-dead", ("ent", Owner))}[/color]";
-
-                message.AddMarkup(dead ? deadText : aliveText);
+                if (Mind?.Session == null) {
+                    // Player has no session attached and dead
+                    message.AddMarkup($"[color=yellow]{Loc.GetString("mind-component-no-mind-and-dead-text", ("ent", Owner))}[/color]");
+                } else {
+                    // Player is dead with session
+                    message.AddMarkup($"[color=red]{Loc.GetString("comp-mind-examined-dead", ("ent", Owner))}[/color]");
+                }
+            }
+            else if (!HasMind)
+            {
+                message.AddMarkup($"[color=purple]{Loc.GetString("comp-mind-examined-catatonic", ("ent", Owner))}[/color]");
             }
             else if (Mind?.Session == null)
             {
-                if (dead) return;
-
-                var text =
-                    $"[color=yellow]{Loc.GetString("comp-mind-examined-ssd", ("ent", Owner))}[/color]";
-
-                message.AddMarkup(text);
+                message.AddMarkup($"[color=yellow]{Loc.GetString("comp-mind-examined-ssd", ("ent", Owner))}[/color]");
             }
         }
     }
