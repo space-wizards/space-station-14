@@ -1,11 +1,6 @@
 Entries:
 - author: CrudeWax
   changes:
-  - {message: Thirteen Loko added to dispenser and now hazardous to your health, type: Add}
-  id: 248
-  time: '2021-06-30T14:35:19.0000000+00:00'
-- author: CrudeWax
-  changes:
   - {message: Theatre is again accessible by clowns and mimes, type: Fix}
   id: 249
   time: '2021-07-01T11:07:19.0000000+00:00'
@@ -2870,3 +2865,10 @@ Entries:
       be present., type: Fix}
   id: 749
   time: '2021-12-19T06:52:14.0000000+00:00'
+- author: Fishfish458
+  changes:
+  - {message: Mobs in crit state now gasp, type: Add}
+  - {message: Examined humans will now tell if they are dead or not regardless if
+      the body is still being occupied by a ghost., type: Add}
+  id: 750
+  time: '2021-12-19T22:45:47.0000000+00:00'
