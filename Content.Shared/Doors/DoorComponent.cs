@@ -219,11 +219,16 @@ public class DoorComponentState : ComponentState
     public readonly TimeSpan? NextStateChange;
     public readonly bool Partial;
 
-    public DoorComponentState(DoorState doorState, List<EntityUid> currentlyCrushing, TimeSpan? nextStateChange, bool partial)
+    // Yeah, modified clients could cheat and highlight all unsafe doors or something. But its also needed to avoid
+    // mis-predicts that lead to really glitchy door animations. 
+    public readonly bool Safety;
+
+    public DoorComponentState(DoorComponent door)
     {
-        DoorState = doorState;
-        CurrentlyCrushing = currentlyCrushing;
-        NextStateChange = nextStateChange;
-        Partial = partial;
+        DoorState = door.State;
+        CurrentlyCrushing = door.CurrentlyCrushing;
+        NextStateChange = door.NextStateChange;
+        Partial = door.Partial;
+        Safety = door.Safety;
     }
 }

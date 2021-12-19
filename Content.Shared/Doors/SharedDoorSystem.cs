@@ -78,7 +78,7 @@ public abstract class SharedDoorSystem : EntitySystem
     #region StateManagement
     private void OnGetState(EntityUid uid, DoorComponent door, ref ComponentGetState args)
     {
-        args.State = new DoorComponentState(door.State, door.CurrentlyCrushing, door.NextStateChange, door.Partial);
+        args.State = new DoorComponentState(door);
     }
 
     private void OnHandleState(EntityUid uid, DoorComponent door, ref ComponentHandleState args)
@@ -90,6 +90,7 @@ public abstract class SharedDoorSystem : EntitySystem
         door.State = state.DoorState;
         door.NextStateChange = state.NextStateChange;
         door.Partial = state.Partial;
+        door.Safety = state.Safety;
 
         if (state.NextStateChange == null)
             ActiveDoors.Remove(door);
@@ -140,6 +141,7 @@ public abstract class SharedDoorSystem : EntitySystem
             return;
 
         door.Safety = safety;
+        door.Dirty();
     }
 
     protected virtual void UpdateAppearance(EntityUid uid, DoorComponent? door = null)
