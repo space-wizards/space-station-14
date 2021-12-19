@@ -47,7 +47,10 @@ public class LungSystem : EntitySystem
             _popupSystem.PopupEntity(Loc.GetString("lung-behavior-gasp"), uid, Filter.Pvs(uid));
         }
 
-        Inhale(uid, lung.CycleDelay);
+        if (!EntityManager.GetComponent<MobStateComponent>(uid).IsCritical())
+        {
+            Inhale(uid, lung.CycleDelay);
+        }
     }
 
     public void UpdateLung(EntityUid uid,

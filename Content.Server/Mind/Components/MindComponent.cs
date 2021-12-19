@@ -137,18 +137,22 @@ namespace Content.Server.Mind.Components
                 _entMan.TryGetComponent<MobStateComponent?>(Owner, out var state) &&
                 state.IsDead();
 
-            if (!HasMind)
+            if (dead)
+            {
+                var noSessionText = $"[color=yellow]{Loc.GetString("mind-component-no-mind-and-dead-text", ("ent", Owner))}[/color]";
+                var hasSessionText = $"[color=red]{Loc.GetString("comp-mind-examined-dead", ("ent", Owner))}[/color]";
+
+                message.AddMarkup(Mind?.Session == null ? noSessionText : hasSessionText);
+            }
+            else if (!HasMind)
             {
                 var aliveText =
                     $"[color=purple]{Loc.GetString("comp-mind-examined-catatonic", ("ent", Owner))}[/color]";
-                var deadText = $"[color=red]{Loc.GetString("comp-mind-examined-dead", ("ent", Owner))}[/color]";
 
-                message.AddMarkup(dead ? deadText : aliveText);
+                message.AddMarkup(aliveText);
             }
             else if (Mind?.Session == null)
             {
-                if (dead) return;
-
                 var text =
                     $"[color=yellow]{Loc.GetString("comp-mind-examined-ssd", ("ent", Owner))}[/color]";
 
