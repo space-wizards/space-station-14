@@ -10,18 +10,16 @@ using Content.Server.Tools.Components;
 using Content.Shared.Doors;
 using Content.Shared.Interaction;
 using Content.Shared.Tag;
+using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Player;
 using System.Linq;
-using static Content.Shared.Doors.DoorComponent;
 
 namespace Content.Server.Doors.Systems;
 
-/// <summary>
-/// Used on the server side to manage global access level overrides.
-/// </summary>
 public sealed class DoorSystem : SharedDoorSystem
 {
     [Dependency] private readonly ConstructionSystem _constructionSystem = default!;
@@ -35,6 +33,47 @@ public sealed class DoorSystem : SharedDoorSystem
 
         SubscribeLocalEvent<DoorComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<DoorComponent, InteractUsingEvent>(OnInteractUsing);
+    }
+
+    // TODO AUDIO PREDICT Figure out how to handle sound and prediction. This is somewhat janky but works well enough?
+    //
+    // Currently a client will predict when a door is going to close automatically. So any client in PVS range can just
+    // play their audio locally. Playing it server-side causes an odd delay, while in shared it causes double-audio.
+    //
+    // But if we just do that, then if a door is closed prematurely as the result of an interaction (i.e., using "E" on
+    // an open door), then the audio would only be played for the client performing the interaction.
+    //
+    // So we do this:
+    // - Play audio client-side IF the closing is being predicted (auto-close or predicted interaction)
+    // - Unless overridden, server assumes closing is predicted by clients and does not play audio.
+    // - Major exception is player interactions, which other players cannot predict
+    // - In that case, send audio to all players, except possibly the interacting player if it was a predicted
+    //   interaction.
+
+    /// <summary>
+    /// Selectively send sound to clients, taking care to not send the double-audio.
+    /// </summary>
+    /// <param name="uid">The audio source</param>
+    /// <param name="sound">The sound</param>
+    /// <param name="predictingPlayer">The user (if any) that instigated an interaction</param>
+    /// <param name="predicted">Whether this interaction would have been predicted. If the predicting player is null,
+    /// this assumes it would have been predicted by all players in PVS range.</param>
+    protected override void PlaySound(EntityUid uid, string sound, AudioParams audioParams, EntityUid? predictingPlayer, bool predicted)
+    {
+        // If this sound would have been predicted by all clients, do not play any audio.
+        if (predicted && predictingPlayer == null)
+            return;
+
+        var filter = Filter.Pvs(uid);
+
+        if (predicted)
+        {
+            // This interaction is predicted, but only by the instigating user, who will have played their own sounds.
+            filter.RemoveWhereAttachedEntity(e => e == predictingPlayer);
+        }
+
+        // send the sound to players.
+        SoundSystem.Play(filter, sound, uid, AudioParams.Default.WithVolume(-5));
     }
 
     private void OnInteractUsing(EntityUid uid, DoorComponent door, InteractUsingEvent args)
@@ -133,6 +172,7 @@ public sealed class DoorSystem : SharedDoorSystem
     protected override void HandleCollide(EntityUid uid, DoorComponent door, StartCollideEvent args)
     {
         // TODO ACCESS READER move access reader to shared and predict door opening/closing
+        // Then this can be moved to the shared system without mispredicting.
         if (!door.BumpOpen)
             return;
 
@@ -141,7 +181,6 @@ public sealed class DoorSystem : SharedDoorSystem
 
         if (TryComp(args.OtherFixture.Body.Owner, out TagComponent? tags) && tags.HasTag("DoorBumpOpener"))
             TryOpen(uid, door, args.OtherFixture.Body.Owner);
-
     }
 
     public override void OnPartialOpen(EntityUid uid, DoorComponent? door = null, PhysicsComponent? physics = null)

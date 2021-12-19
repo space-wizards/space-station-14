@@ -38,40 +38,45 @@ public sealed class DoorComponent : Component
     // read-only.
 
     /// <summary>
-    /// Closing time until impassable (in seconds). Total time is this plus <see cref="CloseTimeTwo"/>.
+    /// Closing time until impassable. Total time is this plus <see cref="CloseTimeTwo"/>.
     /// </summary>
     [DataField("closeTimeOne")]
-    public readonly float CloseTimeOne = 0.4f;
+    public readonly TimeSpan CloseTimeOne = TimeSpan.FromSeconds(0.4f);
 
     /// <summary>
-    /// Closing time until fully closed (in seconds). Total time is this plus <see cref="CloseTimeOne"/>.
+    /// Closing time until fully closed. Total time is this plus <see cref="CloseTimeOne"/>.
     /// </summary>
     [DataField("closeTimeTwo")]
-    public readonly float CloseTimeTwo = 0.2f;
+    public readonly TimeSpan CloseTimeTwo = TimeSpan.FromSeconds(0.2f);
 
     /// <summary>
-    /// Opening time until passable (in seconds). Total time is this plus <see cref="OpenTimeTwo"/>.
+    /// Opening time until passable. Total time is this plus <see cref="OpenTimeTwo"/>.
     /// </summary>
     [DataField("openTimeOne")]
-    public readonly float OpenTimeOne = 0.4f;
+    public readonly TimeSpan OpenTimeOne = TimeSpan.FromSeconds(0.4f);
 
     /// <summary>
-    /// Opening time until fully open (in seconds). Total time is this plus <see cref="OpenTimeOne"/>.
+    /// Opening time until fully open. Total time is this plus <see cref="OpenTimeOne"/>.
     /// </summary>
     [DataField("openTimeTwo")]
-    public readonly float OpenTimeTwo = 0.2f;
+    public readonly TimeSpan OpenTimeTwo = TimeSpan.FromSeconds(0.2f);
 
     /// <summary>
-    ///     Interval between deny sounds & visuals (in seconds);
+    ///     Interval between deny sounds & visuals;
     /// </summary>
     [DataField("denyDuration")]
-    public readonly float DenyDuration = 0.45f;
+    public readonly TimeSpan DenyDuration = TimeSpan.FromSeconds(0.45f);
 
     /// <summary>
-    ///     When the door is active, this is the time in seconds left before the door next needs to update its state.
+    ///     When the door is active, this is the time when the state will next update.
     /// </summary>
-    public float TimeUntilStateChange;
+    public TimeSpan? NextStateChange;
 
+    /// <summary>
+    ///     Whether the door is currently partially closed or open. I.e., when the door is "closing" and is already opaque,
+    ///     but not yet actually closed.
+    /// </summary>
+    public bool Partial;
     #endregion
 
     #region Welding
@@ -115,11 +120,11 @@ public sealed class DoorComponent : Component
 
     #region Crushing
     /// <summary>
-    ///     How long does a door-crush stun you (in seconds)? This also determines how long it takes the door to open up
+    ///     This is how long a door-crush will stun you. This also determines how long it takes the door to open up
     ///     again. Total stun time is actually given by this plus <see cref="OpenTimeOne"/>.
     /// </summary>
     [DataField("doorStunTime")]
-    public readonly float DoorStunTime = 5f;
+    public readonly TimeSpan DoorStunTime = TimeSpan.FromSeconds(5f);
 
     [DataField("crushDamage")]
     public DamageSpecifier? CrushDamage;
@@ -204,12 +209,14 @@ public class DoorComponentState : ComponentState
 {
     public readonly DoorState DoorState;
     public readonly List<EntityUid> CurrentlyCrushing;
-    public readonly float TimeUntilStateChange;
+    public readonly TimeSpan? NextStateChange;
+    public readonly bool Partial;
 
-    public DoorComponentState(DoorState doorState, List<EntityUid> currentlyCrushing, float timeUntilStateChange)
+    public DoorComponentState(DoorState doorState, List<EntityUid> currentlyCrushing, TimeSpan? nextStateChange, bool partial)
     {
         DoorState = doorState;
         CurrentlyCrushing = currentlyCrushing;
-        TimeUntilStateChange = timeUntilStateChange;
+        NextStateChange = nextStateChange;
+        Partial = partial;
     }
 }

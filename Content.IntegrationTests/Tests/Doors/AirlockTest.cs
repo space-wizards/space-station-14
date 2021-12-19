@@ -66,7 +66,7 @@ namespace Content.IntegrationTests.Tests.Doors
                 airlock = entityManager.SpawnEntity("AirlockDummy", MapCoordinates.Nullspace);
 
                 Assert.True(entityManager.TryGetComponent(airlock, out doorComponent));
-                Assert.That(doorComponent.State, Is.EqualTo(DoorComponent.DoorState.Closed));
+                Assert.That(doorComponent.State, Is.EqualTo(DoorState.Closed));
             });
 
             await server.WaitIdleAsync();
@@ -74,24 +74,24 @@ namespace Content.IntegrationTests.Tests.Doors
             server.Assert(() =>
             {
                 EntitySystem.Get<DoorSystem>().StartOpening(airlock);
-                Assert.That(doorComponent.State, Is.EqualTo(DoorComponent.DoorState.Opening));
+                Assert.That(doorComponent.State, Is.EqualTo(DoorState.Opening));
             });
 
             await server.WaitIdleAsync();
 
-            await WaitUntil(server, () => doorComponent.State == DoorComponent.DoorState.Open);
+            await WaitUntil(server, () => doorComponent.State == DoorState.Open);
 
-            Assert.That(doorComponent.State, Is.EqualTo(DoorComponent.DoorState.Open));
+            Assert.That(doorComponent.State, Is.EqualTo(DoorState.Open));
 
             server.Assert((Action) (() =>
             {
                 EntitySystem.Get<DoorSystem>().TryClose((EntityUid) airlock);
-                Assert.That(doorComponent.State, Is.EqualTo(DoorComponent.DoorState.Closing));
+                Assert.That(doorComponent.State, Is.EqualTo(DoorState.Closing));
             }));
 
-            await WaitUntil(server, () => doorComponent.State == DoorComponent.DoorState.Closed);
+            await WaitUntil(server, () => doorComponent.State == DoorState.Closed);
 
-            Assert.That(doorComponent.State, Is.EqualTo(DoorComponent.DoorState.Closed));
+            Assert.That(doorComponent.State, Is.EqualTo(DoorState.Closed));
 
             server.Assert(() =>
             {
@@ -139,7 +139,7 @@ namespace Content.IntegrationTests.Tests.Doors
                 Assert.True(entityManager.TryGetComponent(physicsDummy, out physBody));
 
                 Assert.True(entityManager.TryGetComponent(airlock, out doorComponent));
-                Assert.That(doorComponent.State, Is.EqualTo(DoorComponent.DoorState.Closed));
+                Assert.That(doorComponent.State, Is.EqualTo(DoorState.Closed));
             });
 
             await server.WaitIdleAsync();

@@ -108,11 +108,17 @@ namespace Content.Server.Doors.Components
         }
 
         /// <summary>
-        /// Delay until an open door automatically closes (in seconds). Set zero to prevent auto closing.
+        /// Set whether or not this airlock will automatically close.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("autoClose")]
+        public bool AutoClose = true;
+
+        /// <summary>
+        /// Delay until an open door automatically closes. Set zero to prevent auto closing.
+        /// </summary>
         [DataField("autoCloseDelay")]
-        public float AutoCloseDelay = 5f;
+        public TimeSpan AutoCloseDelay = TimeSpan.FromSeconds(5f);
 
         /// <summary>
         /// Multiplicative modifier for the auto-close delay.

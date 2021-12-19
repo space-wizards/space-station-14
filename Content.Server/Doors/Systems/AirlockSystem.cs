@@ -7,8 +7,8 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using System;
 using System.Linq;
-using static Content.Shared.Doors.DoorComponent;
 
 namespace Content.Server.Doors.Systems
 {
@@ -42,9 +42,17 @@ namespace Content.Server.Doors.Systems
                 component.AppearanceComponent.SetData(DoorVisuals.Powered, args.Powered);
             }
 
-            // stop any scheduled auto-closing
+            
             if (!args.Powered)
-                _doorSystem.QueueAutoClose(uid, 0);
+            {
+                // stop any scheduled auto-closing
+                _doorSystem.SetNextStateChange(uid, null);
+            }
+            else
+            {
+                // door received power. Lets "wake" the door up.
+                _doorSystem.SetNextStateChange(uid, TimeSpan.FromSeconds(1));
+            }
 
             // BoltLights also got out
             component.UpdateBoltLightStatus();
@@ -73,10 +81,10 @@ namespace Content.Server.Doors.Systems
             if (!Resolve(uid, ref airlock, ref door))
                 return;
 
-            if (door.State != DoorState.Open)
+            if (!airlock.AutoClose || door.State != DoorState.Open)
                 return;
 
-            if (airlock.AutoCloseDelay <= 0)
+            if (!airlock.CanChangeState())
                 return;
 
             var autoev = new BeforeDoorAutoCloseEvent();
@@ -84,7 +92,7 @@ namespace Content.Server.Doors.Systems
             if (autoev.Cancelled)
                 return;
 
-            _doorSystem.QueueAutoClose(uid, airlock.AutoCloseDelay * airlock.AutoCloseDelayModifier);
+            _doorSystem.SetNextStateChange(uid, airlock.AutoCloseDelay * airlock.AutoCloseDelayModifier);
         }
 
         public bool SafetyCheck(EntityUid uid,

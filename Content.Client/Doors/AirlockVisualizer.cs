@@ -8,7 +8,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
-using static Content.Shared.Doors.DoorComponent;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Doors
 {
@@ -16,6 +16,7 @@ namespace Content.Client.Doors
     public class AirlockVisualizer : AppearanceVisualizer, ISerializationHooks
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         private const string AnimationKey = "airlock_animation";
 
@@ -123,6 +124,10 @@ namespace Content.Client.Doors
 
         public override void OnChangeData(AppearanceComponent component)
         {
+            // only start playing animations once.
+            if (!_gameTiming.IsFirstTimePredicted)
+                return;
+
             base.OnChangeData(component);
 
             var sprite = _entMan.GetComponent<ISpriteComponent>(component.Owner);
@@ -165,8 +170,7 @@ namespace Content.Client.Doors
                     animPlayer.Play(CloseAnimation, AnimationKey);
                     break;
                 case DoorState.Denying:
-                    if (!animPlayer.HasRunningAnimation(AnimationKey))
-                        animPlayer.Play(DenyAnimation, AnimationKey);
+                    animPlayer.Play(DenyAnimation, AnimationKey);
                     break;
                 case DoorState.Welded:
                     weldedVisible = true;
