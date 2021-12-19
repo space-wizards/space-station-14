@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chemistry.EntitySystems;
+using Content.Server.Chemistry.Components;
 using Content.Server.Fluids.Components;
 using Content.Server.Hands.Components;
 using Content.Server.Plants;
@@ -731,9 +732,19 @@ namespace Content.Server.Botany.Components
                 && solutionSystem.TryGetSolution(Owner, SoilSolutionName, out var targetSolution))
             {
                 var amount = FixedPoint2.New(5);
+
+                var maxamount = FixedPoint2.New(50);
+                var minamount = FixedPoint2.New(5);
+
                 var sprayed = false;
                 var targetEntity = Owner;
                 var solutionEntity = usingItem;
+
+                if (_entMan.TryGetComponent(usingItem, out SolutionTransferComponent transfer))
+                {
+                    
+                    amount = FixedPoint2.Clamp(transfer.TransferAmount, minamount, maxamount);
+                }
 
                 if (_entMan.TryGetComponent(usingItem, out SprayComponent? spray))
                 {
@@ -744,7 +755,10 @@ namespace Content.Server.Botany.Components
                         AudioHelpers.WithVariation(0.125f));
                 }
 
+                amount = FixedPoint2.Min(amount, FixedPoint2.Min(solution.DrainAvailable, targetSolution.AvailableVolume));
+
                 var split = solutionSystem.Drain(solutionEntity, solution, amount);
+
                 if (split.TotalVolume == 0)
                 {
                     user.PopupMessageCursor(Loc.GetString("plant-holder-component-empty-message",
