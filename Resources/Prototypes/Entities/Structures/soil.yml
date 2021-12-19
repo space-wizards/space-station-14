@@ -47,6 +47,8 @@
         maxVol: 200
   - type: RefillableSolution
     solution: soil
+    maxrefill: 50
+    cappedfill: true
   - type: Transform
     anchored: true
   - type: Reactive

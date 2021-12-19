@@ -134,7 +134,14 @@ namespace Content.Server.Chemistry.Components
                            && solutionsSys.TryGetRefillableSolution(Owner, out var ownerRefill)
                            && solutionsSys.TryGetDrainableSolution(target, out var targetDrain))
             {
-                var transferred = DoTransfer(eventArgs.User, target, targetDrain, Owner, ownerRefill, tank.TransferAmount);
+                var tankTransferAmount = tank.TransferAmount;
+
+                if (_entities.TryGetComponent(Owner, out RefillableSolutionComponent? refill) && refill.CappedFill == true)
+                {
+                    tankTransferAmount = FixedPoint2.Min(tankTransferAmount, refill.MaxRefill);
+                }
+
+                var transferred = DoTransfer(eventArgs.User, target, targetDrain, Owner, ownerRefill, tankTransferAmount);
                 if (transferred > 0)
                 {
                     var toTheBrim = ownerRefill.AvailableVolume == 0;
@@ -151,7 +158,14 @@ namespace Content.Server.Chemistry.Components
             if (CanSend && solutionsSys.TryGetRefillableSolution(target, out var targetRefill)
                         && solutionsSys.TryGetDrainableSolution(Owner, out var ownerDrain))
             {
-                var transferred = DoTransfer(eventArgs.User, Owner, ownerDrain, target, targetRefill, TransferAmount);
+                var transferAmount = TransferAmount;
+
+                if (_entities.TryGetComponent(target, out RefillableSolutionComponent? refill) && refill.CappedFill == true)
+                {
+                    transferAmount = FixedPoint2.Min(transferAmount, refill.MaxRefill);
+                }
+
+                var transferred = DoTransfer(eventArgs.User, Owner, ownerDrain, target, targetRefill, transferAmount);
 
                 if (transferred > 0)
                 {
@@ -190,8 +204,7 @@ namespace Content.Server.Chemistry.Components
                 return FixedPoint2.Zero;
             }
 
-            var actualAmount =
-                FixedPoint2.Min(amount, FixedPoint2.Min(source.DrainAvailable, target.AvailableVolume));
+            var actualAmount = FixedPoint2.Min(amount, FixedPoint2.Min(source.DrainAvailable, target.AvailableVolume));
 
             var solution = EntitySystem.Get<SolutionContainerSystem>().Drain(sourceEntity, source, actualAmount);
             EntitySystem.Get<SolutionContainerSystem>().Refill(targetEntity, target, solution);

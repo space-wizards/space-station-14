@@ -729,33 +729,18 @@ namespace Content.Server.Botany.Components
 
             var solutionSystem = EntitySystem.Get<SolutionContainerSystem>();
             if (solutionSystem.TryGetDrainableSolution(usingItem, out var solution)
-                && solutionSystem.TryGetSolution(Owner, SoilSolutionName, out var targetSolution))
+                && solutionSystem.TryGetSolution(Owner, SoilSolutionName, out var targetSolution) && _entMan.TryGetComponent(usingItem, out SprayComponent? spray))
             {
-                var amount = FixedPoint2.New(5);
+                var amount = FixedPoint2.New(1);
 
-                var maxamount = FixedPoint2.New(50);
-                var minamount = FixedPoint2.New(5);
-
-                var sprayed = false;
+                var sprayed = true;
                 var targetEntity = Owner;
                 var solutionEntity = usingItem;
 
-                if (_entMan.TryGetComponent(usingItem, out SolutionTransferComponent transfer))
-                {
-                    
-                    amount = FixedPoint2.Clamp(transfer.TransferAmount, minamount, maxamount);
-                }
-
-                if (_entMan.TryGetComponent(usingItem, out SprayComponent? spray))
-                {
-                    sprayed = true;
-                    amount = FixedPoint2.New(1);
-
-                    SoundSystem.Play(Filter.Pvs(usingItem), spray.SpraySound.GetSound(), usingItem,
-                        AudioHelpers.WithVariation(0.125f));
-                }
-
-                amount = FixedPoint2.Min(amount, FixedPoint2.Min(solution.DrainAvailable, targetSolution.AvailableVolume));
+                
+                SoundSystem.Play(Filter.Pvs(usingItem), spray.SpraySound.GetSound(), usingItem,
+                AudioHelpers.WithVariation(0.125f));
+                
 
                 var split = solutionSystem.Drain(solutionEntity, solution, amount);
 
