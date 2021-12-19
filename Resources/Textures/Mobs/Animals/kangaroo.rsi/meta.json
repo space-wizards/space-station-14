@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "kangaroo",
+      "directions": 4
+    },
+    {
+      "name": "kangaroo-dead"
+    },
+    {
+      "name": "kangaroo-boxing",
+      "directions": 4
+    },
+    {
+      "name": "kangaroo-boxing-dead"
+    },
+    {
+      "name": "kangaroo-space",
+      "directions": 4
+    },
+    {
+      "name": "kangaroo-space-dead"
+    }
+  ]
+}
