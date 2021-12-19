@@ -1,13 +1,19 @@
 ﻿#nullable enable
+using System;
 using System.Linq;
+using System.Net.Http;
+using System.Text;
 using Content.Server.Administration.Managers;
 using Content.Shared.Administration;
+using Content.Shared.CCVar;
 using JetBrains.Annotations;
+using Newtonsoft.Json;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Server.Player;
+using Robust.Shared.Configuration;
 using Robust.Shared.IoC;
-using Robust.Shared.Utility;
+using Robust.Shared.Log;
 using Robust.Shared.Utility.Markup;
 
 namespace Content.Server.Administration
@@ -17,6 +23,27 @@ namespace Content.Server.Administration
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
+        [Dependency] private readonly IConfigurationManager _config = default!;
+
+        private readonly HttpClient _httpClient = new();
+        private string _webhookUrl = string.Empty;
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            _config.OnValueChanged(CCVars.DiscordAHelpWebhook, OnWebhookChanged, true);
+        }
+
+        public override void Shutdown()
+        {
+            base.Shutdown();
+            _config.UnsubValueChanged(CCVars.DiscordAHelpWebhook, OnWebhookChanged);
+        }
+
+        private void OnWebhookChanged(string obj)
+        {
+            _webhookUrl = obj;
+        }
 
         protected override void OnBwoinkTextMessage(BwoinkTextMessage message, EntitySessionEventArgs eventArgs)
         {
@@ -25,9 +52,8 @@ namespace Content.Server.Administration
 
             // TODO: Sanitize text?
             // Confirm that this person is actually allowed to send a message here.
-            var senderPersonalChannel = senderSession.UserId == message.ChannelId;
             var senderAdmin = _adminManager.GetAdminData(senderSession);
-            var authorized = senderPersonalChannel || senderAdmin != null;
+            var authorized = senderSession.Name == message.ChannelName || senderAdmin != null;
             if (!authorized)
             {
                 // Unauthorized bwoink (log?)
@@ -46,7 +72,7 @@ namespace Content.Server.Administration
                 _ => $"{senderSession.Name}: {escapedText}",
             };
 
-            var msg = new BwoinkTextMessage(message.ChannelId, senderSession.UserId, bwoinkText);
+            var msg = new BwoinkTextMessage(message.ChannelName, senderSession.UserId, bwoinkText);
 
             LogBwoink(msg);
 
@@ -54,21 +80,50 @@ namespace Content.Server.Administration
             var targets = _adminManager.ActiveAdmins.Select(p => p.ConnectedClient).ToList();
 
             // And involved player
-            if (_playerManager.TryGetSessionById(message.ChannelId, out var session))
+            if (_playerManager.TryGetSessionByUsername(message.ChannelName, out var session))
                 if (!targets.Contains(session.ConnectedClient))
                     targets.Add(session.ConnectedClient);
 
             foreach (var channel in targets)
                 RaiseNetworkEvent(msg, channel);
 
+            var sendsWebhook = _webhookUrl != string.Empty;
+            if (sendsWebhook)
+            {
+                var payload = new WebhookPayload()
+                {
+                    Username = senderSession.Name,
+                    Content = $"Channel: {msg.ChannelName}\nMessage: {escapedText}"
+                };
+                var request = _httpClient.PostAsync(_webhookUrl,
+                    new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json"));
+
+                var sawmill = IoCManager.Resolve<ILogManager>().GetSawmill("AHELP");
+                request.ContinueWith(task =>
+                {
+                    if (!task.Result.IsSuccessStatusCode)
+                    {
+                        sawmill.Log(LogLevel.Error, $"Discord returned bad status code: {task.Result.StatusCode}");
+                    }
+                });
+            }
+
             if (targets.Count == 1)
             {
-                var systemText = senderPersonalChannel ?
-                    Loc.GetString("bwoink-system-starmute-message-no-other-users-primary") :
-                    Loc.GetString("bwoink-system-starmute-message-no-other-users-secondary");
-                var starMuteMsg = new BwoinkTextMessage(message.ChannelId, SystemUserId, systemText);
+                var systemText = sendsWebhook ?
+                    Loc.GetString("bwoink-system-starmute-message-no-other-users-webhook") :
+                    Loc.GetString("bwoink-system-starmute-message-no-other-users");
+                var starMuteMsg = new BwoinkTextMessage(message.ChannelName, SystemUserId, systemText);
                 RaiseNetworkEvent(starMuteMsg, senderSession.ConnectedClient);
             }
+        }
+
+        [JsonObject(MemberSerialization.Fields)]
+        private struct WebhookPayload
+        {
+            [JsonProperty("username")] public string Username = null!;
+
+            [JsonProperty("content")] public string Content = null!;
         }
     }
 }

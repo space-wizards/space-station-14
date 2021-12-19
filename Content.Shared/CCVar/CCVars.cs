@@ -155,6 +155,13 @@ namespace Content.Shared.CCVar
             CVarDef.Create("game.soft_max_players", 30, CVar.SERVERONLY | CVar.ARCHIVE);
 
         /*
+         * Discord
+         */
+
+        public static readonly CVarDef<string> DiscordAHelpWebhook =
+            CVarDef.Create("discord.ahelp_webhook", string.Empty, CVar.SERVERONLY);
+
+        /*
          * Suspicion
          */
 
