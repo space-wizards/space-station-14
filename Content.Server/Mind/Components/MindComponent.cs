@@ -139,10 +139,13 @@ namespace Content.Server.Mind.Components
 
             if (dead)
             {
-                var noSessionText = $"[color=yellow]{Loc.GetString("mind-component-no-mind-and-dead-text", ("ent", Owner))}[/color]";
-                var hasSessionText = $"[color=red]{Loc.GetString("comp-mind-examined-dead", ("ent", Owner))}[/color]";
-
-                message.AddMarkup(Mind?.Session == null ? noSessionText : hasSessionText);
+                if (Mind?.Session == null) {
+                    // Player has no session attached and dead
+                    message.AddMarkup($"[color=yellow]{Loc.GetString("mind-component-no-mind-and-dead-text", ("ent", Owner))}[/color]");
+                } else {
+                    // Player is dead with session
+                    message.AddMarkup($"[color=red]{Loc.GetString("comp-mind-examined-dead", ("ent", Owner))}[/color]");
+                }
             }
             else if (!HasMind)
             {
