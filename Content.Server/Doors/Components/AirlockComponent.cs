@@ -126,12 +126,7 @@ namespace Content.Server.Doors.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public float AutoCloseDelayModifier = 1.0f;
 
-        /// <summary>
-        /// Whether the airlock will check for colliding entities before closing.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("safety")]
-        public bool Safety = true;
+        public bool Safety => DoorComponent?.Safety ?? true;
 
         protected override void Initialize()
         {
@@ -195,9 +190,7 @@ namespace Content.Server.Doors.Components
                                                     !MathHelper.CloseToPercent(AutoCloseDelayModifier, 1.0f) ? StatusLightState.BlinkingSlow :
                                                     StatusLightState.On,
                                                     "TIME");
-
-            var safetyStatus =
-                new StatusLightData(Color.Red, Safety ? StatusLightState.On : StatusLightState.Off, "SAFE");
+            var safetyStatus = new StatusLightData(Color.Red, Safety ? StatusLightState.On : StatusLightState.Off, "SAFE");
 
             if (WiresComponent == null)
             {
@@ -336,7 +329,7 @@ namespace Content.Server.Doors.Components
                         EntitySystem.Get<AirlockSystem>().UpdateAutoClose(Owner, this);
                         break;
                     case Wires.Safety:
-                        Safety = !Safety;
+                        EntitySystem.Get<SharedDoorSystem>().SetSafety(Owner, !Safety, DoorComponent);
                         break;
                 }
             }
@@ -359,7 +352,7 @@ namespace Content.Server.Doors.Components
                         EntitySystem.Get<AirlockSystem>().UpdateAutoClose(Owner, this);
                         break;
                     case Wires.Safety:
-                        Safety = true;
+                        EntitySystem.Get<SharedDoorSystem>().SetSafety(Owner, true, DoorComponent);
                         break;
                 }
             }
@@ -379,7 +372,7 @@ namespace Content.Server.Doors.Components
                         EntitySystem.Get<AirlockSystem>().UpdateAutoClose(Owner, this);
                         break;
                     case Wires.Safety:
-                        Safety = false;
+                        EntitySystem.Get<SharedDoorSystem>().SetSafety(Owner, false, DoorComponent);
                         break;
                 }
             }

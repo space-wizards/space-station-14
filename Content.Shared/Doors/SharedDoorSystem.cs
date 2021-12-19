@@ -1,12 +1,13 @@
 using Content.Shared.Damage;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
+using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
-using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Timing;
 using System;
@@ -21,6 +22,16 @@ public abstract class SharedDoorSystem : EntitySystem
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly SharedStunSystem _stunSystem = default!;
     [Dependency] protected readonly IGameTiming GameTiming = default!;
+
+    /// <summary>
+    ///     A body must have an intersection percentage larger than this in order to be considered as colliding with a
+    ///     door. Used for safety close-blocking and crushing.
+    /// </summary>
+    /// <remarks>
+    ///     The intersection percentage relies on WORLD AABBs. So if this is too small, and the grid is rotated 45
+    ///     degrees, then an entity outside of the airlock may be crushed.
+    /// </remarks>
+    public const float IntersectPercentage = 0.2f;
 
     protected readonly HashSet<DoorComponent> ActiveDoors = new();
 
@@ -44,8 +55,12 @@ public abstract class SharedDoorSystem : EntitySystem
         // if the door state is not standard (i.e., door starts open), make sure collision & occlusion are properly set.
         if (door.StartOpen)
         {
-            SetState(uid, DoorState.Open, door);
+            // disable occluder & physics
             OnPartialOpen(uid, door);
+
+            // THEN set the correct state, inc disabling partial = true
+            SetState(uid, DoorState.Open, door);
+
             // The airlock component may schedule an auto-close for this door during the SetState.
             // Give the door is supposed to start open, let's prevent any auto-closing that might occur.
             door.NextStateChange = null;
@@ -119,6 +134,14 @@ public abstract class SharedDoorSystem : EntitySystem
         UpdateAppearance(uid, door);
     }
 
+    public void SetSafety(EntityUid uid, bool safety, DoorComponent? door = null)
+    {
+        if (!Resolve(uid, ref door))
+            return;
+
+        door.Safety = safety;
+    }
+
     protected virtual void UpdateAppearance(EntityUid uid, DoorComponent? door = null)
     {
         if (!Resolve(uid, ref door))
@@ -126,10 +149,6 @@ public abstract class SharedDoorSystem : EntitySystem
 
         if (!TryComp(uid, out AppearanceComponent? appearance))
             return;
-
-        // TODO DOORS replace DoorVisualState with just DoorState?
-        // Would have to separate out the "Denied" state.
-        // but that should really be an airlock feature anyway, not a generic door state.
 
         appearance.SetData(DoorVisuals.State, door.State);
     }
@@ -196,6 +215,11 @@ public abstract class SharedDoorSystem : EntitySystem
         if (door.State == DoorState.Welded)
             return false;
 
+        var ev = new DoorOpenAttemptEvent();
+        RaiseLocalEvent(uid, ev, false);
+        if (ev.Cancelled)
+            return false;
+
         if (!HasAccess(uid, user))
         {
             if (!quiet)
@@ -203,9 +227,7 @@ public abstract class SharedDoorSystem : EntitySystem
             return false;
         }
 
-        var ev = new DoorOpenAttemptEvent();
-        RaiseLocalEvent(uid, ev, false);
-        return !ev.Cancelled;
+        return true;
     }
 
     // Convenience function to make using Door system more intuitive for other systems.
@@ -221,7 +243,7 @@ public abstract class SharedDoorSystem : EntitySystem
 
         // I'm not sure what the intent here is/was? It plays a sound if the user is opening a door with a hands
         // component, but no actual hands!? What!? Is this the sound of them head-butting the door to get it to open??
-        // I'm 99% something is wrong here, but I kind of want to keep it this way.
+        // I'm 99% sure something is wrong here, but I kind of want to keep it this way.
 
         if (user != null && TryComp(user.Value, out SharedHandsComponent? hands) && hands.Hands.Count == 0)
             PlaySound(uid, door.TryOpenDoorSound.GetSound(), AudioParams.Default.WithVolume(-2), user, predicted);
@@ -266,13 +288,15 @@ public abstract class SharedDoorSystem : EntitySystem
         if (!Resolve(uid, ref door))
             return false;
 
-        if (!HasAccess(uid, user))
-            return false;
-
         var ev = new DoorCloseAttemptEvent();
         RaiseLocalEvent(uid, ev, false);
+        if (ev.Cancelled)
+            return false;
 
-        return !ev.Cancelled;
+        if (door.Safety && GetColliding(uid).Any())
+            return false;
+
+        return HasAccess(uid, user);
     }
 
     // Convenience function to make using Door system more intuitive for other systems.
@@ -288,17 +312,28 @@ public abstract class SharedDoorSystem : EntitySystem
     }
 
     /// <summary>
-    /// Called when the door is partially closed. This is when the door becomes "solid". If this process crushes mobs,
-    /// returns true;
+    /// Called when the door is partially closed. This is when the door becomes "solid". If this process fails (e.g., a
+    /// mob entered the door as it was closing), then this returns false. Otheriwse, returns true;
     /// </summary>
-    public virtual void OnPartialClose(EntityUid uid, DoorComponent? door = null, PhysicsComponent? physics = null)
+    public virtual bool OnPartialClose(EntityUid uid, DoorComponent? door = null, PhysicsComponent? physics = null)
     {
-        // door argument only used by server override.
         if (!Resolve(uid, ref door, ref physics))
-            return;
+            return false;
+
+        door.Partial = true;
+
+        // Make sure no entity waled into the airlock when it started closing.
+        if (door.Safety && GetColliding(uid).Any())
+        {
+            ActiveDoors.Add(door);
+            door.NextStateChange = GameTiming.CurTime + door.OpenTimeTwo;
+            door.State = DoorState.Opening;
+            door.Dirty();
+            UpdateAppearance(uid, door);
+            return false;
+        }
 
         physics.CanCollide = true;
-        door.Partial = true;
         door.NextStateChange = GameTiming.CurTime + door.CloseTimeTwo;
         ActiveDoors.Add(door);
         door.Dirty();
@@ -309,6 +344,7 @@ public abstract class SharedDoorSystem : EntitySystem
         // Crush any entities. Note that we don't check airlock safety here. This should have been checked before
         // the door closed.
         Crush(uid, door, physics);
+        return true;
     }
     #endregion
 
@@ -319,38 +355,53 @@ public abstract class SharedDoorSystem : EntitySystem
     /// <returns>True if we crushed somebody, false if we did not.</returns>
     public void Crush(EntityUid uid, DoorComponent? door = null, PhysicsComponent? physics = null)
     {
-        if (!Resolve(uid, ref door, ref physics, false))
+        if (!Resolve(uid, ref door))
             return;
 
         // is this door capable of crushing? NOT the same as an airlock safety check. The door will still close.
         if (!door.CanCrush) 
             return;
 
-        var collidingentities = _physicsSystem.GetCollidingEntities(physics, Vector2.Zero, false);
+        // Crush
+        var stunTime = door.DoorStunTime + door.OpenTimeOne;
+        foreach (var entity in GetColliding(uid, physics))
+        {
+            door.CurrentlyCrushing.Add(entity);
+            if (door.CrushDamage != null)
+                _damageableSystem.TryChangeDamage(entity, door.CrushDamage);
 
-        if (!collidingentities.Any())
+            if (TryComp(entity, out StatusEffectsComponent? status))
+                _stunSystem.TryParalyze(entity, stunTime, true, status);
+        }
+
+        if (door.CurrentlyCrushing.Count == 0)
             return;
+
+        // queue the door to open so that the player is no longer stunned once it has FINISHED opening.
+        door.NextStateChange = GameTiming.CurTime + door.DoorStunTime;
+        door.Partial = false;
+    }
+
+    /// <summary>
+    ///     Get all entities that collide with this door by more than <see cref="IntersectPercentage"/> percent.
+    public IEnumerable<EntityUid> GetColliding(EntityUid uid, PhysicsComponent? physics = null)
+    {
+        if (!Resolve(uid, ref physics))
+            yield break;
 
         var doorAABB = physics.GetWorldAABB();
 
-        // Crush
-        var stunTime = door.DoorStunTime + door.OpenTimeOne;
-        foreach (var e in collidingentities)
+        foreach (var body in _physicsSystem.GetCollidingEntities(Transform(uid).MapID, doorAABB))
         {
-            var percentage = e.GetWorldAABB().IntersectPercentage(doorAABB);
-
-            if (percentage < 0.1f)
+            // static bodies (e.g., furniture) shouldn't stop airlocks/windoors from closing.
+            if (body.BodyType == BodyType.Static)
                 continue;
 
-            door.CurrentlyCrushing.Add(e.Owner);
-            if (door.CrushDamage != null)
-                _damageableSystem.TryChangeDamage(e.Owner, door.CrushDamage);
+            if (body.GetWorldAABB().IntersectPercentage(doorAABB) < IntersectPercentage)
+                continue;
 
-            _stunSystem.TryParalyze(e.Owner, stunTime, true);
+            yield return body.Owner;
         }
-
-        if (door.CurrentlyCrushing.Count > 0)
-            door.NextStateChange = door.DoorStunTime;
     }
 
     private void PreventCollision(EntityUid uid, DoorComponent component, PreventCollideEvent args)
@@ -448,22 +499,15 @@ public abstract class SharedDoorSystem : EntitySystem
                 continue;
             }
 
-            // Note. Because state change is based on a time-stamp, simply not updating paused doors doesn't work, as if
-            // they have been paused for a while, then they will proceed to the next state immediately after being
-            // unpaused. I can't think of an elegant solution to this problem, other than incrementing NextState and
-            // marking the component as dirty. And re-sending it to clients every tick. I hate this solution. But using
-            // something like an accumulated frame-time counter doesn't work, because then you'd need the sever to dirty
-            // every active door every tick. For now: fuck it, let paused doors be primed to go to the next state. it
-            // doesn't really matter anyways. The state-timing isn't even saved to the map or anything.
             if (door.Paused)
                 continue;
 
-            if (door.NextStateChange.Value > time)
-                continue;
-
-            // Progress the door to the next state. This may sometimes call ActiveDoors.Add(...), but only for existing
-            // doors, and so it should never result in an enumerator modification error.
-            NextState(door, time);
+            if (door.NextStateChange.Value < time)
+            {
+                // Progress the door to the next state. This may sometimes call ActiveDoors.Add(...), but only for existing
+                // doors, and so it should never result in an enumerator modification error.
+                NextState(door, time);
+            }
         }
 
         ActiveDoors.ExceptWith(toRemove);
@@ -508,7 +552,7 @@ public abstract class SharedDoorSystem : EntitySystem
                 break;
 
             case DoorState.Open:
-                // This door was open, and queued for an auto-close.
+                // This door is open, and queued for an auto-close.
                 if (!TryClose(door.Owner, door, predicted: true))
                 {
                     // The door failed to close (blocked?). Try again in one second.

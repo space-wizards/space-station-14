@@ -167,7 +167,8 @@ namespace Content.Client.Doors
                     animPlayer.Play(OpenAnimation, AnimationKey);
                     break;
                 case DoorState.Closing:
-                    animPlayer.Play(CloseAnimation, AnimationKey);
+                    if (_entMan.TryGetComponent(component.Owner, out DoorComponent door) && door.CurrentlyCrushing.Count == 0)
+                        animPlayer.Play(CloseAnimation, AnimationKey);
                     break;
                 case DoorState.Denying:
                     animPlayer.Play(DenyAnimation, AnimationKey);

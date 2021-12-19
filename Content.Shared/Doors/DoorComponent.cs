@@ -124,7 +124,7 @@ public sealed class DoorComponent : Component
     ///     again. Total stun time is actually given by this plus <see cref="OpenTimeOne"/>.
     /// </summary>
     [DataField("doorStunTime")]
-    public readonly TimeSpan DoorStunTime = TimeSpan.FromSeconds(5f);
+    public readonly TimeSpan DoorStunTime = TimeSpan.FromSeconds(2f);
 
     [DataField("crushDamage")]
     public DamageSpecifier? CrushDamage;
@@ -135,6 +135,13 @@ public sealed class DoorComponent : Component
     /// </summary>
     [DataField("canCrush")]
     public readonly bool CanCrush = true;
+
+    /// <summary>
+    /// Whether the door will check for colliding entities before closing.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("safety")]
+    public bool Safety = true;
 
     /// <summary>
     /// List of EntityUids of entities we're currently crushing. Cleared in OnPartialOpen().

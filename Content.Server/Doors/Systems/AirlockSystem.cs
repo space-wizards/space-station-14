@@ -8,19 +8,12 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using System;
-using System.Linq;
 
 namespace Content.Server.Doors.Systems
 {
     public class AirlockSystem : EntitySystem
     {
         [Dependency] private readonly DoorSystem _doorSystem = default!;
-        [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
-
-        /// <summary>
-        ///     Adjustment for the door-safety collision check.
-        /// </summary>
-        public const float CollideAdjust = -0.015f;
 
         public override void Initialize()
         {
@@ -42,7 +35,6 @@ namespace Content.Server.Doors.Systems
                 component.AppearanceComponent.SetData(DoorVisuals.Powered, args.Powered);
             }
 
-            
             if (!args.Powered)
             {
                 // stop any scheduled auto-closing
@@ -93,21 +85,6 @@ namespace Content.Server.Doors.Systems
                 return;
 
             _doorSystem.SetNextStateChange(uid, airlock.AutoCloseDelay * airlock.AutoCloseDelayModifier);
-        }
-
-        public bool SafetyCheck(EntityUid uid,
-            AirlockComponent? airlock = null,
-            DoorComponent? door = null,
-            PhysicsComponent? physics = null)
-        {
-            if (!Resolve(uid, ref airlock, ref door, ref physics, false))
-                return true;
-
-            if (!airlock.Safety)
-                return true;
-
-            // are there any colliding entities?
-            return !_physicsSystem.GetCollidingEntities(physics, CollideAdjust).Any();
         }
 
         private void OnBeforeDoorOpened(EntityUid uid, AirlockComponent component, DoorOpenAttemptEvent args)

@@ -35,7 +35,7 @@ public sealed class DoorSystem : SharedDoorSystem
         SubscribeLocalEvent<DoorComponent, InteractUsingEvent>(OnInteractUsing);
     }
 
-    // TODO AUDIO PREDICT Figure out how to handle sound and prediction. This is somewhat janky but works well enough?
+    // TODO AUDIO PREDICT Figure out a better way to handle sound and prediction. For now, this works well enough?
     //
     // Currently a client will predict when a door is going to close automatically. So any client in PVS range can just
     // play their audio locally. Playing it server-side causes an odd delay, while in shared it causes double-audio.
@@ -190,28 +190,30 @@ public sealed class DoorSystem : SharedDoorSystem
 
         base.OnPartialOpen(uid, door, physics);
 
-        if (door.ChangeAirtight && TryComp(door.Owner, out AirtightComponent? airtight))
+        if (door.ChangeAirtight && TryComp(uid, out AirtightComponent? airtight))
         {
             _airtightSystem.SetAirblocked(airtight, false);
         }
 
         // Path-finding. Has nothing directly to do with access readers.
-        RaiseLocalEvent(new AccessReaderChangeMessage(door.Owner, false));
+        RaiseLocalEvent(new AccessReaderChangeMessage(uid, false));
     }
 
-    public override void OnPartialClose(EntityUid uid, DoorComponent? door = null, PhysicsComponent? physics = null)
+    public override bool OnPartialClose(EntityUid uid, DoorComponent? door = null, PhysicsComponent? physics = null)
     {
         if (!Resolve(uid, ref door, ref physics))
-            return;
+            return false;
 
-        base.OnPartialClose(uid, door, physics);
+        if (!base.OnPartialClose(uid, door, physics))
+            return false;
 
         // update airtight, if we did not crush something. 
-        if (door.ChangeAirtight && door.CurrentlyCrushing.Count != 0 && TryComp(uid, out AirtightComponent? airtight))
+        if (door.ChangeAirtight && door.CurrentlyCrushing.Count == 0 && TryComp(uid, out AirtightComponent? airtight))
             _airtightSystem.SetAirblocked(airtight, true);
 
         // Path-finding. Has nothing directly to do with access readers.
-        RaiseLocalEvent(new AccessReaderChangeMessage(door.Owner, true));
+        RaiseLocalEvent(new AccessReaderChangeMessage(uid, true));
+        return true;
     }
 
     private void OnMapInit(EntityUid uid, DoorComponent door, MapInitEvent args)
