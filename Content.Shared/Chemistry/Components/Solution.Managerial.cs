@@ -61,7 +61,7 @@ namespace Content.Shared.Chemistry.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public double ThermalEnergy {
             get { return Temperature * HeatCapacity; }
-            set { Temperature = value / HeatCapacity; }
+            set { Temperature = HeatCapacity != 0.0d ? value / HeatCapacity : 0.0d; }
         }
     }
 }

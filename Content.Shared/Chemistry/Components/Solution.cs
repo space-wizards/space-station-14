@@ -46,7 +46,7 @@ namespace Content.Shared.Chemistry.Components
         ///     The total heat capacity of all reagents in the solution.
         /// </summary>
         [ViewVariables]
-        public double HeatCapacity { get; private set; } = 0.0d;
+        public double HeatCapacity { get; set; } = 0.0d;
 
         public Color Color => GetColor();
 
@@ -112,7 +112,7 @@ namespace Content.Shared.Chemistry.Components
             if (quantity <= 0)
                 return;
             if (!IoCManager.Resolve<IPrototypeManager>().TryIndex(reagentId, out ReagentPrototype? proto))
-                return;
+                proto = new ReagentPrototype();
 
             if (temperature == null)
                 temperature = Temperature;
@@ -187,10 +187,9 @@ namespace Content.Shared.Chemistry.Components
                 if(reagent.ReagentId != reagentId)
                     continue;
                 if (!IoCManager.Resolve<IPrototypeManager>().TryIndex(reagentId, out ReagentPrototype? proto))
-                    continue; // TODO: Invalid prototype fix.
+                    proto = new ReagentPrototype();
 
                 var curQuantity = reagent.Quantity;
-
                 var newQuantity = curQuantity - quantity;
                 if (newQuantity <= 0)
                 {

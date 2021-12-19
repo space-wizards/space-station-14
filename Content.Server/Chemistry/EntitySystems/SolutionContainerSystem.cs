@@ -154,6 +154,24 @@ namespace Content.Server.Chemistry.EntitySystems
         }
 
         /// <summary>
+        ///     Sets the capacity (maximum volume) of a solution to a new value.
+        /// </summary>
+        /// <param name="targetUid">The entity containing the solution.</param>
+        /// <param name="targetSolution">The solution to set the capacity of.</param>
+        /// <param name="capacity">The value to set the capacity of the solution to.</param>
+        public void SetCapacity(EntityUid targetUid, Solution targetSolution, FixedPoint2 capacity)
+        {
+            if (targetSolution.MaxVolume == capacity)
+                return;
+
+            targetSolution.MaxVolume = capacity;
+            if (capacity < targetSolution.CurrentVolume)
+                targetSolution.RemoveSolution(targetSolution.CurrentVolume - capacity);
+
+            UpdateChemicals(targetUid, targetSolution);
+        }
+
+        /// <summary>
         ///     Adds reagent of an Id to the container.
         /// </summary>
         /// <param name="targetUid"></param>
@@ -257,17 +275,21 @@ namespace Content.Server.Chemistry.EntitySystems
             {
                 var (reagentId, curQuantity) = solution.Contents[i];
                 removedReagent[pos++] = reagentId;
+                if (!_prototypeManager.TryIndex(reagentId, out ReagentPrototype? proto))
+                    proto = new ReagentPrototype();
 
                 var newQuantity = curQuantity - quantity;
                 if (newQuantity <= 0)
                 {
                     solution.Contents.RemoveSwap(i);
                     solution.TotalVolume -= curQuantity;
+                    solution.HeatCapacity -= (double) curQuantity * proto.SpecificHeat;
                 }
                 else
                 {
                     solution.Contents[i] = new Solution.ReagentQuantity(reagentId, newQuantity);
                     solution.TotalVolume -= quantity;
+                    solution.HeatCapacity -= (double) quantity * proto.SpecificHeat;
                 }
             }
 
@@ -313,7 +335,7 @@ namespace Content.Server.Chemistry.EntitySystems
         /// <param name="owner">The entity in which the solution is located.</param>
         /// <param name="solution">The solution to set the temperature of.</param>
         /// <param name="temperature">The new value to set the temperature to.</param>
-        public void SetSolutionTemperature(EntityUid owner, Solution solution, double temperature)
+        public void SetTemperature(EntityUid owner, Solution solution, double temperature)
         {
             if (temperature == solution.Temperature)
                 return;
