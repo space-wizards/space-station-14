@@ -283,13 +283,11 @@ namespace Content.Server.Chemistry.EntitySystems
                 {
                     solution.Contents.RemoveSwap(i);
                     solution.TotalVolume -= curQuantity;
-                    solution.HeatCapacity -= (double) curQuantity * proto.SpecificHeat;
                 }
                 else
                 {
                     solution.Contents[i] = new Solution.ReagentQuantity(reagentId, newQuantity);
                     solution.TotalVolume -= quantity;
-                    solution.HeatCapacity -= (double) quantity * proto.SpecificHeat;
                 }
             }
 

@@ -1,5 +1,7 @@
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
+using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -62,6 +64,25 @@ namespace Content.Shared.Chemistry.Components
         public double ThermalEnergy {
             get { return Temperature * HeatCapacity; }
             set { Temperature = HeatCapacity != 0.0d ? value / HeatCapacity : 0.0d; }
+        }
+
+        /// <summary>
+        ///     Returns the total heat capacity of the reagents in this solution.
+        /// </summary>
+        /// <returns>The total heat capacity of the reagents in this solution.</returns>
+        public double GetHeatCapacity()
+        {
+            var heatCapacity = 0.0d;
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+            foreach(var reagent in Contents)
+            {
+                if (!prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype? proto))
+                    proto = new ReagentPrototype();
+
+                heatCapacity += (double) reagent.Quantity * proto.SpecificHeat;
+            }
+
+            return heatCapacity;
         }
     }
 }
