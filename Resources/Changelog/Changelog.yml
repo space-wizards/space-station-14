@@ -1,9 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: You can no longer start pulling something while incapacitated., type: Fix}
-  id: 247
-  time: '2021-06-28T12:17:37.0000000+00:00'
 - author: CrudeWax
   changes:
   - {message: Thirteen Loko added to dispenser and now hazardous to your health, type: Add}
@@ -2869,3 +2864,9 @@ Entries:
       able to hear them again reliably., type: Fix}
   id: 748
   time: '2021-12-17T22:45:31.490867+00:00'
+- author: ElectroJr
+  changes:
+  - {message: You can once again refill botany trays without requiring a plant to
+      be present., type: Fix}
+  id: 749
+  time: '2021-12-19T06:52:14.0000000+00:00'
