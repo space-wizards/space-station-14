@@ -2,21 +2,21 @@
 
 # Used internally by the PRESSURE() function.
 zzzz-fmt-pressure = { TOSTRING($divided, "G3") } { $places ->
-    [0] kPa
-    [1] MPa
-    [2] GPa
-    [3] TPa
-    [4] PBa
+    [0] кПа
+    [1] МПа
+    [2] ГПа
+    [3] ТПа
+    [4] ППа
     *[5] ???
 }
 
 # Used internally by the POWERWATTS() function.
 zzzz-fmt-power-watts = { TOSTRING($divided, "G3") } { $places ->
-    [0] W
-    [1] kW
-    [2] MW
-    [3] GW
-    [4] TW
+    [0] Вт
+    [1] кВт
+    [2] МВт
+    [3] гВт
+    [4] ТВт
     *[5] ???
 }
 
@@ -24,11 +24,11 @@ zzzz-fmt-power-watts = { TOSTRING($divided, "G3") } { $places ->
 # Reminder: 1 joule = 1 watt for 1 second (multiply watts by seconds to get joules).
 # Therefore 1 kilowatt-hour is equal to 3,600,000 joules (3.6MJ)
 zzzz-fmt-power-joules = { TOSTRING($divided, "G3") } { $places ->
-    [0] J
-    [1] kJ
-    [2] MJ
-    [3] GJ
-    [4] TJ
+    [0] Дж
+    [1] кДж
+    [2] МДж
+    [3] ГДж
+    [4] ТДж
     *[5] ???
 }
 
@@ -40,42 +40,42 @@ zzzz-the = { PROPER($ent) ->
 
 # Used internally by the SUBJECT() function.
 zzzz-subject-pronoun = { GENDER($ent) ->
-    [male] he
-    [female] she
-    [epicene] they
-   *[neuter] it
+    [male] он
+    [female] она
+    [epicene] они
+   *[neuter] оно
    }
 
 # Used internally by the OBJECT() function.
 zzzz-object-pronoun = { GENDER($ent) ->
-    [male] him
-    [female] her
-    [epicene] them
-   *[neuter] it
+    [male] его
+    [female] её
+    [epicene] их
+   *[neuter] его
    }
 
 # Used internally by the POSS-PRONOUN() function.
 zzzz-possessive-pronoun = { GENDER($ent) ->
-    [male] his
-    [female] hers
-    [epicene] theirs
-   *[neuter] its
+    [male] его
+    [female] её
+    [epicene] их
+   *[neuter] его
    }
 
 # Used internally by the POSS-ADJ() function.
 zzzz-possessive-adjective = { GENDER($ent) ->
-    [male] his
-    [female] her
-    [epicene] their
-   *[neuter] its
+    [male] сам
+    [female] сама
+    [epicene] сами
+   *[neuter] сам
    }
 
 # Used internally by the REFLEXIVE() function.
 zzzz-reflexive-pronoun = { GENDER($ent) ->
-    [male] himself
-    [female] herself
-    [epicene] themselves
-   *[neuter] itself
+    [male] сам
+    [female] сама
+    [epicene] сами
+   *[neuter] сам
    }
 
 # Used internally by the CONJUGATE-BE() function.

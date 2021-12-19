@@ -1,2 +1,2 @@
-administration-ui-round-tab-restart-round-now = Restart NOW
+administration-ui-round-tab-restart-round-now = Перезапустить СЕЙЧАС
 

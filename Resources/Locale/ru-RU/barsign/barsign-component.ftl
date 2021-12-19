@@ -1,1 +1,1 @@
-barsign-component-name = bar sign
+barsign-component-name = вывеска бара

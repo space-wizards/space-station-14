@@ -1,4 +1,4 @@
-delete-verb-get-data-text = Delete
-edit-solutions-verb-get-data-text = Edit Solutions
-explode-verb-get-data-text = Explode
-ahelp-verb-get-data-text = Message
+delete-verb-get-data-text = Удалить
+edit-solutions-verb-get-data-text = Редактировать растворы
+explode-verb-get-data-text = Взорвать
+ahelp-verb-get-data-text = Написать

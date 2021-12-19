@@ -1,17 +1,17 @@
 ﻿### GasTankComponent stuff.
 
 # Examine text showing pressure in tank.
-comp-gas-tank-examine = Pressure: [color=orange]{PRESSURE($pressure)}[/color].
+comp-gas-tank-examine = Давление: [color=orange]{PRESSURE($pressure)}[/color].
 
 # Examine text when internals are active.
-comp-gas-tank-connected = It's connected to an external component.
+comp-gas-tank-connected = Он подключен к внешнему компоненту.
 
 ## ControlVerb
-control-verb-open-control-panel-text = Open Control Panel
+control-verb-open-control-panel-text = Открыть панель управления
 
 ## UI
-gas-tank-window-label = Gas Tank
-gas-tank-window-internals-toggle-button = Toggle
-gas-tank-window-output-pressure-label = Output Pressure
-gas-tank-window-tank-pressure-text = Pressure: {$tankPressure} kPA
-gas-tank-window-internal-text = Internals: [color={$colorName}]{$status}[/color]
+gas-tank-window-label = Газовый баллон
+gas-tank-window-internals-toggle-button = Переключить
+gas-tank-window-output-pressure-label = Выходное давление
+gas-tank-window-tank-pressure-text = Давление: {$tankPressure} кПа
+gas-tank-window-internal-text = Внутреннее: [color={$colorName}]{$status}[/color]

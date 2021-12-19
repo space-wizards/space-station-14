@@ -1,4 +1,4 @@
-admin-player-actions-window-title = Player Actions Panel
-admin-player-actions-window-kick-text = Kick
-admin-player-actions-window-ahelp-text = AHelp
-admin-player-actions-window-respawn-text = Respawn
+admin-player-actions-window-title = Панель действий с игроком
+admin-player-actions-window-kick-text = Кикнуть
+admin-player-actions-window-ahelp-text = ПМ
+admin-player-actions-window-respawn-text = Переместить в лобби

@@ -1,2 +1,2 @@
-station-events-window-not-loaded-text = Not loaded
-station-events-window-random-text = Random
+station-events-window-not-loaded-text = Не загружено
+station-events-window-random-text = Случайное

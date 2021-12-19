@@ -1,1 +1,1 @@
-lung-behavior-gasp = Gasp
+lung-behavior-gasp = Задыхается

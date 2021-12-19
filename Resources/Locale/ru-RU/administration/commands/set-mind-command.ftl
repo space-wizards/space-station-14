@@ -1,4 +1,4 @@
-set-mind-command-description = Transfers a mind to the specified entity. The entity must have a {$requiredComponent}.
-set-mind-command-help-text = Usage: {$command} <entityUid> <username>
-set-mind-command-target-has-no-content-data-message = Target player does not have content data (wtf?)
-set-mind-command-target-has-no-mind-message = Target entity does not have a mind (did you forget to make sentient?)
+set-mind-command-description = Перемещает сознание в указанную сущность. Сущность должна иметь {$requiredComponent}.
+set-mind-command-help-text = Использование: {$command} <entityUid> <username>
+set-mind-command-target-has-no-content-data-message = Целевой игрок не имеет данных о содержимом (wtf?)
+set-mind-command-target-has-no-mind-message = Целевая сущность не обладает разумом (вы забыли сделать ее разумной?)

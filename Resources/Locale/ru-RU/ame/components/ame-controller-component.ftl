@@ -1,23 +1,23 @@
 ame-controller-component-interact-no-hands-text = У вас нет рук.
 ame-controller-component-interact-using-no-hands-text = У вас нет рук.
-ame-controller-component-interact-using-nothing-in-hands-text = You have nothing in your hand!
-ame-controller-component-interact-using-already-has-jar = The controller already has a jar loaded.
-ame-controller-component-interact-using-success = You insert the jar into the fuel slot.
-ame-controller-component-interact-using-fail = You can't put that in the controller...
+ame-controller-component-interact-using-nothing-in-hands-text = У вас в руках ничего нет!
+ame-controller-component-interact-using-already-has-jar = В контроллер уже установлен бак.
+ame-controller-component-interact-using-success = Вы вставляете бак в отверстие для топлива.
+ame-controller-component-interact-using-fail = Вы не можете поместить это в контроллер...
 
 ## UI
 
-ame-window-title = Antimatter Control Unit
-ame-window-engine-status-label = Engine Status:
-ame-window-engine-injection-status-not-injecting-label = Not Injecting
-ame-window-engine-injection-status-injecting-label = Injecting...
-ame-window-toggle-injection-button = Toggle Injection
-ame-window-fuel-status-label = Fuel Status:
-ame-window-fuel-not-inserted-text = No fuel inserted
-ame-window-injection-amount-label = Injection amount:
-ame-window-refresh-parts-button = Refresh Parts
-ame-window-core-count-label = Core count:
-ame-window-toggle-injection-button = Toggle Injection
-ame-window-eject-button = Eject
-ame-window-increase-fuel-button = Increase
-ame-window-decrease-fuel-button = Decrease
+ame-window-title = Блок управления антиматерией
+ame-window-engine-status-label = Состояние двигателя:
+ame-window-engine-injection-status-not-injecting-label = Не впрыскивает
+ame-window-engine-injection-status-injecting-label = Впрыскивание...
+ame-window-toggle-injection-button = Переключение впрыска
+ame-window-fuel-status-label = Состояние топлива:
+ame-window-fuel-not-inserted-text = Топливо не вставлено
+ame-window-injection-amount-label = Количество впрыска:
+ame-window-refresh-parts-button = Обновить детали
+ame-window-core-count-label = Количество ядер:
+ame-window-toggle-injection-button = Переключение впрыска
+ame-window-eject-button = Извлечь
+ame-window-increase-fuel-button = Увеличить
+ame-window-decrease-fuel-button = Уменьшить

@@ -1,5 +1,5 @@
-admin-announce-title = Make Announcement
-announcer-placeholder = Announcer
-announcement-placeholder = Announcement text
-announce-type-station = Station
-announce-type-server = Server
+admin-announce-title = Сделать объявление
+announcer-placeholder = Объявление
+announcement-placeholder = Текст объявления
+announce-type-station = Станция
+announce-type-server = Сервер

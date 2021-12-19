@@ -1,9 +1,9 @@
 ## AdminMenuWindow.xaml.cs
 
-admin-menu-title = Admin Menu
-admin-menu-admin-tab = Admin
-admin-menu-adminbus-tab = Adminbus
-admin-menu-atmos-tab = Atmos
-admin-menu-round-tab = Round
-admin-menu-server-tab = Server
-admin-menu-players-tab = Players
+admin-menu-title = Меню администратора
+admin-menu-admin-tab = Администратор
+admin-menu-adminbus-tab = Админбуз
+admin-menu-atmos-tab = Атмос
+admin-menu-round-tab = Раунд
+admin-menu-server-tab = Сервер
+admin-menu-players-tab = Игроки
