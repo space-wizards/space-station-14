@@ -92,8 +92,7 @@ namespace Content.Server.Administration
             {
                 var payload = new WebhookPayload()
                 {
-                    Username = senderSession.Name,
-                    Content = $"Channel: {msg.ChannelName}\nMessage: {escapedText}"
+                    Content = $"`[{msg.ChannelName}]` {senderSession.Name}: \"{escapedText}\""
                 };
                 var request = _httpClient.PostAsync(_webhookUrl,
                     new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json"));
@@ -121,7 +120,7 @@ namespace Content.Server.Administration
         [JsonObject(MemberSerialization.Fields)]
         private struct WebhookPayload
         {
-            [JsonProperty("username")] public string Username = null!;
+            [JsonProperty("username")] public string Username = "AHelp";
 
             [JsonProperty("content")] public string Content = null!;
         }
