@@ -38,9 +38,9 @@ namespace Content.Shared.Chemistry.Components
         /// <summary>
         ///     The temperature of the reagents in the solution.
         /// </summary>
-        [ViewVariables]
+        [ViewVariables(VVAccess.ReadWrite)]
         [DataField("temperature")]
-        public double Temperature { get; set; }
+        public double Temperature { get; set; } = 293.15;
 
         /// <summary>
         ///     The total heat capacity of all reagents in the solution.

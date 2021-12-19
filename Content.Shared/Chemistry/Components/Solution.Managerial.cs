@@ -58,6 +58,7 @@ namespace Content.Shared.Chemistry.Components
         /// <summary>
         ///     The total thermal energy of the reagents in the solution.
         /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
         public double ThermalEnergy {
             get { return Temperature * HeatCapacity; }
             set { Temperature = value / HeatCapacity; }
