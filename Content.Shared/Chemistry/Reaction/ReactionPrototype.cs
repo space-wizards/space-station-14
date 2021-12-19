@@ -31,6 +31,18 @@ namespace Content.Shared.Chemistry.Reaction
         public Dictionary<string, ReactantPrototype> Reactants = new();
 
         /// <summary>
+        ///     The minimum temperature the reaction can occur at.
+        /// </summary>
+        [DataField("minTemp")]
+        public double MinimumTemperature = 0.0d;
+
+        /// <summary>
+        ///     The maximum temperature the reaction can occur at.
+        /// </summary>
+        [DataField("maxTemp")]
+        public double MaximumTemperature = double.PositiveInfinity;
+
+        /// <summary>
         /// Reagents created when the reaction occurs.
         /// </summary>
         [DataField("products", customTypeSerializer:typeof(PrototypeIdDictionarySerializer<FixedPoint2, ReagentPrototype>))]
