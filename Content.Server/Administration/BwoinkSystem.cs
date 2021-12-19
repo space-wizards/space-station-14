@@ -27,11 +27,18 @@ namespace Content.Server.Administration
 
         private readonly HttpClient _httpClient = new();
         private string _webhookUrl = string.Empty;
+        private string _serverId = String.Empty;
 
         public override void Initialize()
         {
             base.Initialize();
             _config.OnValueChanged(CCVars.DiscordAHelpWebhook, OnWebhookChanged, true);
+            _config.OnValueChanged(CCVars.ServerId, OnServerIdChanged, true);
+        }
+
+        private void OnServerIdChanged(string obj)
+        {
+            _serverId = obj;
         }
 
         public override void Shutdown()
@@ -92,6 +99,7 @@ namespace Content.Server.Administration
             {
                 var payload = new WebhookPayload()
                 {
+                    Username = _serverId,
                     Content = $"`[{msg.ChannelName}]` {senderSession.Name}: \"{escapedText}\""
                 };
                 var request = _httpClient.PostAsync(_webhookUrl,
@@ -120,9 +128,9 @@ namespace Content.Server.Administration
         [JsonObject(MemberSerialization.Fields)]
         private struct WebhookPayload
         {
-            [JsonProperty("username")] public string Username = "AHelp";
+            [JsonProperty("username")] public string Username;
 
-            [JsonProperty("content")] public string Content = null!;
+            [JsonProperty("content")] public string Content;
         }
     }
 }
