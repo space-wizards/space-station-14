@@ -149,17 +149,11 @@ namespace Content.Server.Mind.Components
             }
             else if (!HasMind)
             {
-                var aliveText =
-                    $"[color=purple]{Loc.GetString("comp-mind-examined-catatonic", ("ent", Owner))}[/color]";
-
-                message.AddMarkup(aliveText);
+                message.AddMarkup($"[color=purple]{Loc.GetString("comp-mind-examined-catatonic", ("ent", Owner))}[/color]");
             }
             else if (Mind?.Session == null)
             {
-                var text =
-                    $"[color=yellow]{Loc.GetString("comp-mind-examined-ssd", ("ent", Owner))}[/color]";
-
-                message.AddMarkup(text);
+                message.AddMarkup($"[color=yellow]{Loc.GetString("comp-mind-examined-ssd", ("ent", Owner))}[/color]");
             }
         }
     }
