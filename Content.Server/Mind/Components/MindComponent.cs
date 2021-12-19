@@ -149,7 +149,7 @@ namespace Content.Server.Mind.Components
             }
             else if (!HasMind)
             {
-                message.AddMarkup($"[color=purple]{Loc.GetString("comp-mind-examined-catatonic", ("ent", Owner))}[/color]");
+                message.AddMarkup($"[color=mediumpurple]{Loc.GetString("comp-mind-examined-catatonic", ("ent", Owner))}[/color]");
             }
             else if (Mind?.Session == null)
             {
