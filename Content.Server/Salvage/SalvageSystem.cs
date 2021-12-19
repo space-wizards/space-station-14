@@ -1,7 +1,7 @@
 using Content.Server.Chat.Managers;
-using Content.Server.GameTicking;
 using Content.Shared.CCVar;
 using Content.Shared.Examine;
+using Content.Shared.GameTicking;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Robust.Server.Maps;
@@ -31,7 +31,6 @@ namespace Content.Server.Salvage
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
-        [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
 
@@ -49,14 +48,30 @@ namespace Content.Server.Salvage
             SubscribeLocalEvent<SalvageMagnetComponent, InteractHandEvent>(OnInteractHand);
             SubscribeLocalEvent<SalvageMagnetComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<SalvageMagnetComponent, ComponentShutdown>(OnMagnetRemoval);
-            SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRoundEnd);
+            SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoval);
+            SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundEnd);
         }
 
-        private void OnRoundEnd(GameRunLevelChangedEvent ev)
+        private void OnRoundEnd(RoundRestartCleanupEvent ev)
         {
-            if(ev.New == GameRunLevel.PostRound)
+            _salvageGridStates.Clear();
+        }
+
+        private void OnGridRemoval(GridRemovalEvent ev)
+        {
+            _salvageGridStates.Remove(ev.GridId);
+            foreach(var gridState in _salvageGridStates)
             {
-                _salvageGridStates.Clear();
+                foreach(var magnet in gridState.Value.ActiveMagnets)
+                {
+                    if (magnet.AttachedEntity == ev.EntityUid)
+                    {
+                        magnet.AttachedEntity = null;
+                        magnet.MagnetState = MagnetState.Inactive;
+                        Report("salvage-system-announcement-lost");
+                        return;
+                    }
+                }
             }
         }
 
@@ -133,17 +148,13 @@ namespace Content.Server.Salvage
                 case MagnetStateType.Inactive:
                     ShowPopup("salvage-system-report-activate-success", component, user);
                     var magnetTranform = EntityManager.GetComponent<TransformComponent>(component.Owner);
-                    SalvageGridState? gridState = null;
-                    if (_salvageGridStates.TryGetValue(magnetTranform.GridID, out gridState))
-                    {
-                        gridState.ActiveMagnets.Add(component);
-                    }
-                    else
+                    SalvageGridState? gridState;
+                    if (!_salvageGridStates.TryGetValue(magnetTranform.GridID, out gridState))
                     {
                         gridState = new SalvageGridState();
-                        gridState.ActiveMagnets.Add(component);
                         _salvageGridStates[magnetTranform.GridID] = gridState;
                     }
+                    gridState.ActiveMagnets.Add(component);
                     component.MagnetState = new MagnetState(MagnetStateType.Attaching, gridState.CurrentTime + AttachingTime);
                     Report("salvage-system-report-activate-success");
                     break;
