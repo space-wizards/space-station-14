@@ -121,6 +121,7 @@ namespace Content.Client.CharacterInterface
         private void _setOpenValue(SS14Window menu, bool value)
         {
             _gameHud.CharacterButtonDown = value;
+            menu.SetSize = (545, 400);
             if (value)
                 menu.OpenCentered();
             else

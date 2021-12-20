@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Shared.CharacterInfo;
 using Content.Shared.Objectives;
 using Robust.Client.GameObjects;
@@ -51,6 +51,7 @@ public class CharacterInfoSystem : EntitySystem
         comp.Control.SubText.Text = jobTitle;
 
         comp.Control.ObjectivesContainer.RemoveAllChildren();
+        
         foreach (var (groupId, objectiveConditions) in objectives)
         {
             var vbox = new BoxContainer
