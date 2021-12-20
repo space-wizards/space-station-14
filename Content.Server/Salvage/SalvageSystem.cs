@@ -1,4 +1,5 @@
 using Content.Server.Chat.Managers;
+using Content.Server.GameTicking;
 using Content.Shared.CCVar;
 using Content.Shared.Examine;
 using Content.Shared.GameTicking;
@@ -49,17 +50,27 @@ namespace Content.Server.Salvage
             SubscribeLocalEvent<SalvageMagnetComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<SalvageMagnetComponent, ComponentShutdown>(OnMagnetRemoval);
             SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoval);
-            SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundEnd);
+
+            // Can't use RoundRestartCleanupEvent, I need to clean up before the grid, and components are gone to prevent the announcements
+            SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRoundEnd);
         }
 
-        private void OnRoundEnd(RoundRestartCleanupEvent ev)
+        private void OnRoundEnd(GameRunLevelChangedEvent ev)
         {
-            _salvageGridStates.Clear();
+            if(ev.New != GameRunLevel.InRound)
+            {
+                _salvageGridStates.Clear();
+            }
         }
 
         private void OnGridRemoval(GridRemovalEvent ev)
         {
-            _salvageGridStates.Remove(ev.GridId);
+            // If we ever want to give magnets names, and announce them individually, we would need to loop this, before removing it.
+            if (_salvageGridStates.Remove(ev.GridId))
+            {
+                Report("salvage-system-announcement-spawn-magnet-lost");
+                // For the very unlikely possibility that the salvage magnet was on a salvage, we will not return here
+            }
             foreach(var gridState in _salvageGridStates)
             {
                 foreach(var magnet in gridState.Value.ActiveMagnets)
@@ -78,13 +89,14 @@ namespace Content.Server.Salvage
         private void OnMagnetRemoval(EntityUid uid, SalvageMagnetComponent component, ComponentShutdown args)
         {
             if (component.MagnetState.StateType == MagnetStateType.Inactive) return;
-            Report("salvage-system-announcement-spawn-magnet-lost");
 
             var magnetTranform = EntityManager.GetComponent<TransformComponent>(component.Owner);
-            if (_salvageGridStates.TryGetValue(magnetTranform.GridID, out var salvageGridState))
+            if (!_salvageGridStates.TryGetValue(magnetTranform.GridID, out var salvageGridState))
             {
-                salvageGridState.ActiveMagnets.Remove(component);
+                return;
             }
+            salvageGridState.ActiveMagnets.Remove(component);
+            Report("salvage-system-announcement-spawn-magnet-lost");
             if (component.AttachedEntity.HasValue)
             {
                 SafeDeleteSalvage(component.AttachedEntity.Value);
