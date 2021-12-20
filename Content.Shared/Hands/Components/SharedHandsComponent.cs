@@ -111,6 +111,9 @@ namespace Content.Shared.Hands.Components
             var hands = new List<HandVisualState>();
             foreach (var hand in Hands)
             {
+                if (hand.HeldEntity == null)
+                    continue;
+
                 if (!entMan.TryGetComponent(hand.HeldEntity, out SharedItemComponent? item) || item.RsiPath == null)
                     continue;
 
@@ -230,8 +233,8 @@ namespace Content.Shared.Hands.Components
 
         public bool TryGetActiveHeldEntity(out EntityUid heldEntity)
         {
-            heldEntity = GetActiveHand()?.HeldEntity ?? EntityUid.Invalid;
-            return !heldEntity.Valid;
+            heldEntity = GetActiveHand()?.HeldEntity ?? default;
+            return heldEntity != null;
         }
 
         public bool IsHolding(EntityUid entity)
@@ -412,7 +415,7 @@ namespace Content.Shared.Hands.Components
         /// </summary>
         private bool CanRemoveHeldEntityFromHand(Hand hand)
         {
-            if (!hand.HeldEntity.Valid)
+            if (hand.HeldEntity == null)
                 return false;
 
             var heldEntity = hand.HeldEntity;
@@ -443,7 +446,7 @@ namespace Content.Shared.Hands.Components
         /// </summary>
         private void RemoveHeldEntityFromHand(Hand hand)
         {
-            if (!hand.HeldEntity.Valid)
+            if (hand.HeldEntity == null)
                 return;
 
             var heldEntity = hand.HeldEntity;
@@ -534,7 +537,7 @@ namespace Content.Shared.Hands.Components
 
         private bool CanPutHeldEntityIntoContainer(Hand hand, IContainer targetContainer, bool checkActionBlocker)
         {
-            if (!hand.HeldEntity.Valid)
+            if (hand.HeldEntity == null)
                 return false;
 
             var heldEntity = hand.HeldEntity;
@@ -553,7 +556,7 @@ namespace Content.Shared.Hands.Components
         /// </summary>
         private void PutHeldEntityIntoContainer(Hand hand, IContainer targetContainer)
         {
-            if (!hand.HeldEntity.Valid)
+            if (hand.HeldEntity == null)
                 return;
 
             var heldEntity = hand.HeldEntity;

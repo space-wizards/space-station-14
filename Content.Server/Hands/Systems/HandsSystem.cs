@@ -33,6 +33,7 @@ namespace Content.Server.Hands.Systems
     [UsedImplicitly]
     internal sealed class HandsSystem : SharedHandsSystem
     {
+        [Dependency] private readonly InteractionSystem _interactionSystem = default!;
         [Dependency] private readonly StackSystem _stackSystem = default!;
         [Dependency] private readonly HandVirtualItemSystem _virtualItemSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;

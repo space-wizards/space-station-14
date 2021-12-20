@@ -252,7 +252,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         /// <param name="eventArgs"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
+        public bool UseEntity(UseEntityEventArgs eventArgs)
         {
             EjectAllSlots();
             Dirty();
@@ -260,7 +260,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             return true;
         }
 
-        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
+        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
             return TryInsertBullet(eventArgs.User, eventArgs.Using);
         }

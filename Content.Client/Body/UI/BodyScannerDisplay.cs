@@ -104,7 +104,7 @@ namespace Content.Client.Body.UI
 
         public void UpdateDisplay(EntityUid entity)
         {
-            if(!entity.Valid)
+            if(entity == null)
                 return;
 
             _currentEntity = entity;
@@ -125,7 +125,12 @@ namespace Content.Client.Body.UI
 
         public void BodyPartOnItemSelected(ItemListSelectedEventArgs args)
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedBodyComponent>(_currentEntity, out var body))
+            if (_currentEntity == null)
+                return;
+
+            var body = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<SharedBodyComponent>(_currentEntity);
+
+            if (body == null)
             {
                 return;
             }

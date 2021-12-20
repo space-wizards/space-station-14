@@ -134,9 +134,12 @@ namespace Content.Server.PowerCell.Components
             if (cell == null || !CanRemoveCell) return null;
             if (!_cellContainer.Remove(cell.Owner)) return null;
             //Dirty();
-            if (!_entities.TryGetComponent(user, out HandsComponent? hands) || !hands.PutInHand(_entities.GetComponent<ItemComponent>(cell.Owner)))
+            if (user != null)
             {
-                _entities.GetComponent<TransformComponent>(cell.Owner).Coordinates = _entities.GetComponent<TransformComponent>(user).Coordinates;
+                if (!_entities.TryGetComponent(user, out HandsComponent? hands) || !hands.PutInHand(_entities.GetComponent<ItemComponent>(cell.Owner)))
+                {
+                    _entities.GetComponent<TransformComponent>(cell.Owner).Coordinates = _entities.GetComponent<TransformComponent>(user).Coordinates;
+                }
             }
             else
             {

@@ -99,21 +99,21 @@ namespace Content.Server.Hands.Components
             var source = @event.Source;
             var target = @event.Target;
 
-            if (source.Valid)
+            if (source != null)
             {
                 SoundSystem.Play(Filter.Pvs(source), _disarmedSound.GetSound(), source, AudioHelpers.WithVariation(0.025f));
 
-                if (target.Valid)
+                if (target != null)
                 {
                     if (ActiveHand != null && Drop(ActiveHand, false))
                     {
-                        source.PopupMessageOtherClients(Loc.GetString("hands-component-disarm-success-others-message", ("disarmer", _entities.GetComponent<MetaDataComponent>(source).EntityName), ("disarmed", _entities.GetComponent<MetaDataComponent>(target).EntityName)));
-                        source.PopupMessageCursor(Loc.GetString("hands-component-disarm-success-message", ("disarmed", _entities.GetComponent<MetaDataComponent>(target).EntityName)));
+                        source.PopupMessageOtherClients(Loc.GetString("hands-component-disarm-success-others-message", ("disarmer", Name: _entities.GetComponent<MetaDataComponent>(source).EntityName), ("disarmed", Name: _entities.GetComponent<MetaDataComponent>(target).EntityName)));
+                        source.PopupMessageCursor(Loc.GetString("hands-component-disarm-success-message", ("disarmed", Name: _entities.GetComponent<MetaDataComponent>(target).EntityName)));
                     }
                     else
                     {
-                        source.PopupMessageOtherClients(Loc.GetString("hands-component-shove-success-others-message", ("shover", _entities.GetComponent<MetaDataComponent>(source).EntityName), ("shoved", _entities.GetComponent<MetaDataComponent>(target).EntityName)));
-                        source.PopupMessageCursor(Loc.GetString("hands-component-shove-success-message", ("shoved", _entities.GetComponent<MetaDataComponent>(target).EntityName)));
+                        source.PopupMessageOtherClients(Loc.GetString("hands-component-shove-success-others-message", ("shover", Name: _entities.GetComponent<MetaDataComponent>(source).EntityName), ("shoved", Name: _entities.GetComponent<MetaDataComponent>(target).EntityName)));
+                        source.PopupMessageCursor(Loc.GetString("hands-component-shove-success-message", ("shoved", Name: _entities.GetComponent<MetaDataComponent>(target).EntityName)));
                     }
                 }
             }

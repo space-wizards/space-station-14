@@ -12,7 +12,7 @@ namespace Content.Server.AI.Utility.Considerations.ActionBlocker
         {
             var self = context.GetState<SelfState>().GetValue();
 
-            if (!self.Valid || !EntitySystem.Get<ActionBlockerSystem>().CanMove(self))
+            if (self == null || !EntitySystem.Get<ActionBlockerSystem>().CanMove(self))
             {
                 return 0.0f;
             }

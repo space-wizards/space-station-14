@@ -39,7 +39,7 @@ namespace Content.Server.Storage.Components
 
             var lockerEnt = _robustRandom.Pick(lockers);
 
-            if (!lockerEnt.Valid) return; // No valid lockers anywhere.
+            if (lockerEnt == null) return; // No valid lockers anywhere.
 
             var locker = _entMan.GetComponent<EntityStorageComponent>(lockerEnt);
 

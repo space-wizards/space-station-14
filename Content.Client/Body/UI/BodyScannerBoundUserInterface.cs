@@ -14,6 +14,9 @@ namespace Content.Client.Body.UI
         [ViewVariables]
         private BodyScannerDisplay? _display;
 
+        [ViewVariables]
+        private EntityUid _entity;
+
         public BodyScannerBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey) { }
 
         protected override void Open()
@@ -40,7 +43,7 @@ namespace Content.Client.Body.UI
                 throw new ArgumentException($"Received an invalid entity with id {scannerState.Uid} for body scanner with id {Owner.Owner} at {entMan.GetComponent<TransformComponent>(Owner.Owner).MapPosition}");
             }
 
-            _display?.UpdateDisplay(scannerState.Uid);
+            _display?.UpdateDisplay(_entity);
         }
 
         protected override void Dispose(bool disposing)

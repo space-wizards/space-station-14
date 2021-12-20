@@ -468,7 +468,7 @@ namespace Content.Shared.Body.Components
             var i = 0;
             foreach (var (part, slot) in SlotParts)
             {
-                parts[i] = (slot.Id, part.Owner);
+                parts[i] = (slot.Id, Owner: part.Owner);
                 i++;
             }
 

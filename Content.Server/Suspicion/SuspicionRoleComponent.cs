@@ -161,7 +161,7 @@ namespace Content.Server.Suspicion
                     continue;
                 }
 
-                allies.Add((role.Role!.Mind.CharacterName, role.Owner));
+                allies.Add((role.Role!.Mind.CharacterName, Uid: role.Owner));
             }
 
             return new SuspicionRoleComponentState(Role?.Name, Role?.Antagonist, allies.ToArray());

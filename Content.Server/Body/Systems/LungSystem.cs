@@ -115,6 +115,8 @@ public class LungSystem : EntitySystem
         // TODO Jesus Christ make this event based.
         if (mech.Body != null &&
             EntityManager.TryGetComponent((mech.Body).Owner, out InternalsComponent? internals) &&
+            internals.BreathToolEntity != null &&
+            internals.GasTankEntity != null &&
             EntityManager.TryGetComponent(internals.BreathToolEntity, out BreathToolComponent? breathTool) &&
             breathTool.IsFunctional &&
             EntityManager.TryGetComponent(internals.GasTankEntity, out GasTankComponent? gasTank))

@@ -40,16 +40,16 @@ namespace Content.Server.Stunnable
             var source = args.Source;
             var target = args.Target;
 
-            if (source.Valid)
+            if (source != null)
             {
                 var knock = EntityManager.GetComponent<KnockedDownComponent>(uid);
                 SoundSystem.Play(Filter.Pvs(source), knock.StunAttemptSound.GetSound(), source, AudioHelpers.WithVariation(0.025f));
 
-                if (target.Valid)
+                if (target != null)
                 {
                     // TODO: Use PopupSystem
-                    source.PopupMessageOtherClients(Loc.GetString("stunned-component-disarm-success-others", ("source", EntityManager.GetComponent<MetaDataComponent>(source).EntityName), ("target", EntityManager.GetComponent<MetaDataComponent>(target).EntityName)));
-                    source.PopupMessageCursor(Loc.GetString("stunned-component-disarm-success", ("target", EntityManager.GetComponent<MetaDataComponent>(target).EntityName)));
+                    source.PopupMessageOtherClients(Loc.GetString("stunned-component-disarm-success-others", ("source", Name: EntityManager.GetComponent<MetaDataComponent>(source).EntityName), ("target", Name: EntityManager.GetComponent<MetaDataComponent>(target).EntityName)));
+                    source.PopupMessageCursor(Loc.GetString("stunned-component-disarm-success", ("target", Name: EntityManager.GetComponent<MetaDataComponent>(target).EntityName)));
                 }
             }
 

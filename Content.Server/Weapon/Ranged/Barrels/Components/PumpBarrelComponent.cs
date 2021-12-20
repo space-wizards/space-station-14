@@ -226,13 +226,13 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             return false;
         }
 
-        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
+        public bool UseEntity(UseEntityEventArgs eventArgs)
         {
             Cycle(true);
             return true;
         }
 
-        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
+        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
             return TryInsertBullet(eventArgs);
         }

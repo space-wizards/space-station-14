@@ -235,7 +235,7 @@ namespace Content.Server.RCD.Systems
             mode = (++mode) % _modes.Length; //Then, do a rollover on the value so it doesnt hit an invalid state
             rcd.Mode = (RcdMode) mode; //Finally, cast the newly acquired int mode to an RCDmode so we can use it.
 
-            if (user.Valid)
+            if (user != null)
             {
                 var msg = Loc.GetString("rcd-component-change-mode", ("mode", rcd.Mode.ToString()));
                 rcd.Owner.PopupMessage(user, msg); //Prints an overhead message above the RCD

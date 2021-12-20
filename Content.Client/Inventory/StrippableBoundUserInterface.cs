@@ -29,7 +29,7 @@ namespace Content.Client.Inventory
         {
             base.Open();
 
-            _strippingMenu = new StrippingMenu($"{Loc.GetString("strippable-bound-user-interface-stripping-menu-title",("ownerName", IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Owner).EntityName))}");
+            _strippingMenu = new StrippingMenu($"{Loc.GetString("strippable-bound-user-interface-stripping-menu-title",("ownerName", Name: IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Owner).EntityName))}");
 
             _strippingMenu.OnClose += Close;
             _strippingMenu.OpenCentered();

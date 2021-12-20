@@ -25,7 +25,7 @@ namespace Content.Server.AI.Utility.Actions.Idle
         {
             var lastStorage = context.GetState<LastOpenedStorageState>().GetValue();
 
-            if (!lastStorage.Valid)
+            if (lastStorage == null)
             {
                 ActionOperators = new Queue<AiOperator>(new AiOperator[]
                 {

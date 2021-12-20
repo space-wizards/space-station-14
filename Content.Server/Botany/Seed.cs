@@ -280,7 +280,8 @@ namespace Content.Server.Botany
 
         public IEnumerable<EntityUid> AutoHarvest(EntityCoordinates position, int yieldMod = 1)
         {
-            if (position.IsValid(IoCManager.Resolve<IEntityManager>()) && ProductPrototypes.Count > 0)
+            if (position.IsValid(IoCManager.Resolve<IEntityManager>()) && ProductPrototypes != null &&
+                ProductPrototypes.Count > 0)
                 return GenerateProduct(position, yieldMod);
 
             return Enumerable.Empty<EntityUid>();
@@ -290,10 +291,10 @@ namespace Content.Server.Botany
         {
             AddToDatabase();
 
-            if (!user.Valid)
+            if (user == null)
                 return Enumerable.Empty<EntityUid>();
 
-            if (ProductPrototypes.Count == 0 || Yield <= 0)
+            if (ProductPrototypes == null || ProductPrototypes.Count == 0 || Yield <= 0)
             {
                 user.PopupMessageCursor(Loc.GetString("botany-harvest-fail-message"));
                 return Enumerable.Empty<EntityUid>();
@@ -311,8 +312,14 @@ namespace Content.Server.Botany
                 if (yieldMod < 0)
                 {
                     yieldMod = 1;
+                    totalYield = Yield;
                 }
-                totalYield = Math.Max(1, Yield * yieldMod);
+                else
+                {
+                    totalYield = Yield * yieldMod;
+                }
+
+                totalYield = Math.Max(1, totalYield);
             }
 
             var random = IoCManager.Resolve<IRobustRandom>();

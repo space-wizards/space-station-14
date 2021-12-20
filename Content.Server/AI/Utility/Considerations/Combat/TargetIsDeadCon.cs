@@ -12,7 +12,7 @@ namespace Content.Server.AI.Utility.Considerations.Combat
         {
             var target = context.GetState<TargetEntityState>().GetValue();
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(target, out MobStateComponent? mobState))
+            if (target == null || !IoCManager.Resolve<IEntityManager>().TryGetComponent(target, out MobStateComponent? mobState))
             {
                 return 0.0f;
             }

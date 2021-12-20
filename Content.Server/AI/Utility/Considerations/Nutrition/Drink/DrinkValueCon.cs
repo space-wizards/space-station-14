@@ -13,7 +13,8 @@ namespace Content.Server.AI.Utility.Considerations.Nutrition.Drink
         {
             var target = context.GetState<TargetEntityState>().GetValue();
 
-            if (IoCManager.Resolve<IEntityManager>().Deleted(target)
+            if (target == null
+                || IoCManager.Resolve<IEntityManager>().Deleted(target)
                 || !EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(target, DrinkComponent.DefaultSolutionName, out var drink))
             {
                 return 0.0f;

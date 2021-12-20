@@ -650,7 +650,7 @@ namespace Content.Shared.Interaction
         /// <param name="used"></param>
         public void TryUseInteraction(EntityUid user, EntityUid used, bool altInteract = false)
         {
-            if (user.Valid && used.Valid && _actionBlockerSystem.CanUse(user))
+            if (user != null && used != null && _actionBlockerSystem.CanUse(user))
             {
                 if (altInteract)
                     AltInteract(user, used);
@@ -820,7 +820,7 @@ namespace Content.Shared.Interaction
         /// </summary>
         public bool TryDroppedInteraction(EntityUid user, EntityUid item)
         {
-            if (!user.Valid || !item.Valid || !_actionBlockerSystem.CanDrop(user)) return false;
+            if (user == null || item == null || !_actionBlockerSystem.CanDrop(user)) return false;
 
             DroppedInteraction(user, item);
             return true;

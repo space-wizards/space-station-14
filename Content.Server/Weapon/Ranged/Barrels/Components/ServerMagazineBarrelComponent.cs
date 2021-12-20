@@ -248,7 +248,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             _appearanceComponent?.SetData(AmmoVisuals.AmmoMax, Capacity);
         }
 
-        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
+        public bool UseEntity(UseEntityEventArgs eventArgs)
         {
             // Behavior:
             // If bolt open just close it
@@ -305,7 +305,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
             _chamberContainer.Insert(nextRound);
 
-            if (_autoEjectMag && magazine.Valid && _entities.GetComponent<RangedMagazineComponent>(magazine).ShotsLeft == 0)
+            if (_autoEjectMag && magazine != null && _entities.GetComponent<RangedMagazineComponent>(magazine).ShotsLeft == 0)
             {
                 SoundSystem.Play(Filter.Pvs(Owner), _soundAutoEject.GetSound(), Owner, AudioParams.Default.WithVolume(-2));
 
@@ -391,7 +391,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             UpdateAppearance();
         }
 
-        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
+        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (CanInsertMagazine(eventArgs.User, eventArgs.Using, quiet: false))
             {
