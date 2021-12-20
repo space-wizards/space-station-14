@@ -1,11 +1,4 @@
 Entries:
-- author: CrudeWax
-  changes:
-  - {message: Added omnizine. A reagent which heals any type of damage when ingested.,
-    type: Add}
-  - {message: A small amount of Omnizine can be found in warm donk pockets., type: Add}
-  id: 251
-  time: '2021-07-03T01:16:21.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Reduce potted plant bounding box, type: Tweak}
@@ -2871,3 +2864,8 @@ Entries:
   - {message: Added kangaroos, type: Add}
   id: 752
   time: '2021-12-20T06:16:25.0000000+00:00'
+- author: wrexbe
+  changes:
+  - {message: cloner now tells you why it can't eject, type: Add}
+  id: 753
+  time: '2021-12-20T06:28:50.0000000+00:00'
