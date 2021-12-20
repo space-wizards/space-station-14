@@ -7,7 +7,7 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.IoC;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Network;
-using Robust.Shared.Utility.Markup;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Administration.UI
 {
@@ -46,7 +46,9 @@ namespace Content.Client.Administration.UI
 
         public void ReceiveLine(string text)
         {
-            TextOutput.AddMessage(Basic.RenderMarkup(text));
+            var formatted = new FormattedMessage(1);
+            formatted.AddMarkup(text);
+            TextOutput.AddMessage(formatted);
         }
     }
 }

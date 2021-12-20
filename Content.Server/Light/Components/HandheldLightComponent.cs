@@ -22,7 +22,6 @@ using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
-using Robust.Shared.Utility.Markup;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Light.Components
@@ -84,7 +83,7 @@ namespace Content.Server.Light.Components
             return true;
         }
 
-        void IExamine.Examine(FormattedMessage.Builder message, bool inDetailsRange)
+        void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
             if (Activated)
             {
