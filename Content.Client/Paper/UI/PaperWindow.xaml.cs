@@ -4,7 +4,6 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Utility;
-using Robust.Shared.Utility.Markup;
 
 namespace Content.Client.Paper.UI
 {
@@ -22,9 +21,9 @@ namespace Content.Client.Paper.UI
             {
                 Input.Visible = true;
             }
-            var msg = new Basic();
+            var msg = new FormattedMessage();
             msg.AddMarkupPermissive(state.Text);
-            Label.SetMessage(msg.Render());
+            Label.SetMessage(msg);
         }
     }
 }
