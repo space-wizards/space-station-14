@@ -51,7 +51,6 @@ public class CharacterInfoSystem : EntitySystem
         comp.Control.SubText.Text = jobTitle;
 
         comp.Control.ObjectivesContainer.RemoveAllChildren();
-        
         foreach (var (groupId, objectiveConditions) in objectives)
         {
             var vbox = new BoxContainer
