@@ -25,17 +25,9 @@ namespace Content.Server.Chemistry.Components.SolutionManager
         /// <summary>
         /// The maximum amount that can be transferred to the solution at once
         /// </summary>
-        [DataField("maxrefill")]
+        [DataField("maxRefill")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public FixedPoint2 MaxRefill { get; set; } = FixedPoint2.New(0);
-
-        /// <summary>
-        /// Does this item have a max refill set?
-        /// </summary>
-        [DataField("cappedfill")]
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool CappedFill { get; set; } = false;
-
+        public FixedPoint2? MaxRefill { get; set; } = null;
 
 
     }

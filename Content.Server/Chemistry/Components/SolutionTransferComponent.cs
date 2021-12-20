@@ -136,9 +136,9 @@ namespace Content.Server.Chemistry.Components
             {
                 var tankTransferAmount = tank.TransferAmount;
 
-                if (_entities.TryGetComponent(Owner, out RefillableSolutionComponent? refill) && refill.CappedFill == true)
+                if (_entities.TryGetComponent(Owner, out RefillableSolutionComponent? refill) && refill.MaxRefill != null)
                 {
-                    tankTransferAmount = FixedPoint2.Min(tankTransferAmount, refill.MaxRefill);
+                    tankTransferAmount = FixedPoint2.Min(tankTransferAmount, (FixedPoint2) refill.MaxRefill);
                 }
 
                 var transferred = DoTransfer(eventArgs.User, target, targetDrain, Owner, ownerRefill, tankTransferAmount);
@@ -160,9 +160,9 @@ namespace Content.Server.Chemistry.Components
             {
                 var transferAmount = TransferAmount;
 
-                if (_entities.TryGetComponent(target, out RefillableSolutionComponent? refill) && refill.CappedFill == true)
+                if (_entities.TryGetComponent(target, out RefillableSolutionComponent? refill) && refill.MaxRefill != null)
                 {
-                    transferAmount = FixedPoint2.Min(transferAmount, refill.MaxRefill);
+                    transferAmount = FixedPoint2.Min(transferAmount, (FixedPoint2) refill.MaxRefill);
                 }
 
                 var transferred = DoTransfer(eventArgs.User, Owner, ownerDrain, target, targetRefill, transferAmount);

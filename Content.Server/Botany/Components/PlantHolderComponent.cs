@@ -733,7 +733,6 @@ namespace Content.Server.Botany.Components
             {
                 var amount = FixedPoint2.New(1);
 
-                var sprayed = true;
                 var targetEntity = Owner;
                 var solutionEntity = usingItem;
 
@@ -751,8 +750,7 @@ namespace Content.Server.Botany.Components
                     return true;
                 }
 
-                user.PopupMessageCursor(Loc.GetString(
-                    sprayed ? "plant-holder-component-spray-message" : "plant-holder-component-transfer-message",
+                user.PopupMessageCursor(Loc.GetString("plant-holder-component-spray-message",
                     ("owner", Owner),
                     ("amount", split.TotalVolume)));
 
