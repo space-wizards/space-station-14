@@ -144,7 +144,9 @@ namespace Content.Server.GameTicking
                 }
             }
 
-            var startAttempt = new RoundStartAttemptEvent(readyPlayers.ToArray(), force);
+            var origReadyPlayers = readyPlayers.ToArray();
+
+            var startAttempt = new RoundStartAttemptEvent(origReadyPlayers, force);
             RaiseLocalEvent(startAttempt);
 
             var presetTitle = _preset != null ? Loc.GetString(_preset.ModeTitle) : string.Empty;
@@ -193,7 +195,7 @@ namespace Content.Server.GameTicking
             var assignedJobs = AssignJobs(readyPlayers, profiles);
 
             // For players without jobs, give them the overflow job if they have that set...
-            foreach (var player in readyPlayers)
+            foreach (var player in origReadyPlayers)
             {
                 if (assignedJobs.ContainsKey(player))
                 {
@@ -516,7 +518,7 @@ namespace Content.Server.GameTicking
     /// <summary>
     ///     Event raised before readied up players are spawned and given jobs by the GameTicker.
     ///     You can use this to spawn people off-station, like in the case of nuke ops or wizard.
-    ///     Remove the players you spawned from the PlayerPool.
+    ///     Remove the players you spawned from the PlayerPool and call <see cref="GameTicker.PlayerJoinGame"/> on them.
     /// </summary>
     public class RulePlayerSpawningEvent
     {
@@ -524,6 +526,7 @@ namespace Content.Server.GameTicking
         ///     Pool of players to be spawned.
         ///     If you want to handle a specific player being spawned, remove it from this list and do what you need.
         /// </summary>
+        /// <remarks>If you spawn a player by yourself from this event, don't forget to call <see cref="GameTicker.PlayerJoinGame"/> on them.</remarks>
         public List<IPlayerSession> PlayerPool { get; }
         public IReadOnlyDictionary<NetUserId, HumanoidCharacterProfile> Profiles { get; }
         public bool Forced { get; }
