@@ -122,7 +122,10 @@ namespace Content.Client.CharacterInterface
         private void _setOpenValue(SS14Window menu, bool value)
         {
             _gameHud.CharacterButtonDown = value;
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of 6121df12c (Add more debug logging to admin logs)
             if (value)
                 menu.OpenCentered();
             else
