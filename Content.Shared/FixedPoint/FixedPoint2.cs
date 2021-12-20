@@ -1,6 +1,7 @@
 using System;
 using System.Globalization;
 using System.Linq;
+using Newtonsoft.Json;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.FixedPoint
@@ -290,5 +291,21 @@ namespace Content.Shared.FixedPoint
 
             return acc;
         }
+    }
+
+    public class FixedPointJsonConverter : JsonConverter<FixedPoint2>
+    {
+        public override void WriteJson(JsonWriter writer, FixedPoint2 value, JsonSerializer serializer)
+        {
+            writer.WriteValue(value.Float());
+        }
+
+        public override FixedPoint2 ReadJson(JsonReader reader, Type objectType, FixedPoint2 existingValue, bool hasExistingValue,
+            JsonSerializer serializer)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool CanRead => false;
     }
 }

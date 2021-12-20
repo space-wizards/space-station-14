@@ -1,7 +1,8 @@
 using System.IO;
 using System.Linq;
-using System.Text.Json;
 using Content.Shared.Chemistry.Reaction;
+using Content.Shared.FixedPoint;
+using Newtonsoft.Json;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 
@@ -19,6 +20,7 @@ public class ReactionJsonGenerator
                 .Select(x => new ReactionEntry(x))
                 .ToDictionary(x => x.Id, x => x);
 
-        file.Write(JsonSerializer.Serialize(reactions));
+        file.Write(JsonConvert.SerializeObject(reactions, Formatting.Indented, new FixedPointJsonConverter()));
     }
 }
+

@@ -1,8 +1,10 @@
 using System.IO;
 using System.Linq;
-using System.Text.Json;
+using Content.Server.Administration.Logs.Converters;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
+using Newtonsoft.Json;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 
@@ -33,6 +35,6 @@ public class ChemistryJsonGenerator
             }
         }
 
-        file.Write(JsonSerializer.Serialize(prototypes));
+        file.Write(JsonConvert.SerializeObject(prototypes, Formatting.Indented, new FixedPointJsonConverter()));
     }
 }
