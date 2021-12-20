@@ -3,16 +3,16 @@
   alias:
     - extended
     - shittersafari
-  name: Extended
+  name: extended-title
   showInVote: true
-  description: No antagonists, have fun!
+  description: extended-description
 
 - type: gamePreset
   id: Sandbox
   alias:
     - sandbox
-  name: Sandbox
-  description: No stress, build something!
+  name: sandbox-title
+  description: sandbox-description
   showInVote: true
   rules:
     - Sandbox
@@ -22,7 +22,7 @@
   alias:
     - traitor
   name: traitor-title
-  description: There are traitors among us...
+  description: traitor-description
   showInVote: true
   rules:
     - Traitor
@@ -32,8 +32,8 @@
   alias:
     - suspicion
     - sus
-  name: mode-suspicion
-  description: Suspicion on the Space Station. There are traitors on board... Can you kill them before they kill you?
+  name: suspicion-title
+  description: suspicion-description
   showInVote: true
   rules:
     - Suspicion
@@ -43,8 +43,8 @@
   alias:
     - deathmatch
     - dm
-  name: DeathMatch
-  description: Kill anything that moves!
+  name: death-match-title
+  description: death-match-description
   rules:
     - DeathMatch
 
