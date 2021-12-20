@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
+using Content.Server.Clothing.Components;
 using Content.Server.Hands.Components;
-using Content.Server.Items;
 using Content.Server.Weapon.Ranged.Ammunition.Components;
 using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.Examine;
