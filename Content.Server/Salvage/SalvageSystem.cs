@@ -189,8 +189,8 @@ namespace Content.Server.Salvage
             {
                 if (player.AttachedEntity.HasValue)
                 {
-                    var playerTranform = EntityManager.GetComponent<TransformComponent>(player.AttachedEntity.Value);
-                    playerTranform.AttachParent(parentTransform);
+                    var playerTransform = EntityManager.GetComponent<TransformComponent>(player.AttachedEntity.Value);
+                    playerTransform.AttachParent(parentTransform);
                 }
             }
             EntityManager.QueueDeleteEntity(salvage);
