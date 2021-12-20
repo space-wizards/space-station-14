@@ -13,7 +13,6 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using Robust.Shared.Utility.Markup;
 
 namespace Content.Server.Weapon.Ranged.Ammunition.Components
 {
@@ -157,7 +156,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             EntitySystem.Get<EffectSystem>().CreateParticle(message);
         }
 
-        public void Examine(FormattedMessage.Builder message, bool inDetailsRange)
+        public void Examine(FormattedMessage message, bool inDetailsRange)
         {
             var text = Loc.GetString("ammo-component-on-examine",("caliber", Caliber));
             message.AddMarkup(text);
