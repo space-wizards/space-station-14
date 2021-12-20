@@ -182,13 +182,15 @@ namespace Content.Server.Salvage
                 Logger.ErrorS("salvage", "Salvage entity was missing transform component");
                 return;
             }
+
+            var parentTransform = salvageTransform.Parent!;
             //TODO: Figure out how to delete a grid with players, and ghosts on it without crashing anything.
-            foreach(var player in Filter.Empty().AddInGrid(salvageTransform.GridID, EntityManager).Recipients)
+            foreach (var player in Filter.Empty().AddInGrid(salvageTransform.GridID, EntityManager).Recipients)
             {
                 if (player.AttachedEntity.HasValue)
                 {
                     var playerTranform = EntityManager.GetComponent<TransformComponent>(player.AttachedEntity.Value);
-                    playerTranform.AttachParent(salvageTransform.Parent!);
+                    playerTranform.AttachParent(parentTransform);
                 }
             }
             EntityManager.QueueDeleteEntity(salvage);
