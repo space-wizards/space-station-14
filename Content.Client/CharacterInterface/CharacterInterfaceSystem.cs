@@ -48,8 +48,11 @@ namespace Content.Client.CharacterInterface
             if (comp.UIComponents.Count == 0)
                 return;
 
-            comp.Window = new CharacterInterfaceComponent.CharacterWindow(comp.UIComponents);
-            comp.Window.MinSize = (545, 400);
+            comp.Window = new CharacterInterfaceComponent.CharacterWindow(comp.UIComponents)
+            {
+                MinSize = (545, 400)
+            };
+            
             comp.Window.OnClose += () => _gameHud.CharacterButtonDown = false;
         }
 
