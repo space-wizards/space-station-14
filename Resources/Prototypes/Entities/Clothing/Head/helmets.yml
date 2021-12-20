@@ -45,6 +45,9 @@
   - type: Clothing
     sprite: Clothing/Head/Helmets/eva.rsi
   - type: IngestionBlocker
+  - type: PressureProtection
+    highPressureMultiplier: 0.80
+    lowPressureMultiplier: 55
 
 - type: entity
   parent: ClothingHeadBase
