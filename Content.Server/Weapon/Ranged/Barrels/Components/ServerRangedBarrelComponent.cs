@@ -27,7 +27,6 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using Robust.Shared.Utility.Markup;
 
 namespace Content.Server.Weapon.Ranged.Barrels.Components
 {
@@ -408,7 +407,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         }
         #endregion
 
-        public virtual void Examine(FormattedMessage.Builder message, bool inDetailsRange)
+        public virtual void Examine(FormattedMessage message, bool inDetailsRange)
         {
             var fireRateMessage = Loc.GetString(FireRateSelector switch
             {

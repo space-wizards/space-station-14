@@ -160,6 +160,16 @@ namespace Content.Server.Cloning.Components
                     break;
 
                 case UiButton.Eject:
+                    if (BodyContainer.ContainedEntity == null)
+                    {
+                        obj.Session.AttachedEntity.Value.PopupMessageCursor(Loc.GetString("cloning-pod-component-msg-empty"));
+                        return;
+                    }
+                    if (CloningProgress < CloningTime)
+                    {
+                        obj.Session.AttachedEntity.Value.PopupMessageCursor(Loc.GetString("cloning-pod-component-msg-incomplete"));
+                        return;
+                    }
                     Eject();
                     break;
 

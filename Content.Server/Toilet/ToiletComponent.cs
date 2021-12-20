@@ -24,7 +24,6 @@ using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
-using Robust.Shared.Utility.Markup;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Toilet
@@ -124,7 +123,7 @@ namespace Content.Server.Toilet
             return true;
         }
 
-        public void Examine(FormattedMessage.Builder message, bool inDetailsRange)
+        public void Examine(FormattedMessage message, bool inDetailsRange)
         {
             if (inDetailsRange && LidOpen)
             {
