@@ -1,5 +1,24 @@
 - type: entity
   parent: MarkerBase
+  id: RandomPosterAny
+  name: random poster spawner
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - texture: Structures/Wallmounts/posters.rsi/random_anything.png
+  - type: RandomSpawner
+    offset: 0
+    prototypes:
+      - RandomPosterContraband
+      - RandomPosterLegit
+    chance: 0.95
+    rarePrototypes:
+      - PosterBroken
+    rareChance: 0.05
+
+- type: entity
+  parent: MarkerBase
   id: RandomPosterContraband
   name: random contraband poster spawner
   components:
