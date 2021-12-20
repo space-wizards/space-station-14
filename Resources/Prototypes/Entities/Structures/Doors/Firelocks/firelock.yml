@@ -54,7 +54,6 @@
       startOpen: true
       bumpOpen: false
       clickOpen: false
-      autoClose: false
       crushDamage:
         types:
           Blunt: 15

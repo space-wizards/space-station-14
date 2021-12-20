@@ -7,6 +7,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Timing;
@@ -33,7 +34,10 @@ public abstract class SharedDoorSystem : EntitySystem
     /// </remarks>
     public const float IntersectPercentage = 0.2f;
 
-    protected readonly HashSet<DoorComponent> ActiveDoors = new();
+    /// <summary>
+    ///     A set of doors that are currently opening, closing, or just queued to open/close after some delay.
+    /// </summary>
+    private readonly HashSet<DoorComponent> _activeDoors = new();
 
     public override void Initialize()
     {
@@ -41,6 +45,7 @@ public abstract class SharedDoorSystem : EntitySystem
 
         SubscribeLocalEvent<DoorComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<DoorComponent, ComponentShutdown>(OnShutdown);
+
         SubscribeLocalEvent<DoorComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<DoorComponent, ComponentHandleState>(OnHandleState);
 
@@ -71,8 +76,8 @@ public abstract class SharedDoorSystem : EntitySystem
 
     private void OnShutdown(EntityUid uid, DoorComponent door, ComponentShutdown args)
     {
-        if (ActiveDoors.Contains(door))
-            ActiveDoors.Remove(door);
+        if (_activeDoors.Contains(door))
+            _activeDoors.Remove(door);
     }
 
     #region StateManagement
@@ -90,12 +95,12 @@ public abstract class SharedDoorSystem : EntitySystem
         door.State = state.DoorState;
         door.NextStateChange = state.NextStateChange;
         door.Partial = state.Partial;
-        door.Safety = state.Safety;
+        door.SafetyEnabled = state.Safety;
 
         if (state.NextStateChange == null)
-            ActiveDoors.Remove(door);
+            _activeDoors.Remove(door);
         else
-            ActiveDoors.Add(door);
+            _activeDoors.Add(door);
 
         RaiseLocalEvent(uid, new DoorStateChangedEvent(door.State), false);
         UpdateAppearance(uid, door);
@@ -109,17 +114,17 @@ public abstract class SharedDoorSystem : EntitySystem
         switch (state)
         {
             case DoorState.Opening:
-                ActiveDoors.Add(door);
+                _activeDoors.Add(door);
                 door.NextStateChange = GameTiming.CurTime + door.OpenTimeOne;
                 break;
 
             case DoorState.Closing:
-                ActiveDoors.Add(door);
+                _activeDoors.Add(door);
                 door.NextStateChange = GameTiming.CurTime + door.CloseTimeOne;
                 break;
 
             case DoorState.Denying:
-                ActiveDoors.Add(door);
+                _activeDoors.Add(door);
                 door.NextStateChange = GameTiming.CurTime + door.DenyDuration;
                 break;
 
@@ -140,7 +145,7 @@ public abstract class SharedDoorSystem : EntitySystem
         if (!Resolve(uid, ref door))
             return;
 
-        door.Safety = safety;
+        door.SafetyEnabled = safety;
         door.Dirty();
     }
 
@@ -217,7 +222,7 @@ public abstract class SharedDoorSystem : EntitySystem
         if (door.State == DoorState.Welded)
             return false;
 
-        var ev = new DoorOpenAttemptEvent();
+        var ev = new BeforeDoorOpenedEvent();
         RaiseLocalEvent(uid, ev, false);
         if (ev.Cancelled)
             return false;
@@ -232,7 +237,6 @@ public abstract class SharedDoorSystem : EntitySystem
         return true;
     }
 
-    // Convenience function to make using Door system more intuitive for other systems.
     public virtual void StartOpening(EntityUid uid, DoorComponent? door = null, EntityUid? user = null, bool predicted = false)
     {
         if (!Resolve(uid, ref door))
@@ -252,7 +256,7 @@ public abstract class SharedDoorSystem : EntitySystem
     }
 
     /// <summary>
-    /// Called when the door is partially opened.
+    /// Called when the door is partially opened. The door becomes transparent and stops colliding with entities.
     /// </summary>
     public virtual void OnPartialOpen(EntityUid uid, DoorComponent? door = null, PhysicsComponent? physics = null)
     {
@@ -264,7 +268,7 @@ public abstract class SharedDoorSystem : EntitySystem
         physics.CanCollide = false;
         door.Partial = true;
         door.NextStateChange = GameTiming.CurTime + door.CloseTimeTwo;
-        ActiveDoors.Add(door);
+        _activeDoors.Add(door);
         door.Dirty();
 
         if (door.Occludes && TryComp(uid, out OccluderComponent? occluder))
@@ -290,18 +294,17 @@ public abstract class SharedDoorSystem : EntitySystem
         if (!Resolve(uid, ref door))
             return false;
 
-        var ev = new DoorCloseAttemptEvent();
+        var ev = new BeforeDoorClosedEvent();
         RaiseLocalEvent(uid, ev, false);
         if (ev.Cancelled)
             return false;
 
-        if (door.Safety && GetColliding(uid).Any())
+        if (door.SafetyEnabled && GetColliding(uid).Any())
             return false;
 
         return HasAccess(uid, user);
     }
 
-    // Convenience function to make using Door system more intuitive for other systems.
     public virtual void StartClosing(EntityUid uid, DoorComponent? door = null, EntityUid? user = null, bool predicted = false)
     {
         if (!Resolve(uid, ref door))
@@ -325,9 +328,8 @@ public abstract class SharedDoorSystem : EntitySystem
         door.Partial = true;
 
         // Make sure no entity waled into the airlock when it started closing.
-        if (door.Safety && GetColliding(uid).Any())
+        if (door.SafetyEnabled && GetColliding(uid).Any())
         {
-            ActiveDoors.Add(door);
             door.NextStateChange = GameTiming.CurTime + door.OpenTimeTwo;
             door.State = DoorState.Opening;
             door.Dirty();
@@ -337,7 +339,7 @@ public abstract class SharedDoorSystem : EntitySystem
 
         physics.CanCollide = true;
         door.NextStateChange = GameTiming.CurTime + door.CloseTimeTwo;
-        ActiveDoors.Add(door);
+        _activeDoors.Add(door);
         door.Dirty();
 
         if (door.Occludes && TryComp(uid, out OccluderComponent? occluder))
@@ -352,9 +354,8 @@ public abstract class SharedDoorSystem : EntitySystem
 
     #region Collisions
     /// <summary>
-    /// Crushes everyone colliding with us by more than 10%.
+    /// Crushes everyone colliding with us by more than <see cref="IntersectPercentage"/>%.
     /// </summary>
-    /// <returns>True if we crushed somebody, false if we did not.</returns>
     public void Crush(EntityUid uid, DoorComponent? door = null, PhysicsComponent? physics = null)
     {
         if (!Resolve(uid, ref door))
@@ -456,32 +457,31 @@ public abstract class SharedDoorSystem : EntitySystem
 
     #region Updating
     /// <summary>
-    ///     Schedule for a door update it's state after some time. Useful for third-party systems, like the AirlockSystem power-dependency.
+    ///     Schedule an open or closed door to progress to the next state after some time.
     /// </summary>
+    /// <remarks>
+    ///     If the requested delay is null or non-positive, this will make the door stay open or closed indefinitely.
+    /// </remarks>
     public void SetNextStateChange(EntityUid uid, TimeSpan? delay, DoorComponent? door = null)
     {
         if (!Resolve(uid, ref door))
             return;
 
-        // if the door is currently in the process of opening or closing we will always let that finish and ignore this request.
-        if (door.State == DoorState.Opening || door.State == DoorState.Closing)
+        // If the door is not currently just open or closed, it is busy doing something else (or welded shut). So in
+        // that case we do nothing.
+        if (door.State != DoorState.Open && door.State != DoorState.Closed)
             return;
 
-        // is this trying to prevent an update? (e.g., cancel an auto-close)
-        if (delay == null)
+        // Is this trying to prevent an update? (e.g., cancel an auto-close)
+        if (delay == null || delay.Value <= TimeSpan.Zero)
         {
             door.NextStateChange = null;
-            ActiveDoors.Remove(door);
+            _activeDoors.Remove(door);
             return;
         }
 
-        // if an update is already set to happen before this delay, don't do anything
-        var time = GameTiming.CurTime + delay.Value;
-        if (door.NextStateChange != null && door.NextStateChange.Value < time)
-            return;
-
-        door.NextStateChange = time;
-        ActiveDoors.Add(door);
+        door.NextStateChange = GameTiming.CurTime + delay.Value;
+        _activeDoors.Add(door);
     }
 
     public override void Update(float frameTime)
@@ -493,7 +493,7 @@ public abstract class SharedDoorSystem : EntitySystem
         // cache CurTime (getter function)
         var time = GameTiming.CurTime;
 
-        foreach (var door in ActiveDoors)
+        foreach (var door in _activeDoors)
         {
             if (door.Deleted || door.NextStateChange == null)
             {
@@ -512,11 +512,12 @@ public abstract class SharedDoorSystem : EntitySystem
             }
         }
 
-        ActiveDoors.ExceptWith(toRemove);
+        // remove doors with no queued state changes.
+        _activeDoors.ExceptWith(toRemove);
     }
 
     /// <summary>
-    ///     Updates an active door. Returns true if the door has finished updating, false otherwise.
+    ///     Makes a door proceed to the next state (if applicable).
     /// </summary>
     private void NextState(DoorComponent door, TimeSpan time)
     {
@@ -562,9 +563,9 @@ public abstract class SharedDoorSystem : EntitySystem
                 }
                 break;
 
-            default:
-                // A welded door? This should never happen.
-                door.NextStateChange = null;
+            case DoorState.Welded:
+                // A welded door? This should never have been active in the first place.
+                Logger.Error($"Welded door was in the list of active doors. Door: {ToPrettyString(door.Owner)}");
                 break;
         }
     }

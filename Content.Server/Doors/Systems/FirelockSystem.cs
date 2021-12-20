@@ -12,13 +12,13 @@ namespace Content.Server.Doors.Systems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<FirelockComponent, DoorOpenAttemptEvent>(OnBeforeDoorOpened);
+            SubscribeLocalEvent<FirelockComponent, BeforeDoorOpenedEvent>(OnBeforeDoorOpened);
             SubscribeLocalEvent<FirelockComponent, BeforeDoorDeniedEvent>(OnBeforeDoorDenied);
             SubscribeLocalEvent<FirelockComponent, DoorGetPryTimeModifierEvent>(OnDoorGetPryTimeModifier);
             SubscribeLocalEvent<FirelockComponent, BeforeDoorPryEvent>(OnBeforeDoorPry);
         }
 
-        private void OnBeforeDoorOpened(EntityUid uid, FirelockComponent component, DoorOpenAttemptEvent args)
+        private void OnBeforeDoorOpened(EntityUid uid, FirelockComponent component, BeforeDoorOpenedEvent args)
         {
             if (component.IsHoldingFire() || component.IsHoldingPressure())
                 args.Cancel();

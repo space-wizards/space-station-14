@@ -114,7 +114,7 @@ namespace Content.Server.Explosion.EntitySystems
                         _sharedDoorSystem.TryClose(uid, door);
                         break;
                     case DoorState.Closed:
-                        _sharedDoorSystem.TryClose(uid, door);
+                        _sharedDoorSystem.TryOpen(uid, door);
                         break;
                     case DoorState.Closing:
                     case DoorState.Opening:

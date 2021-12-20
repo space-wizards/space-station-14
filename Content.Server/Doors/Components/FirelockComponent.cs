@@ -38,7 +38,7 @@ namespace Content.Server.Doors.Components
             {
                 doorSys.StartClosing(Owner, DoorComponent);
 
-                // door system also sets airtight, but after a delay. This is immediate.
+                // Door system also sets airtight, but only after a delay. We want it to be immediate.
                 if (_entMan.TryGetComponent(Owner, out AirtightComponent? airtight))
                 {
                     EntitySystem.Get<AirtightSystem>().SetAirblocked(airtight, true);

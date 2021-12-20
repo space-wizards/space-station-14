@@ -80,6 +80,8 @@ public sealed class DoorComponent : Component
     #endregion
 
     #region Welding
+    // TODO WELDING. Consider creating a WeldableComponent for use with doors, crates and lockers? Currently they all
+    // have their own welding logic.
     [DataField("weldingQuality", customTypeSerializer: typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
     public string WeldingQuality = "Welding";
 
@@ -96,9 +98,6 @@ public sealed class DoorComponent : Component
     #endregion
 
     #region Sounds
-    [DataField("tryOpenDoorSound")]
-    public SoundSpecifier TryOpenDoorSound = new SoundPathSpecifier("/Audio/Effects/bang.ogg");
-
     /// <summary>
     /// Sound to play when the door opens.
     /// </summary>
@@ -116,6 +115,12 @@ public sealed class DoorComponent : Component
     /// </summary>
     [DataField("denySound")]
     public SoundSpecifier? DenySound;
+
+    /// <summary>
+    /// Sound to play when a disarmed (hands comp with 0 hands) entity opens the door. What?
+    /// </summary>
+    [DataField("tryOpenDoorSound")]
+    public SoundSpecifier TryOpenDoorSound = new SoundPathSpecifier("/Audio/Effects/bang.ogg");
     #endregion
 
     #region Crushing
@@ -141,7 +146,7 @@ public sealed class DoorComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("safety")]
-    public bool Safety = true;
+    public bool SafetyEnabled = true;
 
     /// <summary>
     /// List of EntityUids of entities we're currently crushing. Cleared in OnPartialOpen().
@@ -229,6 +234,6 @@ public class DoorComponentState : ComponentState
         CurrentlyCrushing = door.CurrentlyCrushing;
         NextStateChange = door.NextStateChange;
         Partial = door.Partial;
-        Safety = door.Safety;
+        Safety = door.SafetyEnabled;
     }
 }

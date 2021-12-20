@@ -45,7 +45,7 @@ public sealed class DoorSystem : SharedDoorSystem
     //
     // So we do this:
     // - Play audio client-side IF the closing is being predicted (auto-close or predicted interaction)
-    // - Unless overridden, server assumes closing is predicted by clients and does not play audio.
+    // - Server assumes automated closing is predicted by clients and does not play audio unless otherwise specified.
     // - Major exception is player interactions, which other players cannot predict
     // - In that case, send audio to all players, except possibly the interacting player if it was a predicted
     //   interaction.
@@ -76,6 +76,9 @@ public sealed class DoorSystem : SharedDoorSystem
         SoundSystem.Play(filter, sound, uid, AudioParams.Default.WithVolume(-5));
     }
 
+    /// <summary>
+    ///     Weld or pry open a door.
+    /// </summary>
     private void OnInteractUsing(EntityUid uid, DoorComponent door, InteractUsingEvent args)
     {
         if (args.Handled)
@@ -98,6 +101,10 @@ public sealed class DoorSystem : SharedDoorSystem
         }
     }
 
+    /// <summary>
+    ///     Attempt to weld a door shut, or unweld it if it is already welded. This does not actually check if the user
+    ///     is holding the correct tool.
+    /// </summary>
     private async void TryWeldDoor(EntityUid target, EntityUid used, EntityUid user, DoorComponent door)
     {
         if (!door.Weldable || door.BeingWelded || door.CurrentlyCrushing.Count > 0)
@@ -150,6 +157,9 @@ public sealed class DoorSystem : SharedDoorSystem
         }
     }
 
+    /// <summary>
+    ///     Does the user have the permissions required to open this door?
+    /// </summary>
     public override bool HasAccess(EntityUid uid, EntityUid? user = null)
     {
         // TODO move access reader to shared for predicting door opening
@@ -169,6 +179,10 @@ public sealed class DoorSystem : SharedDoorSystem
         };
     }
 
+    /// <summary>
+    ///     Open a door if a player or door-bumper (PDA, ID-card) collide with the door. Sadly, bullets no longer
+    ///     generate "access denied" sounds as you fire at a door.
+    /// </summary>
     protected override void HandleCollide(EntityUid uid, DoorComponent door, StartCollideEvent args)
     {
         // TODO ACCESS READER move access reader to shared and predict door opening/closing

@@ -30,7 +30,6 @@
     board: DoorElectronics
     bumpOpen: false
     clickOpen: false
-    autoClose: false
     closeTimeOne: 0.2
     closeTimeTwo: 1.2
     openTimeOne: 1.2

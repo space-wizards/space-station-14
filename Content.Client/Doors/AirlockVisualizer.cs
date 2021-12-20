@@ -191,7 +191,7 @@ namespace Content.Client.Doors
 
             if (!_simpleVisuals)
             {
-                sprite.LayerSetVisible(DoorVisualLayers.BaseUnlit, unlitVisible && state != DoorState.Closed);
+                sprite.LayerSetVisible(DoorVisualLayers.BaseUnlit, unlitVisible && state != DoorState.Closed && state != DoorState.Welded);
                 sprite.LayerSetVisible(DoorVisualLayers.BaseWelded, weldedVisible);
                 sprite.LayerSetVisible(DoorVisualLayers.BaseBolted, unlitVisible && boltedVisible);
             }

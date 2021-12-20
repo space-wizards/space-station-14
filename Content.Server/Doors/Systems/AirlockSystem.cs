@@ -21,8 +21,8 @@ namespace Content.Server.Doors.Systems
 
             SubscribeLocalEvent<AirlockComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<AirlockComponent, DoorStateChangedEvent>(OnStateChanged);
-            SubscribeLocalEvent<AirlockComponent, DoorOpenAttemptEvent>(OnBeforeDoorOpened);
-            SubscribeLocalEvent<AirlockComponent, DoorCloseAttemptEvent>(OnBeforeDoorClosed);
+            SubscribeLocalEvent<AirlockComponent, BeforeDoorOpenedEvent>(OnBeforeDoorOpened);
+            SubscribeLocalEvent<AirlockComponent, BeforeDoorClosedEvent>(OnBeforeDoorClosed);
             SubscribeLocalEvent<AirlockComponent, BeforeDoorDeniedEvent>(OnBeforeDoorDenied);
             SubscribeLocalEvent<AirlockComponent, ActivateInWorldEvent>(OnActivate, before: new [] {typeof(DoorSystem)});
             SubscribeLocalEvent<AirlockComponent, BeforeDoorPryEvent>(OnDoorPry);
@@ -42,7 +42,7 @@ namespace Content.Server.Doors.Systems
             }
             else
             {
-                // door received power. Lets "wake" the door up.
+                // door received power. Lets "wake" the door up, in case it is currently open and needs to auto-close.
                 _doorSystem.SetNextStateChange(uid, TimeSpan.FromSeconds(1));
             }
 
@@ -73,7 +73,7 @@ namespace Content.Server.Doors.Systems
             if (!Resolve(uid, ref airlock, ref door))
                 return;
 
-            if (!airlock.AutoClose || door.State != DoorState.Open)
+            if (door.State != DoorState.Open)
                 return;
 
             if (!airlock.CanChangeState())
@@ -87,13 +87,13 @@ namespace Content.Server.Doors.Systems
             _doorSystem.SetNextStateChange(uid, airlock.AutoCloseDelay * airlock.AutoCloseDelayModifier);
         }
 
-        private void OnBeforeDoorOpened(EntityUid uid, AirlockComponent component, DoorOpenAttemptEvent args)
+        private void OnBeforeDoorOpened(EntityUid uid, AirlockComponent component, BeforeDoorOpenedEvent args)
         {
             if (!component.CanChangeState())
                 args.Cancel();
         }
 
-        private void OnBeforeDoorClosed(EntityUid uid, AirlockComponent component, DoorCloseAttemptEvent args)
+        private void OnBeforeDoorClosed(EntityUid uid, AirlockComponent component, BeforeDoorClosedEvent args)
         {
             if (!component.CanChangeState())
                 args.Cancel();
@@ -107,8 +107,7 @@ namespace Content.Server.Doors.Systems
 
         private void OnActivate(EntityUid uid, AirlockComponent component, ActivateInWorldEvent args)
         {
-            if (component.WiresComponent != null &&
-                component.WiresComponent.IsPanelOpen &&
+            if (component.WiresComponent != null && component.WiresComponent.IsPanelOpen &&
                 TryComp(args.User, out ActorComponent? actor))
             {
                 component.WiresComponent.OpenInterface(actor.PlayerSession);

@@ -19,7 +19,7 @@ namespace Content.Shared.Doors
     /// Raised when the door is determining whether it is able to open.
     /// Cancel to stop the door from being opened.
     /// </summary>
-    public class DoorOpenAttemptEvent : CancellableEntityEventArgs
+    public class BeforeDoorOpenedEvent : CancellableEntityEventArgs
     {
     }
 
@@ -27,7 +27,7 @@ namespace Content.Shared.Doors
     /// Raised when the door is determining whether it is able to close.
     /// Cancel to stop the door from being closed.
     /// </summary>
-    public class DoorCloseAttemptEvent : CancellableEntityEventArgs
+    public class BeforeDoorClosedEvent : CancellableEntityEventArgs
     {
     }
 
@@ -43,6 +43,9 @@ namespace Content.Shared.Doors
     /// Raised to determine whether the door should automatically close.
     /// Cancel to stop it from automatically closing.
     /// </summary>
+    /// <remarks>
+    /// This is called when a door decides whether it SHOULD auto close, not when it actually closes.
+    /// </remarks>
     public class BeforeDoorAutoCloseEvent : CancellableEntityEventArgs
     {
     }

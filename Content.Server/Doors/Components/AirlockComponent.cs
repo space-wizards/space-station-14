@@ -98,8 +98,7 @@ namespace Content.Server.Doors.Components
         [ViewVariables(VVAccess.ReadWrite)]
         private bool BoltLightsVisible
         {
-            get => _boltLightsWirePulsed && BoltsDown && IsPowered()
-                && DoorComponent != null && DoorComponent.State == DoorState.Closed;
+            get => _boltLightsWirePulsed && BoltsDown && IsPowered() && DoorComponent?.State == DoorState.Closed;
             set
             {
                 _boltLightsWirePulsed = value;
@@ -108,25 +107,19 @@ namespace Content.Server.Doors.Components
         }
 
         /// <summary>
-        /// Set whether or not this airlock will automatically close.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("autoClose")]
-        public bool AutoClose = true;
-
-        /// <summary>
-        /// Delay until an open door automatically closes. Set zero to prevent auto closing.
+        /// Delay until an open door automatically closes.
         /// </summary>
         [DataField("autoCloseDelay")]
         public TimeSpan AutoCloseDelay = TimeSpan.FromSeconds(5f);
 
         /// <summary>
-        /// Multiplicative modifier for the auto-close delay.
+        /// Multiplicative modifier for the auto-close delay. Can be modified by hacking the airlock wires. Setting to
+        /// zero will disable auto-closing.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public float AutoCloseDelayModifier = 1.0f;
 
-        public bool Safety => DoorComponent?.Safety ?? true;
+        public bool SafetyEnabled => DoorComponent?.SafetyEnabled ?? true;
 
         protected override void Initialize()
         {
@@ -190,7 +183,7 @@ namespace Content.Server.Doors.Components
                                                     !MathHelper.CloseToPercent(AutoCloseDelayModifier, 1.0f) ? StatusLightState.BlinkingSlow :
                                                     StatusLightState.On,
                                                     "TIME");
-            var safetyStatus = new StatusLightData(Color.Red, Safety ? StatusLightState.On : StatusLightState.Off, "SAFE");
+            var safetyStatus = new StatusLightData(Color.Red, SafetyEnabled ? StatusLightState.On : StatusLightState.Off, "SAFE");
 
             if (WiresComponent == null)
             {
@@ -329,7 +322,7 @@ namespace Content.Server.Doors.Components
                         EntitySystem.Get<AirlockSystem>().UpdateAutoClose(Owner, this);
                         break;
                     case Wires.Safety:
-                        EntitySystem.Get<SharedDoorSystem>().SetSafety(Owner, !Safety, DoorComponent);
+                        EntitySystem.Get<SharedDoorSystem>().SetSafety(Owner, !SafetyEnabled, DoorComponent);
                         break;
                 }
             }
