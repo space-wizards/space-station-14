@@ -53,7 +53,7 @@ namespace Content.Server.Power.EntitySystems
 
         private void OnProviderShutdown(EntityUid uid, ExtensionCableProviderComponent provider, ComponentShutdown args)
         {
-            var xform = EntityManager.GetComponent<TransformComponent>(uid);
+            var xform = Transform(uid);
 
             // If grid deleting no need to update power.
             if (_mapManager.TryGetGrid(xform.GridID, out var grid))
