@@ -3,6 +3,7 @@ using Content.Client.CharacterInfo.Components;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.CharacterInterface
 {
@@ -36,16 +37,20 @@ namespace Content.Client.CharacterInterface
             {
                 Title = "Character";
 
-                var contentsScrollContainer = new ScrollContainer
+                var contentsVBox = new BoxContainer
                 {
-                    
+                    Orientation = LayoutOrientation.Vertical
                 };
-                Contents.AddChild(contentsScrollContainer);
+
+                var mainScrollContainer = new ScrollContainer { };
+                mainScrollContainer.AddChild(contentsVBox);
+
+                Contents.AddChild(mainScrollContainer);
 
                 windowComponents.Sort((a, b) => ((int) a.Priority).CompareTo((int) b.Priority));
                 foreach (var element in windowComponents)
                 {
-                    contentsScrollContainer.AddChild(element.Scene);
+                    contentsVBox.AddChild(element.Scene);
                 }
 
                 _windowComponents = windowComponents;
