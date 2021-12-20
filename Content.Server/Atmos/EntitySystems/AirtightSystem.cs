@@ -92,7 +92,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!Resolve(airtight.Owner, ref xform)) return;
 
             airtight.AirBlocked = airblocked;
-            UpdatePosition(airtight);
+            UpdatePosition(airtight, xform);
             RaiseLocalEvent(airtight.Owner, new AirtightChanged(airtight));
         }
 
