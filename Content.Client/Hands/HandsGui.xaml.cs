@@ -99,8 +99,7 @@ namespace Content.Client.Hands
                 _itemSlotManager.SetItemSlot(newButton, hand.HeldItem);
 
                 // Show blocked overlay if hand is blocked.
-                newButton.Blocked.Visible =
-                    hand.HeldItem != null && IoCManager.Resolve<IEntityManager>().HasComponent<HandVirtualItemComponent>(hand.HeldItem);
+                newButton.Blocked.Visible = IoCManager.Resolve<IEntityManager>().HasComponent<HandVirtualItemComponent>(hand.HeldItem);
             }
 
             if (TryGetActiveHand(out var activeHand))

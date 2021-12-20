@@ -270,7 +270,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             return false;
         }
 
-        public bool UseEntity(UseEntityEventArgs eventArgs)
+        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
             if (BoltOpen)
             {
@@ -284,7 +284,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             return true;
         }
 
-        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             return TryInsertBullet(eventArgs.User, eventArgs.Using);
         }

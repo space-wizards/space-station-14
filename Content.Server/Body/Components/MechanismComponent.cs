@@ -88,7 +88,7 @@ namespace Content.Server.Body.Components
             else // If surgery cannot be performed, show message saying so.
             {
                 eventArgs.Target?.PopupMessage(eventArgs.User,
-                    Loc.GetString("mechanism-component-no-way-to-install-message", ("partName", Name: _entities.GetComponent<MetaDataComponent>(Owner).EntityName)));
+                    Loc.GetString("mechanism-component-no-way-to-install-message", ("partName", _entities.GetComponent<MetaDataComponent>(Owner).EntityName)));
             }
         }
 
@@ -114,7 +114,7 @@ namespace Content.Server.Body.Components
             if (!OptionsCache.TryGetValue(key, out var targetObject))
             {
                 BodyCache.Owner.PopupMessage(PerformerCache.Value,
-                    Loc.GetString("mechanism-component-no-useful-way-to-use-message",("partName", Name: _entities.GetComponent<MetaDataComponent>(Owner).EntityName)));
+                    Loc.GetString("mechanism-component-no-useful-way-to-use-message",("partName", _entities.GetComponent<MetaDataComponent>(Owner).EntityName)));
                 return;
             }
 

@@ -288,7 +288,7 @@ namespace Content.Client.ContextMenu.UI
 
             // Get the first entity in the sub-menus
             var entity = GetFirstEntityOrNull(element.SubMenu);
-            if (entity == null)
+            if (!entity.Valid)
             {
                 // This whole element has no associated entities. We should remove it
                 element.Dispose();

@@ -468,7 +468,7 @@ namespace Content.Server.Inventory.Components
                         var canEquip = CanEquip(msg.Inventoryslot, activeHand, true, out var reason);
                         _hoverEntity =
                             new KeyValuePair<Slots, (EntityUid entity, bool fits)>(msg.Inventoryslot,
-                                (Uid: activeHand.Owner, canEquip));
+                                (activeHand.Owner, canEquip));
 
                         Dirty();
                     }

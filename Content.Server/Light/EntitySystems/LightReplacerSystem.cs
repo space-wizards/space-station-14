@@ -67,17 +67,12 @@ namespace Content.Server.Light.EntitySystems
             // standard interaction checks
             if (!_blocker.CanInteract(eventArgs.User)) return;
 
-            if (eventArgs.Used != null)
-            {
-                var usedUid = eventArgs.Used;
-
-                // want to insert a new light bulb?
-                if (EntityManager.TryGetComponent(usedUid, out LightBulbComponent ? bulb))
-                    eventArgs.Handled = TryInsertBulb(uid, usedUid, eventArgs.User, true, component, bulb);
-                // add bulbs from storage?
-                else if (EntityManager.TryGetComponent(usedUid, out ServerStorageComponent? storage))
-                    eventArgs.Handled = TryInsertBulbsFromStorage(uid, usedUid, eventArgs.User, component, storage);
-            }
+            // want to insert a new light bulb?
+            if (EntityManager.TryGetComponent(eventArgs.Used, out LightBulbComponent ? bulb))
+                eventArgs.Handled = TryInsertBulb(uid, eventArgs.Used, eventArgs.User, true, component, bulb);
+            // add bulbs from storage?
+            else if (EntityManager.TryGetComponent(eventArgs.Used, out ServerStorageComponent? storage))
+                eventArgs.Handled = TryInsertBulbsFromStorage(uid, eventArgs.Used, eventArgs.User, component, storage);
         }
 
         /// <summary>
@@ -108,7 +103,7 @@ namespace Content.Server.Light.EntitySystems
                 (e) => EntityManager.GetComponentOrNull<LightBulbComponent>(e)?.Type == fixture.BulbType);
 
             // found bulb in inserted storage
-            if (bulb != null)
+            if (bulb.Valid)
             {
                 // try to remove it
                 var hasRemoved = replacer.InsertedBulbs.Remove(bulb);

@@ -13,7 +13,7 @@ namespace Content.Server.AI.Utility.Considerations.Inventory
         {
             var target = context.GetState<TargetEntityState>().GetValue();
 
-            if (target == null || !IoCManager.Resolve<IEntityManager>().HasComponent<ItemComponent>(target))
+            if (!IoCManager.Resolve<IEntityManager>().HasComponent<ItemComponent>(target))
             {
                 return 0.0f;
             }

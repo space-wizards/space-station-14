@@ -43,7 +43,7 @@ namespace Content.Server.AI.Utility.Considerations.Containers
 
             var owner = context.GetState<SelfState>().GetValue();
 
-            if (owner == null)
+            if (!owner.Valid)
             {
                 return 0;
             }

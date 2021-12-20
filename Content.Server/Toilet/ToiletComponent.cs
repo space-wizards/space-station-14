@@ -40,7 +40,7 @@ namespace Content.Server.Toilet
 
         private const float PryLidTime = 1f;
 
-        private bool _isPrying = false;
+        private bool _isPrying;
 
         [DataField("pryingQuality", customTypeSerializer:typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
         private string _pryingQuality = "Prying";
@@ -157,20 +157,20 @@ namespace Content.Server.Toilet
             if (_entMan.TryGetComponent<SharedBodyComponent?>(victim, out var body) &&
                 body.HasPartOfType(BodyPartType.Head))
             {
-                var othersMessage = Loc.GetString("toilet-component-suicide-head-message-others", ("victim",Name: _entMan.GetComponent<MetaDataComponent>(victim).EntityName),("owner", Name: _entMan.GetComponent<MetaDataComponent>(Owner).EntityName));
+                var othersMessage = Loc.GetString("toilet-component-suicide-head-message-others", ("victim", _entMan.GetComponent<MetaDataComponent>(victim).EntityName),("owner", _entMan.GetComponent<MetaDataComponent>(Owner).EntityName));
                 victim.PopupMessageOtherClients(othersMessage);
 
-                var selfMessage = Loc.GetString("toilet-component-suicide-head-message", ("owner", Name: _entMan.GetComponent<MetaDataComponent>(Owner).EntityName));
+                var selfMessage = Loc.GetString("toilet-component-suicide-head-message", ("owner", _entMan.GetComponent<MetaDataComponent>(Owner).EntityName));
                 victim.PopupMessage(selfMessage);
 
                 return SuicideKind.Asphyxiation;
             }
             else
             {
-                var othersMessage = Loc.GetString("toilet-component-suicide-message-others",("victim", Name: _entMan.GetComponent<MetaDataComponent>(victim).EntityName),("owner", Name: _entMan.GetComponent<MetaDataComponent>(Owner).EntityName));
+                var othersMessage = Loc.GetString("toilet-component-suicide-message-others",("victim", _entMan.GetComponent<MetaDataComponent>(victim).EntityName),("owner", _entMan.GetComponent<MetaDataComponent>(Owner).EntityName));
                 victim.PopupMessageOtherClients(othersMessage);
 
-                var selfMessage = Loc.GetString("toilet-component-suicide-message", ("owner",Name: _entMan.GetComponent<MetaDataComponent>(Owner).EntityName));
+                var selfMessage = Loc.GetString("toilet-component-suicide-message", ("owner", _entMan.GetComponent<MetaDataComponent>(Owner).EntityName));
                 victim.PopupMessage(selfMessage);
 
                 return SuicideKind.Blunt;

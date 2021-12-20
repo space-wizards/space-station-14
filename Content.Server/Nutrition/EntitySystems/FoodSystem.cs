@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.EntitySystems;
@@ -19,17 +18,13 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Inventory;
 using Content.Shared.MobState.Components;
-using Content.Shared.Tag;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
-using System.Collections.Generic;
 using Robust.Shared.Utility;
-using Content.Server.Inventory.Components;
-using Content.Shared.Inventory;
 using Content.Shared.Hands;
 
 namespace Content.Server.Nutrition.EntitySystems

@@ -129,7 +129,7 @@ namespace Content.Server.PAI
 
         private void AddWipeVerb(EntityUid uid, PAIComponent pai, GetActivationVerbsEvent args)
         {
-            if (args.User == null || !args.CanAccess || !args.CanInteract)
+            if (!args.User.Valid || !args.CanAccess || !args.CanInteract)
                 return;
 
             if (EntityManager.TryGetComponent<MindComponent>(uid, out var mind) && mind.HasMind)

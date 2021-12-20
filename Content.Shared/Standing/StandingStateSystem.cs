@@ -12,8 +12,6 @@ namespace Content.Shared.Standing
 {
     public sealed class StandingStateSystem : EntitySystem
     {
-        [Dependency] private readonly SharedHandsSystem _sharedHandsSystem = default!;
-
         public bool IsDown(EntityUid uid, StandingStateComponent? standingState = null)
         {
             if (!Resolve(uid, ref standingState, false))

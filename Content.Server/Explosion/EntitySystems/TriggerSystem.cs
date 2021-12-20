@@ -39,7 +39,6 @@ namespace Content.Server.Explosion.EntitySystems
     {
         [Dependency] private readonly ExplosionSystem _explosions = default!;
         [Dependency] private readonly FlashSystem _flashSystem = default!;
-        [Dependency] private readonly AdminLogSystem _logSystem = default!;
 
         public override void Initialize()
         {

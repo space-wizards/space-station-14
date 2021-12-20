@@ -10,14 +10,10 @@ namespace Content.Server.AI.Utility.Considerations.Combat.Melee
     {
         protected override float GetScore(Blackboard context)
         {
-            var equipped = context.GetState<EquippedEntityState>().GetValue();
-
-            if (equipped == null)
-            {
-                return 0.0f;
-            }
-
-            return IoCManager.Resolve<IEntityManager>().HasComponent<MeleeWeaponComponent>(equipped) ? 1.0f : 0.0f;
+            return IoCManager.Resolve<IEntityManager>()
+                .HasComponent<MeleeWeaponComponent>(context.GetState<EquippedEntityState>().GetValue())
+                ? 1.0f
+                : 0.0f;
         }
     }
 }

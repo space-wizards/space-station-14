@@ -90,7 +90,7 @@ namespace Content.Server.Disposal.Unit.Components
 
         private bool PlayerCanUse(EntityUid player)
         {
-            if (player == null)
+            if (!player.Valid)
             {
                 return false;
             }

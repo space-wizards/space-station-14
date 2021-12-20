@@ -197,7 +197,7 @@ namespace Content.Server.Chat.Managers
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.Local;
             msg.Message = message;
-            msg.MessageWrap = Loc.GetString("chat-manager-entity-say-wrap-message",("entityName", Name: _entManager.GetComponent<MetaDataComponent>(source).EntityName));
+            msg.MessageWrap = Loc.GetString("chat-manager-entity-say-wrap-message",("entityName", _entManager.GetComponent<MetaDataComponent>(source).EntityName));
             msg.SenderEntity = source;
             msg.HideChat = hideChat;
             _netManager.ServerSendToMany(msg, clients);
@@ -234,7 +234,7 @@ namespace Content.Server.Chat.Managers
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.Emotes;
             msg.Message = action;
-            msg.MessageWrap = Loc.GetString("chat-manager-entity-me-wrap-message", ("entityName",Name: _entManager.GetComponent<MetaDataComponent>(source).EntityName));
+            msg.MessageWrap = Loc.GetString("chat-manager-entity-me-wrap-message", ("entityName", _entManager.GetComponent<MetaDataComponent>(source).EntityName));
             msg.SenderEntity = source;
             _netManager.ServerSendToMany(msg, clients);
         }
