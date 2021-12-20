@@ -1,4 +1,5 @@
 using Content.Shared.Damage;
+using Content.Shared.Examine;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.StatusEffect;
@@ -7,6 +8,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
@@ -50,6 +52,7 @@ public abstract class SharedDoorSystem : EntitySystem
         SubscribeLocalEvent<DoorComponent, ComponentHandleState>(OnHandleState);
 
         SubscribeLocalEvent<DoorComponent, ActivateInWorldEvent>(OnActivate);
+        SubscribeLocalEvent<DoorComponent, ExaminedEvent>(OnExamine);
 
         SubscribeLocalEvent<DoorComponent, StartCollideEvent>(HandleCollide);
         SubscribeLocalEvent<DoorComponent, PreventCollideEvent>(PreventCollision);
@@ -177,6 +180,12 @@ public abstract class SharedDoorSystem : EntitySystem
             TryOpen(uid, door, args.User);
             args.Handled = true;
         }
+    }
+
+    private void OnExamine(EntityUid uid, DoorComponent door, ExaminedEvent args)
+    {
+        if (door.State == DoorState.Welded)
+            args.PushText(Loc.GetString("door-component-examine-is-welded"));
     }
 
     public void Deny(EntityUid uid, DoorComponent? door = null, EntityUid? user = null, bool predicted = false)
@@ -464,7 +473,7 @@ public abstract class SharedDoorSystem : EntitySystem
     /// </remarks>
     public void SetNextStateChange(EntityUid uid, TimeSpan? delay, DoorComponent? door = null)
     {
-        if (!Resolve(uid, ref door))
+        if (!Resolve(uid, ref door, false))
             return;
 
         // If the door is not currently just open or closed, it is busy doing something else (or welded shut). So in
