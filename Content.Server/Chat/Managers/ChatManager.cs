@@ -240,6 +240,35 @@ namespace Content.Server.Chat.Managers
             _netManager.ServerSendToMany(msg, clients);
         }
 
+        public void EntityLOOC(EntityUid source, string message)
+        {
+            // Check if entity is a player
+            if (!_entManager.TryGetComponent(source, out ActorComponent? actor))
+            {
+                return;
+            }
+
+            // Check if message exceeds the character limit
+            if (message.Length > MaxMessageLength)
+            {
+                DispatchServerMessage(actor.PlayerSession, Loc.GetString("chat-manager-max-message-length-exceeded-message", ("limit", MaxMessageLength)));
+                return;
+            }
+
+            message = Basic.EscapeText(message);
+
+            var clients = Filter.Empty()
+                .AddInRange(_entManager.GetComponent<TransformComponent>(source).MapPosition, VoiceRange)
+                .Recipients
+                .Select(p => p.ConnectedClient)
+                .ToList();
+
+            var msg = _netManager.CreateNetMessage<MsgChatMessage>();
+            msg.Channel = ChatChannel.LOOC;
+            msg.Message = message;
+            msg.MessageWrap = Loc.GetString("chat-manager-entity-looc-wrap-message", ("entityName", Name: _entManager.GetComponent<MetaDataComponent>(source).EntityName));
+            _netManager.ServerSendToMany(msg, clients);
+        }
         public void SendOOC(IPlayerSession player, string message)
         {
             if (_adminManager.IsAdmin(player))

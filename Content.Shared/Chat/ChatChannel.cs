@@ -31,35 +31,40 @@ namespace Content.Shared.Chat
         Radio = 1 << 3,
 
         /// <summary>
+        ///     Local out-of-character channel
+        /// </summary>
+        LOOC = 1 << 4,
+
+        /// <summary>
         ///     Out-of-character channel
         /// </summary>
-        OOC = 1 << 4,
+        OOC = 1 << 5,
 
         /// <summary>
         ///     Visual events the player can see.
         ///     Basically like visual_message in SS13.
         /// </summary>
-        Visual = 1 << 5,
+        Visual = 1 << 6,
 
         /// <summary>
         ///     Emotes
         /// </summary>
-        Emotes = 1 << 6,
+        Emotes = 1 << 7,
 
         /// <summary>
         ///     Deadchat
         /// </summary>
-        Dead = 1 << 7,
+        Dead = 1 << 8,
 
         /// <summary>
         ///     Admin chat
         /// </summary>
-        Admin = 1 << 8,
+        Admin = 1 << 9,
 
         /// <summary>
         ///     Unspecified.
         /// </summary>
-        Unspecified = 1 << 9,
+        Unspecified = 1 << 10,
 
         /// <summary>
         ///     Channels considered to be IC.
