@@ -49,6 +49,7 @@ namespace Content.Client.CharacterInterface
                 return;
 
             comp.Window = new CharacterInterfaceComponent.CharacterWindow(comp.UIComponents);
+            comp.Window.MinSize = (545, 400);
             comp.Window.OnClose += () => _gameHud.CharacterButtonDown = false;
         }
 
@@ -121,7 +122,7 @@ namespace Content.Client.CharacterInterface
         private void _setOpenValue(SS14Window menu, bool value)
         {
             _gameHud.CharacterButtonDown = value;
-            menu.SetSize = (545, 400);
+
             if (value)
                 menu.OpenCentered();
             else
