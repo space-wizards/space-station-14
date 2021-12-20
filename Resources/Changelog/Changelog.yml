@@ -1,12 +1,6 @@
 Entries:
 - author: CrudeWax
   changes:
-  - {message: added an item-spawning spell template, type: Add}
-  - {message: added a pie-spawning spell. Honk!, type: Add}
-  id: 250
-  time: '2021-07-01T11:26:44.0000000+00:00'
-- author: CrudeWax
-  changes:
   - {message: Added omnizine. A reagent which heals any type of damage when ingested.,
     type: Add}
   - {message: A small amount of Omnizine can be found in warm donk pockets., type: Add}
@@ -2872,3 +2866,8 @@ Entries:
   - {message: Fixed accumulation of stuttering time., type: Fix}
   id: 751
   time: '2021-12-19T23:27:07.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Added kangaroos, type: Add}
+  id: 752
+  time: '2021-12-20T06:16:25.0000000+00:00'
