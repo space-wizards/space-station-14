@@ -44,7 +44,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void OnAirtightShutdown(EntityUid uid, AirtightComponent airtight, ComponentShutdown args)
         {
-            var xform = EntityManager.GetComponent<TransformComponent>(uid);
+            var xform = Transform(uid);
 
             // If the grid is deleting no point updating atmos.
             if (_mapManager.TryGetGrid(xform.GridID, out var grid))
