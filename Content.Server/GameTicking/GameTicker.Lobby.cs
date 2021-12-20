@@ -42,9 +42,16 @@ namespace Content.Server.GameTicking
                 return string.Empty;
             }
 
+            var mapName = Loc.GetString("game-ticker-no-map-selected");
+            var map = _gameMapManager.GetSelectedMap();
+            if(map != null)
+            {
+                mapName = map.MapName;
+            }
+
             var gmTitle = Preset.ModeTitle;
             var desc = Preset.Description;
-            return Loc.GetString("game-ticker-get-info-text",("gmTitle", gmTitle),("desc", desc));
+            return Loc.GetString("game-ticker-get-info-text",("mapName", mapName),("gmTitle", gmTitle),("desc", desc));
         }
 
         private TickerLobbyReadyEvent GetStatusSingle(ICommonSession player, LobbyPlayerStatus status)
