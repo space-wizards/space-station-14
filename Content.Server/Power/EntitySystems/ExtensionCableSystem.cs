@@ -4,12 +4,16 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Server.Power.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Map;
 using Robust.Shared.Physics;
 
 namespace Content.Server.Power.EntitySystems
 {
     public sealed class ExtensionCableSystem : EntitySystem
     {
+        [Dependency] private readonly IEntityLookup _lookup = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -49,6 +53,14 @@ namespace Content.Server.Power.EntitySystems
 
         private void OnProviderShutdown(EntityUid uid, ExtensionCableProviderComponent provider, ComponentShutdown args)
         {
+            var xform = EntityManager.GetComponent<TransformComponent>(uid);
+
+            // If grid deleting no need to update power.
+            if (_mapManager.TryGetGrid(xform.GridID, out var grid))
+            {
+                if (MetaData(grid.GridEntityId).EntityLifeStage > EntityLifeStage.MapInitialized) return;
+            }
+
             provider.Connectable = false;
             ResetReceivers(provider);
         }
@@ -68,8 +80,7 @@ namespace Content.Server.Power.EntitySystems
             {
                 // No point resetting what the receiver is doing if it's deleting, plus significant perf savings
                 // in not doing needless lookups
-                if (EntityManager.GetComponent<MetaDataComponent>((receiver).Owner).EntityLifeStage >
-                    EntityLifeStage.MapInitialized) continue;
+                if (MetaData(receiver.Owner).EntityLifeStage > EntityLifeStage.MapInitialized) continue;
 
                 TryFindAndSetProvider(receiver);
             }
@@ -77,15 +88,17 @@ namespace Content.Server.Power.EntitySystems
 
         private IEnumerable<ExtensionCableReceiverComponent> FindAvailableReceivers(EntityUid owner, float range)
         {
-            var nearbyEntities = IoCManager.Resolve<IEntityLookup>()
-                .GetEntitiesInRange(owner, range);
+            var nearbyEntities = _lookup.GetEntitiesInRange(owner, range);
+
+            var xform = Transform(owner);
+            var coordinates = xform.Coordinates;
 
             foreach (var entity in nearbyEntities)
             {
                 if (EntityManager.TryGetComponent<ExtensionCableReceiverComponent>(entity, out var receiver) &&
                     receiver.Connectable &&
                     receiver.Provider == null &&
-                    EntityManager.GetComponent<TransformComponent>(entity).Coordinates.TryDistance(EntityManager, EntityManager.GetComponent<TransformComponent>(owner).Coordinates, out var distance) &&
+                    Transform(entity).Coordinates.TryDistance(EntityManager, coordinates, out var distance) &&
                     distance < Math.Min(range, receiver.ReceptionRange))
                 {
                     yield return receiver;
@@ -162,9 +175,9 @@ namespace Content.Server.Power.EntitySystems
             }
         }
 
-        private void TryFindAndSetProvider(ExtensionCableReceiverComponent receiver)
+        private void TryFindAndSetProvider(ExtensionCableReceiverComponent receiver, TransformComponent? xform = null)
         {
-            if (!TryFindAvailableProvider(receiver.Owner, receiver.ReceptionRange, out var provider)) return;
+            if (!TryFindAvailableProvider(receiver.Owner, receiver.ReceptionRange, out var provider, xform)) return;
 
             receiver.Provider = provider;
             provider.LinkedReceivers.Add(receiver);
@@ -172,18 +185,24 @@ namespace Content.Server.Power.EntitySystems
             RaiseLocalEvent(provider.Owner, new ReceiverConnectedEvent(receiver), broadcast: false);
         }
 
-        private bool TryFindAvailableProvider(EntityUid owner, float range, [NotNullWhen(true)] out ExtensionCableProviderComponent? foundProvider)
+        private bool TryFindAvailableProvider(EntityUid owner, float range, [NotNullWhen(true)] out ExtensionCableProviderComponent? foundProvider, TransformComponent? xform = null)
         {
-            var nearbyEntities = IoCManager.Resolve<IEntityLookup>()
-                .GetEntitiesInRange(owner, range);
+            if (!Resolve(owner, ref xform))
+            {
+                foundProvider = null;
+                return false;
+            }
+
+            var coordinates = xform.Coordinates;
+            var nearbyEntities = _lookup.GetEntitiesInRange(coordinates, range);
 
             foreach (var entity in nearbyEntities)
             {
-                if (!EntityManager.TryGetComponent<ExtensionCableProviderComponent?>(entity, out var provider)) continue;
+                if (entity == owner || !EntityManager.TryGetComponent<ExtensionCableProviderComponent?>(entity, out var provider)) continue;
 
                 if (!provider.Connectable) continue;
 
-                if (!EntityManager.GetComponent<TransformComponent>(entity).Coordinates.TryDistance(EntityManager, EntityManager.GetComponent<TransformComponent>(owner).Coordinates, out var distance)) continue;
+                if (!Transform(entity).Coordinates.TryDistance(EntityManager, coordinates, out var distance)) continue;
 
                 if (!(distance < Math.Min(range, provider.TransferRange))) continue;
 
