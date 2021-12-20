@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Server.Chemistry.ReagentEffectConditions
 {
     /// <summary>
-    ///     Requires the solution to be above or below a certain temperature.
+    ///     Requires the solution to be above or below a certain thermal energy.
     ///     Used for things like explosives.
     /// </summary>
     public class SolutionThermalEnergy : ReagentEffectCondition
