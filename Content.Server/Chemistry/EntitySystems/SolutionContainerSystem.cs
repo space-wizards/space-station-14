@@ -181,7 +181,7 @@ namespace Content.Server.Chemistry.EntitySystems
         /// <param name="acceptedQuantity">The amount of reagent successfully added.</param>
         /// <returns>If all the reagent could be added.</returns>
         public bool TryAddReagent(EntityUid targetUid, Solution targetSolution, string reagentId, FixedPoint2 quantity,
-            out FixedPoint2 acceptedQuantity, double? temperature = null)
+            out FixedPoint2 acceptedQuantity, float? temperature = null)
         {
             acceptedQuantity = targetSolution.AvailableVolume > quantity ? quantity : targetSolution.AvailableVolume;
             targetSolution.AddReagent(reagentId, acceptedQuantity, temperature);
@@ -333,7 +333,7 @@ namespace Content.Server.Chemistry.EntitySystems
         /// <param name="owner">The entity in which the solution is located.</param>
         /// <param name="solution">The solution to set the temperature of.</param>
         /// <param name="temperature">The new value to set the temperature to.</param>
-        public void SetTemperature(EntityUid owner, Solution solution, double temperature)
+        public void SetTemperature(EntityUid owner, Solution solution, float temperature)
         {
             if (temperature == solution.Temperature)
                 return;
@@ -348,7 +348,7 @@ namespace Content.Server.Chemistry.EntitySystems
         /// <param name="owner">The entity in which the solution is located.</param>
         /// <param name="solution">The solution to set the thermal energy of.</param>
         /// <param name="thermalEnergy">The new value to set the thermal energy to.</param>
-        public void SetThermalEnergy(EntityUid owner, Solution solution, double thermalEnergy)
+        public void SetThermalEnergy(EntityUid owner, Solution solution, float thermalEnergy)
         {
             if (thermalEnergy == solution.ThermalEnergy)
                 return;
@@ -363,9 +363,9 @@ namespace Content.Server.Chemistry.EntitySystems
         /// <param name="owner">The entity in which the solution is located.</param>
         /// <param name="solution">The solution to set the thermal energy of.</param>
         /// <param name="thermalEnergy">The new value to set the thermal energy to.</param>
-        public void AddThermalEnergy(EntityUid owner, Solution solution, double thermalEnergy = 0.0d)
+        public void AddThermalEnergy(EntityUid owner, Solution solution, float thermalEnergy)
         {
-            if (thermalEnergy == 0.0d)
+            if (thermalEnergy == 0.0f)
                 return;
 
             solution.ThermalEnergy += thermalEnergy;

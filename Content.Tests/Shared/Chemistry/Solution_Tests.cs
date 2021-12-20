@@ -359,20 +359,20 @@ namespace Content.Tests.Shared.Chemistry
         public void EmptySolutionHasNoHeatCapacity()
         {
             var solution = new Solution();
-            Assert.That(solution.HeatCapacity, Is.EqualTo(0.0d));
+            Assert.That(solution.HeatCapacity, Is.EqualTo(0.0f));
         }
 
         [Test]
         public void EmptySolutionHasNoThermalEnergy()
         {
             var solution = new Solution();
-            Assert.That(solution.ThermalEnergy, Is.EqualTo(0.0d));
+            Assert.That(solution.ThermalEnergy, Is.EqualTo(0.0f));
         }
 
         [Test]
         public void AddReagentToEmptySolutionSetsTemperature()
         {
-            const double testTemp = 100.0d;
+            const float testTemp = 100.0f;
 
             var solution = new Solution();
             solution.AddReagent("water", FixedPoint2.New(100), testTemp);
@@ -382,7 +382,7 @@ namespace Content.Tests.Shared.Chemistry
         [Test]
         public void AddReagentWithNullTemperatureDoesNotEffectTemperature()
         {
-            const double initialTemp = 100.0d;
+            const float initialTemp = 100.0f;
 
             var solution = new Solution();
             solution.AddReagent("water", FixedPoint2.New(100), initialTemp);
@@ -397,7 +397,7 @@ namespace Content.Tests.Shared.Chemistry
         [Test]
         public void AddSolutionWithEqualTemperatureDoesNotChangeTemperature()
         {
-            const double initialTemp = 100.0d;
+            const float initialTemp = 100.0f;
 
             var solutionOne = new Solution();
             solutionOne.AddReagent("water", FixedPoint2.New(100));
@@ -415,7 +415,7 @@ namespace Content.Tests.Shared.Chemistry
         [Test]
         public void RemoveReagentDoesNotEffectTemperature()
         {
-            const double initialTemp = 100.0d;
+            const float initialTemp = 100.0f;
 
             var solution = new Solution();
             solution.AddReagent("water", FixedPoint2.New(100), initialTemp);
@@ -426,7 +426,7 @@ namespace Content.Tests.Shared.Chemistry
         [Test]
         public void RemoveSolutionDoesNotEffectTemperature()
         {
-            const double initialTemp = 100.0d;
+            const float initialTemp = 100.0f;
 
             var solution = new Solution();
             solution.AddReagent("water", FixedPoint2.New(100), initialTemp);
@@ -437,7 +437,7 @@ namespace Content.Tests.Shared.Chemistry
         [Test]
         public void SplitSolutionDoesNotEffectTemperature()
         {
-            const double initialTemp = 100.0d;
+            const float initialTemp = 100.0f;
 
             var solution = new Solution();
             solution.AddReagent("water", FixedPoint2.New(100), initialTemp);
@@ -448,7 +448,7 @@ namespace Content.Tests.Shared.Chemistry
         [Test]
         public void AddReagentWithSetTemperatureAdjustsTemperature()
         {
-            const double temp = 100.0d;
+            const float temp = 100.0f;
 
             var solution = new Solution();
             solution.AddReagent("water", FixedPoint2.New(100), temp * 1);
@@ -464,7 +464,7 @@ namespace Content.Tests.Shared.Chemistry
         [Test]
         public void AddSolutionCombinesThermalEnergy()
         {
-            const double initialTemp = 100.0d;
+            const float initialTemp = 100.0f;
 
             var solutionOne = new Solution();
             solutionOne.AddReagent("water", FixedPoint2.New(100), initialTemp);

@@ -42,20 +42,20 @@ namespace Content.Server.Administration.Commands
             }
             var solution = man.Solutions[args[1]];
 
-            if (!double.TryParse(args[2], out var quantity))
+            if (!float.TryParse(args[2], out var quantity))
             {
                 shell.WriteLine($"Failed to parse new thermal energy.");
                 return;
             }
 
-            if (solution.HeatCapacity <= 0.0d)
+            if (solution.HeatCapacity <= 0.0f)
             {
-                if(quantity != 0.0d)
+                if(quantity != 0.0f)
                 {
                     shell.WriteLine($"Cannot set the thermal energy of a solution with 0 heat capacity to a non-zero number.");
                     return;
                 }
-            } else if(quantity <= 0.0d)
+            } else if(quantity <= 0.0f)
             {
                 shell.WriteLine($"Cannot set the thermal energy of a solution with heat capacity to a non-positive number.");
                 return;

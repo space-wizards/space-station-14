@@ -147,7 +147,7 @@ namespace Content.Client.Administration.UI.ManageSolutions
             var temperatureSpin = new FloatSpinBox(1, 2);
             temperatureSpin.HorizontalExpand = true;
             temperatureSpin.Margin = new Thickness(0, 1);
-            temperatureSpin.Value = (float) solution.Temperature;
+            temperatureSpin.Value = solution.Temperature;
             temperatureSpin.OnValueChanged += SetTemperature;
 
             temperatureBox.AddChild(temperatureLabel);
@@ -167,7 +167,7 @@ namespace Content.Client.Administration.UI.ManageSolutions
             var thermalEnergySpin = new FloatSpinBox(1, 2);
             thermalEnergySpin.HorizontalExpand = true;
             thermalEnergySpin.Margin = new Thickness(0, 1);
-            thermalEnergySpin.Value = (float) solution.ThermalEnergy;
+            thermalEnergySpin.Value = solution.ThermalEnergy;
             thermalEnergySpin.OnValueChanged += SetThermalEnergy;
 
             thermalEnergyBox.AddChild(thermalEnergyLabel);

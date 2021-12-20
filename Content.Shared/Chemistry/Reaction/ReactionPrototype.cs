@@ -34,13 +34,13 @@ namespace Content.Shared.Chemistry.Reaction
         ///     The minimum temperature the reaction can occur at.
         /// </summary>
         [DataField("minTemp")]
-        public double MinimumTemperature = 0.0d;
+        public float MinimumTemperature = 0.0f;
 
         /// <summary>
         ///     The maximum temperature the reaction can occur at.
         /// </summary>
         [DataField("maxTemp")]
-        public double MaximumTemperature = double.PositiveInfinity;
+        public float MaximumTemperature = float.PositiveInfinity;
 
         /// <summary>
         /// Reagents created when the reaction occurs.

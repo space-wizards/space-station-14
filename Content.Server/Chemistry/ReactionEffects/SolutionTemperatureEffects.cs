@@ -14,7 +14,7 @@ namespace Content.Server.Chemistry.ReactionEffects
         /// <summary>
         ///     The temperature to set the solution to.
         /// </summary>
-        [DataField("temperature")] private double _temperature;
+        [DataField("temperature", required: true)] private float _temperature;
 
         public override void Effect(ReagentEffectArgs args)
         {
@@ -35,17 +35,17 @@ namespace Content.Server.Chemistry.ReactionEffects
         /// <summary>
         ///     The total change in the thermal energy of the solution.
         /// </summary>
-        [DataField("delta")] protected double Delta;
+        [DataField("delta", required: true)] protected float Delta;
 
         /// <summary>
         ///     The minimum temperature this effect can reach.
         /// </summary>
-        [DataField("minTemp")] private double _minTemp = 0.0d;
+        [DataField("minTemp")] private float _minTemp = 0.0f;
 
         /// <summary>
         ///     The maximum temperature this effect can reach.
         /// </summary>
-        [DataField("maxTemp")] private double _maxTemp = double.PositiveInfinity;
+        [DataField("maxTemp")] private float _maxTemp = float.PositiveInfinity;
 
         /// <summary>
         ///     If true, then scale ranges by intensity. If not, the ranges are the same regardless of reactant amount.
@@ -57,7 +57,7 @@ namespace Content.Server.Chemistry.ReactionEffects
         /// </summary>
         /// <param name="solution"></param>
         /// <returns></returns>
-        protected virtual double GetDeltaT(Solution solution) => Delta;
+        protected virtual float GetDeltaT(Solution solution) => Delta;
 
         public override void Effect(ReagentEffectArgs args)
         {
@@ -67,7 +67,7 @@ namespace Content.Server.Chemistry.ReactionEffects
 
             var deltaT = GetDeltaT(solution);
             if (_scaled)
-                deltaT = deltaT * (double)args.Quantity;
+                deltaT = deltaT * (float) args.Quantity;
 
             if (deltaT == 0.0d)
                 return;
@@ -76,7 +76,7 @@ namespace Content.Server.Chemistry.ReactionEffects
             if (deltaT < 0.0d && solution.Temperature <= _minTemp)
                 return;
 
-            solution.Temperature = MathF.Max(MathF.Min((float) (solution.Temperature + deltaT), (float) _minTemp), (float) _maxTemp);
+            solution.Temperature = MathF.Max(MathF.Min(solution.Temperature + deltaT, _minTemp), _maxTemp);
         }
     }
 
@@ -85,11 +85,11 @@ namespace Content.Server.Chemistry.ReactionEffects
     /// </summary>
     public class AdjustSolutionThermalEnergyEffect : AdjustSolutionTemperatureEffect
     {
-        protected override double GetDeltaT(Solution solution)
+        protected override float GetDeltaT(Solution solution)
         {
             var heatCapacity = solution.HeatCapacity;
-            if (heatCapacity == 0.0d)
-                return 0.0d;
+            if (heatCapacity == 0.0f)
+                return 0.0f;
             return Delta / heatCapacity;
         }
     }

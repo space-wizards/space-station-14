@@ -42,13 +42,13 @@ namespace Content.Server.Administration.Commands
             }
             var solution = man.Solutions[args[1]];
 
-            if (!double.TryParse(args[2], out var quantity))
+            if (!float.TryParse(args[2], out var quantity))
             {
                 shell.WriteLine($"Failed to parse new temperature.");
                 return;
             }
 
-            if (quantity <= 0.0d)
+            if (quantity <= 0.0f)
             {
                 shell.WriteLine($"Cannot set the temperature of a solution to a non-positive number.");
                 return;

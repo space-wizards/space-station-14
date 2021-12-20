@@ -55,37 +55,37 @@ namespace Content.Shared.Chemistry.Components
         ///     The total heat capacity of all reagents in the solution.
         /// </summary>
         [ViewVariables]
-        public double HeatCapacity => GetHeatCapacity();
+        public float HeatCapacity => GetHeatCapacity();
 
         /// <summary>
         ///     The average specific heat of all reagents in the solution.
         /// </summary>
         [ViewVariables]
-        public double SpecificHeat => HeatCapacity / (double) TotalVolume;
+        public float SpecificHeat => HeatCapacity / (float) TotalVolume;
 
         /// <summary>
         ///     The total thermal energy of the reagents in the solution.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public double ThermalEnergy {
+        public float ThermalEnergy {
             get { return Temperature * HeatCapacity; }
-            set { Temperature = ((HeatCapacity == 0.0d) ? 0.0d : (value / HeatCapacity)); }
+            set { Temperature = ((HeatCapacity == 0.0f) ? 0.0f : (value / HeatCapacity)); }
         }
 
         /// <summary>
         ///     Returns the total heat capacity of the reagents in this solution.
         /// </summary>
         /// <returns>The total heat capacity of the reagents in this solution.</returns>
-        private double GetHeatCapacity()
+        private float GetHeatCapacity()
         {
-            var heatCapacity = 0.0d;
+            var heatCapacity = 0.0f;
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             foreach(var reagent in Contents)
             {
                 if (!prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype? proto))
                     proto = new ReagentPrototype();
 
-                heatCapacity += (double) reagent.Quantity * proto.SpecificHeat;
+                heatCapacity += (float) reagent.Quantity * proto.SpecificHeat;
             }
 
             return heatCapacity;
