@@ -304,7 +304,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
                 text = Loc.GetString("rule-suspicion-end-round-innocents-victory");
                 break;
             case Victory.Traitors:
-                text = Loc.GetString("rule-suspicion-end-round-trators-victory");
+                text = Loc.GetString("rule-suspicion-end-round-traitors-victory");
                 break;
             default:
                 text = Loc.GetString("rule-suspicion-end-round-nobody-victory");
