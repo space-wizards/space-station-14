@@ -25,6 +25,7 @@
     drawdepth: Mobs
     sprite: Mobs/Aliens/Guardians/guardians.rsi
     state: tech_basic
+    noRot: true
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
@@ -64,5 +65,3 @@
     innateActions:
       - CombatMode
   - type: Guardian
-    distanceAllowed: 10
-    damageShare: 0.85

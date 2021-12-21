@@ -139,30 +139,4 @@ namespace Content.Shared.MobState.EntitySystems
                 args.Cancel();
         }
     }
-    /// <summary>
-    /// An event broadcasted in case an entity changes its state
-    /// </summary>
-    public class MobStateChangedEvent : EntityEventArgs
-    {
-        /// <summary>
-        /// The component which state has changed
-        /// </summary>
-        public readonly MobStateComponent Component;
-
-        /// <summary>
-        /// The old mobstate of the component, the one before the event triggered
-        /// </summary>
-        public readonly IMobState? OldState;
-
-        /// <summary>
-        /// The new and current mobstate of the component
-        /// </summary>
-        public readonly IMobState State;
-        public MobStateChangedEvent(MobStateComponent component, IMobState? oldstate, IMobState state)
-        {
-            Component = component;
-            OldState = oldstate;
-            State = state;
-        }
-    }
 }

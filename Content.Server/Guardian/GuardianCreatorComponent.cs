@@ -27,5 +27,13 @@ namespace Content.Server.Guardian
         [ViewVariables]
         [DataField("guardianProto", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>), required: true)]
         public string GuardianProto { get; set; } = default!;
+
+        /// <summary>
+        /// How long it takes to inject someone.
+        /// </summary>
+        [DataField("delay")]
+        public float InjectionDelay = 5f;
+
+        public bool Injecting = false;
     }
 }
