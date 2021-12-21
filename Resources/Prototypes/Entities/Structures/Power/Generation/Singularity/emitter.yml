@@ -9,6 +9,7 @@
   - type: InteractionOutline
   - type: Physics
     bodyType: Static
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -69,5 +70,7 @@
   - type: Appearance
     visuals:
     - type: EmitterVisualizer
+  - type: Lock
+    locked: false
   - type: AccessReader
     access: [[ "Engineering" ]]

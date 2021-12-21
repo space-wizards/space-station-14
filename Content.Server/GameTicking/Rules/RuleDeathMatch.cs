@@ -1,10 +1,9 @@
 using System;
 using System.Threading;
 using Content.Server.Chat.Managers;
-using Content.Shared;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
-using Content.Shared.MobState;
+using Content.Shared.MobState.Components;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
@@ -59,11 +58,10 @@ namespace Content.Server.GameTicking.Rules
                 return;
 
             IPlayerSession? winner = null;
-            foreach (var playerSession in _playerManager.GetAllPlayers())
+            foreach (var playerSession in _playerManager.ServerSessions)
             {
-                var playerEntity = playerSession.AttachedEntity;
-                if (playerEntity == null
-                    || !playerEntity.TryGetComponent(out IMobStateComponent? state))
+                if (playerSession.AttachedEntity is not {Valid: true} playerEntity
+                    || !_entityManager.TryGetComponent(playerEntity, out MobStateComponent? state))
                 {
                     continue;
                 }

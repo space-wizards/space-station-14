@@ -1,14 +1,15 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Content.Client.Clickable;
 using Content.Server.GameTicking;
 using NUnit.Framework;
 using Robust.Server.GameObjects;
+using Robust.Shared;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Timing;
 
 namespace Content.IntegrationTests.Tests
 {
@@ -27,7 +28,13 @@ namespace Content.IntegrationTests.Tests
         [OneTimeSetUp]
         public async Task Setup()
         {
-            (_client, _server) = await StartConnectedServerClientPair();
+            (_client, _server) = await StartConnectedServerClientPair(serverOptions: new ServerContentIntegrationOption()
+            {
+                CVarOverrides =
+                {
+                    [CVars.NetPVS.Name] = "false"
+                }
+            });
         }
 
         [Parallelizable(ParallelScope.None)]
@@ -69,13 +76,13 @@ namespace Content.IntegrationTests.Tests
 
             await _server.WaitPost(() =>
             {
-                var gridEnt = mapManager.GetGrid(gameTicker.DefaultGridId).GridEntityId;
-                worldPos = serverEntManager.GetEntity(gridEnt).Transform.WorldPosition;
+                var gridEnt = mapManager.GetAllGrids().First().GridEntityId;
+                worldPos = serverEntManager.GetComponent<TransformComponent>(gridEnt).WorldPosition;
 
                 var ent = serverEntManager.SpawnEntity(prototype, new EntityCoordinates(gridEnt, 0f, 0f));
-                ent.Transform.LocalRotation = angle;
-                ent.GetComponent<SpriteComponent>().Scale = (scale, scale);
-                entity = ent.Uid;
+                serverEntManager.GetComponent<TransformComponent>(ent).LocalRotation = angle;
+                serverEntManager.GetComponent<SpriteComponent>(ent).Scale = (scale, scale);
+                entity = ent;
             });
 
             // Let client sync up.
@@ -85,8 +92,7 @@ namespace Content.IntegrationTests.Tests
 
             await _client.WaitPost(() =>
             {
-                var ent = clientEntManager.GetEntity(entity);
-                var clickable = ent.GetComponent<ClickableComponent>();
+                var clickable = clientEntManager.GetComponent<ClickableComponent>(entity);
 
                 hit = clickable.CheckClick((clickPosX, clickPosY) + worldPos!.Value, out _, out _);
             });

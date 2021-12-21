@@ -1,4 +1,4 @@
-﻿using Content.Shared.Body.Mechanism;
+﻿using Content.Shared.Body.Components;
 using Robust.Client.Console;
 using Robust.Client.GameObjects;
 using Robust.Shared.Console;
@@ -23,7 +23,7 @@ namespace Content.Client.Commands
 
             foreach (var mechanism in mechanisms)
             {
-                if (mechanism.Owner.TryGetComponent(out SpriteComponent? sprite))
+                if (entityManager.TryGetComponent(mechanism.Owner, out SpriteComponent? sprite))
                 {
                     sprite.ContainerOccluded = false;
                 }

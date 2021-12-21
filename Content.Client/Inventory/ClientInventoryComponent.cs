@@ -3,9 +3,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Client.Clothing;
 using Content.Shared.CharacterAppearance;
-using Content.Shared.EffectBlocker;
 using Content.Shared.Inventory;
-using Content.Shared.Movement.Components;
+using Content.Shared.Movement.EntitySystems;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -21,11 +20,13 @@ namespace Content.Client.Inventory
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(SharedInventoryComponent))]
-    public class ClientInventoryComponent : SharedInventoryComponent, IEffectBlocker
+    public class ClientInventoryComponent : SharedInventoryComponent
     {
-        private readonly Dictionary<Slots, IEntity> _slots = new();
+        [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public IReadOnlyDictionary<Slots, IEntity> AllSlots => _slots;
+        private readonly Dictionary<Slots, EntityUid> _slots = new();
+
+        public IReadOnlyDictionary<Slots, EntityUid> AllSlots => _slots;
 
         [ViewVariables] public InventoryInterfaceController InterfaceController { get; private set; } = default!;
 
@@ -77,49 +78,9 @@ namespace Content.Client.Inventory
             }
         }
 
-        public override bool IsEquipped(IEntity item)
+        public override bool IsEquipped(EntityUid item)
         {
-            return item != null && _slots.Values.Any(e => e == item);
-        }
-
-        public override float WalkSpeedModifier
-        {
-            get
-            {
-                var mod = 1f;
-                foreach (var slot in _slots.Values)
-                {
-                    if (slot != null)
-                    {
-                        foreach (var modifier in slot.GetAllComponents<IMoveSpeedModifier>())
-                        {
-                            mod *= modifier.WalkSpeedModifier;
-                        }
-                    }
-                }
-
-                return mod;
-            }
-        }
-
-        public override float SprintSpeedModifier
-        {
-            get
-            {
-                var mod = 1f;
-                foreach (var slot in _slots.Values)
-                {
-                    if (slot != null)
-                    {
-                        foreach (var modifier in slot.GetAllComponents<IMoveSpeedModifier>())
-                        {
-                            mod *= modifier.SprintSpeedModifier;
-                        }
-                    }
-                }
-
-                return mod;
-            }
+            return item != default && _slots.Values.Any(e => e == item);
         }
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
@@ -131,9 +92,9 @@ namespace Content.Client.Inventory
 
             var doneSlots = new HashSet<Slots>();
 
-            foreach (var (slot, entityUid) in state.Entities)
+            foreach (var (slot, entity) in state.Entities)
             {
-                if (!Owner.EntityManager.TryGetEntity(entityUid, out var entity))
+                if (!_entMan.EntityExists(entity))
                 {
                     continue;
                 }
@@ -147,9 +108,7 @@ namespace Content.Client.Inventory
 
             if (state.HoverEntity != null)
             {
-                var (slot, (entityUid, fits)) = state.HoverEntity.Value;
-                var entity = Owner.EntityManager.GetEntity(entityUid);
-
+                var (slot, (entity, fits)) = state.HoverEntity.Value;
                 InterfaceController?.HoverInSlot(slot, entity, fits);
             }
 
@@ -162,27 +121,24 @@ namespace Content.Client.Inventory
                 }
             }
 
-            if (Owner.TryGetComponent(out MovementSpeedModifierComponent? mod))
-            {
-                mod.RefreshMovementSpeedModifiers();
-            }
+            EntitySystem.Get<MovementSpeedModifierSystem>().RefreshMovementSpeedModifiers(Owner);
         }
 
-        private void _setSlot(Slots slot, IEntity entity)
+        private void _setSlot(Slots slot, EntityUid entity)
         {
             SetSlotVisuals(slot, entity);
 
             InterfaceController?.AddToSlot(slot, entity);
         }
 
-        internal void SetSlotVisuals(Slots slot, IEntity entity)
+        internal void SetSlotVisuals(Slots slot, EntityUid entity)
         {
             if (_sprite == null)
             {
                 return;
             }
 
-            if (entity.TryGetComponent(out ClothingComponent? clothing))
+            if (_entMan.TryGetComponent(entity, out ClothingComponent? clothing))
             {
                 var flag = SlotMasks[slot];
                 var data = clothing.GetEquippedStateInfo(flag, SpeciesId);
@@ -233,23 +189,31 @@ namespace Content.Client.Inventory
         public void SendEquipMessage(Slots slot)
         {
             var equipMessage = new ClientInventoryMessage(slot, ClientInventoryUpdate.Equip);
+#pragma warning disable 618
             SendNetworkMessage(equipMessage);
+#pragma warning restore 618
         }
 
         public void SendUseMessage(Slots slot)
         {
             var equipmessage = new ClientInventoryMessage(slot, ClientInventoryUpdate.Use);
+#pragma warning disable 618
             SendNetworkMessage(equipmessage);
+#pragma warning restore 618
         }
 
         public void SendHoverMessage(Slots slot)
         {
+#pragma warning disable 618
             SendNetworkMessage(new ClientInventoryMessage(slot, ClientInventoryUpdate.Hover));
+#pragma warning restore 618
         }
 
         public void SendOpenStorageUIMessage(Slots slot)
         {
+#pragma warning disable 618
             SendNetworkMessage(new OpenSlotStorageUIMessage(slot));
+#pragma warning restore 618
         }
 
         public void PlayerDetached()
@@ -264,12 +228,12 @@ namespace Content.Client.Inventory
             _playerAttached = true;
         }
 
-        public bool TryGetSlot(Slots slot, [NotNullWhen(true)] out IEntity? item)
+        public bool TryGetSlot(Slots slot, [NotNullWhen(true)] out EntityUid item)
         {
             return _slots.TryGetValue(slot, out item);
         }
 
-        public bool TryFindItemSlots(IEntity item, [NotNullWhen(true)] out Slots? slots)
+        public bool TryFindItemSlots(EntityUid item, [NotNullWhen(true)] out Slots? slots)
         {
             slots = null;
 
@@ -283,11 +247,6 @@ namespace Content.Client.Inventory
             }
 
             return false;
-        }
-
-        bool IEffectBlocker.CanSlip()
-        {
-            return !TryGetSlot(Slots.SHOES, out var shoes) || shoes == null || EffectBlockerSystem.CanSlip(shoes);
         }
     }
 }

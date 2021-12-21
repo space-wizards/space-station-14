@@ -1,0 +1,31 @@
+﻿- type: reagent
+  id: Nutriment
+  name: nutriment
+  desc: All the vitamins, minerals, and carbohydrates the body needs in pure form.
+  physicalDesc: opaque
+  color: "#664330"
+  metabolisms:
+    Food:
+      effects:
+      - !type:SatiateHunger
+  plantMetabolism:
+  - !type:PlantAdjustNutrition
+    amount: 1
+  - !type:PlantAdjustHealth
+    amount: 0.5
+
+- type: reagent
+  id: Glucose
+  name: glucose
+  desc: A simple sugar found in many foods.
+  physicalDesc: syrupy
+  color: "#ffffff"
+  boilingPoint: 340282300000000000000000000000000000000 #Fun fact: Glucose can't boil. So let's just set it to the maximum float value.
+  meltingPoint: 146.0
+  plantMetabolism:
+  - !type:PlantAdjustNutrition
+    amount: 0.1
+  - !type:PlantAdjustWeeds
+    amount: 2
+  - !type:PlantAdjustPests
+    amount: 2

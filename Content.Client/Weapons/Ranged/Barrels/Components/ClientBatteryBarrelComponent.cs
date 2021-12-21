@@ -1,6 +1,7 @@
 using System;
 using Content.Client.Items.Components;
 using Content.Client.Stylesheets;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
@@ -8,6 +9,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Maths;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
@@ -21,6 +23,9 @@ namespace Content.Client.Weapons.Ranged.Barrels.Components
 
         private StatusControl? _statusControl;
 
+        [DataField("cellSlot", required: true)]
+        public ItemSlot CellSlot = default!;
+
         /// <summary>
         ///     Count of bullets in the magazine.
         /// </summary>
@@ -29,6 +34,18 @@ namespace Content.Client.Weapons.Ranged.Barrels.Components
         /// </remarks>
         [ViewVariables]
         public (int count, int max)? MagazineCount { get; private set; }
+
+        protected override void Initialize()
+        {
+            base.Initialize();
+            EntitySystem.Get<ItemSlotsSystem>().AddItemSlot(Owner, $"{Name}-powercell-container", CellSlot);
+        }
+
+        protected override void OnRemove()
+        {
+            base.OnRemove();
+            EntitySystem.Get<ItemSlotsSystem>().RemoveItemSlot(Owner, CellSlot);
+        }
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {

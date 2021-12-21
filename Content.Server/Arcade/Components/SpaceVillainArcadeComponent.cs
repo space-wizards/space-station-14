@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
@@ -73,7 +74,7 @@ namespace Content.Server.Arcade.Components
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!Powered || !eventArgs.User.TryGetComponent(out ActorComponent? actor))
+            if (!Powered || !IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User, out ActorComponent? actor))
                 return;
 
             if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User))
@@ -101,9 +102,12 @@ namespace Content.Server.Arcade.Components
             }
         }
 
+        [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
         public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
+#pragma warning disable 618
             base.HandleMessage(message, component);
+#pragma warning restore 618
             switch (message)
             {
                 case PowerChangedMessage powerChanged:
@@ -219,7 +223,7 @@ namespace Content.Server.Arcade.Components
         public void ProcessWin()
         {
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            entityManager.SpawnEntity(_random.Pick(_possibleRewards), Owner.Transform.MapPosition);
+            entityManager.SpawnEntity(_random.Pick(_possibleRewards), entityManager.GetComponent<TransformComponent>(Owner).MapPosition);
         }
 
         /// <summary>

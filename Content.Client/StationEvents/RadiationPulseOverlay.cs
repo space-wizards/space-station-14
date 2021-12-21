@@ -1,147 +1,138 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using JetBrains.Annotations;
 using Robust.Client.Graphics;
-using Robust.Client.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Client.StationEvents
 {
-    [UsedImplicitly]
-    public sealed class RadiationPulseOverlay : Overlay
+    public class RadiationPulseOverlay : Overlay
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IEyeManager _eyeManager = default!;
 
-        /// <summary>
-        /// Current color of a pulse
-        /// </summary>
-        private readonly Dictionary<IEntity, Color> _colors = new();
+        private const float MaxDist = 15.0f;
 
-        /// <summary>
-        /// Whether our alpha is increasing or decreasing and at what time does it flip (or stop)
-        /// </summary>
-        private readonly Dictionary<IEntity, (bool EasingIn, TimeSpan TransitionTime)> _transitions =
-                     new();
+        public override OverlaySpace Space => OverlaySpace.WorldSpace;
+        public override bool RequestScreenTexture => true;
 
-        /// <summary>
-        /// How much the alpha changes per second for each pulse
-        /// </summary>
-        private readonly Dictionary<IEntity, float> _alphaRateOfChange = new();
+        private TimeSpan _lastTick = default;
 
-        private TimeSpan _lastTick;
-
-        // TODO: When worldHandle can do DrawCircle change this.
-        public override OverlaySpace Space => OverlaySpace.ScreenSpace;
+        private readonly ShaderInstance _baseShader;
+        private readonly Dictionary<EntityUid, (ShaderInstance shd, RadiationShaderInstance instance)> _pulses = new();
 
         public RadiationPulseOverlay()
         {
             IoCManager.InjectDependencies(this);
-            _lastTick = _gameTiming.CurTime;
-        }
-
-        /// <summary>
-        /// Get the current color for the entity,
-        /// accounting for what its alpha should be and whether it should be transitioning in or out
-        /// </summary>
-        /// <param name="entity"></param>
-        /// <param name="elapsedTime">frametime</param>
-        /// <param name="endTime"></param>
-        /// <returns></returns>
-        private Color GetColor(IEntity entity, float elapsedTime, TimeSpan endTime)
-        {
-            var currentTime = _gameTiming.CurTime;
-
-            // New pulse
-            if (!_colors.ContainsKey(entity))
-            {
-                UpdateTransition(entity, currentTime, endTime);
-            }
-
-            var currentColor = _colors[entity];
-            var alphaChange = _alphaRateOfChange[entity] * elapsedTime;
-
-            if (!_transitions[entity].EasingIn)
-            {
-                alphaChange *= -1;
-            }
-
-            if (currentTime > _transitions[entity].TransitionTime)
-            {
-                UpdateTransition(entity, currentTime, endTime);
-            }
-
-            _colors[entity] = _colors[entity].WithAlpha(currentColor.A + alphaChange);
-            return _colors[entity];
-        }
-
-        private void UpdateTransition(IEntity entity, TimeSpan currentTime, TimeSpan endTime)
-        {
-            bool easingIn;
-            TimeSpan transitionTime;
-
-            if (!_transitions.TryGetValue(entity, out var transition))
-            {
-                // Start as false because it will immediately be flipped
-                easingIn = false;
-                transitionTime = (endTime - currentTime) / 2 + currentTime;
-            }
-            else
-            {
-                easingIn = transition.EasingIn;
-                transitionTime = endTime;
-            }
-
-            _transitions[entity] = (!easingIn, transitionTime);
-            _colors[entity] = Color.LimeGreen.WithAlpha(0.0f);
-            _alphaRateOfChange[entity] = 1.0f / (float) (transitionTime - currentTime).TotalSeconds;
+            _baseShader = _prototypeManager.Index<ShaderPrototype>("Radiation").Instance().Duplicate();
         }
 
         protected override void Draw(in OverlayDrawArgs args)
         {
-            // PVS should control the overlay pretty well so the overlay doesn't get instantiated unless we're near one...
-            var playerEntity = _playerManager.LocalPlayer?.ControlledEntity;
+            RadiationQuery(args.Viewport.Eye);
 
-            if (playerEntity == null)
+            if (_pulses.Count == 0)
+                return;
+
+            if (ScreenTexture == null)
+                return;
+
+            var worldHandle = args.WorldHandle;
+            var viewport = args.Viewport;
+
+            foreach ((var shd, var instance) in _pulses.Values)
             {
+                // To be clear, this needs to use "inside-viewport" pixels.
+                // In other words, specifically NOT IViewportControl.WorldToScreen (which uses outer coordinates).
+                var tempCoords = viewport.WorldToLocal(instance.CurrentMapCoords);
+                tempCoords.Y = viewport.Size.Y - tempCoords.Y;
+                shd?.SetParameter("renderScale", viewport.RenderScale);
+                shd?.SetParameter("positionInput", tempCoords);
+                shd?.SetParameter("range", instance.Range);
+                var life = (_lastTick - instance.Start) / (instance.End - instance.Start);
+                shd?.SetParameter("life", (float) life);
+
+                // There's probably a very good reason not to do this.
+                // Oh well!
+                shd?.SetParameter("SCREEN_TEXTURE", viewport.RenderTarget.Texture);
+
+                worldHandle.UseShader(shd);
+                worldHandle.DrawRect(Box2.CenteredAround(instance.CurrentMapCoords, new Vector2(instance.Range, instance.Range) * 2f), Color.White);
+            }
+        }
+
+        //Queries all pulses on the map and either adds or removes them from the list of rendered pulses based on whether they should be drawn (in range? on the same z-level/map? pulse entity still exists?)
+        private void RadiationQuery(IEye? currentEye)
+        {
+            if (currentEye == null)
+            {
+                _pulses.Clear();
                 return;
             }
 
-            var elapsedTime = (float) (_gameTiming.CurTime - _lastTick).TotalSeconds;
             _lastTick = _gameTiming.CurTime;
 
-            var radiationPulses = _entityManager
-                .EntityQuery<RadiationPulseComponent>(true)
-                .ToList();
+            var currentEyeLoc = currentEye.Position;
 
-            var screenHandle = args.ScreenHandle;
-            var viewport = _eyeManager.GetWorldViewport();
-
-            foreach (var grid in _mapManager.FindGridsIntersecting(playerEntity.Transform.MapID, viewport))
+            var pulses = _entityManager.EntityQuery<RadiationPulseComponent>();
+            foreach (var pulse in pulses) //Add all pulses that are not added yet but qualify
             {
-                foreach (var pulse in radiationPulses)
+                var pulseEntity = pulse.Owner;
+
+                if (!_pulses.Keys.Contains(pulseEntity) && PulseQualifies(pulseEntity, currentEyeLoc))
                 {
-                    if (!pulse.Draw || grid.Index != pulse.Owner.Transform.GridID) continue;
-
-                    // TODO: Check if viewport intersects circle
-                    var circlePosition = args.ViewportControl!.WorldToScreen(pulse.Owner.Transform.WorldPosition);
-
-                    // change to worldhandle when implemented
-                    screenHandle.DrawCircle(
-                        circlePosition,
-                        pulse.Range * 64,
-                        GetColor(pulse.Owner, pulse.Decay ? elapsedTime : 0, pulse.EndTime));
+                    _pulses.Add(
+                            pulseEntity,
+                            (
+                                _baseShader.Duplicate(),
+                                new RadiationShaderInstance(
+                                    _entityManager.GetComponent<TransformComponent>(pulseEntity).MapPosition.Position,
+                                    pulse.Range,
+                                    pulse.StartTime,
+                                    pulse.EndTime
+                                )
+                            )
+                    );
                 }
             }
+
+            var activeShaderIds = _pulses.Keys;
+            foreach (var pulseEntity in activeShaderIds) //Remove all pulses that are added and no longer qualify
+            {
+                if (_entityManager.EntityExists(pulseEntity) &&
+                    PulseQualifies(pulseEntity, currentEyeLoc) &&
+                    _entityManager.TryGetComponent<RadiationPulseComponent?>(pulseEntity, out var pulse))
+                {
+                    var shaderInstance = _pulses[pulseEntity];
+                    shaderInstance.instance.CurrentMapCoords = _entityManager.GetComponent<TransformComponent>(pulseEntity).MapPosition.Position;
+                    shaderInstance.instance.Range = pulse.Range;
+                } else {
+                    _pulses[pulseEntity].shd.Dispose();
+                    _pulses.Remove(pulseEntity);
+                }
+            }
+
         }
+
+        private bool PulseQualifies(EntityUid pulseEntity, MapCoordinates currentEyeLoc)
+        {
+            return _entityManager.GetComponent<TransformComponent>(pulseEntity).MapID == currentEyeLoc.MapId && _entityManager.GetComponent<TransformComponent>(pulseEntity).Coordinates.InRange(_entityManager, EntityCoordinates.FromMap(_entityManager, _entityManager.GetComponent<TransformComponent>(pulseEntity).ParentUid, currentEyeLoc), MaxDist);
+        }
+
+        private sealed record RadiationShaderInstance(Vector2 CurrentMapCoords, float Range, TimeSpan Start, TimeSpan End)
+        {
+            public Vector2 CurrentMapCoords = CurrentMapCoords;
+            public float Range = Range;
+            public TimeSpan Start = Start;
+            public TimeSpan End = End;
+        };
     }
 }
+

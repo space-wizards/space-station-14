@@ -1,9 +1,7 @@
 using System;
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Body.Respiratory;
-using Content.Server.Explosion;
-using Content.Server.NodeContainer;
-using Content.Server.NodeContainer.Nodes;
+using Content.Server.Body.Components;
+using Content.Server.Explosion.EntitySystems;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
@@ -12,7 +10,6 @@ using Content.Shared.Actions.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Audio;
-using Content.Shared.DragDrop;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Sound;
@@ -22,6 +19,7 @@ using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -32,8 +30,12 @@ namespace Content.Server.Atmos.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
+#pragma warning disable 618
     public class GasTankComponent : Component, IExamine, IGasMixtureHolder, IUse, IDropped, IActivate
+#pragma warning restore 618
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "GasTank";
 
         private const float MaxExplosionRange = 14f;
@@ -155,14 +157,14 @@ namespace Content.Server.Atmos.Components
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor)) return false;
+            if (!_entMan.TryGetComponent(eventArgs.User, out ActorComponent? actor)) return false;
             OpenInterface(actor.PlayerSession);
             return true;
         }
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor)) return;
+            if (!_entMan.TryGetComponent(eventArgs.User, out ActorComponent? actor)) return;
             OpenInterface(actor.PlayerSession);
         }
 
@@ -175,7 +177,7 @@ namespace Content.Server.Atmos.Components
             UpdateUserInterface();
         }
 
-        public void DisconnectFromInternals(IEntity? owner = null)
+        public void DisconnectFromInternals(EntityUid? owner = null)
         {
             if (!IsConnected) return;
             IsConnected = false;
@@ -190,7 +192,7 @@ namespace Content.Server.Atmos.Components
                 new GasTankBoundUserInterfaceState
                 {
                     TankPressure = Air?.Pressure ?? 0,
-                    OutputPressure = initialUpdate ? OutputPressure : (float?) null,
+                    OutputPressure = initialUpdate ? OutputPressure : null,
                     InternalsConnected = IsConnected,
                     CanConnectInternals = IsFunctional && internals != null
                 });
@@ -216,7 +218,7 @@ namespace Content.Server.Atmos.Components
         {
             var user = GetInternalsComponent()?.Owner;
 
-            if (user == null || !EntitySystem.Get<ActionBlockerSystem>().CanUse(user))
+            if (user == null || !EntitySystem.Get<ActionBlockerSystem>().CanUse(user.Value))
                 return;
 
             if (IsConnected)
@@ -228,12 +230,12 @@ namespace Content.Server.Atmos.Components
             ConnectToInternals();
         }
 
-        private InternalsComponent? GetInternalsComponent(IEntity? owner = null)
+        private InternalsComponent? GetInternalsComponent(EntityUid? owner = null)
         {
-            if (Owner.Deleted) return null;
-            if (owner != null) return owner.GetComponentOrNull<InternalsComponent>();
+            if (_entMan.Deleted(Owner)) return null;
+            if (owner != null) return _entMan.GetComponentOrNull<InternalsComponent>(owner.Value);
             return Owner.TryGetContainer(out var container)
-                ? container.Owner.GetComponentOrNull<InternalsComponent>()
+                ? _entMan.GetComponentOrNull<InternalsComponent>(container.Owner)
                 : null;
         }
 
@@ -269,9 +271,9 @@ namespace Content.Server.Atmos.Components
                     range = MaxExplosionRange;
                 }
 
-                Owner.SpawnExplosion((int) (range * 0.25f), (int) (range * 0.5f), (int) (range * 1.5f), 1);
+                EntitySystem.Get<ExplosionSystem>().SpawnExplosion(Owner, (int) (range * 0.25f), (int) (range * 0.5f), (int) (range * 1.5f), 1);
 
-                Owner.QueueDelete();
+                _entMan.QueueDeleteEntity(Owner);
                 return;
             }
 
@@ -279,13 +281,13 @@ namespace Content.Server.Atmos.Components
             {
                 if (_integrity <= 0)
                 {
-                    var environment = atmosphereSystem.GetTileMixture(Owner.Transform.Coordinates, true);
+                    var environment = atmosphereSystem.GetTileMixture(_entMan.GetComponent<TransformComponent>(Owner).Coordinates, true);
                     if(environment != null)
                         atmosphereSystem.Merge(environment, Air);
 
-                    SoundSystem.Play(Filter.Pvs(Owner), _ruptureSound.GetSound(), Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.125f));
+                    SoundSystem.Play(Filter.Pvs(Owner), _ruptureSound.GetSound(), _entMan.GetComponent<TransformComponent>(Owner).Coordinates, AudioHelpers.WithVariation(0.125f));
 
-                    Owner.QueueDelete();
+                    _entMan.QueueDeleteEntity(Owner);
                     return;
                 }
 
@@ -297,7 +299,7 @@ namespace Content.Server.Atmos.Components
             {
                 if (_integrity <= 0)
                 {
-                    var environment = atmosphereSystem.GetTileMixture(Owner.Transform.Coordinates, true);
+                    var environment = atmosphereSystem.GetTileMixture(_entMan.GetComponent<TransformComponent>(Owner).Coordinates, true);
                     if (environment == null)
                         return;
 
@@ -328,7 +330,7 @@ namespace Content.Server.Atmos.Components
     {
         public bool DoToggleAction(ToggleItemActionEventArgs args)
         {
-            if (!args.Item.TryGetComponent<GasTankComponent>(out var gasTankComponent)) return false;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<GasTankComponent?>(args.Item, out var gasTankComponent)) return false;
             // no change
             if (gasTankComponent.IsConnected == args.ToggledOn) return false;
             gasTankComponent.ToggleInternals();

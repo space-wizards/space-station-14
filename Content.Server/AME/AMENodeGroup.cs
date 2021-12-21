@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.AME.Components;
-using Content.Server.Explosion;
+using Content.Server.Explosion.EntitySystems;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Random;
 using Robust.Shared.ViewVariables;
 
@@ -27,8 +27,9 @@ namespace Content.Server.AME
         [ViewVariables]
         private AMEControllerComponent? _masterController;
 
-        [Dependency]
-        private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
+
+        [Dependency] private readonly IEntityManager _entMan = default!;
 
         public AMEControllerComponent? MasterController => _masterController;
 
@@ -46,11 +47,10 @@ namespace Content.Server.AME
             foreach (var node in groupNodes)
             {
                 var nodeOwner = node.Owner;
-                if (nodeOwner.TryGetComponent(out AMEShieldComponent? shield))
+                if (_entMan.TryGetComponent(nodeOwner, out AMEShieldComponent? shield))
                 {
-                    var nodeNeighbors = grid.GetCellsInSquareArea(nodeOwner.Transform.Coordinates, 1)
-                        .Select(sgc => nodeOwner.EntityManager.GetEntity(sgc))
-                        .Where(entity => entity != nodeOwner && entity.HasComponent<AMEShieldComponent>());
+                    var nodeNeighbors = grid.GetCellsInSquareArea(_entMan.GetComponent<TransformComponent>(nodeOwner).Coordinates, 1)
+                        .Where(entity => entity != nodeOwner && _entMan.HasComponent<AMEShieldComponent>(entity));
 
                     if (nodeNeighbors.Count() >= 8)
                     {
@@ -69,7 +69,7 @@ namespace Content.Server.AME
             foreach (var node in groupNodes)
             {
                 var nodeOwner = node.Owner;
-                if (nodeOwner.TryGetComponent(out AMEControllerComponent? controller))
+                if (_entMan.TryGetComponent(nodeOwner, out AMEControllerComponent? controller))
                 {
                     if (_masterController == null)
                     {
@@ -177,7 +177,7 @@ namespace Content.Server.AME
 
             intensity = Math.Min(intensity, 8);
 
-            epicenter.Owner.SpawnExplosion(intensity / 2, intensity, intensity * 2, intensity * 3);
+            EntitySystem.Get<ExplosionSystem>().SpawnExplosion(epicenter.Owner, intensity / 2, intensity, intensity * 2, intensity * 3);
         }
     }
 }

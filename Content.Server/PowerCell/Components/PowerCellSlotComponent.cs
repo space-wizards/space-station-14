@@ -7,6 +7,7 @@ using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -20,8 +21,12 @@ namespace Content.Server.PowerCell.Components
     /// <see cref="PowerCellSize"/>. Intended to supplement other components, not very useful by itself.
     /// </summary>
     [RegisterComponent]
+#pragma warning disable 618
     public class PowerCellSlotComponent : Component, IExamine, IMapInit
+#pragma warning restore 618
     {
+        [Dependency] private readonly IEntityManager _entities = default!;
+
         public override string Name => "PowerCellSlot";
 
         /// <summary>
@@ -78,7 +83,7 @@ namespace Content.Server.PowerCell.Components
             get
             {
                 if (_cellContainer.ContainedEntity == null) return null;
-                return _cellContainer.ContainedEntity.TryGetComponent(out PowerCellComponent? cell) ? cell : null;
+                return _entities.TryGetComponent(_cellContainer.ContainedEntity.Value, out PowerCellComponent? cell) ? cell : null;
             }
         }
 
@@ -123,7 +128,7 @@ namespace Content.Server.PowerCell.Components
         /// <param name="user">(optional) the user to give the removed cell to.</param>
         /// <param name="playSound">Should <see cref="CellRemoveSound"/> be played upon removal?</param>
         /// <returns>The cell component of the entity that was removed, or null if removal failed.</returns>
-        public PowerCellComponent? EjectCell(IEntity? user, bool playSound = true)
+        public PowerCellComponent? EjectCell(EntityUid user, bool playSound = true)
         {
             var cell = Cell;
             if (cell == null || !CanRemoveCell) return null;
@@ -131,14 +136,14 @@ namespace Content.Server.PowerCell.Components
             //Dirty();
             if (user != null)
             {
-                if (!user.TryGetComponent(out HandsComponent? hands) || !hands.PutInHand(cell.Owner.GetComponent<ItemComponent>()))
+                if (!_entities.TryGetComponent(user, out HandsComponent? hands) || !hands.PutInHand(_entities.GetComponent<ItemComponent>(cell.Owner)))
                 {
-                    cell.Owner.Transform.Coordinates = user.Transform.Coordinates;
+                    _entities.GetComponent<TransformComponent>(cell.Owner).Coordinates = _entities.GetComponent<TransformComponent>(user).Coordinates;
                 }
             }
             else
             {
-                cell.Owner.Transform.Coordinates = Owner.Transform.Coordinates;
+                _entities.GetComponent<TransformComponent>(cell.Owner).Coordinates = _entities.GetComponent<TransformComponent>(Owner).Coordinates;
             }
 
             if (playSound)
@@ -146,7 +151,7 @@ namespace Content.Server.PowerCell.Components
                 SoundSystem.Play(Filter.Pvs(Owner), CellRemoveSound.GetSound(), Owner, AudioHelpers.WithVariation(0.125f));
             }
 
-            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new PowerCellChangedEvent(true), false);
+            _entities.EventBus.RaiseLocalEvent(Owner, new PowerCellChangedEvent(true), false);
             return cell;
         }
 
@@ -156,11 +161,11 @@ namespace Content.Server.PowerCell.Components
         /// <param name="cell">The cell to insert.</param>
         /// <param name="playSound">Should <see cref="CellInsertSound"/> be played upon insertion?</param>
         /// <returns>True if insertion succeeded; false otherwise.</returns>
-        public bool InsertCell(IEntity cell, bool playSound = true)
+        public bool InsertCell(EntityUid cell, bool playSound = true)
         {
             if (Cell != null) return false;
-            if (!cell.TryGetComponent<ItemComponent>(out var _)) return false;
-            if (!cell.TryGetComponent<PowerCellComponent>(out var cellComponent)) return false;
+            if (!_entities.HasComponent<ItemComponent>(cell)) return false;
+            if (!_entities.TryGetComponent<PowerCellComponent?>(cell, out var cellComponent)) return false;
             if (cellComponent.CellSize != SlotSize) return false;
             if (!_cellContainer.Insert(cell)) return false;
             //Dirty();
@@ -169,7 +174,7 @@ namespace Content.Server.PowerCell.Components
                 SoundSystem.Play(Filter.Pvs(Owner), CellInsertSound.GetSound(), Owner, AudioHelpers.WithVariation(0.125f));
             }
 
-            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new PowerCellChangedEvent(false), false);
+            _entities.EventBus.RaiseLocalEvent(Owner, new PowerCellChangedEvent(false), false);
             return true;
         }
 
@@ -196,7 +201,7 @@ namespace Content.Server.PowerCell.Components
                 };
             }
 
-            var cell = Owner.EntityManager.SpawnEntity(type, Owner.Transform.Coordinates);
+            var cell = _entities.SpawnEntity(type, _entities.GetComponent<TransformComponent>(Owner).Coordinates);
             _cellContainer.Insert(cell);
         }
     }

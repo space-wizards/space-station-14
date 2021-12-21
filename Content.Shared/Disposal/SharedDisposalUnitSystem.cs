@@ -2,7 +2,7 @@
 using Content.Shared.Body.Components;
 using Content.Shared.Disposal.Components;
 using Content.Shared.Item;
-using Content.Shared.MobState;
+using Content.Shared.MobState.Components;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -31,7 +31,7 @@ namespace Content.Shared.Disposal
 
         private void HandlePreventCollide(EntityUid uid, SharedDisposalUnitComponent component, PreventCollideEvent args)
         {
-            var otherBody = args.BodyB.Owner.Uid;
+            var otherBody = args.BodyB.Owner;
 
             // Items dropped shouldn't collide but items thrown should
             if (EntityManager.HasComponent<SharedItemComponent>(otherBody) &&
@@ -47,26 +47,28 @@ namespace Content.Shared.Disposal
             }
         }
 
-        public virtual bool CanInsert(SharedDisposalUnitComponent component, IEntity entity)
+        public virtual bool CanInsert(SharedDisposalUnitComponent component, EntityUid entity)
         {
-            if (!component.Owner.Transform.Anchored)
+            if (!EntityManager.GetComponent<TransformComponent>(component.Owner).Anchored)
                 return false;
 
             // TODO: Probably just need a disposable tag.
-            if (!entity.TryGetComponent(out SharedItemComponent? storable) &&
-                !entity.HasComponent<SharedBodyComponent>())
+            if (!EntityManager.TryGetComponent(entity, out SharedItemComponent? storable) &&
+                !EntityManager.HasComponent<SharedBodyComponent>(entity))
             {
                 return false;
             }
 
 
-            if (!entity.TryGetComponent(out IPhysBody? physics) ||
+            if (!EntityManager.TryGetComponent(entity, out IPhysBody? physics) ||
                 !physics.CanCollide && storable == null)
             {
-                if (!(entity.TryGetComponent(out IMobStateComponent? damageState) && damageState.IsDead())) {
+                if (!(EntityManager.TryGetComponent(entity, out MobStateComponent? damageState) && damageState.IsDead()))
+                {
                     return false;
                 }
             }
+
             return true;
         }
     }

@@ -50,26 +50,24 @@ namespace Content.Client.Hands
 
         protected override void HandleContainerModified(EntityUid uid, SharedHandsComponent component, ContainerModifiedMessage args)
         {
-            if (uid == _playerManager.LocalPlayer?.ControlledEntity?.Uid)
+            if (uid == _playerManager.LocalPlayer?.ControlledEntity)
                 GuiStateUpdated?.Invoke();
         }
 
         private void HandlePickupAnimation(PickupAnimationMessage msg)
         {
-            if (!EntityManager.TryGetEntity(msg.EntityUid, out var entity))
+            if (!EntityManager.EntityExists(msg.EntityUid))
                 return;
 
             if (!_gameTiming.IsFirstTimePredicted)
                 return;
 
-            ReusableAnimations.AnimateEntityPickup(entity, msg.InitialPosition, msg.FinalPosition);
+            ReusableAnimations.AnimateEntityPickup(msg.EntityUid, msg.InitialPosition, msg.FinalPosition, EntityManager);
         }
 
         public HandsGuiState GetGuiState()
         {
-            var player = _playerManager.LocalPlayer?.ControlledEntity;
-
-            if (player == null || !player.TryGetComponent(out HandsComponent? hands))
+            if (GetPlayerHandsComponent() is not { } hands)
                 return new HandsGuiState(Array.Empty<GuiHand>());
 
             var states = hands.Hands
@@ -77,6 +75,24 @@ namespace Content.Client.Hands
                 .ToArray();
 
             return new HandsGuiState(states, hands.ActiveHand);
+        }
+
+        public EntityUid GetActiveHandEntity()
+        {
+            if (GetPlayerHandsComponent() is not { ActiveHand: { } active } hands)
+                return default;
+
+            return hands.GetHand(active).HeldEntity;
+        }
+
+        private HandsComponent? GetPlayerHandsComponent()
+        {
+            var player = _playerManager.LocalPlayer?.ControlledEntity;
+
+            if (player is not {Valid: true} || !EntityManager.TryGetComponent(player.Value, out HandsComponent? hands))
+                return null;
+
+            return hands;
         }
 
         public void UIHandClick(HandsComponent hands, string handName)
@@ -90,7 +106,7 @@ namespace Content.Client.Hands
             var pressedEntity = pressedHand.HeldEntity;
             var activeEntity = activeHand.HeldEntity;
 
-            if (pressedHand == activeHand && activeEntity != null)
+            if (pressedHand == activeHand && activeEntity != default)
             {
                 // use item in hand
                 // it will always be attack_self() in my heart.
@@ -98,21 +114,21 @@ namespace Content.Client.Hands
                 return;
             }
 
-            if (pressedHand != activeHand && pressedEntity == null)
+            if (pressedHand != activeHand && pressedEntity == default)
             {
                 // change active hand
                 RaiseNetworkEvent(new RequestSetHandEvent(handName));
                 return;
             }
 
-            if (pressedHand != activeHand && pressedEntity != null && activeEntity != null)
+            if (pressedHand != activeHand && pressedEntity != default && activeEntity != default)
             {
                 // use active item on held item
                 RaiseNetworkEvent(new ClientInteractUsingInHandMsg(pressedHand.Name));
                 return;
             }
 
-            if (pressedHand != activeHand && pressedEntity != null && activeEntity == null)
+            if (pressedHand != activeHand && pressedEntity != default && activeEntity == default)
             {
                 // use active item on held item
                 RaiseNetworkEvent(new MoveItemFromHandMsg(pressedHand.Name));

@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Client.Administration.UI;
 using Content.Shared.Administration;
 using JetBrains.Annotations;
+using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Localization;
 using Robust.Shared.GameObjects;
@@ -20,6 +21,8 @@ namespace Content.Client.Administration
     public class BwoinkSystem : SharedBwoinkSystem
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IClyde _clyde = default!;
+
         private readonly Dictionary<NetUserId, BwoinkWindow> _activeWindowMap = new();
 
         protected override void OnBwoinkTextMessage(BwoinkTextMessage message, EntitySessionEventArgs eventArgs)
@@ -34,6 +37,7 @@ namespace Content.Client.Administration
             if (localPlayer?.UserId != message.TrueSender)
             {
                 SoundSystem.Play(Filter.Local(), "/Audio/Effects/adminhelp.ogg");
+                _clyde.RequestWindowAttention();
             }
         }
 

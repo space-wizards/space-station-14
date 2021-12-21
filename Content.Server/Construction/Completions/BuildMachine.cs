@@ -5,6 +5,7 @@ using Content.Shared.Construction;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -14,58 +15,58 @@ namespace Content.Server.Construction.Completions
     [DataDefinition]
     public class BuildMachine : IGraphAction
     {
-        public async Task PerformAction(IEntity entity, IEntity? user)
+        public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {
-            if (!entity.TryGetComponent(out ContainerManagerComponent? containerManager))
+            if (!entityManager.TryGetComponent(uid, out ContainerManagerComponent? containerManager))
             {
-                Logger.Warning($"Machine frame entity {entity} did not have a container manager! Aborting build machine action.");
+                Logger.Warning($"Machine frame entity {uid} did not have a container manager! Aborting build machine action.");
                 return;
             }
 
-            if (!entity.TryGetComponent(out MachineFrameComponent? machineFrame))
+            if (!entityManager.TryGetComponent(uid, out MachineFrameComponent? machineFrame))
             {
-                Logger.Warning($"Machine frame entity {entity} did not have a machine frame component! Aborting build machine action.");
+                Logger.Warning($"Machine frame entity {uid} did not have a machine frame component! Aborting build machine action.");
                 return;
             }
 
             if (!machineFrame.IsComplete)
             {
-                Logger.Warning($"Machine frame entity {entity} doesn't have all required parts to be built! Aborting build machine action.");
+                Logger.Warning($"Machine frame entity {uid} doesn't have all required parts to be built! Aborting build machine action.");
                 return;
             }
 
             if (!containerManager.TryGetContainer(MachineFrameComponent.BoardContainer, out var entBoardContainer))
             {
-                Logger.Warning($"Machine frame entity {entity} did not have the '{MachineFrameComponent.BoardContainer}' container! Aborting build machine action.");
+                Logger.Warning($"Machine frame entity {uid} did not have the '{MachineFrameComponent.BoardContainer}' container! Aborting build machine action.");
                 return;
             }
 
             if (!containerManager.TryGetContainer(MachineFrameComponent.PartContainer, out var entPartContainer))
             {
-                Logger.Warning($"Machine frame entity {entity} did not have the '{MachineFrameComponent.PartContainer}' container! Aborting build machine action.");
+                Logger.Warning($"Machine frame entity {uid} did not have the '{MachineFrameComponent.PartContainer}' container! Aborting build machine action.");
                 return;
             }
 
             if (entBoardContainer.ContainedEntities.Count != 1)
             {
-                Logger.Warning($"Machine frame entity {entity} did not have exactly one item in the '{MachineFrameComponent.BoardContainer}' container! Aborting build machine action.");
+                Logger.Warning($"Machine frame entity {uid} did not have exactly one item in the '{MachineFrameComponent.BoardContainer}' container! Aborting build machine action.");
             }
 
             var board = entBoardContainer.ContainedEntities[0];
 
-            if (!board.TryGetComponent(out MachineBoardComponent? boardComponent))
+            if (!entityManager.TryGetComponent(board, out MachineBoardComponent? boardComponent))
             {
-                Logger.Warning($"Machine frame entity {entity} had an invalid entity in container \"{MachineFrameComponent.BoardContainer}\"! Aborting build machine action.");
+                Logger.Warning($"Machine frame entity {uid} had an invalid entity in container \"{MachineFrameComponent.BoardContainer}\"! Aborting build machine action.");
                 return;
             }
 
-            var entityManager = entity.EntityManager;
             entBoardContainer.Remove(board);
 
-            var machine = entityManager.SpawnEntity(boardComponent.Prototype, entity.Transform.Coordinates);
-            machine.Transform.LocalRotation = entity.Transform.LocalRotation;
+            var transform = entityManager.GetComponent<TransformComponent>(uid);
+            var machine = entityManager.SpawnEntity(boardComponent.Prototype, transform.Coordinates);
+            entityManager.GetComponent<TransformComponent>(machine).LocalRotation = transform.LocalRotation;
 
-            var boardContainer = ContainerHelpers.EnsureContainer<Container>(machine, MachineFrameComponent.BoardContainer, out var existed);
+            var boardContainer = machine.EnsureContainer<Container>(MachineFrameComponent.BoardContainer, out var existed);
 
             if (existed)
             {
@@ -73,7 +74,7 @@ namespace Content.Server.Construction.Completions
                 boardContainer.CleanContainer();
             }
 
-            var partContainer = ContainerHelpers.EnsureContainer<Container>(machine, MachineFrameComponent.PartContainer, out existed);
+            var partContainer = machine.EnsureContainer<Container>(MachineFrameComponent.PartContainer, out existed);
 
             if (existed)
             {
@@ -90,19 +91,20 @@ namespace Content.Server.Construction.Completions
                 partContainer.Insert(part);
             }
 
-            if (machine.TryGetComponent(out ConstructionComponent? construction))
+            var constructionSystem = entityManager.EntitySysManager.GetEntitySystem<ConstructionSystem>();
+            if (entityManager.TryGetComponent(machine, out ConstructionComponent? construction))
             {
                 // We only add these two container. If some construction needs to take other containers into account, fix this.
-                construction.AddContainer(MachineFrameComponent.BoardContainer);
-                construction.AddContainer(MachineFrameComponent.PartContainer);
+                constructionSystem.AddContainer(machine, MachineFrameComponent.BoardContainer, construction);
+                constructionSystem.AddContainer(machine, MachineFrameComponent.PartContainer, construction);
             }
 
-            if (machine.TryGetComponent(out MachineComponent? machineComp))
+            if (entityManager.TryGetComponent(machine, out MachineComponent? machineComp))
             {
                 machineComp.RefreshParts();
             }
 
-            entity.Delete();
+            entityManager.DeleteEntity(uid);
         }
     }
 }

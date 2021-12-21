@@ -22,7 +22,7 @@ namespace Content.IntegrationTests.Tests
         public async Task Test()
         {
             var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
-            var server = StartServerDummyTicker(options);
+            var server = StartServer(options);
             await server.WaitIdleAsync();
 
             var entityManager = server.ResolveDependency<IEntityManager>();
@@ -32,7 +32,7 @@ namespace Content.IntegrationTests.Tests
 
             server.Assert(() =>
             {
-                List<IEntity> entities;
+                List<EntityUid> entities;
                 var mapOne = mapManager.CreateMap();
                 var gridOne = mapManager.CreateGrid(mapOne);
 

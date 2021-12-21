@@ -8,7 +8,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Destructible
 {
     /// <summary>
-    ///     When attached to an <see cref="IEntity"/>, allows it to take damage
+    ///     When attached to an <see cref="Robust.Shared.GameObjects.EntityUid"/>, allows it to take damage
     ///     and triggers thresholds when reached.
     /// </summary>
     [RegisterComponent]

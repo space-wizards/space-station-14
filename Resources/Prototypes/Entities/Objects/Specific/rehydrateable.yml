@@ -11,6 +11,8 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 10
+  - type: Food
+    solution: cube
   - type: RefillableSolution
     solution: cube
   - type: Sprite
@@ -18,18 +20,18 @@
     state: cube
   - type: Reactive
     reactions:
+    - reagents: [Water]
+      methods: [Touch, Ingestion, Injection]
+      effects:
       - !type:AddToSolutionReaction
-        touch: true
-        ingestion: true
-        injection: true
-        reagents:
-          - Water
+        solution: cube
   - type: Rehydratable
     target: MobMonkey
   - type: CollisionWake
     enabled: false
   - type: Physics
     bodyType: KinematicController
+  - type: Fixtures
     fixtures: # TODO: Make a second fixture.
     - shape:
         !type:PhysShapeAabb
@@ -56,21 +58,21 @@
         - ReagentId: Nutriment
           Quantity: 10
   - type: RefillableSolution
-    solution: cube
+    solution: plushie
   - type: Reactive
     reactions:
-    - !type:AddToSolutionReaction
-      touch: true
-      ingestion: true
-      injection: true
-      reagents:
-      - Water
+    - reagents: [Water]
+      methods: [Touch, Ingestion, Injection]
+      effects:
+      - !type:AddToSolutionReaction
+        solution: plushie
   - type: Rehydratable
     target: MobCarp
   - type: CollisionWake
     enabled: false
   - type: Physics
     bodyType: KinematicController
+  - type: Fixtures
     fixtures: # TODO: Make a second fixture.
     - shape:
         !type:PhysShapeAabb

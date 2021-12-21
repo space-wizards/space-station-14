@@ -21,6 +21,7 @@ namespace Content.Server.Projectiles.Components
     [RegisterComponent]
     public class HitscanComponent : Component
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         public override string Name => "Hitscan";
@@ -47,13 +48,24 @@ namespace Content.Server.Projectiles.Components
         [DataField("soundHitWall")]
         private SoundSpecifier _soundHitWall = new SoundPathSpecifier("/Audio/Weapons/Guns/Hits/laser_sear_wall.ogg");
 
-        public void FireEffects(IEntity user, float distance, Angle angle, IEntity? hitEntity = null)
+        public void FireEffects(EntityUid user, float distance, Angle angle, EntityUid? hitEntity = null)
         {
             var effectSystem = EntitySystem.Get<EffectSystem>();
             _startTime = _gameTiming.CurTime;
             _deathTime = _startTime + TimeSpan.FromSeconds(1);
 
-            var afterEffect = AfterEffects(user.Transform.Coordinates, angle, distance, 1.0f);
+            var mapManager = IoCManager.Resolve<IMapManager>();
+
+            // We'll get the effects relative to the grid / map of the firer
+            var gridOrMap = _entMan.GetComponent<TransformComponent>(user).GridID == GridId.Invalid ? mapManager.GetMapEntityId(_entMan.GetComponent<TransformComponent>(user).MapID) :
+                mapManager.GetGrid(_entMan.GetComponent<TransformComponent>(user).GridID).GridEntityId;
+
+            var parentXform = _entMan.GetComponent<TransformComponent>(gridOrMap);
+
+            var localCoordinates = new EntityCoordinates(gridOrMap, parentXform.InvWorldMatrix.Transform(_entMan.GetComponent<TransformComponent>(user).WorldPosition));
+            var localAngle = angle - parentXform.WorldRotation;
+
+            var afterEffect = AfterEffects(localCoordinates, localAngle, distance, 1.0f);
             if (afterEffect != null)
             {
                 effectSystem.CreateParticle(afterEffect);
@@ -62,13 +74,13 @@ namespace Content.Server.Projectiles.Components
             // if we're too close we'll stop the impact and muzzle / impact sprites from clipping
             if (distance > 1.0f)
             {
-                var impactEffect = ImpactFlash(distance, angle);
+                var impactEffect = ImpactFlash(distance, localAngle);
                 if (impactEffect != null)
                 {
                     effectSystem.CreateParticle(impactEffect);
                 }
 
-                var muzzleEffect = MuzzleFlash(user.Transform.Coordinates, angle);
+                var muzzleEffect = MuzzleFlash(localCoordinates, localAngle);
                 if (muzzleEffect != null)
                 {
                     effectSystem.CreateParticle(muzzleEffect);
@@ -78,16 +90,16 @@ namespace Content.Server.Projectiles.Components
             if (hitEntity != null && _soundHitWall != null)
             {
                 // TODO: No wall component so ?
-                var offset = angle.ToVec().Normalized / 2;
-                var coordinates = user.Transform.Coordinates.Offset(offset);
+                var offset = localAngle.ToVec().Normalized / 2;
+                var coordinates = localCoordinates.Offset(offset);
                 SoundSystem.Play(Filter.Pvs(coordinates), _soundHitWall.GetSound(), coordinates);
             }
 
             Owner.SpawnTimer((int) _deathTime.TotalMilliseconds, () =>
             {
-                if (!Owner.Deleted)
+                if (!_entMan.Deleted(Owner))
                 {
-                    Owner.Delete();
+                    _entMan.DeleteEntity(Owner);
                 }
             });
         }
@@ -150,7 +162,7 @@ namespace Content.Server.Projectiles.Components
                 EffectSprite = _impactFlash,
                 Born = _startTime,
                 DeathTime = _deathTime,
-                Coordinates = Owner.Transform.Coordinates.Offset(angle.ToVec() * distance),
+                Coordinates = _entMan.GetComponent<TransformComponent>(Owner).Coordinates.Offset(angle.ToVec() * distance),
                 //Rotated from east facing
                 Rotation = (float) angle.FlipPositive(),
                 Color = Vector4.Multiply(new Vector4(255, 255, 255, 750), ColorModifier),

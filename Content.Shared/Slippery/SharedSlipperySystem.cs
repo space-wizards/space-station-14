@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Shared.EffectBlocker;
+using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;
 using JetBrains.Annotations;
@@ -17,20 +17,22 @@ namespace Content.Shared.Slippery
     [UsedImplicitly]
     public abstract class SharedSlipperySystem : EntitySystem
     {
+        [Dependency] private readonly SharedAdminLogSystem _adminLog = default!;
         [Dependency] private readonly SharedStunSystem _stunSystem = default!;
         [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
 
-        private List<SlipperyComponent> _slipped = new();
+        private readonly List<SlipperyComponent> _slipped = new();
 
         public override void Initialize()
         {
             base.Initialize();
             SubscribeLocalEvent<SlipperyComponent, StartCollideEvent>(HandleCollide);
+            SubscribeLocalEvent<NoSlipComponent, SlipAttemptEvent>(OnNoSlipAttempt);
         }
 
         private void HandleCollide(EntityUid uid, SlipperyComponent component, StartCollideEvent args)
         {
-            var otherUid = args.OtherFixture.Body.Owner.Uid;
+            var otherUid = args.OtherFixture.Body.Owner;
 
             if (!CanSlip(component, otherUid)) return;
 
@@ -38,6 +40,11 @@ namespace Content.Shared.Slippery
                 _slipped.Add(component);
 
             component.Colliding.Add(otherUid);
+        }
+
+        private void OnNoSlipAttempt(EntityUid uid, NoSlipComponent component, SlipAttemptEvent args)
+        {
+            args.Cancel();
         }
 
         /// <inheritdoc />
@@ -56,7 +63,7 @@ namespace Content.Shared.Slippery
             if (!component.Slippery
                 || component.Owner.IsInContainer()
                 || component.Slipped.Contains(uid)
-                || !_statusEffectsSystem.CanApplyEffect(uid, "Stun"))
+                || !_statusEffectsSystem.CanApplyEffect(uid, "Stun")) //Should be KnockedDown instead?
             {
                 return false;
             }
@@ -66,7 +73,7 @@ namespace Content.Shared.Slippery
 
         private bool TrySlip(SlipperyComponent component, IPhysBody ourBody, IPhysBody otherBody)
         {
-            if (!CanSlip(component, otherBody.Owner.Uid)) return false;
+            if (!CanSlip(component, otherBody.Owner)) return false;
 
             if (otherBody.LinearVelocity.Length < component.RequiredSlipSpeed)
             {
@@ -80,18 +87,26 @@ namespace Content.Shared.Slippery
                 return false;
             }
 
-            if (!EffectBlockerSystem.CanSlip(otherBody.Owner))
-            {
+            var ev = new SlipAttemptEvent();
+            RaiseLocalEvent(otherBody.Owner, ev, false);
+            if (ev.Cancelled)
                 return false;
-            }
 
             otherBody.LinearVelocity *= component.LaunchForwardsMultiplier;
 
-            _stunSystem.TryParalyze(otherBody.Owner.Uid, TimeSpan.FromSeconds(5));
-            component.Slipped.Add(otherBody.Owner.Uid);
+            bool playSound = !_statusEffectsSystem.HasStatusEffect(otherBody.Owner, "KnockedDown");
+
+            _stunSystem.TryParalyze(otherBody.Owner, TimeSpan.FromSeconds(component.ParalyzeTime), true);
+            component.Slipped.Add(otherBody.Owner);
             component.Dirty();
 
-            PlaySound(component);
+            //Preventing from playing the slip sound when you are already knocked down.
+            if(playSound)
+            {
+                PlaySound(component);
+            }
+
+            _adminLog.Add(LogType.Slip, LogImpact.Low, $"{ToPrettyString(otherBody.Owner):mob} slipped on collision with {ToPrettyString(component.Owner):entity}");
 
             return true;
         }
@@ -104,7 +119,7 @@ namespace Content.Shared.Slippery
             if (component.Deleted || !component.Slippery || component.Colliding.Count == 0)
                 return true;
 
-            if (!EntityManager.TryGetComponent(component.Owner.Uid, out PhysicsComponent? body))
+            if (!EntityManager.TryGetComponent(component.Owner, out PhysicsComponent? body))
             {
                 component.Colliding.Clear();
                 return true;
@@ -112,7 +127,7 @@ namespace Content.Shared.Slippery
 
             foreach (var uid in component.Colliding.ToArray())
             {
-                if (!uid.IsValid() || !EntityManager.TryGetEntity(uid, out var entity))
+                if (!uid.IsValid())
                 {
                     component.Colliding.Remove(uid);
                     component.Slipped.Remove(uid);
@@ -120,7 +135,7 @@ namespace Content.Shared.Slippery
                     continue;
                 }
 
-                if (!entity.TryGetComponent(out PhysicsComponent? otherPhysics) ||
+                if (!EntityManager.TryGetComponent(uid, out PhysicsComponent? otherPhysics) ||
                     !body.GetWorldAABB().Intersects(otherPhysics.GetWorldAABB()))
                 {
                     component.Colliding.Remove(uid);
@@ -135,5 +150,12 @@ namespace Content.Shared.Slippery
 
             return false;
         }
+    }
+
+    /// <summary>
+    ///     Raised on an entity to determine if it can slip or not.
+    /// </summary>
+    public class SlipAttemptEvent : CancellableEntityEventArgs
+    {
     }
 }

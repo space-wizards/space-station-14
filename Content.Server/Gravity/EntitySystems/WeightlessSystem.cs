@@ -34,15 +34,14 @@ namespace Content.Server.Gravity.EntitySystems
 
         public void AddAlert(ServerAlertsComponent status)
         {
-            var gridId = status.Owner.Transform.GridID;
+            var gridId = EntityManager.GetComponent<TransformComponent>(status.Owner).GridID;
             var alerts = _alerts.GetOrNew(gridId);
 
             alerts.Add(status);
 
-            if (_mapManager.TryGetGrid(status.Owner.Transform.GridID, out var grid))
+            if (_mapManager.TryGetGrid(EntityManager.GetComponent<TransformComponent>(status.Owner).GridID, out var grid))
             {
-                var gridEntity = EntityManager.GetEntity(grid.GridEntityId);
-                if (gridEntity.GetComponent<GravityComponent>().Enabled)
+                if (EntityManager.GetComponent<GravityComponent>(grid.GridEntityId).Enabled)
                 {
                     RemoveWeightless(status);
                 }
@@ -55,7 +54,7 @@ namespace Content.Server.Gravity.EntitySystems
 
         public void RemoveAlert(ServerAlertsComponent status)
         {
-            var grid = status.Owner.Transform.GridID;
+            var grid = EntityManager.GetComponent<TransformComponent>(status.Owner).GridID;
             if (!_alerts.TryGetValue(grid, out var statuses))
             {
                 return;
@@ -99,13 +98,13 @@ namespace Content.Server.Gravity.EntitySystems
 
         private void EntParentChanged(ref EntParentChangedMessage ev)
         {
-            if (!ev.Entity.TryGetComponent(out ServerAlertsComponent? status))
+            if (!EntityManager.TryGetComponent(ev.Entity, out ServerAlertsComponent? status))
             {
                 return;
             }
 
-            if (ev.OldParent != null &&
-                ev.OldParent.TryGetComponent(out IMapGridComponent? mapGrid))
+            if (ev.OldParent is {Valid: true} old &&
+                EntityManager.TryGetComponent(old, out IMapGridComponent? mapGrid))
             {
                 var oldGrid = mapGrid.GridIndex;
 
@@ -115,7 +114,7 @@ namespace Content.Server.Gravity.EntitySystems
                 }
             }
 
-            var newGrid = ev.Entity.Transform.GridID;
+            var newGrid = EntityManager.GetComponent<TransformComponent>(ev.Entity).GridID;
             var newStatuses = _alerts.GetOrNew(newGrid);
 
             newStatuses.Add(status);

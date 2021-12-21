@@ -3,6 +3,8 @@ using Content.Shared.Vapor;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -37,16 +39,6 @@ namespace Content.Client.Chemistry.Visualizers
         {
             base.OnChangeData(component);
 
-            if (component.Deleted)
-            {
-                return;
-            }
-
-            if (component.TryGetData<Angle>(VaporVisuals.Rotation, out var radians))
-            {
-                SetRotation(component, radians);
-            }
-
             if (component.TryGetData<Color>(VaporVisuals.Color, out var color))
             {
                 SetColor(component, color);
@@ -62,22 +54,15 @@ namespace Content.Client.Chemistry.Visualizers
         {
             if (!state) return;
 
-            var animPlayer = component.Owner.GetComponent<AnimationPlayerComponent>();
+            var animPlayer = IoCManager.Resolve<IEntityManager>().GetComponent<AnimationPlayerComponent>(component.Owner);
 
             if(!animPlayer.HasRunningAnimation(AnimationKey))
                 animPlayer.Play(VaporFlick, AnimationKey);
         }
 
-        private void SetRotation(AppearanceComponent component, Angle rotation)
-        {
-            var sprite = component.Owner.GetComponent<ISpriteComponent>();
-
-            sprite.Rotation = rotation;
-        }
-
         private void SetColor(AppearanceComponent component, Color color)
         {
-            var sprite = component.Owner.GetComponent<ISpriteComponent>();
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner);
 
             sprite.Color = color;
         }

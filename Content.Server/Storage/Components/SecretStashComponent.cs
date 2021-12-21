@@ -5,6 +5,7 @@ using Content.Shared.Item;
 using Content.Shared.Popups;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -17,6 +18,8 @@ namespace Content.Server.Storage.Components
     [RegisterComponent]
     public class SecretStashComponent : Component, IDestroyAct
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "SecretStash";
 
         [ViewVariables] [DataField("maxItemSize")]
@@ -27,7 +30,7 @@ namespace Content.Server.Storage.Components
 
         [ViewVariables] private ContainerSlot _itemContainer = default!;
 
-        public string SecretPartName => _secretPartNameOverride ?? Loc.GetString("comp-secret-stash-secret-part-name", ("name", Owner.Name));
+        public string SecretPartName => _secretPartNameOverride ?? Loc.GetString("comp-secret-stash-secret-part-name", ("name", _entMan.GetComponent<MetaDataComponent>(Owner).EntityName));
 
         protected override void Initialize()
         {
@@ -41,7 +44,7 @@ namespace Content.Server.Storage.Components
         /// <param name="user"></param>
         /// <param name="itemToHide"></param>
         /// <returns>True if item was hidden inside stash</returns>
-        public bool TryHideItem(IEntity user, IEntity itemToHide)
+        public bool TryHideItem(EntityUid user, EntityUid itemToHide)
         {
             if (_itemContainer.ContainedEntity != null)
             {
@@ -49,7 +52,7 @@ namespace Content.Server.Storage.Components
                 return false;
             }
 
-            if (!itemToHide.TryGetComponent(out ItemComponent? item))
+            if (!_entMan.TryGetComponent(itemToHide, out ItemComponent? item))
                 return false;
 
             if (item.Size > _maxItemSize)
@@ -59,7 +62,7 @@ namespace Content.Server.Storage.Components
                 return false;
             }
 
-            if (!user.TryGetComponent(out IHandsComponent? hands))
+            if (!_entMan.TryGetComponent(user, out HandsComponent? hands))
                 return false;
 
             if (!hands.Drop(itemToHide, _itemContainer))
@@ -75,22 +78,22 @@ namespace Content.Server.Storage.Components
         /// </summary>
         /// <param name="user"></param>
         /// <returns>True if user recieved item</returns>
-        public bool TryGetItem(IEntity user)
+        public bool TryGetItem(EntityUid user)
         {
-            if (_itemContainer.ContainedEntity == null)
+            if (_itemContainer.ContainedEntity is not {Valid: true} contained)
                 return false;
 
             Owner.PopupMessage(user, Loc.GetString("comp-secret-stash-action-get-item-found-something", ("stash", SecretPartName)));
 
-            if (user.TryGetComponent(out HandsComponent? hands))
+            if (_entMan.TryGetComponent(user, out HandsComponent? hands))
             {
-                if (!_itemContainer.ContainedEntity.TryGetComponent(out ItemComponent? item))
+                if (!_entMan.TryGetComponent(contained, out ItemComponent? item))
                     return false;
                 hands.PutInHandOrDrop(item);
             }
-            else if (_itemContainer.Remove(_itemContainer.ContainedEntity))
+            else if (_itemContainer.Remove(contained))
             {
-                _itemContainer.ContainedEntity.Transform.Coordinates = Owner.Transform.Coordinates;
+                _entMan.GetComponent<TransformComponent>(contained).Coordinates = _entMan.GetComponent<TransformComponent>(Owner).Coordinates;
             }
 
             return true;
@@ -108,9 +111,9 @@ namespace Content.Server.Storage.Components
         public void OnDestroy(DestructionEventArgs eventArgs)
         {
             // drop item inside
-            if (_itemContainer.ContainedEntity != null)
+            if (_itemContainer.ContainedEntity is {Valid: true} contained)
             {
-                _itemContainer.ContainedEntity.Transform.Coordinates = Owner.Transform.Coordinates;
+                _entMan.GetComponent<TransformComponent>(contained).Coordinates = _entMan.GetComponent<TransformComponent>(Owner).Coordinates;
             }
         }
     }

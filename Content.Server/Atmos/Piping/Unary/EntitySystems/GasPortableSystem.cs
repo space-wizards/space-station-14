@@ -6,7 +6,6 @@ using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -29,7 +28,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnPortableAnchorAttempt(EntityUid uid, GasPortableComponent component, AnchorAttemptEvent args)
         {
-            if (!EntityManager.TryGetComponent(uid, out ITransformComponent? transform))
+            if (!EntityManager.TryGetComponent(uid, out TransformComponent? transform))
                 return;
 
             // If we can't find any ports, cancel the anchoring.

@@ -6,8 +6,11 @@
   placement:
     mode: SnapgridCenter
   components:
+    - type: Transform
+      anchored: true
     - type: Physics
       bodyType: Static
+    - type: Fixtures
       fixtures:
       - shape:
           !type:PhysShapeAabb
@@ -54,8 +57,11 @@
   placement:
     mode: SnapgridCenter
   components:
+    - type: Transform
+      anchored: true
     - type: Physics
       bodyType: Static
+    - type: Fixtures
       fixtures:
       - shape:
           !type:PhysShapeAabb

@@ -1,7 +1,7 @@
 using Content.Server.Medical.Components;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Verbs;
 using Content.Shared.Movement;
+using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -21,7 +21,7 @@ namespace Content.Server.Medical
         {
             base.Initialize();
 
-            SubscribeLocalEvent<MedicalScannerComponent, RelayMovementEntityEvent>(OnRelayMovement);            
+            SubscribeLocalEvent<MedicalScannerComponent, RelayMovementEntityEvent>(OnRelayMovement);
             SubscribeLocalEvent<MedicalScannerComponent, GetInteractionVerbsEvent>(AddInsertOtherVerb);
             SubscribeLocalEvent<MedicalScannerComponent, GetAlternativeVerbsEvent>(AddAlternativeVerbs);
         }
@@ -32,13 +32,13 @@ namespace Content.Server.Medical
                 !args.CanAccess ||
                 !args.CanInteract ||
                 component.IsOccupied ||
-                !component.CanInsert(args.Using))
+                !component.CanInsert(args.Using.Value))
                 return;
 
             Verb verb = new();
-            verb.Act = () => component.InsertBody(args.Using);
+            verb.Act = () => component.InsertBody(args.Using.Value);
             verb.Category = VerbCategory.Insert;
-            verb.Text = args.Using.Name;
+            verb.Text = EntityManager.GetComponent<MetaDataComponent>(args.Using.Value).EntityName;
             args.Verbs.Add(verb);
         }
 
@@ -90,7 +90,7 @@ namespace Content.Server.Medical
 
         public override void Update(float frameTime)
         {
-            foreach (var comp in EntityManager.EntityQuery<MedicalScannerComponent>(true))
+            foreach (var comp in EntityManager.EntityQuery<MedicalScannerComponent>())
             {
                 comp.Update(frameTime);
             }

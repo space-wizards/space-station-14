@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Content.Shared.ActionBlocker;
 using Content.Shared.CCVar;
 using Content.Shared.Friction;
-using Content.Shared.MobState;
+using Content.Shared.MobState.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Pulling.Components;
 using Robust.Shared.Configuration;
@@ -67,16 +67,22 @@ namespace Content.Shared.Movement
         {
             var (walkDir, sprintDir) = mover.VelocityDir;
 
+            var transform = EntityManager.GetComponent<TransformComponent>(mover.Owner);
+            var parentRotation = transform.Parent!.WorldRotation;
+
             // Regular movement.
             // Target velocity.
-            var total = (walkDir * mover.CurrentWalkSpeed + sprintDir * mover.CurrentSprintSpeed);
+            var total = walkDir * mover.CurrentWalkSpeed + sprintDir * mover.CurrentSprintSpeed;
 
-            var worldTotal = _relativeMovement ? new Angle(mover.Owner.Transform.Parent!.WorldRotation.Theta).RotateVec(total) : total;
+            var worldTotal = _relativeMovement ? parentRotation.RotateVec(total) : total;
+
+            if (transform.GridID == GridId.Invalid)
+                worldTotal = mover.LastGridAngle.RotateVec(worldTotal);
+            else
+                mover.LastGridAngle = parentRotation;
 
             if (worldTotal != Vector2.Zero)
-            {
-                mover.Owner.Transform.WorldRotation = worldTotal.GetDir().ToAngle();
-            }
+                transform.WorldRotation = worldTotal.GetDir().ToAngle();
 
             physicsComponent.LinearVelocity = worldTotal;
         }
@@ -90,16 +96,16 @@ namespace Content.Shared.Movement
         protected void HandleMobMovement(IMoverComponent mover, PhysicsComponent physicsComponent,
             IMobMoverComponent mobMover)
         {
-            DebugTools.Assert(!UsedMobMovement.ContainsKey(mover.Owner.Uid));
+            DebugTools.Assert(!UsedMobMovement.ContainsKey(mover.Owner));
 
             if (!UseMobMovement(physicsComponent))
             {
-                UsedMobMovement[mover.Owner.Uid] = false;
+                UsedMobMovement[mover.Owner] = false;
                 return;
             }
 
-            UsedMobMovement[mover.Owner.Uid] = true;
-            var transform = mover.Owner.Transform;
+            UsedMobMovement[mover.Owner] = true;
+            var transform = EntityManager.GetComponent<TransformComponent>(mover.Owner);
             var weightless = mover.Owner.IsWeightless(physicsComponent, mapManager: _mapManager, entityManager: _entityManager);
             var (walkDir, sprintDir) = mover.VelocityDir;
 
@@ -111,6 +117,9 @@ namespace Content.Shared.Movement
 
                 if (!touching)
                 {
+                    if (transform.GridID != GridId.Invalid)
+                        mover.LastGridAngle = transform.Parent!.WorldRotation;
+
                     transform.WorldRotation = physicsComponent.LinearVelocity.GetDir().ToAngle();
                     return;
                 }
@@ -119,18 +128,21 @@ namespace Content.Shared.Movement
             // Regular movement.
             // Target velocity.
             // This is relative to the map / grid we're on.
-            var total = (walkDir * mover.CurrentWalkSpeed + sprintDir * mover.CurrentSprintSpeed);
+            var total = walkDir * mover.CurrentWalkSpeed + sprintDir * mover.CurrentSprintSpeed;
 
-            var worldTotal = _relativeMovement ?
-                new Angle(transform.Parent!.WorldRotation.Theta).RotateVec(total) :
-                total;
+            var parentRotation = transform.Parent!.WorldRotation;
+
+            var worldTotal = _relativeMovement ? parentRotation.RotateVec(total) : total;
 
             DebugTools.Assert(MathHelper.CloseToPercent(total.Length, worldTotal.Length));
 
             if (weightless)
-            {
                 worldTotal *= mobMover.WeightlessStrength;
-            }
+
+            if (transform.GridID == GridId.Invalid)
+                worldTotal = mover.LastGridAngle.RotateVec(worldTotal);
+            else
+                mover.LastGridAngle = parentRotation;
 
             if (worldTotal != Vector2.Zero)
             {
@@ -152,16 +164,16 @@ namespace Content.Shared.Movement
         protected bool UseMobMovement(PhysicsComponent body)
         {
             return body.BodyStatus == BodyStatus.OnGround &&
-                   body.Owner.HasComponent<IMobStateComponent>() &&
+                   EntityManager.HasComponent<MobStateComponent>(body.Owner) &&
                    // If we're being pulled then don't mess with our velocity.
-                   (!body.Owner.TryGetComponent(out SharedPullableComponent? pullable) || !pullable.BeingPulled) &&
-                   _blocker.CanMove(body.Owner);
+                   (!EntityManager.TryGetComponent(body.Owner, out SharedPullableComponent? pullable) || !pullable.BeingPulled) &&
+                   _blocker.CanMove((body).Owner);
         }
 
         /// <summary>
         ///     Used for weightlessness to determine if we are near a wall.
         /// </summary>
-        public static bool IsAroundCollider(SharedPhysicsSystem broadPhaseSystem, ITransformComponent transform, IMobMoverComponent mover, IPhysBody collider)
+        public static bool IsAroundCollider(SharedPhysicsSystem broadPhaseSystem, TransformComponent transform, IMobMoverComponent mover, IPhysBody collider)
         {
             var enlargedAABB = collider.GetWorldAABB().Enlarged(mover.GrabRange);
 
@@ -174,7 +186,7 @@ namespace Content.Shared.Movement
                     !otherCollider.CanCollide ||
                     ((collider.CollisionMask & otherCollider.CollisionLayer) == 0 &&
                     (otherCollider.CollisionMask & collider.CollisionLayer) == 0) ||
-                    (otherCollider.Owner.TryGetComponent(out SharedPullableComponent? pullable) && pullable.BeingPulled))
+                    (IoCManager.Resolve<IEntityManager>().TryGetComponent(otherCollider.Owner, out SharedPullableComponent? pullable) && pullable.BeingPulled))
                 {
                     continue;
                 }

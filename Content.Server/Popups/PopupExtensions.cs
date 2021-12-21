@@ -1,7 +1,7 @@
-﻿using Content.Shared.Popups;
+using Content.Shared.Popups;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Robust.Shared.Player;
 
 namespace Content.Server.Popups
 {
@@ -13,29 +13,20 @@ namespace Content.Server.Popups
         /// </summary>
         /// <param name="source">The entity on which to popup the message.</param>
         /// <param name="message">The message to show.</param>
-        /// <param name="playerManager">
-        ///     The instance of player manager to use, will be resolved automatically
-        ///     if null.
-        /// </param>
-        /// <param name="range">
-        ///     The range in which to search for players, defaulting to one screen.
-        /// </param>
-        public static void PopupMessageOtherClients(this IEntity source, string message, IPlayerManager? playerManager = null, int range = 15)
+        public static void PopupMessageOtherClients(this EntityUid source, string message)
         {
-            playerManager ??= IoCManager.Resolve<IPlayerManager>();
-
-            var viewers = playerManager.GetPlayersInRange(source.Transform.Coordinates, range);
+            var viewers = Filter.Empty()
+                .AddPlayersByPvs(source)
+                .Recipients;
 
             foreach (var viewer in viewers)
             {
-                var viewerEntity = viewer.AttachedEntity;
-
-                if (viewerEntity == null || source == viewerEntity || viewer.AttachedEntity == null)
+                if (viewer.AttachedEntity is not {Valid: true} viewerEntity || source == viewerEntity || viewer.AttachedEntity == null)
                 {
                     continue;
                 }
 
-                source.PopupMessage(viewer.AttachedEntity, message);
+                source.PopupMessage(viewerEntity, message);
             }
         }
 
@@ -52,10 +43,10 @@ namespace Content.Server.Popups
         /// <param name="range">
         ///     The range in which to search for players, defaulting to one screen.
         /// </param>
-        public static void PopupMessageEveryone(this IEntity source, string message, IPlayerManager? playerManager = null, int range = 15)
+        public static void PopupMessageEveryone(this EntityUid source, string message, IPlayerManager? playerManager = null, int range = 15)
         {
             source.PopupMessage(message);
-            source.PopupMessageOtherClients(message, playerManager, range);
+            source.PopupMessageOtherClients(message);
         }
     }
 }

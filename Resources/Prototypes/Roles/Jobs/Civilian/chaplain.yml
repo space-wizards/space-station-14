@@ -1,22 +1,22 @@
-#- type: job
-#  id: Chaplain
-#  name: "chaplain"
-#  positions: 1
-#  startingGear: ChaplainGear
-#  departments:
-#  - Civilian
-#  icon: "Chaplain"
-#  supervisors: "the head of personnel"
-#  access:
-#  - Chapel
-#  - Maintenance
-#- type: startingGear
-#  id: ChaplainGear
-#  equipment:
-#    innerclothing: ClothingUniformJumpsuitChaplain
-#    backpack: ClothingBackpack
-#    shoes: ClothingShoesColorBlack
-#    idcard: ChaplainPDA
-#    ears: ClothingHeadsetService
-#  innerclothingskirt: ClothingUniformJumpskirtChaplain
+- type: job
+  id: Chaplain
+  name: "chaplain"
+  startingGear: ChaplainGear
+  departments:
+  - Civilian
+  icon: "Chaplain"
+  supervisors: "the head of personnel"
+  access:
+  - Chapel
+  - Maintenance
+
+- type: startingGear
+  id: ChaplainGear
+  equipment:
+    innerclothing: ClothingUniformJumpsuitChaplain
+    backpack: ClothingBackpack
+    shoes: ClothingShoesColorBlack
+    idcard: ChaplainPDA
+    ears: ClothingHeadsetService
+  innerclothingskirt: ClothingUniformJumpskirtChaplain
 

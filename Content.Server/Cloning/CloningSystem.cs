@@ -34,9 +34,9 @@ namespace Content.Server.Cloning
 
         internal void TransferMindToClone(Mind.Mind mind)
         {
-            if (!ClonesWaitingForMind.TryGetValue(mind, out var entityUid) ||
-                !EntityManager.TryGetEntity(entityUid, out var entity) ||
-                !entity.TryGetComponent(out MindComponent? mindComp) ||
+            if (!ClonesWaitingForMind.TryGetValue(mind, out var entity) ||
+                !EntityManager.EntityExists(entity) ||
+                !EntityManager.TryGetComponent(entity, out MindComponent? mindComp) ||
                 mindComp.Mind != null)
                 return;
 
@@ -48,7 +48,7 @@ namespace Content.Server.Cloning
         private void HandleActivate(EntityUid uid, CloningPodComponent component, ActivateInWorldEvent args)
         {
             if (!component.Powered ||
-                !args.User.TryGetComponent(out ActorComponent? actor))
+                !EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
             {
                 return;
             }
@@ -59,11 +59,11 @@ namespace Content.Server.Cloning
         private void HandleMindAdded(EntityUid uid, BeingClonedComponent component, MindAddedMessage message)
         {
             if (component.Parent == EntityUid.Invalid ||
-                !EntityManager.TryGetEntity(component.Parent, out var parent) ||
-                !parent.TryGetComponent<CloningPodComponent>(out var cloningPodComponent) ||
+                !EntityManager.EntityExists(component.Parent) ||
+                !EntityManager.TryGetComponent<CloningPodComponent?>(component.Parent, out var cloningPodComponent) ||
                 component.Owner != cloningPodComponent.BodyContainer?.ContainedEntity)
             {
-                component.Owner.RemoveComponent<BeingClonedComponent>();
+                EntityManager.RemoveComponent<BeingClonedComponent>(component.Owner);
                 return;
             }
 
@@ -72,7 +72,7 @@ namespace Content.Server.Cloning
 
         public override void Update(float frameTime)
         {
-            foreach (var (cloning, power) in EntityManager.EntityQuery<CloningPodComponent, ApcPowerReceiverComponent>(true))
+            foreach (var (cloning, power) in EntityManager.EntityQuery<CloningPodComponent, ApcPowerReceiverComponent>())
             {
                 if (cloning.UiKnownPowerState != power.Powered)
                 {
@@ -127,7 +127,7 @@ namespace Content.Server.Cloning
 
         public void OnChangeMadeToDnaScans()
         {
-            foreach (var cloning in EntityManager.EntityQuery<CloningPodComponent>(true))
+            foreach (var cloning in EntityManager.EntityQuery<CloningPodComponent>())
                 UpdateUserInterface(cloning);
         }
 

@@ -3,18 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules;
-using Content.Server.Inventory.Components;
-using Content.Server.Items;
 using Content.Server.Objectives.Interfaces;
-using Content.Server.PDA;
 using Content.Server.Players;
+using Content.Server.Roles;
 using Content.Server.Traitor;
 using Content.Server.Traitor.Uplink;
 using Content.Server.Traitor.Uplink.Account;
-using Content.Server.Traitor.Uplink.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Dataset;
-using Content.Shared.Inventory;
 using Content.Shared.Traitor.Uplink;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
@@ -72,7 +68,10 @@ namespace Content.Server.GameTicking.Presets
                 return false;
             }
 
-            var list = new List<IPlayerSession>(readyPlayers);
+            var list = new List<IPlayerSession>(readyPlayers).Where(x =>
+                x.Data.ContentData()?.Mind?.AllRoles.All(role => role is not Job {CanBeAntag: false}) ?? false
+            ).ToList();
+
             var prefList = new List<IPlayerSession>();
 
             foreach (var player in list)
@@ -122,12 +121,12 @@ namespace Content.Server.GameTicking.Presets
                 // initiate uplink account.
                 DebugTools.AssertNotNull(mind.OwnedEntity);
 
-                var uplinkAccount = new UplinkAccount(StartingBalance, mind.OwnedEntity!.Uid);
+                var uplinkAccount = new UplinkAccount(StartingBalance, mind.OwnedEntity!);
                 var accounts = EntityManager.EntitySysManager.GetEntitySystem<UplinkAccountsSystem>();
                 accounts.AddNewAccount(uplinkAccount);
 
                 if (!EntityManager.EntitySysManager.GetEntitySystem<UplinkSystem>()
-                    .AddUplink(mind.OwnedEntity, uplinkAccount))
+                    .AddUplink(mind.OwnedEntity!.Value, uplinkAccount))
                     continue;
 
                 var traitorRole = new TraitorRole(mind);
@@ -174,29 +173,43 @@ namespace Content.Server.GameTicking.Presets
 
         public override string GetRoundEndDescription()
         {
-            var result = Loc.GetString(
-                "traitor-round-end-result",
-                ("traitorCount", _traitors.Count)
-            );
+            var result = Loc.GetString("traitor-round-end-result", ("traitorCount", _traitors.Count));
 
             foreach (var traitor in _traitors)
             {
-                if (traitor.Mind.TryGetSession(out var session))
-                {
-                    result += "\n" + Loc.GetString("traitor-user-was-a-traitor", ("user", session.Name));
-                }
+                var name = traitor.Mind.CharacterName;
+                traitor.Mind.TryGetSession(out var session);
+                var username = session?.Name;
 
                 var objectives = traitor.Mind.AllObjectives.ToArray();
                 if (objectives.Length == 0)
                 {
-                    result += ".\n";
+                    if (username != null)
+                    {
+                        if (name == null)
+                            result += "\n" + Loc.GetString("traitor-user-was-a-traitor", ("user", username));
+                        else
+                            result += "\n" + Loc.GetString("traitor-user-was-a-traitor-named", ("user", username), ("name", name));
+                    }
+                    else if (name != null)
+                        result += "\n" + Loc.GetString("traitor-was-a-traitor-named", ("name", name));
+
                     continue;
                 }
 
-                result += Loc.GetString("traitor-objective-list-start");
+                if (username != null)
+                {
+                    if (name == null)
+                        result += "\n" + Loc.GetString("traitor-user-was-a-traitor-with-objectives", ("user", username));
+                    else
+                        result += "\n" + Loc.GetString("traitor-user-was-a-traitor-with-objectives-named", ("user", username), ("name", name));
+                }
+                else if (name != null)
+                    result += "\n" + Loc.GetString("traitor-was-a-traitor-with-objectives-named", ("name", name));
+
                 foreach (var objectiveGroup in objectives.GroupBy(o => o.Prototype.Issuer))
                 {
-                    result += $"\n[color=#87cefa]{objectiveGroup.Key}[/color]";
+                    result += "\n" + Loc.GetString($"preset-traitor-objective-issuer-{objectiveGroup.Key}");
 
                     foreach (var objective in objectiveGroup)
                     {

@@ -1,8 +1,12 @@
+using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
 using Content.Server.NodeContainer.EntitySystems;
+using Content.Server.Temperature.Components;
+using Content.Server.Temperature.Systems;
 using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
@@ -15,6 +19,7 @@ namespace Content.Server.Atmos.EntitySystems
     public partial class AtmosphereSystem : SharedAtmosphereSystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly AdminLogSystem _adminLog = default!;
 
         private const float ExposedUpdateDelay = 1f;
         private float _exposedTimer = 0f;
@@ -66,18 +71,18 @@ namespace Content.Server.Atmos.EntitySystems
 
             _exposedTimer += frameTime;
 
-            if (_exposedTimer >= ExposedUpdateDelay)
-            {
-                foreach (var exposed in EntityManager.EntityQuery<AtmosExposedComponent>())
-                {
-                    // TODO ATMOS: Kill this with fire.
-                    var tile = GetTileMixture(exposed.Owner.Transform.Coordinates);
-                    if (tile == null) continue;
-                    exposed.Update(tile, _exposedTimer, this);
-                }
+            if (_exposedTimer < ExposedUpdateDelay)
+                return;
 
-                _exposedTimer -= ExposedUpdateDelay;
+            foreach (var (exposed, transform) in EntityManager.EntityQuery<AtmosExposedComponent, TransformComponent>())
+            {
+                var tile = GetTileMixture(transform.Coordinates);
+                if (tile == null) continue;
+                var updateEvent = new AtmosExposedUpdateEvent(transform.Coordinates, tile);
+                RaiseLocalEvent(exposed.Owner, ref updateEvent);
             }
+
+            _exposedTimer -= ExposedUpdateDelay;
         }
     }
 }

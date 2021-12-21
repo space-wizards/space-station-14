@@ -1,6 +1,6 @@
 using System;
-﻿using Content.Client.Administration;
-using Content.Shared.Body.Mechanism;
+ using Content.Client.Administration;
+using Content.Shared.Administration;
 using Robust.Client.Console;
 using Robust.Client.GameObjects;
 using Robust.Shared.Console;
@@ -11,6 +11,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Client.Commands
 {
+    [AnyCommand]
     public class OpenAHelpCommand : IConsoleCommand
     {
         public string Command => "openahelp";

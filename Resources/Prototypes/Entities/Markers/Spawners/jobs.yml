@@ -232,6 +232,18 @@
       - state: green
       - state: doctor
 
+- type: entity
+  id: SpawnPointChemist
+  parent: SpawnPointJobBase
+  name: chemist
+  components:
+  - type: SpawnPoint
+    job_id: Chemist
+  - type: Sprite
+    layers:
+      - state: green
+      - state: chemist
+
 # Science
 
 - type: entity
@@ -272,17 +284,17 @@
       - state: green
       - state: hos
 
-# - type: entity
-#   id: SpawnPointWarden
-#   parent: SpawnPointJobBase
-#   name: warden
-#   components:
-#   - type: SpawnPoint
-#     job_id: Warden
-#   - type: Sprite
-#     layers:
-#       - state: green
-#       - state: warden
+- type: entity
+  id: SpawnPointWarden
+  parent: SpawnPointJobBase
+  name: warden
+  components:
+  - type: SpawnPoint
+    job_id: Warden
+  - type: Sprite
+    layers:
+      - state: green
+      - state: warden
 
 - type: entity
   id: SpawnPointSecurityOfficer

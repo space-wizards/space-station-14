@@ -34,9 +34,11 @@ namespace Content.Server.Actions.Spells
 
         public void DoInstantAction(InstantActionEventArgs args)
         {
+            var entMan = IoCManager.Resolve<IEntityManager>();
+
             var caster = args.Performer;
 
-            if (!caster.TryGetComponent(out HandsComponent? handsComponent))
+            if (!entMan.TryGetComponent(caster, out HandsComponent? handsComponent))
             {
                 caster.PopupMessage(Loc.GetString("spell-fail-no-hands"));
                 return;
@@ -52,12 +54,12 @@ namespace Content.Server.Actions.Spells
             }
 
             // TODO: Look this is shitty and ideally a test would do it
-            var spawnedProto = caster.EntityManager.SpawnEntity(ItemProto, caster.Transform.MapPosition);
+            var spawnedProto = entMan.SpawnEntity(ItemProto, entMan.GetComponent<TransformComponent>(caster).MapPosition);
 
-            if (!spawnedProto.TryGetComponent(out ItemComponent? itemComponent))
+            if (!entMan.TryGetComponent(spawnedProto, out ItemComponent? itemComponent))
             {
                 Logger.Error($"Tried to use {nameof(GiveItemSpell)} but prototype has no {nameof(ItemComponent)}?");
-                spawnedProto.Delete();
+                entMan.DeleteEntity(spawnedProto);
                 return;
             }
 

@@ -1,9 +1,10 @@
-﻿using System;
+using System;
 using Content.Shared.Disposal.Components;
 using Content.Shared.SubFloor;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.Disposal.Visualizers
@@ -22,7 +23,8 @@ namespace Content.Client.Disposal.Visualizers
 
         private void ChangeState(AppearanceComponent appearance)
         {
-            if (!appearance.Owner.TryGetComponent(out ISpriteComponent? sprite))
+            var entities = IoCManager.Resolve<IEntityManager>();
+            if (!entities.TryGetComponent(appearance.Owner, out ISpriteComponent? sprite))
             {
                 return;
             }
@@ -46,17 +48,17 @@ namespace Content.Client.Disposal.Visualizers
             {
                 appearance.Owner.EnsureComponent<SubFloorHideComponent>();
             }
-            else if (appearance.Owner.HasComponent<SubFloorHideComponent>())
+            else if (entities.HasComponent<SubFloorHideComponent>(appearance.Owner))
             {
-                appearance.Owner.RemoveComponent<SubFloorHideComponent>();
+                entities.RemoveComponent<SubFloorHideComponent>(appearance.Owner);
             }
         }
 
-        public override void InitializeEntity(IEntity entity)
+        public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
-
-            var appearance = entity.EnsureComponent<AppearanceComponent>();
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+            var appearance = entityManager.EnsureComponent<ClientAppearanceComponent>(entity);
             ChangeState(appearance);
         }
 

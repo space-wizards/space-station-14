@@ -3,6 +3,7 @@ using Content.Shared.DragDrop;
 using Content.Shared.Interaction.Helpers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Buckle.Components
@@ -32,8 +33,8 @@ namespace Content.Shared.Buckle.Components
 
         bool IDragDropOn.CanDragDropOn(DragDropEvent eventArgs)
         {
-            if (!eventArgs.Dragged.TryGetComponent(out SharedBuckleComponent? buckleComponent)) return false;
-            bool Ignored(IEntity entity) => entity == eventArgs.User || entity == eventArgs.Dragged || entity == eventArgs.Target;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Dragged, out SharedBuckleComponent? buckleComponent)) return false;
+            bool Ignored(EntityUid entity) => entity == eventArgs.User || entity == eventArgs.Dragged || entity == eventArgs.Target;
 
             return eventArgs.Target.InRangeUnobstructed(eventArgs.Dragged, buckleComponent.Range, predicate: Ignored);
         }
@@ -62,7 +63,9 @@ namespace Content.Shared.Buckle.Components
     }
 
     [Serializable, NetSerializable]
+#pragma warning disable 618
     public abstract class StrapChangeMessage : ComponentMessage
+#pragma warning restore 618
     {
         /// <summary>
         ///     Constructs a new instance of <see cref="StrapChangeMessage"/>
@@ -70,7 +73,7 @@ namespace Content.Shared.Buckle.Components
         /// <param name="entity">The entity that had its buckling status changed</param>
         /// <param name="strap">The strap that the entity was buckled to or unbuckled from</param>
         /// <param name="buckled">True if the entity was buckled, false otherwise</param>
-        protected StrapChangeMessage(IEntity entity, IEntity strap, bool buckled)
+        protected StrapChangeMessage(EntityUid entity, EntityUid strap, bool buckled)
         {
             Entity = entity;
             Strap = strap;
@@ -80,12 +83,12 @@ namespace Content.Shared.Buckle.Components
         /// <summary>
         ///     The entity that had its buckling status changed
         /// </summary>
-        public IEntity Entity { get; }
+        public EntityUid Entity { get; }
 
         /// <summary>
         ///     The strap that the entity was buckled to or unbuckled from
         /// </summary>
-        public IEntity Strap { get; }
+        public EntityUid Strap { get; }
 
         /// <summary>
         ///     True if the entity was buckled, false otherwise.
@@ -101,7 +104,7 @@ namespace Content.Shared.Buckle.Components
         /// </summary>
         /// <param name="entity">The entity that had its buckling status changed</param>
         /// <param name="strap">The strap that the entity was buckled to or unbuckled from</param>
-        public StrapMessage(IEntity entity, IEntity strap) : base(entity, strap, true)
+        public StrapMessage(EntityUid entity, EntityUid strap) : base(entity, strap, true)
         {
         }
     }
@@ -114,7 +117,7 @@ namespace Content.Shared.Buckle.Components
         /// </summary>
         /// <param name="entity">The entity that had its buckling status changed</param>
         /// <param name="strap">The strap that the entity was buckled to or unbuckled from</param>
-        public UnStrapMessage(IEntity entity, IEntity strap) : base(entity, strap, false)
+        public UnStrapMessage(EntityUid entity, EntityUid strap) : base(entity, strap, false)
         {
         }
     }

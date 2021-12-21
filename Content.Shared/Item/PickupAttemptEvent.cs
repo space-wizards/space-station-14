@@ -4,11 +4,11 @@ namespace Content.Shared.Item
 {
     public class PickupAttemptEvent : CancellableEntityEventArgs
     {
-        public PickupAttemptEvent(IEntity entity)
+        public PickupAttemptEvent(EntityUid uid)
         {
-            Entity = entity;
+            Uid = uid;
         }
 
-        public IEntity Entity { get; }
+        public EntityUid Uid { get; }
     }
 }

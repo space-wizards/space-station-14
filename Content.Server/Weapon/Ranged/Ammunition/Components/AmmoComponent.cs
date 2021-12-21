@@ -21,8 +21,11 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
     /// Generally used for bullets but can be used for other things like bananas
     /// </summary>
     [RegisterComponent]
+#pragma warning disable 618
     public class AmmoComponent : Component, IExamine, ISerializationHooks
+#pragma warning restore 618
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         public override string Name => "Ammo";
@@ -102,7 +105,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             }
         }
 
-        public IEntity? TakeBullet(EntityCoordinates spawnAt)
+        public EntityUid? TakeBullet(EntityCoordinates spawnAt)
         {
             if (_ammoIsProjectile)
             {
@@ -115,17 +118,17 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             }
 
             _spent = true;
-            if (Owner.TryGetComponent(out AppearanceComponent? appearanceComponent))
+            if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearanceComponent))
             {
                 appearanceComponent.SetData(AmmoVisuals.Spent, true);
             }
 
-            var entity = Owner.EntityManager.SpawnEntity(_projectileId, spawnAt);
+            var entity = _entMan.SpawnEntity(_projectileId, spawnAt);
 
             return entity;
         }
 
-        public void MuzzleFlash(IEntity entity, Angle angle)
+        public void MuzzleFlash(EntityUid entity, Angle angle)
         {
             if (_muzzleFlashSprite == null)
             {
@@ -142,7 +145,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
                 EffectSprite = _muzzleFlashSprite,
                 Born = time,
                 DeathTime = deathTime,
-                AttachedEntityUid = entity.Uid,
+                AttachedEntityUid = entity,
                 AttachedOffset = offset,
                 //Rotated from east facing
                 Rotation = (float) angle.Theta,
@@ -177,6 +180,5 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
         Dart, // Placeholder
         Grenade,
         Energy,
-        CreamPie, // I can't wait for this enum to be a prototype type...
     }
 }

@@ -1,11 +1,11 @@
 using System.Threading.Tasks;
+using Content.Server.Electrocution;
 using Content.Server.Stack;
 using Content.Server.Tools;
-using Content.Server.Tools.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Tools;
-using Content.Shared.Tools.Components;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.ViewVariables;
@@ -18,6 +18,8 @@ namespace Content.Server.Power.Components
     [RegisterComponent]
     public class CableComponent : Component, IInteractUsing
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "Cable";
 
         [ViewVariables]
@@ -41,14 +43,16 @@ namespace Content.Server.Power.Components
             if (_cableDroppedOnCutPrototype == null)
                 return false;
 
-            if (!await EntitySystem.Get<ToolSystem>().UseTool(eventArgs.Using.Uid, eventArgs.User.Uid, Owner.Uid, 0f, 0.25f, _cuttingQuality)) return false;
+            if (!await EntitySystem.Get<ToolSystem>().UseTool(eventArgs.Using, eventArgs.User, Owner, 0f, 0.25f, _cuttingQuality)) return false;
 
-            Owner.Delete();
-            var droppedEnt = Owner.EntityManager.SpawnEntity(_cableDroppedOnCutPrototype, eventArgs.ClickLocation);
+            if (EntitySystem.Get<ElectrocutionSystem>().TryDoElectrifiedAct(Owner, eventArgs.User)) return false;
+
+            _entMan.DeleteEntity(Owner);
+            var droppedEnt = _entMan.SpawnEntity(_cableDroppedOnCutPrototype, eventArgs.ClickLocation);
 
             // TODO: Literally just use a prototype that has a single thing in the stack, it's not that complicated...
-            if (droppedEnt.TryGetComponent<StackComponent>(out var stack))
-                EntitySystem.Get<StackSystem>().SetCount(droppedEnt.Uid, 1, stack);
+            if (_entMan.TryGetComponent<StackComponent?>(droppedEnt, out var stack))
+                EntitySystem.Get<StackSystem>().SetCount(droppedEnt, 1, stack);
 
             return true;
         }

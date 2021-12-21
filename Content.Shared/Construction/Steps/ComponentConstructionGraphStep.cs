@@ -10,9 +10,9 @@ namespace Content.Shared.Construction.Steps
     {
         [DataField("component")] public string Component { get; } = string.Empty;
 
-        public override bool EntityValid(IEntity entity)
+        public override bool EntityValid(EntityUid uid, IEntityManager entityManager)
         {
-            foreach (var component in entity.GetAllComponents())
+            foreach (var component in entityManager.GetComponents(uid))
             {
                 if (component.Name == Component)
                     return true;

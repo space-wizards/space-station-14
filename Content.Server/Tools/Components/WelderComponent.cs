@@ -1,4 +1,6 @@
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Damage;
+using Content.Shared.FixedPoint;
 using Content.Shared.Sound;
 using Content.Shared.Tools.Components;
 using Robust.Shared.GameObjects;
@@ -26,13 +28,13 @@ namespace Content.Server.Tools.Components
         ///     Fuel consumption per second, while the welder is active.
         /// </summary>
         [DataField("fuelConsumption")]
-        public ReagentUnit FuelConsumption { get; } = ReagentUnit.New(0.05f);
+        public FixedPoint2 FuelConsumption { get; } = FixedPoint2.New(0.05f);
 
         /// <summary>
         ///     A fuel amount to be consumed when the welder goes from being unlit to being lit.
         /// </summary>
         [DataField("welderOnConsume")]
-        public ReagentUnit FuelLitCost { get; } = ReagentUnit.New(0.5f);
+        public FixedPoint2 FuelLitCost { get; } = FixedPoint2.New(0.5f);
 
         /// <summary>
         ///     Sound played when the welder is turned off.
@@ -48,5 +50,15 @@ namespace Content.Server.Tools.Components
 
         [DataField("welderRefill")]
         public SoundSpecifier WelderRefill { get; } = new SoundPathSpecifier("/Audio/Effects/refill.ogg");
+
+        /// <summary>
+        ///     When the welder is lit, this damage is added to the base melee weapon damage.
+        /// </summary>
+        /// <remarks>
+        ///     If this is a standard welder, this damage bonus should probably subtract the entity's standard melee weapon damage
+        ///     and replace it all with heat damage. 
+        /// </remarks>
+        [DataField("litMeleeDamageBonus")]
+        public DamageSpecifier LitMeleeDamageBonus = new();
     }
 }

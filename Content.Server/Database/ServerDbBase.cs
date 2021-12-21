@@ -3,20 +3,23 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Net;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Content.Server.Administration.Logs;
+using Content.Shared.Administration.Logs;
 using Content.Shared.CharacterAppearance;
 using Content.Shared.Preferences;
 using Microsoft.EntityFrameworkCore;
 using Robust.Shared.Enums;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Database
 {
     public abstract class ServerDbBase
     {
-
         #region Preferences
         public async Task<PlayerPreferences?> GetPlayerPreferencesAsync(NetUserId userId)
         {
@@ -92,6 +95,11 @@ namespace Content.Server.Database
             var profile = await db.Profile.Include(p => p.Preference)
                 .Where(p => p.Preference.UserId == userId.UserId && p.Slot == slot)
                 .SingleOrDefaultAsync();
+
+            if (profile == null)
+            {
+                return;
+            }
 
             db.Profile.Remove(profile);
         }
@@ -224,6 +232,7 @@ namespace Content.Server.Database
         }
         #endregion
 
+        #region User Ids
         public async Task<NetUserId?> GetAssignedUserIdAsync(string name)
         {
             await using var db = await GetDb();
@@ -244,8 +253,9 @@ namespace Content.Server.Database
 
             await db.DbContext.SaveChangesAsync();
         }
+        #endregion
 
-
+        #region Bans
         /*
          * BAN STUFF
          */
@@ -287,18 +297,66 @@ namespace Content.Server.Database
 
         public abstract Task AddServerBanAsync(ServerBanDef serverBan);
         public abstract Task AddServerUnbanAsync(ServerUnbanDef serverUnban);
+        #endregion
 
+        #region Player Records
         /*
          * PLAYER RECORDS
          */
-        public abstract Task UpdatePlayerRecord(
+        public async Task UpdatePlayerRecord(
             NetUserId userId,
             string userName,
             IPAddress address,
-            ImmutableArray<byte> hwId);
-        public abstract Task<PlayerRecord?> GetPlayerRecordByUserName(string userName, CancellationToken cancel);
-        public abstract Task<PlayerRecord?> GetPlayerRecordByUserId(NetUserId userId, CancellationToken cancel);
+            ImmutableArray<byte> hwId)
+        {
+            await using var db = await GetDb();
 
+            var record = await db.DbContext.Player.SingleOrDefaultAsync(p => p.UserId == userId.UserId);
+            if (record == null)
+            {
+                db.DbContext.Player.Add(record = new Player
+                {
+                    FirstSeenTime = DateTime.UtcNow,
+                    UserId = userId.UserId,
+                });
+            }
+
+            record.LastSeenTime = DateTime.UtcNow;
+            record.LastSeenAddress = address;
+            record.LastSeenUserName = userName;
+            record.LastSeenHWId = hwId.ToArray();
+
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        public async Task<PlayerRecord?> GetPlayerRecordByUserName(string userName, CancellationToken cancel)
+        {
+            await using var db = await GetDb();
+
+            // Sort by descending last seen time.
+            // So if, due to account renames, we have two people with the same username in the DB,
+            // the most recent one is picked.
+            var record = await db.DbContext.Player
+                .OrderByDescending(p => p.LastSeenTime)
+                .FirstOrDefaultAsync(p => p.LastSeenUserName == userName, cancel);
+
+            return record == null ? null : MakePlayerRecord(record);
+        }
+
+        public async Task<PlayerRecord?> GetPlayerRecordByUserId(NetUserId userId, CancellationToken cancel)
+        {
+            await using var db = await GetDb();
+
+            var record = await db.DbContext.Player
+                .SingleOrDefaultAsync(p => p.UserId == userId.UserId, cancel);
+
+            return record == null ? null : MakePlayerRecord(record);
+        }
+
+        protected abstract PlayerRecord MakePlayerRecord(Player player);
+        #endregion
+
+        #region Connection Logs
         /*
          * CONNECTION LOG
          */
@@ -307,9 +365,11 @@ namespace Content.Server.Database
             string userName,
             IPAddress address,
             ImmutableArray<byte> hwId);
+        #endregion
 
+        #region Admin Ranks
         /*
-         * ADMIN STUFF
+         * ADMIN RANKS
          */
         public async Task<Admin?> GetAdminDataForAsync(NetUserId userId, CancellationToken cancel)
         {
@@ -384,6 +444,54 @@ namespace Content.Server.Database
             await db.DbContext.SaveChangesAsync(cancel);
         }
 
+        public virtual async Task<int> AddNewRound(params Guid[] playerIds)
+        {
+            await using var db = await GetDb();
+
+            var players = await db.DbContext.Player
+                .Where(player => playerIds.Contains(player.UserId))
+                .ToListAsync();
+
+            var round = new Round
+            {
+                Players = players
+            };
+
+            db.DbContext.Round.Add(round);
+
+            await db.DbContext.SaveChangesAsync();
+
+            return round.Id;
+        }
+
+        public async Task<Round> GetRound(int id)
+        {
+            await using var db = await GetDb();
+
+            var round = await db.DbContext.Round
+                .Include(round => round.Players)
+                .SingleAsync(round => round.Id == id);
+
+            return round;
+        }
+
+        public async Task AddRoundPlayers(int id, Guid[] playerIds)
+        {
+            await using var db = await GetDb();
+
+            var round = await db.DbContext.Round
+                .Include(round => round.Players)
+                .SingleAsync(round => round.Id == id);
+
+            var players = await db.DbContext.Player
+                .Where(player => playerIds.Contains(player.UserId))
+                .ToListAsync();
+
+            round.Players.AddRange(players);
+
+            await db.DbContext.SaveChangesAsync();
+        }
+
         public async Task UpdateAdminRankAsync(AdminRank rank, CancellationToken cancel)
         {
             await using var db = await GetDb();
@@ -397,6 +505,162 @@ namespace Content.Server.Database
 
             await db.DbContext.SaveChangesAsync(cancel);
         }
+        #endregion
+
+        #region Admin Logs
+
+        public virtual async Task AddAdminLogs(List<QueuedLog> logs)
+        {
+            await using var db = await GetDb();
+
+            var entities = new Dictionary<int, AdminLogEntity>();
+
+            foreach (var (log, entityData) in logs)
+            {
+                var logEntities = new List<AdminLogEntity>(entityData.Count);
+                foreach (var (id, name) in entityData)
+                {
+                    var entity = entities.GetOrNew(id);
+                    entity.Name = name;
+                    logEntities.Add(entity);
+                }
+
+                log.Entities = logEntities;
+                db.DbContext.AdminLog.Add(log);
+            }
+
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        private async Task<IQueryable<AdminLog>> GetAdminLogsQuery(ServerDbContext db, LogFilter? filter = null)
+        {
+            IQueryable<AdminLog> query = db.AdminLog;
+
+            if (filter == null)
+            {
+                return query.OrderBy(log => log.Date);
+            }
+
+            if (filter.Round != null)
+            {
+                query = query.Where(log => log.RoundId == filter.Round);
+            }
+
+            if (filter.Search != null)
+            {
+                query = query.Where(log => log.Message.Contains(filter.Search));
+            }
+
+            if (filter.Types != null)
+            {
+                query = query.Where(log => filter.Types.Contains(log.Type));
+            }
+
+            if (filter.Impacts != null)
+            {
+                query = query.Where(log => filter.Impacts.Contains(log.Impact));
+            }
+
+            if (filter.Before != null)
+            {
+                query = query.Where(log => log.Date < filter.Before);
+            }
+
+            if (filter.After != null)
+            {
+                query = query.Where(log => log.Date > filter.After);
+            }
+
+            if (filter.AnyPlayers != null)
+            {
+                var players = await db.AdminLogPlayer
+                    .Where(player => filter.AnyPlayers.Contains(player.PlayerUserId))
+                    .ToListAsync();
+
+                if (players.Count > 0)
+                {
+                    query = from log in query
+                        join player in db.AdminLogPlayer on log.Id equals player.LogId
+                        where filter.AnyPlayers.Contains(player.Player.UserId)
+                        select log;
+                }
+            }
+
+            if (filter.AllPlayers != null)
+            {
+                // TODO ADMIN LOGGING
+            }
+
+            query = query.Distinct();
+
+            if (filter.LastLogId != null)
+            {
+                query = filter.DateOrder switch
+                {
+                    DateOrder.Ascending => query.Where(log => log.Id < filter.LastLogId),
+                    DateOrder.Descending => query.Where(log => log.Id > filter.LastLogId),
+                    _ => throw new ArgumentOutOfRangeException(nameof(filter),
+                        $"Unknown {nameof(DateOrder)} value {filter.DateOrder}")
+                };
+            }
+
+            query = filter.DateOrder switch
+            {
+                DateOrder.Ascending => query.OrderBy(log => log.Date),
+                DateOrder.Descending => query.OrderByDescending(log => log.Date),
+                _ => throw new ArgumentOutOfRangeException(nameof(filter),
+                    $"Unknown {nameof(DateOrder)} value {filter.DateOrder}")
+            };
+
+            if (filter.Limit != null)
+            {
+                query = query.Take(filter.Limit.Value);
+            }
+
+            return query;
+        }
+
+        public async IAsyncEnumerable<string> GetAdminLogMessages(LogFilter? filter = null)
+        {
+            await using var db = await GetDb();
+            var query = await GetAdminLogsQuery(db.DbContext, filter);
+
+            await foreach (var log in query.Select(log => log.Message).AsAsyncEnumerable())
+            {
+                yield return log;
+            }
+        }
+
+        public async IAsyncEnumerable<LogRecord> GetAdminLogs(LogFilter? filter = null)
+        {
+            await using var db = await GetDb();
+            var query = await GetAdminLogsQuery(db.DbContext, filter);
+            query = query.Include(log => log.Players);
+
+            await foreach (var log in query.AsAsyncEnumerable())
+            {
+                var players = new Guid[log.Players.Count];
+                for (var i = 0; i < log.Players.Count; i++)
+                {
+                    players[i] = log.Players[i].PlayerUserId;
+                }
+
+                yield return new LogRecord(log.Id, log.RoundId, log.Type, log.Impact, log.Date, log.Message, players);
+            }
+        }
+
+        public async IAsyncEnumerable<JsonDocument> GetAdminLogsJson(LogFilter? filter = null)
+        {
+            await using var db = await GetDb();
+            var query = await GetAdminLogsQuery(db.DbContext, filter);
+
+            await foreach (var json in query.Select(log => log.Json).AsAsyncEnumerable())
+            {
+                yield return json;
+            }
+        }
+
+        #endregion
 
         protected abstract Task<DbGuard> GetDb();
 

@@ -1,7 +1,6 @@
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Body.Components;
-using Content.Shared.Body.Part;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
@@ -32,8 +31,8 @@ namespace Content.Server.Body.Commands
             var entityManager = IoCManager.Resolve<IEntityManager>();
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
 
-            IEntity entity;
-            IEntity hand;
+            EntityUid entity;
+            EntityUid hand;
 
             switch (args.Length)
             {
@@ -51,22 +50,22 @@ namespace Content.Server.Body.Commands
                         return;
                     }
 
-                    entity = player.AttachedEntity;
-                    hand = entityManager.SpawnEntity(DefaultHandPrototype, entity.Transform.Coordinates);
+                    entity = player.AttachedEntity.Value;
+                    hand = entityManager.SpawnEntity(DefaultHandPrototype, entityManager.GetComponent<TransformComponent>(entity).Coordinates);
                     break;
                 }
                 case 1:
                 {
                     if (EntityUid.TryParse(args[0], out var uid))
                     {
-                        if (!entityManager.TryGetEntity(uid, out var parsedEntity))
+                        if (!entityManager.EntityExists(uid))
                         {
                             shell.WriteLine($"No entity found with uid {uid}");
                             return;
                         }
 
-                        entity = parsedEntity;
-                        hand = entityManager.SpawnEntity(DefaultHandPrototype, entity.Transform.Coordinates);
+                        entity = uid;
+                        hand = entityManager.SpawnEntity(DefaultHandPrototype, entityManager.GetComponent<TransformComponent>(entity).Coordinates);
                     }
                     else
                     {
@@ -82,8 +81,8 @@ namespace Content.Server.Body.Commands
                             return;
                         }
 
-                        entity = player.AttachedEntity;
-                        hand = entityManager.SpawnEntity(args[0], entity.Transform.Coordinates);
+                        entity = player.AttachedEntity.Value;
+                        hand = entityManager.SpawnEntity(args[0], entityManager.GetComponent<TransformComponent>(entity).Coordinates);
                     }
 
                     break;
@@ -96,13 +95,13 @@ namespace Content.Server.Body.Commands
                         return;
                     }
 
-                    if (!entityManager.TryGetEntity(uid, out var parsedEntity))
+                    if (!entityManager.EntityExists(uid))
                     {
                         shell.WriteLine($"No entity exists with uid {uid}.");
                         return;
                     }
 
-                    entity = parsedEntity;
+                    entity = uid;
 
                     if (!prototypeManager.HasIndex<EntityPrototype>(args[1]))
                     {
@@ -110,7 +109,7 @@ namespace Content.Server.Body.Commands
                         return;
                     }
 
-                    hand = entityManager.SpawnEntity(args[1], entity.Transform.Coordinates);
+                    hand = entityManager.SpawnEntity(args[1], entityManager.GetComponent<TransformComponent>(entity).Coordinates);
 
                     break;
                 }
@@ -121,7 +120,7 @@ namespace Content.Server.Body.Commands
                 }
             }
 
-            if (!entity.TryGetComponent(out SharedBodyComponent? body))
+            if (!entityManager.TryGetComponent(entity, out SharedBodyComponent? body))
             {
                 var random = IoCManager.Resolve<IRobustRandom>();
                 var text = $"You have no body{(random.Prob(0.2f) ? " and you must scream." : ".")}";
@@ -130,7 +129,7 @@ namespace Content.Server.Body.Commands
                 return;
             }
 
-            if (!hand.TryGetComponent(out SharedBodyPartComponent? part))
+            if (!entityManager.TryGetComponent(hand, out SharedBodyPartComponent? part))
             {
                 shell.WriteLine($"Hand entity {hand} does not have a {nameof(SharedBodyPartComponent)} component.");
                 return;
@@ -139,7 +138,7 @@ namespace Content.Server.Body.Commands
             var slot = part.GetHashCode().ToString();
             body.SetPart(slot, part);
 
-            shell.WriteLine($"Added hand to entity {entity.Name}");
+            shell.WriteLine($"Added hand to entity {entityManager.GetComponent<MetaDataComponent>(entity).EntityName}");
         }
     }
 }

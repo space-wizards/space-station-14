@@ -29,7 +29,6 @@ namespace Content.Client.Construction.UI
     {
         [Dependency] private readonly IEntitySystemManager _systemManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly IPlacementManager _placementManager = default!;
 
         private readonly IGameHud _gameHud;
@@ -65,6 +64,9 @@ namespace Content.Client.Construction.UI
                         _constructionView.MoveToFront();
                     else
                         _constructionView.OpenCentered();
+
+                    if(_selected != null)
+                        PopulateInfo(_selected);
                 }
                 else
                     _constructionView.Close();
@@ -155,6 +157,7 @@ namespace Content.Client.Construction.UI
             var recipesList = _constructionView.Recipes;
 
             recipesList.Clear();
+            var recipes = new List<ConstructionPrototype>();
 
             foreach (var recipe in _prototypeManager.EnumeratePrototypes<ConstructionPrototype>())
             {
@@ -170,6 +173,13 @@ namespace Content.Client.Construction.UI
                         continue;
                 }
 
+                recipes.Add(recipe);
+            }
+
+            recipes.Sort((a, b) => string.Compare(a.Name, b.Name, StringComparison.InvariantCulture));
+
+            foreach (var recipe in recipes)
+            {
                 recipesList.Add(GetItem(recipe, recipesList));
             }
 
@@ -191,7 +201,7 @@ namespace Content.Client.Construction.UI
                     uniqueCategories.Add(category);
             }
 
-            _constructionView.CategoryButton.Clear();
+            _constructionView.Category.Clear();
 
             var array = uniqueCategories.ToArray();
             Array.Sort(array);
@@ -199,7 +209,7 @@ namespace Content.Client.Construction.UI
             for (var i = 0; i < array.Length; i++)
             {
                 var category = array[i];
-                _constructionView.CategoryButton.AddItem(category, i);
+                _constructionView.Category.AddItem(category, i);
             }
 
             _constructionView.Categories = array;
@@ -216,150 +226,23 @@ namespace Content.Client.Construction.UI
 
         private void GenerateStepList(ConstructionPrototype prototype, ItemList stepList)
         {
-            if (!_prototypeManager.TryIndex(prototype.Graph, out ConstructionGraphPrototype? graph))
+            if (_constructionSystem?.GetGuide(prototype) is not { } guide)
                 return;
 
-            var startNode = graph.Nodes[prototype.StartNode];
-            var targetNode = graph.Nodes[prototype.TargetNode];
-
-            if (!graph.TryPath(startNode.Name, targetNode.Name, out var path))
+            foreach (var entry in guide.Entries)
             {
-                return;
+                var text = entry.Arguments != null
+                    ? Loc.GetString(entry.Localization, entry.Arguments) : Loc.GetString(entry.Localization);
+
+                if (entry.EntryNumber is {} number)
+                    text = Loc.GetString("construction-presenter-step-wrapper",
+                        ("step-number", number), ("text", text));
+
+                // The padding needs to be applied regardless of text length... (See PadLeft documentation)
+                text = text.PadLeft(text.Length + entry.Padding);
+
+                stepList.AddItem(text, entry.Icon?.Frame0(), false);
             }
-
-            var current = startNode;
-            var stepNumber = 1;
-
-            foreach (var node in path)
-            {
-                if (!current.TryGetEdge(node.Name, out var edge))
-                {
-                    continue;
-                }
-
-                var firstNode = current == startNode;
-
-                if (firstNode)
-                {
-                    stepList.AddItem(prototype.Type == ConstructionType.Item
-                        ? Loc.GetString($"construction-presenter-to-craft", ("step-number", stepNumber++))
-                        : Loc.GetString($"construction-presenter-to-build", ("step-number", stepNumber++)));
-                }
-
-                foreach (var step in edge.Steps)
-                {
-                    var icon = GetTextureForStep(_resourceCache, step);
-
-                    switch (step)
-                    {
-                        case MaterialConstructionGraphStep materialStep:
-                            stepList.AddItem(
-                                !firstNode
-                                    ? Loc.GetString(
-                                        "construction-presenter-material-step",
-                                        ("step-number", stepNumber++),
-                                        ("amount", materialStep.Amount),
-                                        ("material", materialStep.MaterialPrototype.Name))
-                                    : Loc.GetString(
-                                        "construction-presenter-material-first-step",
-                                        ("amount", materialStep.Amount),
-                                        ("material", materialStep.MaterialPrototype.Name)),
-                                    icon);
-
-                            break;
-
-                        case ToolConstructionGraphStep toolStep:
-                            stepList.AddItem(Loc.GetString(
-                                                 "construction-presenter-tool-step",
-                                                 ("step-number", stepNumber++),
-                                                 ("tool", Loc.GetString(_prototypeManager.Index<ToolQualityPrototype>(toolStep.Tool).ToolName))),
-                                             icon);
-                            break;
-
-                        case ArbitraryInsertConstructionGraphStep arbitraryStep:
-                            stepList.AddItem(Loc.GetString(
-                                                 "construction-presenter-arbitrary-step",
-                                                 ("step-number", stepNumber++),
-                                                 ("name", arbitraryStep.Name)),
-                                             icon);
-                            break;
-
-                        case NestedConstructionGraphStep nestedStep:
-                            var parallelNumber = 1;
-                            stepList.AddItem(Loc.GetString("construction-presenter-nested-step", ("step-number", stepNumber++)));
-
-                            foreach (var steps in nestedStep.Steps)
-                            {
-                                var subStepNumber = 1;
-
-                                foreach (var subStep in steps)
-                                {
-                                    icon = GetTextureForStep(_resourceCache, subStep);
-
-                                    switch (subStep)
-                                    {
-                                        case MaterialConstructionGraphStep materialStep:
-                                            if (prototype.Type != ConstructionType.Item) stepList.AddItem(Loc.GetString(
-                                                    "construction-presenter-material-substep",
-                                                    ("step-number", stepNumber),
-                                                    ("parallel-number", parallelNumber),
-                                                    ("substep-number", subStepNumber++),
-                                                    ("amount", materialStep.Amount),
-                                                    ("material", materialStep.MaterialPrototype.Name)),
-                                                icon);
-                                            break;
-
-                                        case ToolConstructionGraphStep toolStep:
-                                            stepList.AddItem(Loc.GetString(
-                                                                 "construction-presenter-tool-substep",
-                                                                 ("step-number", stepNumber),
-                                                                 ("parallel-number", parallelNumber),
-                                                                 ("substep-number", subStepNumber++),
-                                                                 ("tool", Loc.GetString(_prototypeManager.Index<ToolQualityPrototype>(toolStep.Tool).ToolName))),
-                                                            icon);
-                                            break;
-
-                                        case ArbitraryInsertConstructionGraphStep arbitraryStep:
-                                            stepList.AddItem(Loc.GetString(
-                                                                 "construction-presenter-arbitrary-substep",
-                                                                 ("step-number", stepNumber),
-                                                                 ("parallel-number", parallelNumber),
-                                                                 ("substep-number", subStepNumber++),
-                                                                 ("name", arbitraryStep.Name)),
-                                                             icon);
-                                            break;
-                                    }
-                                }
-
-                                parallelNumber++;
-                            }
-
-                            break;
-                    }
-                }
-
-                current = node;
-            }
-        }
-
-        private Texture? GetTextureForStep(IResourceCache resourceCache, ConstructionGraphStep step)
-        {
-            switch (step)
-            {
-                case MaterialConstructionGraphStep materialStep:
-                    return materialStep.MaterialPrototype.Icon?.Frame0();
-
-                case ToolConstructionGraphStep toolStep:
-                    return _prototypeManager.Index<ToolQualityPrototype>(toolStep.Tool).Icon?.Frame0();
-
-                case ArbitraryInsertConstructionGraphStep arbitraryStep:
-                    return arbitraryStep.Icon?.Frame0();
-
-                case NestedConstructionGraphStep:
-                    return null;
-            }
-
-            return null;
         }
 
         private static ItemList.Item GetItem(ConstructionPrototype recipe, ItemList itemList)
@@ -460,6 +343,7 @@ namespace Content.Client.Construction.UI
             _constructionSystem = system;
             system.ToggleCraftingWindow += SystemOnToggleMenu;
             system.CraftingAvailabilityChanged += SystemCraftingAvailabilityChanged;
+            system.ConstructionGuideAvailable += SystemGuideAvailable;
             CraftingAvailable = system.CraftingEnabled;
         }
 
@@ -472,6 +356,7 @@ namespace Content.Client.Construction.UI
 
             system.ToggleCraftingWindow -= SystemOnToggleMenu;
             system.CraftingAvailabilityChanged -= SystemCraftingAvailabilityChanged;
+            system.ConstructionGuideAvailable -= SystemGuideAvailable;
             _constructionSystem = null;
         }
 
@@ -500,6 +385,20 @@ namespace Content.Client.Construction.UI
                 WindowOpen = true;
                 _gameHud.CraftingButtonDown = true; // This does not call CraftingButtonToggled
             }
+        }
+
+        private void SystemGuideAvailable(object? sender, string e)
+        {
+            if (!CraftingAvailable)
+                return;
+
+            if (!WindowOpen)
+                return;
+
+            if (_selected == null)
+                return;
+
+            PopulateInfo(_selected);
         }
     }
 }

@@ -4,7 +4,6 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Shared.Atmos;
-using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -25,11 +24,16 @@ namespace Content.Server.NodeContainer.Nodes
 
         /// <summary>
         ///     The directions in which this pipe can connect to other pipes around it.
-        ///     Used to check if this pipe can connect to another pipe in a given direction.
         /// </summary>
         [ViewVariables]
         [DataField("pipeDirection")]
-        public PipeDirection PipeDirection { get; private set; }
+        private PipeDirection _originalPipeDirection;
+
+        /// <summary>
+        ///     The *current* pipe directions (accounting for rotation)
+        ///     Used to check if this pipe can connect to another pipe in a given direction.
+        /// </summary>
+        public PipeDirection CurrentPipeDirection { get; private set; }
 
         /// <summary>
         ///     The directions in which this node is connected to other nodes.
@@ -103,8 +107,6 @@ namespace Content.Server.NodeContainer.Nodes
         public override void OnContainerStartup()
         {
             base.OnContainerStartup();
-            //HACK: THIS LINE RIGHT HERE IS A FILTHY HACK AND I HATE IT --moony
-            PipeDirection = PipeDirection.RotatePipeDirection(Owner.Transform.LocalRotation);
             OnConnectedDirectionsNeedsUpdating();
         }
 
@@ -124,9 +126,6 @@ namespace Content.Server.NodeContainer.Nodes
         /// </summary>
         void IRotatableNode.RotateEvent(ref RotateEvent ev)
         {
-            if (!RotationsEnabled) return;
-            var diff = ev.NewRotation - ev.OldRotation;
-            PipeDirection = PipeDirection.RotatePipeDirection(diff);
             OnConnectedDirectionsNeedsUpdating();
             UpdateAppearance();
         }
@@ -137,7 +136,7 @@ namespace Content.Server.NodeContainer.Nodes
             {
                 var pipeDir = (PipeDirection) (1 << i);
 
-                if (!PipeDirection.HasDirection(pipeDir))
+                if (!CurrentPipeDirection.HasDirection(pipeDir))
                     continue;
 
                 foreach (var pipe in LinkableNodesInDirection(pipeDir))
@@ -157,7 +156,7 @@ namespace Content.Server.NodeContainer.Nodes
 
             foreach (var pipe in PipesInDirection(pipeDir))
             {
-                if (pipe.ConnectionsEnabled && pipe.PipeDirection.HasDirection(pipeDir.GetOpposite()))
+                if (pipe.ConnectionsEnabled && pipe.CurrentPipeDirection.HasDirection(pipeDir.GetOpposite()))
                     yield return pipe;
             }
         }
@@ -167,14 +166,14 @@ namespace Content.Server.NodeContainer.Nodes
         /// </summary>
         protected IEnumerable<PipeNode> PipesInDirection(PipeDirection pipeDir)
         {
-            if (!Owner.Transform.Anchored)
+            if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Anchored)
                 yield break;
 
-            var grid = IoCManager.Resolve<IMapManager>().GetGrid(Owner.Transform.GridID);
-            var position = Owner.Transform.Coordinates;
+            var grid = IoCManager.Resolve<IMapManager>().GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).GridID);
+            var position = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates;
             foreach (var entity in grid.GetInDir(position, pipeDir.ToDirection()))
             {
-                if (!Owner.EntityManager.TryGetComponent<NodeContainerComponent>(entity, out var container))
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<NodeContainerComponent>(entity, out var container))
                     continue;
 
                 foreach (var node in container.Nodes.Values)
@@ -190,14 +189,14 @@ namespace Content.Server.NodeContainer.Nodes
         /// </summary>
         protected IEnumerable<PipeNode> PipesInTile()
         {
-            if (!Owner.Transform.Anchored)
+            if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Anchored)
                 yield break;
 
-            var grid = IoCManager.Resolve<IMapManager>().GetGrid(Owner.Transform.GridID);
-            var position = Owner.Transform.Coordinates;
+            var grid = IoCManager.Resolve<IMapManager>().GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).GridID);
+            var position = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates;
             foreach (var entity in grid.GetLocal(position))
             {
-                if (!Owner.EntityManager.TryGetComponent<NodeContainerComponent>(entity, out var container))
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<NodeContainerComponent>(entity, out var container))
                     continue;
 
                 foreach (var node in container.Nodes.Values)
@@ -210,9 +209,18 @@ namespace Content.Server.NodeContainer.Nodes
 
         /// <summary>
         ///     Updates the <see cref="ConnectedDirections"/> of this and all sorrounding pipes.
+        ///     Also updates CurrentPipeDirection.
         /// </summary>
         private void OnConnectedDirectionsNeedsUpdating()
         {
+            if (RotationsEnabled)
+            {
+                CurrentPipeDirection = _originalPipeDirection.RotatePipeDirection(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).LocalRotation);
+            }
+            else
+            {
+                CurrentPipeDirection = _originalPipeDirection;
+            }
             UpdateConnectedDirections();
             UpdateAdjacentConnectedDirections();
             UpdateAppearance();
@@ -229,7 +237,7 @@ namespace Content.Server.NodeContainer.Nodes
             {
                 var pipeDir = (PipeDirection) (1 << i);
 
-                if (!PipeDirection.HasDirection(pipeDir))
+                if (!CurrentPipeDirection.HasDirection(pipeDir))
                     continue;
 
                 foreach (var pipe in LinkableNodesInDirection(pipeDir))
@@ -267,8 +275,8 @@ namespace Content.Server.NodeContainer.Nodes
         /// </summary>
         private void UpdateAppearance()
         {
-            if (!Owner.TryGetComponent(out AppearanceComponent? appearance)
-                || !Owner.TryGetComponent(out NodeContainerComponent? container))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AppearanceComponent? appearance)
+                || !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out NodeContainerComponent? container))
                 return;
 
             var netConnectedDirections = PipeDirection.None;

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Acts;
 using Content.Shared.Alert;
 using Content.Shared.Buckle.Components;
@@ -9,7 +8,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Players;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -22,7 +21,9 @@ namespace Content.Server.Buckle.Components
     {
         [ComponentDependency] public readonly SpriteComponent? SpriteComponent = null;
 
-        private readonly HashSet<IEntity> _buckledEntities = new();
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
+        private readonly HashSet<EntityUid> _buckledEntities = new();
 
         /// <summary>
         /// The angle in degrees to rotate the player by when they get strapped
@@ -39,7 +40,7 @@ namespace Content.Server.Buckle.Components
         /// <summary>
         /// The entity that is currently buckled here, synced from <see cref="BuckleComponent.BuckledTo"/>
         /// </summary>
-        public IReadOnlyCollection<IEntity> BuckledEntities => _buckledEntities;
+        public IReadOnlyCollection<EntityUid> BuckledEntities => _buckledEntities;
 
         /// <summary>
         /// The change in position to the strapped mob
@@ -109,7 +110,9 @@ namespace Content.Server.Buckle.Components
 
             buckle.Appearance?.SetData(StrapVisuals.RotationAngle, _rotation);
 
+#pragma warning disable 618
             SendMessage(new StrapMessage(buckle.Owner, Owner));
+#pragma warning restore 618
 
             return true;
         }
@@ -124,7 +127,9 @@ namespace Content.Server.Buckle.Components
             if (_buckledEntities.Remove(buckle.Owner))
             {
                 _occupiedSize -= buckle.Size;
+#pragma warning disable 618
                 SendMessage(new UnStrapMessage(buckle.Owner, Owner));
+#pragma warning restore 618
             }
         }
 
@@ -144,7 +149,7 @@ namespace Content.Server.Buckle.Components
         {
             foreach (var entity in _buckledEntities.ToArray())
             {
-                if (entity.TryGetComponent<BuckleComponent>(out var buckle))
+                if (_entMan.TryGetComponent<BuckleComponent?>(entity, out var buckle))
                 {
                     buckle.TryUnbuckle(entity, true);
                 }
@@ -154,14 +159,14 @@ namespace Content.Server.Buckle.Components
             _occupiedSize = 0;
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new StrapComponentState(Position);
         }
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent<BuckleComponent>(out var buckle))
+            if (!_entMan.TryGetComponent<BuckleComponent?>(eventArgs.User, out var buckle))
             {
                 return false;
             }
@@ -171,7 +176,7 @@ namespace Content.Server.Buckle.Components
 
         public override bool DragDropOn(DragDropEvent eventArgs)
         {
-            if (!eventArgs.Dragged.TryGetComponent(out BuckleComponent? buckleComponent)) return false;
+            if (!_entMan.TryGetComponent(eventArgs.Dragged, out BuckleComponent? buckleComponent)) return false;
             return buckleComponent.TryBuckle(eventArgs.User, Owner);
         }
     }

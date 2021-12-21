@@ -11,6 +11,7 @@
     node: tubeLight
   - type: Physics
     canCollide: false
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -18,6 +19,7 @@
       layer: [ Passable ]
   - type: Sprite
     sprite: Structures/Wallmounts/Lighting/light_tube.rsi
+    drawdepth: WallMountedItems
     layers:
     - state: on
       map: ["enum.PoweredLightLayers.Base"]
@@ -53,6 +55,7 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   placement:
+    mode: SnapgridCenter
     snap:
     - Wallmount
 
@@ -74,6 +77,10 @@
       types:
         Heat: 20
   - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
+  - type: DeviceNetworkComponent
+    deviceNetId: Apc
+  - type: ApcNetworkConnection
   - type: Appearance
     visuals:
     - type: PoweredLightVisualizer
@@ -148,6 +155,7 @@
     enabled: false
     offset: "0, -0.5"
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -159,6 +167,10 @@
       types:
         Heat: 20
   - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
+  - type: DeviceNetworkComponent
+    deviceNetId: Apc
+  - type: ApcNetworkConnection
   - type: Appearance
     visuals:
     - type: PoweredLightVisualizer

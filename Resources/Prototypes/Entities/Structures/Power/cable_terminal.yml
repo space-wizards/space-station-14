@@ -11,6 +11,7 @@
       drawdepth: BelowFloor
     - type: Clickable
     - type: Physics
+    - type: Fixtures
       fixtures:
         - shape:
             !type:PhysShapeAabb
@@ -32,6 +33,9 @@
             - !type:DoActsBehavior
               acts: ["Destruction"]
     - type: SubFloorHide
+    - type: Construction
+      graph: cable_terminal
+      node: cable_terminal
     - type: NodeContainer
       nodes:
         # Just define nodes for both MV and HV. One will end up unused in 99% of cases

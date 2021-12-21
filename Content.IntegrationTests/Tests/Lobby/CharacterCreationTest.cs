@@ -1,16 +1,13 @@
 using System.Threading.Tasks;
-using Content.Client;
 using Content.Client.Lobby;
 using Content.Client.Preferences;
-using Content.Client.State;
 using Content.Server.GameTicking;
-using Content.Server.Preferences;
 using Content.Server.Preferences.Managers;
-using Content.Shared;
 using Content.Shared.CCVar;
 using Content.Shared.Preferences;
 using NUnit.Framework;
 using Robust.Client.State;
+using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Network;
@@ -25,7 +22,17 @@ namespace Content.IntegrationTests.Tests.Lobby
         [Test]
         public async Task CreateDeleteCreateTest()
         {
-            var (client, server) = await StartConnectedServerClientPair();
+            var serverOptions = new ServerContentIntegrationOption
+            {
+                CVarOverrides =
+                {
+                    [CCVars.GameDummyTicker.Name] = "false",
+                    [CCVars.GameLobbyEnabled.Name] = "true",
+                    [CVars.NetPVS.Name] = "false"
+                }
+            };
+
+            var (client, server) = await StartConnectedServerClientPair(serverOptions: serverOptions);
 
             var clientNetManager = client.ResolveDependency<IClientNetManager>();
             var clientStateManager = client.ResolveDependency<IStateManager>();
@@ -43,14 +50,14 @@ namespace Content.IntegrationTests.Tests.Lobby
                 serverConfig.SetCVar(CCVars.GameDummyTicker, false);
                 serverConfig.SetCVar(CCVars.GameLobbyEnabled, true);
                 serverTicker.RestartRound();
-            });
 
-            Assert.That(serverTicker.RunLevel, Is.EqualTo(GameRunLevel.PreRoundLobby));
+                Assert.That(serverTicker.RunLevel, Is.EqualTo(GameRunLevel.PreRoundLobby));
+            });
 
             // Need to run them in sync to receive the messages.
             await RunTicksSync(client, server, 1);
 
-            await WaitUntil(client, () => clientStateManager.CurrentState is LobbyState, maxTicks: 60);
+            await WaitUntil(client, () => clientStateManager.CurrentState is LobbyState, 600);
 
             Assert.NotNull(clientNetManager.ServerChannel);
 
@@ -61,7 +68,8 @@ namespace Content.IntegrationTests.Tests.Lobby
             {
                 clientPrefManager.SelectCharacter(0);
 
-                var clientCharacters = clientPrefManager.Preferences.Characters;
+                var clientCharacters = clientPrefManager.Preferences?.Characters;
+                Assert.That(clientCharacters, Is.Not.Null);
                 Assert.That(clientCharacters.Count, Is.EqualTo(1));
 
                 Assert.That(clientStateManager.CurrentState, Is.TypeOf<LobbyState>());
@@ -69,8 +77,9 @@ namespace Content.IntegrationTests.Tests.Lobby
                 profile = HumanoidCharacterProfile.Random();
                 clientPrefManager.CreateCharacter(profile);
 
-                clientCharacters = clientPrefManager.Preferences.Characters;
+                clientCharacters = clientPrefManager.Preferences?.Characters;
 
+                Assert.That(clientCharacters, Is.Not.Null);
                 Assert.That(clientCharacters.Count, Is.EqualTo(2));
                 Assert.That(clientCharacters[1].MemberwiseEquals(profile));
             });
@@ -89,7 +98,7 @@ namespace Content.IntegrationTests.Tests.Lobby
             {
                 clientPrefManager.DeleteCharacter(1);
 
-                var clientCharacters = clientPrefManager.Preferences.Characters.Count;
+                var clientCharacters = clientPrefManager.Preferences?.Characters.Count;
                 Assert.That(clientCharacters, Is.EqualTo(1));
             });
 
@@ -109,8 +118,9 @@ namespace Content.IntegrationTests.Tests.Lobby
 
                 clientPrefManager.CreateCharacter(profile);
 
-                var clientCharacters = clientPrefManager.Preferences.Characters;
+                var clientCharacters = clientPrefManager.Preferences?.Characters;
 
+                Assert.That(clientCharacters, Is.Not.Null);
                 Assert.That(clientCharacters.Count, Is.EqualTo(2));
                 Assert.That(clientCharacters[1].MemberwiseEquals(profile));
             });

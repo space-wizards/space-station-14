@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using Content.Shared.ActionBlocker;
 using Content.Shared.DragDrop;
 using Content.Shared.Hands.Components;
-using Content.Shared.Interaction.Events;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using static Content.Shared.Inventory.EquipmentSlotDefines;
 
@@ -14,11 +14,11 @@ namespace Content.Shared.Strip.Components
     {
         public override string Name => "Strippable";
 
-        public bool CanBeStripped(IEntity by)
+        public bool CanBeStripped(EntityUid by)
         {
             return by != Owner
-                   && by.HasComponent<ISharedHandsComponent>()
-                   && EntitySystem.Get<ActionBlockerSystem>().CanInteract(by);
+                   && IoCManager.Resolve<IEntityManager>().HasComponent<SharedHandsComponent>(@by)
+                   && EntitySystem.Get<ActionBlockerSystem>().CanInteract(@by);
         }
 
         bool IDraggable.CanDrop(CanDropEvent args)

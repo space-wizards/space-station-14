@@ -18,7 +18,7 @@ namespace Content.IntegrationTests.Tests.Destructible
         [Test]
         public async Task Test()
         {
-            var server = StartServerDummyTicker(new ServerContentIntegrationOption
+            var server = StartServer(new ServerContentIntegrationOption
             {
                 ExtraPrototypes = Prototypes
             });
@@ -30,30 +30,27 @@ namespace Content.IntegrationTests.Tests.Destructible
             var sPrototypeManager = server.ResolveDependency<IPrototypeManager>();
             var sEntitySystemManager = server.ResolveDependency<IEntitySystemManager>();
 
-            IEntity sDestructibleEntity = null;
-            DamageableComponent sDamageableComponent = null;
+            EntityUid sDestructibleEntity = default;
             TestDestructibleListenerSystem sTestThresholdListenerSystem = null;
 
             await server.WaitPost(() =>
             {
-                var mapId = new MapId(1);
-                var coordinates = new MapCoordinates(0, 0, mapId);
-                sMapManager.CreateMap(mapId);
+                var gridId = GetMainGrid(sMapManager).GridEntityId;
+                var coordinates = new EntityCoordinates(gridId, 0, 0);
 
                 sDestructibleEntity = sEntityManager.SpawnEntity(DestructibleDestructionEntityId, coordinates);
-                sDamageableComponent = sDestructibleEntity.GetComponent<DamageableComponent>();
                 sTestThresholdListenerSystem = sEntitySystemManager.GetEntitySystem<TestDestructibleListenerSystem>();
             });
 
             await server.WaitAssertion(() =>
             {
-                var coordinates = sDestructibleEntity.Transform.Coordinates;
+                var coordinates = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(sDestructibleEntity).Coordinates;
                 var bruteDamageGroup = sPrototypeManager.Index<DamageGroupPrototype>("TestBrute");
                 DamageSpecifier bruteDamage = new(bruteDamageGroup,50);
 
                 Assert.DoesNotThrow(() =>
                 {
-                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(sDestructibleEntity.Uid, bruteDamage, true);
+                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(sDestructibleEntity, bruteDamage, true);
                 });
 
                 Assert.That(sTestThresholdListenerSystem.ThresholdsReached.Count, Is.EqualTo(1));
@@ -74,12 +71,12 @@ namespace Content.IntegrationTests.Tests.Destructible
 
                 foreach (var entity in entitiesInRange)
                 {
-                    if (entity.Prototype == null)
+                    if (sEntityManager.GetComponent<MetaDataComponent>(entity).EntityPrototype == null)
                     {
                         continue;
                     }
 
-                    if (entity.Prototype.Name != SpawnedEntityId)
+                    if (sEntityManager.GetComponent<MetaDataComponent>(entity).EntityPrototype?.Name != SpawnedEntityId)
                     {
                         continue;
                     }

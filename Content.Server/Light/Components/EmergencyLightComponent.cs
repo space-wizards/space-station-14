@@ -5,6 +5,7 @@ using Content.Shared.Examine;
 using Content.Shared.Light.Component;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
@@ -16,8 +17,12 @@ namespace Content.Server.Light.Components
     ///     Component that represents an emergency light, it has an internal battery that charges when the power is on.
     /// </summary>
     [RegisterComponent]
+#pragma warning disable 618
     public class EmergencyLightComponent : SharedEmergencyLightComponent, IExamine
+#pragma warning restore 618
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         [ViewVariables]
         private EmergencyLightState State
         {
@@ -28,7 +33,7 @@ namespace Content.Server.Light.Components
                     return;
 
                 _state = value;
-                Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new EmergencyLightMessage(this, _state));
+                _entMan.EventBus.RaiseEvent(EventSource.Local, new EmergencyLightMessage(this, _state));
             }
         }
 
@@ -57,7 +62,7 @@ namespace Content.Server.Light.Components
         /// </summary>
         public void UpdateState()
         {
-            if (!Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver))
+            if (!_entMan.TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver))
             {
                 return;
             }
@@ -77,7 +82,7 @@ namespace Content.Server.Light.Components
 
         public void OnUpdate(float frameTime)
         {
-            if (Owner.Deleted || !Owner.TryGetComponent(out BatteryComponent? battery) || Owner.Paused)
+            if ((!_entMan.EntityExists(Owner) || !_entMan.TryGetComponent(Owner, out BatteryComponent? battery) || _entMan.GetComponent<MetaDataComponent>(Owner).EntityPaused))
             {
                 return;
             }
@@ -95,7 +100,7 @@ namespace Content.Server.Light.Components
                 battery.CurrentCharge += _chargingWattage * frameTime * _chargingEfficiency;
                 if (battery.IsFullyCharged)
                 {
-                    if (Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver))
+                    if (_entMan.TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver))
                     {
                         receiver.Load = 1;
                     }
@@ -107,29 +112,34 @@ namespace Content.Server.Light.Components
 
         private void TurnOff()
         {
-            if (Owner.TryGetComponent(out PointLightComponent? light))
+            if (_entMan.TryGetComponent(Owner, out PointLightComponent? light))
             {
                 light.Enabled = false;
             }
 
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
                 appearance.SetData(EmergencyLightVisuals.On, false);
         }
 
         private void TurnOn()
         {
-            if (Owner.TryGetComponent(out PointLightComponent? light))
+            if (_entMan.TryGetComponent(Owner, out PointLightComponent? light))
             {
                 light.Enabled = true;
             }
 
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
                 appearance.SetData(EmergencyLightVisuals.On, true);
         }
 
+#pragma warning disable 618
+        [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
         public override void HandleMessage(ComponentMessage message, IComponent? component)
+#pragma warning restore 618
         {
+#pragma warning disable 618
             base.HandleMessage(message, component);
+#pragma warning restore 618
             switch (message)
             {
                 case PowerChangedMessage powerChanged:

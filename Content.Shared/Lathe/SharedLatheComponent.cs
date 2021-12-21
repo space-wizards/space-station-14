@@ -12,14 +12,15 @@ namespace Content.Shared.Lathe
     [NetworkedComponent()]
     public class SharedLatheComponent : Component
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
 
         public override string Name => "Lathe";
 
         public bool CanProduce(LatheRecipePrototype recipe, int quantity = 1)
         {
-            if (!Owner.TryGetComponent(out SharedMaterialStorageComponent? storage)
-            ||  !Owner.TryGetComponent(out SharedLatheDatabaseComponent? database)) return false;
+            if (!_entMan.TryGetComponent(Owner, out SharedMaterialStorageComponent? storage)
+            ||  !_entMan.TryGetComponent(Owner, out SharedLatheDatabaseComponent? database)) return false;
 
             if (!database.Contains(recipe)) return false;
 

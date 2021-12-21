@@ -36,7 +36,7 @@ namespace Content.Shared.Alert
             _alerts = state.Alerts;
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new AlertsComponentState(_alerts);
         }
@@ -181,7 +181,9 @@ namespace Content.Shared.Alert
     /// A message that calls the click interaction on a alert
     /// </summary>
     [Serializable, NetSerializable]
+#pragma warning disable 618
     public class ClickAlertMessage : ComponentMessage
+#pragma warning restore 618
     {
         public readonly AlertType Type;
 
