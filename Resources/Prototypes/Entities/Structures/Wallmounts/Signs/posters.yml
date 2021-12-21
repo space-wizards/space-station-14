@@ -346,15 +346,6 @@
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandLizard
-  name: "Lizard"
-  description: "This lewd poster depicts a lizard preparing to mate."
-  components:
-  - type: Sprite
-    state: poster34_contraband
-
-- type: entity
-  parent: PosterBase
   id: PosterContrabandFreeDrone
   name: "Free Drone"
   description: "This poster commemorates the bravery of the rogue drone; once exiled, and then ultimately destroyed by CentCom."
@@ -790,7 +781,7 @@
   parent: PosterBase
   id: PosterLegitNoERP
   name: "No ERP"
-  description: "This poster reminds the crew that Eroticism, Rape and Pornography are banned on Nanotrasen stations."
+  description: "This poster reminds the crew that Eroticism and Pornography are banned on Nanotrasen stations."
   components:
   - type: Sprite
     state: poster34_legit
