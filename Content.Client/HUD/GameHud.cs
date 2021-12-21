@@ -24,7 +24,6 @@ using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
-using Robust.Shared.Utility.Markup;
 using static Robust.Client.Input.Keyboard.Key;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 using Control = Robust.Client.UserInterface.Control;
@@ -728,7 +727,7 @@ namespace Content.Client.HUD
 
             private string? DefaultShortKeyName(BoundKeyFunction keyFunction)
             {
-                var name = Basic.EscapeText(_inputManager.GetKeyFunctionButtonString(keyFunction));
+                var name = FormattedMessage.EscapeText(_inputManager.GetKeyFunctionButtonString(keyFunction));
                 return name.Length > 3 ? null : name;
             }
 

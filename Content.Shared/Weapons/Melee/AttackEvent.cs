@@ -25,7 +25,7 @@ namespace Content.Shared.Weapons.Melee
         public EntityCoordinates ClickLocation { get; }
 
         /// <summary>
-        ///     UID of the entity that was attacked.
+        ///     The entity that was attacked.
         /// </summary>
         public EntityUid? Target { get; }
 

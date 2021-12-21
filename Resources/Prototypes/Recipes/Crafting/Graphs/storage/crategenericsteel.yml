@@ -10,7 +10,7 @@
               amount: 5
               doAfter: 5
 
-              
+
     - node: crategenericsteel
       entity: CrateGenericSteel
       edges:
@@ -25,4 +25,5 @@
             - !type:SpawnPrototype
               prototype: SheetSteel1
               amount: 5
-            - !type:DeleteEntity {}
+            - !type:EmptyAllContainers
+            - !type:DeleteEntity

@@ -129,7 +129,8 @@ namespace Content.Client.Instruments
             var renderer = instrument.Renderer;
 
             // We dispose of the synth two seconds from now to allow the last notes to stop from playing.
-            instrument.Owner.SpawnTimer(2000, () => { renderer?.Dispose(); });
+            // Don't use timers bound to the entity in case it is getting deleted.
+            Timer.Spawn(2000, () => { renderer?.Dispose(); });
             instrument.Renderer = null;
             instrument.MidiEventBuffer.Clear();
 

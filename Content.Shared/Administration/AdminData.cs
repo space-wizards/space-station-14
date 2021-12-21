@@ -33,14 +33,6 @@ namespace Content.Shared.Administration
         }
 
         /// <summary>
-        ///     Check if this admin can open the VV menu.
-        /// </summary>
-        public bool CanViewVar()
-        {
-            return HasFlag(AdminFlags.VarEdit);
-        }
-
-        /// <summary>
         ///     Check if this admin can spawn stuff in with the entity/tile spawn panel.
         /// </summary>
         public bool CanAdminPlace()
