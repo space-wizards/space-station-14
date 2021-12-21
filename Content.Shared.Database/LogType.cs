@@ -60,4 +60,5 @@ public enum LogType
     AtmosVolumeChanged = 56,
     AtmosFilterChanged = 57,
     AtmosRatioChanged = 58,
+    Emitter = 59,
 }
