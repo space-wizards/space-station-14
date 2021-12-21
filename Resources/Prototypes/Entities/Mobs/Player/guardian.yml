@@ -21,10 +21,15 @@
         Blunt: 5
     soundHit:
       path: /Audio/Effects/hit_kick.ogg
+  # TODO: Randomise sprites and randomise the layer color
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Aliens/Guardians/guardians.rsi
-    state: tech_basic
+    layers:
+    - state: tech_base
+    - state: tech_flare
+      color: "#40a7d7"
+      shader: unshaded
     noRot: true
   - type: Clickable
   - type: InteractionOutline

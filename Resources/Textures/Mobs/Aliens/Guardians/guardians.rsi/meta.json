@@ -16,10 +16,6 @@
       "directions": 4
     },
     {
-      "name": "magic_basic",
-      "directions": 4
-    },
-    {
       "name": "miner_flare",
       "directions": 4
     },
@@ -55,11 +51,6 @@
     },
     {
       "name": "tech_base",
-      "directions": 4
-      ]
-    },
-    {
-      "name": "tech_basic",
       "directions": 4
     }
   ]
