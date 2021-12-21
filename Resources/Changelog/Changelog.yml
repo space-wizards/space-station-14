@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Reduce potted plant bounding box, type: Tweak}
-  id: 252
-  time: '2021-07-04T12:35:09.0000000+00:00'
 - author: PJB3005
   changes:
   - {message: Rewrote most of the power system., type: Tweak}
@@ -2869,3 +2864,8 @@ Entries:
   - {message: cloner now tells you why it can't eject, type: Add}
   id: 753
   time: '2021-12-20T06:28:50.0000000+00:00'
+- author: Mirino97
+  changes:
+  - {message: Increased CharacterWindow size to accomodate objectives!, type: Fix}
+  id: 754
+  time: '2021-12-21T01:30:12.0000000+00:00'
