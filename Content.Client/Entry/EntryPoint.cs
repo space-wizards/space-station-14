@@ -84,6 +84,7 @@ namespace Content.Client.Entry
             factory.RegisterClass<SharedGravityGeneratorComponent>();
             factory.RegisterClass<SharedAMEControllerComponent>();
 
+            prototypes.RegisterIgnore("accent");
             prototypes.RegisterIgnore("material");
             prototypes.RegisterIgnore("reaction"); //Chemical reactions only needed by server. Reactions checks are server-side.
             prototypes.RegisterIgnore("gasReaction");
