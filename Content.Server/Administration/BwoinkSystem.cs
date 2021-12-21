@@ -28,6 +28,7 @@ namespace Content.Server.Administration
         [Dependency] private readonly IConfigurationManager _config = default!;
         [Dependency] private readonly IPlayerLocator _playerLocator = default!;
 
+        private ISawmill? _sawmill;
         private readonly HttpClient _httpClient = new();
         private string _webhookUrl = string.Empty;
         private string _serverName = string.Empty;
@@ -48,6 +49,7 @@ namespace Content.Server.Administration
         {
             base.Shutdown();
             _config.UnsubValueChanged(CCVars.DiscordAHelpWebhook, OnWebhookChanged);
+            _config.UnsubValueChanged(CVars.GameHostName, OnServerNameChanged);
         }
 
         private void OnWebhookChanged(string obj)
@@ -100,13 +102,13 @@ namespace Content.Server.Administration
             var sendsWebhook = _webhookUrl != string.Empty;
             if (sendsWebhook)
             {
-                var sawmill = IoCManager.Resolve<ILogManager>().GetSawmill("AHELP");
+                _sawmill ??= IoCManager.Resolve<ILogManager>().GetSawmill("AHELP");
 
-                void LookupFinished(Task<LocatedPlayerData?> finishedTask)
+                async void LookupFinished(Task<LocatedPlayerData?> finishedTask)
                 {
                     if (finishedTask.Result == null)
                     {
-                        sawmill.Log(LogLevel.Error, $"Unable to find player for netuserid {msg.ChannelId} when sending discord webhook.");
+                        _sawmill.Log(LogLevel.Error, $"Unable to find player for netuserid {msg.ChannelId} when sending discord webhook.");
                         return;
                     }
 
@@ -115,16 +117,13 @@ namespace Content.Server.Administration
                         Username = _serverName,
                         Content = $"`[{finishedTask.Result.Username}]` {senderSession.Name}: \"{escapedText}\""
                     };
-                    var request = _httpClient.PostAsync(_webhookUrl,
+                    var request = await _httpClient.PostAsync(_webhookUrl,
                         new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json"));
 
-                    request.ContinueWith(task =>
+                    if (!request.IsSuccessStatusCode)
                     {
-                        if (!task.Result.IsSuccessStatusCode)
-                        {
-                            sawmill.Log(LogLevel.Error, $"Discord returned bad status code: {task.Result.StatusCode}");
-                        }
-                    });
+                        _sawmill.Log(LogLevel.Error, $"Discord returned bad status code: {request.StatusCode}");
+                    }
                 }
 
                 _playerLocator.LookupIdAsync(msg.ChannelId).ContinueWith(LookupFinished);

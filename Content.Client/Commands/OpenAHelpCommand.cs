@@ -12,7 +12,7 @@ namespace Content.Client.Commands
     {
         public string Command => "openahelp";
         public string Description => $"Opens AHelp channel for a given NetUserID, or your personal channel if none given.";
-        public string Help => $"{Command} [<username>]";
+        public string Help => $"{Command} [<netuserid>]";
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
@@ -33,7 +33,7 @@ namespace Content.Client.Commands
                 }
                 else
                 {
-                    shell.WriteError("Bad guid!");
+                    shell.WriteLine("Bad GUID!");
                 }
             }
         }
