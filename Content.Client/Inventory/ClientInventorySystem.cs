@@ -183,8 +183,12 @@ namespace Content.Client.Inventory
             if (!hands.TryGetActiveHeldEntity(out var heldEntity))
                 return;
 
+            if(!TryGetSlotContainer(uid, slot, out var containerSlot, out var slotDef, inventoryComponent))
+                return;
+
             _itemSlotManager.HoverInSlot(button, heldEntity,
-                CanEquip(uid, heldEntity, slot, out _, inventory: inventoryComponent));
+                CanEquip(uid, heldEntity, slot, out _, slotDef, inventoryComponent) &&
+                containerSlot.CanInsert(heldEntity, EntityManager));
         }
 
         private void HandleSlotButtonPressed(EntityUid uid, string slot, ItemSlotButton button,
@@ -220,7 +224,7 @@ namespace Content.Client.Inventory
 
             if (!_uiGenerateDelegates.TryGetValue(component.TemplateId, out var genfunc))
             {
-                genfunc = (entityUid, list) =>
+                _uiGenerateDelegates[component.TemplateId] = genfunc = (entityUid, list) =>
                 {
                     var window = new SS14Window()
                     {
