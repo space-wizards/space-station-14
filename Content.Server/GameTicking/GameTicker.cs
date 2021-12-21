@@ -5,23 +5,22 @@ using Content.Server.Ghost;
 using Content.Server.Maps;
 using Content.Server.PDA;
 using Content.Server.Preferences.Managers;
-using Content.Server.Roles;
 using Content.Server.Station;
 using Content.Shared.Chat;
 using Content.Shared.Damage;
 using Content.Shared.GameTicking;
-using Content.Shared.GameWindow;
 using Robust.Server;
 using Robust.Server.Maps;
 using Robust.Server.ServerStatus;
 using Robust.Shared.Configuration;
-using Robust.Shared.GameObjects;
+#if EXCEPTION_TOLERANCE
+using Robust.Shared.Exceptions;
+#endif
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Reflection;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -92,6 +91,9 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly IWatchdogApi _watchdogApi = default!;
         [Dependency] private readonly IGameMapManager _gameMapManager = default!;
         [Dependency] private readonly IPauseManager _pauseManager = default!;
+#if EXCEPTION_TOLERANCE
+        [Dependency] private readonly IRuntimeLog _runtimeLog = default!;
+#endif
         [Dependency] private readonly StationSystem _stationSystem = default!;
         [Dependency] private readonly AdminLogSystem _adminLogSystem = default!;
         [Dependency] private readonly HumanoidAppearanceSystem _humanoidAppearanceSystem = default!;

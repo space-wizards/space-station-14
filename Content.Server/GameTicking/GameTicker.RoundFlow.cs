@@ -101,157 +101,174 @@ namespace Content.Server.GameTicking
 
         public async void StartRound(bool force = false)
         {
-            // If this game ticker is a dummy, do nothing!
-            if (DummyTicker)
-                return;
-
-            DebugTools.Assert(RunLevel == GameRunLevel.PreRoundLobby);
-            Logger.InfoS("ticker", "Starting round!");
-
-            SendServerMessage(Loc.GetString("game-ticker-start-round"));
-
-            AddGamePresetRules();
-
-            List<IPlayerSession> readyPlayers;
-            if (LobbyEnabled)
+#if EXCEPTION_TOLERANCE
+            try
             {
-                readyPlayers = _playersInLobby.Where(p => p.Value == LobbyPlayerStatus.Ready).Select(p => p.Key).ToList();
-            }
-            else
-            {
-                readyPlayers = _playersInLobby.Keys.ToList();
-            }
+#endif
+                // If this game ticker is a dummy, do nothing!
+                if (DummyTicker)
+                    return;
 
-            RoundLengthMetric.Set(0);
+                DebugTools.Assert(RunLevel == GameRunLevel.PreRoundLobby);
+                Logger.InfoS("ticker", "Starting round!");
 
-            var playerIds = _playersInLobby.Keys.Select(player => player.UserId.UserId).ToArray();
-            RoundId = await _db.AddNewRound(playerIds);
+                SendServerMessage(Loc.GetString("game-ticker-start-round"));
 
-            var startingEvent = new RoundStartingEvent();
-            RaiseLocalEvent(startingEvent);
+                AddGamePresetRules();
 
-            // Get the profiles for each player for easier lookup.
-            var profiles = _prefsManager.GetSelectedProfilesForPlayers(
-                readyPlayers
-                    .Select(p => p.UserId).ToList())
-                    .ToDictionary(p => p.Key, p => (HumanoidCharacterProfile) p.Value);
-
-            foreach (var readyPlayer in readyPlayers)
-            {
-                if (!profiles.ContainsKey(readyPlayer.UserId))
+                List<IPlayerSession> readyPlayers;
+                if (LobbyEnabled)
                 {
-                    profiles.Add(readyPlayer.UserId, HumanoidCharacterProfile.Random());
-                }
-            }
-
-            var origReadyPlayers = readyPlayers.ToArray();
-
-            var startAttempt = new RoundStartAttemptEvent(origReadyPlayers, force);
-            RaiseLocalEvent(startAttempt);
-
-            var presetTitle = _preset != null ? Loc.GetString(_preset.ModeTitle) : string.Empty;
-
-            void FailedPresetRestart()
-            {
-                SendServerMessage(Loc.GetString("game-ticker-start-round-cannot-start-game-mode-restart", ("failedGameMode", presetTitle)));
-                RestartRound();
-                DelayStart(TimeSpan.FromSeconds(PresetFailedCooldownIncrease));
-            }
-
-            if (startAttempt.Cancelled)
-            {
-                if (_configurationManager.GetCVar(CCVars.GameLobbyFallbackEnabled))
-                {
-                    var oldPreset = _preset;
-                    ClearGameRules();
-                    SetGamePreset(_configurationManager.GetCVar(CCVars.GameLobbyFallbackPreset));
-                    AddGamePresetRules();
-
-                    startAttempt.Uncancel();
-                    RaiseLocalEvent(startAttempt);
-
-                    _chatManager.DispatchServerAnnouncement(
-                        Loc.GetString("game-ticker-start-round-cannot-start-game-mode-fallback",
-                            ("failedGameMode", presetTitle),
-                            ("fallbackMode", Loc.GetString(_preset!.ModeTitle))));
-
-                    if (startAttempt.Cancelled)
-                    {
-                        FailedPresetRestart();
-                    }
-
-                    RefreshLateJoinAllowed();
+                    readyPlayers = _playersInLobby.Where(p => p.Value == LobbyPlayerStatus.Ready).Select(p => p.Key)
+                        .ToList();
                 }
                 else
                 {
-                    FailedPresetRestart();
-                    return;
-                }
-            }
-
-            // Allow game rules to spawn players by themselves if needed. (For example, nuke ops or wizard)
-            RaiseLocalEvent(new RulePlayerSpawningEvent(readyPlayers, profiles, force));
-
-            var assignedJobs = AssignJobs(readyPlayers, profiles);
-
-            // For players without jobs, give them the overflow job if they have that set...
-            foreach (var player in origReadyPlayers)
-            {
-                if (assignedJobs.ContainsKey(player))
-                {
-                    continue;
+                    readyPlayers = _playersInLobby.Keys.ToList();
                 }
 
-                var profile = profiles[player.UserId];
-                if (profile.PreferenceUnavailable == PreferenceUnavailableMode.SpawnAsOverflow)
-                {
-                    // Pick a random station
-                    var stations = _stationSystem.StationInfo.Keys.ToList();
-                    _robustRandom.Shuffle(stations);
+                RoundLengthMetric.Set(0);
 
-                    if (stations.Count == 0)
+                var playerIds = _playersInLobby.Keys.Select(player => player.UserId.UserId).ToArray();
+                RoundId = await _db.AddNewRound(playerIds);
+
+                var startingEvent = new RoundStartingEvent();
+                RaiseLocalEvent(startingEvent);
+
+                // Get the profiles for each player for easier lookup.
+                var profiles = _prefsManager.GetSelectedProfilesForPlayers(
+                        readyPlayers
+                            .Select(p => p.UserId).ToList())
+                    .ToDictionary(p => p.Key, p => (HumanoidCharacterProfile) p.Value);
+
+                foreach (var readyPlayer in readyPlayers)
+                {
+                    if (!profiles.ContainsKey(readyPlayer.UserId))
                     {
-                        assignedJobs.Add(player, (FallbackOverflowJob, StationId.Invalid));
+                        profiles.Add(readyPlayer.UserId, HumanoidCharacterProfile.Random());
+                    }
+                }
+
+                var origReadyPlayers = readyPlayers.ToArray();
+
+                var startAttempt = new RoundStartAttemptEvent(origReadyPlayers, force);
+                RaiseLocalEvent(startAttempt);
+
+                var presetTitle = _preset != null ? Loc.GetString(_preset.ModeTitle) : string.Empty;
+
+                void FailedPresetRestart()
+                {
+                    SendServerMessage(Loc.GetString("game-ticker-start-round-cannot-start-game-mode-restart",
+                        ("failedGameMode", presetTitle)));
+                    RestartRound();
+                    DelayStart(TimeSpan.FromSeconds(PresetFailedCooldownIncrease));
+                }
+
+                if (startAttempt.Cancelled)
+                {
+                    if (_configurationManager.GetCVar(CCVars.GameLobbyFallbackEnabled))
+                    {
+                        var oldPreset = _preset;
+                        ClearGameRules();
+                        SetGamePreset(_configurationManager.GetCVar(CCVars.GameLobbyFallbackPreset));
+                        AddGamePresetRules();
+
+                        startAttempt.Uncancel();
+                        RaiseLocalEvent(startAttempt);
+
+                        _chatManager.DispatchServerAnnouncement(
+                            Loc.GetString("game-ticker-start-round-cannot-start-game-mode-fallback",
+                                ("failedGameMode", presetTitle),
+                                ("fallbackMode", Loc.GetString(_preset!.ModeTitle))));
+
+                        if (startAttempt.Cancelled)
+                        {
+                            FailedPresetRestart();
+                        }
+
+                        RefreshLateJoinAllowed();
+                    }
+                    else
+                    {
+                        FailedPresetRestart();
+                        return;
+                    }
+                }
+
+                // Allow game rules to spawn players by themselves if needed. (For example, nuke ops or wizard)
+                RaiseLocalEvent(new RulePlayerSpawningEvent(readyPlayers, profiles, force));
+
+                var assignedJobs = AssignJobs(readyPlayers, profiles);
+
+                // For players without jobs, give them the overflow job if they have that set...
+                foreach (var player in origReadyPlayers)
+                {
+                    if (assignedJobs.ContainsKey(player))
+                    {
                         continue;
                     }
 
-                    foreach (var station in stations)
+                    var profile = profiles[player.UserId];
+                    if (profile.PreferenceUnavailable == PreferenceUnavailableMode.SpawnAsOverflow)
                     {
-                        // Pick a random overflow job from that station
-                        var overflows = _stationSystem.StationInfo[station].MapPrototype.OverflowJobs.Clone();
-                        _robustRandom.Shuffle(overflows);
+                        // Pick a random station
+                        var stations = _stationSystem.StationInfo.Keys.ToList();
+                        _robustRandom.Shuffle(stations);
 
-                        // Stations with no overflow slots should simply get skipped over.
-                        if (overflows.Count == 0)
+                        if (stations.Count == 0)
+                        {
+                            assignedJobs.Add(player, (FallbackOverflowJob, StationId.Invalid));
                             continue;
+                        }
 
-                        // If the overflow exists, put them in as it.
-                        assignedJobs.Add(player, (overflows[0], stations[0]));
+                        foreach (var station in stations)
+                        {
+                            // Pick a random overflow job from that station
+                            var overflows = _stationSystem.StationInfo[station].MapPrototype.OverflowJobs.Clone();
+                            _robustRandom.Shuffle(overflows);
+
+                            // Stations with no overflow slots should simply get skipped over.
+                            if (overflows.Count == 0)
+                                continue;
+
+                            // If the overflow exists, put them in as it.
+                            assignedJobs.Add(player, (overflows[0], stations[0]));
+                        }
                     }
                 }
-            }
 
-            // Spawn everybody in!
-            foreach (var (player, (job, station)) in assignedJobs)
+                // Spawn everybody in!
+                foreach (var (player, (job, station)) in assignedJobs)
+                {
+                    SpawnPlayer(player, profiles[player.UserId], station, job, false);
+                }
+
+                RefreshLateJoinAllowed();
+
+                // Allow rules to add roles to players who have been spawned in. (For example, on-station traitors)
+                RaiseLocalEvent(new RulePlayerJobsAssignedEvent(assignedJobs.Keys.ToArray(), profiles, force));
+
+                _pauseManager.DoMapInitialize(DefaultMap);
+
+                _roundStartDateTime = DateTime.UtcNow;
+                RunLevel = GameRunLevel.InRound;
+
+                _roundStartTimeSpan = _gameTiming.RealTime;
+                SendStatusToAll();
+                ReqWindowAttentionAll();
+                UpdateLateJoinStatus();
+                UpdateJobsAvailable();
+
+#if EXCEPTION_TOLERANCE
+            }
+            catch(Exception e)
             {
-                SpawnPlayer(player, profiles[player.UserId], station, job, false);
+
+                Logger.WarningS("ticker", $"Exception caught while trying to start the round! Restarting...");
+                _runtimeLog.LogException(e, nameof(GameTicker));
+                RestartRound();
             }
-
-            RefreshLateJoinAllowed();
-
-            // Allow rules to add roles to players who have been spawned in. (For example, on-station traitors)
-            RaiseLocalEvent(new RulePlayerJobsAssignedEvent(assignedJobs.Keys.ToArray(), profiles, force));
-
-            _pauseManager.DoMapInitialize(DefaultMap);
-
-            _roundStartDateTime = DateTime.UtcNow;
-            RunLevel = GameRunLevel.InRound;
-
-            _roundStartTimeSpan = _gameTiming.RealTime;
-            SendStatusToAll();
-            ReqWindowAttentionAll();
-            UpdateLateJoinStatus();
-            UpdateJobsAvailable();
+#endif
         }
 
         private void RefreshLateJoinAllowed()
