@@ -1,0 +1,15 @@
+#Misc outfit startingGear definitions.
+- type: startingGear
+  id: IHSGear
+  equipment:
+    innerclothing: ClothingUniformJumpsuitColorBlack
+    backpack: ClothingBackpackFilled
+    head: ClothingHeadHelmetIHSVoidHelm
+    gloves: ClothingHandsGlovesIhscombat
+    outerclothing: IHSVoidsuit
+    shoes: ClothingShoesBootsJack
+    idcard: AssistantPDA
+    ears: ClothingHeadsetService
+  innerclothingskirt: ClothingUniformJumpskirtColorBlack
+  satchel: ClothingBackpackSatchelFilled
+  duffelbag: ClothingBackpackDuffelFilled
