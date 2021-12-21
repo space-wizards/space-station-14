@@ -2798,9 +2798,9 @@ Entries:
   time: '2021-12-15T10:07:58.0000000+00:00'
 - author: buletsponge
   changes:
-  - {message: Added DrozdRiot, type: Add}
+  - {message: Added DrozdRiot., type: Add}
   - {message: Changed packedstation armory to spawn with non-lethal magazines and
-      SMGs, type: Tweak}
+      SMGs., type: Tweak}
   id: 744
   time: '2021-12-16T12:00:09.0000000+00:00'
 - author: Zumorica
@@ -2832,7 +2832,7 @@ Entries:
   time: '2021-12-19T06:52:14.0000000+00:00'
 - author: Fishfish458
   changes:
-  - {message: Mobs in crit state now gasp, type: Add}
+  - {message: Mobs in crit state now gasp., type: Add}
   - {message: Examined humans will now tell if they are dead or not regardless if
       the body is still being occupied by a ghost., type: Add}
   id: 750
@@ -2844,12 +2844,12 @@ Entries:
   time: '2021-12-19T23:27:07.0000000+00:00'
 - author: metalgearsloth
   changes:
-  - {message: Added kangaroos, type: Add}
+  - {message: Added kangaroos., type: Add}
   id: 752
   time: '2021-12-20T06:16:25.0000000+00:00'
 - author: wrexbe
   changes:
-  - {message: cloner now tells you why it can't eject, type: Add}
+  - {message: Cloner now tells you why it can't eject., type: Add}
   id: 753
   time: '2021-12-20T06:28:50.0000000+00:00'
 - author: Mirino97
@@ -2859,6 +2859,6 @@ Entries:
   time: '2021-12-21T01:30:12.0000000+00:00'
 - author: ZorenZal
   changes:
-  - {message: Checkbox in control tab, type: Add}
+  - {message: Add checkbox in controls for US QWERTY keys., type: Add}
   id: 755
   time: '2021-12-21T09:35:34.0000000+00:00'
