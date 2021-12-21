@@ -88,14 +88,15 @@ namespace Content.Server.Power.EntitySystems
 
         private IEnumerable<ExtensionCableReceiverComponent> FindAvailableReceivers(EntityUid owner, float range)
         {
-            var nearbyEntities = _lookup.GetEntitiesInRange(owner, range);
-
             var xform = Transform(owner);
             var coordinates = xform.Coordinates;
 
+            var nearbyEntities = _lookup.GetEntitiesInRange(coordinates, range);
+
             foreach (var entity in nearbyEntities)
             {
-                if (EntityManager.TryGetComponent<ExtensionCableReceiverComponent>(entity, out var receiver) &&
+                if (entity != owner &&
+                    EntityManager.TryGetComponent<ExtensionCableReceiverComponent>(entity, out var receiver) &&
                     receiver.Connectable &&
                     receiver.Provider == null &&
                     Transform(entity).Coordinates.TryDistance(EntityManager, coordinates, out var distance) &&
