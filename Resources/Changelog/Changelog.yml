@@ -1,16 +1,4 @@
 Entries:
-- author: PJB3005
-  changes:
-  - {message: Rewrote most of the power system., type: Tweak}
-  - {message: 'All power supplying objects now have a built-in ramping system. If
-      a large amount of extra power is suddenly needed, engines and batteries on the
-      grid need a bit of time to "ramp up" to match.', type: Add}
-  - {message: 'Power is passed through batteries immediately. This means that APCs
-      are basically on standby until engine power or such cuts out. When the engine
-      cuts out, heavy electrical grids will be underpowered for a second or two until
-      backup batteries can spin up to fill the gap.', type: Add}
-  id: 253
-  time: '2021-07-04T16:11:52.0000000+00:00'
 - author: Swept
   changes:
   - {message: Changed chatbox UI to be more consistent with SS14's UI, type: Tweak}
@@ -2869,3 +2857,8 @@ Entries:
   - {message: Increased CharacterWindow size to accomodate objectives!, type: Fix}
   id: 754
   time: '2021-12-21T01:30:12.0000000+00:00'
+- author: ZorenZal
+  changes:
+  - {message: Checkbox in control tab, type: Add}
+  id: 755
+  time: '2021-12-21T09:35:34.0000000+00:00'
