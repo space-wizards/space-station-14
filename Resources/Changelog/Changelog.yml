@@ -1,9 +1,4 @@
 Entries:
-- author: Swept
-  changes:
-  - {message: AME jars and parts now show inhand sprites, type: Fix}
-  id: 256
-  time: '2021-07-15T07:45:11.671231+00:00'
 - author: Zumorica
   changes:
   - {message: Fix bug where constructing walls and windows would place them in the
@@ -2863,3 +2858,8 @@ Entries:
   - {message: The cigarette vendors are now full of lighters. Go nuts., type: Add}
   id: 757
   time: '2021-12-21T17:20:32.0000000+00:00'
+- author: Pancake
+  changes:
+  - {message: Added accents for overly talkative animals., type: Add}
+  id: 758
+  time: '2021-12-21T20:31:20.0000000+00:00'
