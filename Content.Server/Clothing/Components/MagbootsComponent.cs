@@ -38,7 +38,12 @@ namespace Content.Server.Clothing.Components
             {
                 _on = value;
 
-                UpdateContainer();
+                if (Owner.TryGetContainer(out var container) && EntitySystem.Get<InventorySystem>()
+                        .TryGetSlotEntity(container.Owner, "shoes", out var entityUid) && entityUid == Owner)
+                {
+                    EntitySystem.Get<MagbootsSystem>().UpdateMagbootEffects(container.Owner, Owner, true, this);
+                }
+
                 _itemActions?.Toggle(ItemActionType.ToggleMagboots, On);
                 if (_item != null)
                     _item.EquippedPrefix = On ? "on" : null;
@@ -51,34 +56,6 @@ namespace Content.Server.Clothing.Components
         public void Toggle(EntityUid user)
         {
             On = !On;
-        }
-
-        public void UpdateContainer()
-        {
-            if (!Owner.TryGetContainer(out var container))
-                return;
-
-            var invSystem = EntitySystem.Get<InventorySystem>();
-
-            if (invSystem.TryGetSlotEntity(container.Owner, "shoes", out var entityUid) && _entMan.GetComponent<TransformComponent>(entityUid.Value).ParentUid == Owner)
-            {
-                if (_entMan.TryGetComponent(container.Owner, out MovedByPressureComponent? movedByPressure))
-                {
-                    movedByPressure.Enabled = false;
-                }
-
-                if (_entMan.TryGetComponent(container.Owner, out ServerAlertsComponent? alerts))
-                {
-                    if (On)
-                    {
-                        alerts.ShowAlert(AlertType.Magboots);
-                    }
-                    else
-                    {
-                        alerts.ClearAlert(AlertType.Magboots);
-                    }
-                }
-            }
         }
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)

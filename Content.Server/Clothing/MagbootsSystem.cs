@@ -24,25 +24,44 @@ namespace Content.Server.Clothing
             SubscribeLocalEvent<MagbootsComponent, GotUnequippedEvent>(OnGotUnequipped);
         }
 
-        private void OnGotUnequipped(EntityUid uid, MagbootsComponent component, GotUnequippedEvent args)
+        public void UpdateMagbootEffects(EntityUid parent, EntityUid uid, bool state, MagbootsComponent? component)
         {
-            if (component.On && args.Slot == "shoes")
-            {
-                if (TryComp(args.Equipee, out MovedByPressureComponent? movedByPressure))
-                {
-                    movedByPressure.Enabled = true;
-                }
+            if (!Resolve(uid, ref component))
+                return;
+            state = state && component.On;
 
-                if (TryComp(args.Equipee, out ServerAlertsComponent? alerts))
+            if (TryComp(parent, out MovedByPressureComponent? movedByPressure))
+            {
+                movedByPressure.Enabled = state;
+            }
+
+            if (TryComp(parent, out ServerAlertsComponent? alerts))
+            {
+                if (state)
+                {
+                    alerts.ShowAlert(AlertType.Magboots);
+                }
+                else
                 {
                     alerts.ClearAlert(AlertType.Magboots);
                 }
             }
         }
 
+        private void OnGotUnequipped(EntityUid uid, MagbootsComponent component, GotUnequippedEvent args)
+        {
+            if (args.Slot == "shoes")
+            {
+                UpdateMagbootEffects(args.Equipee, uid, true, component);
+            }
+        }
+
         private void OnGotEquipped(EntityUid uid, MagbootsComponent component, GotEquippedEvent args)
         {
-            component.UpdateContainer();
+            if (args.Slot == "shoes")
+            {
+                UpdateMagbootEffects(args.Equipee, uid, false, component);
+            }
         }
 
         private void OnRefreshMovespeed(EntityUid uid, MagbootsComponent component, RefreshMovementSpeedModifiersEvent args)
