@@ -154,17 +154,23 @@ namespace Content.Server.Guardian
 
         private void OnCreatorInject(GuardianCreatorInjectedEvent ev)
         {
-            if (ev.Component.Deleted ||
-                ev.Component.Used ||
+            var comp = ev.Component;
+
+            if (comp.Deleted ||
+                comp.Used ||
                 !TryComp<HandsComponent>(ev.User, out var hands) ||
-                !hands.IsHolding(ev.Component.Owner) ||
+                !hands.IsHolding(comp.Owner) ||
                 HasComp<GuardianHostComponent>(ev.Target) ||
-                !TryComp<SharedActionsComponent>(ev.Target, out var actions)) return;
+                !TryComp<SharedActionsComponent>(ev.Target, out var actions))
+            {
+                comp.Injecting = false;
+                return;
+            }
 
             var hostXform = EntityManager.GetComponent<TransformComponent>(ev.Target);
             var host = EntityManager.EnsureComponent<GuardianHostComponent>(ev.Target);
             // Use map position so it's not inadvertantly parented to the host + if it's in a container it spawns outside I guess.
-            var guardian = EntityManager.SpawnEntity(ev.Component.GuardianProto, hostXform.MapPosition);
+            var guardian = EntityManager.SpawnEntity(comp.GuardianProto, hostXform.MapPosition);
 
             host.GuardianContainer.Insert(guardian);
             host.HostedGuardian = guardian;
@@ -179,7 +185,7 @@ namespace Content.Server.Guardian
 
                 _popupSystem.PopupEntity(Loc.GetString("guardian-created"), ev.Target, Filter.Entities(ev.Target));
                 // Exhaust the activator
-                ev.Component.Used = true;
+                comp.Used = true;
             }
             else
             {

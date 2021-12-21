@@ -8,6 +8,7 @@ guardian-no-actions-invalid-creation = You don't have the ability to host a guar
 guardian-activator-empty-invalid-creation = The injector is spent.
 guardian-activator-empty-examine = [color=#ba1919]The injector is spent.[/color]
 guardian-no-soul = Your guardian has no soul.
+guardian-available = Your guardian now has a soul.
 
 ## Guardian entity specific
 
