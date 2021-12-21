@@ -22,7 +22,7 @@ namespace Content.Client.Items.UI
 
         [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
 
-        public EntityUid Entity { get; set; }
+        public EntityUid? Entity { get; set; }
         public TextureRect Button { get; }
         public SpriteView SpriteView { get; }
         public SpriteView HoverSpriteView { get; }

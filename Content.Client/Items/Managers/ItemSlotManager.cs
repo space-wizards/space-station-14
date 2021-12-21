@@ -141,9 +141,10 @@ namespace Content.Client.Items.Managers
             button.HoverSpriteView.Sprite = hoverSprite;
         }
 
-        public bool IsHighlighted(EntityUid uid)
+        public bool IsHighlighted(EntityUid? uid)
         {
-            return _highlightEntities.Contains(uid);
+            if (uid == null) return false;
+            return _highlightEntities.Contains(uid.Value);
         }
 
         public void HighlightEntity(EntityUid uid)
