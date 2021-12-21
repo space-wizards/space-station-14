@@ -316,8 +316,7 @@ namespace Content.Shared.MobState.Components
 
             state.EnterState(Owner, entMan);
             state.UpdateState(Owner, threshold, entMan);
-
-            var stateChangeEvent = new MobStateChangedEvent(this, old, state);
+            
             var message = new MobStateChangedEvent(this, old, state);
             entMan.EventBus.RaiseLocalEvent(Owner, message);
             Dirty();
