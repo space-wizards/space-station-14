@@ -550,3 +550,30 @@
     size: 12
     sprite: Objects/Fun/toys.rsi
     HeldPrefix: singularitytoy
+
+- type: entity
+  parent: BaseItem
+  id: PonderingOrb
+  name: pondering orb
+  description: Ponderous, man... Really ponderous.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/toys.rsi
+    state: orb
+    shader: unshaded
+  - type: PointLight
+    radius: 2
+    color: "#00CCFF"
+#  - type: LightBehaviour
+#    behaviours:
+#      - !type:FadeBehaviour
+#        interpolate: Linear
+#        maxDuration: 1.0 #duration of light
+#        startValue: 1.5
+#        endValue: 10.0
+#        property: Radius
+#        isLooped: true
+  #- type: Item
+  #  size: 24
+  #  sprite: Objects/Fun/toys.rsi
+  #  HeldPrefix: orb
