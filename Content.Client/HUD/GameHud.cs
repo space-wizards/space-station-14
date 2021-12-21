@@ -15,6 +15,7 @@ using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
@@ -620,16 +621,23 @@ namespace Content.Client.HUD
             {
                 _inputManager.OnKeyBindingAdded += OnKeyBindingChanged;
                 _inputManager.OnKeyBindingRemoved += OnKeyBindingChanged;
+                _inputManager.OnInputModeChanged += OnKeyBindingChanged;
             }
 
             protected override void ExitedTree()
             {
                 _inputManager.OnKeyBindingAdded -= OnKeyBindingChanged;
                 _inputManager.OnKeyBindingRemoved -= OnKeyBindingChanged;
+                _inputManager.OnInputModeChanged -= OnKeyBindingChanged;
             }
 
 
             private void OnKeyBindingChanged(IKeyBinding obj)
+            {
+                _label.Text = ShortKeyName(_function);
+            }
+
+            private void OnKeyBindingChanged()
             {
                 _label.Text = ShortKeyName(_function);
             }
