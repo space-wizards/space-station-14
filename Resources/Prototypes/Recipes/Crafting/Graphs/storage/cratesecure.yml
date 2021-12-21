@@ -1,5 +1,5 @@
 - type: constructionGraph
-  id: CrateSecure 
+  id: CrateSecure
   start: start
   graph:
     - node: start
@@ -10,7 +10,7 @@
               amount: 5
               doAfter: 5
 
-              
+
     - node: cratesecure
       entity: CrateSecure
       edges:
@@ -22,9 +22,10 @@
             - !type:StorageWelded
               welded: false
             - !type:Locked
-              locked: false              
+              locked: false
           completed:
             - !type:SpawnPrototype
               prototype: SheetSteel1
               amount: 5
-            - !type:DeleteEntity {}
+            - !type:EmptyAllContainers
+            - !type:DeleteEntity

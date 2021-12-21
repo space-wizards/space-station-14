@@ -38,6 +38,10 @@ namespace Content.Server.Database
             {
                 x.Ignore(CoreEventId.ManyServiceProvidersCreatedWarning);
             });
+
+#if DEBUG
+            options.EnableSensitiveDataLogging();
+#endif
         }
 
         public PostgresServerDbContext(DbContextOptions<ServerDbContext> options) : base(options)

@@ -13,7 +13,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Players;
 using Robust.Shared.Utility;
-using Robust.Shared.Utility.Markup;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Suspicion
@@ -126,7 +125,7 @@ namespace Content.Server.Suspicion
             Dirty();
         }
 
-        void IExamine.Examine(FormattedMessage.Builder message, bool inDetailsRange)
+        void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
             if (!IsDead())
             {

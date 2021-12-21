@@ -5,18 +5,17 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Utility;
-using Robust.Shared.Utility.Markup;
 
 namespace Content.Server.Examine
 {
     [UsedImplicitly]
     public class ExamineSystem : ExamineSystemShared
     {
-        private static readonly FormattedMessage.Builder _entityNotFoundMessage;
+        private static readonly FormattedMessage _entityNotFoundMessage;
 
         static ExamineSystem()
         {
-            _entityNotFoundMessage = new FormattedMessage.Builder();
+            _entityNotFoundMessage = new FormattedMessage();
             _entityNotFoundMessage.AddText(Loc.GetString("examine-system-entity-does-not-exist"));
         }
 
@@ -40,7 +39,7 @@ namespace Content.Server.Examine
                 || !CanExamine(playerEnt, request.EntityUid))
             {
                 RaiseNetworkEvent(new ExamineSystemMessages.ExamineInfoResponseMessage(
-                    request.EntityUid, _entityNotFoundMessage.Build()), channel);
+                    request.EntityUid, _entityNotFoundMessage), channel);
                 return;
             }
 
