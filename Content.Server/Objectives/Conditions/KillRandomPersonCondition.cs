@@ -28,10 +28,6 @@ namespace Content.Server.Objectives.Conditions
                        mobState.IsAlive() &&
                        mc.Mind != mind;
             }).Select(mc => mc.Mind).ToList();
-
-            if (allHumans.Count == 0)
-                return new DieCondition(); // I guess I'll die
-
             return new KillRandomPersonCondition {Target = IoCManager.Resolve<IRobustRandom>().Pick(allHumans)};
         }
     }

@@ -1,6 +1,5 @@
 ﻿using System;
 using Content.Server.Administration;
-using Content.Server.GameTicking.Presets;
 using Content.Shared;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
@@ -19,14 +18,14 @@ namespace Content.Server.GameTicking.Commands
         public string Help => $"Usage: {Command} / {Command} <preset>";
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            GamePresetPrototype? preset = null;
+            Type? preset = null;
             var presetName = string.Join(" ", args);
 
             var ticker = EntitySystem.Get<GameTicker>();
 
             if (args.Length > 0)
             {
-                if (!ticker.TryFindGamePreset(presetName, out preset))
+                if (!ticker.TryGetPreset(presetName, out preset))
                 {
                     shell.WriteLine($"No preset found with name {presetName}");
                     return;
@@ -40,7 +39,7 @@ namespace Content.Server.GameTicking.Commands
 
             if (preset != null)
             {
-                ticker.SetGamePreset(preset);
+                ticker.SetStartPreset(preset);
             }
 
             shell.WriteLine($"Enabling the lobby and restarting the round.{(preset == null ? "" : $"\nPreset set to {presetName}")}");

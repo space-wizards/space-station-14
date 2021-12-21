@@ -25,7 +25,6 @@ traitor-objective-condition-success = {$condition} | [color={$markupColor}]Succe
 traitor-objective-condition-fail = {$condition} | [color={$markupColor}]Failure![/color] ({$progress}%)
 
 traitor-title = Traitor
-traitor-description = There are traitors among us...
 traitor-not-enough-ready-players = Not enough players readied up for the game! There were {$readyPlayersCount} players readied up out of {$minimumPlayers} needed.
 traitor-no-one-ready = No players readied up! Can't start Traitor.
 

@@ -23,7 +23,7 @@ namespace Content.Server.GameTicking.Commands
 
             var ticker = EntitySystem.Get<GameTicker>();
 
-            ticker.SetGamePreset(args[0]);
+            ticker.SetStartPreset(args[0]);
         }
     }
 }
