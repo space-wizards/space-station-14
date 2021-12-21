@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Server.GameTicking.Rules;
 using Content.Server.Mind.Components;
 using Content.Server.Roles;
-using Content.Server.Suspicion.EntitySystems;
 using Content.Server.Suspicion.Roles;
 using Content.Shared.Examine;
 using Content.Shared.MobState.Components;
@@ -11,7 +11,6 @@ using Content.Shared.Suspicion;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Players;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -43,17 +42,17 @@ namespace Content.Server.Suspicion
 
                 Dirty();
 
-                var suspicionRoleSystem = EntitySystem.Get<SuspicionRoleSystem>();
+                var sus = EntitySystem.Get<SuspicionRuleSystem>();
 
                 if (value == null || !value.Antagonist)
                 {
                     ClearAllies();
-                    suspicionRoleSystem.RemoveTraitor(this);
+                    sus.RemoveTraitor(this);
                 }
                 else if (value.Antagonist)
                 {
-                    SetAllies(suspicionRoleSystem.Traitors);
-                    suspicionRoleSystem.AddTraitor(this);
+                    SetAllies(sus.Traitors);
+                    sus.AddTraitor(this);
                 }
             }
         }
