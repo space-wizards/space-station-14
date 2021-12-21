@@ -1,6 +1,7 @@
 - type: job
   id: CentralCommandOffical
   name: "centcom official"
+  setPreference: false
   startingGear: CentcomGear
   departments:
     - Command
