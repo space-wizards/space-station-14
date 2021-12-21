@@ -303,6 +303,7 @@
   components:
     - type: Hands
     - type: Inventory
+    - type: ContainerContainer
     - type: Icon
       sprite: Mobs/Species/Human/parts.rsi
       state: full
