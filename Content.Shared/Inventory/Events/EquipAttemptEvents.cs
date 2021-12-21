@@ -1,13 +1,19 @@
-﻿using Robust.Shared.GameObjects;
+﻿using JetBrains.Annotations;
+using Robust.Shared.GameObjects;
 
 namespace Content.Shared.Inventory.Events;
 
 public abstract class EquipAttemptBase : CancellableEntityEventArgs
 {
     /// <summary>
-    /// The entity equipping.
+    /// The entity unequipping.
     /// </summary>
     public readonly EntityUid Equipee;
+
+    /// <summary>
+    /// The entity being unequipped from.
+    /// </summary>
+    public readonly EntityUid EquipTarget;
 
     /// <summary>
     /// The entity to be equipped.
@@ -29,10 +35,11 @@ public abstract class EquipAttemptBase : CancellableEntityEventArgs
     /// </summary>
     public string? Reason;
 
-    public EquipAttemptBase(EntityUid equipee, EntityUid equipment, SlotDefinition slotDefinition)
+    public EquipAttemptBase(EntityUid equipTarget, EntityUid equipment, SlotDefinition slotDefinition, EntityUid equipee)
     {
-        Equipee = equipee;
+        EquipTarget = equipTarget;
         Equipment = equipment;
+        Equipee = equipee;
         SlotFlags = slotDefinition.SlotFlags;
         Slot = slotDefinition.Name;
     }
@@ -40,14 +47,14 @@ public abstract class EquipAttemptBase : CancellableEntityEventArgs
 
 public class BeingEquippedAttemptEvent : EquipAttemptBase
 {
-    public BeingEquippedAttemptEvent(EntityUid equipee, EntityUid equipment, SlotDefinition slotDefinition) : base(equipee, equipment, slotDefinition)
+    public BeingEquippedAttemptEvent(EntityUid equipTarget, EntityUid equipment, SlotDefinition slotDefinition, EntityUid equipee) : base(equipTarget, equipment, slotDefinition, equipee)
     {
     }
 }
 
 public class IsEquippingAttemptEvent : EquipAttemptBase
 {
-    public IsEquippingAttemptEvent(EntityUid equipee, EntityUid equipment, SlotDefinition slotDefinition) : base(equipee, equipment, slotDefinition)
+    public IsEquippingAttemptEvent(EntityUid equipTarget, EntityUid equipment, SlotDefinition slotDefinition, EntityUid equipee) : base(equipTarget, equipment, slotDefinition, equipee)
     {
     }
 }

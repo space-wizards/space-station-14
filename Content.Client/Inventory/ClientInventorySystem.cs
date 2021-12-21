@@ -69,18 +69,18 @@ namespace Content.Client.Inventory
             _config.OnValueChanged(CCVars.HudTheme, UpdateHudTheme);
         }
 
-        public override bool TryEquip(EntityUid uid, EntityUid itemUid, string slot, bool silent = false, bool force = false,
+        public override bool TryEquip(EntityUid actor, EntityUid target, EntityUid itemUid, string slot, bool silent = false, bool force = false,
             InventoryComponent? inventory = null, SharedItemComponent? item = null)
         {
-            if(!uid.IsClientSide()) RaiseNetworkEvent(new TryEquipNetworkMessage(uid, itemUid, slot, silent, force));
-            return base.TryEquip(uid, itemUid, slot, silent, force, inventory, item);
+            if(!target.IsClientSide() && !actor.IsClientSide() && !itemUid.IsClientSide()) RaiseNetworkEvent(new TryEquipNetworkMessage(actor, target, itemUid, slot, silent, force));
+            return base.TryEquip(actor, target, itemUid, slot, silent, force, inventory, item);
         }
 
-        public override bool TryUnequip(EntityUid uid, string slot, bool silent = false, bool force = false,
+        public override bool TryUnequip(EntityUid actor, EntityUid target, string slot, bool silent = false, bool force = false,
             InventoryComponent? inventory = null)
         {
-            if(!uid.IsClientSide()) RaiseNetworkEvent(new TryUnequipNetworkMessage(uid, slot, silent, force));
-            return base.TryUnequip(uid, slot, silent, force, inventory);
+            if(!target.IsClientSide() && !actor.IsClientSide()) RaiseNetworkEvent(new TryUnequipNetworkMessage(actor, target, slot, silent, force));
+            return base.TryUnequip(actor, target, slot, silent, force, inventory);
         }
 
         private void OnDidUnequip(EntityUid uid, ClientInventoryComponent component, DidUnequipEvent args)

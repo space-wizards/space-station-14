@@ -258,12 +258,14 @@ namespace Content.Shared.Stunnable
 
         private void OnEquipAttempt(EntityUid uid, StunnedComponent stunned, IsEquippingAttemptEvent args)
         {
-            args.Cancel();
+            if(args.Equipee == uid)
+                args.Cancel();
         }
 
         private void OnUnequipAttempt(EntityUid uid, StunnedComponent stunned, IsUnequippingAttemptEvent args)
         {
-            args.Cancel();
+            if(args.Unequipee == uid)
+                args.Cancel();
         }
 
         #endregion

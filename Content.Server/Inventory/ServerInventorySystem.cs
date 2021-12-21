@@ -59,12 +59,12 @@ namespace Content.Server.Inventory
 
         private void OnNetworkUnequip(TryUnequipNetworkMessage ev)
         {
-            TryUnequip(ev.Uid, ev.Slot, ev.Silent, ev.Force);
+            TryUnequip(ev.Actor, ev.Target, ev.Slot, ev.Silent, ev.Force);
         }
 
         private void OnNetworkEquip(TryEquipNetworkMessage ev)
         {
-            TryEquip(ev.Uid, ev.ItemUid, ev.Slot, ev.Silent, ev.Force);
+            TryEquip(ev.Actor, ev.Target, ev.ItemUid, ev.Slot, ev.Silent, ev.Force);
         }
     }
 }

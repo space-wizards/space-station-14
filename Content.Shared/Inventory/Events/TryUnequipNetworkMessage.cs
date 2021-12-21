@@ -7,14 +7,16 @@ namespace Content.Shared.Inventory.Events;
 [NetSerializable, Serializable]
 public class TryUnequipNetworkMessage : EntityEventArgs
 {
-    public readonly EntityUid Uid;
+    public readonly EntityUid Actor;
+    public readonly EntityUid Target;
     public readonly string Slot;
     public readonly bool Silent;
     public readonly bool Force;
 
-    public TryUnequipNetworkMessage(EntityUid uid, string slot, bool silent, bool force)
+    public TryUnequipNetworkMessage(EntityUid actor, EntityUid target, string slot, bool silent, bool force)
     {
-        Uid = uid;
+        Actor = actor;
+        Target = target;
         Slot = slot;
         Silent = silent;
         Force = force;

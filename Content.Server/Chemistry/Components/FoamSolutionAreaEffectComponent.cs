@@ -50,7 +50,7 @@ namespace Content.Server.Chemistry.Components
                     if (slot.Name == "back" ||
                         slot.Name == "pocket1" ||
                         slot.Name == "pocket2" ||
-                        slot.Name == "id0")
+                        slot.Name == "id")
                         continue;
 
                     if (invSystem.TryGetSlotEntity(entity, slot.Name, out _))
