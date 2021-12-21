@@ -2,7 +2,7 @@
 - type: entity
   name: Holoparasite
   id: MobHoloparasite
-  description: A memorizing whirl of hard-light patterns weaves a marvelous, yet oddly familiar visage. It stands tall, tuning into it's owner's life to sustain itself.
+  description: A mesmerising whirl of hard-light patterns weaves a marvelous, yet oddly familiar visage. It stands proud, tuning into its owner's life to sustain itself.
   components:
   - type: GhostTakeoverAvailable
     makeSentient: true
