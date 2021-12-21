@@ -1,9 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Airlocks & low walls near arrivals don't look weird anymore, type: Fix}
-  id: 255
-  time: '2021-07-13T04:10:03.0000000+00:00'
 - author: Swept
   changes:
   - {message: AME jars and parts now show inhand sprites, type: Fix}
@@ -2863,3 +2858,8 @@ Entries:
     type: Add}
   id: 756
   time: '2021-12-21T17:18:08.0000000+00:00'
+- author: Mith-randalf
+  changes:
+  - {message: The cigarette vendors are now full of lighters. Go nuts., type: Add}
+  id: 757
+  time: '2021-12-21T17:20:32.0000000+00:00'
