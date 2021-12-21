@@ -83,7 +83,7 @@ namespace Content.Server.Guardian
         public void ToggleGuardian(GuardianHostComponent hostComponent)
         {
             if (!hostComponent.HostedGuardian.IsValid() ||
-                !EntityManager.TryGetComponent(hostComponent.HostedGuardian, out GuardianComponent? guardianComponent)) return;
+                !TryComp(hostComponent.HostedGuardian, out GuardianComponent? guardianComponent)) return;
 
             if (guardianComponent.GuardianLoose)
             {
@@ -175,7 +175,7 @@ namespace Content.Server.Guardian
             host.GuardianContainer.Insert(guardian);
             host.HostedGuardian = guardian;
 
-            if (EntityManager.TryGetComponent(guardian, out GuardianComponent? guardianComponent))
+            if (TryComp(guardian, out GuardianComponent? guardianComponent))
             {
                 guardianComponent.Host = ev.Target;
 
@@ -219,8 +219,8 @@ namespace Content.Server.Guardian
         private void OnGuardianDamaged(EntityUid uid, GuardianComponent component, DamageChangedEvent args)
         {
             if (args.DamageDelta == null ||
-                !EntityManager.HasComponent<DamageableComponent>(uid) ||
-                !EntityManager.TryGetComponent<DamageableComponent>(component.Host, out var hostDamage)) return;
+                !HasComp<DamageableComponent>(uid) ||
+                !TryComp<DamageableComponent>(component.Host, out var hostDamage)) return;
 
             _damageSystem.SetDamage(hostDamage, (hostDamage.Damage + args.DamageDelta * component.DamageShare));
             _popupSystem.PopupEntity(Loc.GetString("guardian-entity-taking-damage"), component.Host, Filter.Entities(component.Host));
@@ -243,7 +243,7 @@ namespace Content.Server.Guardian
         /// </summary>
         private void OnHostMove(EntityUid uid, GuardianHostComponent component, ref MoveEvent args)
         {
-            if (!EntityManager.TryGetComponent(component.HostedGuardian, out GuardianComponent? guardianComponent) ||
+            if (!TryComp(component.HostedGuardian, out GuardianComponent? guardianComponent) ||
                 !guardianComponent.GuardianLoose) return;
 
             CheckGuardianMove(uid, component.HostedGuardian, component);
