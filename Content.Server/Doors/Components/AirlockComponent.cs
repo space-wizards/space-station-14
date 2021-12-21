@@ -158,16 +158,35 @@ namespace Content.Server.Doors.Components
                 return;
             }
 
-            var powerLight = new StatusLightData(Color.Yellow, StatusLightState.On, "POWR");
-            if (PowerWiresPulsed)
+            StatusLightData powerLight;
+            if(WiresComponent != null)
             {
-                powerLight = new StatusLightData(Color.Yellow, StatusLightState.BlinkingFast, "POWR");
+                var mainPowerCut = WiresComponent.IsWireCut(Wires.MainPower);
+                var backupPowerCut = WiresComponent.IsWireCut(Wires.BackupPower);
+                var statusLightState = PowerWiresPulsed ? StatusLightState.BlinkingFast : StatusLightState.On;
+                if (mainPowerCut && backupPowerCut)
+                {
+                    powerLight = new StatusLightData(Color.Yellow, StatusLightState.Off, "POWR");
+                }
+                else if(mainPowerCut != backupPowerCut)
+                {
+                    powerLight = new StatusLightData(Color.Yellow, statusLightState, "POWR");
+                }
+                else
+                {
+                    powerLight = new StatusLightData(Color.Red, statusLightState, "POWR");
+                }
             }
-            else if (WiresComponent != null &&
-                     WiresComponent.IsWireCut(Wires.MainPower) &&
-                     WiresComponent.IsWireCut(Wires.BackupPower))
+            else
             {
-                powerLight = new StatusLightData(Color.Red, StatusLightState.On, "POWR");
+                if (PowerWiresPulsed)
+                {
+                    powerLight = new StatusLightData(Color.Yellow, StatusLightState.BlinkingFast, "POWR");
+                }
+                else
+                {
+                    powerLight = new StatusLightData(Color.Yellow, StatusLightState.On, "POWR");
+                }
             }
 
             var boltStatus =
@@ -219,7 +238,7 @@ namespace Content.Server.Doors.Components
             }
 
             ReceiverComponent.PowerDisabled =
-                WiresComponent.IsWireCut(Wires.MainPower) ||
+                WiresComponent.IsWireCut(Wires.MainPower) &&
                 WiresComponent.IsWireCut(Wires.BackupPower);
         }
 
