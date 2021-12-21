@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Chemistry.Components.SolutionManager;
+using Content.Server.Fluids.Components;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
@@ -293,19 +294,6 @@ namespace Content.Server.Chemistry.EntitySystems
 
             UpdateChemicals(uid, solution);
             return removedReagent;
-        }
-
-        public void TryRemoveAllReagents(EntityUid uid, Solution solution, List<Solution.ReagentQuantity> removeReagents)
-        {
-            if (removeReagents.Count == 0)
-                return;
-
-            foreach (var reagent in removeReagents)
-            {
-                solution.RemoveReagent(reagent.ReagentId, reagent.Quantity);
-            }
-
-            UpdateChemicals(uid, solution);
         }
 
         public FixedPoint2 GetReagentQuantity(EntityUid owner, string reagentId)

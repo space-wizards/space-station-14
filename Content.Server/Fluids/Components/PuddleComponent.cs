@@ -41,11 +41,6 @@ namespace Content.Server.Fluids.Components
         [DataField("spillSound")]
         public SoundSpecifier SpillSound = new SoundPathSpecifier("/Audio/Effects/Fluids/splat.ogg");
 
-        /// <summary>
-        /// Whether or not this puddle is currently overflowing onto its neighbors
-        /// </summary>
-        public bool Overflown;
-
         [ViewVariables(VVAccess.ReadOnly)]
         public FixedPoint2 CurrentVolume => EntitySystem.Get<PuddleSystem>().CurrentVolume(Owner);
 
@@ -53,6 +48,8 @@ namespace Content.Server.Fluids.Components
         public FixedPoint2 OverflowVolume = DefaultOverflowVolume;
 
         public FixedPoint2 OverflowLeft => CurrentVolume - OverflowVolume;
+
+        public bool IsOverflowing => CurrentVolume > OverflowVolume;
 
         [DataField("solution")] public string SolutionName { get; set; } = DefaultSolutionName;
     }
