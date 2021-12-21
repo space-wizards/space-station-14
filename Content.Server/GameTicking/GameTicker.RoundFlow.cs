@@ -42,6 +42,9 @@ namespace Content.Server.GameTicking
         private TimeSpan _roundStartTimeSpan;
 
         [ViewVariables]
+        private bool _startingRound;
+
+        [ViewVariables]
         private GameRunLevel _runLevel;
 
         [ViewVariables]
@@ -66,6 +69,7 @@ namespace Content.Server.GameTicking
         {
             DefaultMap = _mapManager.CreateMap();
             _pauseManager.AddUninitializedMap(DefaultMap);
+            _startingRound = false;
             var startTime = _gameTiming.RealTime;
             var map = _gameMapManager.GetSelectedMapChecked(true);
             var grid = _mapLoader.LoadBlueprint(DefaultMap, map.MapPath);
@@ -105,9 +109,11 @@ namespace Content.Server.GameTicking
             try
             {
 #endif
-                // If this game ticker is a dummy, do nothing!
-                if (DummyTicker)
+                // If this game ticker is a dummy or the round is already being started, do nothing!
+                if (DummyTicker || _startingRound)
                     return;
+
+                _startingRound = true;
 
                 DebugTools.Assert(RunLevel == GameRunLevel.PreRoundLobby);
                 Logger.InfoS("ticker", "Starting round!");
@@ -252,6 +258,8 @@ namespace Content.Server.GameTicking
 
                 _roundStartDateTime = DateTime.UtcNow;
                 RunLevel = GameRunLevel.InRound;
+
+                _startingRound = false;
 
                 _roundStartTimeSpan = _gameTiming.RealTime;
                 SendStatusToAll();
@@ -423,6 +431,8 @@ namespace Content.Server.GameTicking
                 // FIXME: Actually, definitely.
                 EntityManager.DeleteEntity(entity);
             }
+
+            _startingRound = false;
 
             _mapManager.Restart();
 
