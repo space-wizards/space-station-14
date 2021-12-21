@@ -1,5 +1,5 @@
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using Content.Server.GameTicking.Rules;
 using Robust.Shared.ViewVariables;
 
@@ -7,68 +7,66 @@ namespace Content.Server.GameTicking
 {
     public partial class GameTicker
     {
-        // No duplicates.
-        [ViewVariables] private readonly HashSet<GameRulePrototype> _gameRules = new();
-        public IEnumerable<GameRulePrototype> ActiveGameRules => _gameRules;
+        [ViewVariables] private readonly List<GameRule> _gameRules = new();
+        public IEnumerable<GameRule> ActiveGameRules => _gameRules;
 
-        public bool AddGameRule(GameRulePrototype rule)
+        public T AddGameRule<T>() where T : GameRule, new()
         {
-            if (!_gameRules.Add(rule))
+            var instance = _dynamicTypeFactory.CreateInstance<T>();
+
+            _gameRules.Add(instance);
+            instance.Added();
+
+            RaiseLocalEvent(new GameRuleAddedEvent(instance));
+
+            return instance;
+        }
+
+        public bool HasGameRule(string? name)
+        {
+            if (name == null)
                 return false;
 
-            RaiseLocalEvent(new GameRuleAddedEvent(rule));
-            return true;
-        }
-
-        public bool RemoveGameRule(GameRulePrototype rule)
-        {
-            if (!_gameRules.Remove(rule))
-                return false;
-
-            RaiseLocalEvent(new GameRuleRemovedEvent(rule));
-            return true;
-        }
-
-        public bool HasGameRule(GameRulePrototype rule)
-        {
-            return _gameRules.Contains(rule);
-        }
-
-        public bool HasGameRule(string rule)
-        {
-            foreach (var ruleProto in _gameRules)
+            foreach (var rule in _gameRules)
             {
-                if (ruleProto.ID.Equals(rule))
+                if (rule.GetType().Name == name)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public bool HasGameRule(Type? type)
+        {
+            if (type == null || !typeof(GameRule).IsAssignableFrom(type))
+                return false;
+
+            foreach (var rule in _gameRules)
+            {
+                if (rule.GetType().IsAssignableFrom(type))
                     return true;
             }
 
             return false;
         }
 
-        public void ClearGameRules()
+        public void RemoveGameRule(GameRule rule)
         {
-            foreach (var rule in _gameRules.ToArray())
-            {
-                RemoveGameRule(rule);
-            }
+            if (_gameRules.Contains(rule)) return;
+
+            rule.Removed();
+
+            _gameRules.Remove(rule);
         }
     }
 
     public class GameRuleAddedEvent
     {
-        public GameRulePrototype Rule { get; }
+        public GameRule Rule { get; }
 
-        public GameRuleAddedEvent(GameRulePrototype rule)
-        {
-            Rule = rule;
-        }
-    }
-
-    public class GameRuleRemovedEvent
-    {
-        public GameRulePrototype Rule { get; }
-
-        public GameRuleRemovedEvent(GameRulePrototype rule)
+        public GameRuleAddedEvent(GameRule rule)
         {
             Rule = rule;
         }

@@ -18,7 +18,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
-using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
@@ -65,7 +64,6 @@ namespace Content.Server.GameTicking
         private void PreRoundSetup()
         {
             DefaultMap = _mapManager.CreateMap();
-            _pauseManager.AddUninitializedMap(DefaultMap);
             var startTime = _gameTiming.RealTime;
             var map = _gameMapManager.GetSelectedMapChecked(true);
             var grid = _mapLoader.LoadBlueprint(DefaultMap, map.MapPath);
@@ -110,8 +108,6 @@ namespace Content.Server.GameTicking
 
             SendServerMessage(Loc.GetString("game-ticker-start-round"));
 
-            AddGamePresetRules();
-
             List<IPlayerSession> readyPlayers;
             if (LobbyEnabled)
             {
@@ -121,6 +117,9 @@ namespace Content.Server.GameTicking
             {
                 readyPlayers = _playersInLobby.Keys.ToList();
             }
+
+            _roundStartDateTime = DateTime.UtcNow;
+            RunLevel = GameRunLevel.InRound;
 
             RoundLengthMetric.Set(0);
 
@@ -144,58 +143,10 @@ namespace Content.Server.GameTicking
                 }
             }
 
-            var origReadyPlayers = readyPlayers.ToArray();
-
-            var startAttempt = new RoundStartAttemptEvent(origReadyPlayers, force);
-            RaiseLocalEvent(startAttempt);
-
-            var presetTitle = _preset != null ? Loc.GetString(_preset.ModeTitle) : string.Empty;
-
-            void FailedPresetRestart()
-            {
-                SendServerMessage(Loc.GetString("game-ticker-start-round-cannot-start-game-mode-restart", ("failedGameMode", presetTitle)));
-                RestartRound();
-                DelayStart(TimeSpan.FromSeconds(PresetFailedCooldownIncrease));
-            }
-
-            if (startAttempt.Cancelled)
-            {
-                if (_configurationManager.GetCVar(CCVars.GameLobbyFallbackEnabled))
-                {
-                    var oldPreset = _preset;
-                    ClearGameRules();
-                    SetGamePreset(_configurationManager.GetCVar(CCVars.GameLobbyFallbackPreset));
-                    AddGamePresetRules();
-
-                    startAttempt.Uncancel();
-                    RaiseLocalEvent(startAttempt);
-
-                    _chatManager.DispatchServerAnnouncement(
-                        Loc.GetString("game-ticker-start-round-cannot-start-game-mode-fallback",
-                            ("failedGameMode", presetTitle),
-                            ("fallbackMode", Loc.GetString(_preset!.ModeTitle))));
-
-                    if (startAttempt.Cancelled)
-                    {
-                        FailedPresetRestart();
-                    }
-
-                    RefreshLateJoinAllowed();
-                }
-                else
-                {
-                    FailedPresetRestart();
-                    return;
-                }
-            }
-
-            // Allow game rules to spawn players by themselves if needed. (For example, nuke ops or wizard)
-            RaiseLocalEvent(new RulePlayerSpawningEvent(readyPlayers, profiles, force));
-
             var assignedJobs = AssignJobs(readyPlayers, profiles);
 
             // For players without jobs, give them the overflow job if they have that set...
-            foreach (var player in origReadyPlayers)
+            foreach (var player in readyPlayers)
             {
                 if (assignedJobs.ContainsKey(player))
                 {
@@ -237,28 +188,45 @@ namespace Content.Server.GameTicking
                 SpawnPlayer(player, profiles[player.UserId], station, job, false);
             }
 
-            RefreshLateJoinAllowed();
+            // Time to start the preset.
+            Preset = MakeGamePreset(profiles);
 
-            // Allow rules to add roles to players who have been spawned in. (For example, on-station traitors)
-            RaiseLocalEvent(new RulePlayerJobsAssignedEvent(assignedJobs.Keys.ToArray(), profiles, force));
+            DisallowLateJoin |= Preset.DisallowLateJoin;
 
-            _pauseManager.DoMapInitialize(DefaultMap);
+            if (!Preset.Start(assignedJobs.Keys.ToList(), force))
+            {
+                if (_configurationManager.GetCVar(CCVars.GameLobbyFallbackEnabled))
+                {
+                    SetStartPreset(_configurationManager.GetCVar(CCVars.GameLobbyFallbackPreset));
+                    var newPreset = MakeGamePreset(profiles);
+                    _chatManager.DispatchServerAnnouncement(
+                        Loc.GetString("game-ticker-start-round-cannot-start-game-mode-fallback",
+                                      ("failedGameMode", Preset.ModeTitle),
+                                      ("fallbackMode", newPreset.ModeTitle)));
+                    if (!newPreset.Start(readyPlayers, force))
+                    {
+                        throw new ApplicationException("Fallback preset failed to start!");
+                    }
 
-            _roundStartDateTime = DateTime.UtcNow;
-            RunLevel = GameRunLevel.InRound;
+                    DisallowLateJoin = false;
+                    DisallowLateJoin |= newPreset.DisallowLateJoin;
+                    Preset = newPreset;
+                }
+                else
+                {
+                    SendServerMessage(Loc.GetString("game-ticker-start-round-cannot-start-game-mode-restart", ("failedGameMode", Preset.ModeTitle)));
+                    RestartRound();
+                    DelayStart(TimeSpan.FromSeconds(PresetFailedCooldownIncrease));
+                    return;
+                }
+            }
+            Preset.OnGameStarted();
 
             _roundStartTimeSpan = _gameTiming.RealTime;
             SendStatusToAll();
             ReqWindowAttentionAll();
             UpdateLateJoinStatus();
             UpdateJobsAvailable();
-        }
-
-        private void RefreshLateJoinAllowed()
-        {
-            var refresh = new RefreshLateJoinAllowedEvent();
-            RaiseLocalEvent(refresh);
-            DisallowLateJoin = refresh.DisallowLateJoin;
         }
 
         public void EndRound(string text = "")
@@ -273,13 +241,8 @@ namespace Content.Server.GameTicking
             RunLevel = GameRunLevel.PostRound;
 
             //Tell every client the round has ended.
-            var gamemodeTitle = _preset != null ? Loc.GetString(_preset.ModeTitle) : string.Empty;
-
-            // Let things add text here.
-            var textEv = new RoundEndTextAppendEvent();
-            RaiseLocalEvent(textEv);
-
-            var roundEndText = $"{text}\n{textEv.Text}";
+            var gamemodeTitle = Preset?.ModeTitle ?? string.Empty;
+            var roundEndText = text + $"\n{Preset?.GetRoundEndDescription() ?? string.Empty}";
 
             //Get the timespan of the round.
             var roundDuration = RoundDuration();
@@ -369,6 +332,8 @@ namespace Content.Server.GameTicking
             }
             else
             {
+                Preset = null;
+
                 if (_playerManager.PlayerCount == 0)
                     _roundStartCountdownHasNotStartedYetDueToNoPlayers = true;
                 else
@@ -410,7 +375,10 @@ namespace Content.Server.GameTicking
             _mapManager.Restart();
 
             // Clear up any game rules.
-            ClearGameRules();
+            foreach (var rule in _gameRules)
+            {
+                rule.Removed();
+            }
 
             _gameRules.Clear();
 
@@ -482,104 +450,6 @@ namespace Content.Server.GameTicking
         {
             Old = old;
             New = @new;
-        }
-    }
-
-    /// <summary>
-    ///     Event raised to refresh the late join status.
-    ///     If you want to disallow late joins, listen to this and call Disallow.
-    /// </summary>
-    public class RefreshLateJoinAllowedEvent
-    {
-        public bool DisallowLateJoin { get; private set; } = false;
-
-        public void Disallow()
-        {
-            DisallowLateJoin = true;
-        }
-    }
-
-    /// <summary>
-    ///     Attempt event raised on round start.
-    ///     This can be listened to by GameRule systems to cancel round start if some condition is not met, like player count.
-    /// </summary>
-    public class RoundStartAttemptEvent : CancellableEntityEventArgs
-    {
-        public IPlayerSession[] Players { get; }
-        public bool Forced { get; }
-
-        public RoundStartAttemptEvent(IPlayerSession[] players, bool forced)
-        {
-            Players = players;
-            Forced = forced;
-        }
-    }
-
-    /// <summary>
-    ///     Event raised before readied up players are spawned and given jobs by the GameTicker.
-    ///     You can use this to spawn people off-station, like in the case of nuke ops or wizard.
-    ///     Remove the players you spawned from the PlayerPool and call <see cref="GameTicker.PlayerJoinGame"/> on them.
-    /// </summary>
-    public class RulePlayerSpawningEvent
-    {
-        /// <summary>
-        ///     Pool of players to be spawned.
-        ///     If you want to handle a specific player being spawned, remove it from this list and do what you need.
-        /// </summary>
-        /// <remarks>If you spawn a player by yourself from this event, don't forget to call <see cref="GameTicker.PlayerJoinGame"/> on them.</remarks>
-        public List<IPlayerSession> PlayerPool { get; }
-        public IReadOnlyDictionary<NetUserId, HumanoidCharacterProfile> Profiles { get; }
-        public bool Forced { get; }
-
-        public RulePlayerSpawningEvent(List<IPlayerSession> playerPool, IReadOnlyDictionary<NetUserId, HumanoidCharacterProfile> profiles, bool forced)
-        {
-            PlayerPool = playerPool;
-            Profiles = profiles;
-            Forced = forced;
-        }
-    }
-
-    /// <summary>
-    ///     Event raised after players were assigned jobs by the GameTicker.
-    ///     You can give on-station people special roles by listening to this event.
-    /// </summary>
-    public class RulePlayerJobsAssignedEvent
-    {
-        public IPlayerSession[] Players { get; }
-        public IReadOnlyDictionary<NetUserId, HumanoidCharacterProfile> Profiles { get; }
-        public bool Forced { get; }
-
-        public RulePlayerJobsAssignedEvent(IPlayerSession[] players, IReadOnlyDictionary<NetUserId, HumanoidCharacterProfile> profiles, bool forced)
-        {
-            Players = players;
-            Profiles = profiles;
-            Forced = forced;
-        }
-    }
-
-    /// <summary>
-    ///     Event raised to allow subscribers to add text to the round end summary screen.
-    /// </summary>
-    public class RoundEndTextAppendEvent
-    {
-        private bool _doNewLine;
-
-        /// <summary>
-        ///     Text to display in the round end summary screen.
-        /// </summary>
-        public string Text { get; private set; } = string.Empty;
-
-        /// <summary>
-        ///     Invoke this method to add text to the round end summary screen.
-        /// </summary>
-        /// <param name="text"></param>
-        public void AddLine(string text)
-        {
-            if (_doNewLine)
-                Text += "\n";
-
-            Text += text;
-            _doNewLine = true;
         }
     }
 }

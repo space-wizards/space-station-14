@@ -1,5 +1,4 @@
 ﻿using Content.Server.Administration;
-using Content.Server.GameTicking.Presets;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
@@ -30,13 +29,13 @@ namespace Content.Server.GameTicking.Commands
             }
 
             var name = args[0];
-            if (!ticker.TryFindGamePreset(name, out var type))
+            if (!ticker.TryGetPreset(name, out var type))
             {
                 shell.WriteLine($"No preset exists with name {name}.");
                 return;
             }
 
-            ticker.SetGamePreset(type, true);
+            ticker.SetStartPreset(type, true);
             shell.WriteLine($"Forced the game to start with preset {name}.");
         }
     }

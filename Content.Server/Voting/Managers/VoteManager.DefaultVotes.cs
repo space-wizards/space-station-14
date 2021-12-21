@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameTicking;
-using Content.Server.GameTicking.Presets;
 using Content.Server.Maps;
 using Content.Server.RoundEnd;
 using Content.Shared.CCVar;
@@ -12,7 +11,6 @@ using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.Voting.Managers
@@ -107,15 +105,13 @@ namespace Content.Server.Voting.Managers
 
         private void CreatePresetVote(IPlayerSession? initiator)
         {
-            var presets = new Dictionary<string, string>();
-
-            foreach (var preset in _prototypeManager.EnumeratePrototypes<GamePresetPrototype>())
+            var presets = new Dictionary<string, string>
             {
-                if(!preset.ShowInVote)
-                    continue;
-
-                presets[preset.ID] = preset.ModeTitle;
-            }
+                ["traitor"] = "mode-traitor",
+                ["extended"] = "mode-extended",
+                ["sandbox"] = "mode-sandbox",
+                ["suspicion"] = "mode-suspicion",
+            };
 
             var alone = _playerManager.PlayerCount == 1 && initiator != null;
             var options = new VoteOptions
@@ -154,7 +150,7 @@ namespace Content.Server.Voting.Managers
                         Loc.GetString("ui-vote-gamemode-win", ("winner", Loc.GetString(presets[picked]))));
                 }
 
-                EntitySystem.Get<GameTicker>().SetGamePreset(picked);
+                EntitySystem.Get<GameTicker>().SetStartPreset(picked);
             };
         }
 

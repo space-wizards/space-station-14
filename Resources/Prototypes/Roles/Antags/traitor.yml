@@ -1,6 +1,0 @@
-- type: antag
-  id: Traitor
-  name: "traitor"
-  antagonist: true
-  setPreference: true
-  objective: "Complete your objectives without being caught."
