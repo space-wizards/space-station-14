@@ -1,9 +1,4 @@
 Entries:
-- author: Swept
-  changes:
-  - {message: Changed chatbox UI to be more consistent with SS14's UI, type: Tweak}
-  id: 254
-  time: '2021-07-09T07:10:57.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Airlocks & low walls near arrivals don't look weird anymore, type: Fix}
@@ -2862,3 +2857,9 @@ Entries:
   - {message: Add checkbox in controls for US QWERTY keys., type: Add}
   id: 755
   time: '2021-12-21T09:35:34.0000000+00:00'
+- author: pointer-to-null
+  changes:
+  - {message: Server info in the game lobby now shows the currently selected map.,
+    type: Add}
+  id: 756
+  time: '2021-12-21T17:18:08.0000000+00:00'
