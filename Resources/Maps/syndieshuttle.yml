@@ -3599,4 +3599,12 @@ entities:
     type: Sprite
   - canCollide: False
     type: Physics
+- uid: 384
+  type: NukeCodePaper
+  components:
+  - pos: 0.49972236,8.58173
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
 ...
