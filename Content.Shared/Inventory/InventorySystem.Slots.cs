@@ -76,7 +76,7 @@ public partial class InventorySystem : EntitySystem
 
     public SlotDefinition[] GetSlots(EntityUid uid, InventoryComponent? inventoryComponent = null)
     {
-        if (!Resolve(uid, ref inventoryComponent, false)) throw new InvalidOperationException();
+        if (!Resolve(uid, ref inventoryComponent)) throw new InvalidOperationException();
         return _prototypeManager.Index<InventoryTemplatePrototype>(inventoryComponent.TemplateId).Slots;
     }
 

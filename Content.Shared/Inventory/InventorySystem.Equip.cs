@@ -206,7 +206,7 @@ public abstract partial class InventorySystem
         {
             if (!slotContainer.Remove(entity.Value))
             {
-                //should never happen bc of the cabut lets just keep in just in case
+                //should never happen bc of the canremove lets just keep in just in case
                 return false;
             }
         }
