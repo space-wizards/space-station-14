@@ -19,8 +19,6 @@ namespace Content.Client.Inventory
     [Friend(typeof(ClientInventorySystem))]
     public class ClientInventoryComponent : InventoryComponent
     {
-        [Dependency] private readonly IEntityManager _entMan = default!;
-
         public Control BottomLeftButtons = default!;
         public Control BottomRightButtons = default!;
         public Control TopQuickButtons = default!;

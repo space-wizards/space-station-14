@@ -234,8 +234,8 @@ public abstract partial class InventorySystem
     public bool TryGetSlotEntity(EntityUid uid, string slot, [NotNullWhen(true)] out EntityUid? entityUid, InventoryComponent? inventoryComponent = null, ContainerManagerComponent? containerManagerComponent = null)
     {
         entityUid = null;
-        if (!Resolve(uid, ref inventoryComponent, ref containerManagerComponent, false) || !TryGetSlotContainer(uid, slot,
-                out var container, out _, inventoryComponent, containerManagerComponent))
+        if (!Resolve(uid, ref inventoryComponent, ref containerManagerComponent, false)
+            || !TryGetSlotContainer(uid, slot, out var container, out _, inventoryComponent, containerManagerComponent))
             return false;
 
         entityUid = container.ContainedEntity;

@@ -45,8 +45,13 @@ public class ClothingSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ClothingComponent, GotEquippedEvent>(OnDidEquip);
-        SubscribeLocalEvent<ClothingComponent, GotUnequippedEvent>(OnDidUnequip);
+        SubscribeLocalEvent<ClothingComponent, GotEquippedEvent>(OnGotEquipped);
+        SubscribeLocalEvent<SpriteComponent, DidUnequipEvent>(OnDidUnequip);
+    }
+
+    private void OnDidUnequip(EntityUid uid, SpriteComponent component, DidUnequipEvent args)
+    {
+        component.LayerSetVisible(args.Slot, false);
     }
 
     public void InitClothing(EntityUid uid, ClientInventoryComponent? component = null, SpriteComponent? sprite = null)
@@ -64,47 +69,34 @@ public class ClothingSystem : EntitySystem
         }
     }
 
-    private void OnDidUnequip(EntityUid uid, ClothingComponent component, GotUnequippedEvent args)
-    {
-        SpriteComponent? sprite = null;
-        if (!Resolve(args.Equipee, ref sprite))
-        {
-            return;
-        }
-
-        sprite.LayerSetVisible(args.Slot, false);
-    }
-
-    private void OnDidEquip(EntityUid uid, ClothingComponent component, GotEquippedEvent args)
+    private void OnGotEquipped(EntityUid uid, ClothingComponent component, GotEquippedEvent args)
     {
         if (!TryComp<SpriteComponent>(args.Equipee, out var sprite) || !TryComp<ClientInventoryComponent>(args.Equipee, out var invComp))
         {
             return;
         }
 
-        if (TryComp(args.Equipment, out ClothingComponent? clothing))
+        var data = GetEquippedStateInfo(args.Equipment, args.Slot, invComp.SpeciesId, component);
+        if (data != null)
         {
-            var data = GetEquippedStateInfo(args.Equipment, args.Slot, invComp.SpeciesId, clothing);
-            if (data != null)
+            var (rsi, state) = data.Value;
+            sprite.LayerSetVisible(args.Slot, true);
+            sprite.LayerSetState(args.Slot, state, rsi);
+            sprite.LayerSetAutoAnimated(args.Slot, true);
+
+            if (args.Slot == "jumpsuit" && sprite.LayerMapTryGet(HumanoidVisualLayers.StencilMask, out _))
             {
-                var (rsi, state) = data.Value;
-                sprite.LayerSetVisible(args.Slot, true);
-                sprite.LayerSetState(args.Slot, state, rsi);
-                sprite.LayerSetAutoAnimated(args.Slot, true);
-
-                if (args.Slot == "jumpsuit" && sprite.LayerMapTryGet(HumanoidVisualLayers.StencilMask, out _))
+                sprite.LayerSetState(HumanoidVisualLayers.StencilMask, component.FemaleMask switch
                 {
-                    sprite.LayerSetState(HumanoidVisualLayers.StencilMask, clothing.FemaleMask switch
-                    {
-                        FemaleClothingMask.NoMask => "female_none",
-                        FemaleClothingMask.UniformTop => "female_top",
-                        _ => "female_full",
-                    });
-                }
-
-                return;
+                    FemaleClothingMask.NoMask => "female_none",
+                    FemaleClothingMask.UniformTop => "female_top",
+                    _ => "female_full",
+                });
             }
+
+            return;
         }
+
 
         sprite.LayerSetVisible(args.Slot, false);
     }

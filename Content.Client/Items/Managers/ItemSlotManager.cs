@@ -28,9 +28,9 @@ namespace Content.Client.Items.Managers
 
         public event Action<EntitySlotHighlightedEventArgs>? EntityHighlightedUpdated;
 
-        public bool SetItemSlot(ItemSlotButton button, EntityUid entity)
+        public bool SetItemSlot(ItemSlotButton button, EntityUid? entity)
         {
-            if (entity == default)
+            if (entity == null)
             {
                 button.SpriteView.Sprite = null;
                 button.StorageButton.Visible = false;

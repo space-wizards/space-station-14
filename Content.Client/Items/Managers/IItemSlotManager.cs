@@ -9,7 +9,7 @@ namespace Content.Client.Items.Managers
     {
         bool OnButtonPressed(GUIBoundKeyEventArgs args, EntityUid item);
         void UpdateCooldown(ItemSlotButton? cooldownTexture, EntityUid entity);
-        bool SetItemSlot(ItemSlotButton button, EntityUid entity);
+        bool SetItemSlot(ItemSlotButton button, EntityUid? entity);
         void HoverInSlot(ItemSlotButton button, EntityUid entity, bool fits);
         event Action<EntitySlotHighlightedEventArgs>? EntityHighlightedUpdated;
         bool IsHighlighted(EntityUid uid);

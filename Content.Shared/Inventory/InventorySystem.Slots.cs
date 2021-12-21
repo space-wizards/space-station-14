@@ -85,7 +85,7 @@ public partial class InventorySystem : EntitySystem
         private readonly InventorySystem _inventorySystem;
         private readonly EntityUid _uid;
         private readonly SlotDefinition[] _slots;
-        private int _nextIdx = -1;
+        private int _nextIdx = int.MaxValue;
 
         public ContainerSlotEnumerator(EntityUid uid, string prototypeId, IPrototypeManager prototypeManager, InventorySystem inventorySystem)
         {
@@ -106,7 +106,7 @@ public partial class InventorySystem : EntitySystem
         public bool MoveNext([NotNullWhen(true)] out ContainerSlot? container)
         {
             container = null;
-            if (_nextIdx == -1 || _nextIdx >= _slots.Length) return false;
+            if (_nextIdx >= _slots.Length) return false;
 
             while (_nextIdx < _slots.Length && !_inventorySystem.TryGetSlotContainer(_uid, _slots[_nextIdx++].Name, out container, out _)) { }
 

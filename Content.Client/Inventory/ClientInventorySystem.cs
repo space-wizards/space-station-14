@@ -89,7 +89,7 @@ namespace Content.Client.Inventory
             {
                 foreach (var button in buttons)
                 {
-                    _itemSlotManager.SetItemSlot(button, default);
+                    _itemSlotManager.SetItemSlot(button, null);
                 }
             }
         }
