@@ -33,7 +33,7 @@ namespace Content.Server.Storage.Components
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IStorageComponent))]
-    public class EntityStorageComponent : Component, IActivate, IStorageComponent, IInteractUsing, IDestroyAct, IExAct
+    public class EntityStorageComponent : Component, IActivate, IStorageComponent, IInteractUsing, IDestroyAct, IExAct, IMapInit
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
@@ -466,6 +466,12 @@ namespace Content.Server.Storage.Components
                     exAct.OnExplosion(eventArgs);
                 }
             }
+        }
+
+        void IMapInit.MapInit()
+        {
+            TryOpenStorage(Owner);
+            TryCloseStorage(Owner);
         }
     }
 }
