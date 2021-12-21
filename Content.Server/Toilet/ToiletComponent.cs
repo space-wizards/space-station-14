@@ -5,16 +5,13 @@ using Content.Shared.Tools;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Toilet
 {
     [RegisterComponent]
-    public class ToiletComponent : Component, ISuicideAct
+    [ComponentProtoName("Toilet")]
+    public sealed class ToiletComponent : Component, ISuicideAct
     {
-        public sealed override string Name => "Toilet";
-
         [DataField("pryLidTime")]
         public float PryLidTime = 1f;
 
@@ -23,7 +20,6 @@ namespace Content.Server.Toilet
 
         [DataField("toggleSound")]
         public SoundSpecifier ToggleSound = new SoundPathSpecifier("/Audio/Effects/toilet_seat_down.ogg");
-
 
         public bool LidOpen = false;
         public bool IsSeatUp = false;
