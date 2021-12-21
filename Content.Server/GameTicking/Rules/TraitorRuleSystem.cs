@@ -184,7 +184,7 @@ public class TraitorRuleSystem : GameRuleSystem
             }
         }
 
-        SoundSystem.Play(Filter.Empty().AddPlayers(_traitors.Select(t => t.Mind.Session!)), _addedSound.GetSound(), AudioParams.Default);
+        SoundSystem.Play(Filter.Empty().AddWhere(s => ((IPlayerSession)s).Data.ContentData()?.Mind?.HasRole<TraitorRole>() ?? false), _addedSound.GetSound(), AudioParams.Default);
     }
 
     private void OnRoundEndText(RoundEndTextAppendEvent ev)
