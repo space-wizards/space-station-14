@@ -211,7 +211,7 @@ public abstract partial class InventorySystem
             }
         }
 
-        Transform(entity.Value).Coordinates = EntityManager.GetComponent<TransformComponent>(target).Coordinates;
+        Transform(entity.Value).Coordinates = Transform(target).Coordinates;
 
         inventory.Dirty();
 
