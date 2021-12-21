@@ -18,14 +18,14 @@ namespace Content.Client.Administration.UI.Tabs.AdminTab
         public BanWindow()
         {
             RobustXamlLoader.Load(this);
-            PlayerNameLine.OnTextChanged += PlayerNameLineOnOnTextChanged;
+            PlayerNameLine.OnTextChanged += _ => OnPlayerNameChanged();
             PlayerList.OnSelectionChanged += OnPlayerSelectionChanged;
             SubmitButton.OnPressed += SubmitButtonOnOnPressed;
             MinutesLine.OnTextChanged += UpdateButtonsText;
-            HourButton.OnPressed += OnHourButtonPressed;
-            DayButton.OnPressed += OnDayButtonPressed;
-            WeekButton.OnPressed += OnWeekButtonPressed;
-            MonthButton.OnPressed += OnMonthButtonPressed;
+            HourButton.OnPressed += _ => AddMinutes(60);
+            DayButton.OnPressed += _ => AddMinutes(1440);
+            WeekButton.OnPressed += _ => AddMinutes(10080);
+            MonthButton.OnPressed += _ => AddMinutes(43200);
         }
 
         private bool TryGetMinutes(string str, out uint minutes)
@@ -37,26 +37,6 @@ namespace Content.Client.Administration.UI.Tabs.AdminTab
             }
 
             return uint.TryParse(str, out minutes);
-        }
-
-        private void OnHourButtonPressed(BaseButton.ButtonEventArgs obj)
-        {
-            AddMinutes(60);
-        }
-
-        private void OnDayButtonPressed(BaseButton.ButtonEventArgs obj)
-        {
-            AddMinutes(1440);
-        }
-
-        private void OnWeekButtonPressed(BaseButton.ButtonEventArgs obj)
-        {
-            AddMinutes(10080);
-        }
-
-        private void OnMonthButtonPressed(BaseButton.ButtonEventArgs obj)
-        {
-            AddMinutes(43200);
         }
 
         private void AddMinutes(uint add)
@@ -86,11 +66,6 @@ namespace Content.Client.Administration.UI.Tabs.AdminTab
         private void OnPlayerNameChanged()
         {
             SubmitButton.Disabled = string.IsNullOrEmpty(PlayerNameLine.Text);
-        }
-
-        private void PlayerNameLineOnOnTextChanged(LineEditEventArgs obj)
-        {
-            OnPlayerNameChanged();
         }
 
         private void OnPlayerSelectionChanged(PlayerInfo? player)
