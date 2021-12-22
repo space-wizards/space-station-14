@@ -26,5 +26,5 @@ public enum SlotFlags
     IDCARD = 1 << 11,
     POCKET = 1 << 12,
     LEGS = 1 << 13,
-    SHOES = 1 << 14,
+    FEET = 1 << 14,
 }
