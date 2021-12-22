@@ -22,7 +22,6 @@ public enum SlotFlags
     BACK = 1 << 8,
     BELT = 1 << 9,
     GLOVES = 1 << 10,
-    HAND = 1 << 10,
     IDCARD = 1 << 11,
     POCKET = 1 << 12,
     LEGS = 1 << 13,
