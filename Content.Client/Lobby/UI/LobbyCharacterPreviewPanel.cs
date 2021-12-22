@@ -156,9 +156,13 @@ namespace Content.Client.Lobby.UI
                 foreach (var slot in slots)
                 {
                     var itemType = gear.GetGear(slot.Name, profile);
+                    if(invSystem.TryUnequip(dummy, slot.Name, out var unequippedItem, true, true))
+                    {
+                        entMan.DeleteEntity(unequippedItem.Value);
+                    }
+
                     if (itemType != string.Empty)
                     {
-                        invSystem.TryUnequip(dummy, slot.Name, true, true);
                         var item = entMan.SpawnEntity(itemType, MapCoordinates.Nullspace);
                         invSystem.TryEquip(dummy, item, slot.Name, true, true);
                     }

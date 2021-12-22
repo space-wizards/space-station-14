@@ -159,10 +159,17 @@ public abstract partial class InventorySystem
     public bool TryUnequip(EntityUid uid, string slot, bool silent = false, bool force = false,
         InventoryComponent? inventory = null) => TryUnequip(uid, uid, slot, silent, force, inventory);
 
-    public virtual bool TryUnequip(EntityUid actor, EntityUid target, string slot, bool silent = false,
-        bool force = false,
-        InventoryComponent? inventory = null)
+    public bool TryUnequip(EntityUid actor, EntityUid target, string slot, bool silent = false,
+        bool force = false, InventoryComponent? inventory = null) =>
+        TryUnequip(actor, target, slot, out _, silent, force, inventory);
+
+    public bool TryUnequip(EntityUid uid, string slot, [NotNullWhen(true)] out EntityUid? removedItem, bool silent = false, bool force = false,
+        InventoryComponent? inventory = null) => TryUnequip(uid, uid, slot, out removedItem, silent, force, inventory);
+
+    public virtual bool TryUnequip(EntityUid actor, EntityUid target, string slot, [NotNullWhen(true)] out EntityUid? removedItem, bool silent = false,
+        bool force = false, InventoryComponent? inventory = null)
     {
+        removedItem = null;
         if (!Resolve(target, ref inventory, false))
         {
             if(!silent) _popup.PopupCursor(Loc.GetString("inventory-component-can-unequip-cannot"), Filter.Local());
@@ -175,9 +182,9 @@ public abstract partial class InventorySystem
             return false;
         }
 
-        var entity = slotContainer.ContainedEntity;
+        removedItem = slotContainer.ContainedEntity;
 
-        if (!entity.HasValue) return false;
+        if (!removedItem.HasValue) return false;
 
         if (!force && !CanUnequip(actor, target, slot, out var reason, slotContainer, slotDefinition, inventory))
         {
@@ -186,7 +193,7 @@ public abstract partial class InventorySystem
         }
 
         //we need to do this to make sure we are 100% removing this entity, since we are now dropping dependant slots
-        if (!force && !slotContainer.CanRemove(entity.Value))
+        if (!force && !slotContainer.CanRemove(removedItem.Value))
             return false;
 
         foreach (var slotDef in GetSlots(target, inventory))
@@ -200,18 +207,18 @@ public abstract partial class InventorySystem
 
         if (force)
         {
-            slotContainer.ForceRemove(entity.Value);
+            slotContainer.ForceRemove(removedItem.Value);
         }
         else
         {
-            if (!slotContainer.Remove(entity.Value))
+            if (!slotContainer.Remove(removedItem.Value))
             {
                 //should never happen bc of the canremove lets just keep in just in case
                 return false;
             }
         }
 
-        Transform(entity.Value).Coordinates = Transform(target).Coordinates;
+        Transform(removedItem.Value).Coordinates = Transform(target).Coordinates;
 
         inventory.Dirty();
 

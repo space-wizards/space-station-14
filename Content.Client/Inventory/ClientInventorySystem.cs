@@ -76,11 +76,11 @@ namespace Content.Client.Inventory
             return base.TryEquip(actor, target, itemUid, slot, silent, force, inventory, item);
         }
 
-        public override bool TryUnequip(EntityUid actor, EntityUid target, string slot, bool silent = false, bool force = false,
+        public override bool TryUnequip(EntityUid actor, EntityUid target, string slot, [NotNullWhen(true)] out EntityUid? removedItem, bool silent = false, bool force = false,
             InventoryComponent? inventory = null)
         {
             if(!target.IsClientSide() && !actor.IsClientSide()) RaiseNetworkEvent(new TryUnequipNetworkMessage(actor, target, slot, silent, force));
-            return base.TryUnequip(actor, target, slot, silent, force, inventory);
+            return base.TryUnequip(actor, target, slot, out removedItem, silent, force, inventory);
         }
 
         private void OnDidUnequip(EntityUid uid, ClientInventoryComponent component, DidUnequipEvent args)
