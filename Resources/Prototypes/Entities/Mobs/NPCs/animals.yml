@@ -393,7 +393,7 @@
     sprite: Mobs/Animals/mouse.rsi
     HeldPrefix: 0
     Slots:
-    - Helmet
+    - HEAD
   - type: Physics
   - type: Fixtures
     fixtures:

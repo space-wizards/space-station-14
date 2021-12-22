@@ -3,7 +3,7 @@
   slots:
     - name: shoes
       slotTexture: shoes
-      slotFlags: SHOES
+      slotFlags: FEET
       uiContainer: Top
       uiWindowPos: 1,3
       displayName: Shoes
@@ -84,7 +84,7 @@
       displayName: Belt
     - name: back
       slotTexture: back
-      slotFlags: BACKPACK
+      slotFlags: BACK
       uiContainer: BottomLeft
       uiWindowPos: 3,0
       displayName: Back

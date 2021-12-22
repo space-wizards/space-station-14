@@ -5,7 +5,7 @@
   components:
   - type: Clothing
     Slots:
-    - Helmet
+    - HEAD
   - type: Sprite
     state: icon
 
@@ -16,7 +16,7 @@
   components:
   - type: Clothing
     Slots:
-    - Helmet
+    - HEAD
   - type: Sprite
     state: icon
 
