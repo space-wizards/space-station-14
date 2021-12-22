@@ -1,1 +1,1 @@
-galactic-bank-selection-menu-title = Galactic Bank Selection
+galactic-bank-selection-menu-title = Выбор галактического банка

@@ -17,4 +17,3 @@ chatsan-surprised = looks surpised
 chatsan-confused = looks confused
 chatsan-unimpressed = seems unimpressed
 chatsan-waves = waves
-ы

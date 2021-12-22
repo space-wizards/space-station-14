@@ -1,3 +1,3 @@
 delete-singularities = Удалить сингулярности
-open-station-events = События на станции
+open-station-events = Случайные события
 load-game-prototype = Загрузить прототип

@@ -1,4 +1,4 @@
-cuffable-component-cannot-interact-message = You can't do that!
+cuffable-component-cannot-interact-message = Вы не можете этого сделать!
 cuffable-component-cannot-remove-cuffs-too-far-message = You are too far away to remove the cuffs.
 cuffable-component-start-removing-cuffs-message = You start removing the cuffs.
 cuffable-component-remove-cuffs-success-message = You successfully remove the cuffs.

@@ -1,7 +1,7 @@
-suicide-command-description = Commits suicide
-suicide-command-help-text = The suicide command gives you a quick way out of a round while remaining in-character.
-                            The method varies, first it will attempt to use the held item in your active hand.
-                            If that fails, it will attempt to use an object in the environment.
-                            Finally, if neither of the above worked, you will die by biting your tongue.
-suicide-command-default-text-others = {$name} is attempting to bite their own tongue!
-suicide-command-default-text-self = You attempt to bite your own tongue!
+suicide-command-description = Совершает самоубийство
+suicide-command-help-text = Команда самоубийства дает вам возможность быстро выйти из раунда, оставаясь в образе персонажа.
+                            Способы бывают разные, сначала вы попытаетесь использовать предмет, находящийся у вас в активной руке.
+                            Если это не удастся, то будет сделана попытка использовать предмет рядом с вами.
+                            Наконец, если ни один из вышеперечисленных способов не сработал, вы умрете, прикусив язык.
+suicide-command-default-text-others = {$name} пытается прикусить свой собственный язык!
+suicide-command-default-text-self = Вы пытаетесь прикусить свой собственный язык!
