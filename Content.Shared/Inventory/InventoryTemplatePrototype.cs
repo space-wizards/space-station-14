@@ -13,7 +13,6 @@ public class InventoryTemplatePrototype : IPrototype
     [DataField("id", required: true)]
     public string ID { get; } = string.Empty;
 
-    //todo this is supreme shit and ideally slots should be stored in a given equipmentslotscomponent on each equipment
     [DataField("slots")]
     public SlotDefinition[] Slots { get; } = Array.Empty<SlotDefinition>();
 }
@@ -25,13 +24,13 @@ public class SlotDefinition
 
     [DataField("slotTexture")] public string TextureName { get; } = "pocket";
 
-    //todo paul is this how you serialize flags?
     [DataField("slotFlags")] public SlotFlags SlotFlags { get; } = SlotFlags.PREVENTEQUIP;
 
     [DataField("uiContainer")] public SlotUIContainer UIContainer { get; } = SlotUIContainer.None;
 
     [DataField("uiWindowPos", required: true)] public Vector2i UIWindowPosition { get; }
 
+    //todo this is supreme shit and ideally slots should be stored in a given equipmentslotscomponent on each equipment
     [DataField("dependsOn")] public string? DependsOn { get; }
 
     [DataField("displayName", required: true)] public string DisplayName { get; } = string.Empty;
