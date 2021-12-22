@@ -22,7 +22,7 @@ namespace Content.Server.Database
         {
         }
 
-        public ServerDbContext(DbContextOptions<ServerDbContext> options) : base(options)
+        public ServerDbContext(DbContextOptions options) : base(options)
         {
             InitializedWithOptions = true;
         }

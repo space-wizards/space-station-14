@@ -1,18 +1,31 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Net;
+using System.Runtime.CompilerServices;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Content.Server.Database
 {
-    public sealed class PostgresServerDbContext : ServerDbContext
+    public sealed class PostgresServerDbContext : ServerDbContext, IDesignTimeDbContextFactory<PostgresServerDbContext>
     {
         // This is used by the "dotnet ef" CLI tool.
         public PostgresServerDbContext()
         {
+        }
+
+        public PostgresServerDbContext(DbContextOptions<PostgresServerDbContext> options) : base(options)
+        {
+        }
+
+        public PostgresServerDbContext CreateDbContext(string[] args)
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<PostgresServerDbContext>();
+            optionsBuilder.UseNpgsql(args[0]);
+            return new PostgresServerDbContext(optionsBuilder.Options);
         }
 
         static PostgresServerDbContext()
