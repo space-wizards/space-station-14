@@ -64,7 +64,7 @@ namespace Content.Server.Administration
 
             // TODO: Sanitize text?
             // Confirm that this person is actually allowed to send a message here.
-            var personalChannel = senderSession.UserId == message.ChannelId
+            var personalChannel = senderSession.UserId == message.ChannelId;
             var senderAdmin = _adminManager.GetAdminData(senderSession);
             var authorized = personalChannel || senderAdmin != null;
             if (!authorized)
@@ -126,7 +126,8 @@ namespace Content.Server.Administration
 
                     if (!request.IsSuccessStatusCode)
                     {
-                        _sawmill.Log(LogLevel.Error, $"Discord returned bad status code: {request.StatusCode}\nResponse: {request.Content}");
+                        var content = await request.Content.ReadAsStringAsync();
+                        _sawmill.Log(LogLevel.Error, $"Discord returned bad status code: {request.StatusCode}\nResponse: {content}");
                     }
                 }
 
@@ -146,13 +147,13 @@ namespace Content.Server.Administration
         private struct WebhookPayload
         {
             // ReSharper disable once InconsistentNaming
-            public string username;
+            public string username { get; set; } = "";
 
             // ReSharper disable once InconsistentNaming
-            public string content;
+            public string content { get; set; } = "";
 
             // ReSharper disable once InconsistentNaming
-            public readonly Dictionary<string, string[]> allowed_mentions =
+            public Dictionary<string, string[]> allowed_mentions { get; set; } =
                 new()
                 {
                     { "parse", Array.Empty<string>() }
