@@ -41,7 +41,7 @@ jobs:
     - name: Upload files to mothership
       uses: appleboy/scp-action@master
       with:
-        host: 45.76.82.67
+        host: 108.61.171.191
         username: deployer
         key: ${{ secrets.BUILDS_SSH_KEY }}
         source: "release/${{ github.sha }}"
@@ -51,8 +51,8 @@ jobs:
     - name: Update manifest JSON
       uses: appleboy/ssh-action@master
       with:
-        host: 45.76.82.67
+        host: 108.61.171.191
         username: deployer
         key: ${{ secrets.BUILDS_SSH_KEY }}
-        script: node ~/scripts/push_to_manifest.js -bn syndicate -bi ${{ github.sha }}
+        script: node ~/scripts/push_to_manifest.js -fork syndicate -id ${{ github.sha }}
 
