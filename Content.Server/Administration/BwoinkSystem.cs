@@ -1,14 +1,14 @@
 ﻿#nullable enable
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
+using System.Text.Json;
 using Content.Server.Administration.Managers;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using JetBrains.Annotations;
-using Newtonsoft.Json;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Server.Player;
@@ -64,8 +64,9 @@ namespace Content.Server.Administration
 
             // TODO: Sanitize text?
             // Confirm that this person is actually allowed to send a message here.
+            var personalChannel = senderSession.UserId == message.ChannelId
             var senderAdmin = _adminManager.GetAdminData(senderSession);
-            var authorized = senderSession.UserId == message.ChannelId || senderAdmin != null;
+            var authorized = personalChannel || senderAdmin != null;
             if (!authorized)
             {
                 // Unauthorized bwoink (log?)
@@ -102,11 +103,13 @@ namespace Content.Server.Administration
             var sendsWebhook = _webhookUrl != string.Empty;
             if (sendsWebhook)
             {
-                _sawmill ??= IoCManager.Resolve<ILogManager>().GetSawmill("AHELP");
-
-                async void LookupFinished(Task<LocatedPlayerData?> finishedTask)
+                async void SendWebhook()
                 {
-                    if (finishedTask.Result == null)
+                    _sawmill ??= IoCManager.Resolve<ILogManager>().GetSawmill("AHELP");
+
+                    var lookup = await _playerLocator.LookupIdAsync(message.ChannelId);
+
+                    if (lookup == null)
                     {
                         _sawmill.Log(LogLevel.Error, $"Unable to find player for netuserid {msg.ChannelId} when sending discord webhook.");
                         return;
@@ -114,19 +117,20 @@ namespace Content.Server.Administration
 
                     var payload = new WebhookPayload()
                     {
-                        Username = _serverName,
-                        Content = $"`[{finishedTask.Result.Username}]` {senderSession.Name}: \"{escapedText}\""
+                        username = _serverName,
+                        content = $"`[{lookup.Username}]` {senderSession.Name}: \"{message.Text}\""
                     };
+
                     var request = await _httpClient.PostAsync(_webhookUrl,
-                        new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json"));
+                        new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json"));
 
                     if (!request.IsSuccessStatusCode)
                     {
-                        _sawmill.Log(LogLevel.Error, $"Discord returned bad status code: {request.StatusCode}");
+                        _sawmill.Log(LogLevel.Error, $"Discord returned bad status code: {request.StatusCode}\nResponse: {request.Content}");
                     }
                 }
 
-                _playerLocator.LookupIdAsync(msg.ChannelId).ContinueWith(LookupFinished);
+                SendWebhook();
             }
 
             if (targets.Count == 1)
@@ -139,12 +143,20 @@ namespace Content.Server.Administration
             }
         }
 
-        [JsonObject(MemberSerialization.Fields)]
         private struct WebhookPayload
         {
-            [JsonProperty("username")] public string Username;
+            // ReSharper disable once InconsistentNaming
+            public string username;
 
-            [JsonProperty("content")] public string Content;
+            // ReSharper disable once InconsistentNaming
+            public string content;
+
+            // ReSharper disable once InconsistentNaming
+            public readonly Dictionary<string, string[]> allowed_mentions =
+                new()
+                {
+                    { "parse", Array.Empty<string>() }
+                };
         }
     }
 }

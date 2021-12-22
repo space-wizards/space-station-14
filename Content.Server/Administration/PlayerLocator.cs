@@ -114,7 +114,7 @@ namespace Content.Server.Administration
             var client = new HttpClient();
             var authServer = _configurationManager.GetCVar(CVars.AuthServer);
             var requestUri = $"{authServer}api/query/userid?userid={WebUtility.UrlEncode(userId.UserId.ToString())}";
-            using var resp = await client.SendAsync(new HttpRequestMessage(HttpMethod.Head, requestUri), cancel);
+            using var resp = await client.GetAsync(requestUri, cancel);
 
             if (resp.StatusCode == HttpStatusCode.NotFound)
                 return null;
