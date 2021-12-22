@@ -39,13 +39,13 @@ namespace Content.Shared.Alert
         /// Name to show in tooltip window. Accepts formatting.
         /// </summary>
         [DataField("name")]
-        public FormattedMessage Name { get; private set; } = FormattedMessage.Empty;
+        public FormattedMessage Name { get; private set; } = new();
 
         /// <summary>
         /// Description to show in tooltip window. Accepts formatting.
         /// </summary>
         [DataField("description")]
-        public FormattedMessage Description { get; private set; } = FormattedMessage.Empty;
+        public FormattedMessage Description { get; private set; } = new();
 
         /// <summary>
         /// Category the alert belongs to. Only one alert of a given category
