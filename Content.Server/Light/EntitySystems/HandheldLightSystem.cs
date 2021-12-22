@@ -74,7 +74,8 @@ namespace Content.Server.Light.EntitySystems
             EntityManager.EnsureComponent<PointLightComponent>(uid);
             component.CellSlot = EntityManager.EnsureComponent<PowerCellSlotComponent>(uid);
 
-            EntityManager.DirtyEntity(uid);
+            // Want to make sure client has latest data on level so battery displays properly.
+            component.Dirty(EntityManager);
         }
 
         private void OnRemove(EntityUid uid, HandheldLightComponent component, ComponentRemove args)
@@ -88,7 +89,7 @@ namespace Content.Server.Light.EntitySystems
 
             if (!_blocker.CanInteract(args.User)) return;
             if (!component.CellSlot.InsertCell(args.Used)) return;
-            EntityManager.DirtyEntity(uid);
+            component.Dirty(EntityManager);
             args.Handled = true;
         }
 
@@ -172,6 +173,8 @@ namespace Content.Server.Light.EntitySystems
             component.Activated = false;
             UpdateLightAction(component);
             HandleDeactivate(component);
+            component.LastLevel = null;
+            component.Dirty(EntityManager);
 
             if (makeNoise)
                 SoundSystem.Play(Filter.Pvs(component.Owner), component.TurnOffSound.GetSound(), component.Owner);
@@ -206,6 +209,8 @@ namespace Content.Server.Light.EntitySystems
             UpdateLightAction(component);
             SetState(component, true);
             HandleActivate(component);
+            component.LastLevel = GetLevel(component);
+            component.Dirty(EntityManager);
 
             SoundSystem.Play(Filter.Pvs(component.Owner), component.TurnOnSound.GetSound(), component.Owner);
             return true;
@@ -272,7 +277,7 @@ namespace Content.Server.Light.EntitySystems
             if (level != component.LastLevel)
             {
                 component.LastLevel = level;
-                EntityManager.DirtyEntity(component.Owner);
+                component.Dirty(EntityManager);
             }
         }
     }
