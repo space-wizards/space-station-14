@@ -1,0 +1,17 @@
+- type: accent
+  id: cat
+  words:
+  - Meow!
+  - Mow.
+  - Mrrrow!
+  - Hhsss!
+  - Brrow
+
+- type: accent
+  id: dog
+  words:
+  - Bark!
+  - Bork!
+  - Woof!
+  - Arf.
+  - Grrr.

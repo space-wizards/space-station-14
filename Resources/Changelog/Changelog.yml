@@ -1,19 +1,4 @@
 Entries:
-- author: Swept
-  changes:
-  - {message: Changed chatbox UI to be more consistent with SS14's UI, type: Tweak}
-  id: 254
-  time: '2021-07-09T07:10:57.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Airlocks & low walls near arrivals don't look weird anymore, type: Fix}
-  id: 255
-  time: '2021-07-13T04:10:03.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: AME jars and parts now show inhand sprites, type: Fix}
-  id: 256
-  time: '2021-07-15T07:45:11.671231+00:00'
 - author: Zumorica
   changes:
   - {message: Fix bug where constructing walls and windows would place them in the
@@ -2862,3 +2847,19 @@ Entries:
   - {message: Add checkbox in controls for US QWERTY keys., type: Add}
   id: 755
   time: '2021-12-21T09:35:34.0000000+00:00'
+- author: pointer-to-null
+  changes:
+  - {message: Server info in the game lobby now shows the currently selected map.,
+    type: Add}
+  id: 756
+  time: '2021-12-21T17:18:08.0000000+00:00'
+- author: Mith-randalf
+  changes:
+  - {message: The cigarette vendors are now full of lighters. Go nuts., type: Add}
+  id: 757
+  time: '2021-12-21T17:20:32.0000000+00:00'
+- author: Pancake
+  changes:
+  - {message: Added accents for overly talkative animals., type: Add}
+  id: 758
+  time: '2021-12-21T20:31:20.0000000+00:00'

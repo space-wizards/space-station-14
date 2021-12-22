@@ -370,6 +370,7 @@
     - type: FireVisualizer
       sprite: Mobs/Effects/onfire.rsi
       normalState: Monkey_burning
+  - type: MonkeyAccent
 
 - type: entity
   name: mouse
