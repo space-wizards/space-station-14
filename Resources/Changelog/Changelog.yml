@@ -1,12 +1,6 @@
 Entries:
 - author: Zumorica
   changes:
-  - {message: Fix bug where constructing walls and windows would place them in the
-      bar., type: Fix}
-  id: 257
-  time: '2021-07-15T07:45:11.671976+00:00'
-- author: Zumorica
-  changes:
   - {message: Fix being able to play instruments while incapacitated., type: Fix}
   id: 258
   time: '2021-07-15T07:45:11.672684+00:00'
@@ -2863,3 +2857,8 @@ Entries:
   - {message: Added accents for overly talkative animals., type: Add}
   id: 758
   time: '2021-12-21T20:31:20.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Added EVA suits to the EVA room., type: Add}
+  id: 759
+  time: '2021-12-22T22:47:34.0000000+00:00'
