@@ -55098,6 +55098,12 @@ entities:
       storagebase: !type:Container
         ents: []
     type: ContainerContainer
+- uid: 5731
+  type: Rack
+  components:
+  - pos: 12.5,-5.5
+    parent: 0
+    type: Transform
 - uid: 5732
   type: Bed
   components:
@@ -55456,6 +55462,12 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+- uid: 5773
+  type: Rack
+  components:
+  - pos: 11.5,-5.5
+    parent: 0
+    type: Transform
 - uid: 5774
   type: Grille
   components:
@@ -64911,6 +64923,12 @@ entities:
   - pos: 43.5,-2.5
     parent: 0
     type: Transform
+- uid: 6816
+  type: Rack
+  components:
+  - pos: 11.5,-8.5
+    parent: 0
+    type: Transform
 - uid: 6817
   type: WindowDirectional
   components:
@@ -72022,6 +72040,12 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+- uid: 7442
+  type: Rack
+  components:
+  - pos: 12.5,-8.5
+    parent: 0
+    type: Transform
 - uid: 7443
   type: PoweredSmallLight
   components:
@@ -72036,6 +72060,14 @@ entities:
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
+- uid: 7444
+  type: ClothingOuterHardsuitEVA
+  components:
+  - pos: 12.427699,-5.3438883
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 7445
   type: CableHV
   components:
@@ -73133,6 +73165,62 @@ entities:
       RangedMagazine-magazine: !type:Container
         ents: []
     type: ContainerContainer
+- uid: 7567
+  type: ClothingOuterHardsuitEVA
+  components:
+  - pos: 11.521449,-5.3282633
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 7568
+  type: ClothingOuterHardsuitEVA
+  components:
+  - pos: 12.365199,-8.359513
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 7569
+  type: ClothingOuterHardsuitEVA
+  components:
+  - pos: 11.443324,-8.422013
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 7570
+  type: ClothingHeadHelmetEVA
+  components:
+  - pos: 11.537074,-5.5157633
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 7571
+  type: ClothingHeadHelmetEVA
+  components:
+  - pos: 12.458949,-5.5157633
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 7572
+  type: ClothingHeadHelmetEVA
+  components:
+  - pos: 11.505824,-8.625138
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 7573
+  type: ClothingHeadHelmetEVA
+  components:
+  - pos: 12.458949,-8.531388
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 7608
   type: DisposalTrunk
   components:
