@@ -45,7 +45,7 @@ jobs:
         username: deployer
         key: ${{ secrets.BUILDS_SSH_KEY }}
         source: "release/${{ github.sha }}"
-        target: "/var/www/builds.corvax.xyz/syndicate/builds/"
+        target: "/var/www/builds.station14.ru/syndicate/builds/"
         strip_components: 1
 
     - name: Update manifest JSON
