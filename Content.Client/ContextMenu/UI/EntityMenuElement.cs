@@ -40,7 +40,7 @@ namespace Content.Client.ContextMenu.UI
             LayoutContainer.SetGrowVertical(CountLabel, LayoutContainer.GrowDirection.Begin);
 
             Entity = entity;
-            if (Entity != default)
+            if (Entity != null)
             {
                 Count = 1;
                 CountLabel.Visible = false;
@@ -51,7 +51,7 @@ namespace Content.Client.ContextMenu.UI
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
-            Entity = default;
+            Entity = null;
             Count = 0;
         }
 
@@ -61,23 +61,23 @@ namespace Content.Client.ContextMenu.UI
         /// </summary>
         public void UpdateEntity(EntityUid? entity = null)
         {
-            // Deleted() automatically checks for null & existence.
-            if (!_entityManager.Deleted(Entity))
-            {
-                entity = Entity;
-            }
-            else if (_entityManager.Deleted(entity))
+            entity ??= Entity;
+
+            // check whether entity is null, invalid, or has been deleted.
+            // _entityManager.Deleted() implicitly checks all of these.
+            if (_entityManager.Deleted(entity))
             {
                 Text = string.Empty;
+                EntityIcon.Sprite = null;
                 return;
             }
 
             EntityIcon.Sprite = _entityManager.GetComponentOrNull<ISpriteComponent>(entity);
 
             if (UserInterfaceManager.DebugMonitors.Visible)
-                Text = $"{_entityManager.GetComponent<MetaDataComponent>(entity.Value!).EntityName} ({entity})";
+                Text = _entityManager.ToPrettyString(entity.Value);
             else
-                Text = _entityManager.GetComponent<MetaDataComponent>(entity.Value!).EntityName;
+                Text = _entityManager.GetComponent<MetaDataComponent>(entity.Value).EntityName;
         }
     }
 }

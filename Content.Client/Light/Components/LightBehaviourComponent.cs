@@ -52,7 +52,7 @@ namespace Content.Client.Light.Components
         [ViewVariables] protected float MaxTime { get; set; }
 
         private float _maxTime = default;
-        private EntityUid? _parent = null!;
+        private EntityUid _parent = default!;
 
         public void Initialize(EntityUid parent, IRobustRandom random, IEntityManager entMan)
         {
