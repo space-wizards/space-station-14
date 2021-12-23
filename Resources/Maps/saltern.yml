@@ -72557,4 +72557,17 @@ entities:
   - pos: 14.5,-0.5
     parent: 853
     type: Transform
+- uid: 7116
+  type: SalvageMagnet
+  components:
+  - rot: 3.141592697301183 rad
+    pos: 23.5,11.5
+    parent: 853
+    type: Transform
+- uid: 7117
+  type: CrateSalvageEquipment
+  components:
+  - pos: 23.5,13.5
+    parent: 853
+    type: Transform
 ...
