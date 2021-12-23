@@ -564,16 +564,7 @@
   - type: PointLight
     radius: 2
     color: "#00CCFF"
-#  - type: LightBehaviour
-#    behaviours:
-#      - !type:FadeBehaviour
-#        interpolate: Linear
-#        maxDuration: 1.0 #duration of light
-#        startValue: 1.5
-#        endValue: 10.0
-#        property: Radius
-#        isLooped: true
-  #- type: Item
-  #  size: 24
-  #  sprite: Objects/Fun/toys.rsi
-  #  HeldPrefix: orb
+  - type: Item
+    size: 24
+    sprite: Objects/Fun/toys.rsi
+    HeldPrefix: orb

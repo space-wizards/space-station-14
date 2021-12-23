@@ -290,6 +290,14 @@
           0.2
         ]
       ]
+    },
+    {
+      "name": "orb-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "orb-inhand-right",
+      "directions": 4
     }
   ]
 }
