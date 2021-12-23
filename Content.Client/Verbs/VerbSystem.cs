@@ -192,27 +192,43 @@ namespace Content.Client.Verbs
         ///     Execute actions associated with the given verb.
         /// </summary>
         /// <remarks>
-        ///     Unless this is a client-exclusive verb, this will also tell the server to run the same verb. However, if the verb
-        ///     is disabled and has a tooltip, this function will only generate a pop-up-message instead of executing anything.
+        ///     Unless this is a client-exclusive verb, this will also tell the server to run the same verb.
         /// </remarks>
         public void ExecuteVerb(EntityUid target, Verb verb, VerbType verbType)
         {
-            if (verb.Disabled)
-            {
-                if (verb.Message != null)
-                    _popupSystem.PopupCursor(verb.Message);
-                return;
-            }
-
             var user = _playerManager.LocalPlayer?.ControlledEntity;
             if (user == null)
                 return;
 
-            ExecuteVerb(verb, user.Value, target);
-
-            if (!verb.ClientExclusive)
+            // is this verb actually valid?
+            if (verb.Disabled)
             {
-                RaiseNetworkEvent(new ExecuteVerbEvent(target, verb, verbType));
+                // maybe send an informative pop-up message.
+                if (!string.IsNullOrWhiteSpace(verb.Message))
+                    _popupSystem.PopupEntity(verb.Message, user.Value);
+
+                return;
+            }
+
+            if (verb.ClientExclusive)
+                // is this a client exclusive (gui) verb?
+                ExecuteVerb(verb, user.Value, target);
+            else
+                EntityManager.RaisePredictiveEvent(new ExecuteVerbEvent(target, verb, verbType));
+        }
+
+        public override void ExecuteVerb(Verb verb, EntityUid user, EntityUid target,  bool forced = false)
+        {
+            // invoke any relevant actions
+            verb.Act?.Invoke();
+
+            // Maybe raise a local event
+            if (verb.ExecutionEventArgs != null)
+            {
+                if (verb.EventTarget.IsValid())
+                    RaiseLocalEvent(verb.EventTarget, verb.ExecutionEventArgs);
+                else
+                    RaiseLocalEvent(verb.ExecutionEventArgs);
             }
         }
 

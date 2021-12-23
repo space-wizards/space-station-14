@@ -25,7 +25,6 @@ using Robust.Shared.Log;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
-using Robust.Shared.Utility.Markup;
 using static Content.Server.Chat.Managers.IChatManager;
 
 namespace Content.Server.Chat.Managers
@@ -193,7 +192,7 @@ namespace Content.Server.Chat.Managers
             var listeners = EntitySystem.Get<ListeningSystem>();
             listeners.PingListeners(source, message);
 
-            message = Basic.EscapeText(message);
+            message = FormattedMessage.EscapeText(message);
 
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.Local;
@@ -224,7 +223,7 @@ namespace Content.Server.Chat.Managers
                 return;
             }
 
-            action = Basic.EscapeText(action);
+            action = FormattedMessage.EscapeText(action);
 
             var clients = Filter.Empty()
                 .AddInRange(_entManager.GetComponent<TransformComponent>(source).MapPosition, VoiceRange)
@@ -261,7 +260,7 @@ namespace Content.Server.Chat.Managers
                 return;
             }
 
-            message = Basic.EscapeText(message);
+            message = FormattedMessage.EscapeText(message);
 
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.OOC;
@@ -293,7 +292,7 @@ namespace Content.Server.Chat.Managers
                 return;
             }
 
-            message = Basic.EscapeText(message);
+            message = FormattedMessage.EscapeText(message);
 
             var clients = GetDeadChatClients();
 
@@ -320,7 +319,7 @@ namespace Content.Server.Chat.Managers
                 return;
             }
 
-            message = Basic.EscapeText(message);
+            message = FormattedMessage.EscapeText(message);
 
             var clients = GetDeadChatClients();
 
@@ -351,7 +350,7 @@ namespace Content.Server.Chat.Managers
                 return;
             }
 
-            message = Basic.EscapeText(message);
+            message = FormattedMessage.EscapeText(message);
 
             var clients = _adminManager.ActiveAdmins.Select(p => p.ConnectedClient);
 
@@ -369,7 +368,7 @@ namespace Content.Server.Chat.Managers
         {
             var clients = _adminManager.ActiveAdmins.Select(p => p.ConnectedClient);
 
-            message = Basic.EscapeText(message);
+            message = FormattedMessage.EscapeText(message);
 
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
 
@@ -383,7 +382,7 @@ namespace Content.Server.Chat.Managers
 
         public void SendHookOOC(string sender, string message)
         {
-            message = Basic.EscapeText(message);
+            message = FormattedMessage.EscapeText(message);
 
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.OOC;

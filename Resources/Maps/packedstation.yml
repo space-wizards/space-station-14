@@ -27006,21 +27006,14 @@ entities:
     parent: 0
     type: Transform
 - uid: 2090
-  type: CrateGenericSteel
+  type: SalvageMagnet
   components:
   - pos: 6.5,32.5
+    rot: -1.5707963267948966 rad
     parent: 0
     type: Transform
-  - isPlaceable: False
-    type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-      labelSlot: !type:ContainerSlot {}
-      PaperLabel: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 2091
-  type: CrateGenericSteel
+  type: CrateSalvageEquipment
   components:
   - pos: 7.5,31.5
     parent: 0
@@ -55099,13 +55092,11 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 5731
-  type: CarvingHello
+  type: Rack
   components:
-  - pos: 89.49635,-12.434606
+  - pos: 12.5,-5.5
     parent: 0
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 5732
   type: Bed
   components:
@@ -55465,13 +55456,11 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 5773
-  type: CarvingHelpMe
+  type: Rack
   components:
-  - pos: 49.5,-15.5
+  - pos: 11.5,-5.5
     parent: 0
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 5774
   type: Grille
   components:
@@ -64928,13 +64917,11 @@ entities:
     parent: 0
     type: Transform
 - uid: 6816
-  type: CarvingThankYou
+  type: Rack
   components:
-  - pos: 76.450966,-13.440164
+  - pos: 11.5,-8.5
     parent: 0
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 6817
   type: WindowDirectional
   components:
@@ -72047,13 +72034,11 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 7442
-  type: CarvingVeryGood
+  type: Rack
   components:
-  - pos: 11.510399,-10.47184
+  - pos: 12.5,-8.5
     parent: 0
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 7443
   type: PoweredSmallLight
   components:
@@ -72069,9 +72054,9 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 7444
-  type: CarvingImSorry
+  type: ClothingOuterHardsuitEVA
   components:
-  - pos: 74.47542,-5.540069
+  - pos: 12.427699,-5.3438883
     parent: 0
     type: Transform
   - canCollide: False
@@ -73052,6 +73037,183 @@ entities:
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
+- uid: 7557
+  type: SmgDrozdRiot
+  components:
+  - pos: 38.61274,27.452318
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      MagazineBarrel-chamber: !type:ContainerSlot {}
+      MagazineBarrel-magazine: !type:ContainerSlot
+        ent: 7558
+    type: ContainerContainer
+- uid: 7558
+  type: MagazineMagnumSmgRubber
+  components:
+  - parent: 7557
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      RangedMagazine-magazine: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 7559
+  type: SmgDrozdRiot
+  components:
+  - pos: 38.597115,27.702318
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      MagazineBarrel-chamber: !type:ContainerSlot {}
+      MagazineBarrel-magazine: !type:ContainerSlot
+        ent: 7560
+    type: ContainerContainer
+- uid: 7560
+  type: MagazineMagnumSmgRubber
+  components:
+  - parent: 7559
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      RangedMagazine-magazine: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 7561
+  type: MagazineMagnumSmgRubber
+  components:
+  - pos: 38.784615,26.467943
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      RangedMagazine-magazine: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 7562
+  type: MagazineMagnumSmgRubber
+  components:
+  - pos: 38.440865,26.499193
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      RangedMagazine-magazine: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 7563
+  type: MagazineMagnumSmgRubber
+  components:
+  - rot: 2.006034628720954E-05 rad
+    pos: 38.26498,26.51372
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      RangedMagazine-magazine: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 7564
+  type: MagazineMagnumSmgRubber
+  components:
+  - pos: 38.534615,26.483568
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      RangedMagazine-magazine: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 7565
+  type: MagazineMagnumSmgRubber
+  components:
+  - pos: 38.597115,26.483568
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      RangedMagazine-magazine: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 7566
+  type: MagazineMagnumSmgRubber
+  components:
+  - pos: 38.73774,26.483568
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      RangedMagazine-magazine: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 7567
+  type: ClothingOuterHardsuitEVA
+  components:
+  - pos: 11.521449,-5.3282633
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 7568
+  type: ClothingOuterHardsuitEVA
+  components:
+  - pos: 12.365199,-8.359513
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 7569
+  type: ClothingOuterHardsuitEVA
+  components:
+  - pos: 11.443324,-8.422013
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 7570
+  type: ClothingHeadHelmetEVA
+  components:
+  - pos: 11.537074,-5.5157633
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 7571
+  type: ClothingHeadHelmetEVA
+  components:
+  - pos: 12.458949,-5.5157633
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 7572
+  type: ClothingHeadHelmetEVA
+  components:
+  - pos: 11.505824,-8.625138
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 7573
+  type: ClothingHeadHelmetEVA
+  components:
+  - pos: 12.458949,-8.531388
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 7608
   type: DisposalTrunk
   components:
@@ -108719,54 +108881,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 11104
-  type: SmgDrozd
-  components:
-  - pos: 38.4964,27.729683
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      MagazineBarrel-chamber: !type:ContainerSlot {}
-      MagazineBarrel-magazine: !type:ContainerSlot
-        ent: 11105
-    type: ContainerContainer
-- uid: 11105
-  type: MagazineMagnumSmg
-  components:
-  - parent: 11104
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      RangedMagazine-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 11106
-  type: SmgDrozd
-  components:
-  - pos: 38.512024,27.573433
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      MagazineBarrel-chamber: !type:ContainerSlot {}
-      MagazineBarrel-magazine: !type:ContainerSlot
-        ent: 11107
-    type: ContainerContainer
-- uid: 11107
-  type: MagazineMagnumSmg
-  components:
-  - parent: 11106
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      RangedMagazine-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 11108
   type: PowerCellMediumStandard
   components:
@@ -108936,79 +109050,6 @@ entities:
     type: Physics
   - containers:
       storagebase: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 11126
-  type: MagazineMagnumSmg
-  components:
-  - rot: 1.7662936443230137E-05 rad
-    pos: 38.26498,26.539928
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      RangedMagazine-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 11127
-  type: MagazineMagnumSmg
-  components:
-  - pos: 38.440334,26.55563
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      RangedMagazine-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 11128
-  type: MagazineMagnumSmg
-  components:
-  - pos: 38.64346,26.52438
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      RangedMagazine-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 11129
-  type: MagazineMagnumSmg
-  components:
-  - pos: 38.79971,26.52438
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      RangedMagazine-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 11130
-  type: MagazineMagnumSmg
-  components:
-  - pos: 38.534084,26.52438
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      RangedMagazine-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 11131
-  type: MagazineMagnumSmg
-  components:
-  - pos: 38.377834,26.508755
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      RangedMagazine-magazine: !type:Container
         ents: []
     type: ContainerContainer
 - uid: 11132

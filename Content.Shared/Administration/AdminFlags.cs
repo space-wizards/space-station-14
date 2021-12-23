@@ -76,6 +76,11 @@ namespace Content.Shared.Administration
         Query = 1 << 11,
 
         /// <summary>
+        ///     Lets you use the admin help system.
+        /// </summary>
+        Adminhelp = 1 << 12,
+
+        /// <summary>
         ///     Dangerous host permissions like scsi.
         /// </summary>
         Host = 1u << 31,
