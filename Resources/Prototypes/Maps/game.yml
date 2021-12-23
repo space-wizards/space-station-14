@@ -99,7 +99,7 @@
   maxPlayers: 16
   overflowJobs: []
   availableJobs:
-    CargoTechnician: [ 1, 2 ]
+    CargoTechnician: [ 1, 1 ]
     Bartender: [ 1, 1 ]
     Botanist: [ 1, 1 ]
     Chef: [ 1, 1 ]
