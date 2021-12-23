@@ -454,3 +454,14 @@
       amount: 1
   products:
     SpaceDrugs: 3
+    
+- type: reaction
+  id: Ultravasculine
+  reactants:
+    Histamine:
+      amount: 2
+    Plasma:
+      amount: 5
+      catalyst: true
+  products:
+    Ultravasculine: 3
