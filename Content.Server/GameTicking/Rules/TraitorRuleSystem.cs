@@ -117,7 +117,7 @@ public class TraitorRuleSystem : GameRuleSystem
         for (var i = 0; i < numTraitors; i++)
         {
             IPlayerSession traitor;
-            if(prefList.Count < numTraitors)
+            if(prefList.Count == 0)
             {
                 if (list.Count == 0)
                 {
