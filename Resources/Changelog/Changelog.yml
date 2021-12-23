@@ -1,9 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: Added the dual-port air vent., type: Add}
-  id: 261
-  time: '2021-07-15T13:24:45.0000000+00:00'
 - author: Fogapod
   changes:
   - {message: Added missing space in Spanish accent., type: Fix}
@@ -2866,3 +2861,8 @@ Entries:
   - {message: Wizards now have something to ponder., type: Add}
   id: 762
   time: '2021-12-23T10:33:55.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: The Salvage department now partially exists., type: Add}
+  id: 763
+  time: '2021-12-23T12:14:01.0000000+00:00'
