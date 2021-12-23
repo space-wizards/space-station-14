@@ -11,6 +11,7 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
+using Content.Shared.Temperature;
 using Content.Shared.Shuttles.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
@@ -52,7 +53,7 @@ namespace Content.Server.Shuttles.EntitySystems
             SubscribeLocalEvent<ThrusterComponent, PowerChangedEvent>(OnPowerChange);
             SubscribeLocalEvent<ThrusterComponent, AnchorStateChangedEvent>(OnAnchorChange);
             SubscribeLocalEvent<ThrusterComponent, RotateEvent>(OnRotate);
-
+            SubscribeLocalEvent<ThrusterComponent, IsHotEvent>(OnIsHotEvent);
             SubscribeLocalEvent<ThrusterComponent, StartCollideEvent>(OnStartCollide);
             SubscribeLocalEvent<ThrusterComponent, EndCollideEvent>(OnEndCollide);
 
@@ -93,6 +94,11 @@ namespace Content.Server.Shuttles.EntitySystems
         {
             base.Shutdown();
             _mapManager.TileChanged -= OnTileChange;
+        }
+
+        private void OnIsHotEvent(EntityUid uid, ThrusterComponent component, IsHotEvent args)
+        {
+            args.IsHot = component.Enabled;
         }
 
         private void OnTileChange(object? sender, TileChangedEventArgs e)
