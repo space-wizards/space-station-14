@@ -41,6 +41,10 @@
     prefixCreator: 'VG'
   mapPath: Maps/packedstation.yml
   minPlayers: 15
+  conditions:
+  - !type:HolidayMapCondition
+    inverted: true
+    holidays: [ "Christmas" ]
   overflowJobs:
     - Assistant
   availableJobs:
