@@ -12471,10 +12471,12 @@ entities:
   - pos: 4.5,-8.5
     parent: 4
     type: Transform
-  - enabled: False
-    type: AmbientSound
+  - startingCharge: 12000
+    type: Battery
   - loadingNetworkDemand: 30
-    supplyRampPosition: 2.1972852
+    currentReceiving: 15.000059
+    currentSupply: 15
+    supplyRampPosition: -5.9127808E-05
     type: PowerNetworkBattery
 - uid: 1136
   type: Poweredlight
@@ -21004,10 +21006,11 @@ entities:
     pos: 1.5,7.5
     parent: 4
     type: Transform
-  - powerLoad: 0
+  - powerLoad: 40
     type: ApcPowerReceiver
   - containers:
-      light_bulb: !type:ContainerSlot {}
+      light_bulb: !type:ContainerSlot
+        ent: 2019
     type: ContainerContainer
 - uid: 2011
   type: PoweredlightEmpty
@@ -21016,10 +21019,11 @@ entities:
     pos: 4.5,10.5
     parent: 4
     type: Transform
-  - powerLoad: 0
+  - powerLoad: 40
     type: ApcPowerReceiver
   - containers:
-      light_bulb: !type:ContainerSlot {}
+      light_bulb: !type:ContainerSlot
+        ent: 2018
     type: ContainerContainer
 - uid: 2012
   type: PoweredlightEmpty
@@ -21027,10 +21031,11 @@ entities:
   - pos: 8.5,13.5
     parent: 4
     type: Transform
-  - powerLoad: 0
+  - powerLoad: 40
     type: ApcPowerReceiver
   - containers:
-      light_bulb: !type:ContainerSlot {}
+      light_bulb: !type:ContainerSlot
+        ent: 2017
     type: ContainerContainer
 - uid: 2013
   type: PoweredlightEmpty
@@ -21403,14 +21408,111 @@ entities:
   - pos: 21.5,4.5
     parent: 4
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 2060
   type: VendingMachineCola
   components:
   - pos: 23.5,4.5
     parent: 4
     type: Transform
-  - enabled: False
-    type: AmbientSound
+- uid: 2061
+  type: SalternApc
+  components:
+  - pos: 11.5,9.5
+    parent: 4
+    type: Transform
+  - startingCharge: 12000
+    type: Battery
+  - loadingNetworkDemand: 30
+    currentReceiving: 15.000059
+    currentSupply: 15
+    supplyRampPosition: -5.9127808E-05
+    type: PowerNetworkBattery
+- uid: 2062
+  type: CableApcExtension
+  components:
+  - pos: 11.5,9.5
+    parent: 4
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 2063
+  type: CableMV
+  components:
+  - pos: 11.5,9.5
+    parent: 4
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 2064
+  type: SalternSubstation
+  components:
+  - pos: 3.5,9.5
+    parent: 4
+    type: Transform
+  - startingCharge: 3975867.5
+    type: Battery
+  - loadingNetworkDemand: 30.000118
+    currentSupply: 30.000118
+    supplyRampPosition: 30.000118
+    type: PowerNetworkBattery
+- uid: 2065
+  type: CableHV
+  components:
+  - pos: 3.5,8.5
+    parent: 4
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 2066
+  type: CableHV
+  components:
+  - pos: 3.5,9.5
+    parent: 4
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 2067
+  type: CableApcExtension
+  components:
+  - pos: 3.5,8.5
+    parent: 4
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 2068
+  type: CableApcExtension
+  components:
+  - pos: 3.5,9.5
+    parent: 4
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 2069
+  type: CableMV
+  components:
+  - pos: 3.5,8.5
+    parent: 4
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 2070
+  type: CableMV
+  components:
+  - pos: 3.5,9.5
+    parent: 4
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
 ...
