@@ -1,0 +1,67 @@
+- type: entity
+  name: Salvage Material Crate Spawner
+  id: SalvageMaterialCrateSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - texture: Structures/Storage/Crates/generic.rsi/crate_icon.png
+    - type: RandomSpawner
+      rarePrototypes:
+        - SalvageHumanCorpse
+        - CrateMaterialPlasteel
+        - CrateMaterialWood
+        - CrateMaterialPlastic
+        - CrateSalvageEquipment
+        - CrateMaterialSteel
+        - CrateMaterialGlass
+      rareChance: 0.4
+      prototypes:
+        - CrateSalvageAssortedGoodies
+      chance: 0.9
+      offset: 0.0
+
+- type: entity
+  name: Salvage Canister Spawner
+  id: SalvageCanisterSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - texture: Structures/Storage/canister.rsi/blue.png
+    - type: RandomSpawner
+      rarePrototypes:
+        - PlasmaCanister
+      rareChance: 0.03
+      prototypes:
+        - AirCanister
+        - NitrogenCanister
+        - OxygenCanister
+        - CarbonDioxideCanister
+        - WaterVaporCanister
+      chance: 0.9
+      offset: 0.0
+
+- type: entity
+  name: Salvage Mob Spawner
+  id: SalvageMobSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - texture: Mobs/Aliens/Carps/space.rsi/icon.png
+    - type: RandomSpawner
+      prototypes:
+        - MobCarp
+        - MobCarp
+        - MobCarp
+        - MobCarp
+        - MobCarp
+        - PlushieCarp
+        - DehydratedSpaceCarp
+      chance: 0.25
+      offset: 0.2
+

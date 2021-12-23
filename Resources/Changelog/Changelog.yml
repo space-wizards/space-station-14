@@ -1,24 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: Fix being able to play instruments while incapacitated., type: Fix}
-  id: 258
-  time: '2021-07-15T07:45:11.672684+00:00'
-- author: Zumorica
-  changes:
-  - {message: Fix crash when MIDI stops playing., type: Fix}
-  id: 259
-  time: '2021-07-15T07:45:11.673363+00:00'
-- author: Zumorica
-  changes:
-  - {message: Fixes spray puff and fire extinguisher cloud not moving., type: Fix}
-  id: 260
-  time: '2021-07-15T07:45:11.674114+00:00'
-- author: Zumorica
-  changes:
-  - {message: Added the dual-port air vent., type: Add}
-  id: 261
-  time: '2021-07-15T13:24:45.0000000+00:00'
 - author: Fogapod
   changes:
   - {message: Added missing space in Spanish accent., type: Fix}
@@ -2862,3 +2842,27 @@ Entries:
   - {message: Added EVA suits to the EVA room., type: Add}
   id: 759
   time: '2021-12-22T22:47:34.0000000+00:00'
+- author: wrexbe
+  changes:
+  - {message: It is now possible to tell when airlock power wires are partially cut,
+    type: Add}
+  - {message: Airlock text is a little bit clearer, type: Tweak}
+  - {message: 'Airlock now only loses power when both backup, and main power wires
+      are cut', type: Fix}
+  id: 760
+  time: '2021-12-23T04:02:27.0000000+00:00'
+- author: Fishfish458
+  changes:
+  - {message: Hypospray to CMO lockers and also traitor goals., type: Add}
+  id: 761
+  time: '2021-12-23T08:51:49.0000000+00:00'
+- author: Pancake
+  changes:
+  - {message: Wizards now have something to ponder., type: Add}
+  id: 762
+  time: '2021-12-23T10:33:55.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: The Salvage department now partially exists., type: Add}
+  id: 763
+  time: '2021-12-23T12:14:01.0000000+00:00'
