@@ -181,9 +181,9 @@ namespace Content.Client.Examine
                 message = response.Message;
             }
 
-            foreach (var msg in message.Sections)
+            foreach (var msg in message.Tags.OfType<FormattedMessage.TagText>())
             {
-                if (string.IsNullOrWhiteSpace(msg.Content)) continue;
+                if (string.IsNullOrWhiteSpace(msg.Text)) continue;
 
                 var richLabel = new RichTextLabel();
                 richLabel.SetMessage(message);

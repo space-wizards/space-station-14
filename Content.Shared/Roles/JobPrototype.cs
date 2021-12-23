@@ -35,6 +35,9 @@ namespace Content.Shared.Roles
         [DataField("requireAdminNotify")]
         public bool RequireAdminNotify { get; } = false;
 
+        [DataField("setPreference")]
+        public bool SetPreference { get; } = true;
+
         [DataField("canBeAntag")]
         public bool CanBeAntag { get; } = true;
 

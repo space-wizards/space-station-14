@@ -324,6 +324,8 @@ namespace Content.Client.Preferences.UI
 
             foreach (var job in prototypeManager.EnumeratePrototypes<JobPrototype>().OrderBy(j => j.Name))
             {
+                if(!job.SetPreference) { continue; }
+
                 foreach (var department in job.Departments)
                 {
                     if (!_jobCategories.TryGetValue(department, out var category))
