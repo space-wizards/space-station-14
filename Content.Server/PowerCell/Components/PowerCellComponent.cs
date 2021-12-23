@@ -9,7 +9,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
-using Robust.Shared.Utility.Markup;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.PowerCell.Components
@@ -91,7 +90,7 @@ namespace Content.Server.PowerCell.Components
             return (byte) ContentHelpers.RoundToNearestLevels(fraction, 1, SharedPowerCell.PowerCellVisualsLevels);
         }
 
-        void IExamine.Examine(FormattedMessage.Builder message, bool inDetailsRange)
+        void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
             if (inDetailsRange)
             {
