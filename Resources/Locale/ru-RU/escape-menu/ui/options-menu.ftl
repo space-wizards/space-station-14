@@ -65,6 +65,9 @@ ui-options-header-misc = Разное
 ui-options-header-hotbar = Hotbar
 ui-options-header-map-editor = Редактор карт
 ui-options-header-dev = Разработка
+ui-options-header-general = Основное
+
+ui-options-hotkey-keymap = Использовать клавиши QWERTY (США)
 
 ui-options-function-move-up = Move Up
 ui-options-function-move-left = Move Left
