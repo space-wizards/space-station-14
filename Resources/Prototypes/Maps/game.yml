@@ -96,7 +96,7 @@
     prefixCreator: '14'
   mapPath: Maps/ssreach.yml
   minPlayers: 0
-  maxPlayers: 16
+  maxPlayers: 15
   overflowJobs: []
   availableJobs:
     CargoTechnician: [ 1, 1 ]
