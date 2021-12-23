@@ -16,7 +16,6 @@ public class HolidayMapCondition : GameMapCondition
     public override bool Check(GameMapPrototype map)
     {
         var holidaySystem = EntitySystem.Get<HolidaySystem>();
-        Logger.Debug($"{Holidays.Any(holiday => holidaySystem.IsCurrentlyHoliday(holiday)) ^ Inverted}");
 
         return Holidays.Any(holiday => holidaySystem.IsCurrentlyHoliday(holiday)) ^ Inverted;
     }
