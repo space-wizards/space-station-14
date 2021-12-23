@@ -319,7 +319,9 @@ namespace Content.Client.Entry
             "Udder",
             "PneumaticCannon",
             "Spreader",
-            "GrowingKudzu"
+            "GrowingKudzu",
+            "MonkeyAccent",
+            "ReplacementAccent"
         };
     }
 }

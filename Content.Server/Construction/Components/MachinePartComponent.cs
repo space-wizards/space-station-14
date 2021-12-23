@@ -4,7 +4,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
-using Robust.Shared.Utility.Markup;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Construction.Components
@@ -39,7 +38,7 @@ namespace Content.Server.Construction.Components
         [DataField("rating")]
         public int Rating { get; private set; } = 1;
 
-        public void Examine(FormattedMessage.Builder message, bool inDetailsRange)
+        public void Examine(FormattedMessage message, bool inDetailsRange)
         {
             message.AddMarkup(Loc.GetString("machine-part-component-on-examine-rating-text", ("rating", Rating)) + "\n");
             message.AddMarkup(Loc.GetString("machine-part-component-on-examine-type-text", ("type", PartType)) + "\n");

@@ -84,6 +84,7 @@ namespace Content.Client.Entry
             factory.RegisterClass<SharedGravityGeneratorComponent>();
             factory.RegisterClass<SharedAMEControllerComponent>();
 
+            prototypes.RegisterIgnore("accent");
             prototypes.RegisterIgnore("material");
             prototypes.RegisterIgnore("reaction"); //Chemical reactions only needed by server. Reactions checks are server-side.
             prototypes.RegisterIgnore("gasReaction");
@@ -98,6 +99,8 @@ namespace Content.Client.Entry
             prototypes.RegisterIgnore("metabolizerType");
             prototypes.RegisterIgnore("metabolismGroup");
             prototypes.RegisterIgnore("salvageMap");
+            prototypes.RegisterIgnore("gamePreset");
+            prototypes.RegisterIgnore("gameRule");
 
             ClientContentIoC.Register();
 
