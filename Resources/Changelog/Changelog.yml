@@ -1,11 +1,6 @@
 Entries:
 - author: Zumorica
   changes:
-  - {message: Fixes spray puff and fire extinguisher cloud not moving., type: Fix}
-  id: 260
-  time: '2021-07-15T07:45:11.674114+00:00'
-- author: Zumorica
-  changes:
   - {message: Added the dual-port air vent., type: Add}
   id: 261
   time: '2021-07-15T13:24:45.0000000+00:00'
@@ -2866,3 +2861,8 @@ Entries:
   - {message: Hypospray to CMO lockers and also traitor goals., type: Add}
   id: 761
   time: '2021-12-23T08:51:49.0000000+00:00'
+- author: Pancake
+  changes:
+  - {message: Wizards now have something to ponder., type: Add}
+  id: 762
+  time: '2021-12-23T10:33:55.0000000+00:00'
