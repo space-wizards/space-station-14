@@ -158,7 +158,6 @@ namespace Content.Server.Light.EntitySystems
                 return false;
 
             UpdateLight(uid, light);
-
             return true;
         }
 
@@ -260,7 +259,7 @@ namespace Content.Server.Light.EntitySystems
                     case LightBulbState.Normal:
                         if (powerReceiver.Powered && light.On)
                         {
-                            SetLight(uid, true, lightBulb.Color, light);
+                            SetLight(uid, true, lightBulb.Color, light, lightBulb.lightRadius, lightBulb.lightEnergy, lightBulb.lightSoftness);
                             appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.On);
                             var time = _gameTiming.CurTime;
                             if (time > light.LastThunk + ThunkDelay)
@@ -363,7 +362,7 @@ namespace Content.Server.Light.EntitySystems
             SetState(uid, enabled, component);
         }
 
-        private void SetLight(EntityUid uid, bool value, Color? color = null, PoweredLightComponent? light = null)
+        private void SetLight(EntityUid uid, bool value, Color? color = null, PoweredLightComponent? light = null, float? radius = null, float? energy = null, float? softness=null)
         {
             if (!Resolve(uid, ref light))
                 return;
@@ -377,6 +376,12 @@ namespace Content.Server.Light.EntitySystems
 
                 if (color != null)
                     pointLight.Color = color.Value;
+                if (radius != null)
+                    pointLight.Radius = (float) radius;
+                if (energy != null)
+                    pointLight.Energy = (float) energy;
+                if (softness != null)
+                    pointLight.Softness = (float) softness;
             }
         }
 
