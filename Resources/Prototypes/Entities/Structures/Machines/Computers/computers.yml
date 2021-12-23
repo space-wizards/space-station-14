@@ -109,7 +109,7 @@
     - key: enum.ResearchClientUiKey.Key
       type: ResearchClientBoundUserInterface
   - type: ApcPowerReceiver
-    powerLoad: 200
+    powerLoad: 2000
     priority: Low
   - type: ExtensionCableReceiver
   - type: Computer
@@ -200,6 +200,9 @@
       key: generic_key
       screen: comm
   - type: CommunicationsConsole
+  - type: ApcPowerReceiver
+    powerLoad: 5000
+    priority: Low
   - type: ActivatableUI
     key: enum.CommunicationsConsoleUiKey.Key
   - type: ActivatableUIRequiresPower
@@ -226,6 +229,9 @@
       key: generic_key
       screen: solar_screen
   - type: SolarControlConsole
+  - type: ApcPowerReceiver
+    powerLoad: 200
+    priority: Low
   - type: ActivatableUI
     key: enum.SolarControlConsoleUiKey.Key
   - type: ActivatableUIRequiresPower

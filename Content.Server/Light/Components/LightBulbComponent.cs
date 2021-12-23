@@ -30,7 +30,7 @@ namespace Content.Server.Light.Components
         public int BurningTemperature = 1400;
 
         [DataField("PowerUse")]
-        public int PowerUse = 40;
+        public int PowerUse = 120;
 
         [DataField("breakSound")]
         public SoundSpecifier BreakSound = new SoundCollectionSpecifier("GlassBreak");
