@@ -28,6 +28,9 @@ namespace Content.Server.Light.Components
         [DataField("hasLampOnSpawn")]
         public bool HasLampOnSpawn = true;
 
+        [DataField("particularLampOnSpawn")]
+        public string? ParticularLampOnSpawn = null;
+
         [DataField("bulb")]
         public LightBulbType BulbType;
 

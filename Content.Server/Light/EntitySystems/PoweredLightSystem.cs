@@ -66,13 +66,20 @@ namespace Content.Server.Light.EntitySystems
         {
             if (light.HasLampOnSpawn)
             {
-                var prototype = light.BulbType switch
+                var prototype = "";
+                if(light.ParticularLampOnSpawn == null)
                 {
-                    LightBulbType.Bulb => "LightBulb",
-                    LightBulbType.Tube => "LightTube",
-                    _ => throw new ArgumentOutOfRangeException()
-                };
-
+                    prototype = light.BulbType switch
+                    {
+                        LightBulbType.Bulb => "LightBulb",
+                        LightBulbType.Tube => "LightTube",
+                        _ => throw new ArgumentOutOfRangeException()
+                    };
+                }
+                else
+                {
+                    prototype = light.ParticularLampOnSpawn;
+                }
                 var entity = EntityManager.SpawnEntity(prototype, EntityManager.GetComponent<TransformComponent>(light.Owner).Coordinates);
                 light.LightBulbContainer.Insert(entity);
             }

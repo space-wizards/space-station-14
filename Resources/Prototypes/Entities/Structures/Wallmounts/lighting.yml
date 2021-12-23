@@ -102,6 +102,19 @@
         Heat: 20
 
 - type: entity
+  id: PoweredlightLED
+  description: "A powered wall light emitting... light."
+  suffix: LED tube, Powered
+  parent: Poweredlight
+  components:
+  - type: PoweredLight
+    hasLampOnSpawn: True
+    particularLampOnSpawn: "LedLightTube"
+    damage:
+      types:
+        Heat: 20
+
+- type: entity
   name: small light
   description: "An unpowered light."
   id: SmallLight
