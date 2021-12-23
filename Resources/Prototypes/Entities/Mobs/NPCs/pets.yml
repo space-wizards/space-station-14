@@ -33,6 +33,8 @@
       normal: corgi
       crit: corgi_dead
       dead: corgi_dead
+  - type: ReplacementAccent
+    accent: dog
 
 - type: entity
   name: Ian
@@ -85,6 +87,8 @@
       normal: cat
       crit: cat_dead
       dead: cat_dead
+  - type: ReplacementAccent
+    accent: cat
 
 - type: entity
   name: calico cat

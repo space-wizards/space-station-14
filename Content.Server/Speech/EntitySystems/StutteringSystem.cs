@@ -33,10 +33,7 @@ namespace Content.Server.Speech.EntitySystems
             if (!Resolve(uid, ref status, false))
                 return;
 
-            if (!_statusEffectsSystem.HasStatusEffect(uid, StutterKey, status))
-                _statusEffectsSystem.TryAddStatusEffect<StutteringAccentComponent>(uid, StutterKey, time, refresh, status, alerts);
-            else
-                _statusEffectsSystem.TryAddTime(uid, StutterKey, time, status);
+            _statusEffectsSystem.TryAddStatusEffect<StutteringAccentComponent>(uid, StutterKey, time, refresh, status, alerts);
         }
 
         private void OnAccent(EntityUid uid, StutteringAccentComponent component, AccentGetEvent args)

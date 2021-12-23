@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Database;
 using JetBrains.Annotations;
+using Newtonsoft.Json;
 using Robust.Server.Player;
 using Robust.Shared;
 using Robust.Shared.Configuration;
@@ -16,7 +17,7 @@ using Robust.Shared.Network;
 
 namespace Content.Server.Administration
 {
-    public sealed record LocatedPlayerData(NetUserId UserId, IPAddress? LastAddress, ImmutableArray<byte>? LastHWId);
+    public sealed record LocatedPlayerData(NetUserId UserId, IPAddress? LastAddress, ImmutableArray<byte>? LastHWId, string Username);
 
     /// <summary>
     ///     Utilities for finding user IDs that extend to more than the server database.
@@ -38,6 +39,12 @@ namespace Content.Server.Administration
         ///     If passed a player name, returns <see cref="LookupIdByNameAsync"/>.
         /// </summary>
         Task<LocatedPlayerData?> LookupIdByNameOrIdAsync(string playerName, CancellationToken cancel = default);
+
+        /// <summary>
+        ///     Look up a user by <see cref="NetUserId"/> globally.
+        /// </summary>
+        /// <returns>Null if the player does not exist.</returns>
+        Task<LocatedPlayerData?> LookupIdAsync(NetUserId userId, CancellationToken cancel = default);
     }
 
     internal sealed class PlayerLocator : IPlayerLocator
@@ -54,13 +61,13 @@ namespace Content.Server.Administration
                 var userId = session.UserId;
                 var address = session.ConnectedClient.RemoteEndPoint.Address;
                 var hwId = session.ConnectedClient.UserData.HWId;
-                return new LocatedPlayerData(userId, address, hwId);
+                return new LocatedPlayerData(userId, address, hwId, session.Name);
             }
 
             // Check database for past players.
             var record = await _db.GetPlayerRecordByUserName(playerName, cancel);
             if (record != null)
-                return new LocatedPlayerData(record.UserId, record.LastSeenAddress, record.HWId);
+                return new LocatedPlayerData(record.UserId, record.LastSeenAddress, record.HWId, record.LastSeenUserName);
 
             // If all else fails, ask the auth server.
             var client = new HttpClient();
@@ -85,7 +92,7 @@ namespace Content.Server.Administration
                 return null;
             }
 
-            return new LocatedPlayerData(new NetUserId(responseData.UserId), null, null);
+            return new LocatedPlayerData(new NetUserId(responseData.UserId), null, null, responseData.UserName);
         }
 
         public async Task<LocatedPlayerData?> LookupIdAsync(NetUserId userId, CancellationToken cancel = default)
@@ -95,19 +102,19 @@ namespace Content.Server.Administration
             {
                 var address = session.ConnectedClient.RemoteEndPoint.Address;
                 var hwId = session.ConnectedClient.UserData.HWId;
-                return new LocatedPlayerData(userId, address, hwId);
+                return new LocatedPlayerData(userId, address, hwId, session.Name);
             }
 
             // Check database for past players.
             var record = await _db.GetPlayerRecordByUserId(userId, cancel);
             if (record != null)
-                return new LocatedPlayerData(record.UserId, record.LastSeenAddress, record.HWId);
+                return new LocatedPlayerData(record.UserId, record.LastSeenAddress, record.HWId, record.LastSeenUserName);
 
             // If all else fails, ask the auth server.
             var client = new HttpClient();
             var authServer = _configurationManager.GetCVar(CVars.AuthServer);
             var requestUri = $"{authServer}api/query/userid?userid={WebUtility.UrlEncode(userId.UserId.ToString())}";
-            using var resp = await client.SendAsync(new HttpRequestMessage(HttpMethod.Head, requestUri), cancel);
+            using var resp = await client.GetAsync(requestUri, cancel);
 
             if (resp.StatusCode == HttpStatusCode.NotFound)
                 return null;
@@ -118,7 +125,15 @@ namespace Content.Server.Administration
                 return null;
             }
 
-            return new LocatedPlayerData(userId, null, null);
+            var responseData = await resp.Content.ReadFromJsonAsync<UserDataResponse>(cancellationToken: cancel);
+
+            if (responseData == null)
+            {
+                Logger.ErrorS("PlayerLocate", "Auth server returned null response!");
+                return null;
+            }
+
+            return new LocatedPlayerData(new NetUserId(responseData.UserId), null, null, responseData.UserName);
         }
 
         public async Task<LocatedPlayerData?> LookupIdByNameOrIdAsync(string playerName, CancellationToken cancel = default)
