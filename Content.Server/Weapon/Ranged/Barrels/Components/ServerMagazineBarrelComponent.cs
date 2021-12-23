@@ -205,7 +205,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             var entity = _chamberContainer.ContainedEntity ?? default;
 
             Cycle();
-            return entity != default ? _entities.GetComponent<AmmoComponent>(entity).TakeBullet(spawnAt) : null;
+            return entity != default ? EntitySystem.Get<GunSystem>().TakeBullet(_entities.GetComponent<AmmoComponent>(entity), spawnAt) : null;
         }
 
         private void Cycle(bool manual = false)
