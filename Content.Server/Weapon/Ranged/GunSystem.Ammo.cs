@@ -43,7 +43,7 @@ public sealed partial class GunSystem
 
     public void MuzzleFlash(EntityUid entity, AmmoComponent component, Angle angle)
     {
-        if (string.IsNullOrEmpty(component.MuzzleFlashSprite))
+        if (component.MuzzleFlashSprite == null)
         {
             return;
         }
@@ -51,21 +51,44 @@ public sealed partial class GunSystem
         var time = _gameTiming.CurTime;
         var deathTime = time + TimeSpan.FromMilliseconds(200);
         // Offset the sprite so it actually looks like it's coming from the gun
-        var offset = angle.ToVec().Normalized / 2;
+        var offset = new Vector2(0.0f, -0.5f);
 
         var message = new EffectSystemMessage
         {
-            EffectSprite = component.MuzzleFlashSprite,
+            EffectSprite = component.MuzzleFlashSprite.ToString(),
             Born = time,
             DeathTime = deathTime,
             AttachedEntityUid = entity,
             AttachedOffset = offset,
             //Rotated from east facing
-            Rotation = (float) angle.Theta,
+            Rotation = -MathF.PI / 2f,
             Color = Vector4.Multiply(new Vector4(255, 255, 255, 255), 1.0f),
             ColorDelta = new Vector4(0, 0, 0, -1500f),
             Shaded = false
         };
+
+        /* TODO: Fix rotation when shooting sideways. This was the closest I got but still had issues.
+         * var time = _gameTiming.CurTime;
+        var deathTime = time + TimeSpan.FromMilliseconds(200);
+        var entityRotation = EntityManager.GetComponent<TransformComponent>(entity).WorldRotation;
+        var localAngle = entityRotation - (angle + MathF.PI / 2f);
+        // Offset the sprite so it actually looks like it's coming from the gun
+        var offset = localAngle.RotateVec(new Vector2(0.0f, -0.5f));
+
+        var message = new EffectSystemMessage
+        {
+            EffectSprite = component.MuzzleFlashSprite.ToString(),
+            Born = time,
+            DeathTime = deathTime,
+            AttachedEntityUid = entity,
+            AttachedOffset = offset,
+            //Rotated from east facing
+            Rotation = (float) (localAngle - MathF.PI / 2),
+            Color = Vector4.Multiply(new Vector4(255, 255, 255, 255), 1.0f),
+            ColorDelta = new Vector4(0, 0, 0, -1500f),
+            Shaded = false
+        };
+         */
 
         _effects.CreateParticle(message);
     }

@@ -13,6 +13,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -81,7 +82,8 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
         [DataField("ammoVelocity")]
         public float Velocity { get; } = 20f;
 
-        [DataField("muzzleFlash")] public string? MuzzleFlashSprite = "Objects/Weapons/Guns/Projectiles/bullet_muzzle.png";
+        [DataField("muzzleFlash", customTypeSerializer:typeof(ResourcePathSerializer))]
+        public ResourcePath? MuzzleFlashSprite = new("Objects/Weapons/Guns/Projectiles/bullet_muzzle.png");
 
         [DataField("soundCollectionEject")]
         public SoundSpecifier SoundCollectionEject { get; } = new SoundCollectionSpecifier("CasingEject");
