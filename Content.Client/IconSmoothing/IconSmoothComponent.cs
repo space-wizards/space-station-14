@@ -26,6 +26,7 @@ namespace Content.Client.IconSmoothing
     [RegisterComponent]
     public class IconSmoothComponent : Component
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
 
         [DataField("mode")]
@@ -63,7 +64,7 @@ namespace Content.Client.IconSmoothing
         {
             base.Initialize();
 
-            Sprite = Owner.GetComponent<ISpriteComponent>();
+            Sprite = _entMan.GetComponent<ISpriteComponent>(Owner);
         }
 
         /// <inheritdoc />
@@ -71,12 +72,12 @@ namespace Content.Client.IconSmoothing
         {
             base.Startup();
 
-            if (Owner.Transform.Anchored)
+            if (_entMan.GetComponent<TransformComponent>(Owner).Anchored)
             {
                 // ensures lastposition initial value is populated on spawn. Just calling
                 // the hook here would cause a dirty event to fire needlessly
                 UpdateLastPosition();
-                Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new IconSmoothDirtyEvent(Owner, null, Mode));
+                _entMan.EventBus.RaiseEvent(EventSource.Local, new IconSmoothDirtyEvent(Owner, null, Mode));
             }
 
             if (Sprite != null && Mode == IconSmoothingMode.Corners)
@@ -95,9 +96,9 @@ namespace Content.Client.IconSmoothing
 
         private void UpdateLastPosition()
         {
-            if (_mapManager.TryGetGrid(Owner.Transform.GridID, out var grid))
+            if (_mapManager.TryGetGrid(_entMan.GetComponent<TransformComponent>(Owner).GridID, out var grid))
             {
-                _lastPosition = (Owner.Transform.GridID, grid.TileIndicesFor(Owner.Transform.Coordinates));
+                _lastPosition = (_entMan.GetComponent<TransformComponent>(Owner).GridID, grid.TileIndicesFor(_entMan.GetComponent<TransformComponent>(Owner).Coordinates));
             }
             else
             {
@@ -109,9 +110,9 @@ namespace Content.Client.IconSmoothing
 
         internal virtual void CalculateNewSprite()
         {
-            if (!_mapManager.TryGetGrid(Owner.Transform.GridID, out var grid))
+            if (!_mapManager.TryGetGrid(_entMan.GetComponent<TransformComponent>(Owner).GridID, out var grid))
             {
-                Logger.Error($"Failed to calculate IconSmoothComponent sprite in {Owner} because grid {Owner.Transform.GridID} was missing.");
+                Logger.Error($"Failed to calculate IconSmoothComponent sprite in {Owner} because grid {_entMan.GetComponent<TransformComponent>(Owner).GridID} was missing.");
                 return;
             }
             CalculateNewSprite(grid);
@@ -136,14 +137,14 @@ namespace Content.Client.IconSmoothing
 
         private void CalculateNewSpriteCardinal(IMapGrid grid)
         {
-            if (!Owner.Transform.Anchored || Sprite == null)
+            if (!_entMan.GetComponent<TransformComponent>(Owner).Anchored || Sprite == null)
             {
                 return;
             }
 
             var dirs = CardinalConnectDirs.None;
 
-            var position = Owner.Transform.Coordinates;
+            var position = _entMan.GetComponent<TransformComponent>(Owner).Coordinates;
             if (MatchingEntity(grid.GetInDir(position, Direction.North)))
                 dirs |= CardinalConnectDirs.North;
             if (MatchingEntity(grid.GetInDir(position, Direction.South)))
@@ -173,12 +174,12 @@ namespace Content.Client.IconSmoothing
 
         protected (CornerFill ne, CornerFill nw, CornerFill sw, CornerFill se) CalculateCornerFill(IMapGrid grid)
         {
-            if (!Owner.Transform.Anchored)
+            if (!_entMan.GetComponent<TransformComponent>(Owner).Anchored)
             {
                 return (CornerFill.None, CornerFill.None, CornerFill.None, CornerFill.None);
             }
 
-            var position = Owner.Transform.Coordinates;
+            var position = _entMan.GetComponent<TransformComponent>(Owner).Coordinates;
             var n = MatchingEntity(grid.GetInDir(position, Direction.North));
             var ne = MatchingEntity(grid.GetInDir(position, Direction.NorthEast));
             var e = MatchingEntity(grid.GetInDir(position, Direction.East));
@@ -240,7 +241,7 @@ namespace Content.Client.IconSmoothing
             }
 
             // Local is fine as we already know it's parented to the grid (due to the way anchoring works).
-            switch (Owner.Transform.LocalRotation.GetCardinalDir())
+            switch (_entMan.GetComponent<TransformComponent>(Owner).LocalRotation.GetCardinalDir())
             {
                 case Direction.North:
                     return (cornerSW, cornerSE, cornerNE, cornerNW);
@@ -258,17 +259,17 @@ namespace Content.Client.IconSmoothing
         {
             base.Shutdown();
 
-            if (Owner.Transform.Anchored)
+            if (_entMan.GetComponent<TransformComponent>(Owner).Anchored)
             {
-                Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new IconSmoothDirtyEvent(Owner, _lastPosition, Mode));
+                _entMan.EventBus.RaiseEvent(EventSource.Local, new IconSmoothDirtyEvent(Owner, _lastPosition, Mode));
             }
         }
 
         public void AnchorStateChanged()
         {
-            if (Owner.Transform.Anchored)
+            if (_entMan.GetComponent<TransformComponent>(Owner).Anchored)
             {
-                Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new IconSmoothDirtyEvent(Owner, _lastPosition, Mode));
+                _entMan.EventBus.RaiseEvent(EventSource.Local, new IconSmoothDirtyEvent(Owner, _lastPosition, Mode));
                 UpdateLastPosition();
             }
         }
@@ -278,7 +279,7 @@ namespace Content.Client.IconSmoothing
         {
             foreach (var entity in candidates)
             {
-                if (!Owner.EntityManager.TryGetComponent(entity, out IconSmoothComponent? other))
+                if (!_entMan.TryGetComponent(entity, out IconSmoothComponent? other))
                 {
                     continue;
                 }

@@ -3,10 +3,9 @@ using Content.Server.Singularity.Components;
 using Content.Shared.Singularity.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
-using Robust.Shared.Physics.Collision;
-using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Timing;
 
 namespace Content.Server.ParticleAccelerator.Components
@@ -14,28 +13,30 @@ namespace Content.Server.ParticleAccelerator.Components
     [RegisterComponent]
     public class ParticleProjectileComponent : Component
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "ParticleProjectile";
         public ParticleAcceleratorPowerState State;
 
-        public void Fire(ParticleAcceleratorPowerState state, Angle angle, IEntity firer)
+        public void Fire(ParticleAcceleratorPowerState state, Angle angle, EntityUid firer)
         {
             State = state;
 
-            if (!Owner.TryGetComponent<PhysicsComponent>(out var physicsComponent))
+            if (!_entMan.TryGetComponent<PhysicsComponent?>(Owner, out var physicsComponent))
             {
                 Logger.Error("ParticleProjectile tried firing, but it was spawned without a CollidableComponent");
                 return;
             }
             physicsComponent.BodyStatus = BodyStatus.InAir;
 
-            if (!Owner.TryGetComponent<ProjectileComponent>(out var projectileComponent))
+            if (!_entMan.TryGetComponent<ProjectileComponent?>(Owner, out var projectileComponent))
             {
                 Logger.Error("ParticleProjectile tried firing, but it was spawned without a ProjectileComponent");
                 return;
             }
             projectileComponent.IgnoreEntity(firer);
 
-            if (!Owner.TryGetComponent<SinguloFoodComponent>(out var singuloFoodComponent))
+            if (!_entMan.TryGetComponent<SinguloFoodComponent?>(Owner, out var singuloFoodComponent))
             {
                 Logger.Error("ParticleProjectile tried firing, but it was spawned without a SinguloFoodComponent");
                 return;
@@ -60,7 +61,7 @@ namespace Content.Server.ParticleAccelerator.Components
                 _ => "0"
             };
 
-            if (!Owner.TryGetComponent<SpriteComponent>(out var spriteComponent))
+            if (!_entMan.TryGetComponent<SpriteComponent?>(Owner, out var spriteComponent))
             {
                 Logger.Error("ParticleProjectile tried firing, but it was spawned without a SpriteComponent");
                 return;
@@ -70,8 +71,8 @@ namespace Content.Server.ParticleAccelerator.Components
             physicsComponent
                 .LinearVelocity = angle.ToWorldVec() * 20f;
 
-            Owner.Transform.LocalRotation = angle;
-            Timer.Spawn(3000, () => Owner.Delete());
+            _entMan.GetComponent<TransformComponent>(Owner).LocalRotation = angle;
+            Timer.Spawn(3000, () => _entMan.DeleteEntity(Owner));
         }
     }
 }

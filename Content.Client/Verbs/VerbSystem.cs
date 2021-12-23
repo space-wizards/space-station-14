@@ -20,8 +20,6 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
-using static Content.Shared.Interaction.SharedInteractionSystem;
 
 namespace Content.Client.Verbs
 {
@@ -87,7 +85,7 @@ namespace Content.Client.Verbs
         /// <summary>
         ///     Get all of the entities in an area for displaying on the context menu.
         /// </summary>
-        public bool TryGetEntityMenuEntities(MapCoordinates targetPos, [NotNullWhen(true)] out List<IEntity>? result)
+        public bool TryGetEntityMenuEntities(MapCoordinates targetPos, [NotNullWhen(true)] out List<EntityUid>? result)
         {
             result = null;
 
@@ -107,11 +105,11 @@ namespace Content.Client.Verbs
             if ((visibility & MenuVisibility.NoFov) == 0)
             {
                 var entitiesUnderMouse = gameScreenBase.GetEntitiesUnderPosition(targetPos);
-                Ignored? predicate = e => e == player || entitiesUnderMouse.Contains(e);
-                if (!_examineSystem.CanExamine(player, targetPos, predicate))
+                bool Predicate(EntityUid e) => e == player || entitiesUnderMouse.Contains(e);
+                if (!_examineSystem.CanExamine(player.Value, targetPos, Predicate))
                     return false;
             }
-                          
+
             // Get entities
             var entities = _entityLookup.GetEntitiesInRange(targetPos.MapId, targetPos.Position, EntityMenuLookupSize)
                 .ToList();
@@ -130,7 +128,7 @@ namespace Content.Client.Verbs
             {
                 foreach (var entity in entities.ToList())
                 {
-                    if (!player.IsInSameOrTransparentContainer(entity))
+                    if (!player.Value.IsInSameOrTransparentContainer(entity))
                         entities.Remove(entity);
                 }
             }
@@ -140,7 +138,7 @@ namespace Content.Client.Verbs
             {
                 foreach (var entity in entities.ToList())
                 {
-                    if (!EntityManager.TryGetComponent(entity.Uid, out ISpriteComponent? spriteComponent) ||
+                    if (!EntityManager.TryGetComponent(entity, out ISpriteComponent? spriteComponent) ||
                     !spriteComponent.Visible)
                     {
                         entities.Remove(entity);
@@ -155,12 +153,12 @@ namespace Content.Client.Verbs
             // Remove any entities that do not have LOS
             if ((visibility & MenuVisibility.NoFov) == 0)
             {
-                var playerPos = player.Transform.MapPosition;
+                var playerPos = EntityManager.GetComponent<TransformComponent>(player.Value).MapPosition;
                 foreach (var entity in entities.ToList())
                 {
                     if (!ExamineSystemShared.InRangeUnOccluded(
                         playerPos,
-                        entity.Transform.MapPosition,
+                        EntityManager.GetComponent<TransformComponent>(entity).MapPosition,
                         ExamineSystemShared.ExamineRange,
                         null))
                     {
@@ -180,13 +178,13 @@ namespace Content.Client.Verbs
         ///     Ask the server to send back a list of server-side verbs, and for now return an incomplete list of verbs
         ///     (only those defined locally).
         /// </summary>
-        public Dictionary<VerbType, SortedSet<Verb>> GetVerbs(IEntity target, IEntity user, VerbType verbTypes)
+        public Dictionary<VerbType, SortedSet<Verb>> GetVerbs(EntityUid target, EntityUid user, VerbType verbTypes)
         {
-            if (!target.Uid.IsClientSide())
+            if (!target.IsClientSide())
             {
-                RaiseNetworkEvent(new RequestServerVerbsEvent(target.Uid, verbTypes));
+                RaiseNetworkEvent(new RequestServerVerbsEvent(target, verbTypes));
             }
-            
+
             return GetLocalVerbs(target, user, verbTypes);
         }
 
@@ -194,27 +192,43 @@ namespace Content.Client.Verbs
         ///     Execute actions associated with the given verb.
         /// </summary>
         /// <remarks>
-        ///     Unless this is a client-exclusive verb, this will also tell the server to run the same verb. However, if the verb
-        ///     is disabled and has a tooltip, this function will only generate a pop-up-message instead of executing anything.
+        ///     Unless this is a client-exclusive verb, this will also tell the server to run the same verb.
         /// </remarks>
         public void ExecuteVerb(EntityUid target, Verb verb, VerbType verbType)
         {
-            if (verb.Disabled)
-            {
-                if (verb.Message != null)
-                    _popupSystem.PopupCursor(verb.Message);
-                return;
-            }
-
-            var user = _playerManager.LocalPlayer?.ControlledEntityUid;
+            var user = _playerManager.LocalPlayer?.ControlledEntity;
             if (user == null)
                 return;
 
-            ExecuteVerb(verb, user.Value, target);
-
-            if (!verb.ClientExclusive)
+            // is this verb actually valid?
+            if (verb.Disabled)
             {
-                RaiseNetworkEvent(new ExecuteVerbEvent(target, verb, verbType));
+                // maybe send an informative pop-up message.
+                if (!string.IsNullOrWhiteSpace(verb.Message))
+                    _popupSystem.PopupEntity(verb.Message, user.Value);
+
+                return;
+            }
+
+            if (verb.ClientExclusive)
+                // is this a client exclusive (gui) verb?
+                ExecuteVerb(verb, user.Value, target);
+            else
+                EntityManager.RaisePredictiveEvent(new ExecuteVerbEvent(target, verb, verbType));
+        }
+
+        public override void ExecuteVerb(Verb verb, EntityUid user, EntityUid target,  bool forced = false)
+        {
+            // invoke any relevant actions
+            verb.Act?.Invoke();
+
+            // Maybe raise a local event
+            if (verb.ExecutionEventArgs != null)
+            {
+                if (verb.EventTarget.IsValid())
+                    RaiseLocalEvent(verb.EventTarget, verb.ExecutionEventArgs);
+                else
+                    RaiseLocalEvent(verb.ExecutionEventArgs);
             }
         }
 

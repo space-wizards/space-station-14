@@ -4,6 +4,7 @@ using Content.Shared.Construction;
 using Content.Shared.Examine;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -26,16 +27,19 @@ namespace Content.Server.Construction.Conditions
 
         public bool DoExamine(ExaminedEvent args)
         {
+            var entMan = IoCManager.Resolve<IEntityManager>();
             var entity = args.Examined;
 
-            if (!entity.TryGetComponent(out EntityStorageComponent? entityStorage)) return false;
+            if (!entMan.TryGetComponent(entity, out EntityStorageComponent? entityStorage)) return false;
+
+            var metaData = entMan.GetComponent<MetaDataComponent>(entity);
 
             if (entityStorage.IsWeldedShut != Welded)
             {
                 if (Welded == true)
-                    args.PushMarkup(Loc.GetString("construction-examine-condition-door-weld", ("entityName", entity.Name)) + "\n");
+                    args.PushMarkup(Loc.GetString("construction-examine-condition-door-weld", ("entityName", metaData.EntityName)) + "\n");
                 else
-                    args.PushMarkup(Loc.GetString("construction-examine-condition-door-unweld", ("entityName", entity.Name)) + "\n");
+                    args.PushMarkup(Loc.GetString("construction-examine-condition-door-unweld", ("entityName", metaData.EntityName)) + "\n");
                 return true;
             }
 

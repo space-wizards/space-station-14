@@ -35,9 +35,9 @@ namespace Content.Shared.Cuffs
 
         private void HandleStopPull(EntityUid uid, SharedCuffableComponent component, StopPullingEvent args)
         {
-            if (args.User == null || !EntityManager.TryGetEntity(args.User.Value, out var user)) return;
+            if (args.User == null || !EntityManager.EntityExists(args.User.Value)) return;
 
-            if (user == component.Owner && !component.CanStillInteract)
+            if (args.User.Value == component.Owner && !component.CanStillInteract)
             {
                 args.Cancel();
             }

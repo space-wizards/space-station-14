@@ -1,4 +1,6 @@
 using Content.Server.Objectives.Interfaces;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 
@@ -9,7 +11,23 @@ namespace Content.Server.Objectives.Conditions
         protected Mind.Mind? Target;
         public abstract IObjectiveCondition GetAssigned(Mind.Mind mind);
 
-        public string Title => Loc.GetString("objective-condition-kill-person-title", ("targetName", Target?.CharacterName ?? Target?.OwnedEntity?.Name ?? string.Empty));
+        public string Title
+        {
+            get
+            {
+                var targetName = string.Empty;
+
+                if (Target == null)
+                    return Loc.GetString("objective-condition-kill-person-title", ("targetName", targetName));
+
+                if (Target.CharacterName != null)
+                    targetName = Target.CharacterName;
+                else if (Target.OwnedEntity is {Valid: true} owned)
+                    targetName = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(owned).EntityName;
+
+                return Loc.GetString("objective-condition-kill-person-title", ("targetName", targetName));
+            }
+        }
 
         public string Description => Loc.GetString("objective-condition-kill-person-description");
 

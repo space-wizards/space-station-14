@@ -14,6 +14,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Timing;
 using static Content.Shared.Administration.AdminLogsEuiMsg;
 
 namespace Content.Server.Administration.Logs;
@@ -26,7 +27,6 @@ public sealed class AdminLogsEui : BaseEui
 
     private readonly ISawmill _sawmill;
     private readonly AdminLogSystem _logSystem;
-    private readonly GameTicker _gameTicker;
 
     private int _clientBatchSize;
     private bool _isLoading = true;
@@ -43,7 +43,6 @@ public sealed class AdminLogsEui : BaseEui
         _configuration.OnValueChanged(CCVars.AdminLogsClientBatchSize, ClientBatchSizeChanged, true);
 
         _logSystem = EntitySystem.Get<AdminLogSystem>();
-        _gameTicker = EntitySystem.Get<GameTicker>();
 
         _filter = new LogFilter
         {
@@ -144,6 +143,9 @@ public sealed class AdminLogsEui : BaseEui
 
     private async void SendLogs(bool replace)
     {
+        var stopwatch = new Stopwatch();
+        stopwatch.Start();
+
         // TODO ADMIN LOGS array pool
         var logs = new List<SharedAdminLog>(_clientBatchSize);
 
@@ -173,6 +175,8 @@ public sealed class AdminLogsEui : BaseEui
         var message = new NewLogs(logs.ToArray(), replace);
 
         SendMessage(message);
+
+        _sawmill.Info($"Sent {logs.Count} logs to {Player.Name} in {stopwatch.Elapsed.TotalMilliseconds} ms");
     }
 
     public override void Closed()

@@ -20,13 +20,13 @@ namespace Content.Shared.Alert
         /// <summary>
         /// Player clicking the alert
         /// </summary>
-        public readonly IEntity Player;
+        public readonly EntityUid Player;
         /// <summary>
         /// Alert that was clicked
         /// </summary>
         public readonly AlertPrototype Alert;
 
-        public ClickAlertEventArgs(IEntity player, AlertPrototype alert)
+        public ClickAlertEventArgs(EntityUid player, AlertPrototype alert)
         {
             Player = player;
             Alert = alert;

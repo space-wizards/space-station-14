@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Server.Database;
 using Content.Server.GameTicking;
-using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using NUnit.Framework;
@@ -161,7 +160,7 @@ public class AddTests : ContentIntegrationTest
         await server.WaitPost(() =>
         {
             var coordinates = GetMainEntityCoordinates(sMaps);
-            var entity = sEntities.SpawnEntity(null, coordinates).Uid;
+            var entity = sEntities.SpawnEntity(null, coordinates);
 
             if (parallel)
             {

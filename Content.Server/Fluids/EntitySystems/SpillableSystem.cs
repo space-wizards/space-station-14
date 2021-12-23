@@ -65,7 +65,7 @@ public class SpillableSystem : EntitySystem
         if (args.User != null)
         {
             _logSystem.Add(LogType.Landed,
-                $"{EntityManager.ToPrettyString(uid)} spilled {SolutionContainerSystem.ToPrettyString(solution)} on landing");
+                $"{ToPrettyString(uid):entity} spilled a solution {SolutionContainerSystem.ToPrettyString(solution):solution} on landing");
         }
 
         var drainedSolution = _solutionContainerSystem.Drain(uid, solution, solution.DrainAvailable);
@@ -77,7 +77,7 @@ public class SpillableSystem : EntitySystem
         if (!args.CanAccess || !args.CanInteract)
             return;
 
-        if (!_solutionContainerSystem.TryGetDrainableSolution(args.Target.Uid, out var solution))
+        if (!_solutionContainerSystem.TryGetDrainableSolution(args.Target, out var solution))
             return;
 
         if (solution.DrainAvailable == FixedPoint2.Zero)
@@ -88,9 +88,9 @@ public class SpillableSystem : EntitySystem
         // TODO VERB ICONS spill icon? pouring out a glass/beaker?
         verb.Act = () =>
         {
-            var puddleSolution = _solutionContainerSystem.SplitSolution(args.Target.Uid,
+            var puddleSolution = _solutionContainerSystem.SplitSolution(args.Target,
                 solution, solution.DrainAvailable);
-            SpillAt(puddleSolution, args.Target.Transform.Coordinates, "PuddleSmear");
+            SpillAt(puddleSolution, Transform(args.Target).Coordinates, "PuddleSmear");
         };
         verb.Impact = LogImpact.Medium; // dangerous reagent reaction are logged separately.
         args.Verbs.Add(verb);
@@ -123,7 +123,7 @@ public class SpillableSystem : EntitySystem
     {
         foreach (var entity in tileRef.GetEntitiesInTileFast(_gridTileLookupSystem))
         {
-            if (entity.TryGetComponent(out PuddleComponent? p))
+            if (EntityManager.TryGetComponent(entity, out PuddleComponent? p))
             {
                 puddle = p;
                 return true;
@@ -166,9 +166,9 @@ public class SpillableSystem : EntitySystem
         var spillEntities = _entityLookup.GetEntitiesIntersecting(mapGrid.ParentMapId, spillGridCoords.Position).ToArray();
         foreach (var spillEntity in spillEntities)
         {
-            if (_solutionContainerSystem.TryGetRefillableSolution(spillEntity.Uid, out var solutionContainerComponent))
+            if (_solutionContainerSystem.TryGetRefillableSolution(spillEntity, out var solutionContainerComponent))
             {
-                _solutionContainerSystem.Refill(spillEntity.Uid, solutionContainerComponent,
+                _solutionContainerSystem.Refill(spillEntity, solutionContainerComponent,
                     solution.SplitSolution(FixedPoint2.Min(
                         solutionContainerComponent.AvailableVolume,
                         solutionContainerComponent.MaxSpillRefill))
@@ -180,21 +180,21 @@ public class SpillableSystem : EntitySystem
         {
             foreach (var spillEntity in spillEntities)
             {
-                if (!spillEntity.TryGetComponent(out PuddleComponent? puddleComponent)) continue;
+                if (!EntityManager.TryGetComponent(spillEntity, out PuddleComponent? puddleComponent)) continue;
 
-                if (!overflow && _puddleSystem.WouldOverflow(puddleComponent.Owner.Uid, solution, puddleComponent))
+                if (!overflow && _puddleSystem.WouldOverflow(puddleComponent.Owner, solution, puddleComponent))
                     return null;
 
-                if (!_puddleSystem.TryAddSolution(puddleComponent.Owner.Uid, solution, sound)) continue;
+                if (!_puddleSystem.TryAddSolution(puddleComponent.Owner, solution, sound)) continue;
 
                 return puddleComponent;
             }
         }
 
         var puddleEnt = EntityManager.SpawnEntity(prototype, spillGridCoords);
-        var newPuddleComponent = puddleEnt.GetComponent<PuddleComponent>();
+        var newPuddleComponent = EntityManager.GetComponent<PuddleComponent>(puddleEnt);
 
-        _puddleSystem.TryAddSolution(newPuddleComponent.Owner.Uid, solution, sound);
+        _puddleSystem.TryAddSolution(newPuddleComponent.Owner, solution, sound);
 
         return newPuddleComponent;
     }

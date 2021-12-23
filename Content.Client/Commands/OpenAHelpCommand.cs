@@ -1,15 +1,13 @@
 using System;
- using Content.Client.Administration;
-using Robust.Client.Console;
-using Robust.Client.GameObjects;
+using Content.Client.Administration;
+using Content.Shared.Administration;
 using Robust.Shared.Console;
-using Robust.Shared.Network;
-using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Robust.Shared.Network;
 
 namespace Content.Client.Commands
 {
+    [AnyCommand]
     public class OpenAHelpCommand : IConsoleCommand
     {
         public string Command => "openahelp";
@@ -36,7 +34,6 @@ namespace Content.Client.Commands
                 else
                 {
                     shell.WriteLine("Bad GUID!");
-                    return;
                 }
             }
         }

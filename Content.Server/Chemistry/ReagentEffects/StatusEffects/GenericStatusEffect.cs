@@ -30,6 +30,12 @@ namespace Content.Server.Chemistry.ReagentEffects.StatusEffects
         [DataField("time")]
         public float Time = 2.0f;
 
+        /// <remarks>
+        ///     true - refresh status effect time,  false - accumulate status effect time
+        /// </remarks>
+        [DataField("refresh")]
+        public bool Refresh = true;
+
         /// <summary>
         ///     Should this effect add the status effect, remove time from it, or set its cooldown?
         /// </summary>
@@ -41,7 +47,7 @@ namespace Content.Server.Chemistry.ReagentEffects.StatusEffects
             var statusSys = args.EntityManager.EntitySysManager.GetEntitySystem<StatusEffectsSystem>();
             if (Type == StatusEffectMetabolismType.Add && Component != String.Empty)
             {
-                statusSys.TryAddStatusEffect(args.SolutionEntity, Key, TimeSpan.FromSeconds(Time), Component);
+                statusSys.TryAddStatusEffect(args.SolutionEntity, Key, TimeSpan.FromSeconds(Time), Refresh, Component);
             }
             else if (Type == StatusEffectMetabolismType.Remove)
             {

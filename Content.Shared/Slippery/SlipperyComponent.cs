@@ -18,7 +18,7 @@ namespace Content.Shared.Slippery
     {
         public override string Name => "Slippery";
 
-        private float _paralyzeTime = 3f;
+        private float _paralyzeTime = 5f;
         private float _intersectPercentage = 0.3f;
         private float _requiredSlipSpeed = 5f;
         private float _launchForwardsMultiplier = 1f;

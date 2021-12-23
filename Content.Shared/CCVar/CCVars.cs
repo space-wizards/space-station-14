@@ -8,6 +8,16 @@ namespace Content.Shared.CCVar
     public sealed class CCVars : CVars
     {
         /*
+         * Server
+         */
+
+        /// <summary>
+        ///     Change this to have the changelog and rules "last seen" date stored separately.
+        /// </summary>
+        public static readonly CVarDef<string> ServerId =
+            CVarDef.Create("server.id", "unknown_server_id", CVar.REPLICATED | CVar.SERVER);
+
+        /*
          * Ambience
          */
 
@@ -75,7 +85,7 @@ namespace Content.Shared.CCVar
         ///     Controls the default game preset.
         /// </summary>
         public static readonly CVarDef<string>
-            GameLobbyDefaultPreset = CVarDef.Create("game.defaultpreset", "Suspicion", CVar.ARCHIVE);
+            GameLobbyDefaultPreset = CVarDef.Create("game.defaultpreset", "suspicion", CVar.ARCHIVE);
 
         /// <summary>
         ///     Controls if the game can force a different preset if the current preset's criteria are not met.
@@ -87,7 +97,7 @@ namespace Content.Shared.CCVar
         ///     The preset for the game to fall back to if the selected preset could not be used, and fallback is enabled.
         /// </summary>
         public static readonly CVarDef<string>
-            GameLobbyFallbackPreset = CVarDef.Create("game.fallbackpreset", "Sandbox", CVar.ARCHIVE);
+            GameLobbyFallbackPreset = CVarDef.Create("game.fallbackpreset", "sandbox", CVar.ARCHIVE);
 
         /// <summary>
         ///     Controls if people can win the game in Suspicion or Deathmatch.
@@ -143,6 +153,13 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<int> SoftMaxPlayers =
             CVarDef.Create("game.soft_max_players", 30, CVar.SERVERONLY | CVar.ARCHIVE);
+
+        /*
+         * Discord
+         */
+
+        public static readonly CVarDef<string> DiscordAHelpWebhook =
+            CVarDef.Create("discord.ahelp_webhook", string.Empty, CVar.SERVERONLY);
 
         /*
          * Suspicion
