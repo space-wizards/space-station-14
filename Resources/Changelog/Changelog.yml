@@ -1,67 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Reduce potted plant bounding box, type: Tweak}
-  id: 252
-  time: '2021-07-04T12:35:09.0000000+00:00'
-- author: PJB3005
-  changes:
-  - {message: Rewrote most of the power system., type: Tweak}
-  - {message: 'All power supplying objects now have a built-in ramping system. If
-      a large amount of extra power is suddenly needed, engines and batteries on the
-      grid need a bit of time to "ramp up" to match.', type: Add}
-  - {message: 'Power is passed through batteries immediately. This means that APCs
-      are basically on standby until engine power or such cuts out. When the engine
-      cuts out, heavy electrical grids will be underpowered for a second or two until
-      backup batteries can spin up to fill the gap.', type: Add}
-  id: 253
-  time: '2021-07-04T16:11:52.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: Changed chatbox UI to be more consistent with SS14's UI, type: Tweak}
-  id: 254
-  time: '2021-07-09T07:10:57.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Airlocks & low walls near arrivals don't look weird anymore, type: Fix}
-  id: 255
-  time: '2021-07-13T04:10:03.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: AME jars and parts now show inhand sprites, type: Fix}
-  id: 256
-  time: '2021-07-15T07:45:11.671231+00:00'
-- author: Zumorica
-  changes:
-  - {message: Fix bug where constructing walls and windows would place them in the
-      bar., type: Fix}
-  id: 257
-  time: '2021-07-15T07:45:11.671976+00:00'
-- author: Zumorica
-  changes:
-  - {message: Fix being able to play instruments while incapacitated., type: Fix}
-  id: 258
-  time: '2021-07-15T07:45:11.672684+00:00'
-- author: Zumorica
-  changes:
-  - {message: Fix crash when MIDI stops playing., type: Fix}
-  id: 259
-  time: '2021-07-15T07:45:11.673363+00:00'
-- author: Zumorica
-  changes:
-  - {message: Fixes spray puff and fire extinguisher cloud not moving., type: Fix}
-  id: 260
-  time: '2021-07-15T07:45:11.674114+00:00'
-- author: Zumorica
-  changes:
-  - {message: Added the dual-port air vent., type: Add}
-  id: 261
-  time: '2021-07-15T13:24:45.0000000+00:00'
-- author: Fogapod
-  changes:
-  - {message: Added missing space in Spanish accent., type: Fix}
-  id: 262
-  time: '2021-07-17T21:04:04.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: Fixes handheld instruments not working., type: Fix}
@@ -2815,9 +2752,9 @@ Entries:
   time: '2021-12-15T10:07:58.0000000+00:00'
 - author: buletsponge
   changes:
-  - {message: Added DrozdRiot, type: Add}
+  - {message: Added DrozdRiot., type: Add}
   - {message: Changed packedstation armory to spawn with non-lethal magazines and
-      SMGs, type: Tweak}
+      SMGs., type: Tweak}
   id: 744
   time: '2021-12-16T12:00:09.0000000+00:00'
 - author: Zumorica
@@ -2849,7 +2786,7 @@ Entries:
   time: '2021-12-19T06:52:14.0000000+00:00'
 - author: Fishfish458
   changes:
-  - {message: Mobs in crit state now gasp, type: Add}
+  - {message: Mobs in crit state now gasp., type: Add}
   - {message: Examined humans will now tell if they are dead or not regardless if
       the body is still being occupied by a ghost., type: Add}
   id: 750
@@ -2861,11 +2798,72 @@ Entries:
   time: '2021-12-19T23:27:07.0000000+00:00'
 - author: metalgearsloth
   changes:
-  - {message: Added kangaroos, type: Add}
+  - {message: Added kangaroos., type: Add}
   id: 752
   time: '2021-12-20T06:16:25.0000000+00:00'
 - author: wrexbe
   changes:
-  - {message: cloner now tells you why it can't eject, type: Add}
+  - {message: Cloner now tells you why it can't eject., type: Add}
   id: 753
   time: '2021-12-20T06:28:50.0000000+00:00'
+- author: Mirino97
+  changes:
+  - {message: Increased CharacterWindow size to accomodate objectives!, type: Fix}
+  id: 754
+  time: '2021-12-21T01:30:12.0000000+00:00'
+- author: ZorenZal
+  changes:
+  - {message: Add checkbox in controls for US QWERTY keys., type: Add}
+  id: 755
+  time: '2021-12-21T09:35:34.0000000+00:00'
+- author: pointer-to-null
+  changes:
+  - {message: Server info in the game lobby now shows the currently selected map.,
+    type: Add}
+  id: 756
+  time: '2021-12-21T17:18:08.0000000+00:00'
+- author: Mith-randalf
+  changes:
+  - {message: The cigarette vendors are now full of lighters. Go nuts., type: Add}
+  id: 757
+  time: '2021-12-21T17:20:32.0000000+00:00'
+- author: Pancake
+  changes:
+  - {message: Added accents for overly talkative animals., type: Add}
+  id: 758
+  time: '2021-12-21T20:31:20.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Added EVA suits to the EVA room., type: Add}
+  id: 759
+  time: '2021-12-22T22:47:34.0000000+00:00'
+- author: wrexbe
+  changes:
+  - {message: It is now possible to tell when airlock power wires are partially cut,
+    type: Add}
+  - {message: Airlock text is a little bit clearer, type: Tweak}
+  - {message: 'Airlock now only loses power when both backup, and main power wires
+      are cut', type: Fix}
+  id: 760
+  time: '2021-12-23T04:02:27.0000000+00:00'
+- author: Fishfish458
+  changes:
+  - {message: Hypospray to CMO lockers and also traitor goals., type: Add}
+  id: 761
+  time: '2021-12-23T08:51:49.0000000+00:00'
+- author: Pancake
+  changes:
+  - {message: Wizards now have something to ponder., type: Add}
+  id: 762
+  time: '2021-12-23T10:33:55.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: The Salvage department now partially exists., type: Add}
+  id: 763
+  time: '2021-12-23T12:14:01.0000000+00:00'
+- author: moony and TimrodDX
+  changes:
+  - {message: Added a winter holiday version of Packed Station! It will enter the
+      rotation on christmas eve and exit the minute christmas ends., type: Add}
+  id: 764
+  time: '2021-12-24T00:30:30.0000000+00:00'

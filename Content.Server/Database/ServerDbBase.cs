@@ -487,7 +487,16 @@ namespace Content.Server.Database
                 .Where(player => playerIds.Contains(player.UserId))
                 .ToListAsync();
 
-            round.Players.AddRange(players);
+            var playerSet = new HashSet<Guid>(round.Players.Select(player => player.UserId));
+            foreach (var player in players)
+            {
+                if (playerSet.Contains(player.UserId))
+                {
+                    continue;
+                }
+
+                round.Players.Add(player);
+            }
 
             await db.DbContext.SaveChangesAsync();
         }

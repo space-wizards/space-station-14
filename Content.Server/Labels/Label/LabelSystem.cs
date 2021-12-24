@@ -9,7 +9,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Utility;
-using Robust.Shared.Utility.Markup;
 
 namespace Content.Server.Labels
 {
@@ -56,7 +55,9 @@ namespace Content.Server.Labels
             if (label.CurrentLabel == null)
                 return;
 
-            args.Message.AddText(Loc.GetString("hand-labeler-has-label", ("label", label.CurrentLabel)));
+            var message = new FormattedMessage();
+            message.AddText(Loc.GetString("hand-labeler-has-label", ("label", label.CurrentLabel)));
+            args.PushMessage(message);
         }
 
         private void OnExamined(EntityUid uid, PaperLabelComponent comp, ExaminedEvent args)
