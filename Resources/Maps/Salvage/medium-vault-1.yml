@@ -945,318 +945,324 @@ entities:
     parent: 0
     type: Transform
 - uid: 30
-  type: WallReinforced
+  type: SalvageMaterialCrateSpawner
   components:
-  - pos: 2.5,-4.5
+  - pos: 0.5,3.5
     parent: 0
     type: Transform
 - uid: 31
   type: WallReinforced
   components:
-  - pos: -2.5,-6.5
+  - pos: 2.5,-4.5
     parent: 0
     type: Transform
 - uid: 32
   type: WallReinforced
   components:
-  - pos: 1.5,-2.5
+  - pos: -2.5,-6.5
     parent: 0
     type: Transform
 - uid: 33
   type: WallReinforced
   components:
-  - pos: 0.5,-1.5
+  - pos: 1.5,-2.5
     parent: 0
     type: Transform
 - uid: 34
   type: WallReinforced
   components:
-  - pos: 2.5,-3.5
+  - pos: 0.5,-1.5
     parent: 0
     type: Transform
 - uid: 35
   type: WallReinforced
   components:
-  - pos: 1.5,5.5
+  - pos: 2.5,-3.5
     parent: 0
     type: Transform
 - uid: 36
   type: WallReinforced
   components:
-  - pos: 5.5,1.5
+  - pos: 1.5,5.5
     parent: 0
     type: Transform
 - uid: 37
   type: WallReinforced
   components:
-  - pos: 5.5,-6.5
+  - pos: 5.5,1.5
     parent: 0
     type: Transform
 - uid: 38
   type: WallReinforced
   components:
-  - pos: -2.5,5.5
+  - pos: 5.5,-6.5
     parent: 0
     type: Transform
 - uid: 39
   type: WallReinforced
   components:
-  - pos: -2.5,4.5
+  - pos: -2.5,5.5
     parent: 0
     type: Transform
 - uid: 40
   type: WallReinforced
   components:
-  - pos: -2.5,2.5
+  - pos: -2.5,4.5
     parent: 0
     type: Transform
 - uid: 41
   type: WallReinforced
   components:
-  - pos: -3.5,-0.5
+  - pos: -2.5,2.5
     parent: 0
     type: Transform
 - uid: 42
   type: WallReinforced
   components:
-  - pos: -4.5,-0.5
+  - pos: -3.5,-0.5
     parent: 0
     type: Transform
 - uid: 43
   type: WallReinforced
   components:
-  - pos: -4.5,0.5
+  - pos: -4.5,-0.5
     parent: 0
     type: Transform
 - uid: 44
   type: WallReinforced
   components:
-  - pos: -4.5,1.5
+  - pos: -4.5,0.5
     parent: 0
     type: Transform
 - uid: 45
   type: WallReinforced
   components:
-  - pos: -3.5,-3.5
+  - pos: -4.5,1.5
     parent: 0
     type: Transform
 - uid: 46
   type: WallReinforced
   components:
-  - pos: -3.5,-4.5
+  - pos: -3.5,-3.5
     parent: 0
     type: Transform
 - uid: 47
   type: WallReinforced
   components:
-  - pos: -4.5,5.5
+  - pos: -3.5,-4.5
     parent: 0
     type: Transform
 - uid: 48
   type: WallReinforced
   components:
-  - pos: -5.5,5.5
+  - pos: -4.5,5.5
     parent: 0
     type: Transform
 - uid: 49
-  type: SalvageMobSpawner
+  type: WallReinforced
   components:
-  - pos: 3.5,0.5
+  - pos: -5.5,5.5
     parent: 0
     type: Transform
 - uid: 50
   type: SalvageMobSpawner
   components:
-  - pos: 4.5,-0.5
+  - pos: 3.5,0.5
     parent: 0
     type: Transform
 - uid: 51
   type: SalvageMobSpawner
   components:
-  - pos: 3.5,-0.5
+  - pos: 4.5,-0.5
     parent: 0
     type: Transform
 - uid: 52
+  type: SalvageMobSpawner
+  components:
+  - pos: 3.5,-0.5
+    parent: 0
+    type: Transform
+- uid: 53
   type: SalvageCanisterSpawner
   components:
   - pos: -1.5,0.5
     parent: 0
     type: Transform
-- uid: 53
+- uid: 54
   type: SalvageMobSpawner
   components:
   - pos: -3.5,4.5
     parent: 0
     type: Transform
-- uid: 54
+- uid: 55
   type: SalvageMobSpawner
   components:
   - pos: -4.5,4.5
     parent: 0
     type: Transform
-- uid: 55
+- uid: 56
   type: SalvageMobSpawner
   components:
   - pos: -3.5,3.5
     parent: 0
     type: Transform
-- uid: 56
+- uid: 57
   type: SalvageCanisterSpawner
   components:
   - pos: 1.5,0.5
     parent: 0
     type: Transform
-- uid: 57
+- uid: 58
   type: SalvageMaterialCrateSpawner
   components:
   - pos: 3.5,-4.5
     parent: 0
     type: Transform
-- uid: 58
+- uid: 59
   type: SalvageMaterialCrateSpawner
   components:
   - pos: -5.5,1.5
     parent: 0
     type: Transform
-- uid: 59
+- uid: 60
   type: SalvageMaterialCrateSpawner
   components:
   - pos: -1.5,-2.5
     parent: 0
     type: Transform
-- uid: 60
+- uid: 61
   type: SalvageMaterialCrateSpawner
   components:
   - pos: -0.5,-2.5
     parent: 0
     type: Transform
-- uid: 61
+- uid: 62
   type: SalvageCanisterSpawner
   components:
   - pos: -1.5,-3.5
     parent: 0
     type: Transform
-- uid: 62
+- uid: 63
   type: SalvageCanisterSpawner
   components:
   - pos: -1.5,-4.5
     parent: 0
     type: Transform
-- uid: 63
+- uid: 64
   type: SalvageMaterialCrateSpawner
   components:
   - pos: 0.5,-4.5
     parent: 0
     type: Transform
-- uid: 64
+- uid: 65
   type: SalvageCanisterSpawner
   components:
   - pos: -0.5,-4.5
     parent: 0
     type: Transform
-- uid: 65
+- uid: 66
   type: WallReinforced
   components:
   - pos: 1.5,-6.5
     parent: 0
     type: Transform
-- uid: 66
+- uid: 67
   type: WallReinforced
   components:
   - pos: 1.5,-1.5
     parent: 0
     type: Transform
-- uid: 67
+- uid: 68
   type: WallReinforced
   components:
   - pos: 0.5,-5.5
     parent: 0
     type: Transform
-- uid: 68
+- uid: 69
   type: WallReinforced
   components:
   - pos: -1.5,-5.5
     parent: 0
     type: Transform
-- uid: 69
+- uid: 70
   type: WallReinforced
   components:
   - pos: 1.5,-5.5
     parent: 0
     type: Transform
-- uid: 70
+- uid: 71
   type: WallReinforced
   components:
   - pos: 1.5,-0.5
     parent: 0
     type: Transform
-- uid: 71
+- uid: 72
   type: WallReinforced
   components:
   - pos: -0.5,-6.5
     parent: 0
     type: Transform
-- uid: 72
+- uid: 73
   type: WallReinforced
   components:
   - pos: -3.5,-2.5
     parent: 0
     type: Transform
-- uid: 73
+- uid: 74
   type: WallReinforced
   components:
   - pos: -3.5,-1.5
     parent: 0
     type: Transform
-- uid: 74
+- uid: 75
   type: WallReinforced
   components:
   - pos: 0.5,-0.5
     parent: 0
     type: Transform
-- uid: 75
+- uid: 76
   type: WallReinforced
   components:
   - pos: 1.5,-4.5
     parent: 0
     type: Transform
-- uid: 76
+- uid: 77
   type: WallReinforced
   components:
   - pos: -0.5,-5.5
     parent: 0
     type: Transform
-- uid: 77
+- uid: 78
   type: WallReinforced
   components:
   - pos: -2.5,-5.5
     parent: 0
     type: Transform
-- uid: 78
+- uid: 79
   type: WallReinforced
   components:
   - pos: -2.5,-4.5
     parent: 0
     type: Transform
-- uid: 79
+- uid: 80
   type: WallReinforced
   components:
   - pos: -2.5,-3.5
     parent: 0
     type: Transform
-- uid: 80
+- uid: 81
   type: WallReinforced
   components:
   - pos: -2.5,-2.5
     parent: 0
     type: Transform
-- uid: 81
+- uid: 82
   type: WallReinforced
   components:
   - pos: -2.5,-1.5
     parent: 0
     type: Transform
-- uid: 82
+- uid: 83
   type: AirlockSecurityLocked
   components:
   - pos: -0.5,-1.5
@@ -1266,52 +1272,74 @@ entities:
       board: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 83
+- uid: 84
   type: WallReinforced
   components:
   - pos: -1.5,5.5
     parent: 0
     type: Transform
-- uid: 84
+- uid: 85
   type: WallReinforced
   components:
   - pos: 5.5,-5.5
     parent: 0
     type: Transform
-- uid: 85
+- uid: 86
   type: WallReinforced
   components:
   - pos: 4.5,1.5
     parent: 0
     type: Transform
-- uid: 86
+- uid: 87
   type: SalvageMaterialCrateSpawner
   components:
   - pos: 0.5,-2.5
     parent: 0
     type: Transform
-- uid: 87
+- uid: 88
   type: SalvageMaterialCrateSpawner
   components:
   - pos: 0.5,-3.5
     parent: 0
     type: Transform
-- uid: 88
+- uid: 89
   type: SalvageMaterialCrateSpawner
   components:
   - pos: -0.5,-3.5
     parent: 0
     type: Transform
-- uid: 89
+- uid: 90
   type: WallReinforced
   components:
   - pos: -3.5,5.5
     parent: 0
     type: Transform
-- uid: 90
+- uid: 91
   type: WallReinforced
   components:
   - pos: -4.5,2.5
     parent: 0
     type: Transform
+- uid: 92
+  type: SalvageMaterialCrateSpawner
+  components:
+  - pos: 0.5,4.5
+    parent: 0
+    type: Transform
+- uid: 93
+  type: SalvageMaterialCrateSpawner
+  components:
+  - pos: -0.5,4.5
+    parent: 0
+    type: Transform
+- uid: 94
+  type: AirlockSecurityLocked
+  components:
+  - pos: -2.5,3.5
+    parent: 0
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 ...
