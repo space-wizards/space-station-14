@@ -1,26 +1,6 @@
 Entries:
 - author: Zumorica
   changes:
-  - {message: Fix crash when MIDI stops playing., type: Fix}
-  id: 259
-  time: '2021-07-15T07:45:11.673363+00:00'
-- author: Zumorica
-  changes:
-  - {message: Fixes spray puff and fire extinguisher cloud not moving., type: Fix}
-  id: 260
-  time: '2021-07-15T07:45:11.674114+00:00'
-- author: Zumorica
-  changes:
-  - {message: Added the dual-port air vent., type: Add}
-  id: 261
-  time: '2021-07-15T13:24:45.0000000+00:00'
-- author: Fogapod
-  changes:
-  - {message: Added missing space in Spanish accent., type: Fix}
-  id: 262
-  time: '2021-07-17T21:04:04.0000000+00:00'
-- author: Zumorica
-  changes:
   - {message: Fixes handheld instruments not working., type: Fix}
   id: 263
   time: '2021-07-18T13:00:50.345009+00:00'
@@ -2866,3 +2846,24 @@ Entries:
       are cut', type: Fix}
   id: 760
   time: '2021-12-23T04:02:27.0000000+00:00'
+- author: Fishfish458
+  changes:
+  - {message: Hypospray to CMO lockers and also traitor goals., type: Add}
+  id: 761
+  time: '2021-12-23T08:51:49.0000000+00:00'
+- author: Pancake
+  changes:
+  - {message: Wizards now have something to ponder., type: Add}
+  id: 762
+  time: '2021-12-23T10:33:55.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: The Salvage department now partially exists., type: Add}
+  id: 763
+  time: '2021-12-23T12:14:01.0000000+00:00'
+- author: moony and TimrodDX
+  changes:
+  - {message: Added a winter holiday version of Packed Station! It will enter the
+      rotation on christmas eve and exit the minute christmas ends., type: Add}
+  id: 764
+  time: '2021-12-24T00:30:30.0000000+00:00'

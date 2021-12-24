@@ -593,5 +593,15 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool> RestrictedNames =
             CVarDef.Create("ic.restricted_names", true, CVar.SERVER | CVar.REPLICATED);
+
+        /*
+         * Salvage
+         */
+
+        /// <summary>
+        ///     Forced salvage map prototype name (if empty, randomly selected)
+        /// </summary>
+        public static readonly CVarDef<string>
+            SalvageForced = CVarDef.Create("salvage.forced", "", CVar.SERVERONLY);
     }
 }

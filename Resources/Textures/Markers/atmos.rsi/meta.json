@@ -11,6 +11,9 @@
       "name": "base"
     },
     {
+      "name": "base-hot"
+    },
+    {
       "name": "vacuum"
     },
     {
@@ -24,6 +27,9 @@
     },
     {
       "name": "watervapour"
+    },
+    {
+      "name": "fire"
     }
   ]
 }
