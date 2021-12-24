@@ -1,9 +1,4 @@
 Entries:
-- author: Seth
-  changes:
-  - {message: Changed Crowbar and Wrench damage from 5 to 7, type: Tweak}
-  id: 265
-  time: '2021-07-19T20:55:37.0000000+00:00'
 - author: PJB3005
   changes:
   - {message: Chatbox channel management has been tweaked to be much more intuitive
@@ -2868,3 +2863,9 @@ Entries:
       but it exists.', type: Add}
   id: 766
   time: '2021-12-24T09:22:34.0000000+00:00'
+- author: JustinTime
+  changes:
+  - {message: You can now light ciggies by interacting with hot things, type: Tweak}
+  - {message: Thrusters are now hot, type: Tweak}
+  id: 767
+  time: '2021-12-24T11:59:14.0000000+00:00'
