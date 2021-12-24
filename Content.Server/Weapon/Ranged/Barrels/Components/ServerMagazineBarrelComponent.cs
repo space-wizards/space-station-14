@@ -193,7 +193,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
         public override EntityUid? PeekAmmo()
         {
-            return BoltOpen ? default : _chamberContainer.ContainedEntity;
+            return BoltOpen ? null : _chamberContainer.ContainedEntity;
         }
 
         public override EntityUid? TakeProjectile(EntityCoordinates spawnAt)
@@ -205,7 +205,8 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             var entity = _chamberContainer.ContainedEntity;
 
             Cycle();
-            return entity != null ? _entities.GetComponent<AmmoComponent>(entity.Value).TakeBullet(spawnAt) : null;
+
+            return entity != null ? EntitySystem.Get<GunSystem>().TakeBullet(_entities.GetComponent<AmmoComponent>(entity), spawnAt) : null;
         }
 
         private void Cycle(bool manual = false)

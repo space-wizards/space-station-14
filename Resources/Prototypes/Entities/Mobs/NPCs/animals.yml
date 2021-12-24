@@ -432,7 +432,9 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
-  - type: MouseAccent
+  - type: ReplacementAccent
+    accent: mouse
+
 
 - type: entity
   parent: MobMouse

@@ -155,6 +155,13 @@ namespace Content.Shared.CCVar
             CVarDef.Create("game.soft_max_players", 30, CVar.SERVERONLY | CVar.ARCHIVE);
 
         /*
+         * Discord
+         */
+
+        public static readonly CVarDef<string> DiscordAHelpWebhook =
+            CVarDef.Create("discord.ahelp_webhook", string.Empty, CVar.SERVERONLY);
+
+        /*
          * Suspicion
          */
 
@@ -586,5 +593,15 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool> RestrictedNames =
             CVarDef.Create("ic.restricted_names", true, CVar.SERVER | CVar.REPLICATED);
+
+        /*
+         * Salvage
+         */
+
+        /// <summary>
+        ///     Forced salvage map prototype name (if empty, randomly selected)
+        /// </summary>
+        public static readonly CVarDef<string>
+            SalvageForced = CVarDef.Create("salvage.forced", "", CVar.SERVERONLY);
     }
 }

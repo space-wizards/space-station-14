@@ -98,6 +98,7 @@ namespace Content.Client.Entry
             prototypes.RegisterIgnore("advertisementsPack");
             prototypes.RegisterIgnore("metabolizerType");
             prototypes.RegisterIgnore("metabolismGroup");
+            prototypes.RegisterIgnore("salvageMap");
             prototypes.RegisterIgnore("gamePreset");
             prototypes.RegisterIgnore("gameRule");
 
