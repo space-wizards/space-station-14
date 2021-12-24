@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Remove portals until someone does a better job coding it, type: Remove}
-  id: 267
-  time: '2021-07-21T09:16:10.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Add Station driving, type: Add}
   id: 268
   time: '2021-07-21T11:15:12.0000000+00:00'
@@ -2869,3 +2864,10 @@ Entries:
   - {message: added a board game crate to cargo to play games on any station, type: Add}
   id: 768
   time: '2021-12-24T12:20:20.0000000+00:00'
+- author: TaralGit
+  changes:
+  - {message: Deleted the old laser gun., type: Remove}
+  - {message: Replaced laser guns on packedstation with COG laser carbines., type: Tweak}
+  - {message: Reduced ammo capacity for the Svalinn and the COG., type: Tweak}
+  id: 769
+  time: '2021-12-24T12:32:03.0000000+00:00'
