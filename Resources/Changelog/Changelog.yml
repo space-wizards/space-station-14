@@ -2861,7 +2861,7 @@ Entries:
   - {message: The Salvage department now partially exists., type: Add}
   id: 763
   time: '2021-12-23T12:14:01.0000000+00:00'
-- author: moonheart08
+- author: moony and TimrodDX
   changes:
   - {message: Added a winter holiday version of Packed Station! It will enter the
       rotation on christmas eve and exit the minute christmas ends., type: Add}
