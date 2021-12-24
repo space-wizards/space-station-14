@@ -494,13 +494,12 @@ public abstract class SharedDoorSystem : EntitySystem
         _activeDoors.Add(door);
     }
 
+    /// <summary>
+    ///     Iterate over active doors and progress them to the next state if they need to be updated.
+    /// </summary>
     public override void Update(float frameTime)
     {
-        base.Update(frameTime);
-
         HashSet<DoorComponent> toRemove = new();
-
-        // cache CurTime (getter function)
         var time = GameTiming.CurTime;
 
         foreach (var door in _activeDoors)
@@ -516,8 +515,8 @@ public abstract class SharedDoorSystem : EntitySystem
 
             if (door.NextStateChange.Value < time)
             {
-                // Progress the door to the next state. This may sometimes call ActiveDoors.Add(...), but only for existing
-                // doors, and so it should never result in an enumerator modification error.
+                // Progress the door to the next state. This may sometimes call ActiveDoors.Add(...), but these doors
+                // are already in the set, so it should never result in an enumerator modification error.
                 NextState(door, time);
             }
         }
@@ -535,12 +534,11 @@ public abstract class SharedDoorSystem : EntitySystem
 
         if (door.CurrentlyCrushing.Count > 0)
             // This is a closed door that is crushing people and needs to auto-open. Note that we don't check "can open"
-            // here. The door never actually finished closing and we don't want people to get stuck in walls.
+            // here. The door never actually finished closing and we don't want people to get stuck inside of doors.
             StartOpening(door.Owner, door, predicted: true);
 
         switch (door.State)
         {
-
             case DoorState.Opening:
                 // Either fully or partially open this door.
                 if (door.Partial)
