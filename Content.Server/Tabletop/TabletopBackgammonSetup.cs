@@ -64,7 +64,6 @@ namespace Content.Server.Tabletop
             session.Entities.Add(entityManager.SpawnEntity(BlackPiecePrototype, center.Offset(getXposition(0, false), getYPosition(0, true))));
             session.Entities.Add(entityManager.SpawnEntity(BlackPiecePrototype, center.Offset(getXposition(0, false), getYPosition(1, true))));
 
-
             // bottom left
             session.Entities.Add(entityManager.SpawnEntity(WhitePiecePrototype, center.Offset(getXposition(0, true), getYPosition(0, false))));
             session.Entities.Add(entityManager.SpawnEntity(WhitePiecePrototype, center.Offset(getXposition(0, true), getYPosition(1, false))));

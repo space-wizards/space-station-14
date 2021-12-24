@@ -13,7 +13,6 @@
     setup:
       !type:TabletopBackgammonSetup
 
-
 - type: entity
   id: BackgammonBoardTabletop
   name: backgammon
