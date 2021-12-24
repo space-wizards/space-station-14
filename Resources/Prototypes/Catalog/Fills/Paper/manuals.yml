@@ -29,7 +29,7 @@
     - state: seccode
   - type: Paper
     content: |
-      DISCLAIMER: S.E.C codes are not to be treated as gospel, as they are a amalgamation of general suggestions of how to run a commercial ship's security.
+      DISCLAIMER: S.E.C codes are not to be treated as gospel, as they are a amalgamation of general suggestions of how to run security on a commercial spacecraft.
       However, violating them should be generally avoided, and abuse will be punished accordingly.
       
       PROPER ARRESTS:
