@@ -69,7 +69,6 @@
       - id: CrayonWhite
         amount: 1
 
-
 - type: entity
   id: CrateFunBoardGames
   name: board game crate

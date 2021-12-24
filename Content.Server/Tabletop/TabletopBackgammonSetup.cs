@@ -15,8 +15,6 @@ namespace Content.Server.Tabletop
 
         [DataField("blackPiecePrototype")]
         public string BlackPiecePrototype { get; } = "BlackTabletopPiece";
-
-
         public override void SetupTabletop(TabletopSession session, IEntityManager entityManager)
         {
             var board = entityManager.SpawnEntity(BackgammonBoardPrototype, session.Position);
@@ -27,65 +25,47 @@ namespace Content.Server.Tabletop
             const float boardDistanceX = 1.25f;
             const float pieceDistanceY = 0.80f;
 
-            float getXposition (float distanceFromSide, bool isLeftSide)
+            float getXPosition(float distanceFromSide, bool isLeftSide)
             {
-                return isLeftSide ? -borderLengthX + (distanceFromSide * boardDistanceX)
-                : borderLengthX - (distanceFromSide * boardDistanceX);
+                var pos = borderLengthX - (distanceFromSide * boardDistanceX);
+                return isLeftSide ? -pos : pos;
             }
 
-            float getYPosition (float positionNumber, bool isTop)
+            float getYPosition(float positionNumber, bool isTop)
             {
-                return isTop ? borderLengthY  - (pieceDistanceY * positionNumber)
-                : -borderLengthY  + (pieceDistanceY * positionNumber);
+                var pos = borderLengthY - (pieceDistanceY * positionNumber);
+                return isTop ? -pos : pos;
             }
 
-            var center = session.Position;
+            void addPieces(
+                float distanceFromSide,
+                int numberOfPieces,
+                bool isBlackPiece,
+                bool isTop,
+                bool isLeftSide)
+            {
+                for (int i = 0; i < numberOfPieces; i++)
+                {
+                    session.Entities.Add(entityManager.SpawnEntity(isBlackPiece ? BlackPiecePrototype : WhitePiecePrototype, session.Position.Offset(getXPosition(distanceFromSide, isLeftSide), getYPosition(i, isTop))));
+                }
+            }
 
             // Top left
-            session.Entities.Add(entityManager.SpawnEntity(BlackPiecePrototype, center.Offset(getXposition(0, true), getYPosition(0, true))));
-            session.Entities.Add(entityManager.SpawnEntity(BlackPiecePrototype, center.Offset(getXposition(0, true), getYPosition(1, true))));
-            session.Entities.Add(entityManager.SpawnEntity(BlackPiecePrototype, center.Offset(getXposition(0, true), getYPosition(2, true))));
-            session.Entities.Add(entityManager.SpawnEntity(BlackPiecePrototype, center.Offset(getXposition(0, true), getYPosition(3, true))));
-            session.Entities.Add(entityManager.SpawnEntity(BlackPiecePrototype, center.Offset(getXposition(0, true), getYPosition(4, true))));
-
+            addPieces(0, 5, true, true, true);
             // top middle left
-            session.Entities.Add(entityManager.SpawnEntity(WhitePiecePrototype, center.Offset(getXposition(4, true), getYPosition(0, true))));
-            session.Entities.Add(entityManager.SpawnEntity(WhitePiecePrototype, center.Offset(getXposition(4, true), getYPosition(1, true))));
-            session.Entities.Add(entityManager.SpawnEntity(WhitePiecePrototype, center.Offset(getXposition(4, true), getYPosition(2, true))));
-
+            addPieces(4, 3, false, true, true);
             // top middle right
-            session.Entities.Add(entityManager.SpawnEntity(WhitePiecePrototype, center.Offset(getXposition(5, false), getYPosition(0, true))));
-            session.Entities.Add(entityManager.SpawnEntity(WhitePiecePrototype, center.Offset(getXposition(5, false), getYPosition(1, true))));
-            session.Entities.Add(entityManager.SpawnEntity(WhitePiecePrototype, center.Offset(getXposition(5, false), getYPosition(2, true))));
-            session.Entities.Add(entityManager.SpawnEntity(WhitePiecePrototype, center.Offset(getXposition(5, false), getYPosition(3, true))));
-            session.Entities.Add(entityManager.SpawnEntity(WhitePiecePrototype, center.Offset(getXposition(5, false), getYPosition(4, true))));
-
+            addPieces(5, 5, false, true, false);
             // top far right
-            session.Entities.Add(entityManager.SpawnEntity(BlackPiecePrototype, center.Offset(getXposition(0, false), getYPosition(0, true))));
-            session.Entities.Add(entityManager.SpawnEntity(BlackPiecePrototype, center.Offset(getXposition(0, false), getYPosition(1, true))));
-
+            addPieces(0, 2, true, true, false);
             // bottom left
-            session.Entities.Add(entityManager.SpawnEntity(WhitePiecePrototype, center.Offset(getXposition(0, true), getYPosition(0, false))));
-            session.Entities.Add(entityManager.SpawnEntity(WhitePiecePrototype, center.Offset(getXposition(0, true), getYPosition(1, false))));
-            session.Entities.Add(entityManager.SpawnEntity(WhitePiecePrototype, center.Offset(getXposition(0, true), getYPosition(2, false))));
-            session.Entities.Add(entityManager.SpawnEntity(WhitePiecePrototype, center.Offset(getXposition(0, true), getYPosition(3, false))));
-            session.Entities.Add(entityManager.SpawnEntity(WhitePiecePrototype, center.Offset(getXposition(0, true), getYPosition(4, false))));
-
+            addPieces(0, 5, false, false, true);
             // bottom middle left
-            session.Entities.Add(entityManager.SpawnEntity(BlackPiecePrototype, center.Offset(getXposition(4, true), getYPosition(0, false))));
-            session.Entities.Add(entityManager.SpawnEntity(BlackPiecePrototype, center.Offset(getXposition(4, true), getYPosition(1, false))));
-            session.Entities.Add(entityManager.SpawnEntity(BlackPiecePrototype, center.Offset(getXposition(4, true), getYPosition(2, false))));
-
-           // bottom middle right
-            session.Entities.Add(entityManager.SpawnEntity(BlackPiecePrototype, center.Offset(getXposition(5, false), getYPosition(0, false))));
-            session.Entities.Add(entityManager.SpawnEntity(BlackPiecePrototype, center.Offset(getXposition(5, false), getYPosition(1, false))));
-            session.Entities.Add(entityManager.SpawnEntity(BlackPiecePrototype, center.Offset(getXposition(5, false), getYPosition(2, false))));
-            session.Entities.Add(entityManager.SpawnEntity(BlackPiecePrototype, center.Offset(getXposition(5, false), getYPosition(3, false))));
-            session.Entities.Add(entityManager.SpawnEntity(BlackPiecePrototype, center.Offset(getXposition(5, false), getYPosition(4, false))));
-
+            addPieces(4, 3, true, false, true);
+            // bottom middle right
+            addPieces(5, 5, true, false, false);
             // bottom far right
-            session.Entities.Add(entityManager.SpawnEntity(WhitePiecePrototype, center.Offset(getXposition(0, false), getYPosition(0, false))));
-            session.Entities.Add(entityManager.SpawnEntity(WhitePiecePrototype, center.Offset(getXposition(0, false), getYPosition(1, false))));
+            addPieces(0, 2, false, false, false);
         }
     }
 }
