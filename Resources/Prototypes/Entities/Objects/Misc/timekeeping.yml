@@ -1,0 +1,11 @@
+﻿- type: entity
+  parent: BaseItem
+  id: WardenStopwatch
+  name: Mechanical Pocketwatch
+  description: A classic symbol of power, it helps you keep track of celltime served by wrongdoers.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/Timekeeping/mechanical_stopwatch.rsi
+    state: icon
+  - type: TimerStopwatch
+  
