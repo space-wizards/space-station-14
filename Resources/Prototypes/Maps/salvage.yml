@@ -21,6 +21,12 @@
   mapPath: Maps/Salvage/small-ship-1.yml
   size: 3.5
 
+- type: salvageMap
+  id: small3
+  name: "Small / Laundromat 1"
+  mapPath: Maps/Salvage/small-3.yml
+  size: 3.5
+
 # Small - Asteroids
 
 - type: salvageMap
