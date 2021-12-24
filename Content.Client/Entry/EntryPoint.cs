@@ -7,6 +7,7 @@ using Content.Client.EscapeMenu;
 using Content.Client.Eui;
 using Content.Client.Flash;
 using Content.Client.HUD;
+using Content.Client.Info;
 using Content.Client.Input;
 using Content.Client.IoC;
 using Content.Client.Launcher;
@@ -24,6 +25,7 @@ using Content.Client.Stylesheets;
 using Content.Client.Viewport;
 using Content.Client.Voting;
 using Content.Shared.Actions;
+using Content.Shared.Administration;
 using Content.Shared.Alert;
 using Content.Shared.AME;
 using Content.Shared.Cargo.Components;
@@ -82,6 +84,7 @@ namespace Content.Client.Entry
             factory.RegisterClass<SharedGravityGeneratorComponent>();
             factory.RegisterClass<SharedAMEControllerComponent>();
 
+            prototypes.RegisterIgnore("accent");
             prototypes.RegisterIgnore("material");
             prototypes.RegisterIgnore("reaction"); //Chemical reactions only needed by server. Reactions checks are server-side.
             prototypes.RegisterIgnore("gasReaction");
@@ -95,6 +98,9 @@ namespace Content.Client.Entry
             prototypes.RegisterIgnore("advertisementsPack");
             prototypes.RegisterIgnore("metabolizerType");
             prototypes.RegisterIgnore("metabolismGroup");
+            prototypes.RegisterIgnore("salvageMap");
+            prototypes.RegisterIgnore("gamePreset");
+            prototypes.RegisterIgnore("gameRule");
 
             ClientContentIoC.Register();
 
@@ -113,6 +119,7 @@ namespace Content.Client.Entry
             IoCManager.Resolve<IStylesheetManager>().Initialize();
             IoCManager.Resolve<IScreenshotHook>().Initialize();
             IoCManager.Resolve<ChangelogManager>().Initialize();
+            IoCManager.Resolve<RulesManager>().Initialize();
             IoCManager.Resolve<ViewportManager>().Initialize();
 
             IoCManager.InjectDependencies(this);
@@ -186,6 +193,7 @@ namespace Content.Client.Entry
             IoCManager.Resolve<AlertManager>().Initialize();
             IoCManager.Resolve<ActionManager>().Initialize();
             IoCManager.Resolve<IVoteManager>().Initialize();
+            IoCManager.Resolve<IGamePrototypeLoadManager>().Initialize();
 
             _baseClient.RunLevelChanged += (_, args) =>
             {

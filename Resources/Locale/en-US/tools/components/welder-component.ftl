@@ -9,4 +9,4 @@ welder-component-suicide-lit-others-message = {$victim} welds their every orific
 welder-component-suicide-lit-message = You weld your every orifice closed!
 welder-component-suicide-unlit-others-message = {$victim} bashes themselves with the unlit welding torch!
 welder-component-suicide-unlit-message = You bash yourself with the unlit welding torch!
-welder-component-after-interact-refueled-message = Welder refueled
+welder-component-after-interact-refueled-message = Refueled!

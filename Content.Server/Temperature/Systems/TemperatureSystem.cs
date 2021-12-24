@@ -166,30 +166,30 @@ namespace Content.Server.Temperature.Systems
             {
                 if (!temperature.TakingDamage)
                 {
-                    _logSystem.Add(LogType.Temperature, $"{temperature.Owner} started taking high temperature damage");
+                    _logSystem.Add(LogType.Temperature, $"{ToPrettyString(temperature.Owner):entity} started taking high temperature damage");
                     temperature.TakingDamage = true;
                 }
 
                 var diff = Math.Abs(temperature.CurrentTemperature - temperature.HeatDamageThreshold);
                 var tempDamage = c / (1 + a * Math.Pow(Math.E, -heatK * diff)) - y;
-                _damageableSystem.TryChangeDamage(uid, temperature.HeatDamage * tempDamage);
+                _damageableSystem.TryChangeDamage(uid, temperature.HeatDamage * tempDamage, interruptsDoAfters: false);
             }
             else if (temperature.CurrentTemperature <= temperature.ColdDamageThreshold)
             {
                 if (!temperature.TakingDamage)
                 {
-                    _logSystem.Add(LogType.Temperature, $"{temperature.Owner} started taking low temperature damage");
+                    _logSystem.Add(LogType.Temperature, $"{ToPrettyString(temperature.Owner):entity} started taking low temperature damage");
                     temperature.TakingDamage = true;
                 }
 
                 var diff = Math.Abs(temperature.CurrentTemperature - temperature.ColdDamageThreshold);
                 var tempDamage =
                     Math.Sqrt(diff * (Math.Pow(temperature.DamageCap.Double(), 2) / temperature.ColdDamageThreshold));
-                _damageableSystem.TryChangeDamage(uid, temperature.ColdDamage * tempDamage);
+                _damageableSystem.TryChangeDamage(uid, temperature.ColdDamage * tempDamage, interruptsDoAfters: false);
             }
             else if (temperature.TakingDamage)
             {
-                _logSystem.Add(LogType.Temperature, $"{temperature.Owner} stopped taking temperature damage");
+                _logSystem.Add(LogType.Temperature, $"{ToPrettyString(temperature.Owner):entity} stopped taking temperature damage");
                 temperature.TakingDamage = false;
             }
         }

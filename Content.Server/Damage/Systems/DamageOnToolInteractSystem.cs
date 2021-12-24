@@ -29,13 +29,14 @@ namespace Content.Server.Damage.Systems
 
             if (component.WeldingDamage is {} weldingDamage
                 && EntityManager.TryGetComponent<WelderComponent?>(args.Used, out var welder)
-                && welder.Lit)
+                && welder.Lit
+                && !welder.TankSafe)
             {
                 var dmg = _damageableSystem.TryChangeDamage(args.Target, weldingDamage);
 
                 if (dmg != null)
                     _logSystem.Add(LogType.Damaged,
-                        $"{args.User} used {args.Used} as a welder to deal {dmg.Total} damage to {args.Target}");
+                        $"{ToPrettyString(args.User):user} used {ToPrettyString(args.Used):used} as a welder to deal {dmg.Total:damage} damage to {ToPrettyString(args.Target):target}");
 
                 args.Handled = true;
             }
@@ -47,7 +48,7 @@ namespace Content.Server.Damage.Systems
 
                 if (dmg != null)
                     _logSystem.Add(LogType.Damaged,
-                        $"{args.User} used {args.Used} as a tool to deal {dmg.Total} damage to {args.Target}");
+                        $"{ToPrettyString(args.User):user} used {ToPrettyString(args.Used):used} as a tool to deal {dmg.Total:damage} damage to {ToPrettyString(args.Target):target}");
 
                 args.Handled = true;
             }

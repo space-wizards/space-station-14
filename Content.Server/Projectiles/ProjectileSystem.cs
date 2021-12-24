@@ -5,6 +5,7 @@ using Content.Shared.Body.Components;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -57,8 +58,9 @@ namespace Content.Server.Projectiles
                 component.DamagedEntity = true;
 
                 if (dmg is not null && EntityManager.EntityExists(component.Shooter))
-                    _adminLogSystem.Add(LogType.BulletHit, LogImpact.Low,
-                        $"Projectile {component.Owner} shot by {component.Shooter:shooter} hit {otherEntity} and dealt {dmg.Total} damage");
+                    _adminLogSystem.Add(LogType.BulletHit,
+                        HasComp<ActorComponent>(otherEntity) ? LogImpact.Extreme : LogImpact.High,
+                        $"Projectile {ToPrettyString(component.Owner):projectile} shot by {ToPrettyString(component.Shooter):user} hit {ToPrettyString(otherEntity):target} and dealt {dmg.Total:damage} damage");
             }
 
             // Damaging it can delete it

@@ -1,8 +1,11 @@
 name: Publish
 
+concurrency:
+  group: publish
+
 on:
   push:
-    branches: [ stable ]
+    branches: [ master ]
 
 jobs:
   build:

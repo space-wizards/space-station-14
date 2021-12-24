@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Administration.Logs;
@@ -153,13 +153,10 @@ namespace Content.Server.Body.Systems
 
                 if (bloodstreamAmount < amountNeeded)
                 {
-                    if (!EntityManager.GetComponent<MobStateComponent>(uid).IsCritical())
+                    // Panic inhale
+                    foreach (var (lung, mech) in lungs)
                     {
-                        // Panic inhale
-                        foreach (var (lung, mech) in lungs)
-                        {
-                            _lungSystem.Gasp((lung).Owner, lung, mech);
-                        }
+                        _lungSystem.Gasp((lung).Owner, lung, mech);
                     }
 
                     bloodstreamAmount = bloodstream.Air.GetMoles(gas);
@@ -198,7 +195,7 @@ namespace Content.Server.Body.Systems
         private void TakeSuffocationDamage(EntityUid uid, RespiratorComponent respirator)
         {
             if (!respirator.Suffocating)
-                _logSys.Add(LogType.Asphyxiation, $"{uid:Entity} started suffocating");
+                _logSys.Add(LogType.Asphyxiation, $"{ToPrettyString(uid):entity} started suffocating");
 
             respirator.Suffocating = true;
 
@@ -213,7 +210,7 @@ namespace Content.Server.Body.Systems
         private void StopSuffocation(EntityUid uid, RespiratorComponent respirator)
         {
             if (respirator.Suffocating)
-                _logSys.Add(LogType.Asphyxiation, $"{uid:Entity} stopped suffocating");
+                _logSys.Add(LogType.Asphyxiation, $"{ToPrettyString(uid):entity} stopped suffocating");
 
             respirator.Suffocating = false;
 

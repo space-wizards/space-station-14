@@ -270,6 +270,7 @@
       - SecurityHelmet
       - SecuritySupplies
       - SecurityNonLethal
+      - SecurityRestraints
       - HydroponicsTools
       - HydroponicsSeeds
       - HydroponicsSeedsExotic
