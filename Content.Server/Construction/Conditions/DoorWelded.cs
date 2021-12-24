@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Content.Shared.Construction;
-using Content.Shared.Doors;
+using Content.Shared.Doors.Components;
 using Content.Shared.Examine;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;

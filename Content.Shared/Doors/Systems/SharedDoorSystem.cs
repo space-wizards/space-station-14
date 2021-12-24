@@ -1,4 +1,5 @@
 using Content.Shared.Damage;
+using Content.Shared.Doors.Components;
 using Content.Shared.Examine;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
@@ -17,7 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Content.Shared.Doors;
+namespace Content.Shared.Doors.Systems;
 
 public abstract class SharedDoorSystem : EntitySystem
 {
@@ -371,7 +372,7 @@ public abstract class SharedDoorSystem : EntitySystem
             return;
 
         // is this door capable of crushing? NOT the same as an airlock safety check. The door will still close.
-        if (!door.CanCrush) 
+        if (!door.CanCrush)
             return;
 
         // Crush
@@ -539,7 +540,7 @@ public abstract class SharedDoorSystem : EntitySystem
 
         switch (door.State)
         {
-            
+
             case DoorState.Opening:
                 // Either fully or partially open this door.
                 if (door.Partial)

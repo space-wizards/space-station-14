@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Access.Components;
 using Content.Server.Doors.Components;
-using Content.Shared.Doors;
+using Content.Shared.Doors.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;

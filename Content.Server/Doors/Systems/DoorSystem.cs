@@ -8,6 +8,8 @@ using Content.Server.Construction.Components;
 using Content.Server.Tools;
 using Content.Server.Tools.Components;
 using Content.Shared.Doors;
+using Content.Shared.Doors.Components;
+using Content.Shared.Doors.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Tag;
 using Robust.Shared.Audio;

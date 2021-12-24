@@ -10,7 +10,7 @@ using Content.Server.Suspicion.Roles;
 using Content.Server.Traitor.Uplink;
 using Content.Server.Traitor.Uplink.Account;
 using Content.Shared.CCVar;
-using Content.Shared.Doors;
+using Content.Shared.Doors.Systems;
 using Content.Shared.GameTicking;
 using Content.Shared.MobState.Components;
 using Content.Shared.Roles;

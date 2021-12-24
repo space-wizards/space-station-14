@@ -1,6 +1,6 @@
 using System;
 using Content.Client.Wires.Visualizers;
-using Content.Shared.Doors;
+using Content.Shared.Doors.Components;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;

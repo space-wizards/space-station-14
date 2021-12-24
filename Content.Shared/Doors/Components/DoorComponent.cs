@@ -13,7 +13,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 using Robust.Shared.ViewVariables;
 using DrawDepthTag = Robust.Shared.GameObjects.DrawDepth;
 
-namespace Content.Shared.Doors;
+namespace Content.Shared.Doors.Components;
 
 [NetworkedComponent]
 [RegisterComponent]
