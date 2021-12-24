@@ -31,3 +31,9 @@
   mapPath: Maps/Salvage/medium-1.yml
   size: 7.5
 
+- type: salvageMap
+  id: mediumvault1
+  name: "Medium / Vault 1"
+  mapPath: Maps/Salvage/medium-vault-1.yml
+  size: 7.5
+
