@@ -14,7 +14,7 @@
   canRotate: false
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked { }
+    - !type:TileNotBlocked
 
 - type: construction
   name: wall
@@ -32,7 +32,7 @@
   canRotate: false
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked {}
+    - !type:TileNotBlocked
 
 - type: construction
   name: reinforced wall
@@ -50,7 +50,7 @@
   canRotate: false
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked {}
+    - !type:TileNotBlocked
 
 - type: construction
   name: grille
@@ -79,8 +79,8 @@
   description: Clear.
   canBuildInImpassable: true
   conditions:
-    - !type:EmptyOrWindowValidInTile {}
-    - !type:NoWindowsInTile {}
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
   icon:
     sprite: Structures/Windows/window.rsi
     state: full
@@ -98,8 +98,8 @@
   description: Clear but tough.
   canBuildInImpassable: true
   conditions:
-    - !type:EmptyOrWindowValidInTile {}
-    - !type:NoWindowsInTile {}
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
   icon:
     sprite: Structures/Windows/reinforced_window.rsi
     state: full
@@ -117,8 +117,8 @@
   canBuildInImpassable: true
   description: Clear and even tougher, with a purple tint.
   conditions:
-    - !type:EmptyOrWindowValidInTile {}
-    - !type:NoWindowsInTile {}
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
   icon:
     sprite: Structures/Windows/plasma_window.rsi
     state: full
@@ -136,8 +136,8 @@
   canBuildInImpassable: true
   description: Fire resistant and even tougher, with a purple tint.
   conditions:
-    - !type:EmptyOrWindowValidInTile {}
-    - !type:NoWindowsInTile {}
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
   icon:
     sprite: Structures/Windows/reinforced_plasma_window.rsi
     state: full
@@ -155,8 +155,8 @@
   description: Clear.
   canBuildInImpassable: true
   conditions:
-    - !type:EmptyOrWindowValidInTile {}
-    - !type:NoWindowsInTile {}
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
   icon:
     sprite: Structures/Windows/directional.rsi
     state: window
@@ -173,8 +173,8 @@
   description: Clear but tough.
   canBuildInImpassable: true
   conditions:
-    - !type:EmptyOrWindowValidInTile {}
-    - !type:NoWindowsInTile {}
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
   icon:
     sprite: Structures/Windows/directional.rsi
     state: reinforced_window
@@ -191,8 +191,8 @@
   canBuildInImpassable: true
   description: Clear and even tougher, with a purple tint.
   conditions:
-    - !type:EmptyOrWindowValidInTile {}
-    - !type:NoWindowsInTile {}
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
   icon:
     sprite: Structures/Windows/directional.rsi
     state: plasma_window
@@ -209,8 +209,8 @@
   canBuildInImpassable: true
   description: Fire resistant and even tougher, with a purple tint.
   conditions:
-    - !type:EmptyOrWindowValidInTile {}
-    - !type:NoWindowsInTile {}
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
   icon:
     sprite: Structures/Windows/directional.rsi
     state: plasma_reinforced_window
@@ -232,7 +232,7 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked {}
+    - !type:TileNotBlocked
 
 - type: construction
   name: catwalk
@@ -243,7 +243,7 @@
   category: Structures
   description: Just like a lattice. Except it looks better.
   conditions:
-    - !type:TileNotBlocked {}
+    - !type:TileNotBlocked
     - !type:TileType
       targets:
         - lattice
@@ -271,7 +271,41 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked {}
+    - !type:TileNotBlocked
+
+- type: construction
+  name: railing
+  id: Railing
+  graph: railing
+  startNode: start
+  targetNode: railing
+  category: Structures
+  description: Basic railing meant to protect idiots like you from falling.
+  icon:
+    sprite: Structures/Walls/railing.rsi
+    state: side
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  name: railing corner
+  id: RailingCorner
+  graph: railing
+  startNode: start
+  targetNode: railingCorner
+  category: Structures
+  description: Basic railing meant to protect idiots like you from falling.
+  icon:
+    sprite: Structures/Walls/railing.rsi
+    state: corner
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
 
 - type: construction
   name: airlock
@@ -288,7 +322,7 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked {}
+    - !type:TileNotBlocked
 
 - type: construction
   name: windoor
@@ -305,7 +339,7 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-  - !type:TileNotBlocked {}
+    - !type:TileNotBlocked
 
 - type: construction
   name: secure windoor
@@ -322,4 +356,98 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-  - !type:TileNotBlocked {}
+    - !type:TileNotBlocked
+
+
+#lighting
+- type: construction
+  name: wall light
+  id: LightTubeFixture
+  graph: lightFixture
+  startNode: start
+  targetNode: tubeLight
+  category: Structures
+  description: A wall light fixture. Use light tubes.
+  icon:
+    sprite: Structures/Wallmounts/Lighting/light_tube.rsi
+    state: off
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: true
+  canBuildInImpassable: false
+  conditions:
+  # Need an *additional* condition here that forces there to be a wall in the opposite direction to the one used for placement.
+  # Also see below. Didn't add it b/c construction ECS work going on. Cheers, - 20kdc
+    - !type:TileNotBlocked
+
+- type: construction
+  name: small wall light
+  id: LightSmallFixture
+  graph: lightFixture
+  startNode: start
+  targetNode: bulbLight
+  category: Structures
+  description: A wall light fixture. Use light bulbs.
+  icon:
+    sprite: Structures/Wallmounts/Lighting/light_small.rsi
+    state: off
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: true
+  canBuildInImpassable: false
+  conditions:
+  # Same here. - 20kdc
+    - !type:TileNotBlocked
+
+- type: construction
+  name: light switch
+  id: LightSwitchRecipe
+  graph: lightSwitch
+  startNode: start
+  targetNode: lightSwitch
+  category: Structures
+  description: A switch for toggling lights that are connected to the same apc.
+  icon:
+    sprite: Structures/Wallmounts/switch.rsi
+    state: on
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: true
+  canBuildInImpassable: true
+  conditions:
+    - !type:WallmountCondition
+
+
+#conveyor
+- type: construction
+  name: conveyor belt
+  id: conveyorbelt
+  graph: ConveyorGraph
+  startNode: start
+  targetNode: entity
+  category: Structures
+  description: A conveyor belt, commonly used to transport large numbers of items elsewhere quite quickly.
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/conveyor.rsi
+    state: conveyor_stopped_cw
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: two-way lever
+  id: twowaylever
+  graph: leverGraph
+  startNode: start
+  targetNode: lever
+  category: Structures
+  description: A lever to control machines. It has 3 modes.
+  objectType: Structure
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/conveyor.rsi
+    state: switch-off
+  conditions:
+    - !type:TileNotBlocked

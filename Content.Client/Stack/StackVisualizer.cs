@@ -5,6 +5,7 @@ using Content.Shared.Stacks;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 
@@ -77,13 +78,13 @@ namespace Content.Client.Stack
 
         [DataField("sprite")] private ResourcePath? _spritePath;
 
-        public override void InitializeEntity(IEntity entity)
+        public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
 
             if (_isComposite
                 && _spriteLayers.Count > 0
-                && entity.TryGetComponent<ISpriteComponent>(out var spriteComponent))
+                && IoCManager.Resolve<IEntityManager>().TryGetComponent<ISpriteComponent?>(entity, out var spriteComponent))
             {
                 var spritePath = _spritePath ?? spriteComponent.BaseRSI!.Path!;
 
@@ -100,7 +101,8 @@ namespace Content.Client.Stack
         {
             base.OnChangeData(component);
 
-            if (component.Owner.TryGetComponent<ISpriteComponent>(out var spriteComponent))
+            var entities = IoCManager.Resolve<IEntityManager>();
+            if (entities.TryGetComponent(component.Owner, out ISpriteComponent spriteComponent))
             {
                 if (_isComposite)
                 {

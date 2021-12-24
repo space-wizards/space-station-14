@@ -42,7 +42,7 @@ namespace Content.Client.Clothing
 
                 if (!Owner.TryGetContainer(out IContainer? container))
                     return;
-                if (!container.Owner.TryGetComponent(out ClientInventoryComponent? inventory))
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(container.Owner, out ClientInventoryComponent? inventory))
                     return;
                 if (!inventory.TryFindItemSlots(Owner, out EquipmentSlotDefines.Slots? slots))
                     return;

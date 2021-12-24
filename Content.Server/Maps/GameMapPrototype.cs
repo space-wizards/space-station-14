@@ -66,6 +66,9 @@ public class GameMapPrototype : IPrototype
     [DataField("votable")]
     public bool Votable { get; } = true;
 
+    [DataField("conditions")]
+    public List<GameMapCondition> Conditions { get; } = new();
+
     /// <summary>
     /// Jobs used at round start should the station run out of job slots.
     /// Doesn't necessarily mean the station has infinite slots for the given jobs midround!

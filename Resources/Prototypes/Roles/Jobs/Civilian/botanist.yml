@@ -9,6 +9,7 @@
   access:
   - Service
   - Maintenance
+  - Hydroponics
 
 - type: startingGear
   id: BotanistGear

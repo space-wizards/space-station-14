@@ -22,6 +22,8 @@ namespace Content.Server.Mind.Components
     public class MindComponent : Component, IExamine
 #pragma warning restore 618
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         /// <inheritdoc />
         public override string Name => "Mind";
 
@@ -53,25 +55,25 @@ namespace Content.Server.Mind.Components
 
         /// <summary>
         ///     Don't call this unless you know what the hell you're doing.
-        ///     Use <see cref="Mind.TransferTo(IEntity)"/> instead.
+        ///     Use <see cref="Mind.TransferTo(Robust.Shared.GameObjects.EntityUid)"/> instead.
         ///     If that doesn't cover it, make something to cover it.
         /// </summary>
         public void InternalEjectMind()
         {
             if (!Deleted)
-                Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new MindRemovedMessage());
+                _entMan.EventBus.RaiseLocalEvent(Owner, new MindRemovedMessage());
             Mind = null;
         }
 
         /// <summary>
         ///     Don't call this unless you know what the hell you're doing.
-        ///     Use <see cref="Mind.TransferTo(IEntity)"/> instead.
+        ///     Use <see cref="Mind.TransferTo(Robust.Shared.GameObjects.EntityUid)"/> instead.
         ///     If that doesn't cover it, make something to cover it.
         /// </summary>
         public void InternalAssignMind(Mind value)
         {
             Mind = value;
-            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new MindAddedMessage());
+            _entMan.EventBus.RaiseLocalEvent(Owner, new MindAddedMessage());
         }
 
         protected override void Shutdown()
@@ -84,39 +86,39 @@ namespace Content.Server.Mind.Components
 
             if (HasMind)
             {
-                var visiting = Mind?.VisitingEntity;
-                if (visiting != null)
+                if (Mind?.VisitingEntity is {Valid: true} visiting)
                 {
-                    if (visiting.TryGetComponent(out GhostComponent? ghost))
+                    if (_entMan.TryGetComponent(visiting, out GhostComponent? ghost))
                     {
                         EntitySystem.Get<SharedGhostSystem>().SetCanReturnToBody(ghost, false);
                     }
 
-                    Mind!.TransferTo(visiting.Uid);
+                    Mind!.TransferTo(visiting);
                 }
                 else if (GhostOnShutdown)
                 {
-                    var spawnPosition = Owner.Transform.Coordinates;
+                    var spawnPosition = _entMan.GetComponent<TransformComponent>(Owner).Coordinates;
                     // Use a regular timer here because the entity has probably been deleted.
                     Timer.Spawn(0, () =>
                     {
                         // Async this so that we don't throw if the grid we're on is being deleted.
                         var mapMan = IoCManager.Resolve<IMapManager>();
 
-                        var gridId = spawnPosition.GetGridId(Owner.EntityManager);
+                        var gridId = spawnPosition.GetGridId(_entMan);
                         if (gridId == GridId.Invalid || !mapMan.GridExists(gridId))
                         {
                             spawnPosition = EntitySystem.Get<GameTicker>().GetObserverSpawnPoint();
                         }
 
-                        var ghost = Owner.EntityManager.SpawnEntity("MobObserver", spawnPosition);
-                        var ghostComponent = ghost.GetComponent<GhostComponent>();
+                        var ghost = _entMan.SpawnEntity("MobObserver", spawnPosition);
+                        var ghostComponent = _entMan.GetComponent<GhostComponent>(ghost);
                         EntitySystem.Get<SharedGhostSystem>().SetCanReturnToBody(ghostComponent, false);
 
                         if (Mind != null)
                         {
-                            ghost.Name = Mind.CharacterName ?? string.Empty;
-                            Mind.TransferTo(ghost.Uid);
+                            string? val = Mind.CharacterName ?? string.Empty;
+                            _entMan.GetComponent<MetaDataComponent>(ghost).EntityName = val;
+                            Mind.TransferTo(ghost);
                         }
                     });
                 }
@@ -131,25 +133,26 @@ namespace Content.Server.Mind.Components
             }
 
             var dead =
-                Owner.TryGetComponent<MobStateComponent>(out var state) &&
+                _entMan.TryGetComponent<MobStateComponent?>(Owner, out var state) &&
                 state.IsDead();
 
-            if (!HasMind)
+            if (dead)
             {
-                var aliveText =
-                    $"[color=purple]{Loc.GetString("comp-mind-examined-catatonic", ("ent", Owner))}[/color]";
-                var deadText = $"[color=red]{Loc.GetString("comp-mind-examined-dead", ("ent", Owner))}[/color]";
-
-                message.AddMarkup(dead ? deadText : aliveText);
+                if (Mind?.Session == null) {
+                    // Player has no session attached and dead
+                    message.AddMarkup($"[color=yellow]{Loc.GetString("mind-component-no-mind-and-dead-text", ("ent", Owner))}[/color]");
+                } else {
+                    // Player is dead with session
+                    message.AddMarkup($"[color=red]{Loc.GetString("comp-mind-examined-dead", ("ent", Owner))}[/color]");
+                }
+            }
+            else if (!HasMind)
+            {
+                message.AddMarkup($"[color=mediumpurple]{Loc.GetString("comp-mind-examined-catatonic", ("ent", Owner))}[/color]");
             }
             else if (Mind?.Session == null)
             {
-                if (dead) return;
-
-                var text =
-                    $"[color=yellow]{Loc.GetString("comp-mind-examined-ssd", ("ent", Owner))}[/color]";
-
-                message.AddMarkup(text);
+                message.AddMarkup($"[color=yellow]{Loc.GetString("comp-mind-examined-ssd", ("ent", Owner))}[/color]");
             }
         }
     }

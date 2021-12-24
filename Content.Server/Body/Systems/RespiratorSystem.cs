@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Administration.Logs;
@@ -32,7 +32,7 @@ namespace Content.Server.Body.Systems
             foreach (var (respirator, blood, body) in
                      EntityManager.EntityQuery<RespiratorComponent, BloodstreamComponent, SharedBodyComponent>())
             {
-                var uid = respirator.OwnerUid;
+                var uid = respirator.Owner;
                 if (!EntityManager.TryGetComponent<MobStateComponent>(uid, out var state) ||
                     state.IsDead())
                 {
@@ -143,7 +143,7 @@ namespace Content.Server.Body.Systems
 
             foreach (var (lung, mech) in lungs)
             {
-                _lungSystem.UpdateLung(lung.OwnerUid, lung, mech);
+                _lungSystem.UpdateLung(lung.Owner, lung, mech);
             }
 
             foreach (var (gas, amountNeeded) in needs)
@@ -153,13 +153,10 @@ namespace Content.Server.Body.Systems
 
                 if (bloodstreamAmount < amountNeeded)
                 {
-                    if (!EntityManager.GetComponent<MobStateComponent>(uid).IsCritical())
+                    // Panic inhale
+                    foreach (var (lung, mech) in lungs)
                     {
-                        // Panic inhale
-                        foreach (var (lung, mech) in lungs)
-                        {
-                            _lungSystem.Gasp(lung.OwnerUid, lung, mech);
-                        }
+                        _lungSystem.Gasp((lung).Owner, lung, mech);
                     }
 
                     bloodstreamAmount = bloodstream.Air.GetMoles(gas);
@@ -198,7 +195,7 @@ namespace Content.Server.Body.Systems
         private void TakeSuffocationDamage(EntityUid uid, RespiratorComponent respirator)
         {
             if (!respirator.Suffocating)
-                _logSys.Add(LogType.Asphyxiation, $"{EntityManager.GetEntity(uid)} started suffocating");
+                _logSys.Add(LogType.Asphyxiation, $"{ToPrettyString(uid):entity} started suffocating");
 
             respirator.Suffocating = true;
 
@@ -213,7 +210,7 @@ namespace Content.Server.Body.Systems
         private void StopSuffocation(EntityUid uid, RespiratorComponent respirator)
         {
             if (respirator.Suffocating)
-                _logSys.Add(LogType.Asphyxiation, $"{EntityManager.GetEntity(uid)} stopped suffocating");
+                _logSys.Add(LogType.Asphyxiation, $"{ToPrettyString(uid):entity} stopped suffocating");
 
             respirator.Suffocating = false;
 

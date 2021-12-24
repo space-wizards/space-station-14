@@ -1,8 +1,10 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using Content.Server.Access.Components;
+using System.Diagnostics.CodeAnalysis;
 using Content.Server.Hands.Components;
 using Content.Server.Inventory.Components;
+using Content.Shared.Access.Components;
+using Content.Shared.PDA;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.PDA
 {
@@ -14,22 +16,24 @@ namespace Content.Server.PDA
         /// </summary>
         /// <param name="player">The player to check in.</param>
         /// <returns>The id card component.</returns>
-        public static IdCardComponent? GetHeldId(this IEntity player)
+        public static IdCardComponent? GetHeldId(this EntityUid player)
         {
             IdCardComponent? firstIdInPda = null;
 
-            if (player.TryGetComponent(out HandsComponent? hands))
+            var entMan = IoCManager.Resolve<IEntityManager>();
+
+            if (entMan.TryGetComponent(player, out HandsComponent? hands))
             {
                 foreach (var item in hands.GetAllHeldItems())
                 {
                     if (firstIdInPda == null &&
-                        item.Owner.TryGetComponent(out PDAComponent? pda) &&
+                        entMan.TryGetComponent(item.Owner, out PDAComponent? pda) &&
                         pda.ContainedID != null)
                     {
                         firstIdInPda = pda.ContainedID;
                     }
 
-                    if (item.Owner.TryGetComponent(out IdCardComponent? card))
+                    if (entMan.TryGetComponent(item.Owner, out IdCardComponent? card))
                     {
                         return card;
                     }
@@ -43,18 +47,18 @@ namespace Content.Server.PDA
 
             IdCardComponent? firstIdInInventory = null;
 
-            if (player.TryGetComponent(out InventoryComponent? inventory))
+            if (entMan.TryGetComponent(player, out InventoryComponent? inventory))
             {
                 foreach (var item in inventory.GetAllHeldItems())
                 {
                     if (firstIdInInventory == null &&
-                        item.TryGetComponent(out PDAComponent? pda) &&
+                        entMan.TryGetComponent(item, out PDAComponent? pda) &&
                         pda.ContainedID != null)
                     {
                         firstIdInInventory = pda.ContainedID;
                     }
 
-                    if (item.TryGetComponent(out IdCardComponent? card))
+                    if (entMan.TryGetComponent(item, out IdCardComponent? card))
                     {
                         return card;
                     }
@@ -71,7 +75,7 @@ namespace Content.Server.PDA
         /// <param name="player">The player to check in.</param>
         /// <param name="id">The id card component.</param>
         /// <returns>true if found, false otherwise.</returns>
-        public static bool TryGetHeldId(this IEntity player, [NotNullWhen(true)] out IdCardComponent? id)
+        public static bool TryGetHeldId(this EntityUid player, [NotNullWhen(true)] out IdCardComponent? id)
         {
             return (id = player.GetHeldId()) != null;
         }

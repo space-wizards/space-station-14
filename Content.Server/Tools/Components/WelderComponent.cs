@@ -1,4 +1,5 @@
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.Sound;
 using Content.Shared.Tools.Components;
@@ -49,5 +50,22 @@ namespace Content.Server.Tools.Components
 
         [DataField("welderRefill")]
         public SoundSpecifier WelderRefill { get; } = new SoundPathSpecifier("/Audio/Effects/refill.ogg");
+
+        /// <summary>
+        ///     When the welder is lit, this damage is added to the base melee weapon damage.
+        /// </summary>
+        /// <remarks>
+        ///     If this is a standard welder, this damage bonus should probably subtract the entity's standard melee weapon damage
+        ///     and replace it all with heat damage. 
+        /// </remarks>
+        [DataField("litMeleeDamageBonus")]
+        public DamageSpecifier LitMeleeDamageBonus = new();
+
+        /// <summary>
+        ///     Whether the item is safe to refill while lit without exploding the tank.
+        /// </summary>
+        [DataField("tankSafe")]
+        public bool TankSafe = false; //I have no idea what I'm doing
+
     }
 }

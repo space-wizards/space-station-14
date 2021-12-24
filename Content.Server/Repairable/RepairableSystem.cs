@@ -27,16 +27,16 @@ namespace Content.Server.Repairable
         public async void Repair(EntityUid uid, RepairableComponent component, InteractUsingEvent args)
         {
             // Only try repair the target if it is damaged
-            if (!component.Owner.TryGetComponent(out DamageableComponent? damageable) || damageable.TotalDamage == 0)
+            if (!EntityManager.TryGetComponent(component.Owner, out DamageableComponent? damageable) || damageable.TotalDamage == 0)
                 return;
 
             // Can the tool actually repair this, does it have enough fuel?
-            if (!await _toolSystem.UseTool(args.Used.Uid, args.User.Uid, uid, component.FuelCost, component.DoAfterDelay, component.QualityNeeded))
+            if (!await _toolSystem.UseTool(args.Used, args.User, uid, component.FuelCost, component.DoAfterDelay, component.QualityNeeded))
                 return;
 
             // Repair all damage
             _damageableSystem.SetAllDamage(damageable, 0);
-            _logSystem.Add(LogType.Healed, $"{args.User} repaired ${uid} back to full health");
+            _logSystem.Add(LogType.Healed, $"{ToPrettyString(args.User):user} repaired ${ToPrettyString(uid):target} back to full health");
 
             component.Owner.PopupMessage(args.User,
                 Loc.GetString("comp-repairable-repair",

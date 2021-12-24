@@ -31,6 +31,7 @@ namespace Content.Server.Fluids.Components
         public const float SprayDistance = 3f;
         public const string SolutionName = "spray";
 
+        [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         [DataField("transferAmount")]
@@ -78,14 +79,14 @@ namespace Content.Server.Fluids.Components
         public FixedPoint2 CurrentVolume {
             get
             {
-                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution);
+                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution);
                 return solution?.CurrentVolume ?? FixedPoint2.Zero;
             }
         }
 
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User.Uid))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User))
                 return false;
 
             if (CurrentVolume <= 0)
@@ -99,13 +100,13 @@ namespace Content.Server.Fluids.Components
             if(curTime < _cooldownEnd)
                 return true;
 
-            var playerPos = eventArgs.User.Transform.Coordinates;
-            var entManager = Owner.EntityManager;
+            var playerPos = _entMan.GetComponent<TransformComponent>(eventArgs.User).Coordinates;
+            var entManager = _entMan;
 
             if (eventArgs.ClickLocation.GetGridId(entManager) != playerPos.GetGridId(entManager))
                 return true;
 
-            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var contents))
+            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var contents))
                 return true;
 
             var direction = (eventArgs.ClickLocation.Position - playerPos.Position).Normalized;
@@ -124,35 +125,35 @@ namespace Content.Server.Fluids.Components
                 var diffNorm = diffPos.Normalized;
                 var diffLength = diffPos.Length;
 
-                var target = eventArgs.User.Transform.Coordinates.Offset((diffNorm + rotation.ToVec()).Normalized * diffLength + quarter);
+                var target = _entMan.GetComponent<TransformComponent>(eventArgs.User).Coordinates.Offset((diffNorm + rotation.ToVec()).Normalized * diffLength + quarter);
 
-                if (target.TryDistance(Owner.EntityManager, playerPos, out var distance) && distance > SprayDistance)
-                    target = eventArgs.User.Transform.Coordinates.Offset(diffNorm * SprayDistance);
+                if (target.TryDistance(_entMan, playerPos, out var distance) && distance > SprayDistance)
+                    target = _entMan.GetComponent<TransformComponent>(eventArgs.User).Coordinates.Offset(diffNorm * SprayDistance);
 
-                var solution = EntitySystem.Get<SolutionContainerSystem>().SplitSolution(Owner.Uid, contents, _transferAmount);
+                var solution = EntitySystem.Get<SolutionContainerSystem>().SplitSolution(Owner, contents, _transferAmount);
 
                 if (solution.TotalVolume <= FixedPoint2.Zero)
                     break;
 
                 var vapor = entManager.SpawnEntity(_vaporPrototype, playerPos.Offset(distance < 1 ? quarter : threeQuarters));
-                vapor.Transform.LocalRotation = rotation;
+                _entMan.GetComponent<TransformComponent>(vapor).LocalRotation = rotation;
 
-                if (vapor.TryGetComponent(out AppearanceComponent? appearance))
+                if (_entMan.TryGetComponent(vapor, out AppearanceComponent? appearance))
                 {
                     appearance.SetData(VaporVisuals.Color, contents.Color.WithAlpha(1f));
                     appearance.SetData(VaporVisuals.State, true);
                 }
 
                 // Add the solution to the vapor and actually send the thing
-                var vaporComponent = vapor.GetComponent<VaporComponent>();
+                var vaporComponent = _entMan.GetComponent<VaporComponent>(vapor);
                 var vaporSystem = EntitySystem.Get<VaporSystem>();
                 vaporSystem.TryAddSolution(vaporComponent, solution);
 
                 // impulse direction is defined in world-coordinates, not local coordinates
-                var impulseDirection = vapor.Transform.WorldRotation.ToVec();
+                var impulseDirection = _entMan.GetComponent<TransformComponent>(vapor).WorldRotation.ToVec();
                 vaporSystem.Start(vaporComponent, impulseDirection, _sprayVelocity, target, _sprayAliveTime);
 
-                if (_impulse > 0f && eventArgs.User.TryGetComponent(out IPhysBody? body))
+                if (_impulse > 0f && _entMan.TryGetComponent(eventArgs.User, out IPhysBody? body))
                 {
                     body.ApplyLinearImpulse(-impulseDirection * _impulse);
                 }
@@ -163,7 +164,7 @@ namespace Content.Server.Fluids.Components
             _lastUseTime = curTime;
             _cooldownEnd = _lastUseTime + TimeSpan.FromSeconds(_cooldownTime);
 
-            if (Owner.TryGetComponent(out ItemCooldownComponent? cooldown))
+            if (_entMan.TryGetComponent(Owner, out ItemCooldownComponent? cooldown))
             {
                 cooldown.CooldownStart = _lastUseTime;
                 cooldown.CooldownEnd = _cooldownEnd;

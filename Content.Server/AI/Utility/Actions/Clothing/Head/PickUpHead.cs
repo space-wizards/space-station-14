@@ -14,7 +14,7 @@ namespace Content.Server.AI.Utility.Actions.Clothing.Head
 {
     public sealed class PickUpHead : UtilityAction
     {
-        public IEntity Target { get; set; } = default!;
+        public EntityUid Target { get; set; } = default!;
 
         public override void SetupOperators(Blackboard context)
         {

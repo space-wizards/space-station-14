@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Content.Server.Shuttles.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Physics;
 
 namespace Content.Server.Shuttles.EntitySystems
@@ -51,17 +52,17 @@ namespace Content.Server.Shuttles.EntitySystems
 
         private void OnGridInit(GridInitializeEvent ev)
         {
-            EntityManager.GetEntity(ev.EntityUid).EnsureComponent<ShuttleComponent>();
+            EntityManager.EnsureComponent<ShuttleComponent>(ev.EntityUid);
         }
 
         private void OnShuttleStartup(EntityUid uid, ShuttleComponent component, ComponentStartup args)
         {
-            if (!component.Owner.HasComponent<IMapGridComponent>())
+            if (!EntityManager.HasComponent<IMapGridComponent>(component.Owner))
             {
                 return;
             }
 
-            if (!component.Owner.TryGetComponent(out PhysicsComponent? physicsComponent))
+            if (!EntityManager.TryGetComponent(component.Owner, out PhysicsComponent? physicsComponent))
             {
                 return;
             }
@@ -74,7 +75,7 @@ namespace Content.Server.Shuttles.EntitySystems
 
         public void Toggle(ShuttleComponent component)
         {
-            if (!component.Owner.TryGetComponent(out PhysicsComponent? physicsComponent)) return;
+            if (!EntityManager.TryGetComponent(component.Owner, out PhysicsComponent? physicsComponent)) return;
 
             component.Enabled = !component.Enabled;
 
@@ -110,7 +111,7 @@ namespace Content.Server.Shuttles.EntitySystems
             // None of the below is necessary for any cleanup if we're just deleting.
             if (EntityManager.GetComponent<MetaDataComponent>(uid).EntityLifeStage >= EntityLifeStage.Terminating) return;
 
-            if (!component.Owner.TryGetComponent(out PhysicsComponent? physicsComponent))
+            if (!EntityManager.TryGetComponent(component.Owner, out PhysicsComponent? physicsComponent))
             {
                 return;
             }

@@ -5,12 +5,15 @@ using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Client.Lathe.Visualizers
 {
     [UsedImplicitly]
     public class AutolatheVisualizer : AppearanceVisualizer
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         private const string AnimationKey = "inserting_animation";
 
         private Animation _buildingAnimation;
@@ -47,20 +50,19 @@ namespace Content.Client.Lathe.Visualizers
             return animation;
         }
 
-        public override void InitializeEntity(IEntity entity)
+        public override void InitializeEntity(EntityUid entity)
         {
-            if (!entity.HasComponent<AnimationPlayerComponent>())
-            {
-                entity.AddComponent<AnimationPlayerComponent>();
-            }
+            IoCManager.InjectDependencies(this);
+
+            _entMan.EnsureComponent<AnimationPlayerComponent>(entity);
         }
 
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
 
-            var sprite = component.Owner.GetComponent<ISpriteComponent>();
-            var animPlayer = component.Owner.GetComponent<AnimationPlayerComponent>();
+            var sprite = _entMan.GetComponent<ISpriteComponent>(component.Owner);
+            var animPlayer = _entMan.GetComponent<AnimationPlayerComponent>(component.Owner);
             if (!component.TryGetData(PowerDeviceVisuals.VisualState, out LatheVisualState state))
             {
                 state = LatheVisualState.Idle;

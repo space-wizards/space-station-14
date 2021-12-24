@@ -1,4 +1,3 @@
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Sound;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -7,6 +6,7 @@ using Robust.Shared.ViewVariables;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Analyzers;
+using System.Threading;
 
 namespace Content.Server.Nutrition.Components
 {
@@ -50,8 +50,9 @@ namespace Content.Server.Nutrition.Components
         public float ForceFeedDelay = 3;
 
         /// <summary>
-        ///     If true, this drink has some DoAfter active (someone is being force fed).
+        ///     Token for interrupting a do-after action (e.g., force feeding). If not null, implies component is
+        ///     currently "in use".
         /// </summary>
-        public bool InUse = false;
+        public CancellationTokenSource? CancelToken;
     }
 }
