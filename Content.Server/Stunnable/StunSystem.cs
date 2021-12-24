@@ -44,7 +44,7 @@ namespace Content.Server.Stunnable
             SoundSystem.Play(Filter.Pvs(source), knock.StunAttemptSound.GetSound(), source, AudioHelpers.WithVariation(0.025f));
 
             // TODO: Use PopupSystem
-            source.PopupMessageOtherClients(Loc.GetString("stunned-component-disarm-success-others", ("source", Name(source)), ("target", Name(target)));
+            source.PopupMessageOtherClients(Loc.GetString("stunned-component-disarm-success-others", ("source", Name(source)), ("target", Name(target))));
             source.PopupMessageCursor(Loc.GetString("stunned-component-disarm-success", ("target", Name(target))));
 
             _adminLogSystem.Add(LogType.DisarmedKnockdown, LogImpact.Medium, $"{ToPrettyString(args.Source):user} knocked down {ToPrettyString(args.Target):target}");
