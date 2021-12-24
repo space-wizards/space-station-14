@@ -1,9 +1,4 @@
 Entries:
-- author: Fogapod
-  changes:
-  - {message: Added missing space in Spanish accent., type: Fix}
-  id: 262
-  time: '2021-07-17T21:04:04.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: Fixes handheld instruments not working., type: Fix}
@@ -2866,3 +2861,9 @@ Entries:
   - {message: The Salvage department now partially exists., type: Add}
   id: 763
   time: '2021-12-23T12:14:01.0000000+00:00'
+- author: moonheart08
+  changes:
+  - {message: Added a winter holiday version of Packed Station! It will enter the
+      rotation on christmas eve and exit the minute christmas ends., type: Add}
+  id: 764
+  time: '2021-12-24T00:30:30.0000000+00:00'
