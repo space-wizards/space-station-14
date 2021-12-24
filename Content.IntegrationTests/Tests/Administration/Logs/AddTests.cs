@@ -122,7 +122,7 @@ public class AddTests : ContentIntegrationTest
         {
             Round = log.RoundId,
             Search = log.Message,
-            Types = new List<LogType> {log.Type},
+            Types = new HashSet<LogType> {log.Type},
         };
 
         await foreach (var json in sDatabase.GetAdminLogsJson(filter))
@@ -295,7 +295,7 @@ public class AddTests : ContentIntegrationTest
         {
             Round = log.RoundId,
             Search = log.Message,
-            Types = new List<LogType> {log.Type},
+            Types = new HashSet<LogType> {log.Type},
         };
 
         await foreach (var json in sDatabase.GetAdminLogsJson(filter))

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Server.GameTicking;
-using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using NUnit.Framework;
@@ -53,7 +52,7 @@ public class QueryTests : ContentIntegrationTest
         {
             Round = sGamerTicker.RoundId,
             Search = guid.ToString(),
-            Types = new List<LogType> {LogType.Unknown},
+            Types = new HashSet<LogType> {LogType.Unknown},
             After = date,
             AnyPlayers = new[] {player.UserId.UserId}
         };
