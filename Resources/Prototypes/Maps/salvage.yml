@@ -15,6 +15,12 @@
   mapPath: Maps/Salvage/small-2.yml
   size: 3.5
 
+- type: salvageMap
+  id: small-ship-1
+  name: "Small / Ship 1 (Pill)"
+  mapPath: Maps/Salvage/small-ship-1.yml
+  size: 3.5
+
 # Small - Asteroids
 
 - type: salvageMap
