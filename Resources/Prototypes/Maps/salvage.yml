@@ -15,6 +15,12 @@
   mapPath: Maps/Salvage/small-2.yml
   size: 3.5
 
+- type: salvageMap
+  id: smallAISurveyDrone
+  name: "Small / AI Survey Drone"
+  mapPath: Maps/Salvage/small-ai-survey-drone.yml
+  size: 3.5
+
 # Small - Asteroids
 
 - type: salvageMap
