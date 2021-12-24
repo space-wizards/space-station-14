@@ -1,9 +1,4 @@
 Entries:
-- author: Visne
-  changes:
-  - {message: Examine tooltip now closes when moving out of range, type: Tweak}
-  id: 270
-  time: '2021-07-21T11:31:00.0000000+00:00'
 - author: PJB
   changes:
   - {message: 'Restart round votes now start with everybody selecting "no", effectively
@@ -2870,3 +2865,8 @@ Entries:
   - {message: Added a new small drone wreck to salvage., type: Add}
   id: 771
   time: '2021-12-24T22:16:23.0000000+00:00'
+- author: moony
+  changes:
+  - {message: Added three salvage maps, type: Add}
+  id: 772
+  time: '2021-12-24T22:56:46.0000000+00:00'
