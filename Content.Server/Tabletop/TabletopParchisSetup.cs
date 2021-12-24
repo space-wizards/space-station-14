@@ -11,16 +11,16 @@ namespace Content.Server.Tabletop
         public string ParchisBoardPrototype { get; } = "ParchisBoardTabletop";
 
         [DataField("redPiecePrototype")]
-        public string RedPiecePrototype { get; } = "RedParchisPiece";
+        public string RedPiecePrototype { get; } = "RedTabletopPiece";
 
         [DataField("greenPiecePrototype")]
-        public string GreenPiecePrototype { get; } = "GreenParchisPiece";
+        public string GreenPiecePrototype { get; } = "GreenTabletopPiece";
 
         [DataField("yellowPiecePrototype")]
-        public string YellowPiecePrototype { get; } = "YellowParchisPiece";
+        public string YellowPiecePrototype { get; } = "YellowTabletopPiece";
 
         [DataField("bluePiecePrototype")]
-        public string BluePiecePrototype { get; } = "BlueParchisPiece";
+        public string BluePiecePrototype { get; } = "BlueTabletopPiece";
 
         public override void SetupTabletop(TabletopSession session, IEntityManager entityManager)
         {
