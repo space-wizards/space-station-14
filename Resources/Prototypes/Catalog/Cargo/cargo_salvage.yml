@@ -3,7 +3,7 @@
   id: SalvageEquipment
   description: "Gear up a new recruit for salvage missions with this crate full of all the equipment you'll need while salvaging wrecks!"
   icon:
-    sprite: Clothing\OuterClothing\Hardsuits\salvage.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/salvage.rsi
     state: icon
   product: CrateSalvageEquipment
   cost: 5000
