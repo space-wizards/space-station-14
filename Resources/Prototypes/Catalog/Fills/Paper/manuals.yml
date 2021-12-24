@@ -24,7 +24,9 @@
   components:
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
-    state: seccode
+    netsync: false
+    layers:
+    - state: seccode
   - type: Paper
     content: |
       DISCLAIMER: S.E.C codes are not to be treated as gospel, as they are a amalgamation of general suggestions of how to run a commericlal ship's security.

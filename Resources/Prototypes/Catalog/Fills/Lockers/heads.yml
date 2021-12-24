@@ -208,3 +208,5 @@
         prob: 1
       - id: CigarGoldCase
         prob: 0.50
+      - id: SecCode
+        prob: 1

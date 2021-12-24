@@ -25,6 +25,7 @@
     idcard: WardenPDA
     ears: ClothingHeadsetSecurity
     belt: ClothingBeltSecurityFilled
+    pocket1: MechanicalStopwatch
   innerclothingskirt: ClothingUniformJumpskirtWarden
   satchel: ClothingBackpackSatchelSecurityFilled
   duffelbag: ClothingBackpackDuffelSecurityFilled

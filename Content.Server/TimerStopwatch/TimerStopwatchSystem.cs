@@ -26,12 +26,13 @@ namespace Content.Server.TimerStopwatch
             Verb trackverb = new();
             trackverb.Act = () => component.trackingStatus = !component.trackingStatus;
             trackverb.Text = Loc.GetString("timekeeping-verb-toggle");
-            // verb.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
+            // trackverb.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
             Verb resetverb = new();
-            trackverb.Act = () => component.passedTime = 0;
-            trackverb.Text = Loc.GetString("timekeeping-verb-reset");
-            // verb.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
+            resetverb.Act = () => component.passedTime = 0;
+            resetverb.Text = Loc.GetString("timekeeping-verb-reset");
+            // resetverb.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
             args.Verbs.Add(trackverb);
+            args.Verbs.Add(resetverb);
         }
 
         /// <summary>
