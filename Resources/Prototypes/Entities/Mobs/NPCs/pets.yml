@@ -36,6 +36,8 @@
   - type: Butcherable
     meat: FoodMeat
     pieces: 3
+  - type: ReplacementAccent
+    accent: dog
 
 - type: entity
   name: Ian
@@ -91,6 +93,8 @@
   - type: Butcherable
     meat: FoodMeat
     pieces: 2
+  - type: ReplacementAccent
+    accent: cat
 
 - type: entity
   name: calico cat

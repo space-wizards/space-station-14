@@ -5,7 +5,6 @@ using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
-using Robust.Shared.Utility.Markup;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Botany.Components
@@ -27,7 +26,7 @@ namespace Content.Server.Botany.Components
             set => _seedName = value?.ID;
         }
 
-        public void Examine(FormattedMessage.Builder message, bool inDetailsRange)
+        public void Examine(FormattedMessage message, bool inDetailsRange)
         {
             if (!inDetailsRange)
                 return;

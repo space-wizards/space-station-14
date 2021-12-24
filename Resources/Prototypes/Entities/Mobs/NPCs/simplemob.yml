@@ -66,6 +66,9 @@
     heatDamageThreshold: 360
     coldDamageThreshold: 260
     currentTemperature: 310.15
+    coldDamage:
+      types:
+        Cold : 1 #per second, scales with temperature & other constants
     specificHeat: 42
     heatDamage:
       types:
