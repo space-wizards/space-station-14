@@ -34,7 +34,7 @@ namespace Content.Server.Tabletop
             float getYPosition(float positionNumber, bool isTop)
             {
                 var pos = borderLengthY - (pieceDistanceY * positionNumber);
-                return isTop ? -pos : pos;
+                return isTop ? pos : -pos;
             }
 
             void addPieces(
