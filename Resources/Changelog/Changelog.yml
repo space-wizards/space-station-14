@@ -1,10 +1,4 @@
 Entries:
-- author: PJB3005
-  changes:
-  - {message: Chatbox channel management has been tweaked to be much more intuitive
-      and nice to use., type: Tweak}
-  id: 266
-  time: '2021-07-20T08:29:09.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Remove portals until someone does a better job coding it, type: Remove}
@@ -2869,3 +2863,9 @@ Entries:
   - {message: Thrusters are now hot, type: Tweak}
   id: 767
   time: '2021-12-24T11:59:14.0000000+00:00'
+- author: Fishfish458
+  changes:
+  - {message: added a Backgammon board for those who know how to play, type: Add}
+  - {message: added a board game crate to cargo to play games on any station, type: Add}
+  id: 768
+  time: '2021-12-24T12:20:20.0000000+00:00'
