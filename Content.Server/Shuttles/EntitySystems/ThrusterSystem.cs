@@ -98,7 +98,8 @@ namespace Content.Server.Shuttles.EntitySystems
 
         private void OnIsHotEvent(EntityUid uid, ThrusterComponent component, IsHotEvent args)
         {
-            args.IsHot = component.Enabled;
+            if(component.Type != ThrusterType.Angular)
+                args.IsHot = component.Enabled;
         }
 
         private void OnTileChange(object? sender, TileChangedEventArgs e)

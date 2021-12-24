@@ -59,12 +59,13 @@ namespace Content.Server.Nutrition.EntitySystems
                 return;
 
             var isHotEvent = new IsHotEvent();
-            RaiseLocalEvent(targetEntity.Uid, isHotEvent);
+            RaiseLocalEvent(targetEntity.Value, isHotEvent);
 
             if (!isHotEvent.IsHot)
                 return;
 
             SetSmokableState(uid, SmokableState.Lit);
+            args.Handled = true;
         }
 
         private void OnCigarSolutionEmptyEvent(EntityUid uid, CigarComponent component, SmokableSolutionEmptyEvent args)
