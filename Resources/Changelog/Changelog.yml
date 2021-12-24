@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix physics rotation issues, type: Fix}
-  id: 264
-  time: '2021-07-19T08:49:18.0000000+00:00'
 - author: Seth
   changes:
   - {message: Changed Crowbar and Wrench damage from 5 to 7, type: Tweak}
@@ -2867,3 +2862,9 @@ Entries:
   - {message: Accidentally broke christmas, type: Fix}
   id: 765
   time: '2021-12-24T06:06:05.0000000+00:00'
+- author: TemporalOroboros
+  changes:
+  - {message: 'Added temperature handling to solutions. Nothing actually uses it yet,
+      but it exists.', type: Add}
+  id: 766
+  time: '2021-12-24T09:22:34.0000000+00:00'
