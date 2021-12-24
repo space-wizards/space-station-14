@@ -83,11 +83,11 @@ namespace Content.IntegrationTests.Tests.Doors
 
             Assert.That(doorComponent.State, Is.EqualTo(DoorState.Open));
 
-            server.Assert((Action) (() =>
+            server.Assert(() =>
             {
                 EntitySystem.Get<DoorSystem>().TryClose((EntityUid) airlock);
                 Assert.That(doorComponent.State, Is.EqualTo(DoorState.Closing));
-            }));
+            });
 
             await WaitUntil(server, () => doorComponent.State == DoorState.Closed);
 

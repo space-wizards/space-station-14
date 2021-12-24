@@ -49,7 +49,6 @@ namespace Content.Client.Entry
             "Access",
             "AccessReader",
             "IdCardConsole",
-            "Airlock",
             "ThermalRegulator",
             "AtmosFixMarker",
             "CablePlacer",

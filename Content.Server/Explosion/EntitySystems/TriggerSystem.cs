@@ -106,21 +106,7 @@ namespace Content.Server.Explosion.EntitySystems
 
         private void HandleDoorTrigger(EntityUid uid, ToggleDoorOnTriggerComponent component, TriggerEvent args)
         {
-            if (EntityManager.TryGetComponent<DoorComponent>(uid, out var door))
-            {
-                switch (door.State)
-                {
-                    case DoorState.Open:
-                        _sharedDoorSystem.TryClose(uid, door);
-                        break;
-                    case DoorState.Closed:
-                        _sharedDoorSystem.TryOpen(uid, door);
-                        break;
-                    case DoorState.Closing:
-                    case DoorState.Opening:
-                        break;
-                }
-            }
+            _sharedDoorSystem.TryToggleDoor(uid);
         }
 
         private void HandleCollide(EntityUid uid, TriggerOnCollideComponent component, StartCollideEvent args)

@@ -98,7 +98,6 @@ public abstract class SharedDoorSystem : EntitySystem
         door.State = state.DoorState;
         door.NextStateChange = state.NextStateChange;
         door.Partial = state.Partial;
-        door.SafetyEnabled = state.Safety;
 
         if (state.NextStateChange == null)
             _activeDoors.Remove(door);
@@ -143,15 +142,6 @@ public abstract class SharedDoorSystem : EntitySystem
         UpdateAppearance(uid, door);
     }
 
-    public void SetSafety(EntityUid uid, bool safety, DoorComponent? door = null)
-    {
-        if (!Resolve(uid, ref door))
-            return;
-
-        door.SafetyEnabled = safety;
-        door.Dirty();
-    }
-
     protected virtual void UpdateAppearance(EntityUid uid, DoorComponent? door = null)
     {
         if (!Resolve(uid, ref door))
@@ -170,16 +160,8 @@ public abstract class SharedDoorSystem : EntitySystem
         if (args.Handled || !door.ClickOpen)
             return;
 
-        if (door.State == DoorState.Open)
-        {
-            TryClose(uid, door, args.User);
-            args.Handled = true;
-        }
-        else if (door.State == DoorState.Closed)
-        {
-            TryOpen(uid, door, args.User);
-            args.Handled = true;
-        }
+        TryToggleDoor(uid, door, args.User);
+        args.Handled = true;
     }
 
     private void OnExamine(EntityUid uid, DoorComponent door, ExaminedEvent args)
@@ -188,6 +170,10 @@ public abstract class SharedDoorSystem : EntitySystem
             args.PushText(Loc.GetString("door-component-examine-is-welded"));
     }
 
+    /// <summary>
+    ///     Update the door state/visuals and play an access denied sound when a user without access interacts with the
+    ///     door.
+    /// </summary>
     public void Deny(EntityUid uid, DoorComponent? door = null, EntityUid? user = null, bool predicted = false)
     {
         if (!Resolve(uid, ref door))
@@ -206,6 +192,23 @@ public abstract class SharedDoorSystem : EntitySystem
 
         if (door.DenySound != null)
             PlaySound(uid, door.DenySound.GetSound(), AudioParams.Default.WithVolume(-3), user, predicted);
+    }
+
+    public bool TryToggleDoor(EntityUid uid, DoorComponent? door = null, EntityUid? user = null, bool predicted = false)
+    {
+        if (!Resolve(uid, ref door))
+            return false;
+
+        if (door.State == DoorState.Closed)
+        {
+            return TryOpen(uid, door, user, predicted);
+        }
+        else if (door.State == DoorState.Open)
+        {
+            return TryClose(uid, door, user, predicted);
+        }
+
+        return false;
     }
     #endregion
 
@@ -308,9 +311,6 @@ public abstract class SharedDoorSystem : EntitySystem
         if (ev.Cancelled)
             return false;
 
-        if (door.SafetyEnabled && GetColliding(uid).Any())
-            return false;
-
         return HasAccess(uid, user);
     }
 
@@ -337,7 +337,7 @@ public abstract class SharedDoorSystem : EntitySystem
         door.Partial = true;
 
         // Make sure no entity waled into the airlock when it started closing.
-        if (door.SafetyEnabled && GetColliding(uid).Any())
+        if (!CanClose(uid, door))
         {
             door.NextStateChange = GameTiming.CurTime + door.OpenTimeTwo;
             door.State = DoorState.Opening;

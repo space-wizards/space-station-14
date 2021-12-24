@@ -1,20 +1,19 @@
 using Content.Server.Doors.Components;
 using Content.Server.Power.Components;
 using Content.Shared.Doors;
+using Content.Shared.Doors.Components;
+using Content.Shared.Doors.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using System;
 
 namespace Content.Server.Doors.Systems
 {
-    public class AirlockSystem : EntitySystem
+    public sealed class AirlockSystem : SharedAirlockSystem
     {
-        [Dependency] private readonly DoorSystem _doorSystem = default!;
-
         public override void Initialize()
         {
             base.Initialize();
@@ -22,7 +21,6 @@ namespace Content.Server.Doors.Systems
             SubscribeLocalEvent<AirlockComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<AirlockComponent, DoorStateChangedEvent>(OnStateChanged);
             SubscribeLocalEvent<AirlockComponent, BeforeDoorOpenedEvent>(OnBeforeDoorOpened);
-            SubscribeLocalEvent<AirlockComponent, BeforeDoorClosedEvent>(OnBeforeDoorClosed);
             SubscribeLocalEvent<AirlockComponent, BeforeDoorDeniedEvent>(OnBeforeDoorDenied);
             SubscribeLocalEvent<AirlockComponent, ActivateInWorldEvent>(OnActivate, before: new [] {typeof(DoorSystem)});
             SubscribeLocalEvent<AirlockComponent, BeforeDoorPryEvent>(OnDoorPry);
@@ -38,12 +36,12 @@ namespace Content.Server.Doors.Systems
             if (!args.Powered)
             {
                 // stop any scheduled auto-closing
-                _doorSystem.SetNextStateChange(uid, null);
+                DoorSystem.SetNextStateChange(uid, null);
             }
             else
             {
                 // door received power. Lets "wake" the door up, in case it is currently open and needs to auto-close.
-                _doorSystem.SetNextStateChange(uid, TimeSpan.FromSeconds(1));
+                DoorSystem.SetNextStateChange(uid, TimeSpan.FromSeconds(1));
             }
 
             // BoltLights also got out
@@ -84,7 +82,7 @@ namespace Content.Server.Doors.Systems
             if (autoev.Cancelled)
                 return;
 
-            _doorSystem.SetNextStateChange(uid, airlock.AutoCloseDelay * airlock.AutoCloseDelayModifier);
+            DoorSystem.SetNextStateChange(uid, airlock.AutoCloseDelay * airlock.AutoCloseDelayModifier);
         }
 
         private void OnBeforeDoorOpened(EntityUid uid, AirlockComponent component, BeforeDoorOpenedEvent args)
@@ -93,9 +91,14 @@ namespace Content.Server.Doors.Systems
                 args.Cancel();
         }
 
-        private void OnBeforeDoorClosed(EntityUid uid, AirlockComponent component, BeforeDoorClosedEvent args)
+        protected override void OnBeforeDoorClosed(EntityUid uid, SharedAirlockComponent component, BeforeDoorClosedEvent args)
         {
-            if (!component.CanChangeState())
+            base.OnBeforeDoorClosed(uid, component, args);
+
+            if (args.Cancelled)
+                return;
+
+            if (!Comp<AirlockComponent>(uid).CanChangeState())
                 args.Cancel();
         }
 

@@ -164,17 +164,20 @@ public sealed class DoorSystem : SharedDoorSystem
     {
         // TODO move access reader to shared for predicting door opening
 
-        // if there is no "user" we skip the access checks.
+        // if there is no "user" we skip the access checks. Access is also ignored in some game-modes.
         if (user == null || AccessType == AccessTypes.AllowAll)
             return true;
 
         if (!TryComp(uid, out AccessReader? access))
             return true;
 
+        var isExternal = access.AccessLists.Any(list => list.Contains("External"));
+
         return AccessType switch
         {
-            AccessTypes.AllowAllIdExternal => access.AccessLists.Any(list => list.Contains("External")) || _accessReaderSystem.IsAllowed(access, user.Value),
-            AccessTypes.AllowAllNoExternal => !access.AccessLists.Any(list => list.Contains("External")),
+            // Some game modes modify access rules.
+            AccessTypes.AllowAllIdExternal => !isExternal || _accessReaderSystem.IsAllowed(access, user.Value),
+            AccessTypes.AllowAllNoExternal => !isExternal,
             _ => _accessReaderSystem.IsAllowed(access, user.Value)
         };
     }

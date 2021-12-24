@@ -5,10 +5,10 @@ using Content.Server.Power.Components;
 using Content.Server.VendingMachines;
 using Content.Server.WireHacking;
 using Content.Shared.Doors;
+using Content.Shared.Doors.Components;
 using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -19,13 +19,12 @@ using static Content.Shared.Wires.SharedWiresComponent.WiresAction;
 namespace Content.Server.Doors.Components
 {
     /// <summary>
-    /// Companion component to ServerDoorComponent that handles airlock-specific behavior -- wires, requiring power to operate, bolts, and allowing automatic closing.
+    /// Companion component to DoorComponent that handles airlock-specific behavior -- wires, requiring power to operate, bolts, and allowing automatic closing.
     /// </summary>
     [RegisterComponent]
-    public class AirlockComponent : Component, IWires
+    [ComponentReference(typeof(SharedAirlockComponent))]
+    public sealed class AirlockComponent : SharedAirlockComponent, IWires
     {
-        public override string Name => "Airlock";
-
         [ComponentDependency]
         public readonly DoorComponent? DoorComponent = null;
 
@@ -119,8 +118,6 @@ namespace Content.Server.Doors.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public float AutoCloseDelayModifier = 1.0f;
 
-        public bool SafetyEnabled => DoorComponent?.SafetyEnabled ?? true;
-
         protected override void Initialize()
         {
             base.Initialize();
@@ -185,9 +182,9 @@ namespace Content.Server.Doors.Components
                                                     !MathHelper.CloseToPercent(AutoCloseDelayModifier, 1.0f) ? StatusLightState.BlinkingSlow :
                                                     StatusLightState.On,
                                                     "TIME");
-                                                    
+
             var safetyStatus =
-                new StatusLightData(Color.Red, SafetyEnabled ? StatusLightState.On : StatusLightState.Off, "SAFETY");
+                new StatusLightData(Color.Red, Safety ? StatusLightState.On : StatusLightState.Off, "SAFETY");
 
             WiresComponent.SetStatus(AirlockWireStatus.PowerIndicator, powerLight);
             WiresComponent.SetStatus(AirlockWireStatus.BoltIndicator, boltStatus);
@@ -321,7 +318,8 @@ namespace Content.Server.Doors.Components
                         EntitySystem.Get<AirlockSystem>().UpdateAutoClose(Owner, this);
                         break;
                     case Wires.Safety:
-                        EntitySystem.Get<SharedDoorSystem>().SetSafety(Owner, !SafetyEnabled, DoorComponent);
+                        Safety = !Safety;
+                        Dirty();
                         break;
                 }
             }
@@ -344,7 +342,8 @@ namespace Content.Server.Doors.Components
                         EntitySystem.Get<AirlockSystem>().UpdateAutoClose(Owner, this);
                         break;
                     case Wires.Safety:
-                        EntitySystem.Get<SharedDoorSystem>().SetSafety(Owner, true, DoorComponent);
+                        Safety = true;
+                        Dirty();
                         break;
                 }
             }
@@ -364,7 +363,8 @@ namespace Content.Server.Doors.Components
                         EntitySystem.Get<AirlockSystem>().UpdateAutoClose(Owner, this);
                         break;
                     case Wires.Safety:
-                        EntitySystem.Get<SharedDoorSystem>().SetSafety(Owner, false, DoorComponent);
+                        Safety = false;
+                        Dirty();
                         break;
                 }
             }

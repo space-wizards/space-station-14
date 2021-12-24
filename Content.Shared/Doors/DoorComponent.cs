@@ -142,13 +142,6 @@ public sealed class DoorComponent : Component
     public readonly bool CanCrush = true;
 
     /// <summary>
-    /// Whether the door will check for colliding entities before closing.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("safety")]
-    public bool SafetyEnabled = true;
-
-    /// <summary>
     /// List of EntityUids of entities we're currently crushing. Cleared in OnPartialOpen().
     /// </summary>
     public List<EntityUid> CurrentlyCrushing = new();
@@ -224,16 +217,11 @@ public class DoorComponentState : ComponentState
     public readonly TimeSpan? NextStateChange;
     public readonly bool Partial;
 
-    // Yeah, modified clients could cheat and highlight all unsafe doors or something. But its also needed to avoid
-    // mis-predicts that lead to really glitchy door animations. 
-    public readonly bool Safety;
-
     public DoorComponentState(DoorComponent door)
     {
         DoorState = door.State;
         CurrentlyCrushing = door.CurrentlyCrushing;
         NextStateChange = door.NextStateChange;
         Partial = door.Partial;
-        Safety = door.SafetyEnabled;
     }
 }
