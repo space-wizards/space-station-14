@@ -456,7 +456,6 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
-  - type: MouseAccent
   - type: Butcherable
     meat: FoodMeat
     pieces: 1
