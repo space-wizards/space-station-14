@@ -52,10 +52,12 @@ namespace Content.Server.Nutrition.EntitySystems
             args.Handled = true;
         }
 
-        public void OnCigarAfterInteract(EntityUid uid, CigarComponent ownerCigarComponent, AfterInteractEvent args)
+        public void OnCigarAfterInteract(EntityUid uid, CigarComponent component, AfterInteractEvent args)
         {
             var targetEntity = args.Target;
-            if (targetEntity == null)
+            if (targetEntity == null ||
+                !EntityManager.TryGetComponent(uid, out SmokableComponent? smokable) ||
+                smokable.State == SmokableState.Lit)
                 return;
 
             var isHotEvent = new IsHotEvent();
@@ -64,7 +66,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!isHotEvent.IsHot)
                 return;
 
-            SetSmokableState(uid, SmokableState.Lit);
+            SetSmokableState(uid, SmokableState.Lit, smokable);
             args.Handled = true;
         }
 
