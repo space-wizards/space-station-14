@@ -22,10 +22,15 @@ namespace Content.Server.TimerStopwatch
 
         private void AddInteractionVerbsVerbs(EntityUid user, TimerStopwatchComponent component, GetInteractionVerbsEvent args)
         {
+            //TODO: Add verb icons
             Verb trackverb = new();
             trackverb.Act = () => component.trackingStatus = !component.trackingStatus;
-            trackverb.Text = Loc.GetString("timekeeping-stopwatch-toggle");
-           // verb.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
+            trackverb.Text = Loc.GetString("timekeeping-verb-toggle");
+            // verb.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
+            Verb resetverb = new();
+            trackverb.Act = () => component.passedTime = 0;
+            trackverb.Text = Loc.GetString("timekeeping-verb-reset");
+            // verb.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
             args.Verbs.Add(trackverb);
         }
 

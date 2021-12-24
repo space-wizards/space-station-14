@@ -293,6 +293,9 @@
     {
       "name": "stamp-warden"
     },
+	{
+      "name": "seccode"
+    },
     {
       "name": "tallcabinet"
     },

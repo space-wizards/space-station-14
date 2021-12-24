@@ -16,3 +16,37 @@
       Higher will burn the engine out and eventually make it explode. Don't.
       Don't forget to refuel it, it tends to stop at the worst possible time.
 
+- type: entity
+  id: SecCode
+  parent: PaperWritten
+  name: S.E.C manual
+  description: A Secure Environment Conduct manual, known as S.E.C. manual. A must-read for wardens and most other security personnel.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: seccode
+  - type: Paper
+    content: |
+      DISCLAIMER: S.E.C codes are not to be treated as gospel, as they are a amalgamation of general suggestions of how to run a commericlal ship's security.
+      However, violating them should be generally avoided, and abuse will be punished accordingly.
+      
+      PROPER ARRESTS:
+      In most situations a non-lethal option is both more effective and humane. You may not harm crewmembers not causing direct harm to you.
+      In order to detain a crewmember:
+      1. Subdue the offender (via your stun baton or taser) and handcuff them.
+      2. Bring them into the interregation room, you may stripsearch them for contraband there
+      3. Prove the accused of a crime, via collecting evidence from reliable sources
+      4. You may write a document, detailing the code of the crime, the criminal and the accusing party.
+      5. Punish according to the code. Track the time on y
+      
+      Punishments are conducted by the warden. Any further matters must be resolved with higher authority.
+      
+      CRIMINAL CODES: 
+      XX1: tresspass, petty theft and actively preventing security from making an arrest carry a 2 minute brig setnece
+      XX2: posession of contraband, trespassing into high-security zones (such as armory or captain's office) or theft of sensitive items carry a 5 minute brig setence
+      XX3: murder or grand sabotage with the intent of the former is a crime worthy of death penalty. 
+      You can only carry it out with substantial proof and approval of a higher authroity, such as the captain.
+      
+      You may reduce the setnece in case of cooperation with security.
+      Good luck, and remember to be civil in proseuction.
+

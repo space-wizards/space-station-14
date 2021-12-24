@@ -6,3 +6,4 @@ timekeeping-minutes = {$minutes} minutes
 ## Stopwatch verbs
 
 timekeeping-verb-toggle = Toggle timer
+timekeeping-verb-reset = Reset timer

@@ -15,11 +15,6 @@ namespace Content.Server.TimerStopwatch
         public float passedTime = 0;
 
         /// <summary>
-        /// The logged time since the last tracking
-        /// </summary>
-        public float loggedTime = 0;
-
-        /// <summary>
         /// If the stopwatch is currently tracking the time
         /// </summary>
         public bool trackingStatus = false;

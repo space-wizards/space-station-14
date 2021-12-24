@@ -1,11 +1,22 @@
 ﻿- type: entity
   parent: BaseItem
-  id: WardenStopwatch
-  name: Mechanical Pocketwatch
+  id: MechanicalStopwatch
+  name: Mechanical Stopwatch
   description: A classic symbol of power, it helps you keep track of celltime served by wrongdoers.
   components:
   - type: Sprite
     sprite: Objects/Misc/Timekeeping/mechanical_stopwatch.rsi
+    state: icon
+  - type: TimerStopwatch
+  
+- type: entity
+  parent: BaseItem
+  id: DigitalStopwatch
+  name: Digital Stopwatch
+  description: A mysterious alien artifact, which after many hours of research by the best of nanotrasen, revealed its shocking ability.. to fairly reliably track time.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/Timekeeping/digital_stopwatch.rsi
     state: icon
   - type: TimerStopwatch
   
