@@ -1,12 +1,6 @@
 Entries:
 - author: Visne
   changes:
-  - {message: 'Added integer scaling option. Turn it off to get rid of black bars,
-      at the cost of less crisp scaling.', type: Add}
-  id: 269
-  time: '2021-07-21T11:30:50.0000000+00:00'
-- author: Visne
-  changes:
   - {message: Examine tooltip now closes when moving out of range, type: Tweak}
   id: 270
   time: '2021-07-21T11:31:00.0000000+00:00'
@@ -2871,3 +2865,8 @@ Entries:
   - {message: Reduced flare flicker, type: Fix}
   id: 770
   time: '2021-12-24T14:30:36.0000000+00:00'
+- author: Phantom-Lily
+  changes:
+  - {message: Added a new small drone wreck to salvage., type: Add}
+  id: 771
+  time: '2021-12-24T22:16:23.0000000+00:00'
