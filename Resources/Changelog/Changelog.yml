@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Add Station driving, type: Add}
-  id: 268
-  time: '2021-07-21T11:15:12.0000000+00:00'
 - author: Visne
   changes:
   - {message: 'Added integer scaling option. Turn it off to get rid of black bars,
@@ -2871,3 +2866,8 @@ Entries:
   - {message: Reduced ammo capacity for the Svalinn and the COG., type: Tweak}
   id: 769
   time: '2021-12-24T12:32:03.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Reduced flare flicker, type: Fix}
+  id: 770
+  time: '2021-12-24T14:30:36.0000000+00:00'
