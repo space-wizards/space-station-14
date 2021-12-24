@@ -395,6 +395,10 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("bytea")
                         .HasColumnName("hwid");
 
+                    b.Property<int>("ServerId")
+                        .HasColumnType("integer")
+                        .HasColumnName("server_id");
+
                     b.Property<DateTime>("Time")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("time");
@@ -410,6 +414,9 @@ namespace Content.Server.Database.Migrations.Postgres
 
                     b.HasKey("Id")
                         .HasName("PK_connection_log");
+
+                    b.HasIndex("ServerId")
+                        .HasDatabaseName("IX_connection_log__server_id");
 
                     b.HasIndex("UserId");
 
@@ -632,10 +639,37 @@ namespace Content.Server.Database.Migrations.Postgres
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("ServerId")
+                        .HasColumnType("integer")
+                        .HasColumnName("server_id");
+
                     b.HasKey("Id")
                         .HasName("PK_round");
 
+                    b.HasIndex("ServerId")
+                        .HasDatabaseName("IX_round__server_id");
+
                     b.ToTable("round", (string)null);
+                });
+
+            modelBuilder.Entity("Content.Server.Database.Server", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("server_id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id")
+                        .HasName("PK_server");
+
+                    b.ToTable("server", (string)null);
                 });
 
             modelBuilder.Entity("PlayerRound", b =>
@@ -758,6 +792,18 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.Navigation("Profile");
                 });
 
+            modelBuilder.Entity("Content.Server.Database.PostgresConnectionLog", b =>
+                {
+                    b.HasOne("Content.Server.Database.Server", "Server")
+                        .WithMany()
+                        .HasForeignKey("ServerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_connection_log_server__server_id");
+
+                    b.Navigation("Server");
+                });
+
             modelBuilder.Entity("Content.Server.Database.PostgresServerUnban", b =>
                 {
                     b.HasOne("Content.Server.Database.PostgresServerBan", "Ban")
@@ -780,6 +826,18 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasConstraintName("FK_profile_preference_preference_id");
 
                     b.Navigation("Preference");
+                });
+
+            modelBuilder.Entity("Content.Server.Database.Round", b =>
+                {
+                    b.HasOne("Content.Server.Database.Server", "Server")
+                        .WithMany("Rounds")
+                        .HasForeignKey("ServerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_round_server__server_id");
+
+                    b.Navigation("Server");
                 });
 
             modelBuilder.Entity("PlayerRound", b =>
@@ -843,6 +901,11 @@ namespace Content.Server.Database.Migrations.Postgres
             modelBuilder.Entity("Content.Server.Database.Round", b =>
                 {
                     b.Navigation("AdminLogs");
+                });
+
+            modelBuilder.Entity("Content.Server.Database.Server", b =>
+                {
+                    b.Navigation("Rounds");
                 });
 #pragma warning restore 612, 618
         }

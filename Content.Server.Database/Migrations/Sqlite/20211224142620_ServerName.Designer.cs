@@ -3,6 +3,7 @@ using System;
 using Content.Server.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Content.Server.Database.Migrations.Sqlite
 {
     [DbContext(typeof(SqliteServerDbContext))]
-    partial class SqliteServerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211224142620_ServerName")]
+    partial class ServerName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.0");
@@ -473,35 +475,10 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("INTEGER")
                         .HasColumnName("round_id");
 
-                    b.Property<int>("ServerId")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("server_id");
-
                     b.HasKey("Id")
                         .HasName("PK_round");
 
-                    b.HasIndex("ServerId")
-                        .HasDatabaseName("IX_round__server_id");
-
                     b.ToTable("round", (string)null);
-                });
-
-            modelBuilder.Entity("Content.Server.Database.Server", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("server_id");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasColumnName("name");
-
-                    b.HasKey("Id")
-                        .HasName("PK_server");
-
-                    b.ToTable("server", (string)null);
                 });
 
             modelBuilder.Entity("Content.Server.Database.SqliteConnectionLog", b =>
@@ -520,10 +497,6 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("BLOB")
                         .HasColumnName("hwid");
 
-                    b.Property<int>("ServerId")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("server_id");
-
                     b.Property<DateTime>("Time")
                         .HasColumnType("TEXT")
                         .HasColumnName("time");
@@ -539,9 +512,6 @@ namespace Content.Server.Database.Migrations.Sqlite
 
                     b.HasKey("Id")
                         .HasName("PK_connection_log");
-
-                    b.HasIndex("ServerId")
-                        .HasDatabaseName("IX_connection_log__server_id");
 
                     b.ToTable("connection_log", (string)null);
                 });
@@ -748,30 +718,6 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.Navigation("Preference");
                 });
 
-            modelBuilder.Entity("Content.Server.Database.Round", b =>
-                {
-                    b.HasOne("Content.Server.Database.Server", "Server")
-                        .WithMany("Rounds")
-                        .HasForeignKey("ServerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_round_server__server_id");
-
-                    b.Navigation("Server");
-                });
-
-            modelBuilder.Entity("Content.Server.Database.SqliteConnectionLog", b =>
-                {
-                    b.HasOne("Content.Server.Database.Server", "Server")
-                        .WithMany()
-                        .HasForeignKey("ServerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_connection_log_server__server_id");
-
-                    b.Navigation("Server");
-                });
-
             modelBuilder.Entity("Content.Server.Database.SqliteServerUnban", b =>
                 {
                     b.HasOne("Content.Server.Database.SqliteServerBan", "Ban")
@@ -840,11 +786,6 @@ namespace Content.Server.Database.Migrations.Sqlite
             modelBuilder.Entity("Content.Server.Database.Round", b =>
                 {
                     b.Navigation("AdminLogs");
-                });
-
-            modelBuilder.Entity("Content.Server.Database.Server", b =>
-                {
-                    b.Navigation("Rounds");
                 });
 
             modelBuilder.Entity("Content.Server.Database.SqliteServerBan", b =>

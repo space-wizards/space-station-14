@@ -34,6 +34,7 @@ namespace Content.Server.Database
         public DbSet<Admin> Admin { get; set; } = null!;
         public DbSet<AdminRank> AdminRank { get; set; } = null!;
         public DbSet<Round> Round { get; set; } = null!;
+        public DbSet<Server> Server { get; set; } = null!;
         public DbSet<AdminLog> AdminLog { get; set; } = null!;
         public DbSet<AdminLogPlayer> AdminLogPlayer { get; set; } = null!;
 
@@ -251,6 +252,19 @@ namespace Content.Server.Database
         public List<Player> Players { get; set; } = default!;
 
         public List<AdminLog> AdminLogs { get; set; } = default!;
+
+        public Server? Server { get; set; }
+    }
+
+    [Table("server")]
+    public class Server
+    {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
+        public string Name { get; set; } = default!;
+
+        public List<Round> Rounds { get; set; } = default!;
     }
 
     [Index(nameof(Type))]
