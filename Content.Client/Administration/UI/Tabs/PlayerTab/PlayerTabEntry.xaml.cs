@@ -3,6 +3,7 @@ using Robust.Client.Console;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Client.Administration.UI.Tabs.PlayerTab;
@@ -10,7 +11,7 @@ namespace Content.Client.Administration.UI.Tabs.PlayerTab;
 [GenerateTypedNameReferences]
 public partial class PlayerTabEntry : ContainerButton
 {
-    public string? Command { get; set; }
+    public EntityUid? PlayerUid;
 
     public PlayerTabEntry(string username, string character, string antagonist, StyleBox styleBox)
     {
@@ -20,14 +21,5 @@ public partial class PlayerTabEntry : ContainerButton
         CharacterLabel.Text = character;
         AntagonistLabel.Text = antagonist;
         BackgroundColorPanel.PanelOverride = styleBox;
-
-        OnPressed += ExecuteCommand;
-    }
-
-    private void ExecuteCommand(ButtonEventArgs _)
-    {
-        // Default is to execute command
-        if (!string.IsNullOrEmpty(Command))
-            IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand(Command);
     }
 }
