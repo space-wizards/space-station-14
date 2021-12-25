@@ -59,7 +59,7 @@ public class QueryTests : ContentIntegrationTest
 
         await WaitUntil(server, async () =>
         {
-            await foreach (var _ in sAdminLogSystem.All(filter))
+            foreach (var _ in await sAdminLogSystem.All(filter))
             {
                 return true;
             }

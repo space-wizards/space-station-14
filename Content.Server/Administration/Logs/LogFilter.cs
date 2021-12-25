@@ -28,6 +28,8 @@ public sealed class LogFilter
 
     public int? LastLogId { get; set; }
 
+    public int LogsSent { get; set; }
+
     public int? Limit { get; set; }
 
     public DateOrder DateOrder { get; set; } = DateOrder.Descending;
