@@ -64,11 +64,9 @@ namespace Content.Server.Light.EntitySystems
 
         private void OnMapInit(EntityUid uid, PoweredLightComponent light, MapInitEvent args)
         {
-
-            var prototype = "";
             if (light.HasLampOnSpawn != null)
             {
-                var entity = EntityManager.SpawnEntity(prototype, EntityManager.GetComponent<TransformComponent>(light.Owner).Coordinates);
+                var entity = EntityManager.SpawnEntity(light.HasLampOnSpawn, EntityManager.GetComponent<TransformComponent>(light.Owner).Coordinates);
                 light.LightBulbContainer.Insert(entity);
             }
             // need this to update visualizers
