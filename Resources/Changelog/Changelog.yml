@@ -1,12 +1,6 @@
 Entries:
 - author: PJB
   changes:
-  - {message: 'Restart round votes now start with everybody selecting "no", effectively
-      requiring 80% of the whole server to agree.', type: Tweak}
-  id: 271
-  time: '2021-07-21T13:26:06.988275+00:00'
-- author: PJB
-  changes:
   - {message: You can now only make the same type of vote once every 4 minutes., type: Tweak}
   id: 272
   time: '2021-07-21T17:04:18.364235+00:00'
@@ -2870,3 +2864,9 @@ Entries:
   - {message: Added three salvage maps, type: Add}
   id: 772
   time: '2021-12-24T22:56:46.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Rules popup on first connection now has a timer to make sure that they
+      get read., type: Tweak}
+  id: 773
+  time: '2021-12-25T01:32:33.0000000+00:00'
