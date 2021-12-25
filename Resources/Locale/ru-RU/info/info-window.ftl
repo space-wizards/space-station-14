@@ -5,10 +5,6 @@ ui-info-title = Информация
 ui-info-tab-rules = Правила сервера
 ui-info-tab-tutorial = Руководство
 
-## Rules tab
-
-ui-info-header-rules = SS14 RU Правила сервера
-
 ## Tutorial tab
 ui-info-text-controls = Вы можете переопределять кнопки управления в
 
