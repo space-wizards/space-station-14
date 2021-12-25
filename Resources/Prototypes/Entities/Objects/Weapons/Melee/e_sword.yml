@@ -4,13 +4,14 @@
   id: EnergySword
   description: A very robust laser melee weapon. CHANGE THIS LATER
   components:
+  - type: Esword
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_sword.rsi
     state: e_sword_on_rainbow
   - type: MeleeWeapon
     damage:
       types:
-        Slash: 200
+        Slash: 25
   - type: Item
     size: 15
     sprite: Objects/Weapons/Melee/e_sword.rsi
