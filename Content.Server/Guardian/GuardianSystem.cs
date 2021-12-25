@@ -270,10 +270,8 @@ namespace Content.Server.Guardian
             TransformComponent? hostXform = null,
             TransformComponent? guardianXform = null)
         {
-            if (!Resolve(hostUid, ref hostComponent) ||
-                !Resolve(guardianUid, ref guardianComponent) ||
-                !Resolve(hostUid, ref hostXform) ||
-                !Resolve(guardianUid, ref guardianXform))
+            if (!Resolve(hostUid, ref hostComponent, ref hostXform) ||
+                !Resolve(guardianUid, ref guardianComponent, ref guardianXform))
             {
                 return;
             }
