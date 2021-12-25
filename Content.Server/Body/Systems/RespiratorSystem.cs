@@ -153,13 +153,10 @@ namespace Content.Server.Body.Systems
 
                 if (bloodstreamAmount < amountNeeded)
                 {
-                    if (!EntityManager.GetComponent<MobStateComponent>(uid).IsCritical())
+                    // Panic inhale
+                    foreach (var (lung, mech) in lungs)
                     {
-                        // Panic inhale
-                        foreach (var (lung, mech) in lungs)
-                        {
-                            _lungSystem.Gasp((lung).Owner, lung, mech);
-                        }
+                        _lungSystem.Gasp((lung).Owner, lung, mech);
                     }
 
                     bloodstreamAmount = bloodstream.Air.GetMoles(gas);

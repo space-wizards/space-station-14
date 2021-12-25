@@ -126,6 +126,8 @@ namespace Content.Client.Entry
             "Toys",
             "SurgeryTool",
             "EmitSoundOnThrow",
+            "Salvage",
+            "SalvageMagnet",
             "Flash",
             "Docking",
             "Telecrystal",
@@ -317,7 +319,9 @@ namespace Content.Client.Entry
             "Udder",
             "PneumaticCannon",
             "Spreader",
-            "GrowingKudzu"
+            "GrowingKudzu",
+            "MonkeyAccent",
+            "ReplacementAccent"
         };
     }
 }

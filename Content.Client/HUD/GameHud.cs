@@ -14,6 +14,7 @@ using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
@@ -23,7 +24,6 @@ using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
-using Robust.Shared.Utility.Markup;
 using static Robust.Client.Input.Keyboard.Key;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 using Control = Robust.Client.UserInterface.Control;
@@ -612,16 +612,23 @@ namespace Content.Client.HUD
             {
                 _inputManager.OnKeyBindingAdded += OnKeyBindingChanged;
                 _inputManager.OnKeyBindingRemoved += OnKeyBindingChanged;
+                _inputManager.OnInputModeChanged += OnKeyBindingChanged;
             }
 
             protected override void ExitedTree()
             {
                 _inputManager.OnKeyBindingAdded -= OnKeyBindingChanged;
                 _inputManager.OnKeyBindingRemoved -= OnKeyBindingChanged;
+                _inputManager.OnInputModeChanged -= OnKeyBindingChanged;
             }
 
 
             private void OnKeyBindingChanged(IKeyBinding obj)
+            {
+                _label.Text = ShortKeyName(_function);
+            }
+
+            private void OnKeyBindingChanged()
             {
                 _label.Text = ShortKeyName(_function);
             }
@@ -719,7 +726,7 @@ namespace Content.Client.HUD
 
             private string? DefaultShortKeyName(BoundKeyFunction keyFunction)
             {
-                var name = Basic.EscapeText(_inputManager.GetKeyFunctionButtonString(keyFunction));
+                var name = FormattedMessage.EscapeText(_inputManager.GetKeyFunctionButtonString(keyFunction));
                 return name.Length > 3 ? null : name;
             }
 
