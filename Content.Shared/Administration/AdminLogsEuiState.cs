@@ -33,13 +33,13 @@ public static class AdminLogsEuiMsg
     [Serializable, NetSerializable]
     public sealed class NewLogs : EuiMessageBase
     {
-        public NewLogs(SharedAdminLog[] logs, bool replace)
+        public NewLogs(List<SharedAdminLog> logs, bool replace)
         {
             Logs = logs;
             Replace = replace;
         }
 
-        public SharedAdminLog[] Logs { get; set; }
+        public List<SharedAdminLog> Logs { get; set; }
         public bool Replace { get; set; }
     }
 
