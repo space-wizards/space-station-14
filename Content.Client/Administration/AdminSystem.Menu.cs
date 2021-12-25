@@ -151,7 +151,7 @@ namespace Content.Client.Administration
             else if (function == ContentKeyFunctions.ExamineEntity)
                 Get<ExamineSystem>().DoExamine(uid);
             else if (function == ContentKeyFunctions.OpenContextMenu)
-                Get<VerbSystem>().VerbMenu.OpenVerbMenu(uid);
+                Get<VerbSystem>().VerbMenu.OpenVerbMenu(uid, true);
             else
                 return;
 

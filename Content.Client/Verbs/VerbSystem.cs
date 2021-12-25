@@ -178,14 +178,15 @@ namespace Content.Client.Verbs
         ///     Ask the server to send back a list of server-side verbs, and for now return an incomplete list of verbs
         ///     (only those defined locally).
         /// </summary>
-        public Dictionary<VerbType, SortedSet<Verb>> GetVerbs(EntityUid target, EntityUid user, VerbType verbTypes)
+        public Dictionary<VerbType, SortedSet<Verb>> GetVerbs(EntityUid target, EntityUid user, VerbType verbTypes,
+            bool force = false)
         {
             if (!target.IsClientSide())
             {
                 RaiseNetworkEvent(new RequestServerVerbsEvent(target, verbTypes));
             }
 
-            return GetLocalVerbs(target, user, verbTypes);
+            return GetLocalVerbs(target, user, verbTypes, force);
         }
 
         /// <summary>
