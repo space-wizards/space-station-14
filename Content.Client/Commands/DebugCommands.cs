@@ -97,6 +97,7 @@ namespace Content.Client.Commands
 
             shell.ConsoleHost.RegisteredCommands["togglelight"].Execute(shell, string.Empty, Array.Empty<string>());
             shell.ConsoleHost.RegisteredCommands["showsubfloorforever"].Execute(shell, string.Empty, Array.Empty<string>());
+            shell.ConsoleHost.RegisteredCommands["showmarkers"].Execute(shell, string.Empty, Array.Empty<string>());
 
             shell.RemoteExecuteCommand(argStr);
         }
