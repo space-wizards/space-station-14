@@ -487,7 +487,16 @@ namespace Content.Server.Database
                 .Where(player => playerIds.Contains(player.UserId))
                 .ToListAsync();
 
-            round.Players.AddRange(players);
+            var playerSet = new HashSet<Guid>(round.Players.Select(player => player.UserId));
+            foreach (var player in players)
+            {
+                if (playerSet.Contains(player.UserId))
+                {
+                    continue;
+                }
+
+                round.Players.Add(player);
+            }
 
             await db.DbContext.SaveChangesAsync();
         }
@@ -631,7 +640,7 @@ namespace Content.Server.Database
             }
         }
 
-        public async IAsyncEnumerable<LogRecord> GetAdminLogs(LogFilter? filter = null)
+        public async IAsyncEnumerable<SharedAdminLog> GetAdminLogs(LogFilter? filter = null)
         {
             await using var db = await GetDb();
             var query = await GetAdminLogsQuery(db.DbContext, filter);
@@ -645,7 +654,7 @@ namespace Content.Server.Database
                     players[i] = log.Players[i].PlayerUserId;
                 }
 
-                yield return new LogRecord(log.Id, log.RoundId, log.Type, log.Impact, log.Date, log.Message, players);
+                yield return new SharedAdminLog(log.Id, log.Type, log.Impact, log.Date, log.Message, players);
             }
         }
 

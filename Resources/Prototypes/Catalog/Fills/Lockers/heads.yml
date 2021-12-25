@@ -138,6 +138,8 @@
         prob: 1
       - id: ClothingOuterHardsuitMedical
         prob: 1
+      - id: Hypospray
+        prob: 1
 
 - type: entity
   id: LockerResearchDirectorFilled

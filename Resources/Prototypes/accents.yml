@@ -15,3 +15,11 @@
   - Woof!
   - Arf.
   - Grrr.
+
+- type: accent
+  id: mouse
+  words:
+  - Squeak!
+  - Piep!
+  - Chuu!
+  - Eeee!
