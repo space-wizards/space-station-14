@@ -116,7 +116,7 @@ namespace Content.Server.Atmos
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetMoles(int gasId, float quantity)
         {
-            if (float.IsInfinity(quantity) || float.IsNaN(quantity) || float.IsNegative(quantity))
+            if (!float.IsFinite(quantity) || float.IsNegative(quantity))
                 throw new ArgumentException($"Invalid quantity \"{quantity}\" specified!", nameof(quantity));
 
             if (!Immutable)
@@ -134,14 +134,14 @@ namespace Content.Server.Atmos
         {
             if (!Immutable)
             {
-                if (float.IsInfinity(quantity) || float.IsNaN(quantity))
+                if (!float.IsFinite(quantity))
                     throw new ArgumentException($"Invalid quantity \"{quantity}\" specified!", nameof(quantity));
 
                 Moles[gasId] += quantity;
 
                 var moles = Moles[gasId];
 
-                if (float.IsInfinity(moles) || float.IsNaN(moles) || float.IsNegative(moles))
+                if (!float.IsFinite(moles) || float.IsNegative(moles))
                     throw new Exception($"Invalid mole quantity \"{moles}\" in gas Id {gasId} after adjusting moles with \"{quantity}\"!");
             }
         }

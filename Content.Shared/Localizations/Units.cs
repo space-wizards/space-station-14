@@ -112,12 +112,22 @@ namespace Content.Shared.Localizations
 
         public static readonly TypeTable Energy = new TypeTable
         (
-            new TypeTable.Entry(range: (null, 1e-3), factor:  1e6, unit: "u--joule"),
-            new TypeTable.Entry(range: (1e-3,    1), factor:  1e3, unit: "m--joule"),
-            new TypeTable.Entry(range: (   1, 1000), factor:    1, unit: "joule"),
-            new TypeTable.Entry(range: (1000,  1e6), factor: 1e-4, unit: "k-joule"),
-            new TypeTable.Entry(range: ( 1e6,  1e9), factor: 1e-6, unit: "m-joule"),
-            new TypeTable.Entry(range: ( 1e9, null), factor: 1e-9, unit: "g-joule")
+            new TypeTable.Entry(range: ( null, 1e-3), factor:  1e6, unit: "u--joule"),
+            new TypeTable.Entry(range: ( 1e-3,    1), factor:  1e3, unit: "m--joule"),
+            new TypeTable.Entry(range: (    1, 1000), factor:    1, unit: "joule"),
+            new TypeTable.Entry(range: ( 1000,  1e6), factor: 1e-4, unit: "k-joule"),
+            new TypeTable.Entry(range: (  1e6,  1e9), factor: 1e-6, unit: "m-joule"),
+            new TypeTable.Entry(range: (  1e9, null), factor: 1e-9, unit: "g-joule")
+        );
+
+        public static readonly TypeTable Temperature = new TypeTable
+        (
+            new TypeTable.Entry(range: ( null, 1e-3), factor:  1e6, unit: "u--kelvin"),
+            new TypeTable.Entry(range: ( 1e-3,    1), factor:  1e3, unit: "m--kelvin"),
+            new TypeTable.Entry(range: (    1,  1e3), factor:    1, unit: "kelvin"),
+            new TypeTable.Entry(range: (  1e3,  1e6), factor: 1e-3, unit: "k-kelvin"),
+            new TypeTable.Entry(range: (  1e6,  1e9), factor: 1e-6, unit: "m-kelvin"),
+            new TypeTable.Entry(range: (  1e9, null), factor: 1e-9, unit: "g-kelvin")
         );
 
         public readonly static Dictionary<string, TypeTable> Types = new Dictionary<string, TypeTable>
@@ -125,7 +135,8 @@ namespace Content.Shared.Localizations
             ["generic"] = Generic!,
             ["pressure"] = Pressure!,
             ["power"] = Power!,
-            ["energy"] = Energy!
+            ["energy"] = Energy!,
+            ["temperature"] = Temperature!
         };
     }
 }

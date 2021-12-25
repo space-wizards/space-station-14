@@ -370,6 +370,7 @@
     - type: FireVisualizer
       sprite: Mobs/Effects/onfire.rsi
       normalState: Monkey_burning
+  - type: MonkeyAccent
 
 - type: entity
   name: mouse
@@ -431,7 +432,9 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
-  - type: MouseAccent
+  - type: ReplacementAccent
+    accent: mouse
+
 
 - type: entity
   parent: MobMouse
