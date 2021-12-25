@@ -40,22 +40,20 @@ public ref struct LogStringHandler
             format = argument[0] == '@' ? argument[1..] : argument;
         }
 
-        if (!Values.TryAdd(format, value))
+        if (Values.TryAdd(format, value) ||
+            Values[format] == (object?) value)
         {
-            if (Values[format] == (object?) value)
-            {
-                return;
-            }
+            return;
+        }
 
-            var originalFormat = format;
-            var i = 2;
+        var originalFormat = format;
+        var i = 2;
+        format = $"{originalFormat}_{i}";
+
+        while (!Values.TryAdd(format, value))
+        {
             format = $"{originalFormat}_{i}";
-
-            while (!Values.TryAdd(format, value))
-            {
-                format = $"{originalFormat}_{i}";
-                i++;
-            }
+            i++;
         }
     }
 
