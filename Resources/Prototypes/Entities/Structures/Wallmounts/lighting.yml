@@ -73,6 +73,7 @@
     enabled: false
   - type: PoweredLight
     bulb: Tube
+    hasLampOnSpawn: LightTube
     damage:
       types:
         Heat: 20
