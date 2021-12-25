@@ -87,3 +87,25 @@
   description: These protect you from slips while looking like normal sneakers.
   components:
   - type: NoSlip
+
+- type: entity
+  parent: ClothingShoesBase
+  id: ClothingShoesGreenLizardskin
+  name: green lizardskin shoes
+  description: They may have lost some of their lustre over the years, but these green lizardskin shoes fit you perfectly.
+  components:
+    - type: Sprite
+      sprite: Clothing/Shoes/Misc/disco.rsi
+    - type: Clothing
+      sprite: Clothing/Shoes/Misc/disco.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: ClothingShoesAerostatic
+  name: aerostatic boots
+  description: A crisp, clean set of boots for working long hours on the beat.
+  components:
+    - type: Sprite
+      sprite: Clothing/Shoes/Misc/kim.rsi
+    - type: Clothing
+      sprite: Clothing/Shoes/Misc/kim.rsi

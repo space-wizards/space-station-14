@@ -587,3 +587,25 @@
     sprite: Clothing/Uniforms/Jumpsuit/overalls.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/overalls.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitSuperstarCop
+  name: superstar cop uniform
+  description: Flare cut trousers and a dirty shirt that might have been classy before someone took a piss in the armpits. It's the dress of a superstar.
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpsuit/disco.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpsuit/disco.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitAerostatic
+  name: aerostatic suit
+  description: A crisp and well-pressed suit; professional, comfortable and curiously authoritative.
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpsuit/kim.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpsuit/kim.rsi

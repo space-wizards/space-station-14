@@ -142,3 +142,16 @@
     sprite: Clothing/Hands/Gloves/Color/black.rsi
     HeatResistance: 1400
   - type: Insulated
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesAerostatic
+  name: aerostatic gloves
+  description: Breathable red gloves for expert handling of a pen and notebook.
+  components:
+    - type: Sprite
+      sprite: Clothing/Hands/Gloves/kim.rsi
+    - type: Clothing
+      sprite: Clothing/Hands/Gloves/kim.rsi
+      HeatResistance: 1400
+    - type: Insulated

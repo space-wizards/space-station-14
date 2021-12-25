@@ -120,3 +120,14 @@
     sprite: Clothing/Eyes/Glasses/thermal.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/thermal.rsi
+
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesBinoclardLenses
+  name: binoclard lenses
+  description: Shows you know how to sew a lapel and center a back vent.
+  components:
+    - type: Sprite
+      sprite: Clothing/Eyes/Glasses/kim.rsi
+    - type: Clothing
+      sprite: Clothing/Eyes/Glasses/kim.rsi
