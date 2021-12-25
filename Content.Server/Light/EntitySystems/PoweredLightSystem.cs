@@ -64,26 +64,13 @@ namespace Content.Server.Light.EntitySystems
 
         private void OnMapInit(EntityUid uid, PoweredLightComponent light, MapInitEvent args)
         {
-            if (light.HasLampOnSpawn)
+
+            var prototype = "";
+            if (light.HasLampOnSpawn != null)
             {
-                var prototype = "";
-                if(light.ParticularLampOnSpawn == null)
-                {
-                    prototype = light.BulbType switch
-                    {
-                        LightBulbType.Bulb => "LightBulb",
-                        LightBulbType.Tube => "LightTube",
-                        _ => throw new ArgumentOutOfRangeException()
-                    };
-                }
-                else
-                {
-                    prototype = light.ParticularLampOnSpawn;
-                }
                 var entity = EntityManager.SpawnEntity(prototype, EntityManager.GetComponent<TransformComponent>(light.Owner).Coordinates);
                 light.LightBulbContainer.Insert(entity);
             }
-
             // need this to update visualizers
             UpdateLight(uid, light);
         }

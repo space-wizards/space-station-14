@@ -96,7 +96,7 @@
   - type: Sprite
     state: empty
   - type: PoweredLight
-    hasLampOnSpawn: False
+    hasLampOnSpawn: null
     damage:
       types:
         Heat: 20
@@ -108,8 +108,7 @@
   parent: Poweredlight
   components:
   - type: PoweredLight
-    hasLampOnSpawn: True
-    particularLampOnSpawn: "LedLightTube"
+    hasLampOnSpawn: "LedLightTube"
     damage:
       types:
         Heat: 20
@@ -176,6 +175,7 @@
       layer: [ Passable ]
   - type: PoweredLight
     bulb: Bulb
+    hasLampOnSpawn: "LightBulb"
     damage:
       types:
         Heat: 20
@@ -196,7 +196,7 @@
   - type: Sprite
     state: empty
   - type: PoweredLight
-    hasLampOnSpawn: False
+    hasLampOnSpawn: null
     damage:
       types:
         Heat: 20
