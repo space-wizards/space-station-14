@@ -41,6 +41,10 @@
     prefixCreator: 'VG'
   mapPath: Maps/packedstation.yml
   minPlayers: 15
+  conditions:
+    - !type:HolidayMapCondition
+      inverted: true
+      holidays: [ "Christmas" ]
   overflowJobs:
     - Assistant
   availableJobs:
@@ -86,3 +90,49 @@
     MedicalDoctor: [ 1, 1 ]
     ResearchDirector: [ 1, 1 ]
     Botanist: [ 1, 1 ]
+
+- type: gameMap
+  id: sunrise
+  mapName: 'Sunrise'
+  mapNameTemplate: '{0} Sunrise {1}'
+  nameGenerator:
+    !type:NanotrasenNameGenerator
+    prefixCreator: 'SS'
+  mapPath: Maps/sunrise.yml
+  minPlayers: 0
+  maxPlayers: 8
+  overflowJobs: []
+  availableJobs:
+    Bartender: [ 1, 1 ]
+    Captain: [ 1, 1 ]
+    ChiefEngineer: [ 1, 1 ]
+    StationEngineer: [ 1, 1 ]
+    ChiefMedicalOfficer: [ 1, 1 ]
+    MedicalDoctor: [ 1, 1 ]
+    ResearchDirector: [ 1, 1 ]
+    Botanist: [ 1, 1 ]
+
+- type: gameMap
+  id: moonrise
+  mapName: 'Moonrise ERC'
+  mapNameTemplate: '{0} Moonrise {1}'
+  nameGenerator:
+    !type:NanotrasenNameGenerator
+    prefixCreator: 'VG'
+  mapPath: Maps/moonrise.yml
+  minPlayers: 0
+  votable: false
+  overflowJobs: []
+  availableJobs:
+    Botanist: [ 1, 1 ]
+    Chef: [ 1, 1 ]
+    Captain: [ 1, 1 ]
+    HeadOfPersonnel: [ 1, 1 ]
+    ChiefEngineer: [ 1, 1 ]
+    StationEngineer: [ 2, 4 ]
+    ChiefMedicalOfficer: [ 1, 1 ]
+    MedicalDoctor: [ 2, 5 ]
+    Chemist: [ 1, 1 ]
+    HeadOfSecurity: [ 1, 1 ]
+    SecurityOfficer: [ 3, 5 ]
+    Warden: [ 1, 1 ]
