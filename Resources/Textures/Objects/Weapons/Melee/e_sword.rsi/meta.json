@@ -8,6 +8,14 @@
     {
       "name": "e_sword"
     },
+	{
+      "name": "off-inhand-left",
+	  "directions": 4
+    },
+	{
+      "name": "off-inhand-right",
+	  "directions": 4
+    },
     {
       "name": "e_sword_on_rainbow",
       "delays": [

@@ -1,6 +1,10 @@
 using System.Linq;
-using Robust.Shared.GameObjects;
+using Content.Server.Items;
 using Content.Shared.Audio;
+using Content.Shared.Interaction;
+using Content.Shared.ActionBlocker;
+using Robust.Server.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Log;
@@ -14,6 +18,7 @@ namespace Content.Server.Weapon.Melee.Esword
             base.Initialize();
 
             SubscribeLocalEvent<EswordComponent, MeleeHitEvent>(OnMeleeHit);
+            SubscribeLocalEvent<EswordComponent, UseInHandEvent>(OnUseInHand);
 
         }
 
@@ -23,6 +28,56 @@ namespace Content.Server.Weapon.Melee.Esword
                 return;
             
             SoundSystem.Play(Filter.Pvs(comp.Owner), comp.HitSound.GetSound(), comp.Owner, AudioHelpers.WithVariation(0.25f));
+        }
+
+        private void OnUseInHand(EntityUid uid, EswordComponent comp, UseInHandEvent args)
+        {
+            if (!Get<ActionBlockerSystem>().CanUse(args.User))
+                return;
+
+            if (comp.Activated)
+            {
+                TurnOff(comp);
+            }
+            else
+            {
+                TurnOn(comp, args.User);
+            }
+        }
+
+        private void TurnOff(EswordComponent comp)
+        {
+            if (!comp.Activated)
+            {
+                return;
+            }
+
+            if (!EntityManager.TryGetComponent<SpriteComponent?>(comp.Owner, out var sprite) ||
+                !EntityManager.TryGetComponent<ItemComponent?>(comp.Owner, out var item)) return;
+
+            SoundSystem.Play(Filter.Pvs(comp.Owner), comp.DeActivateSound.GetSound(), comp.Owner);
+
+            sprite.LayerSetState(0, "e_sword");
+            comp.Activated = false;
+        }
+
+        private void TurnOn(EswordComponent comp, EntityUid user)
+        {
+            if (comp.Activated)
+            {
+                return;
+            }
+
+            if (!EntityManager.TryGetComponent<SpriteComponent?>(comp.Owner, out var sprite) ||
+                !EntityManager.TryGetComponent<ItemComponent?>(comp.Owner, out var item))
+                return;
+
+            var playerFilter = Filter.Pvs(comp.Owner);
+
+            SoundSystem.Play(playerFilter, comp.ActivateSound.GetSound(), comp.Owner);
+
+            sprite.LayerSetState(0, "e_sword_on_rainbow");
+            comp.Activated = true;
         }
     }
 }

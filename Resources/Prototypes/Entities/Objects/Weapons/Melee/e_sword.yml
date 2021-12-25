@@ -7,7 +7,7 @@
   - type: Esword
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_sword.rsi
-    state: e_sword_on_rainbow
+    state: e_sword
   - type: MeleeWeapon
     damage:
       types:
