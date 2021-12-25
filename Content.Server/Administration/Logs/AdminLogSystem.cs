@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Database;
 using Content.Server.GameTicking;
@@ -75,7 +76,10 @@ public partial class AdminLogSystem : SharedAdminLogSystem
     private readonly ConcurrentQueue<QueuedLog> _logQueue = new();
     private readonly ConcurrentQueue<QueuedLog> _preRoundLogQueue = new();
 
+    // Per round
     private int CurrentRoundId => _gameTicker.RoundId;
+    private int _currentLogId;
+    private int NextLogId => Interlocked.Increment(ref _currentLogId);
 
     public override void Initialize()
     {
@@ -195,6 +199,7 @@ public partial class AdminLogSystem : SharedAdminLogSystem
             foreach (var queued in _preRoundLogQueue)
             {
                 queued.Log.RoundId = _gameTicker.RoundId;
+                CacheLog(queued);
             }
 
             copy.AddRange(_preRoundLogQueue);
@@ -227,6 +232,9 @@ public partial class AdminLogSystem : SharedAdminLogSystem
 
     private void RoundStarting(RoundStartingEvent ev)
     {
+        Interlocked.Exchange(ref _currentLogId, 0);
+        CacheNewRound();
+
         if (_metricsEnabled)
         {
             PreRoundQueueCapReached.Set(0);
@@ -237,12 +245,16 @@ public partial class AdminLogSystem : SharedAdminLogSystem
 
     private async void Add(LogType type, LogImpact impact, string message, JsonDocument json, List<Guid> players, List<(int id, string? name)> entities)
     {
+        var logId = NextLogId;
+        var date = DateTime.UtcNow;
+
         var log = new AdminLog
         {
+            Id = logId,
             RoundId = CurrentRoundId,
             Type = type,
             Impact = impact,
-            Date = DateTime.UtcNow,
+            Date = date,
             Message = message,
             Json = json,
             Players = new List<AdminLogPlayer>(players.Count)
@@ -254,6 +266,7 @@ public partial class AdminLogSystem : SharedAdminLogSystem
         {
             var player = new AdminLogPlayer
             {
+                LogId = logId,
                 PlayerUserId = id
             };
 
@@ -267,6 +280,7 @@ public partial class AdminLogSystem : SharedAdminLogSystem
         else
         {
             _logQueue.Enqueue(queued);
+            CacheLog(log);
         }
     }
 
@@ -289,9 +303,22 @@ public partial class AdminLogSystem : SharedAdminLogSystem
         Add(type, LogImpact.Medium, ref handler);
     }
 
-    public IAsyncEnumerable<LogRecord> All(LogFilter? filter = null)
+    public async Task<List<SharedAdminLog>> All(LogFilter? filter = null)
     {
-        return _db.GetAdminLogs(filter);
+        if (TrySearchCache(filter, out var results))
+        {
+            return results;
+        }
+
+        var initialSize = Math.Min(filter?.Limit ?? 0, 1000);
+        var list = new List<SharedAdminLog>(initialSize);
+
+        await foreach (var log in _db.GetAdminLogs(filter).WithCancellation(filter?.CancellationToken ?? default))
+        {
+            list.Add(log);
+        }
+
+        return list;
     }
 
     public IAsyncEnumerable<string> AllMessages(LogFilter? filter = null)
@@ -309,7 +336,7 @@ public partial class AdminLogSystem : SharedAdminLogSystem
         return _db.GetRound(roundId);
     }
 
-    public IAsyncEnumerable<LogRecord> CurrentRoundLogs(LogFilter? filter = null)
+    public Task<List<SharedAdminLog>> CurrentRoundLogs(LogFilter? filter = null)
     {
         filter ??= new LogFilter();
         filter.Round = CurrentRoundId;
