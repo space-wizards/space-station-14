@@ -133,7 +133,7 @@ namespace Content.Client.Administration
             }
         }
 
-        private static void PlayerTabEntryPressed(BaseButton.ButtonEventArgs args)
+        private void PlayerTabEntryPressed(BaseButton.ButtonEventArgs args)
         {
             if (args.Button is not PlayerTabEntry button
                 || button.PlayerUid == null)
