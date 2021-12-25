@@ -28,6 +28,7 @@ namespace Content.Client.Administration
         [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IEntityLookup _entityLookup = default!;
+        [Dependency] private readonly IClientConsoleHost _clientConsoleHost = default!;
 
         private AdminMenuWindow? _window;
         private readonly List<SS14Window> _commandWindows = new();
@@ -139,7 +140,7 @@ namespace Content.Client.Administration
                 || button.PlayerUid == null)
                 return;
 
-            IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand($"vv {button.PlayerUid}");
+            _clientConsoleHost.ExecuteCommand($"vv {button.PlayerUid}");
         }
     }
 }
