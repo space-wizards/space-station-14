@@ -1,3 +1,4 @@
+using Content.Server.Actions;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
 using Content.Server.Inventory.Components;
@@ -133,11 +134,7 @@ namespace Content.Server.Guardian
             }
 
             // Can't work without actions
-            if (!HasComp<SharedActionsComponent>(target))
-            {
-                _popupSystem.PopupEntity(Loc.GetString("guardian-no-actions-invalid-creation"), user, Filter.Entities(user));
-                return;
-            }
+            EntityManager.EnsureComponent<ServerActionsComponent>(target);
 
             if (component.Injecting) return;
 
