@@ -2,7 +2,9 @@ using System.Collections.Generic;
 using Content.Client.Administration.Managers;
 using Content.Client.Administration.UI;
 using Content.Client.Administration.UI.Tabs.PlayerTab;
+using Content.Client.Examine;
 using Content.Client.HUD;
+using Content.Client.Verbs;
 using Content.Shared.Input;
 using Robust.Client.Console;
 using Robust.Client.Graphics;
@@ -11,6 +13,7 @@ using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
@@ -140,7 +143,19 @@ namespace Content.Client.Administration
                 || button.PlayerUid == null)
                 return;
 
-            _clientConsoleHost.ExecuteCommand($"vv {button.PlayerUid}");
+            var uid = button.PlayerUid.Value;
+            var function = args.Event.Function;
+
+            if (function == EngineKeyFunctions.UIClick)
+                _clientConsoleHost.ExecuteCommand($"vv {button.PlayerUid}");
+            else if (function == ContentKeyFunctions.ExamineEntity)
+                Get<ExamineSystem>().DoExamine(uid);
+            else if (function == ContentKeyFunctions.OpenContextMenu)
+                Get<VerbSystem>().VerbMenu.OpenVerbMenu(uid);
+            else
+                return;
+
+            args.Event.Handle();
         }
     }
 }
