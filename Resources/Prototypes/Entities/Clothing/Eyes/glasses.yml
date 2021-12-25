@@ -87,6 +87,17 @@
 
 - type: entity
   parent: ClothingEyesBase
+  id: ClothingEyesSalesman
+  name: colored glasses
+  description: A pair of glasses with uniquely colored lenses. The frame is inscribed with 'Best Salesman 1997'.
+  components:
+    - type: Sprite
+      sprite: Clothing/Eyes/Glasses/salesman.rsi
+    - type: Clothing
+      sprite: Clothing/Eyes/Glasses/salesman.rsi
+
+- type: entity
+  parent: ClothingEyesBase
   id: ClothingEyesGlassesSunglasses
   name: sun glasses
   description: Useful both for security and cargonia
