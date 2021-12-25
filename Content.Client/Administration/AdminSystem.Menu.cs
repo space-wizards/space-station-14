@@ -1,12 +1,14 @@
 using System.Collections.Generic;
 using Content.Client.Administration.Managers;
 using Content.Client.Administration.UI;
+using Content.Client.Administration.UI.Tabs.PlayerTab;
 using Content.Client.HUD;
 using Content.Shared.Input;
 using Robust.Client.Console;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.ResourceManagement;
+using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input.Binding;
@@ -88,6 +90,7 @@ namespace Content.Client.Administration
         public void Open()
         {
             _window ??= new AdminMenuWindow();
+            _window.PlayerTabControl.OnEntryPressed += PlayerTabEntryPressed;
             _window.OpenCentered();
         }
 
@@ -128,6 +131,15 @@ namespace Content.Client.Administration
             {
                 TryOpen();
             }
+        }
+
+        private static void PlayerTabEntryPressed(BaseButton.ButtonEventArgs args)
+        {
+            if (args.Button is not PlayerTabEntry button
+                || button.PlayerUid == null)
+                return;
+
+            IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand($"vv {button.PlayerUid}");
         }
     }
 }

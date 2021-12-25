@@ -11,6 +11,6 @@
         <atmosTab:AtmosTab />
         <tabs:RoundTab />
         <tabs:ServerTab />
-        <playerTab:PlayerTab Name="PlayerTabControl" />
+        <playerTab:PlayerTab Name="PlayerTabControl" Access="Public" />
     </TabContainer>
 </SS14Window>
