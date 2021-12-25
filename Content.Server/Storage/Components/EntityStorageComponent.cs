@@ -58,8 +58,8 @@ namespace Content.Server.Storage.Components
         private bool _isCollidableWhenOpen;
 
         [ViewVariables]
-        [DataField("EatingRange")]
-        private float _eatingRange = -0.4f;
+        [DataField("EnteringRange")]
+        private float _enteringRange = -0.4f;
 
         [DataField("showContents")]
         private bool _showContents;
@@ -149,10 +149,10 @@ namespace Content.Server.Storage.Components
         }
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public float EatingRange
+        public float EnteringRange
         {
-            get => _eatingRange;
-            set => _eatingRange = value;
+            get => _enteringRange;
+            set => _enteringRange = value;
         }
 
         /// <inheritdoc />
@@ -458,7 +458,7 @@ namespace Content.Server.Storage.Components
         protected virtual IEnumerable<EntityUid> DetermineCollidingEntities()
         {
             var entityLookup = IoCManager.Resolve<IEntityLookup>();
-            return entityLookup.GetEntitiesIntersecting(Owner, _eatingRange, LookupFlags.Approximate);
+            return entityLookup.GetEntitiesIntersecting(Owner, _enteringRange, LookupFlags.Approximate);
         }
 
         void IExAct.OnExplosion(ExplosionEventArgs eventArgs)
