@@ -70,14 +70,5 @@ namespace Content.Client.Administration.UI.Tabs.PlayerTab
                 useAltColor ^= true;
             }
         }
-
-        private static void EntryPressed(BaseButton.ButtonEventArgs args)
-        {
-            if (args.Button is not PlayerTabEntry button
-                || button.PlayerUid == null)
-                return;
-
-            IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand($"vv {button.PlayerUid}");
-        }
     }
 }
