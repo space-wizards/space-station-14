@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Server.Database;
 using Content.Server.GameTicking;
+using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using NUnit.Framework;
@@ -89,6 +90,7 @@ public class AddTests : ContentIntegrationTest
         var sSystems = server.ResolveDependency<IEntitySystemManager>();
 
         var sAdminLogSystem = sSystems.GetEntitySystem<AdminLogSystem>();
+        var sGamerTicker = sSystems.GetEntitySystem<GameTicker>();
 
         var guid = Guid.NewGuid();
 
@@ -100,27 +102,27 @@ public class AddTests : ContentIntegrationTest
             sAdminLogSystem.Add(LogType.Unknown, $"{entity} test log: {guid}");
         });
 
-        LogRecord log = null;
+        SharedAdminLog log = default;
 
         await WaitUntil(server, async () =>
         {
-            var logs = sAdminLogSystem.CurrentRoundLogs(new LogFilter
+            var logs = await sAdminLogSystem.CurrentRoundLogs(new LogFilter
             {
                 Search = guid.ToString()
             });
 
-            await foreach (var found in logs)
+            if (logs.Count == 0)
             {
-                log = found;
-                return true;
+                return false;
             }
 
-            return false;
+            log = logs.First();
+            return true;
         });
 
         var filter = new LogFilter
         {
-            Round = log.RoundId,
+            Round = sGamerTicker.RoundId,
             Search = log.Message,
             Types = new HashSet<LogType> {log.Type},
         };
@@ -137,9 +139,8 @@ public class AddTests : ContentIntegrationTest
     }
 
     [Test]
-    [TestCase(500, false)]
-    [TestCase(500, true)]
-    public async Task BulkAddLogs(int amount, bool parallel)
+    [TestCase(500)]
+    public async Task BulkAddLogs(int amount)
     {
         var server = StartServer(new ServerContentIntegrationOption
         {
@@ -162,33 +163,16 @@ public class AddTests : ContentIntegrationTest
             var coordinates = GetMainEntityCoordinates(sMaps);
             var entity = sEntities.SpawnEntity(null, coordinates);
 
-            if (parallel)
+            for (var i = 0; i < amount; i++)
             {
-                Parallel.For(0, amount, _ =>
-                {
-                    sAdminLogSystem.Add(LogType.Unknown, $"{entity:Entity} test log.");
-                });
-            }
-            else
-            {
-                for (var i = 0; i < amount; i++)
-                {
-                    sAdminLogSystem.Add(LogType.Unknown, $"{entity:Entity} test log.");
-                }
+                sAdminLogSystem.Add(LogType.Unknown, $"{entity:Entity} test log.");
             }
         });
 
         await WaitUntil(server, async () =>
         {
-            var messages = sAdminLogSystem.CurrentRoundLogs();
-            var count = 0;
-
-            await foreach (var _ in messages)
-            {
-                count++;
-            }
-
-            return count >= amount;
+            var messages = await sAdminLogSystem.CurrentRoundLogs();
+            return messages.Count >= amount;
         });
     }
 
@@ -225,15 +209,14 @@ public class AddTests : ContentIntegrationTest
 
         await WaitUntil(server, async () =>
         {
-            var logs = sAdminLogSystem.CurrentRoundLogs();
-
-            await foreach (var log in logs)
+            var logs = await sAdminLogSystem.CurrentRoundLogs();
+            if (logs.Count == 0)
             {
-                Assert.That(log.Players, Does.Contain(playerGuid));
-                return true;
+                return false;
             }
 
-            return false;
+            Assert.That(logs.First().Players, Does.Contain(playerGuid));
+            return true;
         });
     }
 
@@ -273,27 +256,27 @@ public class AddTests : ContentIntegrationTest
             sGamerTicker.StartRound(true);
         });
 
-        LogRecord log = null;
+        SharedAdminLog log = default;
 
         await WaitUntil(server, async () =>
         {
-            var logs = sAdminLogSystem.CurrentRoundLogs(new LogFilter
+            var logs = await sAdminLogSystem.CurrentRoundLogs(new LogFilter
             {
                 Search = guid.ToString()
             });
 
-            await foreach (var found in logs)
+            if (logs.Count == 0)
             {
-                log = found;
-                return true;
+                return false;
             }
 
-            return false;
+            log = logs.First();
+            return true;
         });
 
         var filter = new LogFilter
         {
-            Round = log.RoundId,
+            Round = sGamerTicker.RoundId,
             Search = log.Message,
             Types = new HashSet<LogType> {log.Type},
         };
