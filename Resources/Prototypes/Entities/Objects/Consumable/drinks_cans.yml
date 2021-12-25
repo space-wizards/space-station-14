@@ -111,6 +111,24 @@
     sprite: Objects/Consumable/Drinks/purple_can.rsi
 
 - type: entity
+  parent: DrinkCanBaseFull
+  id: DrinkRootBeerCan
+  name: root beer can
+  description: The taste of a star in liquid form. And, a bit of tuna...?
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: RootBeer
+          Quantity: 30
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/rootbeer.rsi
+  - type: Item
+    sprite: Objects/Consumable/Drinks/rootbeer.rsi
+
+- type: entity
   parent: DrinkGlassBase
   id: DrinkSodaWaterCan
   name: soda water can

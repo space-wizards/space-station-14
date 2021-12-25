@@ -56,6 +56,14 @@
   color: "#9385bf"
 
 - type: reagent
+  id: RootBeer
+  name: root beer
+  parent: BaseSoda
+  desc: A very sweet, carbonated drink reminiscent of sarsparilla. Goes well with ice cream.
+  physicalDesc: fizzy
+  color: "#381c07"
+
+- type: reagent
   id: SpaceMountainWind
   name: Space Mountain Wind
   parent: BaseSoda
