@@ -198,6 +198,7 @@ namespace Content.Server.Administration.Managers
                 LoadPermissionsFromStream(efs);
             }
 
+            // Load flags for client-only commands, those don't have the flag attributes, only "AnyCommand".
             if (_res.TryContentFileRead(new ResourcePath("/clientCommandPerms.yml"), out var cfs))
             {
                 LoadPermissionsFromStream(cfs);
