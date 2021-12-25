@@ -48,8 +48,8 @@ public static class AdminLogsEuiMsg
     {
         public LogsRequest(
             int? roundId,
-            List<LogType>? types,
-            List<LogImpact>? impacts,
+            HashSet<LogType>? types,
+            HashSet<LogImpact>? impacts,
             DateTime? before,
             DateTime? after,
             Guid[]? anyPlayers,
@@ -69,8 +69,8 @@ public static class AdminLogsEuiMsg
         }
 
         public int? RoundId { get; set; }
-        public List<LogType>? Types { get; set; }
-        public List<LogImpact>? Impacts { get; set; }
+        public HashSet<LogType>? Types { get; set; }
+        public HashSet<LogImpact>? Impacts { get; set; }
         public DateTime? Before { get; set; }
         public DateTime? After { get; set; }
         public Guid[]? AnyPlayers { get; set; }

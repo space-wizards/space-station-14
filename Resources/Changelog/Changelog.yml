@@ -1,41 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix physics rotation issues, type: Fix}
-  id: 264
-  time: '2021-07-19T08:49:18.0000000+00:00'
-- author: Seth
-  changes:
-  - {message: Changed Crowbar and Wrench damage from 5 to 7, type: Tweak}
-  id: 265
-  time: '2021-07-19T20:55:37.0000000+00:00'
-- author: PJB3005
-  changes:
-  - {message: Chatbox channel management has been tweaked to be much more intuitive
-      and nice to use., type: Tweak}
-  id: 266
-  time: '2021-07-20T08:29:09.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Remove portals until someone does a better job coding it, type: Remove}
-  id: 267
-  time: '2021-07-21T09:16:10.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Add Station driving, type: Add}
-  id: 268
-  time: '2021-07-21T11:15:12.0000000+00:00'
-- author: Visne
-  changes:
-  - {message: 'Added integer scaling option. Turn it off to get rid of black bars,
-      at the cost of less crisp scaling.', type: Add}
-  id: 269
-  time: '2021-07-21T11:30:50.0000000+00:00'
-- author: Visne
-  changes:
-  - {message: Examine tooltip now closes when moving out of range, type: Tweak}
-  id: 270
-  time: '2021-07-21T11:31:00.0000000+00:00'
 - author: PJB
   changes:
   - {message: 'Restart round votes now start with everybody selecting "no", effectively
@@ -2867,3 +2830,43 @@ Entries:
   - {message: Accidentally broke christmas, type: Fix}
   id: 765
   time: '2021-12-24T06:06:05.0000000+00:00'
+- author: TemporalOroboros
+  changes:
+  - {message: 'Added temperature handling to solutions. Nothing actually uses it yet,
+      but it exists.', type: Add}
+  id: 766
+  time: '2021-12-24T09:22:34.0000000+00:00'
+- author: JustinTime
+  changes:
+  - {message: You can now light ciggies by interacting with hot things, type: Tweak}
+  - {message: Thrusters are now hot, type: Tweak}
+  id: 767
+  time: '2021-12-24T11:59:14.0000000+00:00'
+- author: Fishfish458
+  changes:
+  - {message: added a Backgammon board for those who know how to play, type: Add}
+  - {message: added a board game crate to cargo to play games on any station, type: Add}
+  id: 768
+  time: '2021-12-24T12:20:20.0000000+00:00'
+- author: TaralGit
+  changes:
+  - {message: Deleted the old laser gun., type: Remove}
+  - {message: Replaced laser guns on packedstation with COG laser carbines., type: Tweak}
+  - {message: Reduced ammo capacity for the Svalinn and the COG., type: Tweak}
+  id: 769
+  time: '2021-12-24T12:32:03.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Reduced flare flicker, type: Fix}
+  id: 770
+  time: '2021-12-24T14:30:36.0000000+00:00'
+- author: Phantom-Lily
+  changes:
+  - {message: Added a new small drone wreck to salvage., type: Add}
+  id: 771
+  time: '2021-12-24T22:16:23.0000000+00:00'
+- author: moony
+  changes:
+  - {message: Added three salvage maps, type: Add}
+  id: 772
+  time: '2021-12-24T22:56:46.0000000+00:00'
