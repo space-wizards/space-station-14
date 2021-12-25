@@ -17,7 +17,7 @@
 	  "directions": 4
     },
     {
-      "name": "e_sword_on_rainbow",
+      "name": "e_sword_on",
       "delays": [
         [
           0.1,
@@ -36,7 +36,7 @@
       ]
     },
 	{
-      "name": "inhand-left",
+      "name": "on-inhand-left",
       "directions": 4,
 	  "delays": [
         [
@@ -98,7 +98,7 @@
       ]
     },
     {
-      "name": "inhand-right",
+      "name": "on-inhand-right",
       "directions": 4,
 	  "delays": [
         [

@@ -57,6 +57,7 @@ namespace Content.Server.Weapon.Melee.Esword
 
             SoundSystem.Play(Filter.Pvs(comp.Owner), comp.DeActivateSound.GetSound(), comp.Owner);
 
+            item.EquippedPrefix = "off";
             sprite.LayerSetState(0, "e_sword");
             comp.Activated = false;
         }
@@ -76,7 +77,8 @@ namespace Content.Server.Weapon.Melee.Esword
 
             SoundSystem.Play(playerFilter, comp.ActivateSound.GetSound(), comp.Owner);
 
-            sprite.LayerSetState(0, "e_sword_on_rainbow");
+            item.EquippedPrefix = "on";
+            sprite.LayerSetState(0, "e_sword_on");
             comp.Activated = true;
         }
     }
