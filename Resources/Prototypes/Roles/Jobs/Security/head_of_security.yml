@@ -31,6 +31,7 @@
     idcard: HoSPDA
     ears: ClothingHeadsetAltSecurity
     belt: ClothingBeltSecurityFilled
+    pocket1: SecCode
   innerclothingskirt: ClothingUniformJumpskirtHoS
   satchel: ClothingBackpackSatchelSecurityFilled
   duffelbag: ClothingBackpackDuffelSecurityFilled
