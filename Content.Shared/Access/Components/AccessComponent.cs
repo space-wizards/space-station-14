@@ -1,13 +1,12 @@
 using System.Collections.Generic;
-using Content.Server.Access.Systems;
-using Content.Shared.Access;
+using Content.Shared.Access.Systems;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.Access.Components
+namespace Content.Shared.Access.Components
 {
     /// <summary>
     ///     Simple mutable access provider found on ID cards and such.
