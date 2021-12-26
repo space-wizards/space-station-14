@@ -7,7 +7,6 @@
         - to: ame_shielding
           steps:
             - prototype: AMEPart
-              amount: 1
               doAfter: 2
 
     - node: ame_shielding
