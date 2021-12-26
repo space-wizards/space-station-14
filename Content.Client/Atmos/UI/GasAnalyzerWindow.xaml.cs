@@ -78,19 +78,24 @@ namespace Content.Client.Atmos.UI
                 _lastGasCount++;
             }
 
+            GasGrid.RemoveAllChildren();
+
             using(var gasBarEnumerator = GasBar.Children.GetEnumerator())
             {
                 foreach(var gas in state.Gases)
                 {
                     var color = Color.FromHex($"#{gas.Color}", Color.White);
 
-                    statusMessage.PushNewline();
-
-                    statusMessage.PushColor(color);
-                    statusMessage.AddMarkup(gas.Name);
-                    statusMessage.AddMarkup(" ");
-                    statusMessage.AddMarkup(Loc.GetString("gas-analyzer-window-molality-text", ("mol", $"{gas.Amount:0.##}")));
-                    statusMessage.Pop();
+                    GasGrid.AddChild(new Label
+                    {
+                        Text = gas.Name,
+                        FontColorOverride = color
+                    } );
+                    GasGrid.AddChild(new Label
+                    {
+                        Text = Loc.GetString("gas-analyzer-window-molality-text", ("mol", $"{gas.Amount:0.##}")),
+                        FontColorOverride = color
+                    } );
 
                     gasBarEnumerator.MoveNext();
                     var panel = (PanelContainer)gasBarEnumerator.Current;
