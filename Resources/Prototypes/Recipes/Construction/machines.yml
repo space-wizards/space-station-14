@@ -29,7 +29,7 @@
   id: MachineFrameDestroyed
   graph: machine
   startNode: start
-  targetNode: destroyedmachineframe
+  targetNode: destroyedMachineFrame
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
