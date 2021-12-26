@@ -103,7 +103,7 @@
             - tool: Prying
               doAfter: 0.25
 
-    - node: destroyedmachineframe
+    - node: destroyedMachineFrame
       entity: MachineFrameDestroyed
       edges:
         - to: start
