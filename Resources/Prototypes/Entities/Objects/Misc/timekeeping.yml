@@ -6,6 +6,7 @@
   components:
   - type: Sprite
     sprite: Objects/Misc/Timekeeping/mechanical_stopwatch.rsi
+    netsync: false
     state: icon
   - type: TimerStopwatch
   
@@ -17,6 +18,7 @@
   components:
   - type: Sprite
     sprite: Objects/Misc/Timekeeping/digital_stopwatch.rsi
+    netsync: false
     state: icon
   - type: TimerStopwatch
   
