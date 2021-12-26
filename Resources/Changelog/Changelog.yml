@@ -1,9 +1,4 @@
 Entries:
-- author: Seth
-  changes:
-  - {message: Added Cannabis and Tabaco seeds into the exotic seeds crate, type: Add}
-  id: 273
-  time: '2021-07-22T02:20:41.0000000+00:00'
 - author: Ygg01
   changes:
   - {message: Added visualizer for things like Crayons and Toolbelts, type: Add}
@@ -2870,3 +2865,10 @@ Entries:
   - {message: Fixed butchering without a knife., type: Fix}
   id: 774
   time: '2021-12-26T02:32:02.0000000+00:00'
+- author: Morb0
+  changes:
+  - {message: Changed antag names in preferences, type: Add}
+  - {message: Does not choose a random traitor if there are available candidates,
+    type: Fix}
+  id: 775
+  time: '2021-12-26T03:13:38.0000000+00:00'
