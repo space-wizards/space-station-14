@@ -19,8 +19,8 @@
 - type: entity
   id: SecCode
   parent: PaperWritten
-  name: S.E.C manual
-  description: A Secure Environment Conduct manual, known as S.E.C. manual. A must-read for wardens and most other security personnel.
+  name: S.E.C pocketbook
+  description: An abridged form of the Secure Enviroment Conduct manual, known commonly as S.E.C, a must-read for all security personnel.
   components:
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
