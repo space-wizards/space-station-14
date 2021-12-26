@@ -25,6 +25,8 @@ namespace Content.Client.Atmos.UI
         }
         public void UpdateState(GasAnalyzerBoundUserInterfaceState state)
         {
+            GasGrid.RemoveAllChildren();
+
             var statusMessage = new FormattedMessage();
             StatusLabel.SetMessage(statusMessage);
 
@@ -77,8 +79,6 @@ namespace Content.Client.Atmos.UI
 
                 _lastGasCount++;
             }
-
-            GasGrid.RemoveAllChildren();
 
             using(var gasBarEnumerator = GasBar.Children.GetEnumerator())
             {
