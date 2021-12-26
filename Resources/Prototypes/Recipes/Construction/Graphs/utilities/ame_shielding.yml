@@ -6,7 +6,7 @@
       edges:
         - to: ame_shielding
           steps:
-            - material: AMEPart
+            - prototype: AMEPart
               amount: 1
               doAfter: 2
 
