@@ -46,8 +46,6 @@ namespace Content.Client.Entry
             "ResearchServer",
             "ResearchPointSource",
             "ResearchClient",
-            "Access",
-            "AccessReader",
             "IdCardConsole",
             "Airlock",
             "ThermalRegulator",

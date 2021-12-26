@@ -1,8 +1,8 @@
-using Content.Server.Access.Components;
+using Content.Shared.Access.Components;
 using Robust.Shared.GameObjects;
 using System.Collections.Generic;
 
-namespace Content.Server.Access.Systems
+namespace Content.Shared.Access.Systems
 {
     public class AccessSystem : EntitySystem
     {
