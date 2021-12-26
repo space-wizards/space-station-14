@@ -1,15 +1,15 @@
 - type: constructionGraph
-  id: ame_shielding
+  id: ameShielding
   start: start
   graph:
     - node: start
       edges:
-        - to: ame_shielding
+        - to: ameShielding
           steps:
             - prototype: AMEPart
               doAfter: 2
 
-    - node: ame_shielding
+    - node: ameShielding
       entity: AMEShielding
       edges:
         - to: start
