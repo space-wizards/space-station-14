@@ -1,0 +1,6 @@
+<SS14Window xmlns="https://spacestation14.io" MinSize="440 220" Title="{Loc gas-analyzer-window-name}">
+    <BoxContainer Name="Content" Orientation="Vertical" VerticalExpand="True">
+        <RichTextLabel Name="StatusLabel"/>
+        <BoxContainer Name="GasBar" Orientation="Horizontal" HorizontalExpand="True" MinSize="0 30"/>
+    </BoxContainer>
+</SS14Window>

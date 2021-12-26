@@ -10,22 +10,22 @@ namespace Content.Client.Atmos.UI
         {
         }
 
-        private GasAnalyzerWindow? _menu;
+        private GasAnalyzerWindow? _window;
 
         protected override void Open()
         {
             base.Open();
 
-            _menu = new GasAnalyzerWindow(this);
-            _menu.OnClose += Close;
-            _menu.OpenCentered();
+            _window = new GasAnalyzerWindow();
+            _window.OnClose += Close;
+            _window.OpenCentered();
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
-
-            _menu?.Populate((GasAnalyzerBoundUserInterfaceState) state);
+            var castState = (GasAnalyzerBoundUserInterfaceState) state;
+            _window?.UpdateState(castState);
         }
 
         public void Refresh()
@@ -37,7 +37,7 @@ namespace Content.Client.Atmos.UI
         {
             base.Dispose(disposing);
 
-            if (disposing) _menu?.Dispose();
+            if (disposing) _window?.Dispose();
         }
     }
 }
