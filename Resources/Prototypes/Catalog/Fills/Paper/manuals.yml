@@ -20,7 +20,7 @@
   id: SecCode
   parent: PaperWritten
   name: S.E.C pocketbook
-  description: An abridged form of the Secure Enviroment Conduct manual, known commonly as S.E.C, a must-read for all security personnel.
+  description: An abridged version of the Secure Enviroment Conduct manual or S.E.C for short. A must-read for all security personnel!
   components:
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
