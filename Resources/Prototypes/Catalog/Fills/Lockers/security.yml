@@ -58,7 +58,7 @@
       - id: ClothingShoesBootsJack
         prob: 1
       - id: SecCode
-        prob: 0.2 
+        prob: 0.2
 
 - type: entity
   id: LockerDetectiveFilled
