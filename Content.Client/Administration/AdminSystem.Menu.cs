@@ -148,8 +148,6 @@ namespace Content.Client.Administration
 
             if (function == EngineKeyFunctions.UIClick)
                 _clientConsoleHost.ExecuteCommand($"vv {button.PlayerUid}");
-            else if (function == ContentKeyFunctions.ExamineEntity)
-                Get<ExamineSystem>().DoExamine(uid);
             else if (function == ContentKeyFunctions.OpenContextMenu)
                 Get<VerbSystem>().VerbMenu.OpenVerbMenu(uid, true);
             else
