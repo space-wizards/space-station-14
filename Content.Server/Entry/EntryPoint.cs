@@ -8,6 +8,7 @@ using Content.Server.Connection;
 using Content.Server.Database;
 using Content.Server.EUI;
 using Content.Server.GameTicking;
+using Content.Server.Info;
 using Content.Server.IoC;
 using Content.Server.Maps;
 using Content.Server.NodeContainer.NodeGroups;
@@ -91,6 +92,7 @@ namespace Content.Server.Entry
             IoCManager.Resolve<IAdminManager>().Initialize();
             IoCManager.Resolve<INpcBehaviorManager>().Initialize();
             IoCManager.Resolve<IAfkManager>().Initialize();
+            IoCManager.Resolve<RulesManager>().Initialize();
             _euiManager.Initialize();
 
             IoCManager.Resolve<IGameMapManager>().Initialize();
