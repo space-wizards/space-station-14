@@ -24,11 +24,11 @@ namespace Content.Server.TimerStopwatch
         {
             //TODO: Add verb icons
             Verb trackverb = new();
-            trackverb.Act = () => component.trackingStatus = !component.trackingStatus;
+            trackverb.Act = () => component.TrackingStatus = !component.TrackingStatus;
             trackverb.Text = Loc.GetString("timekeeping-verb-toggle");
             // trackverb.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
             Verb resetverb = new();
-            resetverb.Act = () => component.passedTime = 0;
+            resetverb.Act = () => component.PassedTime = 0;
             resetverb.Text = Loc.GetString("timekeeping-verb-reset");
             // resetverb.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
             args.Verbs.Add(trackverb);
@@ -40,7 +40,7 @@ namespace Content.Server.TimerStopwatch
         /// </summary>
         private void OnUseInHand(EntityUid uid, TimerStopwatchComponent comp, UseInHandEvent args)
         {
-            TellTime(comp.passedTime, args.User);
+            TellTime(comp.PassedTime, args.User);
         }
 
         /// <summary>
@@ -58,9 +58,9 @@ namespace Content.Server.TimerStopwatch
             var comps = EntityManager.EntityQuery<TimerStopwatchComponent>();
             foreach(TimerStopwatchComponent comp in comps)
             {
-                if(comp.trackingStatus == true)
+                if(comp.TrackingStatus == true)
                 {
-                    comp.passedTime += frameTime;
+                    comp.PassedTime += frameTime;
                 }
             }
         }

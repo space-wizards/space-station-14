@@ -12,11 +12,11 @@ namespace Content.Server.TimerStopwatch
         /// <summary>
         /// The amount of time passed since the tracking started
         /// </summary>
-        public float passedTime = 0;
+        public float PassedTime = 0;
 
         /// <summary>
         /// If the stopwatch is currently tracking the time
         /// </summary>
-        public bool trackingStatus = false;
+        public bool TrackingStatus = false;
     }
 }
