@@ -16,7 +16,7 @@
             - material: Steel
               amount: 5
               doAfter: 2.5
-        - to: destroyedmachineframe
+        - to: destroyedMachineFrame
           steps:
             - material: Steel
               amount: 5
