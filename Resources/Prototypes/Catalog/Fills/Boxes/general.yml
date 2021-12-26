@@ -123,6 +123,10 @@
       - id: EpinephrineMedipen
       - id: Flare
       - id: FoodSnackChocolate
+  - type: Sprite
+    layers:
+      - state: box
+      - state: writing
   - type: Storage
     capacity: 30
     size: 30
