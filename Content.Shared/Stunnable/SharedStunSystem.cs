@@ -8,6 +8,7 @@ using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.Movement;
 using Content.Shared.Movement.Components;
+using Content.Shared.Movement.EntitySystems;
 using Content.Shared.Speech;
 using Content.Shared.Standing;
 using Content.Shared.StatusEffect;
@@ -27,6 +28,7 @@ namespace Content.Shared.Stunnable
     {
         [Dependency] private readonly StandingStateSystem _standingStateSystem = default!;
         [Dependency] private readonly StatusEffectsSystem _statusEffectSystem = default!;
+        [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifierSystem = default!;
 
         public override void Initialize()
         {
@@ -44,6 +46,7 @@ namespace Content.Shared.Stunnable
 
             // helping people up if they're knocked down
             SubscribeLocalEvent<KnockedDownComponent, InteractHandEvent>(OnInteractHand);
+            SubscribeLocalEvent<SlowedDownComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
 
             // Attempt event subscriptions.
             SubscribeLocalEvent<StunnedComponent, MovementAttemptEvent>(OnMoveAttempt);
@@ -97,22 +100,17 @@ namespace Content.Shared.Stunnable
 
         private void OnSlowInit(EntityUid uid, SlowedDownComponent component, ComponentInit args)
         {
-            // needs to be done so the client can also refresh when the addition is replicated,
-            // if the initial status effect addition wasn't predicted
-            if (EntityManager.TryGetComponent<MovementSpeedModifierComponent>(uid, out var move))
-            {
-                move.RefreshMovementSpeedModifiers();
-            }
+            _movementSpeedModifierSystem.RefreshMovementSpeedModifiers(uid);
         }
 
         private void OnSlowRemove(EntityUid uid, SlowedDownComponent component, ComponentRemove args)
         {
-            if (EntityManager.TryGetComponent<MovementSpeedModifierComponent>(uid, out var move))
-            {
-                component.SprintSpeedModifier = 1.0f;
-                component.WalkSpeedModifier = 1.0f;
-                move.RefreshMovementSpeedModifiers();
-            }
+            _movementSpeedModifierSystem.RefreshMovementSpeedModifiers(uid);
+        }
+
+        private void OnRefreshMovespeed(EntityUid uid, SlowedDownComponent component, RefreshMovementSpeedModifiersEvent args)
+        {
+            args.ModifySpeed(component.WalkSpeedModifier, component.SprintSpeedModifier);
         }
 
         // TODO STUN: Make events for different things. (Getting modifiers, attempt events, informative events...)
@@ -125,6 +123,9 @@ namespace Content.Shared.Stunnable
             SharedAlertsComponent? alerts = null)
         {
             if (time <= TimeSpan.Zero)
+                return false;
+
+            if (!Resolve(uid, ref status, false))
                 return false;
 
             Resolve(uid, ref alerts, false);
@@ -142,6 +143,9 @@ namespace Content.Shared.Stunnable
             if (time <= TimeSpan.Zero)
                 return false;
 
+            if (!Resolve(uid, ref status, false))
+                return false;
+
             Resolve(uid, ref alerts, false);
 
             return _statusEffectSystem.TryAddStatusEffect<KnockedDownComponent>(uid, "KnockedDown", time, alerts: alerts);
@@ -154,6 +158,9 @@ namespace Content.Shared.Stunnable
             StatusEffectsComponent? status = null,
             SharedAlertsComponent? alerts = null)
         {
+            if (!Resolve(uid, ref status))
+                return false;
+
             // Optional component.
             Resolve(uid, ref alerts, false);
 
@@ -166,11 +173,13 @@ namespace Content.Shared.Stunnable
         public bool TrySlowdown(EntityUid uid, TimeSpan time,
             float walkSpeedMultiplier = 1f, float runSpeedMultiplier = 1f,
             StatusEffectsComponent? status = null,
-            MovementSpeedModifierComponent? speedModifier = null,
             SharedAlertsComponent? alerts = null)
         {
+            if (!Resolve(uid, ref status))
+                return false;
+
             // "Optional" component.
-            Resolve(uid, ref speedModifier, false);
+            Resolve(uid, ref alerts, false);
 
             if (time <= TimeSpan.Zero)
                 return false;
@@ -185,7 +194,7 @@ namespace Content.Shared.Stunnable
                 slowed.WalkSpeedModifier *= walkSpeedMultiplier;
                 slowed.SprintSpeedModifier *= runSpeedMultiplier;
 
-                speedModifier?.RefreshMovementSpeedModifiers();
+                _movementSpeedModifierSystem.RefreshMovementSpeedModifiers(uid);
 
                 return true;
             }

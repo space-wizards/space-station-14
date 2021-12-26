@@ -184,6 +184,12 @@ namespace Content.IntegrationTests
 
         private bool ShouldPool(IntegrationOptions options, bool server)
         {
+            // TODO TEST POOLING client pooling
+            if (!server)
+            {
+                return false;
+            }
+
             if (options.Pool == false)
             {
                 return false;

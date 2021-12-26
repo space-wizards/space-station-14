@@ -37,7 +37,7 @@ namespace Content.Server.Pointing.EntitySystems
             }
         }
 
-        private IEntity? RandomNearbyPlayer(EntityUid uid, RoguePointingArrowComponent? component = null, ITransformComponent? transform = null)
+        private IEntity? RandomNearbyPlayer(EntityUid uid, RoguePointingArrowComponent? component = null, TransformComponent? transform = null)
         {
             if (!Resolve(uid, ref component, ref transform))
                 return null;
@@ -55,7 +55,7 @@ namespace Content.Server.Pointing.EntitySystems
             return _random.Pick(players).AttachedEntity;
         }
 
-        private void UpdateAppearance(EntityUid uid, RoguePointingArrowComponent? component = null, ITransformComponent? transform = null, AppearanceComponent? appearance = null)
+        private void UpdateAppearance(EntityUid uid, RoguePointingArrowComponent? component = null, TransformComponent? transform = null, AppearanceComponent? appearance = null)
         {
             if (!Resolve(uid, ref component, ref transform, ref appearance) || component.Chasing == null)
                 return;
@@ -65,7 +65,7 @@ namespace Content.Server.Pointing.EntitySystems
 
         public override void Update(float frameTime)
         {
-            foreach (var (component, transform) in EntityManager.EntityQuery<RoguePointingArrowComponent, ITransformComponent>())
+            foreach (var (component, transform) in EntityManager.EntityQuery<RoguePointingArrowComponent, TransformComponent>())
             {
                 var uid = component.Owner.Uid;
                 component.Chasing ??= RandomNearbyPlayer(uid, component, transform);

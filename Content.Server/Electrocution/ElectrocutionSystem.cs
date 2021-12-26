@@ -139,7 +139,7 @@ namespace Content.Server.Electrocution
         public bool TryDoElectrifiedAct(EntityUid uid, EntityUid targetUid,
             ElectrifiedComponent? electrified = null,
             NodeContainerComponent? nodeContainer = null,
-            ITransformComponent? transform = null)
+            TransformComponent? transform = null)
         {
             if (!Resolve(uid, ref electrified, ref transform, false))
                 return false;
@@ -253,7 +253,7 @@ namespace Content.Server.Electrocution
             float siemensCoefficient = 1f,
             StatusEffectsComponent? statusEffects = null,
             SharedAlertsComponent? alerts = null,
-            ITransformComponent? sourceTransform = null)
+            TransformComponent? sourceTransform = null)
         {
             if (!DoCommonElectrocutionAttempt(uid, sourceUid, ref siemensCoefficient))
                 return false;

@@ -41,3 +41,9 @@
       - Impassable
   - type: Spillable
     solution: bucket
+  - type: DrawableSolution
+    solution: bucket
+  - type: RefillableSolution
+    solution: bucket
+  - type: DrainableSolution
+    solution: bucket

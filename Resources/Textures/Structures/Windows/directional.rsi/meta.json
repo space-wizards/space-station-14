@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "tgstation at ff1c30ac123dd28c6b5fee11e7f03654f5daa731, plasma windows from paradise at 44c12c6d9d0e42a9d3a582dff7e9a8d72b6ea68a",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "window",
+      "directions": 8
+    },
+    {
+      "name": "reinforced_window",
+      "directions": 8
+    },
+    {
+      "name": "tinted_window",
+      "directions": 8
+    },
+    {
+      "name": "frosted_window",
+      "directions": 8
+    },
+	{
+	  "name": "plasma_window",
+	  "directions": 8
+	},
+	{
+	  "name": "plasma_reinforced_window",
+	  "directions": 8
+	}
+  ]
+}
