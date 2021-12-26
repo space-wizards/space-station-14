@@ -86,7 +86,7 @@ namespace Content.MapRenderer.Painters
             var sMapManager = server.ResolveDependency<IMapManager>();
 
             var tilePainter = new TilePainter(client, server);
-            var entityPainter = new EntityPainter(client, server);
+            var entityPainter = new GridPainter(client, server);
             IMapGrid[] grids = null!;
 
             await server.WaitPost(() =>
