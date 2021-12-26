@@ -1,9 +1,4 @@
 Entries:
-- author: PJB
-  changes:
-  - {message: You can now only make the same type of vote once every 4 minutes., type: Tweak}
-  id: 272
-  time: '2021-07-21T17:04:18.364235+00:00'
 - author: Seth
   changes:
   - {message: Added Cannabis and Tabaco seeds into the exotic seeds crate, type: Add}
@@ -2870,3 +2865,8 @@ Entries:
       get read., type: Tweak}
   id: 773
   time: '2021-12-25T01:32:33.0000000+00:00'
+- author: FoLoKe
+  changes:
+  - {message: Fixed butchering without a knife., type: Fix}
+  id: 774
+  time: '2021-12-26T02:32:02.0000000+00:00'
