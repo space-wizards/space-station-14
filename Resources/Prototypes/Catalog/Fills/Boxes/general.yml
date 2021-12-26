@@ -139,7 +139,7 @@
   - type: StorageFill
     contents:
       - id: Brutepack
-        amount: 5
+        amount: 6
   - type: Storage
     capacity: 30
     size: 30
