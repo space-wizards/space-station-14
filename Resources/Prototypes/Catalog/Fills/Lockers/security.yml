@@ -27,8 +27,6 @@
         prob: 1
       - id: ClothingOuterCoatWarden
         prob: 1
-      - id: SecCode
-        prob: 1
       - id: DigitalStopwatch
         prob: 0.25
 
