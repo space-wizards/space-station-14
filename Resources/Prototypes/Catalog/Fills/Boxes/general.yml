@@ -7,7 +7,6 @@
   - type: Sprite
     layers:
       - state: box
-      - state: writing
   - type: Item
     size: 20
   - type: Storage
@@ -28,10 +27,11 @@
     layers:
       - state: box
       - state: light
-  - type: Item
-    size: 60
   - type: Storage
     capacity: 60
+    whitelist:
+      components:
+      - LightBulb
 
 - type: entity
   name: lighttube box
@@ -47,10 +47,11 @@
     layers:
       - state: box
       - state: lighttube
-  - type: Item
-    size: 60
   - type: Storage
     capacity: 60
+    whitelist:
+      components:
+      - LightBulb
 
 - type: entity
   name: mixed lights box
@@ -68,10 +69,11 @@
     layers:
       - state: box
       - state: lightmixed
-  - type: Item
-    size: 60
   - type: Storage
     capacity: 60
+    whitelist:
+      components:
+      - LightBulb
 
 - type: entity
   name: pda box
@@ -87,10 +89,11 @@
     layers:
       - state: box
       - state: pda
-  - type: Item
-    size: 60
   - type: Storage
     capacity: 60
+    whitelist:
+      components:
+      - PDA
 
 - type: entity
   name: meson box

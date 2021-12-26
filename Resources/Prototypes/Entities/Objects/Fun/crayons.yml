@@ -206,7 +206,7 @@
     - CrayonPurple
 
 - type: entity
-  parent: BaseItem
+  parent: BoxCardboard
   id: CrayonBox
   name: crayon box
   description: "It's a box of crayons."
