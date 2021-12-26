@@ -26,6 +26,7 @@
     state: blue-icon-3
   - type: Item
     sprite: Objects/Specific/Janitorial/trashbag.rsi
+    HeldPrefix: blue
     size: 125
   - type: Storage
     capacity: 125
