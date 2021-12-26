@@ -203,7 +203,7 @@ namespace Content.Client.Inventory
             if (!Owner.TryGetSlot(slot, out var item))
                 return;
 
-            if (!_itemSlotManager.OnButtonPressed(args, item))
+            if (!_itemSlotManager.OnButtonPressed(args, item.Value))
                 base.HandleInventoryKeybind(args, slot);
         }
 
@@ -232,7 +232,7 @@ namespace Content.Client.Inventory
 
                 if (Owner.TryGetSlot(slot, out var entity))
                 {
-                    AddToSlot(slot, entity);
+                    AddToSlot(slot, entity.Value);
                 }
             }
         }
