@@ -219,7 +219,7 @@
     capacity: 7
   - type: Item
     sprite: Objects/Fun/crayons.rsi
-    size: 9999
+    size: 7
     HeldPrefix: box
   - type: StorageFill
     contents:
