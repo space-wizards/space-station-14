@@ -25,6 +25,7 @@
     contents:
       - id: BoxSurvival
       - id: Flash
+      - id: SecCode
 
 - type: entity
   abstract: true
