@@ -60,7 +60,7 @@ namespace Content.MapRenderer.Painters
 
             foreach (var entity in entities)
             {
-                if (entity.Sprite.Owner.HasComponent<SubFloorHideComponent>())
+                if (_sEntityManager.HasComponent<SubFloorHideComponent>(entity.Sprite.Owner))
                 {
                     continue;
                 }
@@ -70,6 +70,7 @@ namespace Content.MapRenderer.Painters
                     continue;
                 }
 
+                var worldRotation = _sEntityManager.GetComponent<TransformComponent>(entity.Sprite.Owner).WorldRotation;
                 foreach (var layer in entity.Sprite.AllLayers)
                 {
                     if (!layer.Visible)
@@ -91,9 +92,9 @@ namespace Content.MapRenderer.Painters
                     }
                     else
                     {
-                        var key = (rsi.Path!.ToString(), state.StateId.Name);
+                        var key = (rsi.Path!.ToString(), state.StateId.Name!);
 
-                        if (!_images.TryGetValue(key, out image))
+                        if (!_images.TryGetValue(key, out image!))
                         {
                             var stream = _cResourceCache.ContentFileRead($"{rsi.Path}/{state.StateId}.png");
                             image = Image.Load<Rgba32>(stream);
@@ -115,7 +116,7 @@ namespace Content.MapRenderer.Painters
                         {
                             case 4:
                             {
-                                var dir = layer.EffectiveDirection(entity.Sprite.Owner.Transform.WorldRotation);
+                                var dir = layer.EffectiveDirection(worldRotation);
 
                                 (xStart, xEnd, yStart, yEnd) = dir switch
                                 {
@@ -169,41 +170,41 @@ namespace Content.MapRenderer.Painters
 
             foreach (var entity in _sEntityManager.GetEntities())
             {
-                if (!entity.HasComponent<ISpriteRenderableComponent>())
+                if (!_sEntityManager.HasComponent<ISpriteRenderableComponent>(entity))
                 {
                     continue;
                 }
 
-                if (entity.Prototype == null)
+                var prototype = _sEntityManager.GetComponent<MetaDataComponent>(entity).EntityPrototype;
+                if (prototype == null)
                 {
                     continue;
                 }
 
-                var clientEntity = _cEntityManager.GetEntity(entity.Uid);
-
-                if (!clientEntity.TryGetComponent(out SpriteComponent sprite))
+                if (!_cEntityManager.TryGetComponent(entity, out SpriteComponent sprite))
                 {
                     throw new InvalidOperationException(
-                        $"No sprite component found on an entity for which a server sprite component exists. Prototype id: {entity.Prototype?.ID}");
+                        $"No sprite component found on an entity for which a server sprite component exists. Prototype id: {prototype?.ID}");
                 }
 
                 var xOffset = 0;
                 var yOffset = 0;
                 var tileSize = 1;
 
-                if (_cMapManager.TryGetGrid(entity.Transform.GridID, out var grid))
+                var transform = _sEntityManager.GetComponent<TransformComponent>(entity);
+                if (_cMapManager.TryGetGrid(transform.GridID, out var grid))
                 {
                     xOffset = (int) Math.Abs(grid.LocalBounds.Left);
                     yOffset = (int) Math.Abs(grid.LocalBounds.Bottom);
                     tileSize = grid.TileSize;
                 }
 
-                var position = entity.Transform.LocalPosition;
+                var position = transform.LocalPosition;
                 var x = ((float) Math.Floor(position.X) + xOffset) * tileSize * TilePainter.TileImageSize;
                 var y = ((float) Math.Floor(position.Y) + yOffset) * tileSize * TilePainter.TileImageSize;
                 var data = new EntityData(sprite, x, y);
 
-                components.GetOrAdd(entity.Transform.GridID, _ => new List<EntityData>()).Add(data);
+                components.GetOrAdd(transform.GridID, _ => new List<EntityData>()).Add(data);
             }
 
             Console.WriteLine($"Found {components.Values.Sum(l => l.Count)} entities on {components.Count} grids in {(int) stopwatch.Elapsed.TotalMilliseconds} ms");

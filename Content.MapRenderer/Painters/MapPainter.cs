@@ -5,15 +5,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using Content.IntegrationTests;
 using Content.Shared.CCVar;
+using Robust.Client.GameObjects;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
+using SpriteComponent = Robust.Server.GameObjects.SpriteComponent;
 
 namespace Content.MapRenderer.Painters
 {
@@ -21,8 +24,6 @@ namespace Content.MapRenderer.Painters
     {
         public async IAsyncEnumerable<Image> Paint(string map)
         {
-            map = map[10..]; // Resources/
-
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
@@ -32,7 +33,8 @@ namespace Content.MapRenderer.Painters
                 {
                     [CVars.NetPVS.Name] = "false"
                 },
-                Pool = false
+                Pool = false,
+                FailureLogLevel = LogLevel.Fatal
             };
 
             var serverOptions = new ServerContentIntegrationOption
@@ -42,7 +44,8 @@ namespace Content.MapRenderer.Painters
                     [CCVars.GameMap.Name] = map,
                     [CVars.NetPVS.Name] = "false"
                 },
-                Pool = false
+                Pool = false,
+                FailureLogLevel = LogLevel.Fatal
             };
 
             var (client, server) = await StartConnectedServerClientPair(clientOptions, serverOptions);
@@ -55,21 +58,23 @@ namespace Content.MapRenderer.Painters
 
             stopwatch.Restart();
 
+            var cEntityManager = client.ResolveDependency<IClientEntityManager>();
             var cPlayerManager = client.ResolveDependency<Robust.Client.Player.IPlayerManager>();
 
             await client.WaitPost(() =>
             {
-                if (cPlayerManager.LocalPlayer!.ControlledEntity!.TryGetComponent(out Robust.Client.GameObjects.SpriteComponent? sprite))
+                if (cEntityManager.TryGetComponent(cPlayerManager.LocalPlayer!.ControlledEntity!, out Robust.Client.GameObjects.SpriteComponent? sprite))
                 {
                     sprite.Visible = false;
                 }
             });
 
+            var sEntityManager = server.ResolveDependency<IServerEntityManager>();
             var sPlayerManager = server.ResolveDependency<IPlayerManager>();
 
             await server.WaitPost(() =>
             {
-                if (sPlayerManager.GetAllPlayers().Single().AttachedEntity!.TryGetComponent(out SpriteComponent? sprite))
+                if (sEntityManager.TryGetComponent(sPlayerManager.ServerSessions.Single().AttachedEntity!, out SpriteComponent? sprite))
                 {
                     sprite.Visible = false;
                 }
@@ -86,7 +91,13 @@ namespace Content.MapRenderer.Painters
 
             await server.WaitPost(() =>
             {
-                sPlayerManager.GetAllPlayers().Single().AttachedEntity?.Delete();
+                var playerEntity = sPlayerManager.ServerSessions.Single().AttachedEntity;
+
+                if (playerEntity.HasValue)
+                {
+                    sEntityManager.DeleteEntity(playerEntity.Value);
+                }
+
                 grids = sMapManager.GetAllMapGrids(new MapId(1)).ToArray();
 
                 foreach (var grid in grids)

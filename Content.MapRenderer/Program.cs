@@ -6,9 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Content.MapRenderer.Extensions;
 using Content.MapRenderer.Painters;
-using Robust.Shared.Utility;
 using SixLabors.ImageSharp;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.MapRenderer
 {
@@ -22,7 +20,7 @@ namespace Content.MapRenderer
 #pragma warning disable CA1825
         private static readonly string[] ForceRender =
         {
-            // "Resources/Maps/saltern.yml"
+            "saltern"
         };
 #pragma warning restore CA1825
 
@@ -33,47 +31,47 @@ namespace Content.MapRenderer
 
         private static async Task Run()
         {
-            var created = Environment.GetEnvironmentVariable(MapsAddedEnvKey);
-            var modified = Environment.GetEnvironmentVariable(MapsModifiedEnvKey);
-
-            var yamlStream = new YamlStream();
-
-            if (created != null)
-            {
-                yamlStream.Load(new StringReader(created));
-            }
-
-            if (modified != null)
-            {
-                yamlStream.Load(new StringReader(modified));
-            }
-
-            var files = new YamlSequenceNode();
-
-            foreach (var doc in yamlStream.Documents)
-            {
-                var filesModified = (YamlSequenceNode) doc.RootNode;
-
-                foreach (var node in filesModified)
-                {
-                    files.Add(node);
-                }
-            }
+            // var created = Environment.GetEnvironmentVariable(MapsAddedEnvKey);
+            // var modified = Environment.GetEnvironmentVariable(MapsModifiedEnvKey);
+            //
+            // var yamlStream = new YamlStream();
+            //
+            // if (created != null)
+            // {
+            //     yamlStream.Load(new StringReader(created));
+            // }
+            //
+            // if (modified != null)
+            // {
+            //     yamlStream.Load(new StringReader(modified));
+            // }
+            //
+            // var files = new YamlSequenceNode();
+            //
+            // foreach (var doc in yamlStream.Documents)
+            // {
+            //     var filesModified = (YamlSequenceNode) doc.RootNode;
+            //
+            //     foreach (var node in filesModified)
+            //     {
+            //         files.Add(node);
+            //     }
+            // }
 
             var maps = new List<string>(ForceRender);
 
-            foreach (var node in files)
-            {
-                var fileName = node.AsString();
-
-                if (!fileName.StartsWith("Resources/Maps/") ||
-                    !fileName.EndsWith("yml"))
-                {
-                    continue;
-                }
-
-                maps.Add(fileName);
-            }
+            // foreach (var node in files)
+            // {
+            //     var fileName = node.AsString();
+            //
+            //     if (!fileName.StartsWith("Resources/Maps/") ||
+            //         !fileName.EndsWith("yml"))
+            //     {
+            //         continue;
+            //     }
+            //
+            //     maps.Add(fileName);
+            // }
 
             Console.WriteLine($"Creating images for {maps.Count} maps");
 
