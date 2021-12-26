@@ -1,9 +1,9 @@
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Content.Server.Administration.Commands;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
-using Content.Shared.MobState;
+using Content.Shared.MobState.Components;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -48,8 +48,8 @@ namespace Content.IntegrationTests.Tests.Commands
                 var human = entityManager.SpawnEntity("DamageableDummy", MapCoordinates.Nullspace);
 
                 // Sanity check
-                Assert.True(human.TryGetComponent(out DamageableComponent damageable));
-                Assert.True(human.TryGetComponent(out IMobStateComponent mobState));
+                Assert.True(IoCManager.Resolve<IEntityManager>().TryGetComponent(human, out DamageableComponent damageable));
+                Assert.True(IoCManager.Resolve<IEntityManager>().TryGetComponent(human, out MobStateComponent mobState));
                 mobState.UpdateState(0);
                 Assert.That(mobState.IsAlive, Is.True);
                 Assert.That(mobState.IsCritical, Is.False);
@@ -59,7 +59,7 @@ namespace Content.IntegrationTests.Tests.Commands
                 // Kill the entity
                 DamageSpecifier damage = new(prototypeManager.Index<DamageGroupPrototype>("Toxin"),
                     FixedPoint2.New(10000000));
-                EntitySystem.Get<DamageableSystem>().TryChangeDamage(human.Uid, damage, true);
+                EntitySystem.Get<DamageableSystem>().TryChangeDamage(human, damage, true);
 
                 // Check that it is dead
                 Assert.That(mobState.IsAlive, Is.False);

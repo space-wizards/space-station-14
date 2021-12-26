@@ -1,7 +1,7 @@
 - type: entity
   name: space carp
   id: MobCarp
-  parent: SimpleMobBase
+  parent: SimpleSpaceMobBase
   description: It's a space carp.
   components:
   - type: UtilityAI
@@ -18,11 +18,11 @@
       state: alive
       sprite: Mobs/Aliens/Carps/space.rsi
   - type: Physics
-    bodyType: Dynamic
+  - type: Fixtures
     fixtures:
     - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.35,-0.35,0.35,0.35"
+        !type:PhysShapeCircle
+        radius: 0.40
       mass: 50
       mask:
       - Impassable
@@ -40,6 +40,7 @@
     visuals:
     - type: DamageStateVisualizer
       normal: alive
+      crit: crit
       dead: dead
 
 - type: entity
@@ -68,11 +69,11 @@
       state: alive
       sprite: Mobs/Aliens/Carps/holo.rsi
   - type: Physics
-    bodyType: Dynamic
+  - type: Fixtures
     fixtures:
     - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.35,-0.35,0.35,0.35"
+        !type:PhysShapeCircle
+        radius: 0.40
       mass: 5
       mask:
         - Impassable

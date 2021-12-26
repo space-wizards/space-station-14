@@ -34,23 +34,19 @@
       type: PDABoundUserInterface
     - key: enum.UplinkUiKey.Key
       type: UplinkBoundUserInterface
-  - type: ItemSlots
-    slots:
-      pdaPenSlot:
-        item: "Pen"
-        whitelist:
-          tags:
-            - Write
-      pdaIdSlot:
-        name: ID Card
-        insertSound:
-          path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
-        ejectSound:
-          path: /Audio/Machines/id_swipe.ogg
-        whitelist:
-          components:
-            - IdCard
   - type: PDA
+    penSlot:
+      startingItem: Pen
+      whitelist:
+        tags:
+        - Write
+    idSlot:
+      name: ID Card
+      ejectSound: /Audio/Machines/id_swipe.ogg
+      insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+      whitelist:
+        components:
+        - IdCard
   - type: DoorBumpOpener
 
 - type: entity
@@ -100,6 +96,15 @@
   components:
   - type: PDA
     idCard: ClownIDCard
+    penSlot:
+      startingItem: CrayonOrange # no pink crayon?!?
+      # Maybe this is a bad idea.
+      # At least they can't just spam alt-click it.
+      # You need to remove the ID & alternate between inserting and ejecting
+      ejectSound: /Audio/Items/bikehorn.ogg
+      whitelist:
+        tags:
+        - Write
   - type: Appearance
     visuals:
       - type: PDAVisualizer
@@ -112,6 +117,7 @@
     enabled: false
   - type: Physics
     bodyType: Dynamic
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -135,6 +141,11 @@
   components:
   - type: PDA
     idCard: MimeIDCard
+    idSlot:
+      name: ID Card
+      whitelist:
+        components:
+        - IdCard
   - type: Appearance
     visuals:
       - type: PDAVisualizer
@@ -142,35 +153,35 @@
   - type: Icon
     state: pda-mime
 
-#- type: entity
-#  name: Chaplain PDA
-#  parent: BasePDA
-#  id: ChaplainPDA
-#  description: God's chosen PDA.
-#  components:
-#    - type: PDA
-#      idCard: ChaplainIDCard
-#    - type: Appearance
-#      visuals:
-#        - type: PDAVisualizer
-#          state: pda-chaplain
-#    - type: Icon
-#      state: pda-chaplain
+- type: entity
+  name: Chaplain PDA
+  parent: BasePDA
+  id: ChaplainPDA
+  description: God's chosen PDA.
+  components:
+  - type: PDA
+    idCard: ChaplainIDCard
+  - type: Appearance
+    visuals:
+      - type: PDAVisualizer
+        state: pda-chaplain
+  - type: Icon
+    state: pda-chaplain
 
-#- type: entity
-#  name: Quartermaster PDA
-#  parent: BasePDA
-#  id: QuartermasterPDA
-#  description: PDA for the guy that orders the guns.
-#  components:
-#    - type: PDA
-#      idCard: QuartermasterIDCard
-#    - type: Appearance
-#      visuals:
-#        - type: PDAVisualizer
-#          state: pda-qm
-#    - type: Icon
-#      state: pda-qm
+- type: entity
+  name: Quartermaster PDA
+  parent: BasePDA
+  id: QuartermasterPDA
+  description: PDA for the guy that orders the guns.
+  components:
+  - type: PDA
+    idCard: QuartermasterIDCard
+  - type: Appearance
+    visuals:
+      - type: PDAVisualizer
+        state: pda-qm
+  - type: Icon
+    state: pda-qm
 
 - type: entity
   parent: BasePDA
@@ -281,7 +292,6 @@
   - type: Icon
     state: pda-engineer
 
-
 - type: entity
   parent: BasePDA
   id: CMOPDA
@@ -297,7 +307,6 @@
   - type: Icon
     state: pda-cmo
 
-
 - type: entity
   parent: BasePDA
   id: MedicalPDA
@@ -312,6 +321,21 @@
         state: pda-medical
   - type: Icon
     state: pda-medical
+
+- type: entity
+  parent: BasePDA
+  id: ChemistryPDA
+  name: chemistry PDA
+  description: It has a few discolored blotches here and there.
+  components:
+  - type: PDA
+    idCard: ChemistIDCard
+  - type: Appearance
+    visuals:
+      - type: PDAVisualizer
+        state: pda-chemistry
+  - type: Icon
+    state: pda-chemistry
 
 - type: entity
   parent: BasePDA
@@ -358,20 +382,20 @@
   - type: Icon
     state: pda-hos
 
-# - type: entity
-#   parent: BasePDA
-#   id: WardenPDA
-#   name: warden PDA
-#   description: The OS appears to have been jailbroken.
-#   components:
-#     - type: PDA
-#       idCard: WardenIDCard
-#     - type: Appearance
-#       visuals:
-#         - type: PDAVisualizer
-#           state: pda-warden
-#     - type: Icon
-#       state: pda-warden
+- type: entity
+  parent: BasePDA
+  id: WardenPDA
+  name: warden PDA
+  description: The OS appears to have been jailbroken.
+  components:
+  - type: PDA
+    idCard: WardenIDCard
+  - type: Appearance
+    visuals:
+      - type: PDAVisualizer
+        state: pda-warden
+  - type: Icon
+    state: pda-warden
 
 - type: entity
   parent: BasePDA

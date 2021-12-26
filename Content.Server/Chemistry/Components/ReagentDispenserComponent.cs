@@ -1,17 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Hands.Components;
-using Content.Server.Items;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Dispenser;
-using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
@@ -19,7 +17,6 @@ using Content.Shared.Sound;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -39,21 +36,20 @@ namespace Content.Server.Chemistry.Components
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    [ComponentReference(typeof(IInteractUsing))]
-    public class ReagentDispenserComponent : SharedReagentDispenserComponent, IActivate, IInteractUsing
+    [ComponentReference(typeof(SharedReagentDispenserComponent))]
+    public class ReagentDispenserComponent : SharedReagentDispenserComponent, IActivate
     {
         private static ReagentInventoryComparer _comparer = new();
         public static string SolutionName = "reagent";
 
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IEntityManager _entities = default!;
 
-        [ViewVariables] public ContainerSlot BeakerContainer = default!;
         [ViewVariables] [DataField("pack")] private string _packPrototypeId = "";
 
         [DataField("clickSound")]
         private SoundSpecifier _clickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
 
-        [ViewVariables] public bool HasBeaker => BeakerContainer.ContainedEntity != null;
         [ViewVariables] private FixedPoint2 _dispenseAmount = FixedPoint2.New(10);
 
         [UsedImplicitly]
@@ -62,13 +58,13 @@ namespace Content.Server.Chemistry.Components
         {
             get
             {
-                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution);
+                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution);
                 return solution;
             }
         }
 
         [ViewVariables]
-        private bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
+        private bool Powered => !_entities.TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(ReagentDispenserUiKey.Key);
 
@@ -85,12 +81,7 @@ namespace Content.Server.Chemistry.Components
                 UserInterface.OnReceiveMessage += OnUiReceiveMessage;
             }
 
-            // Name relied upon by construction graph machine.yml to ensure beaker doesn't get deleted
-            BeakerContainer =
-                ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-reagentContainerContainer");
-
             InitializeFromPrototype();
-            UpdateUserInterface();
         }
 
         [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
@@ -158,7 +149,7 @@ namespace Content.Server.Chemistry.Components
             switch (msg.Button)
             {
                 case UiButton.Eject:
-                    TryEject(obj.Session.AttachedEntity);
+                    EntitySystem.Get<ItemSlotsSystem>().TryEjectToHands(Owner, BeakerSlot, obj.Session.AttachedEntity);
                     break;
                 case UiButton.Clear:
                     TryClear();
@@ -191,7 +182,7 @@ namespace Content.Server.Chemistry.Components
                     _dispenseAmount = FixedPoint2.New(100);
                     break;
                 case UiButton.Dispense:
-                    if (HasBeaker)
+                    if (BeakerSlot.HasItem)
                     {
                         TryDispense(msg.DispenseIndex);
                     }
@@ -210,7 +201,7 @@ namespace Content.Server.Chemistry.Components
         /// </summary>
         /// <param name="playerEntity">The player entity.</param>
         /// <returns>Returns true if the entity can use the dispenser, and false if it cannot.</returns>
-        private bool PlayerCanUseDispenser(IEntity? playerEntity, bool needsPower = true)
+        private bool PlayerCanUseDispenser(EntityUid? playerEntity, bool needsPower = true)
         {
             //Need player entity to check if they are still able to use the dispenser
             if (playerEntity == null)
@@ -219,7 +210,7 @@ namespace Content.Server.Chemistry.Components
             var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
 
             //Check if player can interact in their current state
-            if (!actionBlocker.CanInteract(playerEntity) || !actionBlocker.CanUse(playerEntity))
+            if (!actionBlocker.CanInteract(playerEntity.Value) || !actionBlocker.CanUse(playerEntity.Value))
                 return false;
             //Check if device is powered
             if (needsPower && !Powered)
@@ -234,47 +225,26 @@ namespace Content.Server.Chemistry.Components
         /// <returns>Returns a <see cref="SharedReagentDispenserComponent.ReagentDispenserBoundUserInterfaceState"/></returns>
         private ReagentDispenserBoundUserInterfaceState GetUserInterfaceState()
         {
-            var beaker = BeakerContainer.ContainedEntity;
-            if (beaker == null || !beaker.TryGetComponent(out FitsInDispenserComponent? fits) ||
-                !EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(beaker.Uid, fits.Solution, out var solution))
+            if (BeakerSlot.Item is not {Valid: true} beaker ||
+                !_entities.TryGetComponent(beaker, out FitsInDispenserComponent? fits) ||
+                !EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(beaker, fits.Solution, out var solution))
             {
                 return new ReagentDispenserBoundUserInterfaceState(Powered, false, FixedPoint2.New(0),
                     FixedPoint2.New(0),
-                    string.Empty, Inventory, Owner.Name, null, _dispenseAmount);
+                    string.Empty, Inventory, _entities.GetComponent<MetaDataComponent>(Owner).EntityName, null, _dispenseAmount);
             }
 
             return new ReagentDispenserBoundUserInterfaceState(Powered, true, solution.CurrentVolume,
                 solution.MaxVolume,
-                beaker.Name, Inventory, Owner.Name, solution.Contents.ToList(), _dispenseAmount);
+                _entities.GetComponent<MetaDataComponent>(beaker).EntityName, Inventory, _entities.GetComponent<MetaDataComponent>(Owner).EntityName, solution.Contents.ToList(), _dispenseAmount);
         }
 
         public void UpdateUserInterface()
         {
+            if (!Initialized) return;
+
             var state = GetUserInterfaceState();
             UserInterface?.SetState(state);
-        }
-
-        /// <summary>
-        /// If this component contains an entity with a <see cref="SolutionHolder"/>, eject it.
-        /// Tries to eject into user's hands first, then ejects onto dispenser if both hands are full.
-        /// </summary>
-        public void TryEject(IEntity user)
-        {
-            if (!HasBeaker)
-                return;
-
-            var beaker = BeakerContainer.ContainedEntity;
-            if (beaker is null)
-                return;
-
-            BeakerContainer.Remove(beaker);
-            UpdateUserInterface();
-
-            if (!user.TryGetComponent<HandsComponent>(out var hands) ||
-                !beaker.TryGetComponent<ItemComponent>(out var item))
-                return;
-            if (hands.CanPutInHand(item))
-                hands.PutInHand(item);
         }
 
         /// <summary>
@@ -282,12 +252,12 @@ namespace Content.Server.Chemistry.Components
         /// </summary>
         private void TryClear()
         {
-            if (!HasBeaker || !BeakerContainer.ContainedEntity!.TryGetComponent(out FitsInDispenserComponent? fits) ||
-                !EntitySystem.Get<SolutionContainerSystem>()
-                    .TryGetSolution(BeakerContainer.ContainedEntity.Uid, fits.Solution, out var solution))
+            if (BeakerSlot.Item is not {Valid: true} beaker ||
+                !_entities.TryGetComponent(beaker, out FitsInDispenserComponent? fits) ||
+                !EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(beaker, fits.Solution, out var solution))
                 return;
 
-            EntitySystem.Get<SolutionContainerSystem>().RemoveAllSolution(BeakerContainer.ContainedEntity!.Uid, solution);
+            EntitySystem.Get<SolutionContainerSystem>().RemoveAllSolution(beaker, solution);
 
             UpdateUserInterface();
         }
@@ -298,14 +268,12 @@ namespace Content.Server.Chemistry.Components
         /// <param name="dispenseIndex">The index of the reagent in <c>Inventory</c>.</param>
         private void TryDispense(int dispenseIndex)
         {
-            if (!HasBeaker) return;
-
-            if (BeakerContainer.ContainedEntity is not {} contained || !contained.TryGetComponent(out FitsInDispenserComponent? fits)
-                || !EntitySystem.Get<SolutionContainerSystem>()
-                .TryGetSolution(BeakerContainer.ContainedEntity.Uid, fits.Solution, out var solution)) return;
+            if (BeakerSlot.Item is not {Valid: true} beaker ||
+                !_entities.TryGetComponent(beaker, out FitsInDispenserComponent? fits) ||
+                !EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(beaker, fits.Solution, out var solution)) return;
 
             EntitySystem.Get<SolutionContainerSystem>()
-                .TryAddReagent(BeakerContainer.ContainedEntity.Uid, solution, Inventory[dispenseIndex].ID, _dispenseAmount, out _);
+                .TryAddReagent(beaker, solution, Inventory[dispenseIndex].ID, _dispenseAmount, out _);
 
             UpdateUserInterface();
         }
@@ -316,12 +284,12 @@ namespace Content.Server.Chemistry.Components
         /// <param name="args">Data relevant to the event such as the actor which triggered it.</param>
         void IActivate.Activate(ActivateEventArgs args)
         {
-            if (!args.User.TryGetComponent(out ActorComponent? actor))
+            if (!_entities.TryGetComponent(args.User, out ActorComponent? actor))
             {
                 return;
             }
 
-            if (!args.User.TryGetComponent(out IHandsComponent? hands))
+            if (!_entities.TryGetComponent(args.User, out HandsComponent? hands))
             {
                 Owner.PopupMessage(args.User, Loc.GetString("reagent-dispenser-component-activate-no-hands"));
                 return;
@@ -332,51 +300,6 @@ namespace Content.Server.Chemistry.Components
             {
                 UserInterface?.Open(actor.PlayerSession);
             }
-        }
-
-        /// <summary>
-        /// Called when you click the owner entity with something in your active hand. If the entity in your hand
-        /// contains a <see cref="SolutionHolder"/>, if you have hands, and if the dispenser doesn't already
-        /// hold a container, it will be added to the dispenser.
-        /// </summary>
-        /// <param name="args">Data relevant to the event such as the actor which triggered it.</param>
-        /// <returns></returns>
-        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs args)
-        {
-            if (!args.User.TryGetComponent(out IHandsComponent? hands))
-            {
-                Owner.PopupMessage(args.User, Loc.GetString("reagent-dispenser-component-interact-using-no-hands"));
-                return true;
-            }
-
-            if (hands.GetActiveHand == null)
-            {
-                Owner.PopupMessage(args.User,
-                    Loc.GetString("reagent-dispenser-component-interact-using-nothing-in-hands"));
-                return false;
-            }
-
-            var activeHandEntity = hands.GetActiveHand.Owner;
-            if (activeHandEntity.HasComponent<FitsInDispenserComponent>())
-            {
-                if (HasBeaker)
-                {
-                    Owner.PopupMessage(args.User,
-                        Loc.GetString("reagent-dispenser-component-has-container-already-message"));
-                    return false;
-                }
-
-                BeakerContainer.Insert(activeHandEntity);
-                UpdateUserInterface();
-
-                return true;
-            }
-
-            Owner.PopupMessage(args.User,
-                Loc.GetString("reagent-dispenser-component-cannot-put-entity-message",
-                    ("entity", activeHandEntity)));
-
-            return false;
         }
 
         private void ClickSound()

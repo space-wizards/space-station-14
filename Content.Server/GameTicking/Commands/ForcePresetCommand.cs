@@ -1,4 +1,5 @@
 ﻿using Content.Server.Administration;
+using Content.Server.GameTicking.Presets;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
@@ -6,7 +7,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.GameTicking.Commands
 {
-    [AdminCommand(AdminFlags.Server)]
+    [AdminCommand(AdminFlags.Round)]
     class ForcePresetCommand : IConsoleCommand
     {
         public string Command => "forcepreset";
@@ -29,13 +30,13 @@ namespace Content.Server.GameTicking.Commands
             }
 
             var name = args[0];
-            if (!ticker.TryGetPreset(name, out var type))
+            if (!ticker.TryFindGamePreset(name, out var type))
             {
                 shell.WriteLine($"No preset exists with name {name}.");
                 return;
             }
 
-            ticker.SetStartPreset(type, true);
+            ticker.SetGamePreset(type, true);
             shell.WriteLine($"Forced the game to start with preset {name}.");
         }
     }

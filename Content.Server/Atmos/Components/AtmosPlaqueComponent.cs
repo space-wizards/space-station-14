@@ -1,5 +1,4 @@
 using Content.Shared.Atmos.Visuals;
-using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Random;
@@ -11,6 +10,8 @@ namespace Content.Server.Atmos.Components
     [RegisterComponent]
     public sealed class AtmosPlaqueComponent : Component, IMapInit
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "AtmosPlaque";
 
         [DataField("plaqueType")]
@@ -56,7 +57,9 @@ namespace Content.Server.Atmos.Components
                 return;
             }
 
-            Owner.Description = _type switch
+            var metaData = _entMan.GetComponent<MetaDataComponent>(Owner);
+
+            var val = _type switch
             {
                 PlaqueType.Zumos =>
                     "This plaque commemorates the rise of the Atmos ZUM division. May they carry the torch that the Atmos ZAS, LINDA and FEA divisions left behind.",
@@ -70,7 +73,9 @@ namespace Content.Server.Atmos.Components
                 _ => "Uhm",
             };
 
-            Owner.Name = _type switch
+            metaData.EntityDescription = val;
+
+            var val1 = _type switch
             {
                 PlaqueType.Zumos =>
                     "ZUM Atmospherics Division plaque",
@@ -84,7 +89,9 @@ namespace Content.Server.Atmos.Components
                 _ => "Uhm",
             };
 
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            metaData.EntityName = val1;
+
+            if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
             {
                 var state = _type == PlaqueType.Zumos ? "zumosplaque" : "atmosplaque";
 

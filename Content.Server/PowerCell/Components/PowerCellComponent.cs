@@ -1,13 +1,11 @@
 using System;
-using Content.Server.Chemistry.Components;
-using Content.Server.Explosion;
+using Content.Server.Explosion.EntitySystems;
 using Content.Server.Power.Components;
-using Content.Shared.Chemistry;
 using Content.Shared.Examine;
 using Content.Shared.PowerCell;
 using Content.Shared.Rounding;
-using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
@@ -75,13 +73,13 @@ namespace Content.Server.PowerCell.Components
             var light = (int) Math.Ceiling(Math.Sqrt(CurrentCharge) / 30);
 
             CurrentCharge = 0;
-            Owner.SpawnExplosion(0, heavy, light, light*2);
-            Owner.Delete();
+            EntitySystem.Get<ExplosionSystem>().SpawnExplosion(Owner, 0, heavy, light, light*2);
+            IoCManager.Resolve<IEntityManager>().DeleteEntity(Owner);
         }
 
         private void UpdateVisuals()
         {
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AppearanceComponent? appearance))
             {
                 appearance.SetData(PowerCellVisuals.ChargeLevel, GetLevel(CurrentCharge / MaxCharge));
             }

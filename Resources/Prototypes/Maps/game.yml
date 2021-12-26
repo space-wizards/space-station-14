@@ -1,0 +1,92 @@
+- type: gameMap
+  id: saltern
+  mapName: 'Saltern'
+  mapNameTemplate: '{0} Saltern {1}'
+  nameGenerator:
+    !type:NanotrasenNameGenerator
+    prefixCreator: '14'
+  mapPath: Maps/saltern.yml
+  minPlayers: 0
+  maxPlayers: 20
+  fallback: true
+  overflowJobs:
+    - Assistant
+  availableJobs:
+    CargoTechnician: [ 1, 2 ]
+    Assistant: [ -1, -1 ]
+    Bartender: [ 1, 1 ]
+    Botanist: [ 2, 2 ]
+    Chef: [ 1, 1 ]
+    Clown: [ 1, 1 ]
+    Janitor: [ 1, 1 ]
+    Mime: [ 1, 1 ]
+    Captain: [ 1, 1 ]
+    HeadOfPersonnel: [ 1, 1 ]
+    ChiefEngineer: [ 1, 1 ]
+    StationEngineer: [ 2, 3 ]
+    ChiefMedicalOfficer: [ 1, 1 ]
+    MedicalDoctor: [ 2, 3 ]
+    Chemist: [ 1, 1 ]
+    ResearchDirector: [ 1, 1 ]
+    Scientist: [ 2, 3 ]
+    HeadOfSecurity: [ 1, 1 ]
+    SecurityOfficer: [ 2, 3 ]
+
+- type: gameMap
+  id: packedstation
+  mapName: 'Packedstation'
+  mapNameTemplate: '{0} Packedstation {1}'
+  nameGenerator:
+    !type:NanotrasenNameGenerator
+    prefixCreator: 'VG'
+  mapPath: Maps/packedstation.yml
+  minPlayers: 15
+  conditions:
+    - !type:HolidayMapCondition
+      inverted: true
+      holidays: [ "Christmas" ]
+  overflowJobs:
+    - Assistant
+  availableJobs:
+    CargoTechnician: [ 2, 3 ]
+    Assistant: [ -1, -1 ]
+    Bartender: [ 1, 1 ]
+    Botanist: [ 2, 2 ]
+    Chef: [ 1, 1 ]
+    Clown: [ 1, 1 ]
+    Janitor: [ 1, 1 ]
+    Mime: [ 1, 1 ]
+    Captain: [ 1, 1 ]
+    HeadOfPersonnel: [ 1, 1 ]
+    ChiefEngineer: [ 1, 1 ]
+    StationEngineer: [ 4, 6 ]
+    ChiefMedicalOfficer: [ 1, 1 ]
+    MedicalDoctor: [ 3, 4 ]
+    Chemist: [ 2, 2 ]
+    ResearchDirector: [ 1, 1 ]
+    Scientist: [ 3, 4 ]
+    HeadOfSecurity: [ 1, 1 ]
+    SecurityOfficer: [ 2, 3 ]
+    Chaplain: [ 1, 1 ]
+    Warden: [ 1, 1 ]
+
+- type: gameMap
+  id: knightship
+  mapName: 'Knightship'
+  mapNameTemplate: '{0} Knightship {1}'
+  nameGenerator:
+    !type:NanotrasenNameGenerator
+    prefixCreator: '14'
+  mapPath: Maps/knightship.yml
+  minPlayers: 0
+  maxPlayers: 8
+  overflowJobs: []
+  availableJobs:
+    Bartender: [ 1, 1 ]
+    Captain: [ 1, 1 ]
+    ChiefEngineer: [ 1, 1 ]
+    StationEngineer: [ 1, 1 ]
+    ChiefMedicalOfficer: [ 1, 1 ]
+    MedicalDoctor: [ 1, 1 ]
+    ResearchDirector: [ 1, 1 ]
+    Botanist: [ 1, 1 ]

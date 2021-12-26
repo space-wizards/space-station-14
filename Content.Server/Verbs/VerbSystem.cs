@@ -1,70 +1,39 @@
+using Content.Server.Popups;
+using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
+using Content.Shared.Hands.Components;
 using Content.Shared.Verbs;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Player;
 
 namespace Content.Server.Verbs
 {
     public sealed class VerbSystem : SharedVerbSystem
     {
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly SharedAdminLogSystem _logSystem = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
             SubscribeNetworkEvent<RequestServerVerbsEvent>(HandleVerbRequest);
-            SubscribeNetworkEvent<ExecuteVerbEvent>(HandleTryExecuteVerb);
-        }
-
-        /// <summary>
-        ///     Called when asked over the network to run a given verb.
-        /// </summary>
-        public void HandleTryExecuteVerb(ExecuteVerbEvent args, EntitySessionEventArgs eventArgs)
-        {
-            var session = eventArgs.SenderSession;
-            var userEntity = session.AttachedEntity;
-
-            if (userEntity == null)
-            {
-                Logger.Warning($"{nameof(HandleTryExecuteVerb)} called by player {session} with no attached entity.");
-                return;
-            }
-
-            if (!EntityManager.TryGetEntity(args.Target, out var targetEntity))
-            {
-                return;
-            }
-
-            // Get the list of verbs. This effectively also checks that the requested verb is in fact a valid verb that
-            // the user can perform.
-            var verbs = GetLocalVerbs(targetEntity, userEntity, args.Type)[args.Type];
-
-            // Note that GetLocalVerbs might waste time checking & preparing unrelated verbs even though we know
-            // precisely which one we want to run. However, MOST entities will only have 1 or 2 verbs of a given type.
-            // The one exception here is the "other" verb type, which has 3-4 verbs + all the debug verbs.
-
-            // Find the requested verb.
-            if (verbs.TryGetValue(args.RequestedVerb, out var verb))
-                ExecuteVerb(verb);
-            else
-                // 404 Verb not found. Note that this could happen due to something as simple as opening the verb menu, walking away, then trying
-                // to run the pickup-item verb. So maybe this shouldn't even be logged?
-                Logger.Info($"{nameof(HandleTryExecuteVerb)} called by player {session} with an invalid verb: {args.RequestedVerb.Category?.Text} {args.RequestedVerb.Text}");
         }
 
         private void HandleVerbRequest(RequestServerVerbsEvent args, EntitySessionEventArgs eventArgs)
         {
             var player = (IPlayerSession) eventArgs.SenderSession;
 
-            if (!EntityManager.TryGetEntity(args.EntityUid, out var target))
+            if (!EntityManager.EntityExists(args.EntityUid))
             {
                 Logger.Warning($"{nameof(HandleVerbRequest)} called on a non-existent entity with id {args.EntityUid} by player {player}.");
                 return;
             }
 
-            if (player.AttachedEntity == null)
+            if (player.AttachedEntity is not {} attached)
             {
                 Logger.Warning($"{nameof(HandleVerbRequest)} called by player {player} with no attached entity.");
                 return;
@@ -74,8 +43,73 @@ namespace Content.Server.Verbs
             // this, and some verbs (e.g. view variables) won't even care about whether an entity is accessible through
             // the entity menu or not.
 
-            var response = new VerbsResponseEvent(args.EntityUid, GetLocalVerbs(target, player.AttachedEntity, args.Type));
+            var response = new VerbsResponseEvent(args.EntityUid, GetLocalVerbs(args.EntityUid, attached, args.Type));
             RaiseNetworkEvent(response, player.ConnectedClient);
+        }
+
+        /// <summary>
+        ///     Execute the provided verb.
+        /// </summary>
+        /// <remarks>
+        ///     This will try to call the action delegates and raise the local events for the given verb.
+        /// </remarks>
+        public override void ExecuteVerb(Verb verb, EntityUid user, EntityUid target, bool forced = false)
+        {
+            // is this verb actually valid?
+            if (verb.Disabled)
+            {
+                // Send an informative pop-up message
+                if (!string.IsNullOrWhiteSpace(verb.Message))
+                    _popupSystem.PopupEntity(verb.Message, user, Filter.Entities(user));
+
+                return;
+            }
+
+            // first, lets log the verb. Just in case it ends up crashing the server or something.
+            LogVerb(verb, user, target, forced);
+
+            // then invoke any relevant actions
+            verb.Act?.Invoke();
+
+            // Maybe raise a local event
+            if (verb.ExecutionEventArgs != null)
+            {
+                if (verb.EventTarget.IsValid())
+                    RaiseLocalEvent(verb.EventTarget, verb.ExecutionEventArgs);
+                else
+                    RaiseLocalEvent(verb.ExecutionEventArgs);
+            }
+        }
+
+        public void LogVerb(Verb verb, EntityUid user, EntityUid target, bool forced)
+        {
+            // first get the held item. again.
+            EntityUid? holding = null;
+            if (TryComp(user, out SharedHandsComponent? hands) &&
+                hands.TryGetActiveHeldEntity(out var heldEntity))
+            {
+                holding = heldEntity;
+            }
+
+            // if this is a virtual pull, get the held entity
+            if (holding != null && TryComp(holding, out HandVirtualItemComponent? pull))
+                holding = pull.BlockingEntity;
+
+            var verbText = $"{verb.Category?.Text} {verb.Text}".Trim();
+
+            // lets not frame people, eh?
+            var executionText = forced ? "was forced to execute" : "executed";
+
+            if (holding == null)
+            {
+                _logSystem.Add(LogType.Verb, verb.Impact,
+                        $"{ToPrettyString(user):user} {executionText} the [{verbText:verb}] verb targeting {ToPrettyString(target):target}");
+            }
+            else
+            {
+                _logSystem.Add(LogType.Verb, verb.Impact,
+                       $"{ToPrettyString(user):user} {executionText} the [{verbText:verb}] verb targeting {ToPrettyString(target):target} while holding {ToPrettyString(holding.Value):held}");
+            }
         }
     }
 }

@@ -7,7 +7,6 @@ using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Unary.Visuals;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
@@ -29,7 +28,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnVentScrubberUpdated(EntityUid uid, GasVentScrubberComponent scrubber, AtmosDeviceUpdateEvent args)
         {
-            var appearance = scrubber.Owner.GetComponentOrNull<AppearanceComponent>();
+            var appearance = EntityManager.GetComponentOrNull<AppearanceComponent>(scrubber.Owner);
 
             if (scrubber.Welded)
             {
@@ -45,14 +44,14 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 return;
             }
 
-            var environment = _atmosphereSystem.GetTileMixture(scrubber.Owner.Transform.Coordinates, true);
+            var environment = _atmosphereSystem.GetTileMixture(EntityManager.GetComponent<TransformComponent>(scrubber.Owner).Coordinates, true);
 
             Scrub(_atmosphereSystem, scrubber, appearance, environment, outlet);
 
             if (!scrubber.WideNet) return;
 
             // Scrub adjacent tiles too.
-            foreach (var adjacent in _atmosphereSystem.GetAdjacentTileMixtures(scrubber.Owner.Transform.Coordinates, false, true))
+            foreach (var adjacent in _atmosphereSystem.GetAdjacentTileMixtures(EntityManager.GetComponent<TransformComponent>(scrubber.Owner).Coordinates, false, true))
             {
                 Scrub(_atmosphereSystem, scrubber, null, adjacent, outlet);
             }

@@ -277,7 +277,7 @@ namespace Content.Server.Construction
 
                     // Since many things inherit this step, we delegate the "is this entity valid?" logic to them.
                     // While this is very OOP and I find it icky, I must admit that it simplifies the code here a lot.
-                    if(!insertStep.EntityValid(insert))
+                    if(!insertStep.EntityValid(insert, EntityManager))
                         return HandleResult.False;
 
                     // If we're only testing whether this step would be handled by the given event, then we're done.
@@ -312,7 +312,7 @@ namespace Content.Server.Construction
                     // we split the stack in two and insert the split stack.
                     if (insertStep is MaterialConstructionGraphStep materialInsertStep)
                     {
-                        if (_stackSystem.Split(insert.Uid, materialInsertStep.Amount, interactUsing.User.Transform.Coordinates) is not { } stack)
+                        if (_stackSystem.Split(insert, materialInsertStep.Amount, EntityManager.GetComponent<TransformComponent>(interactUsing.User).Coordinates) is not {} stack)
                             return HandleResult.False;
 
                         insert = stack;
@@ -329,13 +329,12 @@ namespace Content.Server.Construction
                         construction.Containers.Add(store);
 
                         // The container doesn't necessarily need to exist, so we ensure it.
-                        _containerSystem.EnsureContainer<Container>(uid, store)
-                            .Insert(insert);
+                        _containerSystem.EnsureContainer<Container>(uid, store).Insert(insert);
                     }
                     else
                     {
                         // If we don't store the item in a container on the entity, we just delete it right away.
-                        insert.Delete();
+                        EntityManager.DeleteEntity(insert);
                     }
 
                     // Step has been handled correctly, so we signal this.
@@ -349,13 +348,13 @@ namespace Content.Server.Construction
 
                     // TODO: Sanity checks.
 
-                    user = interactUsing.User.Uid;
+                    user = interactUsing.User;
 
                     // If we're validating whether this event handles the step...
                     if (doAfterState == DoAfterState.Validation)
                     {
                         // Then we only really need to check whether the tool entity has that quality or not.
-                        return _toolSystem.HasQuality(interactUsing.Used.Uid, toolInsertStep.Tool)
+                        return _toolSystem.HasQuality(interactUsing.Used, toolInsertStep.Tool)
                             ? HandleResult.Validated : HandleResult.False;
                     }
 
@@ -363,7 +362,7 @@ namespace Content.Server.Construction
                     if (doAfterState != DoAfterState.None)
                         return doAfterState == DoAfterState.Completed ? HandleResult.True : HandleResult.False;
 
-                    if (!_toolSystem.UseTool(interactUsing.Used.Uid, interactUsing.User.Uid,
+                    if (!_toolSystem.UseTool(interactUsing.Used, interactUsing.User,
                         uid, toolInsertStep.Fuel, toolInsertStep.DoAfter, toolInsertStep.Tool,
                         new ConstructionDoAfterComplete(uid, ev), new ConstructionDoAfterCancelled(uid, ev)))
                         return HandleResult.False;

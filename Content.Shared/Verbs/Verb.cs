@@ -1,7 +1,9 @@
+using Content.Shared.Administration.Logs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using System;
+using Content.Shared.Database;
 
 namespace Content.Shared.Verbs
 {
@@ -124,6 +126,14 @@ namespace Content.Shared.Verbs
         ///     a window.
         /// </remarks>
         public bool CloseMenu = true;
+
+        /// <summary>
+        ///     How important is this verb, for the purposes of admin logging?
+        /// </summary>
+        /// <remarks>
+        ///     If this is just opening a UI or ejecting an id card, this should probably be low.
+        /// </remarks>
+        public LogImpact Impact = LogImpact.Low;
 
         /// <summary>
         ///     Compares two verbs based on their <see cref="Priority"/>, <see cref="Category"/>, <see cref="Text"/>,

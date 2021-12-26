@@ -1,16 +1,16 @@
 using System.Collections.Generic;
-using Content.Shared.Access;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
-using static Content.Shared.Access.SharedIdCardConsoleComponent;
+using static Content.Shared.Access.Components.SharedIdCardConsoleComponent;
 
 namespace Content.Client.Access.UI
 {
     public class IdCardConsoleBoundUserInterface : BoundUserInterface
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         public IdCardConsoleBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
@@ -22,9 +22,16 @@ namespace Content.Client.Access.UI
         {
             base.Open();
 
-            _window = new IdCardConsoleWindow(this, _prototypeManager) {Title = Owner.Owner.Name};
+            _window = new IdCardConsoleWindow(this, _prototypeManager) {Title = _entityManager.GetComponent<MetaDataComponent>(Owner.Owner).EntityName};
             _window.OnClose += Close;
             _window.OpenCentered();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+            if (!disposing) return;
+            _window?.Dispose();
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)

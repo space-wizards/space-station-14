@@ -19,7 +19,7 @@ namespace Content.Server.Atmos.Piping.Components
         public Color ColorVV
         {
             get => Color;
-            set => EntitySystem.Get<AtmosPipeColorSystem>().SetColor(Owner.Uid, this, value);
+            set => EntitySystem.Get<AtmosPipeColorSystem>().SetColor(Owner, this, value);
         }
     }
 }

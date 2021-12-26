@@ -24,20 +24,26 @@ except ImportError:
     Style = ColorDummy()
 
 class PlatformReg:
-    def __init__(self, rid: str, target_os: str):
+    def __init__(self, rid: str, target_os: str, build_by_default: bool):
         self.rid = rid
         self.target_os = target_os
+        self.build_by_default = build_by_default
 
 p = os.path.join
 
 PLATFORMS = [
-    PlatformReg("win-x64", "Windows"),
-    PlatformReg("linux-x64", "Linux"),
-    PlatformReg("linux-arm64", "Linux"),
-    PlatformReg("osx-x64", "MacOS"),
+    PlatformReg("win-x64", "Windows", True),
+    PlatformReg("linux-x64", "Linux", True),
+    PlatformReg("linux-arm64", "Linux", True),
+    PlatformReg("osx-x64", "MacOS", True),
+    # Non-default platforms (i.e. for Watchdog Git)
+    PlatformReg("win-x86", "Windows", False),
+    PlatformReg("linux-x86", "Linux", False),
+    PlatformReg("linux-arm", "Linux", False),
 ]
 
 PLATFORM_RIDS = {x.rid for x in PLATFORMS}
+PLATFORM_RIDS_DEFAULT = {x.rid for x in filter(lambda val: val.build_by_default, PLATFORMS)}
 
 SHARED_IGNORED_RESOURCES = {
     ".gitignore",
@@ -57,7 +63,8 @@ SERVER_IGNORED_RESOURCES = {
 SERVER_CONTENT_ASSEMBLIES = [
     "Content.Server.Database",
     "Content.Server",
-    "Content.Shared"
+    "Content.Shared",
+    "Content.Shared.Database"
 ]
 
 # Extra assemblies to copy on the server, with a startswith
@@ -80,12 +87,17 @@ def main() -> None:
                         action="store_true",
                         help=argparse.SUPPRESS)
 
+    parser.add_argument("--hybrid-acz",
+                        action="store_true",
+                        help="Creates a 'Hybrid ACZ' build that contains an embedded Content.Client.zip the server hosts.")
+
     args = parser.parse_args()
     platforms = args.platform
     skip_build = args.skip_build
+    hybrid_acz = args.hybrid_acz
 
     if not platforms:
-        platforms = PLATFORM_RIDS
+        platforms = PLATFORM_RIDS_DEFAULT
 
     if os.path.exists("release"):
         print(Fore.BLUE + Style.DIM +
@@ -94,13 +106,20 @@ def main() -> None:
 
     os.mkdir("release")
 
+    if hybrid_acz:
+        # Hybrid ACZ involves a file "Content.Client.zip" in the server executable directory.
+        # Rather than hosting the client ZIP on the watchdog or on a separate server,
+        #  Hybrid ACZ uses the ACZ hosting functionality to host it as part of the status host,
+        #  which means that features such as automatic UPnP forwarding still work properly.
+        import package_client_build
+        package_client_build.build(skip_build)
+
     # Good variable naming right here.
     for platform in PLATFORMS:
         if platform.rid not in platforms:
             continue
 
-        build_platform(platform, skip_build)
-
+        build_platform(platform, skip_build, hybrid_acz)
 
 def wipe_bin():
     print(Fore.BLUE + Style.DIM +
@@ -112,7 +131,7 @@ def wipe_bin():
         shutil.rmtree("bin")
 
 
-def build_platform(platform: PlatformReg, skip_build: bool) -> None:
+def build_platform(platform: PlatformReg, skip_build: bool, hybrid_acz: bool) -> None:
     print(Fore.GREEN + f"Building project for {platform.rid}..." + Style.RESET_ALL)
 
     if not skip_build:
@@ -137,6 +156,9 @@ def build_platform(platform: PlatformReg, skip_build: bool) -> None:
     copy_dir_into_zip(p("RobustToolbox", "bin", "Server", platform.rid, "publish"), "", server_zip)
     copy_resources(p("Resources"), server_zip)
     copy_content_assemblies(p("Resources", "Assemblies"), server_zip)
+    if hybrid_acz:
+        # Hybrid ACZ expects "Content.Client.zip" (as it's not SS14-specific)
+        server_zip.write(p("release", "SS14.Client.zip"), "Content.Client.zip")
     server_zip.close()
 
 

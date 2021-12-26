@@ -7,7 +7,6 @@ using Content.Shared.Popups;
 using Content.Shared.Storage;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -36,7 +35,7 @@ namespace Content.Server.Lock
 
         private void OnStartup(EntityUid uid, LockComponent lockComp, ComponentStartup args)
         {
-            if (lockComp.Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (EntityManager.TryGetComponent(lockComp.Owner, out AppearanceComponent? appearance))
             {
                 appearance.SetData(StorageVisuals.CanLock, true);
             }
@@ -65,63 +64,63 @@ namespace Content.Server.Lock
             args.PushText(Loc.GetString(lockComp.Locked
                     ? "lock-comp-on-examined-is-locked"
                     : "lock-comp-on-examined-is-unlocked",
-                ("entityName", lockComp.Owner.Name)));
+                ("entityName", Name: EntityManager.GetComponent<MetaDataComponent>(lockComp.Owner).EntityName)));
         }
 
-        public bool TryLock(EntityUid uid, IEntity user, LockComponent? lockComp = null)
+        public bool TryLock(EntityUid uid, EntityUid user, LockComponent? lockComp = null)
         {
             if (!Resolve(uid, ref lockComp))
                 return false;
-            
+
             if (!CanToggleLock(uid, user, quiet: false))
                 return false;
-            
+
             if (!HasUserAccess(uid, user, quiet: false))
                 return false;
 
-            lockComp.Owner.PopupMessage(user, Loc.GetString("lock-comp-do-lock-success", ("entityName",lockComp.Owner.Name)));
+            lockComp.Owner.PopupMessage(user, Loc.GetString("lock-comp-do-lock-success", ("entityName",Name: EntityManager.GetComponent<MetaDataComponent>(lockComp.Owner).EntityName)));
             lockComp.Locked = true;
-            
+
             if(lockComp.LockSound != null)
             {
                 SoundSystem.Play(Filter.Pvs(lockComp.Owner), lockComp.LockSound.GetSound(), lockComp.Owner, AudioParams.Default.WithVolume(-5));
             }
 
-            if (lockComp.Owner.TryGetComponent(out AppearanceComponent? appearanceComp))
+            if (EntityManager.TryGetComponent(lockComp.Owner, out AppearanceComponent? appearanceComp))
             {
                 appearanceComp.SetData(StorageVisuals.Locked, true);
             }
 
-            RaiseLocalEvent(lockComp.Owner.Uid, new LockToggledEvent(true));
+            RaiseLocalEvent(lockComp.Owner, new LockToggledEvent(true));
 
             return true;
         }
 
-        public bool TryUnlock(EntityUid uid, IEntity user, LockComponent? lockComp = null)
+        public bool TryUnlock(EntityUid uid, EntityUid user, LockComponent? lockComp = null)
         {
             if (!Resolve(uid, ref lockComp))
                 return false;
-            
+
             if (!CanToggleLock(uid, user, quiet: false))
                 return false;
-            
+
             if (!HasUserAccess(uid, user, quiet: false))
                 return false;
 
-            lockComp.Owner.PopupMessage(user, Loc.GetString("lock-comp-do-unlock-success", ("entityName", lockComp.Owner.Name)));
+            lockComp.Owner.PopupMessage(user, Loc.GetString("lock-comp-do-unlock-success", ("entityName", Name: EntityManager.GetComponent<MetaDataComponent>(lockComp.Owner).EntityName)));
             lockComp.Locked = false;
-            
+
             if(lockComp.UnlockSound != null)
             {
                 SoundSystem.Play(Filter.Pvs(lockComp.Owner), lockComp.UnlockSound.GetSound(), lockComp.Owner, AudioParams.Default.WithVolume(-5));
             }
 
-            if (lockComp.Owner.TryGetComponent(out AppearanceComponent? appearanceComp))
+            if (EntityManager.TryGetComponent(lockComp.Owner, out AppearanceComponent? appearanceComp))
             {
                 appearanceComp.SetData(StorageVisuals.Locked, false);
             }
 
-            RaiseLocalEvent(lockComp.Owner.Uid, new LockToggledEvent(false));
+            RaiseLocalEvent(lockComp.Owner, new LockToggledEvent(false));
 
             return true;
         }
@@ -129,7 +128,7 @@ namespace Content.Server.Lock
         /// <summary>
         ///     Before locking the entity, check whether it's a locker. If is, prevent it from being locked from the inside or while it is open.
         /// </summary>
-        public bool CanToggleLock(EntityUid uid, IEntity user, EntityStorageComponent? storage = null, bool quiet = true)
+        public bool CanToggleLock(EntityUid uid, EntityUid user, EntityStorageComponent? storage = null, bool quiet = true)
         {
             if (!Resolve(uid, ref storage, logMissing: false))
                 return true;
@@ -145,13 +144,13 @@ namespace Content.Server.Lock
             return true;
         }
 
-        private bool HasUserAccess(EntityUid uid, IEntity user, AccessReader? reader = null, bool quiet = true)
+        private bool HasUserAccess(EntityUid uid, EntityUid user, AccessReader? reader = null, bool quiet = true)
         {
             // Not having an AccessComponent means you get free access. woo!
             if (!Resolve(uid, ref reader))
                 return true;
 
-            if (!_accessReader.IsAllowed(reader, user.Uid))
+            if (!_accessReader.IsAllowed(reader, user))
             {
                 if (!quiet)
                     reader.Owner.PopupMessage(user, Loc.GetString("lock-comp-has-user-access-fail"));

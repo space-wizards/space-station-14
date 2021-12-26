@@ -22,11 +22,19 @@
   parent: BasePlushie
   id: PlushieBee
   name: bee plushie
-  description: A cute toy that resembles an even cuter programmer.
+  description: A cute toy that resembles an even cuter programmer. You'd have to be a monster to grind this up.
   components:
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: plushie_h
+  - type: Extractable
+    grindableSolutionName: bee
+  - type: SolutionContainerManager
+    solutions:
+      bee:
+        reagents:
+          - ReagentId: GroundBee
+            Quantity: 10
 
 - type: entity
   parent: BasePlushie
@@ -147,115 +155,6 @@
   - type: EmitSoundOnUse
     sound:
       path: /Audio/Voice/Vox/shriek1.ogg
-  - type: UseDelay
-    delay: 1.0
-
-# This stuff might be copyright claimed by From Software. The sprites are unique
-# and made by Bright but the sounds are ripped straight from the game. Idk, it's
-# probably not a big deal.
-
-- type: entity
-  parent: BaseItem
-  id: CarvingHelpMe
-  name: help me carving
-  description: Help me!
-  components:
-  - type: Sprite
-    sprite: Objects/Misc/carvings.rsi
-    state: help_me
-  - type: Item
-    sprite: Objects/Misc/carvings.rsi
-  - type: EmitSoundOnThrow
-    sound:
-      path: /Audio/Items/Toys/helpme.ogg
-  - type: ItemCooldown
-  - type: EmitSoundOnUse
-    sound:
-      path: /Audio/Items/Toys/helpme.ogg
-  - type: UseDelay
-    delay: 1.0
-
-- type: entity
-  parent: BaseItem
-  id: CarvingHello
-  name: hello carving
-  description: Hello!
-  components:
-  - type: Sprite
-    sprite: Objects/Misc/carvings.rsi
-    state: hello
-  - type: Item
-    sprite: Objects/Misc/carvings.rsi
-  - type: EmitSoundOnThrow
-    sound:
-      path: /Audio/Items/Toys/hellothere.ogg
-  - type: ItemCooldown
-  - type: EmitSoundOnUse
-    sound:
-      path: /Audio/Items/Toys/hellothere.ogg
-  - type: UseDelay
-    delay: 1.0
-
-- type: entity
-  parent: BaseItem
-  id: CarvingThankYou
-  name: thank you carving
-  description: Thank you!
-  components:
-  - type: Sprite
-    sprite: Objects/Misc/carvings.rsi
-    state: thank_you
-  - type: Item
-    sprite: Objects/Misc/carvings.rsi
-  - type: EmitSoundOnThrow
-    sound:
-      path: /Audio/Items/Toys/thankyou.ogg
-  - type: ItemCooldown
-  - type: EmitSoundOnUse
-    sound:
-      path: /Audio/Items/Toys/thankyou.ogg
-  - type: UseDelay
-    delay: 1.0
-
-- type: entity
-  parent: BaseItem
-  id: CarvingVeryGood
-  name: very good carving
-  description: Very good!
-  components:
-  - type: Sprite
-    sprite: Objects/Misc/carvings.rsi
-    state: very_good
-  - type: Item
-    sprite: Objects/Misc/carvings.rsi
-  - type: EmitSoundOnThrow
-    sound:
-      path: /Audio/Items/Toys/verygood.ogg
-  - type: ItemCooldown
-  - type: EmitSoundOnUse
-    sound:
-      path: /Audio/Items/Toys/verygood.ogg
-  - type: UseDelay
-    delay: 1.0
-
-- type: entity
-  parent: BaseItem
-  id: CarvingImSorry
-  name: sorry carving
-  description: I'm sorry.
-  components:
-  - type: Sprite
-    sprite: Objects/Misc/carvings.rsi
-    state: im_sorry
-  - type: Item
-    sprite: Objects/Misc/carvings.rsi
-  - type: EmitSoundOnThrow
-    sound:
-      path: /Audio/Items/Toys/imsorry.ogg
-  - type: ItemCooldown
-  - type: EmitSoundOnUse
-    sound:
-      path: /Audio/Items/Toys/imsorry.ogg
   - type: UseDelay
     delay: 1.0
 
@@ -651,3 +550,21 @@
     size: 12
     sprite: Objects/Fun/toys.rsi
     HeldPrefix: singularitytoy
+
+- type: entity
+  parent: BaseItem
+  id: PonderingOrb
+  name: pondering orb
+  description: Ponderous, man... Really ponderous.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/toys.rsi
+    state: orb
+    shader: unshaded
+  - type: PointLight
+    radius: 2
+    color: "#00CCFF"
+  - type: Item
+    size: 24
+    sprite: Objects/Fun/toys.rsi
+    HeldPrefix: orb

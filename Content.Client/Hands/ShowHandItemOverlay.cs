@@ -46,7 +46,7 @@ namespace Content.Client.Hands
             var sys = EntitySystem.Get<HandsSystem>();
             var handEntity = sys.GetActiveHandEntity();
 
-            if (handEntity == null || !_cfg.GetCVar(CCVars.HudHeldItemShow) || !handEntity.HasComponent<ISpriteComponent>())
+            if (handEntity == default || !_cfg.GetCVar(CCVars.HudHeldItemShow) || !IoCManager.Resolve<IEntityManager>().HasComponent<ISpriteComponent>(handEntity))
                 return;
 
             var screen = args.ScreenHandle;

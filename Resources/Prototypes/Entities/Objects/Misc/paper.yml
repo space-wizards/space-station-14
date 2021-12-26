@@ -37,6 +37,17 @@
     - state: paper_words
 
 - type: entity
+  parent: PaperWritten
+  id: NukeCodePaper
+  name: nuclear authentication codes
+  components:
+    - type: NukeCodePaper
+    - type: Paper
+      content: |
+        [color=red]TOP SECRET![/color]
+        Nuclear device activation code:
+
+- type: entity
   name: pen
   parent: BaseItem
   id: Pen

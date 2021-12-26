@@ -1,6 +1,7 @@
 using Content.Server.Atmos;
 using Content.Server.Inventory.Components;
 using Content.Server.Items;
+using Content.Server.Temperature.Systems;
 using Content.Shared.Inventory;
 using Content.Shared.Slippery;
 using Content.Shared.Damage;
@@ -25,13 +26,19 @@ namespace Content.Server.Inventory
             SubscribeLocalEvent<InventoryComponent, ElectrocutionAttemptEvent>(OnElectrocutionAttempt);
             SubscribeLocalEvent<InventoryComponent, SlipAttemptEvent>(OnSlipAttemptEvent);
             SubscribeLocalEvent<InventoryComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
+            SubscribeLocalEvent<InventoryComponent, ModifyChangedTemperatureEvent>(OnModifyTemperature);
+        }
+
+        private void OnModifyTemperature(EntityUid uid, InventoryComponent component, ModifyChangedTemperatureEvent args)
+        {
+            RelayInventoryEvent(component, args);
         }
 
         private void OnSlipAttemptEvent(EntityUid uid, InventoryComponent component, SlipAttemptEvent args)
         {
             if (component.TryGetSlotItem(EquipmentSlotDefines.Slots.SHOES, out ItemComponent? shoes))
             {
-                RaiseLocalEvent(shoes.Owner.Uid, args, false);
+                RaiseLocalEvent(shoes.Owner, args, false);
             }
         }
 
@@ -74,7 +81,7 @@ namespace Content.Server.Inventory
         {
             foreach (var equipped in component.GetAllHeldItems())
             {
-                RaiseLocalEvent(equipped.Uid, args, false);
+                RaiseLocalEvent(equipped, args, false);
             }
         }
     }

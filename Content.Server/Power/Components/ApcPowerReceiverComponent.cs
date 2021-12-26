@@ -4,7 +4,6 @@ using Content.Server.Power.NodeGroups;
 using Content.Server.Power.Pow3r;
 using Content.Shared.Examine;
 using Content.Shared.Power;
-using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -25,6 +24,8 @@ namespace Content.Server.Power.Components
     public class ApcPowerReceiverComponent : Component, IExamine
 #pragma warning restore 618
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "ApcPowerReceiver";
 
         [ViewVariables]
@@ -86,9 +87,9 @@ namespace Content.Server.Power.Components
 #pragma warning disable 618
             SendMessage(new PowerChangedMessage(Powered));
 #pragma warning restore 618
-            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new PowerChangedEvent(Powered, NetworkLoad.ReceivingPower));
+            _entMan.EventBus.RaiseLocalEvent(Owner, new PowerChangedEvent(Powered, NetworkLoad.ReceivingPower));
 
-            if (Owner.TryGetComponent<AppearanceComponent>(out var appearance))
+            if (_entMan.TryGetComponent<AppearanceComponent?>(Owner, out var appearance))
             {
                 appearance.SetData(PowerDeviceVisuals.Powered, Powered);
             }

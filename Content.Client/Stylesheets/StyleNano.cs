@@ -115,7 +115,7 @@ namespace Content.Client.Stylesheets
             var notoSansItalic12 = resCache.notoStack(variation: "Italic", size: 12);
             var notoSansBold12 = resCache.notoStack(variation: "Bold", size: 12);
             var notoSansBoldItalic12 = resCache.notoStack(variation: "BoldItalic", size: 12);
-            var notoSansDisplayBold14 = resCache.notoStack(variation: "Bold", display: true, size: 14); 
+            var notoSansDisplayBold14 = resCache.notoStack(variation: "Bold", display: true, size: 14);
             var notoSansDisplayBold16 = resCache.notoStack(variation: "Bold", display: true, size: 16);
             var notoSans15 = resCache.notoStack(variation: "Regular", size: 15);
             var notoSans16 = resCache.notoStack(variation: "Regular", size: 16);
@@ -126,6 +126,14 @@ namespace Content.Client.Stylesheets
             var windowHeader = new StyleBoxTexture
             {
                 Texture = windowHeaderTex,
+                PatchMarginBottom = 3,
+                ExpandMarginBottom = 3,
+                ContentMarginBottomOverride = 0
+            };
+            var windowHeaderAlertTex = resCache.GetTexture("/Textures/Interface/Nano/window_header_alert.png");
+            var windowHeaderAlert = new StyleBoxTexture
+            {
+                Texture = windowHeaderAlertTex,
                 PatchMarginBottom = 3,
                 ExpandMarginBottom = 3,
                 ContentMarginBottomOverride = 0
@@ -439,6 +447,14 @@ namespace Content.Client.Stylesheets
                         new StyleProperty(Label.StylePropertyFontColor, NanoGold),
                         new StyleProperty(Label.StylePropertyFont, notoSansDisplayBold14),
                     }),
+                // Alert (white) window title.
+                new StyleRule(
+                    new SelectorElement(typeof(Label), new[] {"windowTitleAlert"}, null, null),
+                    new[]
+                    {
+                        new StyleProperty(Label.StylePropertyFontColor, Color.White),
+                        new StyleProperty(Label.StylePropertyFont, notoSansDisplayBold14),
+                    }),
                 // Window background.
                 new StyleRule(
                     new SelectorElement(null, new[] {SS14Window.StyleClassWindowPanel}, null, null),
@@ -485,6 +501,13 @@ namespace Content.Client.Stylesheets
                     new[]
                     {
                         new StyleProperty(PanelContainer.StylePropertyPanel, windowHeader),
+                    }),
+                // Alert (red) window header.
+                new StyleRule(
+                    new SelectorElement(typeof(PanelContainer), new[] {"windowHeaderAlert"}, null, null),
+                    new[]
+                    {
+                        new StyleProperty(PanelContainer.StylePropertyPanel, windowHeaderAlert),
                     }),
 
                 // Shapes for the buttons.

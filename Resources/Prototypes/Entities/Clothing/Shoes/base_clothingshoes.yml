@@ -1,0 +1,15 @@
+- type: entity
+  abstract: true
+  parent: Clothing
+  id: ClothingShoesBase
+  components:
+  - type: Clothing
+    Slots:
+    - shoes
+  - type: Sprite
+    state: icon
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fiber
+        Quantity: 5

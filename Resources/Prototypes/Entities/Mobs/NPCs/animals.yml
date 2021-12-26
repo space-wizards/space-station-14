@@ -17,14 +17,15 @@
       state: bat
       sprite: Mobs/Animals/bat.rsi
   - type: Physics
-    bodyType: Dynamic
+  - type: Fixtures
     fixtures:
     - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.25,-0.30,0.25,0.40"
-      mass: 50
+        !type:PhysShapeCircle
+        radius: 0.25
+      mass: 5
       mask:
       - Impassable
+      - MobImpassable #Bullets?!
       - VaultImpassable
       - SmallImpassable
       layer:
@@ -33,6 +34,7 @@
     visuals:
     - type: DamageStateVisualizer
       normal: bat
+      crit: dead
       dead: dead
 
 - type: entity
@@ -52,23 +54,33 @@
       state: 0
       sprite: Mobs/Animals/bee.rsi
   - type: Physics
-    bodyType: Dynamic
+  - type: Fixtures
     fixtures:
     - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.50,-0.90,0.50,0.05"
-      mass: 90
+        !type:PhysShapeCircle
+        radius: 0.1
+      mass: 5
       mask:
       - Impassable
+      - MobImpassable #Bullets?!
       - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque
+  - type: MobState
+    thresholds:
+      0: !type:NormalMobState {}
+      5: !type:CriticalMobState {}
+      10: !type:DeadMobState {}
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
       normal: 0
+      crit: dead
       dead: dead
+  - type: Tag
+    tags:
+    - Bee
 
 - type: entity
   name: chicken
@@ -82,23 +94,11 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: chicken-0
       sprite: Mobs/Animals/chicken.rsi
-  - type: Physics
-    bodyType: Dynamic
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.20,-0.45,0.20,0.10"
-      mass: 20
-      mask:
-      - Impassable
-      - VaultImpassable
-      - SmallImpassable
-      layer:
-      - Opaque
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
       normal: chicken-0
+      crit: dead-0
       dead: dead-0
 
 - type: entity
@@ -117,18 +117,24 @@
       state: butterfly
       sprite: Mobs/Animals/butterfly.rsi
   - type: Physics
-    bodyType: Dynamic
+  - type: Fixtures
     fixtures:
     - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.20,-0.20,0.20,0.20"
+        !type:PhysShapeCircle
+        radius: 0.2
       mass: 5
       mask:
       - Impassable
+      - MobImpassable #Bullets?!
       - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque
+  - type: MobState
+    thresholds:
+      0: !type:NormalMobState {}
+      5: !type:CriticalMobState {}
+      10: !type:DeadMobState {}
   - type: RandomSpriteColor
     state: butterfly
     colors:
@@ -143,6 +149,7 @@
     visuals:
     - type: DamageStateVisualizer
       normal: butterfly
+      crit: dead
       dead: dead
 
 - type: entity
@@ -158,14 +165,15 @@
       state: cow
       sprite: Mobs/Animals/cow.rsi
   - type: Physics
-    bodyType: Dynamic
+  - type: Fixtures
     fixtures:
     - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.50,-0.60,0.50,0.05"
-      mass: 20
+        !type:PhysShapeCircle
+        radius: 0.40
+      mass: 45
       mask:
       - Impassable
+      - MobImpassable
       - VaultImpassable
       - SmallImpassable
       layer:
@@ -174,7 +182,20 @@
     visuals:
     - type: DamageStateVisualizer
       normal: cow
+      crit: dead
       dead: dead
+  - type: SolutionContainerManager
+    solutions:
+      udder:
+        maxVol: 250
+        reagents:
+        - ReagentId: Milk
+          Quantity: 30
+  - type: Udder
+    reagentId: Milk
+    targetSolution: udder
+    quantity: 25
+    updateRate: 30
 
 - type: entity
   name: crab
@@ -189,14 +210,15 @@
       state: crab
       sprite: Mobs/Animals/crab.rsi
   - type: Physics
-    bodyType: Dynamic
+  - type: Fixtures
     fixtures:
     - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.10,-0.10,0.10,0.10"
+        !type:PhysShapeCircle
+        radius: 0.35
       mass: 5
       mask:
       - Impassable
+      - MobImpassable #Bullets!?
       - VaultImpassable
       - SmallImpassable
       layer:
@@ -205,6 +227,7 @@
     visuals:
     - type: DamageStateVisualizer
       normal: crab
+      crit: dead
       dead: dead
     - type: AsteroidRockVisualizer
 
@@ -220,23 +243,11 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: goat
       sprite: Mobs/Animals/goat.rsi
-  - type: Physics
-    bodyType: Dynamic
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.50,-0.60,0.50,0.05"
-      mass: 20
-      mask:
-      - Impassable
-      - VaultImpassable
-      - SmallImpassable
-      layer:
-      - Opaque
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
       normal: goat
+      crit: dead
       dead: dead
 
 # Note that we gotta make this bitch vomit someday when you feed it anthrax or sumthin. Needs to be a small item thief too and aggressive if attacked.
@@ -252,23 +263,11 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: goose
       sprite: Mobs/Animals/goose.rsi
-  - type: Physics
-    bodyType: Dynamic
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.35,-0.45,0.35,0.45"
-      mass: 20
-      mask:
-      - Impassable
-      - VaultImpassable
-      - SmallImpassable
-      layer:
-      - Opaque
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
       normal: goose
+      crit: dead
       dead: dead
 
 - type: entity
@@ -284,14 +283,15 @@
       state: crawling
       sprite: Mobs/Animals/gorilla.rsi
   - type: Physics
-    bodyType: Dynamic
+  - type: Fixtures
     fixtures:
     - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.35,-0.30,0.35,0.35"
+        !type:PhysShapeCircle
+        radius: 0.48
       mass: 20
       mask:
       - Impassable
+      - MobImpassable
       - VaultImpassable
       - SmallImpassable
       layer:
@@ -300,7 +300,45 @@
     visuals:
     - type: DamageStateVisualizer
       normal: crawling
+      crit: dead
       dead: dead
+
+- type: entity
+  name: kangaroo
+  parent: SimpleMobBase
+  id: MobKangaroo
+  description: A large marsupial herbivore. It has powerful hind legs, with nails that resemble long claws.
+  components:
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 4
+    baseSprintSpeed: 7
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+      - map: ["enum.DamageStateVisualLayers.Base"]
+        state: kangaroo
+        sprite: Mobs/Animals/kangaroo.rsi
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      - shape:
+          !type:PhysShapeCircle
+          radius: 0.25
+        mass: 60
+        mask:
+          - Impassable
+          - MobImpassable #Bullets?!
+          - VaultImpassable
+          - SmallImpassable
+        layer:
+          - Opaque
+  - type: Appearance
+    visuals:
+      - type: DamageStateVisualizer
+        normal: kangaroo
+        # SKIPPY NO!
+        crit: kangaroo-dead
+        dead: kangaroo-dead
 
 - type: entity
   name: monkey
@@ -308,33 +346,31 @@
   parent: SimpleMobBase
   description: New church of neo-darwinists actually believe that EVERY animal evolved from a monkey. Tastes like pork, and killing them is both fun and relaxing.
   components:
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: monkey
+    description: Ook ook!
   - type: Sprite
     drawdepth: Mobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: monkey
       sprite: Mobs/Animals/monkey.rsi
-  - type: Physics
-    bodyType: Dynamic
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.30,-0.30,0.30,0.25"
-      mass: 10
-      mask:
-      - Impassable
-      - VaultImpassable
-      - SmallImpassable
-      layer:
-      - Opaque
+  - type: Hands
+  - type: Body
+    template: PrimateTemplate
+    preset: PrimatePreset
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
       normal: monkey
+      crit: dead
       dead: dead
+    - type: HandsVisualizer
     - type: FireVisualizer
       sprite: Mobs/Effects/onfire.rsi
       normalState: Monkey_burning
+  - type: MonkeyAccent
 
 - type: entity
   name: mouse
@@ -360,18 +396,24 @@
     Slots:
     - Helmet
   - type: Physics
-    bodyType: Dynamic
+  - type: Fixtures
     fixtures:
     - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.40,-0.30,0.40,0.45"
+        !type:PhysShapeCircle
+        radius: 0.2
       mass: 10
       mask:
       - Impassable
+      - MobImpassable #Bullets?!
       - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque
+  - type: MobState
+    thresholds:
+      0: !type:NormalMobState {}
+      10: !type:CriticalMobState {}
+      20: !type:DeadMobState {}
   - type: MovementSpeedModifier
     baseWalkSpeed : 5
     baseSprintSpeed : 5
@@ -381,8 +423,6 @@
       normal: mouse-0
       crit: dead-0
       dead: splat-0
-# Eek! You can eat them alive for now until someone makes something that detects when
-# a mob is dead or something idk
   - type: Food
   - type: Extractable
     grindableSolutionName: food
@@ -392,7 +432,9 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
-  - type: MouseAccent
+  - type: ReplacementAccent
+    accent: mouse
+
 
 - type: entity
   parent: MobMouse
@@ -451,14 +493,15 @@
       state: parrot
       sprite: Mobs/Animals/parrot.rsi
   - type: Physics
-    bodyType: Dynamic
+  - type: Fixtures
     fixtures:
     - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.35,-0.40,0.35,0.20"
-      mass: 10
+        !type:PhysShapeCircle
+        radius: 0.25
+      mass: 5
       mask:
       - Impassable
+      - MobImpassable #Bullets?!
       - VaultImpassable
       - SmallImpassable
       layer:
@@ -467,6 +510,7 @@
     visuals:
     - type: DamageStateVisualizer
       normal: parrot
+      crit: dead
       dead: dead
 
 - type: entity
@@ -482,14 +526,15 @@
       state: penguin
       sprite: Mobs/Animals/penguin.rsi
   - type: Physics
-    bodyType: Dynamic
+  - type: Fixtures
     fixtures:
     - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.30,-0.50,0.30,0.35"
+        !type:PhysShapeCircle
+        radius: 0.25
       mass: 10
       mask:
       - Impassable
+      - MobImpassable #Bullets?!
       - VaultImpassable
       - SmallImpassable
       layer:
@@ -498,6 +543,7 @@
     visuals:
     - type: DamageStateVisualizer
       normal: penguin
+      crit: penguin_dead
       dead: penguin_dead
 
 - type: entity
@@ -513,24 +559,28 @@
       state: snake
       sprite: Mobs/Animals/snake.rsi
   - type: Physics
-    bodyType: KinematicController
+  - type: Fixtures
     fixtures:
     - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.30,-0.50,0.30,0.35"
-      mass: 10
+        !type:PhysShapeCircle
+        radius: 0.25
+      mass: 8
       mask:
       - Impassable
+      - MobImpassable #Bullets?!
       - VaultImpassable
       - SmallImpassable
       layer:
       - Opaque
   - type: Appearance
     visuals:
+    - type: RotationVisualizer
     - type: DamageStateVisualizer
       normal: snake
 # It's death animation is animated so hopefully this should push for separation between "dying" and "death" states.
-      dead: dead
+     # looks stupid, Rotation visualizer for now
+     # dead: dead
+     # crit: dead
 
 # Code unique spider prototypes or combine them all into one spider and get a
 # random sprite state when you spawn it.
@@ -547,14 +597,15 @@
       state: tarantula
       sprite: Mobs/Animals/spider.rsi
   - type: Physics
-    bodyType: Dynamic
+  - type: Fixtures
     fixtures:
     - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.40,-0.30,0.40,0.45"
-      mass: 10
+        !type:PhysShapeCircle
+        radius: 0.35
+      mass: 25
       mask:
       - Impassable
+      - MobImpassable #Bullets?!
       - VaultImpassable
       - SmallImpassable
       layer:
@@ -563,4 +614,5 @@
     visuals:
     - type: DamageStateVisualizer
       normal: tarantula
+      crit: tarantula_dead
       dead: tarantula_dead

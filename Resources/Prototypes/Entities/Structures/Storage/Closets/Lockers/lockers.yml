@@ -32,7 +32,7 @@
 # Command
 - type: entity
   id: LockerCaptain
-  parent: LockerBase
+  parent: LockerBaseSecure
   name: captain's locker
   components:
   - type: Appearance
@@ -44,7 +44,7 @@
 
 - type: entity
   id: LockerHeadOfPersonnel
-  parent: LockerBase
+  parent: LockerBaseSecure
   name: head of personnel's locker
   components:
   - type: Appearance
@@ -57,7 +57,7 @@
 # CE
 - type: entity
   id: LockerChiefEngineer
-  parent: LockerBase
+  parent: LockerBaseSecure
   name: chief engineer's locker
   components:
   - type: Appearance
@@ -186,12 +186,12 @@
       state: med
       state_closed: chemical_door
   - type: AccessReader
-    access: [ [ "Medical" ] ]
+    access: [ [ "Chemistry" ] ]
 
 # CMO
 - type: entity
   id: LockerChiefMedicalOfficer
-  parent: LockerBase
+  parent: LockerBaseSecure
   name: chief medical officer's locker
   components:
   - type: Appearance
@@ -202,7 +202,6 @@
     access: [ [ "Medical", "Command" ] ]
 
 # Science
-
 - type: entity
   id: LockerResearchDirector
   parent: LockerBase
@@ -230,7 +229,7 @@
 # HoS
 - type: entity
   id: LockerHeadOfSecurity
-  parent: LockerBase
+  parent: LockerBaseSecure
   name: head of security's locker
   components:
   - type: Appearance
@@ -243,7 +242,7 @@
 # Warden
 - type: entity
   id: LockerWarden
-  parent: LockerBase
+  parent: LockerBaseSecure
   name: warden's locker
   components:
   - type: Appearance
@@ -251,12 +250,12 @@
     - type: StorageVisualizer
       state: warden
   - type: AccessReader
-    access: [["Security"]] # TODO access [["Brig"]]
+    access: [["Security", "Armory"]] # TODO access [["Brig"]]
 
 # Security Officer
 - type: entity
   id: LockerSecurity
-  parent: LockerBase
+  parent: LockerBaseSecure
   name: security officer's locker
   components:
   - type: Appearance
@@ -277,11 +276,10 @@
     access: [["Service"]] # TODO access [["Detective"]]
 
 # Syndicate
-
 - type: entity
   id: LockerSyndicatePersonal
   name: armory closet
-  parent: LockerBase
+  parent: LockerBaseSecure
   description: It's a personal storage unit for operative gear.
   components:
   - type: Appearance

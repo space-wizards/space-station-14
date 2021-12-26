@@ -1,9 +1,10 @@
-﻿using System;
-using Content.Client.Light.Components;
+﻿using Content.Client.Light.Components;
 using Content.Shared.Light.Component;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Player;
 
 namespace Content.Client.Light.Visualizers
@@ -15,9 +16,10 @@ namespace Content.Client.Light.Visualizers
         {
             base.OnChangeData(component);
 
+            var entities = IoCManager.Resolve<IEntityManager>();
             if (component.TryGetData(ExpendableLightVisuals.Behavior, out string lightBehaviourID))
             {
-                if (component.Owner.TryGetComponent<LightBehaviourComponent>(out var lightBehaviour))
+                if (entities.TryGetComponent(component.Owner, out LightBehaviourComponent lightBehaviour))
                 {
                     lightBehaviour.StopLightBehaviour();
 
@@ -25,7 +27,7 @@ namespace Content.Client.Light.Visualizers
                     {
                         lightBehaviour.StartLightBehaviour(lightBehaviourID);
                     }
-                    else if (component.Owner.TryGetComponent<PointLightComponent>(out var light))
+                    else if (entities.TryGetComponent(component.Owner, out PointLightComponent light))
                     {
                         light.Enabled = false;
                     }
@@ -38,7 +40,7 @@ namespace Content.Client.Light.Visualizers
             }
 
             if (component.TryGetData(ExpendableLightVisuals.State, out ExpendableLightState state)
-            && component.Owner.TryGetComponent<ExpendableLightComponent>(out var expendableLight))
+            && entities.TryGetComponent(component.Owner, out ExpendableLightComponent expendableLight))
             {
                 switch (state)
                 {

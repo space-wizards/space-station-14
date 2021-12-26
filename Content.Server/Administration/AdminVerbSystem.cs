@@ -8,7 +8,7 @@ using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Configurable;
 using Content.Server.Disposal.Tube.Components;
 using Content.Server.EUI;
-using Content.Server.Explosion;
+using Content.Server.Explosion.EntitySystems;
 using Content.Server.Ghost.Roles;
 using Content.Server.Inventory.Components;
 using Content.Server.Mind.Commands;
@@ -16,6 +16,7 @@ using Content.Server.Mind.Components;
 using Content.Server.Players;
 using Content.Shared.Administration;
 using Content.Shared.Body.Components;
+using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Popups;
@@ -23,6 +24,7 @@ using Content.Shared.Verbs;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -37,23 +39,65 @@ namespace Content.Server.Administration
     public class AdminVerbSystem : EntitySystem
     {
         [Dependency] private readonly IConGroupController _groupController = default!;
+        [Dependency] private readonly IConsoleHost _console = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly EuiManager _euiManager = default!;
+        [Dependency] private readonly ExplosionSystem _explosions = default!;
         [Dependency] private readonly GhostRoleSystem _ghostRoleSystem = default!;
 
         private readonly Dictionary<IPlayerSession, EditSolutionsEui> _openSolutionUis = new();
 
         public override void Initialize()
         {
+            SubscribeLocalEvent<GetOtherVerbsEvent>(AddAdminVerbs);
             SubscribeLocalEvent<GetOtherVerbsEvent>(AddDebugVerbs);
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<SolutionContainerManagerComponent, SolutionChangedEvent>(OnSolutionChanged);
         }
 
+        private void AddAdminVerbs(GetOtherVerbsEvent args)
+        {
+            if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
+                return;
+
+            var player = actor.PlayerSession;
+
+            // Ahelp
+            if (_adminManager.IsAdmin(player) && TryComp(args.Target, out ActorComponent? targetActor))
+            {
+                Verb verb = new();
+                verb.Text = Loc.GetString("ahelp-verb-get-data-text");
+                verb.Category = VerbCategory.Admin;
+                verb.IconTexture = "/Textures/Interface/gavel.svg.192dpi.png";
+                verb.Act = () => _console.RemoteExecuteCommand(player, $"openahelp \"{targetActor.PlayerSession.UserId}\"");;
+                verb.Impact = LogImpact.Low;
+                args.Verbs.Add(verb);
+            }
+
+            // Atillery
+            if (_adminManager.HasAdminFlag(player, AdminFlags.Fun))
+            {
+                Verb verb = new();
+                verb.Text = Loc.GetString("explode-verb-get-data-text");
+                verb.Category = VerbCategory.Admin;
+                verb.Act = () =>
+                {
+                    var coords = Transform(args.Target).Coordinates;
+                    Timer.Spawn(_gameTiming.TickPeriod, () => _explosions.SpawnExplosion(coords, 0, 1, 2, 1), CancellationToken.None);
+                    if (TryComp(args.Target, out SharedBodyComponent? body))
+                    {
+                        body.Gib();
+                    }
+                };
+                verb.Impact = LogImpact.Extreme; // if you're just outright killing a person, I guess that deserves to be extreme?
+                args.Verbs.Add(verb);
+            }
+        }
+
         private void AddDebugVerbs(GetOtherVerbsEvent args)
         {
-            if (!args.User.TryGetComponent<ActorComponent>(out var actor))
+            if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
                 return;
 
             var player = actor.PlayerSession;
@@ -65,7 +109,8 @@ namespace Content.Server.Administration
                 verb.Text = Loc.GetString("delete-verb-get-data-text");
                 verb.Category = VerbCategory.Debug;
                 verb.IconTexture = "/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png";
-                verb.Act = () => args.Target.Delete();
+                verb.Act = () => EntityManager.DeleteEntity(args.Target);
+                verb.Impact = LogImpact.Medium;
                 args.Verbs.Add(verb);
             }
 
@@ -77,14 +122,15 @@ namespace Content.Server.Administration
                 verb.Category = VerbCategory.Debug;
                 verb.IconTexture = "/Textures/Interface/VerbIcons/rejuvenate.svg.192dpi.png";
                 verb.Act = () => RejuvenateCommand.PerformRejuvenate(args.Target);
+                verb.Impact = LogImpact.Medium;
                 args.Verbs.Add(verb);
             }
 
             // Control mob verb
             if (_groupController.CanCommand(player, "controlmob") &&
                 args.User != args.Target &&
-                args.User.HasComponent<MindComponent>() &&
-                args.Target.TryGetComponent<MindComponent>(out var targetMind))
+                EntityManager.HasComponent<MindComponent>(args.User) &&
+                EntityManager.TryGetComponent<MindComponent?>(args.Target, out var targetMind))
             {
                 Verb verb = new();
                 verb.Text = Loc.GetString("control-mob-verb-get-data-text");
@@ -94,48 +140,34 @@ namespace Content.Server.Administration
                 {
                     player.ContentData()?.Mind?.TransferTo(args.Target, ghostCheckOverride: true);
                 };
+                verb.Impact = LogImpact.High;
                 args.Verbs.Add(verb);
             }
 
             // Make Sentient verb
             if (_groupController.CanCommand(player, "makesentient") &&
                 args.User != args.Target &&
-                !args.Target.HasComponent<MindComponent>())
+                !EntityManager.HasComponent<MindComponent>(args.Target))
             {
                 Verb verb = new();
                 verb.Text = Loc.GetString("make-sentient-verb-get-data-text");
                 verb.Category = VerbCategory.Debug;
                 verb.IconTexture = "/Textures/Interface/VerbIcons/sentient.svg.192dpi.png";
-                verb.Act = () => MakeSentientCommand.MakeSentient(args.Target);
-                args.Verbs.Add(verb);
-            }
-
-            if (_adminManager.HasAdminFlag(player, AdminFlags.Fun))
-            {
-                Verb verb = new();
-                verb.Text = Loc.GetString("explode-verb-get-data-text");
-                verb.Category = VerbCategory.Debug;
-                verb.Act = () =>
-                {
-                    var coords = args.Target.Transform.Coordinates;
-                    Timer.Spawn(_gameTiming.TickPeriod, () => ExplosionHelper.SpawnExplosion(coords, 0, 1, 2, 1), CancellationToken.None);
-                    if (args.Target.TryGetComponent(out SharedBodyComponent? body))
-                    {
-                        body.Gib();
-                    }
-                };
+                verb.Act = () => MakeSentientCommand.MakeSentient(args.Target, EntityManager);
+                verb.Impact = LogImpact.Medium;
                 args.Verbs.Add(verb);
             }
 
             // Set clothing verb
             if (_groupController.CanCommand(player, "setoutfit") &&
-                args.Target.HasComponent<InventoryComponent>())
+                EntityManager.HasComponent<InventoryComponent>(args.Target))
             {
                 Verb verb = new();
                 verb.Text = Loc.GetString("set-outfit-verb-get-data-text");
                 verb.Category = VerbCategory.Debug;
                 verb.IconTexture = "/Textures/Interface/VerbIcons/outfit.svg.192dpi.png";
                 verb.Act = () => _euiManager.OpenEui(new SetOutfitEui(args.Target), player);
+                verb.Impact = LogImpact.Medium;
                 args.Verbs.Add(verb);
             }
 
@@ -158,7 +190,7 @@ namespace Content.Server.Administration
 
             // Get Disposal tube direction verb
             if (_groupController.CanCommand(player, "tubeconnections") &&
-                args.Target.TryGetComponent<IDisposalTubeComponent>(out var tube))
+                EntityManager.TryGetComponent<IDisposalTubeComponent?>(args.Target, out var tube))
             {
                 Verb verb = new();
                 verb.Text = Loc.GetString("tube-direction-verb-get-data-text");
@@ -170,20 +202,21 @@ namespace Content.Server.Administration
 
             // Make ghost role verb
             if (_groupController.CanCommand(player, "makeghostrole") &&
-                !(args.Target.GetComponentOrNull<MindComponent>()?.HasMind ?? false))
+                !(EntityManager.GetComponentOrNull<MindComponent>(args.Target)?.HasMind ?? false))
             {
                 Verb verb = new();
                 verb.Text = Loc.GetString("make-ghost-role-verb-get-data-text");
                 verb.Category = VerbCategory.Debug;
                 // TODO VERB ICON add ghost icon
                 // Where is the national park service icon for haunted forests?
-                verb.Act = () => _ghostRoleSystem.OpenMakeGhostRoleEui(player, args.Target.Uid);
+                verb.Act = () => _ghostRoleSystem.OpenMakeGhostRoleEui(player, args.Target);
+                verb.Impact = LogImpact.Medium;
                 args.Verbs.Add(verb);
             }
 
             // Configuration verb. Is this even used for anything!?
             if (_groupController.CanAdminMenu(player) &&
-                args.Target.TryGetComponent<ConfigurationComponent>(out var config))
+                EntityManager.TryGetComponent<ConfigurationComponent?>(args.Target, out var config))
             {
                 Verb verb = new();
                 verb.Text = Loc.GetString("configure-verb-get-data-text");
@@ -195,13 +228,14 @@ namespace Content.Server.Administration
 
             // Add verb to open Solution Editor
             if (_groupController.CanCommand(player, "addreagent") &&
-                args.Target.HasComponent<SolutionContainerManagerComponent>())
+                EntityManager.HasComponent<SolutionContainerManagerComponent>(args.Target))
             {
                 Verb verb = new();
                 verb.Text = Loc.GetString("edit-solutions-verb-get-data-text");
                 verb.Category = VerbCategory.Debug;
                 verb.IconTexture = "/Textures/Interface/VerbIcons/spill.svg.192dpi.png";
-                verb.Act = () => OpenEditSolutionsEui(player, args.Target.Uid);
+                verb.Act = () => OpenEditSolutionsEui(player, args.Target);
+                verb.Impact = LogImpact.Medium; // maybe high depending on WHAT reagents they add...
                 args.Verbs.Add(verb);
             }
         }

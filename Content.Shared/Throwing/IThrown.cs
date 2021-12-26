@@ -17,12 +17,12 @@ namespace Content.Shared.Throwing
 
     public class ThrownEventArgs : EventArgs
     {
-        public ThrownEventArgs(IEntity user)
+        public ThrownEventArgs(EntityUid user)
         {
             User = user;
         }
 
-        public IEntity User { get; }
+        public EntityUid User { get; }
     }
 
     /// <summary>
@@ -34,14 +34,14 @@ namespace Content.Shared.Throwing
         /// <summary>
         ///     Entity that threw the item.
         /// </summary>
-        public IEntity User { get; }
+        public EntityUid User { get; }
 
         /// <summary>
         ///     Item that was thrown.
         /// </summary>
-        public IEntity Thrown { get; }
+        public EntityUid Thrown { get; }
 
-        public ThrownEvent(IEntity user, IEntity thrown)
+        public ThrownEvent(EntityUid user, EntityUid thrown)
         {
             User = user;
             Thrown = thrown;

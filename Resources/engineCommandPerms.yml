@@ -3,11 +3,37 @@
   - disconnect
   - help
   - list
+  - quit
+  - hardquit
+  - cvar
+  - svbind
+  - bind
+  - exec # macro moment
+  - clear
+  - vram
+  - monitor
+  - setmonitor
+  - keyinfo
+  - setclipboard
+  - getclipboard
+  - gcf
+  - net_graph
+  - net_watchent
+  - net_draw_interp
+  - devwindow
+  - fill
+  - dumpentities
+  - getcomponentregistration
+  - fuck
 
 - Flags: VAREDIT
   Commands:
   - addcomp
+  - addcompc
   - rmcomp
+  - rmcompc
+  - vv
+  - scale
 
 - Flags: DEBUG
   Commands:
@@ -21,12 +47,47 @@
   - netaudit
   - querymappaused
   - physics
+  - showislands
   - showtime
+  - showspritebb
+  - cldbglyr
   - togglefov
   - togglehardfov
   - togglelight
+  - togglelightbuf
   - toggleshadows
   - testbed
+  - lightbb
+  - vv
+  - szr_stats
+  - addview
+  - removeview
+  - hwid
+  - showpos
+  - showray
+  - showchunkbb
+  - entfo
+  - sggcell
+  - ldrsc
+  - rldrsc
+  - rldshader
+  - rldloc
+  - guidump
+  - uitest
+  - chunkinfo
+  - showanchored
+  - dmetamem
+  - launchauth
+  - lsmonitor
+  - monitorinfo
+  - watch
+  - sendgarbage
+  - setinputcontext
+  - showvelocities
+  - tilelookup
+  - net_entityreport
+  - scene
+
 
 - Flags: MAPPING
   Commands:
@@ -41,6 +102,7 @@
   - savebp
   - savemap
   - tpgrid
+  - gridtc
 
 - Flags: ADMIN
   Commands:
@@ -50,7 +112,6 @@
   - tp
   - tpto
   - respawn
-  - forall
 
 - Flags: SERVER
   Commands:
@@ -63,6 +124,7 @@
 - Flags: SPAWN
   Commands:
   - spawn
+  - cspawn
 
 - Flags: HOST
   Commands:
@@ -72,3 +134,10 @@
   - saveconfig
   - testlog
   - sudo
+  - scsi
+  - csi
+  - lsasm
+
+- Flags: QUERY
+  Commands:
+  - forall

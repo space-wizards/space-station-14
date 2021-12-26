@@ -12,12 +12,12 @@ namespace Content.Shared.Weapons.Melee
         /// <summary>
         ///     Entity used to attack, for broadcast purposes.
         /// </summary>
-        public IEntity Used { get; }
+        public EntityUid Used { get; }
 
         /// <summary>
         ///     Entity that triggered the attack.
         /// </summary>
-        public IEntity User { get; }
+        public EntityUid User { get; }
 
         /// <summary>
         ///     The original location that was clicked by the user.
@@ -25,24 +25,16 @@ namespace Content.Shared.Weapons.Melee
         public EntityCoordinates ClickLocation { get; }
 
         /// <summary>
-        ///     UID of the entity that was attacked.
+        ///     The entity that was attacked.
         /// </summary>
-        public EntityUid Target { get; }
+        public EntityUid? Target { get; }
 
-        /// <summary>
-        ///     Entity that was attacked.
-        /// </summary>
-        public IEntity? TargetEntity { get; }
-
-        public ClickAttackEvent(IEntity used, IEntity user, EntityCoordinates clickLocation, EntityUid target = default)
+        public ClickAttackEvent(EntityUid used, EntityUid user, EntityCoordinates clickLocation, EntityUid? target = null)
         {
             Used = used;
             User = user;
             ClickLocation = clickLocation;
             Target = target;
-
-            IoCManager.Resolve<IEntityManager>().TryGetEntity(Target, out var targetEntity);
-            TargetEntity = targetEntity;
         }
     }
 
@@ -54,19 +46,19 @@ namespace Content.Shared.Weapons.Melee
         /// <summary>
         ///     Entity used to attack, for broadcast purposes.
         /// </summary>
-        public IEntity Used { get; }
+        public EntityUid Used { get; }
 
         /// <summary>
         ///     Entity that triggered the attack.
         /// </summary>
-        public IEntity User { get; }
+        public EntityUid User { get; }
 
         /// <summary>
         ///     The original location that was clicked by the user.
         /// </summary>
         public EntityCoordinates ClickLocation { get; }
 
-        public WideAttackEvent(IEntity used, IEntity user, EntityCoordinates clickLocation)
+        public WideAttackEvent(EntityUid used, EntityUid user, EntityCoordinates clickLocation)
         {
             Used = used;
             User = user;
@@ -82,19 +74,19 @@ namespace Content.Shared.Weapons.Melee
         /// <summary>
         ///     Entity used to attack, for broadcast purposes.
         /// </summary>
-        public IEntity Used { get; }
+        public EntityUid Used { get; }
 
         /// <summary>
         ///     Entity that triggered the attack.
         /// </summary>
-        public IEntity User { get; }
+        public EntityUid User { get; }
 
         /// <summary>
         ///     The original location that was clicked by the user.
         /// </summary>
         public EntityCoordinates ClickLocation { get; }
 
-        public AttackedEvent(IEntity used, IEntity user, EntityCoordinates clickLocation)
+        public AttackedEvent(EntityUid used, EntityUid user, EntityCoordinates clickLocation)
         {
             Used = used;
             User = user;

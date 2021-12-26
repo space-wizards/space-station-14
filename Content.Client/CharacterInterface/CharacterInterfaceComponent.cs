@@ -1,14 +1,8 @@
 using System.Collections.Generic;
-using System.Linq;
 using Content.Client.CharacterInfo.Components;
-using Content.Client.HUD;
-using Content.Shared.Input;
-using Robust.Client.GameObjects;
-using Robust.Client.Input;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.CharacterInterface
@@ -20,8 +14,6 @@ namespace Content.Client.CharacterInterface
     [RegisterComponent]
     public class CharacterInterfaceComponent : Component
     {
-        [Dependency] private readonly IGameHud _gameHud = default!;
-
         public override string Name => "Character Interface Component";
 
         /// <summary>
@@ -30,104 +22,35 @@ namespace Content.Client.CharacterInterface
         /// <remarks>
         ///     Null if it would otherwise be empty.
         /// </remarks>
-        public CharacterWindow? Window { get; private set; }
+        public CharacterWindow? Window { get; set; }
 
-        private List<ICharacterUI>? _uiComponents;
-
-        /// <summary>
-        /// Create the window with all character UIs and bind it to a keypress
-        /// </summary>
-        protected override void Initialize()
-        {
-            base.Initialize();
-
-            //Use all the character ui interfaced components to create the character window
-            _uiComponents = Owner.GetAllComponents<ICharacterUI>().ToList();
-            if (_uiComponents.Count == 0)
-            {
-                return;
-            }
-
-            Window = new CharacterWindow(_uiComponents);
-            Window.OnClose += () => _gameHud.CharacterButtonDown = false;
-        }
-
-        /// <summary>
-        /// Dispose of window and the keypress binding
-        /// </summary>
-        protected override void OnRemove()
-        {
-            base.OnRemove();
-
-            if (_uiComponents != null)
-            {
-                foreach (var component in _uiComponents)
-                {
-                    // Make sure these don't get deleted when the window is disposed.
-                    component.Scene.Orphan();
-                }
-            }
-
-            _uiComponents = null;
-
-            Window?.Close();
-            Window = null;
-
-            var inputMgr = IoCManager.Resolve<IInputManager>();
-            inputMgr.SetInputCommand(ContentKeyFunctions.OpenCharacterMenu, null);
-        }
-
-        public void PlayerDetached()
-        {
-            if (Window != null)
-            {
-                _gameHud.CharacterButtonVisible = false;
-                Window.Close();
-            }
-        }
-
-        public void PlayerAttached()
-        {
-            if (Window != null)
-            {
-                _gameHud.CharacterButtonVisible = true;
-
-                _gameHud.CharacterButtonToggled = b =>
-                {
-                    if (b)
-                    {
-                        Window.OpenCentered();
-                    }
-                    else
-                    {
-                        Window.Close();
-                    }
-                };
-            }
-        }
+        public List<ICharacterUI>? UIComponents;
 
         /// <summary>
         /// A window that collects and shows all the individual character user interfaces
         /// </summary>
         public class CharacterWindow : SS14Window
         {
-            private readonly BoxContainer _contentsVBox;
             private readonly List<ICharacterUI> _windowComponents;
 
             public CharacterWindow(List<ICharacterUI> windowComponents)
             {
                 Title = "Character";
 
-                _contentsVBox = new BoxContainer
+                var contentsVBox = new BoxContainer
                 {
                     Orientation = LayoutOrientation.Vertical
                 };
-                Contents.AddChild(_contentsVBox);
+
+                var mainScrollContainer = new ScrollContainer { };
+                mainScrollContainer.AddChild(contentsVBox);
+
+                Contents.AddChild(mainScrollContainer);
 
                 windowComponents.Sort((a, b) => ((int) a.Priority).CompareTo((int) b.Priority));
                 foreach (var element in windowComponents)
                 {
-                    _contentsVBox.AddChild(element.Scene);
+                    contentsVBox.AddChild(element.Scene);
                 }
 
                 _windowComponents = windowComponents;

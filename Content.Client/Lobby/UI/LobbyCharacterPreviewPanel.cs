@@ -22,8 +22,9 @@ namespace Content.Client.Lobby.UI
 {
     public class LobbyCharacterPreviewPanel : Control
     {
+        private readonly IEntityManager _entMan;
         private readonly IClientPreferencesManager _preferencesManager;
-        private IEntity _previewDummy;
+        private EntityUid _previewDummy;
         private readonly Label _summaryLabel;
         private readonly BoxContainer _loaded;
         private readonly Label _unloaded;
@@ -31,6 +32,7 @@ namespace Content.Client.Lobby.UI
         public LobbyCharacterPreviewPanel(IEntityManager entityManager,
             IClientPreferencesManager preferencesManager)
         {
+            _entMan = entityManager;
             _preferencesManager = preferencesManager;
             _previewDummy = entityManager.SpawnEntity("MobHumanDummy", MapCoordinates.Nullspace);
 
@@ -98,15 +100,15 @@ namespace Content.Client.Lobby.UI
             _preferencesManager.OnServerDataLoaded -= UpdateUI;
 
             if (!disposing) return;
-            _previewDummy.Delete();
-            _previewDummy = null!;
+            _entMan.DeleteEntity(_previewDummy);
+            _previewDummy = default;
         }
 
-        private static SpriteView MakeSpriteView(IEntity entity, Direction direction)
+        private SpriteView MakeSpriteView(EntityUid entity, Direction direction)
         {
             return new()
             {
-                Sprite = entity.GetComponent<ISpriteComponent>(),
+                Sprite = _entMan.GetComponent<ISpriteComponent>(entity),
                 OverrideDirection = direction,
                 Scale = (2, 2)
             };
@@ -130,27 +132,28 @@ namespace Content.Client.Lobby.UI
                 else
                 {
                     _summaryLabel.Text = selectedCharacter.Summary;
-                    EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(_previewDummy.Uid, selectedCharacter);
+                    EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(_previewDummy, selectedCharacter);
                     GiveDummyJobClothes(_previewDummy, selectedCharacter);
                 }
             }
         }
 
-        public static void GiveDummyJobClothes(IEntity dummy, HumanoidCharacterProfile profile)
+        public static void GiveDummyJobClothes(EntityUid dummy, HumanoidCharacterProfile profile)
         {
             var protoMan = IoCManager.Resolve<IPrototypeManager>();
 
-            var inventory = dummy.GetComponent<ClientInventoryComponent>();
+            var entMan = IoCManager.Resolve<IEntityManager>();
+            var inventory = entMan.GetComponent<ClientInventoryComponent>(dummy);
 
             var highPriorityJob = profile.JobPriorities.FirstOrDefault(p => p.Value == JobPriority.High).Key;
 
-            var job = protoMan.Index<JobPrototype>(highPriorityJob ?? SharedGameTicker.OverflowJob);
+            // ReSharper disable once ConstantNullCoalescingCondition
+            var job = protoMan.Index<JobPrototype>(highPriorityJob ?? SharedGameTicker.FallbackOverflowJob);
 
             inventory.ClearAllSlotVisuals();
 
             if (job.StartingGear != null)
             {
-                var entityMan = IoCManager.Resolve<IEntityManager>();
                 var gear = protoMan.Index<StartingGearPrototype>(job.StartingGear);
 
                 foreach (var slot in AllSlots)
@@ -158,9 +161,9 @@ namespace Content.Client.Lobby.UI
                     var itemType = gear.GetGear(slot, profile);
                     if (itemType != string.Empty)
                     {
-                        var item = entityMan.SpawnEntity(itemType, MapCoordinates.Nullspace);
+                        var item = entMan.SpawnEntity(itemType, MapCoordinates.Nullspace);
                         inventory.SetSlotVisuals(slot, item);
-                        item.Delete();
+                        entMan.DeleteEntity(item);
                     }
                 }
             }

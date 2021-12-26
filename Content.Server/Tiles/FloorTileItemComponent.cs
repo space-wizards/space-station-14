@@ -20,6 +20,7 @@ namespace Content.Server.Tiles
     [RegisterComponent]
     public class FloorTileItemComponent : Component, IAfterInteract
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
 
         public override string Name => "FloorTile";
@@ -58,16 +59,16 @@ namespace Content.Server.Tiles
             if (!eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
                 return true;
 
-            if (!Owner.TryGetComponent(out StackComponent? stack))
+            if (!_entMan.TryGetComponent(Owner, out StackComponent? stack))
                 return true;
 
             var mapManager = IoCManager.Resolve<IMapManager>();
 
             var location = eventArgs.ClickLocation.AlignWithClosestGridTile();
-            var locationMap = location.ToMap(Owner.EntityManager);
+            var locationMap = location.ToMap(_entMan);
             if (locationMap.MapId == MapId.Nullspace)
                 return true;
-            mapManager.TryGetGrid(location.GetGridId(Owner.EntityManager), out var mapGrid);
+            mapManager.TryGetGrid(location.GetGridId(_entMan), out var mapGrid);
 
             if (_outputTiles == null)
                 return true;
@@ -83,7 +84,7 @@ namespace Content.Server.Tiles
 
                     if (HasBaseTurf(currentTileDefinition, baseTurf.Name))
                     {
-                        if (!EntitySystem.Get<StackSystem>().Use(Owner.Uid, 1, stack))
+                        if (!EntitySystem.Get<StackSystem>().Use(Owner, 1, stack))
                             continue;
 
                         PlaceAt(mapGrid, location, currentTileDefinition.TileId);

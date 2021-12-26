@@ -1,6 +1,8 @@
 ﻿using Content.Shared.Construction;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Client.Construction
 {
@@ -13,7 +15,7 @@ namespace Content.Client.Construction
 
             if (component.TryGetData<int>(MachineFrameVisuals.State, out var data))
             {
-                var sprite = component.Owner.GetComponent<ISpriteComponent>();
+                var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner);
 
                 sprite.LayerSetState(0, $"box_{data}");
             }

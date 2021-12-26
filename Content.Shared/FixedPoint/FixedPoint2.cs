@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using Robust.Shared.Serialization;
@@ -12,10 +10,10 @@ namespace Content.Shared.FixedPoint
     ///     To enforce this level of precision, floats are shifted by 2 decimal points, rounded, and converted to an int.
     /// </summary>
     [Serializable]
-    public struct FixedPoint2 : ISelfSerialize, IComparable<FixedPoint2>, IEquatable<FixedPoint2>
+    public struct FixedPoint2 : ISelfSerialize, IComparable<FixedPoint2>, IEquatable<FixedPoint2>, IFormattable
     {
         private int _value;
-        private static readonly int Shift = 2;
+        private const int Shift = 2;
 
         public static FixedPoint2 MaxValue { get; } = new(int.MaxValue);
         public static FixedPoint2 Epsilon { get; } = new(1);
@@ -210,6 +208,16 @@ namespace Content.Shared.FixedPoint
             return a > b ? a : b;
         }
 
+        public static FixedPoint2 Abs(FixedPoint2 a)
+        {
+            return FixedPoint2.New(Math.Abs(a._value));
+        }
+
+        public static FixedPoint2 Dist(FixedPoint2 a, FixedPoint2 b)
+        {
+            return FixedPoint2.Abs(a - b);
+        }
+
         public static FixedPoint2 Clamp(FixedPoint2 reagent, FixedPoint2 min, FixedPoint2 max)
         {
             if (min > max)
@@ -238,6 +246,11 @@ namespace Content.Shared.FixedPoint
         }
 
         public override readonly string ToString() => $"{ShiftDown().ToString(CultureInfo.InvariantCulture)}";
+
+        public string ToString(string? format, IFormatProvider? formatProvider)
+        {
+            return ToString();
+        }
 
         public readonly string Serialize()
         {

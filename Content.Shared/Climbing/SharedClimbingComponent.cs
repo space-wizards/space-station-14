@@ -58,7 +58,7 @@ namespace Content.Shared.Climbing
         /// <summary>
         ///     We'll launch the mob onto the table and give them at least this amount of time to be on it.
         /// </summary>
-        protected const float BufferTime = 0.3f;
+        public const float BufferTime = 0.3f;
 
         public virtual bool IsClimbing
         {

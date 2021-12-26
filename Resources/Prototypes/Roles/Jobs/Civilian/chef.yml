@@ -1,7 +1,6 @@
 - type: job
   id: Chef
   name: "chef"
-  positions: 1
   startingGear: ChefGear
   departments:
   - Civilian
@@ -10,6 +9,7 @@
   access:
   - Service
   - Maintenance
+  - Kitchen
 
 - type: startingGear
   id: ChefGear

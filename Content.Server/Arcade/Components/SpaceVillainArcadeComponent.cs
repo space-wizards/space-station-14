@@ -74,7 +74,7 @@ namespace Content.Server.Arcade.Components
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!Powered || !eventArgs.User.TryGetComponent(out ActorComponent? actor))
+            if (!Powered || !IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User, out ActorComponent? actor))
                 return;
 
             if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User))
@@ -223,7 +223,7 @@ namespace Content.Server.Arcade.Components
         public void ProcessWin()
         {
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            entityManager.SpawnEntity(_random.Pick(_possibleRewards), Owner.Transform.MapPosition);
+            entityManager.SpawnEntity(_random.Pick(_possibleRewards), entityManager.GetComponent<TransformComponent>(Owner).MapPosition);
         }
 
         /// <summary>

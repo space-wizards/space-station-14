@@ -7,7 +7,6 @@ using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Visuals;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
@@ -28,7 +27,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnGasVentPumpUpdated(EntityUid uid, GasVentPumpComponent vent, AtmosDeviceUpdateEvent args)
         {
-            var appearance = vent.Owner.GetComponentOrNull<AppearanceComponent>();
+            var appearance = EntityManager.GetComponentOrNull<AppearanceComponent>(vent.Owner); //Bingo waz here
 
             if (vent.Welded)
             {
@@ -44,7 +43,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 return;
             }
 
-            var environment = _atmosphereSystem.GetTileMixture(vent.Owner.Transform.Coordinates, true);
+            var environment = _atmosphereSystem.GetTileMixture(EntityManager.GetComponent<TransformComponent>(vent.Owner).Coordinates, true);
 
             // We're in an air-blocked tile... Do nothing.
             if (environment == null)

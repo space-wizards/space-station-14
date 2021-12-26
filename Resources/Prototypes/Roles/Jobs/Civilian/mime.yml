@@ -1,7 +1,6 @@
 - type: job
   id: Mime
   name: "mime"
-  positions: 1
   startingGear: MimeGear
   departments:
   - Civilian

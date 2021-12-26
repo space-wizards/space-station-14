@@ -1,6 +1,7 @@
 using Content.Server.Administration;
 using Content.Server.Chat.Managers;
 using Content.Server.Players;
+using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
@@ -24,7 +25,7 @@ namespace Content.Server.Chat.Commands
                 return;
             }
 
-            if (player.Status != SessionStatus.InGame || !player.AttachedEntityUid.HasValue)
+            if (player.Status != SessionStatus.InGame || player.AttachedEntity == null)
                 return;
 
             if (args.Length < 1)
@@ -49,7 +50,7 @@ namespace Content.Server.Chat.Commands
                 return;
             }
 
-            chat.EntityMe(mindComponent.OwnedEntity, action);
+            chat.EntityMe(mindComponent.OwnedEntity.Value, action);
         }
     }
 }

@@ -10,14 +10,18 @@ namespace Content.Shared.Flash
             base.Initialize();
 
             SubscribeLocalEvent<SharedFlashableComponent, ComponentGetState>(OnFlashableGetState);
+            SubscribeLocalEvent<SharedFlashableComponent, ComponentGetStateAttemptEvent>(OnGetStateAttempt);
+        }
+
+        private void OnGetStateAttempt(EntityUid uid, SharedFlashableComponent component, ComponentGetStateAttemptEvent args)
+        {
+            // Only send state to the player attached to the entity.
+            if (args.Player.AttachedEntity != uid)
+                args.Cancel();
         }
 
         private void OnFlashableGetState(EntityUid uid, SharedFlashableComponent component, ref ComponentGetState args)
         {
-            // Only send state to the player attached to the entity.
-            if (args.Player.AttachedEntityUid != uid)
-                return;
-
             args.State = new FlashableComponentState(component.Duration, component.LastFlash);
         }
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Client.ContextMenu.UI
 {
@@ -16,40 +17,46 @@ namespace Content.Client.ContextMenu.UI
             GroupingContextMenuType = obj;
         }
 
-        private List<List<IEntity>> GroupEntities(IEnumerable<IEntity> entities, int depth = 0)
+        private List<List<EntityUid>> GroupEntities(IEnumerable<EntityUid> entities, int depth = 0)
         {
             if (GroupingContextMenuType == 0)
             {
-                var newEntities = entities.GroupBy(e => e, new PrototypeContextMenuComparer()).ToList();
+                var newEntities = entities.GroupBy(e => _entityManager.GetComponent<MetaDataComponent>(e).EntityName + (_entityManager.GetComponent<MetaDataComponent>(e).EntityPrototype?.ID ?? string.Empty)).ToList();
                 return newEntities.Select(grp => grp.ToList()).ToList();
             }
             else
             {
-                var newEntities = entities.GroupBy(e => e, new PrototypeAndStatesContextMenuComparer(depth)).ToList();
+                var newEntities = entities.GroupBy(e => e, new PrototypeAndStatesContextMenuComparer(depth, _entityManager)).ToList();
                 return newEntities.Select(grp => grp.ToList()).ToList();
             }
         }
 
-        private sealed class PrototypeAndStatesContextMenuComparer : IEqualityComparer<IEntity>
+        private sealed class PrototypeAndStatesContextMenuComparer : IEqualityComparer<EntityUid>
         {
-            private static readonly List<Func<IEntity, IEntity, bool>> EqualsList = new()
+            private static readonly List<Func<EntityUid, EntityUid, IEntityManager, bool>> EqualsList = new()
             {
-                (a, b) => a.Prototype!.ID == b.Prototype!.ID,
-                (a, b) =>
+                (a, b, entMan) => entMan.GetComponent<MetaDataComponent>(a).EntityPrototype!.ID == entMan.GetComponent<MetaDataComponent>(b).EntityPrototype!.ID,
+                (a, b, entMan) =>
                 {
-                    var xStates = a.GetComponent<ISpriteComponent>().AllLayers.Where(e => e.Visible).Select(s => s.RsiState.Name);
-                    var yStates = b.GetComponent<ISpriteComponent>().AllLayers.Where(e => e.Visible).Select(s => s.RsiState.Name);
+                    entMan.TryGetComponent<ISpriteComponent?>(a, out var spriteA);
+                    entMan.TryGetComponent<ISpriteComponent?>(b, out var spriteB);
+
+                    if (spriteA == null || spriteB == null)
+                        return spriteA == spriteB;
+
+                    var xStates = spriteA.AllLayers.Where(e => e.Visible).Select(s => s.RsiState.Name);
+                    var yStates = spriteB.AllLayers.Where(e => e.Visible).Select(s => s.RsiState.Name);
 
                     return xStates.OrderBy(t => t).SequenceEqual(yStates.OrderBy(t => t));
                 },
             };
-            private static readonly List<Func<IEntity, int>> GetHashCodeList = new()
+            private static readonly List<Func<EntityUid, IEntityManager, int>> GetHashCodeList = new()
             {
-                e => EqualityComparer<string>.Default.GetHashCode(e.Prototype!.ID),
-                e =>
+                (e, entMan) => EqualityComparer<string>.Default.GetHashCode(entMan.GetComponent<MetaDataComponent>(e).EntityPrototype!.ID),
+                (e, entMan) =>
                 {
                     var hash = 0;
-                    foreach (var element in e.GetComponent<ISpriteComponent>().AllLayers.Where(obj => obj.Visible).Select(s => s.RsiState.Name))
+                    foreach (var element in entMan.GetComponent<ISpriteComponent>(e).AllLayers.Where(obj => obj.Visible).Select(s => s.RsiState.Name))
                     {
                         hash ^= EqualityComparer<string>.Default.GetHashCode(element!);
                     }
@@ -60,61 +67,28 @@ namespace Content.Client.ContextMenu.UI
             private static int Count => EqualsList.Count - 1;
 
             private readonly int _depth;
-            public PrototypeAndStatesContextMenuComparer(int step = 0)
+            private readonly IEntityManager _entMan;
+            public PrototypeAndStatesContextMenuComparer(int step = 0, IEntityManager? entMan = null)
             {
+                IoCManager.Resolve(ref entMan);
+
                 _depth = step > Count ? Count : step;
+                _entMan = entMan;
             }
 
-            public bool Equals(IEntity? x, IEntity? y)
+            public bool Equals(EntityUid x, EntityUid y)
             {
-                if (x == null)
+                if (x == default)
                 {
-                    return y == null;
+                    return y == default;
                 }
 
-                return y != null && EqualsList[_depth](x, y);
+                return y != default && EqualsList[_depth](x, y, _entMan);
             }
 
-            public int GetHashCode(IEntity e)
+            public int GetHashCode(EntityUid e)
             {
-                return GetHashCodeList[_depth](e);
-            }
-        }
-
-        private sealed class PrototypeContextMenuComparer : IEqualityComparer<IEntity>
-        {
-            public bool Equals(IEntity? x, IEntity? y)
-            {
-                if (x == null)
-                {
-                    return y == null;
-                }
-                if (y != null)
-                {
-                    if (x.Prototype?.ID == y.Prototype?.ID)
-                    {
-                        var xStates = x.GetComponent<ISpriteComponent>().AllLayers.Where(e => e.Visible).Select(s => s.RsiState.Name);
-                        var yStates = y.GetComponent<ISpriteComponent>().AllLayers.Where(e => e.Visible).Select(s => s.RsiState.Name);
-
-                        return xStates.OrderBy(t => t).SequenceEqual(yStates.OrderBy(t => t));
-                    }
-                }
-                return false;
-            }
-
-            public int GetHashCode(IEntity e)
-            {
-                var hash = EqualityComparer<string>.Default.GetHashCode(e.Prototype?.ID!);
-
-                if (e.TryGetComponent<ISpriteComponent>(out var sprite))
-                {
-                    foreach (var element in sprite.AllLayers.Where(obj => obj.Visible).Select(s => s.RsiState.Name))
-                    {
-                        hash ^= EqualityComparer<string>.Default.GetHashCode(element!);
-                    }
-                }
-
-                return hash;
+                return GetHashCodeList[_depth](e, _entMan);
             }
         }
     }

@@ -8,6 +8,7 @@
     whitelist:
       tags:
       - RollingPaper
+      - CigFilter
     capacity: 16
   - type: StorageFill
     contents:
@@ -18,6 +19,25 @@
     state: cigpapers
   - type: Item
     sprite: Objects/Consumable/Smokeables/Cigarettes/paper.rsi
+
+- type: entity
+  parent: PackPaperRolling
+  name: pack of rolling paper with filters
+  id: PackPaperRollingFilters
+  description: A pack of filters and thin pieces of paper used to make fine smokeables.
+  components:
+  - type: Storage
+    whitelist:
+      tags:
+      - RollingPaper
+      - CigFilter
+    capacity: 32
+  - type: StorageFill
+    contents:
+      - id: PaperRolling
+        amount: 8
+      - id: CigaretteFilter
+        amount: 8
 
 - type: entity
   id: PaperRolling
@@ -54,3 +74,7 @@
     state: cigfilter
   - type: Item
     sprite: Objects/Consumable/Smokeables/Cigarettes/paper.rsi
+    size: 2
+  - type: Tag
+    tags:
+    - CigFilter

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Content.Shared.Body.Mechanism;
+using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Robust.Shared.GameObjects;
 
@@ -15,7 +15,7 @@ namespace Content.Shared.Body.Surgery
             SharedMechanismComponent target,
             IBodyPartContainer container,
             ISurgeon surgeon,
-            IEntity performer);
+            EntityUid performer);
 
         /// <summary>
         ///     How long it takes to perform a single surgery step in seconds.

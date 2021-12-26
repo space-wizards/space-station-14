@@ -1,21 +1,19 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using Content.Server.Administration.Logs;
 using Content.Server.IP;
-using Content.Server.Preferences;
 using Content.Server.Preferences.Managers;
-using Content.Shared;
 using Content.Shared.CCVar;
 using Microsoft.EntityFrameworkCore;
 using Robust.Shared.Configuration;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
-
+using Robust.Shared.Utility;
 
 namespace Content.Server.Database
 {
@@ -154,69 +152,14 @@ namespace Content.Server.Database
             await db.SqliteDbContext.SaveChangesAsync();
         }
 
-        public override async Task UpdatePlayerRecord(
-            NetUserId userId,
-            string userName,
-            IPAddress address,
-            ImmutableArray<byte> hwId)
+        protected override PlayerRecord MakePlayerRecord(Player record)
         {
-            await using var db = await GetDbImpl();
-
-            var record = await db.SqliteDbContext.Player.SingleOrDefaultAsync(p => p.UserId == userId.UserId);
-            if (record == null)
-            {
-                db.SqliteDbContext.Player.Add(record = new SqlitePlayer
-                {
-                    FirstSeenTime = DateTime.UtcNow,
-                    UserId = userId.UserId,
-                });
-            }
-
-            record.LastSeenTime = DateTime.UtcNow;
-            record.LastSeenAddress = address.ToString();
-            record.LastSeenUserName = userName;
-            record.LastSeenHWId = hwId.ToArray();
-
-            await db.SqliteDbContext.SaveChangesAsync();
-        }
-
-        public override async Task<PlayerRecord?> GetPlayerRecordByUserName(string userName, CancellationToken cancel)
-        {
-            await using var db = await GetDbImpl();
-
-            // Sort by descending last seen time.
-            // So if due to account renames we have two people with the same username in the DB,
-            // the most recent one is picked.
-            var record = await db.SqliteDbContext.Player
-                .OrderByDescending(p => p.LastSeenTime)
-                .FirstOrDefaultAsync(p => p.LastSeenUserName == userName, cancel);
-
-            return MakePlayerRecord(record);
-        }
-
-        public override async Task<PlayerRecord?> GetPlayerRecordByUserId(NetUserId userId, CancellationToken cancel)
-        {
-            await using var db = await GetDbImpl();
-
-            var record = await db.SqliteDbContext.Player
-                .SingleOrDefaultAsync(p => p.UserId == userId.UserId, cancel);
-
-            return MakePlayerRecord(record);
-        }
-
-        private static PlayerRecord? MakePlayerRecord(SqlitePlayer? record)
-        {
-            if (record == null)
-            {
-                return null;
-            }
-
             return new PlayerRecord(
                 new NetUserId(record.UserId),
                 new DateTimeOffset(record.FirstSeenTime, TimeSpan.Zero),
                 record.LastSeenUserName,
                 new DateTimeOffset(record.LastSeenTime, TimeSpan.Zero),
-                IPAddress.Parse(record.LastSeenAddress),
+                record.LastSeenAddress,
                 record.LastSeenHWId?.ToImmutableArray());
         }
 
@@ -303,6 +246,64 @@ namespace Content.Server.Database
             var adminRanks = await db.DbContext.AdminRank.Include(a => a.Flags).ToArrayAsync(cancel);
 
             return (admins.Select(p => (p.a, p.LastSeenUserName)).ToArray(), adminRanks)!;
+        }
+
+        public override async Task<int> AddNewRound(params Guid[] playerIds)
+        {
+            await using var db = await GetDb();
+
+            var players = await db.DbContext.Player
+                .Where(player => playerIds.Contains(player.UserId))
+                .ToListAsync();
+
+            var nextId = 1;
+            if (await db.DbContext.Round.AnyAsync())
+            {
+                nextId = db.DbContext.Round.Max(round => round.Id) + 1;
+            }
+
+            var round = new Round
+            {
+                Id = nextId,
+                Players = players
+            };
+
+            db.DbContext.Round.Add(round);
+
+            await db.DbContext.SaveChangesAsync();
+
+            return round.Id;
+        }
+
+        public override async Task AddAdminLogs(List<QueuedLog> logs)
+        {
+            await using var db = await GetDb();
+
+            var nextId = 1;
+            if (await db.DbContext.AdminLog.AnyAsync())
+            {
+                nextId = db.DbContext.AdminLog.Max(round => round.Id) + 1;
+            }
+
+            var entities = new Dictionary<int, AdminLogEntity>();
+
+            foreach (var (log, entityData) in logs)
+            {
+                log.Id = nextId++;
+
+                var logEntities = new List<AdminLogEntity>(entityData.Count);
+                foreach (var (id, name) in entityData)
+                {
+                    var entity = entities.GetOrNew(id);
+                    entity.Name = name;
+                    logEntities.Add(entity);
+                }
+
+                log.Entities = logEntities;
+                db.DbContext.AdminLog.Add(log);
+            }
+
+            await db.DbContext.SaveChangesAsync();
         }
 
         private async Task<DbGuardImpl> GetDbImpl()

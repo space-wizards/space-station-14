@@ -59,6 +59,9 @@
   - type: Icon
     sprite: Structures/Windows/directional.rsi
     state: reinforced_window
+  - type: Construction
+    graph: windowDirectional
+    node: windowReinforcedDirectional
   - type: Destructible
     thresholds:
     - trigger:

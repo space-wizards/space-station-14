@@ -1,18 +1,17 @@
 ﻿#nullable enable
 using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Log;
 
 namespace Content.Shared.Administration
 {
     public abstract class SharedBwoinkSystem : EntitySystem
     {
+        // System users
+        public static NetUserId SystemUserId { get; } = new NetUserId(Guid.Empty);
+
         public override void Initialize()
         {
             base.Initialize();

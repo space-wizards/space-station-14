@@ -7,6 +7,7 @@ using Content.Shared.Doors;
 using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -28,7 +29,7 @@ namespace Content.Server.Doors.Components
         public readonly ServerDoorComponent? DoorComponent = null;
 
         [ComponentDependency]
-        public readonly SharedAppearanceComponent? AppearanceComponent = null;
+        public readonly AppearanceComponent? AppearanceComponent = null;
 
         [ComponentDependency]
         public readonly ApcPowerReceiverComponent? ReceiverComponent = null;
@@ -152,30 +153,32 @@ namespace Content.Server.Doors.Components
 
         public void UpdateWiresStatus()
         {
-            if (DoorComponent == null)
-            {
-                return;
-            }
+            if (WiresComponent == null) return;
 
-            var powerLight = new StatusLightData(Color.Yellow, StatusLightState.On, "POWR");
-            if (PowerWiresPulsed)
+            var mainPowerCut = WiresComponent.IsWireCut(Wires.MainPower);
+            var backupPowerCut = WiresComponent.IsWireCut(Wires.BackupPower);
+            var statusLightState = PowerWiresPulsed ? StatusLightState.BlinkingFast : StatusLightState.On;
+            StatusLightData powerLight;
+            if (mainPowerCut && backupPowerCut)
             {
-                powerLight = new StatusLightData(Color.Yellow, StatusLightState.BlinkingFast, "POWR");
+                powerLight = new StatusLightData(Color.DarkGoldenrod, StatusLightState.Off, "POWER");
             }
-            else if (WiresComponent != null &&
-                     WiresComponent.IsWireCut(Wires.MainPower) &&
-                     WiresComponent.IsWireCut(Wires.BackupPower))
+            else if (mainPowerCut != backupPowerCut)
             {
-                powerLight = new StatusLightData(Color.Red, StatusLightState.On, "POWR");
+                powerLight = new StatusLightData(Color.Gold, statusLightState, "POWER");
+            }
+            else
+            {
+                powerLight = new StatusLightData(Color.Yellow, statusLightState, "POWER");
             }
 
             var boltStatus =
                 new StatusLightData(Color.Red, BoltsDown ? StatusLightState.On : StatusLightState.Off, "BOLT");
             var boltLightsStatus = new StatusLightData(Color.Lime,
-                _boltLightsWirePulsed ? StatusLightState.On : StatusLightState.Off, "BLTL");
+                _boltLightsWirePulsed ? StatusLightState.On : StatusLightState.Off, "BOLT LED");
 
             var ev = new DoorGetCloseTimeModifierEvent();
-            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, ev, false);
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, ev, false);
 
             var timingStatus =
                 new StatusLightData(Color.Orange, !AutoClose ? StatusLightState.Off :
@@ -184,17 +187,13 @@ namespace Content.Server.Doors.Components
                                                     "TIME");
 
             var safetyStatus =
-                new StatusLightData(Color.Red, Safety ? StatusLightState.On : StatusLightState.Off, "SAFE");
+                new StatusLightData(Color.Red, Safety ? StatusLightState.On : StatusLightState.Off, "SAFETY");
 
-            if (WiresComponent == null)
-            {
-                return;
-            }
 
             WiresComponent.SetStatus(AirlockWireStatus.PowerIndicator, powerLight);
             WiresComponent.SetStatus(AirlockWireStatus.BoltIndicator, boltStatus);
             WiresComponent.SetStatus(AirlockWireStatus.BoltLightIndicator, boltLightsStatus);
-            WiresComponent.SetStatus(AirlockWireStatus.AIControlIndicator, new StatusLightData(Color.Purple, StatusLightState.BlinkingSlow, "AICT"));
+            WiresComponent.SetStatus(AirlockWireStatus.AIControlIndicator, new StatusLightData(Color.Purple, StatusLightState.BlinkingSlow, "AI CTRL"));
             WiresComponent.SetStatus(AirlockWireStatus.TimingIndicator, timingStatus);
             WiresComponent.SetStatus(AirlockWireStatus.SafetyIndicator, safetyStatus);
         }
@@ -218,7 +217,7 @@ namespace Content.Server.Doors.Components
             }
 
             ReceiverComponent.PowerDisabled =
-                WiresComponent.IsWireCut(Wires.MainPower) ||
+                WiresComponent.IsWireCut(Wires.MainPower) &&
                 WiresComponent.IsWireCut(Wires.BackupPower);
         }
 

@@ -1,27 +1,26 @@
-#- type: job
-#  id: Quartermaster
-#  name: "quartermaster"
-#  positions: 1
-#  spawnPositions: 1
-#  startingGear: QuartermasterGear
-#  departments:
-#  - Cargo
-#  icon: "QuarterMaster"
-#  supervisors: "the head of personnel"
-#  access:
-#  - Cargo
-#  - Quartermaster
-#  - Maintenance
-#
-#- type: startingGear
-#  id: QuartermasterGear
-#  equipment:
-#    head: ClothingHeadHatCargosoft
-#    innerclothing: ClothingUniformJumpsuitQM
-#    backpack: ClothingBackpackFilled
-#    shoes: ClothingShoesColorBrown
-#    idcard: QuartermasterPDA
-#    ears: ClothingHeadsetCargo
-#  innerclothingskirt: ClothingUniformJumpskirtQM
-#  satchel: ClothingBackpackSatchelFilled
-#  duffelbag: ClothingBackpackDuffelFilled
+- type: job
+  id: Quartermaster
+  name: "quartermaster"
+  startingGear: QuartermasterGear
+  departments:
+  - Cargo
+  icon: "QuarterMaster"
+  supervisors: "the head of personnel"
+  access:
+  - Cargo
+ # - Quartermaster
+  - Maintenance
+  - External
+
+- type: startingGear
+  id: QuartermasterGear
+  equipment:
+    head: ClothingHeadHatCargosoft
+    innerclothing: ClothingUniformJumpsuitQM
+    backpack: ClothingBackpackFilled
+    shoes: ClothingShoesColorBrown
+    idcard: QuartermasterPDA
+    ears: ClothingHeadsetCargo
+  innerclothingskirt: ClothingUniformJumpskirtQM
+  satchel: ClothingBackpackSatchelFilled
+  duffelbag: ClothingBackpackDuffelFilled

@@ -13,17 +13,17 @@ namespace Content.Shared.Interaction
         /// <summary>
         ///     Entity that triggered the interaction.
         /// </summary>
-        public IEntity User { get; }
+        public EntityUid User { get; }
 
         /// <summary>
         ///     Entity that the user used to interact.
         /// </summary>
-        public IEntity Used { get; }
+        public EntityUid Used { get; }
 
         /// <summary>
         ///     Entity that was interacted on. This can be null if the attack did not click on an entity.
         /// </summary>
-        public IEntity? Target { get; }
+        public EntityUid? Target { get; }
 
         /// <summary>
         ///     Location that the user clicked outside of their interaction range.
@@ -37,9 +37,9 @@ namespace Content.Shared.Interaction
         public bool CanReach { get; }
 
         public BeforeInteractEvent(
-            IEntity user,
-            IEntity used,
-            IEntity? target,
+            EntityUid user,
+            EntityUid used,
+            EntityUid? target,
             EntityCoordinates clickLocation,
             bool canReach)
         {

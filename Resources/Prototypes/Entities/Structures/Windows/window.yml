@@ -11,6 +11,7 @@
   - type: Tag
     tags:
       - RCDDeconstructWhitelist
+      - ForceFixRotations
   - type: Sprite
     netsync: false
     drawdepth: WallTops
@@ -20,6 +21,7 @@
     state: full
   - type: Physics
     bodyType: Static
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb {}
@@ -76,6 +78,8 @@
     snap:
     - Window
   components:
+    # Attention! If adding tags here:
+    # Keep WindowTintedDirectional in mind
   - type: Sprite
     netsync: false
     drawdepth: WallTops
@@ -85,6 +89,7 @@
     sprite: Structures/Windows/directional.rsi
     state: window
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -122,6 +127,9 @@
     airBlockedDirection:
     - South
   - type: Window
+  - type: Construction
+    graph: windowDirectional
+    node: windowDirectional
 
 - type: entity
   id: WindowTintedDirectional
@@ -138,6 +146,9 @@
     drawdepth: WallTops
     sprite: Structures/Windows/directional.rsi
     state: tinted_window
+  - type: Tag
+    tags:
+      - ForceNoFixRotations
   - type: Icon
     sprite: Structures/Windows/directional.rsi
     state: tinted_window

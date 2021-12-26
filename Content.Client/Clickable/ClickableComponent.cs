@@ -7,6 +7,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
+using TerraFX.Interop.Windows;
 
 namespace Content.Client.Clickable
 {
@@ -29,14 +30,15 @@ namespace Content.Client.Clickable
         /// <returns>True if the click worked, false otherwise.</returns>
         public bool CheckClick(Vector2 worldPos, out int drawDepth, out uint renderOrder)
         {
-            if (!Owner.TryGetComponent(out ISpriteComponent? sprite) || !sprite.Visible)
+            var entMan = IoCManager.Resolve<IEntityManager>();
+            if (!entMan.TryGetComponent(Owner, out ISpriteComponent? sprite) || !sprite.Visible)
             {
                 drawDepth = default;
                 renderOrder = default;
                 return false;
             }
 
-            var transform = Owner.Transform;
+            var transform = entMan.GetComponent<TransformComponent>(Owner);
             var localPos = transform.InvWorldMatrix.Transform(worldPos);
             var spriteMatrix = Matrix3.Invert(sprite.GetLocalMatrix());
 

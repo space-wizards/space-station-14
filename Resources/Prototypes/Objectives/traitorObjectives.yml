@@ -40,3 +40,15 @@
         - StayAliveCondition
   conditions:
     - !type:DieCondition {}
+
+- type: objective
+  id: CMOHyposprayStealObjective
+  issuer: syndicate
+  requirements:
+    - !type:TraitorRequirement {}
+    - !type:IncompatibleConditionsRequirement
+      conditions:
+        - DieCondition
+  conditions:
+    - !type:StealCondition
+      prototype: Hypospray

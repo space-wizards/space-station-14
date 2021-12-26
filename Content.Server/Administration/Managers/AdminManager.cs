@@ -7,9 +7,7 @@ using System.Threading.Tasks;
 using Content.Server.Chat.Managers;
 using Content.Server.Database;
 using Content.Server.Players;
-using Content.Shared;
 using Content.Shared.Administration;
-using Content.Shared.Administration.Menu;
 using Content.Shared.CCVar;
 using Robust.Server.Console;
 using Robust.Server.Player;
@@ -17,7 +15,6 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Enums;
-using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Network;
@@ -46,6 +43,8 @@ namespace Content.Server.Administration.Managers
         public IEnumerable<IPlayerSession> ActiveAdmins => _admins
             .Where(p => p.Value.Data.Active)
             .Select(p => p.Key);
+
+        public IEnumerable<IPlayerSession> AllAdmins => _admins.Select(p => p.Key);
 
         // If a command isn't in this list it's server-console only.
         // if a command is in but the flags value is null it's available to everybody.
@@ -172,8 +171,6 @@ namespace Content.Server.Administration.Managers
         public void Initialize()
         {
             _netMgr.RegisterNetMessage<MsgUpdateAdminStatus>();
-            _netMgr.RegisterNetMessage<AdminMenuPlayerListRequest>(HandlePlayerListRequest);
-            _netMgr.RegisterNetMessage<AdminMenuPlayerListMessage>();
 
             // Cache permissions for loaded console commands with the requisite attributes.
             foreach (var (cmdName, cmd) in _consoleHost.RegisteredCommands)
@@ -196,68 +193,54 @@ namespace Content.Server.Administration.Managers
             }
 
             // Load flags for engine commands, since those don't have the attributes.
-            if (_res.TryContentFileRead(new ResourcePath("/engineCommandPerms.yml"), out var fs))
+            if (_res.TryContentFileRead(new ResourcePath("/engineCommandPerms.yml"), out var efs))
             {
-                using var reader = new StreamReader(fs, EncodingHelpers.UTF8);
-                var yStream = new YamlStream();
-                yStream.Load(reader);
-                var root = (YamlSequenceNode) yStream.Documents[0].RootNode;
+                LoadPermissionsFromStream(efs);
+            }
 
-                foreach (var child in root)
-                {
-                    var map = (YamlMappingNode) child;
-                    var commands = map.GetNode<YamlSequenceNode>("Commands").Select(p => p.AsString());
-                    if (map.TryGetNode("Flags", out var flagsNode))
-                    {
-                        var flagNames = flagsNode.AsString().Split(",", StringSplitOptions.RemoveEmptyEntries);
-                        var flags = AdminFlagsHelper.NamesToFlags(flagNames);
-                        foreach (var cmd in commands)
-                        {
-                            if (!_adminCommands.TryGetValue(cmd, out var exFlags))
-                            {
-                                _adminCommands.Add(cmd, new[] {flags});
-                            }
-                            else
-                            {
-                                var newArr = new AdminFlags[exFlags.Length + 1];
-                                exFlags.CopyTo(newArr, 0);
-                                exFlags[^1] = flags;
-                                _adminCommands[cmd] = newArr;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        _anyCommands.UnionWith(commands);
-                    }
-                }
+            // Load flags for client-only commands, those don't have the flag attributes, only "AnyCommand".
+            if (_res.TryContentFileRead(new ResourcePath("/clientCommandPerms.yml"), out var cfs))
+            {
+                LoadPermissionsFromStream(cfs);
             }
         }
 
-        private void HandlePlayerListRequest(AdminMenuPlayerListRequest message)
+        private void LoadPermissionsFromStream(Stream fs)
         {
-            var senderSession = _playerManager.GetSessionByChannel(message.MsgChannel);
+            using var reader = new StreamReader(fs, EncodingHelpers.UTF8);
+            var yStream = new YamlStream();
+            yStream.Load(reader);
+            var root = (YamlSequenceNode) yStream.Documents[0].RootNode;
 
-            if (!_admins.ContainsKey(senderSession))
+            foreach (var child in root)
             {
-                return;
+                var map = (YamlMappingNode) child;
+                var commands = map.GetNode<YamlSequenceNode>("Commands").Select(p => p.AsString());
+                if (map.TryGetNode("Flags", out var flagsNode))
+                {
+                    var flagNames = flagsNode.AsString().Split(",", StringSplitOptions.RemoveEmptyEntries);
+                    var flags = AdminFlagsHelper.NamesToFlags(flagNames);
+                    foreach (var cmd in commands)
+                    {
+                        if (!_adminCommands.TryGetValue(cmd, out var exFlags))
+                        {
+                            _adminCommands.Add(cmd, new[] {flags});
+                        }
+                        else
+                        {
+                            var newArr = new AdminFlags[exFlags.Length + 1];
+                            exFlags.CopyTo(newArr, 0);
+                            exFlags[^1] = flags;
+                            _adminCommands[cmd] = newArr;
+                        }
+                    }
+                }
+                else
+                {
+                    _anyCommands.UnionWith(commands);
+                }
             }
 
-            var netMsg = _netMgr.CreateNetMessage<AdminMenuPlayerListMessage>();
-
-            netMsg.PlayersInfo.Clear();
-
-            foreach (var session in _playerManager.GetAllPlayers())
-            {
-                var name = session.Name;
-                var username = session.AttachedEntity?.Name ?? string.Empty;
-                var antag = session.ContentData()?.Mind?.AllRoles.Any(r => r.Antagonist) ?? false;
-                var uid = session.AttachedEntity?.Uid ?? EntityUid.Invalid;
-
-                netMsg.PlayersInfo.Add(new AdminMenuPlayerListMessage.PlayerInfo(name, username, antag, uid));
-            }
-
-            _netMgr.ServerSendMessage(netMsg, senderSession.ConnectedClient);
         }
 
         public void PromoteHost(IPlayerSession player)
@@ -472,7 +455,7 @@ namespace Content.Server.Administration.Managers
 
         public bool CanViewVar(IPlayerSession session)
         {
-            return GetAdminData(session)?.CanViewVar() ?? false;
+            return CanCommand(session, "vv");
         }
 
         public bool CanAdminPlace(IPlayerSession session)

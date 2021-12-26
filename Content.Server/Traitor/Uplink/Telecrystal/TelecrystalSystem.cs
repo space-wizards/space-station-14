@@ -26,7 +26,7 @@ namespace Content.Server.Traitor.Uplink.Telecrystal
             if (args.Handled)
                 return;
 
-            if (args.Target == null || !EntityManager.TryGetComponent(args.Target.Uid, out UplinkComponent? uplink))
+            if (args.Target == null || !EntityManager.TryGetComponent(args.Target.Value, out UplinkComponent? uplink))
                 return;
 
             // TODO: when uplink will have some auth logic (like PDA ringtone code)

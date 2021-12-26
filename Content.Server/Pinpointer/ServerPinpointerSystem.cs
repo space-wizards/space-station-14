@@ -62,8 +62,8 @@ namespace Content.Server.Pinpointer
             {
                 if (whitelist.IsValid(e))
                 {
-                    var dist = (e.Transform.WorldPosition - transform.WorldPosition).LengthSquared;
-                    l.TryAdd(dist, e.Uid);
+                    var dist = (EntityManager.GetComponent<TransformComponent>(e).WorldPosition - transform.WorldPosition).LengthSquared;
+                    l.TryAdd(dist, e);
                 }
             }
 

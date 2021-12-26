@@ -1,13 +1,12 @@
 - type: job
   id: SecurityOfficer
   name: "security officer"
-  positions: 3
-  spawnPositions: 2
   startingGear: SecurityOfficerGear
   departments:
   - Security
   icon: "SecurityOfficer"
   supervisors: "the head of security"
+  canBeAntag: false
   access:
   - Security
   - Maintenance

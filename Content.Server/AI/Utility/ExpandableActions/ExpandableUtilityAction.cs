@@ -12,7 +12,7 @@ namespace Content.Server.AI.Utility.ExpandableActions
     /// </summary>
     public abstract class ExpandableUtilityAction : IAiUtility
     {
-        public IEntity Owner { get; set; } = default!;
+        public EntityUid Owner { get; set; } = default!;
 
         public abstract float Bonus { get; }
 

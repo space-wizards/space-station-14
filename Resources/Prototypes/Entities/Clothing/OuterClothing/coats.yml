@@ -1,7 +1,7 @@
 - type: entity
   parent: ClothingOuterBase
   id: ClothingOuterCoatBomber
-  name: bomber
+  name: bomber jacket
   description: A thick, well-worn WW2 leather bomber jacket.
   components:
   - type: Sprite
@@ -14,7 +14,7 @@
 - type: entity
   parent: ClothingOuterBase
   id: ClothingOuterCoatDetective
-  name: detective
+  name: detective trenchcoat
   description: A rugged canvas trenchcoat, designed and created by TX Fabrication Corp. The coat is externally impact resistant - perfect for your next act of autodefenestration!
   components:
   - type: Sprite
@@ -40,7 +40,7 @@
 - type: entity
   parent: ClothingOuterBase
   id: ClothingOuterCoatHoSTrench
-  name: head of security trenchcoat
+  name: head of security's trenchcoat
   description: This trenchcoat was specifically designed for asserting superior authority.
   components:
   - type: Sprite
@@ -54,13 +54,13 @@
       coefficients:
         Blunt: 0.7
         Slash: 0.7
-        Piercing: 0.7
+        Piercing: 0.4
         Heat: 0.7
 
 - type: entity
   parent: ClothingOuterBase
   id: ClothingOuterCoatInspector
-  name: inspector coat
+  name: inspectors coat
   description: A strict inspector coat for being intimidating during inspections.
   components:
   - type: Sprite
@@ -112,7 +112,7 @@
 - type: entity
   parent: ClothingOuterBase
   id: ClothingOuterCoatLabCmo
-  name: lab coat (CMO)
+  name: chief medical officer's lab coat
   description: Bluer than the standard model.
   components:
   - type: Sprite
@@ -125,7 +125,7 @@
 - type: entity
   parent: ClothingOuterBase
   id: ClothingOuterCoatPirate
-  name: pirate
+  name: pirate garb
   description: Yarr.
   components:
   - type: Sprite
@@ -134,3 +134,23 @@
     sprite: Clothing/OuterClothing/Coats/pirate.rsi
   - type: Storage
     capacity: 10
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterCoatWarden
+  name: warden's armored jacket
+  description: A sturdy, utilitarian jacket designed to protect a warden from any brig-bound threats.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/warden.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/warden.rsi
+  - type: Storage
+    capacity: 10
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.4
+        Heat: 0.8

@@ -76,6 +76,13 @@
                                     </BoxContainer>
                                 </prefUi:HighlightedContainer>
                             </BoxContainer>
+                            <!-- Skin -->
+                            <prefUi:HighlightedContainer>
+                                <BoxContainer HorizontalExpand="True">
+                                    <Label Text="{Loc 'humanoid-profile-editor-skin-color-label'}" />
+                                    <Slider HorizontalExpand="True" Name="CSkin" MinValue="0" MaxValue="100" Value="20" />
+                                </BoxContainer>
+                            </prefUi:HighlightedContainer>
                             <!-- Hair -->
                             <prefUi:HighlightedContainer>
                                 <BoxContainer Orientation="Horizontal">

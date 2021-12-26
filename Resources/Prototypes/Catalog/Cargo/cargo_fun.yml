@@ -33,3 +33,15 @@
   cost: 5000
   category: Fun
   group: market
+
+- type: cargoProduct
+  name: "board game crate"
+  id: FunBoardGames
+  description: "Game nights have been proven to either decrease boredom or increase murderous rage depending on the game"
+  icon:
+    sprite: Objects/Fun/dice.rsi
+    state: d66
+  product: CrateFunBoardGames
+  cost: 1500
+  category: Fun
+  group: market

@@ -1,6 +1,9 @@
 ﻿<SS14Window
     xmlns="https://spacestation14.io"
-    SetSize="400 200">
+    SetSize="400 200"
+    HeaderClass="windowHeaderAlert"
+    TitleClass="windowTitleAlert"
+    >
     <BoxContainer Orientation="Vertical">
         <OutputPanel Name="TextOutput" VerticalExpand="true" />
         <HistoryLineEdit Name="SenderLineEdit" />

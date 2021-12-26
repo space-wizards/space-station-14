@@ -1,7 +1,6 @@
 - type: job
   id: Clown
   name: "clown"
-  positions: 1
   startingGear: ClownGear
   departments:
   - Civilian

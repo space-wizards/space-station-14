@@ -154,7 +154,7 @@ namespace Content.Client.Lobby
                 }
                 else
                 {
-                    text = $"{(int) Math.Floor(difference.TotalMinutes / 60)}:{difference.Seconds:D2}";
+                    text = $"{difference.Minutes}:{difference.Seconds:D2}";
                 }
             }
 
@@ -204,6 +204,7 @@ namespace Content.Client.Lobby
                 _lobby.ReadyButton.Text = Loc.GetString("lobby-state-ready-button-join-state");
                 _lobby.ReadyButton.ToggleMode = false;
                 _lobby.ReadyButton.Pressed = false;
+                _lobby.ObserveButton.Disabled = false;
             }
             else
             {
@@ -212,6 +213,7 @@ namespace Content.Client.Lobby
                 _lobby.ReadyButton.ToggleMode = true;
                 _lobby.ReadyButton.Disabled = false;
                 _lobby.ReadyButton.Pressed = gameTicker.AreWeReady;
+                _lobby.ObserveButton.Disabled = true;
             }
 
             if (gameTicker.ServerInfoBlob != null)

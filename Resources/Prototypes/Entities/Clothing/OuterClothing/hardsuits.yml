@@ -11,6 +11,14 @@
   - type: PressureProtection
     highPressureMultiplier: 0.5
     lowPressureMultiplier: 100
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.95
+        Heat: 0.8 #All default but having a little better heat prot makes sense based on the description
+        Radiation: 0.25
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -25,6 +33,14 @@
   - type: PressureProtection
     highPressureMultiplier: 0.5
     lowPressureMultiplier: 100
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.85
+        Heat: 0.8
+        Radiation: 0.1
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -39,6 +55,14 @@
   - type: PressureProtection
     highPressureMultiplier: 0.45
     lowPressureMultiplier: 100
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.2 #best armor in the game
+        Slash: 0.2
+        Piercing: 0.2
+        Heat: 0.2
+        Radiation: 0.2
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -53,11 +77,19 @@
   - type: PressureProtection
     highPressureMultiplier: 0.65
     lowPressureMultiplier: 100
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.90
+        Slash: 0.90
+        Piercing: 0.95
+        Heat: 0.90
+        Radiation: 0.05 #all default, rad armor is higher
 
 - type: entity
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitEngineeringWhite
-  name: CE hardsuit
+  name: chief engineer's hardsuit
   description: A special hardsuit that protects against hazardous, low pressure environments, made for the chief engineer of the station.
   components:
   - type: Sprite
@@ -67,7 +99,15 @@
   - type: PressureProtection
     highPressureMultiplier: 0.45
     lowPressureMultiplier: 100
-
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.95
+        Heat: 0.8
+        Radiation: 0.05 #combines the engi and atmos bonuses
+#The voidsuit and eva suit are not techically 'hardsuits' but this seems to be the place for all EVA-capable outer clothing. This may be worth reevaluating when we have a lot more items.
 - type: entity
   parent: ClothingOuterHardsuitBase
   id: IHSVoidsuit
@@ -84,8 +124,22 @@
 
 - type: entity
   parent: ClothingOuterHardsuitBase
+  id:  ClothingOuterHardsuitEVA
+  name: EVA suit
+  description: A lightweight space suit with the basic ability to protect the wearer from the vacuum of space during emergencies.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/eva.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/eva.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 1
+    lowPressureMultiplier: 100
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitMedical
-  name: medical hardsuit
+  name: chief medical officer's hardsuit
   description: A special suit that protects against hazardous, low pressure environments. Built with lightweight materials for easier movement.
   components:
   - type: Sprite
@@ -109,6 +163,14 @@
   - type: PressureProtection
     highPressureMultiplier: 0.75
     lowPressureMultiplier: 100
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.6 #increased blunt as per description, for bomb survival
+        Slash: 0.9
+        Piercing: 0.95
+        Heat: 0.9
+        Radiation: 0.25
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -137,9 +199,17 @@
   - type: PressureProtection
     highPressureMultiplier: 0.75
     lowPressureMultiplier: 100
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.7
+        Heat: 0.8 #buffed combat stats all round
+        Radiation: 0.25
 
 - type: entity
-  parent: ClothingOuterHardsuitBase
+  parent: ClothingOuterHardsuitSecurity #set parent to sec hardsuit, hopefully wont break anything
   id: ClothingOuterHardsuitSecurityRed
   name: head of security's hardsuit
   description: A special suit that protects against hazardous, low pressure environments. Has an additional layer of armor.
@@ -165,6 +235,14 @@
   - type: PressureProtection
     highPressureMultiplier: 0.45
     lowPressureMultiplier: 100
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.6
+        Piercing: 0.4
+        Heat: 0.4 #all the combat numbers are pumped up here
+        Radiation: 0.20
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -179,3 +257,11 @@
   - type: PressureProtection
     highPressureMultiplier: 0.45
     lowPressureMultiplier: 100
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.6
+        Piercing: 0.4
+        Heat: 0.4 #same as the nukie suit
+        Radiation: 0.20

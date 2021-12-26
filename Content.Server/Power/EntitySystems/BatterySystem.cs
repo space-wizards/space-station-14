@@ -17,7 +17,7 @@ namespace Content.Server.Power.EntitySystems
 
         private void PreSync(NetworkBatteryPreSync ev)
         {
-            foreach (var (bat, netBat) in EntityManager.EntityQuery<BatteryComponent, PowerNetworkBatteryComponent>())
+            foreach (var (netBat, bat) in EntityManager.EntityQuery<PowerNetworkBatteryComponent, BatteryComponent>())
             {
                 netBat.NetworkBattery.Capacity = bat.MaxCharge;
                 netBat.NetworkBattery.CurrentStorage = bat.CurrentCharge;
@@ -26,7 +26,7 @@ namespace Content.Server.Power.EntitySystems
 
         private void PostSync(NetworkBatteryPostSync ev)
         {
-            foreach (var (bat, netBat) in EntityManager.EntityQuery<BatteryComponent, PowerNetworkBatteryComponent>())
+            foreach (var (netBat, bat) in EntityManager.EntityQuery<PowerNetworkBatteryComponent, BatteryComponent>())
             {
                 bat.CurrentCharge = netBat.NetworkBattery.CurrentStorage;
             }
@@ -34,9 +34,11 @@ namespace Content.Server.Power.EntitySystems
 
         public override void Update(float frameTime)
         {
-            foreach (var comp in EntityManager.EntityQuery<BatteryComponent>())
+            foreach (var (comp, batt) in EntityManager.EntityQuery<BatterySelfRechargerComponent, BatteryComponent>())
             {
-                comp.OnUpdate(frameTime);
+                if (!comp.AutoRecharge) continue;
+                if (batt.IsFullyCharged) continue;
+                batt.CurrentCharge += comp.AutoRechargeRate * frameTime;
             }
         }
     }

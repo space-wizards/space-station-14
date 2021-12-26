@@ -1,11 +1,10 @@
-﻿using System.Linq;
-using Content.Server.Explosion;
+using System.Linq;
+using Content.Server.Explosion.EntitySystems;
 using Content.Server.Pointing.Components;
-using Content.Shared.MobState;
+using Content.Shared.MobState.Components;
 using Content.Shared.Pointing.Components;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -19,8 +18,9 @@ namespace Content.Server.Pointing.EntitySystems
     [UsedImplicitly]
     internal sealed class RoguePointingSystem : EntitySystem
     {
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+
+        [Dependency] private readonly ExplosionSystem _explosions = default!;
 
         public override void Initialize()
         {
@@ -37,22 +37,20 @@ namespace Content.Server.Pointing.EntitySystems
             }
         }
 
-        private IEntity? RandomNearbyPlayer(EntityUid uid, RoguePointingArrowComponent? component = null, TransformComponent? transform = null)
+        private EntityUid? RandomNearbyPlayer(EntityUid uid, RoguePointingArrowComponent? component = null, TransformComponent? transform = null)
         {
             if (!Resolve(uid, ref component, ref transform))
                 return null;
 
-            var players = _playerManager
-                .GetPlayersInRange(transform.Coordinates, 15)
-                .Where(player => player.AttachedEntity != null && player.AttachedEntity.TryGetComponent(out IMobStateComponent? mobStateComponent) && !mobStateComponent.IsDead())
+            var players = Filter.Empty()
+                .AddPlayersByPvs(transform.MapPosition)
+                .RemoveWhereAttachedEntity(euid => !EntityManager.TryGetComponent(euid, out MobStateComponent? mobStateComponent) || mobStateComponent.IsDead())
+                .Recipients
                 .ToArray();
 
-            if (players.Length == 0)
-            {
-                return null;
-            }
-
-            return _random.Pick(players).AttachedEntity;
+            return players.Length != 0
+                ? _random.Pick(players).AttachedEntity
+                : null;
         }
 
         private void UpdateAppearance(EntityUid uid, RoguePointingArrowComponent? component = null, TransformComponent? transform = null, AppearanceComponent? appearance = null)
@@ -67,10 +65,10 @@ namespace Content.Server.Pointing.EntitySystems
         {
             foreach (var (component, transform) in EntityManager.EntityQuery<RoguePointingArrowComponent, TransformComponent>())
             {
-                var uid = component.Owner.Uid;
+                var uid = component.Owner;
                 component.Chasing ??= RandomNearbyPlayer(uid, component, transform);
 
-                if (component.Chasing == null)
+                if (component.Chasing is not {Valid: true} chasing)
                 {
                     EntityManager.QueueDeleteEntity(uid);
                     return;
@@ -80,7 +78,7 @@ namespace Content.Server.Pointing.EntitySystems
 
                 if (component.TurningDelay > 0)
                 {
-                    var difference = component.Chasing.Transform.WorldPosition - transform.WorldPosition;
+                    var difference = EntityManager.GetComponent<TransformComponent>(chasing).WorldPosition - transform.WorldPosition;
                     var angle = difference.ToAngle();
                     var adjusted = angle.Degrees + 90;
                     var newAngle = Angle.FromDegrees(adjusted);
@@ -95,7 +93,7 @@ namespace Content.Server.Pointing.EntitySystems
 
                 UpdateAppearance(uid, component, transform);
 
-                var toChased = component.Chasing.Transform.WorldPosition - transform.WorldPosition;
+                var toChased = EntityManager.GetComponent<TransformComponent>(chasing).WorldPosition - transform.WorldPosition;
 
                 transform.WorldPosition += toChased * frameTime * component.ChasingSpeed;
 
@@ -106,7 +104,7 @@ namespace Content.Server.Pointing.EntitySystems
                     return;
                 }
 
-                component.Owner.SpawnExplosion(0, 2, 1, 1);
+                _explosions.SpawnExplosion(uid, 0, 2, 1, 1);
                 SoundSystem.Play(Filter.Pvs(uid, entityManager: EntityManager), component.ExplosionSound.GetSound(), uid);
 
                 EntityManager.QueueDeleteEntity(uid);

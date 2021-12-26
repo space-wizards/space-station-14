@@ -61,6 +61,26 @@ namespace Content.Shared.Administration
         //Piss = 1 << 9,
 
         /// <summary>
+        ///     Lets you view admin logs.
+        /// </summary>
+        Logs = 1 << 9,
+
+        /// <summary>
+        ///     Lets you modify the round (forcemap, loadgamemap, etc)
+        /// </summary>
+        Round = 1 << 10,
+
+        /// <summary>
+        ///     Lets you use BQL queries.
+        /// </summary>
+        Query = 1 << 11,
+
+        /// <summary>
+        ///     Lets you use the admin help system.
+        /// </summary>
+        Adminhelp = 1 << 12,
+
+        /// <summary>
         ///     Dangerous host permissions like scsi.
         /// </summary>
         Host = 1u << 31,

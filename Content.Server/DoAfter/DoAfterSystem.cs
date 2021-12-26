@@ -12,8 +12,8 @@ namespace Content.Server.DoAfter
     public sealed class DoAfterSystem : EntitySystem
     {
         // We cache these lists as to not allocate them every update tick...
-        private readonly List<DoAfter> _cancelled = new();
-        private readonly List<DoAfter> _finished = new();
+        private readonly Queue<DoAfter> _cancelled = new();
+        private readonly Queue<DoAfter> _finished = new();
 
         public override void Initialize()
         {
@@ -23,7 +23,7 @@ namespace Content.Server.DoAfter
 
         public void HandleDamage(EntityUid _, DoAfterComponent component, DamageChangedEvent args)
         {
-            if (component.DoAfters.Count == 0 || !args.DamageIncreased)
+            if (component.DoAfters.Count == 0 || !args.InterruptsDoAfters)
             {
                 return;
             }
@@ -52,17 +52,17 @@ namespace Content.Server.DoAfter
                         case DoAfterStatus.Running:
                             break;
                         case DoAfterStatus.Cancelled:
-                            _cancelled.Add(doAfter);
+                            _cancelled.Enqueue(doAfter);
                             break;
                         case DoAfterStatus.Finished:
-                            _finished.Add(doAfter);
+                            _finished.Enqueue(doAfter);
                             break;
                         default:
                             throw new ArgumentOutOfRangeException();
                     }
                 }
 
-                foreach (var doAfter in _cancelled)
+                while (_cancelled.TryDequeue(out var doAfter))
                 {
                     comp.Cancelled(doAfter);
 
@@ -76,7 +76,7 @@ namespace Content.Server.DoAfter
                         RaiseLocalEvent(doAfter.EventArgs.BroadcastCancelledEvent);
                 }
 
-                foreach (var doAfter in _finished)
+                while (_finished.TryDequeue(out var doAfter))
                 {
                     comp.Finished(doAfter);
 
@@ -89,10 +89,6 @@ namespace Content.Server.DoAfter
                     if(doAfter.EventArgs.BroadcastFinishedEvent != null)
                         RaiseLocalEvent(doAfter.EventArgs.BroadcastFinishedEvent);
                 }
-
-                // Clean the shared lists at the end, ensuring they'll be clean for the next time we need them.
-                _cancelled.Clear();
-                _finished.Clear();
             }
         }
 

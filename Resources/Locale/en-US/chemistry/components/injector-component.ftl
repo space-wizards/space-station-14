@@ -17,3 +17,8 @@ injector-component-transfer-success-message = You transfer {$amount}u into {$tar
 injector-component-draw-success-message = You draw {$amount}u from {$target}.
 injector-component-target-already-full-message = {$target} is already full!
 injector-component-target-is-empty-message = {$target} is empty!
+
+## mob-inject doafter messages
+
+injector-component-injecting-user = You start inserting the needle.
+injector-component-injecting-target = {$user} is trying to stick a needle into you!
