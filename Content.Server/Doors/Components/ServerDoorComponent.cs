@@ -275,19 +275,19 @@ namespace Content.Server.Doors.Components
 
         #region Opening
 
-        public void TryOpen(EntityUid user = default)
+        public void TryOpen(EntityUid? user = null)
         {
             var msg = new DoorOpenAttemptEvent();
             _entMan.EventBus.RaiseLocalEvent(Owner, msg);
 
             if (msg.Cancelled) return;
 
-            if (!user.Valid)
+            if (user == null)
             {
                 // a machine opened it or something, idk
                 Open();
             }
-            else if (CanOpenByEntity(user))
+            else if (CanOpenByEntity(user.Value))
             {
                 Open();
 
@@ -422,14 +422,14 @@ namespace Content.Server.Doors.Components
 
         #region Closing
 
-        public void TryClose(EntityUid user = default)
+        public void TryClose(EntityUid? user = null)
         {
             var msg = new DoorCloseAttemptEvent();
             _entMan.EventBus.RaiseLocalEvent(Owner, msg);
 
             if (msg.Cancelled) return;
 
-            if (user != default && !CanCloseByEntity(user))
+            if (user != null && !CanCloseByEntity(user.Value))
             {
                 Deny();
                 return;
