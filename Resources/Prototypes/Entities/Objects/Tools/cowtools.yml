@@ -144,6 +144,10 @@
     sprite: Objects/Tools/Cowtools/milkalyzer.rsi
     state: milkalyzer
   - type: GasAnalyzer
+  - type: ActivatableUI
+    inHandsOnly: true
+    singleUser: true
+    key: enum.GasAnalyzerUiKey.Key
   - type: UserInterface
     interfaces:
     - key: enum.GasAnalyzerUiKey.Key

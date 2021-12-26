@@ -8,6 +8,10 @@
     sprite: Objects/Specific/Atmos/gasanalyzer.rsi
     state: icon
   - type: GasAnalyzer
+  - type: ActivatableUI
+    inHandsOnly: true
+    singleUser: true
+    key: enum.GasAnalyzerUiKey.Key
   - type: UserInterface
     interfaces:
     - key: enum.GasAnalyzerUiKey.Key
