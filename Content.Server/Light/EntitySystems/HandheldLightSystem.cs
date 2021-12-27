@@ -22,6 +22,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Player;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Light.EntitySystems
 {
@@ -33,7 +34,7 @@ namespace Content.Server.Light.EntitySystems
 
         // TODO: Ideally you'd be able to subscribe to power stuff to get events at certain percentages.. or something?
         // But for now this will be better anyway.
-        private HashSet<HandheldLightComponent> _activeLights = new();
+        private readonly HashSet<HandheldLightComponent> _activeLights = new();
 
         public override void Initialize()
         {
@@ -80,11 +81,12 @@ namespace Content.Server.Light.EntitySystems
 
         private void OnRemove(EntityUid uid, HandheldLightComponent component, ComponentRemove args)
         {
-            HandleDeactivate(component);
+            _activeLights.Remove(component);
         }
 
         private void OnInteractUsing(EntityUid uid, HandheldLightComponent component, InteractUsingEvent args)
         {
+            // TODO: https://github.com/space-wizards/space-station-14/pull/5864#discussion_r775191916
             if (args.Handled) return;
 
             if (!_blocker.CanInteract(args.User)) return;
@@ -124,28 +126,25 @@ namespace Content.Server.Light.EntitySystems
             _activeLights.Clear();
         }
 
-        private void HandleActivate(HandheldLightComponent component)
-        {
-            _activeLights.Add(component);
-        }
-
-        private void HandleDeactivate(HandheldLightComponent component)
-        {
-            _activeLights.Remove(component);
-        }
-
         public override void Update(float frameTime)
         {
-            foreach (var handheld in _activeLights.ToArray())
+            var toRemove = new RemQueue<HandheldLightComponent>();
+
+            foreach (var handheld in _activeLights)
             {
                 if (handheld.Deleted)
                 {
-                    _activeLights.Remove(handheld);
+                    toRemove.Add(handheld);
                     continue;
                 }
 
                 if (handheld.Paused) continue;
                 TryUpdate(handheld, frameTime);
+            }
+
+            foreach (var light in toRemove)
+            {
+                _activeLights.Remove(light);
             }
         }
 
@@ -172,7 +171,7 @@ namespace Content.Server.Light.EntitySystems
             SetState(component, false);
             component.Activated = false;
             UpdateLightAction(component);
-            HandleDeactivate(component);
+            _activeLights.Remove(component);
             component.LastLevel = null;
             component.Dirty(EntityManager);
 
@@ -208,7 +207,7 @@ namespace Content.Server.Light.EntitySystems
             component.Activated = true;
             UpdateLightAction(component);
             SetState(component, true);
-            HandleActivate(component);
+            _activeLights.Add(component);
             component.LastLevel = GetLevel(component);
             component.Dirty(EntityManager);
 
