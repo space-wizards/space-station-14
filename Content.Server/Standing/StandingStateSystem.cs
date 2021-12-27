@@ -21,7 +21,7 @@ public class StandingStateSystem : EntitySystem
 
         foreach (var heldItem in hands.GetAllHeldItems())
         {
-            if (!hands.Drop(heldItem.Owner))
+            if (!hands.Drop(heldItem.Owner, false))
                 continue;
 
             var worldRotation = EntityManager.GetComponent<TransformComponent>(uid).WorldRotation.ToVec();

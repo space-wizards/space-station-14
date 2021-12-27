@@ -172,7 +172,7 @@ namespace Content.Server.Temperature.Systems
 
                 var diff = Math.Abs(temperature.CurrentTemperature - temperature.HeatDamageThreshold);
                 var tempDamage = c / (1 + a * Math.Pow(Math.E, -heatK * diff)) - y;
-                _damageableSystem.TryChangeDamage(uid, temperature.HeatDamage * tempDamage);
+                _damageableSystem.TryChangeDamage(uid, temperature.HeatDamage * tempDamage, interruptsDoAfters: false);
             }
             else if (temperature.CurrentTemperature <= temperature.ColdDamageThreshold)
             {
@@ -185,7 +185,7 @@ namespace Content.Server.Temperature.Systems
                 var diff = Math.Abs(temperature.CurrentTemperature - temperature.ColdDamageThreshold);
                 var tempDamage =
                     Math.Sqrt(diff * (Math.Pow(temperature.DamageCap.Double(), 2) / temperature.ColdDamageThreshold));
-                _damageableSystem.TryChangeDamage(uid, temperature.ColdDamage * tempDamage);
+                _damageableSystem.TryChangeDamage(uid, temperature.ColdDamage * tempDamage, interruptsDoAfters: false);
             }
             else if (temperature.TakingDamage)
             {

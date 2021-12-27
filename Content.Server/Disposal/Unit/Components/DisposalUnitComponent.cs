@@ -90,11 +90,6 @@ namespace Content.Server.Disposal.Unit.Components
 
         private bool PlayerCanUse(EntityUid player)
         {
-            if (player == null)
-            {
-                return false;
-            }
-
             var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
 
             if (!actionBlocker.CanInteract(player) ||

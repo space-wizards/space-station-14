@@ -244,3 +244,13 @@
       magState: mag
       steps: 1
       zeroVisible: true
+
+- type: entity
+  name: Drozd
+  parent: SmgDrozd
+  id: SmgDrozdRiot
+  description: An excellent fully automatic Heavy SMG.
+  suffix: Non-Lethal
+  components:
+  - type: MagazineBarrel
+    magFillPrototype: MagazineMagnumSmgRubber

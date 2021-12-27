@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Content.Server.Construction;
+using Content.Server.Construction.Components;
 using Content.Server.Ghost.Components;
 using Content.Server.Tools;
 using Content.Shared.Acts;
@@ -149,6 +151,9 @@ namespace Content.Server.Storage.Components
             Contents = Owner.EnsureContainer<Container>(nameof(EntityStorageComponent));
             Contents.ShowContents = _showContents;
             Contents.OccludesLight = _occludesLight;
+
+            if(_entMan.TryGetComponent(Owner, out ConstructionComponent? construction))
+                EntitySystem.Get<ConstructionSystem>().AddContainer(Owner, Contents.ID, construction);
 
             if (_entMan.TryGetComponent<PlaceableSurfaceComponent?>(Owner, out var surface))
             {

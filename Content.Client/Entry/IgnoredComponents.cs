@@ -46,9 +46,6 @@ namespace Content.Client.Entry
             "ResearchServer",
             "ResearchPointSource",
             "ResearchClient",
-            "IdCard",
-            "Access",
-            "AccessReader",
             "IdCardConsole",
             "Airlock",
             "ThermalRegulator",
@@ -127,6 +124,8 @@ namespace Content.Client.Entry
             "Toys",
             "SurgeryTool",
             "EmitSoundOnThrow",
+            "Salvage",
+            "SalvageMagnet",
             "Flash",
             "Docking",
             "Telecrystal",
@@ -155,7 +154,6 @@ namespace Content.Client.Entry
             "RefillableSolution",
             "DrainableSolution",
             "ExaminableSolution",
-            "FitsInDispenser",
             "DrawableSolution",
             "InjectableSolution",
             "Barotrauma",
@@ -295,7 +293,6 @@ namespace Content.Client.Entry
             "BatteryCharger",
             "UnpoweredFlashlight",
             "Uplink",
-            "PDA",
             "SpawnItemsOnUse",
             "AmbientOnPowered",
             "Wieldable",
@@ -320,7 +317,9 @@ namespace Content.Client.Entry
             "Udder",
             "PneumaticCannon",
             "Spreader",
-            "GrowingKudzu"
+            "GrowingKudzu",
+            "MonkeyAccent",
+            "ReplacementAccent"
         };
     }
 }

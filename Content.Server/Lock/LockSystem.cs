@@ -1,6 +1,8 @@
 using Content.Server.Access.Components;
 using Content.Server.Access.Systems;
 using Content.Server.Storage.Components;
+using Content.Shared.Access.Components;
+using Content.Shared.Access.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
@@ -144,7 +146,7 @@ namespace Content.Server.Lock
             return true;
         }
 
-        private bool HasUserAccess(EntityUid uid, EntityUid user, AccessReader? reader = null, bool quiet = true)
+        private bool HasUserAccess(EntityUid uid, EntityUid user, AccessReaderComponent? reader = null, bool quiet = true)
         {
             // Not having an AccessComponent means you get free access. woo!
             if (!Resolve(uid, ref reader))

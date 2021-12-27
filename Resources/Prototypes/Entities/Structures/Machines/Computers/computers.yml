@@ -270,6 +270,7 @@
       - SecurityHelmet
       - SecuritySupplies
       - SecurityNonLethal
+      - SecurityRestraints
       - HydroponicsTools
       - HydroponicsSeeds
       - HydroponicsSeedsExotic
@@ -291,6 +292,7 @@
       - FunPlushies
       - FunArtSupplies
       - FunInstruments
+      - FunBoardGames
       - MaterialSteel
       - MaterialGlass
       - MaterialPlastic

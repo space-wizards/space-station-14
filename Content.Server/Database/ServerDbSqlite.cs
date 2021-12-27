@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Net;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Server.IP;
 using Content.Server.Preferences.Managers;
-using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using Microsoft.EntityFrameworkCore;
 using Robust.Shared.Configuration;
@@ -250,18 +248,6 @@ namespace Content.Server.Database
             return (admins.Select(p => (p.a, p.LastSeenUserName)).ToArray(), adminRanks)!;
         }
 
-        private async Task<int> NextId<TModel>(DbSet<TModel> set, Func<TModel, int> selector) where TModel : class
-        {
-            var id = 1;
-
-            if (await set.AnyAsync())
-            {
-                id = set.Max(selector) + 1;
-            }
-
-            return id;
-        }
-
         public override async Task<int> AddNewRound(params Guid[] playerIds)
         {
             await using var db = await GetDb();
@@ -270,9 +256,15 @@ namespace Content.Server.Database
                 .Where(player => playerIds.Contains(player.UserId))
                 .ToListAsync();
 
+            var nextId = 1;
+            if (await db.DbContext.Round.AnyAsync())
+            {
+                nextId = db.DbContext.Round.Max(round => round.Id) + 1;
+            }
+
             var round = new Round
             {
-                Id = await NextId(db.DbContext.Round, round => round.Id),
+                Id = nextId,
                 Players = players
             };
 
@@ -287,7 +279,12 @@ namespace Content.Server.Database
         {
             await using var db = await GetDb();
 
-            var nextId = await NextId(db.DbContext.AdminLog, log => log.Id);
+            var nextId = 1;
+            if (await db.DbContext.AdminLog.AnyAsync())
+            {
+                nextId = db.DbContext.AdminLog.Max(round => round.Id) + 1;
+            }
+
             var entities = new Dictionary<int, AdminLogEntity>();
 
             foreach (var (log, entityData) in logs)
