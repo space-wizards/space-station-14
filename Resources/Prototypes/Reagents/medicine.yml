@@ -518,10 +518,11 @@
             Toxin: -2
             Airloss: -2
             Brute: -2
-            
+
 - type: reagent
   id: Ultravasculine
   name: Ultravasculine
+  group: Medicine
   desc: Rapidly flushes toxins from the body, but places some stress on the veins. Do not overdose.
   physicalDesc: thick and grainy
   color: "#520e30"
