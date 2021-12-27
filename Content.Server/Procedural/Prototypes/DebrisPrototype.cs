@@ -47,8 +47,13 @@ public class DebrisPrototype : IPrototype
 public enum DebrisFloorplanStyle
 {
     /// <summary>
-    /// Produces a "holey" floorplan, as the generator simply places a tile randomly next to an existing tile.
+    /// Produces a "squiggly" floorplan, as the generator simply places a tile randomly next to an existing tile.
     /// </summary>
     Tiles,
+
+    /// <summary>
+    /// Similar to tiles, but places a small blob instead.
+    /// </summary>
+    Blobs,
 }
 

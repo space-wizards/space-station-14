@@ -600,7 +600,7 @@ namespace Content.Shared.CCVar
          */
 
         public static readonly CVarDef<float> SpawnRadius =
-            CVarDef.Create("worldgen.spawn_radius", 1000f, CVar.SERVERONLY);
+            CVarDef.Create("worldgen.spawn_radius", 500f, CVar.SERVERONLY);
 
         public static readonly CVarDef<float> MinDebrisSeparation =
             CVarDef.Create("worldgen.min_debris_separation", 50f, CVar.SERVERONLY);

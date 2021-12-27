@@ -34,7 +34,10 @@ public class DebrisGenerationSystem : EntitySystem
         switch (proto.FloorplanStyle)
         {
             case DebrisFloorplanStyle.Tiles:
-                PlaceFloorplanTiles(proto, grid);
+                PlaceFloorplanTiles(proto, grid, false);
+                break;
+            case DebrisFloorplanStyle.Blobs:
+                PlaceFloorplanTiles(proto, grid, true);
                 break;
             default:
                 throw new NotImplementedException();
@@ -43,7 +46,7 @@ public class DebrisGenerationSystem : EntitySystem
         return (grid, grid.GridEntityId);
     }
 
-    private void PlaceFloorplanTiles(DebrisPrototype proto, IMapGrid grid)
+    private void PlaceFloorplanTiles(DebrisPrototype proto, IMapGrid grid, bool blobs)
     {
         // NO MORE THAN TWO ALLOCATIONS THANK YOU VERY MUCH.
         var spawnPoints = new HashSet<Vector2i>((int)proto.FloorPlacements * 4);
@@ -79,7 +82,20 @@ public class DebrisGenerationSystem : EntitySystem
 
         for (var i = 0; i < proto.FloorPlacements; i++)
         {
-            PlaceTile(_random.Pick(spawnPoints));
+            var point = _random.Pick(spawnPoints);
+            PlaceTile(point);
+
+            if (blobs)
+            {
+                if (!taken.Contains(point.Offset(Direction.North)) && _random.Prob(0.5f))
+                    PlaceTile(point.Offset(Direction.North));
+                if (!taken.Contains(point.Offset(Direction.South)) && _random.Prob(0.5f))
+                    PlaceTile(point.Offset(Direction.South));
+                if (!taken.Contains(point.Offset(Direction.East)) && _random.Prob(0.5f))
+                    PlaceTile(point.Offset(Direction.East));
+                if (!taken.Contains(point.Offset(Direction.West)) && _random.Prob(0.5f))
+                    PlaceTile(point.Offset(Direction.West));
+            }
         }
     }
 

@@ -1,17 +1,4 @@
 - type: debris
-  id: RoidDebris1
-  floorplanStyle: Tiles
-  floorPlacements: 24
-  radius: 4
-  floorTiles:
-    - 'floor_asteroid_coarse_sand0'
-    - 'floor_asteroid_coarse_sand1'
-    - 'floor_asteroid_coarse_sand2'
-  populator:
-    !type:FillDebrisPopulator
-    fillerEntity: AsteroidRock
-
-- type: debris
   id: WreckDebris1
   floorplanStyle: Tiles
   floorPlacements: 24
@@ -52,10 +39,44 @@
           prob: 0.3
           orGroup: Debris
 
-- type: debrisLayout
-  id: SpawnDebris
-  layout:
-  - proto: RoidDebris1
-    prob: 0.75
-  - proto: WreckDebris1
-    prob: 1
+
+- type: debris
+  id: WreckDebris2
+  floorplanStyle: Tiles
+  floorPlacements: 48
+  radius: 6
+  floorTiles:
+    - 'plating'
+    - 'plating'
+    - 'floor_steel'
+    - 'lattice'
+  populator:
+    !type:ScrapyardPopulator
+    entityTable:
+      floor_steel:
+        - id: SalvageMaterialCrateSpawner
+          prob: 0.1
+          orGroup: Debris
+        - id: SalvageCanisterSpawner
+          prob: 0.05
+          orGroup: Debris
+      plating:
+        - id: WallSolid
+          prob: 0.3
+          orGroup: Debris
+        - id: SalvageMaterialCrateSpawner
+          prob: 0.1
+          orGroup: Debris
+        - id: SalvageCanisterSpawner
+          prob: 0.05
+          orGroup: Debris
+      lattice:
+        - id: SalvageMaterialCrateSpawner
+          prob: 0.05
+          orGroup: Debris
+        - id: SalvageCanisterSpawner
+          prob: 0.025
+          orGroup: Debris
+        - id: Grille
+          prob: 0.3
+          orGroup: Debris
