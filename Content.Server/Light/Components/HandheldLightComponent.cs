@@ -1,6 +1,8 @@
 using System.Threading.Tasks;
 using Content.Server.Clothing.Components;
 using Content.Server.Items;
+using Content.Server.Power.Components;
+using Content.Server.PowerCell;
 using Content.Server.PowerCell.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
@@ -31,14 +33,14 @@ namespace Content.Server.Light.Components
     /// </summary>
     [RegisterComponent]
 #pragma warning disable 618
-    internal sealed class HandheldLightComponent : SharedHandheldLightComponent, IUse, IExamine, IInteractUsing
+    internal sealed class HandheldLightComponent : SharedHandheldLightComponent, IUse, IExamine
 #pragma warning restore 618
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
         [ViewVariables(VVAccess.ReadWrite)] [DataField("wattage")] public float Wattage { get; set; } = 3f;
-        [ViewVariables] private PowerCellSlotComponent _cellSlot = default!;
-        private PowerCellComponent? Cell => _cellSlot.Cell;
+
+        private BatteryComponent? Cell => EntitySystem.Get<PowerCellSystem>().TryGetBatteryFromSlot(Owner, out var battery) ? battery : null;
 
         /// <summary>
         ///     Status of light, whether or not it is emitting light.
@@ -46,7 +48,7 @@ namespace Content.Server.Light.Components
         [ViewVariables]
         public bool Activated { get; private set; }
 
-        [ViewVariables] protected override bool HasCell => _cellSlot.HasCell;
+        [ViewVariables] protected override bool HasCell => Cell != null;
 
         [ViewVariables(VVAccess.ReadWrite)] [DataField("turnOnSound")] public SoundSpecifier TurnOnSound = new SoundPathSpecifier("/Audio/Items/flashlight_on.ogg");
         [ViewVariables(VVAccess.ReadWrite)] [DataField("turnOnFailSound")] public SoundSpecifier TurnOnFailSound = new SoundPathSpecifier("/Audio/Machines/button.ogg");
@@ -64,7 +66,6 @@ namespace Content.Server.Light.Components
             base.Initialize();
 
             Owner.EnsureComponent<PointLightComponent>();
-            _cellSlot = Owner.EnsureComponent<PowerCellSlotComponent>();
 
             Dirty();
         }
@@ -73,14 +74,6 @@ namespace Content.Server.Light.Components
         {
             base.OnRemove();
             _entMan.EventBus.QueueEvent(EventSource.Local, new DeactivateHandheldLightMessage(this));
-        }
-
-        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
-        {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User)) return false;
-            if (!_cellSlot.InsertCell(eventArgs.Using)) return false;
-            Dirty();
-            return true;
         }
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
