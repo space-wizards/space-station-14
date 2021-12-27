@@ -101,6 +101,8 @@ namespace Content.Client.Entry
             prototypes.RegisterIgnore("salvageMap");
             prototypes.RegisterIgnore("gamePreset");
             prototypes.RegisterIgnore("gameRule");
+            prototypes.RegisterIgnore("debris");
+            prototypes.RegisterIgnore("debrisLayout");
 
             ClientContentIoC.Register();
 
