@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Pies no longer spin when thrown., type: Tweak}
-  id: 276
-  time: '2021-07-23T06:12:08.0000000+00:00'
 - author: Seth
   changes:
   - {message: Made the baseball bat craftable, type: Add}
@@ -2873,3 +2868,9 @@ Entries:
     type: Tweak}
   id: 777
   time: '2021-12-27T11:29:39.0000000+00:00'
+- author: AJCM-git
+  changes:
+  - {message: Now you need to be closer to a closet/locker/crate to actually enter
+      it, type: Fix}
+  id: 778
+  time: '2021-12-27T12:04:18.0000000+00:00'
