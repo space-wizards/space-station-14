@@ -54,6 +54,6 @@
     sprite: Objects/Misc/bureaucracy.rsi
     state: pen
   product: CrateServiceBureaucracy
-  cost: 500
+  cost: 1000
   category: Service
   group: market
