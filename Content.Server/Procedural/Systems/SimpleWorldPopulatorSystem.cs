@@ -8,6 +8,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Server.Procedural.Systems;
 
@@ -17,6 +18,7 @@ public class SimpleWorldPopulatorSystem : EntitySystem
     [Dependency] private readonly IConfigurationManager _configuration = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly DebrisGenerationSystem _debrisGeneration = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     public void SpawnDebrisField(MapCoordinates around, float exclusionZone)
     {
@@ -28,7 +30,10 @@ public class SimpleWorldPopulatorSystem : EntitySystem
         {
             var proto = layout.Pick();
             if (proto is not null)
-                _debrisGeneration.GenerateDebris(proto, new MapCoordinates(point, around.MapId));
+            {
+                var ent = _debrisGeneration.GenerateDebris(proto, new MapCoordinates(point, around.MapId));
+                EntityManager.GetComponent<TransformComponent>(ent).WorldRotation = _random.NextAngle();
+            }
         }
     }
 }
