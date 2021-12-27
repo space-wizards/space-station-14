@@ -15,7 +15,7 @@ namespace Content.Server.Procedural.Populators.Debris;
 public class ScrapyardPopulator : DebrisPopulator
 {
     [DataField("entityTable", required: true,
-        customTypeSerializer: typeof(PrototypeIdDictionarySerializer<List<EntitySpawnEntry>, EntityPrototype>))]
+        customTypeSerializer: typeof(PrototypeIdDictionarySerializer<List<EntitySpawnEntry>, ContentTileDefinition>))]
     public Dictionary<string, List<EntitySpawnEntry>> EntityTable = default!;
 
     public override void Populate(EntityUid gridEnt, IMapGrid grid)
