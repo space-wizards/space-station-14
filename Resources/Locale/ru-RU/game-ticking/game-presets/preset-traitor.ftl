@@ -39,6 +39,5 @@ traitor-death-match-end-round-description-entry = КПК {$originalName}, с {$t
 ## TraitorRole
 
 # TraitorRole
-traitor-role-name = Агент синдиката
 traitor-role-greeting = Здравствуйте, агент
 traitor-role-codewords = Ваши кодовые слова: {$codewords}
