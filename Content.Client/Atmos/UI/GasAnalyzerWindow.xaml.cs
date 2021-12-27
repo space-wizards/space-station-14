@@ -6,6 +6,7 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
+using Content.Shared.Localizations;
 using Content.Shared.Temperature;
 using static Content.Shared.Atmos.Components.SharedGasAnalyzerComponent;
 
@@ -39,11 +40,20 @@ namespace Content.Client.Atmos.UI
                 return;
             }
 
-            statusMessage.AddMarkup(Loc.GetString("gas-analyzer-window-pressure-text", ("pressure", $"{state.Pressure:0.##}")));
+            statusMessage.AddMarkup(
+                Loc.GetString(
+                    "gas-analyzer-window-pressure-text",
+                    ("pressure", Units.Pressure.Format(state.Pressure,"0.#"))
+                )
+            );
+
             statusMessage.PushNewline();
-            statusMessage.AddMarkup(Loc.GetString("gas-analyzer-window-temperature-text",
-                                     ("tempK", $"{state.Temperature:0.#}"),
-                                     ("tempC", $"{TemperatureHelpers.KelvinToCelsius(state.Temperature):0.#}")));
+            statusMessage.AddMarkup(Loc.GetString(
+                "gas-analyzer-window-temperature-text",
+                    ("tempK", Units.Temperature.Format(state.Temperature,"0.#")),
+                    ("tempC", $"{TemperatureHelpers.KelvinToCelsius(state.Temperature):0.#}")
+                )
+            );
 
             if(state.Gases == null)
             {
