@@ -1,9 +1,4 @@
 Entries:
-- author: Seth
-  changes:
-  - {message: Made the baseball bat craftable, type: Add}
-  id: 277
-  time: '2021-07-24T23:51:17.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Throwing feels more natural., type: Tweak}
@@ -2874,3 +2869,9 @@ Entries:
       it, type: Fix}
   id: 778
   time: '2021-12-27T12:04:18.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'It has been discovered that plasma and histamine react to create Ultravasculine
+      (patent pending), a new advanced antitoxin.', type: Add}
+  id: 779
+  time: '2021-12-27T12:45:16.0000000+00:00'
