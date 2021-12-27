@@ -5,11 +5,9 @@ using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Temperature.Components;
-using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.Database;
-using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
@@ -31,7 +29,7 @@ namespace Content.Server.Temperature.Systems
 
         public float UpdateInterval = 1.0f;
 
-        private float _accumulatedFrametime = 0.0f;
+        private float _accumulatedFrametime;
 
         public override void Initialize()
         {
@@ -109,37 +107,37 @@ namespace Content.Server.Temperature.Systems
             {
                 // Cold strong.
                 case <= 260:
-                    _alertsSystem.ShowAlert(status.Owner, AlertType.Cold, 3, null);
+                    _alertsSystem.ShowAlert(uid, AlertType.Cold, 3);
                     break;
 
                 // Cold mild.
                 case <= 280 and > 260:
-                    _alertsSystem.ShowAlert(status.Owner, AlertType.Cold, 2, null);
+                    _alertsSystem.ShowAlert(uid, AlertType.Cold, 2);
                     break;
 
                 // Cold weak.
                 case <= 292 and > 280:
-                    _alertsSystem.ShowAlert(status.Owner, AlertType.Cold, 1, null);
+                    _alertsSystem.ShowAlert(uid, AlertType.Cold, 1);
                     break;
 
                 // Safe.
                 case <= 327 and > 292:
-                    _alertsSystem.ClearAlertCategory(status.Owner, AlertCategory.Temperature);
+                    _alertsSystem.ClearAlertCategory(uid, AlertCategory.Temperature);
                     break;
 
                 // Heat weak.
                 case <= 335 and > 327:
-                    _alertsSystem.ShowAlert(status.Owner, AlertType.Hot, 1, null);
+                    _alertsSystem.ShowAlert(uid, AlertType.Hot, 1);
                     break;
 
                 // Heat mild.
                 case <= 360 and > 335:
-                    _alertsSystem.ShowAlert(status.Owner, AlertType.Hot, 2, null);
+                    _alertsSystem.ShowAlert(uid, AlertType.Hot, 2);
                     break;
 
                 // Heat strong.
                 case > 360:
-                    _alertsSystem.ShowAlert(status.Owner, AlertType.Hot, 3, null);
+                    _alertsSystem.ShowAlert(uid, AlertType.Hot, 3);
                     break;
             }
         }
@@ -151,7 +149,7 @@ namespace Content.Server.Temperature.Systems
 
         private void ChangeDamage(EntityUid uid, TemperatureComponent temperature)
         {
-            if (!EntityManager.TryGetComponent<DamageableComponent>(uid, out var damage))
+            if (!EntityManager.HasComponent<DamageableComponent>(uid))
                 return;
 
             // See this link for where the scaling func comes from:

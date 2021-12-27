@@ -1,9 +1,7 @@
 using System;
 using System.Text;
 using System.Text.RegularExpressions;
-using Content.Server.Alert;
 using Content.Server.Speech.Components;
-using Content.Shared.Alert;
 using Content.Shared.Speech.EntitySystems;
 using Content.Shared.StatusEffect;
 using Robust.Shared.GameObjects;
@@ -28,13 +26,13 @@ namespace Content.Server.Speech.EntitySystems
             SubscribeLocalEvent<StutteringAccentComponent, AccentGetEvent>(OnAccent);
         }
 
-        public override void DoStutter(EntityUid uid, TimeSpan time, bool refresh, StatusEffectsComponent? status = null, AlertsComponent? alerts = null)
+        public override void DoStutter(EntityUid uid, TimeSpan time, bool refresh, StatusEffectsComponent? status = null)
         {
             if (!Resolve(uid, ref status, false))
                 return;
 
             if (!_statusEffectsSystem.HasStatusEffect(uid, StutterKey, status))
-                _statusEffectsSystem.TryAddStatusEffect<StutteringAccentComponent>(uid, StutterKey, time, refresh, status, alerts);
+                _statusEffectsSystem.TryAddStatusEffect<StutteringAccentComponent>(uid, StutterKey, time, refresh, status);
             else
                 _statusEffectsSystem.TryAddTime(uid, StutterKey, time, status);
         }

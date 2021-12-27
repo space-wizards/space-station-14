@@ -19,11 +19,6 @@ namespace Content.Server.MobState.States
                 return;
             }
 
-            if (!entityManager.HasComponent<AlertsComponent>(entity))
-            {
-                return;
-            }
-
             if (!entityManager.TryGetComponent(entity, out MobStateComponent? stateComponent))
             {
                 return;

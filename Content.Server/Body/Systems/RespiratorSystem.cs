@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Administration.Logs;
-using Content.Server.Alert;
 using Content.Server.Atmos;
 using Content.Server.Body.Components;
 using Content.Shared.Alert;
@@ -203,10 +202,7 @@ namespace Content.Server.Body.Systems
 
             respirator.Suffocating = true;
 
-            if (EntityManager.TryGetComponent(uid, out AlertsComponent? alertsComponent))
-            {
-                _alertsSystem.ShowAlert(alertsComponent.Owner, AlertType.LowOxygen);
-            }
+            _alertsSystem.ShowAlert(uid, AlertType.LowOxygen);
 
             _damageableSys.TryChangeDamage(uid, respirator.Damage, true, false);
         }
@@ -218,10 +214,7 @@ namespace Content.Server.Body.Systems
 
             respirator.Suffocating = false;
 
-            if (EntityManager.TryGetComponent(uid, out AlertsComponent? alertsComponent))
-            {
-                _alertsSystem.ClearAlert(alertsComponent.Owner, AlertType.LowOxygen);
-            }
+            _alertsSystem.ClearAlert(uid, AlertType.LowOxygen);
 
             _damageableSys.TryChangeDamage(uid, respirator.DamageRecovery, true);
         }

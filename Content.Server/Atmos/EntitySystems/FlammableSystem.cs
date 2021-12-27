@@ -167,10 +167,9 @@ namespace Content.Server.Atmos.EntitySystems
         }
 
         public void Resist(EntityUid uid,
-            FlammableComponent? flammable = null,
-            AlertsComponent? alerts = null)
+            FlammableComponent? flammable = null)
         {
-            if (!Resolve(uid, ref flammable, ref alerts))
+            if (!Resolve(uid, ref flammable))
                 return;
 
             if (!flammable.OnFire || !_actionBlockerSystem.CanInteract(flammable.Owner) || flammable.Resisting)
@@ -179,7 +178,7 @@ namespace Content.Server.Atmos.EntitySystems
             flammable.Resisting = true;
 
             flammable.Owner.PopupMessage(Loc.GetString("flammable-component-resist-message"));
-            _stunSystem.TryParalyze(uid, TimeSpan.FromSeconds(2f), true, alerts: alerts);
+            _stunSystem.TryParalyze(uid, TimeSpan.FromSeconds(2f), true);
 
             // TODO FLAMMABLE: Make this not use TimerComponent...
             flammable.Owner.SpawnTimer(2000, () =>

@@ -35,7 +35,6 @@ namespace Content.Server.Buckle.Components
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         [ComponentDependency] public readonly AppearanceComponent? Appearance = null;
-        [ComponentDependency] private readonly AlertsComponent? _serverAlerts = null;
         [ComponentDependency] private readonly MobStateComponent? _mobState = null;
 
         [DataField("size")]
@@ -93,19 +92,14 @@ namespace Content.Server.Buckle.Components
         /// </summary>
         private void UpdateBuckleStatus()
         {
-            if (_serverAlerts == null)
-            {
-                return;
-            }
-
             if (Buckled)
             {
                 AlertType alertType = BuckledTo?.BuckledAlertType ?? AlertType.Buckled;
-                EntitySystem.Get<AlertsSystem>().ShowAlert(_serverAlerts.Owner, alertType, null, null);
+                EntitySystem.Get<AlertsSystem>().ShowAlert(Owner, alertType);
             }
             else
             {
-                EntitySystem.Get<AlertsSystem>().ClearAlertCategory(_serverAlerts.Owner, AlertCategory.Buckled);
+                EntitySystem.Get<AlertsSystem>().ClearAlertCategory(Owner, AlertCategory.Buckled);
             }
         }
 
