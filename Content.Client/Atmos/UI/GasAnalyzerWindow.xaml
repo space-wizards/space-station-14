@@ -1,7 +1,7 @@
-<SS14Window xmlns="https://spacestation14.io" MinSize="440 300" Title="{Loc gas-analyzer-window-name}">
+<SS14Window xmlns="https://spacestation14.io" MinSize="300 200" Title="{Loc gas-analyzer-window-name}">
     <BoxContainer Name="Content" Orientation="Vertical" VerticalExpand="True" SeparationOverride="6">
         <RichTextLabel Name="StatusLabel"/>
         <GridContainer Name="GasGrid" Columns="2" HSeparationOverride="1" VSeparationOverride="8" VerticalExpand="True"/>
-        <BoxContainer Name="GasBar" Orientation="Horizontal" HorizontalExpand="True" MinSize="0 30" VerticalAlignment="Bottom"/>
+        <BoxContainer Name="GasBar" SeparationOverride = "3" Orientation="Horizontal" HorizontalExpand="True" MinSize="0 30" VerticalAlignment="Bottom"/>
     </BoxContainer>
 </SS14Window>
