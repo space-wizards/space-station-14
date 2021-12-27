@@ -30,7 +30,7 @@
     HeldPrefix: unlit
     size: 1
   - type: Candle #Replace with Candle component, probably?
-    wax: 200
+    wax: 2000
     brandNewBehaviorID: BrandNewBehavior
     halfNewBehaviourID: HalfNewBehavior
     almostOutBehaviourID: AlmostOutBehavior
