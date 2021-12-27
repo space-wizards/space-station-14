@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameTicking;
 using Content.Server.Ghost.Components;
+using Content.Server.Mind;
 using Content.Server.Mind.Components;
 using Content.Server.Players;
 using Content.Server.Visible;
@@ -26,6 +27,7 @@ namespace Content.Server.Ghost
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly GameTicker _ticker = default!;
+        [Dependency] private readonly MindSystem _mindSystem = default!;
 
         public override void Initialize()
         {
@@ -180,7 +182,7 @@ namespace Content.Server.Ghost
                 return;
 
             if (EntityManager.TryGetComponent<MindComponent?>(uid, out var mind))
-                mind.GhostOnShutdown = false;
+                _mindSystem.SetGhostOnShutdown(uid, false, mind);
             EntityManager.DeleteEntity(uid);
         }
 
