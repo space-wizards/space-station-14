@@ -1,10 +1,4 @@
 Entries:
-- author: SweptWasTaken
-  changes:
-  - {message: botanical belt for gardening tools, type: Add}
-  - {message: add mapped storage sprites for lots of belts and other stuff, type: Add}
-  id: 280
-  time: '2021-07-25T07:21:18.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: You can now set the transfer amount of solution containers using a right-click
@@ -2874,3 +2868,8 @@ Entries:
   - {message: Fixed camera rotation when going across grids., type: Fix}
   id: 781
   time: '2021-12-27T17:50:00.0000000+00:00'
+- author: Phantom-Lily
+  changes:
+  - {message: 'Added a new wreck to salvage with many, many instruments.', type: Add}
+  id: 782
+  time: '2021-12-27T18:41:14.0000000+00:00'
