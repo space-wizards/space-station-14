@@ -40,18 +40,12 @@ namespace Content.Server.Stunnable
             var source = args.Source;
             var target = args.Target;
 
-            if (source != null)
-            {
-                var knock = EntityManager.GetComponent<KnockedDownComponent>(uid);
-                SoundSystem.Play(Filter.Pvs(source), knock.StunAttemptSound.GetSound(), source, AudioHelpers.WithVariation(0.025f));
+            var knock = EntityManager.GetComponent<KnockedDownComponent>(uid);
+            SoundSystem.Play(Filter.Pvs(source), knock.StunAttemptSound.GetSound(), source, AudioHelpers.WithVariation(0.025f));
 
-                if (target != null)
-                {
-                    // TODO: Use PopupSystem
-                    source.PopupMessageOtherClients(Loc.GetString("stunned-component-disarm-success-others", ("source", Name: EntityManager.GetComponent<MetaDataComponent>(source).EntityName), ("target", Name: EntityManager.GetComponent<MetaDataComponent>(target).EntityName)));
-                    source.PopupMessageCursor(Loc.GetString("stunned-component-disarm-success", ("target", Name: EntityManager.GetComponent<MetaDataComponent>(target).EntityName)));
-                }
-            }
+            // TODO: Use PopupSystem
+            source.PopupMessageOtherClients(Loc.GetString("stunned-component-disarm-success-others", ("source", Name(source)), ("target", Name(target))));
+            source.PopupMessageCursor(Loc.GetString("stunned-component-disarm-success", ("target", Name(target))));
 
             _adminLogSystem.Add(LogType.DisarmedKnockdown, LogImpact.Medium, $"{ToPrettyString(args.Source):user} knocked down {ToPrettyString(args.Target):target}");
 

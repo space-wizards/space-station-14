@@ -33,6 +33,10 @@ namespace Content.Server.Database
             {
                 x.Ignore(CoreEventId.ManyServiceProvidersCreatedWarning);
             });
+
+#if DEBUG
+            options.EnableSensitiveDataLogging();
+#endif
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

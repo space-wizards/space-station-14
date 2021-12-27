@@ -243,7 +243,7 @@ public partial class AdminLogSystem : SharedAdminLogSystem
         }
     }
 
-    private async void Add(LogType type, LogImpact impact, string message, JsonDocument json, List<Guid> players, List<(int id, string? name)> entities)
+    private async void Add(LogType type, LogImpact impact, string message, JsonDocument json, HashSet<Guid> players, Dictionary<int, string?> entities)
     {
         var logId = NextLogId;
         var date = DateTime.UtcNow;

@@ -1,21 +1,6 @@
 Entries:
 - author: PJB
   changes:
-  - {message: You can now only make the same type of vote once every 4 minutes., type: Tweak}
-  id: 272
-  time: '2021-07-21T17:04:18.364235+00:00'
-- author: Seth
-  changes:
-  - {message: Added Cannabis and Tabaco seeds into the exotic seeds crate, type: Add}
-  id: 273
-  time: '2021-07-22T02:20:41.0000000+00:00'
-- author: Ygg01
-  changes:
-  - {message: Added visualizer for things like Crayons and Toolbelts, type: Add}
-  id: 274
-  time: '2021-07-22T09:56:55.0000000+00:00'
-- author: PJB
-  changes:
   - {message: AFK players no longer automatically vote "no" on restart votes., type: Tweak}
   id: 275
   time: '2021-07-22T21:22:04.854449+00:00'
@@ -2870,3 +2855,20 @@ Entries:
       get read., type: Tweak}
   id: 773
   time: '2021-12-25T01:32:33.0000000+00:00'
+- author: FoLoKe
+  changes:
+  - {message: Fixed butchering without a knife., type: Fix}
+  id: 774
+  time: '2021-12-26T02:32:02.0000000+00:00'
+- author: Morb0
+  changes:
+  - {message: Changed antag names in preferences, type: Add}
+  - {message: Does not choose a random traitor if there are available candidates,
+    type: Fix}
+  id: 775
+  time: '2021-12-26T03:13:38.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Beanbag rounds now stun people., type: Fix}
+  id: 776
+  time: '2021-12-26T22:22:20.0000000+00:00'
