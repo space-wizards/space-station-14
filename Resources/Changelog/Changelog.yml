@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Add server cvar for whether pushing is enabled., type: Add}
-  id: 279
-  time: '2021-07-25T06:58:11.0000000+00:00'
 - author: SweptWasTaken
   changes:
   - {message: botanical belt for gardening tools, type: Add}
@@ -2874,3 +2869,8 @@ Entries:
   - {message: Flashing through walls., type: Fix}
   id: 780
   time: '2021-12-27T16:51:12.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixed camera rotation when going across grids., type: Fix}
+  id: 781
+  time: '2021-12-27T17:50:00.0000000+00:00'
