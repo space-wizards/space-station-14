@@ -4,6 +4,7 @@ using Content.Shared.Maps;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Server.Procedural.Prototypes;
 
@@ -36,7 +37,7 @@ public class DebrisPrototype : IPrototype
     /// <summary>
     /// List of tile types to construct the floor with.
     /// </summary>
-    [DataField("floorTiles", required: true)]
+    [DataField("floorTiles", required: true, customTypeSerializer:typeof(PrototypeIdListSerializer<ContentTileDefinition>))]
     public List<string> FloorTiles { get; } = default!;
 
     [DataField("radius", required: true)]
