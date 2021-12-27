@@ -43,6 +43,24 @@
         orGroup: GlovesOrWires
 
 - type: entity
+  id: ToolboxMechanicalFilled
+  name: mechanical toolbox
+  suffix: Filled
+  parent: ToolboxMechanical
+  components:
+  - type: StorageFill
+    contents:
+      - id: Crowbar
+      - id: Wrench
+      - id: Welder
+      - id: Screwdriver
+        prob: 0.5
+      - id: FlashlightLantern
+        prob: 0.7
+      - id: ClothingHeadHatHardhatBlue
+        prob: 0.5
+
+- type: entity
   id: ToolboxSyndicateFilled
   name: suspicious toolbox
   suffix: Filled
