@@ -1,36 +1,4 @@
 Entries:
-- author: PJB
-  changes:
-  - {message: AFK players no longer automatically vote "no" on restart votes., type: Tweak}
-  id: 275
-  time: '2021-07-22T21:22:04.854449+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Pies no longer spin when thrown., type: Tweak}
-  id: 276
-  time: '2021-07-23T06:12:08.0000000+00:00'
-- author: Seth
-  changes:
-  - {message: Made the baseball bat craftable, type: Add}
-  id: 277
-  time: '2021-07-24T23:51:17.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Throwing feels more natural., type: Tweak}
-  - {message: Pushed objects don't slide as far., type: Tweak}
-  id: 278
-  time: '2021-07-25T06:58:03.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Add server cvar for whether pushing is enabled., type: Add}
-  id: 279
-  time: '2021-07-25T06:58:11.0000000+00:00'
-- author: SweptWasTaken
-  changes:
-  - {message: botanical belt for gardening tools, type: Add}
-  - {message: add mapped storage sprites for lots of belts and other stuff, type: Add}
-  id: 280
-  time: '2021-07-25T07:21:18.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: You can now set the transfer amount of solution containers using a right-click
@@ -2872,3 +2840,36 @@ Entries:
   - {message: Beanbag rounds now stun people., type: Fix}
   id: 776
   time: '2021-12-26T22:22:20.0000000+00:00'
+- author: Pancake
+  changes:
+  - {message: Salvage Equipment crates can be purchased from the cargo computer.,
+    type: Tweak}
+  id: 777
+  time: '2021-12-27T11:29:39.0000000+00:00'
+- author: AJCM-git
+  changes:
+  - {message: Now you need to be closer to a closet/locker/crate to actually enter
+      it, type: Fix}
+  id: 778
+  time: '2021-12-27T12:04:18.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'It has been discovered that plasma and histamine react to create Ultravasculine
+      (patent pending), a new advanced antitoxin.', type: Add}
+  id: 779
+  time: '2021-12-27T12:45:16.0000000+00:00'
+- author: Charlese2
+  changes:
+  - {message: Flashing through walls., type: Fix}
+  id: 780
+  time: '2021-12-27T16:51:12.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixed camera rotation when going across grids., type: Fix}
+  id: 781
+  time: '2021-12-27T17:50:00.0000000+00:00'
+- author: Phantom-Lily
+  changes:
+  - {message: 'Added a new wreck to salvage with many, many instruments.', type: Add}
+  id: 782
+  time: '2021-12-27T18:41:14.0000000+00:00'

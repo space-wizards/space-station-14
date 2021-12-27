@@ -52,7 +52,8 @@ namespace Content.Client.Administration.UI.Tabs.PlayerTab
             PlayerList.AddChild(new PlayerTabEntry("Username",
                 "Character",
                 "Antagonist",
-                new StyleBoxFlat(altColor)));
+                new StyleBoxFlat(altColor),
+                true));
             PlayerList.AddChild(new HSeparator());
 
             var useAltColor = false;
@@ -61,7 +62,8 @@ namespace Content.Client.Administration.UI.Tabs.PlayerTab
                 var entry = new PlayerTabEntry(player.Username,
                     player.CharacterName,
                     player.Antag ? "YES" : "NO",
-                    new StyleBoxFlat(useAltColor ? altColor : defaultColor));
+                    new StyleBoxFlat(useAltColor ? altColor : defaultColor),
+                    player.Connected);
                 entry.PlayerUid = player.EntityUid;
                 entry.OnPressed += args => OnEntryPressed?.Invoke(args);
                 PlayerList.AddChild(entry);
