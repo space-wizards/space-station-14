@@ -53,6 +53,7 @@
       - id: Crowbar
       - id: Wrench
       - id: Welder
+      - id: Wirecutter
       - id: Screwdriver
         prob: 0.5
       - id: FlashlightLantern
