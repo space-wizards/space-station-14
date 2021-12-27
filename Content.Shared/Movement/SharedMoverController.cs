@@ -5,6 +5,7 @@ using Content.Shared.Friction;
 using Content.Shared.MobState.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Pulling.Components;
+using JetBrains.Annotations;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -60,6 +61,14 @@ namespace Content.Shared.Movement
             UsedMobMovement.Clear();
         }
 
+        protected Angle GetParentGridAngle(TransformComponent xform, IMoverComponent mover)
+        {
+            if (xform.GridID == GridId.Invalid || !_mapManager.TryGetGrid(xform.GridID, out var grid))
+                return mover.LastGridAngle;
+
+            return grid.WorldRotation;
+        }
+
         /// <summary>
         ///     A generic kinematic mover for entities.
         /// </summary>
@@ -68,7 +77,7 @@ namespace Content.Shared.Movement
             var (walkDir, sprintDir) = mover.VelocityDir;
 
             var transform = EntityManager.GetComponent<TransformComponent>(mover.Owner);
-            var parentRotation = transform.Parent!.WorldRotation;
+            var parentRotation = GetParentGridAngle(transform, mover);
 
             // Regular movement.
             // Target velocity.
@@ -118,7 +127,7 @@ namespace Content.Shared.Movement
                 if (!touching)
                 {
                     if (transform.GridID != GridId.Invalid)
-                        mover.LastGridAngle = transform.Parent!.WorldRotation;
+                        mover.LastGridAngle = GetParentGridAngle(transform, mover);
 
                     transform.WorldRotation = physicsComponent.LinearVelocity.GetDir().ToAngle();
                     return;
@@ -130,7 +139,7 @@ namespace Content.Shared.Movement
             // This is relative to the map / grid we're on.
             var total = walkDir * mover.CurrentWalkSpeed + sprintDir * mover.CurrentSprintSpeed;
 
-            var parentRotation = transform.Parent!.WorldRotation;
+            var parentRotation = GetParentGridAngle(transform, mover);
 
             var worldTotal = _relativeMovement ? parentRotation.RotateVec(total) : total;
 
