@@ -1,12 +1,6 @@
 Entries:
 - author: mirrorcult
   changes:
-  - {message: You can now set the transfer amount of solution containers using a right-click
-      verb., type: Add}
-  id: 281
-  time: '2021-07-25T07:53:53.0000000+00:00'
-- author: mirrorcult
-  changes:
   - {message: Items with missing inhand sprites no longer show a giant ERROR, type: Fix}
   id: 282
   time: '2021-07-25T10:02:48.0000000+00:00'
@@ -2873,3 +2867,8 @@ Entries:
   - {message: 'Added a new wreck to salvage with many, many instruments.', type: Add}
   id: 782
   time: '2021-12-27T18:41:14.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes movement in space., type: Fix}
+  id: 783
+  time: '2021-12-27T20:12:35.788624+00:00'
