@@ -128,7 +128,7 @@
   - type: Sprite
     state: iron
   - type: Meltable
-    material: Iron
+    material: Steel
 
 - type: entity
   id: IronOre1
