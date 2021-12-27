@@ -518,3 +518,44 @@
             Toxin: -2
             Airloss: -2
             Brute: -2
+            
+- type: reagent
+  id: Ultravasculine
+  name: Ultravasculine
+  desc: Rapidly flushes toxins from the body, but places some stress on the veins. Do not overdose.
+  physicalDesc: thick and grainy
+  color: "#520e30"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 0
+          max: 30
+        damage:
+          groups:
+            Toxin: -3
+            Brute: 0.5
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 30
+        damage:
+          groups:
+            Toxin: -1
+            Brute: 3
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Histamine
+          min: 1
+        reagent: Histamine
+        amount: -1
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Histamine
+          min: 1
+        reagent: Ultravasculine
+        amount: 0.5

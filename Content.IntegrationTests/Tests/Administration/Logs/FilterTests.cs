@@ -1,5 +1,4 @@
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Shared.Administration.Logs;
@@ -84,13 +83,13 @@ public class FilterTests : ContentIntegrationTest
             var firstFound = false;
             var secondFound = false;
 
-            var both = sAdminLogSystem.CurrentRoundLogs(new LogFilter
+            var both = await sAdminLogSystem.CurrentRoundLogs(new LogFilter
             {
                 Search = commonGuidStr,
                 DateOrder = order
             });
 
-            await foreach (var log in both)
+            foreach (var log in both)
             {
                 if (!log.Message.Contains(commonGuidStr))
                 {

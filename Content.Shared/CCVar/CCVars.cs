@@ -605,6 +605,16 @@ namespace Content.Shared.CCVar
             SalvageForced = CVarDef.Create("salvage.forced", "", CVar.SERVERONLY);
 
         /*
+         * Rules
+         */
+
+        /// <summary>
+        /// Time that players have to wait before rules can be accepted.
+        /// </summary>
+        public static readonly CVarDef<float> RulesWaitTime =
+            CVarDef.Create("rules.time", 45f, CVar.SERVER | CVar.REPLICATED);
+
+        /*
          * Autogeneration
          */
 

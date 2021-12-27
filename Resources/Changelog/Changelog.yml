@@ -1,82 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: Fixes handheld instruments not working., type: Fix}
-  id: 263
-  time: '2021-07-18T13:00:50.345009+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix physics rotation issues, type: Fix}
-  id: 264
-  time: '2021-07-19T08:49:18.0000000+00:00'
-- author: Seth
-  changes:
-  - {message: Changed Crowbar and Wrench damage from 5 to 7, type: Tweak}
-  id: 265
-  time: '2021-07-19T20:55:37.0000000+00:00'
-- author: PJB3005
-  changes:
-  - {message: Chatbox channel management has been tweaked to be much more intuitive
-      and nice to use., type: Tweak}
-  id: 266
-  time: '2021-07-20T08:29:09.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Remove portals until someone does a better job coding it, type: Remove}
-  id: 267
-  time: '2021-07-21T09:16:10.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Add Station driving, type: Add}
-  id: 268
-  time: '2021-07-21T11:15:12.0000000+00:00'
-- author: Visne
-  changes:
-  - {message: 'Added integer scaling option. Turn it off to get rid of black bars,
-      at the cost of less crisp scaling.', type: Add}
-  id: 269
-  time: '2021-07-21T11:30:50.0000000+00:00'
-- author: Visne
-  changes:
-  - {message: Examine tooltip now closes when moving out of range, type: Tweak}
-  id: 270
-  time: '2021-07-21T11:31:00.0000000+00:00'
-- author: PJB
-  changes:
-  - {message: 'Restart round votes now start with everybody selecting "no", effectively
-      requiring 80% of the whole server to agree.', type: Tweak}
-  id: 271
-  time: '2021-07-21T13:26:06.988275+00:00'
-- author: PJB
-  changes:
-  - {message: You can now only make the same type of vote once every 4 minutes., type: Tweak}
-  id: 272
-  time: '2021-07-21T17:04:18.364235+00:00'
-- author: Seth
-  changes:
-  - {message: Added Cannabis and Tabaco seeds into the exotic seeds crate, type: Add}
-  id: 273
-  time: '2021-07-22T02:20:41.0000000+00:00'
-- author: Ygg01
-  changes:
-  - {message: Added visualizer for things like Crayons and Toolbelts, type: Add}
-  id: 274
-  time: '2021-07-22T09:56:55.0000000+00:00'
-- author: PJB
-  changes:
-  - {message: AFK players no longer automatically vote "no" on restart votes., type: Tweak}
-  id: 275
-  time: '2021-07-22T21:22:04.854449+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Pies no longer spin when thrown., type: Tweak}
-  id: 276
-  time: '2021-07-23T06:12:08.0000000+00:00'
-- author: Seth
-  changes:
-  - {message: Made the baseball bat craftable, type: Add}
-  id: 277
-  time: '2021-07-24T23:51:17.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Throwing feels more natural., type: Tweak}
@@ -2867,3 +2789,89 @@ Entries:
       rotation on christmas eve and exit the minute christmas ends., type: Add}
   id: 764
   time: '2021-12-24T00:30:30.0000000+00:00'
+- author: moony
+  changes:
+  - {message: Accidentally broke christmas, type: Fix}
+  id: 765
+  time: '2021-12-24T06:06:05.0000000+00:00'
+- author: TemporalOroboros
+  changes:
+  - {message: 'Added temperature handling to solutions. Nothing actually uses it yet,
+      but it exists.', type: Add}
+  id: 766
+  time: '2021-12-24T09:22:34.0000000+00:00'
+- author: JustinTime
+  changes:
+  - {message: You can now light ciggies by interacting with hot things, type: Tweak}
+  - {message: Thrusters are now hot, type: Tweak}
+  id: 767
+  time: '2021-12-24T11:59:14.0000000+00:00'
+- author: Fishfish458
+  changes:
+  - {message: added a Backgammon board for those who know how to play, type: Add}
+  - {message: added a board game crate to cargo to play games on any station, type: Add}
+  id: 768
+  time: '2021-12-24T12:20:20.0000000+00:00'
+- author: TaralGit
+  changes:
+  - {message: Deleted the old laser gun., type: Remove}
+  - {message: Replaced laser guns on packedstation with COG laser carbines., type: Tweak}
+  - {message: Reduced ammo capacity for the Svalinn and the COG., type: Tweak}
+  id: 769
+  time: '2021-12-24T12:32:03.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Reduced flare flicker, type: Fix}
+  id: 770
+  time: '2021-12-24T14:30:36.0000000+00:00'
+- author: Phantom-Lily
+  changes:
+  - {message: Added a new small drone wreck to salvage., type: Add}
+  id: 771
+  time: '2021-12-24T22:16:23.0000000+00:00'
+- author: moony
+  changes:
+  - {message: Added three salvage maps, type: Add}
+  id: 772
+  time: '2021-12-24T22:56:46.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Rules popup on first connection now has a timer to make sure that they
+      get read., type: Tweak}
+  id: 773
+  time: '2021-12-25T01:32:33.0000000+00:00'
+- author: FoLoKe
+  changes:
+  - {message: Fixed butchering without a knife., type: Fix}
+  id: 774
+  time: '2021-12-26T02:32:02.0000000+00:00'
+- author: Morb0
+  changes:
+  - {message: Changed antag names in preferences, type: Add}
+  - {message: Does not choose a random traitor if there are available candidates,
+    type: Fix}
+  id: 775
+  time: '2021-12-26T03:13:38.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Beanbag rounds now stun people., type: Fix}
+  id: 776
+  time: '2021-12-26T22:22:20.0000000+00:00'
+- author: Pancake
+  changes:
+  - {message: Salvage Equipment crates can be purchased from the cargo computer.,
+    type: Tweak}
+  id: 777
+  time: '2021-12-27T11:29:39.0000000+00:00'
+- author: AJCM-git
+  changes:
+  - {message: Now you need to be closer to a closet/locker/crate to actually enter
+      it, type: Fix}
+  id: 778
+  time: '2021-12-27T12:04:18.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'It has been discovered that plasma and histamine react to create Ultravasculine
+      (patent pending), a new advanced antitoxin.', type: Add}
+  id: 779
+  time: '2021-12-27T12:45:16.0000000+00:00'

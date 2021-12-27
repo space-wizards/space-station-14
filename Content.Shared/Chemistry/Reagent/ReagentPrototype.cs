@@ -50,6 +50,13 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField("color")]
         public Color SubstanceColor { get; } = Color.White;
 
+        /// <summary>
+        ///     The specific heat of the reagent.
+        ///     How much energy it takes to heat one unit of this reagent by one Kelvin.
+        /// </summary>
+        [DataField("specificHeat")]
+        public float SpecificHeat { get; } = 1.0f;
+
         [DataField("boilingPoint")]
         public float? BoilingPoint { get; }
 

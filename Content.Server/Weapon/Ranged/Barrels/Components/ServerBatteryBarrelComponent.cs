@@ -133,13 +133,13 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
             if (powerCellEntity == null)
             {
-                return default;
+                return null;
             }
 
             var capacitor = _entities.GetComponent<BatteryComponent>(powerCellEntity.Value);
             if (capacitor.CurrentCharge < _lowerChargeLimit)
             {
-                return default;
+                return null;
             }
 
             // Can fire confirmed
@@ -149,7 +149,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             if (capacitor.UseCharge(chargeChange) < _lowerChargeLimit)
             {
                 // Handling of funny exploding cells.
-                return default;
+                return null;
             }
             var energyRatio = chargeChange / _baseFireCost;
 

@@ -128,7 +128,7 @@ namespace Content.Server.PowerCell.Components
         /// <param name="user">(optional) the user to give the removed cell to.</param>
         /// <param name="playSound">Should <see cref="CellRemoveSound"/> be played upon removal?</param>
         /// <returns>The cell component of the entity that was removed, or null if removal failed.</returns>
-        public PowerCellComponent? EjectCell(EntityUid user, bool playSound = true)
+        public PowerCellComponent? EjectCell(EntityUid? user = null, bool playSound = true)
         {
             var cell = Cell;
             if (cell == null || !CanRemoveCell) return null;
@@ -138,7 +138,7 @@ namespace Content.Server.PowerCell.Components
             {
                 if (!_entities.TryGetComponent(user, out HandsComponent? hands) || !hands.PutInHand(_entities.GetComponent<ItemComponent>(cell.Owner)))
                 {
-                    _entities.GetComponent<TransformComponent>(cell.Owner).Coordinates = _entities.GetComponent<TransformComponent>(user).Coordinates;
+                    _entities.GetComponent<TransformComponent>(cell.Owner).Coordinates = _entities.GetComponent<TransformComponent>(user.Value).Coordinates;
                 }
             }
             else
