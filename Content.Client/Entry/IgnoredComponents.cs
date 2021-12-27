@@ -319,7 +319,8 @@ namespace Content.Client.Entry
             "Spreader",
             "GrowingKudzu",
             "MonkeyAccent",
-            "ReplacementAccent"
+            "ReplacementAccent",
+            "Candle"
         };
     }
 }

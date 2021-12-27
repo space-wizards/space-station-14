@@ -1,0 +1,96 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "candlebox1"
+    },
+    {
+      "name": "candlebox2"
+    },
+    {
+      "name": "candlebox3"
+    },
+    {
+      "name": "candlebox4"
+    },
+    {
+      "name": "candlebox5"
+    },
+    {
+      "name": "candlebox0"
+    },
+    {
+      "name": "candle1"
+    },
+    {
+      "name": "candle1_lit",
+      "delays": [
+        [
+          2,
+          1,
+          2,
+          1,
+          2,
+          1,
+          1,
+          2,
+          2,
+          2,
+          2
+        ]
+      ]
+    },
+    {
+      "name": "candle2"
+    },
+    {
+      "name": "candle2_lit",
+      "delays": [
+        [
+          2,
+          1,
+          2,
+          1,
+          2,
+          1,
+          1,
+          2,
+          2,
+          2,
+          2
+        ]
+      ]
+    },
+    {
+      "name": "candle3"
+    },
+    {
+      "name": "candle3_lit",
+      "delays": [
+        [
+          2,
+          1,
+          2,
+          1,
+          2,
+          1,
+          1,
+          2,
+          2,
+          2,
+          2
+        ]
+      ]
+    },
+    {
+      "name": "candle4"
+    },
+    {
+      "name": "candle"
+    }
+  ]
+}
