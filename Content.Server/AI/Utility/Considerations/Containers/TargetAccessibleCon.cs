@@ -24,7 +24,7 @@ namespace Content.Server.AI.Utility.Considerations.Containers
                 return 0.0f;
             }
 
-            if (target.TryGetContainer(out var container))
+            if (target!.Value.TryGetContainer(out var container))
             {
                 if (entMan.TryGetComponent(container.Owner, out EntityStorageComponent? storageComponent))
                 {
@@ -43,12 +43,7 @@ namespace Content.Server.AI.Utility.Considerations.Containers
 
             var owner = context.GetState<SelfState>().GetValue();
 
-            if (owner == null)
-            {
-                return 0;
-            }
-
-            return EntitySystem.Get<AiReachableSystem>().CanAccess(owner, target, SharedInteractionSystem.InteractionRange) ? 1.0f : 0.0f;
+            return EntitySystem.Get<AiReachableSystem>().CanAccess(owner, target.Value, SharedInteractionSystem.InteractionRange) ? 1.0f : 0.0f;
         }
     }
 }

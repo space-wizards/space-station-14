@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Content.Server.Access.Systems;
 using Content.Server.AI.Pathfinding.Pathfinders;
+using Content.Shared.Access.Systems;
 using Content.Shared.AI;
 using Content.Shared.GameTicking;
 using JetBrains.Annotations;

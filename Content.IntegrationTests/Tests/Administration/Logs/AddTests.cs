@@ -291,4 +291,94 @@ public class AddTests : ContentIntegrationTest
             json.Dispose();
         }
     }
+
+    [Test]
+    public async Task DuplicatePlayerDoesNotThrowTest()
+    {
+        var (client, server) = await StartConnectedServerClientPair(serverOptions: new ServerContentIntegrationOption
+        {
+            CVarOverrides =
+            {
+                [CCVars.AdminLogsQueueSendDelay.Name] = "0"
+            },
+        });
+
+        await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
+
+        var sPlayers = server.ResolveDependency<IPlayerManager>();
+        var sSystems = server.ResolveDependency<IEntitySystemManager>();
+
+        var sAdminLogSystem = sSystems.GetEntitySystem<AdminLogSystem>();
+
+        var guid = Guid.NewGuid();
+
+        await server.WaitPost(() =>
+        {
+            var player = sPlayers.ServerSessions.Single();
+
+            sAdminLogSystem.Add(LogType.Unknown, $"{player} {player} test log: {guid}");
+        });
+
+        await WaitUntil(server, async () =>
+        {
+            var logs = await sAdminLogSystem.CurrentRoundLogs(new LogFilter
+            {
+                Search = guid.ToString()
+            });
+
+            if (logs.Count == 0)
+            {
+                return false;
+            }
+
+            return true;
+        });
+
+        Assert.Pass();
+    }
+
+    [Test]
+    public async Task DuplicatePlayerIdDoesNotThrowTest()
+    {
+        var (client, server) = await StartConnectedServerClientPair(serverOptions: new ServerContentIntegrationOption
+        {
+            CVarOverrides =
+            {
+                [CCVars.AdminLogsQueueSendDelay.Name] = "0"
+            },
+        });
+
+        await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
+
+        var sPlayers = server.ResolveDependency<IPlayerManager>();
+        var sSystems = server.ResolveDependency<IEntitySystemManager>();
+
+        var sAdminLogSystem = sSystems.GetEntitySystem<AdminLogSystem>();
+
+        var guid = Guid.NewGuid();
+
+        await server.WaitPost(() =>
+        {
+            var player = sPlayers.ServerSessions.Single();
+
+            sAdminLogSystem.Add(LogType.Unknown, $"{player:first} {player:second} test log: {guid}");
+        });
+
+        await WaitUntil(server, async () =>
+        {
+            var logs = await sAdminLogSystem.CurrentRoundLogs(new LogFilter
+            {
+                Search = guid.ToString()
+            });
+
+            if (logs.Count == 0)
+            {
+                return false;
+            }
+
+            return true;
+        });
+
+        Assert.Pass();
+    }
 }
