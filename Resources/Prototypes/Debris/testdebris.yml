@@ -1,5 +1,5 @@
 - type: debris
-  id: TestDebris1
+  id: RoidDebris1
   floorplanStyle: Tiles
   floorPlacements: 24
   radius: 4
@@ -12,7 +12,7 @@
     fillerEntity: AsteroidRock
 
 - type: debris
-  id: TestDebris2
+  id: WreckDebris1
   floorplanStyle: Tiles
   floorPlacements: 24
   radius: 4
@@ -51,3 +51,11 @@
         - id: Grille
           prob: 0.3
           orGroup: Debris
+
+- type: debrisLayout
+  id: SpawnDebris
+  layout:
+  - proto: RoidDebris1
+    prob: 0.75
+  - proto: WreckDebris1
+    prob: 1
