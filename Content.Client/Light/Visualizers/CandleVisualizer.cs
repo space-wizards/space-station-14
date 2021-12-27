@@ -28,13 +28,6 @@ namespace Content.Client.Light
         [DataField("dead")]
         private string _deadIcon = "icon";
 
-        [DataField("burntPrefix")]
-        private string _burntPrefix = "unlit";
-        [DataField("litPrefix")]
-        private string _litPrefix = "lit";
-        [DataField("unlitPrefix")]
-        private string _unlitPrefix = "unlit";
-
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);

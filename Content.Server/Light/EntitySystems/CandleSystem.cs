@@ -43,7 +43,6 @@ namespace Content.Server.Light.EntitySystems
                 if (candle.CurrentState != SmokableState.Lit || Paused(candle.Owner) || candle.Deleted)
                     continue;
 
-                //Remove frameTime from current duration
                 candle.WaxLeft -= frameTime;
 
                 //There has to be a cleaner way to handle this
@@ -57,7 +56,6 @@ namespace Content.Server.Light.EntitySystems
                     SetState(candle, CandleState.AlmostOut, candle.CurrentState);
                 }
 
-                //Check WaxLeft vs CandleState to determine if we are changing candle state or not.
                 if (candle.WaxLeft <= 0)
                 {
                     SetState(candle, CandleState.Dead, SmokableState.Burnt);
