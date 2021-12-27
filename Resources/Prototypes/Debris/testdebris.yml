@@ -1,0 +1,12 @@
+- type: debris
+  id: TestDebris1
+  floorplanStyle: Tiles
+  floorPlacements: 24
+  radius: 4
+  floorTiles:
+    - 'floor_asteroid_coarse_sand0'
+    - 'floor_asteroid_coarse_sand1'
+    - 'floor_asteroid_coarse_sand2'
+  populator:
+    !type:FillDebrisPopulator
+    fillerEntity: AsteroidRock
