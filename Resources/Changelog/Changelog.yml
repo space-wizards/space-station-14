@@ -1,12 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Throwing feels more natural., type: Tweak}
-  - {message: Pushed objects don't slide as far., type: Tweak}
-  id: 278
-  time: '2021-07-25T06:58:03.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Add server cvar for whether pushing is enabled., type: Add}
   id: 279
   time: '2021-07-25T06:58:11.0000000+00:00'
@@ -2875,3 +2869,8 @@ Entries:
       (patent pending), a new advanced antitoxin.', type: Add}
   id: 779
   time: '2021-12-27T12:45:16.0000000+00:00'
+- author: Charlese2
+  changes:
+  - {message: Flashing through walls., type: Fix}
+  id: 780
+  time: '2021-12-27T16:51:12.0000000+00:00'
