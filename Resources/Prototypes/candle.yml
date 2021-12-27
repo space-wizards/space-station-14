@@ -1,0 +1,114 @@
+- type: Tag
+  id: Candle
+
+- type: entity
+  id: CandleBoxItem
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: Storage
+    capacity: 5
+  - type: Item
+    size: 5
+
+- type: entity
+  name: candle
+  parent: BaseItem
+  id: Candle
+  description: a slender unscented candle that gives off an eery glow.
+  components:
+  - type: Tag
+    tags:
+      - Candle
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Misc/candle.rsi
+    layers:
+      - state: candle
+  - type: Item
+    sprite: Objects/Misc/candle.rsi
+    HeldPrefix: unlit
+    size: 1
+  - type: Candle #Replace with Candle component, probably?
+    wax: 2000
+    brandNewBehaviorID: BrandNewBehavior
+    halfNewBehaviourID: HalfNewBehavior
+    almostOutBehaviourID: AlmostOutBehavior
+  - type: PointLight
+    enabled: false
+    radius: 2
+    energy: 1
+    color: darkorange
+  - type: LightBehaviour
+    behaviours:
+      - !type:RandomizeBehaviour # immediately make it bright and flickery
+        id: BrandNewBehavior
+        interpolate: Cubic
+        minDuration: 0.02
+        maxDuration: 0.06
+        startValue: 2.0
+        endValue: 1.9
+        property: Energy
+        isLooped: true
+      - !type:RandomizeBehaviour # immediately make it bright and flickery
+        id: HalfNewBehavior
+        interpolate: Cubic
+        minDuration: 0.02
+        maxDuration: 0.06
+        startValue: 2.0
+        endValue: 1.5
+        property: Energy
+        isLooped: true
+      - !type:RandomizeBehaviour # weaker flicker as it fades out
+        id: AlmostOutBehavior
+        interpolate: Cubic
+        minDuration: 0.02
+        maxDuration: 0.06
+        startValue: 1.5
+        endValue: 1
+        property: Energy
+        isLooped: true
+  - type: Appearance
+    visuals:
+      - type: CandleStateVisualizer
+        brandNewUnlit: candle
+        halfNewUnlit: candle2
+        almostOutUnlit: candle3
+        brandNewlit: candle1_lit
+        halfNewlit: candle2_lit
+        almostOutlit: candle3_lit
+        dead: candle4
+
+- type: entity
+  name: candle box
+  parent: CandleBoxItem
+  id: Candlebox
+  description: A small box of candles.
+  components:
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/matchbox_drop.ogg
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Misc/candle.rsi
+    layers:
+      - state: candlebox0
+  - type: Item
+    sprite: Objects/Misc/candle.rsi
+  - type: StorageFill
+    contents:
+      - id: Candle
+        amount: 5
+  - type: ItemCounter
+    count:
+      tags: [Candle]
+  - type: Appearance
+    visuals:
+      - type: StackVisualizer
+        stackLayers:
+          - candlebox0
+          - candlebox1
+          - candlebox2
+          - candlebox3
+          - candlebox4
+          - candlebox5
