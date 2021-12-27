@@ -68,3 +68,5 @@
           prob: 0.33
         - id: ClothingBeltUtility
           prob: 0.33
+        - id: Candlebox
+          prob: 0.33
