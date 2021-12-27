@@ -24,6 +24,8 @@
     stackType: AdamantineOre
   - type: Sprite
     state: adamantine
+  - type: Meltable
+    material: Adamantine
 
 - type: entity
   parent: AdamantineOre
@@ -62,6 +64,8 @@
     stackType: BananiumOre
   - type: Sprite
     state: bananium
+  - type: Meltable
+    material: Bananium
 
 - type: entity
   parent: BananiumOre
@@ -81,6 +85,8 @@
     stackType: DiamondRaw
   - type: Sprite
     state: diamond
+  - type: Meltable
+    material: Diamond
 
 - type: entity
   parent: DiamondRaw
@@ -100,6 +106,8 @@
     stackType: GoldOre
   - type: Sprite
     state: gold
+  - type: Meltable
+    material: Gold
 
 - type: entity
   parent: GoldOre
@@ -119,6 +127,8 @@
     stackType: IronOre
   - type: Sprite
     state: iron
+  - type: Meltable
+    material: Iron
 
 - type: entity
   id: IronOre1
@@ -138,6 +148,8 @@
     stackType: PhoronOre
   - type: Sprite
     state: phoron
+  - type: Meltable
+    material: Bananium
 
 - type: entity
   parent: PhoronOre
@@ -157,6 +169,8 @@
     stackType: PlasmaOre
   - type: Sprite
     state: plasma
+  - type: Meltable
+    material: Plasma
 
 - type: entity
   parent: PlasmaOre
@@ -176,6 +190,8 @@
     stackType: Sand
   - type: Sprite
     state: sand
+  - type: Meltable
+    material: Glass
 
 - type: entity
   parent: Sand
@@ -195,6 +211,8 @@
     stackType: BlackSand
   - type: Sprite
     state: sand_black
+  - type: Meltable
+    material: Glass
 
 - type: entity
   parent: SandBlack
@@ -214,6 +232,8 @@
     stackType: SilverOre
   - type: Sprite
     state: silver
+  - type: Meltable
+    material: Silver
 
 - type: entity
   parent: SilverOre
@@ -252,6 +272,8 @@
     stackType: TitaniumOre
   - type: Sprite
     state: titanium
+  - type: Meltable
+    material: Titanium
 
 - type: entity
   parent: TitaniumOre
@@ -271,6 +293,8 @@
     stackType: UraniumOre
   - type: Sprite
     state: uranium
+  - type: Meltable
+    material: Uranium
 
 - type: entity
   parent: UraniumOre
