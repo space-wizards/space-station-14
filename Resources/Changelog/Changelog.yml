@@ -1,9 +1,4 @@
 Entries:
-- author: PJB
-  changes:
-  - {message: AFK players no longer automatically vote "no" on restart votes., type: Tweak}
-  id: 275
-  time: '2021-07-22T21:22:04.854449+00:00'
 - author: metalgearsloth
   changes:
   - {message: Pies no longer spin when thrown., type: Tweak}
@@ -2872,3 +2867,9 @@ Entries:
   - {message: Beanbag rounds now stun people., type: Fix}
   id: 776
   time: '2021-12-26T22:22:20.0000000+00:00'
+- author: Pancake
+  changes:
+  - {message: Salvage Equipment crates can be purchased from the cargo computer.,
+    type: Tweak}
+  id: 777
+  time: '2021-12-27T11:29:39.0000000+00:00'
