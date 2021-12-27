@@ -127,7 +127,7 @@ namespace Content.Server.GameTicking
             return (HumanoidCharacterProfile) _prefsManager.GetPreferences(p.UserId).SelectedCharacter;
         }
 
-        private void PlayerJoinGame(IPlayerSession session)
+        public void PlayerJoinGame(IPlayerSession session)
         {
             _chatManager.DispatchServerMessage(session, Loc.GetString("game-ticker-player-join-game-message"));
 

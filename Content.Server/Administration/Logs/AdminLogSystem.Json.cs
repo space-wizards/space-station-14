@@ -35,11 +35,11 @@ public partial class AdminLogSystem
         _sawmill.Debug($"Admin log converters found: {string.Join(" ", converterNames)}");
     }
 
-    private (JsonDocument json, List<Guid> players, List<(int id, string? name)> entities) ToJson(
+    private (JsonDocument json, HashSet<Guid> players, Dictionary<int, string?> entities) ToJson(
         Dictionary<string, object?> properties)
     {
-        var entities = new List<(int id, string? name)>();
-        var players = new List<Guid>();
+        var entities = new Dictionary<int, string?>();
+        var players = new HashSet<Guid>();
         var parsed = new Dictionary<string, object?>();
 
         foreach (var key in properties.Keys)
@@ -54,7 +54,7 @@ public partial class AdminLogSystem
             var parsedKey = NamingPolicy.ConvertName(key);
             parsed.Add(parsedKey, value);
 
-            EntityUid? entityId = properties[key] switch
+            var entityId = properties[key] switch
             {
                 EntityUid id => id,
                 EntityStringRepresentation rep => rep.Uid,
@@ -72,9 +72,7 @@ public partial class AdminLogSystem
                 ? metadata.EntityName
                 : null;
 
-            if (entities.Any(e => e.id == (int) uid)) continue;
-
-            entities.Add(((int) uid, entityName));
+            entities.TryAdd((int) uid, entityName);
 
             if (_entityManager.TryGetComponent(uid, out ActorComponent? actor))
             {

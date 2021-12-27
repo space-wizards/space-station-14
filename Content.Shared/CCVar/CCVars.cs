@@ -85,7 +85,7 @@ namespace Content.Shared.CCVar
         ///     Controls the default game preset.
         /// </summary>
         public static readonly CVarDef<string>
-            GameLobbyDefaultPreset = CVarDef.Create("game.defaultpreset", "Suspicion", CVar.ARCHIVE);
+            GameLobbyDefaultPreset = CVarDef.Create("game.defaultpreset", "suspicion", CVar.ARCHIVE);
 
         /// <summary>
         ///     Controls if the game can force a different preset if the current preset's criteria are not met.
@@ -97,7 +97,7 @@ namespace Content.Shared.CCVar
         ///     The preset for the game to fall back to if the selected preset could not be used, and fallback is enabled.
         /// </summary>
         public static readonly CVarDef<string>
-            GameLobbyFallbackPreset = CVarDef.Create("game.fallbackpreset", "Sandbox", CVar.ARCHIVE);
+            GameLobbyFallbackPreset = CVarDef.Create("game.fallbackpreset", "sandbox", CVar.ARCHIVE);
 
         /// <summary>
         ///     Controls if people can win the game in Suspicion or Deathmatch.
@@ -134,6 +134,13 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<int> SoftMaxPlayers =
             CVarDef.Create("game.soft_max_players", 30, CVar.SERVERONLY | CVar.ARCHIVE);
+
+        /*
+         * Discord
+         */
+
+        public static readonly CVarDef<string> DiscordAHelpWebhook =
+            CVarDef.Create("discord.ahelp_webhook", string.Empty, CVar.SERVERONLY);
 
         /*
          * Suspicion
@@ -567,5 +574,25 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool> RestrictedNames =
             CVarDef.Create("ic.restricted_names", true, CVar.SERVER | CVar.REPLICATED);
+
+        /*
+         * Salvage
+         */
+
+        /// <summary>
+        ///     Forced salvage map prototype name (if empty, randomly selected)
+        /// </summary>
+        public static readonly CVarDef<string>
+            SalvageForced = CVarDef.Create("salvage.forced", "", CVar.SERVERONLY);
+
+        /*
+         * Rules
+         */
+
+        /// <summary>
+        /// Time that players have to wait before rules can be accepted.
+        /// </summary>
+        public static readonly CVarDef<float> RulesWaitTime =
+            CVarDef.Create("rules.time", 45f, CVar.SERVER | CVar.REPLICATED);
     }
 }
