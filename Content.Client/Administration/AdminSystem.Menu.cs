@@ -97,6 +97,8 @@ namespace Content.Client.Administration
 
         public void Close()
         {
+            if (_window != null)
+                _window.PlayerTabControl.OnEntryPressed -= PlayerTabEntryPressed;
             _window?.Close();
 
             foreach (var window in _commandWindows)
