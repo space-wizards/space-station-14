@@ -96,6 +96,7 @@
     - CryostasisBeaker
     - Dropper
     - Syringe
+    - PillCanister
 
 - type: technology
   name: "medical machinery"
