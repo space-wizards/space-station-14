@@ -71,7 +71,7 @@ namespace Content.Shared.Access.Systems
             if (EntityManager.TryGetComponent(uid, out SharedHandsComponent? hands))
             {
                 if (hands.TryGetActiveHeldEntity(out var heldItem) &&
-                    FindAccessTagsItem(heldItem, out tags))
+                    FindAccessTagsItem(heldItem.Value, out tags))
                 {
                     return tags;
                 }

@@ -69,7 +69,7 @@ namespace Content.Server.Hands.Systems
                 return;
 
             // Cancel pull if all hands full.
-            if (component.Hands.All(hand => !hand.IsEmpty))
+            if (component.Hands.All(hand => hand.HeldEntity != null))
                 args.Cancelled = true;
         }
 
@@ -93,12 +93,12 @@ namespace Content.Server.Hands.Systems
             // and clear it.
             foreach (var hand in component.Hands)
             {
-                if (hand.HeldEntity == default
+                if (hand.HeldEntity == null
                     || !EntityManager.TryGetComponent(hand.HeldEntity, out HandVirtualItemComponent? virtualItem)
                     || virtualItem.BlockingEntity != args.Pulled.Owner)
                     continue;
 
-                EntityManager.DeleteEntity(hand.HeldEntity);
+                EntityManager.DeleteEntity(hand.HeldEntity.Value);
                 break;
             }
         }
@@ -235,16 +235,16 @@ namespace Content.Server.Hands.Systems
                 !_actionBlockerSystem.CanThrow(player))
                 return false;
 
-            if (EntityManager.TryGetComponent(throwEnt, out StackComponent? stack) && stack.Count > 1 && stack.ThrowIndividually)
+            if (EntityManager.TryGetComponent(throwEnt.Value, out StackComponent? stack) && stack.Count > 1 && stack.ThrowIndividually)
             {
-                var splitStack = _stackSystem.Split(throwEnt, 1, EntityManager.GetComponent<TransformComponent>(player).Coordinates, stack);
+                var splitStack = _stackSystem.Split(throwEnt.Value, 1, EntityManager.GetComponent<TransformComponent>(player).Coordinates, stack);
 
                 if (splitStack is not {Valid: true})
                     return false;
 
                 throwEnt = splitStack.Value;
             }
-            else if (!hands.Drop(throwEnt))
+            else if (!hands.Drop(throwEnt.Value))
                 return false;
 
             var direction = coords.ToMapPos(EntityManager) - EntityManager.GetComponent<TransformComponent>(player).WorldPosition;
@@ -254,7 +254,7 @@ namespace Content.Server.Hands.Systems
             direction = direction.Normalized * Math.Min(direction.Length, hands.ThrowRange);
 
             var throwStrength = hands.ThrowForceMultiplier;
-            throwEnt.TryThrow(direction, throwStrength, player);
+            throwEnt.Value.TryThrow(direction, throwStrength, player);
 
             return true;
         }

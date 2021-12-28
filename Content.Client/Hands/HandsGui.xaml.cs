@@ -85,7 +85,7 @@ namespace Content.Client.Hands
         private void UpdateGui()
         {
             HandsContainer.DisposeAllChildren();
-
+            var entManager = IoCManager.Resolve<IEntityManager>();
             foreach (var hand in _hands)
             {
                 var newButton = MakeHandButton(hand.HandLocation);
@@ -96,17 +96,17 @@ namespace Content.Client.Hands
                 newButton.OnPressed += args => OnHandPressed(args, handName);
                 newButton.OnStoragePressed += _ => OnStoragePressed(handName);
 
-                _itemSlotManager.SetItemSlot(newButton, hand.HeldItem);
+                _itemSlotManager.SetItemSlot(newButton, hand.HeldItem ?? EntityUid.Invalid);
 
                 // Show blocked overlay if hand is blocked.
                 newButton.Blocked.Visible =
-                    hand.HeldItem != null && IoCManager.Resolve<IEntityManager>().HasComponent<HandVirtualItemComponent>(hand.HeldItem);
+                    hand.HeldItem != null && entManager.HasComponent<HandVirtualItemComponent>(hand.HeldItem.Value);
             }
 
             if (TryGetActiveHand(out var activeHand))
             {
                 activeHand.HandButton.SetActiveHand(true);
-                StatusPanel.Update(activeHand.HeldItem);
+                StatusPanel.Update(activeHand.HeldItem ?? EntityUid.Invalid);
             }
         }
 
@@ -118,7 +118,7 @@ namespace Content.Client.Hands
             }
             else if (TryGetHand(handName, out var hand))
             {
-                _itemSlotManager.OnButtonPressed(args, hand.HeldItem);
+                _itemSlotManager.OnButtonPressed(args, hand.HeldItem ?? EntityUid.Invalid);
             }
         }
 
@@ -155,7 +155,7 @@ namespace Content.Client.Hands
 
             foreach (var hand in _hands)
             {
-                _itemSlotManager.UpdateCooldown(hand.HandButton, hand.HeldItem);
+                _itemSlotManager.UpdateCooldown(hand.HandButton, hand.HeldItem ?? EntityUid.Invalid);
             }
         }
 
@@ -250,7 +250,7 @@ namespace Content.Client.Hands
         ///     The item being held in this hand.
         /// </summary>
         [ViewVariables]
-        public EntityUid HeldItem { get; }
+        public EntityUid? HeldItem { get; }
 
         /// <summary>
         ///     The button in the gui associated with this hand. Assumed to be set by gui shortly after being received from the client HandsComponent.
@@ -258,7 +258,7 @@ namespace Content.Client.Hands
         [ViewVariables]
         public HandButton HandButton { get; set; } = default!;
 
-        public GuiHand(string name, HandLocation handLocation, EntityUid heldItem)
+        public GuiHand(string name, HandLocation handLocation, EntityUid? heldItem)
         {
             Name = name;
             HandLocation = handLocation;
