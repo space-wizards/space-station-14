@@ -36,7 +36,6 @@ namespace Content.Client.Administration
             InitializeMenu();
             SubscribeNetworkEvent<FullPlayerListEvent>(OnPlayerListChanged);
             SubscribeNetworkEvent<PlayerInfoChangedEvent>(OnPlayerInfoChanged);
-            SubscribeNetworkEvent<PlayerInfoRemovalMessage>(OnPlayerInfoRemoval);
             SubscribeNetworkEvent<RoundRestartCleanupEvent>(OnRoundRestartCleanup);
         }
 
@@ -57,16 +56,6 @@ namespace Content.Client.Administration
                     continue;
                 _playerList.Remove(id);
             }
-            PlayerListChanged?.Invoke(_playerList.Values.ToList());
-        }
-
-        private void OnPlayerInfoRemoval(PlayerInfoRemovalMessage ev)
-        {
-            if (_playerList == null) _playerList = new();
-
-            var playerInfo = _playerList[ev.NetUserId];
-            _playerList[ev.NetUserId] = new PlayerInfo(playerInfo.Username, playerInfo.CharacterName, playerInfo.Antag,
-                playerInfo.EntityUid, playerInfo.SessionId, false);
             PlayerListChanged?.Invoke(_playerList.Values.ToList());
         }
 

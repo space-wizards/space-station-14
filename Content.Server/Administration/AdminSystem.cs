@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Administration.Managers;
 using Content.Server.Players;
@@ -9,6 +10,7 @@ using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Network;
 
 namespace Content.Server.Administration
 {
@@ -16,6 +18,8 @@ namespace Content.Server.Administration
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
+
+        private Dictionary<NetUserId, PlayerInfo>? _playerList;
 
         public override void Initialize()
         {
@@ -29,10 +33,18 @@ namespace Content.Server.Administration
             SubscribeLocalEvent<RoleRemovedEvent>(OnRoleEvent);
         }
 
+        private void UpdatePlayerList(IPlayerSession player)
+        {
+            _playerList ??= new Dictionary<NetUserId, PlayerInfo>();
+            _playerList[player.UserId] = GetPlayerInfo(player);
+        }
+
         private void OnRoleEvent(RoleEvent ev)
         {
             if (ev.Role.Antagonist && ev.Role.Mind.Session != null)
             {
+                UpdatePlayerList(ev.Role.Mind.Session);
+
                 foreach (var admin in _adminManager.ActiveAdmins)
                 {
                     RaiseNetworkEvent(GetChangedEvent(ev.Role.Mind.Session), admin.ConnectedClient);
@@ -53,7 +65,11 @@ namespace Content.Server.Administration
 
         private void OnPlayerDetached(PlayerDetachedEvent ev)
         {
+            // If disconnected then the player won't have a connected entity to get character name from.
+            // The disconnected state gets sent by OnPlayerStatusChanged.
             if(ev.Player.Status == SessionStatus.Disconnected) return;
+
+            UpdatePlayerList(ev.Player);
 
             foreach (var admin in _adminManager.ActiveAdmins)
             {
@@ -64,6 +80,8 @@ namespace Content.Server.Administration
         private void OnPlayerAttached(PlayerAttachedEvent ev)
         {
             if(ev.Player.Status == SessionStatus.Disconnected) return;
+
+            UpdatePlayerList(ev.Player);
 
             foreach (var admin in _adminManager.ActiveAdmins)
             {
@@ -82,25 +100,15 @@ namespace Content.Server.Administration
         {
             return new()
             {
-                PlayerInfo = GetPlayerInfo(session),
+                PlayerInfo = _playerList![session.UserId]
             };
         }
 
         private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
         {
-            EntityEventArgs? args = null;
-            switch (e.NewStatus)
-            {
-                case SessionStatus.InGame:
-                case SessionStatus.Connected:
-                    args = GetChangedEvent(e.Session);
-                    break;
-                case SessionStatus.Disconnected:
-                    args = new PlayerInfoRemovalMessage {NetUserId = e.Session.UserId};
-                    break;
-            }
+            UpdatePlayerList(e.Session);
 
-            if(args == null) return;
+            var args = GetChangedEvent(e.Session);
 
             foreach (var admin in _adminManager.AllAdmins)
             {
@@ -111,11 +119,9 @@ namespace Content.Server.Administration
         private void SendFullPlayerList(IPlayerSession playerSession)
         {
             var ev = new FullPlayerListEvent();
-            ev.PlayersInfo.Clear();
-            foreach (var session in _playerManager.ServerSessions)
-            {
-                ev.PlayersInfo.Add(GetPlayerInfo(session));
-            }
+
+            if (_playerList != null)
+                ev.PlayersInfo = _playerList.Values.ToList();
 
             RaiseNetworkEvent(ev, playerSession.ConnectedClient);
         }
@@ -130,7 +136,10 @@ namespace Content.Server.Administration
 
             var antag = session.ContentData()?.Mind?.AllRoles.Any(r => r.Antagonist) ?? false;
 
-            return new PlayerInfo(name, username, antag, session.AttachedEntity.GetValueOrDefault(), session.UserId, true);
+            var connected = session.Status is SessionStatus.Connected or SessionStatus.InGame;
+
+            return new PlayerInfo(name, username, antag, session.AttachedEntity.GetValueOrDefault(), session.UserId,
+                connected);
         }
     }
 }
