@@ -721,31 +721,84 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 41
-  type: ClothingHeadHatTophat
+  type: OrganHumanEyes
   components:
-  - pos: -1.4423176,-0.6220329
+  - pos: -1.1328837,-0.3843273
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 42
-  type: OrganHumanEyes
+  type: SalvageHumanCorpse
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -0.92498416,-0.5751579
+  - rot: 1.5707963267948966 rad
+    pos: -0.8856816,-0.82670206
     parent: 0
     type: Transform
   - canCollide: False
     type: Physics
+  - standing: False
+    type: StandingState
+  - containers:
+      Inventory_EYES: !type:ContainerSlot
+        occludes: False
+      Inventory_HEAD: !type:ContainerSlot
+        occludes: False
+      Inventory_EARS: !type:ContainerSlot
+        occludes: False
+        ent: 83
+      Inventory_OUTERCLOTHING: !type:ContainerSlot
+        occludes: False
+        ent: 84
+      Inventory_MASK: !type:ContainerSlot
+        occludes: False
+      Inventory_INNERCLOTHING: !type:ContainerSlot
+        occludes: False
+        ent: 85
+      Inventory_BACKPACK: !type:ContainerSlot
+        occludes: False
+        ent: 86
+      Inventory_BELT: !type:ContainerSlot
+        occludes: False
+      Inventory_GLOVES: !type:ContainerSlot
+        occludes: False
+      Inventory_SHOES: !type:ContainerSlot
+        occludes: False
+        ent: 87
+      Inventory_IDCARD: !type:ContainerSlot
+        occludes: False
+        ent: 88
+      Inventory_POCKET1: !type:ContainerSlot
+        occludes: False
+      Inventory_POCKET2: !type:ContainerSlot
+        occludes: False
+      Inventory_NECK: !type:ContainerSlot
+        occludes: False
+      Body-BodyComponent: !type:Container
+        ents:
+        - 65
+        - 68
+        - 74
+        - 75
+        - 76
+        - 77
+        - 78
+        - 79
+        - 80
+        - 81
+      left hand: !type:ContainerSlot
+        occludes: False
+      right hand: !type:ContainerSlot
+        occludes: False
+      Cuffable: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 43
   type: OrganHumanTongue
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -1.5187342,-1.4814079
+  - pos: -1.5451369,-1.2593273
     parent: 0
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 44
   type: PuddleVomit
   components:
@@ -768,7 +821,7 @@ entities:
 - uid: 46
   type: FoodMeatXenoCutlet
   components:
-  - pos: 0.09969014,-0.8567695
+  - pos: 1.0890627,-1.1654103
     parent: 0
     type: Transform
 - uid: 47
@@ -926,4 +979,250 @@ entities:
   - pos: 0.4864508,-1.117334
     parent: 0
     type: Transform
+- uid: 65
+  type: HeadHuman
+  components:
+  - parent: 42
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      BodyPart-BodyPartComponent: !type:Container
+        ents:
+        - 66
+        - 67
+    type: ContainerContainer
+- uid: 66
+  type: OrganHumanBrain
+  components:
+  - parent: 65
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 67
+  type: OrganHumanEyes
+  components:
+  - parent: 65
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 68
+  type: TorsoHuman
+  components:
+  - parent: 42
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      BodyPart-BodyPartComponent: !type:Container
+        ents:
+        - 69
+        - 70
+        - 71
+        - 72
+        - 73
+    type: ContainerContainer
+- uid: 69
+  type: OrganHumanHeart
+  components:
+  - parent: 68
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 70
+  type: OrganHumanLungs
+  components:
+  - parent: 68
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 71
+  type: OrganHumanStomach
+  components:
+  - parent: 68
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 72
+  type: OrganHumanLiver
+  components:
+  - parent: 68
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 73
+  type: OrganHumanKidneys
+  components:
+  - parent: 68
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 74
+  type: LeftArmHuman
+  components:
+  - parent: 42
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      BodyPart-BodyPartComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 75
+  type: LeftHandHuman
+  components:
+  - parent: 42
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      BodyPart-BodyPartComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 76
+  type: RightArmHuman
+  components:
+  - parent: 42
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      BodyPart-BodyPartComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 77
+  type: RightHandHuman
+  components:
+  - parent: 42
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      BodyPart-BodyPartComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 78
+  type: LeftLegHuman
+  components:
+  - parent: 42
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      BodyPart-BodyPartComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 79
+  type: LeftFootHuman
+  components:
+  - parent: 42
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      BodyPart-BodyPartComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 80
+  type: RightLegHuman
+  components:
+  - parent: 42
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      BodyPart-BodyPartComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 81
+  type: RightFootHuman
+  components:
+  - parent: 42
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      BodyPart-BodyPartComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 82
+  type: ClothingHeadHatTophat
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -1.6724236,-0.7749523
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 83
+  type: ClothingHeadsetService
+  components:
+  - pos: 0,-5.9604645E-08
+    parent: 42
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 84
+  type: ClothingOuterVestKevlar
+  components:
+  - pos: 0,-5.9604645E-08
+    parent: 42
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 85
+  type: ClothingUniformJumpsuitBartender
+  components:
+  - pos: 0,-5.9604645E-08
+    parent: 42
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 86
+  type: ClothingBackpackFilled
+  components:
+  - pos: 0,-5.9604645E-08
+    parent: 42
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+  - containers:
+      storagebase: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 87
+  type: ClothingShoesColorBlack
+  components:
+  - pos: 0,-5.9604645E-08
+    parent: 42
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 88
+  type: BartenderPDA
+  components:
+  - pos: 0,-5.9604645E-08
+    parent: 42
+    type: Transform
+  - idSlot:
+      startingItem: BartenderIDCard
+    type: PDA
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+  - containers:
+      PDA-id: !type:ContainerSlot {}
+      PDA-pen: !type:ContainerSlot {}
+    type: ContainerContainer
 ...
