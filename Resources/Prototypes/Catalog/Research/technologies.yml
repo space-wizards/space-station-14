@@ -96,6 +96,7 @@
     - CryostasisBeaker
     - Dropper
     - Syringe
+    - KitchenReagentGrinderMachineCircuitboard
 
 - type: technology
   name: "medical machinery"

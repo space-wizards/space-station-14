@@ -183,6 +183,7 @@
       - SolarControlComputerCircuitboard
       - AutolatheMachineCircuitboard
       - ProtolatheMachineCircuitboard
+      - KitchenReagentGrinderMachineCircuitboard
       - Bucket
       - MopItem
       - SprayBottle
