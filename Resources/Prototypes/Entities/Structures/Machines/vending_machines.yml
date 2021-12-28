@@ -109,7 +109,7 @@
       broken: true
     - type: WiresVisualizer
   - type: AccessReader
-    access: [["Service"]]
+    access: [["Bar"]]
 
 - type: entity
   parent: VendingMachine
@@ -138,7 +138,7 @@
       broken: true
     - type: WiresVisualizer
   - type: AccessReader
-    access: [["Service"]]
+    access: [["Bar"]]
 
 - type: entity
   parent: VendingMachine
@@ -469,7 +469,7 @@
       broken: true
     - type: WiresVisualizer
   - type: AccessReader
-    access: [["Service"]]
+    access: [["Hydroponics"]]
   - type: PointLight
     radius: 1.5
     energy: 1.6
@@ -538,7 +538,7 @@
       broken: true
     - type: WiresVisualizer
   - type: AccessReader
-    access: [["Service"]]
+    access: [["Hydroponics"]]
   - type: PointLight
     radius: 1.5
     energy: 1.6

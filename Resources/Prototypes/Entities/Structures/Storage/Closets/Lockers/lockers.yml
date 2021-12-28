@@ -65,7 +65,7 @@
     - type: StorageVisualizer
       state: ce
   - type: AccessReader
-    access: [ [ "Engineering", "Command" ] ]
+    access: [ [ "ChiefEngineer" ] ]
 
 # Electrical supplies
 - type: entity
@@ -132,7 +132,7 @@
     - type: StorageVisualizer
       state: freezer
   - type: AccessReader
-    access: [ [ "Service" ] ]
+    access: [ [ "Kitchen" ] ]
 
 # Botanist
 - type: entity
@@ -145,7 +145,7 @@
     - type: StorageVisualizer
       state: hydro
   - type: AccessReader
-    access: [ [ "Service" ] ]
+    access: [ [ "Hydroponics" ] ]
 
 # Medicine
 - type: entity
@@ -199,7 +199,7 @@
     - type: StorageVisualizer
       state: cmo
   - type: AccessReader
-    access: [ [ "Medical", "Command" ] ]
+    access: [ [ "ChiefMedicalOfficer" ] ]
 
 # Science
 - type: entity
@@ -212,7 +212,7 @@
     - type: StorageVisualizer
       state: rd
   - type: AccessReader
-    access: [ [ "Research", "Command" ] ]
+    access: [ [ "ResearchDirector" ] ]
 
 - type: entity
   id: LockerScientist
@@ -237,7 +237,7 @@
     - type: StorageVisualizer
       state: hos
   - type: AccessReader
-    access: [["Security", "Command"]]
+    access: [["HeadOfSecurity"]]
 
 # Warden
 - type: entity
@@ -273,7 +273,7 @@
   description: Usually cold and empty... like your heart.
   components:
   - type: AccessReader
-    access: [["Service"]] # TODO access [["Detective"]]
+    access: [["Security"]] # TODO access [["Detective"]]
 
 # Syndicate
 - type: entity
