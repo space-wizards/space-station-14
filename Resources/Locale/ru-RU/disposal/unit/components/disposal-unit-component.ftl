@@ -1,14 +1,14 @@
 ## UI
 
-ui-disposal-unit-title = Disposal Unit
+ui-disposal-unit-title = Утилизатор
 
-ui-disposal-unit-label-state = State:
-ui-disposal-unit-label-pressure = Pressure:
-ui-disposal-unit-label-status = Ready
+ui-disposal-unit-label-state = Состояние:
+ui-disposal-unit-label-pressure = Давление:
+ui-disposal-unit-label-status = Готов
 
-ui-disposal-unit-button-flush = Flush
-ui-disposal-unit-button-eject = Eject Contents
-ui-disposal-unit-button-power = Power
+ui-disposal-unit-button-flush = Смыть
+ui-disposal-unit-button-eject = Извлечь содержимое
+ui-disposal-unit-button-power = Питание
 
 ui-disposal-unit-is-valid-interaction-cannot=interact = Вы не можете этого сделать!
 ui-disposal-unit-is-valid-interaction-cannot-reach = Вы не можете туда достать!

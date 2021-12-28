@@ -1,11 +1,11 @@
 ## UI
 
-disposal-router-window-title = Disposal Router
-disposal-router-window-tags-label = Tags:
-disposal-router-window-tag-input-tooltip = A comma separated list of tags
-disposal-router-window-tag-input-confirm-button = Confirm
-disposal-router-window-tag-input-activate-no-hands = You have no hands
+disposal-router-window-title = Маршрутизатор утилизации
+disposal-router-window-tags-label = Метки:
+disposal-router-window-tag-input-tooltip = Список меток, разделенных запятыми
+disposal-router-window-tag-input-confirm-button = Подтвердить
+disposal-router-window-tag-input-activate-no-hands = У вас нет рук.
 
 ## ConfigureVerb
 
-configure-verb-get-data-text = Open Configuration
+configure-verb-get-data-text = Открыть настройки
