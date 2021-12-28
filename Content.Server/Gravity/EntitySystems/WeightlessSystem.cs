@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Content.Shared.Alert;
 using Content.Shared.GameTicking;

@@ -2,13 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Alert;
 
-public abstract class AlertsSystem : EntitySystem
+public class AlertsSystem : EntitySystem
 {
     [Dependency]
     private readonly IPrototypeManager _prototypeManager = default!;
@@ -157,6 +158,12 @@ public abstract class AlertsSystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<AlertsComponent, ComponentStartup>((uid, _, _) => RaiseLocalEvent(uid, new AlertSyncEvent(uid)));
+        SubscribeLocalEvent<AlertsComponent, ComponentRemove>((uid, _, _) => RaiseLocalEvent(uid, new AlertSyncEvent(uid)));
+
+        SubscribeLocalEvent<AlertsComponent, ComponentGetState>(ClientAlertsGetState);
+        SubscribeNetworkEvent<ClickAlertEvent>(HandleClickAlert);
+
         LoadAlertPrototypes();
     }
 
@@ -180,5 +187,32 @@ public abstract class AlertsSystem : EntitySystem
     public bool TryGet(AlertType alertType, [NotNullWhen(true)] out AlertPrototype? alert)
     {
         return _typeToAlert.TryGetValue(alertType, out alert);
+    }
+
+    private void HandleClickAlert(ClickAlertEvent msg, EntitySessionEventArgs args)
+    {
+        var player = args.SenderSession.AttachedEntity;
+        if (player is null || !EntityManager.TryGetComponent<AlertsComponent>(player, out var alertComp)) return;
+
+        if (!IsShowingAlert(player.Value, msg.Type))
+        {
+            Logger.DebugS("alert", "user {0} attempted to" +
+                                   " click alert {1} which is not currently showing for them",
+                EntityManager.GetComponent<MetaDataComponent>(player.Value).EntityName, msg.Type);
+            return;
+        }
+
+        if (!TryGet(msg.Type, out var alert))
+        {
+            Logger.WarningS("alert", "unrecognized encoded alert {0}", msg.Type);
+            return;
+        }
+
+        alert.OnClick?.AlertClicked(player.Value);
+    }
+
+    private static void ClientAlertsGetState(EntityUid uid, AlertsComponent component, ref ComponentGetState args)
+    {
+        args.State = new AlertsComponentState(component.Alerts);
     }
 }
