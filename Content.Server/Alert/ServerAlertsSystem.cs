@@ -1,4 +1,3 @@
-using Content.Server.Gravity.EntitySystems;
 using Content.Shared.Alert;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -14,13 +13,12 @@ internal class ServerAlertsSystem : AlertsSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<AlertsComponent, ComponentStartup>(HandleComponentStartup);
-        SubscribeLocalEvent<AlertsComponent, ComponentRemove>(HandleComponentRemove);
+        SubscribeLocalEvent<AlertsComponent, ComponentStartup>((uid, _, _) => RaiseLocalEvent(uid, new AlertSyncEvent(uid)));
+        SubscribeLocalEvent<AlertsComponent, ComponentRemove>((uid, _, _) => RaiseLocalEvent(uid, new AlertSyncEvent(uid)));
 
         SubscribeLocalEvent<AlertsComponent, ComponentGetState>(ClientAlertsGetState);
         SubscribeNetworkEvent<ClickAlertEvent>(HandleClickAlert);
     }
-
     private static void ClientAlertsGetState(EntityUid uid, AlertsComponent component, ref ComponentGetState args)
     {
         args.State = new AlertsComponentState(component.Alerts);
@@ -46,21 +44,5 @@ internal class ServerAlertsSystem : AlertsSystem
         }
 
         alert.OnClick?.AlertClicked(player.Value);
-    }
-
-    private static void HandleComponentStartup(EntityUid uid, AlertsComponent component, ComponentStartup args)
-    {
-        if (TryGet<WeightlessSystem>(out var weightlessSystem))
-            weightlessSystem.AddAlert(component);
-        else
-            Logger.WarningS("alert", "weightlesssystem not found");
-    }
-
-    private static void HandleComponentRemove(EntityUid uid, AlertsComponent component, ComponentRemove args)
-    {
-        if (TryGet<WeightlessSystem>(out var weightlessSystem))
-            weightlessSystem.RemoveAlert(component);
-        else
-            Logger.WarningS("alert", $"{nameof(WeightlessSystem)} not found");
     }
 }

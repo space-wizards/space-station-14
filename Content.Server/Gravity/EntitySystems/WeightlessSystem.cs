@@ -26,6 +26,7 @@ namespace Content.Server.Gravity.EntitySystems
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<GravityChangedMessage>(GravityChanged);
             SubscribeLocalEvent<EntParentChangedMessage>(EntParentChanged);
+            SubscribeLocalEvent<AlertsComponent, AlertSyncEvent>(HandleAlertSyncEvent);
         }
 
         public void Reset(RoundRestartCleanupEvent ev)
@@ -44,11 +45,11 @@ namespace Content.Server.Gravity.EntitySystems
             {
                 if (EntityManager.GetComponent<GravityComponent>(grid.GridEntityId).Enabled)
                 {
-                    RemoveWeightless(status);
+                    RemoveWeightless(status.Owner);
                 }
                 else
                 {
-                    AddWeightless(status);
+                    AddWeightless(status.Owner);
                 }
             }
         }
@@ -75,26 +76,25 @@ namespace Content.Server.Gravity.EntitySystems
             {
                 foreach (var status in statuses)
                 {
-                    RemoveWeightless(status);
+                    RemoveWeightless(status.Owner);
                 }
             }
             else
             {
                 foreach (var status in statuses)
                 {
-                    AddWeightless(status);
+                    AddWeightless(status.Owner);
                 }
             }
         }
 
-        private void AddWeightless(AlertsComponent status)
+        private void AddWeightless(EntityUid euid)
         {
-            _alertsSystem.ShowAlert(status.Owner, AlertType.Weightless, null, null);
+            _alertsSystem.ShowAlert(euid, AlertType.Weightless);
         }
 
-        private void RemoveWeightless(AlertsComponent status)
+        private void RemoveWeightless(EntityUid euid)
         {
-            var euid = status.Owner;
             _alertsSystem.ClearAlert(euid, AlertType.Weightless);
         }
 
@@ -120,6 +120,19 @@ namespace Content.Server.Gravity.EntitySystems
             var newStatuses = _alerts.GetOrNew(newGrid);
 
             newStatuses.Add(status);
+        }
+
+        private void HandleAlertSyncEvent(EntityUid uid, AlertsComponent component, AlertSyncEvent args)
+        {
+            switch (component.LifeStage)
+            {
+                case ComponentLifeStage.Starting:
+                    AddAlert(component);
+                    break;
+                case ComponentLifeStage.Removing:
+                    RemoveAlert(component);
+                    break;
+            }
         }
     }
 }
