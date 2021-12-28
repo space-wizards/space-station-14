@@ -17,81 +17,61 @@ namespace Content.Server.BarSign.Systems
 
         public override void Initialize()
         {
-            base.Initialize();
-
-            SubscribeLocalEvent<BarSignComponent, ComponentInit>(OnComponentInit);
-            SubscribeLocalEvent<BarSignComponent, MapInitEvent>(OnMapInit);
-            SubscribeLocalEvent<BarSignComponent, PowerChangedEvent>(OnPowerChanged);
+            SubscribeLocalEvent<BarSignComponent, PowerChangedEvent>(UpdateBarSignVisuals);
         }
 
-        public void SetBarSign(BarSignComponent component, string barSign)
+        private void UpdateBarSignVisuals(EntityUid owner, BarSignComponent component, PowerChangedEvent args)
         {
-            component.CurrentSign = barSign;
-            UpdateBarSignVisuals(component);
-        }
-
-        private void OnComponentInit(EntityUid uid, BarSignComponent component, ComponentInit args)
-        {
-            UpdateBarSignVisuals(component);
-        }
-
-        private void OnMapInit(EntityUid uid, BarSignComponent component, MapInitEvent args)
-        {
-            if (component.CurrentSign != null)
+            var prototype = TryGetPrototype(component);
+            if (prototype == null)
             {
-                return;
+                prototype = Setup(owner, component);
             }
 
-            var prototypes = _prototypeManager.EnumeratePrototypes<BarSignPrototype>().Where(p => !p.Hidden)
-                .ToList();
-            var prototype = _random.Pick(prototypes);
-
-            component.CurrentSign = prototype.ID;
-        }
-
-        private void OnPowerChanged(EntityUid uid, BarSignComponent component, PowerChangedEvent args)
-        {
-            UpdateBarSignVisuals(component);
-        }
-
-        private void UpdateBarSignVisuals(BarSignComponent component)
-        {
-            if (component.CurrentSign == null)
+            var sprite = Comp<SpriteComponent>(owner);
+            if (args.Powered)
             {
-                return;
-            }
-
-            if (!_prototypeManager.TryIndex(component.CurrentSign, out BarSignPrototype? prototype))
-            {
-                Logger.ErrorS("barSign", $"Invalid bar sign prototype: \"{component.CurrentSign}\"");
-                return;
-            }
-
-            if (EntityManager.TryGetComponent(component.Owner, out SpriteComponent? sprite))
-            {
-                if (!EntityManager.TryGetComponent(component.Owner, out ApcPowerReceiverComponent? receiver) || !receiver.Powered)
-                {
-                    sprite.LayerSetState(0, "empty");
-                    sprite.LayerSetShader(0, "shaded");
-                }
-                else
-                {
-                    sprite.LayerSetState(0, prototype.Icon);
-                    sprite.LayerSetShader(0, "unshaded");
-                }
-            }
-
-            if (!string.IsNullOrEmpty(prototype.Name))
-            {
-                EntityManager.GetComponent<MetaDataComponent>(component.Owner).EntityName = prototype.Name;
+                sprite.LayerSetState(0, prototype.Icon);
+                sprite.LayerSetShader(0, "unshaded");
             }
             else
             {
-                string val = Loc.GetString("barsign-component-name");
-                EntityManager.GetComponent<MetaDataComponent>(component.Owner).EntityName = val;
+                sprite.LayerSetState(0, "empty");
+                sprite.LayerSetShader(0, "shaded");
             }
+        }
 
-            EntityManager.GetComponent<MetaDataComponent>(component.Owner).EntityDescription = prototype.Description;
+        private BarSignPrototype? TryGetPrototype(BarSignComponent component)
+        {
+            if (component.CurrentSign != null)
+            {
+                if (_prototypeManager.TryIndex(component.CurrentSign, out BarSignPrototype? existingPrototype))
+                {
+                    return existingPrototype;
+                }
+                else
+                {
+                    Logger.ErrorS("barSign", $"Invalid bar sign prototype: \"{component.CurrentSign}\"");
+                }
+            }
+            return null;
+        }
+
+        private BarSignPrototype Setup(EntityUid owner, BarSignComponent component)
+        {
+            var prototypes = _prototypeManager
+                .EnumeratePrototypes<BarSignPrototype>()
+                .Where(p => !p.Hidden)
+                .ToList();
+
+            var newPrototype = _random.Pick(prototypes);
+
+            var meta = Comp<MetaDataComponent>(owner);
+            meta.EntityName = newPrototype.Name != string.Empty ? newPrototype.Name : Loc.GetString("barsign-component-name");
+            meta.EntityDescription = newPrototype.Description;
+
+            component.CurrentSign = newPrototype.ID;
+            return newPrototype;
         }
     }
 }
