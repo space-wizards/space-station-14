@@ -41,7 +41,11 @@ namespace Content.Client.CharacterInterface
                 {
                     Orientation = LayoutOrientation.Vertical
                 };
-                Contents.AddChild(contentsVBox);
+
+                var mainScrollContainer = new ScrollContainer { };
+                mainScrollContainer.AddChild(contentsVBox);
+
+                Contents.AddChild(mainScrollContainer);
 
                 windowComponents.Sort((a, b) => ((int) a.Priority).CompareTo((int) b.Priority));
                 foreach (var element in windowComponents)

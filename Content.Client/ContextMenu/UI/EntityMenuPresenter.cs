@@ -101,18 +101,16 @@ namespace Content.Client.ContextMenu.UI
 
             // get an entity associated with this element
             var entity = entityElement.Entity;
-            if (!entity.Valid)
-            {
-                entity = GetFirstEntityOrNull(element.SubMenu);
-            }
+            entity ??= GetFirstEntityOrNull(element.SubMenu);
 
-            if (!entity.Valid)
+            // Deleted() automatically checks for null & existence.
+            if (_entityManager.Deleted(entity))
                 return;
 
             // open verb menu?
             if (args.Function == ContentKeyFunctions.OpenContextMenu)
             {
-                _verbSystem.VerbMenu.OpenVerbMenu(entity);
+                _verbSystem.VerbMenu.OpenVerbMenu(entity.Value);
                 args.Handle();
                 return;
             }
@@ -120,7 +118,7 @@ namespace Content.Client.ContextMenu.UI
             // do examination?
             if (args.Function == ContentKeyFunctions.ExamineEntity)
             {
-                _systemManager.GetEntitySystem<ExamineSystem>().DoExamine(entity);
+                _systemManager.GetEntitySystem<ExamineSystem>().DoExamine(entity.Value);
                 args.Handle();
                 return;
             }
@@ -139,7 +137,7 @@ namespace Content.Client.ContextMenu.UI
                 var funcId = _inputManager.NetworkBindMap.KeyFunctionID(func);
 
                 var message = new FullInputCmdMessage(_gameTiming.CurTick, _gameTiming.TickFraction, funcId,
-                    BoundKeyState.Down, _entityManager.GetComponent<TransformComponent>(entity).Coordinates, args.PointerLocation, entity);
+                    BoundKeyState.Down, _entityManager.GetComponent<TransformComponent>(entity.Value).Coordinates, args.PointerLocation, entity.Value);
 
                 var session = _playerManager.LocalPlayer?.Session;
                 if (session != null)
@@ -314,7 +312,7 @@ namespace Content.Client.ContextMenu.UI
                 element.SubMenu.Dispose();
                 element.SubMenu = null;
                 element.CountLabel.Visible = false;
-                Elements[entity] = element;
+                Elements[entity.Value] = element;
             }
 
             // update the parent element, so that it's count and entity icon gets updated.
@@ -326,17 +324,17 @@ namespace Content.Client.ContextMenu.UI
         /// <summary>
         ///     Recursively look through a sub-menu and return the first entity.
         /// </summary>
-        private EntityUid GetFirstEntityOrNull(ContextMenuPopup? menu)
+        private EntityUid? GetFirstEntityOrNull(ContextMenuPopup? menu)
         {
             if (menu == null)
-                return default;
+                return null;
 
             foreach (var element in menu.MenuBody.Children)
             {
                 if (element is not EntityMenuElement entityElement)
                     continue;
 
-                if (entityElement.Entity != default)
+                if (entityElement.Entity != null)
                 {
                     if (!_entityManager.Deleted(entityElement.Entity))
                         return entityElement.Entity;
@@ -345,11 +343,11 @@ namespace Content.Client.ContextMenu.UI
 
                 // if the element has no entity, its a group of entities with another attached sub-menu.
                 var entity = GetFirstEntityOrNull(entityElement.SubMenu);
-                if (entity != default)
+                if (entity != null)
                     return entity;
             }
 
-            return default;
+            return null;
         }
 
         public override void OpenSubMenu(ContextMenuElement element)

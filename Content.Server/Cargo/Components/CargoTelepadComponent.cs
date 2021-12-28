@@ -142,7 +142,7 @@ namespace Content.Server.Cargo.Components
             // attempt to attach the label
             if (_entMan.TryGetComponent(product, out PaperLabelComponent label))
             {
-                EntitySystem.Get<ItemSlotsSystem>().TryInsert(Owner, label.LabelSlot, printed);
+                EntitySystem.Get<ItemSlotsSystem>().TryInsert(Owner, label.LabelSlot, printed, null);
             }
         }
 

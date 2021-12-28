@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Content.Shared.Movement.Components;
+using System.Diagnostics.CodeAnalysis;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
@@ -41,6 +41,8 @@ namespace Content.Shared.Inventory
             DebugTools.Assert(type != null);
             InventoryInstance = DynamicTypeFactory.CreateInstance<Inventory>(type!);
         }
+
+        public abstract bool TryGetSlot(Slots slot, [NotNullWhen(true)] out EntityUid? item);
 
         /// <returns>true if the item is equipped to an equip slot (NOT inside an equipped container
         /// like inside a backpack)</returns>

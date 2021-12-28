@@ -1,29 +1,36 @@
 using System;
 using System.Globalization;
-using System.IO;
-using Content.Client.HUD;
+using Content.Client.Lobby;
+using Content.Client.Viewport;
 using Content.Shared.CCVar;
+using Robust.Client.Console;
+using Robust.Client.State;
+using Robust.Client.UserInterface;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 using Robust.Shared.IoC;
-using Robust.Shared.Network;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Info;
 
 public sealed class RulesManager
 {
-    [Dependency] private readonly IClientNetManager _clientNetManager = default!;
     [Dependency] private readonly IResourceManager _resource = default!;
     [Dependency] private readonly IConfigurationManager _configManager = default!;
+    [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
+    [Dependency] private readonly IStateManager _stateManager = default!;
+    [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
 
-    public event Action? OpenRulesAndInfoWindow;
-
-    private void OnConnectStateChanged(ClientConnectionState state)
+    public void Initialize()
     {
+        _stateManager.OnStateChanged += OnStateChanged;
+    }
 
-        if (state != ClientConnectionState.Connected)
+    private void OnStateChanged(StateChangedEventArgs args)
+    {
+        if (args.NewState is not (GameScreen or LobbyState))
             return;
+        _stateManager.OnStateChanged -= OnStateChanged;
 
         var path = new ResourcePath($"/rules_last_seen_{_configManager.GetCVar(CCVars.ServerId)}");
         var showRules = true;
@@ -33,8 +40,10 @@ public sealed class RulesManager
         else
             SaveLastReadTime();
 
-        if (showRules)
-            OpenRulesAndInfoWindow?.Invoke();
+        if (!showRules)
+            return;
+
+        ShowRules(_configManager.GetCVar(CCVars.RulesWaitTime));
     }
 
     /// <summary>
@@ -47,8 +56,24 @@ public sealed class RulesManager
         sw.Write(DateTime.UtcNow.ToUniversalTime());
     }
 
-    public void Initialize()
+    private void ShowRules(float time)
     {
-        _clientNetManager.ClientConnectStateChanged += OnConnectStateChanged;
+        var rulesPopup = new RulesPopup
+        {
+            Timer = time
+        };
+        rulesPopup.OnQuitPressed += OnQuitPressed;
+        rulesPopup.OnAcceptPressed += OnAcceptPressed;
+        _userInterfaceManager.RootControl.AddChild(rulesPopup);
+    }
+
+    private void OnQuitPressed()
+    {
+        _consoleHost.ExecuteCommand("quit");
+    }
+
+    private void OnAcceptPressed()
+    {
+        SaveLastReadTime();
     }
 }

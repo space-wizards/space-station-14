@@ -46,6 +46,13 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField("color")]
         public Color SubstanceColor { get; } = Color.White;
 
+        /// <summary>
+        ///     The specific heat of the reagent.
+        ///     How much energy it takes to heat one unit of this reagent by one Kelvin.
+        /// </summary>
+        [DataField("specificHeat")]
+        public float SpecificHeat { get; } = 1.0f;
+
         [DataField("boilingPoint")]
         public float? BoilingPoint { get; }
 
@@ -124,8 +131,9 @@ namespace Content.Shared.Chemistry.Reagent
                     var entity = args.SolutionEntity;
                     EntitySystem.Get<SharedAdminLogSystem>().Add(LogType.ReagentEffect, plantMetabolizable.LogImpact,
                         $"Plant metabolism effect {plantMetabolizable.GetType().Name:effect} of reagent {ID:reagent} applied on entity {entMan.ToPrettyString(entity):entity} at {entMan.GetComponent<TransformComponent>(entity).Coordinates:coordinates}");
-                    plantMetabolizable.Effect(args);
                 }
+
+                plantMetabolizable.Effect(args);
             }
         }
     }

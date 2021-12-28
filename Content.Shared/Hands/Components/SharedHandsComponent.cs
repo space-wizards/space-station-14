@@ -474,7 +474,7 @@ namespace Content.Shared.Hands.Components
         /// </summary>
         public void DropHeldEntity(Hand hand, EntityCoordinates targetDropLocation)
         {
-            if (hand.HeldEntity == null)
+            if (hand.IsEmpty)
                 return;
 
             var heldEntity = hand.HeldEntity;
@@ -892,6 +892,7 @@ namespace Content.Shared.Hands.Components
         [ViewVariables]
         public IContainer? Container { get; set; }
 
+        // TODO: Make this a nullable EntityUid...
         [ViewVariables]
         public EntityUid HeldEntity => Container?.ContainedEntities.FirstOrDefault() ?? EntityUid.Invalid;
 

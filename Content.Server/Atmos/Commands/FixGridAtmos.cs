@@ -29,7 +29,7 @@ namespace Content.Server.Atmos.Commands
             var entityManager = IoCManager.Resolve<IEntityManager>();
             var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
 
-            var mixtures = new GasMixture[5];
+            var mixtures = new GasMixture[6];
             for (var i = 0; i < mixtures.Length; i++)
                 mixtures[i] = new GasMixture(Atmospherics.CellVolume) { Temperature = Atmospherics.T20C };
 
@@ -47,6 +47,11 @@ namespace Content.Server.Atmos.Commands
 
             // 4: Plasma (GM)
             mixtures[4].AdjustMoles(Gas.Plasma, Atmospherics.MolesCellGasMiner);
+
+            // 5: Instant Plasmafire (r)
+            mixtures[5].AdjustMoles(Gas.Oxygen, Atmospherics.MolesCellGasMiner);
+            mixtures[5].AdjustMoles(Gas.Plasma, Atmospherics.MolesCellGasMiner);
+            mixtures[5].Temperature = 5000f;
 
             foreach (var gid in args)
             {
