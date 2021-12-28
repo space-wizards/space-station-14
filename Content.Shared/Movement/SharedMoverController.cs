@@ -85,9 +85,7 @@ namespace Content.Shared.Movement
 
             var worldTotal = _relativeMovement ? parentRotation.RotateVec(total) : total;
 
-            if (transform.GridID == GridId.Invalid)
-                worldTotal = mover.LastGridAngle.RotateVec(worldTotal);
-            else
+            if (transform.GridID != GridId.Invalid)
                 mover.LastGridAngle = parentRotation;
 
             if (worldTotal != Vector2.Zero)
@@ -148,9 +146,7 @@ namespace Content.Shared.Movement
             if (weightless)
                 worldTotal *= mobMover.WeightlessStrength;
 
-            if (transform.GridID == GridId.Invalid)
-                worldTotal = mover.LastGridAngle.RotateVec(worldTotal);
-            else
+            if (transform.GridID != GridId.Invalid)
                 mover.LastGridAngle = parentRotation;
 
             if (worldTotal != Vector2.Zero)
