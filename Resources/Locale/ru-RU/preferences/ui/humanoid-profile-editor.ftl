@@ -1,4 +1,4 @@
-humanoid-profile-editor-randomize-everything-button = Сенерировать случайного персонажа
+humanoid-profile-editor-randomize-everything-button = Сенерировать случайного
 humanoid-profile-editor-name-label = Имя:
 humanoid-profile-editor-name-random-button = Сгенерировать
 humanoid-profile-editor-appearance-tab = Внешность
@@ -28,7 +28,7 @@ humanoid-profile-editor-preference-satchel = Сумка
 humanoid-profile-editor-preference-duffelbag = Спортивная сумка
 humanoid-profile-editor-jobs-amount-in-department-tooltip = Профессии в {$departmentName}
 humanoid-profile-editor-department-jobs-label = {$departmentName} профессии
-humanoid-profile-editor-antags-tab = Роли
+humanoid-profile-editor-antags-tab = Антагонисты
 humanoid-profile-editor-job-priority-high-button = Высокий
 humanoid-profile-editor-job-priority-medium-button = Средний
 humanoid-profile-editor-job-priority-low-button = Низкий
