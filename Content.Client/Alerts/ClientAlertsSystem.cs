@@ -33,7 +33,12 @@ internal class ClientAlertsSystem : AlertsSystem
 
         SubscribeLocalEvent<AlertsComponent, ComponentHandleState>(ClientAlertsHandleState);
         SubscribeLocalEvent<AlertsComponent, ComponentShutdown>((_, _, _) => PlayerDetached());
+    }
 
+    protected override void LoadPrototypes()
+    {
+        base.LoadPrototypes();
+        
         AlertOrder = _prototypeManager.EnumeratePrototypes<AlertOrderPrototype>().FirstOrDefault();
         if (AlertOrder == null)
             Logger.ErrorS("alert", "no alertOrder prototype found, alerts will be in random order");

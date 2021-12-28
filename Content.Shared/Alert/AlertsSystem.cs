@@ -164,11 +164,25 @@ public class AlertsSystem : EntitySystem
         SubscribeLocalEvent<AlertsComponent, ComponentGetState>(ClientAlertsGetState);
         SubscribeNetworkEvent<ClickAlertEvent>(HandleClickAlert);
 
-        LoadAlertPrototypes();
+        LoadPrototypes();
+        _prototypeManager.PrototypesReloaded += HandlePrototypesReloaded;
     }
 
-    public void LoadAlertPrototypes()
+    public override void Shutdown()
     {
+        _prototypeManager.PrototypesReloaded -= HandlePrototypesReloaded;
+
+        base.Shutdown();
+    }
+
+    private void HandlePrototypesReloaded(PrototypesReloadedEventArgs obj)
+    {
+        LoadPrototypes();
+    }
+
+    protected virtual void LoadPrototypes()
+    {
+        _typeToAlert.Clear();
         foreach (var alert in _prototypeManager.EnumeratePrototypes<AlertPrototype>())
         {
             if (!_typeToAlert.TryAdd(alert.AlertType, alert))
