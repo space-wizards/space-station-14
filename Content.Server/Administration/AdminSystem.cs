@@ -110,7 +110,7 @@ namespace Content.Server.Administration
 
             var args = GetChangedEvent(e.Session);
 
-            foreach (var admin in _adminManager.AllAdmins)
+            foreach (var admin in _adminManager.ActiveAdmins)
             {
                 RaiseNetworkEvent(args, admin.ConnectedClient);
             }
