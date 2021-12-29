@@ -1,9 +1,4 @@
 Entries:
-- author: Seth
-  changes:
-  - {message: Added bio suits into bio lockers, type: Add}
-  id: 287
-  time: '2021-07-28T17:36:06.0000000+00:00'
 - author: PJB3005
   changes:
   - {message: Pulling is better integrated with hands now. It properly picks an empty
@@ -2879,3 +2874,8 @@ Entries:
   - {message: Pill canisters now fit inside medical belts., type: Tweak}
   id: 788
   time: '2021-12-29T06:21:17.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Ammo produced by a lathe now works properly., type: Fix}
+  id: 789
+  time: '2021-12-29T14:19:49.0000000+00:00'
