@@ -5,6 +5,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -27,7 +28,7 @@ namespace Content.Shared.Research.Prototypes
         [DataField("description")]
         private string _description = string.Empty;
 
-        [DataField("result")]
+        [DataField("result", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         private string _result = string.Empty;
 
         [DataField("completetime")]

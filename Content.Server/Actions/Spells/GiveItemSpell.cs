@@ -15,6 +15,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Actions.Spells
@@ -25,7 +26,7 @@ namespace Content.Server.Actions.Spells
     {   //TODO: Needs to be an EntityPrototype for proper validation
         [ViewVariables] [DataField("castMessage")] public string? CastMessage { get; set; } = default!;
         [ViewVariables] [DataField("cooldown")] public float CoolDown { get; set; } = 1f;
-        [ViewVariables] [DataField("spellItem")] public string ItemProto { get; set; } = default!;
+        [ViewVariables] [DataField("spellItem", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))] public string ItemProto { get; set; } = default!;
 
         [ViewVariables] [DataField("castSound", required: true)] public SoundSpecifier CastSound { get; set; } = default!;
 
