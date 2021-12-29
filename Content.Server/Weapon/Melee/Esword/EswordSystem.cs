@@ -60,13 +60,19 @@ namespace Content.Server.Weapon.Melee.Esword
             }
 
             if (!EntityManager.TryGetComponent<SpriteComponent?>(comp.Owner, out var sprite) ||
-                !EntityManager.TryGetComponent<ItemComponent?>(comp.Owner, out var item)) return;
+                !EntityManager.TryGetComponent<ItemComponent?>(comp.Owner, out var item))
+                return;
 
-            EntityManager.TryGetComponent<ItemComponent>(comp.Owner, out var esword);
-            esword.Size = 5;
+            if (EntityManager.TryGetComponent<ItemComponent?>(comp.Owner, out var esword))
+            {
+                esword.Size = 9999;
+            }
+
             SoundSystem.Play(Filter.Pvs(comp.Owner), comp.DeActivateSound.GetSound(), comp.Owner);
+
             item.EquippedPrefix = "off";
             sprite.LayerSetState(0, "e_sword");
+
             comp.Activated = false;
         }
 
@@ -81,13 +87,16 @@ namespace Content.Server.Weapon.Melee.Esword
                 !EntityManager.TryGetComponent<ItemComponent?>(comp.Owner, out var item))
                 return;
 
-            EntityManager.TryGetComponent<ItemComponent>(comp.Owner, out var esword);
-            esword.Size = 9999;
+            if (EntityManager.TryGetComponent<ItemComponent?>(comp.Owner, out var esword))
+            {
+                esword.Size = 9999;
+            }
 
-            var playerFilter = Filter.Pvs(comp.Owner);
-            SoundSystem.Play(playerFilter, comp.ActivateSound.GetSound(), comp.Owner);
+            SoundSystem.Play(Filter.Pvs(comp.Owner), comp.ActivateSound.GetSound(), comp.Owner);
+
             item.EquippedPrefix = "on";
             sprite.LayerSetState(0, "e_sword_on");
+
             comp.Activated = true;
         }
     }
