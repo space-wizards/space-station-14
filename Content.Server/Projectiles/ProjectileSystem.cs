@@ -73,8 +73,13 @@ namespace Content.Server.Projectiles
                 _cameraRecoil.KickCamera(otherEntity, direction);
             }
 
-            if (component.DeleteOnCollide)
+            var absorbed = new ProjectileAbsorbedEvent(component);
+            RaiseLocalEvent(uid, absorbed);
+
+            if (component.DeleteOnCollide && !absorbed.Cancelled)
+            {
                 EntityManager.QueueDeleteEntity(uid);
+            }
         }
 
         public override void Update(float frameTime)
@@ -91,5 +96,12 @@ namespace Content.Server.Projectiles
                 }
             }
         }
+    }
+
+    public sealed class ProjectileAbsorbedEvent : CancellableEntityEventArgs
+    {
+        public ProjectileComponent Projectile;
+
+        public ProjectileAbsorbedEvent(ProjectileComponent proj) => Projectile = proj;
     }
 }
