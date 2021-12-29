@@ -42,10 +42,12 @@ namespace Content.Server.Buckle.Systems
             if (!args.CanAccess || !args.CanInteract || !component.Buckled)
                 return;
 
-            Verb verb = new();
-            verb.Act = () => component.TryUnbuckle(args.User);
-            verb.Text = Loc.GetString("verb-categories-unbuckle");
-            verb.IconTexture = "/Textures/Interface/VerbIcons/unbuckle.svg.192dpi.png";
+            Verb verb = new()
+            {
+                Act = () => component.TryUnbuckle(args.User),
+                Text = Loc.GetString("verb-categories-unbuckle"),
+                IconTexture = "/Textures/Interface/VerbIcons/unbuckle.svg.192dpi.png"
+            };
 
             if (args.Target == args.User && args.Using == null)
             {
