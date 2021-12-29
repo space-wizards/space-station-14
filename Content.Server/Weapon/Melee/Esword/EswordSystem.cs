@@ -3,7 +3,6 @@ using Content.Server.Items;
 using Content.Shared.Interaction;
 using Content.Shared.ActionBlocker;
 using Content.Shared.FixedPoint;
-
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Audio;
@@ -64,9 +63,7 @@ namespace Content.Server.Weapon.Melee.Esword
                 return;
 
             if (EntityManager.TryGetComponent<ItemComponent?>(comp.Owner, out var esword))
-            {
-                esword.Size = 9999;
-            }
+                esword.Size = 5;
 
             SoundSystem.Play(Filter.Pvs(comp.Owner), comp.DeActivateSound.GetSound(), comp.Owner);
 
@@ -88,9 +85,7 @@ namespace Content.Server.Weapon.Melee.Esword
                 return;
 
             if (EntityManager.TryGetComponent<ItemComponent?>(comp.Owner, out var esword))
-            {
                 esword.Size = 9999;
-            }
 
             SoundSystem.Play(Filter.Pvs(comp.Owner), comp.ActivateSound.GetSound(), comp.Owner);
 

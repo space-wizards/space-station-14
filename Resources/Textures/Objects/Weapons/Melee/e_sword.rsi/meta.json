@@ -17,7 +17,7 @@
       "directions": 4
     },
     {
-      "name": "e_sword_on",
+      "name": "e_sword_rainbow_on",
       "delays": [
         [
           0.1,
@@ -35,8 +35,61 @@
         ]
       ]
     },
+	{
+      "name": "e_sword_on",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
     {
       "name": "on-inhand-left",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1
+        ],
+		[
+          0.1,
+          0.1
+        ],
+		[
+          0.1,
+          0.1
+        ],
+		[
+          0.1,
+          0.1
+        ],
+      ]
+    },
+    {
+      "name": "on-inhand-right",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1
+        ],
+		[
+          0.1,
+          0.1
+        ],
+		[
+          0.1,
+          0.1
+        ],
+		[
+          0.1,
+          0.1
+        ],
+      ]
+    },
+    {
+      "name": "on-inhand-rainbow-left",
       "directions": 4,
       "delays": [
         [
@@ -98,7 +151,7 @@
       ]
     },
     {
-      "name": "on-inhand-right",
+      "name": "on-inhand-rainbow-right",
       "directions": 4,
       "delays": [
         [

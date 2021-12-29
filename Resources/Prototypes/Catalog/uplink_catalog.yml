@@ -31,12 +31,14 @@
 #  itemId: CrossbowEnergyMini
 #  price: 8
 
-# bug swept to make
-#- type: uplinkListing
-#  id: UplinkESword
-#  category: Weapons
-#  itemId: ESword
-#  price: 8
+
+- type: uplinkListing
+  id: UplinkEsword
+  category: Weapons
+  itemId: EnergySword
+  listingName: Energy Sword
+  description: A very dangerous energy sword. Can be stored in pockets when turned off. Makes a lot of noise when used or turned on.
+  price: 8
 
 # bug swept to make
 #- type: uplinkListing
