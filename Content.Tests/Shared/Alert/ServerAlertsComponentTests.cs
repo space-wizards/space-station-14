@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using Content.Server.Alert;
 using Content.Shared.Alert;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
@@ -44,7 +45,7 @@ namespace Content.Tests.Shared.Alert
             prototypeManager.Resync();
 
             var entSys = IoCManager.Resolve<IEntitySystemManager>();
-            entSys.LoadExtraSystemType<AlertsSystem>();
+            entSys.LoadExtraSystemType<ServerAlertsSystem>();
 
             var alertsComponent = new AlertsComponent();
             alertsComponent = IoCManager.InjectDependencies(alertsComponent);
