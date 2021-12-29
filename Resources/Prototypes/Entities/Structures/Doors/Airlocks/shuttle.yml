@@ -22,6 +22,8 @@
       map: ["enum.DoorVisualLayers.BaseBolted"]
     - state: panel_open
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Wires
+    LayoutId: Docking
   - type: Door
     bumpOpen: false
     closeTimeTwo: 0.4

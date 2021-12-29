@@ -75,7 +75,7 @@
       path: /Audio/Machines/airlock_deny.ogg
   - type: Wires
     BoardName: "Windoor Control"
-    LayoutId: Airlock
+    LayoutId: Windoors
   - type: UserInterface
     interfaces:
     - key: enum.WiresUiKey.Key
@@ -120,6 +120,8 @@
     - state: panel_open
       map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       visible: false
+  - type: Wires
+    LayoutId: Secure Windoors
   - type: Destructible
     thresholds:
     - trigger:
