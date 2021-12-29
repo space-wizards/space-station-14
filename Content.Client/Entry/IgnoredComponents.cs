@@ -46,8 +46,6 @@ namespace Content.Client.Entry
             "ResearchServer",
             "ResearchPointSource",
             "ResearchClient",
-            "Access",
-            "AccessReader",
             "IdCardConsole",
             "Airlock",
             "ThermalRegulator",
@@ -126,6 +124,8 @@ namespace Content.Client.Entry
             "Toys",
             "SurgeryTool",
             "EmitSoundOnThrow",
+            "Salvage",
+            "SalvageMagnet",
             "Flash",
             "Docking",
             "Telecrystal",
@@ -318,6 +318,8 @@ namespace Content.Client.Entry
             "PneumaticCannon",
             "Spreader",
             "GrowingKudzu",
+            "MonkeyAccent",
+            "ReplacementAccent",
             "Esword"
         };
     }

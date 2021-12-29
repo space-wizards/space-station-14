@@ -109,6 +109,15 @@ namespace Content.Shared.Chemistry.Reaction
         private static bool CanReact(Solution solution, ReactionPrototype reaction, out FixedPoint2 lowestUnitReactions)
         {
             lowestUnitReactions = FixedPoint2.MaxValue;
+            if (solution.Temperature < reaction.MinimumTemperature)
+            {
+                lowestUnitReactions = FixedPoint2.Zero;
+                return false;
+            } else if(solution.Temperature > reaction.MaximumTemperature)
+            {
+                lowestUnitReactions = FixedPoint2.Zero;
+                return false;
+            }
 
             foreach (var reactantData in reaction.Reactants)
             {
@@ -202,7 +211,7 @@ namespace Content.Shared.Chemistry.Reaction
         ///     Removes the reactants from the solution, then returns a solution with all products.
         ///     WARNING: Does not trigger reactions between solution and new products.
         /// </summary>
-        private bool ProcessReactions(Solution solution, EntityUid Owner, [MaybeNullWhen(false)] out Solution productSolution)
+        private bool ProcessReactions(Solution solution, EntityUid owner, [MaybeNullWhen(false)] out Solution productSolution)
         {
             foreach(var reactant in solution.Contents)
             {
@@ -214,7 +223,7 @@ namespace Content.Shared.Chemistry.Reaction
                     if (!CanReact(solution, reaction, out var unitReactions))
                         continue;
 
-                    productSolution = PerformReaction(solution, Owner, reaction, unitReactions);
+                    productSolution = PerformReaction(solution, owner, reaction, unitReactions);
                     return true;
                 }
             }

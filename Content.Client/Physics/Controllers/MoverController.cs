@@ -5,6 +5,7 @@ using Content.Shared.Pulling.Components;
 using Robust.Client.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Map;
 using Robust.Shared.Physics;
 
 namespace Content.Client.Physics.Controllers
@@ -19,10 +20,14 @@ namespace Content.Client.Physics.Controllers
 
             if (_playerManager.LocalPlayer?.ControlledEntity is not {Valid: true} player ||
                 !EntityManager.TryGetComponent(player, out IMoverComponent? mover) ||
-                !EntityManager.TryGetComponent(player, out PhysicsComponent? body))
+                !EntityManager.TryGetComponent(player, out PhysicsComponent? body) ||
+                !EntityManager.TryGetComponent(player, out TransformComponent? xform))
             {
                 return;
             }
+
+            if (xform.GridID != GridId.Invalid)
+                mover.LastGridAngle = GetParentGridAngle(xform, mover);
 
             // Essentially we only want to set our mob to predicted so every other entity we just interpolate
             // (i.e. only see what the server has sent us).

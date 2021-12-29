@@ -6,7 +6,6 @@ using Content.Client.Info;
 using Content.Client.Resources;
 using Content.Client.Stylesheets;
 using Content.Client.Targeting;
-using Content.Shared;
 using Content.Shared.CCVar;
 using Content.Shared.HUD;
 using Content.Shared.Input;
@@ -15,6 +14,7 @@ using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
@@ -303,8 +303,6 @@ namespace Content.Client.HUD
 
             _rulesAndInfoWindow = new RulesAndInfoWindow();
 
-            IoCManager.Resolve<RulesManager>().OpenRulesAndInfoWindow += OpenRulesAndInfoWindow;
-
             _rulesAndInfoWindow.OnClose += () => _buttonInfo.Pressed = false;
 
             _inputManager.SetInputCommand(ContentKeyFunctions.OpenInfo,
@@ -428,12 +426,6 @@ namespace Content.Client.HUD
             LC.SetMarginTop(VoteContainer, 100);
             LC.SetGrowHorizontal(VoteContainer, LC.GrowDirection.End);
             LC.SetGrowVertical(VoteContainer, LC.GrowDirection.End);
-        }
-
-        private void OpenRulesAndInfoWindow()
-        {
-            _rulesAndInfoWindow.OpenCentered();
-            _buttonInfo.Pressed = true;
         }
 
         private void ButtonInfoOnOnToggled()
@@ -620,16 +612,23 @@ namespace Content.Client.HUD
             {
                 _inputManager.OnKeyBindingAdded += OnKeyBindingChanged;
                 _inputManager.OnKeyBindingRemoved += OnKeyBindingChanged;
+                _inputManager.OnInputModeChanged += OnKeyBindingChanged;
             }
 
             protected override void ExitedTree()
             {
                 _inputManager.OnKeyBindingAdded -= OnKeyBindingChanged;
                 _inputManager.OnKeyBindingRemoved -= OnKeyBindingChanged;
+                _inputManager.OnInputModeChanged -= OnKeyBindingChanged;
             }
 
 
             private void OnKeyBindingChanged(IKeyBinding obj)
+            {
+                _label.Text = ShortKeyName(_function);
+            }
+
+            private void OnKeyBindingChanged()
             {
                 _label.Text = ShortKeyName(_function);
             }

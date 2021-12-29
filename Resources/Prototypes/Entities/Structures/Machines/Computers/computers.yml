@@ -281,6 +281,7 @@
       - ServiceLightsReplacement
       - ServiceSmokeables
       - ServiceCustomSmokable
+      - SalvageEquipment
       - EngineeringCableLv
       - EngineeringCableMv
       - EngineeringCableHv
@@ -292,6 +293,7 @@
       - FunPlushies
       - FunArtSupplies
       - FunInstruments
+      - FunBoardGames
       - MaterialSteel
       - MaterialGlass
       - MaterialPlastic
