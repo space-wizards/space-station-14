@@ -1,11 +1,6 @@
 Entries:
 - author: Seth
   changes:
-  - {message: Added a hardsuit into research directors locker, type: Add}
-  id: 286
-  time: '2021-07-26T22:14:10.0000000+00:00'
-- author: Seth
-  changes:
   - {message: Added bio suits into bio lockers, type: Add}
   id: 287
   time: '2021-07-28T17:36:06.0000000+00:00'
@@ -2877,3 +2872,10 @@ Entries:
       position., type: Add}
   id: 787
   time: '2021-12-29T05:19:01.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Pill canisters are now available in the protolathe after researching
+      chemistry technology., type: Add}
+  - {message: Pill canisters now fit inside medical belts., type: Tweak}
+  id: 788
+  time: '2021-12-29T06:21:17.0000000+00:00'
