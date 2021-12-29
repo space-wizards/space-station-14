@@ -19,9 +19,7 @@ namespace Content.Server.Mind.Components
     ///     Stores a <see cref="Server.Mind.Mind"/> on a mob.
     /// </summary>
     [RegisterComponent, ComponentProtoName("Mind"), Friend(typeof(MindSystem))]
-#pragma warning disable 618
     public class MindComponent : Component
-#pragma warning restore 618
     {
         /// <summary>
         ///     The mind controlling this mob. Can be null.
