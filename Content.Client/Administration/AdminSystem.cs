@@ -4,12 +4,8 @@ using System.Linq;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Events;
 using Content.Shared.GameTicking;
-using Robust.Client.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Network;
-using Robust.Shared.Players;
 
 namespace Content.Client.Administration
 {
