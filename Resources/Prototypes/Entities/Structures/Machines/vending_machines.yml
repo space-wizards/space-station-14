@@ -280,6 +280,9 @@
   components:
   - type: VendingMachine
     pack: RobustSoftdrinksInventory
+    insertWhitelist:
+      components:
+      - Drink
   - type: Advertise
     pack: RobustSoftdrinksAds
   - type: Speech
@@ -555,6 +558,10 @@
     insertWhitelist:
       components:
       - Food
+      - Drink
+      tags:
+      - Pill
+      - PillCanister
   - type: Advertise
     pack: SmartFridgeAds
   - type: Speech
@@ -587,6 +594,9 @@
   components:
   - type: VendingMachine
     pack: GetmoreChocolateCorpInventory
+    insertWhitelist:
+      components:
+      - Food
   - type: Advertise
     pack: GetmoreChocolateCorpAds
   - type: Speech

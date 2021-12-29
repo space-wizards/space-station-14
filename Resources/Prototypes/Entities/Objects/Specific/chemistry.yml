@@ -265,3 +265,6 @@
     whitelist:
       tags:
         - Pill
+  - type: Tag
+    tags:
+    - PillCanister
