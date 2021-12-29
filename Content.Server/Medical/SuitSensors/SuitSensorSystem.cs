@@ -51,7 +51,8 @@ namespace Content.Server.Medical.SuitSensors
             _updateDif += frameTime;
             if (_updateDif < UpdateRate)
                 return;
-            _updateDif = 0f;
+
+            _updateDif -= UpdateRate;
 
             var curTime = _gameTiming.CurTime;
             var sensors = EntityManager.EntityQuery<SuitSensorComponent, DeviceNetworkComponent>();
@@ -63,13 +64,13 @@ namespace Content.Server.Medical.SuitSensors
                 sensor.LastUpdate = curTime;
 
                 // get sensor status
-                var status = GetSensorState(sensor.OwnerUid, sensor);
+                var status = GetSensorState(sensor.Owner, sensor);
                 if (status == null)
                     continue;
 
                 // broadcast it to device network
                 var payload = SuitSensorToPacket(status);
-                _deviceNetworkSystem.QueuePacket(sensor.OwnerUid, DeviceNetworkConstants.NullAddress, device.Frequency, payload, true);
+                _deviceNetworkSystem.QueuePacket(sensor.Owner, DeviceNetworkConstants.NullAddress, device.Frequency, payload, true);
             }
         }
 
@@ -95,7 +96,7 @@ namespace Content.Server.Medical.SuitSensors
             if (args.Slot != component.ActivationSlot)
                 return;
 
-            component.User = args.User.Uid;
+            component.User = args.User;
         }
 
         private void OnUnequipped(EntityUid uid, SuitSensorComponent component, UnequippedEvent args)
@@ -140,15 +141,15 @@ namespace Content.Server.Medical.SuitSensors
                 return;
 
             // standard interaction checks
-            if (!args.CanAccess || !args.CanInteract || !_actionBlockerSystem.CanDrop(args.User.Uid))
+            if (!args.CanAccess || !args.CanInteract || !_actionBlockerSystem.CanDrop(args.User))
                 return;
 
             args.Verbs.UnionWith(new[]
             {
-                CreateVerb(uid, component, args.User.Uid, SuitSensorMode.SensorOff),
-                CreateVerb(uid, component, args.User.Uid, SuitSensorMode.SensorBinary),
-                CreateVerb(uid, component, args.User.Uid, SuitSensorMode.SensorVitals),
-                CreateVerb(uid, component, args.User.Uid, SuitSensorMode.SensorCords)
+                CreateVerb(uid, component, args.User, SuitSensorMode.SensorOff),
+                CreateVerb(uid, component, args.User, SuitSensorMode.SensorBinary),
+                CreateVerb(uid, component, args.User, SuitSensorMode.SensorVitals),
+                CreateVerb(uid, component, args.User, SuitSensorMode.SensorCords)
             });
         }
 

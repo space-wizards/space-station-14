@@ -37,8 +37,8 @@ namespace Content.Server.Medical.CrewMonitoring
             var consoles = EntityManager.EntityQuery<CrewMonitoringConsoleComponent>();
             foreach (var console in consoles)
             {
-                UpdateTimeouts(console.OwnerUid, console);
-                UpdateUserInterface(console.OwnerUid, console);
+                UpdateTimeouts(console.Owner, console);
+                UpdateUserInterface(console.Owner, console);
             }
         }
 

@@ -101,15 +101,7 @@ namespace Content.Server.Access.Systems
                 return true;
 
             // check inventory slot?
-            if (EntityManager.TryGetComponent(uid, out InventoryComponent? inventoryComponent) &&
-                inventoryComponent.HasSlot(EquipmentSlotDefines.Slots.IDCARD) &&
-                inventoryComponent.TryGetSlotItem(EquipmentSlotDefines.Slots.IDCARD, out ItemComponent? item) &&
-                TryGetIdCard(item.Owner, out idCard))
-            {
-                return true;
-            }
-
-            return false;
+            return TryGetIdCardSlot(uid, out idCard);
         }
 
         /// <summary>
@@ -139,7 +131,7 @@ namespace Content.Server.Access.Systems
             return EntityManager.TryGetComponent(uid, out InventoryComponent? inventoryComponent) &&
                    inventoryComponent.HasSlot(EquipmentSlotDefines.Slots.IDCARD) &&
                    inventoryComponent.TryGetSlotItem(EquipmentSlotDefines.Slots.IDCARD, out ItemComponent? item) &&
-                   TryGetIdCard(item.Owner.Uid, out idCard);
+                   TryGetIdCard(item.Owner, out idCard);
         }
     }
 }

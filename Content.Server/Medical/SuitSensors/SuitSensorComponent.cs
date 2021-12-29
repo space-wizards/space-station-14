@@ -13,10 +13,9 @@ namespace Content.Server.Medical.SuitSensors
     /// </summary>
     [RegisterComponent]
     [Friend(typeof(SuitSensorSystem))]
-    public class SuitSensorComponent : Component
+    [ComponentProtoName("SuitSensor")]
+    public sealed class SuitSensorComponent : Component
     {
-        public override string Name => "SuitSensor";
-
         /// <summary>
         ///     Choose a random sensor mode when item is spawned.
         /// </summary>
