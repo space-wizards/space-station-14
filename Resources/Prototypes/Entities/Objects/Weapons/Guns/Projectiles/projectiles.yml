@@ -41,7 +41,7 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 10
+        Piercing: 3
     soundHit:
       path: /Audio/Weapons/Guns/Hits/snap.ogg
   - type: FlashOnTrigger
