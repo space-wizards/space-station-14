@@ -42,8 +42,8 @@
   requiredTechnologies:
     - BasicResearch
   unlockedRecipes:
-    - Scythe
-    - Hatchet
+    - HydroponicsToolScythe
+    - HydroponicsToolHatchet
     - KitchenKnife
 
 - type: technology
@@ -75,7 +75,7 @@
     - Retractor
     - Cautery
     - Drill
-    - BoneSaw
+    - Saw
     - Hemostat
 
 # Chemistry Technology Tree
@@ -219,7 +219,7 @@
   requiredTechnologies:
     - BasicResearch
   unlockedRecipes:
-    - ConveyorAssembly
+    - ConveyorBeltAssembly
     - RCD
     - RCDAmmo
     - FlashlightLantern
@@ -239,7 +239,7 @@
     - SheetSteel
     - SheetPlastic
     - SheetRGlass
-    - GlassStack
+    - SheetGlass1
 
 # Electromagnetic Theory Technology Tree
 
