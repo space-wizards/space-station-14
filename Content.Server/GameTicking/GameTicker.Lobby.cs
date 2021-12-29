@@ -20,6 +20,9 @@ namespace Content.Server.GameTicking
         private TimeSpan _roundStartTime;
 
         [ViewVariables]
+        private readonly TimeSpan _finalCountdownTime = new TimeSpan(0, 0, 10);
+
+        [ViewVariables]
         private TimeSpan _pauseTime;
 
         [ViewVariables]
@@ -135,6 +138,20 @@ namespace Content.Server.GameTicking
             _playersInLobby[player] = ready ? LobbyPlayerStatus.Ready : LobbyPlayerStatus.NotReady;
             RaiseNetworkEvent(GetStatusMsg(player), player.ConnectedClient);
             RaiseNetworkEvent(GetStatusSingle(player, status));
+
+            //The final countdown conditions checkup.
+            if (!Paused)
+            {
+                if (!_playersInLobby.ContainsValue(LobbyPlayerStatus.NotReady))
+                {
+                    if ((_roundStartTime - _gameTiming.CurTime) > _finalCountdownTime)
+                    {
+                        _roundStartTime = _gameTiming.CurTime + _finalCountdownTime;
+                    }
+                }
+
+                RaiseNetworkEvent(new TickerLobbyCountdownEvent(_roundStartTime, Paused));
+            }
         }
     }
 }
