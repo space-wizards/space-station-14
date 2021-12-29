@@ -96,6 +96,7 @@
     - CryostasisBeaker
     - Dropper
     - Syringe
+    - PillCanister
 
 - type: technology
   name: "medical machinery"
@@ -113,6 +114,7 @@
     - MedicalScannerMachineCircuitboard
     - ChemMasterMachineCircuitboard
     - ChemDispenserMachineCircuitboard
+    - CrewMonitoringComputerCircuitboard
 
 # Security Technology Tree
 
