@@ -183,6 +183,7 @@
       - SolarControlComputerCircuitboard
       - AutolatheMachineCircuitboard
       - ProtolatheMachineCircuitboard
+      - CrewMonitoringComputerCircuitboard
       - Bucket
       - MopItem
       - SprayBottle

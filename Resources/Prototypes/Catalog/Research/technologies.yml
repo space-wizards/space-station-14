@@ -113,6 +113,7 @@
     - MedicalScannerMachineCircuitboard
     - ChemMasterMachineCircuitboard
     - ChemDispenserMachineCircuitboard
+    - CrewMonitoringComputerCircuitboard
 
 # Security Technology Tree
 

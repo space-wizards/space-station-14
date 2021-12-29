@@ -308,6 +308,8 @@ namespace Content.Client.Entry
             "ExtensionCableReceiver",
             "ExtensionCableProvider",
             "ApcNetworkConnection",
+            "SuitSensor",
+            "CrewMonitoringConsole",
             "ApcNetSwitch",
             "HandLabeler",
             "Label",
