@@ -21,6 +21,9 @@
         },
 		{
 			"name": "harm"
+		},
+		{
+			"name": "manifest"
 		}
     ]
 }

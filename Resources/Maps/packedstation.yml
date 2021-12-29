@@ -87665,7 +87665,7 @@ entities:
   - color: '#0000FFFF'
     type: AtmosPipeColor
 - uid: 9229
-  type: LaserSecGun
+  type: LaserRifleCog
   components:
   - pos: 41.526512,27.667274
     parent: 0
@@ -109560,7 +109560,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 11192
-  type: LaserSecGun
+  type: LaserRifleCog
   components:
   - pos: 41.526512,27.4329
     parent: 0

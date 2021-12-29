@@ -291,9 +291,6 @@ namespace Content.Server.Botany
         {
             AddToDatabase();
 
-            if (user == null)
-                return Enumerable.Empty<EntityUid>();
-
             if (ProductPrototypes == null || ProductPrototypes.Count == 0 || Yield <= 0)
             {
                 user.PopupMessageCursor(Loc.GetString("botany-harvest-fail-message"));

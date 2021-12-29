@@ -5,6 +5,7 @@ using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Access;
 using Content.Shared.Access.Components;
+using Content.Shared.Access.Systems;
 using Content.Shared.Containers.ItemSlots;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
@@ -29,7 +30,7 @@ namespace Content.Server.Access.Components
         {
             base.Initialize();
 
-            Owner.EnsureComponentWarn<AccessReader>();
+            Owner.EnsureComponentWarn<AccessReaderComponent>();
             Owner.EnsureComponentWarn<ServerUserInterfaceComponent>();
 
             if (UserInterface != null)
@@ -66,11 +67,11 @@ namespace Content.Server.Access.Components
         }
 
         /// <summary>
-        /// Returns true if there is an ID in <see cref="PrivilegedIdSlot"/> and said ID satisfies the requirements of <see cref="AccessReader"/>.
+        /// Returns true if there is an ID in <see cref="PrivilegedIdSlot"/> and said ID satisfies the requirements of <see cref="AccessReaderComponent"/>.
         /// </summary>
         private bool PrivilegedIdIsAuthorized()
         {
-            if (!_entities.TryGetComponent(Owner, out AccessReader? reader))
+            if (!_entities.TryGetComponent(Owner, out AccessReaderComponent? reader))
             {
                 return true;
             }
