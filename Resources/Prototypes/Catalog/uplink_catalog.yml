@@ -112,7 +112,7 @@
 - type: uplinkListing
   id: UplinkHoloparaKit
   category: Utility
-  itemId: HoloparasiteInjector
+  itemId: BoxHoloparasite
   listingName: Holoparasite Kit
   description: The pride and joy of Cybersun. Contains an injector that hosts a sentient metaphysical guardian made of hard light which resides in the user's body when not active. The guardian can punch rapidly and is immune to hazardous environments and bullets, but shares any damage it takes with the user.
   icon: /Textures/Objects/Misc/guardian_info.rsi/icon.png

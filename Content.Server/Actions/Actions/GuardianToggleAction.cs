@@ -24,7 +24,7 @@ namespace Content.Server.Actions.Actions
             var entManager = IoCManager.Resolve<IEntityManager>();
 
             if (entManager.TryGetComponent(args.Performer, out GuardianHostComponent? hostComponent) &&
-                hostComponent.HostedGuardian.IsValid())
+                hostComponent.HostedGuardian != null)
             {
                 EntitySystem.Get<GuardianSystem>().ToggleGuardian(hostComponent);
                 args.PerformerActions?.Cooldown(args.ActionType, Cooldowns.SecondsFromNow(Cooldown));

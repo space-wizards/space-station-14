@@ -10,3 +10,17 @@
     netsync: false
   - type: GuardianCreator
     guardianProto: MobHoloparasite
+
+- type: entity
+  name: holoparasite box
+  parent: BoxBase
+  id: BoxHoloparasite
+  description: A box containing a holoparasite injector
+  components:
+  - type: StorageFill
+    contents:
+      - id: HoloparasiteInjector
+      - id: HoloparasiteInfo
+  - type: Sprite
+    layers:
+      - state: box
