@@ -58,13 +58,12 @@ namespace Content.Client.Administration
                 var screenCoordinates = _eyeManager.WorldToScreen(aabb.Center +
                                                                   new Angle(-_eyeManager.CurrentEye.Rotation).RotateVec(
                                                                       aabb.TopRight - aabb.Center)) + new Vector2(1f, 7f);
-                var alpha = playerInfo.Connected ? 1f : 0.5f;
                 if (playerInfo.Antag)
                 {
-                    args.ScreenHandle.DrawString(_font, screenCoordinates + (lineoffset * 2), "ANTAG", Color.OrangeRed.WithAlpha(alpha));
+                    args.ScreenHandle.DrawString(_font, screenCoordinates + (lineoffset * 2), "ANTAG", Color.OrangeRed);
                 }
-                args.ScreenHandle.DrawString(_font, screenCoordinates+lineoffset, playerInfo.Username, Color.Yellow.WithAlpha(alpha));
-                args.ScreenHandle.DrawString(_font, screenCoordinates, playerInfo.CharacterName, Color.Aquamarine.WithAlpha(alpha));
+                args.ScreenHandle.DrawString(_font, screenCoordinates+lineoffset, playerInfo.Username, playerInfo.Connected ? Color.Yellow : Color.White);
+                args.ScreenHandle.DrawString(_font, screenCoordinates, playerInfo.CharacterName, playerInfo.Connected ? Color.Aquamarine : Color.White);
             }
         }
     }
