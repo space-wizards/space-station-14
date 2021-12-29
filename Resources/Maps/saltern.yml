@@ -47355,17 +47355,6 @@ entities:
     pos: 8.5,-15.5
     parent: 853
     type: Transform
-- uid: 4169
-  type: FlashlightLantern
-  components:
-  - pos: 30.584452,-4.2068677
-    parent: 853
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 4170
   type: MagazinePistolSmgTopMounted
   components:
