@@ -31,12 +31,14 @@ public class ReprocessorSystem : EntitySystem
         if (mat.StackId is null)
             return;
 
-        _stackSystem.Spawn(
+        _stackSystem.Spawn( // Spawn a stack of the processed material.
             stack.Count * melt.Units,
             _prototypeManager.Index<StackPrototype>(mat.StackId),
             Transform(uid).Coordinates
-            );
-        Del(uid);
+        );
+
+        Del(args.Used); // Get rid of the ore.
+
         args.Handled = true;
     }
 }
