@@ -4,6 +4,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.VendingMachines
 {
@@ -67,11 +68,15 @@ namespace Content.Shared.VendingMachines
         {
             [ViewVariables(VVAccess.ReadWrite)]
             public string ID;
-            [ViewVariables(VVAccess.ReadWrite)]
+            [DataField("name")]
+            public string Name;
+            public EntityUid? EntityID;
             public uint Amount;
-            public VendingMachineInventoryEntry(string id, uint amount)
+            public VendingMachineInventoryEntry(string id, string name, EntityUid? entityID,  uint amount)
             {
                 ID = id;
+                Name = name;
+                EntityID = entityID;
                 Amount = amount;
             }
         }

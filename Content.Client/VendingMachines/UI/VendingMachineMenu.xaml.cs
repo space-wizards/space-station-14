@@ -9,6 +9,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
+using Robust.Shared.GameObjects;
 using static Content.Shared.VendingMachines.SharedVendingMachineComponent;
 
 namespace Content.Client.VendingMachines.UI
@@ -18,6 +19,7 @@ namespace Content.Client.VendingMachines.UI
     {
         [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private VendingMachineBoundUserInterface Owner { get; }
 
@@ -39,14 +41,23 @@ namespace Content.Client.VendingMachines.UI
             var longestEntry = "";
             foreach (VendingMachineInventoryEntry entry in inventory)
             {
-                var itemName = _prototypeManager.Index<EntityPrototype>(entry.ID).Name;
+                var itemName = entry.Name;
                 if (itemName.Length > longestEntry.Length)
                     longestEntry = itemName;
 
                 Texture? icon = null;
-                if(_prototypeManager.TryIndex(entry.ID, out EntityPrototype? prototype))
-                    icon = SpriteComponent.GetPrototypeIcon(prototype, _resourceCache).Default;
-
+                if (entry.EntityID == null && _prototypeManager.TryIndex(entry.ID, out EntityPrototype? prototype)) {
+                     icon = SpriteComponent.GetPrototypeIcon(prototype, _resourceCache).Default;
+                } else if (entry.EntityID != null)
+                {
+                    if (_entityManager.TryGetComponent(entry.EntityID, out IconComponent? iconComponent))
+                    {
+                        icon = iconComponent.Icon?.Default;
+                    }  else if (_entityManager.TryGetComponent(entry.EntityID, out SpriteComponent? spriteComponent))
+                    {
+                        icon = spriteComponent.Icon?.Default;
+                    }
+                }
                 VendingContents.AddItem($"{itemName} [{entry.Amount}]", icon);
             }
 

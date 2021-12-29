@@ -23655,6 +23655,10 @@ entities:
     type: Transform
   - enabled: False
     type: AmbientSound
+  - containers:
+      vendor_entity_container: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 1618
   type: GasPassiveVent
   components:
@@ -33394,6 +33398,10 @@ entities:
     type: Transform
   - enabled: False
     type: AmbientSound
+  - containers:
+      vendor_entity_container: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 2986
   type: Grille
   components:
@@ -50315,6 +50323,10 @@ entities:
     type: Transform
   - enabled: False
     type: AmbientSound
+  - containers:
+      vendor_entity_container: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 5174
   type: MedkitFilled
   components:

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
@@ -21,13 +22,18 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
+using Robust.Shared.Containers;
+using Content.Shared.Whitelist;
+using Content.Server.Hands.Components;
+using Content.Server.Items;
+using Content.Shared.Popups;
 using static Content.Shared.Wires.SharedWiresComponent;
 
 namespace Content.Server.VendingMachines
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class VendingMachineComponent : SharedVendingMachineComponent, IActivate, IBreakAct, IWires
+    public class VendingMachineComponent : SharedVendingMachineComponent, IActivate, IBreakAct, IWires, IInteractUsing
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
@@ -50,6 +56,10 @@ namespace Content.Server.VendingMachines
         private SoundSpecifier _soundDeny = new SoundPathSpecifier("/Audio/Machines/custom_deny.ogg");
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(VendingMachineUiKey.Key);
+
+        [DataField("insertWhitelist")]
+        public EntityWhitelist? Whitelist;
+        private Container? _storage;
 
         public bool Broken => _broken;
 
@@ -93,7 +103,11 @@ namespace Content.Server.VendingMachines
             var inventory = new List<VendingMachineInventoryEntry>();
             foreach(var (id, amount) in packPrototype.StartingInventory)
             {
-                inventory.Add(new VendingMachineInventoryEntry(id, amount));
+                if(!_prototypeManager.TryIndex(id, out EntityPrototype? prototype))
+                {
+                    continue;
+                }
+                inventory.Add(new VendingMachineInventoryEntry(id, prototype.Name, null, amount));
             }
             Inventory = inventory;
         }
@@ -107,6 +121,9 @@ namespace Content.Server.VendingMachines
                 UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
             }
 
+            if (Whitelist != null) { // If insertables allowed, initiate storage
+                _storage = Owner.EnsureContainer<Container>("vendor_entity_container");
+            }
             if (_entMan.TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver))
             {
                 TrySetVisualState(receiver.Powered ? VendingMachineVisualState.Normal : VendingMachineVisualState.Off);
@@ -144,7 +161,7 @@ namespace Content.Server.VendingMachines
             switch (message)
             {
                 case VendingMachineEjectMessage msg:
-                    TryEject(msg.ID, serverMsg.Session.AttachedEntity);
+                    AuthorizedVend(msg.ID, serverMsg.Session.AttachedEntity);
                     break;
                 case InventorySyncRequestMessage _:
                     UserInterface?.SendMessage(new VendingMachineInventoryMessage(Inventory));
@@ -152,7 +169,46 @@ namespace Content.Server.VendingMachines
             }
         }
 
-        private void TryEject(string id)
+        private void TryEjectVendorItem(VendingMachineInventoryEntry entry)
+        {
+            _ejecting = true;
+            entry.Amount--;
+            UserInterface?.SendMessage(new VendingMachineInventoryMessage(Inventory));
+            TrySetVisualState(VendingMachineVisualState.Eject);
+
+            Owner.SpawnTimer(_animationDuration, () =>
+            {
+                _ejecting = false;
+                TrySetVisualState(VendingMachineVisualState.Normal);
+                _entMan.SpawnEntity(entry.ID, _entMan.GetComponent<TransformComponent>(Owner).Coordinates);
+            });
+
+            SoundSystem.Play(Filter.Pvs(Owner), _soundVend.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
+        }
+
+        private void TryEjectStorageItem(VendingMachineInventoryEntry entry)
+        {
+            if (entry.EntityID == null || _storage == null)
+            {
+                return;
+            }
+            var entity = entry.EntityID.Value;
+            if (_entMan.EntityExists(entity))
+            {
+                _ejecting = true;
+                Inventory.Remove(entry); // remove entry completely
+                UserInterface?.SendMessage(new VendingMachineInventoryMessage(Inventory));
+                TrySetVisualState(VendingMachineVisualState.Eject);
+                Owner.SpawnTimer(_animationDuration, () =>
+                {
+                    _ejecting = false;
+                    TrySetVisualState(VendingMachineVisualState.Normal);
+                    _storage.Remove(entity);
+                });
+                SoundSystem.Play(Filter.Pvs(Owner), _soundVend.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
+            }
+        }
+        private void TryDispense(string id)
         {
             if (_ejecting || _broken)
             {
@@ -173,23 +229,18 @@ namespace Content.Server.VendingMachines
                 Deny();
                 return;
             }
-
-            _ejecting = true;
-            entry.Amount--;
-            UserInterface?.SendMessage(new VendingMachineInventoryMessage(Inventory));
-            TrySetVisualState(VendingMachineVisualState.Eject);
-
-            Owner.SpawnTimer(_animationDuration, () =>
-            {
-                _ejecting = false;
-                TrySetVisualState(VendingMachineVisualState.Normal);
-                _entMan.SpawnEntity(id, _entMan.GetComponent<TransformComponent>(Owner).Coordinates);
-            });
-
-            SoundSystem.Play(Filter.Pvs(Owner), _soundVend.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
+            if (entry.EntityID != null) { // If this item is a stored item, use storage eject
+                TryEjectStorageItem(entry);
+                return;
+            }
+            if (entry.ID != null) { // If this item is not a stored entity, eject as a new entity of type
+                TryEjectVendorItem(entry);
+                return;
+            }
+            return;
         }
 
-        private void TryEject(string id, EntityUid? sender)
+        private bool IsAuthorized(EntityUid? sender)
         {
             if (_entMan.TryGetComponent<AccessReaderComponent?>(Owner, out var accessReader))
             {
@@ -198,10 +249,56 @@ namespace Content.Server.VendingMachines
                 {
                     Owner.PopupMessageEveryone(Loc.GetString("vending-machine-component-try-eject-access-denied"));
                     Deny();
-                    return;
+                    return false;
                 }
             }
-            TryEject(id);
+            return true;
+        }
+
+        private void AuthorizedVend(string id, EntityUid? sender)
+        {
+            if (IsAuthorized(sender))
+            {
+                TryDispense(id);
+            }
+            return;
+        }
+
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
+        {
+            if (_storage == null || Whitelist == null) {
+                return false;
+            }
+            if (!IsAuthorized(eventArgs.User))
+            {
+                return false;
+            }
+            if (_entMan.GetComponent<HandsComponent>(eventArgs.User).GetActiveHand?.Owner is not {Valid: true} itemEntity)
+            {
+                eventArgs.User.PopupMessage(Loc.GetString("vending-machine-component-interact-using-no-active-hand"));
+                return false;
+            }
+            if (!Whitelist.IsValid(itemEntity))
+            {
+                return false;
+            }
+            if (!_entMan.TryGetComponent(itemEntity, typeof(ItemComponent), out var item))
+            {
+                return false;
+            }
+            var metaData = _entMan.GetComponent<MetaDataComponent>(item.Owner);
+            if (metaData.EntityPrototype == null)
+            {
+                return false;
+            }
+            EntityUid ent = item.Owner; //Get the entity of the ItemComponent.
+            string id = ent.ToString();
+            _storage.Insert(ent);
+            VendingMachineInventoryEntry newEntry = new VendingMachineInventoryEntry(ent.ToString(), metaData.EntityName, ent, 1);
+            Inventory.Add(newEntry);
+            UserInterface?.SendMessage(new VendingMachineInventoryMessage(Inventory));
+            SoundSystem.Play(Filter.Pvs(Owner), _soundVend.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
+            return true;
         }
 
         private void Deny()
@@ -277,7 +374,7 @@ namespace Content.Server.VendingMachines
             {
                 return;
             }
-            TryEject(_random.Pick(availableItems).ID);
+            TryDispense(_random.Pick(availableItems).ID);
         }
     }
 

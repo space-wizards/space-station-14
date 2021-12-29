@@ -552,6 +552,9 @@
   components:
   - type: VendingMachine
     pack: SmartFridgeInventory
+    insertWhitelist:
+      components:
+      - Food
   - type: Advertise
     pack: SmartFridgeAds
   - type: Speech
