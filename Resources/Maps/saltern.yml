@@ -992,6 +992,10 @@ entities:
     type: Transform
   - enabled: False
     type: AmbientSound
+  - containers:
+      vendor_entity_container: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 121
   type: Chair
   components:
@@ -1089,6 +1093,10 @@ entities:
     type: Transform
   - enabled: False
     type: AmbientSound
+  - containers:
+      vendor_entity_container: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 131
   type: Pen
   components:
@@ -19096,6 +19104,10 @@ entities:
     type: Transform
   - enabled: False
     type: AmbientSound
+  - containers:
+      vendor_entity_container: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 987
   type: WarpPoint
   components:
@@ -21174,6 +21186,10 @@ entities:
     type: Transform
   - enabled: False
     type: AmbientSound
+  - containers:
+      vendor_entity_container: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 1236
   type: PottedPlantRandom
   components:
@@ -30090,6 +30106,10 @@ entities:
     type: Transform
   - enabled: False
     type: AmbientSound
+  - containers:
+      vendor_entity_container: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 2436
   type: Table
   components:

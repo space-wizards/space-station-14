@@ -17752,6 +17752,10 @@ entities:
     type: Transform
   - enabled: False
     type: AmbientSound
+  - containers:
+      vendor_entity_container: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 109
   type: ClosetEmergencyFilledRandom
   components:
@@ -19763,6 +19767,10 @@ entities:
     type: Transform
   - enabled: False
     type: AmbientSound
+  - containers:
+      vendor_entity_container: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 396
   type: VendingMachineCola
   components:
@@ -19771,6 +19779,10 @@ entities:
     type: Transform
   - enabled: False
     type: AmbientSound
+  - containers:
+      vendor_entity_container: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 397
   type: DisposalUnit
   components:
@@ -25247,6 +25259,10 @@ entities:
     type: Transform
   - enabled: False
     type: AmbientSound
+  - containers:
+      vendor_entity_container: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 1184
   type: CableHV
   components:
@@ -115100,6 +115116,10 @@ entities:
     type: Transform
   - enabled: False
     type: AmbientSound
+  - containers:
+      vendor_entity_container: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 11258
   type: VendingMachineCigs
   components:
@@ -115136,6 +115156,10 @@ entities:
     type: Transform
   - enabled: False
     type: AmbientSound
+  - containers:
+      vendor_entity_container: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 11262
   type: VendingMachineCoffee
   components:
