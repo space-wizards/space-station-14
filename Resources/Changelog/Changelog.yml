@@ -1,9 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Items with missing inhand sprites no longer show a giant ERROR, type: Fix}
-  id: 282
-  time: '2021-07-25T10:02:48.0000000+00:00'
 - author: Seth
   changes:
   - {message: Added Makeshift Handcuffs into the construction list, type: Add}
@@ -2872,3 +2867,8 @@ Entries:
   - {message: Fixes movement in space., type: Fix}
   id: 783
   time: '2021-12-27T20:12:35.788624+00:00'
+- author: Rane
+  changes:
+  - {message: Chaplain no longer spawns with an empty backpack., type: Fix}
+  id: 784
+  time: '2021-12-29T02:48:58.0000000+00:00'
