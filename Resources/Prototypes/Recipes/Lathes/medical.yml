@@ -57,7 +57,7 @@
     Steel: 200
 
 - type: latheRecipe
-  id: BoneSaw
+  id: Saw
   icon: Objects/Specific/Medical/Surgery/saw.rsi/saw.png
   result: Saw
   completetime: 500
@@ -73,9 +73,9 @@
     Steel: 200
 
 - type: latheRecipe
-  id: BodyBag_Item
-  icon: Objects/Specific/Medical/Morgue/bodybags.rsi/item.png
-  result: BodyBag_Item
+  id: BodyBag_Folded
+  icon: Objects/Specific/Medical/Morgue/bodybags.rsi/bag_folded.png
+  result: BodyBag_Folded
   completetime: 300
   materials:
     Plastic: 200

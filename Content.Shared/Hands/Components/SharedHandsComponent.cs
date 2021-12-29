@@ -615,11 +615,14 @@ namespace Content.Shared.Hands.Components
         protected bool CanInsertEntityIntoHand(Hand hand, EntityUid entity)
         {
             var handContainer = hand.Container;
-            if (handContainer == null)
-                return false;
+            if (handContainer == null) return false;
 
-            if (!handContainer.CanInsert(entity))
-                return false;
+            if (!handContainer.CanInsert(entity)) return false;
+
+            var @event = new AttemptItemPickupEvent();
+            _entMan.EventBus.RaiseLocalEvent(entity, @event);
+
+            if (@event.Cancelled) return false;
 
             return true;
         }

@@ -28,6 +28,7 @@ namespace Content.Server.Ghost
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly GameTicker _ticker = default!;
         [Dependency] private readonly MindSystem _mindSystem = default!;
+        [Dependency] private readonly VisibilitySystem _visibilitySystem = default!;
 
         public override void Initialize()
         {
@@ -61,10 +62,11 @@ namespace Content.Server.Ghost
         private void OnGhostStartup(EntityUid uid, GhostComponent component, ComponentStartup args)
         {
             // Allow this entity to be seen by other ghosts.
-            var visibility = component.Owner.EnsureComponent<VisibilityComponent>();
+            var visibility = EntityManager.EnsureComponent<VisibilityComponent>(component.Owner);
 
-            visibility.Layer |= (int) VisibilityFlags.Ghost;
-            visibility.Layer &= ~(int) VisibilityFlags.Normal;
+            _visibilitySystem.AddLayer(visibility, (int) VisibilityFlags.Ghost, false);
+            _visibilitySystem.RemoveLayer(visibility, (int) VisibilityFlags.Normal, false);
+            _visibilitySystem.RefreshVisibility(visibility);
 
             if (EntityManager.TryGetComponent(component.Owner, out EyeComponent? eye))
             {
@@ -82,8 +84,9 @@ namespace Content.Server.Ghost
                 // Entity can't be seen by ghosts anymore.
                 if (EntityManager.TryGetComponent(component.Owner, out VisibilityComponent? visibility))
                 {
-                    visibility.Layer &= ~(int) VisibilityFlags.Ghost;
-                    visibility.Layer |= (int) VisibilityFlags.Normal;
+                    _visibilitySystem.RemoveLayer(visibility, (int) VisibilityFlags.Ghost, false);
+                    _visibilitySystem.AddLayer(visibility, (int) VisibilityFlags.Normal, false);
+                    _visibilitySystem.RefreshVisibility(visibility);
                 }
 
                 // Entity can't see ghosts anymore.

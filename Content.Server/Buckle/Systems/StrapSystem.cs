@@ -27,7 +27,7 @@ namespace Content.Server.Buckle.Systems
 
         private void AddStrapVerbs(EntityUid uid, StrapComponent component, GetInteractionVerbsEvent args)
         {
-            if (args.Hands == null || !args.CanAccess || !args.CanInteract)
+            if (args.Hands == null || !args.CanAccess || !args.CanInteract || !component.Enabled)
                 return;
 
             // Note that for whatever bloody reason, buckle component has its own interaction range. Additionally, this
@@ -41,9 +41,12 @@ namespace Content.Server.Buckle.Systems
                 if (!_interactionSystem.InRangeUnobstructed(args.User, args.Target, range: buckledComp.Range))
                     continue;
 
-                Verb verb = new();
-                verb.Act = () => buckledComp.TryUnbuckle(args.User);
-                verb.Category = VerbCategory.Unbuckle;
+                Verb verb = new()
+                {
+                    Act = () => buckledComp.TryUnbuckle(args.User),
+                    Category = VerbCategory.Unbuckle
+                };
+
                 if (entity == args.User)
                     verb.Text = Loc.GetString("verb-self-target-pronoun");
                 else
@@ -64,10 +67,12 @@ namespace Content.Server.Buckle.Systems
                 component.HasSpace(buckle) &&
                 _interactionSystem.InRangeUnobstructed(args.User, args.Target, range: buckle.Range))
             {
-                Verb verb = new();
-                verb.Act = () => buckle.TryBuckle(args.User, args.Target);
-                verb.Category = VerbCategory.Buckle;
-                verb.Text = Loc.GetString("verb-self-target-pronoun");
+                Verb verb = new()
+                {
+                    Act = () => buckle.TryBuckle(args.User, args.Target),
+                    Category = VerbCategory.Buckle,
+                    Text = Loc.GetString("verb-self-target-pronoun")
+                };
                 args.Verbs.Add(verb);
             }
 
@@ -82,14 +87,15 @@ namespace Content.Server.Buckle.Systems
                 if (!_interactionSystem.InRangeUnobstructed(@using, args.Target, usingBuckle.Range, predicate: Ignored))
                     return;
 
-                Verb verb = new();
-                verb.Act = () => usingBuckle.TryBuckle(args.User, args.Target);
-                verb.Category = VerbCategory.Buckle;
-                verb.Text = EntityManager.GetComponent<MetaDataComponent>(@using).EntityName;
-
-                // If the used entity is a person being pulled, prioritize this verb. Conversely, if it is
-                // just a held object, the user is probably just trying to sit down.
-                verb.Priority = EntityManager.HasComponent<ActorComponent>(@using) ? 1 : -1;
+                Verb verb = new()
+                {
+                    Act = () => usingBuckle.TryBuckle(args.User, args.Target),
+                    Category = VerbCategory.Buckle,
+                    Text = EntityManager.GetComponent<MetaDataComponent>(@using).EntityName,
+                    // just a held object, the user is probably just trying to sit down.
+                    // If the used entity is a person being pulled, prioritize this verb. Conversely, if it is
+                    Priority = EntityManager.HasComponent<ActorComponent>(@using) ? 1 : -1
+                };
 
                 args.Verbs.Add(verb);
             }
