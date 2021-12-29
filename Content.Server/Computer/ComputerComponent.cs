@@ -7,7 +7,9 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Computer
@@ -18,7 +20,7 @@ namespace Content.Server.Computer
         [Dependency] private readonly IEntityManager _entMan = default!;
 
         [ViewVariables]
-        [DataField("board")]
+        [DataField("board", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         private string? _boardPrototype;
 
         protected override void Initialize()
