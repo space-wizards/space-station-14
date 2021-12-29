@@ -1,6 +1,8 @@
+using Content.Server.Administration.Logs;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Power.Components;
+using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.PowerCell;
 using Content.Shared.PowerCell.Components;
@@ -17,6 +19,7 @@ public class PowerCellSystem : SharedPowerCellSystem
 {
     [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
     [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
+    [Dependency] private readonly AdminLogSystem _logSystem = default!;
 
     public override void Initialize()
     {
@@ -49,6 +52,8 @@ public class PowerCellSystem : SharedPowerCellSystem
 
     private void Explode(EntityUid uid, BatteryComponent? battery = null)
     {
+        _logSystem.Add(LogType.Explosion, LogImpact.High, $"Sabotaged power cell {ToPrettyString(uid)} is exploding");
+
         if (!Resolve(uid, ref battery))
             return;
 
@@ -75,6 +80,11 @@ public class PowerCellSystem : SharedPowerCellSystem
         component.IsRigged = _solutionsSystem.TryGetSolution(uid, PowerCellComponent.SolutionName, out var solution)
                                && solution.ContainsReagent("Plasma", out var plasma)
                                && plasma >= 5;
+
+        if (component.IsRigged)
+        {
+            _logSystem.Add(LogType.Explosion, LogImpact.Medium, $"Power cell {ToPrettyString(uid)} has been rigged up to explode when used.");
+        }
     }
 
     private void OnCellExamined(EntityUid uid, PowerCellComponent component, ExaminedEvent args)
