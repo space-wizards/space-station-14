@@ -64,14 +64,6 @@ namespace Content.Server.Buckle.Systems
             args.Handled = component.TryUnbuckle(args.User);
         }
 
-        public override void Update(float frameTime)
-        {
-            foreach (var (buckle, physics) in EntityManager.EntityQuery<BuckleComponent, PhysicsComponent>())
-            {
-                buckle.Update(physics);
-            }
-        }
-
         private void MoveEvent(EntityUid uid, BuckleComponent buckle, ref MoveEvent ev)
         {
             var strap = buckle.BuckledTo;

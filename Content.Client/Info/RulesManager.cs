@@ -3,27 +3,36 @@ using System.Globalization;
 using Content.Client.Lobby;
 using Content.Client.Viewport;
 using Content.Shared.CCVar;
+using Content.Shared.Info;
 using Robust.Client.Console;
 using Robust.Client.State;
 using Robust.Client.UserInterface;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 using Robust.Shared.IoC;
+using Robust.Shared.Network;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Info;
 
-public sealed class RulesManager
+public sealed class RulesManager : SharedRulesManager
 {
     [Dependency] private readonly IResourceManager _resource = default!;
     [Dependency] private readonly IConfigurationManager _configManager = default!;
     [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
     [Dependency] private readonly IStateManager _stateManager = default!;
     [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
+    [Dependency] private readonly INetManager _netManager = default!;
 
     public void Initialize()
     {
+        _netManager.RegisterNetMessage<ShowRulesPopupMessage>(OnShowRulesPopupMessage);
         _stateManager.OnStateChanged += OnStateChanged;
+    }
+
+    private void OnShowRulesPopupMessage(ShowRulesPopupMessage message)
+    {
+        ShowRules(message.PopupTime);
     }
 
     private void OnStateChanged(StateChangedEventArgs args)

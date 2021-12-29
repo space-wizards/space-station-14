@@ -133,7 +133,7 @@ namespace Content.Server.Buckle.Components
                     break;
             }
 
-            ownTransform.LocalPosition = Vector2.Zero + strap.BuckleOffset;
+            ownTransform.LocalPosition = strap.BuckleOffset;
         }
 
         public bool CanBuckle(EntityUid user, EntityUid to, [NotNullWhen(true)] out StrapComponent? strap)
@@ -409,23 +409,6 @@ namespace Content.Server.Buckle.Components
             }
 
             return new BuckleComponentState(Buckled, drawDepth, LastEntityBuckledTo, DontCollide);
-        }
-
-        public void Update(PhysicsComponent physics)
-        {
-            if (!DontCollide)
-                return;
-
-            physics.WakeBody();
-
-            if (!IsOnStrapEntityThisFrame && DontCollide)
-            {
-                DontCollide = false;
-                TryUnbuckle(Owner);
-                Dirty();
-            }
-
-            IsOnStrapEntityThisFrame = false;
         }
     }
 }
