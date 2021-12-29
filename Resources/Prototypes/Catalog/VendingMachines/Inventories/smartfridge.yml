@@ -1,4 +1,4 @@
 - type: vendingMachineInventory
   id: SmartFridgeInventory
-  name: SmartFridge
+  name: Smart Fridge
   spriteName: smartfridge
