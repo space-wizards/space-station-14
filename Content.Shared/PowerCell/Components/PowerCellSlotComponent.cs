@@ -1,4 +1,3 @@
-using System;
 using Content.Shared.Containers.ItemSlots;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;

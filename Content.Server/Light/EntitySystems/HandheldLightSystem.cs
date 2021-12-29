@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using Content.Server.Clothing.Components;
 using Content.Server.Items;
 using Content.Server.Light.Components;
@@ -11,7 +10,6 @@ using Content.Shared.Actions.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Light.Component;
-using Content.Shared.PowerCell.Components;
 using Content.Shared.Rounding;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
@@ -173,7 +171,6 @@ namespace Content.Server.Light.EntitySystems
         {
             if (component.Activated) return false;
 
-
             if (!_powerCell.TryGetBatteryFromSlot(component.Owner, out var battery))
             {
                 SoundSystem.Play(Filter.Pvs(component.Owner), component.TurnOnFailSound.GetSound(), component.Owner);
@@ -246,7 +243,6 @@ namespace Content.Server.Light.EntitySystems
             var appearanceComponent = EntityManager.GetComponent<AppearanceComponent>(component.Owner);
 
             var fraction = battery.CurrentCharge / battery.MaxCharge;
-
             if (fraction >  0.30)
             {
                 appearanceComponent.SetData(HandheldLightVisuals.Power, HandheldLightPowerStates.FullPower);

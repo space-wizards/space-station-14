@@ -21,7 +21,6 @@
       ejectOnUse: true
       soundOptions: 
         volume: -2
-      cellSize: Small
   - type: Appearance
     visuals:
     - type: MagVisualizer
