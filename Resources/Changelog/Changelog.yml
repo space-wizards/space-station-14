@@ -1,9 +1,4 @@
 Entries:
-- author: Seth
-  changes:
-  - {message: Added Makeshift Handcuffs into the construction list, type: Add}
-  id: 283
-  time: '2021-07-25T15:30:42.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Shuttle-relative movement for when we get shuttle rotation., type: Add}
@@ -2872,3 +2867,10 @@ Entries:
   - {message: Chaplain no longer spawns with an empty backpack., type: Fix}
   id: 784
   time: '2021-12-29T02:48:58.0000000+00:00'
+- author: CrudeWax
+  changes:
+  - {message: Syndiecorp Cybersun invites you to try out their magnum opus- holoparasites!
+      Look for the "Utility" section in your uplink. And ghosts - be on the lookout
+      for a role prompt!, type: Add}
+  id: 785
+  time: '2021-12-29T03:58:49.0000000+00:00'
