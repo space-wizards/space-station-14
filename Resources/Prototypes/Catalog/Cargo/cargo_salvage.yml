@@ -6,6 +6,6 @@
     sprite: Clothing/OuterClothing/Hardsuits/salvage.rsi
     state: icon
   product: CrateSalvageEquipment
-  cost: 5000
+  cost: 8000
   category: Salvage
   group: market

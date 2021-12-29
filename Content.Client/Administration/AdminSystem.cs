@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Events;
+using Content.Shared.GameTicking;
 using Robust.Client.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -36,6 +37,7 @@ namespace Content.Client.Administration
             SubscribeNetworkEvent<FullPlayerListEvent>(OnPlayerListChanged);
             SubscribeNetworkEvent<PlayerInfoChangedEvent>(OnPlayerInfoChanged);
             SubscribeNetworkEvent<PlayerInfoRemovalMessage>(OnPlayerInfoRemoval);
+            SubscribeNetworkEvent<RoundRestartCleanupEvent>(OnRoundRestartCleanup);
         }
 
         public override void Shutdown()
@@ -44,11 +46,27 @@ namespace Content.Client.Administration
             ShutdownOverlay();
         }
 
+        private void OnRoundRestartCleanup(RoundRestartCleanupEvent msg, EntitySessionEventArgs args)
+        {
+            if (_playerList == null)
+                return;
+
+            foreach (var (id, playerInfo) in _playerList.ToArray())
+            {
+                if (playerInfo.Connected)
+                    continue;
+                _playerList.Remove(id);
+            }
+            PlayerListChanged?.Invoke(_playerList.Values.ToList());
+        }
+
         private void OnPlayerInfoRemoval(PlayerInfoRemovalMessage ev)
         {
             if (_playerList == null) _playerList = new();
 
-            _playerList.Remove(ev.NetUserId);
+            var playerInfo = _playerList[ev.NetUserId];
+            _playerList[ev.NetUserId] = new PlayerInfo(playerInfo.Username, playerInfo.CharacterName, playerInfo.Antag,
+                playerInfo.EntityUid, playerInfo.SessionId, false);
             PlayerListChanged?.Invoke(_playerList.Values.ToList());
         }
 
