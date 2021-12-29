@@ -227,7 +227,6 @@ namespace Content.Server.Administration
             }
         }
 
-        // IF YOU UPDATE THIS METHOD (add text to it), UPDATE THE _additionalChars CONST TO ACCOUNT FOR IT!!!
         private string GenerateAHelpMessage(string username, string message, bool admin, bool noReceiver)
         {
             var stringbuilder = new StringBuilder();
