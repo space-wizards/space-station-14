@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Content.Server.Flash.Components;
 using Content.Server.Stunnable;
 using Content.Server.Weapon.Melee;
@@ -75,10 +76,7 @@ namespace Content.Server.Flash
                 return;
             }
 
-            foreach (var entity in _entityLookup.GetEntitiesInRange(EntityManager.GetComponent<TransformComponent>(comp.Owner).Coordinates, comp.Range))
-            {
-                Flash(entity, args.User, uid, comp.AoeFlashDuration, comp.SlowTo);
-            }
+            FlashArea(uid, args.User, comp.Range, comp.AoeFlashDuration, comp.SlowTo, true);
         }
 
         private bool UseFlash(FlashComponent comp, EntityUid user)
@@ -142,15 +140,24 @@ namespace Content.Server.Flash
         public void FlashArea(EntityUid source, EntityUid? user, float range, float duration, float slowTo = 0f, bool displayPopup = false, SoundSpecifier? sound = null)
         {
             var transform = EntityManager.GetComponent<TransformComponent>(source);
+            var flashableEntities = new List<EntityUid>();
 
             foreach (var entity in _entityLookup.GetEntitiesInRange(transform.Coordinates, range))
             {
-                if (!EntityManager.HasComponent<FlashableComponent>(entity) ||
-                    !transform.InRangeUnobstructed(entity, range, CollisionGroup.Opaque)) continue;
+                if (!EntityManager.HasComponent<FlashableComponent>(entity))
+                    continue;
+
+                flashableEntities.Add(entity);
+            }
+
+            foreach (var entity in flashableEntities)
+            {
+                // Check for unobstructed entities while ignoring the mobs with flashable components.
+                if (!transform.InRangeUnobstructed(entity, range, CollisionGroup.Opaque, (e) => flashableEntities.Contains(e)))
+                    continue;
 
                 Flash(entity, user, source, duration, slowTo, displayPopup);
             }
-
             if (sound != null)
             {
                 SoundSystem.Play(Filter.Pvs(transform), sound.GetSound(), transform.Coordinates);

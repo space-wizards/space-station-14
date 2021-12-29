@@ -37,6 +37,14 @@
 
 - type: entity
   parent: BaseComputerCircuitboard
+  id: CrewMonitoringComputerCircuitboard
+  name: crew monitoring console board
+  components:
+    - type: ComputerBoard
+      prototype: ComputerCrewMonitoring
+
+- type: entity
+  parent: BaseComputerCircuitboard
   id: IDComputerCircuitboard
   name: ID card terminal board
   components:

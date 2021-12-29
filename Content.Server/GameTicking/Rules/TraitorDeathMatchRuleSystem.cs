@@ -18,6 +18,7 @@ using Content.Shared.Damage.Prototypes;
 using Content.Shared.Inventory;
 using Content.Shared.MobState.Components;
 using Content.Shared.PDA;
+using Content.Shared.Roles;
 using Content.Shared.Traitor.Uplink;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
@@ -51,6 +52,8 @@ public class TraitorDeathMatchRuleSystem : GameRuleSystem
 
     private readonly Dictionary<UplinkAccount, string> _allOriginalNames = new();
 
+    private const string TraitorPrototypeID = "Traitor";
+
     public override void Initialize()
     {
         base.Initialize();
@@ -76,7 +79,8 @@ public class TraitorDeathMatchRuleSystem : GameRuleSystem
             return;
         }
 
-        var traitorRole = new TraitorRole(mind);
+        var antagPrototype = _prototypeManager.Index<AntagPrototype>(TraitorPrototypeID);
+        var traitorRole = new TraitorRole(mind, antagPrototype);
         mind.AddRole(traitorRole);
 
         // Delete anything that may contain "dangerous" role-specific items.

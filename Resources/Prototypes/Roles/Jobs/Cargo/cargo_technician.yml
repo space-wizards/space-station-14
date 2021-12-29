@@ -9,6 +9,7 @@
   access:
   - Cargo
   - Maintenance
+  - External
 
 - type: startingGear
   id: CargoTechGear

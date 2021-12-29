@@ -27,7 +27,7 @@ namespace Content.Server.Storage.EntitySystems
                 return;
 
             var alreadySpawnedGroups = new List<string>();
-            EntityUid entityToPlaceInHands = default;
+            EntityUid? entityToPlaceInHands = null;
             foreach (var storageItem in component.Items)
             {
                 if (!string.IsNullOrEmpty(storageItem.GroupId) &&
@@ -57,10 +57,10 @@ namespace Content.Server.Storage.EntitySystems
                 EntityManager.DeleteEntity(uid);
             }
 
-            if (entityToPlaceInHands != default
+            if (entityToPlaceInHands != null
                 && EntityManager.TryGetComponent<SharedHandsComponent?>(args.User, out var hands))
             {
-                hands.TryPutInAnyHand(entityToPlaceInHands);
+                hands.TryPutInAnyHand(entityToPlaceInHands.Value);
             }
         }
     }

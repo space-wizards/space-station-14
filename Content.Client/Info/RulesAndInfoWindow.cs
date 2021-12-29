@@ -43,7 +43,7 @@ namespace Content.Client.Info
 
         private void PopulateRules(Info rulesList)
         {
-            AddSection(rulesList, Loc.GetString("ui-info-header-rules"), "Rules.txt", true);
+            AddSection(rulesList, Loc.GetString("ui-rules-header"), "Rules.txt", true);
         }
 
         private void PopulateTutorial(Info tutorialList)

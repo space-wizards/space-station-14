@@ -111,7 +111,7 @@ namespace Content.Shared.MobState.EntitySystems
 
         private void OnStartPullAttempt(EntityUid uid, MobStateComponent component, StartPullAttemptEvent args)
         {
-            if(component.IsIncapacitated())
+            if (component.IsIncapacitated())
                 args.Cancel();
         }
 
@@ -135,7 +135,7 @@ namespace Content.Shared.MobState.EntitySystems
 
         private void OnStandAttempt(EntityUid uid, MobStateComponent component, StandAttemptEvent args)
         {
-            if(component.IsIncapacitated())
+            if (component.IsIncapacitated())
                 args.Cancel();
         }
     }

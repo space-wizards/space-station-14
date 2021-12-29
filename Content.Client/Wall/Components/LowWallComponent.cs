@@ -64,10 +64,11 @@ namespace Content.Client.Wall.Components
         {
             base.Shutdown();
 
-            EntityUid tempQualifier = _overlayEntity;
-            if (tempQualifier != null)
+            // _overlayEntity is non-nullable as it is set on startup.
+            // Should also never be default but might as well check.
+            if (_overlayEntity.Valid)
             {
-                _entMan.DeleteEntity(tempQualifier);
+                _entMan.DeleteEntity(_overlayEntity);
             }
         }
 

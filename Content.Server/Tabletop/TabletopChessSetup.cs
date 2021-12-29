@@ -1,14 +1,16 @@
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Tabletop
 {
     [UsedImplicitly]
     public class TabletopChessSetup : TabletopSetup
     {
-        [DataField("boardPrototype")]
+        [DataField("boardPrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string ChessBoardPrototype { get; } = "ChessBoardTabletop";
 
         // TODO: Un-hardcode the rest of entity prototype IDs, probably.

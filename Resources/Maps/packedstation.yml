@@ -27006,21 +27006,14 @@ entities:
     parent: 0
     type: Transform
 - uid: 2090
-  type: CrateGenericSteel
+  type: SalvageMagnet
   components:
   - pos: 6.5,32.5
+    rot: -1.5707963267948966 rad
     parent: 0
     type: Transform
-  - isPlaceable: False
-    type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-      labelSlot: !type:ContainerSlot {}
-      PaperLabel: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 2091
-  type: CrateGenericSteel
+  type: CrateSalvageEquipment
   components:
   - pos: 7.5,31.5
     parent: 0
@@ -87672,7 +87665,7 @@ entities:
   - color: '#0000FFFF'
     type: AtmosPipeColor
 - uid: 9229
-  type: LaserSecGun
+  type: LaserRifleCog
   components:
   - pos: 41.526512,27.667274
     parent: 0
@@ -109567,7 +109560,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 11192
-  type: LaserSecGun
+  type: LaserRifleCog
   components:
   - pos: 41.526512,27.4329
     parent: 0

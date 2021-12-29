@@ -114,7 +114,7 @@ namespace Content.Server.Access.Systems
         ///     Attempt to get an id card component from an entity, either by getting it directly from the entity, or by
         ///     getting the contained id from a <see cref="PDAComponent"/>.
         /// </summary>
-        private bool TryGetIdCard(EntityUid uid, [NotNullWhen(true)] out IdCardComponent? idCard)
+        public bool TryGetIdCard(EntityUid uid, [NotNullWhen(true)] out IdCardComponent? idCard)
         {
             if (EntityManager.TryGetComponent(uid, out idCard))
                 return true;
