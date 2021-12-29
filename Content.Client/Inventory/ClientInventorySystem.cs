@@ -35,9 +35,9 @@ namespace Content.Client.Inventory
         // jesus christ, this is duplicated to server/client, should really just be shared..
         private void OnSlipAttemptEvent(EntityUid uid, ClientInventoryComponent component, SlipAttemptEvent args)
         {
-            if (component.TryGetSlot(EquipmentSlotDefines.Slots.SHOES, out EntityUid shoes))
+            if (component.TryGetSlot(EquipmentSlotDefines.Slots.SHOES, out EntityUid? shoes))
             {
-                RaiseLocalEvent(shoes, args, false);
+                RaiseLocalEvent(shoes.Value, args, false);
             }
         }
 

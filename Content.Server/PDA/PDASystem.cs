@@ -1,4 +1,3 @@
-using Content.Server.Access.Components;
 using Content.Server.Light.Components;
 using Content.Server.Light.EntitySystems;
 using Content.Server.Light.Events;
@@ -15,9 +14,8 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.PDA
 {
-    public class PDASystem : EntitySystem
+    public sealed class PDASystem : SharedPDASystem
     {
-        [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
         [Dependency] private readonly UplinkSystem _uplinkSystem = default!;
         [Dependency] private readonly UnpoweredFlashlightSystem _unpoweredFlashlight = default!;
 
@@ -25,36 +23,21 @@ namespace Content.Server.PDA
         {
             base.Initialize();
 
-            SubscribeLocalEvent<PDAComponent, ComponentInit>(OnComponentInit);
-            SubscribeLocalEvent<PDAComponent, ComponentRemove>(OnComponentRemove);
-
             SubscribeLocalEvent<PDAComponent, ActivateInWorldEvent>(OnActivateInWorld);
             SubscribeLocalEvent<PDAComponent, UseInHandEvent>(OnUse);
-            SubscribeLocalEvent<PDAComponent, EntInsertedIntoContainerMessage>(OnItemInserted);
-            SubscribeLocalEvent<PDAComponent, EntRemovedFromContainerMessage>(OnItemRemoved);
             SubscribeLocalEvent<PDAComponent, LightToggleEvent>(OnLightToggle);
-
-            SubscribeLocalEvent<PDAComponent, UplinkInitEvent>(OnUplinkInit);
-            SubscribeLocalEvent<PDAComponent, UplinkRemovedEvent>(OnUplinkRemoved);
         }
 
-        private void OnComponentInit(EntityUid uid, PDAComponent pda, ComponentInit args)
+        protected override void OnComponentInit(EntityUid uid, PDAComponent pda, ComponentInit args)
         {
+            base.OnComponentInit(uid, pda, args);
+
             var ui = pda.Owner.GetUIOrNull(PDAUiKey.Key);
             if (ui != null)
                 ui.OnReceiveMessage += (msg) => OnUIMessage(pda, msg);
-
-            if (pda.IdCard != null)
-                pda.IdSlot.StartingItem = pda.IdCard;
-            _itemSlotsSystem.AddItemSlot(uid, $"{pda.Name}-id", pda.IdSlot);
-            _itemSlotsSystem.AddItemSlot(uid, $"{pda.Name}-pen", pda.PenSlot);
         }
 
-        private void OnComponentRemove(EntityUid uid, PDAComponent pda, ComponentRemove args)
-        {
-            _itemSlotsSystem.RemoveItemSlot(uid, pda.IdSlot);
-            _itemSlotsSystem.RemoveItemSlot(uid, pda.PenSlot);
-        }
+
 
         private void OnUse(EntityUid uid, PDAComponent pda, UseInHandEvent args)
         {
@@ -70,21 +53,15 @@ namespace Content.Server.PDA
             args.Handled = OpenUI(pda, args.User);
         }
 
-        private void OnItemInserted(EntityUid uid, PDAComponent pda, EntInsertedIntoContainerMessage args)
+        protected override void OnItemInserted(EntityUid uid, PDAComponent pda, EntInsertedIntoContainerMessage args)
         {
-            if (args.Container.ID == pda.IdSlot.ID)
-                pda.ContainedID = EntityManager.GetComponentOrNull<IdCardComponent>(args.Entity);
-
-            UpdatePDAAppearance(pda);
+            base.OnItemInserted(uid, pda, args);
             UpdatePDAUserInterface(pda);
         }
 
-        private void OnItemRemoved(EntityUid uid, PDAComponent pda, EntRemovedFromContainerMessage args)
+        protected override void OnItemRemoved(EntityUid uid, PDAComponent pda, EntRemovedFromContainerMessage args)
         {
-            if (args.Container.ID == pda.IdSlot.ID)
-                pda.ContainedID = null;
-
-            UpdatePDAAppearance(pda);
+            base.OnItemRemoved(uid, pda, args);
             UpdatePDAUserInterface(pda);
         }
 
@@ -162,12 +139,12 @@ namespace Content.Server.PDA
 
                 case PDAEjectIDMessage _:
                     {
-                        _itemSlotsSystem.TryEjectToHands(pda.Owner, pda.IdSlot, playerUid);
+                        ItemSlotsSystem.TryEjectToHands(pda.Owner, pda.IdSlot, playerUid);
                         break;
                     }
                 case PDAEjectPenMessage _:
                     {
-                        _itemSlotsSystem.TryEjectToHands(pda.Owner, pda.PenSlot, playerUid);
+                        ItemSlotsSystem.TryEjectToHands(pda.Owner, pda.PenSlot, playerUid);
                         break;
                     }
                 case PDAShowUplinkMessage _:

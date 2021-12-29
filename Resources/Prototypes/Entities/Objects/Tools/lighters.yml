@@ -1,0 +1,95 @@
+- type: entity
+  name: basic lighter
+  parent: BaseItem
+  id: Lighter
+  description: "A simple plastic cigarette lighter."
+  components:
+  - type: RandomSpriteState #this has to be before sprite component for the flame to toggle right because weldercomponent behaves weird (and i dont trust myself to fix it right)
+    spriteStates:
+      - basic_icon_base-1
+      - basic_icon_base-2
+      - basic_icon_base-3
+      - basic_icon_base-4
+      - basic_icon_base-5
+      - basic_icon_base-6
+      - basic_icon_base-7
+      - basic_icon_base-8
+      - basic_icon_base-9
+      - basic_icon_base-10
+      - basic_icon_base-11
+  - type: Sprite
+    sprite: Objects/Tools/lighters.rsi
+    layers:
+    - state: icon_map
+    - state: lighter_flame
+      shader: unshaded
+      visible: false
+    - state: basic_icon_top
+  - type: Item
+    size: 3
+    sprite: Objects/Tools/lighters.rsi
+    HeldPrefix: off
+  - type: ItemCooldown
+  - type: ItemStatus
+  - type: RefillableSolution
+    solution: Welder
+  - type: SolutionContainerManager
+    solutions:
+      Welder:
+        reagents:
+        - ReagentId: WeldingFuel
+          Quantity: 8
+        maxVol: 8 #uses less fuel than a welder, so this isnt as bad as it looks
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 0 #this feels hacky, but is needed for burn damage while active (i think)
+  - type: Welder
+    fuelConsumption: 0.01
+    litMeleeDamageBonus:
+      types:
+        Heat: 1
+    tankSafe: true
+    welderOnSounds:
+      collection: lighterOnSounds
+    welderOffSounds:
+      collection: lighterOffSounds
+  - type: PointLight
+    enabled: false
+    radius: 1.1 #smallest possible
+    color: orange
+
+
+- type: entity
+  name: cheap lighter
+  parent: Lighter
+  id: CheapLighter
+  description: "A dangerously inexpensive plastic lighter, don't burn your thumb!"
+  components:
+  - type: RandomSpriteColor
+    state: cheap_icon_base
+    colors:
+      blue: "#1861d5"
+      red: "#951710"
+      pink: "#d5188d"
+      brown: "#a05212"
+      green: "#0e7f1b"
+      cyan: "#18a2d5"
+      yellow: "#d58c18" #all colours proudly stolen from wirecutters
+  - type: Sprite
+    sprite: Objects/Tools/lighters.rsi
+    layers:
+    - state: icon_map
+    - state: lighter_flame
+      shader: unshaded
+      visible: false
+    - state: cheap_icon_top
+  - type: SolutionContainerManager
+    solutions:
+      Welder:
+        reagents:
+        - ReagentId: WeldingFuel
+          Quantity: 4
+        maxVol: 4 #uses less fuel than a welder, so this isnt as bad as it looks
+
+    #TODO: zippos

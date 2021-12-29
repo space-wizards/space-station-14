@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Content.Server.Construction;
+using Content.Server.Construction.Components;
 using Content.Server.Ghost.Components;
 using Content.Server.Tools;
 using Content.Shared.Acts;
@@ -54,6 +56,10 @@ namespace Content.Server.Storage.Components
         [ViewVariables]
         [DataField("IsCollidableWhenOpen")]
         private bool _isCollidableWhenOpen;
+
+        [ViewVariables]
+        [DataField("EnteringRange")]
+        private float _enteringRange = -0.4f;
 
         [DataField("showContents")]
         private bool _showContents;
@@ -142,6 +148,13 @@ namespace Content.Server.Storage.Components
             }
         }
 
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float EnteringRange
+        {
+            get => _enteringRange;
+            set => _enteringRange = value;
+        }
+
         /// <inheritdoc />
         protected override void Initialize()
         {
@@ -149,6 +162,9 @@ namespace Content.Server.Storage.Components
             Contents = Owner.EnsureContainer<Container>(nameof(EntityStorageComponent));
             Contents.ShowContents = _showContents;
             Contents.OccludesLight = _occludesLight;
+
+            if(_entMan.TryGetComponent(Owner, out ConstructionComponent? construction))
+                EntitySystem.Get<ConstructionSystem>().AddContainer(Owner, Contents.ID, construction);
 
             if (_entMan.TryGetComponent<PlaceableSurfaceComponent?>(Owner, out var surface))
             {
@@ -448,7 +464,7 @@ namespace Content.Server.Storage.Components
         protected virtual IEnumerable<EntityUid> DetermineCollidingEntities()
         {
             var entityLookup = IoCManager.Resolve<IEntityLookup>();
-            return entityLookup.GetEntitiesIntersecting(Owner, -0.015f, LookupFlags.Approximate);
+            return entityLookup.GetEntitiesIntersecting(Owner, _enteringRange, LookupFlags.Approximate);
         }
 
         void IExAct.OnExplosion(ExplosionEventArgs eventArgs)

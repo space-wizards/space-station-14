@@ -38,7 +38,7 @@
                     <BoxContainer Orientation="Vertical" Name="LeftPanelContainer" HorizontalExpand="True">
                         <hudUi:StripeBack>
                             <BoxContainer Orientation="Horizontal" SeparationOverride="6" Margin="3 3 3 3">
-                                <cc:UICommandButton Command="observe" Name="ObserveButton" Text="{Loc 'Observe'}" StyleClasses="ButtonBig"  WindowType="{x:Type lobbyUi:ObserveWarningWindow}"/>
+                                <cc:UICommandButton Command="observe" Name="ObserveButton" Access="Public" Text="{Loc 'Observe'}" StyleClasses="ButtonBig"  WindowType="{x:Type lobbyUi:ObserveWarningWindow}"/>
                                 <Label Name="StartTime"
                                        Access="Public"
                                        Align="Right"

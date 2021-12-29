@@ -1,166 +1,38 @@
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using Content.Server.Act;
 using Content.Server.Chat.Managers;
-using Content.Server.DoAfter;
+using Content.Server.Kitchen.EntitySystems;
 using Content.Server.Popups;
 using Content.Shared.DragDrop;
-using Content.Shared.Interaction;
 using Content.Shared.Kitchen.Components;
-using Content.Shared.MobState.Components;
-using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
-using Robust.Shared.Audio;
+using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Player;
+using System.Threading;
 
 namespace Content.Server.Kitchen.Components
 {
-    [RegisterComponent]
-    [ComponentReference(typeof(IActivate))]
-    public class KitchenSpikeComponent : SharedKitchenSpikeComponent, IActivate, ISuicideAct
+    [RegisterComponent, Friend(typeof(KitchenSpikeSystem))]
+    public class KitchenSpikeComponent : SharedKitchenSpikeComponent, ISuicideAct
     {
-        [Dependency] private readonly IEntityManager _entMan = default!;
+        public int MeatParts;
+        public string? MeatPrototype;
 
-        private int _meatParts;
-        private string? _meatPrototype;
-        private string _meatSource1p = "?";
-        private string _meatSource0 = "?";
-        private string _meatName = "?";
+        // TODO: Spiking alive mobs? (Replace with uid) (deal damage to their limbs on spiking, kill on first butcher attempt?) 
+        public string MeatSource1p = "?";
+        public string MeatSource0 = "?";
+        public string MeatName = "?";
 
-        private List<EntityUid> _beingButchered = new();
+        // Prevents simultaneous spiking of two bodies (could be replaced with CancellationToken, but I don't see any situation where Cancel could be called)
+        public bool InUse;
 
-        void IActivate.Activate(ActivateEventArgs eventArgs)
-        {
-            if (_meatParts == 0)
-            {
-                return;
-            }
-            _meatParts--;
-
-            if (!string.IsNullOrEmpty(_meatPrototype))
-            {
-                var meat = _entMan.SpawnEntity(_meatPrototype, _entMan.GetComponent<TransformComponent>(Owner).Coordinates);
-                _entMan.GetComponent<MetaDataComponent>(meat).EntityName = _meatName;
-            }
-
-            if (_meatParts != 0)
-            {
-                eventArgs.User.PopupMessage(_meatSource1p);
-            }
-            else
-            {
-                UpdateAppearance();
-
-                eventArgs.User.PopupMessage(_meatSource0);
-            }
-
-            return;
-
-        }
-
+        // ECS this out!, when DragDropSystem and InteractionSystem refactored
         public override bool DragDropOn(DragDropEvent eventArgs)
         {
-            TrySpike(eventArgs.Dragged, eventArgs.User);
             return true;
         }
 
-        private void UpdateAppearance()
-        {
-            if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
-            {
-                appearance.SetData(KitchenSpikeVisuals.Status, (_meatParts > 0) ? KitchenSpikeStatus.Bloody : KitchenSpikeStatus.Empty);
-            }
-        }
-
-        private bool Spikeable(EntityUid user, EntityUid victim, [NotNullWhen(true)] out SharedButcherableComponent? butcherable)
-        {
-            butcherable = null;
-
-            if (_meatParts > 0)
-            {
-                Owner.PopupMessage(user, Loc.GetString("comp-kitchen-spike-deny-collect", ("this", Owner)));
-                return false;
-            }
-
-            if (!_entMan.TryGetComponent(victim, out butcherable))
-            {
-                Owner.PopupMessage(user, Loc.GetString("comp-kitchen-spike-deny-butcher", ("victim", victim), ("this", Owner)));
-                return false;
-            }
-
-            if (butcherable.MeatPrototype == null)
-                return false;
-
-            return true;
-        }
-
-        public async void TrySpike(EntityUid victim, EntityUid user)
-        {
-            var victimUid = (EntityUid) victim;
-            if (_beingButchered.Contains(victimUid)) return;
-
-            SharedButcherableComponent? butcherable;
-
-            if (!Spikeable(user, victim, out butcherable))
-                return;
-
-            // Prevent dead from being spiked TODO: Maybe remove when rounds can be played and DOT is implemented
-            if (_entMan.TryGetComponent<MobStateComponent?>(victim, out var state) &&
-                !state.IsDead())
-            {
-                Owner.PopupMessage(user, Loc.GetString("comp-kitchen-spike-deny-not-dead", ("victim", victim)));
-                return;
-            }
-
-            if (user != victim)
-                Owner.PopupMessage(victim, Loc.GetString("comp-kitchen-spike-begin-hook-victim", ("user", user), ("this", Owner)));
-            else
-                Owner.PopupMessage(victim, Loc.GetString("comp-kitchen-spike-begin-hook-self", ("this", Owner)));
-
-            var doAfterSystem = EntitySystem.Get<DoAfterSystem>();
-
-            var doAfterArgs = new DoAfterEventArgs(user, SpikeDelay, default, victim)
-            {
-                BreakOnTargetMove = true,
-                BreakOnUserMove = true,
-                BreakOnDamage = true,
-                BreakOnStun = true,
-                NeedHand = true,
-            };
-
-            _beingButchered.Add(victimUid);
-
-            var result = await doAfterSystem.WaitDoAfter(doAfterArgs);
-
-            _beingButchered.Remove(victimUid);
-
-            if (result == DoAfterStatus.Cancelled)
-                return;
-
-            if (!Spikeable(user, victim, out butcherable))
-                return;
-
-            _meatPrototype = butcherable.MeatPrototype;
-            _meatParts = 5;
-            _meatSource1p = Loc.GetString("comp-kitchen-spike-remove-meat", ("victim", victim));
-            _meatSource0 = Loc.GetString("comp-kitchen-spike-remove-meat-last", ("victim", victim));
-            // TODO: This could stand to be improved somehow, but it'd require Name to be much 'richer' in detail than it presently is.
-            // But Name is RobustToolbox-level, so presumably it'd have to be done in some other way (interface???)
-            _meatName = Loc.GetString("comp-kitchen-spike-meat-name", ("victim", victim));
-
-            // TODO: Visualizer
-            UpdateAppearance();
-
-            Owner.PopupMessageEveryone(Loc.GetString("comp-kitchen-spike-kill", ("user", user), ("victim", victim)));
-            // TODO: Need to be able to leave them on the spike to do DoT, see ss13.
-            _entMan.DeleteEntity((EntityUid) victim);
-
-            SoundSystem.Play(Filter.Pvs(Owner), SpikeSound.GetSound(), Owner);
-        }
-
+        // ECS this out!, Handleable SuicideEvent?
         SuicideKind ISuicideAct.Suicide(EntityUid victim, IChatManager chat)
         {
             var othersMessage = Loc.GetString("comp-kitchen-spike-suicide-other", ("victim", victim));
