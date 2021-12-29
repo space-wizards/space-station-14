@@ -20719,7 +20719,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 1181
-  type: WindoorMedicalLocked
+  type: WindoorSecure
   components:
   - rot: 3.141592653589793 rad
     pos: 7.5,-3.5
@@ -47353,6 +47353,12 @@ entities:
   components:
   - rot: -1.5707963267948966 rad
     pos: 8.5,-15.5
+    parent: 853
+    type: Transform
+- uid: 4169
+  type: WindoorMedicalLocked
+  components:
+  - pos: 7.5,-3.5
     parent: 853
     type: Transform
 - uid: 4170
@@ -75620,12 +75626,6 @@ entities:
   type: Rack
   components:
   - pos: 6.5,-5.5
-    parent: 853
-    type: Transform
-- uid: 7180
-  type: WindoorMedicalLocked
-  components:
-  - pos: 7.5,-3.5
     parent: 853
     type: Transform
 - uid: 7181
