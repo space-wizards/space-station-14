@@ -34,7 +34,7 @@ namespace Content.Shared.Research.Prototypes
         [DataField("completetime")]
         private int _completeTime = 2500;
 
-        [DataField("materials", customTypeSerializer:typeof(PrototypeIdDictionarySerializer<int, MaterialPrototype>))]
+        [DataField("materials", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<int, MaterialPrototype>))]
         private Dictionary<string, int> _requiredMaterials = new();
 
         /// <summary>

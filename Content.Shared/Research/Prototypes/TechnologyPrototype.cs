@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -49,15 +49,14 @@ namespace Content.Shared.Research.Prototypes
         /// <summary>
         ///     A list of technology IDs required to unlock this technology.
         /// </summary>
-        [ViewVariables]
-        [DataField("requiredTechnologies")]
+        [DataField("requiredTechnologies", customTypeSerializer: typeof(PrototypeIdListSerializer<TechnologyPrototype>))]
         public List<string> RequiredTechnologies { get; } = new();
 
         /// <summary>
         ///     A list of recipe IDs this technology unlocks.
         /// </summary>
         [ViewVariables]
-        [DataField("unlockedRecipes", customTypeSerializer:typeof(PrototypeIdListSerializer<EntityPrototype>))]
+        [DataField("unlockedRecipes", customTypeSerializer:typeof(PrototypeIdListSerializer<LatheRecipePrototype>))]
         public List<string> UnlockedRecipes { get; } = new();
     }
 }

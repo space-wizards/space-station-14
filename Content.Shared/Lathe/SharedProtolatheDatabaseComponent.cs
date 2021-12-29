@@ -19,7 +19,7 @@ namespace Content.Shared.Lathe
 
         public override string Name => "ProtolatheDatabase";
 
-        [DataField("protolatherecipes", customTypeSerializer:typeof(PrototypeIdListSerializer<EntityPrototype>))]
+        [DataField("protolatherecipes", customTypeSerializer:typeof(PrototypeIdListSerializer<LatheRecipePrototype>))]
         private List<string> _recipeIds = new();
 
         /// <summary>
