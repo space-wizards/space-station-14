@@ -15,25 +15,15 @@ namespace Content.Server.Reflector
         [DataField("whitelist")]
         public EntityWhitelist Whitelist = new();
 
-        /// <summary>
-        ///     The Angle of the reflector
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("Angle")]
-        public Angle Angle { get; set; } = Angle.Zero;
-
-        /// <summary>
-        ///     If the Reflector is one sided(0), two sided(1), or a box Reflector(2)
-        /// </summary>
         [ViewVariables]
-        [DataField("Type")]
+        [DataField("reflectorType")]
         public ReflectorType Type { get; set; } = ReflectorType.SingleSide;
     }
 
     public enum ReflectorType
     {
         SingleSide,
-        DualSide,
+        DoubleSide,
         Box
     }
 }
