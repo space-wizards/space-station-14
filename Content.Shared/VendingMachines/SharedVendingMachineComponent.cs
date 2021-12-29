@@ -72,7 +72,7 @@ namespace Content.Shared.VendingMachines
             public string Name;
             public EntityUid? EntityID;
             public uint Amount;
-            public VendingMachineInventoryEntry(string id, string name, EntityUid? entityID,  uint amount)
+            public VendingMachineInventoryEntry(string id, string name, EntityUid? entityID, uint amount)
             {
                 ID = id;
                 Name = name;
