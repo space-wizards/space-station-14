@@ -1,69 +1,97 @@
 using Content.Server.Power.Components;
-using Content.Server.PowerCell.Components;
-using Content.Server.Weapon;
-using Content.Shared.ActionBlocker;
-using Content.Shared.Verbs;
+using Content.Server.PowerCell;
+using Content.Shared.Containers.ItemSlots;
+using Content.Shared.PowerCell.Components;
 using JetBrains.Annotations;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
-namespace Content.Server.Power.EntitySystems
+namespace Content.Server.Power.EntitySystems;
+
+[UsedImplicitly]
+internal sealed class ChargerSystem : EntitySystem
 {
-    [UsedImplicitly]
-    internal sealed class BaseChargerSystem : EntitySystem
+    [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
+    [Dependency] private readonly PowerCellSystem _cellSystem = default!;
+
+    public override void Initialize()
     {
-        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
+        base.Initialize();
 
-        public override void Initialize()
+        SubscribeLocalEvent<ChargerComponent, ComponentInit>(OnChargerInit);
+        SubscribeLocalEvent<ChargerComponent, ComponentRemove>(OnChargerRemove);
+
+        SubscribeLocalEvent<ChargerComponent, PowerChangedEvent>(OnPowerChanged);
+
+        SubscribeLocalEvent<ChargerComponent, EntInsertedIntoContainerMessage>(OnInserted);
+        SubscribeLocalEvent<ChargerComponent, EntRemovedFromContainerMessage>(OnRemoved);
+        SubscribeLocalEvent<ChargerComponent, ContainerIsInsertingAttemptEvent>(OnInsertAttempt);
+    }
+
+    public override void Update(float frameTime)
+    {
+        foreach (var comp in EntityManager.EntityQuery<ChargerComponent>())
         {
-            base.Initialize();
-
-            SubscribeLocalEvent<PowerCellChargerComponent, GetAlternativeVerbsEvent>(AddEjectVerb);
-            SubscribeLocalEvent<PowerCellChargerComponent, GetInteractionVerbsEvent>(AddInsertVerb);
-            SubscribeLocalEvent<WeaponCapacitorChargerComponent, GetAlternativeVerbsEvent>(AddEjectVerb);
-            SubscribeLocalEvent<WeaponCapacitorChargerComponent, GetInteractionVerbsEvent>(AddInsertVerb);
+            comp.OnUpdate(frameTime);
         }
+    }
+    private void OnChargerInit(EntityUid uid, ChargerComponent component, ComponentInit args)
+    {
+        _itemSlotsSystem.AddItemSlot(uid, "charger-slot", component.ChargerSlot);
+    }
 
-        public override void Update(float frameTime)
+    private void OnChargerRemove(EntityUid uid, ChargerComponent component, ComponentRemove args)
+    {
+        _itemSlotsSystem.RemoveItemSlot(uid, component.ChargerSlot);
+    }
+
+    private void OnPowerChanged(EntityUid uid, ChargerComponent component, PowerChangedEvent args)
+    {
+        component.UpdateStatus();
+    }
+
+    private void OnInserted(EntityUid uid, ChargerComponent component, EntInsertedIntoContainerMessage args)
+    {
+        if (!component.Initialized)
+            return;
+
+        if (args.Container.ID != component.ChargerSlot.ID)
+            return;
+
+        // try get a battery directly on the inserted entity
+        if (!TryComp(args.Entity, out component.HeldBattery))
         {
-            foreach (var comp in EntityManager.EntityQuery<BaseCharger>())
-            {
-                comp.OnUpdate(frameTime);
-            }
+            // or by checking for a power cell slot on the inserted entity
+            _cellSystem.TryGetBatteryFromSlot(args.Entity, out component.HeldBattery);
         }
+        
+        component.UpdateStatus();
+    }
 
-        // TODO VERBS EJECTABLES Standardize eject/insert verbs into a single system?
-        private void AddEjectVerb(EntityUid uid, BaseCharger component, GetAlternativeVerbsEvent args)
-        {
-            if (args.Hands == null ||
-                !args.CanAccess ||
-                !args.CanInteract ||
-                !component.HasCell ||
-                !_actionBlockerSystem.CanPickup(args.User))
-                return;
+    private void OnRemoved(EntityUid uid, ChargerComponent component, EntRemovedFromContainerMessage args)
+    {
+        if (args.Container.ID != component.ChargerSlot.ID)
+            return;
 
-            Verb verb = new();
-            verb.Text = EntityManager.GetComponent<MetaDataComponent>(component.Container.ContainedEntity!.Value).EntityName;
-            verb.Category = VerbCategory.Eject;
-            verb.Act = () => component.RemoveItem(args.User);
-            args.Verbs.Add(verb);
-        }
+        component.UpdateStatus();
+    }
 
-        private void AddInsertVerb(EntityUid uid, BaseCharger component, GetInteractionVerbsEvent args)
-        {
-            if (args.Using is not {Valid: true} @using ||
-                !args.CanAccess ||
-                !args.CanInteract ||
-                component.HasCell ||
-                !component.IsEntityCompatible(@using) ||
-                !_actionBlockerSystem.CanDrop(args.User))
-                return;
+    /// <summary>
+    ///     Verify that the entity being inserted is actually rechargeable.
+    /// </summary>
+    private void OnInsertAttempt(EntityUid uid, ChargerComponent component, ContainerIsInsertingAttemptEvent args)
+    {
+        if (!component.Initialized)
+            return;
 
-            Verb verb = new();
-            verb.Text = EntityManager.GetComponent<MetaDataComponent>(@using).EntityName;
-            verb.Category = VerbCategory.Insert;
-            verb.Act = () => component.TryInsertItem(@using);
-            args.Verbs.Add(verb);
-        }
+        if (args.Container.ID != component.ChargerSlot.ID)
+            return;
+
+        if (!TryComp(args.EntityUid, out PowerCellSlotComponent? cellSlot))
+            return;
+
+        if (!cellSlot.FitsInCharger || !cellSlot.CellSlot.HasItem)
+            args.Cancel();
     }
 }

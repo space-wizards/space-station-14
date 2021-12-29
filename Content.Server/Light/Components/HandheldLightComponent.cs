@@ -3,7 +3,6 @@ using Content.Server.Clothing.Components;
 using Content.Server.Items;
 using Content.Server.Power.Components;
 using Content.Server.PowerCell;
-using Content.Server.PowerCell.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Behaviors.Item;

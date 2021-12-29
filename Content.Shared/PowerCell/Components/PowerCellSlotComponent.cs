@@ -58,6 +58,12 @@ public sealed class PowerCellSlotComponent : Component
     [DataField("descFormatString")]
     public string? DescFormatString { get; set; } = "It uses size {0} power cells.";
 
+    /// <summary>
+    /// Can this entity be inserted directly into a charging station? If false, you need to manually remove the power
+    /// cell and recharge it separately.
+    /// </summary>
+    [DataField("fitsInCharger")]
+    public bool FitsInCharger = true;
 }
 
 public class PowerCellChangedEvent : EntityEventArgs

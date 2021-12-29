@@ -24,13 +24,18 @@ public abstract class SharedPowerCellSystem : EntitySystem
 
         SubscribeLocalEvent<PowerCellSlotComponent, EntInsertedIntoContainerMessage>(OnCellInserted);
         SubscribeLocalEvent<PowerCellSlotComponent, EntRemovedFromContainerMessage>(OnCellRemoved);
-
         SubscribeLocalEvent<PowerCellSlotComponent, ContainerIsInsertingAttemptEvent>(OnCellInsertAttempt);
     }
 
-    private void OnCellInsertAttempt(EntityUid uid, PowerCellSlotComponent slot, ContainerIsInsertingAttemptEvent args)
+    private void OnCellInsertAttempt(EntityUid uid, PowerCellSlotComponent component, ContainerIsInsertingAttemptEvent args)
     {
-        if (!TryComp(args.EntityUid, out PowerCellComponent? cell) || cell.CellSize != slot.SlotSize)
+        if (!component.Initialized)
+            return;
+
+        if (args.Container.ID != component.CellSlot.ID)
+            return;
+
+        if (!TryComp(args.EntityUid, out PowerCellComponent? cell) || cell.CellSize != component.SlotSize)
         {
             args.Cancel();
         }
@@ -44,7 +49,7 @@ public abstract class SharedPowerCellSystem : EntitySystem
         if (args.Container.ID != component.CellSlot.ID)
             return;
 
-        RaiseLocalEvent(uid, new PowerCellChangedEvent(true), false);
+        RaiseLocalEvent(uid, new PowerCellChangedEvent(false), false);
     }
 
     private void OnCellRemoved(EntityUid uid, PowerCellSlotComponent component, EntRemovedFromContainerMessage args)
@@ -52,10 +57,10 @@ public abstract class SharedPowerCellSystem : EntitySystem
         if (args.Container.ID != component.CellSlot.ID)
             return;
 
-        RaiseLocalEvent(uid, new PowerCellChangedEvent(false), false);
+        RaiseLocalEvent(uid, new PowerCellChangedEvent(true), false);
     }
 
-    protected virtual void OnCellSlotInit(EntityUid uid, PowerCellSlotComponent component, ComponentInit args)
+    private void OnCellSlotInit(EntityUid uid, PowerCellSlotComponent component, ComponentInit args)
     {
         _itemSlotsSystem.AddItemSlot(uid, "cellslot_cell_container", component.CellSlot);
 

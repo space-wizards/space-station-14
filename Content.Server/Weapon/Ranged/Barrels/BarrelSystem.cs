@@ -1,4 +1,3 @@
-using Content.Server.PowerCell.Components;
 using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Popups;
