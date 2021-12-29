@@ -7,7 +7,7 @@
   placement:
     mode: SnapgridCenter
   components:
-  - type: Sprite
+  - type: Sprite # TODO: add sprite for maintenece panel open
     sprite: Structures/Power/substation.rsi
     layers:
     - state: substation
@@ -42,3 +42,22 @@
     maxChargeRate: 5000
     supplyRampTolerance: 5000
     supplyRampRate: 1000
+  - type: Construction
+    graph: machine
+    node: machine
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Wires
+    BoardName: "Substation"
+    LayoutId: Substation
+  - type: Machine
+    board: SubstationMachineCircuitboard
+    

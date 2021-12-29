@@ -26,6 +26,15 @@
      Glass: 50
 
 - type: latheRecipe
+  id: SubstationMachineCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: SubstationMachineCircuitboard
+  completetime: 1000
+  materials:
+     Steel: 100
+     Glass: 100
+
+- type: latheRecipe
   id: CloningPodMachineCircuitboard
   icon: Objects/Misc/module.rsi/id_mod.png
   result: CloningPodMachineCircuitboard
@@ -96,3 +105,4 @@
   materials:
      Steel: 100
      Glass: 100
+

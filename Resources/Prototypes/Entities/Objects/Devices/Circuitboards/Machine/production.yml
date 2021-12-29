@@ -110,3 +110,16 @@
           DefaultPrototype: Beaker
           ExamineName: Glass Beaker
 
+- type: entity
+  id: SubstationMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: Substation (Machine Board)
+  components:
+    - type: MachineBoard
+      prototype: BaseSubstation
+      requirements:
+        Capacitor: 3
+      materialRequirements:
+        CableMV: 5
+        CableHV: 5
+

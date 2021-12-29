@@ -176,6 +176,7 @@
       - CapacitorStockPart
       - DoorElectronics
       - APCElectronics
+      - SubstationMachineCircuitboard
       - CloningPodMachineCircuitboard
       - MedicalScannerMachineCircuitboard
       - ChemMasterMachineCircuitboard
