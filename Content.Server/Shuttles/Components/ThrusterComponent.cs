@@ -17,7 +17,7 @@ namespace Content.Server.Shuttles.Components
         public override string Name => "Thruster";
 
         /// <summary>
-        /// Whether the thruster has been force to be enabled / disable (e.g. VV, interaction, etc.)
+        /// Whether the thruster has been force to be enabled / disabled (e.g. VV, interaction, etc.)
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("enabled")]
@@ -33,11 +33,11 @@ namespace Content.Server.Shuttles.Components
 
                 if (!_enabled)
                 {
-                    system.DisableThruster(OwnerUid, this);
+                    system.DisableThruster(Owner, this);
                 }
-                else if (system.CanEnable(OwnerUid, this))
+                else if (system.CanEnable(Owner, this))
                 {
-                    system.EnableThruster(OwnerUid, this);
+                    system.EnableThruster(Owner, this);
                 }
             }
         }
@@ -51,7 +51,7 @@ namespace Content.Server.Shuttles.Components
 
         [ViewVariables]
         [DataField("impulse")]
-        public float Impulse = 5f;
+        public float Impulse = 450f;
 
         [ViewVariables]
         [DataField("thrusterType")]

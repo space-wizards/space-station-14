@@ -2,9 +2,11 @@ using Content.Server.Administration;
 using Content.Server.Chat.Managers;
 using Content.Server.Ghost.Components;
 using Content.Server.Players;
+using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Server.Chat.Commands
@@ -18,15 +20,20 @@ namespace Content.Server.Chat.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var player = shell.Player as IPlayerSession;
-            if (player == null)
+            if (shell.Player is not IPlayerSession player)
             {
                 shell.WriteLine("This command cannot be run from the server.");
                 return;
             }
 
-            if (player.Status != SessionStatus.InGame || !player.AttachedEntityUid.HasValue)
+            if (player.Status != SessionStatus.InGame)
                 return;
+
+            if (player.AttachedEntity is not {} playerEntity)
+            {
+                shell.WriteLine("You don't have an entity!");
+                return;
+            }
 
             if (args.Length < 1)
                 return;
@@ -36,15 +43,9 @@ namespace Content.Server.Chat.Commands
                 return;
 
             var chat = IoCManager.Resolve<IChatManager>();
-            var playerEntity = player.AttachedEntity;
+            var chatSanitizer = IoCManager.Resolve<IChatSanitizationManager>();
 
-            if (playerEntity == null)
-            {
-                shell.WriteLine("You don't have an entity!");
-                return;
-            }
-
-            if (playerEntity.HasComponent<GhostComponent>())
+            if (IoCManager.Resolve<IEntityManager>().HasComponent<GhostComponent>(playerEntity))
                 chat.SendDeadChat(player, message);
             else
             {
@@ -56,13 +57,17 @@ namespace Content.Server.Chat.Commands
                     return;
                 }
 
-                if (mindComponent.OwnedEntity == null)
+                if (mindComponent.OwnedEntity is not {Valid: true} owned)
                 {
                     shell.WriteError("You don't have an entity!");
                     return;
                 }
 
-                chat.EntitySay(mindComponent.OwnedEntity, message);
+                var emote = chatSanitizer.TrySanitizeOutSmilies(message, owned, out var sanitized, out var emoteStr);
+                if (sanitized.Length != 0)
+                    chat.EntitySay(owned, sanitized);
+                if (emote)
+                    chat.EntityMe(owned, emoteStr!);
             }
 
         }

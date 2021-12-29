@@ -17,6 +17,7 @@
       state: bat
       sprite: Mobs/Animals/bat.rsi
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle
@@ -35,6 +36,9 @@
       normal: bat
       crit: dead
       dead: dead
+  - type: Butcherable
+    meat: FoodMeat
+    pieces: 1
 
 - type: entity
   name: bee
@@ -53,6 +57,7 @@
       state: 0
       sprite: Mobs/Animals/bee.rsi
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle
@@ -98,6 +103,9 @@
       normal: chicken-0
       crit: dead-0
       dead: dead-0
+  - type: Butcherable
+    meat: FoodMeatChicken
+    pieces: 1
 
 - type: entity
   name: butterfly
@@ -115,6 +123,7 @@
       state: butterfly
       sprite: Mobs/Animals/butterfly.rsi
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle
@@ -162,6 +171,7 @@
       state: cow
       sprite: Mobs/Animals/cow.rsi
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle
@@ -192,6 +202,9 @@
     targetSolution: udder
     quantity: 25
     updateRate: 30
+  - type: Butcherable
+    meat: FoodMeat
+    pieces: 5
 
 - type: entity
   name: crab
@@ -206,6 +219,7 @@
       state: crab
       sprite: Mobs/Animals/crab.rsi
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle
@@ -225,6 +239,9 @@
       crit: dead
       dead: dead
     - type: AsteroidRockVisualizer
+  - type: Butcherable
+    meat: FoodMeatCrab
+    pieces: 2
 
 - type: entity
   name: goat
@@ -244,6 +261,9 @@
       normal: goat
       crit: dead
       dead: dead
+  - type: Butcherable
+    meat: FoodMeat
+    pieces: 4
 
 # Note that we gotta make this bitch vomit someday when you feed it anthrax or sumthin. Needs to be a small item thief too and aggressive if attacked.
 - type: entity
@@ -264,6 +284,9 @@
       normal: goose
       crit: dead
       dead: dead
+  - type: Butcherable
+    meat: FoodMeatChicken
+    pieces: 2
 
 - type: entity
   name: gorilla
@@ -278,6 +301,7 @@
       state: crawling
       sprite: Mobs/Animals/gorilla.rsi
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle
@@ -296,6 +320,46 @@
       normal: crawling
       crit: dead
       dead: dead
+  - type: Butcherable
+    meat: FoodMeat
+    pieces: 4
+
+- type: entity
+  name: kangaroo
+  parent: SimpleMobBase
+  id: MobKangaroo
+  description: A large marsupial herbivore. It has powerful hind legs, with nails that resemble long claws.
+  components:
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 4
+    baseSprintSpeed: 7
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+      - map: ["enum.DamageStateVisualLayers.Base"]
+        state: kangaroo
+        sprite: Mobs/Animals/kangaroo.rsi
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      - shape:
+          !type:PhysShapeCircle
+          radius: 0.25
+        mass: 60
+        mask:
+          - Impassable
+          - MobImpassable #Bullets?!
+          - VaultImpassable
+          - SmallImpassable
+        layer:
+          - Opaque
+  - type: Appearance
+    visuals:
+      - type: DamageStateVisualizer
+        normal: kangaroo
+        # SKIPPY NO!
+        crit: kangaroo-dead
+        dead: kangaroo-dead
 
 - type: entity
   name: monkey
@@ -304,6 +368,9 @@
   description: New church of neo-darwinists actually believe that EVERY animal evolved from a monkey. Tastes like pork, and killing them is both fun and relaxing.
   components:
   - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: monkey
+    description: Ook ook!
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -324,6 +391,10 @@
     - type: FireVisualizer
       sprite: Mobs/Effects/onfire.rsi
       normalState: Monkey_burning
+  - type: Butcherable
+    meat: FoodMeat
+    pieces: 3
+  - type: MonkeyAccent
 
 - type: entity
   name: mouse
@@ -349,6 +420,7 @@
     Slots:
     - Helmet
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle
@@ -375,8 +447,6 @@
       normal: mouse-0
       crit: dead-0
       dead: splat-0
-# Eek! You can eat them alive for now until someone makes something that detects when
-# a mob is dead or something idk
   - type: Food
   - type: Extractable
     grindableSolutionName: food
@@ -386,7 +456,12 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
-  - type: MouseAccent
+  - type: Butcherable
+    meat: FoodMeat
+    pieces: 1
+  - type: ReplacementAccent
+    accent: mouse
+
 
 - type: entity
   parent: MobMouse
@@ -445,6 +520,7 @@
       state: parrot
       sprite: Mobs/Animals/parrot.rsi
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle
@@ -463,6 +539,9 @@
       normal: parrot
       crit: dead
       dead: dead
+  - type: Butcherable
+    meat: FoodMeat
+    pieces: 1
 
 - type: entity
   name: penguin
@@ -477,6 +556,7 @@
       state: penguin
       sprite: Mobs/Animals/penguin.rsi
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle
@@ -495,6 +575,9 @@
       normal: penguin
       crit: penguin_dead
       dead: penguin_dead
+  - type: Butcherable
+    meat: FoodMeatPenguin
+    pieces: 3
 
 - type: entity
   name: snake
@@ -509,6 +592,7 @@
       state: snake
       sprite: Mobs/Animals/snake.rsi
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle
@@ -530,6 +614,9 @@
      # looks stupid, Rotation visualizer for now
      # dead: dead
      # crit: dead
+  - type: Butcherable
+    meat: FoodMeat
+    pieces: 1
 
 # Code unique spider prototypes or combine them all into one spider and get a
 # random sprite state when you spawn it.
@@ -546,6 +633,7 @@
       state: tarantula
       sprite: Mobs/Animals/spider.rsi
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle
@@ -564,3 +652,6 @@
       normal: tarantula
       crit: tarantula_dead
       dead: tarantula_dead
+  - type: Butcherable
+    meat: FoodMeatSpider
+    pieces: 2

@@ -1,0 +1,63 @@
+# ALL SALVAGE MAPS SHOULD BE SETUP SUCH THAT TILE REF -1,-1 IS THEIR OFFICIAL CENTRE,
+# AND FOR EASE OF UNDERSTANDING, USE - pos: 0.5, 0.5 FOR SAVED POSITION.
+
+# "Small"-class maps - Max size square: 7x7, indicated size: 3.5
+
+- type: salvageMap
+  id: small1
+  name: "Small / Engineering Storage 1"
+  mapPath: Maps/Salvage/small-1.yml
+  size: 3.5
+
+- type: salvageMap
+  id: small2
+  name: "Small / Gaming Nook 1"
+  mapPath: Maps/Salvage/small-2.yml
+  size: 3.5
+
+- type: salvageMap
+  id: small-ship-1
+  name: "Small / Ship 1 (Pill)"
+  mapPath: Maps/Salvage/small-ship-1.yml
+  size: 3.5
+
+- type: salvageMap
+  id: small3
+  name: "Small / Laundromat 1"
+  mapPath: Maps/Salvage/small-3.yml
+  size: 3.5
+
+- type: salvageMap
+  id: smallAISurveyDrone
+  name: "Small / AI Survey Drone"
+  mapPath: Maps/Salvage/small-ai-survey-drone.yml
+  size: 3.5
+
+# Small - Asteroids
+
+- type: salvageMap
+  id: smallA1
+  name: "Small / Asteroid 1 Plasmafire"
+  mapPath: Maps/Salvage/small-a-1.yml
+  size: 3.5
+
+# "Medium"-class maps - Max size square: 15x15, indicated size: 7.5
+
+- type: salvageMap
+  id: medium1
+  name: "Medium / Plasma-Trapped Cache 1"
+  mapPath: Maps/Salvage/medium-1.yml
+  size: 7.5
+
+- type: salvageMap
+  id: mediumvault1
+  name: "Medium / Vault 1"
+  mapPath: Maps/Salvage/medium-vault-1.yml
+  size: 7.5
+
+- type: salvageMap
+  id: mediumOrchestra
+  name: "Medium / Silent Orchestra"
+  mapPath: Maps/Salvage/medium-silent-orchestra.yml
+  size: 7.5
+

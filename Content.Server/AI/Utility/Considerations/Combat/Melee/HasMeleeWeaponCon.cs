@@ -1,6 +1,8 @@
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States.Inventory;
 using Content.Server.Weapon.Melee.Components;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Utility.Considerations.Combat.Melee
 {
@@ -10,7 +12,7 @@ namespace Content.Server.AI.Utility.Considerations.Combat.Melee
         {
             foreach (var item in context.GetState<EnumerableInventoryState>().GetValue())
             {
-                if (item.HasComponent<MeleeWeaponComponent>())
+                if (IoCManager.Resolve<IEntityManager>().HasComponent<MeleeWeaponComponent>(item))
                 {
                     return 1.0f;
                 }

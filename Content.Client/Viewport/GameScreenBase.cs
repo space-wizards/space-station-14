@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
@@ -6,7 +7,6 @@ using Content.Client.ContextMenu.UI;
 using Content.Client.Interactable;
 using Content.Client.Interactable.Components;
 using Content.Client.State;
-using Content.Shared;
 using Content.Shared.CCVar;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -44,7 +44,7 @@ namespace Content.Client.Viewport
 
         private IEventBus _eventBus => _entityManager.EventBus;
 
-        private IEntity? _lastHoveredEntity;
+        private EntityUid? _lastHoveredEntity;
 
         private bool _outlineEnabled = true;
 
@@ -84,7 +84,7 @@ namespace Content.Client.Viewport
             // lead to extremely thick outlines in the other viewports. Fixing this probably requires changing how the
             // hover outline works, so that it only highlights the entity in a single viewport.
 
-            IEntity? entityToClick = null;
+            EntityUid? entityToClick = null;
             var renderScale = 1;
             if (UserInterfaceManager.CurrentlyHovered is IViewportControl vp)
             {
@@ -109,13 +109,13 @@ namespace Content.Client.Viewport
             var inRange = false;
             if (localPlayer.ControlledEntity != null && entityToClick != null)
             {
-                inRange = localPlayer.InRangeUnobstructed(entityToClick, ignoreInsideBlocker: true);
+                inRange = localPlayer.InRangeUnobstructed(entityToClick.Value, ignoreInsideBlocker: true);
             }
 
             InteractionOutlineComponent? outline;
             if(!_outlineEnabled || !ConfigurationManager.GetCVar(CCVars.OutlineEnabled))
             {
-                if(entityToClick != null && entityToClick.TryGetComponent(out outline))
+                if(entityToClick != null && _entityManager.TryGetComponent(entityToClick, out outline))
                 {
                     outline.OnMouseLeave(); //Prevent outline remains from persisting post command.
                 }
@@ -124,7 +124,7 @@ namespace Content.Client.Viewport
 
             if (entityToClick == _lastHoveredEntity)
             {
-                if (entityToClick != null && entityToClick.TryGetComponent(out outline))
+                if (entityToClick != null && _entityManager.TryGetComponent(entityToClick, out outline))
                 {
                     outline.UpdateInRange(inRange, renderScale);
                 }
@@ -132,42 +132,42 @@ namespace Content.Client.Viewport
                 return;
             }
 
-            if (_lastHoveredEntity != null && !_lastHoveredEntity.Deleted &&
-                _lastHoveredEntity.TryGetComponent(out outline))
+            if (_lastHoveredEntity != null && !_entityManager.Deleted(_lastHoveredEntity) &&
+                _entityManager.TryGetComponent(_lastHoveredEntity, out outline))
             {
                 outline.OnMouseLeave();
             }
 
             _lastHoveredEntity = entityToClick;
 
-            if (_lastHoveredEntity != null && _lastHoveredEntity.TryGetComponent(out outline))
+            if (_lastHoveredEntity != null && _entityManager.TryGetComponent(_lastHoveredEntity, out outline))
             {
                 outline.OnMouseEnter(inRange, renderScale);
             }
         }
 
-        public IEntity? GetEntityUnderPosition(MapCoordinates coordinates)
+        public EntityUid? GetEntityUnderPosition(MapCoordinates coordinates)
         {
             var entitiesUnderPosition = GetEntitiesUnderPosition(coordinates);
             return entitiesUnderPosition.Count > 0 ? entitiesUnderPosition[0] : null;
         }
 
-        public IList<IEntity> GetEntitiesUnderPosition(EntityCoordinates coordinates)
+        public IList<EntityUid> GetEntitiesUnderPosition(EntityCoordinates coordinates)
         {
             return GetEntitiesUnderPosition(coordinates.ToMap(EntityManager));
         }
 
-        public IList<IEntity> GetEntitiesUnderPosition(MapCoordinates coordinates)
+        public IList<EntityUid> GetEntitiesUnderPosition(MapCoordinates coordinates)
         {
             // Find all the entities intersecting our click
             var entities = IoCManager.Resolve<IEntityLookup>().GetEntitiesIntersecting(coordinates.MapId,
                 Box2.CenteredAround(coordinates.Position, (1, 1)));
 
             // Check the entities against whether or not we can click them
-            var foundEntities = new List<(IEntity clicked, int drawDepth, uint renderOrder)>();
+            var foundEntities = new List<(EntityUid clicked, int drawDepth, uint renderOrder)>();
             foreach (var entity in entities)
             {
-                if (entity.TryGetComponent<ClickableComponent>(out var component)
+                if (_entityManager.TryGetComponent<ClickableComponent?>(entity, out var component)
                     && !entity.IsInContainer()
                     && component.CheckClick(coordinates.Position, out var drawDepthClicked, out var renderOrder))
                 {
@@ -176,9 +176,9 @@ namespace Content.Client.Viewport
             }
 
             if (foundEntities.Count == 0)
-                return new List<IEntity>();
+                return Array.Empty<EntityUid>();
 
-            foundEntities.Sort(new ClickableEntityComparer());
+            foundEntities.Sort(new ClickableEntityComparer(_entityManager));
             // 0 is the top element.
             foundEntities.Reverse();
             return foundEntities.Select(a => a.clicked).ToList();
@@ -193,20 +193,27 @@ namespace Content.Client.Viewport
         /// <param name="stateManager">state manager to use to get the current game screen</param>
         /// <param name="coordinates">coordinates to check</param>
         /// <returns>the entities under the position, empty list if none found</returns>
-        public static IList<IEntity> GetEntitiesUnderPosition(IStateManager stateManager, EntityCoordinates coordinates)
+        public static IList<EntityUid> GetEntitiesUnderPosition(IStateManager stateManager, EntityCoordinates coordinates)
         {
             if (stateManager.CurrentState is GameScreenBase gameScreenBase)
             {
                 return gameScreenBase.GetEntitiesUnderPosition(coordinates);
             }
 
-            return ImmutableList<IEntity>.Empty;
+            return ImmutableList<EntityUid>.Empty;
         }
 
-        internal class ClickableEntityComparer : IComparer<(IEntity clicked, int depth, uint renderOrder)>
+        internal class ClickableEntityComparer : IComparer<(EntityUid clicked, int depth, uint renderOrder)>
         {
-            public int Compare((IEntity clicked, int depth, uint renderOrder) x,
-                (IEntity clicked, int depth, uint renderOrder) y)
+            private readonly IEntityManager _entities;
+
+            public ClickableEntityComparer(IEntityManager entities)
+            {
+                _entities = entities;
+            }
+
+            public int Compare((EntityUid clicked, int depth, uint renderOrder) x,
+                (EntityUid clicked, int depth, uint renderOrder) y)
             {
                 var val = x.depth.CompareTo(y.depth);
                 if (val != 0)
@@ -223,15 +230,15 @@ namespace Content.Client.Viewport
                 }
                 */
 
-                var transX = x.clicked.Transform;
-                var transY = y.clicked.Transform;
+                var transX = _entities.GetComponent<TransformComponent>(x.clicked);
+                var transY = _entities.GetComponent<TransformComponent>(y.clicked);
                 val = transX.Coordinates.Y.CompareTo(transY.Coordinates.Y);
                 if (val != 0)
                 {
                     return val;
                 }
 
-                return x.clicked.Uid.CompareTo(y.clicked.Uid);
+                return x.clicked.CompareTo(y.clicked);
             }
         }
 
@@ -250,11 +257,11 @@ namespace Content.Client.Viewport
             var funcId = InputManager.NetworkBindMap.KeyFunctionID(func);
 
             EntityCoordinates coordinates = default;
-            EntityUid entityToClick = default;
+            EntityUid? entityToClick = null;
             if (args.Viewport is IViewportControl vp)
             {
                 var mousePosWorld = vp.ScreenToMap(kArgs.PointerLocation.Position);
-                entityToClick = GetEntityUnderPosition(mousePosWorld)?.Uid ?? EntityUid.Invalid;
+                entityToClick = GetEntityUnderPosition(mousePosWorld);
 
                 coordinates = MapManager.TryFindGridAt(mousePosWorld, out var grid) ? grid.MapToGrid(mousePosWorld) :
                     EntityCoordinates.FromMap(MapManager, mousePosWorld);
@@ -262,7 +269,7 @@ namespace Content.Client.Viewport
 
             var message = new FullInputCmdMessage(Timing.CurTick, Timing.TickFraction, funcId, kArgs.State,
                 coordinates , kArgs.PointerLocation,
-                entityToClick);
+                entityToClick ?? default); // TODO make entityUid nullable
 
             // client side command handlers will always be sent the local player session.
             var session = PlayerManager.LocalPlayer?.Session;

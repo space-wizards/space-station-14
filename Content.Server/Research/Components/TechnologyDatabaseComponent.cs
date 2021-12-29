@@ -1,6 +1,7 @@
 using Content.Shared.Research.Components;
 using Content.Shared.Research.Prototypes;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Players;
 
 namespace Content.Server.Research.Components
@@ -8,7 +9,7 @@ namespace Content.Server.Research.Components
     [RegisterComponent]
     public class  TechnologyDatabaseComponent : SharedTechnologyDatabaseComponent
     {
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new TechnologyDatabaseState(_technologies);
         }
@@ -41,7 +42,7 @@ namespace Content.Server.Research.Components
         /// <returns>Whether it could sync or not</returns>
         public bool SyncWithServer()
         {
-            if (!Owner.TryGetComponent(out ResearchClientComponent? client)) return false;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out ResearchClientComponent? client)) return false;
             if (client.Server?.Database == null) return false;
 
             Sync(client.Server.Database);

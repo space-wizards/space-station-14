@@ -1,8 +1,8 @@
 using System;
-using Content.Server.Access.Components;
-using Content.Server.Access.Systems;
 using Content.Server.Power.NodeGroups;
 using Content.Server.UserInterface;
+using Content.Shared.Access.Components;
+using Content.Shared.Access.Systems;
 using Content.Shared.APC;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
@@ -24,6 +24,7 @@ namespace Content.Server.Power.Components
     [ComponentReference(typeof(IActivate))]
     public class ApcComponent : BaseApcNetComponent, IActivate
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         public override string Name => "Apc";
@@ -56,16 +57,16 @@ namespace Content.Server.Power.Components
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(ApcUiKey.Key);
 
-        public BatteryComponent? Battery => Owner.TryGetComponent(out BatteryComponent? batteryComponent) ? batteryComponent : null;
+        public BatteryComponent? Battery => _entMan.TryGetComponent(Owner, out BatteryComponent? batteryComponent) ? batteryComponent : null;
 
-        [ComponentDependency] private AccessReader? _accessReader = null;
+        [ComponentDependency] private AccessReaderComponent? _accessReader = null;
 
         protected override void Initialize()
         {
             base.Initialize();
 
             Owner.EnsureComponentWarn<ServerUserInterfaceComponent>();
-            Owner.EnsureComponentWarn<AccessReader>();
+            Owner.EnsureComponentWarn<AccessReaderComponent>();
 
             if (UserInterface != null)
             {
@@ -87,25 +88,21 @@ namespace Content.Server.Power.Components
 
         private void UserInterfaceOnReceiveMessage(ServerBoundUserInterfaceMessage serverMsg)
         {
-            if (serverMsg.Message is ApcToggleMainBreakerMessage)
+            if (serverMsg.Message is not ApcToggleMainBreakerMessage || serverMsg.Session.AttachedEntity is not {} attached)
+                return;
+
+            var accessSystem = EntitySystem.Get<AccessReaderSystem>();
+            if (_accessReader == null || accessSystem.IsAllowed(_accessReader, attached))
             {
-                var user = serverMsg.Session.AttachedEntity;
-                if (user == null) return;
+                MainBreakerEnabled = !MainBreakerEnabled;
+                _entMan.GetComponent<PowerNetworkBatteryComponent>(Owner).CanDischarge = MainBreakerEnabled;
 
-                var accessSystem = EntitySystem.Get<AccessReaderSystem>();
-                if (_accessReader == null || accessSystem.IsAllowed(_accessReader, user.Uid))
-                {
-                    MainBreakerEnabled = !MainBreakerEnabled;
-                    Owner.GetComponent<PowerNetworkBatteryComponent>().CanDischarge = MainBreakerEnabled;
-
-                    _uiDirty = true;
-                    SoundSystem.Play(Filter.Pvs(Owner), _onReceiveMessageSound.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
-                }
-                else
-                {
-                    user.PopupMessageCursor(Loc.GetString("apc-component-insufficient-access"));
-                }
-
+                _uiDirty = true;
+                SoundSystem.Play(Filter.Pvs(Owner), _onReceiveMessageSound.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
+            }
+            else
+            {
+                attached.PopupMessageCursor(Loc.GetString("apc-component-insufficient-access"));
             }
         }
 
@@ -117,12 +114,12 @@ namespace Content.Server.Power.Components
                 _lastChargeState = newState;
                 _lastChargeStateChange = _gameTiming.CurTime;
 
-                if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+                if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
                 {
                     appearance.SetData(ApcVisuals.ChargeState, newState);
                 }
 
-                if (Owner.TryGetComponent(out SharedPointLightComponent? light))
+                if (_entMan.TryGetComponent(Owner, out SharedPointLightComponent? light))
                 {
                     light.Color = newState switch
                     {
@@ -135,7 +132,7 @@ namespace Content.Server.Power.Components
                 }
             }
 
-            Owner.TryGetComponent(out BatteryComponent? battery);
+            _entMan.TryGetComponent(Owner, out BatteryComponent? battery);
 
             var newCharge = battery?.CurrentCharge;
             if (newCharge != null && newCharge != _lastCharge && _lastChargeChange + TimeSpan.FromSeconds(VisualsChangeDelay) < _gameTiming.CurTime)
@@ -162,7 +159,7 @@ namespace Content.Server.Power.Components
 
         private ApcChargeState CalcChargeState()
         {
-            if (!Owner.TryGetComponent(out BatteryComponent? battery))
+            if (!_entMan.TryGetComponent(Owner, out BatteryComponent? battery))
             {
                 return ApcChargeState.Lack;
             }
@@ -174,7 +171,7 @@ namespace Content.Server.Power.Components
                 return ApcChargeState.Full;
             }
 
-            var netBattery = Owner.GetComponent<PowerNetworkBatteryComponent>();
+            var netBattery = _entMan.GetComponent<PowerNetworkBatteryComponent>(Owner);
             var delta = netBattery.CurrentSupply - netBattery.CurrentReceiving;
 
             return delta < 0 ? ApcChargeState.Charging : ApcChargeState.Lack;
@@ -186,7 +183,7 @@ namespace Content.Server.Power.Components
             if (bat == null)
                 return ApcExternalPowerState.None;
 
-            var netBat = Owner.GetComponent<PowerNetworkBatteryComponent>();
+            var netBat = _entMan.GetComponent<PowerNetworkBatteryComponent>(Owner);
             if (netBat.CurrentReceiving == 0 && netBat.LoadingNetworkDemand != 0)
             {
                 return ApcExternalPowerState.None;
@@ -203,7 +200,7 @@ namespace Content.Server.Power.Components
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
+            if (!_entMan.TryGetComponent(eventArgs.User, out ActorComponent? actor))
             {
                 return;
             }

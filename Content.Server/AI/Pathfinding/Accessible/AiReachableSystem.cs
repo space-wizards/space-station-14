@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using Content.Server.Access.Components;
 using Content.Server.Access.Systems;
 using Content.Server.AI.Pathfinding.Pathfinders;
+using Content.Shared.Access.Systems;
 using Content.Shared.AI;
 using Content.Shared.GameTicking;
 using JetBrains.Annotations;
@@ -171,22 +171,22 @@ namespace Content.Server.AI.Pathfinding.Accessible
         /// <param name="target"></param>
         /// <param name="range"></param>
         /// <returns></returns>
-        public bool CanAccess(IEntity entity, IEntity target, float range = 0.0f)
+        public bool CanAccess(EntityUid entity, EntityUid target, float range = 0.0f)
         {
             // TODO: Handle this gracefully instead of just failing.
-            if (!target.Transform.GridID.IsValid())
+            if (!EntityManager.GetComponent<TransformComponent>(target).GridID.IsValid())
                 return false;
 
-            var targetTile = _mapManager.GetGrid(target.Transform.GridID).GetTileRef(target.Transform.Coordinates);
+            var targetTile = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(target).GridID).GetTileRef(EntityManager.GetComponent<TransformComponent>(target).Coordinates);
             var targetNode = _pathfindingSystem.GetNode(targetTile);
 
             var collisionMask = 0;
-            if (entity.TryGetComponent(out IPhysBody? physics))
+            if (EntityManager.TryGetComponent(entity, out IPhysBody? physics))
             {
                 collisionMask = physics.CollisionMask;
             }
 
-            var access = _accessReader.FindAccessTags(entity.Uid);
+            var access = _accessReader.FindAccessTags(entity);
 
             // We'll do a quick traversable check before going through regions
             // If we can't access it we'll try to get a valid node in range (this is essentially an early-out)
@@ -198,7 +198,7 @@ namespace Content.Server.AI.Pathfinding.Accessible
                     return false;
                 }
 
-                var pathfindingArgs = new PathfindingArgs(entity.Uid, access, collisionMask, default, targetTile, range);
+                var pathfindingArgs = new PathfindingArgs(entity, access, collisionMask, default, targetTile, range);
                 foreach (var node in BFSPathfinder.GetNodesInRange(pathfindingArgs, false))
                 {
                     targetNode = node;
@@ -208,14 +208,14 @@ namespace Content.Server.AI.Pathfinding.Accessible
             return CanAccess(entity, targetNode);
         }
 
-        public bool CanAccess(IEntity entity, PathfindingNode targetNode)
+        public bool CanAccess(EntityUid entity, PathfindingNode targetNode)
         {
-            if (entity.Transform.GridID != targetNode.TileRef.GridIndex)
+            if (EntityManager.GetComponent<TransformComponent>(entity).GridID != targetNode.TileRef.GridIndex)
             {
                 return false;
             }
 
-            var entityTile = _mapManager.GetGrid(entity.Transform.GridID).GetTileRef(entity.Transform.Coordinates);
+            var entityTile = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(entity).GridID).GetTileRef(EntityManager.GetComponent<TransformComponent>(entity).Coordinates);
             var entityNode = _pathfindingSystem.GetNode(entityTile);
             var entityRegion = GetRegion(entityNode);
             var targetRegion = GetRegion(targetNode);
@@ -423,14 +423,14 @@ namespace Content.Server.AI.Pathfinding.Accessible
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public PathfindingRegion? GetRegion(IEntity entity)
+        public PathfindingRegion? GetRegion(EntityUid entity)
         {
-            if (!entity.Transform.GridID.IsValid())
+            if (!EntityManager.GetComponent<TransformComponent>(entity).GridID.IsValid())
             {
                 return null;
             }
 
-            var entityTile = _mapManager.GetGrid(entity.Transform.GridID).GetTileRef(entity.Transform.Coordinates);
+            var entityTile = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(entity).GridID).GetTileRef(EntityManager.GetComponent<TransformComponent>(entity).Coordinates);
             var entityNode = _pathfindingSystem.GetNode(entityTile);
             return GetRegion(entityNode);
         }

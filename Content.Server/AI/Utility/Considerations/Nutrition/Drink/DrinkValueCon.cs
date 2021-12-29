@@ -3,6 +3,7 @@ using Content.Server.AI.WorldState.States;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Nutrition.Components;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Utility.Considerations.Nutrition.Drink
 {
@@ -13,8 +14,8 @@ namespace Content.Server.AI.Utility.Considerations.Nutrition.Drink
             var target = context.GetState<TargetEntityState>().GetValue();
 
             if (target == null
-                || target.Deleted
-                || !EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(target.Uid, DrinkComponent.DefaultSolutionName, out var drink))
+                || IoCManager.Resolve<IEntityManager>().Deleted(target)
+                || !EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(target.Value, DrinkComponent.DefaultSolutionName, out var drink))
             {
                 return 0.0f;
             }

@@ -5,6 +5,7 @@ using Content.Shared.Friction;
 using Content.Shared.MobState.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Pulling.Components;
+using JetBrains.Annotations;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -60,6 +61,14 @@ namespace Content.Shared.Movement
             UsedMobMovement.Clear();
         }
 
+        protected Angle GetParentGridAngle(TransformComponent xform, IMoverComponent mover)
+        {
+            if (xform.GridID == GridId.Invalid || !_mapManager.TryGetGrid(xform.GridID, out var grid))
+                return mover.LastGridAngle;
+
+            return grid.WorldRotation;
+        }
+
         /// <summary>
         ///     A generic kinematic mover for entities.
         /// </summary>
@@ -67,8 +76,8 @@ namespace Content.Shared.Movement
         {
             var (walkDir, sprintDir) = mover.VelocityDir;
 
-            var transform = mover.Owner.Transform;
-            var parentRotation = transform.Parent!.WorldRotation;
+            var transform = EntityManager.GetComponent<TransformComponent>(mover.Owner);
+            var parentRotation = GetParentGridAngle(transform, mover);
 
             // Regular movement.
             // Target velocity.
@@ -76,9 +85,7 @@ namespace Content.Shared.Movement
 
             var worldTotal = _relativeMovement ? parentRotation.RotateVec(total) : total;
 
-            if (transform.GridID == GridId.Invalid)
-                worldTotal = mover.LastGridAngle.RotateVec(worldTotal);
-            else
+            if (transform.GridID != GridId.Invalid)
                 mover.LastGridAngle = parentRotation;
 
             if (worldTotal != Vector2.Zero)
@@ -96,16 +103,16 @@ namespace Content.Shared.Movement
         protected void HandleMobMovement(IMoverComponent mover, PhysicsComponent physicsComponent,
             IMobMoverComponent mobMover)
         {
-            DebugTools.Assert(!UsedMobMovement.ContainsKey(mover.OwnerUid));
+            DebugTools.Assert(!UsedMobMovement.ContainsKey(mover.Owner));
 
             if (!UseMobMovement(physicsComponent))
             {
-                UsedMobMovement[mover.OwnerUid] = false;
+                UsedMobMovement[mover.Owner] = false;
                 return;
             }
 
-            UsedMobMovement[mover.OwnerUid] = true;
-            var transform = mover.Owner.Transform;
+            UsedMobMovement[mover.Owner] = true;
+            var transform = EntityManager.GetComponent<TransformComponent>(mover.Owner);
             var weightless = mover.Owner.IsWeightless(physicsComponent, mapManager: _mapManager, entityManager: _entityManager);
             var (walkDir, sprintDir) = mover.VelocityDir;
 
@@ -118,7 +125,7 @@ namespace Content.Shared.Movement
                 if (!touching)
                 {
                     if (transform.GridID != GridId.Invalid)
-                        mover.LastGridAngle = transform.Parent!.WorldRotation;
+                        mover.LastGridAngle = GetParentGridAngle(transform, mover);
 
                     transform.WorldRotation = physicsComponent.LinearVelocity.GetDir().ToAngle();
                     return;
@@ -130,7 +137,7 @@ namespace Content.Shared.Movement
             // This is relative to the map / grid we're on.
             var total = walkDir * mover.CurrentWalkSpeed + sprintDir * mover.CurrentSprintSpeed;
 
-            var parentRotation = transform.Parent!.WorldRotation;
+            var parentRotation = GetParentGridAngle(transform, mover);
 
             var worldTotal = _relativeMovement ? parentRotation.RotateVec(total) : total;
 
@@ -139,9 +146,7 @@ namespace Content.Shared.Movement
             if (weightless)
                 worldTotal *= mobMover.WeightlessStrength;
 
-            if (transform.GridID == GridId.Invalid)
-                worldTotal = mover.LastGridAngle.RotateVec(worldTotal);
-            else
+            if (transform.GridID != GridId.Invalid)
                 mover.LastGridAngle = parentRotation;
 
             if (worldTotal != Vector2.Zero)
@@ -164,10 +169,10 @@ namespace Content.Shared.Movement
         protected bool UseMobMovement(PhysicsComponent body)
         {
             return body.BodyStatus == BodyStatus.OnGround &&
-                   body.Owner.HasComponent<MobStateComponent>() &&
+                   EntityManager.HasComponent<MobStateComponent>(body.Owner) &&
                    // If we're being pulled then don't mess with our velocity.
-                   (!body.Owner.TryGetComponent(out SharedPullableComponent? pullable) || !pullable.BeingPulled) &&
-                   _blocker.CanMove(body.OwnerUid);
+                   (!EntityManager.TryGetComponent(body.Owner, out SharedPullableComponent? pullable) || !pullable.BeingPulled) &&
+                   _blocker.CanMove((body).Owner);
         }
 
         /// <summary>
@@ -186,7 +191,7 @@ namespace Content.Shared.Movement
                     !otherCollider.CanCollide ||
                     ((collider.CollisionMask & otherCollider.CollisionLayer) == 0 &&
                     (otherCollider.CollisionMask & collider.CollisionLayer) == 0) ||
-                    (otherCollider.Owner.TryGetComponent(out SharedPullableComponent? pullable) && pullable.BeingPulled))
+                    (IoCManager.Resolve<IEntityManager>().TryGetComponent(otherCollider.Owner, out SharedPullableComponent? pullable) && pullable.BeingPulled))
                 {
                     continue;
                 }

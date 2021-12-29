@@ -43,6 +43,7 @@
           nodeGroupID: Apc
     - type: Physics
       bodyType: Static
+    - type: Fixtures
       fixtures:
         - shape:
             !type:PhysShapeAabb
@@ -84,16 +85,7 @@
       graph: grille
       node: grilleBroken
       deconstructionTarget: start
-    - type: Physics
-      fixtures:
-        - shape:
-            !type:PhysShapeAabb
-            bounds: "-0.5,-0.5,0.5,0.5"
-          mass: 50
-          layer:
-            - Passable
-          mask:
-            - Passable
+    - type: Fixtures # overwrite BaseStructure parent.
     - type: Damageable
       damageContainer: Inorganic
       damageModifierSet: FlimsyMetallic

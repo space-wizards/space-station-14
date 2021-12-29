@@ -47,6 +47,7 @@ ui-options-vp-integer-scaling-tooltip = If this option is enabled, the viewport 
                                         means that black bars appear at the top/bottom of the screen or that part
                                         of the viewport is not visible.
 ui-options-vp-low-res = Low-resolution viewport
+ui-options-fps-counter = Show FPS counter
 
 ## Controls menu
 
@@ -64,6 +65,9 @@ ui-options-header-misc = Miscellaneous
 ui-options-header-hotbar = Hotbar
 ui-options-header-map-editor = Map Editor
 ui-options-header-dev = Development
+ui-options-header-general = General
+
+ui-options-hotkey-keymap = Use US QWERTY Keys
 
 ui-options-function-move-up = Move Up
 ui-options-function-move-left = Move Left

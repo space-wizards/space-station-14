@@ -8,8 +8,9 @@
   supervisors: "the head of personnel"
   access:
   - Cargo
-  - Quartermaster
+ # - Quartermaster
   - Maintenance
+  - External
 
 - type: startingGear
   id: QuartermasterGear

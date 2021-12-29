@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Content.Shared.Crayon;
+using Content.Shared.Decals;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -22,9 +23,8 @@ namespace Content.Client.Crayon.UI
 
             _menu.OnClose += Close;
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-            var crayonDecals = prototypeManager.EnumeratePrototypes<CrayonDecalPrototype>().FirstOrDefault();
-            if (crayonDecals != null)
-                _menu.Populate(crayonDecals);
+            var crayonDecals = prototypeManager.EnumeratePrototypes<DecalPrototype>().Where(x => x.Tags.Contains("crayon"));
+            _menu.Populate(crayonDecals);
             _menu.OpenCentered();
         }
 

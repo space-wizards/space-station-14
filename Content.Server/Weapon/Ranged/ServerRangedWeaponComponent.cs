@@ -4,14 +4,12 @@ using Content.Server.CombatMode;
 using Content.Server.Hands.Components;
 using Content.Server.Interaction.Components;
 using Content.Server.Stunnable;
-using Content.Server.Stunnable.Components;
 using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
 using Content.Shared.Hands;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
-using Content.Shared.Stunnable;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -32,6 +30,7 @@ namespace Content.Server.Weapon.Ranged
     [RegisterComponent]
     public sealed class ServerRangedWeaponComponent : SharedRangedWeaponComponent, IHandSelected
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
@@ -60,8 +59,8 @@ namespace Content.Server.Weapon.Ranged
         public DamageSpecifier? ClumsyDamage;
 
         public Func<bool>? WeaponCanFireHandler;
-        public Func<IEntity, bool>? UserCanFireHandler;
-        public Action<IEntity, Vector2>? FireHandler;
+        public Func<EntityUid, bool>? UserCanFireHandler;
+        public Action<EntityUid, Vector2>? FireHandler;
 
         public ServerRangedBarrelComponent? Barrel
         {
@@ -87,9 +86,9 @@ namespace Content.Server.Weapon.Ranged
             return WeaponCanFireHandler == null || WeaponCanFireHandler();
         }
 
-        private bool UserCanFire(IEntity user)
+        private bool UserCanFire(EntityUid user)
         {
-            return (UserCanFireHandler == null || UserCanFireHandler(user)) && EntitySystem.Get<ActionBlockerSystem>().CanInteract(user.Uid);
+            return (UserCanFireHandler == null || UserCanFireHandler(user)) && EntitySystem.Get<ActionBlockerSystem>().CanInteract(user);
         }
 
         /// <inheritdoc />
@@ -106,8 +105,7 @@ namespace Content.Server.Weapon.Ranged
             switch (message)
             {
                 case FirePosComponentMessage msg:
-                    var user = session.AttachedEntity;
-                    if (user == null)
+                    if (session.AttachedEntity is not {Valid: true} user)
                     {
                         return;
                     }
@@ -134,7 +132,7 @@ namespace Content.Server.Weapon.Ranged
             }
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new RangedWeaponComponentState(FireRateSelector);
         }
@@ -144,14 +142,14 @@ namespace Content.Server.Weapon.Ranged
         /// </summary>
         /// <param name="user">Entity that is operating the weapon, usually the player.</param>
         /// <param name="targetPos">Target position on the map to shoot at.</param>
-        private void TryFire(IEntity user, Vector2 targetPos)
+        private void TryFire(EntityUid user, Vector2 targetPos)
         {
-            if (!user.TryGetComponent(out HandsComponent? hands) || hands.GetActiveHand?.Owner != Owner)
+            if (!_entMan.TryGetComponent(user, out HandsComponent? hands) || hands.GetActiveHand?.Owner != Owner)
             {
                 return;
             }
 
-            if (!user.TryGetComponent(out CombatModeComponent? combat) || !combat.IsInCombatMode)
+            if (!_entMan.TryGetComponent(user, out CombatModeComponent? combat) || !combat.IsInCombatMode)
             {
                 return;
             }
@@ -173,27 +171,27 @@ namespace Content.Server.Weapon.Ranged
             if (ClumsyCheck && ClumsyDamage != null && ClumsyComponent.TryRollClumsy(user, ClumsyExplodeChance))
             {
                 //Wound them
-                EntitySystem.Get<DamageableSystem>().TryChangeDamage(user.Uid, ClumsyDamage);
-                EntitySystem.Get<StunSystem>().TryParalyze(user.Uid, TimeSpan.FromSeconds(3f));
+                EntitySystem.Get<DamageableSystem>().TryChangeDamage(user, ClumsyDamage);
+                EntitySystem.Get<StunSystem>().TryParalyze(user, TimeSpan.FromSeconds(3f), true);
 
                 // Apply salt to the wound ("Honk!")
                 SoundSystem.Play(
                     Filter.Pvs(Owner), _clumsyWeaponHandlingSound.GetSound(),
-                    Owner.Transform.Coordinates, AudioParams.Default.WithMaxDistance(5));
+                    _entMan.GetComponent<TransformComponent>(Owner).Coordinates, AudioParams.Default.WithMaxDistance(5));
 
                 SoundSystem.Play(
                     Filter.Pvs(Owner), _clumsyWeaponShotSound.GetSound(),
-                    Owner.Transform.Coordinates, AudioParams.Default.WithMaxDistance(5));
+                    _entMan.GetComponent<TransformComponent>(Owner).Coordinates, AudioParams.Default.WithMaxDistance(5));
 
                 user.PopupMessage(Loc.GetString("server-ranged-weapon-component-try-fire-clumsy"));
 
-                Owner.Delete();
+                _entMan.DeleteEntity(Owner);
                 return;
             }
 
             if (_canHotspot)
             {
-                EntitySystem.Get<AtmosphereSystem>().HotspotExpose(user.Transform.Coordinates, 700, 50);
+                EntitySystem.Get<AtmosphereSystem>().HotspotExpose(_entMan.GetComponent<TransformComponent>(user).Coordinates, 700, 50);
             }
             FireHandler?.Invoke(user, targetPos);
         }

@@ -14,6 +14,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -70,11 +71,11 @@ namespace Content.Server.Disposal.Unit.Components
         /// </summary>
         [ViewVariables] public Container Container = default!;
 
-        [ViewVariables] public IReadOnlyList<IEntity> ContainedEntities => Container.ContainedEntities;
+        [ViewVariables] public IReadOnlyList<EntityUid> ContainedEntities => Container.ContainedEntities;
 
         [ViewVariables]
         public bool Powered =>
-            !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) ||
+            !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver) ||
             receiver.Powered;
 
         [ViewVariables] public PressureState State => Pressure >= 1 ? PressureState.Ready : PressureState.Pressurizing;
@@ -87,17 +88,12 @@ namespace Content.Server.Disposal.Unit.Components
         [DataField("air")]
         public GasMixture Air { get; set; } = new(Atmospherics.CellVolume);
 
-        private bool PlayerCanUse(IEntity? player)
+        private bool PlayerCanUse(EntityUid player)
         {
-            if (player == null)
-            {
-                return false;
-            }
-
             var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
 
-            if (!actionBlocker.CanInteract(player.Uid) ||
-                !actionBlocker.CanUse(player.Uid))
+            if (!actionBlocker.CanInteract(player) ||
+                !actionBlocker.CanUse(player))
             {
                 return false;
             }
@@ -107,12 +103,12 @@ namespace Content.Server.Disposal.Unit.Components
 
         public void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
         {
-            if (obj.Session.AttachedEntity == null)
+            if (obj.Session.AttachedEntity is not {Valid: true} player)
             {
                 return;
             }
 
-            if (!PlayerCanUse(obj.Session.AttachedEntity))
+            if (!PlayerCanUse(player))
             {
                 return;
             }
@@ -148,7 +144,7 @@ namespace Content.Server.Disposal.Unit.Components
 
         public override bool DragDropOn(DragDropEvent eventArgs)
         {
-            EntitySystem.Get<DisposalUnitSystem>().TryInsert(Owner.Uid, eventArgs.Dragged.Uid, eventArgs.User.Uid);
+            EntitySystem.Get<DisposalUnitSystem>().TryInsert(Owner, eventArgs.Dragged, eventArgs.User);
             return true;
         }
 

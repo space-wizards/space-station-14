@@ -23,10 +23,16 @@ namespace Content.Server.Chemistry.ReagentEffects.StatusEffects
         [DataField("time")]
         public float Time = 2.0f;
 
+        /// <remarks>
+        ///     true - refresh jitter time,  false - accumulate jitter time
+        /// </remarks>
+        [DataField("refresh")]
+        public bool Refresh = true;
+
         public override void Effect(ReagentEffectArgs args)
         {
             args.EntityManager.EntitySysManager.GetEntitySystem<SharedJitteringSystem>()
-                .DoJitter(args.SolutionEntity, TimeSpan.FromSeconds(Time), Amplitude, Frequency);
+                .DoJitter(args.SolutionEntity, TimeSpan.FromSeconds(Time), Refresh, Amplitude, Frequency);
         }
     }
 }

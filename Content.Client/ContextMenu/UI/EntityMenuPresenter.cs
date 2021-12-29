@@ -1,13 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.Examine;
-using Content.Client.Items.Managers;
 using Content.Client.Verbs;
 using Content.Client.Viewport;
 using Content.Shared.CCVar;
 using Content.Shared.Input;
-using Content.Shared.Interaction.Helpers;
-using Content.Shared.Verbs;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
@@ -22,6 +19,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
+
 namespace Content.Client.ContextMenu.UI
 {
     /// <summary>
@@ -35,7 +33,6 @@ namespace Content.Client.ContextMenu.UI
     public sealed partial class EntityMenuPresenter : ContextMenuPresenter
     {
         [Dependency] private readonly IEntitySystemManager _systemManager = default!;
-        [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IStateManager _stateManager = default!;
@@ -54,7 +51,7 @@ namespace Content.Client.ContextMenu.UI
         /// <remarks>
         ///     This is used remove GUI elements when the entities are deleted. or leave the LOS.
         /// </remarks>
-        public Dictionary<IEntity, EntityMenuElement> Elements = new();
+        public Dictionary<EntityUid, EntityMenuElement> Elements = new();
 
         public EntityMenuPresenter(VerbSystem verbSystem) : base()
         {
@@ -80,11 +77,15 @@ namespace Content.Client.ContextMenu.UI
         /// <summary>
         ///     Given a list of entities, sort them into groups and them to a new entity menu.
         /// </summary>
-        public void OpenRootMenu(List<IEntity> entities)
+        public void OpenRootMenu(List<EntityUid> entities)
         {
+            // close any old menus first.
+            if (RootMenu.Visible)
+                Close();
+
             var entitySpriteStates = GroupEntities(entities);
             var orderedStates = entitySpriteStates.ToList();
-            orderedStates.Sort((x, y) => string.CompareOrdinal(x.First().Prototype?.Name, y.First().Prototype?.Name));
+            orderedStates.Sort((x, y) => string.CompareOrdinal(_entityManager.GetComponent<MetaDataComponent>(x.First()).EntityPrototype?.Name, _entityManager.GetComponent<MetaDataComponent>(y.First()).EntityPrototype?.Name));
             Elements.Clear();
             AddToUI(orderedStates);
 
@@ -101,13 +102,15 @@ namespace Content.Client.ContextMenu.UI
             // get an entity associated with this element
             var entity = entityElement.Entity;
             entity ??= GetFirstEntityOrNull(element.SubMenu);
-            if (entity == null)
+
+            // Deleted() automatically checks for null & existence.
+            if (_entityManager.Deleted(entity))
                 return;
 
             // open verb menu?
             if (args.Function == ContentKeyFunctions.OpenContextMenu)
             {
-                _verbSystem.VerbMenu.OpenVerbMenu(entity);
+                _verbSystem.VerbMenu.OpenVerbMenu(entity.Value);
                 args.Handle();
                 return;
             }
@@ -115,14 +118,18 @@ namespace Content.Client.ContextMenu.UI
             // do examination?
             if (args.Function == ContentKeyFunctions.ExamineEntity)
             {
-                _systemManager.GetEntitySystem<ExamineSystem>().DoExamine(entity);
+                _systemManager.GetEntitySystem<ExamineSystem>().DoExamine(entity.Value);
                 args.Handle();
                 return;
             }
 
             // do some other server-side interaction?
-            if (args.Function == EngineKeyFunctions.Use || args.Function == ContentKeyFunctions.AltActivateItemInWorld || args.Function == ContentKeyFunctions.Point ||
-                args.Function == ContentKeyFunctions.TryPullObject || args.Function == ContentKeyFunctions.MovePulledObject)
+            if (args.Function == EngineKeyFunctions.Use ||
+                args.Function == ContentKeyFunctions.ActivateItemInWorld ||
+                args.Function == ContentKeyFunctions.AltActivateItemInWorld ||
+                args.Function == ContentKeyFunctions.Point ||
+                args.Function == ContentKeyFunctions.TryPullObject ||
+                args.Function == ContentKeyFunctions.MovePulledObject)
             {
                 var inputSys = _systemManager.GetEntitySystem<InputSystem>();
 
@@ -130,7 +137,7 @@ namespace Content.Client.ContextMenu.UI
                 var funcId = _inputManager.NetworkBindMap.KeyFunctionID(func);
 
                 var message = new FullInputCmdMessage(_gameTiming.CurTick, _gameTiming.TickFraction, funcId,
-                    BoundKeyState.Down, entity.Transform.Coordinates, args.PointerLocation, entity.Uid);
+                    BoundKeyState.Down, _entityManager.GetComponent<TransformComponent>(entity.Value).Coordinates, args.PointerLocation, entity.Value);
 
                 var session = _playerManager.LocalPlayer?.Session;
                 if (session != null)
@@ -141,11 +148,6 @@ namespace Content.Client.ContextMenu.UI
                 _verbSystem.CloseAllMenus();
                 args.Handle();
                 return;
-            }
-
-            if (_itemSlotManager.OnButtonPressed(args, entity))
-            {
-                _verbSystem.CloseAllMenus();
             }
         }
 
@@ -173,9 +175,8 @@ namespace Content.Client.ContextMenu.UI
             if (!RootMenu.Visible)
                 return;
 
-            var player = _playerManager.LocalPlayer?.ControlledEntity;
-
-            if (player == null)
+            if (_playerManager.LocalPlayer?.ControlledEntity is not { } player ||
+                !player.IsValid())
                 return;
 
             // Do we need to do in-range unOccluded checks?
@@ -184,16 +185,16 @@ namespace Content.Client.ContextMenu.UI
 
             foreach (var entity in Elements.Keys.ToList())
             {
-                if (entity.Deleted || !ignoreFov && !_examineSystem.CanExamine(player, entity))
+                if (_entityManager.Deleted(entity) || !ignoreFov && !_examineSystem.CanExamine(player, entity))
                     RemoveEntity(entity);
             }
         }
 
         /// <summary>
-        ///     Add menu elements for a list of grouped entities; 
+        ///     Add menu elements for a list of grouped entities;
         /// </summary>
         /// <param name="entityGroups"> A list of entity groups. Entities are grouped together based on prototype.</param>
-        private void AddToUI(List<List<IEntity>> entityGroups)
+        private void AddToUI(List<List<EntityUid>> entityGroups)
         {
             // If there is only a single group. We will just directly list individual entities
             if (entityGroups.Count == 1)
@@ -220,13 +221,13 @@ namespace Content.Client.ContextMenu.UI
                 AddElement(RootMenu, element);
                 Elements.TryAdd(group[0], element);
             }
-            
+
         }
 
         /// <summary>
         ///     Given a group of entities, add a menu element that has a pop-up sub-menu listing group members
         /// </summary>
-        private void AddGroupToUI(List<IEntity> group)
+        private void AddGroupToUI(List<EntityUid> group)
         {
             EntityMenuElement element = new();
             ContextMenuPopup subMenu = new(this, element);
@@ -245,12 +246,12 @@ namespace Content.Client.ContextMenu.UI
         /// <summary>
         ///     Remove an entity from the entity context menu.
         /// </summary>
-        private void RemoveEntity(IEntity entity)
+        private void RemoveEntity(EntityUid entity)
         {
             // find the element associated with this entity
             if (!Elements.TryGetValue(entity, out var element))
             {
-                Logger.Error($"Attempted to remove unknown entity from the entity menu: {entity.Name} ({entity.Uid})");
+                Logger.Error($"Attempted to remove unknown entity from the entity menu: {_entityManager.GetComponent<MetaDataComponent>(entity).EntityName} ({entity})");
                 return;
             }
 
@@ -264,7 +265,7 @@ namespace Content.Client.ContextMenu.UI
                 UpdateElement(e);
 
             // if the verb menu is open and targeting this entity, close it.
-            if (_verbSystem.VerbMenu.CurrentTarget == entity.Uid)
+            if (_verbSystem.VerbMenu.CurrentTarget == entity)
                 _verbSystem.VerbMenu.Close();
 
             // If this was the last entity, close the entity menu
@@ -311,7 +312,7 @@ namespace Content.Client.ContextMenu.UI
                 element.SubMenu.Dispose();
                 element.SubMenu = null;
                 element.CountLabel.Visible = false;
-                Elements[entity] = element;
+                Elements[entity.Value] = element;
             }
 
             // update the parent element, so that it's count and entity icon gets updated.
@@ -323,7 +324,7 @@ namespace Content.Client.ContextMenu.UI
         /// <summary>
         ///     Recursively look through a sub-menu and return the first entity.
         /// </summary>
-        private IEntity? GetFirstEntityOrNull(ContextMenuPopup? menu)
+        private EntityUid? GetFirstEntityOrNull(ContextMenuPopup? menu)
         {
             if (menu == null)
                 return null;
@@ -335,7 +336,7 @@ namespace Content.Client.ContextMenu.UI
 
                 if (entityElement.Entity != null)
                 {
-                    if (!entityElement.Entity.Deleted)
+                    if (!_entityManager.Deleted(entityElement.Entity))
                         return entityElement.Entity;
                     continue;
                 }

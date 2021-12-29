@@ -9,7 +9,7 @@ namespace Content.Shared.Random.Helpers
 {
     public static class SharedEntityExtensions
     {
-        public static void RandomOffset(this IEntity entity, float minX, float maxX, float minY, float maxY)
+        public static void RandomOffset(this EntityUid entity, float minX, float maxX, float minY, float maxY)
         {
             DebugTools.AssertNotNull(entity);
             DebugTools.Assert(minX <= maxX, $"Minimum X value ({minX}) must be smaller than or equal to the maximum X value ({maxX})");
@@ -20,10 +20,10 @@ namespace Content.Shared.Random.Helpers
             var randomY = random.NextFloat() * (maxY - minY) + minY;
             var offset = new Vector2(randomX, randomY);
 
-            entity.Transform.LocalPosition += offset;
+            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).LocalPosition += offset;
         }
 
-        public static void RandomOffset(this IEntity entity, float min, float max)
+        public static void RandomOffset(this EntityUid entity, float min, float max)
         {
             DebugTools.AssertNotNull(entity);
             DebugTools.Assert(min <= max, $"Minimum value ({min}) must be smaller than or equal to the maximum value ({max})");
@@ -31,7 +31,7 @@ namespace Content.Shared.Random.Helpers
             entity.RandomOffset(min, max, min, max);
         }
 
-        public static void RandomOffset(this IEntity entity, float value)
+        public static void RandomOffset(this EntityUid entity, float value)
         {
             value = Math.Abs(value);
             entity.RandomOffset(-value, value);

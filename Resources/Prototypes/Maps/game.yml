@@ -41,6 +41,10 @@
     prefixCreator: 'VG'
   mapPath: Maps/packedstation.yml
   minPlayers: 15
+  conditions:
+    - !type:HolidayMapCondition
+      inverted: true
+      holidays: [ "Christmas" ]
   overflowJobs:
     - Assistant
   availableJobs:
@@ -64,6 +68,7 @@
     HeadOfSecurity: [ 1, 1 ]
     SecurityOfficer: [ 2, 3 ]
     Chaplain: [ 1, 1 ]
+    Warden: [ 1, 1 ]
 
 - type: gameMap
   id: knightship

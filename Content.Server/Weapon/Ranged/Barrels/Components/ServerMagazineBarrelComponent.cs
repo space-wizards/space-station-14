@@ -14,10 +14,10 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
-using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -27,9 +27,11 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
     [RegisterComponent]
     [NetworkedComponent()]
 #pragma warning disable 618
-    public sealed class ServerMagazineBarrelComponent : ServerRangedBarrelComponent, IExamine
+    public sealed class ServerMagazineBarrelComponent : ServerRangedBarrelComponent, IUse, IInteractUsing, IExamine
 #pragma warning restore 618
     {
+        [Dependency] private readonly IEntityManager _entities = default!;
+
         public override string Name => "MagazineBarrel";
 
         [ViewVariables]
@@ -54,10 +56,9 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                     count++;
                 }
 
-                var magazine = MagazineContainer.ContainedEntity;
-                if (magazine != null)
+                if (MagazineContainer.ContainedEntity is {Valid: true} magazine)
                 {
-                    count += magazine.GetComponent<RangedMagazineComponent>().ShotsLeft;
+                    count += _entities.GetComponent<RangedMagazineComponent>(magazine).ShotsLeft;
                 }
 
                 return count;
@@ -70,10 +71,9 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             {
                 // Chamber
                 var count = 1;
-                var magazine = MagazineContainer.ContainedEntity;
-                if (magazine != null)
+                if (MagazineContainer.ContainedEntity is {Valid: true} magazine)
                 {
-                    count += magazine.GetComponent<RangedMagazineComponent>().Capacity;
+                    count += _entities.GetComponent<RangedMagazineComponent>(magazine).Capacity;
                 }
 
                 return count;
@@ -149,11 +149,11 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             return types;
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             (int, int)? count = null;
-            var magazine = MagazineContainer.ContainedEntity;
-            if (magazine != null && magazine.TryGetComponent(out RangedMagazineComponent? rangedMagazineComponent))
+            if (MagazineContainer.ContainedEntity is {Valid: true} magazine &&
+                _entities.TryGetComponent(magazine, out RangedMagazineComponent? rangedMagazineComponent))
             {
                 count = (rangedMagazineComponent.ShotsLeft, rangedMagazineComponent.Capacity);
             }
@@ -169,17 +169,17 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         {
             base.Initialize();
 
-            if (Owner.TryGetComponent(out AppearanceComponent? appearanceComponent))
+            if (_entities.TryGetComponent(Owner, out AppearanceComponent? appearanceComponent))
             {
                 _appearanceComponent = appearanceComponent;
             }
 
-            _chamberContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-chamber");
-            MagazineContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-magazine", out var existing);
+            _chamberContainer = Owner.EnsureContainer<ContainerSlot>($"{Name}-chamber");
+            MagazineContainer = Owner.EnsureContainer<ContainerSlot>($"{Name}-magazine", out var existing);
 
             if (!existing && _magFillPrototype != null)
             {
-                var magEntity = Owner.EntityManager.SpawnEntity(_magFillPrototype, Owner.Transform.Coordinates);
+                var magEntity = _entities.SpawnEntity(_magFillPrototype, _entities.GetComponent<TransformComponent>(Owner).Coordinates);
                 MagazineContainer.Insert(magEntity);
             }
             Dirty();
@@ -191,12 +191,12 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             UpdateAppearance();
         }
 
-        public override IEntity? PeekAmmo()
+        public override EntityUid? PeekAmmo()
         {
             return BoltOpen ? null : _chamberContainer.ContainedEntity;
         }
 
-        public override IEntity? TakeProjectile(EntityCoordinates spawnAt)
+        public override EntityUid? TakeProjectile(EntityCoordinates spawnAt)
         {
             if (BoltOpen)
             {
@@ -205,7 +205,8 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             var entity = _chamberContainer.ContainedEntity;
 
             Cycle();
-            return entity?.GetComponent<AmmoComponent>().TakeBullet(spawnAt);
+
+            return entity != null ? EntitySystem.Get<GunSystem>().TakeBullet(_entities.GetComponent<AmmoComponent>(entity.Value), spawnAt) : null;
         }
 
         private void Cycle(bool manual = false)
@@ -248,7 +249,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             _appearanceComponent?.SetData(AmmoVisuals.AmmoMax, Capacity);
         }
 
-        public override bool UseEntity(UseEntityEventArgs eventArgs)
+        public bool UseEntity(UseEntityEventArgs eventArgs)
         {
             // Behavior:
             // If bolt open just close it
@@ -272,14 +273,13 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
         public bool TryEjectChamber()
         {
-            var chamberEntity = _chamberContainer.ContainedEntity;
-            if (chamberEntity != null)
+            if (_chamberContainer.ContainedEntity is {Valid: true} chamberEntity)
             {
                 if (!_chamberContainer.Remove(chamberEntity))
                 {
                     return false;
                 }
-                var ammoComponent = chamberEntity.GetComponent<AmmoComponent>();
+                var ammoComponent = _entities.GetComponent<AmmoComponent>(chamberEntity);
                 if (!ammoComponent.Caseless)
                 {
                     EjectCasing(chamberEntity);
@@ -298,20 +298,19 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
             // Try and pull a round from the magazine to replace the chamber if possible
             var magazine = MagazineContainer.ContainedEntity;
-            var nextRound = magazine?.GetComponent<RangedMagazineComponent>().TakeAmmo();
 
-            if (nextRound == null)
+            if (_entities.GetComponentOrNull<RangedMagazineComponent>(magazine)?.TakeAmmo() is not {Valid: true} nextRound)
             {
                 return false;
             }
 
             _chamberContainer.Insert(nextRound);
 
-            if (_autoEjectMag && magazine != null && magazine.GetComponent<RangedMagazineComponent>().ShotsLeft == 0)
+            if (_autoEjectMag && magazine != null && _entities.GetComponent<RangedMagazineComponent>(magazine.Value).ShotsLeft == 0)
             {
                 SoundSystem.Play(Filter.Pvs(Owner), _soundAutoEject.GetSound(), Owner, AudioParams.Default.WithVolume(-2));
 
-                MagazineContainer.Remove(magazine);
+                MagazineContainer.Remove(magazine.Value);
 #pragma warning disable 618
                 SendNetworkMessage(new MagazineAutoEjectMessage());
 #pragma warning restore 618
@@ -319,7 +318,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             return true;
         }
 
-        public void RemoveMagazine(IEntity user)
+        public void RemoveMagazine(EntityUid user)
         {
             var mag = MagazineContainer.ContainedEntity;
 
@@ -334,21 +333,21 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 return;
             }
 
-            MagazineContainer.Remove(mag);
+            MagazineContainer.Remove(mag.Value);
             SoundSystem.Play(Filter.Pvs(Owner), _soundMagEject.GetSound(), Owner, AudioParams.Default.WithVolume(-2));
 
-            if (user.TryGetComponent(out HandsComponent? handsComponent))
+            if (_entities.TryGetComponent(user, out HandsComponent? handsComponent))
             {
-                handsComponent.PutInHandOrDrop(mag.GetComponent<ItemComponent>());
+                handsComponent.PutInHandOrDrop(_entities.GetComponent<ItemComponent>(mag.Value));
             }
 
             Dirty();
             UpdateAppearance();
         }
 
-        public bool CanInsertMagazine(IEntity user, IEntity magazine, bool quiet = true)
+        public bool CanInsertMagazine(EntityUid user, EntityUid magazine, bool quiet = true)
         {
-            if (!magazine.TryGetComponent(out RangedMagazineComponent? magazineComponent))
+            if (!_entities.TryGetComponent(magazine, out RangedMagazineComponent? magazineComponent))
             {
                 return false;
             }
@@ -384,7 +383,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             return false;
         }
 
-        public void InsertMagazine(IEntity user, IEntity magazine)
+        public void InsertMagazine(EntityUid user, EntityUid magazine)
         {
             SoundSystem.Play(Filter.Pvs(Owner), _soundMagInsert.GetSound(), Owner, AudioParams.Default.WithVolume(-2));
             Owner.PopupMessage(user, Loc.GetString("server-magazine-barrel-component-interact-using-success"));
@@ -393,7 +392,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             UpdateAppearance();
         }
 
-        public override async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (CanInsertMagazine(eventArgs.User, eventArgs.Using, quiet: false))
             {
@@ -402,7 +401,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             }
 
             // Insert 1 ammo
-            if (eventArgs.Using.TryGetComponent(out AmmoComponent? ammoComponent))
+            if (_entities.TryGetComponent(eventArgs.Using, out AmmoComponent? ammoComponent))
             {
                 if (!BoltOpen)
                 {

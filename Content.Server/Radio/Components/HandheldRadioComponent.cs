@@ -63,7 +63,7 @@ namespace Content.Server.Radio.Components
             _chatManager.EntitySay(Owner, message);
         }
 
-        public bool Use(IEntity user)
+        public bool Use(EntityUid user)
         {
             RadioOn = !RadioOn;
 
@@ -79,13 +79,13 @@ namespace Content.Server.Radio.Components
             return Use(eventArgs.User);
         }
 
-        public bool CanListen(string message, IEntity source)
+        public bool CanListen(string message, EntityUid source)
         {
             return RadioOn &&
-                   Owner.InRangeUnobstructed(source.Transform.Coordinates, range: ListenRange);
+                   Owner.InRangeUnobstructed(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(source).Coordinates, range: ListenRange);
         }
 
-        public void Receive(string message, int channel, IEntity speaker)
+        public void Receive(string message, int channel, EntityUid speaker)
         {
             if (RadioOn)
             {
@@ -93,12 +93,12 @@ namespace Content.Server.Radio.Components
             }
         }
 
-        public void Listen(string message, IEntity speaker)
+        public void Listen(string message, EntityUid speaker)
         {
             Broadcast(message, speaker);
         }
 
-        public void Broadcast(string message, IEntity speaker)
+        public void Broadcast(string message, EntityUid speaker)
         {
             _radioSystem.SpreadMessage(this, speaker, message, BroadcastFrequency);
         }

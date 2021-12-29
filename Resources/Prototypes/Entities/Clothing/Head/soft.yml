@@ -1,7 +1,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatBluesoft
-  name: bluesoft
+  name: blue cap
   description: "It's a baseball hat in a tasteless blue colour."
   components:
   - type: Sprite
@@ -12,7 +12,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatBluesoftFlipped
-  name: bluesoft flipped
+  name: blue cap flipped
   description: "It's a baseball hat in a tasteless blue colour. Flipped."
   components:
   - type: Sprite
@@ -23,7 +23,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatCargosoft
-  name: cargosoft
+  name: cargo cap
   description: "It's a baseball hat painted in Cargo colours."
   components:
   - type: Sprite
@@ -34,7 +34,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatCargosoftFlipped
-  name: cargosoft flipped
+  name: cargo cap flipped
   description: "It's a baseball hat painted in Cargo colours. Flipped."
   components:
   - type: Sprite
@@ -45,7 +45,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatCorpsoft
-  name: corpsoft
+  name: corporate cap
   description: A baseball bat in corporation colors.
   components:
   - type: Sprite
@@ -56,7 +56,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatCorpsoftFlipped
-  name: corpsoft flipped
+  name: corporate cap flipped
   description: A baseball bat in corporation colors. Flipped.
   components:
   - type: Sprite
@@ -67,7 +67,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatGreensoft
-  name: greensoft
+  name: green cap
   description: "It's a baseball hat in a tasteless green colour."
   components:
   - type: Sprite
@@ -78,7 +78,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatGreensoftFlipped
-  name: greensoft flipped
+  name: green cap flipped
   description: "It's a baseball hat in a tasteless green colour. Flipped."
   components:
   - type: Sprite
@@ -89,7 +89,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatGreysoft
-  name: greysoft
+  name: grey cap
   description: "It's a baseball hat in a tasteless grey colour."
   components:
   - type: Sprite
@@ -100,7 +100,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatGreysoftFlipped
-  name: greysoft flipped
+  name: grey cap flipped
   description: "It's a baseball hat in a tasteless grey colour. Flipped."
   components:
   - type: Sprite
@@ -111,7 +111,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatMimesoft
-  name: mimesoft
+  name: mime cap
   description: "It's a baseball hat in a tasteless white colour."
   components:
   - type: Sprite
@@ -122,7 +122,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatMimesoftFlipped
-  name: mimesoft flipped
+  name: mime cap flipped
   description: It's a baseball hat in a tasteless white colour. Flipped.
   components:
   - type: Sprite
@@ -133,7 +133,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatOrangesoft
-  name: orangesoft
+  name: orange cap
   description: It's a baseball hat in a good-looking orange colour.
   components:
   - type: Sprite
@@ -144,7 +144,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatOrangesoftFlipped
-  name: orangesoft flipped
+  name: orange cap flipped
   description: It's a baseball hat in a good-looking orange colour. Flipped.
   components:
   - type: Sprite
@@ -155,7 +155,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatPurplesoft
-  name: purple soft
+  name: purple cap
   description: It's a baseball hat in a tasteless purple colour.
   components:
   - type: Sprite
@@ -166,7 +166,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatPurplesoftFlipped
-  name: purplesoft flipped
+  name: purple cap flipped
   description: It's a baseball hat in a tasteless purple colour. Flipped.
   components:
   - type: Sprite
@@ -177,7 +177,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatRedsoft
-  name: redsoft
+  name: red cap
   description: It's a baseball hat in a tasteless red colour.
   components:
   - type: Sprite
@@ -188,7 +188,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatRedsoftFlipped
-  name: redsoft flipped
+  name: red cap flipped
   description: It's a baseball hat in a tasteless purple colour. Flipped.
   components:
   - type: Sprite
@@ -199,7 +199,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatSecsoft
-  name: secsoft
+  name: ssecurity cap
   description: It's a robust baseball hat in tasteful red colour.
   components:
   - type: Sprite
@@ -210,7 +210,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatSecsoftFlipped
-  name: secsoft flipped
+  name: security cap flipped
   description: It's a robust baseball hat in tasteful red colour. Flipped.
   components:
   - type: Sprite
@@ -221,7 +221,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatYellowsoft
-  name: yellowsoft
+  name: yellow cap
   description: A yellow baseball hat.
   components:
   - type: Sprite
@@ -232,10 +232,32 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatYellowsoftFlipped
-  name: yellowsoft flipped
+  name: yellow cap flipped
   description: A yellow flipped baseball hat.
   components:
   - type: Sprite
     sprite: Clothing/Head/Soft/yellowsoft_flipped.rsi
   - type: Clothing
     sprite: Clothing/Head/Soft/yellowsoft_flipped.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBizarreSoft
+  name: troublemaker's soft
+  description: A truly.. bizarre accessory.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Soft/bizarresoft.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Soft/bizarresoft.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBizarreSoftFlipped
+  name: troublemaker's soft flipped
+  description: A truly.. bizarre accessory, flipped.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Soft/bizarresoft_flipped.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Soft/bizarresoft_flipped.rsi

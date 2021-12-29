@@ -1,6 +1,5 @@
 using System.Linq;
 using Content.Shared.Body.Components;
-using Content.Shared.Body.Part;
 using Content.Shared.Damage;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
@@ -14,10 +13,8 @@ namespace Content.Client.Body.UI
 {
     public sealed class BodyScannerDisplay : SS14Window
     {
-        private IEntity? _currentEntity;
+        private EntityUid? _currentEntity;
         private SharedBodyPartComponent? _currentBodyPart;
-
-        private SharedBodyComponent? CurrentBody => _currentEntity?.GetComponentOrNull<SharedBodyComponent>();
 
         public BodyScannerDisplay(BodyScannerBoundUserInterface owner)
         {
@@ -105,12 +102,12 @@ namespace Content.Client.Body.UI
 
         private RichTextLabel MechanismInfoLabel { get; }
 
-        public void UpdateDisplay(IEntity entity)
+        public void UpdateDisplay(EntityUid entity)
         {
             _currentEntity = entity;
             BodyPartList.Clear();
 
-            var body = CurrentBody;
+            var body = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<SharedBodyComponent>(_currentEntity);
 
             if (body == null)
             {
@@ -125,9 +122,7 @@ namespace Content.Client.Body.UI
 
         public void BodyPartOnItemSelected(ItemListSelectedEventArgs args)
         {
-            var body = CurrentBody;
-
-            if (body == null)
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedBodyComponent>(_currentEntity, out var body))
             {
                 return;
             }
@@ -143,10 +138,11 @@ namespace Content.Client.Body.UI
 
         private void UpdateBodyPartBox(SharedBodyPartComponent part, string slotName)
         {
-            BodyPartLabel.Text = $"{Loc.GetString(slotName)}: {Loc.GetString(part.Owner.Name)}";
+            var entMan = IoCManager.Resolve<IEntityManager>();
+            BodyPartLabel.Text = $"{Loc.GetString(slotName)}: {Loc.GetString(entMan.GetComponent<MetaDataComponent>(part.Owner).EntityName)}";
 
             // TODO BODY Part damage
-            if (part.Owner.TryGetComponent(out DamageableComponent? damageable))
+            if (entMan.TryGetComponent(part.Owner, out DamageableComponent? damageable))
             {
                 BodyPartHealth.Text = Loc.GetString("body-scanner-display-body-part-damage-text",("damage", damageable.TotalDamage));
             }

@@ -3,6 +3,7 @@ using Content.Shared.DragDrop;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Sound;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -15,15 +16,15 @@ namespace Content.Shared.Kitchen.Components
 
         [ViewVariables]
         [DataField("delay")]
-        protected float SpikeDelay = 12.0f;
+        public float SpikeDelay = 12.0f;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("sound")]
-        protected SoundSpecifier SpikeSound = new SoundPathSpecifier("/Audio/Effects/Fluids/splat.ogg");
+        public SoundSpecifier SpikeSound = new SoundPathSpecifier("/Audio/Effects/Fluids/splat.ogg");
 
         bool IDragDropOn.CanDragDropOn(DragDropEvent eventArgs)
         {
-            if (!eventArgs.Dragged.HasComponent<SharedButcherableComponent>())
+            if (!IoCManager.Resolve<IEntityManager>().HasComponent<SharedButcherableComponent>(eventArgs.Dragged))
             {
                 return false;
             }

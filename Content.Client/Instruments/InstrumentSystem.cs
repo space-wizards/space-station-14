@@ -129,7 +129,8 @@ namespace Content.Client.Instruments
             var renderer = instrument.Renderer;
 
             // We dispose of the synth two seconds from now to allow the last notes to stop from playing.
-            instrument.Owner.SpawnTimer(2000, () => { renderer?.Dispose(); });
+            // Don't use timers bound to the entity in case it is getting deleted.
+            Timer.Spawn(2000, () => { renderer?.Dispose(); });
             instrument.Renderer = null;
             instrument.MidiEventBuffer.Clear();
 
@@ -319,10 +320,10 @@ namespace Content.Client.Instruments
             foreach (var instrument in EntityManager.EntityQuery<InstrumentComponent>(true))
             {
                 if (instrument.DirtyRenderer && instrument.Renderer != null)
-                    UpdateRenderer(instrument.OwnerUid, instrument);
+                    UpdateRenderer(instrument.Owner, instrument);
 
                 if (!instrument.IsMidiOpen && !instrument.IsInputOpen)
-                    return;
+                    continue;
 
                 var now = _gameTiming.RealTime;
                 var oneSecAGo = now.Add(OneSecAgo);
@@ -333,7 +334,7 @@ namespace Content.Client.Instruments
                     instrument.SentWithinASec = 0;
                 }
 
-                if (instrument.MidiEventBuffer.Count == 0) return;
+                if (instrument.MidiEventBuffer.Count == 0) continue;
 
                 var max = instrument.RespectMidiLimits ?
                     Math.Min(MaxMidiEventsPerBatch, MaxMidiEventsPerSecond - instrument.SentWithinASec)
@@ -342,7 +343,7 @@ namespace Content.Client.Instruments
                 if (max <= 0)
                 {
                     // hit event/sec limit, have to lag the batch or drop events
-                    return;
+                    continue;
                 }
 
                 // fix cross-fade events generating retroactive events
@@ -364,9 +365,9 @@ namespace Content.Client.Instruments
                 var eventCount = events.Length;
 
                 if (eventCount == 0)
-                    return;
+                    continue;
 
-                RaiseNetworkEvent(new InstrumentMidiEventEvent(instrument.OwnerUid, events));
+                RaiseNetworkEvent(new InstrumentMidiEventEvent(instrument.Owner, events));
 
                 instrument.SentWithinASec += eventCount;
 

@@ -1,17 +1,17 @@
-using Content.Server.Access.Components;
 using Content.Server.Inventory.Components;
 using Content.Server.Items;
-using Content.Server.PDA;
-using Content.Shared.Access;
 using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
+using Content.Shared.PDA;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Access.Components;
+using Content.Shared.Access.Systems;
 
 namespace Content.Server.Access.Systems
 {
-    public class IdCardSystem : EntitySystem
+    public class IdCardSystem : SharedIdCardSystem
     {
         public override void Initialize()
         {
@@ -21,7 +21,7 @@ namespace Content.Server.Access.Systems
 
         private void OnInit(EntityUid uid, IdCardComponent id, ComponentInit args)
         {
-            id.OriginalOwnerName ??= id.Owner.Name;
+            id.OriginalOwnerName ??= EntityManager.GetComponent<MetaDataComponent>(id.Owner).EntityName;
             UpdateEntityName(uid, id);
         }
 
@@ -66,19 +66,20 @@ namespace Content.Server.Access.Systems
 
             if (string.IsNullOrWhiteSpace(id.FullName) && string.IsNullOrWhiteSpace(id.JobTitle))
             {
-                id.Owner.Name = id.OriginalOwnerName;
+                EntityManager.GetComponent<MetaDataComponent>(id.Owner).EntityName = id.OriginalOwnerName;
                 return;
             }
 
             var jobSuffix = string.IsNullOrWhiteSpace(id.JobTitle) ? string.Empty : $" ({id.JobTitle})";
 
-            id.Owner.Name = string.IsNullOrWhiteSpace(id.FullName)
+            var val = string.IsNullOrWhiteSpace(id.FullName)
                 ? Loc.GetString("access-id-card-component-owner-name-job-title-text",
-                                ("originalOwnerName", id.OriginalOwnerName),
-                                ("jobSuffix", jobSuffix))
+                    ("originalOwnerName", id.OriginalOwnerName),
+                    ("jobSuffix", jobSuffix))
                 : Loc.GetString("access-id-card-component-owner-full-name-job-title-text",
-                                ("fullName", id.FullName),
-                                ("jobSuffix", jobSuffix));
+                    ("fullName", id.FullName),
+                    ("jobSuffix", jobSuffix));
+            EntityManager.GetComponent<MetaDataComponent>(id.Owner).EntityName = val;
         }
 
         /// <summary>
@@ -90,7 +91,7 @@ namespace Content.Server.Access.Systems
             // check held item?
             if (EntityManager.TryGetComponent(uid, out SharedHandsComponent? hands) &&
                 hands.TryGetActiveHeldEntity(out var heldItem) &&
-                TryGetIdCard(heldItem.Uid, out idCard))
+                TryGetIdCard(heldItem, out idCard))
             {
                 return true;
             }
@@ -100,7 +101,15 @@ namespace Content.Server.Access.Systems
                 return true;
 
             // check inventory slot?
-            return TryGetIdCardSlot(uid, out idCard);
+            if (EntityManager.TryGetComponent(uid, out InventoryComponent? inventoryComponent) &&
+                inventoryComponent.HasSlot(EquipmentSlotDefines.Slots.IDCARD) &&
+                inventoryComponent.TryGetSlotItem(EquipmentSlotDefines.Slots.IDCARD, out ItemComponent? item) &&
+                TryGetIdCard(item.Owner, out idCard))
+            {
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>

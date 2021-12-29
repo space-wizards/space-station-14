@@ -41,6 +41,10 @@
     sprite: Clothing/Uniforms/Jumpskirt/ce.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpskirt/ce.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Radiation: 0.8
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -156,7 +160,7 @@
   parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtHoSParadeMale
   name: head of security's parade uniform
-  description: A male head of security's luxury-wear, for special occasions.
+  description: A head of security's luxury-wear, for special occasions.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpskirt/hos_parade.rsi

@@ -8,6 +8,7 @@
   - type: InteractionOutline
   - type: Physics
     bodyType: Static
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -46,6 +47,7 @@
         maxVol: 200
   - type: RefillableSolution
     solution: soil
+    maxRefill: 50
   - type: Transform
     anchored: true
   - type: Reactive

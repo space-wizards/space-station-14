@@ -43,12 +43,14 @@ namespace Content.Server.Wieldable
             // TODO VERB TOOLTIPS Make CanWield or some other function return string, set as verb tooltip and disable
             // verb. Or just don't add it to the list if the action is not executable.
 
-            Verb verb = new();
             // TODO VERBS ICON + localization
-            verb.Text = component.Wielded ? "Unwield" : "Wield";
-            verb.Act = component.Wielded
-                ? () => AttemptUnwield(component.Owner.Uid, component, args.User)
-                : () => AttemptWield(component.Owner.Uid, component, args.User);
+            Verb verb = new()
+            {
+                Text = component.Wielded ? "Unwield" : "Wield",
+                Act = component.Wielded
+                    ? () => AttemptUnwield(component.Owner, component, args.User)
+                    : () => AttemptWield(component.Owner, component, args.User)
+            };
 
             args.Verbs.Add(verb);
         }
@@ -63,10 +65,10 @@ namespace Content.Server.Wieldable
                 AttemptUnwield(uid, component, args.User);
         }
 
-        public bool CanWield(EntityUid uid, WieldableComponent component, IEntity user, bool quiet=false)
+        public bool CanWield(EntityUid uid, WieldableComponent component, EntityUid user, bool quiet=false)
         {
             // Do they have enough hands free?
-            if (!EntityManager.TryGetComponent<HandsComponent>(user.Uid, out var hands))
+            if (!EntityManager.TryGetComponent<HandsComponent>(user, out var hands))
             {
                 if(!quiet)
                     user.PopupMessage(Loc.GetString("wieldable-component-no-hands"));
@@ -80,19 +82,18 @@ namespace Content.Server.Wieldable
                 {
                     user.PopupMessage(Loc.GetString("wieldable-component-not-enough-free-hands",
                         ("number", component.FreeHandsRequired),
-                        ("item", EntityManager.GetEntity(uid))));
+                        ("item", uid)));
                 }
 
                 return false;
             }
 
             // Is it.. actually in one of their hands?
-            if (!hands.TryGetHandHoldingEntity(EntityManager.GetEntity(uid), out var _))
+            if (!hands.TryGetHandHoldingEntity(uid, out _))
             {
                 if (!quiet)
                 {
-                    user.PopupMessage(Loc.GetString("wieldable-component-not-in-hands",
-                        ("item", EntityManager.GetEntity(uid))));
+                    user.PopupMessage(Loc.GetString("wieldable-component-not-in-hands", ("item", uid)));
                 }
 
                 return false;
@@ -105,13 +106,12 @@ namespace Content.Server.Wieldable
         /// <summary>
         ///     Attempts to wield an item, creating a DoAfter..
         /// </summary>
-        public void AttemptWield(EntityUid uid, WieldableComponent component, IEntity user)
+        public void AttemptWield(EntityUid used, WieldableComponent component, EntityUid user)
         {
-            if (!CanWield(uid, component, user))
+            if (!CanWield(used, component, user))
                 return;
             var ev = new BeforeWieldEvent();
-            RaiseLocalEvent(uid, ev, false);
-            var used = EntityManager.GetEntity(uid);
+            RaiseLocalEvent(used, ev, false);
 
             if (ev.Cancelled) return;
 
@@ -119,8 +119,7 @@ namespace Content.Server.Wieldable
                 user,
                 component.WieldTime,
                 default,
-                used
-            )
+                used)
             {
                 BreakOnUserMove = false,
                 BreakOnDamage = true,
@@ -136,26 +135,26 @@ namespace Content.Server.Wieldable
         /// <summary>
         ///     Attempts to unwield an item, with no DoAfter.
         /// </summary>
-        public void AttemptUnwield(EntityUid uid, WieldableComponent component, IEntity user)
+        public void AttemptUnwield(EntityUid used, WieldableComponent component, EntityUid user)
         {
             var ev = new BeforeUnwieldEvent();
-            RaiseLocalEvent(uid, ev, false);
-            var used = EntityManager.GetEntity(uid);
+            RaiseLocalEvent(used, ev, false);
 
             if (ev.Cancelled) return;
 
             var targEv = new ItemUnwieldedEvent(user);
             var userEv = new UnwieldedItemEvent(used);
 
-            RaiseLocalEvent(uid, targEv, false);
-            RaiseLocalEvent(user.Uid, userEv, false);
+            RaiseLocalEvent(used, targEv, false);
+            RaiseLocalEvent(user, userEv, false);
         }
 
         private void OnItemWielded(EntityUid uid, WieldableComponent component, ItemWieldedEvent args)
         {
             if (args.User == null)
                 return;
-            if (!CanWield(uid, component, args.User) || component.Wielded)
+
+            if (!CanWield(uid, component, args.User.Value) || component.Wielded)
                 return;
 
             if (EntityManager.TryGetComponent<ItemComponent>(uid, out var item))
@@ -168,16 +167,16 @@ namespace Content.Server.Wieldable
 
             if (component.WieldSound != null)
             {
-                SoundSystem.Play(Filter.Pvs(EntityManager.GetEntity(uid)), component.WieldSound.GetSound());
+                SoundSystem.Play(Filter.Pvs(uid), component.WieldSound.GetSound());
             }
 
             for (var i = 0; i < component.FreeHandsRequired; i++)
             {
-                _virtualItemSystem.TrySpawnVirtualItemInHand(uid, args.User.Uid);
+                _virtualItemSystem.TrySpawnVirtualItemInHand(uid, args.User.Value);
             }
 
-            args.User.PopupMessage(Loc.GetString("wieldable-component-successful-wield",
-                ("item", EntityManager.GetEntity(uid))));
+            args.User.Value.PopupMessage(Loc.GetString("wieldable-component-successful-wield",
+                ("item", uid)));
         }
 
         private void OnItemUnwielded(EntityUid uid, WieldableComponent component, ItemUnwieldedEvent args)
@@ -198,28 +197,28 @@ namespace Content.Server.Wieldable
             {
                 if (component.UnwieldSound != null)
                 {
-                    SoundSystem.Play(Filter.Pvs(EntityManager.GetEntity(uid)),
+                    SoundSystem.Play(Filter.Pvs(uid),
                         component.UnwieldSound.GetSound());
                 }
 
-                args.User.PopupMessage(Loc.GetString("wieldable-component-failed-wield",
-                    ("item", EntityManager.GetEntity(uid))));
+                args.User.Value.PopupMessage(Loc.GetString("wieldable-component-failed-wield",
+                    ("item", uid)));
             }
 
-            _virtualItemSystem.DeleteInHandsMatching(args.User.Uid, uid);
+            _virtualItemSystem.DeleteInHandsMatching(args.User.Value, uid);
         }
 
         private void OnItemLeaveHand(EntityUid uid, WieldableComponent component, UnequippedHandEvent args)
         {
-            if (!component.Wielded || component.Owner.Uid != args.Unequipped.Uid)
+            if (!component.Wielded || component.Owner != args.Unequipped)
                 return;
             RaiseLocalEvent(uid, new ItemUnwieldedEvent(args.User, force: true));
         }
 
         private void OnVirtualItemDeleted(EntityUid uid, WieldableComponent component, VirtualItemDeletedEvent args)
         {
-            if(args.BlockingEntity == uid && component.Wielded)
-                AttemptUnwield(args.BlockingEntity, component, EntityManager.GetEntity(args.User));
+            if (args.BlockingEntity == uid && component.Wielded)
+                AttemptUnwield(args.BlockingEntity, component, args.User);
         }
 
         private void OnMeleeHit(EntityUid uid, IncreaseDamageOnWieldComponent component, MeleeHitEvent args)
@@ -247,9 +246,9 @@ namespace Content.Server.Wieldable
     /// </summary>
     public class ItemWieldedEvent : EntityEventArgs
     {
-        public IEntity? User;
+        public EntityUid? User;
 
-        public ItemWieldedEvent(IEntity? user=null)
+        public ItemWieldedEvent(EntityUid? user = null)
         {
             User = user;
         }
@@ -260,9 +259,9 @@ namespace Content.Server.Wieldable
     /// </summary>
     public class WieldedItemEvent : EntityEventArgs
     {
-        public IEntity Item;
+        public EntityUid Item;
 
-        public WieldedItemEvent(IEntity item)
+        public WieldedItemEvent(EntityUid item)
         {
             Item = item;
         }
@@ -277,13 +276,13 @@ namespace Content.Server.Wieldable
     /// </summary>
     public class ItemUnwieldedEvent : EntityEventArgs
     {
-        public IEntity? User;
+        public EntityUid? User;
         /// <summary>
         ///     Whether the item is being forced to be unwielded, or if the player chose to unwield it themselves.
         /// </summary>
         public bool Force;
 
-        public ItemUnwieldedEvent(IEntity? user=null, bool force=false)
+        public ItemUnwieldedEvent(EntityUid? user = null, bool force=false)
         {
             User = user;
             Force = force;
@@ -295,9 +294,9 @@ namespace Content.Server.Wieldable
     /// </summary>
     public class UnwieldedItemEvent : EntityEventArgs
     {
-        public IEntity Item;
+        public EntityUid Item;
 
-        public UnwieldedItemEvent(IEntity item)
+        public UnwieldedItemEvent(EntityUid item)
         {
             Item = item;
         }

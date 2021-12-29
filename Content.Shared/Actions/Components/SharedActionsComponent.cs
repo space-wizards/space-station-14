@@ -75,7 +75,7 @@ namespace Content.Shared.Actions.Components
         }
 
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new ActionComponentState(_actions, _itemActions);
         }
@@ -117,13 +117,6 @@ namespace Content.Shared.Actions.Components
 
             itemActionStates = null;
             return false;
-        }
-
-        /// <seealso cref="TryGetItemActionStates(Robust.Shared.GameObjects.EntityUid,out System.Collections.Generic.IReadOnlyDictionary{Content.Shared.Actions.ItemActionType,Content.Shared.Actions.Components.ActionState}?)"/>
-        public bool TryGetItemActionStates(IEntity item,
-            [NotNullWhen((true))] out IReadOnlyDictionary<ItemActionType, ActionState>? itemActionStates)
-        {
-            return TryGetItemActionStates(item.Uid, out itemActionStates);
         }
 
         /// <summary>
@@ -168,12 +161,6 @@ namespace Content.Shared.Actions.Components
         {
             return _itemActions.Values.SelectMany(vals => vals)
                 .Any(state => state.Key == actionType && state.Value.Enabled);
-        }
-
-        /// <seealso cref="TryGetItemActionState(Content.Shared.Actions.ItemActionType,Robust.Shared.GameObjects.EntityUid,out Content.Shared.Actions.Components.ActionState)"/>
-        public bool TryGetItemActionState(ItemActionType actionType, IEntity item, out ActionState actionState)
-        {
-            return TryGetItemActionState(actionType, item.Uid, out actionState);
         }
 
         /// <summary>

@@ -10,8 +10,8 @@
   - type: ExpendableLight
     spentName: spent flare
     spentDesc: It looks like this flare has burnt out. What a bummer.
-    glowDuration: 150
-    fadeOutDuration: 4
+    glowDuration: 45
+    fadeOutDuration: 15
     iconStateOn: flare_unlit
     iconStateSpent: flare_spent
     turnOnBehaviourID: turn_on
@@ -49,24 +49,24 @@
       - !type:RandomizeBehaviour # immediately make it bright and flickery
         id: turn_on
         interpolate: Nearest
-        minDuration: 0.02
-        maxDuration: 0.06
+        minDuration: 0.001
+        maxDuration: 0.001
         startValue: 6.0
-        endValue: 9.0
+        endValue: 15.0
         property: Energy
         isLooped: true
       - !type:FadeBehaviour # have the radius start small and get larger as it starts to burn
         id: turn_on
         interpolate: Linear
-        maxDuration: 8.0
-        startValue: 1.0
-        endValue: 6.0
+        maxDuration: 45.0 #duration of light
+        startValue: 2.5
+        endValue: 10.0
         property: Radius
       - !type:RandomizeBehaviour # weaker flicker as it fades out
         id: fade_out
         interpolate: Nearest
-        minDuration: 0.02
-        maxDuration: 0.06
+        minDuration: 0.001
+        maxDuration: 0.001
         startValue: 4.0
         endValue: 8.0
         property: Energy
@@ -74,7 +74,7 @@
       - !type:FadeBehaviour # fade out radius as it burns out
         id: fade_out
         interpolate: Linear
-        maxDuration: 4.0
-        startValue: 6.0
+        maxDuration: 15.0
+        startValue: 8.0
         endValue: 1.0
         property: Radius

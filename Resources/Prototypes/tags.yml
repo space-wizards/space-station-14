@@ -40,6 +40,9 @@
   id: CaptainSabre
 
 - type: Tag
+  id: CigFilter
+
+- type: Tag
   id: CigPack
 
 - type: Tag
@@ -89,6 +92,9 @@
 
 - type: Tag
   id: DoorElectronics
+
+- type: Tag
+  id: DonkPocket
 
 - type: Tag
   id: Donut

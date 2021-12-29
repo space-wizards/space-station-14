@@ -3,10 +3,8 @@ using System.Linq;
 using Content.Client.HUD;
 using Content.Client.Items.Managers;
 using Content.Client.Items.UI;
-using Content.Shared;
 using Content.Shared.CCVar;
 using JetBrains.Annotations;
-using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
@@ -15,7 +13,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
-using Robust.Shared.Prototypes;
 using static Content.Shared.Inventory.EquipmentSlotDefines;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
@@ -155,7 +152,7 @@ namespace Content.Client.Inventory
             return buttons;
         }
 
-        public override void AddToSlot(Slots slot, IEntity entity)
+        public override void AddToSlot(Slots slot, EntityUid entity)
         {
             base.AddToSlot(slot, entity);
 
@@ -184,7 +181,7 @@ namespace Content.Client.Inventory
             }
         }
 
-        public override void HoverInSlot(Slots slot, IEntity entity, bool fits)
+        public override void HoverInSlot(Slots slot, EntityUid entity, bool fits)
         {
             base.HoverInSlot(slot, entity, fits);
 
@@ -206,14 +203,14 @@ namespace Content.Client.Inventory
             if (!Owner.TryGetSlot(slot, out var item))
                 return;
 
-            if (!_itemSlotManager.OnButtonPressed(args, item))
+            if (!_itemSlotManager.OnButtonPressed(args, item.Value))
                 base.HandleInventoryKeybind(args, slot);
         }
 
         private void ClearButton(ItemSlotButton button, Slots slot)
         {
             button.OnPressed = (e) => AddToInventory(e, slot);
-            _itemSlotManager.SetItemSlot(button, null);
+            _itemSlotManager.SetItemSlot(button, default);
         }
 
         public override void PlayerAttached()
@@ -235,7 +232,7 @@ namespace Content.Client.Inventory
 
                 if (Owner.TryGetSlot(slot, out var entity))
                 {
-                    AddToSlot(slot, entity);
+                    AddToSlot(slot, entity.Value);
                 }
             }
         }

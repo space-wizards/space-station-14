@@ -19,13 +19,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
         private void OnThrowDoHit(EntityUid uid, ForcefeedOnCollideComponent component, ThrowDoHitEvent args)
         {
-            if (!args.Target.HasComponent<HungerComponent>())
-                return;
-            if (!EntityManager.TryGetComponent<FoodComponent>(uid, out var food))
-                return;
-
-            // the 'target' isnt really the 'user' per se.. but..
-            _foodSystem.TryUseFood(food.OwnerUid, args.Target.Uid, args.Target.Uid);
+            _foodSystem.ProjectileForceFeed(uid, args.Target, args.User);
         }
 
         private void OnLand(EntityUid uid, ForcefeedOnCollideComponent component, LandEvent args)

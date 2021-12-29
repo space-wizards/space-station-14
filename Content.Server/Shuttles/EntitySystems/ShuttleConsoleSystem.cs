@@ -39,7 +39,7 @@ namespace Content.Server.Shuttles.EntitySystems
             {
                 if (comp.Console == null) continue;
 
-                if (!_blocker.CanInteract(comp.OwnerUid))
+                if (!_blocker.CanInteract((comp).Owner))
                 {
                     toRemove.Add(comp);
                 }
@@ -96,7 +96,7 @@ namespace Content.Server.Shuttles.EntitySystems
                 return;
             }
 
-            var pilotComponent = EntityManager.EnsureComponent<PilotComponent>(args.User.Uid);
+            var pilotComponent = EntityManager.EnsureComponent<PilotComponent>(args.User);
 
             if (!component.Enabled)
             {
@@ -130,10 +130,10 @@ namespace Content.Server.Shuttles.EntitySystems
             ClearPilots(component);
         }
 
-        public void AddPilot(IEntity entity, ShuttleConsoleComponent component)
+        public void AddPilot(EntityUid entity, ShuttleConsoleComponent component)
         {
-            if (!_blocker.CanInteract(entity.Uid) ||
-                !entity.TryGetComponent(out PilotComponent? pilotComponent) ||
+            if (!_blocker.CanInteract(entity) ||
+                !EntityManager.TryGetComponent(entity, out PilotComponent? pilotComponent) ||
                 component.SubscribedPilots.Contains(pilotComponent))
             {
                 return;
@@ -141,14 +141,14 @@ namespace Content.Server.Shuttles.EntitySystems
 
             component.SubscribedPilots.Add(pilotComponent);
 
-            if (entity.TryGetComponent(out ServerAlertsComponent? alertsComponent))
+            if (EntityManager.TryGetComponent(entity, out ServerAlertsComponent? alertsComponent))
             {
                 alertsComponent.ShowAlert(AlertType.PilotingShuttle);
             }
 
             entity.PopupMessage(Loc.GetString("shuttle-pilot-start"));
             pilotComponent.Console = component;
-            pilotComponent.Position = EntityManager.GetComponent<TransformComponent>(entity.Uid).Coordinates;
+            pilotComponent.Position = EntityManager.GetComponent<TransformComponent>(entity).Coordinates;
             pilotComponent.Dirty();
         }
 
@@ -163,7 +163,7 @@ namespace Content.Server.Shuttles.EntitySystems
 
             if (!helmsman.SubscribedPilots.Remove(pilotComponent)) return;
 
-            if (pilotComponent.Owner.TryGetComponent(out ServerAlertsComponent? alertsComponent))
+            if (EntityManager.TryGetComponent(pilotComponent.Owner, out ServerAlertsComponent? alertsComponent))
             {
                 alertsComponent.ClearAlert(AlertType.PilotingShuttle);
             }
@@ -171,12 +171,12 @@ namespace Content.Server.Shuttles.EntitySystems
             pilotComponent.Owner.PopupMessage(Loc.GetString("shuttle-pilot-end"));
 
             if (pilotComponent.LifeStage < ComponentLifeStage.Stopping)
-                EntityManager.RemoveComponent<PilotComponent>(pilotComponent.Owner.Uid);
+                EntityManager.RemoveComponent<PilotComponent>(pilotComponent.Owner);
         }
 
-        public void RemovePilot(IEntity entity)
+        public void RemovePilot(EntityUid entity)
         {
-            if (!entity.TryGetComponent(out PilotComponent? pilotComponent)) return;
+            if (!EntityManager.TryGetComponent(entity, out PilotComponent? pilotComponent)) return;
 
             RemovePilot(pilotComponent);
         }

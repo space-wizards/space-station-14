@@ -1,14 +1,15 @@
 - type: job
   id: CentralCommandOffical
   name: "centcom official"
+  setPreference: false
   startingGear: CentcomGear
   departments:
     - Command
   icon: "Nanotrasen"
   supervisors: "the head of security"
   access:
-    - Command
-    - Maintenence
+  - Command
+  - Maintenance
 
 - type: startingGear
   id: CentcomGear

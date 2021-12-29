@@ -6,6 +6,7 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Sound;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Chemistry.Reaction
@@ -26,12 +27,26 @@ namespace Content.Shared.Chemistry.Reaction
         /// <summary>
         /// Reactants required for the reaction to occur.
         /// </summary>
-        [DataField("reactants")] public Dictionary<string, ReactantPrototype> Reactants = new();
+        [DataField("reactants", customTypeSerializer:typeof(PrototypeIdDictionarySerializer<ReactantPrototype, ReagentPrototype>))]
+        public Dictionary<string, ReactantPrototype> Reactants = new();
+
+        /// <summary>
+        ///     The minimum temperature the reaction can occur at.
+        /// </summary>
+        [DataField("minTemp")]
+        public float MinimumTemperature = 0.0f;
+
+        /// <summary>
+        ///     The maximum temperature the reaction can occur at.
+        /// </summary>
+        [DataField("maxTemp")]
+        public float MaximumTemperature = float.PositiveInfinity;
 
         /// <summary>
         /// Reagents created when the reaction occurs.
         /// </summary>
-        [DataField("products")] public Dictionary<string, FixedPoint2> Products = new();
+        [DataField("products", customTypeSerializer:typeof(PrototypeIdDictionarySerializer<FixedPoint2, ReagentPrototype>))]
+        public Dictionary<string, FixedPoint2> Products = new();
 
         /// <summary>
         /// Effects to be triggered when the reaction occurs.

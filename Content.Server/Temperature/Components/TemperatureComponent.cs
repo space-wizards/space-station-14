@@ -2,6 +2,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -45,7 +46,7 @@ namespace Content.Server.Temperature.Components
         {
             get
             {
-                if (Owner.TryGetComponent<IPhysBody>(out var physics))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<IPhysBody?>(Owner, out var physics) && physics.Mass != 0)
                 {
                     return SpecificHeat * physics.Mass;
                 }

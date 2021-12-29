@@ -2,7 +2,6 @@ using System;
 using System.Threading.Tasks;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
-using Content.Server.Stunnable.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.Interaction;
@@ -12,10 +11,10 @@ using Content.Shared.Sound;
 using Content.Shared.Stunnable;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Player;
-using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -25,6 +24,8 @@ namespace Content.Server.Cuffs.Components
     [ComponentReference(typeof(SharedHandcuffComponent))]
     public class HandcuffComponent : SharedHandcuffComponent, IAfterInteract
     {
+        [Dependency] private readonly IEntityManager _entities = default!;
+
         /// <summary>
         ///     The time it takes to apply a <see cref="CuffedComponent"/> to an entity.
         /// </summary>
@@ -138,7 +139,7 @@ namespace Content.Server.Cuffs.Components
         /// </summary>
         private bool _cuffing;
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new HandcuffedComponentState(Broken ? BrokenState : string.Empty);
         }
@@ -147,7 +148,9 @@ namespace Content.Server.Cuffs.Components
         {
             if (_cuffing) return true;
 
-            if (eventArgs.Target == null || !EntitySystem.Get<ActionBlockerSystem>().CanUse(eventArgs.User.Uid) || !eventArgs.Target.TryGetComponent<CuffableComponent>(out var cuffed))
+            if (eventArgs.Target is not {Valid: true} target ||
+                !EntitySystem.Get<ActionBlockerSystem>().CanUse(eventArgs.User) ||
+                !_entities.TryGetComponent<CuffableComponent?>(eventArgs.Target.Value, out var cuffed))
             {
                 return false;
             }
@@ -164,7 +167,7 @@ namespace Content.Server.Cuffs.Components
                 return true;
             }
 
-            if (!eventArgs.Target.TryGetComponent<HandsComponent>(out var hands))
+            if (!_entities.TryGetComponent<HandsComponent?>(target, out var hands))
             {
                 eventArgs.User.PopupMessage(Loc.GetString("handcuff-component-target-has-no-hands-error",("targetName", eventArgs.Target)));
                 return true;
@@ -183,22 +186,22 @@ namespace Content.Server.Cuffs.Components
             }
 
             eventArgs.User.PopupMessage(Loc.GetString("handcuff-component-start-cuffing-target-message",("targetName", eventArgs.Target)));
-            eventArgs.User.PopupMessage(eventArgs.Target, Loc.GetString("handcuff-component-start-cuffing-by-other-message",("otherName", eventArgs.User)));
+            eventArgs.User.PopupMessage(target, Loc.GetString("handcuff-component-start-cuffing-by-other-message",("otherName", eventArgs.User)));
 
             SoundSystem.Play(Filter.Pvs(Owner), StartCuffSound.GetSound(), Owner);
 
-            TryUpdateCuff(eventArgs.User, eventArgs.Target, cuffed);
+            TryUpdateCuff(eventArgs.User, target, cuffed);
             return true;
         }
 
         /// <summary>
         /// Update the cuffed state of an entity
         /// </summary>
-        private async void TryUpdateCuff(IEntity user, IEntity target, CuffableComponent cuffs)
+        private async void TryUpdateCuff(EntityUid user, EntityUid target, CuffableComponent cuffs)
         {
             var cuffTime = CuffTime;
 
-            if (target.HasComponent<StunnedComponent>())
+            if (_entities.HasComponent<StunnedComponent>(target))
             {
                 cuffTime = MathF.Max(0.1f, cuffTime - StunBonus);
             }

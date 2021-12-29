@@ -4,7 +4,6 @@ using Content.Client.Stylesheets;
 using Content.Shared.GameTicking;
 using Content.Shared.Popups;
 using Robust.Client.Graphics;
-using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
@@ -52,9 +51,9 @@ namespace Content.Client.Popups
             PopupMessage(message, _eyeManager.CoordinatesToScreen(transform.Coordinates));
         }
 
-        public void PopupMessage(string message, ScreenCoordinates coordinates, IEntity? entity = null)
+        public void PopupMessage(string message, ScreenCoordinates coordinates, EntityUid? entity = null)
         {
-            var label = new PopupLabel(_eyeManager)
+            var label = new PopupLabel(_eyeManager, EntityManager)
             {
                 Entity = entity,
                 Text = message,
@@ -143,14 +142,16 @@ namespace Content.Client.Popups
         private class PopupLabel : Label
         {
             private readonly IEyeManager _eyeManager;
+            private readonly IEntityManager _entityManager;
 
             public float TimeLeft { get; private set; }
             public Vector2 InitialPos { get; set; }
-            public IEntity? Entity { get; set; }
+            public EntityUid? Entity { get; set; }
 
-            public PopupLabel(IEyeManager eyeManager)
+            public PopupLabel(IEyeManager eyeManager, IEntityManager entityManager)
             {
                 _eyeManager = eyeManager;
+                _entityManager = entityManager;
                 ShadowOffsetXOverride = 1;
                 ShadowOffsetYOverride = 1;
                 FontColorShadowOverride = Color.Black;
@@ -162,7 +163,7 @@ namespace Content.Client.Popups
 
                 var position = Entity == null
                     ? InitialPos
-                    : (_eyeManager.CoordinatesToScreen(Entity.Transform.Coordinates).Position / UIScale) - DesiredSize / 2;
+                    : (_eyeManager.CoordinatesToScreen(_entityManager.GetComponent<TransformComponent>(Entity.Value).Coordinates).Position / UIScale) - DesiredSize / 2;
 
                 LayoutContainer.SetPosition(this, position - (0, 20 * (TimeLeft * TimeLeft + TimeLeft)));
 

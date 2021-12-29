@@ -11,6 +11,7 @@
     anchored: true
   - type: Physics
     bodyType: Static
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -109,6 +110,7 @@
   - type: InteractionOutline
   - type: Physics
     bodyType: Static
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle
@@ -150,6 +152,7 @@
   - type: InteractionOutline
   - type: Physics
     bodyType: Static
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb {}

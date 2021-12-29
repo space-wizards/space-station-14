@@ -6,9 +6,9 @@ using Content.Shared.Interaction.Helpers;
 using Content.Shared.Inventory;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -21,6 +21,8 @@ namespace Content.Shared.Item
     [NetworkedComponent()]
     public abstract class SharedItemComponent : Component, IEquipped, IUnequipped, IInteractHand
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "Item";
 
         /// <summary>
@@ -88,7 +90,7 @@ namespace Content.Shared.Item
         [DataField("sprite")]
         private string? _rsiPath;
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new ItemComponentState(Size, EquippedPrefix, Color, RsiPath);
         }
@@ -109,15 +111,15 @@ namespace Content.Shared.Item
         /// <summary>
         ///     If a player can pick up this item.
         /// </summary>
-        public bool CanPickup(IEntity user, bool popup = true)
+        public bool CanPickup(EntityUid user, bool popup = true)
         {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanPickup(user.Uid))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanPickup(user))
                 return false;
 
-            if (user.Transform.MapID != Owner.Transform.MapID)
+            if (_entMan.GetComponent<TransformComponent>(user).MapID != _entMan.GetComponent<TransformComponent>(Owner).MapID)
                 return false;
 
-            if (!Owner.TryGetComponent(out IPhysBody? physics) || physics.BodyType == BodyType.Static)
+            if (!_entMan.TryGetComponent(Owner, out IPhysBody? physics) || physics.BodyType == BodyType.Static)
                 return false;
 
             return user.InRangeUnobstructed(Owner, ignoreInsideBlocker: true, popup: popup);
@@ -140,7 +142,7 @@ namespace Content.Shared.Item
             if (!CanPickup(user))
                 return false;
 
-            if (!user.TryGetComponent(out SharedHandsComponent? hands))
+            if (!_entMan.TryGetComponent(user, out SharedHandsComponent? hands))
                 return false;
 
             var activeHand = hands.ActiveHand;

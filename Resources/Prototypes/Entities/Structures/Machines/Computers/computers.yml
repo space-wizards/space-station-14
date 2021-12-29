@@ -25,6 +25,8 @@
     radius: 1.5
     energy: 1.6
     color: "#43ccb5"
+  - type: Rotatable
+    rotateWhileAnchored: true
 
 - type: entity
   parent: ComputerShuttleBase
@@ -289,6 +291,7 @@
       - EmergencyFire
       - EmergencyInternals
       - EmergencyRadiation
+      - EmergencyInflatablewall
       - ArmorySmg
       - ArmoryShotgun
       - SecurityArmor
@@ -297,6 +300,7 @@
       - SecurityHelmet
       - SecuritySupplies
       - SecurityNonLethal
+      - SecurityRestraints
       - HydroponicsTools
       - HydroponicsSeeds
       - HydroponicsSeedsExotic
@@ -307,6 +311,7 @@
       - ServiceLightsReplacement
       - ServiceSmokeables
       - ServiceCustomSmokable
+      - SalvageEquipment
       - EngineeringCableLv
       - EngineeringCableMv
       - EngineeringCableHv
@@ -318,6 +323,7 @@
       - FunPlushies
       - FunArtSupplies
       - FunInstruments
+      - FunBoardGames
       - MaterialSteel
       - MaterialGlass
       - MaterialPlastic

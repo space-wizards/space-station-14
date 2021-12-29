@@ -13,9 +13,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Chemistry.EntitySystems
@@ -67,7 +65,7 @@ namespace Content.Server.Chemistry.EntitySystems
             ExaminedEvent args)
         {
             SolutionContainerManagerComponent? solutionsManager = null;
-            if (!Resolve(args.Examined.Uid, ref solutionsManager)
+            if (!Resolve(args.Examined, ref solutionsManager)
                 || !solutionsManager.Solutions.TryGetValue(examinableComponent.Solution, out var solutionHolder))
                 return;
 
@@ -156,6 +154,24 @@ namespace Content.Server.Chemistry.EntitySystems
         }
 
         /// <summary>
+        ///     Sets the capacity (maximum volume) of a solution to a new value.
+        /// </summary>
+        /// <param name="targetUid">The entity containing the solution.</param>
+        /// <param name="targetSolution">The solution to set the capacity of.</param>
+        /// <param name="capacity">The value to set the capacity of the solution to.</param>
+        public void SetCapacity(EntityUid targetUid, Solution targetSolution, FixedPoint2 capacity)
+        {
+            if (targetSolution.MaxVolume == capacity)
+                return;
+
+            targetSolution.MaxVolume = capacity;
+            if (capacity < targetSolution.CurrentVolume)
+                targetSolution.RemoveSolution(targetSolution.CurrentVolume - capacity);
+
+            UpdateChemicals(targetUid, targetSolution);
+        }
+
+        /// <summary>
         ///     Adds reagent of an Id to the container.
         /// </summary>
         /// <param name="targetUid"></param>
@@ -165,10 +181,10 @@ namespace Content.Server.Chemistry.EntitySystems
         /// <param name="acceptedQuantity">The amount of reagent successfully added.</param>
         /// <returns>If all the reagent could be added.</returns>
         public bool TryAddReagent(EntityUid targetUid, Solution targetSolution, string reagentId, FixedPoint2 quantity,
-            out FixedPoint2 acceptedQuantity)
+            out FixedPoint2 acceptedQuantity, float? temperature = null)
         {
             acceptedQuantity = targetSolution.AvailableVolume > quantity ? quantity : targetSolution.AvailableVolume;
-            targetSolution.AddReagent(reagentId, acceptedQuantity);
+            targetSolution.AddReagent(reagentId, acceptedQuantity, temperature);
 
             if (acceptedQuantity > 0)
                 UpdateChemicals(targetUid, targetSolution, true);
@@ -259,6 +275,8 @@ namespace Content.Server.Chemistry.EntitySystems
             {
                 var (reagentId, curQuantity) = solution.Contents[i];
                 removedReagent[pos++] = reagentId;
+                if (!_prototypeManager.TryIndex(reagentId, out ReagentPrototype? proto))
+                    proto = new ReagentPrototype();
 
                 var newQuantity = curQuantity - quantity;
                 if (newQuantity <= 0)
@@ -290,11 +308,11 @@ namespace Content.Server.Chemistry.EntitySystems
             UpdateChemicals(uid, solution);
         }
 
-        public FixedPoint2 GetReagentQuantity(EntityUid ownerUid, string reagentId)
+        public FixedPoint2 GetReagentQuantity(EntityUid owner, string reagentId)
         {
             var reagentQuantity = FixedPoint2.New(0);
-            if (EntityManager.TryGetEntity(ownerUid, out var owner)
-                && owner.TryGetComponent(out SolutionContainerManagerComponent? managerComponent))
+            if (EntityManager.EntityExists(owner)
+                && EntityManager.TryGetComponent(owner, out SolutionContainerManagerComponent? managerComponent))
             {
                 foreach (var solution in managerComponent.Solutions.Values)
                 {
@@ -304,5 +322,56 @@ namespace Content.Server.Chemistry.EntitySystems
 
             return reagentQuantity;
         }
+
+
+        // Thermal energy and temperature management.
+        #region Thermal Energy and Temperature
+
+        /// <summary>
+        ///     Sets the temperature of a solution to a new value and then checks for reaction processing.
+        /// </summary>
+        /// <param name="owner">The entity in which the solution is located.</param>
+        /// <param name="solution">The solution to set the temperature of.</param>
+        /// <param name="temperature">The new value to set the temperature to.</param>
+        public void SetTemperature(EntityUid owner, Solution solution, float temperature)
+        {
+            if (temperature == solution.Temperature)
+                return;
+
+            solution.Temperature = temperature;
+            UpdateChemicals(owner, solution, true);
+        }
+
+        /// <summary>
+        ///     Sets the thermal energy of a solution to a new value and then checks for reaction processing.
+        /// </summary>
+        /// <param name="owner">The entity in which the solution is located.</param>
+        /// <param name="solution">The solution to set the thermal energy of.</param>
+        /// <param name="thermalEnergy">The new value to set the thermal energy to.</param>
+        public void SetThermalEnergy(EntityUid owner, Solution solution, float thermalEnergy)
+        {
+            if (thermalEnergy == solution.ThermalEnergy)
+                return;
+
+            solution.ThermalEnergy = thermalEnergy;
+            UpdateChemicals(owner, solution, true);
+        }
+
+        /// <summary>
+        ///     Adds some thermal energy to a solution and then checks for reaction processing.
+        /// </summary>
+        /// <param name="owner">The entity in which the solution is located.</param>
+        /// <param name="solution">The solution to set the thermal energy of.</param>
+        /// <param name="thermalEnergy">The new value to set the thermal energy to.</param>
+        public void AddThermalEnergy(EntityUid owner, Solution solution, float thermalEnergy)
+        {
+            if (thermalEnergy == 0.0f)
+                return;
+
+            solution.ThermalEnergy += thermalEnergy;
+            UpdateChemicals(owner, solution, true);
+        }
+
+        #endregion Thermal Energy and Temperature
     }
 }
