@@ -125,6 +125,7 @@ namespace Content.Server.GameTicking
                 _chatManager.DispatchStationAnnouncement(Loc.GetString(
                     "latejoin-arrival-announcement",
                     ("character", character.Name),
+                    ("gender", character.Gender),
                     ("job", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(job.Name))
                     ), Loc.GetString("latejoin-arrival-sender"),
                     playDefaultSound: false);
