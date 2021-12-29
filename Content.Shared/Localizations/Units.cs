@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using Robust.Shared.Localization;
 
 namespace Content.Shared.Localizations
 {
@@ -23,7 +24,7 @@ namespace Content.Shared.Localizations
                 public readonly double Factor;
 
                 // Unit is an ID for Fluent. All Units are prefixed with
-                // "unit-" internally. Usually follows the format $"{unit-abbrev}-{prefix}".
+                // "units-" internally. Usually follows the format $"{unit-abbrev}-{prefix}".
                 //
                 // Example: "si-g" is actually processed as "units-si-g"
                 //
@@ -53,7 +54,7 @@ namespace Content.Shared.Localizations
             public string Format(double val)
             {
                 if (TryGetUnit(val, out var w))
-                    return (val * w.Factor).ToString() + " " + w.Unit;
+                    return (val * w.Factor).ToString() + " " + Loc.GetString("units-" + w.Unit);
 
                 return val.ToString();
             }
@@ -61,7 +62,7 @@ namespace Content.Shared.Localizations
             public string Format(double val, string fmt)
             {
                 if (TryGetUnit(val, out var w))
-                    return (val * w.Factor).ToString(fmt) + " " + w.Unit;
+                    return (val * w.Factor).ToString(fmt) + " " + Loc.GetString("units-" + w.Unit);
 
                 return val.ToString(fmt);
             }
@@ -96,8 +97,8 @@ namespace Content.Shared.Localizations
             new TypeTable.Entry(range: (1e-6, 1e-3), factor:  1e6, unit: "m--pascal"),
             new TypeTable.Entry(range: (1e-3,    1), factor:  1e3, unit: "pascal"),
             new TypeTable.Entry(range: (   1, 1000), factor:    1, unit: "k-pascal"),
-            new TypeTable.Entry(range: (1000,  1e6), factor: 1e-4, unit: "M-pascal"),
-            new TypeTable.Entry(range: ( 1e6, null), factor: 1e-6, unit: "G-pascal")
+            new TypeTable.Entry(range: (1000,  1e6), factor: 1e-4, unit: "m-pascal"),
+            new TypeTable.Entry(range: ( 1e6, null), factor: 1e-6, unit: "g-pascal")
         );
 
         public static readonly TypeTable Power = new TypeTable
