@@ -130,7 +130,7 @@ namespace Content.Server.Administration
 
             var antag = session.ContentData()?.Mind?.AllRoles.Any(r => r.Antagonist) ?? false;
 
-            return new PlayerInfo(name, username, antag, session.AttachedEntity.GetValueOrDefault(), session.UserId);
+            return new PlayerInfo(name, username, antag, session.AttachedEntity.GetValueOrDefault(), session.UserId, true);
         }
     }
 }

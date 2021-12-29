@@ -101,22 +101,14 @@ namespace Content.Server.Access.Systems
                 return true;
 
             // check inventory slot?
-            if (EntityManager.TryGetComponent(uid, out InventoryComponent? inventoryComponent) &&
-                inventoryComponent.HasSlot(EquipmentSlotDefines.Slots.IDCARD) &&
-                inventoryComponent.TryGetSlotItem(EquipmentSlotDefines.Slots.IDCARD, out ItemComponent? item) &&
-                TryGetIdCard(item.Owner, out idCard))
-            {
-                return true;
-            }
-
-            return false;
+            return TryGetIdCardSlot(uid, out idCard);
         }
 
         /// <summary>
         ///     Attempt to get an id card component from an entity, either by getting it directly from the entity, or by
         ///     getting the contained id from a <see cref="PDAComponent"/>.
         /// </summary>
-        private bool TryGetIdCard(EntityUid uid, [NotNullWhen(true)] out IdCardComponent? idCard)
+        public bool TryGetIdCard(EntityUid uid, [NotNullWhen(true)] out IdCardComponent? idCard)
         {
             if (EntityManager.TryGetComponent(uid, out idCard))
                 return true;
@@ -128,6 +120,18 @@ namespace Content.Server.Access.Systems
             }
 
             return false;
+        }
+
+        /// <summary>
+        ///     Try get id card from mobs ID inventory slot
+        /// </summary>
+        public bool TryGetIdCardSlot(EntityUid uid, [NotNullWhen(true)] out IdCardComponent? idCard)
+        {
+            idCard = null;
+            return EntityManager.TryGetComponent(uid, out InventoryComponent? inventoryComponent) &&
+                   inventoryComponent.HasSlot(EquipmentSlotDefines.Slots.IDCARD) &&
+                   inventoryComponent.TryGetSlotItem(EquipmentSlotDefines.Slots.IDCARD, out ItemComponent? item) &&
+                   TryGetIdCard(item.Owner, out idCard);
         }
     }
 }

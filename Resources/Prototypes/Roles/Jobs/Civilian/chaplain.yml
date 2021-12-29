@@ -14,7 +14,7 @@
   id: ChaplainGear
   equipment:
     innerclothing: ClothingUniformJumpsuitChaplain
-    backpack: ClothingBackpack
+    backpack: ClothingBackpackFilled
     shoes: ClothingShoesColorBlack
     idcard: ChaplainPDA
     ears: ClothingHeadsetService

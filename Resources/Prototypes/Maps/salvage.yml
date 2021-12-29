@@ -15,6 +15,24 @@
   mapPath: Maps/Salvage/small-2.yml
   size: 3.5
 
+- type: salvageMap
+  id: small-ship-1
+  name: "Small / Ship 1 (Pill)"
+  mapPath: Maps/Salvage/small-ship-1.yml
+  size: 3.5
+
+- type: salvageMap
+  id: small3
+  name: "Small / Laundromat 1"
+  mapPath: Maps/Salvage/small-3.yml
+  size: 3.5
+
+- type: salvageMap
+  id: smallAISurveyDrone
+  name: "Small / AI Survey Drone"
+  mapPath: Maps/Salvage/small-ai-survey-drone.yml
+  size: 3.5
+
 # Small - Asteroids
 
 - type: salvageMap
@@ -29,5 +47,17 @@
   id: medium1
   name: "Medium / Plasma-Trapped Cache 1"
   mapPath: Maps/Salvage/medium-1.yml
+  size: 7.5
+
+- type: salvageMap
+  id: mediumvault1
+  name: "Medium / Vault 1"
+  mapPath: Maps/Salvage/medium-vault-1.yml
+  size: 7.5
+
+- type: salvageMap
+  id: mediumOrchestra
+  name: "Medium / Silent Orchestra"
+  mapPath: Maps/Salvage/medium-silent-orchestra.yml
   size: 7.5
 

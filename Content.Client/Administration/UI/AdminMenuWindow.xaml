@@ -3,13 +3,14 @@
     xmlns:adminTab="clr-namespace:Content.Client.Administration.UI.Tabs.AdminTab"
     xmlns:adminbusTab="clr-namespace:Content.Client.Administration.UI.Tabs.AdminbusTab"
     xmlns:atmosTab="clr-namespace:Content.Client.Administration.UI.Tabs.AtmosTab"
-    xmlns:tabs="clr-namespace:Content.Client.Administration.UI.Tabs">
+    xmlns:tabs="clr-namespace:Content.Client.Administration.UI.Tabs"
+    xmlns:playerTab="clr-namespace:Content.Client.Administration.UI.Tabs.PlayerTab">
     <TabContainer Name="MasterTabContainer">
         <adminTab:AdminTab />
         <adminbusTab:AdminbusTab />
         <atmosTab:AtmosTab />
         <tabs:RoundTab />
         <tabs:ServerTab />
-        <tabs:PlayerTab Name="PlayerTabControl" />
+        <playerTab:PlayerTab Name="PlayerTabControl" Access="Public" />
     </TabContainer>
 </SS14Window>
