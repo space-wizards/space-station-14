@@ -77,13 +77,13 @@ namespace Content.Server.Guardian
 
         private void OnHostShutdown(EntityUid uid, GuardianHostComponent component, ComponentShutdown args)
         {
-            if (!component.HostedGuardian.IsValid()) return;
-            EntityManager.QueueDeleteEntity(component.HostedGuardian);
+            if (component.HostedGuardian == null) return;
+            EntityManager.QueueDeleteEntity(component.HostedGuardian.Value);
         }
 
         public void ToggleGuardian(GuardianHostComponent hostComponent)
         {
-            if (!hostComponent.HostedGuardian.IsValid() ||
+            if (hostComponent.HostedGuardian == null ||
                 !TryComp(hostComponent.HostedGuardian, out GuardianComponent? guardianComponent)) return;
 
             if (guardianComponent.GuardianLoose)
@@ -196,12 +196,12 @@ namespace Content.Server.Guardian
         /// </summary>
         private void OnHostStateChange(EntityUid uid, GuardianHostComponent component, MobStateChangedEvent args)
         {
-            if (!component.HostedGuardian.IsValid()) return;
+            if (component.HostedGuardian == null) return;
 
             if (args.CurrentMobState.IsCritical())
             {
-                _popupSystem.PopupEntity(Loc.GetString("guardian-critical-warn"), component.HostedGuardian, Filter.Entities(component.HostedGuardian));
-                SoundSystem.Play(Filter.Entities(component.HostedGuardian), "/Audio/Effects/guardian_warn.ogg", component.HostedGuardian);
+                _popupSystem.PopupEntity(Loc.GetString("guardian-critical-warn"), component.HostedGuardian.Value, Filter.Entities(component.HostedGuardian.Value));
+                SoundSystem.Play(Filter.Entities(component.HostedGuardian.Value), "/Audio/Effects/guardian_warn.ogg", component.HostedGuardian.Value);
             }
             else if (args.CurrentMobState.IsDead())
             {
@@ -238,10 +238,11 @@ namespace Content.Server.Guardian
         /// </summary>
         private void OnHostMove(EntityUid uid, GuardianHostComponent component, ref MoveEvent args)
         {
-            if (!TryComp(component.HostedGuardian, out GuardianComponent? guardianComponent) ||
+            if (component.HostedGuardian == null ||
+                !TryComp(component.HostedGuardian, out GuardianComponent? guardianComponent) ||
                 !guardianComponent.GuardianLoose) return;
 
-            CheckGuardianMove(uid, component.HostedGuardian, component);
+            CheckGuardianMove(uid, component.HostedGuardian.Value, component);
         }
 
         /// <summary>
