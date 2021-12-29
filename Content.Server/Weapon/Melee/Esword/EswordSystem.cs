@@ -3,6 +3,7 @@ using Content.Server.Items;
 using Content.Shared.Interaction;
 using Content.Shared.ActionBlocker;
 using Content.Shared.FixedPoint;
+
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Audio;
@@ -24,7 +25,7 @@ namespace Content.Server.Weapon.Melee.Esword
 
         private void OnMeleeHit(EntityUid uid, EswordComponent comp, MeleeHitEvent args)
         {
-
+            
             if (comp.Activated == true)
             {
                 args.BonusDamage.DamageDict = new Dictionary<string, FixedPoint2>()
@@ -61,6 +62,8 @@ namespace Content.Server.Weapon.Melee.Esword
             if (!EntityManager.TryGetComponent<SpriteComponent?>(comp.Owner, out var sprite) ||
                 !EntityManager.TryGetComponent<ItemComponent?>(comp.Owner, out var item)) return;
 
+            EntityManager.TryGetComponent<ItemComponent>(comp.Owner, out var esword);
+            esword.Size = 5;
             SoundSystem.Play(Filter.Pvs(comp.Owner), comp.DeActivateSound.GetSound(), comp.Owner);
             item.EquippedPrefix = "off";
             sprite.LayerSetState(0, "e_sword");
@@ -77,6 +80,9 @@ namespace Content.Server.Weapon.Melee.Esword
             if (!EntityManager.TryGetComponent<SpriteComponent?>(comp.Owner, out var sprite) ||
                 !EntityManager.TryGetComponent<ItemComponent?>(comp.Owner, out var item))
                 return;
+
+            EntityManager.TryGetComponent<ItemComponent>(comp.Owner, out var esword);
+            esword.Size = 9999;
 
             var playerFilter = Filter.Pvs(comp.Owner);
             SoundSystem.Play(playerFilter, comp.ActivateSound.GetSound(), comp.Owner);

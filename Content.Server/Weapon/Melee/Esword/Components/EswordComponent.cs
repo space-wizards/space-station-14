@@ -11,7 +11,6 @@ namespace Content.Server.Weapon.Melee.Esword
         public override string Name => "Esword";
 
         public bool Activated = false;
-
         [DataField("hitSound")]
         public SoundSpecifier HitSound { get; set; } = new SoundPathSpecifier("/Audio/Weapons/eblade1.ogg");
 

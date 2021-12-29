@@ -13,5 +13,5 @@
       types:
         Blunt: 5
   - type: Item
-    size: 15
+    size: 5
     sprite: Objects/Weapons/Melee/e_sword.rsi
