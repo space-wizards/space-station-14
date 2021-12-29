@@ -557,8 +557,8 @@
     pack: SmartFridgeInventory
     insertWhitelist:
       components:
-      - Food
       - Drink
+      - Produce
       tags:
       - Pill
       - PillCanister
