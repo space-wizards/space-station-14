@@ -151,9 +151,10 @@ namespace Content.Server.Wieldable
 
         private void OnItemWielded(EntityUid uid, WieldableComponent component, ItemWieldedEvent args)
         {
-            if (args.User == default)
+            if (args.User == null)
                 return;
-            if (!CanWield(uid, component, args.User) || component.Wielded)
+
+            if (!CanWield(uid, component, args.User.Value) || component.Wielded)
                 return;
 
             if (EntityManager.TryGetComponent<ItemComponent>(uid, out var item))
@@ -171,16 +172,16 @@ namespace Content.Server.Wieldable
 
             for (var i = 0; i < component.FreeHandsRequired; i++)
             {
-                _virtualItemSystem.TrySpawnVirtualItemInHand(uid, args.User);
+                _virtualItemSystem.TrySpawnVirtualItemInHand(uid, args.User.Value);
             }
 
-            args.User.PopupMessage(Loc.GetString("wieldable-component-successful-wield",
+            args.User.Value.PopupMessage(Loc.GetString("wieldable-component-successful-wield",
                 ("item", uid)));
         }
 
         private void OnItemUnwielded(EntityUid uid, WieldableComponent component, ItemUnwieldedEvent args)
         {
-            if (args.User == default)
+            if (args.User == null)
                 return;
             if (!component.Wielded)
                 return;
@@ -200,11 +201,11 @@ namespace Content.Server.Wieldable
                         component.UnwieldSound.GetSound());
                 }
 
-                args.User.PopupMessage(Loc.GetString("wieldable-component-failed-wield",
+                args.User.Value.PopupMessage(Loc.GetString("wieldable-component-failed-wield",
                     ("item", uid)));
             }
 
-            _virtualItemSystem.DeleteInHandsMatching(args.User, uid);
+            _virtualItemSystem.DeleteInHandsMatching(args.User.Value, uid);
         }
 
         private void OnItemLeaveHand(EntityUid uid, WieldableComponent component, UnequippedHandEvent args)
@@ -245,9 +246,9 @@ namespace Content.Server.Wieldable
     /// </summary>
     public class ItemWieldedEvent : EntityEventArgs
     {
-        public EntityUid User;
+        public EntityUid? User;
 
-        public ItemWieldedEvent(EntityUid user = default)
+        public ItemWieldedEvent(EntityUid? user = null)
         {
             User = user;
         }
@@ -275,13 +276,13 @@ namespace Content.Server.Wieldable
     /// </summary>
     public class ItemUnwieldedEvent : EntityEventArgs
     {
-        public EntityUid User;
+        public EntityUid? User;
         /// <summary>
         ///     Whether the item is being forced to be unwielded, or if the player chose to unwield it themselves.
         /// </summary>
         public bool Force;
 
-        public ItemUnwieldedEvent(EntityUid user = default, bool force=false)
+        public ItemUnwieldedEvent(EntityUid? user = null, bool force=false)
         {
             User = user;
             Force = force;

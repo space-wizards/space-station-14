@@ -78,3 +78,18 @@ units-m--joule-long = Millijoule
 units-joule-long = Joule
 units-k-joule-long = Kilojoule
 units-m-joule-long = Megajoule
+
+## Kelvin (Temperature)
+units-u--kelvin = µK
+units-m--kelvin = mK
+units-kelvin = K
+units-k-kelvin = kK
+units-m-kelvin = MK
+units-g-kelvin = GK
+
+units-u--kelvin-long = Microkelvin
+units-m--kelvin-long = Millikelvin
+units-kelvin-long = Kelvin
+units-k-kelvin-long = Kilokelvin
+units-m-kelvin-long = Megakelvin
+units-g-kelvin-long = Gigakelvin

@@ -1,19 +1,15 @@
 ﻿#nullable enable
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using Content.Client.Administration.UI;
 using Content.Shared.Administration;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
-using Robust.Shared.Localization;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.Network;
-using Robust.Shared.Players;
 using Robust.Shared.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.IoC;
+using Robust.Shared.Network;
 
 namespace Content.Client.Administration
 {
@@ -43,24 +39,16 @@ namespace Content.Client.Administration
 
         public BwoinkWindow EnsureWindow(NetUserId channelId)
         {
-            if (_activeWindowMap.TryGetValue(channelId, out var existingWindow))
+            if (!_activeWindowMap.TryGetValue(channelId, out var existingWindow))
             {
-                existingWindow.Open();
-                return existingWindow;
+                _activeWindowMap[channelId] = existingWindow = new BwoinkWindow(channelId,
+                    _playerManager.SessionsDict.TryGetValue(channelId, out var otherSession)
+                        ? otherSession.Name
+                        : channelId.ToString());
             }
-            string title;
-            if (_playerManager.SessionsDict.TryGetValue(channelId, out var otherSession))
-            {
-                title = otherSession.Name;
-            }
-            else
-            {
-                title = channelId.ToString();
-            }
-            var window = new BwoinkWindow(channelId, title);
-            _activeWindowMap[channelId] = window;
-            window.Open();
-            return window;
+
+            existingWindow.Open();
+            return existingWindow;
         }
 
         public void EnsureWindowForLocalPlayer()

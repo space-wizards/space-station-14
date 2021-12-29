@@ -110,7 +110,7 @@ namespace Content.Server.Electrocution
                     if (actual != null)
                     {
                         _logSystem.Add(LogType.Electrocution,
-                            $"{finished.Owner} took {actual.Total} powered electrocution damage");
+                            $"{ToPrettyString(finished.Owner):entity} received {actual.Total:damage} powered electrocution damage");
                     }
                 }
 
@@ -353,7 +353,7 @@ namespace Content.Server.Electrocution
                 if (actual != null)
                 {
                     _logSystem.Add(LogType.Electrocution,
-                        $"{statusEffects.Owner} took {actual.Total} powered electrocution damage");
+                        $"{ToPrettyString(statusEffects.Owner):entity} received {actual.Total:damage} powered electrocution damage");
                 }
             }
 

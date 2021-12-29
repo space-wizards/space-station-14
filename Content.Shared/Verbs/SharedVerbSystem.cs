@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Administration.Logs;
-using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Robust.Shared.Containers;
@@ -12,9 +10,34 @@ namespace Content.Shared.Verbs
 {
     public abstract class SharedVerbSystem : EntitySystem
     {
-        [Dependency] private readonly SharedAdminLogSystem _logSystem = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            SubscribeAllEvent<ExecuteVerbEvent>(HandleExecuteVerb);
+        }
+
+        private void HandleExecuteVerb(ExecuteVerbEvent args, EntitySessionEventArgs eventArgs)
+        {
+            var user = eventArgs.SenderSession.AttachedEntity;
+            if (user == null)
+                return;
+
+            // Get the list of verbs. This effectively also checks that the requested verb is in fact a valid verb that
+            // the user can perform.
+            var verbs = GetLocalVerbs(args.Target, user.Value, args.Type)[args.Type];
+
+            // Note that GetLocalVerbs might waste time checking & preparing unrelated verbs even though we know
+            // precisely which one we want to run. However, MOST entities will only have 1 or 2 verbs of a given type.
+            // The one exception here is the "other" verb type, which has 3-4 verbs + all the debug verbs.
+
+            // Find the requested verb.
+            if (verbs.TryGetValue(args.RequestedVerb, out var verb))
+                ExecuteVerb(verb, user.Value, args.Target);
+        }
 
         /// <summary>
         ///     Raises a number of events in order to get all verbs of the given type(s) defined in local systems. This
@@ -41,15 +64,17 @@ namespace Content.Shared.Verbs
             // call ActionBlocker checks, just cache it for the verb request.
             var canInteract = force || _actionBlockerSystem.CanInteract(user);
 
-            EntityUid @using = default;
-            if (EntityManager.TryGetComponent(user, out SharedHandsComponent? hands) && (force || _actionBlockerSystem.CanUse(user)))
+            EntityUid? @using = null;
+            if (TryComp(user, out SharedHandsComponent? hands) && (force || _actionBlockerSystem.CanUse(user)))
             {
-                hands.TryGetActiveHeldEntity(out @using);
+                // TODO Hands remove nullable (#5634)
+                hands.TryGetActiveHeldEntity(out var nonNullableUsing);
+                @using = nonNullableUsing;
 
                 // Check whether the "Held" entity is a virtual pull entity. If yes, set that as the entity being "Used".
                 // This allows you to do things like buckle a dragged person onto a surgery table, without click-dragging
                 // their sprite.
-                if (@using != default && EntityManager.TryGetComponent<HandVirtualItemComponent?>(@using, out var pull))
+                if (@using != null && TryComp(@using, out HandVirtualItemComponent? pull))
                 {
                     @using = pull.BlockingEntity;
                 }
@@ -92,57 +117,6 @@ namespace Content.Shared.Verbs
         /// <remarks>
         ///     This will try to call the action delegates and raise the local events for the given verb.
         /// </remarks>
-        public void ExecuteVerb(Verb verb, EntityUid user, EntityUid target, bool forced = false)
-        {
-            // first, lets log the verb. Just in case it ends up crashing the server or something.
-            LogVerb(verb, user, target, forced);
-
-            // then invoke any relevant actions
-            verb.Act?.Invoke();
-
-            // Maybe raise a local event
-            if (verb.ExecutionEventArgs != null)
-            {
-                if (verb.EventTarget.IsValid())
-                    RaiseLocalEvent(verb.EventTarget, verb.ExecutionEventArgs);
-                else
-                    RaiseLocalEvent(verb.ExecutionEventArgs);
-            }
-        }
-
-        public void LogVerb(Verb verb, EntityUid user, EntityUid target, bool forced)
-        {
-            // first get the held item. again.
-            EntityUid usedUid = default;
-            if (EntityManager.TryGetComponent(user, out SharedHandsComponent? hands) &&
-                hands.TryGetActiveHeldEntity(out var heldEntity))
-            {
-                usedUid = heldEntity;
-                if (usedUid != default && EntityManager.TryGetComponent(usedUid, out HandVirtualItemComponent? pull))
-                    usedUid = pull.BlockingEntity;
-            }
-
-            // get all the entities
-            if (!user.IsValid() || !target.IsValid())
-                return;
-
-            EntityUid? used = null;
-            if (usedUid != default)
-                EntityManager.EntityExists(usedUid);
-
-            // then prepare the basic log message body
-            var verbText = $"{verb.Category?.Text} {verb.Text}".Trim();
-            var logText = forced
-                ? $"was forced to execute the '{verbText}' verb targeting " // let's not frame people, eh?
-                : $"executed '{verbText}' verb targeting ";
-
-            // then log with entity information
-            if (used != null)
-                _logSystem.Add(LogType.Verb, verb.Impact,
-                       $"{ToPrettyString(user)} {logText} {ToPrettyString(target)} while holding {ToPrettyString(used.Value)}");
-            else
-                _logSystem.Add(LogType.Verb, verb.Impact,
-                       $"{ToPrettyString(user)} {logText} {ToPrettyString(target)}");
-        }
+        public abstract void ExecuteVerb(Verb verb, EntityUid user, EntityUid target, bool forced = false);
     }
 }

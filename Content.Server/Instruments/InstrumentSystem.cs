@@ -149,6 +149,12 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
 
         foreach (var instrument in EntityManager.EntityQuery<InstrumentComponent>(true))
         {
+            if (instrument.DirtyRenderer)
+            {
+                instrument.Dirty();
+                instrument.DirtyRenderer = false;
+            }
+
             if ((instrument.BatchesDropped >= MaxMidiBatchesDropped
                  || instrument.LaggedBatches >= MaxMidiLaggedBatches)
                 && instrument.InstrumentPlayer != null && instrument.RespectMidiLimits)

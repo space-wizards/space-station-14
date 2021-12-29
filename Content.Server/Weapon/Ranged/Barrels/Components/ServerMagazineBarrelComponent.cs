@@ -193,19 +193,20 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
         public override EntityUid? PeekAmmo()
         {
-            return BoltOpen ? default : _chamberContainer.ContainedEntity;
+            return BoltOpen ? null : _chamberContainer.ContainedEntity;
         }
 
         public override EntityUid? TakeProjectile(EntityCoordinates spawnAt)
         {
             if (BoltOpen)
             {
-                return default;
+                return null;
             }
-            var entity = _chamberContainer.ContainedEntity ?? default;
+            var entity = _chamberContainer.ContainedEntity;
 
             Cycle();
-            return entity != default ? _entities.GetComponent<AmmoComponent>(entity).TakeBullet(spawnAt) : null;
+
+            return entity != null ? EntitySystem.Get<GunSystem>().TakeBullet(_entities.GetComponent<AmmoComponent>(entity.Value), spawnAt) : null;
         }
 
         private void Cycle(bool manual = false)
@@ -296,7 +297,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             }
 
             // Try and pull a round from the magazine to replace the chamber if possible
-            var magazine = MagazineContainer.ContainedEntity ?? default;
+            var magazine = MagazineContainer.ContainedEntity;
 
             if (_entities.GetComponentOrNull<RangedMagazineComponent>(magazine)?.TakeAmmo() is not {Valid: true} nextRound)
             {
@@ -305,11 +306,11 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
             _chamberContainer.Insert(nextRound);
 
-            if (_autoEjectMag && magazine != null && _entities.GetComponent<RangedMagazineComponent>(magazine).ShotsLeft == 0)
+            if (_autoEjectMag && magazine != null && _entities.GetComponent<RangedMagazineComponent>(magazine.Value).ShotsLeft == 0)
             {
                 SoundSystem.Play(Filter.Pvs(Owner), _soundAutoEject.GetSound(), Owner, AudioParams.Default.WithVolume(-2));
 
-                MagazineContainer.Remove(magazine);
+                MagazineContainer.Remove(magazine.Value);
 #pragma warning disable 618
                 SendNetworkMessage(new MagazineAutoEjectMessage());
 #pragma warning restore 618

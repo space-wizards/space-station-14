@@ -173,7 +173,7 @@ namespace Content.Server.Cuffs.Components
         /// </summary>
         /// <param name="user">The cuffed entity</param>
         /// <param name="cuffsToRemove">Optional param for the handcuff entity to remove from the cuffed entity. If null, uses the most recently added handcuff entity.</param>
-        public async void TryUncuff(EntityUid user, EntityUid cuffsToRemove = default)
+        public async void TryUncuff(EntityUid user, EntityUid? cuffsToRemove = null)
         {
             if (_uncuffing) return;
 
@@ -190,7 +190,7 @@ namespace Content.Server.Cuffs.Components
             }
             else
             {
-                if (!Container.ContainedEntities.Contains(cuffsToRemove))
+                if (!Container.ContainedEntities.Contains(cuffsToRemove.Value))
                 {
                     Logger.Warning("A user is trying to remove handcuffs that aren't in the owner's container. This should never happen!");
                 }
@@ -213,13 +213,6 @@ namespace Content.Server.Cuffs.Components
             if (!isOwner && !user.InRangeUnobstructed(Owner))
             {
                 user.PopupMessage(Loc.GetString("cuffable-component-cannot-remove-cuffs-too-far-message"));
-                return;
-            }
-
-            // TODO: Why are we even doing this check?
-            if (!cuffsToRemove.InRangeUnobstructed(Owner))
-            {
-                Logger.Warning("Handcuffs being removed from player are obstructed or too far away! This should not happen!");
                 return;
             }
 
@@ -254,16 +247,18 @@ namespace Content.Server.Cuffs.Components
             {
                 SoundSystem.Play(Filter.Pvs(Owner), cuff.EndUncuffSound.GetSound(), Owner);
 
-                Container.ForceRemove(cuffsToRemove);
-                _entMan.GetComponent<TransformComponent>(cuffsToRemove).AttachToGridOrMap();
-                _entMan.GetComponent<TransformComponent>(cuffsToRemove).WorldPosition = _entMan.GetComponent<TransformComponent>(Owner).WorldPosition;
+                Container.ForceRemove(cuffsToRemove.Value);
+                var transform = _entMan.GetComponent<TransformComponent>(cuffsToRemove.Value);
+                transform.AttachToGridOrMap();
+                transform.WorldPosition = _entMan.GetComponent<TransformComponent>(Owner).WorldPosition;
 
                 if (cuff.BreakOnRemove)
                 {
                     cuff.Broken = true;
 
-                    _entMan.GetComponent<MetaDataComponent>(cuffsToRemove).EntityName = cuff.BrokenName;
-                    _entMan.GetComponent<MetaDataComponent>(cuffsToRemove).EntityDescription = cuff.BrokenDesc;
+                    var meta = _entMan.GetComponent<MetaDataComponent>(cuffsToRemove.Value);
+                    meta.EntityName = cuff.BrokenName;
+                    meta.EntityDescription = cuff.BrokenDesc;
 
                     if (_entMan.TryGetComponent<SpriteComponent?>(cuffsToRemove, out var sprite) && cuff.BrokenState != null)
                     {

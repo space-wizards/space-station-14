@@ -560,5 +560,17 @@ namespace Content.Server.Inventory.Components
 
             return false;
         }
+
+        public override bool TryGetSlot(Slots slot, [NotNullWhen(true)] out EntityUid? item)
+        {
+            if (_slotContainers.TryGetValue(slot, out var container))
+            {
+                item = container.ContainedEntity;
+                return item != null;
+            }
+
+            item = null;
+            return false;
+        }
     }
 }

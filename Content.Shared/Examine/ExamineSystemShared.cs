@@ -64,7 +64,7 @@ namespace Content.Shared.Examine
         [Pure]
         public bool CanExamine(EntityUid examiner, EntityUid examined)
         {
-            return CanExamine(examiner, EntityManager.GetComponent<TransformComponent>(examined).MapPosition,
+            return !Deleted(examined) && CanExamine(examiner, EntityManager.GetComponent<TransformComponent>(examined).MapPosition,
                 entity => entity == examiner || entity == examined);
         }
 

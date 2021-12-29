@@ -202,9 +202,9 @@ namespace Content.Server.Nutrition.Components
             if (calculatedThirstThreshold != _currentThirstThreshold)
             {
                 if (_currentThirstThreshold == ThirstThreshold.Dead)
-                    EntitySystem.Get<AdminLogSystem>().Add(LogType.Thirst, $"{Owner} has stopped taking dehydration damage");
+                    EntitySystem.Get<AdminLogSystem>().Add(LogType.Thirst, $"{_entMan.ToPrettyString(Owner):entity} has stopped taking dehydration damage");
                 else if (calculatedThirstThreshold == ThirstThreshold.Dead)
-                    EntitySystem.Get<AdminLogSystem>().Add(LogType.Thirst, $"{Owner} has started taking dehydration damage");
+                    EntitySystem.Get<AdminLogSystem>().Add(LogType.Thirst, $"{_entMan.ToPrettyString(Owner):entity} has started taking dehydration damage");
 
                 _currentThirstThreshold = calculatedThirstThreshold;
                 ThirstThresholdEffect();

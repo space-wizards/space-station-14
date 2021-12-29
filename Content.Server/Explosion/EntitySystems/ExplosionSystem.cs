@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Administration.Logs;
-using Content.Server.Camera;
 using Content.Server.Explosion.Components;
 using Content.Shared.Acts;
+using Content.Shared.Camera;
 using Content.Shared.Database;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Maps;
@@ -51,6 +51,7 @@ namespace Content.Server.Explosion.EntitySystems
         [Dependency] private readonly EffectSystem _effects = default!;
         [Dependency] private readonly TriggerSystem _triggers = default!;
         [Dependency] private readonly AdminLogSystem _logSystem = default!;
+        [Dependency] private readonly CameraRecoilSystem _cameraRecoil = default!;
 
         private bool IgnoreExplosivePassable(EntityUid e)
         {
@@ -82,7 +83,7 @@ namespace Content.Server.Explosion.EntitySystems
             foreach (var player in players)
             {
                 if (player.AttachedEntity is not {Valid: true} playerEntity ||
-                    !EntityManager.TryGetComponent(playerEntity, out CameraRecoilComponent? recoil))
+                    !EntityManager.HasComponent<CameraRecoilComponent>(playerEntity))
                 {
                     continue;
                 }
@@ -99,7 +100,7 @@ namespace Content.Server.Explosion.EntitySystems
                 if (effect > 0.01f)
                 {
                     var kick = -delta.Normalized * effect;
-                    recoil.Kick(kick);
+                    _cameraRecoil.KickCamera(player.AttachedEntity.Value, kick);
                 }
             }
         }
@@ -343,20 +344,20 @@ namespace Content.Server.Explosion.EntitySystems
             }
 
             // logging
-            var text = $"{epicenter} with range {devastationRange}/{heavyImpactRange}/{lightImpactRange}/{flashRange}";
+            var range = $"{devastationRange}/{heavyImpactRange}/{lightImpactRange}/{flashRange}";
             if (entity == null || !entity.Value.IsValid())
             {
-                _logSystem.Add(LogType.Explosion, LogImpact.High, $"Explosion spawned at {text}");
+                _logSystem.Add(LogType.Explosion, LogImpact.High, $"Explosion spawned at {epicenter:coordinates} with range {range}");
             }
             else if (user == null || !user.Value.IsValid())
             {
                 _logSystem.Add(LogType.Explosion, LogImpact.High,
-                    $"{ToPrettyString(entity.Value)} exploded at {text}");
+                    $"{ToPrettyString(entity.Value):entity} exploded at {epicenter:coordinates} with range {range}");
             }
             else
             {
                 _logSystem.Add(LogType.Explosion, LogImpact.High,
-                    $"{ToPrettyString(user.Value)} caused {ToPrettyString(entity.Value)} to explode at {text}");
+                    $"{ToPrettyString(user.Value):user} caused {ToPrettyString(entity.Value):entity} to explode at {epicenter:coordinates} with range {range}");
             }
 
             var maxRange = MathHelper.Max(devastationRange, heavyImpactRange, lightImpactRange, 0);

@@ -105,7 +105,7 @@ namespace Content.Server.Atmos.EntitySystems
                         if (!barotrauma.TakingDamage)
                         {
                             barotrauma.TakingDamage = true;
-                            _logSystem.Add(LogType.Barotrauma, $"{barotrauma.Owner} started taking low pressure damage");
+                            _logSystem.Add(LogType.Barotrauma, $"{ToPrettyString(barotrauma.Owner):entity} started taking low pressure damage");
                         }
 
                         if (pressure <= Atmospherics.HazardLowPressure)
@@ -132,7 +132,7 @@ namespace Content.Server.Atmos.EntitySystems
                         if (!barotrauma.TakingDamage)
                         {
                             barotrauma.TakingDamage = true;
-                            _logSystem.Add(LogType.Barotrauma, $"{barotrauma.Owner} started taking high pressure damage");
+                            _logSystem.Add(LogType.Barotrauma, $"{ToPrettyString(barotrauma.Owner):entity} started taking high pressure damage");
                         }
 
                         if (pressure >= Atmospherics.HazardHighPressure)
@@ -149,7 +149,7 @@ namespace Content.Server.Atmos.EntitySystems
                         if (barotrauma.TakingDamage)
                         {
                             barotrauma.TakingDamage = false;
-                            _logSystem.Add(LogType.Barotrauma, $"{barotrauma.Owner} stopped taking pressure damage");
+                            _logSystem.Add(LogType.Barotrauma, $"{ToPrettyString(barotrauma.Owner):entity} stopped taking pressure damage");
                         }
                         _alertsSystem.ClearAlertCategory(barotrauma.Owner, AlertCategory.Pressure);
                         break;
