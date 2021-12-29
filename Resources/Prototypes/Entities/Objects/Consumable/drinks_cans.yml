@@ -114,7 +114,7 @@
   parent: DrinkCanBaseFull
   id: DrinkRootBeerCan
   name: root beer can
-  description: The taste of a star in liquid form. And, a bit of tuna...?
+  description: Some of that tasty root beer goodness, now in a portable can!
   components:
   - type: SolutionContainerManager
     solutions:
