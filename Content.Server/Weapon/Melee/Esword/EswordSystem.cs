@@ -1,8 +1,8 @@
-using System.Linq;
+using System.Collections.Generic;
 using Content.Server.Items;
-using Content.Shared.Audio;
 using Content.Shared.Interaction;
 using Content.Shared.ActionBlocker;
+using Content.Shared.FixedPoint;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Audio;
@@ -24,10 +24,16 @@ namespace Content.Server.Weapon.Melee.Esword
 
         private void OnMeleeHit(EntityUid uid, EswordComponent comp, MeleeHitEvent args)
         {
-            if (!comp.Activated || !args.HitEntities.Any())
-                return;
+
+            if (comp.Activated == true)
+            {
+                args.BonusDamage.DamageDict = new Dictionary<string, FixedPoint2>()
+                {
+                    {"Slash", FixedPoint2.New(25)},
+                };
+                args.HitSoundOverride = comp.HitSound;
+            }
             
-            SoundSystem.Play(Filter.Pvs(comp.Owner), comp.HitSound.GetSound(), comp.Owner, AudioHelpers.WithVariation(0.25f));
         }
 
         private void OnUseInHand(EntityUid uid, EswordComponent comp, UseInHandEvent args)
@@ -56,7 +62,6 @@ namespace Content.Server.Weapon.Melee.Esword
                 !EntityManager.TryGetComponent<ItemComponent?>(comp.Owner, out var item)) return;
 
             SoundSystem.Play(Filter.Pvs(comp.Owner), comp.DeActivateSound.GetSound(), comp.Owner);
-
             item.EquippedPrefix = "off";
             sprite.LayerSetState(0, "e_sword");
             comp.Activated = false;
@@ -74,9 +79,7 @@ namespace Content.Server.Weapon.Melee.Esword
                 return;
 
             var playerFilter = Filter.Pvs(comp.Owner);
-
             SoundSystem.Play(playerFilter, comp.ActivateSound.GetSound(), comp.Owner);
-
             item.EquippedPrefix = "on";
             sprite.LayerSetState(0, "e_sword_on");
             comp.Activated = true;

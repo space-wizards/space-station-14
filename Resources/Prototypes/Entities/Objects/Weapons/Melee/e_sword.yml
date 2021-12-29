@@ -11,7 +11,7 @@
   - type: MeleeWeapon
     damage:
       types:
-        Slash: 25
+        Blunt: 5
   - type: Item
     size: 15
     sprite: Objects/Weapons/Melee/e_sword.rsi
