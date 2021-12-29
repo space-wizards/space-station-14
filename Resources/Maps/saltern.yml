@@ -5206,12 +5206,15 @@ entities:
     parent: 853
     type: Transform
 - uid: 460
-  type: RandomSpawner
+  type: ComputerCrewMonitoring
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 7.5,-18.5
+  - pos: 0.5,32.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 461
   type: RandomSpawner
   components:
@@ -5830,12 +5833,21 @@ entities:
     parent: 853
     type: Transform
 - uid: 546
-  type: SuspicionMeleeSpawner
+  type: Lamp
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 10.5,-13.5
+  - pos: 22.50832,-12.354015
     parent: 853
     type: Transform
+  - canCollide: False
+    type: Physics
+  - cellInsertSound: !type:SoundPathSpecifier
+      path: /Audio/Items/pistol_magout.ogg
+    cellRemoveSound: !type:SoundPathSpecifier
+      path: /Audio/Items/pistol_magin.ogg
+    type: PowerCellSlot
+  - containers:
+      cellslot_cell_container: !type:ContainerSlot {}
+    type: ContainerContainer
 - uid: 547
   type: SuspicionMeleeSpawner
   components:
@@ -75553,7 +75565,7 @@ entities:
 - uid: 7171
   type: DrinkDoctorsDelightGlass
   components:
-  - pos: 22.540249,-12.515343
+  - pos: 22.430195,-13.166515
     parent: 853
     type: Transform
   - canCollide: False
@@ -75726,6 +75738,14 @@ entities:
   type: Pen
   components:
   - pos: 8.627178,-5.447321
+    parent: 853
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 7196
+  type: Pen
+  components:
+  - pos: 24.619991,-13.21339
     parent: 853
     type: Transform
   - canCollide: False
