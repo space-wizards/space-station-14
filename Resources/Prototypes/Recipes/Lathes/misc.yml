@@ -26,9 +26,9 @@
     Glass: 100
 
 - type: latheRecipe
-  id: GlowStickRed
+  id: GlowstickRed
   icon: Objects/Misc/glowstick.rsi
-  result: GlowStickRed
+  result: GlowstickRed
   completetime: 500
   materials:
     Plastic: 50

@@ -164,10 +164,10 @@
       - Flash
       - Handcuffs
       - Stunbaton
-      - CartridgePistolBase
-      - ShellShotgunBase
-      - CartridgeLRifleBase
-      - CartridgeMagnumBase
+      - CartridgePistol
+      - ShellShotgun
+      - CartridgeLRifle
+      - CartridgeMagnum
       - FirelockElectronics
       - MicroManipulatorStockPart
       - ScanningModuleStockPart
