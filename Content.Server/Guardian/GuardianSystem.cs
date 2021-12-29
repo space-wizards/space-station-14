@@ -215,11 +215,9 @@ namespace Content.Server.Guardian
         /// </summary>
         private void OnGuardianDamaged(EntityUid uid, GuardianComponent component, DamageChangedEvent args)
         {
-            if (args.DamageDelta == null ||
-                !HasComp<DamageableComponent>(uid) ||
-                !TryComp<DamageableComponent>(component.Host, out var hostDamage)) return;
+            if (args.DamageDelta == null) return;
 
-            _damageSystem.SetDamage(hostDamage, (hostDamage.Damage + args.DamageDelta * component.DamageShare));
+            _damageSystem.TryChangeDamage(component.Host, args.DamageDelta * component.DamageShare);
             _popupSystem.PopupEntity(Loc.GetString("guardian-entity-taking-damage"), component.Host, Filter.Entities(component.Host));
 
         }

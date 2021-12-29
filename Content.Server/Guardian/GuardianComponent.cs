@@ -17,7 +17,7 @@ namespace Content.Server.Guardian
         public EntityUid Host;
 
         /// <summary>
-        /// Percentage of damage reflected from the guardian to the host, use f
+        /// Percentage of damage reflected from the guardian to the host
         /// </summary>
         [ViewVariables]
         [DataField("damageShare")]
