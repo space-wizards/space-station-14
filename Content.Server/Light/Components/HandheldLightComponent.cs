@@ -1,5 +1,4 @@
 using Content.Server.Light.EntitySystems;
-using Content.Server.PowerCell.Components;
 using Content.Shared.Actions.Behaviors.Item;
 using Content.Shared.Light.Component;
 using Content.Shared.Sound;
@@ -20,16 +19,12 @@ namespace Content.Server.Light.Components
     public sealed class HandheldLightComponent : SharedHandheldLightComponent
     {
         [ViewVariables(VVAccess.ReadWrite)] [DataField("wattage")] public float Wattage { get; set; } = 3f;
-        [ViewVariables] public PowerCellSlotComponent CellSlot = default!;
-        public PowerCellComponent? Cell => CellSlot.Cell;
 
         /// <summary>
         ///     Status of light, whether or not it is emitting light.
         /// </summary>
         [ViewVariables]
         public bool Activated { get; set; }
-
-        [ViewVariables] protected override bool HasCell => CellSlot.HasCell;
 
         [ViewVariables(VVAccess.ReadWrite)] [DataField("turnOnSound")] public SoundSpecifier TurnOnSound = new SoundPathSpecifier("/Audio/Items/flashlight_on.ogg");
         [ViewVariables(VVAccess.ReadWrite)] [DataField("turnOnFailSound")] public SoundSpecifier TurnOnFailSound = new SoundPathSpecifier("/Audio/Machines/button.ogg");
