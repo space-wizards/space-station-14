@@ -25,10 +25,8 @@ namespace Content.Server.Foldable
 
             SubscribeLocalEvent<FoldableComponent, ComponentInit>(OnFoldableInit);
             SubscribeLocalEvent<FoldableComponent, StorageOpenAttemptEvent>(OnFoldableOpenAttempt);
-            SubscribeLocalEvent<FoldableComponent, InteractHandEvent>(OnInteract);
             SubscribeLocalEvent<FoldableComponent, AttemptItemPickupEvent>(OnPickedUpAttempt);
-
-            SubscribeLocalEvent<FoldableComponent, GetInteractionVerbsEvent>(AddFoldVerb);
+            SubscribeLocalEvent<FoldableComponent, GetAlternativeVerbsEvent>(AddFoldVerb);
         }
 
         private void OnFoldableOpenAttempt(EntityUid uid, FoldableComponent component, StorageOpenAttemptEvent args)
@@ -95,24 +93,6 @@ namespace Content.Server.Foldable
         #region Event handlers
 
         /// <summary>
-        /// Handle pickup events and block them if the object is unfolded
-        /// </summary>
-        /// <param name="uid">Target entity</param>
-        /// <param name="component">Attached foldable component</param>
-        /// <param name="args"></param>
-        private void OnInteract(EntityUid uid, FoldableComponent component, InteractHandEvent args)
-        {
-            // TODO: Storage check only exists for bodybag and coz no priority on the event.
-            if (args.Handled || EntityManager.HasComponent<EntityStorageComponent>(uid)) return;
-
-            // Try to fold, if succeeded prevent from being picked up
-            if (TrySetFolded(component, true))
-                args.Handled = true;
-
-            // Else, let it be picked up
-        }
-
-        /// <summary>
         /// Prevents foldable objects to be picked up when unfolded
         /// </summary>
         /// <param name="uid"></param>
@@ -128,7 +108,7 @@ namespace Content.Server.Foldable
 
         #region Verb
 
-        private void AddFoldVerb(EntityUid uid, FoldableComponent component, GetInteractionVerbsEvent args)
+        private void AddFoldVerb(EntityUid uid, FoldableComponent component, GetAlternativeVerbsEvent args)
         {
             if (!args.CanAccess || !args.CanInteract)
                 return;
@@ -140,7 +120,7 @@ namespace Content.Server.Foldable
                 IconTexture = "/Textures/Interface/VerbIcons/fold.svg.192dpi.png",
 
                 // If the object is unfolded and they click it, they want to fold it, if it's folded, they want to pick it up
-                Priority = component.IsFolded ? 0 : 2
+                Priority = component.IsFolded ? 0 : 2,
             };
 
             args.Verbs.Add(verb);
