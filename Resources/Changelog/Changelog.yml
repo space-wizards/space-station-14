@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Shuttle-relative movement for when we get shuttle rotation., type: Add}
-  id: 284
-  time: '2021-07-25T15:48:22.0000000+00:00'
 - author: Seth
   changes:
   - {message: Added Storage Room to Coats, type: Add}
@@ -2874,3 +2869,8 @@ Entries:
       for a role prompt!, type: Add}
   id: 785
   time: '2021-12-29T03:58:49.0000000+00:00'
+- author: Topy
+  changes:
+  - {message: Add rollerbeds to roll people around!, type: Add}
+  id: 786
+  time: '2021-12-29T04:57:21.0000000+00:00'
