@@ -1,6 +1,6 @@
 - type: entity
   name: holoparasite injector
-  id: HoloparaInjector
+  id: HoloparasiteInjector
   parent: BaseItem
   description: A complex artwork of handheld machinery allowing the user to host a holoparasite guardian.
   components:
