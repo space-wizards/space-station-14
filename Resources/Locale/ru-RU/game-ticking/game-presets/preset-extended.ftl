@@ -1,2 +1,2 @@
 extended-title = Расширенный
-extended-description = Никаких антагонистов, веселитесь!
+extended-description = Никаких антагонистов, расслабьтесь!

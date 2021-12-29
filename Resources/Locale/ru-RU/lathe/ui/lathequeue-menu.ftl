@@ -1,2 +1,2 @@
-﻿lathequeue-menu-title = Lathe Queue
-lathequeue-menu-not-producing-text = Not producing anything.
+﻿lathequeue-menu-title = Очередь производства
+lathequeue-menu-not-producing-text = Ничего не производится.

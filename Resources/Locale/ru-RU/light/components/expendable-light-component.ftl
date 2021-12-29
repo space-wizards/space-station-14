@@ -1,1 +1,1 @@
-expendable-light-start-verb = Start Light
+expendable-light-start-verb = Зажечь

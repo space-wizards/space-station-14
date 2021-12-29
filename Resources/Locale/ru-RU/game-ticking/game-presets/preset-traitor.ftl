@@ -19,25 +19,25 @@ traitor-was-a-traitor-with-objectives-named = [color=White]{$name}[/color] бы�
 preset-traitor-objective-issuer-syndicate = [color=#87cefa]Синдикат[/color]
 
 # Shown at the end of a round of Traitor
-traitor-objective-condition-success = {$condition} | [color={$markupColor}]Успешно![/color]
+traitor-objective-condition-success = {$condition} | [color={$markupColor}]Успех![/color]
 
 # Shown at the end of a round of Traitor
 traitor-objective-condition-fail = {$condition} | [color={$markupColor}]Провал![/color] ({$progress}%)
 
 traitor-title = Предатель
 traitor-description = Среди нас есть предатели...
-traitor-not-enough-ready-players = Недостаточно игроков готовы к игре! Из {$minimumPlayers} необходимых игроков готово {$readyPlayersCount}.
-traitor-no-one-ready = Нет готовых игроков! Не удалось начать режим Предатель.
+traitor-not-enough-ready-players = Недостаточно игроков готовы к игре! Из {$minimumPlayers} необходимых игроков готовы {$readyPlayersCount}.
+traitor-no-one-ready = Нет готовых игроков! Не удалось начать режим Предателя.
 
 ## TraitorDeathMatch
-traitor-death-match-title = DeathMatch Предателей
+traitor-death-match-title = Бой насмерть предателей
 traitor-death-match-description = Все - предатели. Все хотят смерти друг друга.
-traitor-death-match-station-is-too-unsafe-announcement = Станция слишком опасна для продолжения. У вас есть одна минута.
-traitor-death-match-end-round-description-first-line = После этого КПК восстановились...
-traitor-death-match-end-round-description-entry = КПК {$originalName}, с {$tcBalance} TC
+traitor-death-match-station-is-too-unsafe-announcement = На станции слишком опасно, чтобы продолжать. У вас есть одна минута.
+traitor-death-match-end-round-description-first-line = ПДА были восстановлены...
+traitor-death-match-end-round-description-entry = ПДА {$originalName}, с {$tcBalance} TC
 
 ## TraitorRole
 
 # TraitorRole
-traitor-role-greeting = Здравствуйте, агент
+traitor-role-greeting = Приветствуем, Агент
 traitor-role-codewords = Ваши кодовые слова: {$codewords}

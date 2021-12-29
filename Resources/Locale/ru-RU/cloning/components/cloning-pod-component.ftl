@@ -3,7 +3,7 @@
 cloning-pod-window-title = Капсула клонирования
 cloning-pod-clone-button = Клонировать
 cloning-pod-eject-body-button = Извлечь тело
-cloning-pod-neural-interface-label = Нейронный интерфейс:
+cloning-pod-neural-interface-label = Нейроинтерфейс:
 cloning-pod-no-activity-text = Нет активности
 cloning-pod-mind-present-text = Сознание обнаружено
 

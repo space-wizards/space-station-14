@@ -2,18 +2,19 @@
 ### UI
 
 # Shown when an empty flash is examined at any range
-flash-component-examine-empty = It's burnt out!
+flash-component-examine-empty = Она выгорела!
 
 # Shown when a flash is examined in details range
-flash-component-examine-detail-count = The flash has [color={$markupCountColor}]{$count}[/color] {$count ->
-    [one] use
-    *[other] uses
-} remaining.
+flash-component-examine-detail-count = У флешки осталось [color={$markupCountColor}]{$count}[/color] {$count ->
+    [one] использование
+    [few] использования
+    *[other] использований
+}.
 
 ### Interaction Messages
 
 # Shown when someone flashes you with a flash
-flash-component-user-blinds-you = {$user} blinds you with the flash!
+flash-component-user-blinds-you = {$user} ослепляет вас вспышкой!
 
 # Shown when a flash runs out of uses
-flash-component-becomes-empty = The flash burns out!
+flash-component-becomes-empty = Флешка выгорает!

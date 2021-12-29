@@ -1,10 +1,9 @@
 # InstrumentComponent
-instrument-component-finger-cramps-light-message = Your fingers are beginning to a cramp a little!
-instrument-component-finger-cramps-serious-message = Your fingers are seriously cramping up!
-instrument-component-finger-cramps-max-message = Your fingers cramp up from playing!
-instruments-component-menu-no-midi-support = MIDI support is currently not
-                                             available on your system.
-                                             If on Linux, you may need to install
-                                             FluidSynth or a development package
-                                             for FluidSynth.
-
+instrument-component-finger-cramps-light-message = Ваши пальцы начинает немного сводить судорогой!
+instrument-component-finger-cramps-serious-message = Ваши пальцы свело судорогой!
+instrument-component-finger-cramps-max-message = Ваши пальцы сводит судорогой от игры!
+instruments-component-menu-no-midi-support = Поддержка MIDI в настоящее время не
+                                             доступна в вашей системе.
+                                             Если вы на Linux, вам может потребоваться установить
+                                             FluidSynth или пакет разработки
+                                             для FluidSynth.

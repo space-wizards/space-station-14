@@ -1,5 +1,5 @@
 ## ExamineSystem
 
-examine-system-entity-does-not-exist = That entity doesn't exist
+examine-system-entity-does-not-exist = Этой сущности не существует
 
-examine-verb-name = Examine
+examine-verb-name = Осмотреть

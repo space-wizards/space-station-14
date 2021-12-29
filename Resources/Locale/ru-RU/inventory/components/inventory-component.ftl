@@ -1,3 +1,3 @@
-inventory-component-on-equip-cannot = You can't equip this!
-inventory-component-can-equip-cannot = You can't equip this!
-inventory-component-can-equip-does-not-fit = This doesn't fit!
+inventory-component-on-equip-cannot = Вы не можете экипировать это!
+inventory-component-can-equip-cannot = Вы не можете экипировать это!
+inventory-component-can-equip-does-not-fit = Это не подходит!
