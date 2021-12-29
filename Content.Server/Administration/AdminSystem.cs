@@ -19,7 +19,7 @@ namespace Content.Server.Administration
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
 
-        private Dictionary<NetUserId, PlayerInfo>? _playerList;
+        private readonly Dictionary<NetUserId, PlayerInfo> _playerList = new();
 
         public override void Initialize()
         {
@@ -35,7 +35,6 @@ namespace Content.Server.Administration
 
         private void UpdatePlayerList(IPlayerSession player)
         {
-            _playerList ??= new Dictionary<NetUserId, PlayerInfo>();
             _playerList[player.UserId] = GetPlayerInfo(player);
         }
 
@@ -100,7 +99,7 @@ namespace Content.Server.Administration
         {
             return new()
             {
-                PlayerInfo = _playerList![session.UserId]
+                PlayerInfo = _playerList[session.UserId]
             };
         }
 
@@ -120,8 +119,7 @@ namespace Content.Server.Administration
         {
             var ev = new FullPlayerListEvent();
 
-            if (_playerList != null)
-                ev.PlayersInfo = _playerList.Values.ToList();
+            ev.PlayersInfo = _playerList.Values.ToList();
 
             RaiseNetworkEvent(ev, playerSession.ConnectedClient);
         }
