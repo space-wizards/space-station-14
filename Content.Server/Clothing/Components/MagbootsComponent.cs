@@ -20,6 +20,7 @@ namespace Content.Server.Clothing.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
+    [ComponentReference(typeof(SharedMagbootsComponent))]
     public sealed class MagbootsComponent : SharedMagbootsComponent, IUse, IActivate
     {
         [ComponentDependency] private SharedItemComponent? _item = null;
