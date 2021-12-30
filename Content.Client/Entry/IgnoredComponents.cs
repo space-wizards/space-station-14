@@ -255,6 +255,7 @@ namespace Content.Client.Entry
             "CargoTelepad",
             "TraitorDeathMatchRedemption",
             "GlassBeaker",
+            "CanHostGuardian",
             "SliceableFood",
             "DamageOtherOnHit",
             "SinguloFood",

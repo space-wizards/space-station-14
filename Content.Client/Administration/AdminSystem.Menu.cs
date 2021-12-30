@@ -31,7 +31,7 @@ namespace Content.Client.Administration
         [Dependency] private readonly IClientConsoleHost _clientConsoleHost = default!;
 
         private AdminMenuWindow? _window;
-        private readonly List<SS14Window> _commandWindows = new();
+        private readonly List<BaseWindow> _commandWindows = new();
 
         private void InitializeMenu()
         {
@@ -82,7 +82,7 @@ namespace Content.Client.Administration
             _commandWindows.Clear();
         }
 
-        public void OpenCommand(SS14Window window)
+        public void OpenCommand(BaseWindow window)
         {
             _commandWindows.Add(window);
             window.OpenCentered();

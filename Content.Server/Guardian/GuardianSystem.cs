@@ -124,6 +124,14 @@ namespace Content.Server.Guardian
                 return;
             }
 
+            // Can only inject things with the component...
+            if (!HasComp<CanHostGuardianComponent>(target))
+            {
+                _popupSystem.PopupEntity(Loc.GetString("guardian-activator-invalid-target"), user, Filter.Entities(user));
+                return;
+            }
+
+
             // If user is already a host don't duplicate.
             if (HasComp<GuardianHostComponent>(target))
             {
