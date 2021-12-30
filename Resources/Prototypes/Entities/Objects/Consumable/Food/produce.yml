@@ -26,6 +26,7 @@
     state: produce
   - type: Produce
   - type: Extractable
+    grindableSolutionName: food
 
 # Subclasses
 
@@ -558,10 +559,8 @@
       solutions:
         food:
           reagents:
-            - ReagentId: Nutriment
-              Quantity: 5
             - ReagentId: CapsaicinOil
-              Quantity: 1
+              Quantity: 5
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/chili.rsi
     - type: Produce
