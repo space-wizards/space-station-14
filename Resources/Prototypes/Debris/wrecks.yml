@@ -1,0 +1,82 @@
+- type: debris
+  id: WreckDebris1
+  floorplanStyle: Tiles
+  floorPlacements: 24
+  radius: 4
+  floorTiles:
+    - 'plating'
+    - 'plating'
+    - 'floor_steel'
+    - 'lattice'
+  populator:
+    !type:ScrapyardPopulator
+    entityTable:
+      floor_steel:
+        - id: SalvageMaterialCrateSpawner
+          prob: 0.1
+          orGroup: Debris
+        - id: SalvageCanisterSpawner
+          prob: 0.05
+          orGroup: Debris
+      plating:
+        - id: WallSolid
+          prob: 0.3
+          orGroup: Debris
+        - id: SalvageMaterialCrateSpawner
+          prob: 0.1
+          orGroup: Debris
+        - id: SalvageCanisterSpawner
+          prob: 0.05
+          orGroup: Debris
+      lattice:
+        - id: SalvageMaterialCrateSpawner
+          prob: 0.05
+          orGroup: Debris
+        - id: SalvageCanisterSpawner
+          prob: 0.025
+          orGroup: Debris
+        - id: Grille
+          prob: 0.3
+          orGroup: Debris
+
+
+- type: debris
+  id: WreckDebris2
+  floorplanStyle: Tiles
+  floorPlacements: 48
+  radius: 6
+  floorTiles:
+    - 'plating'
+    - 'plating'
+    - 'floor_steel'
+    - 'lattice'
+  populator:
+    !type:ScrapyardPopulator
+    entityTable:
+      floor_steel:
+        - id: SalvageMaterialCrateSpawner
+          prob: 0.1
+          orGroup: Debris
+        - id: SalvageCanisterSpawner
+          prob: 0.05
+          orGroup: Debris
+      plating:
+        - id: WallSolid
+          prob: 0.3
+          orGroup: Debris
+        - id: SalvageMaterialCrateSpawner
+          prob: 0.1
+          orGroup: Debris
+        - id: SalvageCanisterSpawner
+          prob: 0.05
+          orGroup: Debris
+      lattice:
+        - id: SalvageMaterialCrateSpawner
+          prob: 0.05
+          orGroup: Debris
+        - id: SalvageCanisterSpawner
+          prob: 0.025
+          orGroup: Debris
+        - id: Grille
+          prob: 0.3
+          orGroup: Debris

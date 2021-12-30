@@ -18,6 +18,7 @@ using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.Objectives;
 using Content.Server.Objectives.Interfaces;
 using Content.Server.Preferences.Managers;
+using Content.Server.Procedural.Tools;
 using Content.Server.Sandbox;
 using Content.Server.Speech;
 using Content.Server.Voting.Managers;
@@ -57,6 +58,7 @@ namespace Content.Server.IoC
             IoCManager.Register<IAfkManager, AfkManager>();
             IoCManager.Register<IGameMapManager, GameMapManager>();
             IoCManager.Register<IGamePrototypeLoadManager, GamePrototypeLoadManager>();
+            IoCManager.Register<PoissonDiskSampler>();
         }
     }
 }

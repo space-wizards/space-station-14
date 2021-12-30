@@ -1,0 +1,13 @@
+- type: debrisLayout
+  id: SpawnDebris
+  layout:
+    - proto: RoidDebris1
+      prob: 0.55
+    - proto: RoidDebris2
+      prob: 0.25
+    - proto: RoidDebris3
+      prob: 0.1
+    - proto: WreckDebris1
+      prob: 0.25
+    - proto: WreckDebris2
+      prob: 1

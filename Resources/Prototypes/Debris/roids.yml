@@ -1,0 +1,38 @@
+- type: debris
+  id: RoidDebris1
+  floorplanStyle: Blobs
+  floorPlacements: 12
+  radius: 4
+  floorTiles:
+    - 'floor_asteroid_coarse_sand0'
+    - 'floor_asteroid_coarse_sand1'
+    - 'floor_asteroid_coarse_sand2'
+  populator:
+    !type:FillDebrisPopulator
+    fillerEntity: AsteroidRock
+
+- type: debris
+  id: RoidDebris2
+  floorplanStyle: Blobs
+  floorPlacements: 24
+  radius: 6
+  floorTiles:
+    - 'floor_asteroid_coarse_sand0'
+    - 'floor_asteroid_coarse_sand1'
+    - 'floor_asteroid_coarse_sand2'
+  populator:
+    !type:FillDebrisPopulator
+    fillerEntity: AsteroidRock
+
+- type: debris
+  id: RoidDebris3
+  floorplanStyle: Blobs
+  floorPlacements: 75
+  radius: 9
+  floorTiles:
+    - 'floor_asteroid_coarse_sand0'
+    - 'floor_asteroid_coarse_sand1'
+    - 'floor_asteroid_coarse_sand2'
+  populator:
+    !type:FillDebrisPopulator
+    fillerEntity: AsteroidRock

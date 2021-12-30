@@ -6,6 +6,7 @@ using Content.Server.GameTicking.Events;
 using Content.Server.Ghost;
 using Content.Server.Mind;
 using Content.Server.Players;
+using Content.Server.Procedural.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Coordinates;
 using Content.Shared.GameTicking;
@@ -37,6 +38,8 @@ namespace Content.Server.GameTicking
             "Round length in seconds.");
 
         [Dependency] private readonly IServerDbManager _db = default!;
+        [Dependency] private readonly SimpleWorldPopulatorSystem _swps = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         [ViewVariables]
         private TimeSpan _roundStartTimeSpan;
@@ -83,6 +86,8 @@ namespace Content.Server.GameTicking
             _stationSystem.InitialSetupStationGrid(grid.GridEntityId, map);
 
             _spawnPoint = grid.ToCoordinates();
+
+            _swps.SpawnDebrisField(_spawnPoint.ToMap(_entityManager), 35f);
 
             var timeSpan = _gameTiming.RealTime - startTime;
             Logger.InfoS("ticker", $"Loaded map in {timeSpan.TotalMilliseconds:N2}ms.");
