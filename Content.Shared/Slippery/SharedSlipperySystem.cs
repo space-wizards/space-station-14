@@ -26,6 +26,9 @@ namespace Content.Shared.Slippery
         public override void Initialize()
         {
             base.Initialize();
+
+            UpdatesOutsidePrediction = true;
+
             SubscribeLocalEvent<SlipperyComponent, StartCollideEvent>(HandleCollide);
             SubscribeLocalEvent<NoSlipComponent, SlipAttemptEvent>(OnNoSlipAttempt);
         }

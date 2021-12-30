@@ -21,6 +21,7 @@
   - type: CameraRecoil
   - type: Examiner
   - type: HumanInventoryController
+  - type: CanHostGuardian
   - type: AiFactionTag
     factions:
     - NanoTrasen
