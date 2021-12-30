@@ -183,7 +183,7 @@ namespace Content.Client.Verbs
         {
             if (!target.IsClientSide())
             {
-                RaiseNetworkEvent(new RequestServerVerbsEvent(target, verbTypes, adminRequest: true));
+                RaiseNetworkEvent(new RequestServerVerbsEvent(target, verbTypes, adminRequest: force));
             }
 
             return GetLocalVerbs(target, user, verbTypes, force);
