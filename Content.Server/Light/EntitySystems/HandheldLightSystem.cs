@@ -47,7 +47,7 @@ namespace Content.Server.Light.EntitySystems
             SubscribeLocalEvent<HandheldLightComponent, ExaminedEvent>(OnExamine);
             SubscribeLocalEvent<HandheldLightComponent, GetActivationVerbsEvent>(AddToggleLightVerb);
             SubscribeLocalEvent<HandheldLightComponent, InteractUsingEvent>(OnInteractUsing);
-            SubscribeLocalEvent<HandheldLightComponent, UseInHandEvent>(OnUse);
+            SubscribeLocalEvent<HandheldLightComponent, ActivateInWorldEvent>(OnActivate);
         }
 
         private void OnGetState(EntityUid uid, HandheldLightComponent component, ref ComponentGetState args)
@@ -95,7 +95,7 @@ namespace Content.Server.Light.EntitySystems
             args.Handled = true;
         }
 
-        private void OnUse(EntityUid uid, HandheldLightComponent component, UseInHandEvent args)
+        private void OnActivate(EntityUid uid, HandheldLightComponent component, ActivateInWorldEvent args)
         {
             if (args.Handled) return;
 

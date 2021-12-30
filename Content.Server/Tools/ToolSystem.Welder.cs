@@ -36,7 +36,6 @@ namespace Content.Server.Tools
             SubscribeLocalEvent<WelderComponent, IsHotEvent>(OnWelderIsHotEvent);
             SubscribeLocalEvent<WelderComponent, ExaminedEvent>(OnWelderExamine);
             SubscribeLocalEvent<WelderComponent, SolutionChangedEvent>(OnWelderSolutionChange);
-            SubscribeLocalEvent<WelderComponent, UseInHandEvent>(OnWelderUseInHand);
             SubscribeLocalEvent<WelderComponent, ActivateInWorldEvent>(OnWelderActivate);
             SubscribeLocalEvent<WelderComponent, AfterInteractEvent>(OnWelderAfterInteract);
             SubscribeLocalEvent<WelderComponent, ToolUseAttemptEvent>(OnWelderToolUseAttempt);
@@ -237,11 +236,6 @@ namespace Content.Server.Tools
             }
 
             args.Handled = true;
-        }
-
-        private void OnWelderUseInHand(EntityUid uid, WelderComponent welder, UseInHandEvent args)
-        {
-            args.Handled = TryToggleWelder(uid, args.User, welder);
         }
 
         private void OnWelderToolUseAttempt(EntityUid uid, WelderComponent welder, ToolUseAttemptEvent args)

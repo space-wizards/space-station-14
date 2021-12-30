@@ -22,7 +22,7 @@ namespace Content.Server.Clothing.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public sealed class MagbootsComponent : SharedMagbootsComponent, IUnequipped, IEquipped, IUse, IActivate
+    public sealed class MagbootsComponent : SharedMagbootsComponent, IUnequipped, IEquipped, IActivate
     {
         [ComponentDependency] private ItemComponent? _item = null;
         [ComponentDependency] private ItemActionsComponent? _itemActions = null;
@@ -101,12 +101,6 @@ namespace Content.Server.Clothing.Components
                     }
                 }
             }
-        }
-
-        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
-        {
-            Toggle(eventArgs.User);
-            return true;
         }
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
