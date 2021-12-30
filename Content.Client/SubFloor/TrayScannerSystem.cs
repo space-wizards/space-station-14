@@ -21,6 +21,8 @@ public class TrayScannerSystem : SharedTrayScannerSystem
     {
         base.Initialize();
 
+        UpdatesOutsidePrediction = true;
+
         SubscribeLocalEvent<TrayScannerComponent, ComponentShutdown>(OnComponentShutdown);
     }
 

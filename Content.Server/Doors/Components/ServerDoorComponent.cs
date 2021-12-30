@@ -3,8 +3,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Access;
-using Content.Server.Access.Components;
-using Content.Server.Access.Systems;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Construction;
@@ -13,6 +11,8 @@ using Content.Server.Hands.Components;
 using Content.Server.Stunnable;
 using Content.Server.Tools;
 using Content.Server.Tools.Components;
+using Content.Shared.Access.Components;
+using Content.Shared.Access.Systems;
 using Content.Shared.Damage;
 using Content.Shared.Doors;
 using Content.Shared.Interaction;
@@ -275,19 +275,19 @@ namespace Content.Server.Doors.Components
 
         #region Opening
 
-        public void TryOpen(EntityUid user = default)
+        public void TryOpen(EntityUid? user = null)
         {
             var msg = new DoorOpenAttemptEvent();
             _entMan.EventBus.RaiseLocalEvent(Owner, msg);
 
             if (msg.Cancelled) return;
 
-            if (!user.Valid)
+            if (user == null)
             {
                 // a machine opened it or something, idk
                 Open();
             }
-            else if (CanOpenByEntity(user))
+            else if (CanOpenByEntity(user.Value))
             {
                 Open();
 
@@ -310,7 +310,7 @@ namespace Content.Server.Doors.Components
                 return false;
             }
 
-            if (!_entMan.TryGetComponent(Owner, out AccessReader? access))
+            if (!_entMan.TryGetComponent(Owner, out AccessReaderComponent? access))
             {
                 return true;
             }
@@ -334,7 +334,7 @@ namespace Content.Server.Doors.Components
         /// </summary>
         private bool HasAccessType(string accessType)
         {
-            if (_entMan.TryGetComponent(Owner, out AccessReader? access))
+            if (_entMan.TryGetComponent(Owner, out AccessReaderComponent? access))
             {
                 return access.AccessLists.Any(list => list.Contains(accessType));
             }
@@ -422,14 +422,14 @@ namespace Content.Server.Doors.Components
 
         #region Closing
 
-        public void TryClose(EntityUid user = default)
+        public void TryClose(EntityUid? user = null)
         {
             var msg = new DoorCloseAttemptEvent();
             _entMan.EventBus.RaiseLocalEvent(Owner, msg);
 
             if (msg.Cancelled) return;
 
-            if (user != default && !CanCloseByEntity(user))
+            if (user != null && !CanCloseByEntity(user.Value))
             {
                 Deny();
                 return;
@@ -445,7 +445,7 @@ namespace Content.Server.Doors.Components
                 return false;
             }
 
-            if (!_entMan.TryGetComponent(Owner, out AccessReader? access))
+            if (!_entMan.TryGetComponent(Owner, out AccessReaderComponent? access))
             {
                 return true;
             }

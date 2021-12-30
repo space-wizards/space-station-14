@@ -25,7 +25,7 @@ namespace Content.Server.Clothing
 
         private void AddToggleVerb(EntityUid uid, MagbootsComponent component, GetActivationVerbsEvent args)
         {
-            if (args.User == null || !args.CanAccess || !args.CanInteract)
+            if (!args.CanAccess || !args.CanInteract)
                 return;
 
             Verb verb = new();

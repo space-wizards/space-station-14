@@ -1,0 +1,131 @@
+- type: entity
+  parent: MarkerBase
+  id: RandomPosterAny
+  name: random poster spawner
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - texture: Structures/Wallmounts/posters.rsi/random_anything.png
+  - type: RandomSpawner
+    offset: 0
+    prototypes:
+      - RandomPosterContraband
+      - RandomPosterLegit
+    chance: 0.95
+    rarePrototypes:
+      - PosterBroken
+    rareChance: 0.05
+
+- type: entity
+  parent: MarkerBase
+  id: RandomPosterContraband
+  name: random contraband poster spawner
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - texture: Structures/Wallmounts/posters.rsi/random_contraband.png
+  - type: RandomSpawner
+    offset: 0
+    prototypes:
+      - PosterContrabandFreeTonto
+      - PosterContrabandAtmosiaDeclarationIndependence
+      - PosterContrabandFunPolice
+      - PosterContrabandLustyXenomorph
+      - PosterContrabandSyndicateRecruitment
+      - PosterContrabandClown
+      - PosterContrabandSmoke
+      - PosterContrabandGreyTide
+      - PosterContrabandMissingGloves
+      - PosterContrabandHackingGuide
+      - PosterContrabandRIPBadger
+      - PosterContrabandAmbrosiaVulgaris
+      - PosterContrabandDonutCorp.
+      - PosterContrabandEAT.
+      - PosterContrabandTools
+      - PosterContrabandPower
+      - PosterContrabandSpaceCube
+      - PosterContrabandCommunistState
+      - PosterContrabandLamarr
+      - PosterContrabandBorgFancy
+      - PosterContrabandBorgFancyv2
+      - PosterContrabandKosmicheskayaStantsiya
+      - PosterContrabandRebelsUnite
+      - PosterContrabandC20r
+      - PosterContrabandHaveaPuff
+      - PosterContrabandRevolver
+      - PosterContrabandDDayPromo
+      - PosterContrabandSyndicatePistol
+      - PosterContrabandEnergySwords
+      - PosterContrabandRedRum
+      - PosterContrabandCC64KAd
+      - PosterContrabandPunchShit
+      - PosterContrabandTheGriffin
+      - PosterContrabandFreeDrone
+      - PosterContrabandBustyBackdoorXenoBabes6
+      - PosterContrabandRobustSoftdrinks
+      - PosterContrabandShamblersJuice
+      - PosterContrabandPwrGame
+      - PosterContrabandSunkist
+      - PosterContrabandSpaceCola
+      - PosterContrabandSpaceUp
+      - PosterContrabandKudzu
+      - PosterContrabandMaskedMen
+      - PosterContrabandUnreadableAnnouncement
+      - PosterContrabandFreeSyndicateEncryptionKey
+      - PosterContrabandBountyHunters
+      - PosterContrabandTheBigGasTruth
+      - PosterContrabandGotWood
+    chance: 1
+
+- type: entity
+  parent: MarkerBase
+  id: RandomPosterLegit
+  name: random legit poster spawner
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - texture: Structures/Wallmounts/posters.rsi/random_legit.png
+  - type: RandomSpawner
+    offset: 0
+    prototypes:
+      - PosterLegitHereForYourSafety
+      - PosterLegitNanotrasenLogo
+      - PosterLegitCleanliness
+      - PosterLegitHelpOthers
+      - PosterLegitBuild
+      - PosterLegitBlessThisSpess
+      - PosterLegitScience
+      - PosterLegitIan
+      - PosterLegitObey
+      - PosterLegitWalk
+      - PosterLegitStateLaws
+      - PosterLegitLoveIan
+      - PosterLegitSpaceCops
+      - PosterLegitUeNo
+      - PosterLegitGetYourLEGS
+      - PosterLegitDoNotQuestion
+      - PosterLegitWorkForAFuture
+      - PosterLegitSoftCapPopArt
+      - PosterLegitSafetyInternals
+      - PosterLegitSafetyEyeProtection
+      - PosterLegitSafetyReport
+      - PosterLegitReportCrimes
+      - PosterLegitIonRifle
+      - PosterLegitFoamForceAd
+      - PosterLegitCohibaRobustoAd
+      - PosterLegit50thAnniversaryVintageReprint
+      - PosterLegitFruitBowl
+      - PosterLegitPDAAd
+      - PosterLegitEnlist
+      - PosterLegitNanomichiAd
+      - PosterLegit12Gauge
+      - PosterLegitHighClassMartini
+      - PosterLegitTheOwl
+      - PosterLegitNoERP
+      - PosterLegitCarbonDioxide
+      - PosterLegitDickGumshue
+      - PosterLegitThereIsNoGasGiant
+    chance: 1

@@ -640,7 +640,7 @@ namespace Content.Server.Database
             }
         }
 
-        public async IAsyncEnumerable<LogRecord> GetAdminLogs(LogFilter? filter = null)
+        public async IAsyncEnumerable<SharedAdminLog> GetAdminLogs(LogFilter? filter = null)
         {
             await using var db = await GetDb();
             var query = await GetAdminLogsQuery(db.DbContext, filter);
@@ -654,7 +654,7 @@ namespace Content.Server.Database
                     players[i] = log.Players[i].PlayerUserId;
                 }
 
-                yield return new LogRecord(log.Id, log.RoundId, log.Type, log.Impact, log.Date, log.Message, players);
+                yield return new SharedAdminLog(log.Id, log.Type, log.Impact, log.Date, log.Message, players);
             }
         }
 

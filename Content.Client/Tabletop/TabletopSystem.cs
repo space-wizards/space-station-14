@@ -43,6 +43,8 @@ namespace Content.Client.Tabletop
 
         public override void Initialize()
         {
+            UpdatesOutsidePrediction = true;
+
             CommandBinds.Builder
                         .Bind(EngineKeyFunctions.Use, new PointerInputCmdHandler(OnUse, false))
                         .Register<TabletopSystem>();

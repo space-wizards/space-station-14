@@ -1,12 +1,14 @@
 using System.Collections.Generic;
 using Content.Client.Administration.Managers;
 using Content.Client.Administration.UI;
+using Content.Client.Administration.UI.Tabs.PlayerTab;
 using Content.Client.HUD;
 using Content.Shared.Input;
 using Robust.Client.Console;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.ResourceManagement;
+using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input.Binding;
@@ -26,9 +28,10 @@ namespace Content.Client.Administration
         [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IEntityLookup _entityLookup = default!;
+        [Dependency] private readonly IClientConsoleHost _clientConsoleHost = default!;
 
         private AdminMenuWindow? _window;
-        private readonly List<SS14Window> _commandWindows = new();
+        private readonly List<BaseWindow> _commandWindows = new();
 
         private void InitializeMenu()
         {
@@ -79,7 +82,7 @@ namespace Content.Client.Administration
             _commandWindows.Clear();
         }
 
-        public void OpenCommand(SS14Window window)
+        public void OpenCommand(BaseWindow window)
         {
             _commandWindows.Add(window);
             window.OpenCentered();
@@ -88,11 +91,14 @@ namespace Content.Client.Administration
         public void Open()
         {
             _window ??= new AdminMenuWindow();
+            _window.PlayerTabControl.OnEntryPressed += PlayerTabEntryPressed;
             _window.OpenCentered();
         }
 
         public void Close()
         {
+            if (_window != null)
+                _window.PlayerTabControl.OnEntryPressed -= PlayerTabEntryPressed;
             _window?.Close();
 
             foreach (var window in _commandWindows)
@@ -128,6 +134,15 @@ namespace Content.Client.Administration
             {
                 TryOpen();
             }
+        }
+
+        private void PlayerTabEntryPressed(BaseButton.ButtonEventArgs args)
+        {
+            if (args.Button is not PlayerTabEntry button
+                || button.PlayerUid == null)
+                return;
+
+            _clientConsoleHost.ExecuteCommand($"vv {button.PlayerUid}");
         }
     }
 }

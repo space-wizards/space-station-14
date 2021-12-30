@@ -44,7 +44,7 @@ namespace Content.Client.Viewport
 
         private IEventBus _eventBus => _entityManager.EventBus;
 
-        private EntityUid _lastHoveredEntity;
+        private EntityUid? _lastHoveredEntity;
 
         private bool _outlineEnabled = true;
 
@@ -84,7 +84,7 @@ namespace Content.Client.Viewport
             // lead to extremely thick outlines in the other viewports. Fixing this probably requires changing how the
             // hover outline works, so that it only highlights the entity in a single viewport.
 
-            EntityUid entityToClick = default;
+            EntityUid? entityToClick = null;
             var renderScale = 1;
             if (UserInterfaceManager.CurrentlyHovered is IViewportControl vp)
             {
@@ -107,15 +107,15 @@ namespace Content.Client.Viewport
             }
 
             var inRange = false;
-            if (localPlayer.ControlledEntity != default && entityToClick != default)
+            if (localPlayer.ControlledEntity != null && entityToClick != null)
             {
-                inRange = localPlayer.InRangeUnobstructed(entityToClick, ignoreInsideBlocker: true);
+                inRange = localPlayer.InRangeUnobstructed(entityToClick.Value, ignoreInsideBlocker: true);
             }
 
             InteractionOutlineComponent? outline;
             if(!_outlineEnabled || !ConfigurationManager.GetCVar(CCVars.OutlineEnabled))
             {
-                if(entityToClick != default && _entityManager.TryGetComponent(entityToClick, out outline))
+                if(entityToClick != null && _entityManager.TryGetComponent(entityToClick, out outline))
                 {
                     outline.OnMouseLeave(); //Prevent outline remains from persisting post command.
                 }
@@ -124,7 +124,7 @@ namespace Content.Client.Viewport
 
             if (entityToClick == _lastHoveredEntity)
             {
-                if (entityToClick != default && _entityManager.TryGetComponent(entityToClick, out outline))
+                if (entityToClick != null && _entityManager.TryGetComponent(entityToClick, out outline))
                 {
                     outline.UpdateInRange(inRange, renderScale);
                 }
@@ -132,7 +132,7 @@ namespace Content.Client.Viewport
                 return;
             }
 
-            if (_lastHoveredEntity != default && !_entityManager.Deleted(_lastHoveredEntity) &&
+            if (_lastHoveredEntity != null && !_entityManager.Deleted(_lastHoveredEntity) &&
                 _entityManager.TryGetComponent(_lastHoveredEntity, out outline))
             {
                 outline.OnMouseLeave();
@@ -140,16 +140,16 @@ namespace Content.Client.Viewport
 
             _lastHoveredEntity = entityToClick;
 
-            if (_lastHoveredEntity != default && _entityManager.TryGetComponent(_lastHoveredEntity, out outline))
+            if (_lastHoveredEntity != null && _entityManager.TryGetComponent(_lastHoveredEntity, out outline))
             {
                 outline.OnMouseEnter(inRange, renderScale);
             }
         }
 
-        public EntityUid GetEntityUnderPosition(MapCoordinates coordinates)
+        public EntityUid? GetEntityUnderPosition(MapCoordinates coordinates)
         {
             var entitiesUnderPosition = GetEntitiesUnderPosition(coordinates);
-            return entitiesUnderPosition.Count > 0 ? entitiesUnderPosition[0] : default;
+            return entitiesUnderPosition.Count > 0 ? entitiesUnderPosition[0] : null;
         }
 
         public IList<EntityUid> GetEntitiesUnderPosition(EntityCoordinates coordinates)
@@ -257,7 +257,7 @@ namespace Content.Client.Viewport
             var funcId = InputManager.NetworkBindMap.KeyFunctionID(func);
 
             EntityCoordinates coordinates = default;
-            EntityUid entityToClick = default;
+            EntityUid? entityToClick = null;
             if (args.Viewport is IViewportControl vp)
             {
                 var mousePosWorld = vp.ScreenToMap(kArgs.PointerLocation.Position);
@@ -269,7 +269,7 @@ namespace Content.Client.Viewport
 
             var message = new FullInputCmdMessage(Timing.CurTick, Timing.TickFraction, funcId, kArgs.State,
                 coordinates , kArgs.PointerLocation,
-                entityToClick);
+                entityToClick ?? default); // TODO make entityUid nullable
 
             // client side command handlers will always be sent the local player session.
             var session = PlayerManager.LocalPlayer?.Session;

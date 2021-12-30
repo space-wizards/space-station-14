@@ -5,17 +5,16 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Light.Component
 {
-    [NetworkedComponent()]
+    [NetworkedComponent]
+    [ComponentProtoName("HandheldLight")]
     public abstract class SharedHandheldLightComponent : Robust.Shared.GameObjects.Component
     {
-        public sealed override string Name => "HandheldLight";
-
         protected abstract bool HasCell { get; }
 
-        protected const int StatusLevels = 6;
+        public const int StatusLevels = 6;
 
         [Serializable, NetSerializable]
-        protected sealed class HandheldLightComponentState : ComponentState
+        public sealed class HandheldLightComponentState : ComponentState
         {
             public byte? Charge { get; }
 
