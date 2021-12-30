@@ -10,7 +10,9 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Weapon.Ranged.Ammunition.Components
 {
@@ -35,8 +37,8 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
 
         public int AmmoLeft => _spawnedAmmo.Count + _unspawnedCount;
 
-        [DataField("fillPrototype")]
-        private string? _fillPrototype = default;
+        [DataField("fillPrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
+        private string? _fillPrototype;
 
         protected override void Initialize()
         {

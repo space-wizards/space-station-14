@@ -57,7 +57,7 @@
     Steel: 200
 
 - type: latheRecipe
-  id: BoneSaw
+  id: Saw
   icon: Objects/Specific/Medical/Surgery/saw.rsi/saw.png
   result: Saw
   completetime: 500

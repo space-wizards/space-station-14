@@ -38,6 +38,8 @@ namespace Content.Client.Instruments
         {
             base.Initialize();
 
+            UpdatesOutsidePrediction = true;
+
             _cfg.OnValueChanged(CCVars.MaxMidiEventsPerBatch, OnMaxMidiEventsPerBatchChanged, true);
             _cfg.OnValueChanged(CCVars.MaxMidiEventsPerSecond, OnMaxMidiEventsPerSecondChanged, true);
 
