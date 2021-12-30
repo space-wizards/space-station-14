@@ -22,6 +22,8 @@ namespace Content.Server.BarSign.Systems
 
         private void UpdateBarSignVisuals(EntityUid owner, BarSignComponent component, PowerChangedEvent args)
         {
+            if (component.LifeStage is < ComponentLifeStage.Initialized or > ComponentLifeStage.Running) return;
+
             var prototype = TryGetPrototype(component);
             if (prototype == null)
             {
