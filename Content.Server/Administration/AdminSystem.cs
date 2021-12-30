@@ -36,19 +36,24 @@ namespace Content.Server.Administration
         private void UpdatePlayerList(IPlayerSession player)
         {
             _playerList[player.UserId] = GetPlayerInfo(player);
+
+            var playerInfoChangedEvent = new PlayerInfoChangedEvent
+            {
+                PlayerInfo = _playerList[player.UserId]
+            };
+
+            foreach (var admin in _adminManager.ActiveAdmins)
+            {
+                RaiseNetworkEvent(playerInfoChangedEvent, admin.ConnectedClient);
+            }
         }
 
         private void OnRoleEvent(RoleEvent ev)
         {
-            if (ev.Role.Antagonist && ev.Role.Mind.Session != null)
-            {
-                UpdatePlayerList(ev.Role.Mind.Session);
+            if (!ev.Role.Antagonist || ev.Role.Mind.Session == null)
+                return;
 
-                foreach (var admin in _adminManager.ActiveAdmins)
-                {
-                    RaiseNetworkEvent(GetChangedEvent(ev.Role.Mind.Session), admin.ConnectedClient);
-                }
-            }
+            UpdatePlayerList(ev.Role.Mind.Session);
         }
 
         private void OnAdminPermsChanged(AdminPermsChangedEventArgs obj)
@@ -69,11 +74,6 @@ namespace Content.Server.Administration
             if(ev.Player.Status == SessionStatus.Disconnected) return;
 
             UpdatePlayerList(ev.Player);
-
-            foreach (var admin in _adminManager.ActiveAdmins)
-            {
-                RaiseNetworkEvent(GetChangedEvent(ev.Player), admin.ConnectedClient);
-            }
         }
 
         private void OnPlayerAttached(PlayerAttachedEvent ev)
@@ -81,11 +81,6 @@ namespace Content.Server.Administration
             if(ev.Player.Status == SessionStatus.Disconnected) return;
 
             UpdatePlayerList(ev.Player);
-
-            foreach (var admin in _adminManager.ActiveAdmins)
-            {
-                RaiseNetworkEvent(GetChangedEvent(ev.Player), admin.ConnectedClient);
-            }
         }
 
         public override void Shutdown()
@@ -95,24 +90,9 @@ namespace Content.Server.Administration
             _adminManager.OnPermsChanged -= OnAdminPermsChanged;
         }
 
-        private PlayerInfoChangedEvent GetChangedEvent(IPlayerSession session)
-        {
-            return new()
-            {
-                PlayerInfo = _playerList[session.UserId]
-            };
-        }
-
         private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
         {
             UpdatePlayerList(e.Session);
-
-            var args = GetChangedEvent(e.Session);
-
-            foreach (var admin in _adminManager.ActiveAdmins)
-            {
-                RaiseNetworkEvent(args, admin.ConnectedClient);
-            }
         }
 
         private void SendFullPlayerList(IPlayerSession playerSession)
