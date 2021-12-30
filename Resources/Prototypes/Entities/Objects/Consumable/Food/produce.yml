@@ -547,3 +547,20 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/onion_red.rsi
+
+- type: entity
+  name: Chili Pepper
+  parent: FoodProduceBase
+  id: FoodChili
+  description: Spicy, best not touch your eyes.
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          reagents:
+            - ReagentId: Nutriment
+              Quantity: 5
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/chili.rsi
+    - type: Produce
+      seed: chili
