@@ -343,6 +343,14 @@
     layers:
     - state: bowl
     - state: chili-hot
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+          - ReagentId: Nutriment
+            Quantity: 30
+          - ReagentId: CapsaicinOil
+            Quantity: 5
 # Tastes like hot peppers.
 
 - type: entity
