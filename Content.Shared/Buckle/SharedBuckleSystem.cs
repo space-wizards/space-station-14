@@ -59,7 +59,6 @@ namespace Content.Shared.Buckle
         {
             if (args.BodyB.Owner != component.LastEntityBuckledTo) return;
 
-            component.IsOnStrapEntityThisFrame = true;
             if (component.Buckled || component.DontCollide)
             {
                 args.Cancel();

@@ -11,6 +11,7 @@ using Content.Server.DeviceNetwork;
 using Content.Server.EUI;
 using Content.Server.Holiday;
 using Content.Server.Holiday.Interfaces;
+using Content.Server.Info;
 using Content.Server.Maps;
 using Content.Server.Module;
 using Content.Server.MoMMI;
@@ -59,6 +60,7 @@ namespace Content.Server.IoC
             IoCManager.Register<IGameMapManager, GameMapManager>();
             IoCManager.Register<IGamePrototypeLoadManager, GamePrototypeLoadManager>();
             IoCManager.Register<PoissonDiskSampler>();
+            IoCManager.Register<RulesManager, RulesManager>();
         }
     }
 }

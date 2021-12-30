@@ -1,0 +1,73 @@
+# Does not inherit from simplemob
+- type: entity
+  name: Holoparasite
+  id: MobHoloparasite
+  description: A mesmerising whirl of hard-light patterns weaves a marvelous, yet oddly familiar visage. It stands proud, tuning into its owner's life to sustain itself.
+  components:
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: Holoparasite
+    description: Listen to your owner. Don't tank damage. Punch people hard.
+  - type: Input
+    context: "human"
+  - type: PlayerMobMover
+  - type: PlayerInputMover
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 7
+    baseSprintSpeed : 7
+  - type: DamageOnHighSpeedImpact
+    damage:
+      types:
+        Blunt: 5
+    soundHit:
+      path: /Audio/Effects/hit_kick.ogg
+  # TODO: Randomise sprites and randomise the layer color
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/Guardians/guardians.rsi
+    layers:
+    - state: tech_base
+    - state: tech_flare
+      color: "#40a7d7"
+      shader: unshaded
+    noRot: true
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: KinematicController
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      mass: 10
+      mask:
+      - Impassable
+      - SmallImpassable
+      - MobImpassable
+      layer:
+      - Opaque
+  - type: Damageable
+    damageContainer: Biological
+  - type: MobState
+    thresholds:
+      0: !type:NormalMobState {}
+  - type: HeatResistance
+  - type: CombatMode
+  - type: Internals
+  - type: Examiner
+  - type: Speech
+  - type: Pullable
+  - type: UnarmedCombat
+    range: 2
+    arcwidth: 30
+    arc: fist
+    cooldownTime: 0.7
+    arcCooldownTime: 0.7
+    damage:
+      types:
+        Blunt: 40
+  - type: Actions
+    innateActions:
+      - CombatMode
+  - type: Guardian

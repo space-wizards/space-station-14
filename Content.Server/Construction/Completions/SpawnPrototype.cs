@@ -5,7 +5,9 @@ using Content.Shared.Prototypes;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Construction.Completions
 {
@@ -13,8 +15,10 @@ namespace Content.Server.Construction.Completions
     [DataDefinition]
     public class SpawnPrototype : IGraphAction
     {
-        [DataField("prototype")] public string Prototype { get; private set; } = string.Empty;
-        [DataField("amount")] public int Amount { get; private set; } = 1;
+        [DataField("prototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
+        public string Prototype { get; private set; } = string.Empty;
+        [DataField("amount")]
+        public int Amount { get; private set; } = 1;
 
         public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {

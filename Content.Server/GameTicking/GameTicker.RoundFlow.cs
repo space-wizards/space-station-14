@@ -191,6 +191,9 @@ namespace Content.Server.GameTicking
                     }
                 }
 
+                // MapInitialize *before* spawning players, our codebase is too shit to do it afterwards...
+                _pauseManager.DoMapInitialize(DefaultMap);
+
                 // Allow game rules to spawn players by themselves if needed. (For example, nuke ops or wizard)
                 RaiseLocalEvent(new RulePlayerSpawningEvent(readyPlayers, profiles, force));
 
@@ -243,8 +246,6 @@ namespace Content.Server.GameTicking
 
                 // Allow rules to add roles to players who have been spawned in. (For example, on-station traitors)
                 RaiseLocalEvent(new RulePlayerJobsAssignedEvent(assignedJobs.Keys.ToArray(), profiles, force));
-
-                _pauseManager.DoMapInitialize(DefaultMap);
 
                 _roundStartDateTime = DateTime.UtcNow;
                 RunLevel = GameRunLevel.InRound;
