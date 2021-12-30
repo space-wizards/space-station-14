@@ -62,6 +62,7 @@
   desc: A very sweet, carbonated drink reminiscent of sarsparilla. Goes well with ice cream.
   physicalDesc: fizzy
   color: "#381c07"
+  spritePath: rootbeerglass.rsi
 
 - type: reagent
   id: SpaceMountainWind
