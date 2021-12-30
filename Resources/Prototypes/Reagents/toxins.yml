@@ -298,8 +298,15 @@
         - !type:HealthChange
           damage:
             groups:
+              Caustic: 1
+        - !type:HealthChange
+          conditions:
+            - !type:ReagentThreshold
+              min: 5
+          damage:
+            groups:
               Caustic: 2
         - !type:PopupMessage
           type: Local
           messages: [ "capsaicin-effect-light-burn" ]
-          probability: 0.2
+          probability: 0.1
