@@ -460,12 +460,12 @@
   lifespan: 25
   maturation: 6
   production: 6
-  yield: 2
+  yield: 3
   potency: 20
   idealLight: 9
   idealHeat: 298
   chemicals:
-    Nutriment:
+    CapsaicinOil:
       Min: 1
       Max: 10
       PotencyDivisor: 10
