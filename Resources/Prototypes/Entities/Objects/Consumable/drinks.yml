@@ -1462,6 +1462,7 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/rootbeerglass.rsi
+    state: icon
 
 - type: entity
   parent: DrinkGlassBase
