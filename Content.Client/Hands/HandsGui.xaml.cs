@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Content.Client.HUD;
+using Content.Client.Inventory;
 using Content.Client.Items.Managers;
 using Content.Client.Items.UI;
 using Content.Client.Resources;
@@ -32,7 +33,7 @@ namespace Content.Client.Hands
         private readonly HandsSystem _handsSystem;
         private readonly HandsComponent _handsComponent;
 
-        private Texture StorageTexture => _gameHud.GetHudTexture("back.png");
+        private string StorageTexture => "back.png";
         private Texture BlockedTexture => _resourceCache.GetTexture("/Textures/Interface/Inventory/blocked.png");
 
         private ItemStatusPanel StatusPanel { get; }
@@ -166,9 +167,8 @@ namespace Content.Client.Hands
                 HandLocation.Right => "hand_r.png",
                 _ => "hand_l.png"
             };
-            var buttonTexture = _gameHud.GetHudTexture(buttonTextureName);
 
-            return new HandButton(buttonTexture, StorageTexture, buttonTextureName, BlockedTexture, buttonLocation);
+            return new HandButton(ClientInventorySystem.ButtonSize, buttonTextureName, StorageTexture, _gameHud, BlockedTexture, buttonLocation);
         }
 
         private void UpdateHudTheme(int idx)

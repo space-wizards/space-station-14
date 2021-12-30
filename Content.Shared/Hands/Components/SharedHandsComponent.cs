@@ -789,14 +789,24 @@ namespace Content.Shared.Hands.Components
         }
 
         /// <summary>
+        ///     Tries to pick up an entity into the active hand. If it cannot, tries to pick up the entity into each other hand.
+        /// </summary>
+        public bool PutInHand(EntityUid uid, bool checkActionBlocker = true)
+        {
+            return TryPutInActiveHandOrAny(uid, checkActionBlocker);
+        }
+
+        /// <summary>
         ///     Puts an item any hand, prefering the active hand, or puts it on the floor under the player.
         /// </summary>
-        public void PutInHandOrDrop(SharedItemComponent item, bool checkActionBlocker = true)
-        {
-            var entity = item.Owner;
+        public void PutInHandOrDrop(SharedItemComponent item, bool checkActionBlocker = true) =>
+            PutInHandOrDrop(item.Owner, checkActionBlocker);
 
-            if (!TryPutInActiveHandOrAny(entity, checkActionBlocker))
-                _entMan.GetComponent<TransformComponent>(entity).Coordinates = _entMan.GetComponent<TransformComponent>(Owner).Coordinates;
+        public void PutInHandOrDrop(EntityUid uid, bool checkActionBlocker = true)
+        {
+            if (!TryPutInActiveHandOrAny(uid, checkActionBlocker))
+                _entMan.GetComponent<TransformComponent>(uid).Coordinates = _entMan.GetComponent<TransformComponent>(Owner).Coordinates;
+
         }
 
         /// <summary>
