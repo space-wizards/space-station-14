@@ -217,7 +217,7 @@ namespace Content.Server.Medical.SuitSensors
             // try to get mobs id from ID slot
             var userName = Loc.GetString("suit-sensor-component-unknown-name");
             var userJob = Loc.GetString("suit-sensor-component-unknown-job");
-            if (_idCardSystem.TryGetIdCardSlot(sensor.User.Value, out var card))
+            if (_idCardSystem.TryFindIdCard(sensor.User.Value, out var card))
             {
                 if (card.FullName != null)
                     userName = card.FullName;

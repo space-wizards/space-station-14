@@ -226,11 +226,6 @@ namespace Content.Server.Light.EntitySystems
                 light.Enabled = on;
             }
 
-            if (EntityManager.TryGetComponent(component.Owner, out ClothingComponent? clothing))
-            {
-                clothing.ClothingEquippedPrefix = Loc.GetString(on ? "on" : "off");
-            }
-
             if (EntityManager.TryGetComponent(component.Owner, out ItemComponent? item))
             {
                 item.EquippedPrefix = Loc.GetString(on ? "on" : "off");
