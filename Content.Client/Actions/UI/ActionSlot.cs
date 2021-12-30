@@ -232,8 +232,8 @@ namespace Content.Client.Actions.UI
             {
                 ActionPrototype actionPrototype => new ActionAttempt(actionPrototype),
                 ItemActionPrototype itemActionPrototype =>
-                    Item.HasValue ?
-                        new ItemActionAttempt(itemActionPrototype, Item.Value, EntitySystem.Get<SharedActionSystem>()) : null,
+                    Item.HasValue && IoCManager.Resolve<IEntityManager>().TryGetComponent<ItemActionsComponent?>(Item, out var itemActions) ?
+                        new ItemActionAttempt(itemActionPrototype, Item.Value, itemActions) : null,
                 _ => null
             };
             return attempt;

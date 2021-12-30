@@ -176,7 +176,7 @@ namespace Content.Server.Actions
                         return null;
                     }
 
-                    attempt = new ItemActionAttempt(itemAction, item, EntitySystem.Get<SharedActionSystem>());
+                    attempt = new ItemActionAttempt(itemAction, item, actionsComponent);
                     break;
                 default:
                     return null;
