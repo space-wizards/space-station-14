@@ -5,6 +5,25 @@
   description: That's an asteroid
   components:
   - type: AsteroidRock
+    oreChance: 0.5
+    oreTable:
+      - id: IronOre1
+        prob: 0.5
+        orGroup: Ore
+      - id: SilverOre1
+        prob: 0.2
+        orGroup: Ore
+      - id: GoldOre1
+        prob: 0.1
+        orGroup: Ore
+      - id: TitaniumOre1
+        prob: 0.1
+        orGroup: Ore
+      - id: PlasmaOre1
+        prob: 0.3
+        orGroup: Ore
+      - id: Sand1
+        prob: 0.2
   - type: InteractionOutline
   - type: Sprite
     sprite: Structures/Walls/asteroid_rock.rsi

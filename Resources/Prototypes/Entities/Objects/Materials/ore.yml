@@ -24,6 +24,8 @@
     stackType: AdamantineOre
   - type: Sprite
     state: adamantine
+  - type: Meltable
+    material: Adamantine
 
 - type: entity
   parent: AdamantineOre
@@ -100,6 +102,8 @@
     stackType: GoldOre
   - type: Sprite
     state: gold
+  - type: Meltable
+    material: Gold
 
 - type: entity
   parent: GoldOre
@@ -119,6 +123,8 @@
     stackType: IronOre
   - type: Sprite
     state: iron
+  - type: Meltable
+    material: Steel
 
 - type: entity
   id: IronOre1
@@ -157,6 +163,8 @@
     stackType: PlasmaOre
   - type: Sprite
     state: plasma
+  - type: Meltable
+    material: Plasma
 
 - type: entity
   parent: PlasmaOre
@@ -176,6 +184,8 @@
     stackType: Sand
   - type: Sprite
     state: sand
+  - type: Meltable
+    material: Glass
 
 - type: entity
   parent: Sand
@@ -195,6 +205,8 @@
     stackType: BlackSand
   - type: Sprite
     state: sand_black
+  - type: Meltable
+    material: Glass
 
 - type: entity
   parent: SandBlack
@@ -214,6 +226,8 @@
     stackType: SilverOre
   - type: Sprite
     state: silver
+  - type: Meltable
+    material: Silver
 
 - type: entity
   parent: SilverOre
@@ -252,6 +266,8 @@
     stackType: TitaniumOre
   - type: Sprite
     state: titanium
+  - type: Meltable
+    material: Titanium
 
 - type: entity
   parent: TitaniumOre
