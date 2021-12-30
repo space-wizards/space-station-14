@@ -3,8 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Hands.Components;
 using Content.Server.Interaction;
-using Content.Server.Inventory.Components;
-using Content.Server.Items;
+using Content.Server.Inventory;
 using Content.Server.Stack;
 using Content.Server.Storage.Components;
 using Content.Server.Throwing;
@@ -13,6 +12,7 @@ using Content.Shared.Examine;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Input;
+using Content.Shared.Inventory;
 using Content.Shared.Physics.Pull;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
@@ -26,14 +26,13 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
 using Robust.Shared.Utility;
-using static Content.Shared.Inventory.EquipmentSlotDefines;
 
 namespace Content.Server.Hands.Systems
 {
     [UsedImplicitly]
     internal sealed class HandsSystem : SharedHandsSystem
     {
-        [Dependency] private readonly InteractionSystem _interactionSystem = default!;
+        [Dependency] private readonly InventorySystem _inventorySystem = default!;
         [Dependency] private readonly StackSystem _stackSystem = default!;
         [Dependency] private readonly HandVirtualItemSystem _virtualItemSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
@@ -261,15 +260,15 @@ namespace Content.Server.Hands.Systems
 
         private void HandleSmartEquipBackpack(ICommonSession? session)
         {
-            HandleSmartEquip(session, Slots.BACKPACK);
+            HandleSmartEquip(session, "back");
         }
 
         private void HandleSmartEquipBelt(ICommonSession? session)
         {
-            HandleSmartEquip(session, Slots.BELT);
+            HandleSmartEquip(session, "belt");
         }
 
-        private void HandleSmartEquip(ICommonSession? session, Slots equipmentSlot)
+        private void HandleSmartEquip(ICommonSession? session, string equipmentSlot)
         {
             if (session is not IPlayerSession playerSession)
                 return;
@@ -277,14 +276,13 @@ namespace Content.Server.Hands.Systems
             if (playerSession.AttachedEntity is not {Valid: true} plyEnt || !EntityManager.EntityExists(plyEnt))
                 return;
 
-            if (!EntityManager.TryGetComponent(plyEnt, out SharedHandsComponent? hands) ||
-                !EntityManager.TryGetComponent(plyEnt, out InventoryComponent? inventory))
+            if (!EntityManager.TryGetComponent(plyEnt, out SharedHandsComponent? hands))
                 return;
 
-            if (!inventory.TryGetSlotItem(equipmentSlot, out ItemComponent? equipmentItem) ||
-                !EntityManager.TryGetComponent(equipmentItem.Owner, out ServerStorageComponent? storageComponent))
+            if (!_inventorySystem.TryGetSlotEntity(plyEnt, equipmentSlot, out var slotEntity) ||
+                !EntityManager.TryGetComponent(slotEntity, out ServerStorageComponent? storageComponent))
             {
-                plyEnt.PopupMessage(Loc.GetString("hands-system-missing-equipment-slot", ("slotName", SlotNames[equipmentSlot].ToLower())));
+                plyEnt.PopupMessage(Loc.GetString("hands-system-missing-equipment-slot", ("slotName", equipmentSlot)));
                 return;
             }
 
@@ -296,7 +294,7 @@ namespace Content.Server.Hands.Systems
             {
                 if (storageComponent.StoredEntities.Count == 0)
                 {
-                    plyEnt.PopupMessage(Loc.GetString("hands-system-empty-equipment-slot", ("slotName", SlotNames[equipmentSlot].ToLower())));
+                    plyEnt.PopupMessage(Loc.GetString("hands-system-empty-equipment-slot", ("slotName", equipmentSlot)));
                 }
                 else
                 {
