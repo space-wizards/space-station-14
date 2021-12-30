@@ -433,6 +433,17 @@
   solids:
     FoodDonkpocketGondola: 1
 
+- type: microwaveMealRecipe
+  id: RecipeHotChili
+  name: hot chili recipe
+  result: FoodSoupChiliHot
+  time: 20
+  solids:
+    FoodChili: 1
+    FoodMeatCutlet: 2
+    FoodOnionSlice: 2
+
+
 # NOT ACTUAL FOOD
 
 - type: microwaveMealRecipe

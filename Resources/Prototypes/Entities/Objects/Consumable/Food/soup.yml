@@ -334,7 +334,7 @@
 # Tastes like chaos.
 
 - type: entity
-  name: hot chili
+  name: Bowl of hot chili
   parent: FoodBowlBase
   id: FoodSoupChiliHot
   description: A Texan five-alarm chili!
