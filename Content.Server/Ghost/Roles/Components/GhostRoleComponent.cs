@@ -56,7 +56,7 @@ namespace Content.Server.Ghost.Roles.Components
         }
 
         [ViewVariables(VVAccess.ReadOnly)]
-        public bool Taken { get; protected set; }
+        public bool Taken { get; set; }
 
         [ViewVariables]
         public uint Identifier { get; set; }
