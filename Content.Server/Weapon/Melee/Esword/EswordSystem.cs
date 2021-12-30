@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Content.Server.Items;
+using Content.Server.Tools.Components;
 using Content.Shared.Interaction;
 using Content.Shared.ActionBlocker;
 using Content.Shared.FixedPoint;
@@ -19,6 +20,7 @@ namespace Content.Server.Weapon.Melee.Esword
 
             SubscribeLocalEvent<EswordComponent, MeleeHitEvent>(OnMeleeHit);
             SubscribeLocalEvent<EswordComponent, UseInHandEvent>(OnUseInHand);
+            SubscribeLocalEvent<EswordComponent, InteractUsingEvent>(OnInteractUsing);
 
         }
 
@@ -89,10 +91,38 @@ namespace Content.Server.Weapon.Melee.Esword
 
             SoundSystem.Play(Filter.Pvs(comp.Owner), comp.ActivateSound.GetSound(), comp.Owner);
 
-            item.EquippedPrefix = "on";
-            sprite.LayerSetState(0, "e_sword_on");
+            if (comp.Hacked == true)
+            {
+                item.EquippedPrefix = "on-rainbow";
+                sprite.LayerSetState(0, "e_sword_rainbow_on");
+            } else
+            {
+                item.EquippedPrefix = "on";
+                sprite.LayerSetState(0, "e_sword_on");
+            }
+            
 
             comp.Activated = true;
+        }
+        private void OnInteractUsing(EntityUid uid, EswordComponent comp, InteractUsingEvent args)
+        {
+            if (!Get<ActionBlockerSystem>().CanInteract(args.User) || comp.Hacked == true)
+                return;
+            if(EntityManager.TryGetComponent<ToolComponent>(args.Used, out var tool))
+            {
+                if (tool.Qualities.ContainsAny("Pulsing"))
+                {
+                    comp.Hacked = true;
+
+                    if (comp.Activated == true && EntityManager.TryGetComponent<SpriteComponent?>(comp.Owner, out var sprite) && EntityManager.TryGetComponent<ItemComponent?>(comp.Owner, out var item))
+                    {
+                        sprite.LayerSetState(0, "e_sword_rainbow_on");
+                        item.EquippedPrefix = "on-rainbow";
+                    }
+                       
+                }
+            }
+         
         }
     }
 }

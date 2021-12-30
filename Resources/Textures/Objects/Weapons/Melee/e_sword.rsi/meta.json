@@ -89,7 +89,7 @@
       ]
     },
     {
-      "name": "on-inhand-rainbow-left",
+      "name": "on-rainbow-inhand-left",
       "directions": 4,
       "delays": [
         [
@@ -151,7 +151,7 @@
       ]
     },
     {
-      "name": "on-inhand-rainbow-right",
+      "name": "on-rainbow-inhand-right",
       "directions": 4,
       "delays": [
         [
