@@ -125,7 +125,7 @@ public abstract partial class InventorySystem
             return false;
         }
 
-        var attemptEvent = new IsEquippingAttemptEvent(target, itemUid, slotDefinition, actor);
+        var attemptEvent = new IsEquippingAttemptEvent(actor, target, itemUid, slotDefinition);
         RaiseLocalEvent(target, attemptEvent);
         if (attemptEvent.Cancelled)
         {
@@ -145,7 +145,7 @@ public abstract partial class InventorySystem
             }
         }
 
-        var itemAttemptEvent = new BeingEquippedAttemptEvent(target, itemUid, slotDefinition, actor);
+        var itemAttemptEvent = new BeingEquippedAttemptEvent(actor, target, itemUid, slotDefinition);
         RaiseLocalEvent(itemUid, itemAttemptEvent);
         if (itemAttemptEvent.Cancelled)
         {
@@ -249,7 +249,7 @@ public abstract partial class InventorySystem
 
         var itemUid = containerSlot.ContainedEntity.Value;
 
-        var attemptEvent = new IsUnequippingAttemptEvent(target, itemUid, slotDefinition, actor);
+        var attemptEvent = new IsUnequippingAttemptEvent(actor, target, itemUid, slotDefinition);
         RaiseLocalEvent(target, attemptEvent);
         if (attemptEvent.Cancelled)
         {
@@ -269,7 +269,7 @@ public abstract partial class InventorySystem
             }
         }
 
-        var itemAttemptEvent = new BeingUnequippedAttemptEvent(target, itemUid, slotDefinition, actor);
+        var itemAttemptEvent = new BeingUnequippedAttemptEvent(actor, target, itemUid, slotDefinition);
         RaiseLocalEvent(itemUid, itemAttemptEvent);
         if (itemAttemptEvent.Cancelled)
         {

@@ -1,17 +1,16 @@
-﻿using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
+﻿using Robust.Shared.GameObjects;
 
 namespace Content.Shared.Inventory.Events;
 
 public abstract class EquipAttemptBase : CancellableEntityEventArgs
 {
     /// <summary>
-    /// The entity unequipping.
+    /// The entity equipping.
     /// </summary>
     public readonly EntityUid Equipee;
 
     /// <summary>
-    /// The entity being unequipped from.
+    /// The entity being equipped to.
     /// </summary>
     public readonly EntityUid EquipTarget;
 
@@ -35,7 +34,8 @@ public abstract class EquipAttemptBase : CancellableEntityEventArgs
     /// </summary>
     public string? Reason;
 
-    public EquipAttemptBase(EntityUid equipTarget, EntityUid equipment, SlotDefinition slotDefinition, EntityUid equipee)
+    public EquipAttemptBase(EntityUid equipee, EntityUid equipTarget, EntityUid equipment,
+        SlotDefinition slotDefinition)
     {
         EquipTarget = equipTarget;
         Equipment = equipment;
@@ -47,14 +47,16 @@ public abstract class EquipAttemptBase : CancellableEntityEventArgs
 
 public class BeingEquippedAttemptEvent : EquipAttemptBase
 {
-    public BeingEquippedAttemptEvent(EntityUid equipTarget, EntityUid equipment, SlotDefinition slotDefinition, EntityUid equipee) : base(equipTarget, equipment, slotDefinition, equipee)
+    public BeingEquippedAttemptEvent(EntityUid equipee, EntityUid equipTarget, EntityUid equipment,
+        SlotDefinition slotDefinition) : base(equipee, equipTarget, equipment, slotDefinition)
     {
     }
 }
 
 public class IsEquippingAttemptEvent : EquipAttemptBase
 {
-    public IsEquippingAttemptEvent(EntityUid equipTarget, EntityUid equipment, SlotDefinition slotDefinition, EntityUid equipee) : base(equipTarget, equipment, slotDefinition, equipee)
+    public IsEquippingAttemptEvent(EntityUid equipee, EntityUid equipTarget, EntityUid equipment,
+        SlotDefinition slotDefinition) : base(equipee, equipTarget, equipment, slotDefinition)
     {
     }
 }
