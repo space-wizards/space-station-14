@@ -1448,6 +1448,23 @@
 
 - type: entity
   parent: DrinkGlassBase
+  id: DrinkRootBeerGlass
+  name: root beer glass
+  description: Fizzy, foamy, and full of sweet, non-caffienated goodness.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: RootBeer
+          Quantity: 50
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/rootbeerglass.rsi
+
+- type: entity
+  parent: DrinkGlassBase
   id: DrinkRumGlass
   name: rum glass
   description: Now you want to Pray for a pirate suit, don't you?
