@@ -1,5 +1,5 @@
 ﻿- type: latheRecipe
-  id: ConveyorAssembly
+  id: ConveyorBeltAssembly
   icon:
     sprite: Structures/conveyor.rsi
     state: conveyor_loose

@@ -25,6 +25,7 @@ namespace Content.Shared.Movement.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
+            UpdatesOutsidePrediction = true;
             SubscribeLocalEvent<MovementSpeedModifierComponent, ComponentGetState>(OnGetState);
             SubscribeLocalEvent<MovementSpeedModifierComponent, ComponentHandleState>(OnHandleState);
         }

@@ -51,6 +51,8 @@ namespace Content.Client.Verbs
         {
             base.Initialize();
 
+            UpdatesOutsidePrediction = true;
+
             SubscribeNetworkEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeNetworkEvent<VerbsResponseEvent>(HandleVerbResponse);
 
