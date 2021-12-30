@@ -64,8 +64,6 @@
     stackType: BananiumOre
   - type: Sprite
     state: bananium
-  - type: Meltable
-    material: MaterialBananium
 
 - type: entity
   parent: BananiumOre
@@ -85,8 +83,6 @@
     stackType: DiamondRaw
   - type: Sprite
     state: diamond
-  - type: Meltable
-    material: MaterialDiamond
 
 - type: entity
   parent: DiamondRaw
@@ -148,8 +144,6 @@
     stackType: PhoronOre
   - type: Sprite
     state: phoron
-  - type: Meltable
-    material: Bananium
 
 - type: entity
   parent: PhoronOre
