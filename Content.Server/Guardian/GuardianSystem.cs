@@ -1,7 +1,6 @@
 using Content.Server.Actions;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
-using Content.Server.Inventory.Components;
 using Content.Server.Popups;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
@@ -10,7 +9,6 @@ using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.MobState;
-using Content.Shared.MobState.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
