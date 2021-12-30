@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using Content.Client.Administration.Managers;
 using Content.Client.Administration.UI;
 using Content.Client.Administration.UI.Tabs.PlayerTab;
-using Content.Client.Examine;
 using Content.Client.HUD;
 using Content.Client.Verbs;
 using Content.Shared.Input;
@@ -32,6 +31,8 @@ namespace Content.Client.Administration
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IEntityLookup _entityLookup = default!;
         [Dependency] private readonly IClientConsoleHost _clientConsoleHost = default!;
+
+        [Dependency] private readonly VerbSystem _verbSystem = default!;
 
         private AdminMenuWindow? _window;
         private readonly List<SS14Window> _commandWindows = new();
@@ -147,9 +148,9 @@ namespace Content.Client.Administration
             var function = args.Event.Function;
 
             if (function == EngineKeyFunctions.UIClick)
-                _clientConsoleHost.ExecuteCommand($"vv {button.PlayerUid}");
+                _clientConsoleHost.ExecuteCommand($"vv {uid}");
             else if (function == ContentKeyFunctions.OpenContextMenu)
-                Get<VerbSystem>().VerbMenu.OpenVerbMenu(uid, true);
+                _verbSystem.VerbMenu.OpenVerbMenu(uid, true);
             else
                 return;
 
