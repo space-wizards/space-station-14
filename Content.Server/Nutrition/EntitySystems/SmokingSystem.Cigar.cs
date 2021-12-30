@@ -13,7 +13,6 @@ namespace Content.Server.Nutrition.EntitySystems
             SubscribeLocalEvent<CigarComponent, ActivateInWorldEvent>(OnCigarActivatedEvent);
             SubscribeLocalEvent<CigarComponent, InteractUsingEvent>(OnCigarInteractUsingEvent);
             SubscribeLocalEvent<CigarComponent, SmokableSolutionEmptyEvent>(OnCigarSolutionEmptyEvent);
-            SubscribeLocalEvent<CigarComponent, AfterInteractEvent>(OnCigarAfterInteract);
         }
 
         private void OnCigarActivatedEvent(EntityUid uid, CigarComponent component, ActivateInWorldEvent args)
@@ -50,21 +49,6 @@ namespace Content.Server.Nutrition.EntitySystems
 
             SetSmokableState(uid, SmokableState.Lit, smokable);
             args.Handled = true;
-        }
-
-        public void OnCigarAfterInteract(EntityUid uid, CigarComponent ownerCigarComponent, AfterInteractEvent args)
-        {
-            var targetEntity = args.Target;
-            if (targetEntity == null)
-                return;
-
-            var isHotEvent = new IsHotEvent();
-            RaiseLocalEvent(targetEntity.Uid, isHotEvent);
-
-            if (!isHotEvent.IsHot)
-                return;
-
-            SetSmokableState(uid, SmokableState.Lit);
         }
 
         private void OnCigarSolutionEmptyEvent(EntityUid uid, CigarComponent component, SmokableSolutionEmptyEvent args)
