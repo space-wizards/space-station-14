@@ -9,10 +9,10 @@ namespace Content.Server.Weapon.Ranged
         {
             base.Initialize();
 
-            SubscribeLocalEvent<ServerRangedWeaponComponent, HandSelectedEvent>(OnHandSelectted);
+            SubscribeLocalEvent<ServerRangedWeaponComponent, HandSelectedEvent>(OnHandSelected);
         }
 
-        private void OnHandSelectted(EntityUid uid, ServerRangedWeaponComponent component, HandSelectedEvent args)
+        private void OnHandSelected(EntityUid uid, ServerRangedWeaponComponent component, HandSelectedEvent args)
         {
             // Instead of dirtying on hand-select this component should probably by dirtied whenever it needs to be.
             // I take no responsibility for this code. It was like this when I got here.
