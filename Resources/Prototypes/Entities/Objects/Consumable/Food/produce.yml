@@ -559,8 +559,10 @@
       solutions:
         food:
           reagents:
-            - ReagentId: CapsaicinOil
+            - ReagentId: Nutriment
               Quantity: 5
+            - ReagentId: CapsaicinOil
+              Quantity: 1
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/chili.rsi
     - type: Produce

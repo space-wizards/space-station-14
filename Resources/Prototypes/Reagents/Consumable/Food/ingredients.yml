@@ -121,23 +121,19 @@
   meltingPoint: 146
   boilingPoint: 410 # Really high boiling point compared to its melting
   metabolisms:
-    Food:
-      effects:
-        - !type:SatiateHunger
-          factor: 1
     Poison:
       effects:
         - !type:HealthChange
           damage:
             groups:
-              Caustic: 1
+              Caustic: 0.5
         - !type:HealthChange
           conditions:
             - !type:ReagentThreshold
               min: 5
           damage:
             groups:
-              Caustic: 2
+              Caustic: 1
         - !type:PopupMessage
           type: Local
           messages: [ "capsaicin-effect-light-burn" ]
