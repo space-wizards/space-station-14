@@ -1,9 +1,4 @@
 Entries:
-- author: Seth
-  changes:
-  - {message: Made plasma Grindable, type: Tweak}
-  id: 291
-  time: '2021-08-01T19:05:02.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Door sounds no longer play twice sometimes., type: Fix}
@@ -2876,3 +2871,9 @@ Entries:
   - {message: Reagent grinders can now be constructed like other machines., type: Add}
   id: 792
   time: '2021-12-30T18:07:14.0000000+00:00'
+- author: MeltedPixel
+  changes:
+  - {message: Fixed issue where beaker contents visually did not show after being
+      ground in the grinder., type: Fix}
+  id: 793
+  time: '2021-12-31T02:12:37.0000000+00:00'
