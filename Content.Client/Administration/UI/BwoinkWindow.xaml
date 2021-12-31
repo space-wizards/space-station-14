@@ -1,11 +1,11 @@
 ﻿<SS14Window
     xmlns="https://spacestation14.io"
+    xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
     SetSize="400 200"
     HeaderClass="windowHeaderAlert"
-    TitleClass="windowTitleAlert"
-    >
-    <BoxContainer Orientation="Vertical">
-        <OutputPanel Name="TextOutput" VerticalExpand="true" />
-        <HistoryLineEdit Name="SenderLineEdit" />
+    TitleClass="windowTitleAlert">
+    <BoxContainer Orientation="Horizontal">
+        <cc:PlayerListControl Access="Public" Name="ChannelSelector" HorizontalExpand="True" SizeFlagsStretchRatio="1" />
+        <BoxContainer Name="BwoinkArea" HorizontalExpand="True" SizeFlagsStretchRatio="2" />
     </BoxContainer>
 </SS14Window>

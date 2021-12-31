@@ -1,0 +1,7 @@
+﻿<SS14Window
+    xmlns="https://spacestation14.io"
+    SetSize="400 200"
+    HeaderClass="windowHeaderAlert"
+    TitleClass="windowTitleAlert">
+    <!-- A BwoinkPanel gets added here in the constructor. -->
+</SS14Window>
