@@ -186,9 +186,9 @@ namespace Content.Client.Inventory
             if(!TryGetSlotContainer(uid, slot, out var containerSlot, out var slotDef, inventoryComponent))
                 return;
 
-            _itemSlotManager.HoverInSlot(button, heldEntity,
-                CanEquip(uid, heldEntity, slot, out _, slotDef, inventoryComponent) &&
-                containerSlot.CanInsert(heldEntity, EntityManager));
+            _itemSlotManager.HoverInSlot(button, heldEntity.Value,
+                CanEquip(uid, heldEntity.Value, slot, out _, slotDef, inventoryComponent) &&
+                containerSlot.CanInsert(heldEntity.Value, EntityManager));
         }
 
         private void HandleSlotButtonPressed(EntityUid uid, string slot, ItemSlotButton button,

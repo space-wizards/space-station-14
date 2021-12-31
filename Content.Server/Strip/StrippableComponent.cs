@@ -235,7 +235,7 @@ namespace Content.Server.Strip
                     return false;
                 }
 
-                if (!invSystem.CanUnequip(Owner, slot, out _))
+                if (!invSystem.CanUnequip(user, Owner, slot, out _))
                 {
                     user.PopupMessageCursor(Loc.GetString("strippable-component-cannot-unequip-message",("owner", Owner)));
                     return false;
@@ -258,10 +258,7 @@ namespace Content.Server.Strip
             var result = await doAfterSystem.WaitDoAfter(doAfterArgs);
             if (result != DoAfterStatus.Finished) return;
 
-            invSystem.TryGetSlotEntity(Owner, slot, out var item);
-            invSystem.TryUnequip(Owner, slot);
-
-            if (item != null)
+            if (invSystem.TryGetSlotEntity(Owner, slot, out var item) && invSystem.TryUnequip(Owner, slot))
             {
                 userHands.PutInHandOrDrop(item.Value);
             }

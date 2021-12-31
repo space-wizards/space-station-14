@@ -495,7 +495,7 @@
   parent: CrateBaseSecure
   components:
   - type: AccessReader
-    access: [["Service"]]
+    access: [["Hydroponics"]]
   - type: Lock
   - type: Sprite
     sprite: Structures/Storage/Crates/hydro_secure.rsi
@@ -524,7 +524,7 @@
   parent: CrateBaseSecure
   components:
   - type: AccessReader
-    access: [["Security"]]
+    access: [["Armory"]]
   - type: Lock
   - type: Sprite
     sprite: Structures/Storage/Crates/weapon.rsi
