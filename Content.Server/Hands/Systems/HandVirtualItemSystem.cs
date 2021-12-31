@@ -1,4 +1,4 @@
-﻿using Content.Server.Hands.Components;
+using Content.Server.Hands.Components;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
@@ -27,7 +27,7 @@ namespace Content.Server.Hands.Systems
                 foreach (var handName in hands.ActivePriorityEnumerable())
                 {
                     var hand = hands.GetHand(handName);
-                    if (!hand.IsEmpty)
+                    if (hand.HeldEntity != null)
                         continue;
 
                     var pos = EntityManager.GetComponent<TransformComponent>(hands.Owner).Coordinates;
@@ -87,13 +87,11 @@ namespace Content.Server.Hands.Systems
             foreach (var handName in hands.ActivePriorityEnumerable())
             {
                 var hand = hands.GetHand(handName);
-                if (hand.IsEmpty)
+
+                if (!(hand.HeldEntity is { } heldEntity))
                     continue;
 
-                if (hand.HeldEntity == default)
-                    continue;
-
-                if (EntityManager.TryGetComponent<HandVirtualItemComponent>(hand.HeldEntity, out var virt)
+                if (EntityManager.TryGetComponent<HandVirtualItemComponent>(heldEntity, out var virt)
                     && virt.BlockingEntity == matching)
                 {
                     Delete(virt, user);
