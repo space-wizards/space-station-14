@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.Hands.Components;
-using Content.Server.Items;
 using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Item;
 using Content.Shared.Popups;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Shared.Containers;
@@ -156,7 +156,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
                 return false;
             }
 
-            var itemComponent = _entities.GetComponent<ItemComponent>(ammo);
+            var itemComponent = _entities.GetComponent<SharedItemComponent>(ammo);
             if (!handsComponent.CanPutInHand(itemComponent))
             {
                 _entities.GetComponent<TransformComponent>(ammo).Coordinates = _entities.GetComponent<TransformComponent>(eventArgs.User).Coordinates;

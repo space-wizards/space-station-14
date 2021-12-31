@@ -731,47 +731,6 @@ namespace Content.Shared.Interaction
         }
         #endregion
 
-        #region Equip
-        /// <summary>
-        ///     Calls Equipped on all components that implement the IEquipped interface
-        ///     on an entity that has been equipped.
-        /// </summary>
-        public void EquippedInteraction(EntityUid user, EntityUid equipped, EquipmentSlotDefines.Slots slot)
-        {
-            var equipMsg = new EquippedEvent(user, equipped, slot);
-            RaiseLocalEvent(equipped, equipMsg);
-            if (equipMsg.Handled)
-                return;
-
-            var comps = AllComps<IEquipped>(equipped).ToList();
-
-            // Call Thrown on all components that implement the interface
-            foreach (var comp in comps)
-            {
-                comp.Equipped(new EquippedEventArgs(user, slot));
-            }
-        }
-
-        /// <summary>
-        ///     Calls Unequipped on all components that implement the IUnequipped interface
-        ///     on an entity that has been equipped.
-        /// </summary>
-        public void UnequippedInteraction(EntityUid user, EntityUid equipped, EquipmentSlotDefines.Slots slot)
-        {
-            var unequipMsg = new UnequippedEvent(user, equipped, slot);
-            RaiseLocalEvent(equipped, unequipMsg);
-            if (unequipMsg.Handled)
-                return;
-
-            var comps = AllComps<IUnequipped>(equipped).ToList();
-
-            // Call Thrown on all components that implement the interface
-            foreach (var comp in comps)
-            {
-                comp.Unequipped(new UnequippedEventArgs(user, slot));
-            }
-        }
-
         #region Equip Hand
         /// <summary>
         ///     Calls EquippedHand on all components that implement the IEquippedHand interface
@@ -810,7 +769,6 @@ namespace Content.Shared.Interaction
                 comp.UnequippedHand(new UnequippedHandEventArgs(user, hand));
             }
         }
-        #endregion
         #endregion
 
         #region Drop

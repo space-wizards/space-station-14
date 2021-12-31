@@ -51,7 +51,7 @@ namespace Content.Shared.Verbs
             bool canAccess = false;
             if (force || target == user)
                 canAccess = true;
-            else if (_interactionSystem.InRangeUnobstructed(user, target, ignoreInsideBlocker: true))
+            else if (EntityManager.EntityExists(target) && _interactionSystem.InRangeUnobstructed(user, target, ignoreInsideBlocker: true))
             {
                 if (user.IsInSameOrParentContainer(target))
                     canAccess = true;

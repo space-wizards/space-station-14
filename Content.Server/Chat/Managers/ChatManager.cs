@@ -3,8 +3,6 @@ using System.Linq;
 using Content.Server.Administration.Managers;
 using Content.Server.Ghost.Components;
 using Content.Server.Headset;
-using Content.Server.Inventory.Components;
-using Content.Server.Items;
 using Content.Server.MoMMI;
 using Content.Server.Preferences.Managers;
 using Content.Server.Radio.EntitySystems;
@@ -171,9 +169,10 @@ namespace Content.Server.Chat.Managers
                 message = message[0].ToString().ToUpper() +
                           message.Remove(0, 1);
 
-                if (_entManager.TryGetComponent(source, out InventoryComponent? inventory) &&
-                    inventory.TryGetSlotItem(EquipmentSlotDefines.Slots.EARS, out ItemComponent? item) &&
-                    _entManager.TryGetComponent(item.Owner, out HeadsetComponent? headset))
+                var invSystem = EntitySystem.Get<InventorySystem>();
+
+                if (invSystem.TryGetSlotEntity(source, "ears", out var entityUid) &&
+                    _entManager.TryGetComponent(entityUid, out HeadsetComponent? headset))
                 {
                     headset.RadioRequested = true;
                 }
