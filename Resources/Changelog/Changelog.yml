@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: 'Station will spawn at a random position rather than 0,0.', type: Tweak}
-  id: 294
-  time: '2021-08-03T08:49:25.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Fix lerping for other physics bodies., type: Fix}
   - {message: Fix joint prediction., type: Fix}
   id: 295
@@ -2878,3 +2873,11 @@ Entries:
       have the proper restrictions. Botanists are the major winners here., type: Tweak}
   id: 795
   time: '2021-12-31T02:27:28.0000000+00:00'
+- author: Fishfish458
+  changes:
+  - {message: added a bureaucracy crate for when the mime reaches the end of his pages,
+    type: Add}
+  - {message: bruise packs to the clown's box of hugs, type: Add}
+  - {message: 3 more PDAs to the Head of Personal's spare PDA box, type: Add}
+  id: 796
+  time: '2021-12-31T02:28:38.0000000+00:00'
