@@ -159,11 +159,11 @@ namespace Content.Shared.Item
 
         private void OnEquippedPrefixChange()
         {
-            if (!Owner.TryGetContainer(out var container) ||
-                _entMan.TryGetComponent(container.Owner, out SharedHandsComponent hands))
+            if (!Owner.TryGetContainer(out var container)
+                || !_entMan.TryGetComponent(container.Owner, out SharedHandsComponent hands))
                 return;
 
-            EntitySystem.Get<SharedHandsSystem>().UpdateHandVisualizer(Owner, hands);
+            EntitySystem.Get<SharedHandsSystem>().UpdateHandVisualizer(container.Owner, hands);
         }
 
         public void RemovedFromSlot()
