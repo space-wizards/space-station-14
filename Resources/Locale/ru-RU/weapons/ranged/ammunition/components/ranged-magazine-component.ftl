@@ -1,4 +1,4 @@
 ## RangedMagazineComponent
-ranged-magazine-component-try-insert-ammo-wrong-caliber = Wrong caliber
-ranged-magazine-component-try-insert-ammo-is-full = Magazine is full
-ranged-magazine-component-on-examine = It's a [color=white]{$magazineType}[/color] magazine of [color=white]{$caliber}[/color] caliber.
+ranged-magazine-component-try-insert-ammo-wrong-caliber = Неправильный калибр
+ranged-magazine-component-try-insert-ammo-is-full = Магазин уже заполнен
+ranged-magazine-component-on-examine = Это магазин типа "[color=white]{$magazineType}[/color]", [color=white]{$caliber}[/color] калибра.
