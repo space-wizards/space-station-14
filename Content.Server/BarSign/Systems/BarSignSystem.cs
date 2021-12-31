@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Power.Components;
 using Robust.Server.GameObjects;
@@ -31,8 +32,7 @@ namespace Content.Server.BarSign.Systems
                 return;
             }
 
-            var prototype = TryGetPrototype(component);
-            if (prototype == null)
+            if (!TryGetBarSignPrototype(component, out var prototype))
             {
                 prototype = Setup(owner, component);
             }
@@ -49,20 +49,21 @@ namespace Content.Server.BarSign.Systems
             }
         }
 
-        private BarSignPrototype? TryGetPrototype(BarSignComponent component)
+        private bool TryGetBarSignPrototype(BarSignComponent component, [NotNullWhen(true)] out BarSignPrototype? prototype)
         {
             if (component.CurrentSign != null)
             {
-                if (_prototypeManager.TryIndex(component.CurrentSign, out BarSignPrototype? existingPrototype))
+                if (_prototypeManager.TryIndex(component.CurrentSign, out prototype))
                 {
-                    return existingPrototype;
+                    return true;
                 }
-                else
-                {
-                    Logger.ErrorS("barSign", $"Invalid bar sign prototype: \"{component.CurrentSign}\"");
-                }
+                Logger.ErrorS("barSign", $"Invalid bar sign prototype: \"{component.CurrentSign}\"");
             }
-            return null;
+            else
+            {
+                prototype = null;
+            }
+            return false;
         }
 
         private BarSignPrototype Setup(EntityUid owner, BarSignComponent component)
