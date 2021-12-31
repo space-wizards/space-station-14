@@ -6,7 +6,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.IoC;
-using Robust.Shared.GameObjects;
+using Robust.Shared.Localization;
 using Robust.Shared.Network;
 using Robust.Shared.Utility;
 
@@ -60,7 +60,7 @@ namespace Content.Client.Administration.UI.CustomControls
             {
                 if (p is SS14Window np)
                 {
-                    np.Title = (_playerManager.LocalPlayer?.UserId == _channelId) ? "Admin Message" : _channelName;
+                    np.Title = (_playerManager.LocalPlayer?.UserId == _channelId) ? Loc.GetString("bwoink-user-title") : _channelName;
                     return;
                 }
             }

@@ -8,7 +8,6 @@ using Content.Client.Administration.UI.CustomControls;
 using Content.Shared.Administration;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
-using Robust.Client.UserInterface.Controls;
 using Robust.Client.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Player;
