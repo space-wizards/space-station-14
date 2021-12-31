@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Content.Server.Power.Components;
 using Robust.Server.GameObjects;
@@ -24,13 +25,18 @@ namespace Content.Server.BarSign.Systems
         {
             if (component.LifeStage is < ComponentLifeStage.Initialized or > ComponentLifeStage.Running) return;
 
+            if (!TryComp(owner, out SpriteComponent? sprite))
+            {
+                Logger.ErrorS("barSign", "Barsign is missing sprite component");
+                return;
+            }
+
             var prototype = TryGetPrototype(component);
             if (prototype == null)
             {
                 prototype = Setup(owner, component);
             }
 
-            var sprite = Comp<SpriteComponent>(owner);
             if (args.Powered)
             {
                 sprite.LayerSetState(0, prototype.Icon);
