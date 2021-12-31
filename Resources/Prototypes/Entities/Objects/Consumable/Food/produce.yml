@@ -550,7 +550,7 @@
     sprite: Objects/Specific/Hydroponics/onion_red.rsi
 
 - type: entity
-  name: Chili Pepper
+  name: chili
   parent: FoodProduceBase
   id: FoodChili
   description: Spicy, best not touch your eyes.

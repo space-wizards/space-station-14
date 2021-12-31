@@ -334,7 +334,7 @@
 # Tastes like chaos.
 
 - type: entity
-  name: Bowl of hot chili
+  name: bowl of hot chili
   parent: FoodBowlBase
   id: FoodSoupChiliHot
   description: A Texan five-alarm chili!
@@ -375,6 +375,14 @@
     layers:
     - state: bowl
     - state: chili-clown
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+          - ReagentId: Nutriment
+            Quantity: 30
+          - ReagentId: CapsaicinOil
+            Quantity: 5
 # Tastes like tomato, hot peppers, clown feet, kind of funny, someone's parents.
 
 - type: entity

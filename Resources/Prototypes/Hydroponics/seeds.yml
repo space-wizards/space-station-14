@@ -450,7 +450,7 @@
 
 - type: seed
   id: chili
-  name: Chili Pepper
+  name: chili
   seedName: chili
   displayName: chilis
   plantRsi: Objects/Specific/Hydroponics/chili.rsi
