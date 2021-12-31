@@ -1,9 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: Fixes mobs not taking pressure damage on space., type: Fix}
-  id: 296
-  time: '2021-08-04T07:49:53.509340+00:00'
 - author: SweptWasTaken
   changes:
   - {message: Added an alternate jumpsuit for Botany, type: Add}
@@ -2883,3 +2878,8 @@ Entries:
       sniper precision., type: Tweak}
   id: 797
   time: '2021-12-31T08:19:42.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Fixed lights not working while in inventory., type: Fix}
+  id: 798
+  time: '2021-12-31T23:51:13.0000000+00:00'
