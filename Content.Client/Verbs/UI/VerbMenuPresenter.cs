@@ -41,7 +41,9 @@ namespace Content.Client.Verbs.UI
         /// <summary>
         ///     Open a verb menu and fill it work verbs applicable to the given target entity.
         /// </summary>
-        public void OpenVerbMenu(EntityUid target)
+        /// <param name="target">Entity to get verbs on.</param>
+        /// <param name="force">Used to force showing all verbs (mostly for admins).</param>
+        public void OpenVerbMenu(EntityUid target, bool force = false)
         {
             if (_playerManager.LocalPlayer?.ControlledEntity is not {Valid: true} user)
                 return;
@@ -49,7 +51,7 @@ namespace Content.Client.Verbs.UI
             Close();
 
             CurrentTarget = target;
-            CurrentVerbs = _verbSystem.GetVerbs(target, user, VerbType.All);
+            CurrentVerbs = _verbSystem.GetVerbs(target, user, VerbType.All, force);
 
             if (!target.IsClientSide())
             {

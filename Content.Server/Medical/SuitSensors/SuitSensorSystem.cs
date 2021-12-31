@@ -8,6 +8,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.Inventory;
+using Content.Shared.Inventory.Events;
 using Content.Shared.Medical.SuitSensor;
 using Content.Shared.MobState.Components;
 using Content.Shared.Verbs;
@@ -37,8 +38,8 @@ namespace Content.Server.Medical.SuitSensors
         {
             base.Initialize();
             SubscribeLocalEvent<SuitSensorComponent, MapInitEvent>(OnMapInit);
-            SubscribeLocalEvent<SuitSensorComponent, EquippedEvent>(OnEquipped);
-            SubscribeLocalEvent<SuitSensorComponent, UnequippedEvent>(OnUnequipped);
+            SubscribeLocalEvent<SuitSensorComponent, GotEquippedEvent>(OnEquipped);
+            SubscribeLocalEvent<SuitSensorComponent, GotUnequippedEvent>(OnUnequipped);
             SubscribeLocalEvent<SuitSensorComponent, ExaminedEvent>(OnExamine);
             SubscribeLocalEvent<SuitSensorComponent, GetInteractionVerbsEvent>(OnVerb);
         }
@@ -91,15 +92,15 @@ namespace Content.Server.Medical.SuitSensors
             }
         }
 
-        private void OnEquipped(EntityUid uid, SuitSensorComponent component, EquippedEvent args)
+        private void OnEquipped(EntityUid uid, SuitSensorComponent component, GotEquippedEvent args)
         {
             if (args.Slot != component.ActivationSlot)
                 return;
 
-            component.User = args.User;
+            component.User = args.Equipee;
         }
 
-        private void OnUnequipped(EntityUid uid, SuitSensorComponent component, UnequippedEvent args)
+        private void OnUnequipped(EntityUid uid, SuitSensorComponent component, GotUnequippedEvent args)
         {
             if (args.Slot != component.ActivationSlot)
                 return;
@@ -216,7 +217,7 @@ namespace Content.Server.Medical.SuitSensors
             // try to get mobs id from ID slot
             var userName = Loc.GetString("suit-sensor-component-unknown-name");
             var userJob = Loc.GetString("suit-sensor-component-unknown-job");
-            if (_idCardSystem.TryGetIdCardSlot(sensor.User.Value, out var card))
+            if (_idCardSystem.TryFindIdCard(sensor.User.Value, out var card))
             {
                 if (card.FullName != null)
                     userName = card.FullName;
