@@ -236,7 +236,6 @@ namespace Content.Server.Mind
             _objectives.Add(objective);
             return true;
         }
-        
 
         /// <summary>
         /// Removes an objective to this mind.
