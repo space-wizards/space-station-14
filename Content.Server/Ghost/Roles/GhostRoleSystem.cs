@@ -204,6 +204,8 @@ namespace Content.Server.Ghost.Roles
 
         private void OnMindRemoved(EntityUid uid, GhostRoleComponent component, MindRemovedMessage args)
         {
+            if (!component.ReregisterOnGhost)
+                return;
             component.Taken = false;
             RegisterGhostRole(component);
         }
