@@ -318,7 +318,6 @@ namespace Content.Server.Kitchen.EntitySystems
                                 component.HeldBeaker.MaxVolume) continue;
                             solution.ScaleSolution(juiceEvent.Scalar);
                             _solutionsSystem.TryAddSolution(beakerEntity.Value, component.HeldBeaker, solution);
-                            _solutionsSystem.RemoveAllSolution(beakerEntity.Value, solution);
                             EntityManager.DeleteEntity(item);
                         }
 
