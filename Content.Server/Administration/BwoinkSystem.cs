@@ -38,7 +38,8 @@ namespace Content.Server.Administration
         private string _webhookUrl = string.Empty;
         private string _serverName = string.Empty;
         private readonly Dictionary<NetUserId, (string id, string username, string content)> _relayMessages = new();
-        private readonly Dictionary<NetUserId, Queue<string>> _messageQueues = new();
+        private readonly ConcurrentDictionary<NetUserId, int> _messageQueues = new();
+        private readonly Dictionary<NetUserId, List<BwoinkTextMessage>> _history = new();
         private readonly HashSet<NetUserId> _processingChannels = new();
         private const ushort MessageMax = 2000;
         private int _maxAdditionalChars;
@@ -49,7 +50,7 @@ namespace Content.Server.Administration
             _config.OnValueChanged(CCVars.DiscordAHelpWebhook, OnWebhookChanged, true);
             _config.OnValueChanged(CVars.GameHostName, OnServerNameChanged, true);
             _sawmill = IoCManager.Resolve<ILogManager>().GetSawmill("AHELP");
-            _maxAdditionalChars = GenerateAHelpMessage("", "", true, true).Length + Header("").Length;
+            _maxAdditionalChars = GenerateAHelpMessage("", "", true).Length + Header("").Length;
         }
 
         private void OnServerNameChanged(string obj)
@@ -71,15 +72,25 @@ namespace Content.Server.Administration
 
         private string Header(string serverName) => $"Server: {serverName}";
 
-        private async void ProcessQueue(NetUserId channelId, Queue<string> messages)
+        private async void ProcessQueue(NetUserId channelId, int since)
         {
-            if (!_relayMessages.TryGetValue(channelId, out var oldMessage) || messages.Sum(x => x.Length+2) + oldMessage.content.Length > MessageMax)
+            if (!_playerManager.TryGetSessionById(channelId, out var playerSession))
+            {
+                _sawmill.Log(LogLevel.Error, $"Unable to find player session for netuserid {channelId}");
+                return;
+            }
+
+            var chLog = _history[channelId];
+            if (!_relayMessages.TryGetValue(channelId, out var oldMessage) ||
+                    chLog.GetRange(since, chLog.Count).Sum(
+                        x => FormattedMessage.RemoveMarkup(x.Text).Length+2)
+                            + oldMessage.content.Length > MessageMax)
             {
                 var lookup = await _playerLocator.LookupIdAsync(channelId);
 
                 if (lookup == null)
                 {
-                    _sawmill.Log(LogLevel.Error, $"Unable to find player for netuserid {channelId} when sending discord webhook.");
+                    _sawmill.Log(LogLevel.Error, $"Unable to find player for netuserid {channelId}.");
                     _relayMessages.Remove(channelId);
                     return;
                 }
@@ -87,9 +98,13 @@ namespace Content.Server.Administration
                 oldMessage = (string.Empty, lookup.Username, Header(_serverName));
             }
 
-            while (messages.TryDequeue(out var message))
+            for (var i = since; i < chLog.Count; i++)
             {
-                oldMessage.content += $"\n{message}";
+                oldMessage.content += "\n" + GenerateAHelpMessage(
+                        playerSession.Name,
+                        FormattedMessage.RemoveMarkup(chLog[i].Text),
+                        chLog[i].TrueSender != channelId
+                );
             }
 
             var payload = new WebhookPayload()
@@ -137,6 +152,7 @@ namespace Content.Server.Administration
 
             _relayMessages[channelId] = oldMessage;
 
+            _messageQueues[channelId] = chLog.Count;
             _processingChannels.Remove(channelId);
         }
 
@@ -146,14 +162,16 @@ namespace Content.Server.Administration
 
             foreach (var channelId in _messageQueues.Keys.ToArray())
             {
-                if(_processingChannels.Contains(channelId)) continue;
+                if(_processingChannels.Contains(channelId))
+                    continue;
 
-                var queue = _messageQueues[channelId];
-                _messageQueues.Remove(channelId);
-                if (queue.Count == 0) continue;
+                var since = _messageQueues[channelId];
+                if (since >= _history[channelId].Count) // since should never be larger than the history list, but whatever
+                    continue;
+
                 _processingChannels.Add(channelId);
 
-                ProcessQueue(channelId, queue);
+                ProcessQueue(channelId, since);
             }
         }
 
@@ -175,18 +193,20 @@ namespace Content.Server.Administration
 
             var escapedText = FormattedMessage.EscapeText(message.Text);
 
-            var bwoinkText = senderAdmin switch
+            var bwoinkText = senderAdmin?.Flags switch
             {
-                var x when x is not null && x.Flags == AdminFlags.Adminhelp =>
-                    $"[color=purple]{senderSession.Name}[/color]: {escapedText}",
-                var x when x is not null && x.HasFlag(AdminFlags.Adminhelp) =>
-                    $"[color=red]{senderSession.Name}[/color]: {escapedText}",
+                AdminFlags.Adminhelp => $"[color=purple]{senderSession.Name}[/color]: {escapedText}",
+                > AdminFlags.Adminhelp => $"[color=red]{senderSession.Name}[/color]: {escapedText}",
                 _ => $"{senderSession.Name}: {escapedText}",
             };
 
             var msg = new BwoinkTextMessage(message.ChannelId, senderSession.UserId, bwoinkText);
 
             LogBwoink(msg);
+            if (!_history.ContainsKey(message.ChannelId))
+                _history[message.ChannelId] = new();
+
+            _history[message.ChannelId].Add(msg);
 
             // Admins
             var targets = _adminManager.ActiveAdmins.Select(p => p.ConnectedClient).ToList();
@@ -205,7 +225,7 @@ namespace Content.Server.Administration
             if (sendsWebhook)
             {
                 if (!_messageQueues.ContainsKey(msg.ChannelId))
-                    _messageQueues[msg.ChannelId] = new Queue<string>();
+                    _messageQueues[msg.ChannelId] = 0;
 
                 var str = message.Text;
                 var unameLength = senderSession.Name.Length;
@@ -214,7 +234,6 @@ namespace Content.Server.Administration
                 {
                     str = str[..(MessageMax - _maxAdditionalChars - unameLength)];
                 }
-                _messageQueues[msg.ChannelId].Enqueue(GenerateAHelpMessage(senderSession.Name, str, !personalChannel, noReceivers));
             }
 
             if (noReceivers)
@@ -227,11 +246,9 @@ namespace Content.Server.Administration
             }
         }
 
-        private string GenerateAHelpMessage(string username, string message, bool admin, bool noReceiver)
+        private string GenerateAHelpMessage(string username, string message, bool admin)
         {
             var stringbuilder = new StringBuilder();
-            if (noReceiver)
-                stringbuilder.Append(":sos:");
             stringbuilder.Append(admin ? ":outbox_tray:" : ":inbox_tray:");
             stringbuilder.Append(' ');
             stringbuilder.Append(username);
