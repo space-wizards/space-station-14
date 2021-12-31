@@ -206,7 +206,7 @@
     - CrayonPurple
 
 - type: entity
-  parent: BaseItem
+  parent: BoxCardboard
   id: CrayonBox
   name: crayon box
   description: "It's a box of crayons."
@@ -219,7 +219,7 @@
     capacity: 7
   - type: Item
     sprite: Objects/Fun/crayons.rsi
-    size: 9999
+    size: 7
     HeldPrefix: box
   - type: StorageFill
     contents:

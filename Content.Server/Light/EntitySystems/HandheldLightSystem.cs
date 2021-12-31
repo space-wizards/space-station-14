@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using System.Linq;
 using Content.Server.Clothing.Components;
-using Content.Server.Items;
 using Content.Server.Light.Components;
 using Content.Server.Popups;
 using Content.Server.PowerCell.Components;
@@ -226,11 +224,6 @@ namespace Content.Server.Light.EntitySystems
             if (EntityManager.TryGetComponent(component.Owner, out PointLightComponent? light))
             {
                 light.Enabled = on;
-            }
-
-            if (EntityManager.TryGetComponent(component.Owner, out ClothingComponent? clothing))
-            {
-                clothing.ClothingEquippedPrefix = Loc.GetString(on ? "on" : "off");
             }
 
             if (EntityManager.TryGetComponent(component.Owner, out ItemComponent? item))

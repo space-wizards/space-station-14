@@ -2,11 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Shared.Access.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
-using Content.Shared.Item;
 using Content.Shared.PDA;
+using Content.Shared.Access.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -17,6 +16,7 @@ namespace Content.Shared.Access.Systems
     public class AccessReaderSystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly InventorySystem _inventorySystem = default!;
 
         public override void Initialize()
         {
@@ -71,22 +71,15 @@ namespace Content.Shared.Access.Systems
             if (EntityManager.TryGetComponent(uid, out SharedHandsComponent? hands))
             {
                 if (hands.TryGetActiveHeldEntity(out var heldItem) &&
-                    FindAccessTagsItem(heldItem, out tags))
+                    FindAccessTagsItem(heldItem.Value, out tags))
                 {
                     return tags;
                 }
             }
 
             // maybe its inside an inventory slot?
-            if (EntityManager.TryGetComponent(uid, out SharedInventoryComponent? inventoryComponent))
-            {
-                if (inventoryComponent.TryGetSlot(EquipmentSlotDefines.Slots.IDCARD, out var entity) &&
-                    FindAccessTagsItem(entity.Value, out tags)
-                )
-                {
-                    return tags;
-                }
-            }
+            if (_inventorySystem.TryGetSlotEntity(uid, "id", out var idUid) && FindAccessTagsItem(idUid.Value, out tags))
+                return tags;
 
             return Array.Empty<string>();
         }

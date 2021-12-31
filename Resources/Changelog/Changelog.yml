@@ -1,43 +1,4 @@
 Entries:
-- author: PJB3005
-  changes:
-  - {message: Pulling is better integrated with hands now. It properly picks an empty
-      hand and dropping on the pulling hand stops the pull. You also see what you're
-      pulling in your hand!, type: Tweak}
-  id: 288
-  time: '2021-07-31T01:14:00.0000000+00:00'
-- author: plinyvic
-  changes:
-  - {message: Fixed reagent grinder not giving correct output with stacked items,
-    type: Fix}
-  id: 289
-  time: '2021-07-31T12:06:25.0000000+00:00'
-- author: michaelcooke
-  changes:
-  - {message: Throwing items in space will now push you in the opposite direction
-      to the thrown object, type: Fix}
-  id: 290
-  time: '2021-07-31T12:53:18.0000000+00:00'
-- author: Seth
-  changes:
-  - {message: Made plasma Grindable, type: Tweak}
-  id: 291
-  time: '2021-08-01T19:05:02.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Door sounds no longer play twice sometimes., type: Fix}
-  id: 292
-  time: '2021-08-02T11:57:06.0000000+00:00'
-- author: scaly-chimp
-  changes:
-  - {message: Added everyone's favorite stimulant meth!, type: Add}
-  id: 293
-  time: '2021-08-03T03:32:08.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: 'Station will spawn at a random position rather than 0,0.', type: Tweak}
-  id: 294
-  time: '2021-08-03T08:49:25.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix lerping for other physics bodies., type: Fix}
@@ -2879,3 +2840,44 @@ Entries:
   - {message: Ammo produced by a lathe now works properly., type: Fix}
   id: 789
   time: '2021-12-29T14:19:49.0000000+00:00'
+- author: wrexbe
+  changes:
+  - {message: Cloning is now less likely to fail!, type: Fix}
+  id: 790
+  time: '2021-12-30T03:36:44.0000000+00:00'
+- author: Your_Name_Here
+  changes:
+  - {message: Fixes guardian injector being usable on anything. Now only humans can
+      use it., type: Fix}
+  id: 791
+  time: '2021-12-30T10:56:30.788752+00:00'
+- author: Rane
+  changes:
+  - {message: Reagent grinders can now be constructed like other machines., type: Add}
+  id: 792
+  time: '2021-12-30T18:07:14.0000000+00:00'
+- author: MeltedPixel
+  changes:
+  - {message: Fixed issue where beaker contents visually did not show after being
+      ground in the grinder., type: Fix}
+  id: 793
+  time: '2021-12-31T02:12:37.0000000+00:00'
+- author: Melted Pixel
+  changes:
+  - {message: Adjusted gain on Windoor to make it more audible., type: Tweak}
+  id: 794
+  time: '2021-12-31T02:21:00.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Containers with access readers have been reconfigured to ensure they
+      have the proper restrictions. Botanists are the major winners here., type: Tweak}
+  id: 795
+  time: '2021-12-31T02:27:28.0000000+00:00'
+- author: Fishfish458
+  changes:
+  - {message: added a bureaucracy crate for when the mime reaches the end of his pages,
+    type: Add}
+  - {message: bruise packs to the clown's box of hugs, type: Add}
+  - {message: 3 more PDAs to the Head of Personal's spare PDA box, type: Add}
+  id: 796
+  time: '2021-12-31T02:28:38.0000000+00:00'
