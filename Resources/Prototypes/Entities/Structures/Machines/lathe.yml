@@ -185,6 +185,7 @@
       - SolarControlComputerCircuitboard
       - AutolatheMachineCircuitboard
       - ProtolatheMachineCircuitboard
+      - KitchenReagentGrinderMachineCircuitboard
       - CrewMonitoringComputerCircuitboard
       - Bucket
       - MopItem

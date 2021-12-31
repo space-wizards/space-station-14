@@ -123,3 +123,19 @@
         CableMV: 5
         CableHV: 5
 
+- type: entity
+  id: KitchenReagentGrinderMachineCircuitboard #unsure why the reagent grinder has 'kitchen' in the id name when multiple departments use it but that's for another time
+  parent: BaseMachineCircuitboard
+  name: Reagent Grinder (Machine Board)
+  components:
+    - type: MachineBoard
+      prototype: KitchenReagentGrinder
+      requirements:
+        Laser: 1
+        ScanningModule: 1
+        MatterBin: 2
+      tagRequirements:
+        GlassBeaker:
+          Amount: 1
+          DefaultPrototype: Beaker
+          ExamineName: Glass Beaker

@@ -1,18 +1,19 @@
-using Content.Server.Inventory.Components;
-using Content.Server.Items;
 using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
-using Content.Shared.PDA;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
+using Content.Shared.PDA;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Access.Systems
 {
     public class IdCardSystem : SharedIdCardSystem
     {
+        [Dependency] private readonly InventorySystem _inventorySystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -91,7 +92,7 @@ namespace Content.Server.Access.Systems
             // check held item?
             if (EntityManager.TryGetComponent(uid, out SharedHandsComponent? hands) &&
                 hands.TryGetActiveHeldEntity(out var heldItem) &&
-                TryGetIdCard(heldItem, out idCard))
+                TryGetIdCard(heldItem.Value, out idCard))
             {
                 return true;
             }
@@ -101,7 +102,12 @@ namespace Content.Server.Access.Systems
                 return true;
 
             // check inventory slot?
-            return TryGetIdCardSlot(uid, out idCard);
+            if (_inventorySystem.TryGetSlotEntity(uid, "id", out var idUid) && TryGetIdCard(idUid.Value, out idCard))
+            {
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -120,18 +126,6 @@ namespace Content.Server.Access.Systems
             }
 
             return false;
-        }
-
-        /// <summary>
-        ///     Try get id card from mobs ID inventory slot
-        /// </summary>
-        public bool TryGetIdCardSlot(EntityUid uid, [NotNullWhen(true)] out IdCardComponent? idCard)
-        {
-            idCard = null;
-            return EntityManager.TryGetComponent(uid, out InventoryComponent? inventoryComponent) &&
-                   inventoryComponent.HasSlot(EquipmentSlotDefines.Slots.IDCARD) &&
-                   inventoryComponent.TryGetSlotItem(EquipmentSlotDefines.Slots.IDCARD, out ItemComponent? item) &&
-                   TryGetIdCard(item.Owner, out idCard);
         }
     }
 }

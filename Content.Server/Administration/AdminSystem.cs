@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Administration.Managers;
 using Content.Server.Players;
@@ -9,6 +10,7 @@ using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Network;
 
 namespace Content.Server.Administration
 {
@@ -16,6 +18,8 @@ namespace Content.Server.Administration
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
+
+        private readonly Dictionary<NetUserId, PlayerInfo> _playerList = new();
 
         public override void Initialize()
         {
@@ -29,15 +33,27 @@ namespace Content.Server.Administration
             SubscribeLocalEvent<RoleRemovedEvent>(OnRoleEvent);
         }
 
+        private void UpdatePlayerList(IPlayerSession player)
+        {
+            _playerList[player.UserId] = GetPlayerInfo(player);
+
+            var playerInfoChangedEvent = new PlayerInfoChangedEvent
+            {
+                PlayerInfo = _playerList[player.UserId]
+            };
+
+            foreach (var admin in _adminManager.ActiveAdmins)
+            {
+                RaiseNetworkEvent(playerInfoChangedEvent, admin.ConnectedClient);
+            }
+        }
+
         private void OnRoleEvent(RoleEvent ev)
         {
-            if (ev.Role.Antagonist && ev.Role.Mind.Session != null)
-            {
-                foreach (var admin in _adminManager.ActiveAdmins)
-                {
-                    RaiseNetworkEvent(GetChangedEvent(ev.Role.Mind.Session), admin.ConnectedClient);
-                }
-            }
+            if (!ev.Role.Antagonist || ev.Role.Mind.Session == null)
+                return;
+
+            UpdatePlayerList(ev.Role.Mind.Session);
         }
 
         private void OnAdminPermsChanged(AdminPermsChangedEventArgs obj)
@@ -53,22 +69,18 @@ namespace Content.Server.Administration
 
         private void OnPlayerDetached(PlayerDetachedEvent ev)
         {
+            // If disconnected then the player won't have a connected entity to get character name from.
+            // The disconnected state gets sent by OnPlayerStatusChanged.
             if(ev.Player.Status == SessionStatus.Disconnected) return;
 
-            foreach (var admin in _adminManager.ActiveAdmins)
-            {
-                RaiseNetworkEvent(GetChangedEvent(ev.Player), admin.ConnectedClient);
-            }
+            UpdatePlayerList(ev.Player);
         }
 
         private void OnPlayerAttached(PlayerAttachedEvent ev)
         {
             if(ev.Player.Status == SessionStatus.Disconnected) return;
 
-            foreach (var admin in _adminManager.ActiveAdmins)
-            {
-                RaiseNetworkEvent(GetChangedEvent(ev.Player), admin.ConnectedClient);
-            }
+            UpdatePlayerList(ev.Player);
         }
 
         public override void Shutdown()
@@ -78,44 +90,16 @@ namespace Content.Server.Administration
             _adminManager.OnPermsChanged -= OnAdminPermsChanged;
         }
 
-        private PlayerInfoChangedEvent GetChangedEvent(IPlayerSession session)
-        {
-            return new()
-            {
-                PlayerInfo = GetPlayerInfo(session),
-            };
-        }
-
         private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
         {
-            EntityEventArgs? args = null;
-            switch (e.NewStatus)
-            {
-                case SessionStatus.InGame:
-                case SessionStatus.Connected:
-                    args = GetChangedEvent(e.Session);
-                    break;
-                case SessionStatus.Disconnected:
-                    args = new PlayerInfoRemovalMessage {NetUserId = e.Session.UserId};
-                    break;
-            }
-
-            if(args == null) return;
-
-            foreach (var admin in _adminManager.AllAdmins)
-            {
-                RaiseNetworkEvent(args, admin.ConnectedClient);
-            }
+            UpdatePlayerList(e.Session);
         }
 
         private void SendFullPlayerList(IPlayerSession playerSession)
         {
             var ev = new FullPlayerListEvent();
-            ev.PlayersInfo.Clear();
-            foreach (var session in _playerManager.ServerSessions)
-            {
-                ev.PlayersInfo.Add(GetPlayerInfo(session));
-            }
+
+            ev.PlayersInfo = _playerList.Values.ToList();
 
             RaiseNetworkEvent(ev, playerSession.ConnectedClient);
         }
@@ -130,7 +114,10 @@ namespace Content.Server.Administration
 
             var antag = session.ContentData()?.Mind?.AllRoles.Any(r => r.Antagonist) ?? false;
 
-            return new PlayerInfo(name, username, antag, session.AttachedEntity.GetValueOrDefault(), session.UserId, true);
+            var connected = session.Status is SessionStatus.Connected or SessionStatus.InGame;
+
+            return new PlayerInfo(name, username, antag, session.AttachedEntity.GetValueOrDefault(), session.UserId,
+                connected);
         }
     }
 }

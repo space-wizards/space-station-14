@@ -1,17 +1,16 @@
 using System.Linq;
 using Content.Server.Act;
-using Content.Server.Administration;
 using Content.Server.Administration.Logs;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Server.Hands.Components;
-using Content.Server.Items;
 using Content.Server.Players;
 using Content.Server.Popups;
 using Content.Shared.Administration;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Database;
+using Content.Shared.Item;
 using Content.Shared.Popups;
 using Robust.Server.Player;
 using Robust.Shared.Console;
@@ -108,7 +107,7 @@ namespace Content.Server.Chat.Commands
             {
                 foreach (var entity in entities)
                 {
-                    if (_entities.HasComponent<ItemComponent>(entity))
+                    if (_entities.HasComponent<SharedItemComponent>(entity))
                         continue;
                     var suicide = _entities.GetComponents<ISuicideAct>(entity).FirstOrDefault();
                     if (suicide != null)

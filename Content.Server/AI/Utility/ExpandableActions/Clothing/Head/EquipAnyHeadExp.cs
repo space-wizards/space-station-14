@@ -26,7 +26,7 @@ namespace Content.Server.AI.Utility.ExpandableActions.Clothing.Head
             var considerationsManager = IoCManager.Resolve<ConsiderationsManager>();
 
             return new[] {
-                considerationsManager.Get<ClothingInSlotCon>().Slot(EquipmentSlotDefines.Slots.HEAD, context)
+                considerationsManager.Get<ClothingInSlotCon>().Slot("head", context)
                 .InverseBoolCurve(context),
             };
         }
@@ -38,7 +38,7 @@ namespace Content.Server.AI.Utility.ExpandableActions.Clothing.Head
             foreach (var entity in context.GetState<EnumerableInventoryState>().GetValue())
             {
                 if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out ClothingComponent? clothing) &&
-                    (clothing.SlotFlags & EquipmentSlotDefines.SlotFlags.HEAD) != 0)
+                    (clothing.SlotFlags & SlotFlags.HEAD) != 0)
                 {
                     yield return new EquipHead {Owner = owner, Target = entity, Bonus = Bonus};
                 }

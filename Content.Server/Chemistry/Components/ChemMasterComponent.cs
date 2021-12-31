@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Hands.Components;
-using Content.Server.Items;
 using Content.Server.Labels.Components;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
@@ -12,6 +11,7 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
+using Content.Shared.Item;
 using Content.Shared.Popups;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Sound;
@@ -319,7 +319,7 @@ namespace Content.Server.Chemistry.Components
 
                     //Try to give them the bottle
                     if (_entities.TryGetComponent<HandsComponent?>(user, out var hands) &&
-                        _entities.TryGetComponent<ItemComponent?>(bottle, out var item))
+                        _entities.TryGetComponent<SharedItemComponent?>(bottle, out var item))
                     {
                         if (hands.CanPutInHand(item))
                         {
@@ -368,7 +368,7 @@ namespace Content.Server.Chemistry.Components
 
                     //Try to give them the bottle
                     if (_entities.TryGetComponent<HandsComponent?>(user, out var hands) &&
-                        _entities.TryGetComponent<ItemComponent?>(pill, out var item))
+                        _entities.TryGetComponent<SharedItemComponent?>(pill, out var item))
                     {
                         if (hands.CanPutInHand(item))
                         {
