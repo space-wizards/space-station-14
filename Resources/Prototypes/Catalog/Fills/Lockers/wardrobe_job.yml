@@ -98,7 +98,7 @@
        - id: ClothingUniformOveralls
          amount: 1
        - id: ClothingHeadHatTrucker #the hat itself is a subtle joke
-         prob: 0.3
+         prob: 0.15
        - id: ClothingHandsGlovesLeather
          prob: 0.5
 
@@ -129,7 +129,7 @@
    id: WardrobeChapelFilled
    suffix: Filled
    parent: WardrobeChapel
-   description: "Modest is hottest."
+   description: "You have to look presentable for your flock."
    components:
    - type: StorageFill
      contents: # todo chaplain backpack
@@ -139,20 +139,6 @@
          amount: 1
        - id: ClothingUniformJumpskirtChaplain
          amount: 1
-       - id: ClothingHeadHatHoodChaplainHood
-         amount: 1
-       - id: ClothingHeadHatHoodNunHood
-         amount: 1
-       - id: ClothingOuterHoodieChaplain
-         amount: 1
-       - id: ClothingHeadHatFez
-         prob: 0.5
-       - id: ClothingHeadHatPlaguedoctor
-         prob: 0.15
-       - id: ClothingHeadHatWitch
-         prob: 0.05
-       - id: ClothingHeadHatWitch1
-         prob: 0.05
      
 
  - type: entity
