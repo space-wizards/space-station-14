@@ -36,7 +36,7 @@ namespace Content.Server.Mind
 
         private readonly List<Objective> _objectives = new();
         
-        public string _briefing = String.Empty;
+        public string Briefing = String.Empty;
 
         /// <summary>
         ///     Creates the new mind.
@@ -256,9 +256,9 @@ namespace Content.Server.Mind
         /// </summary>
         public bool TryAddBriefing(string briefing)
         {
-                if (briefing == string.Empty || briefing == null) return false;
-                _briefing = briefing;
-                return true;
+            if (briefing == string.Empty || briefing == null) return false;
+            Briefing = briefing;
+            return true;
         }
                 
 

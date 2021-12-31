@@ -27,7 +27,7 @@ public class CharacterInfoSystem : EntitySystem
 
         var conditions = new Dictionary<string, List<ConditionInfo>>();
         var jobTitle = "No Profession";
-        var briefing = "No Briefing (And this should not be showing!)";
+        var briefing = "!!ERROR: No Briefing!!"; //should never show on the UI unless there's a bug
         if (EntityManager.TryGetComponent(entity, out MindComponent? mindComponent) && mindComponent.Mind != null)
         {
             var mind = mindComponent.Mind;
@@ -54,7 +54,7 @@ public class CharacterInfoSystem : EntitySystem
             }
             
             // Get briefing
-            briefing = mind._briefing;
+            briefing = mind.Briefing;
         }
 
         RaiseNetworkEvent(new CharacterInfoEvent(entity, jobTitle, conditions, briefing),
