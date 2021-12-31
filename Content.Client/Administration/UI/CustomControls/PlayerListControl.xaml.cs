@@ -20,6 +20,8 @@ namespace Content.Client.Administration.UI.CustomControls
 
         public event Action<PlayerInfo?>? OnSelectionChanged;
 
+        public Action<PlayerInfo, ItemList.Item>? DecoratePlayer;
+
         public PlayerListControl()
         {
             _adminSystem = EntitySystem.Get<AdminSystem>();
@@ -65,11 +67,13 @@ namespace Content.Client.Administration.UI.CustomControls
                     continue;
                 }
 
-                PlayerItemList.Add(new ItemList.Item(PlayerItemList)
+                var item = new ItemList.Item(PlayerItemList)
                 {
                     Metadata = info,
                     Text = displayName
-                });
+                };
+                DecoratePlayer?.Invoke(info, item);
+                PlayerItemList.Add(item);
             }
         }
     }
