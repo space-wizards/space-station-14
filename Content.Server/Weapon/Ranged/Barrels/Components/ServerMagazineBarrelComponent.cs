@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.Hands.Components;
-using Content.Server.Items;
 using Content.Server.Weapon.Ranged.Ammunition.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Item;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Content.Shared.Weapons.Ranged;
@@ -18,7 +18,9 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -80,7 +82,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             }
         }
 
-        [DataField("magFillPrototype")]
+        [DataField("magFillPrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         private string? _magFillPrototype;
 
         public bool BoltOpen
@@ -338,7 +340,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
             if (_entities.TryGetComponent(user, out HandsComponent? handsComponent))
             {
-                handsComponent.PutInHandOrDrop(_entities.GetComponent<ItemComponent>(mag.Value));
+                handsComponent.PutInHandOrDrop(_entities.GetComponent<SharedItemComponent>(mag.Value));
             }
 
             Dirty();

@@ -35,7 +35,7 @@ namespace Content.Server.Light.EntitySystems
                 component.PointLightComponent.Enabled = component.CurrentState == SmokableState.Lit;
             }
 
-            if (EntityManager.TryGetComponent(component.Owner, out ItemComponent? item))
+            if (EntityManager.TryGetComponent(component.Owner, out SharedItemComponent? item))
             {
                 switch (component.CurrentState)
                 {

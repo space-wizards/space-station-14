@@ -108,7 +108,7 @@
       sprite: Mobs/Customization/masking_helpers.rsi
       state: female_full
       visible: false
-    - map: [ "enum.Slots.INNERCLOTHING" ]
+    - map: [ "jumpsuit" ]
       shader: StencilDraw
     - map: [ "enum.HumanoidVisualLayers.LHand" ]
       color: "#e8b59b"
@@ -131,25 +131,25 @@
       sprite: Objects/Misc/handcuffs.rsi
       state: body-overlay-2
       visible: false
-    - map: [ "enum.Slots.IDCARD" ]
-    - map: [ "enum.Slots.GLOVES" ]
-    - map: [ "enum.Slots.SHOES" ]
-    - map: [ "enum.Slots.EARS" ]
-    - map: [ "enum.Slots.OUTERCLOTHING" ]
-    - map: [ "enum.Slots.EYES" ]
-    - map: [ "enum.Slots.BELT" ]
-    - map: [ "enum.Slots.NECK" ]
-    - map: [ "enum.Slots.BACKPACK" ]
+    - map: [ "id" ]
+    - map: [ "gloves" ]
+    - map: [ "shoes" ]
+    - map: [ "ears" ]
+    - map: [ "outerClothing" ]
+    - map: [ "eyes" ]
+    - map: [ "belt" ]
+    - map: [ "neck" ]
+    - map: [ "back" ]
     - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
       state: shaved
       sprite: Mobs/Customization/human_facial_hair.rsi
     - map: [ "enum.HumanoidVisualLayers.Hair" ]
       state: bald
       sprite: Mobs/Customization/human_hair.rsi
-    - map: [ "enum.Slots.MASK" ]
-    - map: [ "enum.Slots.HEAD" ]
-    - map: [ "enum.Slots.POCKET1" ]
-    - map: [ "enum.Slots.POCKET2" ]
+    - map: [ "mask" ]
+    - map: [ "head" ]
+    - map: [ "pocket1" ]
+    - map: [ "pocket2" ]
   - type: Physics
     bodyType: KinematicController
   - type: Fixtures
@@ -303,6 +303,7 @@
   components:
     - type: Hands
     - type: Inventory
+    - type: ContainerContainer
     - type: Icon
       sprite: Mobs/Species/Human/parts.rsi
       state: full
@@ -354,7 +355,7 @@
         sprite: Mobs/Customization/masking_helpers.rsi
         state: female_full
         visible: false
-      - map: ["enum.Slots.INNERCLOTHING"]
+      - map: ["jumpsuit"]
         shader: StencilDraw
       - map: ["enum.HumanoidVisualLayers.LHand"]
         color: "#e8b59b"
@@ -369,25 +370,25 @@
         sprite: Objects/Misc/handcuffs.rsi
         state: body-overlay-2
         visible: false
-      - map: ["enum.Slots.IDCARD"]
-      - map: ["enum.Slots.GLOVES"]
-      - map: ["enum.Slots.SHOES"]
-      - map: ["enum.Slots.EARS"]
-      - map: ["enum.Slots.OUTERCLOTHING"]
-      - map: ["enum.Slots.EYES"]
-      - map: ["enum.Slots.BELT"]
-      - map: ["enum.Slots.NECK"]
-      - map: ["enum.Slots.BACKPACK"]
+      - map: ["id"]
+      - map: ["gloves"]
+      - map: ["shoes"]
+      - map: ["ears"]
+      - map: ["outerClothing"]
+      - map: ["eyes"]
+      - map: ["belt"]
+      - map: ["neck"]
+      - map: ["back"]
       - map: ["enum.HumanoidVisualLayers.FacialHair"]
         state: shaved
         sprite: Mobs/Customization/human_facial_hair.rsi
       - map: ["enum.HumanoidVisualLayers.Hair"]
         state: bald
         sprite: Mobs/Customization/human_hair.rsi
-      - map: ["enum.Slots.MASK"]
-      - map: ["enum.Slots.HEAD"]
-      - map: [ "enum.Slots.POCKET1" ]
-      - map: [ "enum.Slots.POCKET2" ]
+      - map: ["mask"]
+      - map: ["head"]
+      - map: [ "pocket1" ]
+      - map: [ "pocket2" ]
       - map: ["hand-left"]
       - map: ["hand-right"]
     - type: Physics

@@ -13,11 +13,11 @@
 - type: startingGear
   id: DoctorGear
   equipment:
-    innerclothing: ClothingUniformJumpsuitMedicalDoctor
-    backpack: ClothingBackpackMedicalFilled
+    jumpsuit: ClothingUniformJumpsuitMedicalDoctor
+    back: ClothingBackpackMedicalFilled
     shoes: ClothingShoesColorWhite
     outerclothing: ClothingOuterCoatLab
-    idcard: MedicalPDA
+    id: MedicalPDA
     ears: ClothingHeadsetMedical
     belt: ClothingBeltMedical
   innerclothingskirt: ClothingUniformJumpskirtMedicalDoctor
