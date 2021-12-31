@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Client.Administration.Managers;
 using Content.Client.Administration.UI;
@@ -7,6 +8,7 @@ using Content.Client.Administration.UI.CustomControls;
 using Content.Shared.Administration;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
+using Robust.Client.UserInterface.Controls;
 using Robust.Client.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Player;
@@ -42,12 +44,18 @@ namespace Content.Client.Administration
                 SoundSystem.Play(Filter.Local(), "/Audio/Effects/adminhelp.ogg");
                 _clyde.RequestWindowAttention();
             }
+
+            _adminWindow?.ChannelSelector?.Refresh();
         }
+
+        public bool TryGetChannel(NetUserId ch, [NotNullWhen(true)] out BwoinkPanel bp) => _activePanelMap.TryGetValue(ch, out bp!);
 
         private BwoinkPanel EnsureAdmin(NetUserId channelId)
         {
             if (_adminWindow is null)
+            {
                 _adminWindow = new BwoinkWindow(this);
+            }
 
             if (!_activePanelMap.TryGetValue(channelId, out var existingPanel))
             {

@@ -21,6 +21,8 @@ namespace Content.Client.Administration.UI.CustomControls
         private readonly NetUserId _channelId;
         private readonly string _channelName;
 
+        public int Unread { get; private set; } = 0;
+
         public BwoinkPanel(BwoinkSystem bwoinkSys, NetUserId userId, string channelName)
         {
             RobustXamlLoader.Load(this);
@@ -32,7 +34,10 @@ namespace Content.Client.Administration.UI.CustomControls
             OnVisibilityChanged += c =>
             {
                 if (c.Visible)
+                {
+                    Unread = 0;
                     UpdateTitle();
+                }
             };
             SenderLineEdit.OnTextEntered += Input_OnTextEntered;
         }
@@ -71,6 +76,8 @@ namespace Content.Client.Administration.UI.CustomControls
 
         public void ReceiveLine(string text)
         {
+            if (!Visible)
+                Unread++;
             var formatted = new FormattedMessage(1);
             formatted.AddMarkup(text);
             TextOutput.AddMessage(formatted);
