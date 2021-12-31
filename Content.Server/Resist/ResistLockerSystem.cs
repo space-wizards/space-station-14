@@ -5,7 +5,7 @@ using Content.Server.DoAfter;
 using Content.Shared.Popups;
 using Robust.Shared.Localization;
 
-namespace Content.Server.Resist.EntitySystems
+namespace Content.Server.Resist
 {
     public class ResistLockerSystem : EntitySystem
     {
@@ -18,23 +18,25 @@ namespace Content.Server.Resist.EntitySystems
 
         private void OnRelayMovement(EntityUid uid, ResistLockerComponent component, RelayMovementEntityEvent args)
         {
-            if(EntityManager.TryGetComponent<EntityStorageComponent?>(uid, out var storageComponent))
+            TryComp(uid, out EntityStorageComponent? storageComponent);
+            if (storageComponent == null)
+                return;
+
+            if (!component.IsResisting)
             {
-                if (!component.IsResisting)
+                //Check IfWeldedShut or if Lock exists and is locked
+                if (TryComp<LockComponent?>(uid, out var lockComponent) && lockComponent.Locked || storageComponent.IsWeldedShut)
                 {
-                    //Check IfWeldedShut or if Lock exists and is locked
-                    if (EntityManager.TryGetComponent<LockComponent?>(uid, out var lockComponent) && lockComponent.Locked || storageComponent.IsWeldedShut)
-                    {
-                            AttemptResist(args.Entity, uid, storageComponent, component);
-                    } 
-                }
+                    AttemptResist(args.Entity, uid, storageComponent, component);
+                } 
             }
 
         }
-
-
-        private async void AttemptResist(EntityUid user, EntityUid target, EntityStorageComponent storageComponent, ResistLockerComponent resistLockerComponent)
+        private async void AttemptResist(EntityUid user, EntityUid target, EntityStorageComponent? storageComponent, ResistLockerComponent? resistLockerComponent)
         {
+            if (!Resolve(target, ref storageComponent, ref resistLockerComponent))
+                return;
+
             var doAfterEventArgs = new DoAfterEventArgs(user, resistLockerComponent.ResistTime, default, target)
             {
                 BreakOnTargetMove = false,
@@ -56,19 +58,16 @@ namespace Content.Server.Resist.EntitySystems
                 if (storageComponent.IsWeldedShut)
                 {
                     storageComponent.IsWeldedShut = false;
-                    storageComponent.TryOpenStorage(user);
-                    return;
                 }
 
                 //Handle Locks as well
-                if (EntityManager.TryGetComponent<LockComponent?>(target, out var lockComponent))
+                if (TryComp<LockComponent>(target, out var lockComponent))
                 {
                     lockComponent.Locked = false;
-                    storageComponent.TryOpenStorage(user);
-                    return;
                 }
 
-
+                storageComponent.TryOpenStorage(user);
+                return;
             }
             user.PopupMessage(Loc.GetString("resist-locker-component-resist-interrupted"));
         }
