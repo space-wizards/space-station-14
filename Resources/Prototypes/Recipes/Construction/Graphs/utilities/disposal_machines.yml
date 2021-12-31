@@ -22,7 +22,7 @@
             - !type:SpawnPrototype
               prototype: SheetSteel1
               amount: 1
-            - !type:DeleteEntity {}
+            - !type:DeleteEntity
           steps:
             - tool: Screwing
               doAfter: 1
@@ -86,7 +86,7 @@
               doAfter: 0.25
         - to: disposal_unit
           conditions:
-            - !type:EntityAnchored {}
+            - !type:EntityAnchored
           steps:
             - material: Steel
               amount: 1
@@ -99,8 +99,9 @@
             - !type:SpawnPrototype
               prototype: SheetSteel1
               amount: 1
+            - !type:EmptyAllContainers
           conditions:
-            - !type:EntityAnchored {}
+            - !type:EntityAnchored
           steps:
             - tool: Prying
               doAfter: 1
@@ -129,6 +130,7 @@
     #        - !type:SpawnPrototype
     #          prototype: SheetSteel1
     #          amount: 1
+    #        - !type:EmptyAllContainers
     #      conditions:
     #        - !type:EntityAnchored {}
     #      steps:
@@ -159,6 +161,7 @@
     #        - !type:SpawnPrototype
     #          prototype: SheetSteel1
     #          amount: 1
+    #        - !type:EmptyAllContainers
     #      conditions:
     #        - !type:EntityAnchored {}
     #      steps:

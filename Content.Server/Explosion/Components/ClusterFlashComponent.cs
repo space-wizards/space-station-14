@@ -9,8 +9,10 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Explosion.Components
@@ -27,7 +29,7 @@ namespace Content.Server.Explosion.Components
         /// <summary>
         ///     What we fill our prototype with if we want to pre-spawn with grenades.
         /// </summary>
-        [ViewVariables] [DataField("fillPrototype")]
+        [ViewVariables] [DataField("fillPrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         private string? _fillPrototype;
 
         /// <summary>

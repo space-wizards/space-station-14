@@ -50,6 +50,7 @@ namespace Content.Shared.Movement.Components
 
         private MoveButtons _heldMoveButtons = MoveButtons.None;
 
+        [ViewVariables]
         public Angle LastGridAngle { get; set; } = new(0);
 
         public float CurrentWalkSpeed => _movementSpeed?.CurrentWalkSpeed ?? MovementSpeedModifierComponent.DefaultBaseWalkSpeed;

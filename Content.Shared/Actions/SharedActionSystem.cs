@@ -17,6 +17,7 @@ namespace Content.Shared.Actions
         {
             base.Initialize();
 
+            UpdatesOutsidePrediction = true;
             SubscribeLocalEvent<ItemActionsComponent, UnequippedHandEvent>(OnHandUnequipped);
             SubscribeLocalEvent<ItemActionsComponent, EquippedHandEvent>(OnHandEquipped);
         }

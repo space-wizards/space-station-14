@@ -3,8 +3,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Hands.Components;
-using Content.Server.Inventory.Components;
-using Content.Server.Items;
 using Content.Server.Stack;
 using Content.Server.Storage.Components;
 using Content.Server.Strip;
@@ -15,6 +13,7 @@ using Content.Shared.Examine;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Input;
+using Content.Shared.Inventory;
 using Content.Shared.Physics.Pull;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
@@ -31,13 +30,13 @@ using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Utility;
-using static Content.Shared.Inventory.EquipmentSlotDefines;
 
 namespace Content.Server.Hands.Systems
 {
     [UsedImplicitly]
     internal sealed class HandsSystem : SharedHandsSystem
     {
+        [Dependency] private readonly InventorySystem _inventorySystem = default!;
         [Dependency] private readonly StackSystem _stackSystem = default!;
         [Dependency] private readonly HandVirtualItemSystem _virtualItemSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
@@ -75,9 +74,38 @@ namespace Content.Server.Hands.Systems
             CommandBinds.Unregister<HandsSystem>();
         }
 
+        private static void HandlePullAttempt(EntityUid uid, HandsComponent component, PullAttemptMessage args)
+        {
+            if (args.Puller.Owner != uid)
+                return;
+
+            // Cancel pull if all hands full.
+            if (component.Hands.All(hand => hand.HeldEntity != null))
+                args.Cancelled = true;
+        }
+
         private void GetComponentState(EntityUid uid, HandsComponent hands, ref ComponentGetState args)
         {
             args.State = new HandsComponentState(hands.Hands, hands.ActiveHand);
+        }
+
+        private void HandlePullStarted(EntityUid uid, HandsComponent component, PullStartedMessage args)
+        {
+            if (args.Puller.Owner != uid)
+                return;
+
+            // Try find hand that is doing this pull.
+            // and clear it.
+            foreach (var hand in component.Hands)
+            {
+                if (hand.HeldEntity == null
+                    || !EntityManager.TryGetComponent(hand.HeldEntity, out HandVirtualItemComponent? virtualItem)
+                    || virtualItem.BlockingEntity != args.Pulled.Owner)
+                    continue;
+
+                EntityManager.DeleteEntity(hand.HeldEntity.Value);
+                break;
+            }
         }
 
         #region EntityInsertRemove
@@ -207,9 +235,9 @@ namespace Content.Server.Hands.Systems
                 !_actionBlockerSystem.CanThrow(player))
                 return false;
 
-            if (TryComp(throwEnt, out StackComponent? stack) && stack.Count > 1 && stack.ThrowIndividually)
+            if (EntityManager.TryGetComponent(throwEnt.Value, out StackComponent? stack) && stack.Count > 1 && stack.ThrowIndividually)
             {
-                var splitStack = _stackSystem.Split(throwEnt.Value, 1, Transform(player).Coordinates, stack);
+                var splitStack = _stackSystem.Split(throwEnt.Value, 1, EntityManager.GetComponent<TransformComponent>(player).Coordinates, stack);
 
                 if (splitStack is not {Valid: true})
                     return false;
@@ -233,15 +261,15 @@ namespace Content.Server.Hands.Systems
 
         private void HandleSmartEquipBackpack(ICommonSession? session)
         {
-            HandleSmartEquip(session, Slots.BACKPACK);
+            HandleSmartEquip(session, "back");
         }
 
         private void HandleSmartEquipBelt(ICommonSession? session)
         {
-            HandleSmartEquip(session, Slots.BELT);
+            HandleSmartEquip(session, "belt");
         }
 
-        private void HandleSmartEquip(ICommonSession? session, Slots equipmentSlot)
+        private void HandleSmartEquip(ICommonSession? session, string equipmentSlot)
         {
             if (session is not IPlayerSession playerSession)
                 return;
@@ -249,14 +277,13 @@ namespace Content.Server.Hands.Systems
             if (playerSession.AttachedEntity is not {Valid: true} plyEnt || !Exists(plyEnt))
                 return;
 
-            if (!TryComp(plyEnt, out SharedHandsComponent? hands) ||
-                !TryComp(plyEnt, out InventoryComponent? inventory))
+            if (!EntityManager.TryGetComponent(plyEnt, out SharedHandsComponent? hands))
                 return;
 
-            if (!inventory.TryGetSlotItem(equipmentSlot, out ItemComponent? equipmentItem) ||
-                !TryComp(equipmentItem.Owner, out ServerStorageComponent? storageComponent))
+            if (!_inventorySystem.TryGetSlotEntity(plyEnt, equipmentSlot, out var slotEntity) ||
+                !TryComp(slotEntity, out ServerStorageComponent? storageComponent))
             {
-                plyEnt.PopupMessage(Loc.GetString("hands-system-missing-equipment-slot", ("slotName", SlotNames[equipmentSlot].ToLower())));
+                plyEnt.PopupMessage(Loc.GetString("hands-system-missing-equipment-slot", ("slotName", equipmentSlot)));
                 return;
             }
 
@@ -268,7 +295,7 @@ namespace Content.Server.Hands.Systems
             {
                 if (storageComponent.StoredEntities.Count == 0)
                 {
-                    plyEnt.PopupMessage(Loc.GetString("hands-system-empty-equipment-slot", ("slotName", SlotNames[equipmentSlot].ToLower())));
+                    plyEnt.PopupMessage(Loc.GetString("hands-system-empty-equipment-slot", ("slotName", equipmentSlot)));
                 }
                 else
                 {

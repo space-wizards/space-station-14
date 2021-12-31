@@ -49,8 +49,8 @@
       - !type:RandomizeBehaviour # immediately make it bright and flickery
         id: turn_on
         interpolate: Nearest
-        minDuration: 0.02
-        maxDuration: 0.06
+        minDuration: 0.001
+        maxDuration: 0.001
         startValue: 6.0
         endValue: 15.0
         property: Energy
@@ -65,8 +65,8 @@
       - !type:RandomizeBehaviour # weaker flicker as it fades out
         id: fade_out
         interpolate: Nearest
-        minDuration: 0.02
-        maxDuration: 0.06
+        minDuration: 0.001
+        maxDuration: 0.001
         startValue: 4.0
         endValue: 8.0
         property: Energy

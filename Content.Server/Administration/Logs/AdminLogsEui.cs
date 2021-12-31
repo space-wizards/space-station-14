@@ -14,6 +14,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Timing;
 using static Content.Shared.Administration.AdminLogsEuiMsg;
 
 namespace Content.Server.Administration.Logs;
@@ -142,22 +143,21 @@ public sealed class AdminLogsEui : BaseEui
 
     private async void SendLogs(bool replace)
     {
+        var stopwatch = new Stopwatch();
+        stopwatch.Start();
+
         // TODO ADMIN LOGS array pool
-        var logs = new List<SharedAdminLog>(_clientBatchSize);
+        List<SharedAdminLog> logs = default!;
 
         await Task.Run(async () =>
         {
-            var results = await Task.Run(() => _logSystem.All(_filter));
-
-            await foreach (var record in results.WithCancellation(_logSendCancellation.Token))
-            {
-                var log = new SharedAdminLog(record.Id, record.Type, record.Impact, record.Date, record.Message, record.Players);
-                logs.Add(log);
-            }
+            logs = await _logSystem.All(_filter);
         }, _filter.CancellationToken);
 
         if (logs.Count > 0)
         {
+            _filter.LogsSent += logs.Count;
+
             var largestId = _filter.DateOrder switch
             {
                 DateOrder.Ascending => ^1,
@@ -168,9 +168,11 @@ public sealed class AdminLogsEui : BaseEui
             _filter.LastLogId = logs[largestId].Id;
         }
 
-        var message = new NewLogs(logs.ToArray(), replace);
+        var message = new NewLogs(logs, replace);
 
         SendMessage(message);
+
+        _sawmill.Info($"Sent {logs.Count} logs to {Player.Name} in {stopwatch.Elapsed.TotalMilliseconds} ms");
     }
 
     public override void Closed()

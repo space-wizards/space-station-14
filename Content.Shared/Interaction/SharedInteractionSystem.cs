@@ -139,16 +139,14 @@ namespace Content.Shared.Interaction
             if (!TryComp(user, out SharedHandsComponent? hands))
                 return;
 
-            hands.TryGetActiveHeldEntity(out var held);
-
             // TODO: Replace with body interaction range when we get something like arm length or telekinesis or something.
             var inRangeUnobstructed = user.InRangeUnobstructed(coordinates, ignoreInsideBlocker: true);
             if (target == null || !inRangeUnobstructed)
             {
-                if (held == null)
+                if (!hands.TryGetActiveHeldEntity(out var heldEntity))
                     return;
 
-                if (!await InteractUsingRanged(user, held.Value, target, coordinates, inRangeUnobstructed) &&
+                if (!await InteractUsingRanged(user, heldEntity.Value, target, coordinates, inRangeUnobstructed) &&
                     !inRangeUnobstructed)
                 {
                     var message = Loc.GetString("interaction-system-user-interaction-cannot-reach");
@@ -163,13 +161,17 @@ namespace Content.Shared.Interaction
                 if (altInteract)
                     // Perform alternative interactions, using context menu verbs.
                     AltInteract(user, target.Value);
-                else if (held != null && held != target)
-                    // We are performing a standard interaction with an item, and the target isn't the same as the item
-                    // currently in our hand. We will use the item in our hand on the nearby object via InteractUsing
-                    await InteractUsing(user, held.Value, target.Value, coordinates);
-                else if (held == null)
+
+                if (!hands.TryGetActiveHeldEntity(out var heldEntity))
+                {
                     // Since our hand is empty we will use InteractHand/Activate
                     InteractHand(user, target.Value);
+                }
+                else if (heldEntity != target)
+                {
+                    await InteractUsing(user, heldEntity.Value, target.Value, coordinates);
+                }
+                    
             }
         }
 
@@ -648,7 +650,7 @@ namespace Content.Shared.Interaction
         /// <param name="used"></param>
         public void TryUseInteraction(EntityUid user, EntityUid used, bool altInteract = false)
         {
-            if (user != null && used != null && _actionBlockerSystem.CanUse(user))
+            if (_actionBlockerSystem.CanUse(user))
             {
                 if (altInteract)
                     AltInteract(user, used);
@@ -729,44 +731,43 @@ namespace Content.Shared.Interaction
         }
         #endregion
 
-        #region Equip
+
+        #region Equip Hand
         /// <summary>
-        ///     Calls Equipped on all components that implement the IEquipped interface
-        ///     on an entity that has been equipped.
+        ///     Calls EquippedHand on all components that implement the IEquippedHand interface
+        ///     on an item.
         /// </summary>
-        public void EquippedInteraction(EntityUid user, EntityUid equipped, EquipmentSlotDefines.Slots slot)
+        public void EquippedHandInteraction(EntityUid user, EntityUid item, HandState hand)
         {
-            var equipMsg = new EquippedEvent(user, equipped, slot);
-            RaiseLocalEvent(equipped, equipMsg);
-            if (equipMsg.Handled)
+            var equippedHandMessage = new EquippedHandEvent(user, item, hand);
+            RaiseLocalEvent(item, equippedHandMessage);
+            if (equippedHandMessage.Handled)
                 return;
 
-            var comps = AllComps<IEquipped>(equipped).ToList();
+            var comps = AllComps<IEquippedHand>(item).ToList();
 
-            // Call Thrown on all components that implement the interface
             foreach (var comp in comps)
             {
-                comp.Equipped(new EquippedEventArgs(user, slot));
+                comp.EquippedHand(new EquippedHandEventArgs(user, hand));
             }
         }
 
         /// <summary>
-        ///     Calls Unequipped on all components that implement the IUnequipped interface
-        ///     on an entity that has been equipped.
+        ///     Calls UnequippedHand on all components that implement the IUnequippedHand interface
+        ///     on an item.
         /// </summary>
-        public void UnequippedInteraction(EntityUid user, EntityUid equipped, EquipmentSlotDefines.Slots slot)
+        public void UnequippedHandInteraction(EntityUid user, EntityUid item, HandState hand)
         {
-            var unequipMsg = new UnequippedEvent(user, equipped, slot);
-            RaiseLocalEvent(equipped, unequipMsg);
-            if (unequipMsg.Handled)
+            var unequippedHandMessage = new UnequippedHandEvent(user, item, hand);
+            RaiseLocalEvent(item, unequippedHandMessage);
+            if (unequippedHandMessage.Handled)
                 return;
 
-            var comps = AllComps<IUnequipped>(equipped).ToList();
+            var comps = AllComps<IUnequippedHand>(item).ToList();
 
-            // Call Thrown on all components that implement the interface
             foreach (var comp in comps)
             {
-                comp.Unequipped(new UnequippedEventArgs(user, slot));
+                comp.UnequippedHand(new UnequippedHandEventArgs(user, hand));
             }
         }
         #endregion
@@ -778,7 +779,7 @@ namespace Content.Shared.Interaction
         /// </summary>
         public bool TryDroppedInteraction(EntityUid user, EntityUid item)
         {
-            if (user == null || item == null || !_actionBlockerSystem.CanDrop(user)) return false;
+            if (!_actionBlockerSystem.CanDrop(user)) return false;
 
             DroppedInteraction(user, item);
             return true;

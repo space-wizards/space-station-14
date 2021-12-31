@@ -14,9 +14,9 @@ public sealed class LogFilter
 
     public string? Search { get; set; }
 
-    public List<LogType>? Types { get; set; }
+    public HashSet<LogType>? Types { get; set; }
 
-    public List<LogImpact>? Impacts { get; set; }
+    public HashSet<LogImpact>? Impacts { get; set; }
 
     public DateTime? Before { get; set; }
 
@@ -27,6 +27,8 @@ public sealed class LogFilter
     public Guid[]? AllPlayers { get; set; }
 
     public int? LastLogId { get; set; }
+
+    public int LogsSent { get; set; }
 
     public int? Limit { get; set; }
 

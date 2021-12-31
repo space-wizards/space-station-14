@@ -1,13 +1,15 @@
 using Content.Server.Administration.Logs;
-using Content.Server.Camera;
 using Content.Server.Projectiles.Components;
 using Content.Shared.Body.Components;
+using Content.Shared.Camera;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Maths;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
 
@@ -18,6 +20,7 @@ namespace Content.Server.Projectiles
     {
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly AdminLogSystem _adminLogSystem = default!;
+        [Dependency] private readonly CameraRecoilSystem _cameraRecoil = default!;
 
         public override void Initialize()
         {
@@ -57,16 +60,17 @@ namespace Content.Server.Projectiles
                 component.DamagedEntity = true;
 
                 if (dmg is not null && EntityManager.EntityExists(component.Shooter))
-                    _adminLogSystem.Add(LogType.BulletHit, LogImpact.Low,
+                    _adminLogSystem.Add(LogType.BulletHit,
+                        HasComp<ActorComponent>(otherEntity) ? LogImpact.Extreme : LogImpact.High,
                         $"Projectile {ToPrettyString(component.Owner):projectile} shot by {ToPrettyString(component.Shooter):user} hit {ToPrettyString(otherEntity):target} and dealt {dmg.Total:damage} damage");
             }
 
             // Damaging it can delete it
             if (!EntityManager.GetComponent<MetaDataComponent>(otherEntity).EntityDeleted &&
-                EntityManager.TryGetComponent(otherEntity, out CameraRecoilComponent? recoilComponent))
+                EntityManager.HasComponent<CameraRecoilComponent>(otherEntity))
             {
                 var direction = args.OurFixture.Body.LinearVelocity.Normalized;
-                recoilComponent.Kick(direction);
+                _cameraRecoil.KickCamera(otherEntity, direction);
             }
 
             if (component.DeleteOnCollide)

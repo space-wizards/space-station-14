@@ -143,7 +143,7 @@ namespace Content.Client.Hands
             var pressedEntity = pressedHand.HeldEntity;
             var activeEntity = activeHand.HeldEntity;
 
-            if (pressedHand == activeHand && activeEntity != default)
+            if (pressedHand == activeHand && activeEntity != null)
             {
                 // use item in hand
                 // it will always be attack_self() in my heart.
@@ -151,14 +151,14 @@ namespace Content.Client.Hands
                 return;
             }
 
-            if (pressedHand != activeHand && pressedEntity == default)
+            if (pressedHand != activeHand && pressedEntity == null)
             {
                 // change active hand
                 EntityManager.RaisePredictiveEvent(new RequestSetHandEvent(handName));
                 return;
             }
 
-            if (pressedHand != activeHand && pressedEntity != default && activeEntity != default)
+            if (pressedHand != activeHand && pressedEntity != null && activeEntity != null)
             {
                 // use active item on held item
                 RaiseNetworkEvent(new ClientInteractUsingInHandMsg(pressedHand.Name));

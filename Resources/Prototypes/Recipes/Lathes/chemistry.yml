@@ -48,3 +48,11 @@
   completetime: 500
   materials:
     Glass: 200
+
+- type: latheRecipe
+  id: PillCanister
+  icon: Objects/Specific/Chemistry/pills_canister.rsi/pill_canister.png
+  result: PillCanister
+  completetime: 500
+  materials:
+    Plastic: 100

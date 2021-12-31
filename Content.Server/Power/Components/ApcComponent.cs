@@ -1,8 +1,8 @@
 using System;
-using Content.Server.Access.Components;
-using Content.Server.Access.Systems;
 using Content.Server.Power.NodeGroups;
 using Content.Server.UserInterface;
+using Content.Shared.Access.Components;
+using Content.Shared.Access.Systems;
 using Content.Shared.APC;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
@@ -59,14 +59,14 @@ namespace Content.Server.Power.Components
 
         public BatteryComponent? Battery => _entMan.TryGetComponent(Owner, out BatteryComponent? batteryComponent) ? batteryComponent : null;
 
-        [ComponentDependency] private AccessReader? _accessReader = null;
+        [ComponentDependency] private AccessReaderComponent? _accessReader = null;
 
         protected override void Initialize()
         {
             base.Initialize();
 
             Owner.EnsureComponentWarn<ServerUserInterfaceComponent>();
-            Owner.EnsureComponentWarn<AccessReader>();
+            Owner.EnsureComponentWarn<AccessReaderComponent>();
 
             if (UserInterface != null)
             {

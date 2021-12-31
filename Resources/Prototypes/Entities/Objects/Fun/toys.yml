@@ -134,7 +134,7 @@
     QuickEquip: false
     sprite: Objects/Fun/ducky.rsi
     Slots:
-    - Helmet
+    - HEAD
   - type: ItemCooldown
   - type: EmitSoundOnUse
     sound:
@@ -550,3 +550,21 @@
     size: 12
     sprite: Objects/Fun/toys.rsi
     HeldPrefix: singularitytoy
+
+- type: entity
+  parent: BaseItem
+  id: PonderingOrb
+  name: pondering orb
+  description: Ponderous, man... Really ponderous.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/toys.rsi
+    state: orb
+    shader: unshaded
+  - type: PointLight
+    radius: 2
+    color: "#00CCFF"
+  - type: Item
+    size: 24
+    sprite: Objects/Fun/toys.rsi
+    HeldPrefix: orb

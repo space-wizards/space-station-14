@@ -51,7 +51,7 @@ namespace Content.Shared.Verbs
             bool canAccess = false;
             if (force || target == user)
                 canAccess = true;
-            else if (_interactionSystem.InRangeUnobstructed(user, target, ignoreInsideBlocker: true))
+            else if (EntityManager.EntityExists(target) && _interactionSystem.InRangeUnobstructed(user, target, ignoreInsideBlocker: true))
             {
                 if (user.IsInSameOrParentContainer(target))
                     canAccess = true;
@@ -65,13 +65,14 @@ namespace Content.Shared.Verbs
             var canInteract = force || _actionBlockerSystem.CanInteract(user);
 
             EntityUid? @using = null;
-            if (EntityManager.TryGetComponent(user, out SharedHandsComponent? hands) && (force || _actionBlockerSystem.CanUse(user)))
+            if (TryComp(user, out SharedHandsComponent? hands) && (force || _actionBlockerSystem.CanUse(user)))
             {
-                hands.TryGetActiveHeldEntity(out @using);
+                hands.TryGetActiveHeldEntity(out var @using);
 
                 // Check whether the "Held" entity is a virtual pull entity. If yes, set that as the entity being "Used".
                 // This allows you to do things like buckle a dragged person onto a surgery table, without click-dragging
                 // their sprite.
+
                 if (TryComp(@using, out HandVirtualItemComponent? pull))
                 {
                     @using = pull.BlockingEntity;

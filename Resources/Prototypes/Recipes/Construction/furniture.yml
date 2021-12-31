@@ -247,7 +247,7 @@
   startNode: start
   targetNode: toilet
   category: Furniture
-  description: A square piece of wood standing on four legs covered by a cloth. (What did you expect?)
+  description: A human excrement flushing apparatus
   icon:
     sprite: Structures/Furniture/toilet.rsi
     state: closed_toilet_seat_up

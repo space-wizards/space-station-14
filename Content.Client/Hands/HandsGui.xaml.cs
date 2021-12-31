@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Content.Client.HUD;
+using Content.Client.Inventory;
 using Content.Client.Items.Managers;
 using Content.Client.Items.UI;
 using Content.Client.Resources;
@@ -32,7 +33,7 @@ namespace Content.Client.Hands
         private readonly HandsSystem _handsSystem;
         private readonly HandsComponent _handsComponent;
 
-        private Texture StorageTexture => _gameHud.GetHudTexture("back.png");
+        private string StorageTexture => "back.png";
         private Texture BlockedTexture => _resourceCache.GetTexture("/Textures/Interface/Inventory/blocked.png");
 
         private ItemStatusPanel StatusPanel { get; }
@@ -79,7 +80,7 @@ namespace Content.Client.Hands
         private void UpdateGui()
         {
             HandsContainer.DisposeAllChildren();
-
+            var entManager = IoCManager.Resolve<IEntityManager>();
             foreach (var hand in _hands)
             {
                 var newButton = MakeHandButton(hand.HandLocation);
@@ -90,17 +91,17 @@ namespace Content.Client.Hands
                 newButton.OnPressed += args => OnHandPressed(args, handName);
                 newButton.OnStoragePressed += _ => OnStoragePressed(handName);
 
-                _itemSlotManager.SetItemSlot(newButton, hand.HeldItem);
+                _itemSlotManager.SetItemSlot(newButton, hand.HeldItem ?? EntityUid.Invalid);
 
                 // Show blocked overlay if hand is blocked.
                 newButton.Blocked.Visible =
-                    hand.HeldItem != null && IoCManager.Resolve<IEntityManager>().HasComponent<HandVirtualItemComponent>(hand.HeldItem);
+                    hand.HeldItem != null && entManager.HasComponent<HandVirtualItemComponent>(hand.HeldItem.Value);
             }
 
             if (TryGetActiveHand(out var activeHand))
             {
                 activeHand.HandButton.SetActiveHand(true);
-                StatusPanel.Update(activeHand.HeldItem);
+                StatusPanel.Update(activeHand.HeldItem ?? EntityUid.Invalid);
             }
         }
 
@@ -112,7 +113,7 @@ namespace Content.Client.Hands
             }
             else if (TryGetHand(handName, out var hand))
             {
-                _itemSlotManager.OnButtonPressed(args, hand.HeldItem);
+                _itemSlotManager.OnButtonPressed(args, hand.HeldItem ?? EntityUid.Invalid);
             }
         }
 
@@ -149,7 +150,7 @@ namespace Content.Client.Hands
 
             foreach (var hand in _hands)
             {
-                _itemSlotManager.UpdateCooldown(hand.HandButton, hand.HeldItem);
+                _itemSlotManager.UpdateCooldown(hand.HandButton, hand.HeldItem ?? EntityUid.Invalid);
             }
         }
 
@@ -160,9 +161,8 @@ namespace Content.Client.Hands
                 HandLocation.Right => "hand_r.png",
                 _ => "hand_l.png"
             };
-            var buttonTexture = _gameHud.GetHudTexture(buttonTextureName);
 
-            return new HandButton(buttonTexture, StorageTexture, buttonTextureName, BlockedTexture, buttonLocation);
+            return new HandButton(ClientInventorySystem.ButtonSize, buttonTextureName, StorageTexture, _gameHud, BlockedTexture, buttonLocation);
         }
 
         private void UpdateHudTheme(int idx)

@@ -60,3 +60,6 @@
       crit: crit
       dead: dead
   - type: Puller
+  - type: Butcherable
+    meat: FoodMeatXeno
+    pieces: 5

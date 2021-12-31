@@ -96,3 +96,21 @@
   materials:
      Steel: 100
      Glass: 100
+
+- type: latheRecipe
+  id: KitchenReagentGrinderMachineCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: KitchenReagentGrinderMachineCircuitboard
+  completetime: 1000
+  materials:
+     Steel: 100
+     Glass: 100
+
+- type: latheRecipe
+  id: CrewMonitoringComputerCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: CrewMonitoringComputerCircuitboard
+  completetime: 1000
+  materials:
+     Steel: 100
+     Glass: 100
