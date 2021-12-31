@@ -23,6 +23,8 @@
           # This default isn't actually explicitly used right now.
           enum.PaperStatus.Blank: paper
           enum.PaperStatus.Written: paper_words
+  - type: Item
+    size: 1
 
 - type: entity
   parent: Paper
@@ -62,3 +64,4 @@
   - type: Item
     sprite: Objects/Misc/bureaucracy.rsi
     HeldPrefix: pen
+    size: 2

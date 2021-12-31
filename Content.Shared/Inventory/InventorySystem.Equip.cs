@@ -59,7 +59,7 @@ public abstract partial class InventorySystem
         if (!hands.TryGetActiveHeldEntity(out var heldEntity))
             return false;
 
-        return TryEquip(uid, heldEntity, slot, silent, force, component);
+        return TryEquip(uid, heldEntity.Value, slot, silent, force, component);
     }
 
     public bool TryEquip(EntityUid uid, EntityUid itemUid, string slot, bool silent = false, bool force = false,
