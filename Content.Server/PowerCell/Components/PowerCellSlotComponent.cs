@@ -136,7 +136,7 @@ namespace Content.Server.PowerCell.Components
             //Dirty();
             if (user != null)
             {
-                if (!_entities.TryGetComponent(user, out HandsComponent? hands) || !hands.PutInHand(_entities.GetComponent<SharedItemComponent>(cell.Owner)))
+                if (!_entities.TryGetComponent(user, out HandsComponent? hands) || !hands.TryPutInActiveHandOrAny(_entities.GetComponent<SharedItemComponent>(cell.Owner)))
                 {
                     _entities.GetComponent<TransformComponent>(cell.Owner).Coordinates = _entities.GetComponent<TransformComponent>(user.Value).Coordinates;
                 }

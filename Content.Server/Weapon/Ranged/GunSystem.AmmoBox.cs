@@ -159,7 +159,7 @@ public sealed partial class GunSystem
                 return false;
             }
 
-            handsComponent.PutInHand(item);
+            handsComponent.TryPutInActiveHandOrAny(item);
         }
 
         UpdateAmmoBoxAppearance(ammoBox.Owner, ammoBox);

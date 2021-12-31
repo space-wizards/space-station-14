@@ -41,6 +41,7 @@ namespace Content.Server.Hands.Systems
         [Dependency] private readonly HandVirtualItemSystem _virtualItemSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly AdminLogSystem _logSystem = default!;
+        [Dependency] private readonly StrippableSystem _strippableSystem = default!;
 
         public override void Initialize()
         {
@@ -74,38 +75,9 @@ namespace Content.Server.Hands.Systems
             CommandBinds.Unregister<HandsSystem>();
         }
 
-        private static void HandlePullAttempt(EntityUid uid, HandsComponent component, PullAttemptMessage args)
-        {
-            if (args.Puller.Owner != uid)
-                return;
-
-            // Cancel pull if all hands full.
-            if (component.Hands.All(hand => hand.HeldEntity != null))
-                args.Cancelled = true;
-        }
-
         private void GetComponentState(EntityUid uid, HandsComponent hands, ref ComponentGetState args)
         {
             args.State = new HandsComponentState(hands.Hands, hands.ActiveHand);
-        }
-
-        private void HandlePullStarted(EntityUid uid, HandsComponent component, PullStartedMessage args)
-        {
-            if (args.Puller.Owner != uid)
-                return;
-
-            // Try find hand that is doing this pull.
-            // and clear it.
-            foreach (var hand in component.Hands)
-            {
-                if (hand.HeldEntity == null
-                    || !EntityManager.TryGetComponent(hand.HeldEntity, out HandVirtualItemComponent? virtualItem)
-                    || virtualItem.BlockingEntity != args.Pulled.Owner)
-                    continue;
-
-                EntityManager.DeleteEntity(hand.HeldEntity.Value);
-                break;
-            }
         }
 
         #region EntityInsertRemove
@@ -113,15 +85,10 @@ namespace Content.Server.Hands.Systems
         {
             base.RemoveHeldEntityFromHand(uid, hand, hands);
 
-            if (TryComp(uid, out StrippableComponent? strip))
-                strip.UpdateSubscribed();
+            // update gui of anyone stripping this entity.
+            _strippableSystem.SendUpdate(uid);
 
-            var entity = hand.HeldEntity;
-
-            if (entity == null)
-                return;
-
-            if (TryComp(entity, out SpriteComponent? sprite))
+            if (TryComp(hand.HeldEntity, out SpriteComponent? sprite))
                 sprite.RenderOrder = EntityManager.CurrentTick.Value;
         }
 
@@ -129,9 +96,9 @@ namespace Content.Server.Hands.Systems
         {
             base.PutEntityIntoHand(uid, hand ,entity, hands);
 
-            if (TryComp(uid, out StrippableComponent? strip))
-                strip.UpdateSubscribed();
-            
+            // update gui of anyone stripping this entity.
+            _strippableSystem.SendUpdate(uid);
+
             _logSystem.Add(LogType.Pickup, LogImpact.Low, $"{uid} picked up {entity}");
         }
 

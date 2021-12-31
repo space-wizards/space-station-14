@@ -67,7 +67,7 @@ namespace Content.Shared.Verbs
             EntityUid? @using = null;
             if (TryComp(user, out SharedHandsComponent? hands) && (force || _actionBlockerSystem.CanUse(user)))
             {
-                hands.TryGetActiveHeldEntity(out var @using);
+                hands.TryGetActiveHeldEntity(out @using);
 
                 // Check whether the "Held" entity is a virtual pull entity. If yes, set that as the entity being "Used".
                 // This allows you to do things like buckle a dragged person onto a surgery table, without click-dragging

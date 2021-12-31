@@ -323,7 +323,7 @@ namespace Content.Server.Chemistry.Components
                     {
                         if (hands.CanPutInHand(item))
                         {
-                            hands.PutInHand(item);
+                            hands.TryPutInActiveHandOrAny(item);
                             continue;
                         }
                     }
@@ -372,7 +372,7 @@ namespace Content.Server.Chemistry.Components
                     {
                         if (hands.CanPutInHand(item))
                         {
-                            hands.PutInHand(item);
+                            hands.TryPutInActiveHandOrAny(item);
                             continue;
                         }
                     }

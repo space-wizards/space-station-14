@@ -731,47 +731,6 @@ namespace Content.Shared.Interaction
         }
         #endregion
 
-
-        #region Equip Hand
-        /// <summary>
-        ///     Calls EquippedHand on all components that implement the IEquippedHand interface
-        ///     on an item.
-        /// </summary>
-        public void EquippedHandInteraction(EntityUid user, EntityUid item, HandState hand)
-        {
-            var equippedHandMessage = new EquippedHandEvent(user, item, hand);
-            RaiseLocalEvent(item, equippedHandMessage);
-            if (equippedHandMessage.Handled)
-                return;
-
-            var comps = AllComps<IEquippedHand>(item).ToList();
-
-            foreach (var comp in comps)
-            {
-                comp.EquippedHand(new EquippedHandEventArgs(user, hand));
-            }
-        }
-
-        /// <summary>
-        ///     Calls UnequippedHand on all components that implement the IUnequippedHand interface
-        ///     on an item.
-        /// </summary>
-        public void UnequippedHandInteraction(EntityUid user, EntityUid item, HandState hand)
-        {
-            var unequippedHandMessage = new UnequippedHandEvent(user, item, hand);
-            RaiseLocalEvent(item, unequippedHandMessage);
-            if (unequippedHandMessage.Handled)
-                return;
-
-            var comps = AllComps<IUnequippedHand>(item).ToList();
-
-            foreach (var comp in comps)
-            {
-                comp.UnequippedHand(new UnequippedHandEventArgs(user, hand));
-            }
-        }
-        #endregion
-
         #region Drop
         /// <summary>
         /// Activates the Dropped behavior of an object
@@ -811,6 +770,7 @@ namespace Content.Shared.Interaction
             _adminLogSystem.Add(LogType.Drop, LogImpact.Low, $"{ToPrettyString(user):user} dropped {ToPrettyString(item):entity}");
         }
         #endregion
+        #endregion
 
         /// <summary>
         ///     If a target is in range, but not in the same container as the user, it may be inside of a backpack. This
@@ -847,8 +807,6 @@ namespace Content.Shared.Interaction
 
             return true;
         }
-
-        #endregion
     }
 
     /// <summary>

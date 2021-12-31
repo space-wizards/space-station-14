@@ -101,7 +101,7 @@ namespace Content.Server.Power.Components
             _heldBattery = null;
             if (_entMan.TryGetComponent(user, out HandsComponent? handsComponent))
             {
-                handsComponent.PutInHandOrDrop(_entMan.GetComponent<SharedItemComponent>(heldItem));
+                handsComponent.PutInHandOrDrop(heldItem);
             }
 
             if (_entMan.TryGetComponent(heldItem, out ServerBatteryBarrelComponent? batteryBarrelComponent))

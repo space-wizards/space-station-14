@@ -226,7 +226,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 if (EntityManager.TryGetComponent(finisher, out SharedItemComponent? item) &&
                     handsComponent.CanPutInHand(item))
                 {
-                    handsComponent.PutInHand(item);
+                    handsComponent.TryPutInActiveHandOrAny(item);
                 }
                 return;
             }

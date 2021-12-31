@@ -44,9 +44,8 @@ namespace Content.Server.Inventory
             }
             else if (TryUnequip(ev.Uid, ev.Slot))
             {
-                hands.PutInHand(itemUid.Value);
+                hands.TryPutInActiveHandOrAny(itemUid.Value);
             }
-
         }
 
         private void OnOpenSlotStorage(OpenSlotStorageNetworkMessage ev)

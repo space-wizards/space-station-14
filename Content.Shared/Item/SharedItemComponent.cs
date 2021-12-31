@@ -5,6 +5,8 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Inventory;
+using Content.Shared.Sound;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
@@ -137,11 +139,8 @@ namespace Content.Shared.Item
 
         private void OnEquippedPrefixChange()
         {
-            if (!Owner.TryGetContainer(out var container)
-                || !_entMan.TryGetComponent(container.Owner, out SharedHandsComponent hands))
-                return;
-
-            EntitySystem.Get<SharedHandsSystem>().UpdateHandVisualizer(container.Owner, hands);
+            if (Owner.TryGetContainer(out var container))
+                EntitySystem.Get<SharedHandsSystem>().UpdateHandVisualizer(container.Owner);
         }
 
         public void RemovedFromSlot()

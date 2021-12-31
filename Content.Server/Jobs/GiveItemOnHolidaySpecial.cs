@@ -36,7 +36,7 @@ namespace Content.Server.Jobs
             if (!entMan.TryGetComponent(entity, out SharedItemComponent? item) || !entMan.TryGetComponent(mob, out HandsComponent? hands))
                 return;
 
-            hands.PutInHand(item, false);
+            hands.TryPutInActiveHandOrAny(item, false);
         }
     }
 }

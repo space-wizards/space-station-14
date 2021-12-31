@@ -497,6 +497,9 @@ namespace Content.Shared.Hands.Components
         /// </summary>
         protected bool CanInsertEntityIntoHand(Hand hand, EntityUid entity)
         {
+            if (!_entMan.HasComponent<SharedItemComponent>(entity))
+                return false;
+
             var handContainer = hand.Container;
             if (handContainer == null)
                 return false;
@@ -618,7 +621,7 @@ namespace Content.Shared.Hands.Components
         /// <summary>
         ///     Tries to pick up an entity into the active hand. If it cannot, tries to pick up the entity into each other hand.
         /// </summary>
-        public bool PutInHand(SharedItemComponent item, bool checkActionBlocker = true)
+        public bool TryPutInActiveHandOrAny(SharedItemComponent item, bool checkActionBlocker = true)
         {
             return TryPutInActiveHandOrAny(item.Owner, checkActionBlocker);
         }
@@ -626,13 +629,17 @@ namespace Content.Shared.Hands.Components
         /// <summary>
         ///     Puts an item any hand, prefering the active hand, or puts it on the floor under the player.
         /// </summary>
-        public void PutInHandOrDrop(SharedItemComponent item, bool checkActionBlocker = true)
+        public void PutInHandOrDrop(EntityUid entity, bool checkActionBlocker = true)
         {
-            var entity = item.Owner;
-
             if (!TryPutInActiveHandOrAny(entity, checkActionBlocker))
                 _entMan.GetComponent<TransformComponent>(entity).Coordinates = _entMan.GetComponent<TransformComponent>(Owner).Coordinates;
         }
+
+        public void PutInHandOrDrop(SharedItemComponent item, bool checkActionBlocker = true)
+        {
+            PutInHandOrDrop(item.Owner, checkActionBlocker);
+        }
+
 
         /// <summary>
         ///     Tries to pick up an entity into the active hand. If it cannot, tries to pick up the entity into each other hand.
@@ -745,7 +752,6 @@ namespace Content.Shared.Hands.Components
         [ViewVariables, NonSerialized]
         public ContainerSlot? Container;
 
-        // TODO: Make this a nullable EntityUid...
         [ViewVariables]
         public EntityUid? HeldEntity => Container?.ContainedEntity;
 

@@ -253,7 +253,7 @@ namespace Content.IntegrationTests.Tests.Buckle
 
                     // Equip items
                     Assert.True(entityManager.TryGetComponent(akms, out SharedItemComponent item));
-                    Assert.True(hands.PutInHand(item));
+                    Assert.True(hands.TryPutInActiveHandOrAny(item));
                 }
             });
 

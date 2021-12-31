@@ -74,7 +74,7 @@ namespace Content.IntegrationTests.Tests.PDA
                 // Put PDA in hand
                 var dummyPda = sEntityManager.SpawnEntity(PdaDummy, sEntityManager.GetComponent<TransformComponent>(player).MapPosition);
                 var pdaItemComponent = sEntityManager.GetComponent<SharedItemComponent>(dummyPda);
-                sEntityManager.GetComponent<HandsComponent>(player).PutInHand(pdaItemComponent);
+                sEntityManager.GetComponent<HandsComponent>(player).TryPutInActiveHandOrAny(pdaItemComponent);
 
                 var pdaComponent = sEntityManager.GetComponent<PDAComponent>(dummyPda);
                 var pdaIdCard = sEntityManager.SpawnEntity(IdCardDummy, sEntityManager.GetComponent<TransformComponent>(player).MapPosition);
@@ -94,7 +94,7 @@ namespace Content.IntegrationTests.Tests.PDA
                 // Put ID card in hand
                 var idDummy = sEntityManager.SpawnEntity(IdCardDummy, sEntityManager.GetComponent<TransformComponent>(player).MapPosition);
                 var idItemComponent = sEntityManager.GetComponent<SharedItemComponent>(idDummy);
-                sEntityManager.GetComponent<HandsComponent>(player).PutInHand(idItemComponent);
+                sEntityManager.GetComponent<HandsComponent>(player).TryPutInActiveHandOrAny(idItemComponent);
 
                 var idCardComponent = sEntityManager.GetComponent<IdCardComponent>(idDummy);
 
