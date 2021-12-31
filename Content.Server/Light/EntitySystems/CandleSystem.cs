@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Items;
 using Content.Server.Light.Components;
+using Content.Server.Ignitable;
 using Content.Shared.Interaction;
 using Content.Shared.Smoking;
 using Content.Shared.Light;
@@ -14,116 +15,92 @@ namespace Content.Server.Light.EntitySystems
 {
     public class CandleSystem : EntitySystem
     {
-        [Dependency] private readonly IRobustRandom _random = default!;
-
-        private HashSet<CandleComponent> _litCandles = new();
-        [Dependency]
-        private readonly AtmosphereSystem _atmosphereSystem = default!;
-
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<CandleComponent, InteractUsingEvent>(OnInteractUsing);
-            SubscribeLocalEvent<CandleComponent, IsHotEvent>(OnIsHotEvent);
-            SubscribeLocalEvent<CandleComponent, ComponentShutdown>(OnShutdown);
             SubscribeLocalEvent<CandleComponent, AfterInteractEvent>(OnAfterInteractEvent);
             SubscribeLocalEvent<CandleComponent, UseInHandEvent>(OnUseInHandEvent);
-        }
-
-        private void OnShutdown(EntityUid uid, CandleComponent component, ComponentShutdown args)
-        {
-            _litCandles.Remove(component);
+            SubscribeLocalEvent<CandleComponent, InteractUsingEvent>(OnInteractUsing);
         }
 
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
-            foreach (var candle in _litCandles)
+
+            //Check each candle's time left vs icon and set the appearance data if not already set
+            var ents = EntityManager.EntityQuery<CandleComponent, IgnitableComponent>();
+            foreach (var ent in ents)
             {
-                if (candle.CurrentState != SmokableState.Lit || Paused(candle.Owner) || candle.Deleted)
+                //If IsFirstLight is true then this candle has never been lit/initalized and we can't trust DurationLeft
+                if (ent.Item2.IsFirstLight)
                     continue;
 
-                candle.WaxLeft -= frameTime;
+                SmokableState ignitableState = ent.Item2.CurrentState;
+                float candlePercent = ent.Item2.DurationLeft / ent.Item2.Duration;
+                CandleState currentCandleIcon = ent.Item1.CurrentCandleIcon;
 
-                //There has to be a cleaner way to handle this
-                float candlePercent = candle.WaxLeft / candle.WaxTotal;
-                if (candlePercent <= 0.5 && candlePercent > 0.33 && candle.CurrentCandleIcon != CandleState.Half)
+                //Only care about actually lit candles because their sprite can't shouldn't while not lit
+                if (ignitableState == SmokableState.Lit)
                 {
-                    SetState(candle, CandleState.Half, candle.CurrentState);
-                }
-                else if(candlePercent <= 0.33 && candlePercent > 0 && candle.CurrentCandleIcon != CandleState.AlmostOut)
-                {
-                    SetState(candle, CandleState.AlmostOut, candle.CurrentState);
+                    if (candlePercent <= 0.5 && candlePercent > 0.33 && currentCandleIcon != CandleState.Half)
+                    {
+                        ent.Item1.CurrentCandleIcon = CandleState.BrandNew;
+                        SetState(ent.Item1, ignitableState);
+                        continue;
+                    }
+
+                    if (candlePercent <= 0.33 && candlePercent > 0 && currentCandleIcon != CandleState.AlmostOut)
+                    {
+                        ent.Item1.CurrentCandleIcon = CandleState.AlmostOut;
+                        SetState(ent.Item1, ignitableState);
+                        continue;
+                    }
+
                 }
 
-                if (candle.WaxLeft <= 0)
+                //Since we randomize
+                if (ent.Item2.DurationLeft <= 0 && currentCandleIcon != CandleState.Dead)
                 {
-                    SetState(candle, CandleState.Dead, SmokableState.Burnt);
-                    _litCandles.Remove(candle);
-                    continue;
+                    ent.Item1.CurrentCandleIcon = CandleState.Dead;
+                    SetState(ent.Item1, ignitableState);
                 }
-
-                _atmosphereSystem.HotspotExpose(EntityManager.GetComponent<TransformComponent>(candle.Owner).Coordinates, 400, 50, true);
             }
-        }
-
-        private void OnInteractUsing(EntityUid uid, CandleComponent component, InteractUsingEvent args)
-        {
-            if (args.Handled || component.CurrentState != SmokableState.Unlit)
-                return;
-
-            var isHotEvent = new IsHotEvent();
-            RaiseLocalEvent(args.Used, isHotEvent, false);
-
-            if (!isHotEvent.IsHot)
-                return;
-
-            Ignite(component, args.User);
-            args.Handled = true;
         }
 
         private void OnAfterInteractEvent(EntityUid uid, CandleComponent component, AfterInteractEvent args)
         {
-            var targetEntity = args.Target;
-            if (targetEntity == null)
-                return;
-
-            var isHotEvent = new IsHotEvent();
-            RaiseLocalEvent(targetEntity.Value, isHotEvent);
-
-            if (!isHotEvent.IsHot)
-                return;
-
-            Ignite(component, args.User);
-            args.Handled = true;
+            //Check our current Ignitable state and Set Candle state based on that
+            if(TryComp<IgnitableComponent>(uid, out var ignitableComponent))
+            {
+                SetState(component, ignitableComponent.CurrentState);
+            }
+           
         }
 
         private void OnUseInHandEvent(EntityUid uid, CandleComponent component, UseInHandEvent args)
         {
             if(component.CurrentState == SmokableState.Lit)
-            SetState(component, component.CurrentCandleIcon, SmokableState.Unlit);
-            args.Handled = true;
-        }
-
-        private void OnIsHotEvent(EntityUid uid, CandleComponent component, IsHotEvent args)
-        {
-            args.IsHot = component.CurrentState == SmokableState.Lit;
-        }
-
-        public void Ignite(CandleComponent component, EntityUid user)
-        {
-            if(component.IsFirstLight)
             {
-                CandleInit(component);
+                SetState(component, SmokableState.Unlit);
+                args.Handled = true;
             }
-            SetState(component, component.CurrentCandleIcon, SmokableState.Lit);
-            _litCandles.Add(component);
         }
 
-        private void SetState(CandleComponent component, CandleState value, SmokableState smokableState)
+        private void OnInteractUsing(EntityUid uid, CandleComponent component, InteractUsingEvent args)
         {
-            component.CurrentCandleIcon = value;
-            component.CurrentState = smokableState;
+            //Check our current Ignitable state and Set Candle state based on that
+            if (TryComp<IgnitableComponent>(uid, out var ignitableComponent))
+            {
+                SetState(component, ignitableComponent.CurrentState);
+            }
+        }
+
+
+
+
+        private void SetState(CandleComponent component, SmokableState currentSmokableState)
+        {
+            component.CurrentState = currentSmokableState;
 
             if (component.PointLightComponent != null)
             {
@@ -146,20 +123,12 @@ namespace Content.Server.Light.EntitySystems
             if (EntityManager.TryGetComponent(component.Owner, out AppearanceComponent? appearance))
             {
                 appearance.SetData(CandleVisuals.CandleState, component.CurrentCandleIcon);
-                appearance.SetData(CandleVisuals.SmokableState, component.CurrentState);
                 appearance.SetData(CandleVisuals.Behaviour, CandleStateToBehaviorID(component));
             }
         }
 
-
-        private void CandleInit(CandleComponent component)
-        {
-            float numSecondsToChangeBy = _random.Next(-120, 120);
-            component.WaxLeft += numSecondsToChangeBy;
-            component.WaxTotal = component.WaxLeft;
-            component.IsFirstLight = false;
-        }
-
+        //These behaviour ID's control the LightBehavior animation that is being played.
+        //Used to increase flicker/dimming as the candle gets more worn out
         private string CandleStateToBehaviorID(CandleComponent component)
         {
             switch(component.CurrentCandleIcon)

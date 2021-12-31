@@ -29,8 +29,13 @@
     sprite: Objects/Misc/candle.rsi
     HeldPrefix: unlit
     size: 1
+  - type: Ignitable
+    duration: 2000
+    temperature: 1000
+    canRelight: true
+    shouldRandomize: true
+    randomizeMaxTime: 120
   - type: Candle #Replace with Candle component, probably?
-    wax: 2000
     brandNewBehaviorID: BrandNewBehavior
     halfNewBehaviourID: HalfNewBehavior
     almostOutBehaviourID: AlmostOutBehavior

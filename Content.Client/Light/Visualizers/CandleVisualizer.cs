@@ -1,4 +1,4 @@
-using Content.Client.Clothing;
+using Content.Shared.Ignitable;
 using Content.Shared.Smoking;
 using Content.Shared.Light;
 using JetBrains.Annotations;
@@ -34,7 +34,7 @@ namespace Content.Client.Light
 
             if (component.TryGetData<CandleState>(CandleVisuals.CandleState, out var candleIconState))
             {
-                if (component.TryGetData<SmokableState>(CandleVisuals.SmokableState, out var candleSmokableState))
+                if (component.TryGetData<SmokableState>(IgnitableVisuals.SmokableState, out var candleSmokableState))
                 {
                     SetState(component, candleIconState, candleSmokableState);
 

@@ -29,13 +29,6 @@ namespace Content.Server.Light.Components
         [ViewVariables]
         public CandleState CurrentCandleIcon = CandleState.BrandNew;
 
-
-        /// <summary>
-        /// Whether or not this is the first light of this candle. We use this to determine if we should initialize the candle before ignition
-        /// </summary>
-        [ViewVariables]
-        public bool IsFirstLight = true;
-
         /// <summary>
         /// LightBehaviour behaviour ID. Used to trigger a specific light animation based on candle state
         /// </summary>
@@ -50,16 +43,6 @@ namespace Content.Server.Light.Components
         [ViewVariables(VVAccess.ReadOnly)]
         [DataField("almostOutBehaviourID")]
         public string AlmostOutBehaviourID { get; set; } = string.Empty;
-
-        /// <summary>
-        /// How long will the candle last in seconds. This is tracked and subtracted from whilst the candle is lit
-        /// </summary>
-        [ViewVariables(VVAccess.ReadOnly)]
-        [DataField("wax")]
-        public float WaxLeft = 10;
-
-        [ViewVariables(VVAccess.ReadOnly)]
-        public float WaxTotal = 10;
 
         /// <summary>
         /// Point light component so the candle can actually produce light

@@ -320,7 +320,8 @@ namespace Content.Client.Entry
             "GrowingKudzu",
             "MonkeyAccent",
             "ReplacementAccent",
-            "Candle"
+            "Candle",
+            "Ignitable"
         };
     }
 }

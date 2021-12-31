@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: SmallboxItem
   parent: BaseItem
   abstract: true
@@ -26,10 +26,15 @@
     sprite: Objects/Tools/matches.rsi
     HeldPrefix: unlit
     size: 1
-  - type: Matchstick
+  - type: Ignitable
     duration: 10
+    temperature: 1000
+    canRelight: false
+    shouldRandomize: false
+    shouldPlaySound: true
     igniteSound:
       path: /Audio/Items/match_strike.ogg
+  - type: Matchstick
   - type: PointLight
     enabled: false
     radius: 1.1
