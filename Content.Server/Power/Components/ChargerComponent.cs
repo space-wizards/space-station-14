@@ -28,7 +28,7 @@ namespace Content.Server.Power.Components
         private float _transferEfficiency = 0.85f;
 
         [DataField("chargerSlot", required: true)]
-        public ItemSlot ChargerSlot = default!;
+        public ItemSlot ChargerSlot = new();
 
         private CellChargerStatus GetStatus()
         {
