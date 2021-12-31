@@ -30,8 +30,6 @@ namespace Content.Server.Construction.Components
             {MachinePart.Transmitter, "TransmitterSubspaceStockPart"}
         };
 
-        public override string Name => "MachinePart";
-
         [ViewVariables] [DataField("part")] public MachinePart PartType { get; private set; } = MachinePart.Capacitor;
 
         [ViewVariables(VVAccess.ReadWrite)]

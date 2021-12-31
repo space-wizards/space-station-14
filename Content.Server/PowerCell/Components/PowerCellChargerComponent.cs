@@ -13,8 +13,6 @@ namespace Content.Server.PowerCell.Components
     [ComponentReference(typeof(BaseCharger))]
     public sealed class PowerCellChargerComponent : BaseCharger
     {
-        public override string Name => "PowerCellCharger";
-
         public override bool IsEntityCompatible(EntityUid entity)
         {
             return IoCManager.Resolve<IEntityManager>().HasComponent<BatteryComponent>(entity);

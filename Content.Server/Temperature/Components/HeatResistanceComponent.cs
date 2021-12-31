@@ -8,8 +8,6 @@ namespace Content.Server.Temperature.Components
     [RegisterComponent]
     public class HeatResistanceComponent : Component
     {
-        public override string Name => "HeatResistance";
-
         public int GetHeatResistance()
         {
             // TODO: When making into system: Any animal that touches bulb that has no

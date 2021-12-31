@@ -24,8 +24,6 @@ namespace Content.Server.Clothing.Components
         [Dependency] private readonly IEntityManager _entities = default!;
         [Dependency] private readonly IPrototypeManager _prototype = default!;
 
-        public override string Name => "Clothing";
-
         [DataField("QuickEquip")]
         private bool _quickEquipEnabled = true;
 

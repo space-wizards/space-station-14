@@ -17,8 +17,6 @@ namespace Content.Server.Singularity.Components
         [ComponentDependency] public readonly AccessReaderComponent? AccessReader = default;
         [ComponentDependency] public readonly PowerConsumerComponent? PowerConsumer = default;
 
-        public override string Name => "Emitter";
-
         public CancellationTokenSource? TimerCancel;
 
         // whether the power switch is in "on"

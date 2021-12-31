@@ -7,8 +7,6 @@ namespace Content.Server.Kudzu;
 [RegisterComponent]
 public class GrowingKudzuComponent : Component
 {
-    public override string Name => "GrowingKudzu";
-
     [DataField("growthLevel")]
     public int GrowthLevel = 1;
 

@@ -9,8 +9,6 @@ namespace Content.Server.Repairable
     [RegisterComponent]
     public class RepairableComponent : Component
     {
-        public override string Name => "Repairable";
-
         [ViewVariables(VVAccess.ReadWrite)] [DataField("fuelCost")]
         public int FuelCost = 5;
 

@@ -1,4 +1,4 @@
-﻿using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.ParticleAccelerator.Components
 {
@@ -6,6 +6,5 @@ namespace Content.Server.ParticleAccelerator.Components
     [ComponentReference(typeof(ParticleAcceleratorPartComponent))]
     public class ParticleAcceleratorEndCapComponent : ParticleAcceleratorPartComponent
     {
-        public override string Name => "ParticleAcceleratorEndCap";
     }
 }

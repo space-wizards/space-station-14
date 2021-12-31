@@ -21,8 +21,6 @@ namespace Content.Server.Medical.Components
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public override string Name => "Healing";
-
         [DataField("damage", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
         public DamageSpecifier Damage = default!;

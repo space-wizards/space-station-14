@@ -10,8 +10,6 @@ namespace Content.Server.Traitor.Uplink.Components
     [RegisterComponent]
     public class UplinkComponent : Component
     {
-        public override string Name => "Uplink";
-
         [ViewVariables]
         [DataField("buySuccessSound")]
         public SoundSpecifier BuySuccessSound = new SoundPathSpecifier("/Audio/Effects/kaching.ogg");

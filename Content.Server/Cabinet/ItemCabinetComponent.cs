@@ -12,8 +12,6 @@ namespace Content.Server.Cabinet
     [RegisterComponent]
     public class ItemCabinetComponent : Component
     {
-        public override string Name => "ItemCabinet";
-
         /// <summary>
         ///     Sound to be played when the cabinet door is opened.
         /// </summary>

@@ -12,8 +12,6 @@ namespace Content.Server.Construction.Components
     [RegisterComponent, Friend(typeof(AnchorableSystem))]
     public class AnchorableComponent : Component
     {
-        public override string Name => "Anchorable";
-
         [DataField("tool", customTypeSerializer:typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
         public string Tool { get; private set; } = "Anchoring";
 

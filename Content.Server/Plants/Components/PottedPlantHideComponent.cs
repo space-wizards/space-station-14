@@ -15,8 +15,6 @@ namespace Content.Server.Plants.Components
     [Friend(typeof(PottedPlantHideSystem))]
     public class PottedPlantHideComponent : Component
     {
-        public override string Name => "PottedPlantHide";
-
         [DataField("rustleSound")]
         public SoundSpecifier RustleSound = new SoundPathSpecifier("/Audio/Effects/plant_rustle.ogg");
     }

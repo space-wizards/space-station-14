@@ -16,8 +16,6 @@ namespace Content.Client.Interactable.Components
         private const string ShaderInRange = "SelectionOutlineInrange";
         private const string ShaderOutOfRange = "SelectionOutline";
 
-        public override string Name => "InteractionOutline";
-
         private bool _inRange;
         private ShaderInstance? _shader;
         private int _lastRenderScale;

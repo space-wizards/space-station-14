@@ -33,9 +33,6 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
     {
         // Originally I had this logic shared with PumpBarrel and used a couple of variables to control things
         // but it felt a lot messier to play around with, especially when adding verbs
-
-        public override string Name => "BoltActionBarrel";
-
         public override int ShotsLeft
         {
             get

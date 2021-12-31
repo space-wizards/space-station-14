@@ -10,10 +10,10 @@ namespace Content.Server.DeviceNetwork.Components
     [Friend(typeof(ApcNetworkSystem))]
     public class ApcNetworkComponent : Component
     {
-        public override string Name => "ApcNetworkConnection";
+        public override string Name => "ApcNetwork";
 
         /// <summary>
-        /// The node Group the ApcNetworkConnection is connected to
+        /// The node Group the ApcNetwork is connected to
         /// </summary>
         [ViewVariables] public Node? ConnectedNode;
     }

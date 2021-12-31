@@ -1,4 +1,4 @@
-﻿using Content.Server.Body.Components;
+using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Chemistry;
@@ -16,7 +16,6 @@ namespace Content.Server.Chemistry.Components
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public override string Name => "SmokeSolutionAreaEffect";
         public new const string SolutionName = "solutionArea";
 
         protected override void UpdateVisuals()

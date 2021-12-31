@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Robust.Shared.Analyzers;
@@ -13,8 +13,6 @@ namespace Content.Server.Chemistry.Components.SolutionManager
     [Friend(typeof(SolutionContainerSystem))]
     public class SolutionContainerManagerComponent : Component
     {
-        public override string Name => "SolutionContainerManager";
-
         [ViewVariables]
         [DataField("solutions")]
         public readonly Dictionary<string, Solution> Solutions = new();

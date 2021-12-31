@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Content.Server.Stack;
 using Robust.Shared.Containers;
@@ -12,8 +12,6 @@ namespace Content.Server.Construction.Components
     public class MachineComponent : Component, IMapInit
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
-
-        public override string Name => "Machine";
 
         [DataField("board")]
         public string? BoardPrototype { get; private set; }

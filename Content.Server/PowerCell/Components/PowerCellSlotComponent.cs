@@ -27,8 +27,6 @@ namespace Content.Server.PowerCell.Components
     {
         [Dependency] private readonly IEntityManager _entities = default!;
 
-        public override string Name => "PowerCellSlot";
-
         /// <summary>
         /// What size of cell fits into this component.
         /// </summary>

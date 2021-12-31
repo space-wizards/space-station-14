@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Runtime.ExceptionServices;
 using System.Threading;
@@ -25,8 +25,6 @@ namespace Content.Server.AI.Utility.AiLogic
     [ComponentReference(typeof(AiControllerComponent)), ComponentReference(typeof(IMoverComponent))]
     public sealed class UtilityAi : AiControllerComponent, ISerializationHooks
     {
-        public override string Name => "UtilityAI";
-
         // TODO: Look at having ParallelOperators (probably no more than that as then you'd have a full-blown BT)
         // Also RepeatOperators (e.g. if we're following an entity keep repeating MoveToEntity)
         private AiActionSystem _planner = default!;

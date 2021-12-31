@@ -4,7 +4,7 @@
   parent: SimpleSpaceMobBase
   description: It's a space carp.
   components:
-  - type: UtilityAI
+  - type: UtilityAi
     behaviorSets:
     - Idle
     - UnarmedAttackHostiles

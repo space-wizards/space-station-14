@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Disposal.Tube;
@@ -18,9 +18,6 @@ namespace Content.Server.Disposal.Tube.Components
         [Dependency] private readonly IEntityManager _entMan = default!;
 
         private const string HolderPrototypeId = "DisposalHolder";
-
-        public override string Name => "DisposalEntry";
-
         public bool TryInsert(DisposalUnitComponent from)
         {
             var holder = _entMan.SpawnEntity(HolderPrototypeId, _entMan.GetComponent<TransformComponent>(Owner).MapPosition);

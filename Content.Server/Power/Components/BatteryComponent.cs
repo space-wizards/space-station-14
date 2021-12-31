@@ -12,8 +12,6 @@ namespace Content.Server.Power.Components
     [RegisterComponent]
     public class BatteryComponent : Component
     {
-        public override string Name => "Battery";
-
         /// <summary>
         /// Maximum charge of the battery in joules (ie. watt seconds)
         /// </summary>

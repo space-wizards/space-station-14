@@ -1,4 +1,4 @@
-﻿using Content.Server.Light.EntitySystems;
+using Content.Server.Light.EntitySystems;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 
@@ -13,6 +13,5 @@ namespace Content.Server.Light.Components
     [RegisterComponent, Friend(typeof(PoweredLightSystem))]
     public class LitOnPoweredComponent : Component
     {
-        public override string Name => "LitOnPowered";
     }
 }

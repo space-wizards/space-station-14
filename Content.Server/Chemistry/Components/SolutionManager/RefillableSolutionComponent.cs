@@ -13,8 +13,6 @@ namespace Content.Server.Chemistry.Components.SolutionManager
     [RegisterComponent]
     public class RefillableSolutionComponent : Component
     {
-        public override string Name => "RefillableSolution";
-
         /// <summary>
         /// Solution name that can added to easily.
         /// </summary>

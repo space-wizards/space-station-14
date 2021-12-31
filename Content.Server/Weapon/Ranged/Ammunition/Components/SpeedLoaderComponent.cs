@@ -24,8 +24,6 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public override string Name => "SpeedLoader";
-
         [DataField("caliber")]
         private BallisticCaliber _caliber = BallisticCaliber.Unspecified;
         public int Capacity => _capacity;

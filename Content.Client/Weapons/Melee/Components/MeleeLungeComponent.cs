@@ -1,4 +1,4 @@
-﻿using Robust.Client.GameObjects;
+using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
@@ -8,7 +8,6 @@ namespace Content.Client.Weapons.Melee.Components
     [RegisterComponent]
     public sealed class MeleeLungeComponent : Component
     {
-        public override string Name => "MeleeLunge";
 
         private const float ResetTime = 0.3f;
         private const float BaseOffset = 0.25f;

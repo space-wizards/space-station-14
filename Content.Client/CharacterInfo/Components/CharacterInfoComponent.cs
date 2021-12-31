@@ -13,7 +13,6 @@ namespace Content.Client.CharacterInfo.Components
     [RegisterComponent]
     public sealed class CharacterInfoComponent : Component, ICharacterUI
     {
-        public override string Name => "CharacterInfo";
 
         public CharacterInfoControl Control = default!;
 

@@ -53,7 +53,7 @@
         nodeGroupID: Apc
   - type: BatteryCharger
     voltage: Medium
-  - type: PowerProvider
+  - type: ApcPowerProvider
     voltage: Apc
   - type: Apc
     voltage: Apc

@@ -29,12 +29,10 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
     [RegisterComponent]
     [NetworkedComponent()]
 #pragma warning disable 618
-    public sealed class ServerMagazineBarrelComponent : ServerRangedBarrelComponent, IUse, IInteractUsing, IExamine
+    public sealed class MagazineBarrelComponent : ServerRangedBarrelComponent, IUse, IInteractUsing, IExamine
 #pragma warning restore 618
     {
         [Dependency] private readonly IEntityManager _entities = default!;
-
-        public override string Name => "MagazineBarrel";
 
         [ViewVariables]
         private ContainerSlot _chamberContainer = default!;

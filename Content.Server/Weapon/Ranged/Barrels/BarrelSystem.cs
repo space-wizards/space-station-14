@@ -21,16 +21,16 @@ namespace Content.Server.Weapon.Ranged.Barrels
 
             SubscribeLocalEvent<RevolverBarrelComponent, GetAlternativeVerbsEvent>(AddSpinVerb);
 
-            SubscribeLocalEvent<ServerBatteryBarrelComponent, EntInsertedIntoContainerMessage>(OnCellSlotUpdated);
-            SubscribeLocalEvent<ServerBatteryBarrelComponent, EntRemovedFromContainerMessage>(OnCellSlotUpdated);
+            SubscribeLocalEvent<BatteryBarrelComponent, EntInsertedIntoContainerMessage>(OnCellSlotUpdated);
+            SubscribeLocalEvent<BatteryBarrelComponent, EntRemovedFromContainerMessage>(OnCellSlotUpdated);
 
             SubscribeLocalEvent<BoltActionBarrelComponent, GetInteractionVerbsEvent>(AddToggleBoltVerb);
 
-            SubscribeLocalEvent<ServerMagazineBarrelComponent, GetInteractionVerbsEvent>(AddMagazineInteractionVerbs);
-            SubscribeLocalEvent<ServerMagazineBarrelComponent, GetAlternativeVerbsEvent>(AddEjectMagazineVerb);
+            SubscribeLocalEvent<MagazineBarrelComponent, GetInteractionVerbsEvent>(AddMagazineInteractionVerbs);
+            SubscribeLocalEvent<MagazineBarrelComponent, GetAlternativeVerbsEvent>(AddEjectMagazineVerb);
         }
 
-        private void OnCellSlotUpdated(EntityUid uid, ServerBatteryBarrelComponent component, ContainerModifiedMessage args)
+        private void OnCellSlotUpdated(EntityUid uid, BatteryBarrelComponent component, ContainerModifiedMessage args)
         {
             if (args.Container.ID == component.CellSlot.ID)
                 component.UpdateAppearance();
@@ -70,7 +70,7 @@ namespace Content.Server.Weapon.Ranged.Barrels
             args.Verbs.Add(verb);
         }
 
-        private void AddEjectMagazineVerb(EntityUid uid, ServerMagazineBarrelComponent component, GetAlternativeVerbsEvent args)
+        private void AddEjectMagazineVerb(EntityUid uid, MagazineBarrelComponent component, GetAlternativeVerbsEvent args)
         {
             if (args.Hands == null ||
                 !args.CanAccess ||
@@ -89,7 +89,7 @@ namespace Content.Server.Weapon.Ranged.Barrels
             args.Verbs.Add(verb);
         }
 
-        private void AddMagazineInteractionVerbs(EntityUid uid, ServerMagazineBarrelComponent component, GetInteractionVerbsEvent args)
+        private void AddMagazineInteractionVerbs(EntityUid uid, MagazineBarrelComponent component, GetInteractionVerbsEvent args)
         {
             if (args.Hands == null ||
                 !args.CanAccess ||

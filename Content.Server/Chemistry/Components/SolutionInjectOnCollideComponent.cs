@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
@@ -13,8 +13,6 @@ namespace Content.Server.Chemistry.Components
     [RegisterComponent]
     internal sealed class SolutionInjectOnCollideComponent : Component
     {
-        public override string Name => "SolutionInjectOnCollide";
-
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("transferAmount")]
         public FixedPoint2 TransferAmount { get; set; } = FixedPoint2.New(1);

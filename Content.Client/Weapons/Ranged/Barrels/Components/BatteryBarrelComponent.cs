@@ -16,11 +16,9 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 namespace Content.Client.Weapons.Ranged.Barrels.Components
 {
     [RegisterComponent]
-    [NetworkedComponent()]
-    public class ClientBatteryBarrelComponent : Component, IItemStatus
+    [NetworkedComponent]
+    public class BatteryBarrelComponent : Component, IItemStatus
     {
-        public override string Name => "BatteryBarrel";
-
         private StatusControl? _statusControl;
 
         [DataField("cellSlot", required: true)]
@@ -75,12 +73,12 @@ namespace Content.Client.Weapons.Ranged.Barrels.Components
 
         private sealed class StatusControl : Control
         {
-            private readonly ClientBatteryBarrelComponent _parent;
+            private readonly BatteryBarrelComponent _parent;
             private readonly BoxContainer _bulletsList;
             private readonly Label _noBatteryLabel;
             private readonly Label _ammoCount;
 
-            public StatusControl(ClientBatteryBarrelComponent parent)
+            public StatusControl(BatteryBarrelComponent parent)
             {
                 MinHeight = 15;
                 _parent = parent;

@@ -20,8 +20,6 @@ namespace Content.Server.Disposal.Unit.Components
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public override string Name => "DisposalHolder";
-
         public Container Container = null!;
 
         /// <summary>

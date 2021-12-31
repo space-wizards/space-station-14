@@ -9,8 +9,6 @@ namespace Content.Server.DeviceNetwork.Components
     [RegisterComponent]
     public class WirelessNetworkComponent : Component
     {
-        public override string Name => "WirelessNetworkConnection";
-        
         [DataField("range")]
         public int Range { get; set; }
     }

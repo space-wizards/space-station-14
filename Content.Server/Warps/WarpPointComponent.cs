@@ -12,8 +12,6 @@ namespace Content.Server.Warps
     public sealed class WarpPointComponent : Component, IExamine
 #pragma warning restore 618
     {
-        public override string Name => "WarpPoint";
-
         [ViewVariables(VVAccess.ReadWrite)] [DataField("location")] public string? Location { get; set; }
 
         public void Examine(FormattedMessage message, bool inDetailsRange)

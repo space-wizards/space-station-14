@@ -18,9 +18,6 @@ namespace Content.Server.Power.Components
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
 
-        /// <inheritdoc />
-        public override string Name => "CablePlacer";
-
         [ViewVariables]
         [DataField("cablePrototypeID")]
         private string? _cablePrototypeID = "CableHV";

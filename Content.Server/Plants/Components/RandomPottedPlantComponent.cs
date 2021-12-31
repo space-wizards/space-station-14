@@ -13,8 +13,6 @@ namespace Content.Server.Plants.Components
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public override string Name => "RandomPottedPlant";
-
         private static readonly string[] RegularPlantStates;
         private static readonly string[] PlasticPlantStates;
 

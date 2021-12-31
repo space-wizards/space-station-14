@@ -22,8 +22,6 @@ namespace Content.Server.Extinguisher
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public override string Name => "FireExtinguisher";
-
         [DataField("refillSound")]
         SoundSpecifier _refillSound = new SoundPathSpecifier("/Audio/Effects/refill.ogg");
         [DataField("hasSafety")]

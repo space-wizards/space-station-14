@@ -28,8 +28,6 @@ namespace Content.Server.Body.Surgery.Components
     {
         [Dependency] private readonly IEntityManager _entities = default!;
 
-        public override string Name => "SurgeryTool";
-
         private readonly Dictionary<int, object> _optionsCache = new();
 
         [DataField("baseOperateTime")]

@@ -13,8 +13,6 @@ namespace Content.Client.Spawners
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public override string Name => "ClientEntitySpawner";
-
         [DataField("prototypes")] private List<string> _prototypes =  new() { "HVDummyWire" };
 
         private readonly List<EntityUid> _entity = new();

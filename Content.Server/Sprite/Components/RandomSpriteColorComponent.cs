@@ -11,8 +11,6 @@ namespace Content.Server.Sprite.Components
     [RegisterComponent]
     public class RandomSpriteColorComponent : Component, IMapInit
     {
-        public override string Name => "RandomSpriteColor";
-
         [DataField("selected")]
         private string? _selectedColor;
         [DataField("state")]

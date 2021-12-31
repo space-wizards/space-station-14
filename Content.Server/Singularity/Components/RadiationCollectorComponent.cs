@@ -17,7 +17,6 @@ namespace Content.Server.Singularity.Components
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
-        public override string Name => "RadiationCollector";
         private bool _enabled;
         private TimeSpan _coolDownEnd;
 

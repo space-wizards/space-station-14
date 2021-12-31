@@ -4,9 +4,9 @@
   id: ClothingWithSuitSensor
   components:
   - type: SuitSensor
-  - type: DeviceNetworkComponent
+  - type: DeviceNetwork
     deviceNetId: Wireless
-  - type: WirelessNetworkConnection
+  - type: WirelessNetwork
     range: 500
 
 - type: entity

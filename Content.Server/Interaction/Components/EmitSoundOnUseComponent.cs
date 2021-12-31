@@ -9,7 +9,5 @@ namespace Content.Server.Interaction.Components
     [RegisterComponent]
     public class EmitSoundOnUseComponent : BaseEmitSoundComponent
     {
-        /// <inheritdoc />
-        public override string Name => "EmitSoundOnUse";
     }
 }

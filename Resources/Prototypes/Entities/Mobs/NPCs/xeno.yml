@@ -5,7 +5,7 @@
   parent: SimpleMobBase
   description: They mostly come at night. Mostly.
   components:
-  - type: UtilityAI
+  - type: UtilityAi
     behaviorSets:
     - Idle
     - UnarmedAttackHostiles

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Server.Body.Systems;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Prototypes;
@@ -17,8 +17,6 @@ namespace Content.Server.Body.Components
     [RegisterComponent, Friend(typeof(MetabolizerSystem))]
     public class MetabolizerComponent : Component
     {
-        public override string Name => "Metabolizer";
-
         public float AccumulatedFrametime = 0.0f;
 
         /// <summary>

@@ -1,4 +1,4 @@
-﻿using Content.Server.Fluids.EntitySystems;
+using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Analyzers;
@@ -11,8 +11,6 @@ namespace Content.Server.Fluids.Components
     [Friend(typeof(EvaporationSystem))]
     public sealed class EvaporationComponent : Component
     {
-        public override string Name => "Evaporation";
-
         /// <summary>
         ///     The time that it will take this puddle to lose one fixed unit of solution, in seconds.
         /// </summary>

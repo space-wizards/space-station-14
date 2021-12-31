@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Shared.Sound;
 using Content.Shared.Tools;
 using Robust.Shared.Analyzers;
@@ -16,8 +16,6 @@ namespace Content.Server.PneumaticCannon
     [RegisterComponent, Friend(typeof(PneumaticCannonSystem))]
     public class PneumaticCannonComponent : Component
     {
-        public override string Name { get; } = "PneumaticCannon";
-
         [ViewVariables]
         public ContainerSlot GasTankSlot = default!;
 

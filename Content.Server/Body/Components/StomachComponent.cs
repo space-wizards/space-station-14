@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Server.Body.Systems;
 using Content.Shared.Body.Components;
 using Content.Shared.FixedPoint;
@@ -12,8 +12,6 @@ namespace Content.Server.Body.Components
     [RegisterComponent, Friend(typeof(StomachSystem))]
     public class StomachComponent : Component
     {
-        public override string Name => "Stomach";
-
         public float AccumulatedFrameTime;
 
         /// <summary>

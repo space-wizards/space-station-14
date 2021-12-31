@@ -1,4 +1,4 @@
-﻿using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.Atmos.Components
 {
@@ -9,6 +9,5 @@ namespace Content.Server.Atmos.Components
     [RegisterComponent]
     public class AtmosExposedComponent : Component
     {
-        public override string Name => "AtmosExposed";
     }
 }

@@ -1,4 +1,4 @@
-﻿using Content.Server.Body.Components;
+using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Shared.Inventory;
 using Robust.Shared.Analyzers;
@@ -22,7 +22,6 @@ namespace Content.Server.Atmos.Components
         [DataField("allowedSlots")]
         public SlotFlags AllowedSlots = SlotFlags.MASK;
 
-        public override string Name => "BreathMask";
         public bool IsFunctional;
         public EntityUid ConnectedInternalsEntity;
 

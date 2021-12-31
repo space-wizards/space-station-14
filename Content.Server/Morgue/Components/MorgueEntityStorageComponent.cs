@@ -37,8 +37,6 @@ namespace Content.Server.Morgue.Components
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public override string Name => "MorgueEntityStorage";
-
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("trayPrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         private string? _trayPrototypeId;

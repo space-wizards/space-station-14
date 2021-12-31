@@ -1,4 +1,4 @@
-﻿using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -10,8 +10,6 @@ namespace Content.Server.Chemistry.Components.SolutionManager
     [RegisterComponent]
     public class InjectableSolutionComponent : Component
     {
-        public override string Name => "InjectableSolution";
-
         /// <summary>
         /// Solution name which can be added with syringes.
         /// </summary>

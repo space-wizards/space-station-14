@@ -13,8 +13,6 @@ namespace Content.Server.Body.Components
     [RegisterComponent, Friend(typeof(BloodstreamSystem))]
     public class BloodstreamComponent : Component, IGasMixtureHolder
     {
-        public override string Name => "Bloodstream";
-
         /// <summary>
         ///     Max volume of internal solution storage
         /// </summary>

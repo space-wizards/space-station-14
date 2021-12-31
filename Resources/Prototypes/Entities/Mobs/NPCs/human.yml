@@ -4,7 +4,7 @@
   id: MobCivilian
   description: A miserable pile of secrets.
   components:
-  - type: UtilityAI
+  - type: UtilityAi
     behaviorSets:
     - Clothing
     - Hunger
@@ -21,7 +21,7 @@
   id: MobSpirate
   description: Yarr!
   components:
-  - type: UtilityAI
+  - type: UtilityAi
     behaviorSets:
     - Clothing
     - Hunger

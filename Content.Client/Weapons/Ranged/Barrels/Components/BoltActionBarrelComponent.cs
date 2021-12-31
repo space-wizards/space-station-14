@@ -17,10 +17,8 @@ namespace Content.Client.Weapons.Ranged.Barrels.Components
 {
     [RegisterComponent]
     [NetworkedComponent()]
-    public class ClientPumpBarrelComponent : Component, IItemStatus
+    public class BoltActionBarrelComponent : Component, IItemStatus
     {
-        public override string Name => "PumpBarrel";
-
         private StatusControl? _statusControl;
 
         /// <summary>
@@ -43,7 +41,7 @@ namespace Content.Client.Weapons.Ranged.Barrels.Components
         {
             base.HandleComponentState(curState, nextState);
 
-            if (curState is not PumpBarrelComponentState cast)
+           if (curState is not BoltActionBarrelComponentState cast)
                 return;
 
             Chamber = cast.Chamber;
@@ -68,13 +66,13 @@ namespace Content.Client.Weapons.Ranged.Barrels.Components
 
         private sealed class StatusControl : Control
         {
-            private readonly ClientPumpBarrelComponent _parent;
+            private readonly BoltActionBarrelComponent _parent;
             private readonly BoxContainer _bulletsListTop;
             private readonly BoxContainer _bulletsListBottom;
             private readonly TextureRect _chamberedBullet;
             private readonly Label _noMagazineLabel;
 
-            public StatusControl(ClientPumpBarrelComponent parent)
+            public StatusControl(BoltActionBarrelComponent parent)
             {
                 MinHeight = 15;
                 _parent = parent;

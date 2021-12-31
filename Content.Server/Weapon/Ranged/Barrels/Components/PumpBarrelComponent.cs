@@ -27,8 +27,6 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
     [NetworkedComponent()]
     public sealed class PumpBarrelComponent : ServerRangedBarrelComponent, IUse, IInteractUsing, IMapInit, ISerializationHooks
     {
-        public override string Name => "PumpBarrel";
-
         public override int ShotsLeft
         {
             get

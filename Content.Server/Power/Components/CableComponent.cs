@@ -20,8 +20,6 @@ namespace Content.Server.Power.Components
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public override string Name => "Cable";
-
         [ViewVariables]
         [DataField("cableDroppedOnCutPrototype")]
         private string? _cableDroppedOnCutPrototype = "CableHVStack1";

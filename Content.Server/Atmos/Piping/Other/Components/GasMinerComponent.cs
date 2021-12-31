@@ -8,8 +8,6 @@ namespace Content.Server.Atmos.Piping.Other.Components
     [RegisterComponent]
     public class GasMinerComponent : Component
     {
-        public override string Name => "GasMiner";
-
         public bool Enabled { get; set; } = true;
 
         public bool Broken { get; set; } = false;

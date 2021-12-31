@@ -1,4 +1,4 @@
-﻿using Content.Server.Body.Systems;
+using Content.Server.Body.Systems;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -10,8 +10,6 @@ namespace Content.Server.Body.Components;
 [Friend(typeof(ThermalRegulatorSystem))]
 public class ThermalRegulatorComponent : Component
 {
-    public override string Name => "ThermalRegulator";
-
     /// <summary>
     /// Heat generated due to metabolism. It's generated via metabolism
     /// </summary>

@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Maps;
@@ -17,8 +17,6 @@ namespace Content.Server.Tools.Components
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
-
-        public override string Name => "TilePrying";
 
         [DataField("toolComponentNeeded")]
         private bool _toolComponentNeeded = true;

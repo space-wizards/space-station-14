@@ -13,11 +13,9 @@ namespace Content.Shared.Lathe
 {
     [ComponentReference(typeof(SharedLatheDatabaseComponent))]
     [NetworkedComponent()]
-    public class SharedProtolatheDatabaseComponent : SharedLatheDatabaseComponent, ISerializationHooks
+    public abstract class SharedProtolatheDatabaseComponent : SharedLatheDatabaseComponent, ISerializationHooks
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-
-        public override string Name => "ProtolatheDatabase";
 
         [DataField("protolatherecipes", customTypeSerializer:typeof(PrototypeIdListSerializer<LatheRecipePrototype>))]
         private List<string> _recipeIds = new();

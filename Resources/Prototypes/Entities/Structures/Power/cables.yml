@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   abstract: true
   id: CableBase
   placement:
@@ -141,7 +141,7 @@
       power:
         !type:CableNode
         nodeGroupID: Apc
-  - type: PowerProvider
+  - type: ApcPowerProvider
     voltage: Apc
   - type: ExtensionCableProvider
   - type: Cable

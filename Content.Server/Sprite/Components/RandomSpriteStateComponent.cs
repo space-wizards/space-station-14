@@ -11,7 +11,6 @@ namespace Content.Server.Sprite.Components
     public class RandomSpriteStateComponent : Component
     {
         [Dependency] private readonly IRobustRandom _random = default!;
-        public override string Name => "RandomSpriteState";
 
         [DataField("spriteStates")]
         private List<string>? _spriteStates;

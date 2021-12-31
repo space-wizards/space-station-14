@@ -15,8 +15,6 @@ namespace Content.Server.Spawners.Components
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
-        public override string Name => "RandomSpawner";
-
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("rarePrototypes")]
         public List<string> RarePrototypes { get; set; } = new();

@@ -24,9 +24,6 @@ namespace Content.Server.Mind.Components
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        /// <inheritdoc />
-        public override string Name => "Mind";
-
         /// <summary>
         ///     The mind controlling this mob. Can be null.
         /// </summary>

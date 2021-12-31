@@ -20,7 +20,6 @@ namespace Content.Server.Mining.Components
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
-        public override string Name => "AsteroidRock";
         private static readonly string[] SpriteStates = {"0", "1", "2", "3", "4"};
 
         protected override void Initialize()

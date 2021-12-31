@@ -1,4 +1,4 @@
-﻿using Content.Server.Power.EntitySystems;
+using Content.Server.Power.EntitySystems;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -10,8 +10,6 @@ namespace Content.Server.Power.Components
     [Friend(typeof(ExtensionCableSystem))]
     public class ExtensionCableReceiverComponent : Component
     {
-        public override string Name => "ExtensionCableReceiver";
-
         [ViewVariables]
         public ExtensionCableProviderComponent? Provider { get; set; }
 

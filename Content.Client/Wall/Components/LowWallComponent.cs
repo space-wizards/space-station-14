@@ -24,7 +24,6 @@ namespace Content.Client.Wall.Components
     [ComponentReference(typeof(IconSmoothComponent))]
     public class LowWallComponent : IconSmoothComponent
     {
-        public override string Name => "LowWall";
 
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;

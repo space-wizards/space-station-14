@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Content.Server.Explosion.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Trigger;
@@ -11,8 +11,6 @@ namespace Content.Server.Explosion.Components
     [RegisterComponent]
     public class OnUseTimerTriggerComponent : Component, IUse
     {
-        public override string Name => "OnUseTimerTrigger";
-
         [DataField("delay")]
         private float _delay = 0f;
 

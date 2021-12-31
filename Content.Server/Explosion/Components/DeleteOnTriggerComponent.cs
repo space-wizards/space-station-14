@@ -9,6 +9,5 @@ namespace Content.Server.Explosion.Components
     [RegisterComponent]
     public class DeleteOnTriggerComponent : Component
     {
-        public override string Name => "DeleteOnTrigger";
     }
 }

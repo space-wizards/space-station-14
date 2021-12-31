@@ -1,4 +1,4 @@
-﻿using Content.Server.Power.NodeGroups;
+using Content.Server.Power.NodeGroups;
 using Robust.Shared.GameObjects;
 
 namespace Content.Server.Power.Components
@@ -9,8 +9,6 @@ namespace Content.Server.Power.Components
     [RegisterComponent]
     public class BatteryChargerComponent : BasePowerNetComponent
     {
-        public override string Name => "BatteryCharger";
-
         protected override void AddSelfToNet(IPowerNet net)
         {
             net.AddCharger(this);

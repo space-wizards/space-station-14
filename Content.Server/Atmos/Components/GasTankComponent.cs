@@ -36,8 +36,6 @@ namespace Content.Server.Atmos.Components
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public override string Name => "GasTank";
-
         private const float MaxExplosionRange = 14f;
         private const float DefaultOutputPressure = Atmospherics.OneAtmosphere;
 

@@ -392,8 +392,6 @@ namespace Content.IntegrationTests.Tests.Networking
         [NetworkedComponent()]
         private sealed class PredictionTestComponent : Component
         {
-            public override string Name => "PredictionTest";
-
             private bool _foo;
 
             public bool Foo

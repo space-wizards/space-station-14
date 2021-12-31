@@ -1,4 +1,4 @@
-﻿using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.Weapon.Melee.Components
 {
@@ -7,6 +7,5 @@ namespace Content.Server.Weapon.Melee.Components
     [ComponentReference(typeof(MeleeWeaponComponent))]
     public class UnarmedCombatComponent : MeleeWeaponComponent
     {
-        public override string Name => "UnarmedCombat";
     }
 }

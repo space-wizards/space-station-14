@@ -13,8 +13,6 @@ namespace Content.Server.Light.Components
     [Friend(typeof(MatchstickSystem))]
     public class MatchstickComponent : Component
     {
-        public override string Name => "Matchstick";
-
         /// <summary>
         /// Current state to matchstick. Can be <code>Unlit</code>, <code>Lit</code> or <code>Burnt</code>.
         /// </summary>

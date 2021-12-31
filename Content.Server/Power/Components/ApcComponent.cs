@@ -27,8 +27,6 @@ namespace Content.Server.Power.Components
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
-        public override string Name => "Apc";
-
         public bool MainBreakerEnabled { get; private set; } = true;
 
         [DataField("onReceiveMessageSound")] private SoundSpecifier _onReceiveMessageSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");

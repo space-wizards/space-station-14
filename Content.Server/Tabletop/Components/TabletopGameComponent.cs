@@ -12,8 +12,6 @@ namespace Content.Server.Tabletop.Components
     [RegisterComponent, Friend(typeof(TabletopSystem))]
     public class TabletopGameComponent : Component
     {
-        public override string Name => "TabletopGame";
-
         [DataField("boardName")]
         public string BoardName { get; } = "tabletop-default-board-name";
 

@@ -89,7 +89,6 @@ namespace Content.Benchmarks
 
         private class DummyComponent : Component
         {
-            public override string Name => "Dummy";
         }
     }
 }

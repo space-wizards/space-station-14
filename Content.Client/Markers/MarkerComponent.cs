@@ -7,7 +7,6 @@ namespace Content.Client.Markers
     [RegisterComponent]
     public sealed class MarkerComponent : Component
     {
-        public override string Name => "Marker";
 
         protected override void Startup()
         {

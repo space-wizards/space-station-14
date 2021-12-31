@@ -26,7 +26,6 @@ namespace Content.Server.Fluids.Components
     {
         [Dependency] private readonly IEntityManager _entities = default!;
 
-        public override string Name => "Mop";
         public const string SolutionName = "mop";
 
         /// <summary>

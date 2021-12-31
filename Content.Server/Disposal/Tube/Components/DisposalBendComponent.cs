@@ -1,4 +1,4 @@
-﻿using Content.Server.Disposal.Unit.Components;
+using Content.Server.Disposal.Unit.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
@@ -12,8 +12,6 @@ namespace Content.Server.Disposal.Tube.Components
     {
         [DataField("sideDegrees")]
         private int _sideDegrees = -90;
-
-        public override string Name => "DisposalBend";
 
         protected override Direction[] ConnectableDirections()
         {

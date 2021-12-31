@@ -17,9 +17,6 @@ namespace Content.Server.Temperature.Components
     [RegisterComponent]
     public class TemperatureComponent : Component
     {
-        /// <inheritdoc />
-        public override string Name => "Temperature";
-
         [ViewVariables(VVAccess.ReadWrite)]
         public float CurrentTemperature { get; set; } = Atmospherics.T20C;
 

@@ -1,4 +1,4 @@
-﻿using Content.Shared.Singularity.Components;
+using Content.Shared.Singularity.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -10,7 +10,6 @@ namespace Content.Server.ParticleAccelerator.Components
     [ComponentReference(typeof(ParticleAcceleratorPartComponent))]
     public class ParticleAcceleratorEmitterComponent : ParticleAcceleratorPartComponent
     {
-        public override string Name => "ParticleAcceleratorEmitter";
         [DataField("emitterType")]
         public ParticleAcceleratorEmitterType Type = ParticleAcceleratorEmitterType.Center;
 

@@ -7,8 +7,6 @@ namespace Content.Server.Mining.Components
     [RegisterComponent]
     public class PickaxeComponent : Component
     {
-        public override string Name => "Pickaxe";
-
         [DataField("miningSound")]
         public SoundSpecifier MiningSound { get; set; } = new SoundPathSpecifier("/Audio/Items/Mining/pickaxe.ogg");
 

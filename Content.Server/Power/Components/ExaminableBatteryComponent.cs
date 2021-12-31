@@ -11,8 +11,6 @@ namespace Content.Server.Power.Components
     public class ExaminableBatteryComponent : Component, IExamine
 #pragma warning restore 618
     {
-        public override string Name => "ExaminableBattery";
-
         [ViewVariables]
         [ComponentDependency] private BatteryComponent? _battery = default!;
 

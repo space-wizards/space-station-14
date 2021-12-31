@@ -10,9 +10,6 @@ namespace Content.Server.Explosion.Components
     public class ExplosionLaunchedComponent : Component, IExAct
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
-
-        public override string Name => "ExplosionLaunched";
-
         void IExAct.OnExplosion(ExplosionEventArgs eventArgs)
         {
             if (_entMan.Deleted(Owner))

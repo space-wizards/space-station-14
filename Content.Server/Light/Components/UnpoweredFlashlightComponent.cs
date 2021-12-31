@@ -12,8 +12,6 @@ namespace Content.Server.Light.Components
     [RegisterComponent]
     public class UnpoweredFlashlightComponent : Component
     {
-        public override string Name => "UnpoweredFlashlight";
-
         [DataField("toggleFlashlightSound")]
         public SoundSpecifier ToggleSound = new SoundPathSpecifier("/Audio/Items/flashlight_pda.ogg");
 

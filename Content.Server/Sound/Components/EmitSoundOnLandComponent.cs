@@ -8,7 +8,5 @@ namespace Content.Server.Sound.Components
     [RegisterComponent]
     public class EmitSoundOnLandComponent : BaseEmitSoundComponent
     {
-        /// <inheritdoc />
-        public override string Name => "EmitSoundOnLand";
     }
 }

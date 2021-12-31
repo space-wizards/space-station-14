@@ -1,4 +1,4 @@
-﻿using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -11,8 +11,6 @@ namespace Content.Server.Chemistry.Components.SolutionManager
     [RegisterComponent]
     public class DrainableSolutionComponent : Component
     {
-        public override string Name => "DrainableSolution";
-
         /// <summary>
         /// Solution name that can be drained.
         /// </summary>

@@ -10,8 +10,6 @@ namespace Content.Server.Recycling.Components
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public override string Name => "Recyclable";
-
         /// <summary>
         ///     The prototype that will be spawned on recycle.
         /// </summary>

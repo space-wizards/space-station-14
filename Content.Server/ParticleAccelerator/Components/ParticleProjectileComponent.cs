@@ -15,7 +15,6 @@ namespace Content.Server.ParticleAccelerator.Components
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public override string Name => "ParticleProjectile";
         public ParticleAcceleratorPowerState State;
 
         public void Fire(ParticleAcceleratorPowerState state, Angle angle, EntityUid firer)

@@ -8,8 +8,6 @@ namespace Content.Server.Rotatable
     [RegisterComponent]
     public class FlippableComponent : Component
     {
-        public override string Name => "Flippable";
-
         /// <summary>
         ///     Entity to replace this entity with when the current one is 'flipped'.
         /// </summary>

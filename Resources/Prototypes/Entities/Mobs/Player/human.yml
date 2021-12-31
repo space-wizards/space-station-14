@@ -39,5 +39,5 @@
     makeSentient: false
     name: centcom official
     description: Inspect the station, jot down performance reviews for heads of staff, bug the Captain.
-  - type: UtilityAI
+  - type: UtilityAi
     startingGear: CentcomGear

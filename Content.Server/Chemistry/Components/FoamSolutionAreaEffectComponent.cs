@@ -1,4 +1,4 @@
-﻿using Content.Server.Body.Components;
+using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.FixedPoint;
@@ -16,7 +16,6 @@ namespace Content.Server.Chemistry.Components
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public override string Name => "FoamSolutionAreaEffect";
         public new const string SolutionName = "solutionArea";
 
         [DataField("foamedMetalPrototype")] private string? _foamedMetalPrototype;

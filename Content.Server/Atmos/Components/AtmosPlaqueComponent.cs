@@ -12,8 +12,6 @@ namespace Content.Server.Atmos.Components
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public override string Name => "AtmosPlaque";
-
         [DataField("plaqueType")]
         private PlaqueType _type = PlaqueType.Unset;
 

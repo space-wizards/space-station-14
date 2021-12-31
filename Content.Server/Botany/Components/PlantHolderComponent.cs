@@ -48,8 +48,6 @@ namespace Content.Server.Botany.Components
         [Dependency] private readonly IEntityManager _entMan = default!;
         [ComponentDependency] private readonly AppearanceComponent? _appearanceComponent = default!;
 
-        public override string Name => "PlantHolder";
-
         [ViewVariables] private int _lastProduce;
 
         [ViewVariables(VVAccess.ReadWrite)] private int _missingGas;

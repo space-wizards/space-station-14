@@ -10,7 +10,6 @@ namespace Content.Server.Singularity.Components
     [RegisterComponent]
     public class SinguloFoodComponent : Component
     {
-        public override string Name => "SinguloFood";
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("energy")]
         public int Energy { get; set; } = 1;

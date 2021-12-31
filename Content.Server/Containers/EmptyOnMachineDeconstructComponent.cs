@@ -13,8 +13,6 @@ namespace Content.Server.Containers
     [RegisterComponent]
     public class EmptyOnMachineDeconstructComponent : Component
     {
-        public override string Name => "EmptyOnMachineDeconstruct";
-
         [ViewVariables]
         [DataField("containers")]
         public HashSet<string> Containers { get; set; } = new();

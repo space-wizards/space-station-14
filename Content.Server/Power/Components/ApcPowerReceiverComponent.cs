@@ -26,8 +26,6 @@ namespace Content.Server.Power.Components
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public override string Name => "ApcPowerReceiver";
-
         [ViewVariables]
         public bool Powered => (MathHelper.CloseToPercent(NetworkLoad.ReceivingPower, Load) || !NeedsPower) && !PowerDisabled;
 

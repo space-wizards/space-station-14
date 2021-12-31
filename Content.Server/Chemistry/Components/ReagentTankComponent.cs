@@ -1,4 +1,4 @@
-﻿using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -10,7 +10,6 @@ namespace Content.Server.Chemistry.Components
     [RegisterComponent]
     public class ReagentTankComponent : Component
     {
-        public override string Name => "ReagentTank";
 
         [DataField("transferAmount")]
         [ViewVariables(VVAccess.ReadWrite)]

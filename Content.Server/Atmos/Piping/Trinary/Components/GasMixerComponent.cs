@@ -8,8 +8,6 @@ namespace Content.Server.Atmos.Piping.Trinary.Components
     [RegisterComponent]
     public class GasMixerComponent : Component
     {
-        public override string Name => "GasMixer";
-
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Enabled = true;
 

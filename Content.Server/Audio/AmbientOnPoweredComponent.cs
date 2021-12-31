@@ -9,6 +9,5 @@ namespace Content.Server.Audio
     [RegisterComponent]
     public class AmbientOnPoweredComponent : Component
     {
-        public override string Name => "AmbientOnPowered";
     }
 }

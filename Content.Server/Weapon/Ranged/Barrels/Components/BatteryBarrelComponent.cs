@@ -19,11 +19,9 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 {
     [RegisterComponent]
     [NetworkedComponent()]
-    public sealed class ServerBatteryBarrelComponent : ServerRangedBarrelComponent
+    public sealed class BatteryBarrelComponent : ServerRangedBarrelComponent
     {
         [Dependency] private readonly IEntityManager _entities = default!;
-
-        public override string Name => "BatteryBarrel";
 
         [DataField("cellSlot", required: true)]
         public ItemSlot CellSlot = new();

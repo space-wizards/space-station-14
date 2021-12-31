@@ -21,8 +21,6 @@ namespace Content.Server.Arcade.Components
     {
         [Dependency] private readonly IRobustRandom _random = default!;
 
-        public override string Name => "BlockGameArcade";
-
         [ComponentDependency] private readonly ApcPowerReceiverComponent? _powerReceiverComponent = default!;
 
         private bool Powered => _powerReceiverComponent?.Powered ?? false;

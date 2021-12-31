@@ -9,8 +9,6 @@ namespace Content.Server.Atmos.Components
     [RegisterComponent]
     public class AtmosFixMarkerComponent : Component
     {
-        public override string Name => "AtmosFixMarker";
-
         // See FixGridAtmos for more details
         [DataField("mode")]
         public int Mode { get; set; } = 0;

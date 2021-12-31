@@ -17,8 +17,6 @@ namespace Content.Server.Storage.Components
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public override string Name => "StorageFill";
-
         [DataField("contents")] private List<EntitySpawnEntry> _contents = new();
 
         public IReadOnlyList<EntitySpawnEntry> Contents => _contents;

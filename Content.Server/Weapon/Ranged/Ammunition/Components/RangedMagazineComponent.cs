@@ -26,8 +26,6 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
     {
         [Dependency] private readonly IEntityManager _entities = default!;
 
-        public override string Name => "RangedMagazine";
-
         private readonly Stack<EntityUid> _spawnedAmmo = new();
         private Container _ammoContainer = default!;
 

@@ -1,4 +1,4 @@
-﻿using Content.Server.Kitchen.EntitySystems;
+using Content.Server.Kitchen.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
@@ -14,8 +14,6 @@ namespace Content.Server.Kitchen.Components
     [Friend(typeof(ReagentGrinderSystem))]
     public class ExtractableComponent : Component
     {
-        public override string Name => "Extractable";
-
         [ViewVariables]
         [DataField("juiceSolution")] 
         public Solution? JuiceSolution;

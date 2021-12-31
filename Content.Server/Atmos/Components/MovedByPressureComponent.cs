@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Atmos;
 using Content.Shared.MobState.Components;
@@ -19,8 +19,6 @@ namespace Content.Server.Atmos.Components
     {
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly IEntityManager _entMan = default!;
-
-        public override string Name => "MovedByPressure";
 
         private const float MoveForcePushRatio = 1f;
         private const float MoveForceForcePushRatio = 1f;

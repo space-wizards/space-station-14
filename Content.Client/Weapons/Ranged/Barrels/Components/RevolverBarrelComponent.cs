@@ -15,10 +15,8 @@ namespace Content.Client.Weapons.Ranged.Barrels.Components
 {
     [RegisterComponent]
     [NetworkedComponent()]
-    public class ClientRevolverBarrelComponent : Component, IItemStatus
+    public class RevolverBarrelComponent : Component, IItemStatus
     {
-        public override string Name => "RevolverBarrel";
-
         private StatusControl? _statusControl;
 
         /// <summary>
@@ -62,10 +60,10 @@ namespace Content.Client.Weapons.Ranged.Barrels.Components
 
         private sealed class StatusControl : Control
         {
-            private readonly ClientRevolverBarrelComponent _parent;
+            private readonly RevolverBarrelComponent _parent;
             private readonly BoxContainer _bulletsList;
 
-            public StatusControl(ClientRevolverBarrelComponent parent)
+            public StatusControl(RevolverBarrelComponent parent)
             {
                 MinHeight = 15;
                 _parent = parent;

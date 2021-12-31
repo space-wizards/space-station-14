@@ -1,4 +1,4 @@
-﻿using Content.Server.Power.Components;
+using Content.Server.Power.Components;
 using Content.Server.PowerCell.Components;
 using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.Interaction;
@@ -8,7 +8,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.Weapon
 {
     /// <summary>
-    /// Recharges the battery in a <see cref="ServerBatteryBarrelComponent"/>.
+    /// Recharges the battery in a <see cref="BatteryBarrelComponent"/>.
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
@@ -17,11 +17,9 @@ namespace Content.Server.Weapon
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public override string Name => "WeaponCapacitorCharger";
-
         public override bool IsEntityCompatible(EntityUid entity)
         {
-            return _entMan.TryGetComponent(entity, out ServerBatteryBarrelComponent? battery) && battery.PowerCell != null ||
+            return _entMan.TryGetComponent(entity, out BatteryBarrelComponent? battery) && battery.PowerCell != null ||
                    _entMan.TryGetComponent(entity, out PowerCellSlotComponent? slot) && slot.HasCell;
         }
 
@@ -35,7 +33,7 @@ namespace Content.Server.Weapon
                 }
             }
 
-            if (_entMan.TryGetComponent(entity, out ServerBatteryBarrelComponent? battery))
+            if (_entMan.TryGetComponent(entity, out BatteryBarrelComponent? battery))
             {
                 if (battery.PowerCell != null)
                 {

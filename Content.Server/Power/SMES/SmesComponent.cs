@@ -21,8 +21,6 @@ namespace Content.Server.Power.SMES
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
-        public override string Name => "Smes";
-
         private int _lastChargeLevel;
 
         private TimeSpan _lastChargeLevelChange;

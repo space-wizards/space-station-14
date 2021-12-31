@@ -20,8 +20,6 @@ namespace Content.Server.UserInterface
     public class ActivatableUIComponent : Component,
             ISerializationHooks
     {
-        public override string Name => "ActivatableUI";
-
         [ViewVariables]
         public Enum? Key { get; set; }
 

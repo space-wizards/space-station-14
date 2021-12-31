@@ -16,8 +16,6 @@ namespace Content.Server.Doors.Components
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public override string Name => "Firelock";
-
         [ComponentDependency]
         public readonly ServerDoorComponent? DoorComponent = null;
 

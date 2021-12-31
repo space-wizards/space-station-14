@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: ComputerBase
   id: ComputerAlert
   name: alerts computer
@@ -113,9 +113,9 @@
         - key: enum.CrewMonitoringUIKey.Key
           type: CrewMonitoringBoundUserInterface
     - type: CrewMonitoringConsole
-    - type: DeviceNetworkComponent
+    - type: DeviceNetwork
       deviceNetId: Wireless
-    - type: WirelessNetworkConnection
+    - type: WirelessNetwork
       range: 500
 
 - type: entity

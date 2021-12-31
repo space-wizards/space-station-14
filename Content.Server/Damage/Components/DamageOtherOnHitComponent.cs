@@ -11,8 +11,6 @@ namespace Content.Server.Damage.Components
     [RegisterComponent]
     public class DamageOtherOnHitComponent : Component
     {
-        public override string Name => "DamageOtherOnHit";
-
         [DataField("ignoreResistances")]
         [ViewVariables(VVAccess.ReadWrite)]
         public bool IgnoreResistances = false;

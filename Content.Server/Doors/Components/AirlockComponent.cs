@@ -23,8 +23,6 @@ namespace Content.Server.Doors.Components
     [RegisterComponent]
     public class AirlockComponent : Component, IWires
     {
-        public override string Name => "Airlock";
-
         [ComponentDependency]
         public readonly ServerDoorComponent? DoorComponent = null;
 

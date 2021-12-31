@@ -16,8 +16,6 @@ namespace Content.Server.Nutrition.Components
     [RegisterComponent, Friend(typeof(FoodSystem))]
     public class FoodComponent : Component
     {
-        public override string Name => "Food";
-
         [DataField("solution")]
         public string SolutionName { get; set; } = "food";
 

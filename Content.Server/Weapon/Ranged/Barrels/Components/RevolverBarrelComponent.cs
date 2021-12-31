@@ -28,8 +28,6 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
     {
         [Dependency] private readonly IRobustRandom _random = default!;
 
-        public override string Name => "RevolverBarrel";
-
         [ViewVariables]
         [DataField("caliber")]
         private BallisticCaliber _caliber = BallisticCaliber.Unspecified;

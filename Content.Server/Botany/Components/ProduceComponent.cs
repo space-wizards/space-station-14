@@ -16,7 +16,6 @@ namespace Content.Server.Botany.Components
     [RegisterComponent]
     public class ProduceComponent : Component, ISerializationHooks
     {
-        public override string Name => "Produce";
         [DataField("targetSolution")] public string SolutionName { get; set; } = "food";
 
         [DataField("seed")] private string? _seedName;

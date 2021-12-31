@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
@@ -10,7 +10,6 @@ namespace Content.Server.Chemistry.Components
     [RegisterComponent]
     public class MeleeChemicalInjectorComponent : Component
     {
-        public override string Name => "MeleeChemicalInjector";
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("transferAmount")]

@@ -62,9 +62,9 @@
       graph: lightSwitch
       node: lightSwitch
     - type: ExtensionCableReceiver
-    - type: DeviceNetworkComponent
+    - type: DeviceNetwork
       deviceNetId: Apc
-    - type: ApcNetworkConnection
+    - type: ApcNetwork
     - type: ApcNetSwitch
   placement:
     mode: SnapgridCenter

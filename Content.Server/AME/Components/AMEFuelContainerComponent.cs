@@ -6,8 +6,6 @@ namespace Content.Server.AME.Components
     [RegisterComponent]
     public class AMEFuelContainerComponent : Component
     {
-        public override string Name => "AMEFuelContainer";
-
         private int _fuelAmount;
         private int _maxFuelAmount;
 

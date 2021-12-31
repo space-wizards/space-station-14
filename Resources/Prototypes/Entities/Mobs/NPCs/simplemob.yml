@@ -9,7 +9,7 @@
       Flammable: [Touch]
       Extinguish: [Touch]
       Acidic: [Touch, Ingestion]
-  - type: UtilityAI
+  - type: UtilityAi
     behaviorSets:
     # - Clothing
     - Idle
@@ -126,7 +126,7 @@
   parent: SimpleSpaceMobBase
   suffix: AI
   components:
-  - type: UtilityAI
+  - type: UtilityAi
     behaviorSets:
     - Idle
     # - Hunger TODO: eating on the floor and fix weird AI endless stomach

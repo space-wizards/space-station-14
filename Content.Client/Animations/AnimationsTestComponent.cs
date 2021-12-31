@@ -11,7 +11,6 @@ namespace Content.Client.Animations
     [RegisterComponent]
     public sealed class AnimationsTestComponent : Component
     {
-        public override string Name => "AnimationsTest";
 
         protected override void Initialize()
         {

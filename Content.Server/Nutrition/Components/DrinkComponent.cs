@@ -18,8 +18,6 @@ namespace Content.Server.Nutrition.Components
         public string SolutionName { get; set; } = DefaultSolutionName;
         public const string DefaultSolutionName = "drink";
 
-        public override string Name => "Drink";
-
         [ViewVariables]
         [DataField("useSound")]
         public SoundSpecifier UseSound = new SoundPathSpecifier("/Audio/Items/drink.ogg");

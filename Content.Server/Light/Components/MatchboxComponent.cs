@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Content.Shared.Interaction;
 using Content.Shared.Smoking;
 using Robust.Shared.GameObjects;
@@ -10,6 +10,5 @@ namespace Content.Server.Light.Components
     [RegisterComponent]
     public class MatchboxComponent : Component
     {
-        public override string Name => "Matchbox";
     }
 }

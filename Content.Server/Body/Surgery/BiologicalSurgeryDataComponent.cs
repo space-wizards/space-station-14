@@ -23,8 +23,6 @@ namespace Content.Server.Body.Surgery
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public override string Name => "BiologicalSurgeryData";
-
         private readonly HashSet<SharedMechanismComponent> _disconnectedOrgans = new();
 
         private bool SkinOpened { get; set; }

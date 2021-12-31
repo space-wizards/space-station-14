@@ -13,8 +13,6 @@ namespace Content.Server.Damage.Components
     [RegisterComponent]
     internal sealed class DamageOnHighSpeedImpactComponent : Component
     {
-        public override string Name => "DamageOnHighSpeedImpact";
-
         [DataField("minimumSpeed")]
         public float MinimumSpeed { get; set; } = 20f;
         [DataField("factor")]

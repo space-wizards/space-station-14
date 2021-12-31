@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Disposal.Unit.Components;
 using Robust.Shared.GameObjects;
@@ -23,8 +23,6 @@ namespace Content.Server.Disposal.Tube.Components
         [ViewVariables]
         [DataField("degrees")]
         private List<Angle> _degrees = new();
-
-        public override string Name => "DisposalJunction";
 
         protected override Direction[] ConnectableDirections()
         {

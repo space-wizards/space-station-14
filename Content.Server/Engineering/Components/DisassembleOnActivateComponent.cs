@@ -10,8 +10,6 @@ namespace Content.Server.Engineering.Components
     [RegisterComponent]
     public class DisassembleOnActivateComponent : Component
     {
-        public override string Name => "DisassembleOnActivate";
-
         [ViewVariables]
         [DataField("prototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string? Prototype { get; }

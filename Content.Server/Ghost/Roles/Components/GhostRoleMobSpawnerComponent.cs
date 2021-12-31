@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Content.Server.Mind.Commands;
 using Content.Server.Mind.Components;
 using JetBrains.Annotations;
@@ -17,8 +17,6 @@ namespace Content.Server.Ghost.Roles.Components
     public class GhostRoleMobSpawnerComponent : GhostRoleComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
-
-        public override string Name => "GhostRoleMobSpawner";
 
         [ViewVariables(VVAccess.ReadWrite)] [DataField("deleteOnSpawn")]
         private bool _deleteOnSpawn = true;

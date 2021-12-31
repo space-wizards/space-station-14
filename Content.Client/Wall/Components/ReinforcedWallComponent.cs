@@ -11,7 +11,6 @@ namespace Content.Client.Wall.Components
     [ComponentReference(typeof(IconSmoothComponent))]
     public class ReinforcedWallComponent : IconSmoothComponent
     {
-        public override string Name => "ReinforcedWall";
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("reinforcedBase")]

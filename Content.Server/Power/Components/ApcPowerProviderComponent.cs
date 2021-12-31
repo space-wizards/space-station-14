@@ -8,8 +8,6 @@ namespace Content.Server.Power.Components
     [RegisterComponent]
     public class ApcPowerProviderComponent : BaseApcNetComponent
     {
-        public override string Name => "PowerProvider";
-
         [ViewVariables] public List<ApcPowerReceiverComponent> LinkedReceivers { get; } = new();
 
         public void AddReceiver(ApcPowerReceiverComponent receiver)

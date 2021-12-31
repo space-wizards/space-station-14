@@ -23,7 +23,7 @@ namespace Content.Client.Weapons.Ranged.Barrels.Components
 {
     [RegisterComponent]
     [NetworkedComponent()]
-    public class ClientMagazineBarrelComponent : Component, IItemStatus
+    public class MagazineBarrelComponent : Component, IItemStatus
     {
         private static readonly Animation AlarmAnimationSmg = new()
         {
@@ -70,8 +70,6 @@ namespace Content.Client.Weapons.Ranged.Barrels.Components
                 }
             }
         };
-
-        public override string Name => "MagazineBarrel";
 
         private StatusControl? _statusControl;
 
@@ -135,13 +133,13 @@ namespace Content.Client.Weapons.Ranged.Barrels.Components
 
         private sealed class StatusControl : Control
         {
-            private readonly ClientMagazineBarrelComponent _parent;
+            private readonly MagazineBarrelComponent _parent;
             private readonly BoxContainer _bulletsList;
             private readonly TextureRect _chamberedBullet;
             private readonly Label _noMagazineLabel;
             private readonly Label _ammoCount;
 
-            public StatusControl(ClientMagazineBarrelComponent parent)
+            public StatusControl(MagazineBarrelComponent parent)
             {
                 MinHeight = 15;
                 _parent = parent;

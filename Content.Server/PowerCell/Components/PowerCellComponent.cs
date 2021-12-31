@@ -23,7 +23,6 @@ namespace Content.Server.PowerCell.Components
     public class PowerCellComponent : BatteryComponent, IExamine
 #pragma warning restore 618
     {
-        public override string Name => "PowerCell";
         public const string SolutionName = "powerCell";
 
         [ViewVariables] public PowerCellSize CellSize => _cellSize;

@@ -7,7 +7,7 @@
   - type: Tag
     tags:
     - FootstepSound
-  - type: UtilityAI
+  - type: UtilityAi
     behaviorSets:
     - UnarmedAttackHostiles
   - type: AiFactionTag

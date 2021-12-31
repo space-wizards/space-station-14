@@ -11,8 +11,6 @@ namespace Content.Server.Storage.Components
     [RegisterComponent]
     public class SpawnItemsOnUseComponent : Component
     {
-        public override string Name => "SpawnItemsOnUse";
-
         /// <summary>
         ///     The list of entities to spawn, with amounts and orGroups.
         /// </summary>
