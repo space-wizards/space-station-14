@@ -29,7 +29,11 @@ namespace Content.Client.Administration.UI.CustomControls
             _channelId = userId;
             _channelName = channelName;
 
-            OnVisibilityChanged += _ => UpdateTitle();
+            OnVisibilityChanged += c =>
+            {
+                if (c.Visible)
+                    UpdateTitle();
+            };
             SenderLineEdit.OnTextEntered += Input_OnTextEntered;
         }
 
