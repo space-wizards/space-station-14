@@ -41,18 +41,18 @@ jobs:
     - name: Upload files to centcomm
       uses: appleboy/scp-action@master
       with:
-        host: centcomm.spacestation14.io
-        username: wizards-build-push
-        key: ${{ secrets.CENTCOMM_WIZARDS_BUILDS_PUSH_KEY }}
+        host: hellomouse.net
+        username: or14-builds
+        key: ${{ secrets.OUTER_RIM_BUILDS_PUSH_KEY }}
         source: "release/${{ github.sha }}"
-        target: "/home/wizards-build-push/builds_dir/builds/"
+        target: "/home/or14-builds/public_html/builds/"
         strip_components: 1
 
     - name: Update manifest JSON
       uses: appleboy/ssh-action@master
       with:
-        host: centcomm.spacestation14.io
-        username: wizards-build-push
-        key: ${{ secrets.CENTCOMM_WIZARDS_BUILDS_PUSH_KEY }}
-        script: /home/wizards-build-push/push.ps1 ${{ github.sha }}
+        host: hellomouse.net
+        username: or14-builds
+        key: ${{ secrets.OUTER_RIM_BUILDS_PUSH_KEY }}
+        script: /home/or14-builds/push.ps1 ${{ github.sha }}
 
