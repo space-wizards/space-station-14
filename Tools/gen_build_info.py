@@ -18,8 +18,8 @@ SERVER_FILES = [
 ]
 
 VERSION = os.environ['GITHUB_SHA']
-FORK_ID = "wizards"
-BUILD_URL = f"https://cdn.centcomm.spacestation14.com/builds/wizards/builds/{VERSION}/{FILE}"
+FORK_ID = "outerrim"
+BUILD_URL = f"https://hellomouse.net/~or14-builds/builds/{VERSION}/{FILE}"
 
 def main() -> None:
     manifest = generate_manifest("release")
