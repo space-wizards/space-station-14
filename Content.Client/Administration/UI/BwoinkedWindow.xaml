@@ -2,6 +2,7 @@
     xmlns="https://spacestation14.io"
     SetSize="400 200"
     HeaderClass="windowHeaderAlert"
-    TitleClass="windowTitleAlert">
+    TitleClass="windowTitleAlert"
+    Title="{Loc 'bwoink-user-title'}">
     <!-- A BwoinkPanel gets added here in the constructor. -->
 </SS14Window>

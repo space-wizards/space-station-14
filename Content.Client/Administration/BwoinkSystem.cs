@@ -59,7 +59,7 @@ namespace Content.Client.Administration
             if (!_activePanelMap.TryGetValue(channelId, out var existingPanel))
             {
                 _playerManager.SessionsDict.TryGetValue(channelId, out var otherSession);
-                existingPanel = new BwoinkPanel(this, channelId, otherSession?.Name ?? channelId.ToString());
+                existingPanel = new BwoinkPanel(this, channelId);
                 _activePanelMap[channelId] = existingPanel;
             }
 
@@ -81,7 +81,7 @@ namespace Content.Client.Administration
         {
             if (_plainWindow is null)
             {
-                var bp = new BwoinkPanel(this, channelId, Loc.GetString("bwoink-user-title"));
+                var bp = new BwoinkPanel(this, channelId);
                 _plainWindow = new BwoinkedWindow(bp);
             }
 

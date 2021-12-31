@@ -24,7 +24,10 @@ namespace Content.Client.Administration.UI
             ChannelSelector.OnSelectionChanged += sel =>
             {
                 if (sel is not null)
+                {
                     SwitchToChannel(sel.SessionId);
+                    Title = $"{sel.CharacterName} / {sel.Username}";
+                }
 
                 foreach (var li in ChannelSelector.PlayerItemList)
                     li.Text = FormatTabTitle(li);

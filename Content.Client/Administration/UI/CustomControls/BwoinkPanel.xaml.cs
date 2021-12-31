@@ -19,51 +19,22 @@ namespace Content.Client.Administration.UI.CustomControls
 
         private readonly BwoinkSystem _bwoinkSystem;
         private readonly NetUserId _channelId;
-        private readonly string _channelName;
 
         public int Unread { get; private set; } = 0;
 
-        public BwoinkPanel(BwoinkSystem bwoinkSys, NetUserId userId, string channelName)
+        public BwoinkPanel(BwoinkSystem bwoinkSys, NetUserId userId)
         {
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
             _bwoinkSystem = bwoinkSys;
             _channelId = userId;
-            _channelName = channelName;
 
             OnVisibilityChanged += c =>
             {
                 if (c.Visible)
-                {
                     Unread = 0;
-                    UpdateTitle();
-                }
             };
             SenderLineEdit.OnTextEntered += Input_OnTextEntered;
-        }
-
-        protected override void Parented(Control? newParent)
-        {
-            if (newParent is null)
-            {
-                base.Deparented();
-                return;
-            }
-
-            base.Parented(newParent);
-            UpdateTitle();
-        }
-
-        private void UpdateTitle()
-        {
-            for (var p = Parent; p is not null; p = p.Parent)
-            {
-                if (p is SS14Window np)
-                {
-                    np.Title = (_playerManager.LocalPlayer?.UserId == _channelId) ? Loc.GetString("bwoink-user-title") : _channelName;
-                    return;
-                }
-            }
         }
 
         private void Input_OnTextEntered(LineEdit.LineEditEventArgs args)
