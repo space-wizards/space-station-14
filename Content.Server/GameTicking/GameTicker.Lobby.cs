@@ -20,9 +20,6 @@ namespace Content.Server.GameTicking
         private TimeSpan _roundStartTime;
 
         [ViewVariables]
-        private readonly TimeSpan _finalCountdownTime = new TimeSpan(0, 0, 10);
-
-        [ViewVariables]
         private TimeSpan _pauseTime;
 
         [ViewVariables]
@@ -144,9 +141,9 @@ namespace Content.Server.GameTicking
             {
                 if (!_playersInLobby.ContainsValue(LobbyPlayerStatus.NotReady))
                 {
-                    if ((_roundStartTime - _gameTiming.CurTime) > _finalCountdownTime)
+                    if ((_roundStartTime - _gameTiming.CurTime) > LobbyFinalCountdownDuration)
                     {
-                        _roundStartTime = _gameTiming.CurTime + _finalCountdownTime;
+                        _roundStartTime = _gameTiming.CurTime + LobbyFinalCountdownDuration;
                     }
                 }
 

@@ -76,6 +76,12 @@ namespace Content.Shared.CCVar
             GameLobbyDuration = CVarDef.Create("game.lobbyduration", 150, CVar.ARCHIVE);
 
         /// <summary>
+        ///     Controls the duration of the final countdown timer in lobby when all players are ready. In seconds.
+        /// </summary>
+        public static readonly CVarDef<int>
+            GameLobbyFinalCountdownDuration = CVarDef.Create("game.lobbyfinalcountdownduration", 10, CVar.ARCHIVE);
+
+        /// <summary>
         ///     Controls if players can latejoin at all.
         /// </summary>
         public static readonly CVarDef<bool>
