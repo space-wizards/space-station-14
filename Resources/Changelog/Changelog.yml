@@ -1,9 +1,4 @@
 Entries:
-- author: scaly-chimp
-  changes:
-  - {message: Added everyone's favorite stimulant meth!, type: Add}
-  id: 293
-  time: '2021-08-03T03:32:08.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: 'Station will spawn at a random position rather than 0,0.', type: Tweak}
@@ -2877,3 +2872,9 @@ Entries:
   - {message: Adjusted gain on Windoor to make it more audible., type: Tweak}
   id: 794
   time: '2021-12-31T02:21:00.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Containers with access readers have been reconfigured to ensure they
+      have the proper restrictions. Botanists are the major winners here., type: Tweak}
+  id: 795
+  time: '2021-12-31T02:27:28.0000000+00:00'
