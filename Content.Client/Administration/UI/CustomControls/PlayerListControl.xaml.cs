@@ -55,6 +55,8 @@ namespace Content.Client.Administration.UI.CustomControls
             OnSelectionChanged?.Invoke(null);
         }
 
+        public void Refresh() => PopulateList();
+
         private void PopulateList(IReadOnlyList<PlayerInfo> _ = null!)
         {
             PlayerItemList.Clear();
