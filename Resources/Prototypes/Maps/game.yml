@@ -90,3 +90,37 @@
     MedicalDoctor: [ 1, 1 ]
     ResearchDirector: [ 1, 1 ]
     Botanist: [ 1, 1 ]
+
+
+- type: gameMap
+  id: nssEternity
+  mapName: 'NSS Eternity'
+  mapNameTemplate: '{0} nssEternity {1}'
+  nameGenerator:
+    !type:NanotrasenNameGenerator
+    prefixCreator: '14'
+  mapPath: Maps/nss_eternity.yml
+  minPlayers: 0
+  overflowJobs: []
+  availableJobs:
+    CargoTechnician: [ 2, 3 ]
+    Assistant: [ -1, -1 ]
+    Bartender: [ 1, 1 ]
+    Botanist: [ 2, 2 ]
+    Chef: [ 1, 1 ]
+    Clown: [ 1, 1 ]
+    Janitor: [ 1, 1 ]
+    Mime: [ 1, 1 ]
+    Captain: [ 1, 1 ]
+    HeadOfPersonnel: [ 1, 1 ]
+    ChiefEngineer: [ 1, 1 ]
+    StationEngineer: [ 4, 6 ]
+    ChiefMedicalOfficer: [ 1, 1 ]
+    MedicalDoctor: [ 3, 4 ]
+    Chemist: [ 2, 2 ]
+    ResearchDirector: [ 1, 1 ]
+    Scientist: [ 3, 4 ]
+    HeadOfSecurity: [ 1, 1 ]
+    SecurityOfficer: [ 2, 3 ]
+    Chaplain: [ 1, 1 ]
+    Warden: [ 1, 1 ]
