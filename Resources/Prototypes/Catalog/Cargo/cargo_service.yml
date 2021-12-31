@@ -47,13 +47,13 @@
   group: market
 
 - type: cargoProduct
-  name: "office supplies crate"
-  id: ServiceOffice
-  description: "The only thing that saves us from bureaucracy is its inefficiency."
+  name: "bureaucracy crate"
+  id: ServiceBureaucracy
+  description: "Several stacks of paper and a few pens, what more can you ask for."
   icon:
     sprite: Objects/Misc/bureaucracy.rsi
-    state: paper
-  product: CrateServiceOfficeSupplies
+    state: pen
+  product: CrateServiceBureaucracy
   cost: 1000
   category: Service
   group: market

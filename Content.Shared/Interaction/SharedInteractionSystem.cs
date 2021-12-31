@@ -139,18 +139,15 @@ namespace Content.Shared.Interaction
             if (!TryComp(user, out SharedHandsComponent? hands))
                 return;
 
-            // TODO remove invalid/default uid and use nullable.
-            hands.TryGetActiveHeldEntity(out var heldEntity);
-            EntityUid? held = heldEntity.Valid ? heldEntity : null;
 
             // TODO: Replace with body interaction range when we get something like arm length or telekinesis or something.
             var inRangeUnobstructed = user.InRangeUnobstructed(coordinates, ignoreInsideBlocker: true);
             if (target == null || !inRangeUnobstructed)
             {
-                if (held == null)
+                if (!hands.TryGetActiveHeldEntity(out var heldEntity))
                     return;
 
-                if (!await InteractUsingRanged(user, held.Value, target, coordinates, inRangeUnobstructed) &&
+                if (!await InteractUsingRanged(user, heldEntity.Value, target, coordinates, inRangeUnobstructed) &&
                     !inRangeUnobstructed)
                 {
                     var message = Loc.GetString("interaction-system-user-interaction-cannot-reach");
@@ -165,13 +162,17 @@ namespace Content.Shared.Interaction
                 if (altInteract)
                     // Perform alternative interactions, using context menu verbs.
                     AltInteract(user, target.Value);
-                else if (held != null && held != target)
-                    // We are performing a standard interaction with an item, and the target isn't the same as the item
-                    // currently in our hand. We will use the item in our hand on the nearby object via InteractUsing
-                    await InteractUsing(user, held.Value, target.Value, coordinates);
-                else if (held == null)
+
+                if (!hands.TryGetActiveHeldEntity(out var heldEntity))
+                {
                     // Since our hand is empty we will use InteractHand/Activate
                     InteractHand(user, target.Value);
+                }
+                else if (heldEntity != target)
+                {
+                    await InteractUsing(user, heldEntity.Value, target.Value, coordinates);
+                }
+                    
             }
         }
 

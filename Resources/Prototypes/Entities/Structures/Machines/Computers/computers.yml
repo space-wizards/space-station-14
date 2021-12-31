@@ -312,6 +312,7 @@
       - ServiceSmokeables
       - ServiceCustomSmokable
       - SalvageEquipment
+      - ServiceBureaucracy
       - EngineeringCableLv
       - EngineeringCableMv
       - EngineeringCableHv

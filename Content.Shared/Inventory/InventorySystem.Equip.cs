@@ -59,7 +59,7 @@ public abstract partial class InventorySystem
         if (!hands.TryGetActiveHeldEntity(out var heldEntity))
             return false;
 
-        return TryEquip(uid, heldEntity, slot, silent, force, component);
+        return TryEquip(uid, heldEntity.Value, slot, silent, force, component);
     }
 
     public bool TryEquip(EntityUid uid, EntityUid itemUid, string slot, bool silent = false, bool force = false,
@@ -92,7 +92,7 @@ public abstract partial class InventorySystem
             return false;
         }
 
-        if(item.EquipSound != null)
+        if(!silent && item.EquipSound != null)
             SoundSystem.Play(Filter.Pvs(target), item.EquipSound.GetSound(), target, AudioParams.Default.WithVolume(-2f));
 
         inventory.Dirty();

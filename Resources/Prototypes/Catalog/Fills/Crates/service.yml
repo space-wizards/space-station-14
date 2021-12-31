@@ -76,14 +76,14 @@
     - id: Matchbox
 
 - type: entity
-  id: CrateServiceOfficeSupplies
-  name: office supplies crate
-  description: Office supplies for bureaucracy and paperwork.
-  parent: CratePlastic
+  id: CrateServiceBureaucracy
+  name: bureaucracy crate
+  description: Several stacks of paper and a few pens, what more can you ask for.
+  parent: CrateGenericSteel
   components:
-    - type: StorageFill
-      contents:
-        - id: Paper
-          amount: 10
-        - id: Pen
-          amount: 2
+  - type: StorageFill
+    contents:
+    - id: Paper
+      amount: 15
+    - id: Pen
+      amount: 2
