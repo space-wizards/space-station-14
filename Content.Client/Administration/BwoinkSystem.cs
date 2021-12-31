@@ -34,7 +34,7 @@ namespace Content.Client.Administration
             LogBwoink(message);
             // Actual line
             var window = EnsurePanel(message.ChannelId);
-            window.ReceiveLine(message.Text);
+            window.ReceiveLine($"[color=gray]{message.SentAt.ToShortTimeString()}[/color] {message.Text}");
             // Play a sound if we didn't send it
             var localPlayer = _playerManager.LocalPlayer;
             if (localPlayer?.UserId != message.TrueSender)
