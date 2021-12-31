@@ -35,6 +35,8 @@ namespace Content.Server.Mind
         private readonly ISet<Role> _roles = new HashSet<Role>();
 
         private readonly List<Objective> _objectives = new();
+        
+        public string _briefing = String.Empty;
 
         /// <summary>
         ///     Creates the new mind.
@@ -234,6 +236,7 @@ namespace Content.Server.Mind
             _objectives.Add(objective);
             return true;
         }
+        
 
         /// <summary>
         /// Removes an objective to this mind.
@@ -247,6 +250,17 @@ namespace Content.Server.Mind
             _objectives.Remove(objective);
             return true;
         }
+        
+        /// <summary>
+        /// Adds a briefing (i.e. traitor codewords, nuclear code, ...) to this mind
+        /// </summary>
+        public bool TryAddBriefing(string briefing)
+        {
+                if (briefing == string.Empty || briefing == null) return false;
+                _briefing = briefing;
+                return true;
+        }
+                
 
         /// <summary>
         ///     Transfer this mind's control over to a new entity.

@@ -27,6 +27,7 @@ public class CharacterInfoSystem : EntitySystem
 
         var conditions = new Dictionary<string, List<ConditionInfo>>();
         var jobTitle = "No Profession";
+        var briefing = "No Briefing (And this should not be showing!)";
         if (EntityManager.TryGetComponent(entity, out MindComponent? mindComponent) && mindComponent.Mind != null)
         {
             var mind = mindComponent.Mind;
@@ -51,9 +52,12 @@ public class CharacterInfoSystem : EntitySystem
                 jobTitle = role.Name;
                 break;
             }
+            
+            // Get briefing
+            briefing = mind._briefing;
         }
 
-        RaiseNetworkEvent(new CharacterInfoEvent(entity, jobTitle, conditions),
+        RaiseNetworkEvent(new CharacterInfoEvent(entity, jobTitle, conditions, briefing),
             Filter.SinglePlayer(args.SenderSession));
     }
 }
