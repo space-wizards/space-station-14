@@ -7,7 +7,9 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Weapon.Ranged.Barrels.Components
@@ -26,7 +28,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         [DataField("fireCost")]
         [ViewVariables] private int _baseFireCost = 300;
         // What gets fired
-        [DataField("ammoPrototype")]
+        [DataField("ammoPrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         [ViewVariables] private string? _ammoPrototype;
 
         private ContainerSlot _ammoContainer = default!;

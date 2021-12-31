@@ -137,23 +137,23 @@
       - LightTube
       - LightBulb
       - SheetSteel
-      - GlassStack
+      - SheetGlass1
       - SheetRGlass
       - SheetPlastic
       - CableStack
       - CableMVStack
       - CableHVStack
-      - ConveyorAssembly
+      - ConveyorBeltAssembly
       - RCD
       - RCDAmmo
-      - Scythe
-      - Hatchet
+      - HydroponicsToolScythe
+      - HydroponicsToolHatchet
       - Shovel
       - Scalpel
       - Retractor
       - Cautery
       - Drill
-      - BoneSaw
+      - Saw
       - Hemostat
       - Beaker
       - LargeBeaker
@@ -164,10 +164,10 @@
       - Flash
       - Handcuffs
       - Stunbaton
-      - CartridgePistolBase
-      - ShellShotgunBase
-      - CartridgeLRifleBase
-      - CartridgeMagnumBase
+      - CartridgePistol
+      - ShellShotgun
+      - CartridgeLRifle
+      - CartridgeMagnum
       - FirelockElectronics
       - MicroManipulatorStockPart
       - ScanningModuleStockPart
@@ -184,6 +184,7 @@
       - SolarControlComputerCircuitboard
       - AutolatheMachineCircuitboard
       - ProtolatheMachineCircuitboard
+      - KitchenReagentGrinderMachineCircuitboard
       - CrewMonitoringComputerCircuitboard
       - Bucket
       - MopItem

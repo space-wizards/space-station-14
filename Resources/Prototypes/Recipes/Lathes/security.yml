@@ -32,41 +32,41 @@
     Steel: 100
 
 - type: latheRecipe
-  id: CartridgePistolBase
+  id: CartridgePistol
   icon:
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     state: base
-  result: CartridgePistolBase
+  result: CartridgePistol
   completetime: 500
   materials:
     Steel: 10
 
 - type: latheRecipe
-  id: ShellShotgunBase
+  id: ShellShotgun
   icon:
     sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
     state: base
-  result: ShellShotgunBase
+  result: ShellShotgun
   completetime: 500
   materials:
     Steel: 20
 
 - type: latheRecipe
-  id: CartridgeMagnumBase
+  id: CartridgeMagnum
   icon:
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     state: base
-  result: CartridgeMagnumBase
+  result: CartridgeMagnum
   completetime: 500
   materials:
     Steel: 20
 
 - type: latheRecipe
-  id: CartridgeLRifleBase
+  id: CartridgeLRifle
   icon:
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     state: base
-  result: CartridgeLRifleBase
+  result: CartridgeLRifle
   completetime: 500
   materials:
     Steel: 30
