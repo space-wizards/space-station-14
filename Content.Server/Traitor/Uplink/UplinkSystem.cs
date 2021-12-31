@@ -1,13 +1,13 @@
 using System.Linq;
 using Content.Server.Hands.Components;
-using Content.Server.Inventory.Components;
-using Content.Server.Items;
 using Content.Server.Traitor.Uplink.Account;
 using Content.Server.Traitor.Uplink.Components;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Inventory;
+using Content.Shared.Item;
 using Content.Shared.PDA;
 using Content.Shared.Traitor.Uplink;
 using Robust.Server.GameObjects;
@@ -26,6 +26,8 @@ namespace Content.Server.Traitor.Uplink
         private readonly UplinkAccountsSystem _accounts = default!;
         [Dependency]
         private readonly UplinkListingSytem _listing = default!;
+
+        [Dependency] private readonly InventorySystem _inventorySystem = default!;
 
         public override void Initialize()
         {
@@ -126,7 +128,7 @@ namespace Content.Server.Traitor.Uplink
             }
 
             if (EntityManager.TryGetComponent(player, out HandsComponent? hands) &&
-                EntityManager.TryGetComponent(entity.Value, out ItemComponent? item))
+                EntityManager.TryGetComponent(entity.Value, out SharedItemComponent? item))
             {
                 hands.PutInHandOrDrop(item);
             }
@@ -206,11 +208,16 @@ namespace Content.Server.Traitor.Uplink
         private EntityUid? FindUplinkTarget(EntityUid user)
         {
             // Try to find PDA in inventory
-            if (EntityManager.TryGetComponent(user, out InventoryComponent? inventory))
+
+            if (_inventorySystem.TryGetContainerSlotEnumerator(user, out var containerSlotEnumerator))
             {
-                var foundPDA = inventory.LookupItems<PDAComponent>().FirstOrDefault();
-                if (foundPDA != null)
-                    return foundPDA.Owner;
+                while (containerSlotEnumerator.MoveNext(out var pdaUid))
+                {
+                    if(!pdaUid.ContainedEntity.HasValue) continue;
+
+                    if(HasComp<PDAComponent>(pdaUid.ContainedEntity.Value))
+                        return pdaUid.ContainedEntity.Value;
+                }
             }
 
             // Also check hands

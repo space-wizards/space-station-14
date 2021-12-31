@@ -21,10 +21,10 @@
   id: ChiefEngineerGear
   equipment:
     head: ClothingHeadHatHardhatWhite
-    innerclothing: ClothingUniformJumpsuitChiefEngineer
-    backpack: ClothingBackpackEngineeringFilled
+    jumpsuit: ClothingUniformJumpsuitChiefEngineer
+    back: ClothingBackpackEngineeringFilled
     shoes: ClothingShoesColorBrown
-    idcard: CEPDA
+    id: CEPDA
     ears: ClothingHeadsetEngineering
     belt: ClothingBeltChiefEngineerFilled
   innerclothingskirt: ClothingUniformJumpskirtChiefEngineer
