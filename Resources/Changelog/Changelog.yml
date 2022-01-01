@@ -1,9 +1,4 @@
 Entries:
-- author: Seth
-  changes:
-  - {message: Added a hardsuit into CMO's Locker, type: Add}
-  id: 305
-  time: '2021-08-06T23:11:18.0000000+00:00'
 - author: SweptWasTaken
   changes:
   - {message: Maps in windoors, type: Add}
@@ -2899,3 +2894,8 @@ Entries:
       have been getting top marks on.', type: Tweak}
   id: 806
   time: '2022-01-01T22:46:00.0000000+00:00'
+- author: Charlese2
+  changes:
+  - {message: Lowered flash bullet damage., type: Tweak}
+  id: 807
+  time: '2022-01-01T22:54:43.0000000+00:00'
