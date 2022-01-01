@@ -162,10 +162,6 @@ namespace Content.Server.Database
             var jobs = profile.Jobs.ToDictionary(j => j.JobName, j => (JobPriority) j.Priority);
             var antags = profile.Antags.Select(a => a.AntagName);
 
-            var species = SpeciesManager.DefaultSpecies;
-            if (profile.Species != "" && SpeciesManager.SpeciesIdToProto.ContainsKey(profile.Species))
-                species = profile.Species;
-
             var sex = Sex.Male;
             if (Enum.TryParse<Sex>(profile.Sex, true, out var sexVal))
                 sex = sexVal;
@@ -184,7 +180,7 @@ namespace Content.Server.Database
 
             return new HumanoidCharacterProfile(
                 profile.CharacterName,
-                species,
+                profile.Species,
                 profile.Age,
                 sex,
                 gender,

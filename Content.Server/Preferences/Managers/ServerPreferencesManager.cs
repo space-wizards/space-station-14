@@ -7,6 +7,7 @@ using Content.Shared;
 using Content.Shared.CCVar;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
+using Content.Shared.Species;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.IoC;
@@ -268,7 +269,11 @@ namespace Content.Server.Preferences.Managers
                                     _protos.HasIndex<JobPrototype>(job.Key)))
                             .WithAntagPreferences(
                                 hp.AntagPreferences.Where(antag =>
-                                    _protos.HasIndex<AntagPrototype>(antag)));
+                                    _protos.HasIndex<AntagPrototype>(antag)))
+                            .WithSpecies(
+                                IoCManager.Resolve<IPrototypeManager>().HasIndex<SpeciesPrototype>(hp.Species)
+                                ? hp.Species
+                                : SpeciesManager.DefaultSpecies);
                         break;
                     }
                     default:

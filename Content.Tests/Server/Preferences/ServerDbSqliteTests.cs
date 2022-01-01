@@ -110,7 +110,6 @@ namespace Content.Tests.Server.Preferences
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             prototypeManager.Initialize();
             prototypeManager.LoadFromStream(new StringReader(Prototypes));
-            IoCManager.Resolve<SpeciesManager>().Initialize();
             await db.InitPrefsAsync(username, HumanoidCharacterProfile.Default());
             await db.SaveCharacterSlotAsync(username, CharlieCharlieson(), 1);
             await db.SaveSelectedCharacterIndexAsync(username, 1);

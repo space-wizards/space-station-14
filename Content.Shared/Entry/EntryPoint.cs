@@ -39,7 +39,6 @@ namespace Content.Shared.Entry
             _initTileDefinitions();
             CheckReactions();
             IoCManager.Resolve<SpriteAccessoryManager>().Initialize();
-            IoCManager.Resolve<SpeciesManager>().Initialize();
         }
 
         private void CheckReactions()
