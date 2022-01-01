@@ -1,5 +1,6 @@
 #nullable enable
 using System.Text;
+using System.Linq;
 using Content.Client.Administration.Managers;
 using Content.Client.Administration.UI.Tabs.AdminTab;
 using Content.Shared.Administration;
@@ -50,6 +51,15 @@ namespace Content.Client.Administration.UI
             ChannelSelector.DecoratePlayer += (PlayerInfo pl, ItemList.Item li) =>
             {
                 li.Text = FormatTabTitle(li, pl);
+            };
+
+            ChannelSelector.SortKey = (PlayerInfo pl) =>
+            {
+               if (_bwoinkSystem.TryGetChannel(pl.SessionId, out var ch))
+               {
+                   return ch.Unread;
+               }
+               return 0;
             };
 
             // ew
