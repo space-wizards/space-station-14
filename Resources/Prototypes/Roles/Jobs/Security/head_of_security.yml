@@ -11,13 +11,29 @@
   supervisors: "the captain"
   canBeAntag: false
   access:
-  - HeadOfSecurity
-  - Command
-#  - Brig
-  - Security
-  - Armory
-  - Maintenance
-  - Service
+    - Captain
+    - HeadOfPersonnel
+    - ChiefEngineer
+    - ChiefMedicalOfficer
+    - HeadOfSecurity
+    - ResearchDirector
+    - Command
+    - Security
+    - Armory
+    - Engineering
+    - Medical
+    - Cargo
+    - Research
+    - Service
+    - Maintenance
+    - External
+    - Janitor
+    - Theatre
+    - Bar
+    - Chemistry
+    - Kitchen
+    - Chapel
+    - Hydroponics
 
 - type: startingGear
   id: HoSGear

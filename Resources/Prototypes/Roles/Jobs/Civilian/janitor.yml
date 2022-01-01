@@ -7,8 +7,29 @@
   icon: "Janitor"
   supervisors: "the head of personnel"
   access:
-  - Janitor
-  - Maintenance
+    - Captain
+    - HeadOfPersonnel
+    - ChiefEngineer
+    - ChiefMedicalOfficer
+    - HeadOfSecurity
+    - ResearchDirector
+    - Command
+    - Security
+    - Armory
+    - Engineering
+    - Medical
+    - Cargo
+    - Research
+    - Service
+    - Maintenance
+    - External
+    - Janitor
+    - Theatre
+    - Bar
+    - Chemistry
+    - Kitchen
+    - Chapel
+    - Hydroponics
   special:
   - !type:GiveItemOnHolidaySpecial
     holiday: GarbageDay

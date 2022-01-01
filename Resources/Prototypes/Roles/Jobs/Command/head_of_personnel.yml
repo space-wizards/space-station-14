@@ -10,18 +10,29 @@
   supervisors: "the captain"
   canBeAntag: false
   access:
-  - Command
+  - Captain
   - HeadOfPersonnel
-  - Security # HoPcurity strikes again
-  - Service
+  - ChiefEngineer
+  - ChiefMedicalOfficer
+  - HeadOfSecurity
+  - ResearchDirector
+  - Command
+  - Security
+  - Armory
+  - Engineering
+  - Medical
   - Cargo
+  - Research
+  - Service
   - Maintenance
+  - External
   - Janitor
   - Theatre
+  - Bar
+  - Chemistry
   - Kitchen
   - Chapel
   - Hydroponics
-  # I mean they'll give themselves the rest of the access levels *anyways*.
 
 - type: startingGear
   id: HoPGear

@@ -7,9 +7,29 @@
   icon: "Bartender"
   supervisors: "the head of personnel"
   access:
-  - Service
-  - Maintenance
-  - Bar
+    - Captain
+    - HeadOfPersonnel
+    - ChiefEngineer
+    - ChiefMedicalOfficer
+    - HeadOfSecurity
+    - ResearchDirector
+    - Command
+    - Security
+    - Armory
+    - Engineering
+    - Medical
+    - Cargo
+    - Research
+    - Service
+    - Maintenance
+    - External
+    - Janitor
+    - Theatre
+    - Bar
+    - Chemistry
+    - Kitchen
+    - Chapel
+    - Hydroponics
 
 - type: startingGear
   id: BartenderGear

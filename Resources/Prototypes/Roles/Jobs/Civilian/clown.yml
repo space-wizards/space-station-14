@@ -7,8 +7,29 @@
   icon: "Clown"
   supervisors: "the head of personnel"
   access:
-  - Theatre
-  - Maintenance
+    - Captain
+    - HeadOfPersonnel
+    - ChiefEngineer
+    - ChiefMedicalOfficer
+    - HeadOfSecurity
+    - ResearchDirector
+    - Command
+    - Security
+    - Armory
+    - Engineering
+    - Medical
+    - Cargo
+    - Research
+    - Service
+    - Maintenance
+    - External
+    - Janitor
+    - Theatre
+    - Bar
+    - Chemistry
+    - Kitchen
+    - Chapel
+    - Hydroponics
   special:
   - !type:AddComponentSpecial
     component: Clumsy # Adds ClumsyComponent to the mob.
