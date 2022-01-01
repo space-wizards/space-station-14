@@ -237,6 +237,7 @@
         - Ointment
         - CigPack
         - Pill
+        - PillCanister
       components:
         - Hypospray
         - SurgeryTool
@@ -255,6 +256,7 @@
         whitelist:
           tags:
           - Pill
+          - PillCanister
       bottle_spray:
         whitelist:
           tags:

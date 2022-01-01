@@ -8,6 +8,7 @@ using Content.Server.Chat.Managers;
 using Content.Server.Connection;
 using Content.Server.Database;
 using Content.Server.EUI;
+using Content.Server.Info;
 using Content.Server.Maps;
 using Content.Server.Module;
 using Content.Server.MoMMI;
@@ -51,6 +52,7 @@ namespace Content.Server.IoC
             IoCManager.Register<IAfkManager, AfkManager>();
             IoCManager.Register<IGameMapManager, GameMapManager>();
             IoCManager.Register<IGamePrototypeLoadManager, GamePrototypeLoadManager>();
+            IoCManager.Register<RulesManager, RulesManager>();
         }
     }
 }

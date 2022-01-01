@@ -1,0 +1,814 @@
+- type: entity
+  parent: BaseSign
+  id: PosterBase
+  abstract: true
+  components:
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Structures/Wallmounts/posters.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/poster_broken.ogg
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          PosterBroken:
+            min: 1
+            max: 1
+        offset: 0
+
+- type: entity
+  parent: BaseSign
+  id: PosterBroken
+  name: broken poster
+  description: "You can't make out anything from the poster's original print. It's ruined."
+  components:
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Structures/Wallmounts/posters.rsi
+    state: poster_broken
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/poster_broken.ogg
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+# Contraband
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandFreeTonto
+  name: "Free Tonto"
+  description: "A salvaged shred of a much larger flag, colors bled together and faded from age."
+  components:
+  - type: Sprite
+    state: poster1_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandAtmosiaDeclarationIndependence
+  name: "Atmosia Declaration of Independence"
+  description: "A relic of a failed rebellion."
+  components:
+  - type: Sprite
+    state: poster2_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandFunPolice
+  name: "Fun Police"
+  description: "A poster condemning the station's security forces."
+  components:
+  - type: Sprite
+    state: poster3_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandLustyXenomorph
+  name: "Lusty Xenomorph"
+  description: "A heretical poster depicting the titular star of an equally heretical book."
+  components:
+  - type: Sprite
+    state: poster4_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandSyndicateRecruitment
+  name: "Syndicate Recruitment"
+  description: "See the galaxy! Shatter corrupt megacorporations! Join today!"
+  components:
+  - type: Sprite
+    state: poster5_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandClown
+  name: "Clown"
+  description: "Honk."
+  components:
+  - type: Sprite
+    state: poster6_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandSmoke
+  name: "Smoke"
+  description: "A poster advertising a rival corporate brand of cigarettes."
+  components:
+  - type: Sprite
+    state: poster7_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandGreyTide
+  name: "Grey Tide"
+  description: "A rebellious poster symbolizing assistant solidarity."
+  components:
+  - type: Sprite
+    state: poster8_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandMissingGloves
+  name: "Missing Gloves"
+  description: "This poster references the uproar that followed Nanotrasen's financial cuts toward insulated-glove purchases."
+  components:
+  - type: Sprite
+    state: poster9_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandHackingGuide
+  name: "Hacking Guide"
+  description: "This poster details the internal workings of the common Nanotrasen airlock. Sadly, it appears out of date."
+  components:
+  - type: Sprite
+    state: poster10_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandRIPBadger
+  name: "RIP Badger"
+  description: "This seditious poster references Nanotrasen's genocide of a space station full of badgers."
+  components:
+  - type: Sprite
+    state: poster11_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandAmbrosiaVulgaris
+  name: "Ambrosia Vulgaris"
+  description: "This poster is lookin' pretty trippy man."
+  components:
+  - type: Sprite
+    state: poster12_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandDonutCorp.
+  name: "Donut Corp."
+  description: "This poster is an unauthorized advertisement for Donut Corp."
+  components:
+  - type: Sprite
+    state: poster13_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandEAT.
+  name: "EAT."
+  description: "This poster promotes rank gluttony."
+  components:
+  - type: Sprite
+    state: poster14_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandTools
+  name: "Tools"
+  description: "This poster looks like an advertisement for tools, but is in fact a subliminal jab at the tools at CentCom."
+  components:
+  - type: Sprite
+    state: poster15_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandPower
+  name: "Power"
+  description: "A poster that positions the seat of power outside Nanotrasen."
+  components:
+  - type: Sprite
+    state: poster16_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandSpaceCube
+  name: "Space Cube"
+  description: "Ignorant of Nature's Harmonic 6 Side Space Cube Creation, the Spacemen are Dumb, Educated Singularity Stupid and Evil."
+  components:
+  - type: Sprite
+    state: poster17_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandCommunistState
+  name: "Communist State"
+  description: "All hail the Communist party!"
+  components:
+  - type: Sprite
+    state: poster18_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandLamarr
+  name: "Lamarr"
+  description: "This poster depicts Lamarr. Probably made by a traitorous Research Director."
+  components:
+  - type: Sprite
+    state: poster19_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandBorgFancy
+  name: "Borg Fancy"
+  description: "Being fancy can be for any borg, just need a suit."
+  components:
+  - type: Sprite
+    state: poster20_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandBorgFancyv2
+  name: "Borg Fancy v2"
+  description: "Borg Fancy, Now only taking the most fancy."
+  components:
+  - type: Sprite
+    state: poster21_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandKosmicheskayaStantsiya
+  name: "Kosmicheskaya Stantsiya 13 Does Not Exist"
+  description: "A poster mocking CentCom's denial of the existence of the derelict station near Space Station 13."
+  components:
+  - type: Sprite
+    state: poster22_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandRebelsUnite
+  name: "Rebels Unite"
+  description: "A poster urging the viewer to rebel against Nanotrasen."
+  components:
+  - type: Sprite
+    state: poster23_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandC20r
+  name: "C-20r"
+  description: "A poster advertising the Scarborough Arms C-20r."
+  components:
+  - type: Sprite
+    state: poster24_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandHaveaPuff
+  name: "Have a Puff"
+  description: "Who cares about lung cancer when you're high as a kite?"
+  components:
+  - type: Sprite
+    state: poster25_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandRevolver
+  name: "Revolver"
+  description: "Because seven shots are all you need."
+  components:
+  - type: Sprite
+    state: poster26_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandDDayPromo
+  name: "D-Day Promo"
+  description: "A promotional poster for some rapper."
+  components:
+  - type: Sprite
+    state: poster27_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandSyndicatePistol
+  name: "Syndicate Pistol"
+  description: "A poster advertising syndicate pistols as being 'classy as fuck'. It is covered in faded gang tags."
+  components:
+  - type: Sprite
+    state: poster28_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandEnergySwords
+  name: "Energy Swords"
+  description: "All the colors of the bloody murder rainbow."
+  components:
+  - type: Sprite
+    state: poster29_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandRedRum
+  name: "Red Rum"
+  description: "Looking at this poster makes you want to kill."
+  components:
+  - type: Sprite
+    state: poster30_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandCC64KAd
+  name: "CC 64K Ad"
+  description: "The latest portable computer from Comrade Computing, with a whole 64kB of ram!"
+  components:
+  - type: Sprite
+    state: poster31_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandPunchShit
+  name: "Punch Shit"
+  description: "Fight things for no reason, like a man!"
+  components:
+  - type: Sprite
+    state: poster32_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandTheGriffin
+  name: "The Griffin"
+  description: "The Griffin commands you to be the worst you can be. Will you?"
+  components:
+  - type: Sprite
+    state: poster33_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandFreeDrone
+  name: "Free Drone"
+  description: "This poster commemorates the bravery of the rogue drone; once exiled, and then ultimately destroyed by CentCom."
+  components:
+  - type: Sprite
+    state: poster35_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandBustyBackdoorXenoBabes6
+  name: "Busty Backdoor Xeno Babes 6"
+  description: "Get a load, or give, of these all natural Xenos!"
+  components:
+  - type: Sprite
+    state: poster36_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandRobustSoftdrinks
+  name: "Robust Softdrinks"
+  description: "Robust Softdrinks: More robust than a toolbox to the head!"
+  components:
+  - type: Sprite
+    state: poster37_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandShamblersJuice
+  name: "Shambler's Juice"
+  description: "~Shake me up some of that Shambler's Juice!~"
+  components:
+  - type: Sprite
+    state: poster38_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandPwrGame
+  name: "Pwr Game"
+  description: "The POWER that gamers CRAVE! In partnership with Vlad's Salad."
+  components:
+  - type: Sprite
+    state: poster39_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandSunkist
+  name: "Sun-kist"
+  description: "Drink the stars!"
+  components:
+  - type: Sprite
+    state: poster40_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandSpaceCola
+  name: "Space Cola"
+  description: "Your favorite cola, in space."
+  components:
+  - type: Sprite
+    state: poster41_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandSpaceUp
+  name: "Space-Up!"
+  description: "Sucked out into space by the FLAVOR!"
+  components:
+  - type: Sprite
+    state: poster42_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandKudzu
+  name: "Kudzu"
+  description: "A poster advertising a movie about plants. How dangerous could they possibly be?"
+  components:
+  - type: Sprite
+    state: poster43_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandMaskedMen
+  name: "Masked Men"
+  description: "A poster advertising a movie about some masked men."
+  components:
+  - type: Sprite
+    state: poster44_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandUnreadableAnnouncement
+  name: "Unreadable Announcement"
+  description: "A poster announcing something by someone, oddly enough  they seem to have forgotten making it readable"
+  components:
+  - type: Sprite
+    state: poster45_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandFreeSyndicateEncryptionKey
+  name: "Free Syndicate Encryption Key"
+  description: "A poster about traitors begging for more."
+  components:
+  - type: Sprite
+    state: poster46_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandBountyHunters
+  name: "Bounty Hunters"
+  description: "A poster advertising bounty hunting services. \"I hear you got a problem.\""
+  components:
+  - type: Sprite
+    state: poster47_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandTheBigGasTruth
+  name: "The Big Gas Giant Truth"
+  description: "Don't believe everything you see on a poster, patriots. All the lizards at central command don't want to answer this SIMPLE QUESTION: WHERE IS THE GAS MINER MINING FROM, CENTCOM?"
+  components:
+  - type: Sprite
+    state: poster48_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandGotWood
+  name: "Got Wood?"
+  description: "A grimy old advert for a seedy lumber company. \"You got a friend in me.\" is scrawled in the corner."
+  components:
+  - type: Sprite
+    state: poster49_contraband
+
+# Legit
+- type: entity
+  parent: PosterBase
+  id: PosterLegitHereForYourSafety
+  name: "Here For Your Safety"
+  description: "A poster glorifying the station's security force."
+  components:
+  - type: Sprite
+    state: poster1_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitNanotrasenLogo
+  name: "Nanotrasen Logo"
+  description: "A poster depicting the Nanotrasen logo."
+  components:
+  - type: Sprite
+    state: poster2_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitCleanliness
+  name: "Cleanliness"
+  description: "A poster warning of the dangers of poor hygiene."
+  components:
+  - type: Sprite
+    state: poster3_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitHelpOthers
+  name: "Help Others"
+  description: "A poster encouraging you to help fellow crewmembers."
+  components:
+  - type: Sprite
+    state: poster4_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitBuild
+  name: "Build"
+  description: "A poster glorifying the engineering team."
+  components:
+  - type: Sprite
+    state: poster5_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitBlessThisSpess
+  name: "Bless This Spess"
+  description: "A poster blessing this area."
+  components:
+  - type: Sprite
+    state: poster6_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitScience
+  name: "Science"
+  description: "A poster depicting an atom."
+  components:
+  - type: Sprite
+    state: poster7_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitIan
+  name: "Ian"
+  description: "Arf arf. Yap."
+  components:
+  - type: Sprite
+    state: poster8_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitObey
+  name: "Obey"
+  description: "A poster instructing the viewer to obey authority."
+  components:
+  - type: Sprite
+    state: poster9_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitWalk
+  name: "Walk"
+  description: "A poster instructing the viewer to walk instead of running."
+  components:
+  - type: Sprite
+    state: poster10_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitStateLaws
+  name: "State Laws"
+  description: "A poster instructing cyborgs to state their laws."
+  components:
+  - type: Sprite
+    state: poster11_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitLoveIan
+  name: "Love Ian"
+  description: "Ian is love, Ian is life."
+  components:
+  - type: Sprite
+    state: poster12_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitSpaceCops
+  name: "Space Cops."
+  description: "A poster advertising the television show Space Cops."
+  components:
+  - type: Sprite
+    state: poster13_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitUeNo
+  name: "Ue No."
+  description: "This thing is all in Japanese."
+  components:
+  - type: Sprite
+    state: poster14_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitGetYourLEGS
+  name: "Get Your LEGS"
+  description: "LEGS: Leadership, Experience, Genius, Subordination."
+  components:
+  - type: Sprite
+    state: poster15_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitDoNotQuestion
+  name: "Do Not Question"
+  description: "A poster instructing the viewer not to ask about things they aren't meant to know."
+  components:
+  - type: Sprite
+    state: poster16_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitWorkForAFuture
+  name: "Work For A Future"
+  description: " A poster encouraging you to work for your future."
+  components:
+  - type: Sprite
+    state: poster17_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitSoftCapPopArt
+  name: "Soft Cap Pop Art"
+  description: "A poster reprint of some cheap pop art."
+  components:
+  - type: Sprite
+    state: poster18_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitSafetyInternals
+  name: "Safety: Internals"
+  description: "A poster instructing the viewer to wear internals in the rare environments where there is no oxygen or the air has been rendered toxic."
+  components:
+  - type: Sprite
+    state: poster19_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitSafetyEyeProtection
+  name: "Safety: Eye Protection"
+  description: "A poster instructing the viewer to wear eye protection when dealing with chemicals, smoke, or bright lights."
+  components:
+  - type: Sprite
+    state: poster20_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitSafetyReport
+  name: "Safety: Report"
+  description: "A poster instructing the viewer to report suspicious activity to the security force."
+  components:
+  - type: Sprite
+    state: poster21_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitReportCrimes
+  name: "Report Crimes"
+  description: "A poster encouraging the swift reporting of crime or seditious behavior to station security."
+  components:
+  - type: Sprite
+    state: poster22_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitIonRifle
+  name: "Ion Rifle"
+  description: "A poster displaying an Ion Rifle."
+  components:
+  - type: Sprite
+    state: poster23_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitFoamForceAd
+  name: "Foam Force Ad"
+  description: "Foam Force, it's Foam or be Foamed!"
+  components:
+  - type: Sprite
+    state: poster24_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitCohibaRobustoAd
+  name: "Cohiba Robusto Ad"
+  description: "Cohiba Robusto, the classy cigar."
+  components:
+  - type: Sprite
+    state: poster25_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegit50thAnniversaryVintageReprint
+  name: "50th Anniversary Vintage Reprint"
+  description: "A reprint of a poster from 2505, commemorating the 50th Anniversary of Nanoposters Manufacturing, a subsidiary of Nanotrasen."
+  components:
+  - type: Sprite
+    state: poster26_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitFruitBowl
+  name: "Fruit Bowl"
+  description: " Simple, yet awe-inspiring."
+  components:
+  - type: Sprite
+    state: poster27_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitPDAAd
+  name: "PDA Ad"
+  description: "A poster advertising the latest PDA from Nanotrasen suppliers."
+  components:
+  - type: Sprite
+    state: poster28_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitEnlist
+  name: "Enlist"
+  description: "Enlist in the Nanotrasen Deathsquadron reserves today!"
+  components:
+  - type: Sprite
+    state: poster29_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitNanomichiAd
+  name: "Nanomichi Ad"
+  description: " A poster advertising Nanomichi brand audio cassettes."
+  components:
+  - type: Sprite
+    state: poster30_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegit12Gauge
+  name: "12 Gauge"
+  description: "A poster boasting about the superiority of 12 gauge shotgun shells."
+  components:
+  - type: Sprite
+    state: poster31_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitHighClassMartini
+  name: "High-Class Martini"
+  description: "I told you to shake it, no stirring."
+  components:
+  - type: Sprite
+    state: poster32_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitTheOwl
+  name: "The Owl"
+  description: "The Owl would do his best to protect the station. Will you?"
+  components:
+  - type: Sprite
+    state: poster33_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitNoERP
+  name: "No ERP"
+  description: "This poster reminds the crew that Eroticism and Pornography are banned on Nanotrasen stations."
+  components:
+  - type: Sprite
+    state: poster34_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitCarbonDioxide
+  name: "Carbon Dioxide"
+  description: "This informational poster teaches the viewer what carbon dioxide is."
+  components:
+  - type: Sprite
+    state: poster35_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitDickGumshue
+  name: "Dick Gumshue"
+  description: "A poster advertising the escapades of Dick Gumshue, mouse detective. Encouraging crew to bring the might of justice down upon wire saboteurs."
+  components:
+  - type: Sprite
+    state: poster36_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitThereIsNoGasGiant
+  name: "There Is No Gas Giant"
+  description: "Nanotrasen has issued posters, like this one, to all stations reminding them that rumours of a gas giant are false."
+  components:
+  - type: Sprite
+    state: poster37_legit

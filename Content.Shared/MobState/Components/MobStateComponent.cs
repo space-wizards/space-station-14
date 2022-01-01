@@ -5,6 +5,7 @@ using System.Linq;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
+using Content.Shared.MobState.EntitySystems;
 using Content.Shared.MobState.State;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
@@ -314,7 +315,6 @@ namespace Content.Shared.MobState.Components
 
             var message = new MobStateChangedEvent(this, old, state);
             entMan.EventBus.RaiseLocalEvent(Owner, message);
-
             Dirty();
         }
     }

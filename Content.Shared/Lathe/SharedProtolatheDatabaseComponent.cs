@@ -7,6 +7,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Lathe
 {
@@ -18,7 +19,8 @@ namespace Content.Shared.Lathe
 
         public override string Name => "ProtolatheDatabase";
 
-        [DataField("protolatherecipes")] private List<string> _recipeIds = new();
+        [DataField("protolatherecipes", customTypeSerializer:typeof(PrototypeIdListSerializer<LatheRecipePrototype>))]
+        private List<string> _recipeIds = new();
 
         /// <summary>
         ///    A full list of recipes this protolathe can print.

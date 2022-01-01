@@ -1,33 +1,30 @@
 using Content.Server.Hands.Components;
-using Content.Server.Inventory.Components;
-using Content.Server.Items;
 using Content.Shared.Clothing;
 using Content.Shared.Interaction;
+using Content.Shared.Inventory;
 using Content.Shared.Item;
-using Content.Shared.Popups;
-using Content.Shared.Sound;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
-using static Content.Shared.Inventory.EquipmentSlotDefines;
 
 namespace Content.Server.Clothing.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedItemComponent))]
-    [ComponentReference(typeof(ItemComponent))]
-    [NetworkedComponent()]
+    public class ItemComponent : SharedItemComponent{}
+
+    [RegisterComponent]
+    [NetworkedComponent]
+    [ComponentReference(typeof(SharedItemComponent))]
     public class ClothingComponent : ItemComponent, IUse
     {
         [Dependency] private readonly IEntityManager _entities = default!;
+        [Dependency] private readonly IPrototypeManager _prototype = default!;
 
         public override string Name => "Clothing";
-
-        [ViewVariables]
-        [DataField("Slots")]
-        public SlotFlags SlotFlags = SlotFlags.PREVENTEQUIP; //Different from None, NONE allows equips if no slot flags are required
 
         [DataField("QuickEquip")]
         private bool _quickEquipEnabled = true;
@@ -35,79 +32,42 @@ namespace Content.Server.Clothing.Components
         [DataField("HeatResistance")]
         private int _heatResistance = 323;
 
-        [DataField("EquipSound")]
-        public SoundSpecifier? EquipSound { get; set; } = default!;
-
         [ViewVariables(VVAccess.ReadWrite)]
         public int HeatResistance => _heatResistance;
-
-        [DataField("ClothingPrefix")]
-        private string? _clothingEquippedPrefix;
-        [ViewVariables(VVAccess.ReadWrite)]
-        public string? ClothingEquippedPrefix
-        {
-            get => _clothingEquippedPrefix;
-            set
-            {
-                Dirty();
-                _clothingEquippedPrefix = value;
-            }
-        }
-
-        public override ComponentState GetComponentState()
-        {
-            return new ClothingComponentState(ClothingEquippedPrefix, EquippedPrefix);
-        }
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
             if (!_quickEquipEnabled) return false;
+
+            var invSystem = EntitySystem.Get<InventorySystem>();
             if (!_entities.TryGetComponent(eventArgs.User, out InventoryComponent? inv)
-            ||  !_entities.TryGetComponent(eventArgs.User, out HandsComponent? hands)) return false;
+            ||  !_entities.TryGetComponent(eventArgs.User, out HandsComponent? hands) || !_prototype.TryIndex<InventoryTemplatePrototype>(inv.TemplateId, out var prototype)) return false;
 
-            foreach (var (slot, flag) in SlotMasks)
+            foreach (var slotDef in prototype.Slots)
             {
-                // We check if the clothing can be equipped in this slot.
-                if ((SlotFlags & flag) == 0) continue;
+                if(!invSystem.CanEquip(eventArgs.User, Owner, slotDef.Name, out _, slotDef, inv))
+                    continue;
 
-                if (inv.TryGetSlotItem(slot, out ItemComponent? item))
+                if (invSystem.TryGetSlotEntity(eventArgs.User, slotDef.Name, out var slotEntity, inv))
                 {
-                    if (!inv.CanUnequip(slot)) continue;
-                    hands.Drop(Owner);
-                    inv.Unequip(slot);
-                    hands.PutInHand(item);
+                    if(!invSystem.TryUnequip(eventArgs.User, slotDef.Name, true, inventory: inv))
+                        continue;
 
-                    if (!TryEquip(inv, slot, eventArgs.User))
-                    {
-                        hands.Drop(item.Owner);
-                        inv.Equip(slot, item);
-                        hands.PutInHand(_entities.GetComponent<ItemComponent>(Owner));
-                    }
+                    if (!invSystem.TryEquip(eventArgs.User, Owner, slotDef.Name, true, inventory: inv))
+                        continue;
+
+                    hands.PutInHandOrDrop(slotEntity.Value);
                 }
                 else
                 {
-                    hands.Drop(Owner);
-                    if (!TryEquip(inv, slot, eventArgs.User))
-                        hands.PutInHand(_entities.GetComponent<ItemComponent>(Owner));
+                    if (!invSystem.TryEquip(eventArgs.User, Owner, slotDef.Name, true, inventory: inv))
+                        continue;
                 }
 
                 return true;
             }
 
             return false;
-        }
-
-        public bool TryEquip(InventoryComponent inv, Slots slot, EntityUid user)
-        {
-            if (!inv.Equip(slot, this, true, out var reason))
-            {
-                if (reason != null)
-                    Owner.PopupMessage(user, reason);
-
-                return false;
-            }
-
-            return true;
         }
     }
 }

@@ -1,0 +1,26 @@
+- type: entity
+  name: holoparasite injector
+  id: HoloparasiteInjector
+  parent: BaseItem
+  description: A complex artwork of handheld machinery allowing the user to host a holoparasite guardian.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/hypospray.rsi
+    state: combat_hypo
+    netsync: false
+  - type: GuardianCreator
+    guardianProto: MobHoloparasite
+
+- type: entity
+  name: holoparasite box
+  parent: BoxBase
+  id: BoxHoloparasite
+  description: A box containing a holoparasite injector
+  components:
+  - type: StorageFill
+    contents:
+      - id: HoloparasiteInjector
+      - id: HoloparasiteInfo
+  - type: Sprite
+    layers:
+      - state: box
