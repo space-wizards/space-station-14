@@ -7,6 +7,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
+using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using Content.Shared.Preferences;
 using Microsoft.Data.Sqlite;
@@ -19,7 +20,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
-using Logger = Robust.Shared.Log.Logger;
 using LogLevel = Robust.Shared.Log.LogLevel;
 using MSLogLevel = Microsoft.Extensions.Logging.LogLevel;
 
@@ -135,7 +135,7 @@ namespace Content.Server.Database
 
         Task AddAdminLogs(List<QueuedLog> logs);
         IAsyncEnumerable<string> GetAdminLogMessages(LogFilter? filter = null);
-        IAsyncEnumerable<LogRecord> GetAdminLogs(LogFilter? filter = null);
+        IAsyncEnumerable<SharedAdminLog> GetAdminLogs(LogFilter? filter = null);
         IAsyncEnumerable<JsonDocument> GetAdminLogsJson(LogFilter? filter = null);
 
         #endregion
@@ -346,7 +346,7 @@ namespace Content.Server.Database
             return _db.GetAdminLogMessages(filter);
         }
 
-        public IAsyncEnumerable<LogRecord> GetAdminLogs(LogFilter? filter = null)
+        public IAsyncEnumerable<SharedAdminLog> GetAdminLogs(LogFilter? filter = null)
         {
             return _db.GetAdminLogs(filter);
         }

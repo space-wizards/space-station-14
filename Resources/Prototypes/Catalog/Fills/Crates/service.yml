@@ -74,3 +74,16 @@
     - id: GroundTobacco
       amount: 4
     - id: Matchbox
+
+- type: entity
+  id: CrateServiceBureaucracy
+  name: bureaucracy crate
+  description: Several stacks of paper and a few pens, what more can you ask for.
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+    - id: Paper
+      amount: 15
+    - id: Pen
+      amount: 2
