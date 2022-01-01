@@ -1,0 +1,11 @@
+- type: species
+  id: Human
+  name: Human
+  prototype: MobHuman
+  dollPrototype: MobHumanDummy
+
+- type: species
+  id: Dwarf
+  name: Dwarf
+  prototype: MobDwarf
+  dollPrototype: MobDwarfDummy

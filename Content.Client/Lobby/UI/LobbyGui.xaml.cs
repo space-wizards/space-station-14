@@ -7,7 +7,9 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Lobby.UI
@@ -27,7 +29,8 @@ namespace Content.Client.Lobby.UI
 
             CharacterPreview = new LobbyCharacterPreviewPanel(
                 entityManager,
-                preferencesManager)
+                preferencesManager,
+                IoCManager.Resolve<IPrototypeManager>())
             {
                 HorizontalAlignment = HAlignment.Left
             };

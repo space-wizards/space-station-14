@@ -12,6 +12,7 @@ humanoid-profile-editor-pronouns-male-text = He / Him
 humanoid-profile-editor-pronouns-female-text = She / Her
 humanoid-profile-editor-pronouns-epicene-text = They / Them
 humanoid-profile-editor-pronouns-neuter-text = It / It
+humanoid-profile-editor-species-label = Species:
 humanoid-profile-editor-import-button = Import
 humanoid-profile-editor-export-button = Export
 humanoid-profile-editor-save-button = Save

@@ -7,6 +7,7 @@ using Content.Server.Database;
 using Content.Shared.CharacterAppearance;
 using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
+using Content.Shared.Species;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
@@ -36,12 +37,19 @@ namespace Content.Tests.Server.Preferences
 - type: dataset
   id: names_last
   values:
-  - Ackerley";
+  - Ackerley
+
+- type: species
+  id: Human
+  name: Human
+  prototype: MobHuman
+  dollPrototype: MobHumanDummy";
 
         private static HumanoidCharacterProfile CharlieCharlieson()
         {
             return new(
                 "Charlie Charlieson",
+                "Human",
                 21,
                 Sex.Male,
                 Gender.Epicene,
@@ -102,6 +110,7 @@ namespace Content.Tests.Server.Preferences
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             prototypeManager.Initialize();
             prototypeManager.LoadFromStream(new StringReader(Prototypes));
+            IoCManager.Resolve<SpeciesManager>().Initialize();
             await db.InitPrefsAsync(username, HumanoidCharacterProfile.Default());
             await db.SaveCharacterSlotAsync(username, CharlieCharlieson(), 1);
             await db.SaveSelectedCharacterIndexAsync(username, 1);
