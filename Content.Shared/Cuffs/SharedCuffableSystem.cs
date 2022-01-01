@@ -63,12 +63,16 @@ namespace Content.Shared.Cuffs
 
         private void OnEquipAttempt(EntityUid uid, SharedCuffableComponent component, IsEquippingAttemptEvent args)
         {
-            CheckAct(uid, component, args);
+            // is this a self-equip, or are they being stripped?
+            if (args.Equipee == uid)
+                CheckAct(uid, component, args);
         }
 
         private void OnUnequipAttempt(EntityUid uid, SharedCuffableComponent component, IsUnequippingAttemptEvent args)
         {
-            CheckAct(uid, component, args);
+            // is this a self-equip, or are they being stripped?
+            if (args.Unequipee == uid)
+                CheckAct(uid, component, args);
         }
 
         private void OnAttackAttempt(EntityUid uid, SharedCuffableComponent component, AttackAttemptEvent args)

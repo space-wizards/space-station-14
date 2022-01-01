@@ -51,13 +51,24 @@
         !type:DamageTrigger
         damage: 100
       behaviors:
-      - !type:ChangeConstructionNodeBehavior
-        node: machineFrame
       - !type:DoActsBehavior
         acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+      - !type:ExplodeBehavior
+      - !type:SpawnEntitiesBehavior #in future should also emit a cloud of hot gas
+        spawn:
+          MachineFrameDestroyed:
+            min: 1
+            max: 1
+  - type: Explosive
+    devastationRange: 1
+    heavyImpactRange: 3
+    lightImpactRange: 5
+    flashRange: 6
   - type: Wires
     BoardName: "Substation"
     LayoutId: Substation
   - type: Machine
     board: SubstationMachineCircuitboard
-    
