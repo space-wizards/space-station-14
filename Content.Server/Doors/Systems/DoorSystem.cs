@@ -1,12 +1,12 @@
 using Content.Server.Access;
-using Content.Server.Access.Components;
-using Content.Server.Access.Systems;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Construction;
 using Content.Server.Construction.Components;
 using Content.Server.Tools;
 using Content.Server.Tools.Components;
+using Content.Shared.Access.Components;
+using Content.Shared.Access.Systems;
 using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
@@ -170,7 +170,7 @@ public sealed class DoorSystem : SharedDoorSystem
         if (user == null || AccessType == AccessTypes.AllowAll)
             return true;
 
-        if (!TryComp(uid, out AccessReader? access))
+        if (!TryComp(uid, out AccessReaderComponent? access))
             return true;
 
         var isExternal = access.AccessLists.Any(list => list.Contains("External"));
