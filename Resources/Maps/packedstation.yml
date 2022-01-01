@@ -81411,6 +81411,16 @@ entities:
   - pos: 51.5,-26.5
     parent: 0
     type: Transform
+- uid: 7951
+  type: ComputerCrewMonitoring
+  components:
+  - pos: 31.5,48.5
+    parent: 0
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 7952
   type: ReinforcedPlasmaWindow
   components:
@@ -114602,6 +114612,26 @@ entities:
   - pos: 30.5,-23.5
     parent: 0
     type: Transform
+- uid: 11177
+  type: ComputerCrewMonitoring
+  components:
+  - pos: 44.5,2.5
+    parent: 0
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 11178
+  type: ComputerCrewMonitoring
+  components:
+  - pos: 54.5,-11.5
+    parent: 0
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 11179
   type: SmgWt550
   components:
@@ -117630,6 +117660,14 @@ entities:
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
+- uid: 11562
+  type: Basketball
+  components:
+  - pos: 30.518913,4.5333457
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 11563
   type: CableTerminal
   components:
