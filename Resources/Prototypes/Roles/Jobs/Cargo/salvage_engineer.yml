@@ -1,0 +1,32 @@
+- type: job
+  id: SalvageEngineer
+  name: "salvage engineer"
+  startingGear: CargoTechGear
+  departments:
+  - Cargo
+  icon: "CargoTechnician"
+  supervisors: "the head of personnel" # TODO: Change this to include the QM when it gets in.
+  access:
+    - Captain
+    - HeadOfPersonnel
+    - ChiefEngineer
+    - ChiefMedicalOfficer
+    - HeadOfSecurity
+    - ResearchDirector
+    - Command
+    - Security
+    - Armory
+    - Engineering
+    - Medical
+    - Cargo
+    - Research
+    - Service
+    - Maintenance
+    - External
+    - Janitor
+    - Theatre
+    - Bar
+    - Chemistry
+    - Kitchen
+    - Chapel
+    - Hydroponics

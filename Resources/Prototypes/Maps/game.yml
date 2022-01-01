@@ -17,3 +17,23 @@
     MedicalDoctor: [ 1, 1 ]
     ResearchDirector: [ 1, 1 ]
     Botanist: [ 1, 1 ]
+
+- type: gameMap
+  id: Dredger
+  mapName: 'Dredger'
+  mapNameTemplate: '{0} Dredger {1}'
+  nameGenerator:
+    !type:NanotrasenNameGenerator
+    prefixCreator: 'OR'
+  mapPath: Maps/dredger.yml
+  minPlayers: 0
+  overflowJobs: []
+  availableJobs:
+    Bartender: [ 1, 1 ]
+    Captain: [ 1, 1 ]
+    StationEngineer: [ 2, 2 ]
+    Chemist: [ 1, 1 ]
+    MedicalDoctor: [ 1, 1 ]
+    Assistant: [ 4, 4 ]
+    SalvageEngineer: [ 2, 2 ]
+    Botanist: [ 1, 1 ]
