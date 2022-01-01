@@ -1,9 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Ghosts can now properly return to their body if applicable., type: Fix}
-  id: 300
-  time: '2021-08-06T07:02:36.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: 'Fixes a bug where items would disappear when placed in tables, in certain
@@ -2889,3 +2884,9 @@ Entries:
       generate power. Wear a hardsuit and mesons!', type: Fix}
   id: 801
   time: '2022-01-01T03:28:13.477890+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Removed the ability to stuff the held part of a pulled entity in your
+      pocket., type: Remove}
+  id: 802
+  time: '2022-01-01T13:20:32.0000000+00:00'
