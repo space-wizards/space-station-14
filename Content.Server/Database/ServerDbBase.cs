@@ -671,6 +671,34 @@ namespace Content.Server.Database
 
         #endregion
 
+        #region Whitelist
+
+        public async Task<bool> GetWhitelistStatusAsync(Guid player)
+        {
+            await using var db = await GetDb();
+
+            var list = await db.DbContext.Whitelist.Where(w => w.UserId == player).ToListAsync();
+            return list.Count > 0;
+        }
+
+        public async Task AddToWhitelistAsync(Guid player)
+        {
+            await using var db = await GetDb();
+
+            db.DbContext.Whitelist.Add(new Whitelist { UserId = player });
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        public async Task RemoveFromWhitelistAsync(Guid player)
+        {
+            await using var db = await GetDb();
+            var entry = await db.DbContext.Whitelist.SingleAsync(w => w.UserId == player);
+            db.DbContext.Whitelist.Remove(entry);
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        #endregion
+
         protected abstract Task<DbGuard> GetDb();
 
         protected abstract class DbGuard : IAsyncDisposable

@@ -36,6 +36,7 @@ namespace Content.Server.Database
         public DbSet<Round> Round { get; set; } = null!;
         public DbSet<AdminLog> AdminLog { get; set; } = null!;
         public DbSet<AdminLogPlayer> AdminLogPlayer { get; set; } = null!;
+        public DbSet<Whitelist> Whitelist { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -100,6 +101,11 @@ namespace Content.Server.Database
 
             modelBuilder.Entity<AdminLogPlayer>()
                 .HasKey(logPlayer => new {logPlayer.PlayerUserId, logPlayer.LogId, logPlayer.RoundId});
+
+            modelBuilder.Entity<Whitelist>()
+                .Property(w => w.UserId)
+                .ValueGeneratedOnAdd()
+                .IsRequired();
         }
     }
 
@@ -203,6 +209,11 @@ namespace Content.Server.Database
         // Data that changes with each round
         public List<Round> Rounds { get; set; } = null!;
         public List<AdminLogPlayer> AdminLogs { get; set; } = null!;
+    }
+
+    public class Whitelist
+    {
+        public Guid UserId { get; set; }
     }
 
     public class Admin

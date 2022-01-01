@@ -139,6 +139,16 @@ namespace Content.Server.Database
         IAsyncEnumerable<JsonDocument> GetAdminLogsJson(LogFilter? filter = null);
 
         #endregion
+
+        #region Whitelist
+
+        Task<bool> GetWhitelistStatusAsync(Guid player);
+
+        Task AddToWhitelistAsync(Guid player);
+
+        Task RemoveFromWhitelistAsync(Guid player);
+
+        #endregion
     }
 
     public sealed class ServerDbManager : IServerDbManager
@@ -354,6 +364,21 @@ namespace Content.Server.Database
         public IAsyncEnumerable<JsonDocument> GetAdminLogsJson(LogFilter? filter = null)
         {
             return _db.GetAdminLogsJson(filter);
+        }
+
+        public Task<bool> GetWhitelistStatusAsync(Guid player)
+        {
+            return _db.GetWhitelistStatusAsync(player);
+        }
+
+        public Task AddToWhitelistAsync(Guid player)
+        {
+            return _db.AddToWhitelistAsync(player);
+        }
+
+        public Task RemoveFromWhitelistAsync(Guid player)
+        {
+            return _db.RemoveFromWhitelistAsync(player);
         }
 
         private DbContextOptions<ServerDbContext> CreatePostgresOptions()

@@ -9,6 +9,7 @@ using Content.Shared.CCVar;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Network;
 
 
@@ -84,6 +85,13 @@ The ban reason is: ""{ban.Reason}""
             if (ban != null)
             {
                 e.Deny(ban.DisconnectMessage);
+                return;
+            }
+
+            if (_cfg.GetCVar(CCVars.WhitelistEnabled)
+                && await _db.GetWhitelistStatusAsync(userId.UserId) == false)
+            {
+                e.Deny(Loc.GetString("whitelist-not-whitelisted"));
                 return;
             }
 
