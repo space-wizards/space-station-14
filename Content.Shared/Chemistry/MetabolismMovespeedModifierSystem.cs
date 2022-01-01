@@ -23,6 +23,8 @@ namespace Content.Shared.Chemistry
         {
             base.Initialize();
 
+            UpdatesOutsidePrediction = true;
+
             SubscribeLocalEvent<MovespeedModifierMetabolismComponent, ComponentHandleState>(OnMovespeedHandleState);
             SubscribeLocalEvent<MovespeedModifierMetabolismComponent, ComponentStartup>(AddComponent);
             SubscribeLocalEvent<MovespeedModifierMetabolismComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);

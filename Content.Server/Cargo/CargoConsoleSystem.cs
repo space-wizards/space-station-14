@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using Content.Server.Access.Components;
 using Content.Server.Access.Systems;
 using Content.Server.Cargo.Components;
+using Content.Shared.Access.Components;
+using Content.Shared.Access.Systems;
 using Content.Shared.Cargo;
 using Content.Shared.GameTicking;
 using Robust.Shared.GameObjects;
@@ -177,7 +178,7 @@ namespace Content.Server.Cargo
             return true;
         }
 
-        public bool ApproveOrder(EntityUid uid, EntityUid approver, int id, int orderNumber, AccessReader? reader = null)
+        public bool ApproveOrder(EntityUid uid, EntityUid approver, int id, int orderNumber, AccessReaderComponent? reader = null)
         {
             // does the approver have permission to approve orders?
             if (Resolve(uid, ref reader) && !_accessReaderSystem.IsAllowed(reader, approver))

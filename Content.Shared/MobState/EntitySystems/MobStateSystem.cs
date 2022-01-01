@@ -26,9 +26,9 @@ namespace Content.Shared.MobState.EntitySystems
             SubscribeLocalEvent<MobStateComponent, InteractionAttemptEvent>(OnInteractAttempt);
             SubscribeLocalEvent<MobStateComponent, ThrowAttemptEvent>(OnThrowAttempt);
             SubscribeLocalEvent<MobStateComponent, SpeakAttemptEvent>(OnSpeakAttempt);
-            SubscribeLocalEvent<MobStateComponent, EquipAttemptEvent>(OnEquipAttempt);
+            SubscribeLocalEvent<MobStateComponent, IsEquippingAttemptEvent>(OnEquipAttempt);
             SubscribeLocalEvent<MobStateComponent, EmoteAttemptEvent>(OnEmoteAttempt);
-            SubscribeLocalEvent<MobStateComponent, UnequipAttemptEvent>(OnUnequipAttempt);
+            SubscribeLocalEvent<MobStateComponent, IsUnequippingAttemptEvent>(OnUnequipAttempt);
             SubscribeLocalEvent<MobStateComponent, AttackAttemptEvent>(OnAttackAttempt);
             SubscribeLocalEvent<MobStateComponent, DropAttemptEvent>(OnDropAttempt);
             SubscribeLocalEvent<MobStateComponent, PickupAttemptEvent>(OnPickupAttempt);
@@ -77,7 +77,7 @@ namespace Content.Shared.MobState.EntitySystems
             CheckAct(uid, component, args);
         }
 
-        private void OnEquipAttempt(EntityUid uid, MobStateComponent component, EquipAttemptEvent args)
+        private void OnEquipAttempt(EntityUid uid, MobStateComponent component, IsEquippingAttemptEvent args)
         {
             CheckAct(uid, component, args);
         }
@@ -87,7 +87,7 @@ namespace Content.Shared.MobState.EntitySystems
             CheckAct(uid, component, args);
         }
 
-        private void OnUnequipAttempt(EntityUid uid, MobStateComponent component, UnequipAttemptEvent args)
+        private void OnUnequipAttempt(EntityUid uid, MobStateComponent component, IsUnequippingAttemptEvent args)
         {
             CheckAct(uid, component, args);
         }
@@ -111,7 +111,7 @@ namespace Content.Shared.MobState.EntitySystems
 
         private void OnStartPullAttempt(EntityUid uid, MobStateComponent component, StartPullAttemptEvent args)
         {
-            if(component.IsIncapacitated())
+            if (component.IsIncapacitated())
                 args.Cancel();
         }
 
@@ -135,7 +135,7 @@ namespace Content.Shared.MobState.EntitySystems
 
         private void OnStandAttempt(EntityUid uid, MobStateComponent component, StandAttemptEvent args)
         {
-            if(component.IsIncapacitated())
+            if (component.IsIncapacitated())
                 args.Cancel();
         }
     }

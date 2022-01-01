@@ -36,6 +36,9 @@
       normal: bat
       crit: dead
       dead: dead
+  - type: Butcherable
+    meat: FoodMeat
+    pieces: 1
 
 - type: entity
   name: bee
@@ -100,6 +103,9 @@
       normal: chicken-0
       crit: dead-0
       dead: dead-0
+  - type: Butcherable
+    meat: FoodMeatChicken
+    pieces: 1
 
 - type: entity
   name: butterfly
@@ -196,6 +202,9 @@
     targetSolution: udder
     quantity: 25
     updateRate: 30
+  - type: Butcherable
+    meat: FoodMeat
+    pieces: 5
 
 - type: entity
   name: crab
@@ -230,6 +239,9 @@
       crit: dead
       dead: dead
     - type: AsteroidRockVisualizer
+  - type: Butcherable
+    meat: FoodMeatCrab
+    pieces: 2
 
 - type: entity
   name: goat
@@ -249,6 +261,9 @@
       normal: goat
       crit: dead
       dead: dead
+  - type: Butcherable
+    meat: FoodMeat
+    pieces: 4
 
 # Note that we gotta make this bitch vomit someday when you feed it anthrax or sumthin. Needs to be a small item thief too and aggressive if attacked.
 - type: entity
@@ -269,6 +284,9 @@
       normal: goose
       crit: dead
       dead: dead
+  - type: Butcherable
+    meat: FoodMeatChicken
+    pieces: 2
 
 - type: entity
   name: gorilla
@@ -302,6 +320,9 @@
       normal: crawling
       crit: dead
       dead: dead
+  - type: Butcherable
+    meat: FoodMeat
+    pieces: 4
 
 - type: entity
   name: kangaroo
@@ -350,6 +371,9 @@
     makeSentient: true
     name: monkey
     description: Ook ook!
+    rules: |
+      Being a monkey does NOT give you a free pass to kill, RDM or self-antag.
+
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -370,6 +394,9 @@
     - type: FireVisualizer
       sprite: Mobs/Effects/onfire.rsi
       normalState: Monkey_burning
+  - type: Butcherable
+    meat: FoodMeat
+    pieces: 3
   - type: MonkeyAccent
 
 - type: entity
@@ -392,9 +419,8 @@
     QuickEquip: false
     sprite: Mobs/Animals/mouse.rsi
     HeldPrefix: 0
-    ClothingPrefix: 0
     Slots:
-    - Helmet
+    - HEAD
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -432,6 +458,9 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
+  - type: Butcherable
+    meat: FoodMeat
+    pieces: 1
   - type: ReplacementAccent
     accent: mouse
 
@@ -448,7 +477,6 @@
       sprite: Mobs/Animals/mouse.rsi
   - type: Clothing
     HeldPrefix: 1
-    ClothingPrefix: 1
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -468,7 +496,6 @@
       sprite: Mobs/Animals/mouse.rsi
   - type: Clothing
     HeldPrefix: 1
-    ClothingPrefix: 2
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -512,6 +539,9 @@
       normal: parrot
       crit: dead
       dead: dead
+  - type: Butcherable
+    meat: FoodMeat
+    pieces: 1
 
 - type: entity
   name: penguin
@@ -545,6 +575,9 @@
       normal: penguin
       crit: penguin_dead
       dead: penguin_dead
+  - type: Butcherable
+    meat: FoodMeatPenguin
+    pieces: 3
 
 - type: entity
   name: snake
@@ -581,6 +614,9 @@
      # looks stupid, Rotation visualizer for now
      # dead: dead
      # crit: dead
+  - type: Butcherable
+    meat: FoodMeat
+    pieces: 1
 
 # Code unique spider prototypes or combine them all into one spider and get a
 # random sprite state when you spawn it.
@@ -616,3 +652,6 @@
       normal: tarantula
       crit: tarantula_dead
       dead: tarantula_dead
+  - type: Butcherable
+    meat: FoodMeatSpider
+    pieces: 2

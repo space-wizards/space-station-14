@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.Access.Components;
 using Content.Server.Doors.Components;
+using Content.Shared.Access.Components;
 using Content.Shared.Doors.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -33,8 +33,8 @@ namespace Content.Server.AI.Pathfinding
         /// The entities on this tile that require access to traverse
         /// </summary>
         /// We don't store the ICollection, at least for now, as we'd need to replicate the access code here
-        public IReadOnlyCollection<AccessReader> AccessReaders => _accessReaders.Values;
-        private readonly Dictionary<EntityUid, AccessReader> _accessReaders = new(0);
+        public IReadOnlyCollection<AccessReaderComponent> AccessReaders => _accessReaders.Values;
+        private readonly Dictionary<EntityUid, AccessReaderComponent> _accessReaders = new(0);
 
         public PathfindingNode(PathfindingChunk parent, TileRef tileRef)
         {
@@ -269,7 +269,7 @@ namespace Content.Server.AI.Pathfinding
                 // TODO: Check for powered I think (also need an event for when it's depowered
                 // AccessReader calls this whenever opening / closing but it can seem to get called multiple times
                 // Which may or may not be intended?
-                if (entMan.TryGetComponent(entity, out AccessReader? accessReader) && !_accessReaders.ContainsKey(entity))
+                if (entMan.TryGetComponent(entity, out AccessReaderComponent? accessReader) && !_accessReaders.ContainsKey(entity))
                 {
                     _accessReaders.Add(entity, accessReader);
                     ParentChunk.Dirty();
