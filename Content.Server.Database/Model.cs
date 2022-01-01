@@ -213,7 +213,7 @@ namespace Content.Server.Database
 
     public class Whitelist
     {
-        public Guid UserId { get; set; }
+        [Key] public Guid UserId { get; set; }
     }
 
     public class Admin

@@ -75,7 +75,8 @@ The ban reason is: ""{ban.Reason}""
                 hwId = null;
             }
 
-            if (_plyMgr.PlayerCount >= _cfg.GetCVar(CCVars.SoftMaxPlayers) && await _dbManager.GetAdminDataForAsync(e.UserId) is null)
+            var adminData = await _dbManager.GetAdminDataForAsync(e.UserId);
+            if (_plyMgr.PlayerCount >= _cfg.GetCVar(CCVars.SoftMaxPlayers) && adminData is null)
             {
                 e.Deny("The server is full!");
                 return;
@@ -89,7 +90,8 @@ The ban reason is: ""{ban.Reason}""
             }
 
             if (_cfg.GetCVar(CCVars.WhitelistEnabled)
-                && await _db.GetWhitelistStatusAsync(userId.UserId) == false)
+                && await _db.GetWhitelistStatusAsync(userId.UserId) == false
+                && adminData is null)
             {
                 e.Deny(Loc.GetString("whitelist-not-whitelisted"));
                 return;
