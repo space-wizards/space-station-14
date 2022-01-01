@@ -5994,4 +5994,186 @@ entities:
     type: GravityGenerator
   - radius: 2.0447414
     type: PointLight
+- uid: 616
+  type: AirlockCommandLocked
+  components:
+  - pos: 2.5,1.5
+    parent: 0
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 617
+  type: CableApcExtension
+  components:
+  - pos: -0.5,-9.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 618
+  type: CableApcExtension
+  components:
+  - pos: -0.5,-8.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 619
+  type: CableApcExtension
+  components:
+  - pos: -0.5,-7.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 620
+  type: CableApcExtension
+  components:
+  - pos: -0.5,-6.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 621
+  type: CableApcExtension
+  components:
+  - pos: -0.5,-5.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 622
+  type: CableApcExtension
+  components:
+  - pos: -3.5,-6.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 623
+  type: CableApcExtension
+  components:
+  - pos: -2.5,-6.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 624
+  type: CableApcExtension
+  components:
+  - pos: -1.5,-6.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 625
+  type: CableApcExtension
+  components:
+  - pos: 0.5,-6.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 626
+  type: CableApcExtension
+  components:
+  - pos: 1.5,-6.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 627
+  type: SpawnPointLatejoin
+  components:
+  - pos: 7.5,-2.5
+    parent: 0
+    type: Transform
+- uid: 628
+  type: SpawnPointBartender
+  components:
+  - pos: -7.5,-6.5
+    parent: 0
+    type: Transform
+- uid: 629
+  type: SpawnPointCaptain
+  components:
+  - pos: 1.5,6.5
+    parent: 0
+    type: Transform
+- uid: 630
+  type: SpawnPointStationEngineer
+  components:
+  - pos: -2.5,-12.5
+    parent: 0
+    type: Transform
+- uid: 631
+  type: SpawnPointStationEngineer
+  components:
+  - pos: -1.5,-12.5
+    parent: 0
+    type: Transform
+- uid: 632
+  type: SpawnPointChemist
+  components:
+  - pos: 5.5,-7.5
+    parent: 0
+    type: Transform
+- uid: 633
+  type: SpawnPointMedicalDoctor
+  components:
+  - pos: 5.5,-6.5
+    parent: 0
+    type: Transform
+- uid: 634
+  type: SpawnPointAssistant
+  components:
+  - pos: -2.5,-8.5
+    parent: 0
+    type: Transform
+- uid: 635
+  type: SpawnPointAssistant
+  components:
+  - pos: -0.5,-8.5
+    parent: 0
+    type: Transform
+- uid: 636
+  type: SpawnPointAssistant
+  components:
+  - pos: -2.5,-5.5
+    parent: 0
+    type: Transform
+- uid: 637
+  type: SpawnPointAssistant
+  components:
+  - pos: -0.5,-5.5
+    parent: 0
+    type: Transform
+- uid: 638
+  type: SpawnPointBotanist
+  components:
+  - pos: -7.5,-8.5
+    parent: 0
+    type: Transform
 ...
