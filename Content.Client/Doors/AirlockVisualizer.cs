@@ -137,6 +137,7 @@ namespace Content.Client.Doors
                 state = DoorState.Closed;
             }
 
+            var door = _entMan.GetComponent<DoorComponent>(component.Owner);
             var unlitVisible = true;
             var boltedVisible = false;
             var weldedVisible = false;
@@ -167,8 +168,10 @@ namespace Content.Client.Doors
                     animPlayer.Play(OpenAnimation, AnimationKey);
                     break;
                 case DoorState.Closing:
-                    if (_entMan.TryGetComponent(component.Owner, out DoorComponent door) && door.CurrentlyCrushing.Count == 0)
+                    if (door.CurrentlyCrushing.Count == 0)
                         animPlayer.Play(CloseAnimation, AnimationKey);
+                    else
+                        sprite.LayerSetState(DoorVisualLayers.Base, "closed");
                     break;
                 case DoorState.Denying:
                     animPlayer.Play(DenyAnimation, AnimationKey);

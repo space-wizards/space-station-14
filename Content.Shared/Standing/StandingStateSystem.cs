@@ -1,18 +1,18 @@
 using System;
 using Content.Shared.Audio;
-using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Rotation;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Player;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Standing
 {
     public sealed class StandingStateSystem : EntitySystem
     {
-        [Dependency] private readonly SharedHandsSystem _sharedHandsSystem = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         public bool IsDown(EntityUid uid, StandingStateComponent? standingState = null)
         {
@@ -56,10 +56,14 @@ namespace Content.Shared.Standing
             standingState.Dirty();
             RaiseLocalEvent(uid, new DownedEvent(), false);
 
+            if (!_gameTiming.IsFirstTimePredicted)
+                return true;
+
             // Seemed like the best place to put it
             appearance?.SetData(RotationVisuals.RotationState, RotationState.Horizontal);
 
             // Currently shit is only downed by server but when it's predicted we can probably only play this on server / client
+            // > no longer true with door crushing. There just needs to be a better way to handle audio prediction.
             if (playSound)
             {
                 SoundSystem.Play(Filter.Pvs(uid), standingState.DownSoundCollection.GetSound(), uid, AudioHelpers.WithVariation(0.25f));

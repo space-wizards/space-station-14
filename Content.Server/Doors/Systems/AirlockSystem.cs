@@ -50,6 +50,9 @@ namespace Content.Server.Doors.Systems
 
         private void OnStateChanged(EntityUid uid, AirlockComponent component, DoorStateChangedEvent args)
         {
+            // TODO move to shared? having this be server-side, but having client-side door opening/closing & prediction
+            // means that sometimes the panels & bolt lights may be visible despite a door being completely open.
+
             // Only show the maintenance panel if the airlock is closed
             if (component.WiresComponent != null)
             {
