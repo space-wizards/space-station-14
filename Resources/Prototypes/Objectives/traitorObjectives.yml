@@ -113,3 +113,15 @@
   conditions:
     - !type:StealCondition
       prototype: ClothingHeadHelmetHardsuitSecurityRed
+      
+- type: objective
+  id: SupplyConsoleBoardStealObjective
+  issuer: syndicate
+  requirements:
+    - !type:TraitorRequirement {}
+    - !type:IncompatibleConditionsRequirement
+      conditions:
+        - DieCondition
+  conditions:
+    - !type:StealCondition
+      prototype: SupplyComputerCircuitboard
