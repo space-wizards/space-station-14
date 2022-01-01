@@ -45,7 +45,7 @@ namespace Content.Client.Administration
                 _clyde.RequestWindowAttention();
             }
 
-            _adminWindow?.ChannelSelector?.Refresh();
+            _adminWindow?.OnBwoink(message.ChannelId);
         }
 
         public bool TryGetChannel(NetUserId ch, [NotNullWhen(true)] out BwoinkPanel? bp) => _activePanelMap.TryGetValue(ch, out bp);
@@ -55,19 +55,11 @@ namespace Content.Client.Administration
             _adminWindow ??= new BwoinkWindow(this);
 
             if (!_activePanelMap.TryGetValue(channelId, out var existingPanel))
-                _activePanelMap[channelId] = existingPanel = new BwoinkPanel(this, channelId);
-
-            if (!_adminWindow.IsOpen)
             {
-                _adminWindow.Open();
-
-                var csl = _adminWindow.ChannelSelector.PlayerItemList;
-                csl.ClearSelected();
-
-                var pi = csl.FirstOrDefault(i => ((PlayerInfo) i.Metadata!).SessionId == channelId);
-                if (pi is not null)
-                    pi.Selected = true;
+                _activePanelMap[channelId] = existingPanel = new BwoinkPanel(this, channelId);
+                existingPanel.Visible = false;
             }
+
             return existingPanel;
         }
 

@@ -80,6 +80,24 @@ namespace Content.Client.Administration.UI
             };
         }
 
+        public void OnBwoink(NetUserId channel)
+        {
+            var open = IsOpen;
+            Open();
+
+            ChannelSelector.Refresh();
+
+            if (!open)
+            {
+                var pi = ChannelSelector
+                    .PlayerItemList
+                    .FirstOrDefault(i => ((PlayerInfo) i.Metadata!).SessionId == channel);
+
+                if (pi is not null)
+                    pi.Selected = true;
+            }
+        }
+
         private void FixButtons()
         {
             Ban.Visible = _adminManager.HasFlag(AdminFlags.Ban);
