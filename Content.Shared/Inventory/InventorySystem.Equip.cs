@@ -92,7 +92,7 @@ public abstract partial class InventorySystem
             return false;
         }
 
-        if(item.EquipSound != null)
+        if(!silent && item.EquipSound != null)
             SoundSystem.Play(Filter.Pvs(target), item.EquipSound.GetSound(), target, AudioParams.Default.WithVolume(-2f));
 
         inventory.Dirty();

@@ -52,7 +52,7 @@ namespace Content.Server.Clothing
         {
             if (args.Slot == "shoes")
             {
-                UpdateMagbootEffects(args.Equipee, uid, true, component);
+                UpdateMagbootEffects(args.Equipee, uid, false, component);
             }
         }
 
@@ -60,7 +60,7 @@ namespace Content.Server.Clothing
         {
             if (args.Slot == "shoes")
             {
-                UpdateMagbootEffects(args.Equipee, uid, false, component);
+                UpdateMagbootEffects(args.Equipee, uid, true, component);
             }
         }
 
