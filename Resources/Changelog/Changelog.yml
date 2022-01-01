@@ -1,12 +1,6 @@
 Entries:
 - author: Zumorica
   changes:
-  - {message: 'Fixes a bug where items would disappear when placed in tables, in certain
-      situations.', type: Fix}
-  id: 301
-  time: '2021-08-06T15:53:48.856573+00:00'
-- author: Zumorica
-  changes:
   - {message: Fixes pickup animation not showing under certain conditions., type: Fix}
   id: 302
   time: '2021-08-06T16:13:07.405459+00:00'
@@ -2890,3 +2884,9 @@ Entries:
       pocket., type: Remove}
   id: 802
   time: '2022-01-01T13:20:32.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Substations now explode when damaged enough and produce debris. Watch
+      out!, type: Fix}
+  id: 803
+  time: '2022-01-01T16:51:57.0000000+00:00'
