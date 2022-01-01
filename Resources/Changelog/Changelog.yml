@@ -1,9 +1,4 @@
 Entries:
-- author: SweptWasTaken
-  changes:
-  - {message: Added an alternate jumpsuit for Botany, type: Add}
-  id: 297
-  time: '2021-08-05T10:18:05.0000000+00:00'
 - author: Seth
   changes:
   - {message: Added two new maintenance areas, type: Add}
@@ -2883,3 +2878,14 @@ Entries:
   - {message: Fixed lights not working while in inventory., type: Fix}
   id: 798
   time: '2021-12-31T23:51:13.0000000+00:00'
+- author: TimrodDX
+  changes:
+  - {message: Packed Station is now significantly brighter., type: Tweak}
+  - {message: Cargo on Packed Station now has two starting hardsuit crates., type: Tweak}
+  - {message: 'In response to rampant gun violence, Security on Packed Station now
+      has some new non-lethal gear.', type: Tweak}
+  - {message: Some of the secret areas on Packed Station have been re-stocked., type: Add}
+  - {message: Packed Station's plasma canisters have been replaced with Nanotrasen-brand
+      Safety Plasma., type: Remove}
+  id: 799
+  time: '2022-01-01T01:17:09.0000000+00:00'
