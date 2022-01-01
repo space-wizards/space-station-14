@@ -1,11 +1,6 @@
 Entries:
 - author: Zumorica
   changes:
-  - {message: Fixes pickup animation not showing under certain conditions., type: Fix}
-  id: 302
-  time: '2021-08-06T16:13:07.405459+00:00'
-- author: Zumorica
-  changes:
   - {message: Fix pointing at an item in your inventory resulting in the pointing
       arrow playing a weird animation., type: Fix}
   id: 303
@@ -2890,3 +2885,15 @@ Entries:
       out!, type: Fix}
   id: 803
   time: '2022-01-01T16:51:57.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: The Syndicate is now interested in a wider variety of items spread between
+      almost all departments., type: Add}
+  - {message: Some coveted items have had their name or description changed to make
+      their value to NanoTrasen (and the Syndicate) clear., type: Tweak}
+  - {message: The Syndicate is less likely to ask for an overly optimistic amount
+      of things to be stolen., type: Tweak}
+  - {message: The Syndicate will no longer ask for agents to both steal an item and
+      die., type: Fix}
+  id: 804
+  time: '2022-01-01T16:56:25.0000000+00:00'
