@@ -8,7 +8,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Server.Hands.Systems
 {
     [UsedImplicitly]
-    public sealed class HandVirtualItemSystem : EntitySystem
+    public sealed class HandVirtualItemSystem : SharedHandVirtualItemSystem
     {
         public override void Initialize()
         {

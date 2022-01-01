@@ -1,20 +1,4 @@
 Entries:
-- author: Seth
-  changes:
-  - {message: Added two new maintenance areas, type: Add}
-  id: 298
-  time: '2021-08-05T22:20:58.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Windoors and secure windoors have been added and are constructible.,
-    type: Add}
-  id: 299
-  time: '2021-08-06T06:09:39.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Ghosts can now properly return to their body if applicable., type: Fix}
-  id: 300
-  time: '2021-08-06T07:02:36.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: 'Fixes a bug where items would disappear when placed in tables, in certain
@@ -2889,3 +2873,20 @@ Entries:
       Safety Plasma., type: Remove}
   id: 799
   time: '2022-01-01T01:17:09.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed alt-click interactions not working properly., type: Fix}
+  id: 800
+  time: '2022-01-01T03:16:45.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'The singularity properly generates radiation, meaning it should now
+      generate power. Wear a hardsuit and mesons!', type: Fix}
+  id: 801
+  time: '2022-01-01T03:28:13.477890+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Removed the ability to stuff the held part of a pulled entity in your
+      pocket., type: Remove}
+  id: 802
+  time: '2022-01-01T13:20:32.0000000+00:00'
