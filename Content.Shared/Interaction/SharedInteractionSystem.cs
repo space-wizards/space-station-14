@@ -156,23 +156,21 @@ namespace Content.Shared.Interaction
 
                 return;
             }
-            else
-            {
-                // We are close to the nearby object.
-                if (altInteract)
-                    // Perform alternative interactions, using context menu verbs.
-                    AltInteract(user, target.Value);
 
-                if (!hands.TryGetActiveHeldEntity(out var heldEntity))
-                {
-                    // Since our hand is empty we will use InteractHand/Activate
-                    InteractHand(user, target.Value);
-                }
-                else if (heldEntity != target)
-                {
-                    await InteractUsing(user, heldEntity.Value, target.Value, coordinates);
-                }
-                    
+            // We are close to the nearby object.
+            if (altInteract)
+            {
+                // Perform alternative interactions, using context menu verbs.
+                AltInteract(user, target.Value);
+            }
+            else if (!hands.TryGetActiveHeldEntity(out var heldEntity))
+            {
+                // Since our hand is empty we will use InteractHand/Activate
+                InteractHand(user, target.Value);
+            }
+            else if (heldEntity != target)
+            {
+                await InteractUsing(user, heldEntity.Value, target.Value, coordinates);
             }
         }
 
