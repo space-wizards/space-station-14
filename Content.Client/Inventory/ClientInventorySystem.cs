@@ -94,7 +94,7 @@ namespace Content.Client.Inventory
             UpdateComponentUISlot(uid, component, args.Slot, args.Equipment);
         }
 
-        private void UpdateComponentUISlot(EntityUid uid, ClientInventoryComponent? component, string slot, EntityUid? item)
+        private void UpdateComponentUISlot(EntityUid uid, string slot, EntityUid? item, ClientInventoryComponent? component = null)
         {
             if (!Resolve(uid, ref component))
                 return;
