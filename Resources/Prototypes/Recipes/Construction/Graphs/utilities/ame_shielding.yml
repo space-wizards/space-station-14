@@ -3,11 +3,6 @@
   start: start
   graph:
     - node: start
-      edges:
-        - to: ameShielding
-          steps:
-            - prototype: AMEPart
-              doAfter: 2
 
     - node: ameShielding
       entity: AMEShielding
