@@ -258,13 +258,15 @@ namespace Content.Shared.Stunnable
 
         private void OnEquipAttempt(EntityUid uid, StunnedComponent stunned, IsEquippingAttemptEvent args)
         {
-            if(args.Equipee == uid)
+            // is this a self-equip, or are they being stripped?
+            if (args.Equipee == uid)
                 args.Cancel();
         }
 
         private void OnUnequipAttempt(EntityUid uid, StunnedComponent stunned, IsUnequippingAttemptEvent args)
         {
-            if(args.Unequipee == uid)
+            // is this a self-equip, or are they being stripped?
+            if (args.Unequipee == uid)
                 args.Cancel();
         }
 
