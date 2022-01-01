@@ -1,6 +1,6 @@
-using Content.Server.Items;
 using Content.Server.Light.Components;
 using Content.Server.Ignitable;
+using Content.Shared.Item;
 using Content.Shared.Interaction;
 using Content.Shared.Smoking;
 using Robust.Shared.GameObjects;

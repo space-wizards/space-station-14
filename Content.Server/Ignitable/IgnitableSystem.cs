@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Items;
 using Content.Shared.Interaction;
 using Content.Shared.Smoking;
 using Content.Shared.Ignitable;
 using Content.Shared.Temperature;
+using Content.Shared.Item;
 using Content.Shared.Audio;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
@@ -146,7 +146,7 @@ namespace Content.Server.Ignitable
                 component.PointLightComponent.Enabled = component.CurrentState == SmokableState.Lit;
             }
 
-            if (EntityManager.TryGetComponent(component.Owner, out ItemComponent? item))
+            if (EntityManager.TryGetComponent(component.Owner, out SharedItemComponent? item))
             {
                 switch (component.CurrentState)
                 {
