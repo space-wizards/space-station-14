@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Content.Server.DoAfter;
 using Content.Server.Mining.Components;
 using Content.Server.Weapon.Melee.Components;
 using Content.Shared.Acts;
@@ -17,11 +18,19 @@ public class AsteroidRockSystem : EntitySystem
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+    [Dependency] private readonly DoAfterSystem _doAfter = default!;
+    [Dependency] private readonly ActSystem _actSystem = default!;
 
     public override void Initialize()
     {
         SubscribeLocalEvent<AsteroidRockComponent, DestructionEventArgs>(OnAsteroidRockDestruction);
         SubscribeLocalEvent<AsteroidRockComponent, InteractUsingEvent>(OnAsteroidRockInteractUsing);
+        SubscribeLocalEvent<AsteroidRockComponent, MineDoAfterComplete>(RockMined);
+    }
+
+    private void RockMined(EntityUid uid, AsteroidRockComponent component, MineDoAfterComplete args)
+    {
+        _actSystem.HandleDestruction(uid);
     }
 
     private void OnAsteroidRockDestruction(EntityUid uid, AsteroidRockComponent component, DestructionEventArgs args)
@@ -50,19 +59,26 @@ public class AsteroidRockSystem : EntitySystem
 
     private void OnAsteroidRockInteractUsing(EntityUid uid, AsteroidRockComponent component, InteractUsingEvent args)
     {
-        var item = args.Used;
-        if (!TryComp(item, out MeleeWeaponComponent? meleeWeaponComponent))
-            return;
-
-        _damageableSystem.TryChangeDamage(uid, meleeWeaponComponent.Damage);
-
-        if (!TryComp<PickaxeComponent>(item, out var pickaxeComponent))
+        if (!TryComp<PickaxeComponent>(args.Used, out var pickaxeComponent))
         {
-            args.Handled = true;
             return;
         }
 
+        _doAfter.DoAfter(new DoAfterEventArgs
+        (
+            args.User,
+            0.8f,
+            default,
+            uid
+        )
+        {
+            TargetFinishedEvent = new MineDoAfterComplete()
+        });
+
         SoundSystem.Play(Filter.Pvs(uid), pickaxeComponent.MiningSound.GetSound(), uid, AudioParams.Default);
+
         args.Handled = true;
     }
+
+    private class MineDoAfterComplete : EntityEventArgs { }
 }
