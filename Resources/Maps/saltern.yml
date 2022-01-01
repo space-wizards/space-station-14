@@ -8018,13 +8018,17 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 783
-  type: Wrench
+  type: WardrobeBotanistFilled
   components:
-  - pos: 22.701124,-4.455392
+  - pos: -17.5,1.5
     parent: 853
     type: Transform
-  - canCollide: False
-    type: Physics
+  - isPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 784
   type: AirCanister
   components:
@@ -8266,10 +8270,9 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 806
-  type: LockerSecurityFilled
+  type: WardrobeSecurityFilled
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -14.5,13.5
+  - pos: -14.5,13.5
     parent: 853
     type: Transform
   - isPlaceable: False
@@ -20427,19 +20430,27 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1147
-  type: Table
+  type: WardrobeCargoFilled
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 23.5,-4.5
+  - pos: 24.5,10.5
     parent: 853
     type: Transform
+  - isPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 1148
-  type: Table
+  type: CableApcExtension
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 22.5,-4.5
+  - pos: 22.5,-4.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
 - uid: 1149
   type: Table
   components:
@@ -20450,8 +20461,7 @@ entities:
 - uid: 1150
   type: WaterTankFull
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -17.5,1.5
+  - pos: -19.5,0.5
     parent: 853
     type: Transform
 - uid: 1151
@@ -21061,10 +21071,9 @@ entities:
         ent: 3179
     type: ContainerContainer
 - uid: 1223
-  type: ClosetToolFilled
+  type: WardrobeEngineeringFilled
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 35.5,-0.5
+  - pos: 35.5,-0.5
     parent: 853
     type: Transform
   - isPlaceable: False
@@ -21080,10 +21089,9 @@ entities:
     parent: 853
     type: Transform
 - uid: 1225
-  type: ClosetToolFilled
+  type: WardrobeEngineeringFilled
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 35.5,0.5
+  - pos: 35.5,0.5
     parent: 853
     type: Transform
   - isPlaceable: False
@@ -26785,10 +26793,9 @@ entities:
     parent: 853
     type: Transform
 - uid: 1975
-  type: WardrobePrison
+  type: WardrobePrisonFilled
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -13.5,8.5
+  - pos: -13.5,8.5
     parent: 853
     type: Transform
   - isPlaceable: False
@@ -27075,7 +27082,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 2016
-  type: WardrobePrison
+  type: WardrobePrisonFilled
   components:
   - pos: -7.5,8.5
     parent: 853
@@ -34918,13 +34925,17 @@ entities:
     parent: 853
     type: Transform
 - uid: 2916
-  type: Crowbar
+  type: WardrobeMedicalDoctorFilled
   components:
-  - pos: 22.77925,-4.517892
+  - pos: 22.5,-4.5
     parent: 853
     type: Transform
-  - canCollide: False
-    type: Physics
+  - isPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 2917
   type: FirelockGlass
   components:
@@ -35100,16 +35111,17 @@ entities:
     parent: 853
     type: Transform
 - uid: 2934
-  type: CableApcExtension
+  type: WardrobeMedicalDoctorFilled
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 22.5,-4.5
+  - pos: 23.5,-4.5
     parent: 853
     type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
+  - isPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 2935
   type: CableApcExtension
   components:
@@ -45271,15 +45283,13 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 3926
-  type: ClothingBackpackDuffelSurgeryFilled
+  type: InflatableWallStack1
   components:
-  - pos: 23.283348,-4.2176166
+  - pos: 22.390877,-9.397044
     parent: 853
     type: Transform
-  - containers:
-      storagebase: !type:Container
-        ents: []
-    type: ContainerContainer
+  - canCollide: False
+    type: Physics
 - uid: 3927
   type: SheetSteel
   components:
@@ -47420,10 +47430,15 @@ entities:
 - uid: 4176
   type: BarSign
   components:
+  - desc: Where people go that'd rather not be called by their name.
+    name: The Singulo
+    type: MetaData
   - rot: 4.371139006309477E-08 rad
     pos: -5.5,2.5
     parent: 853
     type: Transform
+  - current: TheSingulo
+    type: BarSign
 - uid: 4177
   type: SignBar
   components:
@@ -55327,10 +55342,9 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 5123
-  type: LockerMedicineFilled
+  type: WardrobeChemistryFilled
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 18.5,-2.5
+  - pos: 18.5,-2.5
     parent: 853
     type: Transform
   - isPlaceable: False
@@ -75321,7 +75335,7 @@ entities:
 - uid: 7145
   type: BodyBag_Folded
   components:
-  - pos: 14.771516,-13.47101
+  - pos: 14.55099,-13.192887
     parent: 853
     type: Transform
   - containers:
@@ -75344,7 +75358,7 @@ entities:
 - uid: 7147
   type: BodyBag_Folded
   components:
-  - pos: 14.464998,-13.40851
+  - pos: 14.092656,-13.130387
     parent: 853
     type: Transform
   - containers:
@@ -75383,20 +75397,15 @@ entities:
     parent: 853
     type: Transform
 - uid: 7153
-  type: BodyBag_Folded
+  type: Table
   components:
-  - pos: 14.514998,-13.114999
+  - pos: 14.5,-13.5
     parent: 853
     type: Transform
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-      PaperLabel: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 7154
   type: BodyBag_Folded
   components:
-  - pos: 14.725986,-13.114999
+  - pos: 14.17599,-13.317887
     parent: 853
     type: Transform
   - containers:
@@ -75407,7 +75416,7 @@ entities:
 - uid: 7155
   type: BodyBag_Folded
   components:
-  - pos: 14.485002,-13.114999
+  - pos: 14.55099,-13.505387
     parent: 853
     type: Transform
   - containers:
@@ -75446,36 +75455,44 @@ entities:
 - uid: 7159
   type: InflatableWallStack1
   components:
-  - pos: 23.609575,-4.6035914
+  - rot: -0.0024018422700464725 rad
+    pos: 22.214645,-9.876302
     parent: 853
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 7160
-  type: InflatableWallStack1
+  type: WardrobeScienceFilled
   components:
-  - rot: 0.0003953256527893245 rad
-    pos: 23.70319,-4.263307
+  - pos: -13.5,-22.5
     parent: 853
     type: Transform
-  - canCollide: False
-    type: Physics
+  - isPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 7161
   type: InflatableWallStack1
   components:
-  - pos: 23.172075,-4.4629664
+  - pos: 22.724209,-9.792877
     parent: 853
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 7162
-  type: InflatableWallStack1
+  type: WardrobeScienceFilled
   components:
-  - pos: 23.734575,-4.3535914
+  - pos: -13.5,-21.5
     parent: 853
     type: Transform
-  - canCollide: False
-    type: Physics
+  - isPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 7163
   type: Poweredlight
   components:
@@ -75513,13 +75530,17 @@ entities:
     parent: 853
     type: Transform
 - uid: 7167
-  type: InflatableWallStack1
+  type: ClosetToolFilled
   components:
-  - pos: 23.4377,-4.5723414
+  - pos: 32.5,-4.5
     parent: 853
     type: Transform
-  - canCollide: False
-    type: Physics
+  - isPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 7168
   type: EmergencyRollerBed
   components:
