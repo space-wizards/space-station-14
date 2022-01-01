@@ -170,6 +170,37 @@
     radius: 1
     energy: 1.3
     color: "#ffb0b0"
+    
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineChapel
+  name: PietyVend
+  components:
+  - type: VendingMachine
+    pack: PietyVendInventory
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/chapel.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Unlit"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: AccessReader
+    access: [["Chapel"]]
+  - type: Appearance
+    visuals:
+    - type: VendingMachineVisualizer
+      normalUnshaded: true
+      denyUnshaded: true
+      broken: true
+    - type: WiresVisualizer
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#CCCCCC" #The holy C
 
 - type: entity
   parent: VendingMachine
