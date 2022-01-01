@@ -57,5 +57,6 @@ jobs:
       with:
         host: hellomouse.net
         username: or14-builds
+        debug: true
         key: ${{ secrets.OUTER_RIM_BUILDS_PUSH_KEY }}
         script: /home/or14-builds/push.ps1 ${{ github.sha }}
