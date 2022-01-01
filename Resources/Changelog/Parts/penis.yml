@@ -1,4 +1,0 @@
-﻿author: mirrorcult
-changes:
-- type: Fix # One of the following: Add, Remove, Tweak, Fix
-  message: The singularity properly generates radiation, meaning it should now generate power. Wear a hardsuit and mesons!
