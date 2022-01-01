@@ -1,49 +1,6 @@
 Entries:
 - author: Zumorica
   changes:
-  - {message: Fixes mobs not taking pressure damage on space., type: Fix}
-  id: 296
-  time: '2021-08-04T07:49:53.509340+00:00'
-- author: SweptWasTaken
-  changes:
-  - {message: Added an alternate jumpsuit for Botany, type: Add}
-  id: 297
-  time: '2021-08-05T10:18:05.0000000+00:00'
-- author: Seth
-  changes:
-  - {message: Added two new maintenance areas, type: Add}
-  id: 298
-  time: '2021-08-05T22:20:58.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Windoors and secure windoors have been added and are constructible.,
-    type: Add}
-  id: 299
-  time: '2021-08-06T06:09:39.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Ghosts can now properly return to their body if applicable., type: Fix}
-  id: 300
-  time: '2021-08-06T07:02:36.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: 'Fixes a bug where items would disappear when placed in tables, in certain
-      situations.', type: Fix}
-  id: 301
-  time: '2021-08-06T15:53:48.856573+00:00'
-- author: Zumorica
-  changes:
-  - {message: Fixes pickup animation not showing under certain conditions., type: Fix}
-  id: 302
-  time: '2021-08-06T16:13:07.405459+00:00'
-- author: Zumorica
-  changes:
-  - {message: Fix pointing at an item in your inventory resulting in the pointing
-      arrow playing a weird animation., type: Fix}
-  id: 303
-  time: '2021-08-06T16:28:43.947928+00:00'
-- author: Zumorica
-  changes:
   - {message: Fix bug where you couldn't point at space., type: Fix}
   id: 304
   time: '2021-08-06T16:28:43.948705+00:00'
@@ -2883,3 +2840,60 @@ Entries:
       sniper precision., type: Tweak}
   id: 797
   time: '2021-12-31T08:19:42.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Fixed lights not working while in inventory., type: Fix}
+  id: 798
+  time: '2021-12-31T23:51:13.0000000+00:00'
+- author: TimrodDX
+  changes:
+  - {message: Packed Station is now significantly brighter., type: Tweak}
+  - {message: Cargo on Packed Station now has two starting hardsuit crates., type: Tweak}
+  - {message: 'In response to rampant gun violence, Security on Packed Station now
+      has some new non-lethal gear.', type: Tweak}
+  - {message: Some of the secret areas on Packed Station have been re-stocked., type: Add}
+  - {message: Packed Station's plasma canisters have been replaced with Nanotrasen-brand
+      Safety Plasma., type: Remove}
+  id: 799
+  time: '2022-01-01T01:17:09.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed alt-click interactions not working properly., type: Fix}
+  id: 800
+  time: '2022-01-01T03:16:45.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'The singularity properly generates radiation, meaning it should now
+      generate power. Wear a hardsuit and mesons!', type: Fix}
+  id: 801
+  time: '2022-01-01T03:28:13.477890+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Removed the ability to stuff the held part of a pulled entity in your
+      pocket., type: Remove}
+  id: 802
+  time: '2022-01-01T13:20:32.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Substations now explode when damaged enough and produce debris. Watch
+      out!, type: Fix}
+  id: 803
+  time: '2022-01-01T16:51:57.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: The Syndicate is now interested in a wider variety of items spread between
+      almost all departments., type: Add}
+  - {message: Some coveted items have had their name or description changed to make
+      their value to NanoTrasen (and the Syndicate) clear., type: Tweak}
+  - {message: The Syndicate is less likely to ask for an overly optimistic amount
+      of things to be stolen., type: Tweak}
+  - {message: The Syndicate will no longer ask for agents to both steal an item and
+      die., type: Fix}
+  id: 804
+  time: '2022-01-01T16:56:25.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed not being able to strip inventory from incapacitated entities.,
+    type: Fix}
+  id: 805
+  time: '2022-01-01T17:03:29.0000000+00:00'
