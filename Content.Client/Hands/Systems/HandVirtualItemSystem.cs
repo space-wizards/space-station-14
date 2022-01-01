@@ -1,8 +1,7 @@
 using Content.Client.Items;
+using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
-using Content.Shared.Hands.Systems;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
 
 namespace Content.Client.Hands.Systems
 {

@@ -1,6 +1,5 @@
 using System;
 using Content.Shared.Hands.Components;
-using Content.Shared.Hands.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;

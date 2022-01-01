@@ -1,11 +1,9 @@
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory.Events;
-using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using System;
 
-namespace Content.Shared.Hands.Systems;
+namespace Content.Shared.Hands;
 
 public abstract class SharedHandVirtualItemSystem : EntitySystem
 {
@@ -13,15 +11,13 @@ public abstract class SharedHandVirtualItemSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<HandVirtualItemComponent, BeingEquippedAttemptEvent>(OnEquipAttempt);
+        SubscribeLocalEvent<HandVirtualItemComponent, BeingEquippedAttemptEvent>(OnBeingEquippedAttempt);
         SubscribeLocalEvent<HandVirtualItemComponent, BeforeInteractEvent>(HandleBeforeInteract);
     }
-
-    private void OnEquipAttempt(EntityUid uid, HandVirtualItemComponent component, BeingEquippedAttemptEvent args)
+    private void OnBeingEquippedAttempt(EntityUid uid, HandVirtualItemComponent component, BeingEquippedAttemptEvent args)
     {
         args.Cancel();
     }
-
     private static void HandleBeforeInteract(
         EntityUid uid,
         HandVirtualItemComponent component,

@@ -1,6 +1,6 @@
 using Content.Server.Hands.Components;
+using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
-using Content.Shared.Hands.Systems;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
