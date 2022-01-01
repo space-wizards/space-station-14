@@ -13,7 +13,7 @@ namespace Content.Client.Administration.UI
     /// This window connects to a BwoinkSystem channel. BwoinkSystem manages the rest.
     /// </summary>
     [GenerateTypedNameReferences]
-    public partial class BwoinkWindow : SS14Window
+    public partial class BwoinkWindow : DefaultWindow
     {
         private readonly BwoinkSystem _bwoinkSystem;
         public BwoinkWindow(BwoinkSystem bs)

@@ -1,4 +1,4 @@
-﻿<SS14Window
+﻿<DefaultWindow
     xmlns="https://spacestation14.io"
     xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
     SetSize="400 200"
@@ -8,4 +8,4 @@
         <cc:PlayerListControl Access="Public" Name="ChannelSelector" HorizontalExpand="True" SizeFlagsStretchRatio="1" />
         <BoxContainer Name="BwoinkArea" HorizontalExpand="True" SizeFlagsStretchRatio="2" />
     </SplitContainer>
-</SS14Window>
+</DefaultWindow>

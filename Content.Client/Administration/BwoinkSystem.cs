@@ -8,6 +8,7 @@ using Content.Client.Administration.UI.CustomControls;
 using Content.Shared.Administration;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
+using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Player;
@@ -26,7 +27,7 @@ namespace Content.Client.Administration
         [Dependency] private readonly IClyde _clyde = default!;
 
         private BwoinkWindow? _adminWindow;
-        private BwoinkedWindow? _plainWindow;
+        private DefaultWindow? _plainWindow;
         private readonly Dictionary<NetUserId, BwoinkPanel> _activePanelMap = new();
 
         protected override void OnBwoinkTextMessage(BwoinkTextMessage message, EntitySessionEventArgs eventArgs)
@@ -79,14 +80,27 @@ namespace Content.Client.Administration
 
         private BwoinkPanel EnsurePlain(NetUserId channelId)
         {
+            BwoinkPanel bp;
             if (_plainWindow is null)
             {
-                var bp = new BwoinkPanel(this, channelId);
-                _plainWindow = new BwoinkedWindow(bp);
+                bp = new BwoinkPanel(this, channelId);
+                _plainWindow = new DefaultWindow()
+                {
+                    TitleClass="windowTitleAlert",
+                    HeaderClass="windowHeaderAlert",
+                    Title=Loc.GetString("bwoink-user-title"),
+                    SetSize=(400, 200),
+                };
+
+                _plainWindow.Contents.AddChild(bp);
+            }
+            else
+            {
+                bp = (BwoinkPanel) _plainWindow.Contents.GetChild(0);
             }
 
             _plainWindow.Open();
-            return _plainWindow.Bwoink!;
+            return bp;
         }
 
         public BwoinkPanel EnsurePanel(NetUserId channelId)
