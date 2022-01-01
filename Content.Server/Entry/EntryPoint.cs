@@ -21,6 +21,7 @@ using Content.Shared.Alert;
 using Content.Shared.Kitchen;
 using Robust.Server.Bql;
 using Robust.Server.Player;
+using Robust.Server.ServerStatus;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -38,6 +39,9 @@ namespace Content.Server.Entry
         public override void Init()
         {
             base.Init();
+
+            IoCManager.Resolve<IStatusHost>().SetAczInfo("Content.Client",
+                new[] { "Content.Client", "Content.Shared", "Content.Shared.Database" });
 
             var factory = IoCManager.Resolve<IComponentFactory>();
 

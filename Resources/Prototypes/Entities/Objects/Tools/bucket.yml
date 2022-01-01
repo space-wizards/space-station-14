@@ -15,7 +15,7 @@
     size: 100
     sprite: Objects/Tools/bucket.rsi
     Slots:
-    - Helmet
+    - HEAD
   - type: Bucket
   - type: SolutionContainerManager
     solutions:

@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
 using Content.Server.Interaction;
-using Content.Server.Items;
 using Content.Shared.Acts;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
@@ -471,7 +470,7 @@ namespace Content.Server.Storage.Components
                         break;
                     }
 
-                    if (!_entityManager.TryGetComponent(remove.EntityUid, out ItemComponent? item) || !_entityManager.TryGetComponent(player, out HandsComponent? hands))
+                    if (!_entityManager.TryGetComponent(remove.EntityUid, out SharedItemComponent? item) || !_entityManager.TryGetComponent(player, out HandsComponent? hands))
                     {
                         break;
                     }

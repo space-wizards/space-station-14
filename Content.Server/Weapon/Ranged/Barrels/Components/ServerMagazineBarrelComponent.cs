@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.Hands.Components;
-using Content.Server.Items;
 using Content.Server.Weapon.Ranged.Ammunition.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Item;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Content.Shared.Weapons.Ranged;
@@ -340,7 +340,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
             if (_entities.TryGetComponent(user, out HandsComponent? handsComponent))
             {
-                handsComponent.PutInHandOrDrop(_entities.GetComponent<ItemComponent>(mag.Value));
+                handsComponent.PutInHandOrDrop(_entities.GetComponent<SharedItemComponent>(mag.Value));
             }
 
             Dirty();

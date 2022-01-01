@@ -134,7 +134,7 @@
     QuickEquip: false
     sprite: Objects/Fun/ducky.rsi
     Slots:
-    - Helmet
+    - HEAD
   - type: ItemCooldown
   - type: EmitSoundOnUse
     sound:
