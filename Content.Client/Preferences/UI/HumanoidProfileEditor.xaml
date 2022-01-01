@@ -75,6 +75,8 @@
                                         <OptionButton Name="CPronounsButton" />
                                     </BoxContainer>
                                 </prefUi:HighlightedContainer>
+                            </BoxContainer>
+                            <BoxContainer Orientation="Horizontal" SeparationOverride="10">
                                 <!-- Species -->
                                 <prefUi:HighlightedContainer>
                                     <BoxContainer Orientation="Horizontal">
