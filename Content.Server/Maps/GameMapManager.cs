@@ -30,6 +30,12 @@ public class GameMapManager : IGameMapManager
     {
         _configurationManager.OnValueChanged(CCVars.GameMap, value =>
         {
+            if (string.IsNullOrEmpty(value))
+            {
+                SelectRandomMap();
+                return;
+            }
+
             if (TryLookupMap(value, out var map))
                 _currentMap = map;
             else
