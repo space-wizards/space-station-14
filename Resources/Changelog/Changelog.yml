@@ -1,9 +1,4 @@
 Entries:
-- author: Seth
-  changes:
-  - {message: Added two new maintenance areas, type: Add}
-  id: 298
-  time: '2021-08-05T22:20:58.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Windoors and secure windoors have been added and are constructible.,
@@ -2889,3 +2884,8 @@ Entries:
       Safety Plasma., type: Remove}
   id: 799
   time: '2022-01-01T01:17:09.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed alt-click interactions not working properly., type: Fix}
+  id: 800
+  time: '2022-01-01T03:16:45.0000000+00:00'
