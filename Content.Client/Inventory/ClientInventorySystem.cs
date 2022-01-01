@@ -86,20 +86,23 @@ namespace Content.Client.Inventory
 
         private void OnDidUnequip(EntityUid uid, ClientInventoryComponent component, DidUnequipEvent args)
         {
-            UpdateComponentUISlot(component, args.Slot, null);
+            UpdateComponentUISlot(uid, component, args.Slot, null);
         }
 
         private void OnDidEquip(EntityUid uid, ClientInventoryComponent component, DidEquipEvent args)
         {
-            UpdateComponentUISlot(component, args.Slot, args.Equipment);
+            UpdateComponentUISlot(uid, component, args.Slot, args.Equipment);
         }
 
-        private void UpdateComponentUISlot(ClientInventoryComponent component, string slot, EntityUid? entity)
+        private void UpdateComponentUISlot(EntityUid uid, ClientInventoryComponent? component, string slot, EntityUid? item)
         {
+            if (!Resolve(uid, ref component))
+                return;
+
             if (!component.SlotButtons.TryGetValue(slot, out var buttons))
                 return;
 
-            UpdateUISlot(buttons, entity);
+            UpdateUISlot(buttons, item);
         }
 
         private void UpdateUISlot(List<ItemSlotButton> buttons, EntityUid? entity)
