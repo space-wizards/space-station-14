@@ -164,7 +164,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             }
             else
             {
-                handsComponent.TryPutInActiveHandOrAny(itemComponent);
+                handsComponent.PutInHand(itemComponent);
             }
 
             return true;

@@ -254,7 +254,7 @@ namespace Content.Server.Storage.Components
 
             if (!Insert(toInsert.Owner))
             {
-                hands.TryPutInActiveHandOrAny(toInsert);
+                hands.PutInHand(toInsert);
                 Owner.PopupMessage(player, "Can't insert.");
                 return false;
             }
@@ -480,7 +480,7 @@ namespace Content.Server.Storage.Components
                         break;
                     }
 
-                    hands.TryPutInActiveHandOrAny(item);
+                    hands.PutInHand(item);
 
                     break;
                 }

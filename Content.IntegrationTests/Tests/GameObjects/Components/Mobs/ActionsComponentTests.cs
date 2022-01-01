@@ -268,7 +268,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
 
                 // grant an extra item action, before pickup, initially disabled
                 itemActions.GrantOrUpdate(ItemActionType.DebugToggle, false);
-                serverEntManager.GetComponent<HandsComponent>(serverPlayerEnt).TryPutInActiveHandOrAny(serverEntManager.GetComponent<SharedItemComponent>(serverFlashlight), false);
+                serverEntManager.GetComponent<HandsComponent>(serverPlayerEnt).PutInHand(serverEntManager.GetComponent<SharedItemComponent>(serverFlashlight), false);
                 // grant an extra item action, after pickup, with a cooldown
                 itemActions.GrantOrUpdate(ItemActionType.DebugInstant, cooldown: cooldown);
 
@@ -360,7 +360,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
             {
                 // pick the item up again, the states should be back to what they were when dropped,
                 // as the states "stick" with the item
-                serverEntManager.GetComponent<HandsComponent>(serverPlayerEnt).TryPutInActiveHandOrAny(serverEntManager.GetComponent<SharedItemComponent>(serverFlashlight), false);
+                serverEntManager.GetComponent<HandsComponent>(serverPlayerEnt).PutInHand(serverEntManager.GetComponent<SharedItemComponent>(serverFlashlight), false);
                 Assert.That(serverActionsComponent.ItemActionStates().TryGetValue(serverFlashlight, out var lightStates));
                 Assert.That(lightStates.TryGetValue(ItemActionType.ToggleLight, out var lightState));
                 Assert.That(lightState.Equals(new ActionState(true, toggledOn: true)));

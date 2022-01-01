@@ -624,7 +624,7 @@ namespace Content.Shared.Hands.Components
         /// <summary>
         ///     Tries to pick up an entity into the active hand. If it cannot, tries to pick up the entity into each other hand.
         /// </summary>
-        public bool TryPutInActiveHandOrAny(SharedItemComponent item, bool checkActionBlocker = true)
+        public bool PutInHand(SharedItemComponent item, bool checkActionBlocker = true)
         {
             return PutInHand(item.Owner, checkActionBlocker);
         }

@@ -248,7 +248,7 @@ namespace Content.Server.AME.Components
             if (!_entities.TryGetComponent<HandsComponent?>(user, out var hands) || !_entities.TryGetComponent<SharedItemComponent?>(jar, out var item))
                 return;
             if (hands.CanPutInHand(item))
-                hands.TryPutInActiveHandOrAny(item);
+                hands.PutInHand(item);
         }
 
         private void ToggleInjection()
