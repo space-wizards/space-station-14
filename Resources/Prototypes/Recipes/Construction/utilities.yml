@@ -46,21 +46,6 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
 
-- type: construction
-  name: AME shielding
-  id: AMEShielding
-  graph: ameShielding
-  startNode: start
-  targetNode: ameShielding
-  category: Utilities
-  description: "Shielding for the antimatter engine"
-  icon:
-    sprite: Structures/Power/Generation/ame.rsi
-    state: shield_0
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-
 
 #DISPOSALS
 - type: construction
