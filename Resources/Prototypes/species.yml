@@ -3,9 +3,18 @@
   name: Human
   prototype: MobHuman
   dollPrototype: MobHumanDummy
+  skinColoration: HumanToned
 
 - type: species
   id: Dwarf
   name: Dwarf
   prototype: MobDwarf
   dollPrototype: MobDwarfDummy
+  skinColoration: HumanToned
+
+- type: species
+  id: SlimePerson
+  name: Slime Person
+  prototype: MobSlimePerson
+  dollPrototype: MobSlimePersonDummy
+  skinColoration: Hues

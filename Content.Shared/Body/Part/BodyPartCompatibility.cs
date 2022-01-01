@@ -12,6 +12,7 @@ namespace Content.Shared.Body.Part
     {
         Universal = 0,
         Biological,
-        Mechanical
+        Mechanical,
+        Slime,
     }
 }

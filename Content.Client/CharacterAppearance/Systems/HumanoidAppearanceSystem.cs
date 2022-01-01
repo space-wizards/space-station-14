@@ -59,12 +59,18 @@ namespace Content.Client.CharacterAppearance.Systems
             }
 
             sprite.LayerSetColor(HumanoidVisualLayers.Hair,
-                component.CanColorHair ? component.Appearance.HairColor : Color.White);
+                (!component.HairMatchesSkin
+                    ? (component.CanColorHair ? component.Appearance.HairColor : Color.White)
+                    : component.Appearance.SkinColor).WithAlpha(component.HairAlpha));
             sprite.LayerSetColor(HumanoidVisualLayers.FacialHair,
-                component.CanColorFacialHair ? component.Appearance.FacialHairColor : Color.White);
+                (!component.HairMatchesSkin
+                    ? (component.CanColorFacialHair ? component.Appearance.FacialHairColor : Color.White)
+                    : component.Appearance.SkinColor).WithAlpha(component.HairAlpha));
 
             foreach (var layer in _bodyPartLayers)
+            {
                 sprite.LayerSetColor(layer, component.Appearance.SkinColor);
+            }
 
             sprite.LayerSetColor(HumanoidVisualLayers.Eyes, component.Appearance.EyeColor);
 

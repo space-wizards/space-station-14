@@ -204,26 +204,44 @@ namespace Content.Client.Preferences.UI
                 if (Profile is null)
                     return;
 
-                int rangeOffset = (int) range.Value - 20;
+                var skin = _prototypeManager.Index<SpeciesPrototype>(Profile.Species).SkinColoration;
 
-                float hue = 25;
-                float sat = 20;
-                float val = 100;
-
-                if (rangeOffset < 0)
+                switch (skin)
                 {
-                    hue += Math.Abs(rangeOffset);
-                }
-                else if (rangeOffset > 0)
-                {
-                    sat += rangeOffset;
-                    val -= rangeOffset;
+                    case SpeciesSkinColor.HumanToned:
+                    {
+                        var rangeOffset = (int) range.Value - 20;
+
+                        float hue = 25;
+                        float sat = 20;
+                        float val = 100;
+
+                        switch (rangeOffset)
+                        {
+                            case < 0:
+                                hue += Math.Abs(rangeOffset);
+                                break;
+                            case > 0:
+                                sat += rangeOffset;
+                                val -= rangeOffset;
+                                break;
+                        }
+
+                        var color = Color.FromHsv(new Vector4(hue / 360, sat / 100, val / 100, 1.0f));
+
+                        Profile = Profile.WithCharacterAppearance(
+                            Profile.Appearance.WithSkinColor(color));
+                        break;
+                    }
+                    case SpeciesSkinColor.Hues:
+                    {
+                        var color = Color.FromHsv(new Vector4(range.Value / 100.0f, 1.0f, 1.0f, 1.0f));
+                        Profile = Profile.WithCharacterAppearance(
+                            Profile.Appearance.WithSkinColor(color));
+                        break;
+                    }
                 }
 
-                var color = Color.FromHsv(new Vector4(hue / 360, sat / 100, val / 100, 1.0f));
-
-                Profile = Profile.WithCharacterAppearance(
-                    Profile.Appearance.WithSkinColor(color));
                 IsDirty = true;
             };
 
@@ -602,20 +620,35 @@ namespace Content.Client.Preferences.UI
             if (Profile == null)
                 return;
 
+            var skin = _prototypeManager.Index<SpeciesPrototype>(Profile.Species).SkinColoration;
             var color = Color.ToHsv(Profile.Appearance.SkinColor);
-            // check for hue/value first, if hue is lower than this percentage
-            // and value is 1.0
-            // then it'll be hue
-            if (Math.Clamp(color.X, 25f / 360f, 1) > 25f / 360f
-                && color.Z == 1.0)
+
+            switch (skin)
             {
-                _skinColor.Value = Math.Abs(45 - (color.X * 360));
+                case SpeciesSkinColor.HumanToned:
+                {
+                    // check for hue/value first, if hue is lower than this percentage
+                    // and value is 1.0
+                    // then it'll be hue
+                    if (Math.Clamp(color.X, 25f / 360f, 1) > 25f / 360f
+                        && color.Z == 1.0)
+                    {
+                        _skinColor.Value = Math.Abs(45 - (color.X * 360));
+                    }
+                    // otherwise it'll directly be the saturation
+                    else
+                    {
+                        _skinColor.Value = color.Y * 100;
+                    }
+                    break;
+                }
+                case SpeciesSkinColor.Hues:
+                {
+                    _skinColor.Value = color.X * 100;
+                    break;
+                }
             }
-            // otherwise it'll directly be the saturation
-            else
-            {
-                _skinColor.Value = color.Y * 100;
-            }
+
         }
 
         private void UpdateGenderControls()

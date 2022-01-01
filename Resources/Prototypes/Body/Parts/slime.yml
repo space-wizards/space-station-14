@@ -23,13 +23,9 @@
     - type: BodyPart
       partType: Torso
       size: 14
-      compatibility: Biological
+      compatibility: Slime
       mechanisms:
-        - OrganHumanHeart
-        - OrganHumanLungs
-        - OrganHumanStomach
-        - OrganHumanLiver
-        - OrganHumanKidneys
+        - SentientSlimeCore
     - type: BiologicalSurgeryData
 #    criticalThreshold: 100
 #    deadThreshold: 150
@@ -49,11 +45,8 @@
     - type: BodyPart
       partType: Head
       size: 7
-      compatibility: Biological
+      compatibility: Slime
       vital: true
-      mechanisms:
-        - OrganHumanBrain
-        - OrganHumanEyes
     - type: BiologicalSurgeryData
     #    criticalThreshold: 50
     #    deadThreshold: 120
@@ -77,7 +70,7 @@
     - type: BodyPart
       partType: Arm
       size: 5
-      compatibility: Biological
+      compatibility: Slime
       symmetry: Left
     - type: BiologicalSurgeryData
     #    criticalThreshold: 40
@@ -98,7 +91,7 @@
     - type: BodyPart
       partType: Arm
       size: 5
-      compatibility: Biological
+      compatibility: Slime
       symmetry: Right
     - type: BiologicalSurgeryData
     #    criticalThreshold: 40
@@ -119,7 +112,7 @@
     - type: BodyPart
       partType: Hand
       size: 3
-      compatibility: Biological
+      compatibility: Slime
       symmetry: Left
     - type: BiologicalSurgeryData
     #    criticalThreshold: 30
@@ -140,7 +133,7 @@
     - type: BodyPart
       partType: Hand
       size: 3
-      compatibility: Biological
+      compatibility: Slime
       symmetry: Right
     - type: BiologicalSurgeryData
     #    criticalThreshold: 30
@@ -161,7 +154,7 @@
     - type: BodyPart
       partType: Leg
       size: 6
-      compatibility: Biological
+      compatibility: Slime
       symmetry: Left
     - type: BiologicalSurgeryData
 
@@ -180,7 +173,7 @@
     - type: BodyPart
       partType: Leg
       size: 6
-      compatibility: Biological
+      compatibility: Slime
       symmetry: Right
     - type: BiologicalSurgeryData
     #    criticalThreshold: 45
@@ -201,7 +194,7 @@
     - type: BodyPart
       partType: Foot
       size: 2
-      compatibility: Biological
+      compatibility: Slime
       symmetry: Left
     - type: BiologicalSurgeryData
 #    criticalThreshold: 30
@@ -222,7 +215,7 @@
     - type: BodyPart
       partType: Foot
       size: 2
-      compatibility: Biological
+      compatibility: Slime
       symmetry: Right
     - type: BiologicalSurgeryData
 #    criticalThreshold: 30
