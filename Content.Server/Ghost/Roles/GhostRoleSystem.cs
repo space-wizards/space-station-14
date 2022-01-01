@@ -4,6 +4,7 @@ using Content.Server.EUI;
 using Content.Server.Ghost.Components;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Ghost.Roles.UI;
+using Content.Server.Mind.Components;
 using Content.Server.Players;
 using Content.Shared.Administration;
 using Content.Shared.GameTicking;
@@ -42,6 +43,7 @@ namespace Content.Server.Ghost.Roles
 
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttached);
+            SubscribeLocalEvent<GhostRoleComponent, MindRemovedMessage>(OnMindRemoved);
 
             _playerManager.PlayerStatusChanged += PlayerStatusChanged;
         }
@@ -198,6 +200,14 @@ namespace Content.Server.Ghost.Roles
             if (!_openUis.ContainsKey(message.Player)) return;
             if (EntityManager.HasComponent<GhostComponent>(message.Entity)) return;
             CloseEui(message.Player);
+        }
+
+        private void OnMindRemoved(EntityUid uid, GhostRoleComponent component, MindRemovedMessage args)
+        {
+            if (!component.ReregisterOnGhost)
+                return;
+            component.Taken = false;
+            RegisterGhostRole(component);
         }
 
         public void Reset(RoundRestartCleanupEvent ev)
