@@ -88,7 +88,7 @@ public abstract partial class InventorySystem
 
         // Make the actor drop the held entity. Cannot insert directly, as this bypasses some hands interaction stuff.
         // One day, maybe hands code wont be shit and can just perform interaction on container-modified messages. That'd that be nice.
-        if (fromHands && TryComp(actor, out SharedHandsComponent? hands) && !hands.TryDropEntity(itemUid, Transform(actor).Coordinates))
+        if (fromHands && (!TryComp(actor, out SharedHandsComponent? hands) || !hands.TryDropEntity(itemUid, Transform(actor).Coordinates)))
         {
             if (!silent) _popup.PopupCursor(Loc.GetString("inventory-component-can-equip-cannot"), Filter.Local());
             return false;
