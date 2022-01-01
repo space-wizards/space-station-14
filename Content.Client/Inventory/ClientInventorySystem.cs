@@ -86,12 +86,12 @@ namespace Content.Client.Inventory
 
         private void OnDidUnequip(EntityUid uid, ClientInventoryComponent component, DidUnequipEvent args)
         {
-            UpdateComponentUISlot(uid, component, args.Slot, null);
+            UpdateComponentUISlot(uid, args.Slot, null, component);
         }
 
         private void OnDidEquip(EntityUid uid, ClientInventoryComponent component, DidEquipEvent args)
         {
-            UpdateComponentUISlot(uid, component, args.Slot, args.Equipment);
+            UpdateComponentUISlot(uid, args.Slot, args.Equipment, component);
         }
 
         private void UpdateComponentUISlot(EntityUid uid, string slot, EntityUid? item, ClientInventoryComponent? component = null)
