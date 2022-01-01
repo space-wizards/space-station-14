@@ -29,6 +29,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
+using Range = Robust.Client.UserInterface.Controls.Range;
 
 namespace Content.Client.Preferences.UI
 {
@@ -185,6 +186,7 @@ namespace Content.Client.Preferences.UI
             {
                 CSpeciesButton.SelectId(args.Id);
                 SetSpecies(options[args.Id].ID);
+                OnSkinColorOnOnValueChanged(CSkin);
             };
 
             #endregion Species
@@ -199,51 +201,7 @@ namespace Content.Client.Preferences.UI
             // 0 is 45 - 20 - 100
             // 20 is 25 - 20 - 100
             // 100 is 25 - 100 - 20
-            _skinColor.OnValueChanged += range =>
-            {
-                if (Profile is null)
-                    return;
-
-                var skin = _prototypeManager.Index<SpeciesPrototype>(Profile.Species).SkinColoration;
-
-                switch (skin)
-                {
-                    case SpeciesSkinColor.HumanToned:
-                    {
-                        var rangeOffset = (int) range.Value - 20;
-
-                        float hue = 25;
-                        float sat = 20;
-                        float val = 100;
-
-                        switch (rangeOffset)
-                        {
-                            case < 0:
-                                hue += Math.Abs(rangeOffset);
-                                break;
-                            case > 0:
-                                sat += rangeOffset;
-                                val -= rangeOffset;
-                                break;
-                        }
-
-                        var color = Color.FromHsv(new Vector4(hue / 360, sat / 100, val / 100, 1.0f));
-
-                        Profile = Profile.WithCharacterAppearance(
-                            Profile.Appearance.WithSkinColor(color));
-                        break;
-                    }
-                    case SpeciesSkinColor.Hues:
-                    {
-                        var color = Color.FromHsv(new Vector4(range.Value / 100.0f, 1.0f, 1.0f, 1.0f));
-                        Profile = Profile.WithCharacterAppearance(
-                            Profile.Appearance.WithSkinColor(color));
-                        break;
-                    }
-                }
-
-                IsDirty = true;
-            };
+            _skinColor.OnValueChanged += OnSkinColorOnOnValueChanged;
 
             #endregion
 
@@ -478,6 +436,49 @@ namespace Content.Client.Preferences.UI
             preferencesManager.OnServerDataLoaded += LoadServerData;
 
             IsDirty = false;
+        }
+
+        private void OnSkinColorOnOnValueChanged(Range range)
+        {
+            if (Profile is null) return;
+
+            var skin = _prototypeManager.Index<SpeciesPrototype>(Profile.Species).SkinColoration;
+
+            switch (skin)
+            {
+                case SpeciesSkinColor.HumanToned:
+                {
+                    var rangeOffset = (int) range.Value - 20;
+
+                    float hue = 25;
+                    float sat = 20;
+                    float val = 100;
+
+                    switch (rangeOffset)
+                    {
+                        case < 0:
+                            hue += Math.Abs(rangeOffset);
+                            break;
+                        case > 0:
+                            sat += rangeOffset;
+                            val -= rangeOffset;
+                            break;
+                    }
+
+                    var color = Color.FromHsv(new Vector4(hue / 360, sat / 100, val / 100, 1.0f));
+
+                    Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
+                    break;
+                }
+                case SpeciesSkinColor.Hues:
+                {
+                    var color = Color.FromHsv(new Vector4(range.Value / 100.0f, 1.0f, 1.0f, 1.0f));
+                    Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
+                    break;
+                }
+            }
+
+            IsDirty = true;
         }
 
         protected override void Dispose(bool disposing)
