@@ -90,22 +90,6 @@ namespace Content.Shared.ActionBlocker
             return !ev.Cancelled;
         }
 
-        public bool CanEquip(EntityUid uid)
-        {
-            var ev = new EquipAttemptEvent(uid);
-            RaiseLocalEvent(uid, ev);
-
-            return !ev.Cancelled;
-        }
-
-        public bool CanUnequip(EntityUid uid)
-        {
-            var ev = new UnequipAttemptEvent(uid);
-            RaiseLocalEvent(uid, ev);
-
-            return !ev.Cancelled;
-        }
-
         public bool CanChangeDirection(EntityUid uid)
         {
             var ev = new ChangeDirectionAttemptEvent(uid);

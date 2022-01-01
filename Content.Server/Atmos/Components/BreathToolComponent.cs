@@ -1,5 +1,7 @@
 ﻿using Content.Server.Body.Components;
+using Content.Server.Body.Systems;
 using Content.Shared.Inventory;
+using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -10,7 +12,7 @@ namespace Content.Server.Atmos.Components
     /// Used in internals as breath tool.
     /// </summary>
     [RegisterComponent]
-    public class BreathToolComponent : Component, IEquipped, IUnequipped
+    public class BreathToolComponent : Component
     {
         [Dependency] private readonly IEntityManager _entities = default!;
 
@@ -18,32 +20,15 @@ namespace Content.Server.Atmos.Components
         /// Tool is functional only in allowed slots
         /// </summary>
         [DataField("allowedSlots")]
-        private EquipmentSlotDefines.SlotFlags _allowedSlots = EquipmentSlotDefines.SlotFlags.MASK;
+        public SlotFlags AllowedSlots = SlotFlags.MASK;
 
         public override string Name => "BreathMask";
-        public bool IsFunctional { get; private set; }
-        public EntityUid ConnectedInternalsEntity { get; private set; }
+        public bool IsFunctional;
+        public EntityUid ConnectedInternalsEntity;
 
         protected override void Shutdown()
         {
             base.Shutdown();
-            DisconnectInternals();
-        }
-
-        void IEquipped.Equipped(EquippedEventArgs eventArgs)
-        {
-            if ((EquipmentSlotDefines.SlotMasks[eventArgs.Slot] & _allowedSlots) != _allowedSlots) return;
-            IsFunctional = true;
-
-            if (_entities.TryGetComponent(eventArgs.User, out InternalsComponent? internals))
-            {
-                ConnectedInternalsEntity = eventArgs.User;
-                internals.ConnectBreathTool(Owner);
-            }
-        }
-
-        void IUnequipped.Unequipped(UnequippedEventArgs eventArgs)
-        {
             DisconnectInternals();
         }
 

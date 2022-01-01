@@ -7,7 +7,7 @@ namespace Content.Server.AI.Utility.Considerations.Clothing
     public class ClothingInSlotCon : Consideration
     {
 
-        public ClothingInSlotCon Slot(EquipmentSlotDefines.Slots slot, Blackboard context)
+        public ClothingInSlotCon Slot(string slot, Blackboard context)
         {
             context.GetState<ClothingSlotConState>().SetValue(slot);
             return this;
@@ -17,7 +17,7 @@ namespace Content.Server.AI.Utility.Considerations.Clothing
         {
             var slot = context.GetState<ClothingSlotConState>().GetValue();
             var inventory = context.GetState<EquippedClothingState>().GetValue();
-            return inventory.ContainsKey(slot) ? 1.0f : 0.0f;
+            return slot != null && inventory.ContainsKey(slot) ? 1.0f : 0.0f;
         }
     }
 }

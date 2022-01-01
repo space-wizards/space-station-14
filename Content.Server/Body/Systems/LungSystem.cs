@@ -7,6 +7,7 @@ using Content.Server.Popups;
 using Content.Shared.Atmos;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Events;
+using Content.Shared.Inventory.Events;
 using Content.Shared.MobState.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -27,6 +28,26 @@ public class LungSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<LungComponent, AddedToBodyEvent>(OnAddedToBody);
+        SubscribeLocalEvent<BreathToolComponent, GotEquippedEvent>(OnGotEquipped);
+        SubscribeLocalEvent<BreathToolComponent, GotUnequippedEvent>(OnGotUnequipped);
+    }
+
+    private void OnGotUnequipped(EntityUid uid, BreathToolComponent component, GotUnequippedEvent args)
+    {
+        component.DisconnectInternals();
+    }
+
+    private void OnGotEquipped(EntityUid uid, BreathToolComponent component, GotEquippedEvent args)
+    {
+
+        if ((args.SlotFlags & component.AllowedSlots) != component.AllowedSlots) return;
+        component.IsFunctional = true;
+
+        if (TryComp(args.Equipee, out InternalsComponent? internals))
+        {
+            component.ConnectedInternalsEntity = args.Equipee;
+            internals.ConnectBreathTool(uid);
+        }
     }
 
     private void OnAddedToBody(EntityUid uid, LungComponent component, AddedToBodyEvent args)
