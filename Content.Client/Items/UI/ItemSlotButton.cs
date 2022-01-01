@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Content.Client.Cooldown;
 using Content.Client.HUD;
 using Content.Client.Items.Managers;

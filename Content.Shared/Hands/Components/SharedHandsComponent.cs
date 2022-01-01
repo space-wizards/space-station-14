@@ -626,7 +626,7 @@ namespace Content.Shared.Hands.Components
         /// </summary>
         public bool TryPutInActiveHandOrAny(SharedItemComponent item, bool checkActionBlocker = true)
         {
-            return TryPutInActiveHandOrAny(item.Owner, checkActionBlocker);
+            return PutInHand(item.Owner, checkActionBlocker);
         }
 
         /// <summary>
@@ -634,7 +634,7 @@ namespace Content.Shared.Hands.Components
         /// </summary>
         public void PutInHandOrDrop(EntityUid entity, bool checkActionBlocker = true)
         {
-            if (!TryPutInActiveHandOrAny(entity, checkActionBlocker))
+            if (!PutInHand(entity, checkActionBlocker))
                 _entMan.GetComponent<TransformComponent>(entity).Coordinates = _entMan.GetComponent<TransformComponent>(Owner).Coordinates;
         }
 
@@ -647,9 +647,9 @@ namespace Content.Shared.Hands.Components
         /// <summary>
         ///     Tries to pick up an entity into the active hand. If it cannot, tries to pick up the entity into each other hand.
         /// </summary>
-        public bool TryPutInActiveHandOrAny(EntityUid entity, bool checkActionBlocker = true)
+        public bool PutInHand(EntityUid entity, bool checkActionBlocker = true)
         {
-            return TryPutInAnyHand(entity, GetActiveHand(), checkActionBlocker);
+            return PutInHand(entity, GetActiveHand(), checkActionBlocker);
         }
 
         /// <summary>
@@ -662,13 +662,13 @@ namespace Content.Shared.Hands.Components
             if (priorityHandName != null)
                 priorityHand = GetHandOrNull(priorityHandName);
 
-            return TryPutInAnyHand(entity, priorityHand, checkActionBlocker);
+            return PutInHand(entity, priorityHand, checkActionBlocker);
         }
 
         /// <summary>
         ///     Tries to pick up an entity into the priority hand, if provided. If it cannot, tries to pick up the entity into each other hand.
         /// </summary>
-        private bool TryPutInAnyHand(EntityUid entity, Hand? priorityHand = null, bool checkActionBlocker = true)
+        private bool PutInHand(EntityUid entity, Hand? priorityHand = null, bool checkActionBlocker = true)
         {
             if (priorityHand != null)
             {

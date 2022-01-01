@@ -44,7 +44,7 @@ namespace Content.Server.Inventory
             }
             else if (TryUnequip(ev.Uid, ev.Slot))
             {
-                hands.TryPutInActiveHandOrAny(itemUid.Value);
+                hands.PutInHand(itemUid.Value);
             }
         }
 

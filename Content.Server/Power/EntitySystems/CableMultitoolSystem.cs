@@ -48,7 +48,6 @@ namespace Content.Server.Power.EntitySystems
                     var held = hand.HeldEntity;
                     // Pulsing is hardcoded here because I don't think it needs to be more complex than that right now.
                     // Update if I'm wrong.
-
                     if (held != null && _toolSystem.HasQuality(held.Value, "Pulsing"))
                     {
                         args.PushMarkup(GenerateCableMarkup(uid));

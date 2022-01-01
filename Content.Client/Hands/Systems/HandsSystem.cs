@@ -177,7 +177,7 @@ namespace Content.Client.Hands
         /// </summary>
         public void UIHandActivate(string handName)
         {
-            RaiseNetworkEvent (new ActivateInHandMsg(handName));
+            RaiseNetworkEvent(new ActivateInHandMsg(handName));
         }
 
         #region Gui

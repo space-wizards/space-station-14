@@ -360,7 +360,7 @@ namespace Content.Shared.Containers.ItemSlots
                 return false;
 
             if (user != null && EntityManager.TryGetComponent(user.Value, out SharedHandsComponent? hands))
-                hands.TryPutInActiveHandOrAny(item.Value);
+                hands.PutInHand(item.Value);
 
             return true;
         }
