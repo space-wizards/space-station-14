@@ -60,6 +60,8 @@ namespace Content.Client.Administration
                 existingPanel.Visible = false;
             }
 
+            _adminWindow.Open();
+
             return existingPanel;
         }
 
