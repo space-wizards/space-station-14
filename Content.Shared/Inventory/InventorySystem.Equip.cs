@@ -59,14 +59,14 @@ public abstract partial class InventorySystem
         if (!hands.TryGetActiveHeldEntity(out var heldEntity))
             return false;
 
-        return TryEquip(uid, heldEntity.Value, slot, silent, force, component);
+        return TryEquip(uid, heldEntity.Value, slot, silent, force, fromHands: true, component);
     }
 
-    public bool TryEquip(EntityUid uid, EntityUid itemUid, string slot, bool silent = false, bool force = false,
+    public bool TryEquip(EntityUid uid, EntityUid itemUid, string slot, bool silent = false, bool force = false, bool fromHands = false,
         InventoryComponent? inventory = null, SharedItemComponent? item = null) =>
-        TryEquip(uid, uid, itemUid, slot, silent, force, inventory, item);
+        TryEquip(uid, uid, itemUid, slot, silent, force, fromHands, inventory, item);
 
-    public virtual bool TryEquip(EntityUid actor, EntityUid target, EntityUid itemUid, string slot, bool silent = false, bool force = false, InventoryComponent? inventory = null, SharedItemComponent? item = null)
+    public virtual bool TryEquip(EntityUid actor, EntityUid target, EntityUid itemUid, string slot, bool silent = false, bool force = false, bool fromHands = false, InventoryComponent? inventory = null, SharedItemComponent? item = null)
     {
         if (!Resolve(target, ref inventory, false) || !Resolve(itemUid, ref item, false))
         {
@@ -83,6 +83,14 @@ public abstract partial class InventorySystem
         if (!force && !CanEquip(actor, target, itemUid, slot, out var reason, slotDefinition, inventory, item))
         {
             if(!silent) _popup.PopupCursor(Loc.GetString(reason), Filter.Local());
+            return false;
+        }
+
+        // Make the actor drop the held entity. Cannot insert directly, as this bypasses some hands interaction stuff.
+        // One day, maybe hands code wont be shit and can just perform interaction on container-modified messages. That'd that be nice.
+        if (fromHands && TryComp(actor, out SharedHandsComponent? hands) && !hands.TryDropEntity(itemUid, Transform(actor).Coordinates))
+        {
+            if (!silent) _popup.PopupCursor(Loc.GetString("inventory-component-can-equip-cannot"), Filter.Local());
             return false;
         }
 

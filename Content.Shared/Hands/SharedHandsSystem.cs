@@ -1,18 +1,22 @@
 using System;
 using Content.Shared.Hands.Components;
+using Content.Shared.Hands.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Hands
 {
     public abstract class SharedHandsSystem : EntitySystem
     {
+        [Dependency] private readonly SharedHandVirtualItemSystem _virtualSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
 
-            SubscribeLocalEvent<SharedHandsComponent, EntRemovedFromContainerMessage>(HandleContainerModified);
+            SubscribeLocalEvent<SharedHandsComponent, EntRemovedFromContainerMessage>(HandleContainerRemoved);
             SubscribeLocalEvent<SharedHandsComponent, EntInsertedIntoContainerMessage>(HandleContainerModified);
 
             SubscribeAllEvent<RequestSetHandEvent>(HandleSetHand);
@@ -34,6 +38,17 @@ namespace Content.Shared.Hands
             ContainerModifiedMessage args)
         {
             component.Dirty();
+        }
+
+        private void HandleContainerRemoved(
+            EntityUid uid,
+            SharedHandsComponent component,
+            ContainerModifiedMessage args)
+            {
+            if (TryComp(args.Entity, out HandVirtualItemComponent? @virtual))
+                _virtualSystem.Delete(@virtual, uid);
+
+            HandleContainerModified(uid, component, args);
         }
     }
 

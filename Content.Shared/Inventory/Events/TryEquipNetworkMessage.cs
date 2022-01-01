@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
@@ -13,8 +13,9 @@ public class TryEquipNetworkMessage : EntityEventArgs
     public readonly string Slot;
     public readonly bool Silent;
     public readonly bool Force;
+    public readonly bool FromHands;
 
-    public TryEquipNetworkMessage(EntityUid actor, EntityUid target, EntityUid itemUid, string slot, bool silent, bool force)
+    public TryEquipNetworkMessage(EntityUid actor, EntityUid target, EntityUid itemUid, string slot, bool silent, bool force, bool fromHands)
     {
         Actor = actor;
         Target = target;
@@ -22,5 +23,6 @@ public class TryEquipNetworkMessage : EntityEventArgs
         Slot = slot;
         Silent = silent;
         Force = force;
+        FromHands = fromHands;
     }
 }

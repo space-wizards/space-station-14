@@ -69,11 +69,11 @@ namespace Content.Client.Inventory
             _config.OnValueChanged(CCVars.HudTheme, UpdateHudTheme);
         }
 
-        public override bool TryEquip(EntityUid actor, EntityUid target, EntityUid itemUid, string slot, bool silent = false, bool force = false,
+        public override bool TryEquip(EntityUid actor, EntityUid target, EntityUid itemUid, string slot, bool silent = false, bool force = false, bool fromHands = false,
             InventoryComponent? inventory = null, SharedItemComponent? item = null)
         {
-            if(!target.IsClientSide() && !actor.IsClientSide() && !itemUid.IsClientSide()) RaiseNetworkEvent(new TryEquipNetworkMessage(actor, target, itemUid, slot, silent, force));
-            return base.TryEquip(actor, target, itemUid, slot, silent, force, inventory, item);
+            if(!target.IsClientSide() && !actor.IsClientSide() && !itemUid.IsClientSide()) RaiseNetworkEvent(new TryEquipNetworkMessage(actor, target, itemUid, slot, silent, force, fromHands));
+            return base.TryEquip(actor, target, itemUid, slot, silent, force, fromHands, inventory, item);
         }
 
         public override bool TryUnequip(EntityUid actor, EntityUid target, string slot, [NotNullWhen(true)] out EntityUid? removedItem, bool silent = false, bool force = false,

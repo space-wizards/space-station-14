@@ -64,7 +64,7 @@ namespace Content.Server.Inventory
 
         private void OnNetworkEquip(TryEquipNetworkMessage ev)
         {
-            TryEquip(ev.Actor, ev.Target, ev.ItemUid, ev.Slot, ev.Silent, ev.Force);
+            TryEquip(ev.Actor, ev.Target, ev.ItemUid, ev.Slot, ev.Silent, ev.Force, ev.FromHands);
         }
     }
 }
