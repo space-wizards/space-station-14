@@ -48,21 +48,14 @@ namespace Content.Client.Administration
             _adminWindow?.ChannelSelector?.Refresh();
         }
 
-        public bool TryGetChannel(NetUserId ch, [NotNullWhen(true)] out BwoinkPanel bp) => _activePanelMap.TryGetValue(ch, out bp!);
+        public bool TryGetChannel(NetUserId ch, [NotNullWhen(true)] out BwoinkPanel? bp) => _activePanelMap.TryGetValue(ch, out bp);
 
         private BwoinkPanel EnsureAdmin(NetUserId channelId)
         {
-            if (_adminWindow is null)
-            {
-                _adminWindow = new BwoinkWindow(this);
-            }
+            _adminWindow ??= new BwoinkWindow(this);
 
             if (!_activePanelMap.TryGetValue(channelId, out var existingPanel))
-            {
-                _playerManager.SessionsDict.TryGetValue(channelId, out var otherSession);
-                existingPanel = new BwoinkPanel(this, channelId);
-                _activePanelMap[channelId] = existingPanel;
-            }
+                _activePanelMap[channelId] = existingPanel = new BwoinkPanel(this, channelId);
 
             if (!_adminWindow.IsOpen)
             {
