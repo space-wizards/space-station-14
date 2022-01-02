@@ -54,6 +54,7 @@ namespace Content.Server.Chat.Managers
         public int MaxMessageLength => _configurationManager.GetCVar(CCVars.ChatMaxMessageLength);
 
         private const int VoiceRange = 7; // how far voice goes in world units
+        private const int WhisperRange = 2; // how far voice goes in world units
 
         //TODO: make prio based?
         private readonly List<TransformChat> _chatTransformHandlers = new();
@@ -197,6 +198,96 @@ namespace Content.Server.Chat.Managers
             msg.Channel = ChatChannel.Local;
             msg.Message = message;
             msg.MessageWrap = Loc.GetString("chat-manager-entity-say-wrap-message",("entityName", Name: _entManager.GetComponent<MetaDataComponent>(source).EntityName));
+            msg.SenderEntity = source;
+            msg.HideChat = hideChat;
+            _netManager.ServerSendToMany(msg, clients);
+        }
+
+        public void EntityWhisper(EntityUid source, string message, bool hideChat=false)
+        {
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanSpeak(source))
+            {
+                return;
+            }
+
+            // Check if message exceeds the character limit if the sender is a player
+            if (_entManager.TryGetComponent(source, out ActorComponent? actor) &&
+                message.Length > MaxMessageLength)
+            {
+                var feedback = Loc.GetString("chat-manager-max-message-length-exceeded-message", ("limit", MaxMessageLength));
+
+                DispatchServerMessage(actor.PlayerSession, feedback);
+
+                return;
+            }
+
+            foreach (var handler in _chatTransformHandlers)
+            {
+                //TODO: rather return a bool and use a out var?
+                message = handler(source, message);
+            }
+
+            message = message.Trim();
+
+            // We'll try to avoid using MapPosition as EntityCoordinates can early-out and potentially be faster for common use cases
+            // Downside is it may potentially convert to MapPosition unnecessarily.
+            var sourceMapId = _entManager.GetComponent<TransformComponent>(source).MapID;
+            var sourceCoords = _entManager.GetComponent<TransformComponent>(source).Coordinates;
+
+            var clients = new List<INetChannel>();
+
+            foreach (var player in _playerManager.Sessions)
+            {
+                if (player.AttachedEntity is not {Valid: true} playerEntity)
+                    continue;
+
+                var transform = _entManager.GetComponent<TransformComponent>(playerEntity);
+
+                if (transform.MapID != sourceMapId ||
+                    !_entManager.HasComponent<GhostComponent>(playerEntity) &&
+                    !sourceCoords.InRange(_entManager, transform.Coordinates, WhisperRange))
+                    continue;
+
+                clients.Add(player.ConnectedClient);
+            }
+
+            if (message.StartsWith(';'))
+            {
+                // Remove semicolon
+                message = message.Substring(1).TrimStart();
+
+                // Capitalize first letter
+                message = message[0].ToString().ToUpper() +
+                          message.Remove(0, 1);
+
+                var invSystem = EntitySystem.Get<InventorySystem>();
+
+                if (invSystem.TryGetSlotEntity(source, "ears", out var entityUid) &&
+                    _entManager.TryGetComponent(entityUid, out HeadsetComponent? headset))
+                {
+                    headset.RadioRequested = true;
+                }
+                else
+                {
+                    source.PopupMessage(Loc.GetString("chat-manager-no-headset-on-message"));
+                }
+            }
+            else
+            {
+                // Capitalize first letter
+                message = message[0].ToString().ToUpper() +
+                          message.Remove(0, 1);
+            }
+
+            var listeners = EntitySystem.Get<ListeningSystem>();
+            listeners.PingListeners(source, message);
+
+            message = FormattedMessage.EscapeText(message);
+
+            var msg = _netManager.CreateNetMessage<MsgChatMessage>();
+            msg.Channel = ChatChannel.Whisper;
+            msg.Message = message;
+            msg.MessageWrap = Loc.GetString("chat-manager-entity-whisper-wrap-message",("entityName", Name: _entManager.GetComponent<MetaDataComponent>(source).EntityName));
             msg.SenderEntity = source;
             msg.HideChat = hideChat;
             _netManager.ServerSendToMany(msg, clients);

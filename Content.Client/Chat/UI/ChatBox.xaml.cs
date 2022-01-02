@@ -30,6 +30,7 @@ namespace Content.Client.Chat.UI
         private static readonly ChatChannel[] ChannelFilterOrder =
         {
             ChatChannel.Local,
+            ChatChannel.Whisper,
             ChatChannel.Emotes,
             ChatChannel.Radio,
             ChatChannel.OOC,
@@ -42,6 +43,7 @@ namespace Content.Client.Chat.UI
         private static readonly ChatSelectChannel[] ChannelSelectorOrder =
         {
             ChatSelectChannel.Local,
+            ChatSelectChannel.Whisper,
             ChatSelectChannel.Emotes,
             ChatSelectChannel.Radio,
             ChatSelectChannel.OOC,
@@ -58,10 +60,12 @@ namespace Content.Client.Chat.UI
         public const char AliasEmotes = '@';
         public const char AliasAdmin = ']';
         public const char AliasRadio = ';';
+        public const char AliasWhisper = '#';
 
         private static readonly Dictionary<char, ChatSelectChannel> PrefixToChannel = new()
         {
             {AliasLocal, ChatSelectChannel.Local},
+            {AliasWhisper, ChatSelectChannel.Whisper},
             {AliasConsole, ChatSelectChannel.Console},
             {AliasOOC, ChatSelectChannel.OOC},
             {AliasEmotes, ChatSelectChannel.Emotes},

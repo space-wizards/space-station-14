@@ -16,7 +16,8 @@ namespace Content.Client.Chat.UI
         public enum SpeechType : byte
         {
             Emote,
-            Say
+            Say,
+            Whisper
         }
 
         /// <summary>
@@ -56,6 +57,9 @@ namespace Content.Client.Chat.UI
 
                 case SpeechType.Say:
                     return new SaySpeechBubble(text, senderEntity, eyeManager, chatManager, entityManager);
+
+                case SpeechType.Whisper:
+                    return new WhisperSpeechBubble(text, senderEntity, eyeManager, chatManager, entityManager);
 
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -207,6 +211,32 @@ namespace Content.Client.Chat.UI
             var panel = new PanelContainer
             {
                 StyleClasses = { "speechBox", "sayBox" },
+                Children = { label },
+                ModulateSelfOverride = Color.White.WithAlpha(0.75f)
+            };
+
+            return panel;
+        }
+    }
+
+    public class WhisperSpeechBubble : SpeechBubble
+    {
+        public WhisperSpeechBubble(string text, EntityUid senderEntity, IEyeManager eyeManager, IChatManager chatManager, IEntityManager entityManager)
+            : base(text, senderEntity, eyeManager, chatManager, entityManager)
+        {
+        }
+
+        protected override Control BuildBubble(string text)
+        {
+            var label = new RichTextLabel
+            {
+                MaxWidth = 256,
+            };
+            label.SetMessage(text);
+
+            var panel = new PanelContainer
+            {
+                StyleClasses = { "speechBox", "whisperBox" },
                 Children = { label },
                 ModulateSelfOverride = Color.White.WithAlpha(0.75f)
             };

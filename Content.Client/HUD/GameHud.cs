@@ -715,6 +715,7 @@ namespace Content.Client.HUD
                         PageUp => "PgU",
                         RBracket => "]",
                         SemiColon => ";",
+                        Octothorp => "#",
                         _ => DefaultShortKeyName(keyFunction)
                     };
                     return name != null;
