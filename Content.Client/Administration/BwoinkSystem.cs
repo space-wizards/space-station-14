@@ -58,6 +58,8 @@ namespace Content.Client.Administration
             {
                 _activePanelMap[channelId] = existingPanel = new BwoinkPanel(this, channelId);
                 existingPanel.Visible = false;
+                if (!_adminWindow.BwoinkArea.Children.Contains(existingPanel))
+                    _adminWindow.BwoinkArea.AddChild(existingPanel);
             }
 
             _adminWindow.Open();

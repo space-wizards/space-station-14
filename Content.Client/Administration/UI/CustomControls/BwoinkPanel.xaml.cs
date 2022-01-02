@@ -11,7 +11,7 @@ namespace Content.Client.Administration.UI.CustomControls
     public partial class BwoinkPanel : BoxContainer
     {
         private readonly BwoinkSystem _bwoinkSystem;
-        private readonly NetUserId _channelId;
+        public readonly NetUserId ChannelId;
 
         public int Unread { get; private set; } = 0;
 
@@ -19,7 +19,7 @@ namespace Content.Client.Administration.UI.CustomControls
         {
             RobustXamlLoader.Load(this);
             _bwoinkSystem = bwoinkSys;
-            _channelId = userId;
+            ChannelId = userId;
 
             OnVisibilityChanged += c =>
             {
@@ -32,7 +32,7 @@ namespace Content.Client.Administration.UI.CustomControls
         private void Input_OnTextEntered(LineEdit.LineEditEventArgs args)
         {
             if (!string.IsNullOrWhiteSpace(args.Text))
-                _bwoinkSystem.Send(_channelId, args.Text);
+                _bwoinkSystem.Send(ChannelId, args.Text);
 
             SenderLineEdit.Clear();
         }
