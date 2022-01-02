@@ -10,6 +10,7 @@ using Robust.Client.Console;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
+using Robust.Shared.Enums;
 using Robust.Shared.Network;
 using Robust.Shared.IoC;
 
@@ -141,7 +142,7 @@ namespace Content.Client.Administration.UI
         {
             pl ??= (PlayerInfo) li.Metadata!;
             var sb = new StringBuilder();
-            sb.Append(pl.Connected ? '●' : '○');
+            sb.Append(pl.Connected is SessionStatus.Connected or SessionStatus.InGame ? '●' : '○');
             sb.Append(' ');
             if (_bwoinkSystem.TryGetChannel(pl.SessionId, out var panel) && panel.Unread > 0)
             {

@@ -8,6 +8,7 @@ using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
+using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
@@ -63,7 +64,7 @@ namespace Content.Client.Administration.UI.Tabs.PlayerTab
                     player.CharacterName,
                     player.Antag ? "YES" : "NO",
                     new StyleBoxFlat(useAltColor ? altColor : defaultColor),
-                    player.Connected);
+                    player.Connected is SessionStatus.Connected or SessionStatus.InGame);
                 entry.PlayerUid = player.EntityUid;
                 entry.OnPressed += args => OnEntryPressed?.Invoke(args);
                 PlayerList.AddChild(entry);

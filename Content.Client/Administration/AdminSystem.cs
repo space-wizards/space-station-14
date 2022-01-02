@@ -4,6 +4,7 @@ using System.Linq;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Events;
 using Content.Shared.GameTicking;
+using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Network;
 
@@ -48,7 +49,7 @@ namespace Content.Client.Administration
 
             foreach (var (id, playerInfo) in _playerList.ToArray())
             {
-                if (playerInfo.Connected)
+                if (playerInfo.Connected is SessionStatus.Connected or SessionStatus.InGame)
                     continue;
                 _playerList.Remove(id);
             }

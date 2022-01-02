@@ -1,10 +1,15 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Administration.Managers;
+using Content.Server.Afk;
 using Content.Server.Players;
 using Content.Server.Roles;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Events;
+using Content.Shared.MobState;
+using Content.Shared.MobState.Components;
+using Content.Server.Mind.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
@@ -18,8 +23,11 @@ namespace Content.Server.Administration
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
+        [Dependency] private readonly INetManager _netManager = default!;
+        [Dependency] private readonly IAfkManager _afkManager = default!;
 
         private readonly Dictionary<NetUserId, PlayerInfo> _playerList = new();
+        private readonly Dictionary<NetUserId, PlayerDisconnect> _disconnections = new();
 
         public override void Initialize()
         {
@@ -27,10 +35,12 @@ namespace Content.Server.Administration
 
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
             _adminManager.OnPermsChanged += OnAdminPermsChanged;
+            _netManager.Disconnect += OnDisconnect;
             SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttached);
             SubscribeLocalEvent<PlayerDetachedEvent>(OnPlayerDetached);
             SubscribeLocalEvent<RoleAddedEvent>(OnRoleEvent);
             SubscribeLocalEvent<RoleRemovedEvent>(OnRoleEvent);
+            SubscribeLocalEvent<MobStateChangedEvent>(OnMobState);
         }
 
         private void UpdatePlayerList(IPlayerSession player)
@@ -46,6 +56,11 @@ namespace Content.Server.Administration
             {
                 RaiseNetworkEvent(playerInfoChangedEvent, admin.ConnectedClient);
             }
+        }
+
+        private void OnDisconnect(object? sender, NetDisconnectedArgs args)
+        {
+            _disconnections[args.Channel.UserId] = new PlayerDisconnect(DateTime.Now, args.Reason);
         }
 
         private void OnRoleEvent(RoleEvent ev)
@@ -83,11 +98,20 @@ namespace Content.Server.Administration
             UpdatePlayerList(ev.Player);
         }
 
+        private void OnMobState(MobStateChangedEvent ev)
+        {
+            if (TryComp<MindComponent>(ev.Entity, out var mind)
+                && mind.Mind is not null
+                && mind.Mind.TryGetSession(out var session))
+                    UpdatePlayerList(session);
+        }
+
         public override void Shutdown()
         {
             base.Shutdown();
             _playerManager.PlayerStatusChanged -= OnPlayerStatusChanged;
             _adminManager.OnPermsChanged -= OnAdminPermsChanged;
+            _netManager.Disconnect -= OnDisconnect;
         }
 
         private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
@@ -106,18 +130,39 @@ namespace Content.Server.Administration
 
         private PlayerInfo GetPlayerInfo(IPlayerSession session)
         {
-            var name = session.Name;
-            var username = string.Empty;
+            var username = session.Name;
+            var name = string.Empty;
+            MobStateFlags msf = MobStateFlags.Unknown;
 
             if (session.AttachedEntity != null)
-                username = EntityManager.GetComponent<MetaDataComponent>(session.AttachedEntity.Value).EntityName;
+            {
+                name = Comp<MetaDataComponent>(session.AttachedEntity.Value).EntityName;
+                if (TryComp<MobStateComponent>(session.AttachedEntity.Value, out var mobState))
+                    msf = mobState.CurrentState?.ToFlags() ?? msf;
+            }
 
-            var antag = session.ContentData()?.Mind?.AllRoles.Any(r => r.Antagonist) ?? false;
+            var mind = session.ContentData()?.Mind;
+            var antag = mind?.AllRoles.Any(r => r.Antagonist) ?? false;
+            var roles = mind?.AllRoles.Select(r => r.Name).ToArray() ?? Array.Empty<string>();
 
-            var connected = session.Status is SessionStatus.Connected or SessionStatus.InGame;
+            return new PlayerInfo
+            (
+                Username: username,
+                SessionId: session.UserId,
+                Ping: session.Ping,
+                EntityUid: session.AttachedEntity.GetValueOrDefault(),
+                Connected: session.Status,
+                Disconnected: _disconnections.GetValueOrDefault(session.UserId),
+                Afk: _afkManager.IsAfk(session),
 
-            return new PlayerInfo(name, username, antag, session.AttachedEntity.GetValueOrDefault(), session.UserId,
-                connected);
+                CharacterName: name,
+                Antag: antag,
+                Roles: roles,
+                DeadIC: mind?.CharacterDeadIC ?? true,
+                DeadPhysically: mind?.CharacterDeadPhysically ?? true,
+                TimeOfDeath: mind?.TimeOfDeath,
+                MobState: msf
+            );
         }
     }
 }
