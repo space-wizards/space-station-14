@@ -25,10 +25,10 @@
       - AllMask
   - type: Singularity
   - type: SingularityDistortion
-  #- type: RadiationPulse
-  #  range: 15
-  #  decay: false
-  #  dps: 1
+  - type: RadiationPulse
+    range: 15
+    decay: false
+    dps: 1
   - type: Sprite
     sprite: Structures/Power/Generation/Singularity/singularity_1.rsi
     state: singularity_1

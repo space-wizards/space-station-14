@@ -1,81 +1,4 @@
 Entries:
-- author: Seth
-  changes:
-  - {message: Added two new maintenance areas, type: Add}
-  id: 298
-  time: '2021-08-05T22:20:58.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Windoors and secure windoors have been added and are constructible.,
-    type: Add}
-  id: 299
-  time: '2021-08-06T06:09:39.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Ghosts can now properly return to their body if applicable., type: Fix}
-  id: 300
-  time: '2021-08-06T07:02:36.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: 'Fixes a bug where items would disappear when placed in tables, in certain
-      situations.', type: Fix}
-  id: 301
-  time: '2021-08-06T15:53:48.856573+00:00'
-- author: Zumorica
-  changes:
-  - {message: Fixes pickup animation not showing under certain conditions., type: Fix}
-  id: 302
-  time: '2021-08-06T16:13:07.405459+00:00'
-- author: Zumorica
-  changes:
-  - {message: Fix pointing at an item in your inventory resulting in the pointing
-      arrow playing a weird animation., type: Fix}
-  id: 303
-  time: '2021-08-06T16:28:43.947928+00:00'
-- author: Zumorica
-  changes:
-  - {message: Fix bug where you couldn't point at space., type: Fix}
-  id: 304
-  time: '2021-08-06T16:28:43.948705+00:00'
-- author: Seth
-  changes:
-  - {message: Added a hardsuit into CMO's Locker, type: Add}
-  id: 305
-  time: '2021-08-06T23:11:18.0000000+00:00'
-- author: SweptWasTaken
-  changes:
-  - {message: Maps in windoors, type: Add}
-  id: 306
-  time: '2021-08-07T02:47:43.0000000+00:00'
-- author: scrato
-  changes:
-  - {message: 'When the head is detached from the body, the hair, eyes and ears will
-      not remain at the body.', type: Add}
-  id: 307
-  time: '2021-08-07T21:18:43.0000000+00:00'
-- author: TimrodDX
-  changes:
-  - {message: Security windoors for planned mapping rework., type: Add}
-  id: 308
-  time: '2021-08-07T21:29:47.0000000+00:00'
-- author: TimrodDX
-  changes:
-  - {message: Partially re-mapped Security and Chemistry., type: Add}
-  id: 309
-  time: '2021-08-08T00:32:18.0000000+00:00'
-- author: Seth
-  changes:
-  - {message: Added cloning pod and medical scanner circuit boards into the protolathe,
-    type: Add}
-  - {message: Made the cloning pod and medical scanner constructible, type: Add}
-  id: 310
-  time: '2021-08-08T20:21:19.0000000+00:00'
-- author: TimrodDX
-  changes:
-  - {message: Fixed the light in the captain's bathroom and the inner windoor at the
-      science desk., type: Tweak}
-  id: 311
-  time: '2021-08-10T00:28:11.0000000+00:00'
 - author: Swept
   changes:
   - {message: Most belts now have restrictions for what can be inserted into them,
@@ -2889,3 +2812,90 @@ Entries:
       Safety Plasma., type: Remove}
   id: 799
   time: '2022-01-01T01:17:09.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed alt-click interactions not working properly., type: Fix}
+  id: 800
+  time: '2022-01-01T03:16:45.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'The singularity properly generates radiation, meaning it should now
+      generate power. Wear a hardsuit and mesons!', type: Fix}
+  id: 801
+  time: '2022-01-01T03:28:13.477890+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Removed the ability to stuff the held part of a pulled entity in your
+      pocket., type: Remove}
+  id: 802
+  time: '2022-01-01T13:20:32.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Substations now explode when damaged enough and produce debris. Watch
+      out!, type: Fix}
+  id: 803
+  time: '2022-01-01T16:51:57.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: The Syndicate is now interested in a wider variety of items spread between
+      almost all departments., type: Add}
+  - {message: Some coveted items have had their name or description changed to make
+      their value to NanoTrasen (and the Syndicate) clear., type: Tweak}
+  - {message: The Syndicate is less likely to ask for an overly optimistic amount
+      of things to be stolen., type: Tweak}
+  - {message: The Syndicate will no longer ask for agents to both steal an item and
+      die., type: Fix}
+  id: 804
+  time: '2022-01-01T16:56:25.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed not being able to strip inventory from incapacitated entities.,
+    type: Fix}
+  id: 805
+  time: '2022-01-01T17:03:29.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'After evaluating recent agent performance, the Syndicate now considers
+      most objectives more difficult. The only exception is dying, which their agents
+      have been getting top marks on.', type: Tweak}
+  id: 806
+  time: '2022-01-01T22:46:00.0000000+00:00'
+- author: Charlese2
+  changes:
+  - {message: Lowered flash bullet damage., type: Tweak}
+  id: 807
+  time: '2022-01-01T22:54:43.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: The Uplink purchase sound is much quieter now. It still may be audible
+      to other people if they are close enough and in a quiet place., type: Tweak}
+  id: 808
+  time: '2022-01-02T02:00:01.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: 'NanoTrasen has decided that air quality is important, and have provided
+      its stations with air and fire alarms. No longer will a single gas leak accidentally
+      ruin entire stations.', type: Add}
+  id: 809
+  time: '2022-01-02T04:56:24.0000000+00:00'
+- author: Phantom-Lily
+  changes:
+  - {message: 'Added a classic emergency shuttle wreck to Salvage, in its natural
+      state.', type: Add}
+  id: 810
+  time: '2022-01-02T05:39:45.0000000+00:00'
+- author: Delete69
+  changes:
+  - {message: small bar-themed salvage, type: Add}
+  id: 811
+  time: '2022-01-02T05:40:44.0000000+00:00'
+- author: Lamrr
+  changes:
+  - {message: Floor tile crafting now produces four floor tiles instead of one., type: Tweak}
+  id: 812
+  time: '2022-01-02T05:57:46.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Crit and dead mobs will now be hidden from the ghost roles list., type: Tweak}
+  id: 813
+  time: '2022-01-02T06:00:22.0000000+00:00'
