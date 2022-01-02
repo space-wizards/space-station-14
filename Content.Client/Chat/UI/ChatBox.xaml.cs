@@ -60,7 +60,7 @@ namespace Content.Client.Chat.UI
         public const char AliasEmotes = '@';
         public const char AliasAdmin = ']';
         public const char AliasRadio = ';';
-        public const char AliasWhisper = '#';
+        public const char AliasWhisper = ',';
 
         private static readonly Dictionary<char, ChatSelectChannel> PrefixToChannel = new()
         {
