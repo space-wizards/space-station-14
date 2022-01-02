@@ -67,7 +67,7 @@ binds:
   key: Period
 - function: FocusWhisperChatWindow
   type: State
-  key: Octothorp
+  key: Apostrophe
 - function: FocusRadioWindow
   type: State
   key: SemiColon
