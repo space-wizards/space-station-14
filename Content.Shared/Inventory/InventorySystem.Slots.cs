@@ -26,6 +26,7 @@ public partial class InventorySystem : EntitySystem
         if (!containerComp.TryGetContainer(slotDefinition.Name, out var container))
         {
             containerSlot = containerComp.MakeContainer<ContainerSlot>(slotDefinition.Name);
+            containerSlot.OccludesLight = false;
             return true;
         }
 
