@@ -259,18 +259,6 @@ namespace Content.Server.Chat.Managers
                 // Capitalize first letter
                 message = message[0].ToString().ToUpper() +
                           message.Remove(0, 1);
-
-                var invSystem = EntitySystem.Get<InventorySystem>();
-
-                if (invSystem.TryGetSlotEntity(source, "ears", out var entityUid) &&
-                    _entManager.TryGetComponent(entityUid, out HeadsetComponent? headset))
-                {
-                    headset.RadioRequested = true;
-                }
-                else
-                {
-                    source.PopupMessage(Loc.GetString("chat-manager-no-headset-on-message"));
-                }
             }
             else
             {
