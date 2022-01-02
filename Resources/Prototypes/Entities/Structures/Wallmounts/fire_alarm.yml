@@ -37,6 +37,7 @@
     LayoutId: FireAlarm
   - type: Sprite
     sprite: Structures/Wallmounts/air_monitors.rsi
+    netsync: false
     layers:
     - state: fire0
       map: ["fireAlarmBase"]

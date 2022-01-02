@@ -70,7 +70,7 @@ namespace Content.Server.Atmos.Monitor.Systems
         public override void Initialize()
         {
             SubscribeLocalEvent<AtmosMonitorComponent, ComponentInit>(OnAtmosMonitorInit);
-            SubscribeLocalEvent<AtmosMonitorComponent, ComponentStartup>(OnAtmosMonitorStartup);
+            SubscribeLocalEvent<AtmosMonitorComponent, MapInitEvent>(OnAtmosMonitorStartup);
             SubscribeLocalEvent<AtmosMonitorComponent, ComponentShutdown>(OnAtmosMonitorShutdown);
             SubscribeLocalEvent<AtmosMonitorComponent, AtmosDeviceUpdateEvent>(OnAtmosUpdate);
             SubscribeLocalEvent<AtmosMonitorComponent, TileFireEvent>(OnFireEvent);
@@ -96,7 +96,7 @@ namespace Content.Server.Atmos.Monitor.Systems
             }
         }
 
-        private void OnAtmosMonitorStartup(EntityUid uid, AtmosMonitorComponent component, ComponentStartup args)
+        private void OnAtmosMonitorStartup(EntityUid uid, AtmosMonitorComponent component, MapInitEvent args)
         {
             if (component.PowerRecvComponent == null
                 && component.AtmosDeviceComponent != null)
