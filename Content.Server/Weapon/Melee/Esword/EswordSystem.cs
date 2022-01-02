@@ -8,7 +8,6 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
-using Robust.Shared.Log;
 
 namespace Content.Server.Weapon.Melee.Esword
 {
@@ -49,7 +48,6 @@ namespace Content.Server.Weapon.Melee.Esword
             }
             else
             {
-                Logger.Info(comp.Name);
                 TurnOn(comp, args.User);
             }
         }
