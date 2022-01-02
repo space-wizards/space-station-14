@@ -25,7 +25,7 @@ namespace Content.Server.Plants.Systems
 
         public override void Initialize()
         {
-            SubscribeLocalEvent<RandomPottedPlantComponent,MapInitEvent>(OnMapInit);
+            SubscribeLocalEvent<RandomPottedPlantComponent, MapInitEvent>(OnMapInit);
         }
 
         private void OnMapInit(EntityUid uid, RandomPottedPlantComponent component, MapInitEvent args)
