@@ -1,11 +1,11 @@
-﻿using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Shared.Inventory.Events;
 
 public class UnequipAttemptEventBase : CancellableEntityEventArgs
 {
     /// <summary>
-    /// The entity unequipping.
+    /// The entity performing the action. NOT necessarily the same as the entity whose equipment is being removed..
     /// </summary>
     public readonly EntityUid Unequipee;
 

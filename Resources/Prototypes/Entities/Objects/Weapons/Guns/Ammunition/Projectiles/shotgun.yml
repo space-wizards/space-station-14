@@ -55,7 +55,7 @@
   - type: Projectile
     damage:
       types:
-        Blunt: 13
+        Blunt: 3
 
 - type: entity
   id: PelletShotgunIncendiary
