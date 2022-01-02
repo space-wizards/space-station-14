@@ -7,7 +7,7 @@
   placement:
     mode: SnapgridCenter
   components:
-  - type: Sprite # TODO: add sprite for maintenece panel open
+  - type: Sprite # TODO: add sprite for maintenance panel open
     sprite: Structures/Power/substation.rsi
     layers:
     - state: substation
