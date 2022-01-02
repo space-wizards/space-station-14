@@ -32,7 +32,6 @@ internal class ClientAlertsSystem : AlertsSystem
         SubscribeLocalEvent<AlertsComponent, PlayerDetachedEvent>((_, _, _) => PlayerDetached());
 
         SubscribeLocalEvent<AlertsComponent, ComponentHandleState>(ClientAlertsHandleState);
-        SubscribeLocalEvent<AlertsComponent, ComponentShutdown>((_, _, _) => PlayerDetached());
     }
 
     protected override void LoadPrototypes()
@@ -87,6 +86,13 @@ internal class ClientAlertsSystem : AlertsSystem
     {
         if (!CurControlled(clientAlertsComponent.Owner, _playerManager)) return;
         SyncAlerts?.Invoke(this, clientAlertsComponent.Alerts);
+    }
+
+    protected override void HandleComponentShutdown(EntityUid uid)
+    {
+        base.HandleComponentShutdown(uid);
+
+        PlayerDetached();
     }
 
     private void PlayerDetached()

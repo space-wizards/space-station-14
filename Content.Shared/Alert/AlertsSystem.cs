@@ -159,13 +159,18 @@ public abstract class AlertsSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<AlertsComponent, ComponentStartup>((uid, _, _) => RaiseLocalEvent(uid, new AlertSyncEvent(uid)));
-        SubscribeLocalEvent<AlertsComponent, ComponentRemove>((uid, _, _) => RaiseLocalEvent(uid, new AlertSyncEvent(uid)));
+        SubscribeLocalEvent<AlertsComponent, ComponentShutdown>((uid, _, _) => HandleComponentShutdown(uid));
 
         SubscribeLocalEvent<AlertsComponent, ComponentGetState>(ClientAlertsGetState);
         SubscribeNetworkEvent<ClickAlertEvent>(HandleClickAlert);
 
         LoadPrototypes();
         _prototypeManager.PrototypesReloaded += HandlePrototypesReloaded;
+    }
+
+    protected virtual void HandleComponentShutdown(EntityUid uid)
+    {
+        RaiseLocalEvent(uid, new AlertSyncEvent(uid));
     }
 
     public override void Shutdown()
