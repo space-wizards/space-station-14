@@ -7,14 +7,13 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.ViewVariables;
-using static Content.Shared.Inventory.EquipmentSlotDefines;
 
 namespace Content.Client.Inventory
 {
     [UsedImplicitly]
     public class StrippableBoundUserInterface : BoundUserInterface
     {
-        public Dictionary<Slots, string>? Inventory { get; private set; }
+        public Dictionary<(string ID, string Name), string>? Inventory { get; private set; }
         public Dictionary<string, string>? Hands { get; private set; }
         public Dictionary<EntityUid, string>? Handcuffs { get; private set; }
 
@@ -55,9 +54,9 @@ namespace Content.Client.Inventory
             {
                 foreach (var (slot, name) in Inventory)
                 {
-                    _strippingMenu.AddButton(SlotNames[slot], name, (ev) =>
+                    _strippingMenu.AddButton(slot.Name, name, (ev) =>
                     {
-                        SendMessage(new StrippingInventoryButtonPressed(slot));
+                        SendMessage(new StrippingInventoryButtonPressed(slot.ID));
                     });
                 }
             }

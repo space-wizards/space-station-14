@@ -23,9 +23,9 @@ namespace Content.Server.AI.Utility.ExpandableActions.Clothing.Gloves
             var considerationsManager = IoCManager.Resolve<ConsiderationsManager>();
             return new[]
             {
-                considerationsManager.Get<ClothingInSlotCon>().Slot(EquipmentSlotDefines.Slots.GLOVES, context)
+                considerationsManager.Get<ClothingInSlotCon>().Slot("gloves", context)
                     .InverseBoolCurve(context),
-                considerationsManager.Get<ClothingInInventoryCon>().Slot(EquipmentSlotDefines.SlotFlags.GLOVES, context)
+                considerationsManager.Get<ClothingInInventoryCon>().Slot(SlotFlags.GLOVES, context)
                     .InverseBoolCurve(context),
             };
         }
@@ -37,7 +37,7 @@ namespace Content.Server.AI.Utility.ExpandableActions.Clothing.Gloves
             foreach (var entity in context.GetState<NearbyClothingState>().GetValue())
             {
                 if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out ClothingComponent? clothing) &&
-                    (clothing.SlotFlags & EquipmentSlotDefines.SlotFlags.GLOVES) != 0)
+                    (clothing.SlotFlags & SlotFlags.GLOVES) != 0)
                 {
                     yield return new PickUpGloves {Owner = owner, Target = entity, Bonus = Bonus};
                 }

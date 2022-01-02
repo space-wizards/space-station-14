@@ -1,5 +1,6 @@
 using System;
 using Content.Shared.Atmos;
+using Content.Shared.Atmos.Piping.Unary.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -13,6 +14,9 @@ namespace Content.Server.Atmos.Piping.Unary.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Enabled { get; set; } = true;
+
+        [ViewVariables]
+        public bool IsDirty { get; set; } = false;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Welded { get; set; } = false;
@@ -33,19 +37,30 @@ namespace Content.Server.Atmos.Piping.Unary.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         public float InternalPressureBound { get; set; } = 0f;
-    }
 
-    public enum VentPumpDirection : sbyte
-    {
-        Siphoning = 0,
-        Releasing = 1,
-    }
+        public GasVentPumpData ToAirAlarmData()
+        {
+            if (!IsDirty) return new GasVentPumpData { Dirty = IsDirty };
 
-    [Flags]
-    public enum VentPressureBound : sbyte
-    {
-        NoBound       = 0,
-        InternalBound = 1,
-        ExternalBound = 2,
+            return new GasVentPumpData
+            {
+                Enabled = Enabled,
+                Dirty = IsDirty,
+                PumpDirection = PumpDirection,
+                PressureChecks = PressureChecks,
+                ExternalPressureBound = ExternalPressureBound,
+                InternalPressureBound = InternalPressureBound
+            };
+        }
+
+        public void FromAirAlarmData(GasVentPumpData data)
+        {
+            Enabled = data.Enabled;
+            IsDirty = data.Dirty;
+            PumpDirection = (VentPumpDirection) data.PumpDirection!;
+            PressureChecks = (VentPressureBound) data.PressureChecks!;
+            ExternalPressureBound = (float) data.ExternalPressureBound!;
+            InternalPressureBound = (float) data.InternalPressureBound!;
+        }
     }
 }

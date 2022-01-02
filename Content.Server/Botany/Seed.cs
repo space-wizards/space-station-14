@@ -16,6 +16,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -103,7 +104,7 @@ namespace Content.Server.Botany
         #region Output
 
         [ViewVariables]
-        [DataField("productPrototypes")]
+        [DataField("productPrototypes", customTypeSerializer:typeof(PrototypeIdListSerializer<EntityPrototype>))]
         public List<string> ProductPrototypes { get; set; } = new();
 
         [ViewVariables]
