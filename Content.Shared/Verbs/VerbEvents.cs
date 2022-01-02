@@ -21,12 +21,14 @@ namespace Content.Shared.Verbs
         /// </summary>
         public readonly EntityUid? SlotOwner;
 
+        public readonly bool AdminRequest;
 
-        public RequestServerVerbsEvent(EntityUid entityUid, VerbType type, EntityUid? slotOwner = null)
+        public RequestServerVerbsEvent(EntityUid entityUid, VerbType type, EntityUid? slotOwner = null, bool adminRequest = false)
         {
             EntityUid = entityUid;
             Type = type;
             SlotOwner = slotOwner;
+            AdminRequest = adminRequest;
         }
     }
 

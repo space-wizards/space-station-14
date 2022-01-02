@@ -13,7 +13,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Utility;
-using Robust.Shared.Utility.Markup;
 using static Content.Shared.Interaction.SharedInteractionSystem;
 
 namespace Content.Shared.Examine
@@ -26,7 +25,7 @@ namespace Content.Shared.Examine
         /// </summary>
         /// <param name="message">The message to append to which will be displayed.</param>
         /// <param name="inDetailsRange">Whether the examiner is within the 'Details' range, allowing you to show information logically only availabe when close to the examined entity.</param>
-        void Examine(FormattedMessage.Builder message, bool inDetailsRange);
+        void Examine(FormattedMessage message, bool inDetailsRange);
     }
 
     public abstract class ExamineSystemShared : EntitySystem
@@ -65,7 +64,7 @@ namespace Content.Shared.Examine
         [Pure]
         public bool CanExamine(EntityUid examiner, EntityUid examined)
         {
-            return CanExamine(examiner, EntityManager.GetComponent<TransformComponent>(examined).MapPosition,
+            return !Deleted(examined) && CanExamine(examiner, EntityManager.GetComponent<TransformComponent>(examined).MapPosition,
                 entity => entity == examiner || entity == examined);
         }
 
@@ -213,11 +212,11 @@ namespace Content.Shared.Examine
 
         public FormattedMessage GetExamineText(EntityUid entity, EntityUid? examiner)
         {
-            var message = new FormattedMessage.Builder();
+            var message = new FormattedMessage();
 
             if (examiner == null)
             {
-                return new(new Section[] {});
+                return message;
             }
 
             var doNewline = false;
@@ -239,15 +238,21 @@ namespace Content.Shared.Examine
             //Add component statuses from components that report one
             foreach (var examineComponent in EntityManager.GetComponents<IExamine>(entity))
             {
-                examineComponent.Examine(message, isInDetailsRange);
+                var subMessage = new FormattedMessage();
+                examineComponent.Examine(subMessage, isInDetailsRange);
+                if (subMessage.Tags.Count == 0)
+                    continue;
 
                 if (doNewline)
                     message.AddText("\n");
 
+                message.AddMessage(subMessage);
                 doNewline = true;
             }
 
-            return message.Build();
+            message.Pop();
+
+            return message;
         }
     }
 
@@ -264,7 +269,7 @@ namespace Content.Shared.Examine
         /// <seealso cref="PushMessage"/>
         /// <seealso cref="PushMarkup"/>
         /// <seealso cref="PushText"/>
-        public FormattedMessage.Builder Message { get; }
+        public FormattedMessage Message { get; }
 
         /// <summary>
         ///     The entity performing the examining.
@@ -283,7 +288,7 @@ namespace Content.Shared.Examine
 
         private bool _doNewLine;
 
-        public ExaminedEvent(FormattedMessage.Builder message, EntityUid examined, EntityUid examiner, bool isInDetailsRange, bool doNewLine)
+        public ExaminedEvent(FormattedMessage message, EntityUid examined, EntityUid examiner, bool isInDetailsRange, bool doNewLine)
         {
             Message = message;
             Examined = examined;
@@ -299,6 +304,9 @@ namespace Content.Shared.Examine
         /// <seealso cref="PushText"/>
         public void PushMessage(FormattedMessage message)
         {
+            if (message.Tags.Count == 0)
+                return;
+
             if (_doNewLine)
                 Message.AddText("\n");
 
@@ -313,7 +321,7 @@ namespace Content.Shared.Examine
         /// <seealso cref="PushMessage"/>
         public void PushMarkup(string markup)
         {
-            PushMessage(Basic.RenderMarkup(markup));
+            PushMessage(FormattedMessage.FromMarkup(markup));
         }
 
         /// <summary>
@@ -321,6 +329,11 @@ namespace Content.Shared.Examine
         /// </summary>
         /// <seealso cref="PushMarkup"/>
         /// <seealso cref="PushMessage"/>
-        public void PushText(string text) => Message.AddText(text);
+        public void PushText(string text)
+        {
+            var msg = new FormattedMessage();
+            msg.AddText(text);
+            PushMessage(msg);
+        }
     }
 }

@@ -9,18 +9,13 @@ namespace Content.Server.AI.WorldState.States.Inventory
     /// AKA what's in active hand
     /// </summary>
     [UsedImplicitly]
-    public sealed class EquippedEntityState : StateData<EntityUid>
+    public sealed class EquippedEntityState : StateData<EntityUid?>
     {
         public override string Name => "EquippedEntity";
 
-        public override EntityUid GetValue()
+        public override EntityUid? GetValue()
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out HandsComponent? handsComponent))
-            {
-                return default;
-            }
-
-            return handsComponent.GetActiveHand?.Owner ?? default;
+            return IoCManager.Resolve<IEntityManager>().GetComponentOrNull<HandsComponent>(Owner)?.GetActiveHand?.Owner;
         }
     }
 }

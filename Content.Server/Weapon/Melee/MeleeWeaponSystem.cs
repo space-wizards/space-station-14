@@ -74,7 +74,7 @@ namespace Content.Server.Weapon.Melee
             args.Handled = true;
             var curTime = _gameTiming.CurTime;
 
-            if (curTime < comp.CooldownEnd || !args.Target.IsValid())
+            if (curTime < comp.CooldownEnd || args.Target == null)
                 return;
 
             var location = EntityManager.GetComponent<TransformComponent>(args.User).Coordinates;
@@ -101,10 +101,10 @@ namespace Content.Server.Weapon.Melee
                     {
                         if (args.Used == args.User)
                             _logSystem.Add(LogType.MeleeHit,
-                                $"{ToPrettyString(args.User):user} melee attacked {ToPrettyString(args.Target):target} using their hands and dealt {damageResult.Total:damage} damage");
+                                $"{ToPrettyString(args.User):user} melee attacked {ToPrettyString(args.Target.Value):target} using their hands and dealt {damageResult.Total:damage} damage");
                         else
                             _logSystem.Add(LogType.MeleeHit,
-                                $"{ToPrettyString(args.User):user} melee attacked {ToPrettyString(args.Target):target} using {ToPrettyString(args.Used):used} and dealt {damageResult.Total:damage} damage");
+                                $"{ToPrettyString(args.User):user} melee attacked {ToPrettyString(args.Target.Value):target} using {ToPrettyString(args.Used):used} and dealt {damageResult.Total:damage} damage");
                     }
 
                     SoundSystem.Play(Filter.Pvs(owner), comp.HitSound.GetSound(), target);

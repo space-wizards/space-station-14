@@ -193,42 +193,54 @@ namespace Content.Server.Administration.Managers
             }
 
             // Load flags for engine commands, since those don't have the attributes.
-            if (_res.TryContentFileRead(new ResourcePath("/engineCommandPerms.yml"), out var fs))
+            if (_res.TryContentFileRead(new ResourcePath("/engineCommandPerms.yml"), out var efs))
             {
-                using var reader = new StreamReader(fs, EncodingHelpers.UTF8);
-                var yStream = new YamlStream();
-                yStream.Load(reader);
-                var root = (YamlSequenceNode) yStream.Documents[0].RootNode;
+                LoadPermissionsFromStream(efs);
+            }
 
-                foreach (var child in root)
+            // Load flags for client-only commands, those don't have the flag attributes, only "AnyCommand".
+            if (_res.TryContentFileRead(new ResourcePath("/clientCommandPerms.yml"), out var cfs))
+            {
+                LoadPermissionsFromStream(cfs);
+            }
+        }
+
+        private void LoadPermissionsFromStream(Stream fs)
+        {
+            using var reader = new StreamReader(fs, EncodingHelpers.UTF8);
+            var yStream = new YamlStream();
+            yStream.Load(reader);
+            var root = (YamlSequenceNode) yStream.Documents[0].RootNode;
+
+            foreach (var child in root)
+            {
+                var map = (YamlMappingNode) child;
+                var commands = map.GetNode<YamlSequenceNode>("Commands").Select(p => p.AsString());
+                if (map.TryGetNode("Flags", out var flagsNode))
                 {
-                    var map = (YamlMappingNode) child;
-                    var commands = map.GetNode<YamlSequenceNode>("Commands").Select(p => p.AsString());
-                    if (map.TryGetNode("Flags", out var flagsNode))
+                    var flagNames = flagsNode.AsString().Split(",", StringSplitOptions.RemoveEmptyEntries);
+                    var flags = AdminFlagsHelper.NamesToFlags(flagNames);
+                    foreach (var cmd in commands)
                     {
-                        var flagNames = flagsNode.AsString().Split(",", StringSplitOptions.RemoveEmptyEntries);
-                        var flags = AdminFlagsHelper.NamesToFlags(flagNames);
-                        foreach (var cmd in commands)
+                        if (!_adminCommands.TryGetValue(cmd, out var exFlags))
                         {
-                            if (!_adminCommands.TryGetValue(cmd, out var exFlags))
-                            {
-                                _adminCommands.Add(cmd, new[] {flags});
-                            }
-                            else
-                            {
-                                var newArr = new AdminFlags[exFlags.Length + 1];
-                                exFlags.CopyTo(newArr, 0);
-                                exFlags[^1] = flags;
-                                _adminCommands[cmd] = newArr;
-                            }
+                            _adminCommands.Add(cmd, new[] {flags});
+                        }
+                        else
+                        {
+                            var newArr = new AdminFlags[exFlags.Length + 1];
+                            exFlags.CopyTo(newArr, 0);
+                            exFlags[^1] = flags;
+                            _adminCommands[cmd] = newArr;
                         }
                     }
-                    else
-                    {
-                        _anyCommands.UnionWith(commands);
-                    }
+                }
+                else
+                {
+                    _anyCommands.UnionWith(commands);
                 }
             }
+
         }
 
         public void PromoteHost(IPlayerSession player)
@@ -443,7 +455,7 @@ namespace Content.Server.Administration.Managers
 
         public bool CanViewVar(IPlayerSession session)
         {
-            return GetAdminData(session)?.CanViewVar() ?? false;
+            return CanCommand(session, "vv");
         }
 
         public bool CanAdminPlace(IPlayerSession session)

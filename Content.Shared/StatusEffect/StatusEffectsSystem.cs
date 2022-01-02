@@ -20,6 +20,8 @@ namespace Content.Shared.StatusEffect
         {
             base.Initialize();
 
+            UpdatesOutsidePrediction = true;
+
             SubscribeLocalEvent<StatusEffectsComponent, ComponentGetState>(OnGetState);
             SubscribeLocalEvent<StatusEffectsComponent, ComponentHandleState>(OnHandleState);
         }

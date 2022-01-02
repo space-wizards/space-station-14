@@ -82,7 +82,7 @@ namespace Content.Server.Cloning
                 }
 
                 if (!power.Powered)
-                    return;
+                    continue;
 
                 if (cloning.BodyContainer.ContainedEntity != null)
                 {

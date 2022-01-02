@@ -43,6 +43,9 @@
   id: CaptainSabre
 
 - type: Tag
+  id: CigFilter
+
+- type: Tag
   id: CigPack
 
 - type: Tag
@@ -182,6 +185,9 @@
 
 - type: Tag
   id: Pill
+
+- type: Tag
+  id: PillCanister
 
 - type: Tag
   id: Pipe

@@ -6,7 +6,6 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Utility;
-using Robust.Shared.Utility.Markup;
 
 namespace Content.Client.Info
 {
@@ -63,7 +62,7 @@ namespace Content.Client.Info
 
         public void SetInfoBlob(string markup)
         {
-            _richTextLabel.SetMessage(Basic.RenderMarkup(markup));
+            _richTextLabel.SetMessage(FormattedMessage.FromMarkup(markup));
         }
     }
 }

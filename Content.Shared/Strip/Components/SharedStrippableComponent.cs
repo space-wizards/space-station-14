@@ -6,7 +6,6 @@ using Content.Shared.Hands.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
-using static Content.Shared.Inventory.EquipmentSlotDefines;
 
 namespace Content.Shared.Strip.Components
 {
@@ -40,9 +39,9 @@ namespace Content.Shared.Strip.Components
     [NetSerializable, Serializable]
     public class StrippingInventoryButtonPressed : BoundUserInterfaceMessage
     {
-        public Slots Slot { get; }
+        public string Slot { get; }
 
-        public StrippingInventoryButtonPressed(Slots slot)
+        public StrippingInventoryButtonPressed(string slot)
         {
             Slot = slot;
         }
@@ -73,11 +72,11 @@ namespace Content.Shared.Strip.Components
     [NetSerializable, Serializable]
     public class StrippingBoundUserInterfaceState : BoundUserInterfaceState
     {
-        public Dictionary<Slots, string> Inventory { get; }
+        public Dictionary<(string ID, string Name), string> Inventory { get; }
         public Dictionary<string, string> Hands { get; }
         public Dictionary<EntityUid, string> Handcuffs { get; }
 
-        public StrippingBoundUserInterfaceState(Dictionary<Slots, string> inventory, Dictionary<string, string> hands, Dictionary<EntityUid, string> handcuffs)
+        public StrippingBoundUserInterfaceState(Dictionary<(string ID, string Name), string> inventory, Dictionary<string, string> hands, Dictionary<EntityUid, string> handcuffs)
         {
             Inventory = inventory;
             Hands = hands;

@@ -1,3 +1,4 @@
+#chairs
 - type: construction
   name: chair
   id: Chair
@@ -13,7 +14,7 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked {}
+    - !type:TileNotBlocked
 
 - type: construction
   name: stool
@@ -30,7 +31,7 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked {}
+    - !type:TileNotBlocked
 
 - type: construction
   name: bar stool
@@ -47,7 +48,7 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked {}
+    - !type:TileNotBlocked
 
 - type: construction
   name: office chair
@@ -64,7 +65,7 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked {}
+    - !type:TileNotBlocked
 
 - type: construction
   name: dark office chair
@@ -81,7 +82,7 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked {}
+    - !type:TileNotBlocked
 
 - type: construction
   name: comfy chair
@@ -98,7 +99,7 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked {}
+    - !type:TileNotBlocked
 
 - type: construction
   name: wooden chair
@@ -115,4 +116,143 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked {}
+    - !type:TileNotBlocked
+
+
+#tables
+- type: construction
+  name: table
+  id: Table
+  graph: table
+  startNode: start
+  targetNode: Table
+  category: Furniture
+  description: A square piece of metal standing on four metal legs.
+  icon:
+    sprite: Structures/Furniture/Tables/carpet.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: reinforced table
+  id: TableReinforced
+  graph: table
+  startNode: start
+  targetNode: TableReinforced
+  category: Furniture
+  description: A square piece of metal standing on four metal legs. Extra robust.
+  icon:
+    sprite: Structures/Furniture/Tables/reinforced.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: glass table
+  id: TableGlass
+  graph: table
+  startNode: start
+  targetNode: TableGlass
+  category: Furniture
+  description: A square piece of glass, standing on four metal legs.
+  icon:
+    sprite: Structures/Furniture/Tables/glass.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: reinforced glass table
+  id: TableReinforcedGlass
+  graph: table
+  startNode: start
+  targetNode: TableReinforcedGlass
+  category: Furniture
+  description: A square piece of glass, standing on four metal legs. Extra robust.
+  icon:
+    sprite: Structures/Furniture/Tables/r_glass.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: plasma glass table
+  id: TablePlasmaGlass
+  graph: table
+  startNode: start
+  targetNode: TablePlasmaGlass
+  category: Furniture
+  description: A square piece of plasma glass, standing on four metal legs. Pretty!
+  icon:
+    sprite: Structures/Furniture/Tables/plasma.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: wood table
+  id: TableWood
+  graph: table
+  startNode: start
+  targetNode: TableWood
+  category: Furniture
+  description: Do not apply fire to this. Rumour says it burns easily.
+  icon:
+    sprite: Structures/Furniture/Tables/wood.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: poker table
+  id: TableCarpet
+  graph: table
+  startNode: start
+  targetNode: TableCarpet
+  category: Furniture
+  description: A square piece of wood standing on four legs covered by a cloth. (What did you expect?)
+  icon:
+    sprite: Structures/Furniture/Tables/carpet.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+#bathroom
+- type: construction
+  name: toilet
+  id: ToiletEmpty
+  graph: toilet
+  startNode: start
+  targetNode: toilet
+  category: Furniture
+  description: A human excrement flushing apparatus
+  icon:
+    sprite: Structures/Furniture/toilet.rsi
+    state: closed_toilet_seat_up
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked

@@ -9,6 +9,7 @@ verb-self-target-pronoun = Yourself
 
 # verb categories & common verbs. These appear across multiple systems, so they may as well go here.
 
+verb-categories-admin = Admin
 verb-categories-debug = Debug
 verb-categories-eject = Eject
 verb-categories-insert = Insert
@@ -17,6 +18,7 @@ verb-categories-unbuckle = Unbuckle
 verb-categories-rotate = Rotate
 verb-categories-transfer = Set Transfer Amount
 verb-categories-split = Split
+verb-categories-set-sensor = Sensor
 
 verb-common-toggle-light = Toggle light
 verb-common-close = Close

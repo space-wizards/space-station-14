@@ -7,6 +7,7 @@ using Content.Server.Visible;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
+using Content.Shared.MobState.Components;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
@@ -32,6 +33,7 @@ namespace Content.Server.Pointing.EntitySystems
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly RotateToFaceSystem _rotateToFaceSystem = default!;
+        [Dependency] private readonly VisibilitySystem _visibilitySystem = default!;
 
         private static readonly TimeSpan PointDelay = TimeSpan.FromSeconds(0.5f);
 
@@ -76,9 +78,9 @@ namespace Content.Server.Pointing.EntitySystems
 
         public bool InRange(EntityUid pointer, EntityCoordinates coordinates)
         {
-            if (EntityManager.HasComponent<GhostComponent>(pointer))
+            if (HasComp<GhostComponent>(pointer))
             {
-                return EntityManager.GetComponent<TransformComponent>(pointer).Coordinates.InRange(EntityManager, coordinates, 15);
+                return Transform(pointer).Coordinates.InRange(EntityManager, coordinates, 15);
             }
             else
             {
@@ -100,9 +102,16 @@ namespace Content.Server.Pointing.EntitySystems
                 return false;
             }
 
-            if (EntityManager.EntityExists(pointed))
+            if (HasComp<PointingArrowComponent>(pointed))
             {
                 // this is a pointing arrow. no pointing here...
+                return false;
+            }
+
+            // Checking mob state directly instead of some action blocker, as many action blockers are blocked for
+            // ghosts and there is no obvious choice for pointing.
+            if (TryComp(player, out MobStateComponent? mob) && mob.IsIncapacitated())
+            {
                 return false;
             }
 
@@ -117,21 +126,22 @@ namespace Content.Server.Pointing.EntitySystems
             var arrow = EntityManager.SpawnEntity("pointingarrow", mapCoords);
 
             var layer = (int) VisibilityFlags.Normal;
-            if (EntityManager.TryGetComponent(player, out VisibilityComponent? playerVisibility))
+            if (TryComp(player, out VisibilityComponent? playerVisibility))
             {
-                var arrowVisibility = arrow.EnsureComponent<VisibilityComponent>();
-                layer = arrowVisibility.Layer = playerVisibility.Layer;
+                var arrowVisibility = EntityManager.EnsureComponent<VisibilityComponent>(arrow);
+                layer = playerVisibility.Layer;
+                _visibilitySystem.SetLayer(arrowVisibility, layer);
             }
 
             // Get players that are in range and whose visibility layer matches the arrow's.
             bool ViewerPredicate(IPlayerSession playerSession)
             {
                 if (playerSession.ContentData()?.Mind?.CurrentEntity is not {Valid: true} ent ||
-                    !EntityManager.TryGetComponent<EyeComponent?>(ent, out var eyeComp) ||
+                    !TryComp(ent, out EyeComponent? eyeComp) ||
                     (eyeComp.VisibilityMask & layer) == 0)
                     return false;
 
-                return EntityManager.GetComponent<TransformComponent>(ent).MapPosition.InRange(EntityManager.GetComponent<TransformComponent>(player).MapPosition, PointingRange);
+                return Transform(ent).MapPosition.InRange(Transform(player).MapPosition, PointingRange);
             }
 
             var viewers = Filter.Empty()
@@ -141,18 +151,21 @@ namespace Content.Server.Pointing.EntitySystems
             string selfMessage;
             string viewerMessage;
             string? viewerPointedAtMessage = null;
+            var playerName = Name(player);
 
-            if (EntityManager.EntityExists(pointed))
+            if (Exists(pointed))
             {
+                var pointedName = Name(pointed);
+
                 selfMessage = player == pointed
                     ? Loc.GetString("pointing-system-point-at-self")
-                    : Loc.GetString("pointing-system-point-at-other", ("other", pointed));
+                    : Loc.GetString("pointing-system-point-at-other", ("other", pointedName));
 
                 viewerMessage = player == pointed
-                    ? Loc.GetString("pointing-system-point-at-self-others", ("otherName", Name: EntityManager.GetComponent<MetaDataComponent>(player).EntityName), ("other", player))
-                    : Loc.GetString("pointing-system-point-at-other-others", ("otherName", Name: EntityManager.GetComponent<MetaDataComponent>(player).EntityName), ("other", pointed));
+                    ? Loc.GetString("pointing-system-point-at-self-others", ("otherName", playerName), ("other", playerName))
+                    : Loc.GetString("pointing-system-point-at-other-others", ("otherName", playerName), ("other", pointedName));
 
-                viewerPointedAtMessage = Loc.GetString("pointing-system-point-at-you-other", ("otherName", Name: EntityManager.GetComponent<MetaDataComponent>(player).EntityName));
+                viewerPointedAtMessage = Loc.GetString("pointing-system-point-at-you-other", ("otherName", playerName));
             }
             else
             {
@@ -167,7 +180,7 @@ namespace Content.Server.Pointing.EntitySystems
 
                 selfMessage = Loc.GetString("pointing-system-point-at-tile", ("tileName", tileDef.DisplayName));
 
-                viewerMessage = Loc.GetString("pointing-system-other-point-at-tile", ("otherName", Name: EntityManager.GetComponent<MetaDataComponent>(player).EntityName), ("tileName", tileDef.DisplayName));
+                viewerMessage = Loc.GetString("pointing-system-other-point-at-tile", ("otherName", playerName), ("tileName", tileDef.DisplayName));
             }
 
             _pointers[session] = _gameTiming.CurTime;
@@ -196,17 +209,19 @@ namespace Content.Server.Pointing.EntitySystems
                 return;
 
             //Check if the object is already being pointed at
-            if (EntityManager.HasComponent<PointingArrowComponent>(args.Target))
+            if (HasComp<PointingArrowComponent>(args.Target))
                 return;
 
+            var transform = Transform(args.Target);
+
             if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor)  ||
-                !InRange(args.User, EntityManager.GetComponent<TransformComponent>(args.Target).Coordinates))
+                !InRange(args.User, transform.Coordinates))
                 return;
 
             Verb verb = new();
             verb.Text = Loc.GetString("pointing-verb-get-data-text");
             verb.IconTexture = "/Textures/Interface/VerbIcons/point.svg.192dpi.png";
-            verb.Act = () => TryPoint(actor.PlayerSession, EntityManager.GetComponent<TransformComponent>(args.Target).Coordinates, args.Target); ;
+            verb.Act = () => TryPoint(actor.PlayerSession, transform.Coordinates, args.Target);
             args.Verbs.Add(verb);
         }
 
