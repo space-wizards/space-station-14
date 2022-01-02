@@ -13,6 +13,7 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Enums;
 using Robust.Shared.Network;
 using Robust.Shared.IoC;
+using Robust.Client.Player;
 
 namespace Content.Client.Administration.UI
 {
@@ -47,12 +48,36 @@ namespace Content.Client.Administration.UI
                 }
 
                 foreach (var li in ChannelSelector.PlayerItemList)
-                    li.Text = FormatTabTitle(li);
+                    li.Text = FormatTabTitle((PlayerInfo) li.Metadata!);
             };
 
             ChannelSelector.DecoratePlayer += (PlayerInfo pl, ItemList.Item li) =>
             {
-                li.Text = FormatTabTitle(li, pl);
+                li.Text = FormatTabTitle(pl);
+                li.TooltipEnabled = true;
+                var sb = new StringBuilder()
+                    .AppendFormat("CKey: {0}\n", pl.Username)
+                    .AppendFormat("Status: {0} {1} Ping: {2}ms\n", StateSymbol(pl.Connected), pl.Connected, pl.Ping);
+
+                if (pl.Afk)
+                    sb.Append("AFK\n");
+
+                if (pl.Disconnected is not null)
+                    sb.AppendFormat("Disconnected at {1} ({0})\n", pl.Disconnected.reason, pl.Disconnected.stamp);
+
+                sb.Append("Roles: ").AppendJoin(", ", pl.Roles).Append('\n')
+                    .AppendFormat("IC State: {0}\n", (pl.DeadIC, pl.DeadPhysically) switch {
+                            (false, false) => "Alive",
+                            ( true, false) => "Dead (IC)",
+                            (false,  true) => "Dead (Physically)",
+                            ( true,  true) => "Dead (IC & Physically)"
+                    })
+                    .AppendFormat("Mob State: {0}", pl.MobState);
+
+                if (pl.TimeOfDeath is not null)
+                    sb.AppendFormat("\nDied at: {0}", pl.TimeOfDeath);
+
+                li.TooltipText = sb.ToString();
             };
 
             ChannelSelector.Comparison = (a, b) =>
@@ -138,12 +163,20 @@ namespace Content.Client.Administration.UI
             Respawn.Disabled = !Respawn.Visible;
         }
 
-        private string FormatTabTitle(ItemList.Item li, PlayerInfo? pl = default)
+        private static char StateSymbol(SessionStatus i) => i switch {
+            SessionStatus.Connecting => '⧁',
+            SessionStatus.Connected => '⦿',
+            SessionStatus.InGame => '●',
+            SessionStatus.Disconnected => '○',
+            SessionStatus.Zombie => '⦻',
+            _ => throw new System.ArgumentOutOfRangeException("unexpected SessionStatus")
+        };
+
+        private string FormatTabTitle(PlayerInfo pl)
         {
-            pl ??= (PlayerInfo) li.Metadata!;
             var sb = new StringBuilder();
-            sb.Append(pl.Connected is SessionStatus.Connected or SessionStatus.InGame ? '●' : '○');
-            sb.Append(' ');
+            sb.Append(StateSymbol(pl.Connected)).Append(' ');
+
             if (_bwoinkSystem.TryGetChannel(pl.SessionId, out var panel) && panel.Unread > 0)
             {
                 if (panel.Unread < 11)
@@ -156,9 +189,10 @@ namespace Content.Client.Administration.UI
             if (pl.Antag)
                 sb.Append(new Rune(0x1F5E1)); // 🗡
 
-            sb.AppendFormat("\"{0}\"", pl.CharacterName)
-                .Append(' ')
-                .Append(pl.Username);
+            if (pl.CharacterName.Length > 0)
+                sb.AppendFormat("\"{0}\"", pl.CharacterName);
+            else
+                sb.Append(pl.Username);
 
             return sb.ToString();
         }
