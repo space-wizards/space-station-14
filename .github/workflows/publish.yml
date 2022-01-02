@@ -48,8 +48,10 @@ jobs:
         target: "/home/or14-builds/public_html/builds/"
         strip_components: 1
 
+    # For some fucking reason this doesn't work with hellomouse.net. FUCK. Poke moony to update shit.
     - name: Update manifest JSON
       uses: appleboy/ssh-action@master
+      continue-on-error: true
       with:
         host: hellomouse.net
         username: or14-builds
