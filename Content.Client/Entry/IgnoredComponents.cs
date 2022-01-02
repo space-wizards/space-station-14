@@ -327,7 +327,8 @@ namespace Content.Client.Entry
             "MonkeyAccent",
             "ReplacementAccent",
             "Meltable",
-            "Reprocessor"
+            "Reprocessor",
+            "RadarConsole"
         };
     }
 }

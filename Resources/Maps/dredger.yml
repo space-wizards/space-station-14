@@ -336,6 +336,19 @@ entities:
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
+        - 1.99,-14.99
+        - 1.99,-13.01
+        - 0.01,-13.01
+        - 0.01,-14.99
+      id: grid_chunk-0.01--14.99
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 15.681597
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
         - 7.99,-15.99
         - 7.99,-13.01
         - 5.01,-13.01
@@ -466,6 +479,32 @@ entities:
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
+        - -19.01,0.01
+        - -19.01,8.99
+        - -21.99,8.99
+        - -21.99,0.01
+      id: grid_chunk--21.99-0.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 107.04158
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -19.01,-11.99
+        - -19.01,-3.01
+        - -21.99,-3.01
+        - -21.99,-11.99
+      id: grid_chunk--21.99--11.99
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 107.04158
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
         - -16.01,-3.99
         - -16.01,-3.01
         - -17.99,-3.01
@@ -476,6 +515,32 @@ entities:
       layer:
       - MapGrid
       mass: 7.7615986
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -16.01,-2.99
+        - -16.01,-2.01
+        - -22.99,-2.01
+        - -22.99,-2.99
+      id: grid_chunk--22.99--2.99
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 27.361599
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -16.01,-1.99
+        - -16.01,-0.01
+        - -21.99,-0.01
+        - -21.99,-1.99
+      id: grid_chunk--21.99--1.99
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 47.361595
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -515,71 +580,6 @@ entities:
       layer:
       - MapGrid
       mass: 15.601593
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - -16.01,-1.99
-        - -16.01,-0.01
-        - -21.99,-0.01
-        - -21.99,-1.99
-      id: grid_chunk--21.99--1.99
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 47.361595
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - -19.01,-11.99
-        - -19.01,-3.01
-        - -21.99,-3.01
-        - -21.99,-11.99
-      id: grid_chunk--21.99--11.99
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 107.04158
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - -19.01,0.01
-        - -19.01,8.99
-        - -21.99,8.99
-        - -21.99,0.01
-      id: grid_chunk--21.99-0.01
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 107.04158
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - -16.01,-2.99
-        - -16.01,-2.01
-        - -22.99,-2.01
-        - -22.99,-2.99
-      id: grid_chunk--22.99--2.99
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 27.361599
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 1.99,-14.99
-        - 1.99,-13.01
-        - 0.01,-13.01
-        - 0.01,-14.99
-      id: grid_chunk-0.01--14.99
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 15.681597
       restitution: 0.1
     type: Fixtures
   - gravityShakeSound: !type:SoundPathSpecifier
@@ -1091,6 +1091,75 @@ entities:
       11,-19: 0
       11,-18: 0
       11,-17: 0
+      7,-11: 5
+      8,-11: 5
+      -22,0: 5
+      -22,1: 5
+      -22,2: 5
+      -22,3: 5
+      -22,4: 5
+      -22,5: 5
+      -22,6: 5
+      -22,7: 5
+      -22,8: 5
+      -21,0: 5
+      -21,1: 5
+      -21,2: 5
+      -21,3: 5
+      -21,4: 5
+      -21,5: 5
+      -21,6: 5
+      -21,7: 5
+      -21,8: 5
+      -20,0: 5
+      -20,1: 5
+      -20,2: 5
+      -20,3: 5
+      -20,4: 5
+      -20,5: 5
+      -20,6: 5
+      -20,7: 5
+      -20,8: 5
+      -23,-3: 5
+      -22,-12: 5
+      -22,-11: 5
+      -22,-10: 5
+      -22,-9: 5
+      -22,-8: 5
+      -22,-7: 5
+      -22,-6: 5
+      -22,-5: 5
+      -22,-4: 5
+      -22,-3: 5
+      -22,-2: 5
+      -22,-1: 5
+      -21,-12: 5
+      -21,-11: 5
+      -21,-10: 5
+      -21,-9: 5
+      -21,-8: 5
+      -21,-7: 5
+      -21,-6: 5
+      -21,-5: 5
+      -21,-4: 5
+      -21,-3: 5
+      -21,-2: 5
+      -21,-1: 5
+      -20,-12: 5
+      -20,-11: 5
+      -20,-10: 5
+      -20,-9: 5
+      -20,-8: 5
+      -20,-7: 5
+      -20,-6: 5
+      -20,-5: 5
+      -20,-4: 5
+      -20,-3: 5
+      -20,-2: 5
+      -20,-1: 5
+      -19,-3: 5
+      -19,-2: 5
+      -19,-1: 5
     uniqueMixes:
     - volume: 2500
       temperature: 293.15
@@ -1141,6 +1210,17 @@ entities:
       moles:
       - 16.36866
       - 61.57734
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.15
+      moles:
+      - 0
+      - 0
       - 0
       - 0
       - 0
@@ -7516,4 +7596,14 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+- uid: 815
+  type: ComputerRadar
+  components:
+  - pos: 0.5,7.5
+    parent: 0
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 ...
