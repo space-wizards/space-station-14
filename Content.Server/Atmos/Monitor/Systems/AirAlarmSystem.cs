@@ -1,15 +1,15 @@
 using System;
 using System.Collections.Generic;
-using Content.Server.Access.Components;
-using Content.Server.Access.Systems;
 using Content.Server.Atmos.Monitor.Components;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
+using Content.Server.Popups;
 using Content.Server.Power.Components;
-using Content.Server.UserInterface;
 using Content.Server.WireHacking;
+using Content.Shared.Access.Components;
+using Content.Shared.Access.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Monitor.Components;
@@ -19,7 +19,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Log;
+using Robust.Shared.Player;
 
 namespace Content.Server.Atmos.Monitor.Systems
 {
@@ -38,6 +38,7 @@ namespace Content.Server.Atmos.Monitor.Systems
         [Dependency] private readonly AtmosMonitorSystem _atmosMonitorSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly AccessReaderSystem _accessSystem = default!;
+        [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
 
         #region Device Network API
@@ -252,12 +253,12 @@ namespace Content.Server.Atmos.Monitor.Systems
             if (!Resolve(uid, ref component))
                 return false;
 
-            if (!EntityManager.TryGetComponent(uid, out AccessReader reader) || user == null)
+            if (!EntityManager.TryGetComponent(uid, out AccessReaderComponent reader) || user == null)
                 return false;
 
-            if (!_accessSystem.IsAllowed(reader, (EntityUid) user) && !component.FullAccess)
+            if (!_accessSystem.IsAllowed(reader, user.Value) && !component.FullAccess)
             {
-                ((EntityUid) user).PopupMessage(Loc.GetString("air-alarm-ui-access-denied"));
+                _popup.PopupEntity(Loc.GetString("air-alarm-ui-access-denied"), user.Value, Filter.Entities(user.Value));
                 return false;
             }
 
