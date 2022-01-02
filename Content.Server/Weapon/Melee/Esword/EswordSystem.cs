@@ -49,6 +49,7 @@ namespace Content.Server.Weapon.Melee.Esword
             }
             else
             {
+                Logger.Info(comp.Name);
                 TurnOn(comp, args.User);
             }
         }
@@ -56,16 +57,13 @@ namespace Content.Server.Weapon.Melee.Esword
         private void TurnOff(EswordComponent comp)
         {
             if (!comp.Activated)
-            {
                 return;
-            }
 
             if (!EntityManager.TryGetComponent<SpriteComponent?>(comp.Owner, out var sprite) ||
                 !EntityManager.TryGetComponent<ItemComponent?>(comp.Owner, out var item))
                 return;
 
-            if (EntityManager.TryGetComponent<ItemComponent?>(comp.Owner, out var esword))
-                esword.Size = 5;
+            item.Size = 5;
 
             SoundSystem.Play(Filter.Pvs(comp.Owner), comp.DeActivateSound.GetSound(), comp.Owner);
 
@@ -78,16 +76,13 @@ namespace Content.Server.Weapon.Melee.Esword
         private void TurnOn(EswordComponent comp, EntityUid user)
         {
             if (comp.Activated)
-            {
                 return;
-            }
 
             if (!EntityManager.TryGetComponent<SpriteComponent?>(comp.Owner, out var sprite) ||
                 !EntityManager.TryGetComponent<ItemComponent?>(comp.Owner, out var item))
                 return;
 
-            if (EntityManager.TryGetComponent<ItemComponent?>(comp.Owner, out var esword))
-                esword.Size = 9999;
+            item.Size = 9999;
 
             SoundSystem.Play(Filter.Pvs(comp.Owner), comp.ActivateSound.GetSound(), comp.Owner);
 
@@ -108,13 +103,15 @@ namespace Content.Server.Weapon.Melee.Esword
         {
             if (!Get<ActionBlockerSystem>().CanInteract(args.User) || comp.Hacked == true)
                 return;
-            if(EntityManager.TryGetComponent<ToolComponent>(args.Used, out var tool))
+
+            if (EntityManager.TryGetComponent<ToolComponent>(args.Used, out var tool))
             {
                 if (tool.Qualities.ContainsAny("Pulsing"))
                 {
                     comp.Hacked = true;
 
-                    if (comp.Activated == true && EntityManager.TryGetComponent<SpriteComponent?>(comp.Owner, out var sprite) && EntityManager.TryGetComponent<ItemComponent?>(comp.Owner, out var item))
+                    if (comp.Activated == true && EntityManager.TryGetComponent<SpriteComponent?>(comp.Owner, out var sprite)
+                        && EntityManager.TryGetComponent<ItemComponent?>(comp.Owner, out var item))
                     {
                         sprite.LayerSetState(0, "e_sword_rainbow_on");
                         item.EquippedPrefix = "on-rainbow";
