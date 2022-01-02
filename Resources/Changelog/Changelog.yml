@@ -1,9 +1,4 @@
 Entries:
-- author: SweptWasTaken
-  changes:
-  - {message: Maps in windoors, type: Add}
-  id: 306
-  time: '2021-08-07T02:47:43.0000000+00:00'
 - author: scrato
   changes:
   - {message: 'When the head is detached from the body, the hair, eyes and ears will
@@ -2899,3 +2894,9 @@ Entries:
   - {message: Lowered flash bullet damage., type: Tweak}
   id: 807
   time: '2022-01-01T22:54:43.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: The Uplink purchase sound is much quieter now. It still may be audible
+      to other people if they are close enough and in a quiet place., type: Tweak}
+  id: 808
+  time: '2022-01-02T02:00:01.0000000+00:00'
