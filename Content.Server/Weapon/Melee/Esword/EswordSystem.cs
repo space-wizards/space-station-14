@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Content.Server.Items;
+using Content.Shared.Item;
 using Content.Server.Tools.Components;
 using Content.Shared.Interaction;
 using Content.Shared.ActionBlocker;
@@ -58,7 +58,7 @@ namespace Content.Server.Weapon.Melee.Esword
                 return;
 
             if (!EntityManager.TryGetComponent<SpriteComponent?>(comp.Owner, out var sprite) ||
-                !EntityManager.TryGetComponent<ItemComponent?>(comp.Owner, out var item))
+                !EntityManager.TryGetComponent<SharedItemComponent?>(comp.Owner, out var item))
                 return;
 
             item.Size = 5;
@@ -77,7 +77,7 @@ namespace Content.Server.Weapon.Melee.Esword
                 return;
 
             if (!EntityManager.TryGetComponent<SpriteComponent?>(comp.Owner, out var sprite) ||
-                !EntityManager.TryGetComponent<ItemComponent?>(comp.Owner, out var item))
+                !EntityManager.TryGetComponent<SharedItemComponent?>(comp.Owner, out var item))
                 return;
 
             item.Size = 9999;
@@ -109,7 +109,7 @@ namespace Content.Server.Weapon.Melee.Esword
                     comp.Hacked = true;
 
                     if (comp.Activated == true && EntityManager.TryGetComponent<SpriteComponent?>(comp.Owner, out var sprite)
-                        && EntityManager.TryGetComponent<ItemComponent?>(comp.Owner, out var item))
+                        && EntityManager.TryGetComponent<SharedItemComponent?>(comp.Owner, out var item))
                     {
                         sprite.LayerSetState(0, "e_sword_rainbow_on");
                         item.EquippedPrefix = "on-rainbow";
