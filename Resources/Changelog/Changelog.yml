@@ -1,11 +1,4 @@
 Entries:
-- author: Seth
-  changes:
-  - {message: Added cloning pod and medical scanner circuit boards into the protolathe,
-    type: Add}
-  - {message: Made the cloning pod and medical scanner constructible, type: Add}
-  id: 310
-  time: '2021-08-08T20:21:19.0000000+00:00'
 - author: TimrodDX
   changes:
   - {message: Fixed the light in the captain's bathroom and the inner windoor at the
@@ -2902,3 +2895,8 @@ Entries:
   - {message: small bar-themed salvage, type: Add}
   id: 811
   time: '2022-01-02T05:40:44.0000000+00:00'
+- author: Lamrr
+  changes:
+  - {message: Floor tile crafting now produces four floor tiles instead of one., type: Tweak}
+  id: 812
+  time: '2022-01-02T05:57:46.0000000+00:00'
