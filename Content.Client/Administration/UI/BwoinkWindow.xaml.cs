@@ -152,7 +152,7 @@ namespace Content.Client.Administration.UI
         public void SwitchToChannel(NetUserId ch)
         {
             foreach (var bw in BwoinkArea.Children)
-                bw.Visible = ((BwoinkPanel) bw).ChannelId == ch;
+                bw.Visible = (bw as BwoinkPanel)?.ChannelId == ch;
         }
     }
 }
