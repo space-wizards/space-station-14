@@ -54,7 +54,7 @@ namespace Content.Server.Chat.Managers
         public int MaxMessageLength => _configurationManager.GetCVar(CCVars.ChatMaxMessageLength);
 
         private const int VoiceRange = 7; // how far voice goes in world units
-        private const int WhisperRange = 2; // how far voice goes in world units
+        private const int WhisperRange = 1; // how far whisper goes in world units
 
         //TODO: make prio based?
         private readonly List<TransformChat> _chatTransformHandlers = new();
