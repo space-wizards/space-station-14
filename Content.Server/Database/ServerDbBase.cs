@@ -379,6 +379,7 @@ namespace Content.Server.Database
                 .Include(p => p.Flags)
                 .Include(p => p.AdminRank)
                 .ThenInclude(p => p!.Flags)
+                .AsSplitQuery()
                 .SingleOrDefaultAsync(p => p.UserId == userId.UserId, cancel);
         }
 
@@ -677,8 +678,7 @@ namespace Content.Server.Database
         {
             await using var db = await GetDb();
 
-            var list = await db.DbContext.Whitelist.Where(w => w.UserId == player).ToListAsync();
-            return list.Count > 0;
+            return await db.DbContext.Whitelist.AnyAsync(w => w.UserId == player);
         }
 
         public async Task AddToWhitelistAsync(Guid player)

@@ -104,7 +104,6 @@ namespace Content.Server.Database
 
             modelBuilder.Entity<Whitelist>()
                 .Property(w => w.UserId)
-                .ValueGeneratedOnAdd()
                 .IsRequired();
         }
     }
