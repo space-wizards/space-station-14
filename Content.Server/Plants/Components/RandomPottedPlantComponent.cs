@@ -8,10 +8,9 @@ namespace Content.Server.Plants.Components
 {
     [RegisterComponent]
     [Friend(typeof(RandomPottedPlantSystem))]
+    [ComponentProtoName("RandomPottedPlant")]
     public class RandomPottedPlantComponent : Component
     {
-        public override string Name => "RandomPottedPlant";
-
         [ViewVariables(VVAccess.ReadOnly)]
         [DataField("selected")]
         public string? State;
