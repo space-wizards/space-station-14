@@ -1,10 +1,4 @@
 Entries:
-- author: TimrodDX
-  changes:
-  - {message: Fixed the light in the captain's bathroom and the inner windoor at the
-      science desk., type: Tweak}
-  id: 311
-  time: '2021-08-10T00:28:11.0000000+00:00'
 - author: Swept
   changes:
   - {message: Most belts now have restrictions for what can be inserted into them,
@@ -2900,3 +2894,8 @@ Entries:
   - {message: Floor tile crafting now produces four floor tiles instead of one., type: Tweak}
   id: 812
   time: '2022-01-02T05:57:46.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Crit and dead mobs will now be hidden from the ghost roles list., type: Tweak}
+  id: 813
+  time: '2022-01-02T06:00:22.0000000+00:00'
