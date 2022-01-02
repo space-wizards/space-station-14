@@ -379,7 +379,7 @@ namespace Content.Server.Database
                 .Include(p => p.Flags)
                 .Include(p => p.AdminRank)
                 .ThenInclude(p => p!.Flags)
-                .AsSplitQuery()
+                .AsSplitQuery() // tests fail because of a random warning if you dont have this!
                 .SingleOrDefaultAsync(p => p.UserId == userId.UserId, cancel);
         }
 
