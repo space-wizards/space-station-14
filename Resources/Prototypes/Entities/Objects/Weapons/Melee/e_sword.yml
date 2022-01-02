@@ -16,26 +16,3 @@
     size: 5
     sprite: Objects/Weapons/Melee/e_sword.rsi
     
-- type: entity
-  name: dual saber
-  parent: BaseItem
-  id: DualSaber
-  description: A very dangerous energy sword. Can be stored in pockets when turned off. Makes a lot of noise when used or turned on.
-  components:
-  - type: Esword
-  - type: Sprite
-    sprite: Objects/Weapons/Melee/e_sword.rsi
-    state: dual_saber
-  - type: MeleeWeapon
-    damage:
-      types:
-        Blunt: 5
-  - type: Wieldable
-  - type: IncreaseDamageOnWield
-    modifiers:
-      flatReductions:
-        Blunt: 5 # negative reductions = increases
-        Slash: -30
-  - type: Item
-    size: 5
-    sprite: Objects/Weapons/Melee/e_sword.rsi
