@@ -156,10 +156,12 @@ namespace Content.Server.RoundEnd
             OnRoundEndCountdownFinished?.Invoke();
             var gameTicker = Get<GameTicker>();
             gameTicker.EndRound();
-
             _chatManager.DispatchServerAnnouncement(Loc.GetString("round-end-system-round-restart-eta-announcement", ("seconds", RestartRoundTime)));
-
-            Timer.Spawn(TimeSpan.FromSeconds(RestartRoundTime), () => gameTicker.RestartRound(), CancellationToken.None);
+            var currentRoundId = gameTicker.RoundId;
+            Timer.Spawn(TimeSpan.FromSeconds(RestartRoundTime), () => {
+                if (gameTicker.RoundId != currentRoundId) return;
+                gameTicker.RestartRound();
+            }, CancellationToken.None);
         }
     }
 }
