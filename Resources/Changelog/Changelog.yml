@@ -1,10 +1,4 @@
 Entries:
-- author: scrato
-  changes:
-  - {message: 'When the head is detached from the body, the hair, eyes and ears will
-      not remain at the body.', type: Add}
-  id: 307
-  time: '2021-08-07T21:18:43.0000000+00:00'
 - author: TimrodDX
   changes:
   - {message: Security windoors for planned mapping rework., type: Add}
@@ -2900,3 +2894,10 @@ Entries:
       to other people if they are close enough and in a quiet place., type: Tweak}
   id: 808
   time: '2022-01-02T02:00:01.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: 'NanoTrasen has decided that air quality is important, and have provided
+      its stations with air and fire alarms. No longer will a single gas leak accidentally
+      ruin entire stations.', type: Add}
+  id: 809
+  time: '2022-01-02T04:56:24.0000000+00:00'
