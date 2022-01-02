@@ -31,7 +31,7 @@ public class AddWhitelistCommand : IConsoleCommand
 
         if (data != null)
         {
-            var guid = data.UserId.UserId;
+            var guid = data.UserId;
             var isWhitelisted = await db.GetWhitelistStatusAsync(guid);
             if (isWhitelisted)
                 return;
@@ -60,7 +60,7 @@ public class RemoveWhitelistCommand : IConsoleCommand
 
         if (data != null)
         {
-            var guid = data.UserId.UserId;
+            var guid = data.UserId;
             var isWhitelisted = await db.GetWhitelistStatusAsync(guid);
             if (!isWhitelisted)
                 return;
@@ -94,8 +94,8 @@ public class KickNonWhitelistedCommand : IConsoleCommand
         {
             if (await db.GetAdminDataForAsync(session.UserId) is not null)
                 continue;
-            
-            if (!await db.GetWhitelistStatusAsync(session.UserId.UserId))
+
+            if (!await db.GetWhitelistStatusAsync(session.UserId))
             {
                 net.DisconnectChannel(session.ConnectedClient, Loc.GetString("whitelist-not-whitelisted"));
             }

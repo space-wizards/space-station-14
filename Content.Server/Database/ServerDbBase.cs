@@ -674,14 +674,14 @@ namespace Content.Server.Database
 
         #region Whitelist
 
-        public async Task<bool> GetWhitelistStatusAsync(Guid player)
+        public async Task<bool> GetWhitelistStatusAsync(NetUserId player)
         {
             await using var db = await GetDb();
 
             return await db.DbContext.Whitelist.AnyAsync(w => w.UserId == player);
         }
 
-        public async Task AddToWhitelistAsync(Guid player)
+        public async Task AddToWhitelistAsync(NetUserId player)
         {
             await using var db = await GetDb();
 
@@ -689,7 +689,7 @@ namespace Content.Server.Database
             await db.DbContext.SaveChangesAsync();
         }
 
-        public async Task RemoveFromWhitelistAsync(Guid player)
+        public async Task RemoveFromWhitelistAsync(NetUserId player)
         {
             await using var db = await GetDb();
             var entry = await db.DbContext.Whitelist.SingleAsync(w => w.UserId == player);

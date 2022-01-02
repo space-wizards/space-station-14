@@ -142,11 +142,11 @@ namespace Content.Server.Database
 
         #region Whitelist
 
-        Task<bool> GetWhitelistStatusAsync(Guid player);
+        Task<bool> GetWhitelistStatusAsync(NetUserId player);
 
-        Task AddToWhitelistAsync(Guid player);
+        Task AddToWhitelistAsync(NetUserId player);
 
-        Task RemoveFromWhitelistAsync(Guid player);
+        Task RemoveFromWhitelistAsync(NetUserId player);
 
         #endregion
     }
@@ -366,17 +366,17 @@ namespace Content.Server.Database
             return _db.GetAdminLogsJson(filter);
         }
 
-        public Task<bool> GetWhitelistStatusAsync(Guid player)
+        public Task<bool> GetWhitelistStatusAsync(NetUserId player)
         {
             return _db.GetWhitelistStatusAsync(player);
         }
 
-        public Task AddToWhitelistAsync(Guid player)
+        public Task AddToWhitelistAsync(NetUserId player)
         {
             return _db.AddToWhitelistAsync(player);
         }
 
-        public Task RemoveFromWhitelistAsync(Guid player)
+        public Task RemoveFromWhitelistAsync(NetUserId player)
         {
             return _db.RemoveFromWhitelistAsync(player);
         }

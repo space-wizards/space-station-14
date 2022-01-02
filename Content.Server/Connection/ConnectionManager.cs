@@ -90,7 +90,7 @@ The ban reason is: ""{ban.Reason}""
             }
 
             if (_cfg.GetCVar(CCVars.WhitelistEnabled)
-                && await _db.GetWhitelistStatusAsync(userId.UserId) == false
+                && await _db.GetWhitelistStatusAsync(userId) == false
                 && adminData is null)
             {
                 e.Deny(Loc.GetString("whitelist-not-whitelisted"));
