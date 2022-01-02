@@ -17,6 +17,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Configuration;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
@@ -85,23 +86,30 @@ namespace Content.Client.Inventory
 
         private void OnDidUnequip(EntityUid uid, ClientInventoryComponent component, DidUnequipEvent args)
         {
-            if (component.SlotButtons.TryGetValue(args.Slot, out var buttons))
-            {
-                foreach (var button in buttons)
-                {
-                    _itemSlotManager.SetItemSlot(button, null);
-                }
-            }
+            UpdateComponentUISlot(uid, args.Slot, null, component);
         }
 
         private void OnDidEquip(EntityUid uid, ClientInventoryComponent component, DidEquipEvent args)
         {
-            if (component.SlotButtons.TryGetValue(args.Slot, out var buttons))
+            UpdateComponentUISlot(uid, args.Slot, args.Equipment, component);
+        }
+
+        private void UpdateComponentUISlot(EntityUid uid, string slot, EntityUid? item, ClientInventoryComponent? component = null)
+        {
+            if (!Resolve(uid, ref component))
+                return;
+
+            if (!component.SlotButtons.TryGetValue(slot, out var buttons))
+                return;
+
+            UpdateUISlot(buttons, item);
+        }
+
+        private void UpdateUISlot(List<ItemSlotButton> buttons, EntityUid? entity)
+        {
+            foreach (var button in buttons)
             {
-                foreach (var button in buttons)
-                {
-                    _itemSlotManager.SetItemSlot(button, args.Equipment);
-                }
+                _itemSlotManager.SetItemSlot(button, entity);
             }
         }
 
@@ -165,6 +173,17 @@ namespace Content.Client.Inventory
             if (!TryGetUIElements(uid, out var window, out var bottomLeft, out var bottomRight, out var topQuick,
                     component))
                 return;
+
+            if (TryComp<ContainerManagerComponent>(uid, out var containerManager))
+            {
+                foreach (var (slot, buttons) in component.SlotButtons)
+                {
+                    if (!TryGetSlotEntity(uid, slot, out var entity, component, containerManager))
+                        continue;
+
+                    UpdateUISlot(buttons, entity);
+                }
+            }
 
             component.InventoryWindow = window;
             component.BottomLeftButtons = bottomLeft;
