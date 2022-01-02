@@ -188,7 +188,7 @@ public class TraitorRuleSystem : GameRuleSystem
             }
             
             //give traitors their codewords to keep in their character info menu
-            traitor.Mind.TryAddBriefing(Loc.GetString("traitor-role-codewords", ("codewords", string.Join(", ",codewords))));
+            traitor.Mind.Briefing = Loc.GetString("traitor-role-codewords", ("codewords", string.Join(", ",codewords)));
         }
 
         SoundSystem.Play(Filter.Empty().AddWhere(s => ((IPlayerSession)s).Data.ContentData()?.Mind?.HasRole<TraitorRole>() ?? false), _addedSound.GetSound(), AudioParams.Default);

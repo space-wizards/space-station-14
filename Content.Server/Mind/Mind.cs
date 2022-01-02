@@ -249,17 +249,6 @@ namespace Content.Server.Mind
             _objectives.Remove(objective);
             return true;
         }
-        
-        /// <summary>
-        /// Adds a briefing (i.e. traitor codewords, nuclear code, ...) to this mind
-        /// </summary>
-        public bool TryAddBriefing(string briefing)
-        {
-            if (briefing == string.Empty || briefing == null) return false;
-            Briefing = briefing;
-            return true;
-        }
-                
 
         /// <summary>
         ///     Transfer this mind's control over to a new entity.
