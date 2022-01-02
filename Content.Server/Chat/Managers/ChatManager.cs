@@ -83,21 +83,15 @@ namespace Content.Server.Chat.Managers
 
         public void DispatchServerAnnouncement(string message)
         {
-            var msg = _netManager.CreateNetMessage<MsgChatMessage>();
-            msg.Channel = ChatChannel.Server;
-            msg.Message = message;
-            msg.MessageWrap = Loc.GetString("chat-manager-server-wrap-message");
-            _netManager.ServerSendToAll(msg);
+            var messageWrap = Loc.GetString("chat-manager-server-wrap-message");
+            NetMessageToAll(ChatChannel.Server, message, messageWrap);
             Logger.InfoS("SERVER", message);
         }
 
         public void DispatchStationAnnouncement(string message, string sender = "CentComm", bool playDefaultSound = true)
         {
-            var msg = _netManager.CreateNetMessage<MsgChatMessage>();
-            msg.Channel = ChatChannel.Radio;
-            msg.Message = message;
-            msg.MessageWrap = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", sender));
-            _netManager.ServerSendToAll(msg);
+            var messageWrap = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", sender));
+            NetMessageToAll(ChatChannel.Radio, message, messageWrap);
             if (playDefaultSound)
             {
                 SoundSystem.Play(Filter.Broadcast(), "/Audio/Announcements/announce.ogg", AudioParams.Default.WithVolume(-2f));
@@ -106,11 +100,8 @@ namespace Content.Server.Chat.Managers
 
         public void DispatchServerMessage(IPlayerSession player, string message)
         {
-            var msg = _netManager.CreateNetMessage<MsgChatMessage>();
-            msg.Channel = ChatChannel.Server;
-            msg.Message = message;
-            msg.MessageWrap = Loc.GetString("chat-manager-server-wrap-message");
-            _netManager.ServerSendMessage(msg, player.ConnectedClient);
+            var messageWrap = Loc.GetString("chat-manager-server-wrap-message");
+            NetMessageToServer(ChatChannel.Server, message, messageWrap, player);
         }
 
         public void EntitySay(EntityUid source, string message, bool hideChat=false)
@@ -120,14 +111,8 @@ namespace Content.Server.Chat.Managers
                 return;
             }
 
-            // Check if message exceeds the character limit if the sender is a player
-            if (_entManager.TryGetComponent(source, out ActorComponent? actor) &&
-                message.Length > MaxMessageLength)
+            if (MessageCharacterLimit(source, message))
             {
-                var feedback = Loc.GetString("chat-manager-max-message-length-exceeded-message", ("limit", MaxMessageLength));
-
-                DispatchServerMessage(actor.PlayerSession, feedback);
-
                 return;
             }
 
@@ -139,68 +124,19 @@ namespace Content.Server.Chat.Managers
 
             message = message.Trim();
 
-            // We'll try to avoid using MapPosition as EntityCoordinates can early-out and potentially be faster for common use cases
-            // Downside is it may potentially convert to MapPosition unnecessarily.
-            var sourceMapId = _entManager.GetComponent<TransformComponent>(source).MapID;
-            var sourceCoords = _entManager.GetComponent<TransformComponent>(source).Coordinates;
-
             var clients = new List<INetChannel>();
 
-            foreach (var player in _playerManager.Sessions)
-            {
-                if (player.AttachedEntity is not {Valid: true} playerEntity)
-                    continue;
+            ClientDistanceToList(source, VoiceRange, clients);
 
-                var transform = _entManager.GetComponent<TransformComponent>(playerEntity);
-
-                if (transform.MapID != sourceMapId ||
-                    !_entManager.HasComponent<GhostComponent>(playerEntity) &&
-                    !sourceCoords.InRange(_entManager, transform.Coordinates, VoiceRange))
-                    continue;
-
-                clients.Add(player.ConnectedClient);
-            }
-
-            if (message.StartsWith(';'))
-            {
-                // Remove semicolon
-                message = message.Substring(1).TrimStart();
-
-                // Capitalize first letter
-                message = message[0].ToString().ToUpper() +
-                          message.Remove(0, 1);
-
-                var invSystem = EntitySystem.Get<InventorySystem>();
-
-                if (invSystem.TryGetSlotEntity(source, "ears", out var entityUid) &&
-                    _entManager.TryGetComponent(entityUid, out HeadsetComponent? headset))
-                {
-                    headset.RadioRequested = true;
-                }
-                else
-                {
-                    source.PopupMessage(Loc.GetString("chat-manager-no-headset-on-message"));
-                }
-            }
-            else
-            {
-                // Capitalize first letter
-                message = message[0].ToString().ToUpper() +
-                          message.Remove(0, 1);
-            }
+            message = SanitizeMessageCapital(source, message);
 
             var listeners = EntitySystem.Get<ListeningSystem>();
             listeners.PingListeners(source, message);
 
             message = FormattedMessage.EscapeText(message);
 
-            var msg = _netManager.CreateNetMessage<MsgChatMessage>();
-            msg.Channel = ChatChannel.Local;
-            msg.Message = message;
-            msg.MessageWrap = Loc.GetString("chat-manager-entity-say-wrap-message",("entityName", Name: _entManager.GetComponent<MetaDataComponent>(source).EntityName));
-            msg.SenderEntity = source;
-            msg.HideChat = hideChat;
-            _netManager.ServerSendToMany(msg, clients);
+            var messageWrap = Loc.GetString("chat-manager-entity-say-wrap-message",("entityName", Name: _entManager.GetComponent<MetaDataComponent>(source).EntityName));
+            NetMessageToMany(ChatChannel.Local, message, messageWrap, source, hideChat, clients);
         }
 
         public void EntityWhisper(EntityUid source, string message, bool hideChat=false)
@@ -210,14 +146,8 @@ namespace Content.Server.Chat.Managers
                 return;
             }
 
-            // Check if message exceeds the character limit if the sender is a player
-            if (_entManager.TryGetComponent(source, out ActorComponent? actor) &&
-                message.Length > MaxMessageLength)
+            if (MessageCharacterLimit(source, message))
             {
-                var feedback = Loc.GetString("chat-manager-max-message-length-exceeded-message", ("limit", MaxMessageLength));
-
-                DispatchServerMessage(actor.PlayerSession, feedback);
-
                 return;
             }
 
@@ -229,56 +159,19 @@ namespace Content.Server.Chat.Managers
 
             message = message.Trim();
 
-            // We'll try to avoid using MapPosition as EntityCoordinates can early-out and potentially be faster for common use cases
-            // Downside is it may potentially convert to MapPosition unnecessarily.
-            var sourceMapId = _entManager.GetComponent<TransformComponent>(source).MapID;
-            var sourceCoords = _entManager.GetComponent<TransformComponent>(source).Coordinates;
-
             var clients = new List<INetChannel>();
 
-            foreach (var player in _playerManager.Sessions)
-            {
-                if (player.AttachedEntity is not {Valid: true} playerEntity)
-                    continue;
+            ClientDistanceToList(source, WhisperRange, clients);
 
-                var transform = _entManager.GetComponent<TransformComponent>(playerEntity);
-
-                if (transform.MapID != sourceMapId ||
-                    !_entManager.HasComponent<GhostComponent>(playerEntity) &&
-                    !sourceCoords.InRange(_entManager, transform.Coordinates, WhisperRange))
-                    continue;
-
-                clients.Add(player.ConnectedClient);
-            }
-
-            if (message.StartsWith(';'))
-            {
-                // Remove semicolon
-                message = message.Substring(1).TrimStart();
-
-                // Capitalize first letter
-                message = message[0].ToString().ToUpper() +
-                          message.Remove(0, 1);
-            }
-            else
-            {
-                // Capitalize first letter
-                message = message[0].ToString().ToUpper() +
-                          message.Remove(0, 1);
-            }
+            message = SanitizeMessageCapital(source, message);
 
             var listeners = EntitySystem.Get<ListeningSystem>();
             listeners.PingListeners(source, message);
 
             message = FormattedMessage.EscapeText(message);
 
-            var msg = _netManager.CreateNetMessage<MsgChatMessage>();
-            msg.Channel = ChatChannel.Whisper;
-            msg.Message = message;
-            msg.MessageWrap = Loc.GetString("chat-manager-entity-whisper-wrap-message",("entityName", Name: _entManager.GetComponent<MetaDataComponent>(source).EntityName));
-            msg.SenderEntity = source;
-            msg.HideChat = hideChat;
-            _netManager.ServerSendToMany(msg, clients);
+            var messageWrap = Loc.GetString("chat-manager-entity-whisper-wrap-message",("entityName", Name: _entManager.GetComponent<MetaDataComponent>(source).EntityName));
+            NetMessageToMany(ChatChannel.Whisper, message, messageWrap, source, hideChat, clients);
         }
 
         public void EntityMe(EntityUid source, string action)
@@ -294,27 +187,19 @@ namespace Content.Server.Chat.Managers
                 return;
             }
 
-            // Check if message exceeds the character limit
-            if (action.Length > MaxMessageLength)
+            if (MessageCharacterLimit(source, action))
             {
-                DispatchServerMessage(actor.PlayerSession, Loc.GetString("chat-manager-max-message-length-exceeded-message",("limit", MaxMessageLength)));
                 return;
             }
 
             action = FormattedMessage.EscapeText(action);
 
-            var clients = Filter.Empty()
-                .AddInRange(_entManager.GetComponent<TransformComponent>(source).MapPosition, VoiceRange)
-                .Recipients
-                .Select(p => p.ConnectedClient)
-                .ToList();
+            var clients = new List<INetChannel>();
 
-            var msg = _netManager.CreateNetMessage<MsgChatMessage>();
-            msg.Channel = ChatChannel.Emotes;
-            msg.Message = action;
-            msg.MessageWrap = Loc.GetString("chat-manager-entity-me-wrap-message", ("entityName",Name: _entManager.GetComponent<MetaDataComponent>(source).EntityName));
-            msg.SenderEntity = source;
-            _netManager.ServerSendToMany(msg, clients);
+            ClientDistanceToList(source, VoiceRange, clients);
+
+            var messageWrap = Loc.GetString("chat-manager-entity-me-wrap-message", ("entityName",Name: _entManager.GetComponent<MetaDataComponent>(source).EntityName));
+            NetMessageToMany(ChatChannel.Emotes, action, messageWrap, source, true, clients);
         }
 
         public void SendOOC(IPlayerSession player, string message)
@@ -461,18 +346,115 @@ namespace Content.Server.Chat.Managers
         public void SendHookOOC(string sender, string message)
         {
             message = FormattedMessage.EscapeText(message);
-
-            var msg = _netManager.CreateNetMessage<MsgChatMessage>();
-            msg.Channel = ChatChannel.OOC;
-            msg.Message = message;
-            msg.MessageWrap = Loc.GetString("chat-manager-send-hook-ooc-wrap-message", ("senderName", sender));
-            _netManager.ServerSendToAll(msg);
+            var messageWrap = Loc.GetString("chat-manager-send-hook-ooc-wrap-message", ("senderName", sender));
+            NetMessageToAll(ChatChannel.OOC, message, messageWrap);
         }
 
         public void RegisterChatTransform(TransformChat handler)
         {
             // TODO: Literally just make this an event...
             _chatTransformHandlers.Add(handler);
+        }
+
+        public string SanitizeMessageCapital(EntityUid source, string message)
+        {
+            if (message.StartsWith(';'))
+            {
+                // Remove semicolon
+                message = message.Substring(1).TrimStart();
+
+                // Capitalize first letter
+                message = message[0].ToString().ToUpper() + message.Remove(0, 1);
+
+                var invSystem = EntitySystem.Get<InventorySystem>();
+
+                if (invSystem.TryGetSlotEntity(source, "ears", out var entityUid) &&
+                    _entManager.TryGetComponent(entityUid, out HeadsetComponent? headset))
+                {
+                    headset.RadioRequested = true;
+                }
+                else
+                {
+                    source.PopupMessage(Loc.GetString("chat-manager-no-headset-on-message"));
+                }
+            }
+            else
+            {
+                // Capitalize first letter
+                message = message[0].ToString().ToUpper() + message.Remove(0, 1);
+            }
+
+            return message;
+        }
+
+        public void NetMessageToMany(ChatChannel channel, string message, string messageWrap, EntityUid source, bool hideChat,  List<INetChannel> clients)
+        {
+            var msg = _netManager.CreateNetMessage<MsgChatMessage>();
+            msg.Channel = channel;
+            msg.Message = message;
+            msg.MessageWrap = messageWrap;
+            msg.SenderEntity = source;
+            msg.HideChat = hideChat;
+            _netManager.ServerSendToMany(msg, clients);
+        }
+
+        public void NetMessageToAll(ChatChannel channel, string message, string messageWrap)
+        {
+            var msg = _netManager.CreateNetMessage<MsgChatMessage>();
+            msg.Channel = channel;
+            msg.Message = message;
+            msg.MessageWrap = messageWrap;
+            _netManager.ServerSendToAll(msg);
+        }
+
+        public void NetMessageToServer(ChatChannel channel, string message, string messageWrap, IPlayerSession player)
+        {
+            var msg = _netManager.CreateNetMessage<MsgChatMessage>();
+            msg.Channel = channel;
+            msg.Message = message;
+            msg.MessageWrap = messageWrap;
+            _netManager.ServerSendMessage(msg, player.ConnectedClient);;
+        }
+
+        public bool MessageCharacterLimit(EntityUid source, string message)
+        {
+            bool isOverLength = false;
+
+            // Check if message exceeds the character limit if the sender is a player
+            if (_entManager.TryGetComponent(source, out ActorComponent? actor) &&
+                message.Length > MaxMessageLength)
+            {
+                var feedback = Loc.GetString("chat-manager-max-message-length-exceeded-message", ("limit", MaxMessageLength));
+
+                DispatchServerMessage(actor.PlayerSession, feedback);
+
+                isOverLength = true;
+            }
+
+            return isOverLength;
+        }
+
+        public void ClientDistanceToList(EntityUid source, int voiceRange, List<INetChannel> clients)
+        {
+            // We'll try to avoid using MapPosition as EntityCoordinates can early-out and potentially be faster for common use cases
+            // Downside is it may potentially convert to MapPosition unnecessarily.
+            var sourceMapId = _entManager.GetComponent<TransformComponent>(source).MapID;
+            var sourceCoords = _entManager.GetComponent<TransformComponent>(source).Coordinates;
+
+            foreach (var player in _playerManager.Sessions)
+            {
+                if (player.AttachedEntity is not {Valid: true} playerEntity)
+                    continue;
+
+                var transform = _entManager.GetComponent<TransformComponent>(playerEntity);
+
+                if (transform.MapID != sourceMapId ||
+                    !_entManager.HasComponent<GhostComponent>(playerEntity) &&
+                    !sourceCoords.InRange(_entManager, transform.Coordinates, voiceRange))
+                    continue;
+
+                clients.Add(player.ConnectedClient);
+            }
         }
     }
 }
