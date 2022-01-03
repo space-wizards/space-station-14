@@ -73,9 +73,11 @@ public abstract partial class InventorySystem
         }
 
         // Make the actor drop the held entity. We need to do this and cannot insert directly, as that would bypasses
-        // some hands interaction stuff. One day, maybe hands code wont be shit and can just perform interaction on
+        // hands unequipped interactions. One day, maybe hands code wont be shit and can just perform interaction on
         // container-modified messages. That'd that be nice.
-        if (!hands.TryDropEntity(itemUid.Value, Transform(actor).Coordinates))
+        //
+        // Note that `TryDropNoInteraction` means no dropping-interactions. hands-unequipped interactions are still triggered.
+        if (!hands.TryDropNoInteraction())
         {
             if (!silent) _popup.PopupCursor(Loc.GetString("inventory-component-can-equip-cannot"), Filter.Local());
             return false;
