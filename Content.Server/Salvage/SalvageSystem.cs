@@ -215,7 +215,7 @@ namespace Content.Server.Salvage
             {
                 coords = new EntityCoordinates(smc.Owner, smc.Offset).ToMap(EntityManager);
                 var grid = tsc.GridID;
-                if (grid != GridId.Invalid && _mapManager.TryGetGrid(grid, out var magnetGrid))
+                if (_mapManager.TryGetGrid(grid, out var magnetGrid))
                 {
                     angle = magnetGrid.WorldRotation;
                 }
