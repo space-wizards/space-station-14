@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix disposal unit collision when exiting., type: Fix}
-  - {message: Items no longer collide with disposal units (except when thrown!), type: Tweak}
-  id: 314
-  time: '2021-08-12T03:40:39.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: Fixes some tool sounds not playing., type: Fix}
@@ -2898,3 +2892,9 @@ Entries:
   - {message: The doctor and CMO's starting inventories are more efficient., type: Tweak}
   id: 815
   time: '2022-01-03T07:38:37.0000000+00:00'
+- author: ZeroDayDaemon
+  changes:
+  - {message: Added 3 variants of ducks and related food items, type: Add}
+  - {message: Tweaked Cargo console to sell duck and chicken crates, type: Tweak}
+  id: 816
+  time: '2022-01-03T07:47:36.0000000+00:00'
