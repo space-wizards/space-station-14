@@ -20,7 +20,6 @@ namespace Content.Server.Weapon.Melee.Esword
             SubscribeLocalEvent<EswordComponent, MeleeHitEvent>(OnMeleeHit);
             SubscribeLocalEvent<EswordComponent, UseInHandEvent>(OnUseInHand);
             SubscribeLocalEvent<EswordComponent, InteractUsingEvent>(OnInteractUsing);
-
         }
 
         private void OnMeleeHit(EntityUid uid, EswordComponent comp, MeleeHitEvent args)
@@ -34,7 +33,6 @@ namespace Content.Server.Weapon.Melee.Esword
                 };
                 args.HitSoundOverride = comp.HitSound;
             }
-            
         }
 
         private void OnUseInHand(EntityUid uid, EswordComponent comp, UseInHandEvent args)
@@ -88,15 +86,16 @@ namespace Content.Server.Weapon.Melee.Esword
             {
                 item.EquippedPrefix = "on-rainbow";
                 sprite.LayerSetState(0, "e_sword_rainbow_on");
-            } else
+            }
+            else
             {
                 item.EquippedPrefix = "on";
                 sprite.LayerSetState(0, "e_sword_on");
             }
             
-
             comp.Activated = true;
         }
+
         private void OnInteractUsing(EntityUid uid, EswordComponent comp, InteractUsingEvent args)
         {
             if (!Get<ActionBlockerSystem>().CanInteract(args.User) || comp.Hacked == true)
@@ -114,10 +113,8 @@ namespace Content.Server.Weapon.Melee.Esword
                         sprite.LayerSetState(0, "e_sword_rainbow_on");
                         item.EquippedPrefix = "on-rainbow";
                     }
-                       
                 }
             }
-         
         }
     }
 }
