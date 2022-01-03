@@ -1,5 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Channels;
 using Content.Server.Administration.Managers;
 using Content.Server.Ghost.Components;
 using Content.Server.Headset;
@@ -22,6 +25,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
+using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using static Content.Server.Chat.Managers.IChatManager;
 
@@ -47,6 +51,7 @@ namespace Content.Server.Chat.Managers
         [Dependency] private readonly IAdminManager _adminManager = default!;
         [Dependency] private readonly IServerPreferencesManager _preferencesManager = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
 
         /// <summary>
         /// The maximum length a player-sent message can be sent
@@ -54,7 +59,7 @@ namespace Content.Server.Chat.Managers
         public int MaxMessageLength => _configurationManager.GetCVar(CCVars.ChatMaxMessageLength);
 
         private const int VoiceRange = 7; // how far voice goes in world units
-        private const int WhisperRange = 1; // how far whisper goes in world units
+        private const int WhisperRange = 2; // how far whisper goes in world units
 
         //TODO: make prio based?
         private readonly List<TransformChat> _chatTransformHandlers = new();
@@ -101,7 +106,11 @@ namespace Content.Server.Chat.Managers
         public void DispatchServerMessage(IPlayerSession player, string message)
         {
             var messageWrap = Loc.GetString("chat-manager-server-wrap-message");
-            NetMessageToServer(ChatChannel.Server, message, messageWrap, player);
+            var msg = _netManager.CreateNetMessage<MsgChatMessage>();
+            msg.Channel = ChatChannel.Server;
+            msg.Message = message;
+            msg.MessageWrap = messageWrap;
+            _netManager.ServerSendMessage(msg, player.ConnectedClient);
         }
 
         public void EntitySay(EntityUid source, string message, bool hideChat=false)
@@ -159,10 +168,6 @@ namespace Content.Server.Chat.Managers
 
             message = message.Trim();
 
-            var clients = new List<INetChannel>();
-
-            ClientDistanceToList(source, WhisperRange, clients);
-
             message = SanitizeMessageCapital(source, message);
 
             var listeners = EntitySystem.Get<ListeningSystem>();
@@ -170,8 +175,15 @@ namespace Content.Server.Chat.Managers
 
             message = FormattedMessage.EscapeText(message);
 
+            var obfuscatedMessage = ObfuscateMessageReadability(message, 0.2f);
+
+            var farClients = new List<INetChannel>();
+            var nearClients = new List<INetChannel>();
+            ClientDistanceToList(source, VoiceRange, farClients, nearClients, WhisperRange);
+
             var messageWrap = Loc.GetString("chat-manager-entity-whisper-wrap-message",("entityName", Name: _entManager.GetComponent<MetaDataComponent>(source).EntityName));
-            NetMessageToMany(ChatChannel.Whisper, message, messageWrap, source, hideChat, clients);
+            NetMessageToMany(ChatChannel.Whisper, obfuscatedMessage, messageWrap, source, hideChat, farClients);
+            NetMessageToMany(ChatChannel.Whisper, message, messageWrap, source, hideChat, nearClients);
         }
 
         public void EntityMe(EntityUid source, string action)
@@ -407,15 +419,6 @@ namespace Content.Server.Chat.Managers
             _netManager.ServerSendToAll(msg);
         }
 
-        public void NetMessageToServer(ChatChannel channel, string message, string messageWrap, IPlayerSession player)
-        {
-            var msg = _netManager.CreateNetMessage<MsgChatMessage>();
-            msg.Channel = channel;
-            msg.Message = message;
-            msg.MessageWrap = messageWrap;
-            _netManager.ServerSendMessage(msg, player.ConnectedClient);;
-        }
-
         public bool MessageCharacterLimit(EntityUid source, string message)
         {
             bool isOverLength = false;
@@ -434,7 +437,7 @@ namespace Content.Server.Chat.Managers
             return isOverLength;
         }
 
-        public void ClientDistanceToList(EntityUid source, int voiceRange, List<INetChannel> clients)
+        public void ClientDistanceToList(EntityUid source, int voiceRange, List<INetChannel> clientsRangeOutside, List<INetChannel>? clientsRangeInside = null, float? shortVoiceRange = null)
         {
             // We'll try to avoid using MapPosition as EntityCoordinates can early-out and potentially be faster for common use cases
             // Downside is it may potentially convert to MapPosition unnecessarily.
@@ -453,8 +456,39 @@ namespace Content.Server.Chat.Managers
                     !sourceCoords.InRange(_entManager, transform.Coordinates, voiceRange))
                     continue;
 
-                clients.Add(player.ConnectedClient);
+                if (clientsRangeInside != null && shortVoiceRange != null && sourceCoords.InRange(_entManager, transform.Coordinates, shortVoiceRange.Value))
+                {
+                    clientsRangeInside.Add(player.ConnectedClient);
+                }
+                else
+                {
+                    clientsRangeOutside.Add(player.ConnectedClient);
+                }
             }
+        }
+
+        public string ObfuscateMessageReadability(string message, float chance)
+        {
+            var modifiedMessage = new StringBuilder(message);
+
+            for (var i = 0; i < message.Length; i++)
+            {
+                if (char.IsWhiteSpace((modifiedMessage[i])))
+                {
+                    continue;
+                }
+
+                if (_random.Prob(chance))
+                {
+                    modifiedMessage[i] = modifiedMessage[i];
+                }
+                else
+                {
+                    modifiedMessage[i] = '*';
+                }
+            }
+
+            return modifiedMessage.ToString();
         }
     }
 }
