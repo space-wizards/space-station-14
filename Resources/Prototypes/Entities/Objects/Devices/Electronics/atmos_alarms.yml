@@ -8,7 +8,7 @@
     - AirAlarmElectronics
   - type: Sprite
     sprite: Objects/Misc/module.rsi
-    state: door_electronics
+    state: airalarm_electronics
 
 - type: entity
   id: FireAlarmElectronics
