@@ -591,3 +591,14 @@
     sprite: Clothing/Uniforms/Jumpsuit/overalls.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/overalls.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformLibrarian
+  name: librarian jumpsuit
+  description: A cosy green jumper fit for a curator of books.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/librarian.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/librarian.rsi
