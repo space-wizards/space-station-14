@@ -245,12 +245,12 @@
 # Avionics Circuitry Technology Tree
 
 - type: technology
-  name: "avionics circuitry"
-  id: AvionicsCircuitry
+  name: "avionics systems"
+  id: AvionicsSystems
   description: Fly-by-LV-wire
   icon:
     sprite: Structures/Machines/computers.rsi
-    state: avionics-circuitry
+    state: avionics-systems
   requiredPoints: 10000
   requiredTechnologies:
     - IndustrialEngineering
