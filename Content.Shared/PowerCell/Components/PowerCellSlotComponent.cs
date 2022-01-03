@@ -36,7 +36,7 @@ public sealed class PowerCellSlotComponent : Component
     /// cell"). 
     /// </remarks>
     [DataField("slotName")]
-    public readonly string SlotName = "Power cell";
+    public readonly string SlotName = "power-cell-slot-component-slot-name-default"; // gets Loc.GetString()-ed by ItemSlotsSystem
 
     /// <summary>
     /// True if we don't want a cell inserted during map init. If a starting item is defined
@@ -49,13 +49,12 @@ public sealed class PowerCellSlotComponent : Component
     public bool StartEmpty = false;
 
     /// <summary>
-    /// String passed to <see><cref>String.Format</cref></see> when showing the description text for this item.
-    /// String.Format is given a single parameter which is the size letter (S/M/L) of the cells this component uses.
-    /// Use null to show no text.
+    /// Descriptive text to add to add when examining an entity with a cell slot. If empty or whitespace, will not add
+    /// any text.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("descFormatString")]
-    public string? DescFormatString { get; set; } = "It uses size {0} power cells.";
+    public string? DescFormatString { get; set; } = "power-cell-slot-component-description-default";
 
     /// <summary>
     /// Can this entity be inserted directly into a charging station? If false, you need to manually remove the power

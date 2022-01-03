@@ -96,14 +96,14 @@ public abstract class SharedPowerCellSystem : EntitySystem
         if (!args.IsInDetailsRange || string.IsNullOrWhiteSpace(component.DescFormatString))
             return;
 
-        string sizeLetter = component.SlotSize switch
+        var sizeText = Loc.GetString(component.SlotSize switch
         {
-            PowerCellSize.Small => Loc.GetString("power-cell-slot-component-small-size-shorthand"),
-            PowerCellSize.Medium => Loc.GetString("power-cell-slot-component-medium-size-shorthand"),
-            PowerCellSize.Large => Loc.GetString("power-cell-slot-component-large-size-shorthand"),
+            PowerCellSize.Small => "power-cell-slot-component-description-size-small",
+            PowerCellSize.Medium => "power-cell-slot-component-description-size-medium",
+            PowerCellSize.Large => "power-cell-slot-component-description-size-large",
             _ => "???"
-        };
+        });
 
-        args.PushMarkup(string.Format(component.DescFormatString, sizeLetter));
+        args.PushMarkup(Loc.GetString(component.DescFormatString, ("size", sizeText)));
     }
 }
