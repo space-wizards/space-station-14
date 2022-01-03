@@ -1,0 +1,90 @@
+- type: entity
+  id: AirAlarm
+  name: air alarm
+  description: An air alarm. Alarms... air?
+  components:
+  - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
+  - type: DeviceNetworkComponent
+    deviceNetId: Apc
+    frequency: 1621
+  - type: ApcNetworkConnection
+  - type: AtmosMonitor
+    temperatureThreshold: stationTemperature
+    pressureThreshold: stationPressure
+    gasThresholds:
+      Oxygen: stationOxygen
+      Nitrogen: ignore
+      CarbonDioxide: stationCO2
+      Plasma: danger # everything below is usually bad
+      Tritium: danger
+      WaterVapor: danger
+  - type: AtmosAlarmable
+    alarmedBy: ["AirAlarm"]
+  - type: AtmosDevice
+  - type: AirAlarm
+  - type: Clickable
+  - type: InteractionOutline
+  - type: UserInterface
+    interfaces:
+    - key: enum.SharedAirAlarmInterfaceKey.Key
+      type: AirAlarmBoundUserInterface
+    - key: enum.WiresUiKey.Key
+      type: WiresBoundUserInterface
+  - type: Wires
+    BoardName: "Air Alarm"
+    LayoutId: AirAlarm
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.3,0.25"
+      layer: [ Passable ]
+  - type: AccessReader
+    access: [["Engineering"]]
+  - type: Appearance
+    visuals:
+    - type: AtmosMonitorVisualizer
+      layerMap: "airAlarmBase"
+      alarmStates:
+        Normal: alarm0
+        Warning: alarm2
+        Danger: alarm1
+      setOnDepowered:
+        airAlarmBase: alarmp
+    - type: WiresVisualizer
+  - type: Sprite
+    sprite: Structures/Wallmounts/air_monitors.rsi
+    layers:
+    - state: alarm0
+      map: ["airAlarmBase"] # TODO: fire alarm enum
+    - state: alarmx
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Transform
+    anchored: true
+  - type: Construction
+    graph: air_alarm
+    node: air_alarm
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wallmount
+
+- type: entity
+  id: AirAlarmAssembly
+  name: air alarm assembly
+  description: An air alarm. Doesn't look like it'll be alarming air any time soon.
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    sprite: Structures/Wallmounts/air_monitors.rsi
+    state: alarm_b1
+  - type: Construction
+    graph: air_alarm
+    node: assembly
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wallmount

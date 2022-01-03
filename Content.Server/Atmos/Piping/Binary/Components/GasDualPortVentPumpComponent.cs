@@ -1,6 +1,6 @@
 using System;
-using Content.Server.Atmos.Piping.Unary.Components;
 using Content.Shared.Atmos;
+using Content.Shared.Atmos.Piping.Unary.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
