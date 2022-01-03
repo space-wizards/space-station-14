@@ -1,0 +1,28 @@
+- type: job
+  id: ERTLeader
+  name: "ERT Leader"
+  setPreference: false
+  startingGear: ERTLeaderGear
+  departments:
+    - Command
+  icon: "Nanotrasen"
+  supervisors: "centcom official"
+  access:
+  - Command
+  - Maintenance
+
+- type: startingGear
+  id: ERTLeaderGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCentcomOfficial
+    back: ClothingBackpackSecurityFilled
+    shoes: ClothingShoesBootsJack
+    head: ClothingHeadHatCentcom
+    eyes: ClothingEyesGlassesSecurity
+    gloves: ClothingHandsGlovesColorBlack
+    outerclothing: ClothingOuterVestKevlar
+    id: CentcomPDA
+    ears: ClothingHeadsetAltCommand
+    belt: ClothingBeltSecurityFilled
+    pocket1:
+    pocket2:
