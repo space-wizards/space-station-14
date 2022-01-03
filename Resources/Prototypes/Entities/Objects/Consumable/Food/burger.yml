@@ -304,6 +304,16 @@
 # Tastes like bun, chicken.
 
 - type: entity
+  name: duck sandwich # Burger for you sick bastards
+  parent: FoodBurgerBase
+  id: FoodBurgerDuck
+  description: A duck sandwich, only the criminally insane would dare to eat the meat of such an adorable creature.
+  components:
+  - type: Sprite
+    state: chicken
+# Tastes like bun, duck.
+
+- type: entity
   name: cheese burger
   parent: FoodBurgerBase
   id: FoodBurgerCheese

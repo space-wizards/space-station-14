@@ -19,9 +19,10 @@ using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
-using Robust.Shared.Utility.Markup;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Morgue.Components
@@ -39,7 +40,7 @@ namespace Content.Server.Morgue.Components
         public override string Name => "MorgueEntityStorage";
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("trayPrototype")]
+        [DataField("trayPrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         private string? _trayPrototypeId;
 
         [ViewVariables]
@@ -173,7 +174,7 @@ namespace Content.Server.Morgue.Components
             }
         }
 
-        void IExamine.Examine(FormattedMessage.Builder message, bool inDetailsRange)
+        void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
             if (Appearance == null) return;
 

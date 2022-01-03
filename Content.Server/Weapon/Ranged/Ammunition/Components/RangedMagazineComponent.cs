@@ -2,19 +2,20 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.Hands.Components;
-using Content.Server.Items;
 using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Item;
 using Content.Shared.Popups;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
-using Robust.Shared.Utility.Markup;
 
 namespace Content.Server.Weapon.Ranged.Ammunition.Components
 {
@@ -45,7 +46,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
         private AppearanceComponent? _appearanceComponent;
 
         // If there's anything already in the magazine
-        [DataField("fillPrototype")]
+        [DataField("fillPrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         private string? _fillPrototype;
 
         // By default the magazine won't spawn the entity until needed so we need to keep track of how many left we can spawn
@@ -121,7 +122,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
 
         public EntityUid? TakeAmmo()
         {
-            EntityUid ammo = default;
+            EntityUid? ammo = null;
             // If anything's spawned use that first, otherwise use the fill prototype as a fallback (if we have spawn count left)
             if (_spawnedAmmo.TryPop(out var entity))
             {
@@ -155,7 +156,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
                 return false;
             }
 
-            var itemComponent = _entities.GetComponent<ItemComponent>(ammo);
+            var itemComponent = _entities.GetComponent<SharedItemComponent>(ammo);
             if (!handsComponent.CanPutInHand(itemComponent))
             {
                 _entities.GetComponent<TransformComponent>(ammo).Coordinates = _entities.GetComponent<TransformComponent>(eventArgs.User).Coordinates;
@@ -169,7 +170,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             return true;
         }
 
-        public void Examine(FormattedMessage.Builder message, bool inDetailsRange)
+        public void Examine(FormattedMessage message, bool inDetailsRange)
         {
             var text = Loc.GetString("ranged-magazine-component-on-examine", ("magazineType", MagazineType),("caliber", Caliber));
             message.AddMarkup(text);

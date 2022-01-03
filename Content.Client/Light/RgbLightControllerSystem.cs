@@ -13,6 +13,13 @@ namespace Content.Client.Light
     {
         [Dependency] private IGameTiming _gameTiming = default!;
 
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            UpdatesOutsidePrediction = true;
+        }
+
         public override void Update(float frameTime)
         {
             base.Update(frameTime);

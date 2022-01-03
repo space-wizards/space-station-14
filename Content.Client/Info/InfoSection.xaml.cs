@@ -2,7 +2,6 @@
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Utility;
-using Robust.Shared.Utility.Markup;
 
 namespace Content.Client.Info;
 
@@ -16,7 +15,7 @@ public partial class InfoSection : BoxContainer
         TitleLabel.Text = title;
 
         if (markup)
-            Content.SetMessage(Basic.RenderMarkup(text.Trim()));
+            Content.SetMessage(FormattedMessage.FromMarkup(text.Trim()));
         else
             Content.SetMessage(text);
     }

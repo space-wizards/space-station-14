@@ -3,8 +3,6 @@ using System.Linq;
 using Content.Server.Administration.Managers;
 using Content.Server.Ghost.Components;
 using Content.Server.Headset;
-using Content.Server.Inventory.Components;
-using Content.Server.Items;
 using Content.Server.MoMMI;
 using Content.Server.Preferences.Managers;
 using Content.Server.Radio.EntitySystems;
@@ -25,7 +23,6 @@ using Robust.Shared.Log;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
-using Robust.Shared.Utility.Markup;
 using static Content.Server.Chat.Managers.IChatManager;
 
 namespace Content.Server.Chat.Managers
@@ -172,9 +169,10 @@ namespace Content.Server.Chat.Managers
                 message = message[0].ToString().ToUpper() +
                           message.Remove(0, 1);
 
-                if (_entManager.TryGetComponent(source, out InventoryComponent? inventory) &&
-                    inventory.TryGetSlotItem(EquipmentSlotDefines.Slots.EARS, out ItemComponent? item) &&
-                    _entManager.TryGetComponent(item.Owner, out HeadsetComponent? headset))
+                var invSystem = EntitySystem.Get<InventorySystem>();
+
+                if (invSystem.TryGetSlotEntity(source, "ears", out var entityUid) &&
+                    _entManager.TryGetComponent(entityUid, out HeadsetComponent? headset))
                 {
                     headset.RadioRequested = true;
                 }
@@ -193,7 +191,7 @@ namespace Content.Server.Chat.Managers
             var listeners = EntitySystem.Get<ListeningSystem>();
             listeners.PingListeners(source, message);
 
-            message = Basic.EscapeText(message);
+            message = FormattedMessage.EscapeText(message);
 
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.Local;
@@ -224,7 +222,7 @@ namespace Content.Server.Chat.Managers
                 return;
             }
 
-            action = Basic.EscapeText(action);
+            action = FormattedMessage.EscapeText(action);
 
             var clients = Filter.Empty()
                 .AddInRange(_entManager.GetComponent<TransformComponent>(source).MapPosition, VoiceRange)
@@ -290,7 +288,7 @@ namespace Content.Server.Chat.Managers
                 return;
             }
 
-            message = Basic.EscapeText(message);
+            message = FormattedMessage.EscapeText(message);
 
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.OOC;
@@ -322,7 +320,7 @@ namespace Content.Server.Chat.Managers
                 return;
             }
 
-            message = Basic.EscapeText(message);
+            message = FormattedMessage.EscapeText(message);
 
             var clients = GetDeadChatClients();
 
@@ -349,7 +347,7 @@ namespace Content.Server.Chat.Managers
                 return;
             }
 
-            message = Basic.EscapeText(message);
+            message = FormattedMessage.EscapeText(message);
 
             var clients = GetDeadChatClients();
 
@@ -380,7 +378,7 @@ namespace Content.Server.Chat.Managers
                 return;
             }
 
-            message = Basic.EscapeText(message);
+            message = FormattedMessage.EscapeText(message);
 
             var clients = _adminManager.ActiveAdmins.Select(p => p.ConnectedClient);
 
@@ -398,7 +396,7 @@ namespace Content.Server.Chat.Managers
         {
             var clients = _adminManager.ActiveAdmins.Select(p => p.ConnectedClient);
 
-            message = Basic.EscapeText(message);
+            message = FormattedMessage.EscapeText(message);
 
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
 
@@ -412,7 +410,7 @@ namespace Content.Server.Chat.Managers
 
         public void SendHookOOC(string sender, string message)
         {
-            message = Basic.EscapeText(message);
+            message = FormattedMessage.EscapeText(message);
 
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.OOC;

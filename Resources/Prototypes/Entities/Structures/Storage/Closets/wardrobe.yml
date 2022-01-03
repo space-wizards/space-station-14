@@ -17,6 +17,7 @@
     visuals:
     - type: StorageVisualizer
       state: generic
+      state_open: generic_open
       state_closed: blue_door
 
 # Pink wardrobe
@@ -29,6 +30,7 @@
     visuals:
     - type: StorageVisualizer
       state: generic
+      state_open: generic_open
       state_closed: pink_door
 
 # Black wardrobe
@@ -41,6 +43,7 @@
     visuals:
     - type: StorageVisualizer
       state: generic
+      state_open: generic_open
       state_closed: black_door
 
 # Green wardrobe
@@ -53,6 +56,7 @@
     visuals:
     - type: StorageVisualizer
       state: generic
+      state_open: generic_open
       state_closed: green_door
 
 # Prison wardrobe
@@ -65,6 +69,7 @@
     visuals:
     - type: StorageVisualizer
       state: generic
+      state_open: generic_open
       state_closed: orange_door
 
 # Yellow wardrobe
@@ -77,6 +82,7 @@
     visuals:
     - type: StorageVisualizer
       state: generic
+      state_open: generic_open
       state_closed: yellow_door
 
 # White wardrobe
@@ -89,6 +95,7 @@
     visuals:
     - type: StorageVisualizer
       state: generic
+      state_open: generic_open
       state_closed: white_door
 
 # Grey wardrobe
@@ -101,6 +108,7 @@
     visuals:
     - type: StorageVisualizer
       state: generic
+      state_open: generic_open
       state_closed: grey_door
 
 # Mixed wardrobe
@@ -113,6 +121,7 @@
     visuals:
     - type: StorageVisualizer
       state: generic
+      state_open: generic_open
       state_closed: mixed_door
 
 # Jobs
@@ -126,6 +135,7 @@
     visuals:
     - type: StorageVisualizer
       state: generic
+      state_open: generic_open
       state_closed: red_door
 
 - type: entity
@@ -137,6 +147,7 @@
     visuals:
     - type: StorageVisualizer
       state: generic
+      state_open: generic_open
       state_closed: atmos_wardrobe_door
 
 - type: entity

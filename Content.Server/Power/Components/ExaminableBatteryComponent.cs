@@ -3,7 +3,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
-using Robust.Shared.Utility.Markup;
 
 namespace Content.Server.Power.Components
 {
@@ -17,7 +16,7 @@ namespace Content.Server.Power.Components
         [ViewVariables]
         [ComponentDependency] private BatteryComponent? _battery = default!;
 
-        void IExamine.Examine(FormattedMessage.Builder message, bool inDetailsRange)
+        void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
             if (_battery == null)
                 return;

@@ -1,13 +1,9 @@
 using System;
- using Content.Client.Administration;
+using Content.Client.Administration;
 using Content.Shared.Administration;
-using Robust.Client.Console;
-using Robust.Client.GameObjects;
 using Robust.Shared.Console;
-using Robust.Shared.Network;
-using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Robust.Shared.Network;
 
 namespace Content.Client.Commands
 {
@@ -27,18 +23,17 @@ namespace Content.Client.Commands
             }
             if (args.Length == 0)
             {
-                EntitySystem.Get<BwoinkSystem>().EnsureWindowForLocalPlayer();
+                EntitySystem.Get<BwoinkSystem>().EnsurePanelForLocalPlayer();
             }
             else
             {
                 if (Guid.TryParse(args[0], out var guid))
                 {
-                    EntitySystem.Get<BwoinkSystem>().EnsureWindow(new NetUserId(guid));
+                    EntitySystem.Get<BwoinkSystem>().EnsurePanel(new NetUserId(guid));
                 }
                 else
                 {
                     shell.WriteLine("Bad GUID!");
-                    return;
                 }
             }
         }

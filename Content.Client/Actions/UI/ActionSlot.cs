@@ -4,6 +4,7 @@ using Content.Client.Stylesheets;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
 using Content.Shared.Actions.Prototypes;
+using Content.Shared.Inventory;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
@@ -16,7 +17,6 @@ using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using Robust.Shared.Utility.Markup;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Actions.UI
@@ -232,7 +232,7 @@ namespace Content.Client.Actions.UI
             {
                 ActionPrototype actionPrototype => new ActionAttempt(actionPrototype),
                 ItemActionPrototype itemActionPrototype =>
-                    (Item != null && IoCManager.Resolve<IEntityManager>().TryGetComponent<ItemActionsComponent?>(Item, out var itemActions)) ?
+                    Item.HasValue && IoCManager.Resolve<IEntityManager>().TryGetComponent<ItemActionsComponent?>(Item, out var itemActions) ?
                         new ItemActionAttempt(itemActionPrototype, Item.Value, itemActions) : null,
                 _ => null
             };
@@ -479,10 +479,10 @@ namespace Content.Client.Actions.UI
 
         private FormattedMessage SlotNumberLabel()
         {
-            if (SlotNumber > 10) return FormattedMessage.Empty;
+            if (SlotNumber > 10) return FormattedMessage.FromMarkup("");
             var number = Loc.GetString(SlotNumber == 10 ? "0" : SlotNumber.ToString());
             var color = (ActionEnabled || !HasAssignment) ? EnabledColor : DisabledColor;
-            return Basic.RenderMarkup("[color=" + color + "]" + number + "[/color]");
+            return FormattedMessage.FromMarkup("[color=" + color + "]" + number + "[/color]");
         }
 
         private void UpdateIcons()

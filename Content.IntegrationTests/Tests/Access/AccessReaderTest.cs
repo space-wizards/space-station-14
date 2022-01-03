@@ -1,15 +1,15 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.IntegrationTests;
-using Content.Server.Access.Components;
-using Content.Server.Access.Systems;
+using Content.Shared.Access.Components;
+using Content.Shared.Access.Systems;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 
 namespace Content.Tests.Server.GameObjects.Components.Access
 {
     [TestFixture]
-    [TestOf(typeof(AccessReader))]
+    [TestOf(typeof(AccessReaderComponent))]
     public class AccessReaderTest : ContentIntegrationTest
     {
         [Test]
@@ -21,13 +21,13 @@ namespace Content.Tests.Server.GameObjects.Components.Access
                 var system = EntitySystem.Get<AccessReaderSystem>();
 
                 // test empty
-                var reader = new AccessReader();
+                var reader = new AccessReaderComponent();
                 Assert.That(system.IsAllowed(reader, new[] { "Foo" }), Is.True);
                 Assert.That(system.IsAllowed(reader, new[] { "Bar" }), Is.True);
                 Assert.That(system.IsAllowed(reader, new string[] { }), Is.True);
 
                 // test deny
-                reader = new AccessReader();
+                reader = new AccessReaderComponent();
                 reader.DenyTags.Add("A");
                 Assert.That(system.IsAllowed(reader, new[] { "Foo" }), Is.True);
                 Assert.That(system.IsAllowed(reader, new[] { "A" }), Is.False);
@@ -35,7 +35,7 @@ namespace Content.Tests.Server.GameObjects.Components.Access
                 Assert.That(system.IsAllowed(reader, new string[] { }), Is.True);
 
                 // test one list
-                reader = new AccessReader();
+                reader = new AccessReaderComponent();
                 reader.AccessLists.Add(new HashSet<string> { "A" });
                 Assert.That(system.IsAllowed(reader, new[] { "A" }), Is.True);
                 Assert.That(system.IsAllowed(reader, new[] { "B" }), Is.False);
@@ -43,7 +43,7 @@ namespace Content.Tests.Server.GameObjects.Components.Access
                 Assert.That(system.IsAllowed(reader, new string[] { }), Is.False);
 
                 // test one list - two items
-                reader = new AccessReader();
+                reader = new AccessReaderComponent();
                 reader.AccessLists.Add(new HashSet<string> { "A", "B" });
                 Assert.That(system.IsAllowed(reader, new[] { "A" }), Is.False);
                 Assert.That(system.IsAllowed(reader, new[] { "B" }), Is.False);
@@ -51,7 +51,7 @@ namespace Content.Tests.Server.GameObjects.Components.Access
                 Assert.That(system.IsAllowed(reader, new string[] { }), Is.False);
 
                 // test two list
-                reader = new AccessReader();
+                reader = new AccessReaderComponent();
                 reader.AccessLists.Add(new HashSet<string> { "A" });
                 reader.AccessLists.Add(new HashSet<string> { "B", "C" });
                 Assert.That(system.IsAllowed(reader, new[] { "A" }), Is.True);
@@ -62,7 +62,7 @@ namespace Content.Tests.Server.GameObjects.Components.Access
                 Assert.That(system.IsAllowed(reader, new string[] { }), Is.False);
 
                 // test deny list
-                reader = new AccessReader();
+                reader = new AccessReaderComponent();
                 reader.AccessLists.Add(new HashSet<string> { "A" });
                 reader.DenyTags.Add("B");
                 Assert.That(system.IsAllowed(reader, new[] { "A" }), Is.True);

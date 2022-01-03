@@ -1,9 +1,9 @@
 using System;
 using System.Threading.Tasks;
 using Content.Server.Hands.Components;
-using Content.Server.Items;
 using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Item;
 using Content.Shared.Popups;
 using Content.Shared.Power;
 using Robust.Shared.Containers;
@@ -101,7 +101,7 @@ namespace Content.Server.Power.Components
             _heldBattery = null;
             if (_entMan.TryGetComponent(user, out HandsComponent? handsComponent))
             {
-                handsComponent.PutInHandOrDrop(_entMan.GetComponent<ItemComponent>(heldItem));
+                handsComponent.PutInHandOrDrop(_entMan.GetComponent<SharedItemComponent>(heldItem));
             }
 
             if (_entMan.TryGetComponent(heldItem, out ServerBatteryBarrelComponent? batteryBarrelComponent))
