@@ -39,6 +39,7 @@
     - type: ComputerVisualizer
       key: generic_key
       screen: shuttle
+  - type: Computer
   board: ShuttleConsoleCircuitboard
 
 - type: entity
