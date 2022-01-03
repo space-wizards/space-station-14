@@ -142,7 +142,7 @@ namespace Content.Server.Cloning.Components
                     }
 
                     var speciesProto = _prototype.Index<SpeciesPrototype>(dna.Profile.Species).Prototype;
-                    var mob = _entities.SpawnEntity("MobHuman", _entities.GetComponent<TransformComponent>(Owner).MapPosition);
+                    var mob = _entities.SpawnEntity(speciesProto, _entities.GetComponent<TransformComponent>(Owner).MapPosition);
 
 
                     EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(mob, dna.Profile);
