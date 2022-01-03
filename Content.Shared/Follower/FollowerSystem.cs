@@ -24,7 +24,6 @@ public class FollowerSystem : EntitySystem
 
         foreach (var follower in EntityManager.EntityQuery<FollowerComponent>())
         {
-            Logger.Debug($"Entity {follower} on {follower.Following}");
             var xform = Transform(follower.Owner);
             var targetXform = Transform(follower.Following);
             xform.Coordinates = targetXform.Coordinates;
