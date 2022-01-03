@@ -85,7 +85,7 @@ namespace Content.Server.Administration
                     Text = Loc.GetString("admin-verbs-teleport-to"),
                     Category = VerbCategory.Admin,
                     IconTexture = "/Textures/Interface/VerbIcons/open.svg.192dpi.png",
-                    Act = () => _console.RemoteExecuteCommand(player, $"tpto {args.Target}"),
+                    Act = () => _console.ExecuteCommand(player, $"tpto {args.Target}"),
                     Impact = LogImpact.Low
                 });
 
@@ -95,7 +95,7 @@ namespace Content.Server.Administration
                     Text = Loc.GetString("admin-verbs-teleport-here"),
                     Category = VerbCategory.Admin,
                     IconTexture = "/Textures/Interface/VerbIcons/close.svg.192dpi.png",
-                    Act = () => _console.RemoteExecuteCommand(player, $"tpto {args.Target} {args.User}"),
+                    Act = () => _console.ExecuteCommand(player, $"tpto {args.Target} {args.User}"),
                     Impact = LogImpact.Low
                 });
             }
