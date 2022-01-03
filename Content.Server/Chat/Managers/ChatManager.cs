@@ -175,15 +175,18 @@ namespace Content.Server.Chat.Managers
 
             message = FormattedMessage.EscapeText(message);
 
-            var obfuscatedMessage = ObfuscateMessageReadability(message, 0.2f);
-
             var farClients = new List<INetChannel>();
             var nearClients = new List<INetChannel>();
             ClientDistanceToList(source, VoiceRange, farClients, nearClients, WhisperRange);
 
             var messageWrap = Loc.GetString("chat-manager-entity-whisper-wrap-message",("entityName", Name: _entManager.GetComponent<MetaDataComponent>(source).EntityName));
-            NetMessageToMany(ChatChannel.Whisper, obfuscatedMessage, messageWrap, source, hideChat, farClients);
             NetMessageToMany(ChatChannel.Whisper, message, messageWrap, source, hideChat, nearClients);
+
+            if (farClients.Count >= 1)
+            {
+                var obfuscatedMessage = ObfuscateMessageReadability(message, 0.2f);
+                NetMessageToMany(ChatChannel.Whisper, obfuscatedMessage, messageWrap, source, hideChat, farClients);
+            }
         }
 
         public void EntityMe(EntityUid source, string action)
@@ -439,24 +442,23 @@ namespace Content.Server.Chat.Managers
 
         public void ClientDistanceToList(EntityUid source, int voiceRange, List<INetChannel> clientsRangeOutside, List<INetChannel>? clientsRangeInside = null, float? shortVoiceRange = null)
         {
-            // We'll try to avoid using MapPosition as EntityCoordinates can early-out and potentially be faster for common use cases
-            // Downside is it may potentially convert to MapPosition unnecessarily.
-            var sourceMapId = _entManager.GetComponent<TransformComponent>(source).MapID;
-            var sourceCoords = _entManager.GetComponent<TransformComponent>(source).Coordinates;
+            var transformSource = _entManager.GetComponent<TransformComponent>(source);
+            var sourceMapId = transformSource.MapID;
+            var sourceCoords = transformSource.Coordinates;
 
             foreach (var player in _playerManager.Sessions)
             {
                 if (player.AttachedEntity is not {Valid: true} playerEntity)
                     continue;
 
-                var transform = _entManager.GetComponent<TransformComponent>(playerEntity);
+                var transformEntity = _entManager.GetComponent<TransformComponent>(playerEntity);
 
-                if (transform.MapID != sourceMapId ||
+                if (transformEntity.MapID != sourceMapId ||
                     !_entManager.HasComponent<GhostComponent>(playerEntity) &&
-                    !sourceCoords.InRange(_entManager, transform.Coordinates, voiceRange))
+                    !sourceCoords.InRange(_entManager, transformEntity.Coordinates, voiceRange))
                     continue;
 
-                if (clientsRangeInside != null && shortVoiceRange != null && sourceCoords.InRange(_entManager, transform.Coordinates, shortVoiceRange.Value))
+                if (clientsRangeInside != null && shortVoiceRange != null && sourceCoords.InRange(_entManager, transformEntity.Coordinates, shortVoiceRange.Value))
                 {
                     clientsRangeInside.Add(player.ConnectedClient);
                 }

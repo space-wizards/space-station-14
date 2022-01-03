@@ -22,7 +22,7 @@ namespace Content.Server.Chat.Commands
         {
             if (shell.Player is not IPlayerSession player)
             {
-                shell.WriteLine("This command cannot be run from the server.");
+                shell.WriteError("This command cannot be run from the server.");
                 return;
             }
 
@@ -31,7 +31,7 @@ namespace Content.Server.Chat.Commands
 
             if (player.AttachedEntity is not {} playerEntity)
             {
-                shell.WriteLine("You don't have an entity!");
+                shell.WriteError("You don't have an entity!");
                 return;
             }
 
@@ -43,7 +43,6 @@ namespace Content.Server.Chat.Commands
                 return;
 
             var chat = IoCManager.Resolve<IChatManager>();
-            var chatSanitizer = IoCManager.Resolve<IChatSanitizationManager>();
 
             if (IoCManager.Resolve<IEntityManager>().HasComponent<GhostComponent>(playerEntity))
                 chat.SendDeadChat(player, message);
@@ -63,11 +62,7 @@ namespace Content.Server.Chat.Commands
                     return;
                 }
 
-                var emote = chatSanitizer.TrySanitizeOutSmilies(message, owned, out var sanitized, out var emoteStr);
-                if (sanitized.Length != 0)
-                    chat.EntityWhisper(owned, sanitized);
-                if (emote)
-                    chat.EntityMe(owned, emoteStr!);
+                chat.EntityWhisper(owned, message);
             }
 
         }
