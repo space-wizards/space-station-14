@@ -8,11 +8,13 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Weapon.Melee.Esword
 {
     internal class EswordSystem : EntitySystem
     {
+        [Dependency] private readonly ActionBlockerSystem _blockerSystem = default!;
         public override void Initialize()
         {
             base.Initialize();
@@ -37,7 +39,7 @@ namespace Content.Server.Weapon.Melee.Esword
 
         private void OnUseInHand(EntityUid uid, EswordComponent comp, UseInHandEvent args)
         {
-            if (!Get<ActionBlockerSystem>().CanUse(args.User))
+            if (_blockerSystem.CanUse(args.User))
                 return;
 
             if (comp.Activated)
@@ -98,7 +100,7 @@ namespace Content.Server.Weapon.Melee.Esword
 
         private void OnInteractUsing(EntityUid uid, EswordComponent comp, InteractUsingEvent args)
         {
-            if (!Get<ActionBlockerSystem>().CanInteract(args.User) || comp.Hacked == true)
+            if (_blockerSystem.CanInteract(args.User) || comp.Hacked == true)
                 return;
 
             if (TryComp(args.Used, out ToolComponent? tool))
