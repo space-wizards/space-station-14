@@ -1,4 +1,8 @@
+using Content.Server.Alert;
+using Content.Server.Atmos.Components;
 using Content.Server.Clothing.Components;
+using Content.Shared.Alert;
+using Content.Shared.Inventory.Events;
 using Content.Shared.Movement.EntitySystems;
 using Content.Shared.Slippery;
 using Content.Shared.Verbs;
@@ -16,6 +20,48 @@ namespace Content.Server.Clothing
             SubscribeLocalEvent<MagbootsComponent, GetActivationVerbsEvent>(AddToggleVerb);
             SubscribeLocalEvent<MagbootsComponent, SlipAttemptEvent>(OnSlipAttempt);
             SubscribeLocalEvent<MagbootsComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
+            SubscribeLocalEvent<MagbootsComponent, GotEquippedEvent>(OnGotEquipped);
+            SubscribeLocalEvent<MagbootsComponent, GotUnequippedEvent>(OnGotUnequipped);
+        }
+
+        public void UpdateMagbootEffects(EntityUid parent, EntityUid uid, bool state, MagbootsComponent? component)
+        {
+            if (!Resolve(uid, ref component))
+                return;
+            state = state && component.On;
+
+            if (TryComp(parent, out MovedByPressureComponent? movedByPressure))
+            {
+                movedByPressure.Enabled = state;
+            }
+
+            if (TryComp(parent, out ServerAlertsComponent? alerts))
+            {
+                if (state)
+                {
+                    alerts.ShowAlert(AlertType.Magboots);
+                }
+                else
+                {
+                    alerts.ClearAlert(AlertType.Magboots);
+                }
+            }
+        }
+
+        private void OnGotUnequipped(EntityUid uid, MagbootsComponent component, GotUnequippedEvent args)
+        {
+            if (args.Slot == "shoes")
+            {
+                UpdateMagbootEffects(args.Equipee, uid, false, component);
+            }
+        }
+
+        private void OnGotEquipped(EntityUid uid, MagbootsComponent component, GotEquippedEvent args)
+        {
+            if (args.Slot == "shoes")
+            {
+                UpdateMagbootEffects(args.Equipee, uid, true, component);
+            }
         }
 
         private void OnRefreshMovespeed(EntityUid uid, MagbootsComponent component, RefreshMovementSpeedModifiersEvent args)

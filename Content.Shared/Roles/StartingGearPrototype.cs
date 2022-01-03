@@ -4,7 +4,6 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.ViewVariables;
-using static Content.Shared.Inventory.EquipmentSlotDefines;
 
 namespace Content.Shared.Roles
 {
@@ -12,7 +11,7 @@ namespace Content.Shared.Roles
     public class StartingGearPrototype : IPrototype
     {
         // TODO: Custom TypeSerializer for dictionary value prototype IDs
-        [DataField("equipment")] private Dictionary<Slots, string> _equipment = new();
+        [DataField("equipment")] private Dictionary<string, string> _equipment = new();
 
         /// <summary>
         /// if empty, there is no skirt override - instead the uniform provided in equipment is added.
@@ -37,26 +36,19 @@ namespace Content.Shared.Roles
         [DataField("id", required: true)]
         public string ID { get; } = string.Empty;
 
-        public string GetGear(Slots slot, HumanoidCharacterProfile? profile)
+        public string GetGear(string slot, HumanoidCharacterProfile? profile)
         {
             if (profile != null)
             {
-                if (slot == Slots.INNERCLOTHING && profile.Clothing == ClothingPreference.Jumpskirt && !string.IsNullOrEmpty(_innerClothingSkirt))
+                if (slot == "jumpsuit" && profile.Clothing == ClothingPreference.Jumpskirt && !string.IsNullOrEmpty(_innerClothingSkirt))
                     return _innerClothingSkirt;
-                if (slot == Slots.BACKPACK && profile.Backpack == BackpackPreference.Satchel && !string.IsNullOrEmpty(_satchel))
+                if (slot == "back" && profile.Backpack == BackpackPreference.Satchel && !string.IsNullOrEmpty(_satchel))
                     return _satchel;
-                if (slot == Slots.BACKPACK && profile.Backpack == BackpackPreference.Duffelbag && !string.IsNullOrEmpty(_duffelbag))
+                if (slot == "back" && profile.Backpack == BackpackPreference.Duffelbag && !string.IsNullOrEmpty(_duffelbag))
                     return _duffelbag;
             }
 
-            if (_equipment.ContainsKey(slot))
-            {
-                return _equipment[slot];
-            }
-            else
-            {
-                return "";
-            }
+            return _equipment.TryGetValue(slot, out var equipment) ? equipment : string.Empty;
         }
     }
 }

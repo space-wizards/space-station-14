@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Content.Server.Hands.Components;
-using Content.Server.Items;
-using Content.Server.Stunnable.Components;
+using Content.Shared.Item;
 using Content.Shared.Stunnable;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -33,7 +32,7 @@ namespace Content.Server.DoAfter
 
         // NeedHand
         private readonly string? _activeHand;
-        private readonly ItemComponent? _activeItem;
+        private readonly SharedItemComponent? _activeItem;
 
         public DoAfter(DoAfterEventArgs eventArgs, IEntityManager entityManager)
         {

@@ -16,10 +16,10 @@
   id: QuartermasterGear
   equipment:
     head: ClothingHeadHatCargosoft
-    innerclothing: ClothingUniformJumpsuitQM
-    backpack: ClothingBackpackFilled
+    jumpsuit: ClothingUniformJumpsuitQM
+    back: ClothingBackpackFilled
     shoes: ClothingShoesColorBrown
-    idcard: QuartermasterPDA
+    id: QuartermasterPDA
     ears: ClothingHeadsetCargo
   innerclothingskirt: ClothingUniformJumpskirtQM
   satchel: ClothingBackpackSatchelFilled

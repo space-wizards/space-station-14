@@ -10,7 +10,7 @@ namespace Content.Server.AI.Utility.Considerations.Clothing
 {
     public sealed class ClothingInInventoryCon : Consideration
     {
-        public ClothingInInventoryCon Slot(EquipmentSlotDefines.SlotFlags slotFlags, Blackboard context)
+        public ClothingInInventoryCon Slot(SlotFlags slotFlags, Blackboard context)
         {
             // Ideally we'd just use a variable but then if we were iterating through multiple AI at once it'd be
             // Stuffed so we need to store it on the AI's context.
@@ -21,16 +21,17 @@ namespace Content.Server.AI.Utility.Considerations.Clothing
         protected override float GetScore(Blackboard context)
         {
             var slots = context.GetState<ClothingSlotConState>().GetValue();
-            var slotFlags = EquipmentSlotDefines.SlotMasks[slots];
+            if (slots == null) return 0.0f;
 
             foreach (var entity in context.GetState<EnumerableInventoryState>().GetValue())
             {
-                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out ClothingComponent? clothingComponent))
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out ClothingComponent? clothingComponent) ||
+                    !EntitySystem.Get<InventorySystem>().TryGetSlot(entity, slots, out var slotDef))
                 {
                     continue;
                 }
 
-                if ((clothingComponent.SlotFlags & slotFlags) != 0)
+                if ((clothingComponent.SlotFlags & slotDef.SlotFlags) != 0)
                 {
                     return 1.0f;
                 }
