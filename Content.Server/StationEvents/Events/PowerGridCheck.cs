@@ -144,12 +144,15 @@ namespace Content.Server.StationEvents.Events
             {
                 // The (rough) goal for how long each stage should take to shut down
                 var tgt = SHUTOFF_TARGET_MS / _powerStages.Count;
-                // Half the target
-                var htgt = (int) (0.5f * tgt);
 
                 // The actual next time will be fudged ±50% of the target.
-                var nt = _random.Next(tgt - htgt, tgt + htgt);
-                Timer.Spawn(nt, () => DoShutoff(tier+1));
+                Timer.Spawn(
+                    _random.Next(
+                        tgt - (int)(0.5f * tgt),
+                        tgt + (int)(0.5f * tgt)
+                    ),
+                    () => DoShutoff(tier + 1)
+                );
             }
         }
 
@@ -172,10 +175,14 @@ namespace Content.Server.StationEvents.Events
             {
                 // Same as the DoShutoff version.
                 var tgt = REBOOT_TARGET_MS / _powerStages.Count;
-                var htgt = (int) (0.5f * tgt);
 
-                var nt = _random.Next(tgt - htgt, tgt + htgt);
-                Timer.Spawn(nt, () => DoReboot(tier-1));
+                Timer.Spawn(
+                    _random.Next(
+                        tgt - (int)(0.5f * tgt),
+                        tgt + (int)(0.5f * tgt)
+                    ),
+                    () => DoReboot(tier - 1)
+                );
             }
         }
 
