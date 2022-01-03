@@ -18,7 +18,7 @@ namespace Content.Client.Administration.UI.CustomControls
         public event Action<PlayerInfo?>? OnSelectionChanged;
 
         public Action<PlayerInfo, ItemList.Item>? DecoratePlayer;
-        public Func<PlayerInfo, int>? SortKey;
+        public Comparison<PlayerInfo>? Comparison;
 
         public PlayerListControl()
         {
@@ -59,11 +59,7 @@ namespace Content.Client.Administration.UI.CustomControls
         {
             PlayerItemList.Clear();
 
-            IEnumerable<PlayerInfo> iter = _adminSystem.PlayerList;
-            if (SortKey is not null)
-                iter = _adminSystem.PlayerList.OrderByDescending(SortKey);
-
-            foreach (var info in iter)
+            foreach (var info in Comparison == null ? _adminSystem.PlayerList : _adminSystem.GetSortedPlayerList(Comparison))
             {
                 var displayName = $"{info.CharacterName} ({info.Username})";
                 if (!string.IsNullOrEmpty(FilterLineEdit.Text) &&

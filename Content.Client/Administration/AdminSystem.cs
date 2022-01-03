@@ -24,6 +24,14 @@ namespace Content.Client.Administration
             }
         }
 
+        public List<PlayerInfo> GetSortedPlayerList(Comparison<PlayerInfo> comparison)
+        {
+            if (_playerList == null) return new List<PlayerInfo>();
+            var list = _playerList.Values.ToList();
+            list.Sort(comparison);
+            return list;
+        }
+
         public override void Initialize()
         {
             base.Initialize();

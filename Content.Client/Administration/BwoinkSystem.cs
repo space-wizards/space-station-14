@@ -36,7 +36,7 @@ namespace Content.Client.Administration
             LogBwoink(message);
             // Actual line
             var window = EnsurePanel(message.ChannelId);
-            window.ReceiveLine($"[color=gray]{message.SentAt.ToShortTimeString()}[/color] {message.Text}");
+            window.ReceiveLine(message);
             // Play a sound if we didn't send it
             var localPlayer = _playerManager.LocalPlayer;
             if (localPlayer?.UserId != message.TrueSender)
@@ -62,7 +62,7 @@ namespace Content.Client.Administration
                     _adminWindow.BwoinkArea.AddChild(existingPanel);
             }
 
-            _adminWindow.Open();
+            if(!_adminWindow.IsOpen) _adminWindow.Open();
 
             return existingPanel;
         }

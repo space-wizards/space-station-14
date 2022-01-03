@@ -54,13 +54,20 @@ namespace Content.Client.Administration.UI
                 li.Text = FormatTabTitle(li, pl);
             };
 
-            ChannelSelector.SortKey = (PlayerInfo pl) =>
+            ChannelSelector.Comparison = (a, b) =>
             {
-               if (_bwoinkSystem.TryGetChannel(pl.SessionId, out var ch))
-               {
-                   return ch.Unread;
-               }
-               return 0;
+                var aChannelExists = _bwoinkSystem.TryGetChannel(a.SessionId, out var ach);
+                var bChannelExists = _bwoinkSystem.TryGetChannel(b.SessionId, out var bch);
+                if (!aChannelExists && !bChannelExists)
+                    return 0;
+
+                if (!aChannelExists)
+                    return -1;
+
+                if (!bChannelExists)
+                    return 1;
+
+                return bch!.LastMessage.CompareTo(ach!.LastMessage);
             };
 
             // ew
@@ -152,7 +159,8 @@ namespace Content.Client.Administration.UI
         public void SwitchToChannel(NetUserId ch)
         {
             foreach (var bw in BwoinkArea.Children)
-                bw.Visible = (bw as BwoinkPanel)?.ChannelId == ch;
+                bw.Visible = false;
+            _bwoinkSystem.EnsurePanel(ch).Visible = true;
         }
     }
 }
