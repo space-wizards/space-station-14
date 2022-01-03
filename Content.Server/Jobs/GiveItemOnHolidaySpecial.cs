@@ -1,6 +1,6 @@
 using Content.Server.Hands.Components;
 using Content.Server.Holiday;
-using Content.Server.Items;
+using Content.Shared.Item;
 using Content.Shared.Roles;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -33,7 +33,7 @@ namespace Content.Server.Jobs
 
             var entity = entMan.SpawnEntity(Prototype, entMan.GetComponent<TransformComponent>(mob).Coordinates);
 
-            if (!entMan.TryGetComponent(entity, out ItemComponent? item) || !entMan.TryGetComponent(mob, out HandsComponent? hands))
+            if (!entMan.TryGetComponent(entity, out SharedItemComponent? item) || !entMan.TryGetComponent(mob, out HandsComponent? hands))
                 return;
 
             hands.PutInHand(item, false);
