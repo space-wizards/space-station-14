@@ -59,13 +59,13 @@
         prob: 0.25
       - id: ClothingUniformJumpskirtColorDarkBlue
         prob: 0.25
-      - id: ClothingUniformJumpsuitColorDarkTeal
+      - id: ClothingUniformJumpsuitColorTeal
         prob: 0.25
-      - id: ClothingUniformJumpskirtColorDarkTeal
+      - id: ClothingUniformJumpskirtColorTeal
         prob: 0.25
-      - id: ClothingUniformJumpsuitColorDarkPurple
+      - id: ClothingUniformJumpsuitColorPurple
         prob: 0.25
-      - id: ClothingUniformJumpskirtColorDarkPurple
+      - id: ClothingUniformJumpskirtColorPurple
         prob: 0.25
       - id: ClothingShoesColorBlack
         amount: 1
