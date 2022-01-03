@@ -98,3 +98,13 @@
   id: ClosetRadiationSuitFilled
   parent: ClosetRadiationSuit
   suffix: Filled
+  description: "More comfortable then radiation poisioning"
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingHeadHatHoodRad
+        amount: 2
+      - id: ClothingOuterSuitRad
+        amount: 2
+
+  
