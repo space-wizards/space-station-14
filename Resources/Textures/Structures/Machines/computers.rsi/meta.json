@@ -2125,6 +2125,15 @@
           1
         ]
       ]
+    },
+    {
+      "name": "avionics-circuitry",
+      "directions": 1,
+      "delays": [
+        [
+          1
+        ]
+      ]
     }
   ]
 }

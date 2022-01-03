@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: ComputerBase
   id: ComputerAlert
   name: alerts computer
@@ -39,6 +39,8 @@
     - type: ComputerVisualizer
       key: generic_key
       screen: shuttle
+  - type: computer
+  board: ShuttleConsoleCircuitboard
 
 - type: entity
   parent: ComputerShuttleBase
