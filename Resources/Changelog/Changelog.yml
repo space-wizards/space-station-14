@@ -1,10 +1,4 @@
 Entries:
-- author: Swept
-  changes:
-  - {message: Crematorium makes a sound on and during cremate, type: Add}
-  - {message: Crematorium burns for 5 seconds instead of 3, type: Tweak}
-  id: 313
-  time: '2021-08-12T02:29:57.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix disposal unit collision when exiting., type: Fix}
@@ -2899,3 +2893,8 @@ Entries:
       \ here!", type: Add}
   id: 814
   time: '2022-01-03T05:51:43.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: The doctor and CMO's starting inventories are more efficient., type: Tweak}
+  id: 815
+  time: '2022-01-03T07:38:37.0000000+00:00'
