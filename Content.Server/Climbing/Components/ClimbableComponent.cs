@@ -115,7 +115,7 @@ namespace Content.Server.Climbing.Components
                 return false;
             }
 
-            if (target == null || !_entities.HasComponent<ClimbingComponent>(dragged))
+            if (!_entities.HasComponent<ClimbingComponent>(dragged))
             {
                 reason = Loc.GetString("comp-climbable-cant-climb");
                 return false;

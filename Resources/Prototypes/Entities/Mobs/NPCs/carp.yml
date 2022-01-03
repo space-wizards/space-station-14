@@ -42,6 +42,9 @@
       normal: alive
       crit: crit
       dead: dead
+  - type: Butcherable
+    meat: FoodMeat # TODO: CrapMeat or FishMeat
+    pieces: 2
 
 - type: entity
   name: magicarp

@@ -57,5 +57,7 @@ namespace Content.Shared.Verbs
 
         public static readonly VerbCategory Split =
             new("verb-categories-split", null);
+
+        public static readonly VerbCategory SetSensor = new("verb-categories-set-sensor", null);
     }
 }

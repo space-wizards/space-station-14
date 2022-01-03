@@ -1,0 +1,94 @@
+- type: entity
+  id: RollerBed
+  parent: BaseItem
+  name: rollerbed
+  description: Used to carry patients around without damaging them.
+  components:
+    - type: Transform
+      noRot: true
+    - type: Item
+      size: 5
+    - type: Sprite
+      sprite: Structures/Furniture/rollerbeds.rsi
+      netsync: false
+      noRot: true
+      layers:
+      - state: rollerbed
+        map: ["enum.FoldableVisualLayers.Base"]
+    - type: MovedByPressure
+    - type: DamageOnHighSpeedImpact
+      soundHit: /Audio/Effects/bang.ogg
+    - type: InteractionOutline
+    - type: Physics
+    - type: Fixtures
+      fixtures:
+        - shape:
+            !type:PhysShapeCircle
+            radius: 0.35
+          mass: 30
+          mask:
+            - Impassable
+            - SmallImpassable
+          layer:
+            - Opaque
+    - type: Damageable
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 50
+          behaviors:
+            - !type:DoActsBehavior
+              acts: ["Destruction"]
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                SheetSteel1:
+                  min: 1
+                  max: 1
+    - type: Pullable
+    - type: Strap
+      position: Down
+      rotation: -90
+      buckleOffset: "0,0.15"
+      unbuckleOffset: "0,0.15"
+    - type: Foldable
+    - type: Appearance
+      visuals:
+      - type: FoldableVisualizer
+        key: rollerbed
+      - type: RollerbedVisualizer
+        key: rollerbed
+
+- type: entity
+  id: CheapRollerBed
+  name: rollerbed
+  parent: RollerBed
+  description: A run-down rollerbed. Used to carry patients around.
+  components:
+  - type: Sprite
+    layers:
+    - state: cheap_rollerbed
+      map: [ "enum.FoldableVisualLayers.Base" ]
+  - type: Appearance
+    visuals:
+    - type: FoldableVisualizer
+      key: cheap_rollerbed
+    - type: RollerbedVisualizer
+      key: cheap_rollerbed
+
+- type: entity
+  id: EmergencyRollerBed
+  name: rollerbed
+  parent: RollerBed
+  description: A robust looking rollerbed used for emergencies.
+  components:
+  - type: Sprite
+    layers:
+    - state: emergency_rollerbed
+      map: [ "enum.FoldableVisualLayers.Base" ]
+  - type: Appearance
+    visuals:
+    - type: FoldableVisualizer
+      key: emergency_rollerbed
+    - type: RollerbedVisualizer
+      key: emergency_rollerbed

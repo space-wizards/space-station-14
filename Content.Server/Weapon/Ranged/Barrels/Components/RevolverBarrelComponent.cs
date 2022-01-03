@@ -13,9 +13,11 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Weapon.Ranged.Barrels.Components
@@ -24,7 +26,6 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
     [NetworkedComponent()]
     public sealed class RevolverBarrelComponent : ServerRangedBarrelComponent, IUse, IInteractUsing, ISerializationHooks
     {
-        [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
         public override string Name => "RevolverBarrel";
@@ -49,7 +50,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         public override int ShotsLeft => _ammoContainer.ContainedEntities.Count;
 
         [ViewVariables]
-        [DataField("fillPrototype")]
+        [DataField("fillPrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         private string? _fillPrototype;
 
         [ViewVariables]
@@ -82,7 +83,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             {
                 slotsSpent[i] = null;
                 var ammoEntity = _ammoSlots[i];
-                if (ammoEntity != default && _entMan.TryGetComponent(ammoEntity, out AmmoComponent? ammo))
+                if (ammoEntity != default && Entities.TryGetComponent(ammoEntity, out AmmoComponent? ammo))
                 {
                     slotsSpent[i] = ammo.Spent;
                 }
@@ -114,7 +115,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
             for (var i = 0; i < _unspawnedCount; i++)
             {
-                var entity = _entMan.SpawnEntity(_fillPrototype, _entMan.GetComponent<TransformComponent>(Owner).Coordinates);
+                var entity = Entities.SpawnEntity(_fillPrototype, Entities.GetComponent<TransformComponent>(Owner).Coordinates);
                 _ammoSlots[idx] = entity;
                 _ammoContainer.Insert(entity);
                 idx++;
@@ -126,7 +127,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
         private void UpdateAppearance()
         {
-            if (!_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
+            if (!Entities.TryGetComponent(Owner, out AppearanceComponent? appearance))
             {
                 return;
             }
@@ -139,7 +140,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
         public bool TryInsertBullet(EntityUid user, EntityUid entity)
         {
-            if (!_entMan.TryGetComponent(entity, out AmmoComponent? ammoComponent))
+            if (!Entities.TryGetComponent(entity, out AmmoComponent? ammoComponent))
             {
                 return false;
             }
@@ -209,8 +210,8 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             EntityUid? bullet = null;
             if (ammo != default)
             {
-                var ammoComponent = _entMan.GetComponent<AmmoComponent>(ammo);
-                bullet = ammoComponent.TakeBullet(spawnAt);
+                var ammoComponent = Entities.GetComponent<AmmoComponent>(ammo);
+                bullet = EntitySystem.Get<GunSystem>().TakeBullet(ammoComponent, spawnAt);
                 if (ammoComponent.Caseless)
                 {
                     _ammoSlots[_currentSlot] = default;

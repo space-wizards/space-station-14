@@ -1,0 +1,82 @@
+- type: entity
+  id: CrateSalvageEquipment
+  name: "salvage equipment crate"
+  description: For the daring.
+  suffix: Filled
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingHeadHelmetHardsuitSalvage
+      - id: ClothingOuterHardsuitSalvage
+      - id: ClothingMaskBreath
+      - id: OxygenTankFilled
+      - id: FireExtinguisher
+      - id: ClothingShoesBootsMag
+      - id: Pickaxe
+      # bare-minimum for cutting apart walls
+      # not giving them wirecutters/etc. for balance reasons
+      - id: Welder
+      - id: Wrench
+      - id: Screwdriver
+      - id: Crowbar
+
+- type: entity
+  id: CrateSalvageAssortedGoodies
+  suffix: Filled, Salvage Random
+  abstract: true # You should use SalvageMaterialCrateSpawner instead
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+        # Normal (10%)
+      - id: ToolboxEmergencyFilled
+        prob: 0.1
+      - id: ClothingMaskBreath
+        prob: 0.1
+      - id: OxygenTankFilled
+        prob: 0.1
+      - id: SheetPlasma
+        prob: 0.1
+        #  - Service
+      - id: CrayonBox
+        prob: 0.1
+        #  - Medical
+      - id: MedkitFilled
+        prob: 0.1
+      - id: BoxSyringe
+        prob: 0.1
+      - id: BoxBeaker
+        prob: 0.1
+        #  - Scaf
+      - id: ClothingHeadHelmetScaf
+        prob: 0.1
+      - id: ClothingOuterArmorScaf
+        prob: 0.1
+        #  - Heh
+      - id: SalvageHumanCorpse
+        prob: 0.1
+        # Interesting (1%)
+        #  - Ammo
+      - id: BoxMagnum
+        prob: 0.01
+        #  - #shinies
+      - id: PowerCellLargeHyper
+        prob: 0.01
+        # Just no (0.1%)
+        #  - Working guns
+      - id: RevolverDeckard
+        prob: 0.001
+      - id: RevolverInspector
+        prob: 0.001
+        #  - Skub
+      - id: Skub
+        prob: 0.001
+        # TRAITOR EQUIPMENT (0.01%)
+      - id: Telecrystal10
+        prob: 0.0001
+      - id: RevolverPredator
+        prob: 0.0001
+      - id: RevolverMateba
+        prob: 0.0001
+

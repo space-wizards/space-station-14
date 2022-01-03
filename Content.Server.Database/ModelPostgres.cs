@@ -37,7 +37,15 @@ namespace Content.Server.Database
             options.ConfigureWarnings(x =>
             {
                 x.Ignore(CoreEventId.ManyServiceProvidersCreatedWarning);
+#if DEBUG
+                // for tests
+                x.Ignore(CoreEventId.SensitiveDataLoggingEnabledWarning);
+#endif
             });
+
+#if DEBUG
+            options.EnableSensitiveDataLogging();
+#endif
         }
 
         public PostgresServerDbContext(DbContextOptions<ServerDbContext> options) : base(options)

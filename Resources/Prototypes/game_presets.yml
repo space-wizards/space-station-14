@@ -1,0 +1,60 @@
+- type: gamePreset
+  id: Extended
+  alias:
+    - extended
+    - shittersafari
+  name: extended-title
+  showInVote: true
+  description: extended-description
+
+- type: gamePreset
+  id: Sandbox
+  alias:
+    - sandbox
+  name: sandbox-title
+  description: sandbox-description
+  showInVote: true
+  rules:
+    - Sandbox
+
+- type: gamePreset
+  id: Traitor
+  alias:
+    - traitor
+  name: traitor-title
+  description: traitor-description
+  showInVote: true
+  rules:
+    - Traitor
+
+- type: gamePreset
+  id: Suspicion
+  alias:
+    - suspicion
+    - sus
+  name: suspicion-title
+  description: suspicion-description
+  showInVote: true
+  rules:
+    - Suspicion
+
+- type: gamePreset
+  id: Deathmatch
+  alias:
+    - deathmatch
+    - dm
+  name: death-match-title
+  description: death-match-description
+  rules:
+    - DeathMatch
+
+- type: gamePreset
+  id: TraitorDeathMatch
+  alias:
+    - traitordm
+    - traitordeathmatch
+  name: traitor-death-match-title
+  description: traitor-death-match-description
+  rules:
+    - TraitorDeathMatch
+    - MaxTimeRestart

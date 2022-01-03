@@ -73,3 +73,27 @@
   components:
   - type: AccessReader
     access: [["Security"]]
+    
+- type: entity
+  parent: WindoorSecure
+  id: WindoorEngineeringLocked
+  suffix: Engineering, Locked
+  components:
+  - type: AccessReader
+    access: [["Engineering"]]
+    
+- type: entity
+  parent: WindoorSecure
+  id: WindoorChapelLocked
+  suffix: Chapel, Locked
+  components:
+  - type: AccessReader
+    access: [["Chapel"]]
+    
+- type: entity
+  parent: WindoorSecure
+  id: WindoorJanitorLocked
+  suffix: Janitor, Locked
+  components:
+  - type: AccessReader
+    access: [["Janitor"]]
