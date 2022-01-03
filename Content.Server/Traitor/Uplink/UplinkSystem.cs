@@ -134,7 +134,7 @@ namespace Content.Server.Traitor.Uplink
             }
 
             SoundSystem.Play(Filter.SinglePlayer(message.Session), uplink.BuySuccessSound.GetSound(),
-                uplink.Owner, AudioParams.Default.WithVolume(-2f));
+                uplink.Owner, AudioParams.Default.WithVolume(-8f));
 
             RaiseNetworkEvent(new UplinkBuySuccessMessage(), message.Session.ConnectedClient);
         }
@@ -158,7 +158,7 @@ namespace Content.Server.Traitor.Uplink
 
             // play buying sound
             SoundSystem.Play(Filter.SinglePlayer(args.Session), uplink.BuySuccessSound.GetSound(),
-                    uplink.Owner, AudioParams.Default.WithVolume(-2f));
+                    uplink.Owner, AudioParams.Default.WithVolume(-8f));
 
             UpdateUserInterface(uplink);
         }
