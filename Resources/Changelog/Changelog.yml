@@ -1,9 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: Fixes some tool sounds not playing., type: Fix}
-  id: 315
-  time: '2021-08-13T09:06:13.304552+00:00'
 - author: YggOne
   changes:
   - {message: Added foaming agent sound to prevent a crash., type: Fix}
@@ -2898,3 +2893,13 @@ Entries:
   - {message: Tweaked Cargo console to sell duck and chicken crates, type: Tweak}
   id: 816
   time: '2022-01-03T07:47:36.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Lockers and crates now have significantly reduced HP, so anything that
+      is able to break them in the first place will have an easier time.', type: Tweak}
+  - {message: 'Combat knives, wielded spears, wielded fireaxes, the syndicate toolbox,
+      and butchers cleavers are now able to break strong lockers and crates.', type: Tweak}
+  - {message: Pickaxes and baseball bats do slightly less damage., type: Tweak}
+  - {message: 'Spears can now be wielded, same as fire-axes.', type: Add}
+  id: 817
+  time: '2022-01-03T09:53:09.0000000+00:00'
