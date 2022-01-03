@@ -9,7 +9,6 @@ namespace Content.Shared.Light.Component
     [ComponentProtoName("HandheldLight")]
     public abstract class SharedHandheldLightComponent : Robust.Shared.GameObjects.Component
     {
-
         public const int StatusLevels = 6;
 
         [Serializable, NetSerializable]

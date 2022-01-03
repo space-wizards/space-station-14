@@ -137,7 +137,7 @@ namespace Content.Shared.Containers.ItemSlots
         public bool EjectOnUse = false;
 
         /// <summary>
-        ///     Override the insert verb text. Defaults to using the slots name (if specified) or the name of the
+        ///     Override the insert verb text. Defaults to using the slot's name (if specified) or the name of the
         ///     targeted item. If specified, the verb will not be added to the default insert verb category.
         /// </summary>
         [DataField("insertVerbText")]

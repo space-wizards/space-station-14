@@ -237,11 +237,11 @@ namespace Content.Server.Light.EntitySystems
             var appearanceComponent = EntityManager.GetComponent<AppearanceComponent>(component.Owner);
 
             var fraction = battery.CurrentCharge / battery.MaxCharge;
-            if (fraction >  0.30)
+            if (fraction >= 0.30)
             {
                 appearanceComponent.SetData(HandheldLightVisuals.Power, HandheldLightPowerStates.FullPower);
             }
-            else if (fraction > 0.10)
+            else if (fraction >= 0.10)
             {
                 appearanceComponent.SetData(HandheldLightVisuals.Power, HandheldLightPowerStates.LowPower);
             }
@@ -250,7 +250,8 @@ namespace Content.Server.Light.EntitySystems
                 appearanceComponent.SetData(HandheldLightVisuals.Power, HandheldLightPowerStates.Dying);
             }
 
-            if (component.Activated && !battery.TryUseCharge(component.Wattage * frameTime)) TurnOff(component, false);
+            if (component.Activated && !battery.TryUseCharge(component.Wattage * frameTime))
+                TurnOff(component, false);
 
             var level = GetLevel(component);
 

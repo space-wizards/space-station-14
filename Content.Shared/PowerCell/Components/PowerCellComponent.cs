@@ -22,7 +22,7 @@ public sealed class PowerCellComponent : Component
     [DataField("cellSize")]
     public PowerCellSize CellSize = PowerCellSize.Small;
 
-    // not networked to clients
+    // Not networked to clients
     [ViewVariables(VVAccess.ReadWrite)]
     public bool IsRigged { get; set; }
 }

@@ -16,7 +16,6 @@ namespace Content.Server.Weapon.Ranged.Barrels
         public override void Initialize()
         {
             base.Initialize();
-            
             SubscribeLocalEvent<RevolverBarrelComponent, GetAlternativeVerbsEvent>(AddSpinVerb);
 
             SubscribeLocalEvent<ServerBatteryBarrelComponent, PowerCellChangedEvent>(OnCellSlotUpdated);
