@@ -112,11 +112,11 @@ namespace Content.Server.Weapon.Melee
                     if (hitEvent.HitSoundOverride != null)
                     {
                         SoundSystem.Play(Filter.Pvs(owner), hitEvent.HitSoundOverride.GetSound(), target, AudioHelpers.WithVariation(0.25f));
-                    } else
+                    }
+                    else
                     {
                         SoundSystem.Play(Filter.Pvs(owner), comp.HitSound.GetSound(), target);
                     }
-                    
                 }
             }
             else
