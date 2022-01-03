@@ -51,3 +51,34 @@
         - badfeeling-artifact-drastic-2
         - badfeeling-artifact-drastic-3
         - badfeeling-artifact-drastic-4
+        - badfeeling-artifact-drastic-5
+        - badfeeling-artifact-drastic-6
+
+- type: entity
+  parent: BaseXenoArtifact
+  id: GoodfeelingArtifact
+  suffix: Goodfeeling
+  components:
+    - type: TelepathicArtifact
+      messages:
+        - goodfeeling-artifact-1
+        - goodfeeling-artifact-2
+        - goodfeeling-artifact-3
+        - goodfeeling-artifact-4
+        - goodfeeling-artifact-5
+        - goodfeeling-artifact-6
+        - goodfeeling-artifact-7
+        - goodfeeling-artifact-8
+        - goodfeeling-artifact-9
+        - goodfeeling-artifact-10
+        - goodfeeling-artifact-11
+        - goodfeeling-artifact-12
+        - goodfeeling-artifact-13
+        - goodfeeling-artifact-14
+      drastic:
+        - goodfeeling-artifact-drastic-1
+        - goodfeeling-artifact-drastic-2
+        - goodfeeling-artifact-drastic-3
+        - goodfeeling-artifact-drastic-4
+        - goodfeeling-artifact-drastic-5
+        - goodfeeling-artifact-drastic-6

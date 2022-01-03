@@ -19,3 +19,4 @@ badfeeling-artifact-drastic-2 = There's something out there!
 badfeeling-artifact-drastic-3 = What's happening to you?
 badfeeling-artifact-drastic-4 = OH GOD!
 badfeeling-artifact-drastic-5 = HELP ME!
+badfeeling-artifact-drastic-6 = You've got to get out of here!
