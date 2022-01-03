@@ -4,3 +4,5 @@ bwoink-system-starmute-message-no-other-users = *System: Nobody is available to 
 
 bwoink-system-starmute-message-no-other-users-webhook = *System: Your message has been relayed to the admins via discord.
 
+admin-bwoink-window-list-hide = ◀
+admin-bwoink-window-list-show = ▶

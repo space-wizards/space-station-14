@@ -5,15 +5,20 @@
     HeaderClass="windowHeaderAlert"
     TitleClass="windowTitleAlert"
     Title="{Loc 'bwoink-user-title'}" >
-    <SplitContainer Orientation="Horizontal">
-        <cc:PlayerListControl Access="Public" Name="ChannelSelector" HorizontalExpand="True" SizeFlagsStretchRatio="1" />
+    <SplitContainer Name="Split" Orientation="Horizontal">
+        <BoxContainer Orientation="Horizontal">
+            <cc:PlayerListControl Access="Public" Name="ChannelSelector" HorizontalExpand="True" SizeFlagsStretchRatio="1" />
+        </BoxContainer>
         <BoxContainer Orientation="Vertical" HorizontalExpand="True" SizeFlagsStretchRatio="2">
             <BoxContainer Access="Public" Name="BwoinkArea" VerticalExpand="True" />
-            <BoxContainer Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button Visible="False" Name="Kick" Text="{Loc 'admin-player-actions-kick'}" />
-                <Button Visible="False" Name="Ban" Text="{Loc 'admin-player-actions-ban'}" />
-                <Button Visible="False" Name="Respawn" Text="{Loc 'admin-player-actions-respawn'}" />
-                <Button Visible="False" Name="Teleport" Text="{Loc 'admin-player-actions-teleport'}" />
+            <BoxContainer Orientation="Horizontal" HorizontalExpand="True" >
+                <Button Name="Hide" Text="{Loc 'admin-bwoink-window-list-hide'}" HorizontalAlignment="Left" />
+                <BoxContainer Orientation="Horizontal" HorizontalExpand="True" HorizontalAlignment="Right">
+                    <Button Visible="False" Name="Kick" Text="{Loc 'admin-player-actions-kick'}" />
+                    <Button Visible="False" Name="Ban" Text="{Loc 'admin-player-actions-ban'}" />
+                    <Button Visible="False" Name="Respawn" Text="{Loc 'admin-player-actions-respawn'}" />
+                    <Button Visible="False" Name="Teleport" Text="{Loc 'admin-player-actions-teleport'}" />
+                </BoxContainer>
             </BoxContainer>
         </BoxContainer>
     </SplitContainer>
