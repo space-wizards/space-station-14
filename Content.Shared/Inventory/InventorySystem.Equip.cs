@@ -50,23 +50,58 @@ public abstract partial class InventorySystem
         RaiseLocalEvent(args.Entity, gotEquippedEvent);
     }
 
-    public bool TryEquipActiveHandTo(EntityUid uid, string slot, bool silent = false, bool force = false,
-        InventoryComponent? component = null, SharedHandsComponent? hands = null)
+    /// <summary>
+    ///     Same as <see cref="TryEquip"/>, but also makes sure that hands-drop interactions occur.
+    /// </summary>
+    public virtual bool TryEquipActiveHandTo(EntityUid actor, EntityUid target, string slot, bool silent = false, bool force = false,
+        InventoryComponent? inventory = null, SharedHandsComponent? hands = null)
     {
-        if (!Resolve(uid, ref component, false) || !Resolve(uid, ref hands, false))
+        if (!Resolve(target, ref inventory, false)
+            || !Resolve(actor, ref hands, false)
+            || !hands.TryGetActiveHeldEntity(out var itemUid)
+            || !TryComp(itemUid, out SharedItemComponent? item)
+            || !TryGetSlotContainer(target, slot, out var slotContainer, out var slotDefinition, inventory))
+        {
+            if (!silent) _popup.PopupCursor(Loc.GetString("inventory-component-can-equip-cannot"), Filter.Local());
             return false;
+        }
 
-        if (!hands.TryGetActiveHeldEntity(out var heldEntity))
+        if (!force && !CanEquip(actor, target, itemUid.Value, slot, out var reason, slotDefinition, inventory, item))
+        {
+            if (!silent) _popup.PopupCursor(Loc.GetString(reason), Filter.Local());
             return false;
+        }
 
-        return TryEquip(uid, heldEntity.Value, slot, silent, force, fromHands: true, component);
+        // Make the actor drop the held entity. We need to do this and cannot insert directly, as that would bypasses
+        // some hands interaction stuff. One day, maybe hands code wont be shit and can just perform interaction on
+        // container-modified messages. That'd that be nice.
+        if (!hands.TryDropEntity(itemUid.Value, Transform(actor).Coordinates))
+        {
+            if (!silent) _popup.PopupCursor(Loc.GetString("inventory-component-can-equip-cannot"), Filter.Local());
+            return false;
+        }
+
+        if (!slotContainer.Insert(itemUid.Value))
+        {
+            if (!silent) _popup.PopupCursor(Loc.GetString("inventory-component-can-unequip-cannot"), Filter.Local());
+            return false;
+        }
+
+        if (!silent && item.EquipSound != null)
+            SoundSystem.Play(Filter.Pvs(target), item.EquipSound.GetSound(), target, AudioParams.Default.WithVolume(-2f));
+
+        inventory.Dirty();
+
+        _movementSpeed.RefreshMovementSpeedModifiers(target);
+
+        return true;
     }
 
-    public bool TryEquip(EntityUid uid, EntityUid itemUid, string slot, bool silent = false, bool force = false, bool fromHands = false,
+    public bool TryEquip(EntityUid uid, EntityUid itemUid, string slot, bool silent = false, bool force = false,
         InventoryComponent? inventory = null, SharedItemComponent? item = null) =>
-        TryEquip(uid, uid, itemUid, slot, silent, force, fromHands, inventory, item);
+        TryEquip(uid, uid, itemUid, slot, silent, force, inventory, item);
 
-    public virtual bool TryEquip(EntityUid actor, EntityUid target, EntityUid itemUid, string slot, bool silent = false, bool force = false, bool fromHands = false, InventoryComponent? inventory = null, SharedItemComponent? item = null)
+    public virtual bool TryEquip(EntityUid actor, EntityUid target, EntityUid itemUid, string slot, bool silent = false, bool force = false, InventoryComponent? inventory = null, SharedItemComponent? item = null)
     {
         if (!Resolve(target, ref inventory, false) || !Resolve(itemUid, ref item, false))
         {
@@ -83,14 +118,6 @@ public abstract partial class InventorySystem
         if (!force && !CanEquip(actor, target, itemUid, slot, out var reason, slotDefinition, inventory, item))
         {
             if(!silent) _popup.PopupCursor(Loc.GetString(reason), Filter.Local());
-            return false;
-        }
-
-        // Make the actor drop the held entity. Cannot insert directly, as this bypasses some hands interaction stuff.
-        // One day, maybe hands code wont be shit and can just perform interaction on container-modified messages. That'd that be nice.
-        if (fromHands && (!TryComp(actor, out SharedHandsComponent? hands) || !hands.TryDropEntity(itemUid, Transform(actor).Coordinates)))
-        {
-            if (!silent) _popup.PopupCursor(Loc.GetString("inventory-component-can-equip-cannot"), Filter.Local());
             return false;
         }
 

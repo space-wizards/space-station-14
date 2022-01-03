@@ -26,6 +26,7 @@ namespace Content.Server.Inventory
             SubscribeLocalEvent<InventoryComponent, ModifyChangedTemperatureEvent>(RelayInventoryEvent);
 
             SubscribeNetworkEvent<TryEquipNetworkMessage>(OnNetworkEquip);
+            SubscribeNetworkEvent<TryEquipFromHandsNetworkMessage>(OnNetworkHandEquip);
             SubscribeNetworkEvent<TryUnequipNetworkMessage>(OnNetworkUnequip);
             SubscribeNetworkEvent<OpenSlotStorageNetworkMessage>(OnOpenSlotStorage);
             SubscribeNetworkEvent<UseSlotNetworkMessage>(OnUseSlot);
@@ -64,7 +65,12 @@ namespace Content.Server.Inventory
 
         private void OnNetworkEquip(TryEquipNetworkMessage ev)
         {
-            TryEquip(ev.Actor, ev.Target, ev.ItemUid, ev.Slot, ev.Silent, ev.Force, ev.FromHands);
+            TryEquip(ev.Actor, ev.Target, ev.ItemUid, ev.Slot, ev.Silent, ev.Force);
+        }
+
+        private void OnNetworkHandEquip(TryEquipFromHandsNetworkMessage ev)
+        {
+            TryEquipActiveHandTo(ev.Actor, ev.Target, ev.Slot, ev.Silent, ev.Force);
         }
     }
 }

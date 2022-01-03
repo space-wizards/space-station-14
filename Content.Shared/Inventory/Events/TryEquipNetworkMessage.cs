@@ -13,9 +13,8 @@ public class TryEquipNetworkMessage : EntityEventArgs
     public readonly string Slot;
     public readonly bool Silent;
     public readonly bool Force;
-    public readonly bool FromHands;
 
-    public TryEquipNetworkMessage(EntityUid actor, EntityUid target, EntityUid itemUid, string slot, bool silent, bool force, bool fromHands)
+    public TryEquipNetworkMessage(EntityUid actor, EntityUid target, EntityUid itemUid, string slot, bool silent, bool force)
     {
         Actor = actor;
         Target = target;
@@ -23,6 +22,25 @@ public class TryEquipNetworkMessage : EntityEventArgs
         Slot = slot;
         Silent = silent;
         Force = force;
-        FromHands = fromHands;
+    }
+}
+
+
+[NetSerializable, Serializable]
+public class TryEquipFromHandsNetworkMessage : EntityEventArgs
+{
+    public readonly EntityUid Actor;
+    public readonly EntityUid Target;
+    public readonly string Slot;
+    public readonly bool Silent;
+    public readonly bool Force;
+
+    public TryEquipFromHandsNetworkMessage(EntityUid actor, EntityUid target, string slot, bool silent, bool force)
+    {
+        Actor = actor;
+        Target = target;
+        Slot = slot;
+        Silent = silent;
+        Force = force;
     }
 }
