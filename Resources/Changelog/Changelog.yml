@@ -1,14 +1,4 @@
 Entries:
-- author: YggOne
-  changes:
-  - {message: Added foaming agent sound to prevent a crash., type: Fix}
-  id: 316
-  time: '2021-08-16T02:44:35.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: Bedsheets are pickupable again, type: Fix}
-  id: 317
-  time: '2021-08-17T21:27:17.0000000+00:00'
 - author: SweptWasTaken
   changes:
   - {message: Crayons/Crayonbox now have inhands, type: Add}
@@ -2903,3 +2893,14 @@ Entries:
   - {message: 'Spears can now be wielded, same as fire-axes.', type: Add}
   id: 817
   time: '2022-01-03T09:53:09.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Spawned salvage now synced with a station rotation., type: Tweak}
+  id: 818
+  time: '2022-01-03T21:32:16.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Fire and Air Alarm Electronics can now be printed in the lathe after
+      unlocking Industrial Engineering., type: Add}
+  id: 819
+  time: '2022-01-03T21:32:28.0000000+00:00'
