@@ -1,23 +1,4 @@
 Entries:
-- author: Seth
-  changes:
-  - {message: Added cloning pod and medical scanner circuit boards into the protolathe,
-    type: Add}
-  - {message: Made the cloning pod and medical scanner constructible, type: Add}
-  id: 310
-  time: '2021-08-08T20:21:19.0000000+00:00'
-- author: TimrodDX
-  changes:
-  - {message: Fixed the light in the captain's bathroom and the inner windoor at the
-      science desk., type: Tweak}
-  id: 311
-  time: '2021-08-10T00:28:11.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: Most belts now have restrictions for what can be inserted into them,
-    type: Add}
-  id: 312
-  time: '2021-08-10T20:36:01.0000000+00:00'
 - author: Swept
   changes:
   - {message: Crematorium makes a sound on and during cremate, type: Add}
@@ -2902,3 +2883,19 @@ Entries:
   - {message: small bar-themed salvage, type: Add}
   id: 811
   time: '2022-01-02T05:40:44.0000000+00:00'
+- author: Lamrr
+  changes:
+  - {message: Floor tile crafting now produces four floor tiles instead of one., type: Tweak}
+  id: 812
+  time: '2022-01-02T05:57:46.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Crit and dead mobs will now be hidden from the ghost roles list., type: Tweak}
+  id: 813
+  time: '2022-01-02T06:00:22.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: "The prophecy is true, the arrival of the \u0429\u03A3\u0389, is finally\
+      \ here!", type: Add}
+  id: 814
+  time: '2022-01-03T05:51:43.0000000+00:00'

@@ -5,11 +5,13 @@ using Content.Server.Ghost.Components;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Ghost.Roles.UI;
 using Content.Server.Mind.Components;
+using Content.Server.MobState.States;
 using Content.Server.Players;
 using Content.Shared.Administration;
 using Content.Shared.GameTicking;
 using Content.Shared.Ghost;
 using Content.Shared.Ghost.Roles;
+using Content.Shared.MobState;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -43,9 +45,27 @@ namespace Content.Server.Ghost.Roles
 
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttached);
-            SubscribeLocalEvent<GhostRoleComponent, MindRemovedMessage>(OnMindRemoved);
+            SubscribeLocalEvent<GhostTakeoverAvailableComponent, MindRemovedMessage>(OnMindRemoved);
+            SubscribeLocalEvent<GhostTakeoverAvailableComponent, MobStateChangedEvent>(OnMobStateChanged);
 
             _playerManager.PlayerStatusChanged += PlayerStatusChanged;
+        }
+
+        private void OnMobStateChanged(EntityUid uid, GhostRoleComponent component, MobStateChangedEvent args)
+        {
+            switch (args.CurrentMobState)
+            {
+                case NormalMobState:
+                {
+                    if (!component.Taken)
+                        RegisterGhostRole(component);
+                    break;
+                }
+                case CriticalMobState:
+                case DeadMobState:
+                    UnregisterGhostRole(component);
+                    break;
+            }
         }
 
         public override void Shutdown()
