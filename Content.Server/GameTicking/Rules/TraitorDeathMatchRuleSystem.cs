@@ -4,8 +4,6 @@ using System.Linq;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat.Managers;
 using Content.Server.Hands.Components;
-using Content.Server.Inventory.Components;
-using Content.Server.Items;
 using Content.Server.PDA;
 using Content.Server.Players;
 using Content.Server.Spawners.Components;
@@ -20,6 +18,7 @@ using Content.Shared.Damage.Prototypes;
 using Content.Shared.Inventory;
 using Content.Shared.MobState.Components;
 using Content.Shared.PDA;
+using Content.Shared.Roles;
 using Content.Shared.Traitor.Uplink;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
@@ -41,6 +40,7 @@ public class TraitorDeathMatchRuleSystem : GameRuleSystem
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly MaxTimeRestartRuleSystem _restarter = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
 
     public override string Prototype => "TraitorDeathMatch";
 
@@ -51,6 +51,8 @@ public class TraitorDeathMatchRuleSystem : GameRuleSystem
     private bool _safeToEndRound = false;
 
     private readonly Dictionary<UplinkAccount, string> _allOriginalNames = new();
+
+    private const string TraitorPrototypeID = "Traitor";
 
     public override void Initialize()
     {
@@ -77,18 +79,19 @@ public class TraitorDeathMatchRuleSystem : GameRuleSystem
             return;
         }
 
-        var traitorRole = new TraitorRole(mind);
+        var antagPrototype = _prototypeManager.Index<AntagPrototype>(TraitorPrototypeID);
+        var traitorRole = new TraitorRole(mind, antagPrototype);
         mind.AddRole(traitorRole);
 
         // Delete anything that may contain "dangerous" role-specific items.
         // (This includes the PDA, as everybody gets the captain PDA in this mode for true-all-access reasons.)
-        if (mind.OwnedEntity is {Valid: true} owned && TryComp(owned, out InventoryComponent? inventory))
+        if (mind.OwnedEntity is {Valid: true} owned)
         {
-            var victimSlots = new[] {EquipmentSlotDefines.Slots.IDCARD, EquipmentSlotDefines.Slots.BELT, EquipmentSlotDefines.Slots.BACKPACK};
+            var victimSlots = new[] {"id", "belt", "back"};
             foreach (var slot in victimSlots)
             {
-                if (inventory.TryGetSlotItem(slot, out ItemComponent? vItem))
-                    Del(vItem.Owner);
+                if(_inventory.TryUnequip(owned, slot, out var entityUid, true, true))
+                    Del(entityUid.Value);
             }
 
             // Replace their items:
@@ -97,15 +100,15 @@ public class TraitorDeathMatchRuleSystem : GameRuleSystem
 
             //  pda
             var newPDA = Spawn(PDAPrototypeName, ownedCoords);
-            inventory.Equip(EquipmentSlotDefines.Slots.IDCARD, Comp<ItemComponent>(newPDA));
+            _inventory.TryEquip(owned, newPDA, "id", true);
 
             //  belt
             var newTmp = Spawn(BeltPrototypeName, ownedCoords);
-            inventory.Equip(EquipmentSlotDefines.Slots.BELT, Comp<ItemComponent>(newTmp));
+            _inventory.TryEquip(owned, newTmp, "belt", true);
 
             //  backpack
             newTmp = Spawn(BackpackPrototypeName, ownedCoords);
-            inventory.Equip(EquipmentSlotDefines.Slots.BACKPACK, Comp<ItemComponent>(newTmp));
+            _inventory.TryEquip(owned, newTmp, "back", true);
 
             // Like normal traitors, they need access to a traitor account.
             var uplinkAccount = new UplinkAccount(startingBalance, owned);

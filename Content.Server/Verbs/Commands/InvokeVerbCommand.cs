@@ -29,7 +29,7 @@ namespace Content.Server.Verbs.Commands
             var verbSystem = EntitySystem.Get<SharedVerbSystem>();
 
             // get the 'player' entity (defaulting to command user, otherwise uses a uid)
-            EntityUid playerEntity = default;
+            EntityUid? playerEntity = null;
             if (!int.TryParse(args[0], out var intPlayerUid))
             {
                 if (args[0] == "self" && shell.Player?.AttachedEntity != null)
@@ -54,7 +54,7 @@ namespace Content.Server.Verbs.Commands
                 return;
             }
 
-            if (playerEntity == default)
+            if (playerEntity == null)
             {
                 shell.WriteError(Loc.GetString("invoke-verb-command-invalid-player-entity"));
                 return;
@@ -68,14 +68,14 @@ namespace Content.Server.Verbs.Commands
             }
 
             var verbName = args[2].ToLowerInvariant();
-            var verbs = verbSystem.GetLocalVerbs(target, playerEntity, VerbType.All, true);
+            var verbs = verbSystem.GetLocalVerbs(target, playerEntity.Value, VerbType.All, true);
 
             if ((Enum.TryParse(typeof(VerbType), verbName, ignoreCase: true, out var vtype) &&
                 vtype is VerbType key) &&
                 verbs.TryGetValue(key, out var vset) &&
                 vset.Any())
             {
-                verbSystem.ExecuteVerb(vset.First(), playerEntity, target, forced: true);
+                verbSystem.ExecuteVerb(vset.First(), playerEntity.Value, target, forced: true);
                 shell.WriteLine(Loc.GetString("invoke-verb-command-success", ("verb", verbName), ("target", target), ("player", playerEntity)));
                 return;
             }
@@ -86,7 +86,7 @@ namespace Content.Server.Verbs.Commands
                 {
                     if (verb.Text.ToLowerInvariant() == verbName)
                     {
-                        verbSystem.ExecuteVerb(verb, playerEntity, target, forced: true);
+                        verbSystem.ExecuteVerb(verb, playerEntity.Value, target, forced: true);
                         shell.WriteLine(Loc.GetString("invoke-verb-command-success", ("verb", verb.Text), ("target", target), ("player", playerEntity)));
                         return;
                     }

@@ -1,8 +1,8 @@
 using System;
 using Content.Server.Hands.Components;
-using Content.Server.Items;
 using Content.Shared.Audio;
 using Content.Shared.Examine;
+using Content.Shared.Item;
 using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -128,7 +128,7 @@ namespace Content.Server.PowerCell.Components
         /// <param name="user">(optional) the user to give the removed cell to.</param>
         /// <param name="playSound">Should <see cref="CellRemoveSound"/> be played upon removal?</param>
         /// <returns>The cell component of the entity that was removed, or null if removal failed.</returns>
-        public PowerCellComponent? EjectCell(EntityUid user, bool playSound = true)
+        public PowerCellComponent? EjectCell(EntityUid? user = null, bool playSound = true)
         {
             var cell = Cell;
             if (cell == null || !CanRemoveCell) return null;
@@ -136,9 +136,9 @@ namespace Content.Server.PowerCell.Components
             //Dirty();
             if (user != null)
             {
-                if (!_entities.TryGetComponent(user, out HandsComponent? hands) || !hands.PutInHand(_entities.GetComponent<ItemComponent>(cell.Owner)))
+                if (!_entities.TryGetComponent(user, out HandsComponent? hands) || !hands.PutInHand(_entities.GetComponent<SharedItemComponent>(cell.Owner)))
                 {
-                    _entities.GetComponent<TransformComponent>(cell.Owner).Coordinates = _entities.GetComponent<TransformComponent>(user).Coordinates;
+                    _entities.GetComponent<TransformComponent>(cell.Owner).Coordinates = _entities.GetComponent<TransformComponent>(user.Value).Coordinates;
                 }
             }
             else
@@ -164,7 +164,7 @@ namespace Content.Server.PowerCell.Components
         public bool InsertCell(EntityUid cell, bool playSound = true)
         {
             if (Cell != null) return false;
-            if (!_entities.HasComponent<ItemComponent>(cell)) return false;
+            if (!_entities.HasComponent<SharedItemComponent>(cell)) return false;
             if (!_entities.TryGetComponent<PowerCellComponent?>(cell, out var cellComponent)) return false;
             if (cellComponent.CellSize != SlotSize) return false;
             if (!_cellContainer.Insert(cell)) return false;

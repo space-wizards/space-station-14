@@ -3,12 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Events;
-using Robust.Client.Player;
+using Content.Shared.GameTicking;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Network;
-using Robust.Shared.Players;
 
 namespace Content.Client.Administration
 {
@@ -27,6 +24,14 @@ namespace Content.Client.Administration
             }
         }
 
+        public List<PlayerInfo> GetSortedPlayerList(Comparison<PlayerInfo> comparison)
+        {
+            if (_playerList == null) return new List<PlayerInfo>();
+            var list = _playerList.Values.ToList();
+            list.Sort(comparison);
+            return list;
+        }
+
         public override void Initialize()
         {
             base.Initialize();
@@ -35,7 +40,7 @@ namespace Content.Client.Administration
             InitializeMenu();
             SubscribeNetworkEvent<FullPlayerListEvent>(OnPlayerListChanged);
             SubscribeNetworkEvent<PlayerInfoChangedEvent>(OnPlayerInfoChanged);
-            SubscribeNetworkEvent<PlayerInfoRemovalMessage>(OnPlayerInfoRemoval);
+            SubscribeNetworkEvent<RoundRestartCleanupEvent>(OnRoundRestartCleanup);
         }
 
         public override void Shutdown()
@@ -44,11 +49,17 @@ namespace Content.Client.Administration
             ShutdownOverlay();
         }
 
-        private void OnPlayerInfoRemoval(PlayerInfoRemovalMessage ev)
+        private void OnRoundRestartCleanup(RoundRestartCleanupEvent msg, EntitySessionEventArgs args)
         {
-            if (_playerList == null) _playerList = new();
+            if (_playerList == null)
+                return;
 
-            _playerList.Remove(ev.NetUserId);
+            foreach (var (id, playerInfo) in _playerList.ToArray())
+            {
+                if (playerInfo.Connected)
+                    continue;
+                _playerList.Remove(id);
+            }
             PlayerListChanged?.Invoke(_playerList.Values.ToList());
         }
 

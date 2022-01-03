@@ -28,9 +28,9 @@ namespace Content.Client.Items.Managers
 
         public event Action<EntitySlotHighlightedEventArgs>? EntityHighlightedUpdated;
 
-        public bool SetItemSlot(ItemSlotButton button, EntityUid entity)
+        public bool SetItemSlot(ItemSlotButton button, EntityUid? entity)
         {
-            if (entity == default)
+            if (entity == null)
             {
                 button.SpriteView.Sprite = null;
                 button.StorageButton.Visible = false;
@@ -141,9 +141,10 @@ namespace Content.Client.Items.Managers
             button.HoverSpriteView.Sprite = hoverSprite;
         }
 
-        public bool IsHighlighted(EntityUid uid)
+        public bool IsHighlighted(EntityUid? uid)
         {
-            return _highlightEntities.Contains(uid);
+            if (uid == null) return false;
+            return _highlightEntities.Contains(uid.Value);
         }
 
         public void HighlightEntity(EntityUid uid)
