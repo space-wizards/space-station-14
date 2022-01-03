@@ -3,6 +3,7 @@
   parent: BaseStructureDynamic
   abstract: true
   components:
+  - type: PottedPlant
   - type: Transform
     noRot: true
   - type: InteractionOutline

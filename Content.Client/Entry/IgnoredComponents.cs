@@ -320,7 +320,8 @@ namespace Content.Client.Entry
             "Udder",
             "PneumaticCannon",
             "Spreader",
-            "GrowingKudzu"
+            "GrowingKudzu",
+            "PottedPlant"
         };
     }
 }
