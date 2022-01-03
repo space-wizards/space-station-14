@@ -39,7 +39,7 @@ namespace Content.Server.Weapon.Melee.Esword
 
         private void OnUseInHand(EntityUid uid, EswordComponent comp, UseInHandEvent args)
         {
-            if (_blockerSystem.CanUse(args.User))
+            if (!_blockerSystem.CanUse(args.User))
                 return;
 
             if (comp.Activated)
