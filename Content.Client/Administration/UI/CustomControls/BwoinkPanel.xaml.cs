@@ -16,7 +16,7 @@ namespace Content.Client.Administration.UI.CustomControls
         public readonly NetUserId ChannelId;
 
         public int Unread { get; private set; } = 0;
-        public DateTime LastMessage { get; private set; }
+        public DateTime LastMessage { get; private set; } = DateTime.MinValue;
 
         public BwoinkPanel(BwoinkSystem bwoinkSys, NetUserId userId)
         {
@@ -34,9 +34,10 @@ namespace Content.Client.Administration.UI.CustomControls
 
         private void Input_OnTextEntered(LineEdit.LineEditEventArgs args)
         {
-            if (!string.IsNullOrWhiteSpace(args.Text))
-                _bwoinkSystem.Send(ChannelId, args.Text);
+            if (string.IsNullOrWhiteSpace(args.Text))
+                return;
 
+            _bwoinkSystem.Send(ChannelId, args.Text);
             SenderLineEdit.Clear();
         }
 

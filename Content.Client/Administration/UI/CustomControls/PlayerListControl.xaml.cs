@@ -53,13 +53,25 @@ namespace Content.Client.Administration.UI.CustomControls
             OnSelectionChanged?.Invoke(null);
         }
 
-        public void Refresh() => PopulateList();
+        public void RefreshDecorators()
+        {
+            foreach (var item in PlayerItemList)
+            {
+                DecoratePlayer?.Invoke((PlayerInfo) item.Metadata!, item);
+            }
+        }
+
+        public void Sort()
+        {
+            if(Comparison != null)
+                PlayerItemList.Sort((a, b) => Comparison((PlayerInfo) a.Metadata!, (PlayerInfo) b.Metadata!));
+        }
 
         private void PopulateList(IReadOnlyList<PlayerInfo> _ = null!)
         {
             PlayerItemList.Clear();
 
-            foreach (var info in Comparison == null ? _adminSystem.PlayerList : _adminSystem.GetSortedPlayerList(Comparison))
+            foreach (var info in _adminSystem.PlayerList)
             {
                 var displayName = $"{info.CharacterName} ({info.Username})";
                 if (!string.IsNullOrEmpty(FilterLineEdit.Text) &&
@@ -76,6 +88,8 @@ namespace Content.Client.Administration.UI.CustomControls
                 DecoratePlayer?.Invoke(info, item);
                 PlayerItemList.Add(item);
             }
+
+            Sort();
         }
     }
 }
