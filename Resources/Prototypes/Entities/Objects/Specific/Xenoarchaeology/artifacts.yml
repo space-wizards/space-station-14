@@ -1,0 +1,53 @@
+﻿- type: entity
+  parent: BaseStructureDynamic
+  id: BaseXenoArtifact
+  name: alien artifact
+  description: A strange alien device.
+  abstract: true
+  components:
+    - type: Sprite
+      sprite: Objects/Devices/nuke.rsi
+      netsync: false
+      state: nuclearbomb_base
+    - type: Physics
+      bodyType: Dynamic
+    - type: Fixtures
+      fixtures:
+        - shape:
+            !type:PhysShapeCircle
+            radius: 0.45
+          mass: 150
+          layer:
+            - SmallImpassable
+          mask:
+            - VaultImpassable
+    - type: InteractionOutline
+    - type: Artifact
+
+- type: entity
+  parent: BaseXenoArtifact
+  id: BadfeelingArtifact
+  suffix: Badfeeling
+  components:
+    - type: TelepathicArtifact
+      messages:
+        - badfeeling-artifact-1
+        - badfeeling-artifact-2
+        - badfeeling-artifact-3
+        - badfeeling-artifact-4
+        - badfeeling-artifact-5
+        - badfeeling-artifact-6
+        - badfeeling-artifact-7
+        - badfeeling-artifact-8
+        - badfeeling-artifact-9
+        - badfeeling-artifact-10
+        - badfeeling-artifact-11
+        - badfeeling-artifact-12
+        - badfeeling-artifact-13
+        - badfeeling-artifact-14
+        - badfeeling-artifact-15
+      drastic:
+        - badfeeling-artifact-drastic-1
+        - badfeeling-artifact-drastic-2
+        - badfeeling-artifact-drastic-3
+        - badfeeling-artifact-drastic-4
