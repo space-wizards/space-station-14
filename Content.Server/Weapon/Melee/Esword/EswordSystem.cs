@@ -55,8 +55,8 @@ namespace Content.Server.Weapon.Melee.Esword
             if (!comp.Activated)
                 return;
 
-            if (!EntityManager.TryGetComponent<SpriteComponent?>(comp.Owner, out var sprite) ||
-                !EntityManager.TryGetComponent<SharedItemComponent?>(comp.Owner, out var item))
+            if (!TryComp(comp.Owner, out SpriteComponent? sprite)
+                || !TryComp(comp.Owner, out SharedItemComponent? item))
                 return;
 
             item.Size = 5;
@@ -74,8 +74,8 @@ namespace Content.Server.Weapon.Melee.Esword
             if (comp.Activated)
                 return;
 
-            if (!EntityManager.TryGetComponent<SpriteComponent?>(comp.Owner, out var sprite) ||
-                !EntityManager.TryGetComponent<SharedItemComponent?>(comp.Owner, out var item))
+            if (!TryComp(comp.Owner, out SpriteComponent? sprite)
+                || !TryComp(comp.Owner, out SharedItemComponent? item))
                 return;
 
             item.Size = 9999;
@@ -101,14 +101,14 @@ namespace Content.Server.Weapon.Melee.Esword
             if (!Get<ActionBlockerSystem>().CanInteract(args.User) || comp.Hacked == true)
                 return;
 
-            if (EntityManager.TryGetComponent<ToolComponent>(args.Used, out var tool))
+            if (TryComp(args.Used, out ToolComponent? tool))
             {
                 if (tool.Qualities.ContainsAny("Pulsing"))
                 {
                     comp.Hacked = true;
 
-                    if (comp.Activated == true && EntityManager.TryGetComponent<SpriteComponent?>(comp.Owner, out var sprite)
-                        && EntityManager.TryGetComponent<SharedItemComponent?>(comp.Owner, out var item))
+                    if (comp.Activated == true && TryComp(comp.Owner, out SpriteComponent? sprite)
+                        && TryComp(comp.Owner, out SharedItemComponent? item))
                     {
                         sprite.LayerSetState(0, "e_sword_rainbow_on");
                         item.EquippedPrefix = "on-rainbow";
