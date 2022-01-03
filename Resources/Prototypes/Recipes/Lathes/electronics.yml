@@ -114,3 +114,12 @@
   materials:
      Steel: 100
      Glass: 100
+
+- type: latheRecipe
+  id: ShuttleConsoleCircuitboard
+  icon: objects/Misc/module.rsi/id_mod.png
+  result: ShuttleConsoleCircuitboard
+  completetime: 1000
+  materials:
+     Steel: 100
+     Glass: 100

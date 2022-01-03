@@ -103,7 +103,7 @@
 - type: entity
   parent: BaseComputerCircuitboard
   id: ShuttleConsoleCircuitboard
-  name: shuttle console computer board
+  name: Shuttle Console Board
   components:
     - type: ComputerBoard
       prototype: ComputerShuttle
