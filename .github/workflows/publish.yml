@@ -1,58 +1,61 @@
-name: Publish
 
-concurrency:
-  group: publish
+# Not using a manifest update method, using git instead
 
-on:
-  push:
-    branches: [ master ]
+#name: Publish
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+#concurrency:
+#  group: publish
 
-    steps:
-    - uses: actions/checkout@v2
-      with:
-        submodules: 'recursive'
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 6.0.100
+#on:
+#  push:
+#    branches: [ master ]
 
-    - name: Get Engine Tag
-      run: |
-        cd RobustToolbox
-        git fetch --depth=1
+#jobs:
+#  build:
+#    runs-on: ubuntu-latest
 
-    - name: Package client
-      run: |
-        Tools/package_server_build.py -p win-x64 linux-x64 osx-x64 linux-arm64
-        Tools/package_client_build.py
+#    steps:
+#    - uses: actions/checkout@v2
+#      with:
+#        submodules: 'recursive'
+#    - name: Setup .NET Core
+#      uses: actions/setup-dotnet@v1
+#      with:
+#        dotnet-version: 6.0.100
 
-    - name: Update Build Info
-      run: Tools/gen_build_info.py
+#    - name: Get Engine Tag
+#      run: |
+#        cd RobustToolbox
+#        git fetch --depth=1
 
-    - name: Shuffle files around
-      run: |
-        mkdir "release/${{ github.sha }}"
-        mv release/*.zip "release/${{ github.sha }}"
+#    - name: Package all
+#      run: |
+#        Tools/package_server_build.py -p win-x64 linux-x64 osx-x64 linux-arm64
+#        Tools/package_client_build.py
 
-    - name: Upload files to centcomm
-      uses: appleboy/scp-action@master
-      with:
-        host: centcomm.spacestation14.io
-        username: wizards-build-push
-        key: ${{ secrets.CENTCOMM_WIZARDS_BUILDS_PUSH_KEY }}
-        source: "release/${{ github.sha }}"
-        target: "/home/wizards-build-push/builds_dir/builds/"
-        strip_components: 1
+#    - name: Update Build Info
+#      run: Tools/gen_build_info.py
 
-    - name: Update manifest JSON
-      uses: appleboy/ssh-action@master
-      with:
-        host: centcomm.spacestation14.io
-        username: wizards-build-push
-        key: ${{ secrets.CENTCOMM_WIZARDS_BUILDS_PUSH_KEY }}
-        script: /home/wizards-build-push/push.ps1 ${{ github.sha }}
+#    - name: Shuffle files around
+#      run: |
+#        mkdir "release/${{ github.sha }}"
+#        mv release/*.zip "release/${{ github.sha }}"
+
+#    - name: Upload files to nowhere
+#      uses: appleboy/scp-action@master
+#      with:
+#        host: station14.space
+#        username: arcadia-build-push
+#        key: ${{ secrets.NOWHERE_ARCADIA_BUILDS_PUSH_KEY }}
+#        source: "release/${{ github.sha }}"
+#        target: "/home/arcadia-build-push/builds_dir/builds/"
+#        strip_components: 1
+
+#    - name: Update manifest JSON
+#      uses: appleboy/ssh-action@master
+#      with:
+#        host: centcomm.spacestation14.io
+#        username: arcadia-build-push
+#        key: ${{ secrets.NOWHERE_ARCADIA_BUILDS_PUSH_KEY }}
+#        script: /home/arcadia-build-push/push.ps1 ${{ github.sha }}
 
