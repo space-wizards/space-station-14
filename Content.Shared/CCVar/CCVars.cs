@@ -486,6 +486,15 @@ namespace Content.Shared.CCVar
             CVarDef.Create("ooc.enabled_admin", true, CVar.NOTIFY);
 
         /*
+         * LOOC
+         */
+
+        public static readonly CVarDef<bool> LoocEnabled = CVarDef.Create("looc.enabled", true, CVar.NOTIFY);
+
+        public static readonly CVarDef<bool> AdminLoocEnabled =
+            CVarDef.Create("looc.enabled_admin", true, CVar.NOTIFY);
+
+        /*
          * Entity Menu Grouping Types
          */
         public static readonly CVarDef<int> EntityMenuGroupingType = CVarDef.Create("entity_menu", 0, CVar.CLIENTONLY);

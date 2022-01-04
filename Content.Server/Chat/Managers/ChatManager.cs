@@ -59,12 +59,15 @@ namespace Content.Server.Chat.Managers
         private readonly List<TransformChat> _chatTransformHandlers = new();
         private bool _oocEnabled = true;
         private bool _adminOocEnabled = true;
+        private bool _loocEnabled = true;
+        private bool _adminLoocEnabled = true;
 
         public void Initialize()
         {
             _netManager.RegisterNetMessage<MsgChatMessage>();
 
             _configurationManager.OnValueChanged(CCVars.OocEnabled, OnOocEnabledChanged, true);
+            _configurationManager.OnValueChanged(CCVars.LoocEnabled, OnLoocEnabledChanged, true);
             _configurationManager.OnValueChanged(CCVars.AdminOocEnabled, OnAdminOocEnabledChanged, true);
         }
 
@@ -72,6 +75,12 @@ namespace Content.Server.Chat.Managers
         {
             _oocEnabled = val;
             DispatchServerAnnouncement(Loc.GetString(val ? "chat-manager-ooc-chat-enabled-message" : "chat-manager-ooc-chat-disabled-message"));
+        }
+
+        private void OnLoocEnabledChanged(bool val)
+        {
+            _loocEnabled = val;
+            DispatchServerAnnouncement(Loc.GetString(val ? "chat-manager-looc-chat-enabled-message" : "chat-manager-looc-chat-disabled-message"));
         }
 
         private void OnAdminOocEnabledChanged(bool val)
@@ -248,12 +257,12 @@ namespace Content.Server.Chat.Managers
 
             if (_adminManager.IsAdmin(actor.PlayerSession))
             {
-                if (!_adminOocEnabled)
+                if (!_adminLoocEnabled)
                 {
                     return;
                 }
             }
-            else if (!_oocEnabled)
+            else if (!_loocEnabled)
             {
                 return;
             }
