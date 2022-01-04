@@ -52,8 +52,8 @@ namespace Content.Server.Resist
                 BreakOnDamage = true,
                 BreakOnStun = true,
                 NeedHand = false, //No hands 'cause we be kickin'
-                TargetFinishedEvent = new ResistDoAfterComplete(storageComponent, user, target),
-                TargetCancelledEvent = new ResistDoAfterCancelled(user, resistLockerComponent)
+                TargetFinishedEvent = new ResistDoAfterComplete(user, target),
+                TargetCancelledEvent = new ResistDoAfterCancelled(user)
             };
 
             resistLockerComponent.IsResisting = true;
@@ -65,18 +65,19 @@ namespace Content.Server.Resist
         {
             component.IsResisting = false;
 
-            if (ev.StorageComponent.IsWeldedShut)
+            if (TryComp<EntityStorageComponent>(uid, out var storageComponent))
             {
-                ev.StorageComponent.IsWeldedShut = false;
-            }
+                if (storageComponent.IsWeldedShut)
+                    storageComponent.IsWeldedShut = false;
 
-            if (TryComp<LockComponent>(ev.Target, out var lockComponent))
-            {
-                lockComponent.Locked = false;
-            }
+                if (TryComp<LockComponent>(ev.Target, out var lockComponent))
+                {
+                    lockComponent.Locked = false;
+                }
 
-            component.CancelToken = null;
-            ev.StorageComponent.TryOpenStorage(ev.User);
+                component.CancelToken = null;
+                storageComponent.TryOpenStorage(ev.User);
+            }
         }
 
         private void OnDoAfterCancelled(EntityUid uid, ResistLockerComponent component, ResistDoAfterCancelled ev)
@@ -97,12 +98,10 @@ namespace Content.Server.Resist
         }
         private class ResistDoAfterComplete : EntityEventArgs
         {
-            public EntityStorageComponent StorageComponent;
             public readonly EntityUid User;
             public readonly EntityUid Target;
-            public ResistDoAfterComplete(EntityStorageComponent component, EntityUid userUid, EntityUid target)
+            public ResistDoAfterComplete(EntityUid userUid, EntityUid target)
             {
-                StorageComponent = component;
                 User = userUid;
                 Target = target;
             }
@@ -112,7 +111,7 @@ namespace Content.Server.Resist
         {
             public readonly EntityUid User;
 
-            public ResistDoAfterCancelled(EntityUid userUid, ResistLockerComponent resistComponent)
+            public ResistDoAfterCancelled(EntityUid userUid)
             {
                 User = userUid;
             }
