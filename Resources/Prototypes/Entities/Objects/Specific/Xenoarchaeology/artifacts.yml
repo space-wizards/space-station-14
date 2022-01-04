@@ -95,3 +95,25 @@
       possiblePrototypes:
         - MobCarpHolo
         - MobCarpMagic
+
+- type: entity
+  parent: BaseXenoArtifact
+  id: JunkSpawnArtifact
+  suffix: Junk Spawn
+  components:
+    - type: SpawnArtifact
+      maxSpawns: 10
+      possiblePrototypes:
+        - RandomSpawner
+        - RandomInstruments
+        - ToySpawner
+
+- type: entity
+  parent: BaseXenoArtifact
+  id: BananaSpawnArtifact
+  suffix: Banana Spawn
+  components:
+    - type: SpawnArtifact
+      maxSpawns: 20
+      possiblePrototypes:
+        - FoodBanana
