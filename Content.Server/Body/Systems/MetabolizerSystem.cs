@@ -76,6 +76,8 @@ namespace Content.Server.Body.Systems
             // First step is get the solution we actually care about
             Solution? solution = null;
             EntityUid? solutionEntityUid = null;
+            EntityUid? bodyEntityUid = mech?.Body?.Owner;
+
             SolutionContainerManagerComponent? manager = null;
 
             if (meta.SolutionOnBody)
@@ -156,7 +158,8 @@ namespace Content.Server.Body.Systems
                             continue;
                     }
 
-                    var args = new ReagentEffectArgs(solutionEntityUid.Value, (meta).Owner, solution, proto, mostToRemove,
+                    var actualEntity = bodyEntityUid != null ? bodyEntityUid.Value : solutionEntityUid.Value;
+                    var args = new ReagentEffectArgs(actualEntity, (meta).Owner, solution, proto, mostToRemove,
                         EntityManager, null);
 
                     // do all effects, if conditions apply
@@ -167,7 +170,7 @@ namespace Content.Server.Body.Systems
 
                         if (effect.ShouldLog)
                         {
-                            var entity = args.SolutionEntity;
+                            var entity = bodyEntityUid != null ? bodyEntityUid.Value : args.SolutionEntity;
                             _logSystem.Add(LogType.ReagentEffect, effect.LogImpact,
                                 $"Metabolism effect {effect.GetType().Name:effect} of reagent {args.Reagent.Name:reagent} applied on entity {entity} at {Transform(entity).Coordinates:coordinates}");
                         }

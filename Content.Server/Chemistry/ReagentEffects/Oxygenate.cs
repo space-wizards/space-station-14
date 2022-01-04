@@ -1,5 +1,5 @@
-﻿using Content.Server.Body.Systems;
-using Content.Shared.Body.Components;
+﻿using Content.Server.Body.Components;
+using Content.Server.Body.Systems;
 using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -13,11 +13,10 @@ public class Oxygenate : ReagentEffect
 
     public override void Effect(ReagentEffectArgs args)
     {
-        if (args.EntityManager.TryGetComponent<SharedMechanismComponent>(args.SolutionEntity, out var mech))
+        if (args.EntityManager.TryGetComponent<RespiratorComponent>(args.SolutionEntity, out var resp))
         {
-            if (mech.Body == null) return;
             var respSys = EntitySystem.Get<RespiratorSystem>();
-            respSys.UpdateSaturation(mech.Body.Owner, args.Quantity.Float() * Factor);
+            respSys.UpdateSaturation(resp.Owner, args.Quantity.Float() * Factor, resp);
         }
     }
 }

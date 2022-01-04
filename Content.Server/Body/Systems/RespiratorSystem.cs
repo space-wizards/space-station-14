@@ -107,7 +107,7 @@ namespace Content.Server.Body.Systems
             }
 
             var pressure = ev.Gas.Pressure / ev.AmountRatio;
-            var molesNeeded = pressure * respirator.InhaleAmount / (Atmospherics.R * ev.Gas.Temperature);
+            var molesNeeded = Atmospherics.OneAtmosphere * respirator.InhaleAmount / (Atmospherics.R * ev.Gas.Temperature);
             var actualGas = ev.Gas.Remove(molesNeeded);
 
             var ratio = 1.0f / organs.Length;

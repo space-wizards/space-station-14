@@ -30,10 +30,10 @@ namespace Content.Server.Body.Components
         public float SuffocationThreshold = 0.0f;
 
         [DataField("maxSaturation")]
-        public float MaxSaturation = 10.0f;
+        public float MaxSaturation = 5.0f;
 
         [DataField("minSaturation")]
-        public float MinSaturation = -10.0f;
+        public float MinSaturation = -5.0f;
 
         // TODO HYPEROXIA
 

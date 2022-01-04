@@ -86,10 +86,10 @@
   - type: Respirator
     damage:
       types:
-        Asphyxiation: 1
+        Asphyxiation: 3
     damageRecovery:
       types:
-        Asphyxiation: -1
+        Asphyxiation: -1.5
 #  - type: Appearance
 #    visuals:
 #      - type: RotationVisualizer

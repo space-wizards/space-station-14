@@ -42,10 +42,10 @@
   - type: Respirator
     damage:
       types:
-        Asphyxiation: 1
+        Asphyxiation: 3
     damageRecovery:
       types:
-        Asphyxiation: -1
+        Asphyxiation: -1.5
   - type: UnarmedCombat
     range: 1.5
     arcwidth: 0

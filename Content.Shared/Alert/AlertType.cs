@@ -8,11 +8,12 @@
         Pressure,
         Temperature,
         Breathing,
+        Toxins,
         Buckled,
         Health,
         Piloting,
         Hunger,
-        Thirst
+        Thirst,
     }
 
     /// <summary>
@@ -46,6 +47,7 @@
         Pulled,
         Pulling,
         Magboots,
+        Toxins,
         Debug1,
         Debug2,
         Debug3,

@@ -49,6 +49,8 @@
           types:
             Poison:
               1
+      - !type:AdjustAlert
+        alertType: Toxins
   reactiveEffects:
     Flammable:
       methods: [ Touch ]
@@ -80,3 +82,5 @@
           types:
             Radiation:
               1
+      - !type:AdjustAlert
+        alertType: Toxins

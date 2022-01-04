@@ -25,7 +25,16 @@
     sprite: /Textures/Interface/Alerts/breathing.rsi
     state: not_enough_oxy
   name: "[color=red]Low Oxygen[/color]"
-  description: "There is not [color=red]not enough oxygen[/color] in the air you are breathing. Put on [color=green]internals[/color]."
+  description: "There is [color=red]not enough oxygen[/color] in the air you are breathing. Put on [color=green]internals[/color]."
+
+- type: alert
+  alertType: Toxins
+  category: Toxins
+  icon:
+    sprite: /Textures/Interface/Alerts/breathing.rsi
+    state: too_much_tox
+  name: "[color=red]High Toxin Level[/color]"
+  description: "There are [color=red]too many toxins[/color] in the air you are breathing. Put on [color=green]internals[/color] or get away."
 
 - type: alert
   alertType: LowPressure

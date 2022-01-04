@@ -201,10 +201,10 @@
   - type: Respirator
     damage:
       types:
-        Asphyxiation: 1
+        Asphyxiation: 3
     damageRecovery:
       types:
-        Asphyxiation: -1
+        Asphyxiation: -1.5
   - type: Internals
   - type: MobState
     thresholds:
