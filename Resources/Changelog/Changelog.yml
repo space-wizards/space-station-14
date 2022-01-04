@@ -1,11 +1,6 @@
 Entries:
 - author: Swept
   changes:
-  - {message: Cig and Match animations work again, type: Fix}
-  id: 319
-  time: '2021-08-17T23:26:35.0000000+00:00'
-- author: Swept
-  changes:
   - {message: You can equip the scythe on your back now, type: Tweak}
   - {message: Updated spade/scythe/hoe sprites, type: Tweak}
   - {message: Plant clippers for hydroponics, type: Add}
@@ -2906,3 +2901,9 @@ Entries:
       their host.', type: Fix}
   id: 820
   time: '2022-01-04T09:22:28.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: The Syndicate now considers certain steal targets to be easier or harder
+      than others., type: Tweak}
+  id: 821
+  time: '2022-01-04T12:05:06.0000000+00:00'
