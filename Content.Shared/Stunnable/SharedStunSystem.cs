@@ -56,8 +56,8 @@ namespace Content.Shared.Stunnable
             SubscribeLocalEvent<StunnedComponent, DropAttemptEvent>(OnDropAttempt);
             SubscribeLocalEvent<StunnedComponent, PickupAttemptEvent>(OnPickupAttempt);
             SubscribeLocalEvent<StunnedComponent, AttackAttemptEvent>(OnAttackAttempt);
-            SubscribeLocalEvent<StunnedComponent, EquipAttemptEvent>(OnEquipAttempt);
-            SubscribeLocalEvent<StunnedComponent, UnequipAttemptEvent>(OnUnequipAttempt);
+            SubscribeLocalEvent<StunnedComponent, IsEquippingAttemptEvent>(OnEquipAttempt);
+            SubscribeLocalEvent<StunnedComponent, IsUnequippingAttemptEvent>(OnUnequipAttempt);
         }
 
         private void OnSlowGetState(EntityUid uid, SlowedDownComponent component, ref ComponentGetState args)
@@ -256,14 +256,18 @@ namespace Content.Shared.Stunnable
             args.Cancel();
         }
 
-        private void OnEquipAttempt(EntityUid uid, StunnedComponent stunned, EquipAttemptEvent args)
+        private void OnEquipAttempt(EntityUid uid, StunnedComponent stunned, IsEquippingAttemptEvent args)
         {
-            args.Cancel();
+            // is this a self-equip, or are they being stripped?
+            if (args.Equipee == uid)
+                args.Cancel();
         }
 
-        private void OnUnequipAttempt(EntityUid uid, StunnedComponent stunned, UnequipAttemptEvent args)
+        private void OnUnequipAttempt(EntityUid uid, StunnedComponent stunned, IsUnequippingAttemptEvent args)
         {
-            args.Cancel();
+            // is this a self-equip, or are they being stripped?
+            if (args.Unequipee == uid)
+                args.Cancel();
         }
 
         #endregion

@@ -12,8 +12,8 @@
   - type: MeleeWeapon
     damage:
       types:
-        Piercing: 15
-        Blunt: 5
+        Piercing: 10
+        Blunt: 4
   - type: Item
     size: 24
     sprite: Objects/Weapons/Melee/pickaxe.rsi

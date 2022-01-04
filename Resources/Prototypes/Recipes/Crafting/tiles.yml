@@ -7,7 +7,7 @@
   startNode: start
   targetNode: steeltile
   category: Tiles
-  description: "A steel station tile."
+  description: "Four steel station tiles."
   icon: Objects/Tiles/tile.rsi/steel.png
   objectType: Item
 
@@ -18,7 +18,7 @@
   startNode: start
   targetNode: woodtile
   category: Tiles
-  description: "A piece of wooden station flooring."
+  description: "Four pieces of wooden station flooring."
   icon: Objects/Tiles/tile.rsi/wood.png
   objectType: Item
 

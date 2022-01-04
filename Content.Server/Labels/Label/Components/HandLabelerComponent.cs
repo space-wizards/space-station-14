@@ -1,5 +1,3 @@
-using System;
-using Content.Server.Items;
 using Content.Shared.Whitelist;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
