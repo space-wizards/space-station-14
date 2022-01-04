@@ -80,10 +80,13 @@ namespace Content.Server.Body.Systems
                         respirator.LastGaspPopupTime = _gameTiming.CurTime;
                         _popupSystem.PopupEntity(Loc.GetString("lung-behavior-gasp"), uid, Filter.Pvs(uid));
                     }
+
+                    respirator.SuffocationCycles += 1;
                     TakeSuffocationDamage(uid, respirator);
                     continue;
                 }
 
+                respirator.SuffocationCycles = 0;
                 StopSuffocation(uid, respirator);
             }
         }
@@ -106,8 +109,8 @@ namespace Content.Server.Body.Systems
                 if (ev.Gas == null) return;
             }
 
-            var pressure = ev.Gas.Pressure / ev.AmountRatio;
-            var molesNeeded = Atmospherics.OneAtmosphere * respirator.InhaleAmount / (Atmospherics.R * ev.Gas.Temperature);
+            var pressure = Atmospherics.OneAtmosphere / ev.AmountRatio;
+            var molesNeeded = pressure * respirator.InhaleAmount / (Atmospherics.R * ev.Gas.Temperature);
             var actualGas = ev.Gas.Remove(molesNeeded);
 
             var ratio = 1.0f / organs.Length;
@@ -153,7 +156,8 @@ namespace Content.Server.Body.Systems
 
             respirator.Suffocating = true;
 
-            if (EntityManager.TryGetComponent(uid, out ServerAlertsComponent? alertsComponent))
+            if (EntityManager.TryGetComponent(uid, out ServerAlertsComponent? alertsComponent)
+                && respirator.SuffocationCycles >= respirator.SuffocationCycleThreshold)
             {
                 alertsComponent.ShowAlert(AlertType.LowOxygen);
             }

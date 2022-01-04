@@ -57,6 +57,18 @@ namespace Content.Server.Body.Components
         [ViewVariables]
         public TimeSpan LastGaspPopupTime;
 
+        /// <summary>
+        ///     How many cycles in a row has the mob been undersaturated?
+        /// </summary>
+        [ViewVariables]
+        public int SuffocationCycles = 0;
+
+        /// <summary>
+        ///     How many cycles in a row does it take for the suffocation alert to pop up?
+        /// </summary>
+        [ViewVariables]
+        public int SuffocationCycleThreshold = 3;
+
         [ViewVariables]
         public bool Suffocating = false;
 

@@ -49,8 +49,9 @@
           types:
             Poison:
               1
-      - !type:AdjustAlert
-        alertType: Toxins
+      # Cant be added until I add metabolism effects on reagent removal
+      #- !type:AdjustAlert
+      #  alertType: Toxins
   reactiveEffects:
     Flammable:
       methods: [ Touch ]
@@ -82,5 +83,6 @@
           types:
             Radiation:
               1
-      - !type:AdjustAlert
-        alertType: Toxins
+      # Cant be added until I add metabolism effects on reagent removal
+      #- !type:AdjustAlert
+      #  alertType: Toxins
