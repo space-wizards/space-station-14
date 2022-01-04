@@ -240,7 +240,6 @@
         - PillCanister
       components:
         - Hypospray
-        - SurgeryTool
         - Radio
   - type: ItemMapper
     mapLayers:

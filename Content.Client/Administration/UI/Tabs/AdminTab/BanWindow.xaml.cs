@@ -68,7 +68,7 @@ namespace Content.Client.Administration.UI.Tabs.AdminTab
             SubmitButton.Disabled = string.IsNullOrEmpty(PlayerNameLine.Text);
         }
 
-        private void OnPlayerSelectionChanged(PlayerInfo? player)
+        public void OnPlayerSelectionChanged(PlayerInfo? player)
         {
             PlayerNameLine.Text = player?.Username ?? string.Empty;
             OnPlayerNameChanged();

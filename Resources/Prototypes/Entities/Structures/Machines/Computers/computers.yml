@@ -306,6 +306,8 @@
       - HydroponicsSeedsExotic
       - LivestockMonkeyCube
       - LivestockCow
+      - LivestockChicken
+      - LivestockDuck
       - FoodPizza
       - ServiceJanitorial
       - ServiceLightsReplacement
