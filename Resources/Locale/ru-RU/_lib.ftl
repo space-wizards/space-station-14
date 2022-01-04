@@ -15,7 +15,7 @@ zzzz-fmt-power-watts = { TOSTRING($divided, "G3") } { $places ->
     [0] Вт
     [1] кВт
     [2] МВт
-    [3] гВт
+    [3] ГВт
     [4] ТВт
     *[5] ???
 }
