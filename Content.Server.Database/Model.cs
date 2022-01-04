@@ -101,10 +101,6 @@ namespace Content.Server.Database
 
             modelBuilder.Entity<AdminLogPlayer>()
                 .HasKey(logPlayer => new {logPlayer.PlayerUserId, logPlayer.LogId, logPlayer.RoundId});
-
-            modelBuilder.Entity<Whitelist>()
-                .Property(w => w.UserId)
-                .IsRequired();
         }
     }
 
@@ -210,9 +206,10 @@ namespace Content.Server.Database
         public List<AdminLogPlayer> AdminLogs { get; set; } = null!;
     }
 
+    [Table("whitelist")]
     public class Whitelist
     {
-        [Key] public Guid UserId { get; set; }
+        [Required, Key] public Guid UserId { get; set; }
     }
 
     public class Admin

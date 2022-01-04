@@ -14,7 +14,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Content.Server.Database.Migrations.Postgres
 {
     [DbContext(typeof(PostgresServerDbContext))]
-    [Migration("20220102083845_whitelist")]
+    [Migration("20220103235647_whitelist")]
     partial class whitelist
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

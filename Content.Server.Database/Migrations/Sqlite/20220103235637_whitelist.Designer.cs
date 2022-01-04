@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Content.Server.Database.Migrations.Sqlite
 {
     [DbContext(typeof(SqliteServerDbContext))]
-    [Migration("20220102083836_whitelist")]
+    [Migration("20220103235637_whitelist")]
     partial class whitelist
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
