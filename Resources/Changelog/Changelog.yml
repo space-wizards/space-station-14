@@ -1,11 +1,4 @@
 Entries:
-- author: Swept
-  changes:
-  - {message: You can equip the scythe on your back now, type: Tweak}
-  - {message: Updated spade/scythe/hoe sprites, type: Tweak}
-  - {message: Plant clippers for hydroponics, type: Add}
-  id: 320
-  time: '2021-08-18T02:42:35.0000000+00:00'
 - author: SweptWasTaken
   changes:
   - {message: 'Can equip bat, fireaxe, spear and claymore on your back now', type: Tweak}
@@ -2907,3 +2900,8 @@ Entries:
       than others., type: Tweak}
   id: 821
   time: '2022-01-04T12:05:06.0000000+00:00'
+- author: router
+  changes:
+  - {message: Added paying respects, type: Add}
+  id: 822
+  time: '2022-01-04T13:05:21.0000000+00:00'
