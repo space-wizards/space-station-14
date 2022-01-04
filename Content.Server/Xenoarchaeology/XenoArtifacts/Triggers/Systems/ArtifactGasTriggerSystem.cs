@@ -1,11 +1,11 @@
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Atmos.Piping.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Systems;
+using Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Random;
 
-namespace Content.Server.Xenoarchaeology.XenoArtifacts.Triggers;
+namespace Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Systems;
 
 public class ArtifactGasTriggerSystem : EntitySystem
 {

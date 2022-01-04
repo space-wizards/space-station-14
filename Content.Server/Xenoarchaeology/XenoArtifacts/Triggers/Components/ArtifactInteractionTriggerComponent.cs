@@ -1,6 +1,6 @@
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.Xenoarchaeology.XenoArtifacts.Triggers;
+namespace Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Components;
 
 [RegisterComponent]
 public class ArtifactInteractionTriggerComponent : Component

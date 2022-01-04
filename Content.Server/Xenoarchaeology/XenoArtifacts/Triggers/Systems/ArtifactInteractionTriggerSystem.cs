@@ -1,9 +1,10 @@
 using Content.Server.Xenoarchaeology.XenoArtifacts.Systems;
+using Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Components;
 using Content.Shared.Interaction;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
-namespace Content.Server.Xenoarchaeology.XenoArtifacts.Triggers;
+namespace Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Systems;
 
 public class ArtifactInteractionTriggerSystem : EntitySystem
 {

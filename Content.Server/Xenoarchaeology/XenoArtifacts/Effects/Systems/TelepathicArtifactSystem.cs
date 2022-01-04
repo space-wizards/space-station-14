@@ -1,3 +1,4 @@
+using Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
@@ -7,7 +8,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
-namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects;
+namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems;
 
 public class TelepathicArtifactSystem : EntitySystem
 {
