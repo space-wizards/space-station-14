@@ -75583,7 +75583,7 @@ entities:
 - uid: 7172
   type: CheapRollerBed
   components:
-  - pos: 6.560457,-8.321582
+  - pos: 6.5,-8.5
     parent: 853
     type: Transform
   - canCollide: False
@@ -75591,7 +75591,7 @@ entities:
 - uid: 7173
   type: CheapRollerBed
   components:
-  - pos: 6.654207,-9.212207
+  - pos: 6.5,-9.5
     parent: 853
     type: Transform
   - canCollide: False
@@ -75599,7 +75599,7 @@ entities:
 - uid: 7174
   type: CheapRollerBed
   components:
-  - pos: 6.529207,-10.055957
+  - pos: 6.5,-10.5
     parent: 853
     type: Transform
   - canCollide: False
