@@ -1,11 +1,6 @@
 Entries:
 - author: Swept
   changes:
-  - {message: Missing vending machine descriptions found, type: Fix}
-  id: 323
-  time: '2021-08-20T05:23:02.0000000+00:00'
-- author: Swept
-  changes:
   - {message: Adds a ton of inhands for various items, type: Add}
   id: 324
   time: '2021-08-20T05:36:32.0000000+00:00'
@@ -2906,3 +2901,13 @@ Entries:
   - {message: 'Added Shuttle SS Reach, atmospherics not included yet.', type: Add}
   id: 824
   time: '2022-01-04T13:36:37.0000000+00:00'
+- author: MeltedPixel
+  changes:
+  - {message: Added Hydroponics plant - Chilis!, type: Add}
+  - {message: Added Hot Chili Soup Recipe + Meal, type: Add}
+  - {message: Added Clown Chili Soup Recipe + Meal, type: Add}
+  - {message: Added Enchiladas Recipe + Meal, type: Add}
+  - {message: Added Queso Recipe + Meal, type: Add}
+  - {message: Added new reagent Capsaicin Oil from Chilis, type: Add}
+  id: 825
+  time: '2022-01-04T13:51:23.0000000+00:00'
