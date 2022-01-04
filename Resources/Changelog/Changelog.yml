@@ -1,9 +1,4 @@
 Entries:
-- author: SweptWasTaken
-  changes:
-  - {message: Adds seclite and duck related content, type: Add}
-  id: 322
-  time: '2021-08-19T23:23:49.0000000+00:00'
 - author: Swept
   changes:
   - {message: Missing vending machine descriptions found, type: Fix}
@@ -2906,3 +2901,8 @@ Entries:
       force equipped for Vacuum with heavy weaponry.', type: Add}
   id: 823
   time: '2022-01-04T13:23:13.0000000+00:00'
+- author: Schiene
+  changes:
+  - {message: 'Added Shuttle SS Reach, atmospherics not included yet.', type: Add}
+  id: 824
+  time: '2022-01-04T13:36:37.0000000+00:00'
