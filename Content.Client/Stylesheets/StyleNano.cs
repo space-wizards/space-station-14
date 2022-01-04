@@ -779,6 +779,7 @@ namespace Content.Client.Stylesheets
                 new StyleRule(new SelectorElement(typeof(Label), new [] { StyleClassBwoinkTooltipLabel }, null, null), new[]
                 {
                     new StyleProperty(Label.StylePropertyFontColor, Color.Gray),
+                    new StyleProperty(Label.StylePropertyAlignMode, Label.AlignMode.Right),
                 }),
 
                 new StyleRule(new SelectorElement(typeof(PanelContainer), new [] { StyleClassTooltipPanel }, null, null), new[]
