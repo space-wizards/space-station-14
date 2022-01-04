@@ -1,0 +1,13 @@
+<PanelContainer xmlns="https://spacestation14.io">
+    <GridContainer Columns="2">
+        <Label StyleClasses="bwoinkTooltipLabel" Text="{Loc 'bwoink-window-tooltip-ckey'}" />         <Label Name="CKey" />
+        <Label StyleClasses="bwoinkTooltipLabel" Text="{Loc 'bwoink-window-tooltip-status'}" />       <Label Name="Status" />
+        <Label StyleClasses="bwoinkTooltipLabel" Text="{Loc 'bwoink-window-tooltip-ping'}" />         <Label Name="Ping" />
+        <Label StyleClasses="bwoinkTooltipLabel" Text="{Loc 'bwoink-window-tooltip-afk'}" />          <Label Name="Afk" />
+        <Label StyleClasses="bwoinkTooltipLabel" Text="{Loc 'bwoink-window-tooltip-disconnected'}" /> <Label Name="Disconnected" />
+        <Label StyleClasses="bwoinkTooltipLabel" Text="{Loc 'bwoink-window-tooltip-roles'}" />        <Label Name="Roles" />
+        <Label StyleClasses="bwoinkTooltipLabel" Text="{Loc 'bwoink-window-tooltip-ic-state'}" />     <Label Name="ICState" />
+        <Label StyleClasses="bwoinkTooltipLabel" Text="{Loc 'bwoink-window-tooltip-mob-state'}" />    <Label Name="MobState" />
+        <Label StyleClasses="bwoinkTooltipLabel" Text="{Loc 'bwoink-window-tooltip-died-at'}" />      <Label Name="DiedAt" />
+    </GridContainer>
+</PanelContainer>

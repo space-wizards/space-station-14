@@ -52,33 +52,7 @@ namespace Content.Client.Administration.UI
             };
 
             ChannelSelector.DecoratePlayer += (PlayerInfo pl, ItemList.Item li) =>
-            {
                 li.Text = FormatTabTitle(pl);
-                li.TooltipEnabled = true;
-                var sb = new StringBuilder()
-                    .AppendFormat("CKey: {0}\n", pl.Username)
-                    .AppendFormat("Status: {0} {1} Ping: {2}ms\n", StateSymbol(pl.Connected), pl.Connected, pl.Ping);
-
-                if (pl.Afk)
-                    sb.Append("AFK\n");
-
-                if (pl.Disconnected is not null)
-                    sb.AppendFormat("Disconnected at {1} ({0})\n", pl.Disconnected.reason, pl.Disconnected.stamp);
-
-                sb.Append("Roles: ").AppendJoin(", ", pl.Roles).Append('\n')
-                    .AppendFormat("IC State: {0}\n", (pl.DeadIC, pl.DeadPhysically) switch {
-                            (false, false) => "Alive",
-                            ( true, false) => "Dead (IC)",
-                            (false,  true) => "Dead (Physically)",
-                            ( true,  true) => "Dead (IC & Physically)"
-                    })
-                    .AppendFormat("Mob State: {0}", pl.MobState);
-
-                if (pl.TimeOfDeath is not null)
-                    sb.AppendFormat("\nDied at: {0}", pl.TimeOfDeath);
-
-                li.TooltipText = sb.ToString();
-            };
 
             ChannelSelector.Comparison = (a, b) =>
             {
@@ -163,7 +137,7 @@ namespace Content.Client.Administration.UI
             Respawn.Disabled = !Respawn.Visible;
         }
 
-        private static char StateSymbol(SessionStatus i) => i switch {
+        public static char StateSymbol(SessionStatus i) => i switch {
             SessionStatus.Connecting => '⧁',
             SessionStatus.Connected => '⦿',
             SessionStatus.InGame => '●',

@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Client.Actions.UI;
+using Content.Client.Administration.UI.CustomControls;
 using Content.Client.ContextMenu.UI;
 using Content.Client.Examine;
 using Content.Client.HUD;
@@ -62,6 +63,8 @@ namespace Content.Client.Stylesheets
         public const string StyleClassChatChannelSelectorButton = "chatSelectorOptionButton";
         public const string StyleClassChatFilterOptionButton = "chatFilterOptionButton";
         public const string StyleClassStorageButton = "storageButton";
+
+        public const string StyleClassBwoinkTooltipLabel = "bwoinkTooltipLabel";
 
         public const string StyleClassSliderRed = "Red";
         public const string StyleClassSliderGreen = "Green";
@@ -766,6 +769,16 @@ namespace Content.Client.Stylesheets
                 new StyleRule(new SelectorElement(typeof(Tooltip), null, null, null), new[]
                 {
                     new StyleProperty(PanelContainer.StylePropertyPanel, tooltipBox)
+                }),
+
+                new StyleRule(new SelectorElement(typeof(AHelpTooltip), null, null, null), new[]
+                {
+                    new StyleProperty(PanelContainer.StylePropertyPanel, tooltipBox)
+                }),
+
+                new StyleRule(new SelectorElement(typeof(Label), new [] { StyleClassBwoinkTooltipLabel }, null, null), new[]
+                {
+                    new StyleProperty(Label.StylePropertyFontColor, Color.Gray),
                 }),
 
                 new StyleRule(new SelectorElement(typeof(PanelContainer), new [] { StyleClassTooltipPanel }, null, null), new[]
