@@ -24,6 +24,7 @@
     - type: InteractionOutline
     - type: Artifact
 
+# Telepathic
 - type: entity
   parent: BaseXenoArtifact
   id: BadfeelingArtifact
@@ -82,3 +83,15 @@
         - goodfeeling-artifact-drastic-4
         - goodfeeling-artifact-drastic-5
         - goodfeeling-artifact-drastic-6
+
+# Spawners
+- type: entity
+  parent: BaseXenoArtifact
+  id: AngryMobsSpawnArtifact
+  suffix: Angry Mobs Spawn
+  components:
+    - type: SpawnArtifact
+      maxSpawns: 5
+      possiblePrototypes:
+        - MobCarpHolo
+        - MobCarpMagic
