@@ -7,7 +7,14 @@
   - type: Esword
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_sword.rsi
-    state: e_sword
+    layers:
+      - state: e_sword
+      - state: e_sword_blade
+        color: "#FFFFFF"
+        visible: false
+        shader: unshaded
+      #- state: flare_unlit
+       # color: "#FF0000"
   - type: MeleeWeapon
     damage:
       types:

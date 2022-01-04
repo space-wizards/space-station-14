@@ -9,6 +9,8 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.IoC;
+using Robust.Shared.Maths;
+using System;
 
 namespace Content.Server.Weapon.Melee.Esword
 {
@@ -19,9 +21,17 @@ namespace Content.Server.Weapon.Melee.Esword
         {
             base.Initialize();
 
+            SubscribeLocalEvent<EswordComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<EswordComponent, MeleeHitEvent>(OnMeleeHit);
             SubscribeLocalEvent<EswordComponent, UseInHandEvent>(OnUseInHand);
             SubscribeLocalEvent<EswordComponent, InteractUsingEvent>(OnInteractUsing);
+        }
+
+        private void OnComponentInit(EntityUid uid, EswordComponent comp, ComponentInit args)
+        {
+            string[] possibleColors = { "Tomato", "DodgerBlue", "Aqua", "MediumSpringGreen", "MediumOrchid" };
+            Random random = new Random();
+            comp.BladeColor = Color.FromName(possibleColors[random.Next(5)]);
         }
 
         private void OnMeleeHit(EntityUid uid, EswordComponent comp, MeleeHitEvent args)
@@ -66,7 +76,7 @@ namespace Content.Server.Weapon.Melee.Esword
             SoundSystem.Play(Filter.Pvs(comp.Owner), comp.DeActivateSound.GetSound(), comp.Owner);
 
             item.EquippedPrefix = "off";
-            sprite.LayerSetState(0, "e_sword");
+            sprite.LayerSetVisible(1, false);
 
             comp.Activated = false;
         }
@@ -92,7 +102,10 @@ namespace Content.Server.Weapon.Melee.Esword
             else
             {
                 item.EquippedPrefix = "on";
-                sprite.LayerSetState(0, "e_sword_on");
+                item.Color = comp.BladeColor;
+
+                sprite.LayerSetColor(1, comp.BladeColor);
+                sprite.LayerSetVisible(1, true);
             }
             
             comp.Activated = true;

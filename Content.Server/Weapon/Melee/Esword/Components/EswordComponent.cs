@@ -1,6 +1,7 @@
 using Content.Shared.Sound;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Maths;
 
 namespace Content.Server.Weapon.Melee.Esword
 {
@@ -8,6 +9,8 @@ namespace Content.Server.Weapon.Melee.Esword
     internal class EswordComponent : Component
     {
         public override string Name => "Esword";
+
+        public Color BladeColor = Color.Blue;
 
         public bool Hacked = false;
 
