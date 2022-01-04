@@ -1,8 +1,10 @@
 using Content.Server.Xenoarchaeology.XenoArtifacts.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
+using Content.Server.Xenoarchaeology.XenoArtifacts.Triggers;
 using Content.Shared.Interaction;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Systems;
@@ -10,16 +12,33 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Systems;
 public class ArtifactSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly IComponentFactory _componentFactory = default!;
 
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<ArtifactComponent, InteractHandEvent>(OnInteract);
+        SubscribeLocalEvent<ArtifactComponent, ComponentInit>(OnInit);
     }
 
-    private void OnInteract(EntityUid uid, ArtifactComponent component, InteractHandEvent args)
+    private void OnInit(EntityUid uid, ArtifactComponent component, ComponentInit args)
     {
-        TryActivateArtifact(uid, component);
+        if (component.RandomTrigger)
+        {
+            AddRandomTrigger(uid, component);
+        }
+    }
+
+    public void AddRandomTrigger(EntityUid uid, ArtifactComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        var triggerName = _random.Pick(component.PossibleTriggers);
+        var trigger = (Component) _componentFactory.GetComponent(triggerName);
+        trigger.Owner = uid;
+
+        EntityManager.AddComponent(uid, trigger);
     }
 
     public bool TryActivateArtifact(EntityUid uid, ArtifactComponent? component = null)

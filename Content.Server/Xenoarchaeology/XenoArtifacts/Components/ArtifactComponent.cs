@@ -11,6 +11,22 @@ public class ArtifactComponent : Component
     public override string Name => "Artifact";
 
     /// <summary>
+    ///     Should artifact pick a random trigger on startup?
+    /// </summary>
+    [DataField("randomTrigger")]
+    public bool RandomTrigger = true;
+
+    /// <summary>
+    ///     List of all possible triggers activations.
+    ///     Should be same as components names.
+    /// </summary>
+    [DataField("possibleTriggers")]
+    public string[] PossibleTriggers = {
+        "ArtifactInteractionTrigger",
+        "ArtifactGasTrigger"
+    };
+
+    /// <summary>
     ///     Cooldown time between artifact activations (in seconds).
     /// </summary>
     [DataField("timer")]
