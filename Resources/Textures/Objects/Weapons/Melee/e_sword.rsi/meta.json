@@ -46,6 +46,15 @@
         ]
       ]
     },
+	{
+      "name": "e_sword_blade",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
     {
       "name": "on-inhand-left",
       "directions": 4,
