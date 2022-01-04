@@ -43,6 +43,21 @@
 
 
 - type: entity
+  id: CrateNPCDuck
+  name: duck crate
+  parent: CrateLivestock
+  components:
+  - type: StorageFill
+    contents:
+      - id: MobDuckMallard
+        amount: 2
+      - id: MobDuckWhite
+        amount: 2
+      - id: MobDuckBrown
+        amount: 2
+
+
+- type: entity
   id: CrateNPCCorgi
   name: corgi crate
   parent: CrateLivestock
