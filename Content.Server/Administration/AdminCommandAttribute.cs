@@ -12,7 +12,7 @@ namespace Content.Server.Administration
     ///     If this attribute is used multiple times, either attribute's flag sets can be used to get access.
     /// </remarks>
     /// <seealso cref="AnyCommandAttribute"/>
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = true)]
     [BaseTypeRequired(typeof(IConsoleCommand))]
     [MeansImplicitUse]
     public sealed class AdminCommandAttribute : Attribute

@@ -436,7 +436,13 @@ namespace Content.Server.Administration.Managers
 
         private static (bool isAvail, AdminFlags[] flagsReq) GetRequiredFlag(IConsoleCommand cmd)
         {
-            var type = cmd.GetType();
+            MemberInfo type = cmd.GetType();
+
+            if (cmd is ConsoleHost.RegisteredCommand registered)
+            {
+                type = registered.Callback.Method;
+            }
+
             if (Attribute.IsDefined(type, typeof(AnyCommandAttribute)))
             {
                 // Available to everybody.
