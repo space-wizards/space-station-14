@@ -15,6 +15,9 @@
   issuer: syndicate
   requirements:
     - !type:TraitorRequirement {}
+    - !type:IncompatibleConditionsRequirement
+        conditions:
+          - RandomTraitorAliveObjective
   conditions:
     - !type:KillRandomPersonCondition {}
   canBeDuplicate: true
@@ -24,6 +27,9 @@
   issuer: syndicate
   requirements:
     - !type:TraitorRequirement {}
+    - !type:IncompatibleConditionsRequirement
+        conditions:
+          - KillRandomObjective
   conditions:
     - !type:RandomTraitorAliveCondition {}
   canBeDuplicate: true
