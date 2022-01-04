@@ -7,11 +7,11 @@ namespace Content.Server.Power.Pow3r
 {
     public sealed class BatteryRampPegSolver : IPowerSolver
     {
-        private sealed class HeightComparer : IComparer<Network>
+        private sealed class HeightComparer : Comparer<Network>
         {
             public static HeightComparer Instance { get; } = new();
 
-            public int Compare(Network? x, Network? y)
+            public override int Compare(Network? x, Network? y)
             {
                 if (x!.Height == y!.Height) return 0;
                 if (x!.Height > y!.Height) return 1;
