@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.Atmos;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Shared.Atmos;
@@ -21,11 +20,9 @@ namespace Content.IntegrationTests.Tests.Body
     {
         private const string Prototypes = @"
 - type: entity
-  name: HumanBodyAndBloodstreamDummy
-  id: HumanBodyAndBloodstreamDummy
+  name: HumanBodyDummy
+  id: HumanBodyDummy
   components:
-  - type: Bloodstream
-    max_volume: 100
   - type: SolutionContainerManager
   - type: Body
     template: HumanoidTemplate
@@ -56,34 +53,20 @@ namespace Content.IntegrationTests.Tests.Body
 
                 var entityManager = IoCManager.Resolve<IEntityManager>();
 
-                var human = entityManager.SpawnEntity("HumanBodyAndBloodstreamDummy", new MapCoordinates(Vector2.Zero, mapId));
+                var human = entityManager.SpawnEntity("HumanBodyDummy", new MapCoordinates(Vector2.Zero, mapId));
 
                 var bodySys = EntitySystem.Get<BodySystem>();
                 var lungSys = EntitySystem.Get<LungSystem>();
+                var respSys = EntitySystem.Get<RespiratorSystem>();
 
                 Assert.That(entityManager.TryGetComponent(human, out SharedBodyComponent body));
 
                 var lungs = bodySys.GetComponentsOnMechanisms<LungComponent>(human, body).ToArray();
                 Assert.That(lungs.Count, Is.EqualTo(1));
-                Assert.That(entityManager.TryGetComponent(human, out BloodstreamComponent bloodstream));
 
-                var gas = new GasMixture(1);
-
-                var originalOxygen = 2;
-                var originalNitrogen = 8;
-                var breathedPercentage = Atmospherics.BreathVolume / gas.Volume;
-
-                gas.AdjustMoles(Gas.Oxygen, originalOxygen);
-                gas.AdjustMoles(Gas.Nitrogen, originalNitrogen);
-
-                var (lung, _) = lungs[0];
-                lungSys.TakeGasFrom(((IComponent) lung).Owner, 1, gas, lung);
-
-                var lungOxygen = originalOxygen * breathedPercentage;
-                var lungNitrogen = originalNitrogen * breathedPercentage;
-
-                Assert.That(bloodstream.Air.GetMoles(Gas.Oxygen), Is.EqualTo(lungOxygen));
-                Assert.That(bloodstream.Air.GetMoles(Gas.Nitrogen), Is.EqualTo(lungNitrogen));
+                (var lung, _) = lungs[0];
+                Assert.That(lung.Air.GetMoles(Gas.Oxygen), Is.EqualTo(0));
+                Assert.That(lung.Air.GetMoles(Gas.Nitrogen), Is.EqualTo(0));
 
                 var mixtureOxygen = originalOxygen - lungOxygen;
                 var mixtureNitrogen = originalNitrogen - lungNitrogen;

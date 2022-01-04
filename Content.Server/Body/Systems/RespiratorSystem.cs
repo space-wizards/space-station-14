@@ -64,7 +64,7 @@ namespace Content.Server.Body.Systems
                 switch (respirator.Status)
                 {
                     case RespiratorStatus.Inhaling:
-                        Inhale(uid, respirator, body);
+                        Inhale(uid, body);
                         respirator.Status = RespiratorStatus.Exhaling;
                         break;
                     case RespiratorStatus.Exhaling:
@@ -91,8 +91,7 @@ namespace Content.Server.Body.Systems
             }
         }
 
-        private void Inhale(EntityUid uid, RespiratorComponent respirator,
-            SharedBodyComponent? body=null)
+        public void Inhale(EntityUid uid, SharedBodyComponent? body=null)
         {
             if (!Resolve(uid, ref body, false))
                 return;
@@ -121,7 +120,7 @@ namespace Content.Server.Body.Systems
             }
         }
 
-        private void Exhale(EntityUid uid, SharedBodyComponent? body=null)
+        public void Exhale(EntityUid uid, SharedBodyComponent? body=null)
         {
             if (!Resolve(uid, ref body, false))
                 return;

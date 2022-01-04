@@ -1,8 +1,5 @@
 using System;
-using System.Collections.Generic;
 using Content.Server.Body.Systems;
-using Content.Server.Chemistry.ReagentEffects;
-using Content.Shared.Atmos;
 using Content.Shared.Damage;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
@@ -27,7 +24,7 @@ namespace Content.Server.Body.Components
         ///     At what level of saturation will you begin to suffocate?
         /// </summary>
         [DataField("suffocationThreshold")]
-        public float SuffocationThreshold = 0.0f;
+        public float SuffocationThreshold;
 
         [DataField("maxSaturation")]
         public float MaxSaturation = 5.0f;
@@ -52,7 +49,7 @@ namespace Content.Server.Body.Components
         public TimeSpan LastGaspPopupTime;
 
         /// <summary>
-        ///     How many cycles in a row has the mob been undersaturated?
+        ///     How many cycles in a row has the mob been under-saturated?
         /// </summary>
         [ViewVariables]
         public int SuffocationCycles = 0;
