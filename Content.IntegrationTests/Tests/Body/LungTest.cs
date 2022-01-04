@@ -1,4 +1,4 @@
-﻿/*using System;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Atmos;
@@ -186,4 +186,4 @@ namespace Content.IntegrationTests.Tests.Body
             await server.WaitIdleAsync();
         }
     }
-}*/
+}

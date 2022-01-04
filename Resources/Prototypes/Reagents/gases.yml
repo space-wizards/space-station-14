@@ -17,6 +17,9 @@
         conditions:
         - !type:OrganType
           type: Animal
+      - !type:CreateLungGas
+        ratios:
+          CarbonDioxide: 1.0
 
 
 - type: reagent
