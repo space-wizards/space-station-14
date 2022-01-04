@@ -2,6 +2,7 @@ using System;
 using Content.Shared.Trigger;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
+using Robust.Shared.Animations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -34,7 +35,21 @@ namespace Content.Client.Trigger
                 {
                     LayerKey = ProximityTriggerVisualLayers.Base,
                     KeyFrames = { new AnimationTrackSpriteFlick.KeyFrame(_animationState, 0f)}
-                }}
+
+                },
+                new AnimationTrackComponentProperty()
+                {
+                    ComponentType = typeof(PointLightComponent),
+                    InterpolationMode = AnimationInterpolationMode.Nearest,
+                    Property = nameof(PointLightComponent.Radius),
+                    KeyFrames =
+                    {
+                        new AnimationTrackProperty.KeyFrame(0.1f, 0),
+                        new AnimationTrackProperty.KeyFrame(3f, 0.1f),
+                        new AnimationTrackProperty.KeyFrame(0.1f, 0.5f)
+                    }
+                }
+                }
             };
         }
 
@@ -59,7 +74,7 @@ namespace Content.Client.Trigger
                 case ProximityTriggerVisuals.Active:
                     if (_animationState == null || player == null ||
                         animSystem.HasRunningAnimation(player, AnimKey)) return;
-
+                    
                     animSystem.Play(player, _animation, AnimKey);
                     break;
                 default:

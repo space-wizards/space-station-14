@@ -91,4 +91,9 @@
       visuals:
       - type: ProximityTriggerVisualizer
         animationState: flashing
+    - type: PointLight
+      energy: 2.0
+      radius: 0
+      softness: 0
+      enabled: true
 
