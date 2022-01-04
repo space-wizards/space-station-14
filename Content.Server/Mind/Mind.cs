@@ -291,15 +291,19 @@ namespace Content.Server.Mind
                 }
             }
 
-            OwnedComponent?.InternalEjectMind();
+            var mindSystem = EntitySystem.Get<MindSystem>();
+
+            if(OwnedComponent != null)
+                mindSystem.InternalEjectMind(OwnedComponent.Owner, OwnedComponent);
 
             OwnedComponent = component;
-            OwnedComponent?.InternalAssignMind(this);
+            if(OwnedComponent != null)
+                mindSystem.InternalAssignMind(OwnedComponent.Owner, this, OwnedComponent);
 
             if (VisitingEntity != null
                 && (ghostCheckOverride // to force mind transfer, for example from ControlMobVerb
-                || !entMan.TryGetComponent(VisitingEntity!, out GhostComponent? ghostComponent) // visiting entity is not a Ghost
-                || !ghostComponent.CanReturnToBody))  // it is a ghost, but cannot return to body anyway, so it's okay
+                    || !entMan.TryGetComponent(VisitingEntity!, out GhostComponent? ghostComponent) // visiting entity is not a Ghost
+                    || !ghostComponent.CanReturnToBody))  // it is a ghost, but cannot return to body anyway, so it's okay
             {
                 VisitingEntity = default;
             }
