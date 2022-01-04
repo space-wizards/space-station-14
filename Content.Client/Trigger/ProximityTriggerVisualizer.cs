@@ -27,7 +27,6 @@ namespace Content.Client.Trigger
 
             entity.EnsureComponent<AnimationPlayerComponent>();
 
-            // TODO: Need light and shit for portable flasher but I just want this merged and it's not my PR
             _animation = new Animation
             {
                 Length = TimeSpan.FromSeconds(_animationDuration),
