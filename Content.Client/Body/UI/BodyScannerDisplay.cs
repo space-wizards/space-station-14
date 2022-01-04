@@ -161,7 +161,7 @@ namespace Content.Client.Body.UI
             UpdateMechanismBox(_currentBodyPart?.Mechanisms.ElementAt(args.ItemIndex));
         }
 
-        private void UpdateMechanismBox(SharedMechanismComponent? mechanism)
+        private void UpdateMechanismBox(MechanismComponent? mechanism)
         {
             // TODO BODY Improve UI
             if (mechanism == null)
