@@ -25,7 +25,6 @@ using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
-using Robust.Shared.Utility.Markup;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.WireHacking
@@ -426,7 +425,7 @@ namespace Content.Server.WireHacking
                     }
 
                     ToolComponent? tool = null;
-                    if (handsComponent.GetActiveHand?.Owner is {Valid: true} activeHandEntity)
+                    if (handsComponent.GetActiveHand?.Owner is EntityUid activeHandEntity)
                         _entities.TryGetComponent(activeHandEntity, out tool);
                     var toolSystem = EntitySystem.Get<ToolSystem>();
 
@@ -535,7 +534,7 @@ namespace Content.Server.WireHacking
             return false;
         }
 
-        void IExamine.Examine(FormattedMessage.Builder message, bool inDetailsRange)
+        void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
             message.AddMarkup(Loc.GetString(IsPanelOpen
                 ? "wires-component-on-examine-panel-open"

@@ -10,7 +10,7 @@
   - type: MeleeWeapon
     damage:
       types:
-        Blunt: 15
+        Blunt: 14
   - type: Clothing
     size: 15
     sprite: Objects/Weapons/Melee/baseball_bat.rsi

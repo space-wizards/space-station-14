@@ -24,9 +24,9 @@ namespace Content.Server.AI.Utility.ExpandableActions.Clothing.Shoes
 
             return new[]
             {
-                considerationsManager.Get<ClothingInSlotCon>().Slot(EquipmentSlotDefines.Slots.SHOES, context)
+                considerationsManager.Get<ClothingInSlotCon>().Slot("shoes", context)
                     .InverseBoolCurve(context),
-                considerationsManager.Get<ClothingInInventoryCon>().Slot(EquipmentSlotDefines.SlotFlags.SHOES, context)
+                considerationsManager.Get<ClothingInInventoryCon>().Slot(SlotFlags.FEET, context)
                     .InverseBoolCurve(context)
             };
         }
@@ -38,7 +38,7 @@ namespace Content.Server.AI.Utility.ExpandableActions.Clothing.Shoes
             foreach (var entity in context.GetState<NearbyClothingState>().GetValue())
             {
                 if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out ClothingComponent? clothing) &&
-                    (clothing.SlotFlags & EquipmentSlotDefines.SlotFlags.SHOES) != 0)
+                    (clothing.SlotFlags & SlotFlags.FEET) != 0)
                 {
                     yield return new PickUpShoes {Owner = owner, Target = entity, Bonus = Bonus};
                 }

@@ -1,8 +1,3 @@
-# These signs would not have collision otherwise, they simply
-# need collision in order for them to be destructible. Once the
-# SmallImpassable etc. stuff actually gets implemented in this
-# shitheap of a videogame bother swept to go back and fix these.
-
 - type: entity
   parent: BaseSign
   id: PaintingMonkey

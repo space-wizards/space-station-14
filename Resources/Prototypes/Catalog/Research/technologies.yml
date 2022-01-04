@@ -42,8 +42,8 @@
   requiredTechnologies:
     - BasicResearch
   unlockedRecipes:
-    - Scythe
-    - Hatchet
+    - HydroponicsToolScythe
+    - HydroponicsToolHatchet
     - KitchenKnife
 
 - type: technology
@@ -75,7 +75,7 @@
     - Retractor
     - Cautery
     - Drill
-    - BoneSaw
+    - Saw
     - Hemostat
 
 # Chemistry Technology Tree
@@ -96,6 +96,8 @@
     - CryostasisBeaker
     - Dropper
     - Syringe
+    - KitchenReagentGrinderMachineCircuitboard
+    - PillCanister
 
 - type: technology
   name: "medical machinery"
@@ -113,6 +115,7 @@
     - MedicalScannerMachineCircuitboard
     - ChemMasterMachineCircuitboard
     - ChemDispenserMachineCircuitboard
+    - CrewMonitoringComputerCircuitboard
 
 # Security Technology Tree
 
@@ -142,10 +145,10 @@
   requiredTechnologies:
      - SecurityTechnology
   unlockedRecipes:
-    - CartridgePistolBase
-    - ShellShotgunBase
-    - CartridgeLRifleBase
-    - CartridgeMagnumBase
+    - CartridgePistol
+    - ShellShotgun
+    - CartridgeLRifle
+    - CartridgeMagnum
 
 #- type: technology
 #   name: "ballistic technology"
@@ -217,13 +220,15 @@
   requiredTechnologies:
     - BasicResearch
   unlockedRecipes:
-    - ConveyorAssembly
+    - ConveyorBeltAssembly
     - RCD
     - RCDAmmo
     - FlashlightLantern
     - FireExtinguisher
     - AutolatheMachineCircuitboard
     - ProtolatheMachineCircuitboard
+    - AirAlarmElectronics
+    - FireAlarmElectronics
 
 - type: technology
   name: material sheet printing
@@ -237,7 +242,7 @@
     - SheetSteel
     - SheetPlastic
     - SheetRGlass
-    - GlassStack
+    - SheetGlass1
 
 # Electromagnetic Theory Technology Tree
 

@@ -33,6 +33,7 @@ namespace Content.Server.Pointing.EntitySystems
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly RotateToFaceSystem _rotateToFaceSystem = default!;
+        [Dependency] private readonly VisibilitySystem _visibilitySystem = default!;
 
         private static readonly TimeSpan PointDelay = TimeSpan.FromSeconds(0.5f);
 
@@ -127,8 +128,9 @@ namespace Content.Server.Pointing.EntitySystems
             var layer = (int) VisibilityFlags.Normal;
             if (TryComp(player, out VisibilityComponent? playerVisibility))
             {
-                var arrowVisibility = arrow.EnsureComponent<VisibilityComponent>();
-                layer = arrowVisibility.Layer = playerVisibility.Layer;
+                var arrowVisibility = EntityManager.EnsureComponent<VisibilityComponent>(arrow);
+                layer = playerVisibility.Layer;
+                _visibilitySystem.SetLayer(arrowVisibility, layer);
             }
 
             // Get players that are in range and whose visibility layer matches the arrow's.

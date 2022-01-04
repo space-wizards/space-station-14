@@ -23,6 +23,7 @@
   - type: Occluder
     sizeX: 32
     sizeY: 32
+  - type: Airtight
   - type: Appearance
     visuals:
     - type: AsteroidRockVisualizer

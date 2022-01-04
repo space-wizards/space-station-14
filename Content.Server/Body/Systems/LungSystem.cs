@@ -17,7 +17,32 @@ public class LungSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<LungComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<LungComponent, AddedToBodyEvent>(OnAddedToBody);
+        SubscribeLocalEvent<BreathToolComponent, GotEquippedEvent>(OnGotEquipped);
+        SubscribeLocalEvent<BreathToolComponent, GotUnequippedEvent>(OnGotUnequipped);
+    }
+
+    private void OnGotUnequipped(EntityUid uid, BreathToolComponent component, GotUnequippedEvent args)
+    {
+        component.DisconnectInternals();
+    }
+
+    private void OnGotEquipped(EntityUid uid, BreathToolComponent component, GotEquippedEvent args)
+    {
+
+        if ((args.SlotFlags & component.AllowedSlots) != component.AllowedSlots) return;
+        component.IsFunctional = true;
+
+        if (TryComp(args.Equipee, out InternalsComponent? internals))
+        {
+            component.ConnectedInternalsEntity = args.Equipee;
+            internals.ConnectBreathTool(uid);
+        }
+    }
+
+    private void OnAddedToBody(EntityUid uid, LungComponent component, AddedToBodyEvent args)
+    {
+        Inhale(uid, component.CycleDelay);
     }
 
     private void OnComponentInit(EntityUid uid, LungComponent component, ComponentInit args)

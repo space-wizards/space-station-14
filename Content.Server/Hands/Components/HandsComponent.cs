@@ -4,12 +4,12 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Act;
 using Content.Server.Interaction;
-using Content.Server.Items;
 using Content.Server.Popups;
 using Content.Server.Pulling;
 using Content.Shared.Audio;
 using Content.Shared.Body.Part;
 using Content.Shared.Hands.Components;
+using Content.Shared.Item;
 using Content.Shared.Popups;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Sound;
@@ -39,7 +39,7 @@ namespace Content.Server.Hands.Components
 
         protected override void OnHeldEntityRemovedFromHand(EntityUid heldEntity, HandState handState)
         {
-            if (_entities.TryGetComponent(heldEntity, out ItemComponent? item))
+            if (_entities.TryGetComponent(heldEntity, out SharedItemComponent? item))
             {
                 item.RemovedFromSlot();
                 _entitySystemManager.GetEntitySystem<InteractionSystem>().UnequippedHandInteraction(Owner, heldEntity, handState);
@@ -99,23 +99,17 @@ namespace Content.Server.Hands.Components
             var source = @event.Source;
             var target = @event.Target;
 
-            if (source != null)
-            {
-                SoundSystem.Play(Filter.Pvs(source), _disarmedSound.GetSound(), source, AudioHelpers.WithVariation(0.025f));
+            SoundSystem.Play(Filter.Pvs(source), _disarmedSound.GetSound(), source, AudioHelpers.WithVariation(0.025f));
 
-                if (target != null)
-                {
-                    if (ActiveHand != null && Drop(ActiveHand, false))
-                    {
-                        source.PopupMessageOtherClients(Loc.GetString("hands-component-disarm-success-others-message", ("disarmer", Name: _entities.GetComponent<MetaDataComponent>(source).EntityName), ("disarmed", Name: _entities.GetComponent<MetaDataComponent>(target).EntityName)));
-                        source.PopupMessageCursor(Loc.GetString("hands-component-disarm-success-message", ("disarmed", Name: _entities.GetComponent<MetaDataComponent>(target).EntityName)));
-                    }
-                    else
-                    {
-                        source.PopupMessageOtherClients(Loc.GetString("hands-component-shove-success-others-message", ("shover", Name: _entities.GetComponent<MetaDataComponent>(source).EntityName), ("shoved", Name: _entities.GetComponent<MetaDataComponent>(target).EntityName)));
-                        source.PopupMessageCursor(Loc.GetString("hands-component-shove-success-message", ("shoved", Name: _entities.GetComponent<MetaDataComponent>(target).EntityName)));
-                    }
-                }
+            if (ActiveHand != null && Drop(ActiveHand, false))
+            {
+                source.PopupMessageOtherClients(Loc.GetString("hands-component-disarm-success-others-message", ("disarmer", Name: _entities.GetComponent<MetaDataComponent>(source).EntityName), ("disarmed", Name: _entities.GetComponent<MetaDataComponent>(target).EntityName)));
+                source.PopupMessageCursor(Loc.GetString("hands-component-disarm-success-message", ("disarmed", Name: _entities.GetComponent<MetaDataComponent>(target).EntityName)));
+            }
+            else
+            {
+                source.PopupMessageOtherClients(Loc.GetString("hands-component-shove-success-others-message", ("shover", Name: _entities.GetComponent<MetaDataComponent>(source).EntityName), ("shoved", Name: _entities.GetComponent<MetaDataComponent>(target).EntityName)));
+                source.PopupMessageCursor(Loc.GetString("hands-component-shove-success-message", ("shoved", Name: _entities.GetComponent<MetaDataComponent>(target).EntityName)));
             }
 
             return true;
@@ -159,19 +153,19 @@ namespace Content.Server.Hands.Components
         /// <summary>
         ///     Tries to get the ItemComponent on the entity held by a hand.
         /// </summary>
-        public ItemComponent? GetItem(string handName)
+        public SharedItemComponent? GetItem(string handName)
         {
             if (!TryGetHeldEntity(handName, out var heldEntity))
                 return null;
 
-            _entities.TryGetComponent(heldEntity, out ItemComponent? item);
+            _entities.TryGetComponent(heldEntity, out SharedItemComponent? item);
             return item;
         }
 
         /// <summary>
         ///     Tries to get the ItemComponent on the entity held by a hand.
         /// </summary>
-        public bool TryGetItem(string handName, [NotNullWhen(true)] out ItemComponent? item)
+        public bool TryGetItem(string handName, [NotNullWhen(true)] out SharedItemComponent? item)
         {
             item = null;
 
@@ -184,23 +178,23 @@ namespace Content.Server.Hands.Components
         /// <summary>
         ///     Tries to get the ItemComponent off the entity in the active hand.
         /// </summary>
-        public ItemComponent? GetActiveHand
+        public SharedItemComponent? GetActiveHand
         {
             get
             {
                 if (!TryGetActiveHeldEntity(out var heldEntity))
                     return null;
 
-                _entities.TryGetComponent(heldEntity, out ItemComponent? item);
+                _entities.TryGetComponent(heldEntity, out SharedItemComponent? item);
                 return item;
             }
         }
 
-        public IEnumerable<ItemComponent> GetAllHeldItems()
+        public IEnumerable<SharedItemComponent> GetAllHeldItems()
         {
             foreach (var entity in GetAllHeldEntities())
             {
-                if (_entities.TryGetComponent(entity, out ItemComponent? item))
+                if (_entities.TryGetComponent(entity, out SharedItemComponent? item))
                     yield return item;
             }
         }
@@ -208,7 +202,7 @@ namespace Content.Server.Hands.Components
         /// <summary>
         ///     Checks if any hand can pick up an item.
         /// </summary>
-        public bool CanPutInHand(ItemComponent item, bool mobCheck = true)
+        public bool CanPutInHand(SharedItemComponent item, bool mobCheck = true)
         {
             var entity = item.Owner;
 

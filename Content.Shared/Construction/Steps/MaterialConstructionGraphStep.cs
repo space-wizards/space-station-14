@@ -7,7 +7,6 @@ using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Utility.Markup;
 
 namespace Content.Shared.Construction.Steps
 {
@@ -25,7 +24,7 @@ namespace Content.Shared.Construction.Steps
         {
             var material = IoCManager.Resolve<IPrototypeManager>().Index<StackPrototype>(MaterialPrototypeId);
 
-            examinedEvent.Message.AddMessage(Basic.RenderMarkup(Loc.GetString("construction-insert-material-entity", ("amount", Amount), ("materialName", material.Name))));
+            examinedEvent.Message.AddMarkup(Loc.GetString("construction-insert-material-entity", ("amount", Amount), ("materialName", material.Name)));
         }
 
         public override bool EntityValid(EntityUid uid, IEntityManager entityManager)

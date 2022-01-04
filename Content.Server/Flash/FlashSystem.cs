@@ -1,7 +1,6 @@
 using System;
+using System.Collections.Generic;
 using Content.Server.Flash.Components;
-using Content.Server.Inventory.Components;
-using Content.Server.Items;
 using Content.Server.Stunnable;
 using Content.Server.Weapon.Melee;
 using Content.Shared.Examine;
@@ -19,6 +18,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
+using InventoryComponent = Content.Shared.Inventory.InventoryComponent;
 
 namespace Content.Server.Flash
 {
@@ -27,6 +27,7 @@ namespace Content.Server.Flash
         [Dependency] private readonly IEntityLookup _entityLookup = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly StunSystem _stunSystem = default!;
+        [Dependency] private readonly InventorySystem _inventorySystem = default!;
 
         public override void Initialize()
         {
@@ -75,10 +76,7 @@ namespace Content.Server.Flash
                 return;
             }
 
-            foreach (var entity in _entityLookup.GetEntitiesInRange(EntityManager.GetComponent<TransformComponent>(comp.Owner).Coordinates, comp.Range))
-            {
-                Flash(entity, args.User, uid, comp.AoeFlashDuration, comp.SlowTo);
-            }
+            FlashArea(uid, args.User, comp.Range, comp.AoeFlashDuration, comp.SlowTo, true);
         }
 
         private bool UseFlash(FlashComponent comp, EntityUid user)
@@ -127,15 +125,11 @@ namespace Content.Server.Flash
                 flashable.LastFlash = _gameTiming.CurTime;
                 flashable.Duration = flashDuration / 1000f; // TODO: Make this sane...
                 flashable.Dirty();
-            }
 
-            _stunSystem.TrySlowdown(target, TimeSpan.FromSeconds(flashDuration/1000f), true,
-                slowTo, slowTo);
+                _stunSystem.TrySlowdown(target, TimeSpan.FromSeconds(flashDuration/1000f), true,
+                    slowTo, slowTo);
 
-            if (displayPopup && user != null && target != user)
-            {
-                // TODO Resolving the EntityUidhere bad.
-                if (EntityManager.EntityExists(user.Value) && EntityManager.EntityExists(target))
+                if (displayPopup && user != null && target != user && EntityManager.EntityExists(user.Value))
                 {
                     user.Value.PopupMessage(target, Loc.GetString("flash-component-user-blinds-you",
                         ("user", user.Value)));
@@ -146,15 +140,24 @@ namespace Content.Server.Flash
         public void FlashArea(EntityUid source, EntityUid? user, float range, float duration, float slowTo = 0f, bool displayPopup = false, SoundSpecifier? sound = null)
         {
             var transform = EntityManager.GetComponent<TransformComponent>(source);
+            var flashableEntities = new List<EntityUid>();
 
             foreach (var entity in _entityLookup.GetEntitiesInRange(transform.Coordinates, range))
             {
-                if (!EntityManager.HasComponent<FlashableComponent>(entity) ||
-                    !transform.InRangeUnobstructed(entity, range, CollisionGroup.Opaque)) continue;
+                if (!EntityManager.HasComponent<FlashableComponent>(entity))
+                    continue;
+
+                flashableEntities.Add(entity);
+            }
+
+            foreach (var entity in flashableEntities)
+            {
+                // Check for unobstructed entities while ignoring the mobs with flashable components.
+                if (!transform.InRangeUnobstructed(entity, range, CollisionGroup.Opaque, (e) => flashableEntities.Contains(e)))
+                    continue;
 
                 Flash(entity, user, source, duration, slowTo, displayPopup);
             }
-
             if (sound != null)
             {
                 SoundSystem.Play(Filter.Pvs(transform), sound.GetSound(), transform.Coordinates);
@@ -184,8 +187,8 @@ namespace Content.Server.Flash
         private void OnInventoryFlashAttempt(EntityUid uid, InventoryComponent component, FlashAttemptEvent args)
         {
             // Forward the event to the glasses, if any.
-            if(component.TryGetSlotItem(EquipmentSlotDefines.Slots.EYES, out ItemComponent? glasses))
-                RaiseLocalEvent(glasses.Owner, args);
+            if(_inventorySystem.TryGetSlotEntity(uid, "eyes", out var slotEntity, component))
+                RaiseLocalEvent(slotEntity.Value, args);
         }
 
         private void OnFlashImmunityFlashAttempt(EntityUid uid, FlashImmunityComponent component, FlashAttemptEvent args)

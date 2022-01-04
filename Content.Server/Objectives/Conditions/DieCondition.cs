@@ -25,7 +25,7 @@ namespace Content.Server.Objectives.Conditions
 
         public float Progress => (_mind?.CharacterDeadIC ?? true) ? 1f : 0f;
 
-        public float Difficulty => 1f;
+        public float Difficulty => 0.5f;
 
         public bool Equals(IObjectiveCondition? other)
         {

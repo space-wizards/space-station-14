@@ -7,7 +7,14 @@
             <Label Text ="{Loc 'admin-solutions-window-solution-label'}" Margin="0 0 10 0"/>
             <OptionButton Name="SolutionOption" HorizontalExpand="True"/>
         </BoxContainer>
-        <Label Name="TotalLabel" HorizontalExpand="True"  Margin="0 4"/>
+
+        <!-- The total volume / capacity of the solution -->
+        <BoxContainer Name="VolumeBox" Orientation="Vertical" HorizontalExpand="True" Margin="0 4"/>
+
+        <!-- The temperature / heat capacity / thermal energy of the solution -->
+        <BoxContainer Name="ThermalBox" Orientation="Vertical" HorizontalExpand="True" Margin="0 4"/>
+
+        <!-- The reagents in the solution -->
         <ScrollContainer HorizontalExpand="True" VerticalExpand="True" Margin="0 4">
             <BoxContainer Name="ReagentList" Orientation="Vertical"/>
         </ScrollContainer>

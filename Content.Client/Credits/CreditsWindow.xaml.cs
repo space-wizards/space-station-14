@@ -15,7 +15,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
-using Robust.Shared.Utility.Markup;
 using YamlDotNet.RepresentationModel;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
@@ -144,7 +143,7 @@ namespace Content.Client.Credits
                 var text = _resourceManager.ContentFileReadAllText($"/Credits/{path}");
                 if (markup)
                 {
-                    label.SetMessage(Basic.RenderMarkup(text.Trim()));
+                    label.SetMessage(FormattedMessage.FromMarkup(text.Trim()));
                 }
                 else
                 {

@@ -1,7 +1,7 @@
 using Content.Server.Hands.Components;
-using Content.Server.Items;
 using Content.Server.Nutrition.Components;
 using Content.Server.Nutrition.EntitySystems;
+using Content.Shared.Item;
 using Content.Shared.Nutrition.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -34,7 +34,7 @@ namespace Content.Server.AI.Operators.Nutrition
             // TODO: Also have this check storage a la backpack etc.
             if (entities.Deleted(_target) ||
                 !entities.TryGetComponent(_owner, out HandsComponent? handsComponent) ||
-                !entities.TryGetComponent(_target, out ItemComponent? itemComponent))
+                !entities.TryGetComponent(_target, out SharedItemComponent? itemComponent))
             {
                 return Outcome.Failed;
             }

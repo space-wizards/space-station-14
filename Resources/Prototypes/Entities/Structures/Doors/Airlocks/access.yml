@@ -119,6 +119,14 @@
   components:
   - type: AccessReader
     access: [["Research"]]
+    
+- type: entity
+  parent: AirlockScience
+  id: AirlockMedicalScienceLocked
+  suffix: Medical/Science, Locked
+  components:
+  - type: AccessReader
+    access: [["Research"], ["Medical"]]
 
 - type: entity
   parent: AirlockCommand
@@ -252,7 +260,7 @@
 - type: entity
   parent: AirlockEngineeringGlass
   id: AirlockEngineeringGlassLocked
-  suffix: Glass, Locked
+  suffix: Engineering, Locked
   components:
   - type: AccessReader
     access: [["Engineering"]]
@@ -421,7 +429,7 @@
 - type: entity
   parent: AirlockMaint
   id: AirlockMaintRnDLocked
-  suffix: RnD, Locked
+  suffix: Science, Locked
   components:
   - type: AccessReader
     access: [["Research"]]
@@ -429,7 +437,7 @@
 - type: entity
   parent: AirlockMaint
   id: AirlockMaintRnDMedLocked
-  suffix: Med/RnD, Locked
+  suffix: Medical/Science, Locked
   components:
   - type: AccessReader
     access: [["Research"], ["Medical"]]
