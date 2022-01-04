@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Content.Shared.Body.Events;
+﻿using Content.Shared.Body.Events;
 using Content.Shared.Body.Part;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -8,16 +7,13 @@ using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Body.Components
 {
-    public abstract class SharedMechanismComponent : Component, ISerializationHooks
+    [RegisterComponent]
+    public class MechanismComponent : Component, ISerializationHooks
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
         public override string Name => "Mechanism";
 
-        protected readonly Dictionary<int, object> OptionsCache = new();
-        protected SharedBodyComponent? BodyCache;
-        protected int IdHash;
-        protected EntityUid? PerformerCache;
         private SharedBodyPartComponent? _part;
 
         public SharedBodyComponent? Body => Part?.Body;
@@ -74,13 +70,13 @@ namespace Content.Shared.Body.Components
         // TODO BODY OnSizeChanged
         /// <summary>
         ///     Determines whether this
-        ///     <see cref="SharedMechanismComponent"/> can fit into a <see cref="SharedBodyPartComponent"/>.
+        ///     <see cref="MechanismComponent"/> can fit into a <see cref="SharedBodyPartComponent"/>.
         /// </summary>
         [DataField("size")] public int Size { get; set; } = 1;
 
         /// <summary>
         ///     What kind of <see cref="SharedBodyPartComponent"/> this
-        ///     <see cref="SharedMechanismComponent"/> can be easily installed into.
+        ///     <see cref="MechanismComponent"/> can be easily installed into.
         /// </summary>
         [DataField("compatibility")]
         public BodyPartCompatibility Compatibility { get; set; } = BodyPartCompatibility.Universal;

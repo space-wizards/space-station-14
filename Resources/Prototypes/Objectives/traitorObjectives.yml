@@ -60,6 +60,7 @@
 - type: objective
   id: CMOHyposprayStealObjective
   issuer: syndicate
+  difficultyOverride: 2.25
   requirements:
     - !type:TraitorRequirement {}
     - !type:IncompatibleConditionsRequirement
@@ -72,6 +73,7 @@
 - type: objective
   id: RDHardsuitStealObjective
   issuer: syndicate
+  difficultyOverride: 2.5
   requirements:
     - !type:TraitorRequirement {}
     - !type:IncompatibleConditionsRequirement
@@ -108,6 +110,7 @@
 - type: objective
   id: MagbootsStealObjective #Replace this with CE magboots when we get those
   issuer: syndicate
+  difficultyOverride: 1.5
   requirements:
     - !type:TraitorRequirement {}
     - !type:IncompatibleConditionsRequirement
@@ -120,6 +123,7 @@
 - type: objective
   id: HOSHardsuitHelmStealObjective
   issuer: syndicate
+  difficultyOverride: 2.5
   requirements:
     - !type:TraitorRequirement {}
     - !type:IncompatibleConditionsRequirement

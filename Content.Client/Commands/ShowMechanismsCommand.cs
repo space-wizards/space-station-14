@@ -19,7 +19,7 @@ namespace Content.Client.Commands
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            var mechanisms = entityManager.EntityQuery<SharedMechanismComponent>(true);
+            var mechanisms = entityManager.EntityQuery<MechanismComponent>(true);
 
             foreach (var mechanism in mechanisms)
             {

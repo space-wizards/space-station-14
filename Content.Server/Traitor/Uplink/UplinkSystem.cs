@@ -35,7 +35,7 @@ namespace Content.Server.Traitor.Uplink
 
             SubscribeLocalEvent<UplinkComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<UplinkComponent, ComponentRemove>(OnRemove);
-            SubscribeLocalEvent<UplinkComponent, UseInHandEvent>(OnUseHand);
+            SubscribeLocalEvent<UplinkComponent, ActivateInWorldEvent>(OnActivate);
 
             // UI events
             SubscribeLocalEvent<UplinkComponent, UplinkBuyListingMessage>(OnBuy);
@@ -75,7 +75,7 @@ namespace Content.Server.Traitor.Uplink
             RaiseLocalEvent(uid, new UplinkRemovedEvent());
         }
 
-        private void OnUseHand(EntityUid uid, UplinkComponent component, UseInHandEvent args)
+        private void OnActivate(EntityUid uid, UplinkComponent component, ActivateInWorldEvent args)
         {
             if (args.Handled)
                 return;
