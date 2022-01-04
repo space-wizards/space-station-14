@@ -53,20 +53,20 @@ namespace Content.Client.Chat.UI
             switch (type)
             {
                 case SpeechType.Emote:
-                    return new EmoteSpeechBubble(text, senderEntity, eyeManager, chatManager, entityManager);
+                    return new TextSpeechBubble(text, senderEntity, eyeManager, chatManager, entityManager, "emoteBox");
 
                 case SpeechType.Say:
-                    return new SaySpeechBubble(text, senderEntity, eyeManager, chatManager, entityManager);
+                    return new TextSpeechBubble(text, senderEntity, eyeManager, chatManager, entityManager, "sayBox");
 
                 case SpeechType.Whisper:
-                    return new WhisperSpeechBubble(text, senderEntity, eyeManager, chatManager, entityManager);
+                    return new TextSpeechBubble(text, senderEntity, eyeManager, chatManager, entityManager, "whisperBox");
 
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
 
-        public SpeechBubble(string text, EntityUid senderEntity, IEyeManager eyeManager, IChatManager chatManager, IEntityManager entityManager)
+        public SpeechBubble(string text, EntityUid senderEntity, IEyeManager eyeManager, IChatManager chatManager, IEntityManager entityManager, string speechClass)
         {
             _chatManager = chatManager;
             _senderEntity = senderEntity;
@@ -76,7 +76,7 @@ namespace Content.Client.Chat.UI
             // Use text clipping so new messages don't overlap old ones being pushed up.
             RectClipContent = true;
 
-            var bubble = BuildBubble(text);
+            var bubble = BuildBubble(text, speechClass);
 
             AddChild(bubble);
 
@@ -87,7 +87,7 @@ namespace Content.Client.Chat.UI
             _verticalOffsetAchieved = -ContentHeight;
         }
 
-        protected abstract Control BuildBubble(string text);
+        protected abstract Control BuildBubble(string text, string speechClass);
 
         protected override void FrameUpdate(FrameEventArgs args)
         {
@@ -166,15 +166,15 @@ namespace Content.Client.Chat.UI
         }
     }
 
-    public class EmoteSpeechBubble : SpeechBubble
+    public class TextSpeechBubble : SpeechBubble
 
     {
-        public EmoteSpeechBubble(string text, EntityUid senderEntity, IEyeManager eyeManager, IChatManager chatManager, IEntityManager entityManager)
-            : base(text, senderEntity, eyeManager, chatManager, entityManager)
+        public TextSpeechBubble(string text, EntityUid senderEntity, IEyeManager eyeManager, IChatManager chatManager, IEntityManager entityManager, string speechClass)
+            : base(text, senderEntity, eyeManager, chatManager, entityManager, speechClass)
         {
         }
 
-        protected override Control BuildBubble(string text)
+        protected override Control BuildBubble(string text, string speechClass)
         {
             var label = new RichTextLabel
             {
@@ -184,59 +184,7 @@ namespace Content.Client.Chat.UI
 
             var panel = new PanelContainer
             {
-                StyleClasses = { "speechBox", "emoteBox" },
-                Children = { label },
-                ModulateSelfOverride = Color.White.WithAlpha(0.75f)
-            };
-
-            return panel;
-        }
-    }
-
-    public class SaySpeechBubble : SpeechBubble
-    {
-        public SaySpeechBubble(string text, EntityUid senderEntity, IEyeManager eyeManager, IChatManager chatManager, IEntityManager entityManager)
-            : base(text, senderEntity, eyeManager, chatManager, entityManager)
-        {
-        }
-
-        protected override Control BuildBubble(string text)
-        {
-            var label = new RichTextLabel
-            {
-                MaxWidth = 256,
-            };
-            label.SetMessage(text);
-
-            var panel = new PanelContainer
-            {
-                StyleClasses = { "speechBox", "sayBox" },
-                Children = { label },
-                ModulateSelfOverride = Color.White.WithAlpha(0.75f)
-            };
-
-            return panel;
-        }
-    }
-
-    public class WhisperSpeechBubble : SpeechBubble
-    {
-        public WhisperSpeechBubble(string text, EntityUid senderEntity, IEyeManager eyeManager, IChatManager chatManager, IEntityManager entityManager)
-            : base(text, senderEntity, eyeManager, chatManager, entityManager)
-        {
-        }
-
-        protected override Control BuildBubble(string text)
-        {
-            var label = new RichTextLabel
-            {
-                MaxWidth = 256,
-            };
-            label.SetMessage(text);
-
-            var panel = new PanelContainer
-            {
-                StyleClasses = { "speechBox", "whisperBox" },
+                StyleClasses = { "speechBox", speechClass },
                 Children = { label },
                 ModulateSelfOverride = Color.White.WithAlpha(0.75f)
             };
