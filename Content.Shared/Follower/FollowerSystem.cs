@@ -18,18 +18,6 @@ public class FollowerSystem : EntitySystem
         SubscribeLocalEvent<FollowerComponent, RelayMoveInputEvent>(OnFollowerMove);
     }
 
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        foreach (var follower in EntityManager.EntityQuery<FollowerComponent>())
-        {
-            var xform = Transform(follower.Owner);
-            var targetXform = Transform(follower.Following);
-            xform.Coordinates = targetXform.Coordinates;
-        }
-    }
-
     private void OnGetAlternativeVerbs(GetAlternativeVerbsEvent ev)
     {
         if (!HasComp<SharedGhostComponent>(ev.User))
@@ -42,6 +30,9 @@ public class FollowerSystem : EntitySystem
             {
                 var follower = EnsureComp<FollowerComponent>(ev.User);
                 follower.Following = ev.Target;
+                var xform = Transform(ev.User);
+                xform.Coordinates = Transform(ev.Target).Coordinates;
+                xform.AttachParent(ev.Target);
             }),
             Impact = LogImpact.Low,
             Text = Loc.GetString("verb-follow-text"),
@@ -54,5 +45,6 @@ public class FollowerSystem : EntitySystem
     private void OnFollowerMove(EntityUid uid, FollowerComponent component, RelayMoveInputEvent args)
     {
         RemComp<FollowerComponent>(uid);
+        Transform(uid).AttachToGridOrMap();
     }
 }
