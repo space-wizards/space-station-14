@@ -1,19 +1,24 @@
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Server.Body.Components;
 using Content.Server.GameTicking;
 using Content.Server.Mind.Components;
+using Content.Shared.Audio;
 using Content.Shared.Body.Components;
+using Content.Shared.Body.Prototypes;
+using Content.Shared.Body.Systems;
 using Content.Shared.MobState.Components;
 using Content.Shared.Movement.EntitySystems;
+using Content.Shared.Random.Helpers;
+using Robust.Shared.Audio;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Body.Systems
 {
-    public sealed class BodySystem : EntitySystem
+    public sealed class BodySystem : SharedBodySystem
     {
         [Dependency] private readonly GameTicker _ticker = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
@@ -22,6 +27,37 @@ namespace Content.Server.Body.Systems
         {
             base.Initialize();
             SubscribeLocalEvent<BodyComponent, RelayMoveInputEvent>(OnRelayMoveInput);
+            SubscribeLocalEvent<BodyComponent, ComponentStartup>(OnComponentStartup);
+        }
+
+        protected override void OnComponentInit(EntityUid uid, SharedBodyComponent component, ComponentInit args)
+        {
+            var preset = _prototypeManager.Index<BodyPresetPrototype>(component.PresetId);
+            foreach (var slot in component.SlotIds.Values)
+            {
+                // Using MapPosition instead of Coordinates here prevents
+                // a crash within the character preview menu in the lobby
+                var entity = Spawn(preset.PartIDs[slot.Id], Transform(uid).MapPosition);
+
+                if (!TryComp(entity, out SharedBodyPartComponent? part))
+                {
+                    Logger.Error($"Entity {slot.Id} does not have a {nameof(SharedBodyPartComponent)} component.");
+                    continue;
+                }
+
+                SetPart(slot.Id, part);
+            }
+        }
+
+        private void OnComponentStartup(EntityUid uid, BodyComponent component, ComponentStartup args)
+        {
+            // This is ran in Startup as entities spawned in Initialize
+            // are not synced to the client since they are assumed to be
+            // identical on it
+            foreach (var (part, _) in component.Parts)
+            {
+                part.Dirty();
+            }
         }
 
         private void OnRelayMoveInput(EntityUid uid, BodyComponent component, RelayMoveInputEvent args)
@@ -40,55 +76,36 @@ namespace Content.Server.Body.Systems
             }
         }
 
-        /// <summary>
-        ///     Returns a list of ValueTuples of <see cref="T"/> and MechanismComponent on each mechanism
-        ///     in the given body.
-        /// </summary>
-        /// <param name="uid">The entity to check for the component on.</param>
-        /// <param name="body">The body to check for mechanisms on.</param>
-        /// <typeparam name="T">The component to check for.</typeparam>
-        public IEnumerable<(T Comp, MechanismComponent Mech)> GetComponentsOnMechanisms<T>(EntityUid uid,
-            SharedBodyComponent? body=null) where T : Component
+        public void Gib(EntityUid uid, bool gibParts = false,
+            BodyComponent? body=null)
         {
-            if (!Resolve(uid, ref body))
-                yield break;
+            if (!Resolve(uid, ref body, false))
+                return;
 
-            foreach (var (part, _) in body.Parts)
-            foreach (var mechanism in part.Mechanisms)
+            foreach (var part in body.Parts.Keys)
             {
-                if (EntityManager.TryGetComponent<T>((mechanism).Owner, out var comp))
-                    yield return (comp, mechanism);
-            }
-        }
+                RemovePart(uid, part, body);
 
-        /// <summary>
-        ///     Tries to get a list of ValueTuples of <see cref="T"/> and MechanismComponent on each mechanism
-        ///     in the given body.
-        /// </summary>
-        /// <param name="uid">The entity to check for the component on.</param>
-        /// <param name="comps">The list of components.</param>
-        /// <param name="body">The body to check for mechanisms on.</param>
-        /// <typeparam name="T">The component to check for.</typeparam>
-        /// <returns>Whether any were found.</returns>
-        public bool TryGetComponentsOnMechanisms<T>(EntityUid uid,
-            [NotNullWhen(true)] out IEnumerable<(T Comp, MechanismComponent Mech)>? comps,
-            SharedBodyComponent? body=null) where T: Component
-        {
-            if (!Resolve(uid, ref body))
-            {
-                comps = null;
-                return false;
+                if (gibParts)
+                    part.Gib();
             }
 
-            comps = GetComponentsOnMechanisms<T>(uid, body).ToArray();
+            SoundSystem.Play(Filter.Pvs(uid), body.GibSound.GetSound(), Transform(uid).Coordinates, AudioHelpers.WithVariation(0.025f));
 
-            if (!comps.Any())
+            if (TryComp(uid, out ContainerManagerComponent? container))
             {
-                comps = null;
-                return false;
+                foreach (var cont in container.GetAllContainers())
+                {
+                    foreach (var ent in cont.ContainedEntities)
+                    {
+                        cont.ForceRemove(ent);
+                        Transform(ent).Coordinates = Transform(uid).Coordinates;
+                        ent.RandomOffset(0.25f);
+                    }
+                }
             }
 
-            return true;
+            QueueDel(uid);
         }
     }
 }
