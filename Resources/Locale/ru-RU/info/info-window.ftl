@@ -11,8 +11,8 @@ ui-info-text-controls = Вы можете переопределять кноп�
 ui-info-header-intro = Введение
 ui-info-header-controls = Управление
 ui-info-header-gameplay = Геймплей
-ui-info-header-sandbox = Спавн вещей в режиме Песочницы
-ui-info-subheader-entityoptions = Опции панели спавна сущностей:
+ui-info-header-sandbox = Спаун вещей в режиме Песочницы
+ui-info-subheader-entityoptions = Опции панели спауна сущностей:
 ui-info-subheader-gridoptions = Варианты выравнивания по сетке:
 ui-info-header-feedback = Обратная связь
 
