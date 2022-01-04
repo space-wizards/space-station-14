@@ -109,14 +109,13 @@ namespace Content.Server.Body.Systems
                 if (ev.Gas == null) return;
             }
 
-            var pressure = Atmospherics.OneAtmosphere / ev.AmountRatio;
-            var molesNeeded = pressure * respirator.InhaleAmount / (Atmospherics.R * ev.Gas.Temperature);
-            var actualGas = ev.Gas.Remove(molesNeeded);
+            var ratio = (Atmospherics.BreathVolume / ev.Gas.Volume);
+            var actualGas = ev.Gas.RemoveRatio(ratio);
 
-            var ratio = 1.0f / organs.Length;
+            var lungRatio = 1.0f / organs.Length;
             foreach (var (lung, _) in organs)
             {
-                var gas = organs.Length == 1 ? actualGas : actualGas.RemoveRatio(ratio);
+                var gas = organs.Length == 1 ? actualGas : actualGas.RemoveRatio(lungRatio);
                 _atmosSys.Merge(lung.Air, gas);
                 _lungSystem.GasToReagent(lung.Owner, lung);
             }
@@ -196,12 +195,6 @@ namespace Content.Server.Body.Systems
 public class InhaleLocationEvent : EntityEventArgs
 {
     public GasMixture? Gas;
-
-    /// <summary>
-    ///     What percentage of the gas should actually be used?
-    ///     Used for things like a gas tank specifying output pressure.
-    /// </summary>
-    public float AmountRatio = 1.0f;
 }
 
 public class ExhaleLocationEvent : EntityEventArgs

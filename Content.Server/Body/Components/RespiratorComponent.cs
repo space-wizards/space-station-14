@@ -35,13 +35,7 @@ namespace Content.Server.Body.Components
         [DataField("minSaturation")]
         public float MinSaturation = -5.0f;
 
-        // TODO HYPEROXIA
-
-        /// <summary>
-        ///     What volume of gas should be inhaled at once?
-        /// </summary>
-        [DataField("inhaleAmount")]
-        public float InhaleAmount = Atmospherics.BreathVolume;
+        // TODO HYPEROXIA?
 
         [DataField("damage", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
