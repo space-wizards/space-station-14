@@ -1,11 +1,6 @@
 Entries:
 - author: SweptWasTaken
   changes:
-  - {message: 'Can equip bat, fireaxe, spear and claymore on your back now', type: Tweak}
-  id: 321
-  time: '2021-08-18T02:42:50.0000000+00:00'
-- author: SweptWasTaken
-  changes:
   - {message: Adds seclite and duck related content, type: Add}
   id: 322
   time: '2021-08-19T23:23:49.0000000+00:00'
@@ -2905,3 +2900,9 @@ Entries:
   - {message: Added paying respects, type: Add}
   id: 822
   time: '2022-01-04T13:05:21.0000000+00:00'
+- author: Schiene
+  changes:
+  - {message: 'Added a spawnable Boarding Shuttle map called Dart, comes with a small
+      force equipped for Vacuum with heavy weaponry.', type: Add}
+  id: 823
+  time: '2022-01-04T13:23:13.0000000+00:00'
