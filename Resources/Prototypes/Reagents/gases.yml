@@ -1,0 +1,15 @@
+﻿- type: reagent
+  id: Oxygen
+  name: oxygen
+  desc: An oxidizing, colorless gas.
+  physicalDesc: gaseous
+  color: "#808080"
+  boilingPoint: -183.0
+  meltingPoint: -218.4
+  metabolisms:
+    Gas:
+      effects:
+      - !type:Oxygenate
+        conditions:
+        - !type:OrganType
+          type: Human

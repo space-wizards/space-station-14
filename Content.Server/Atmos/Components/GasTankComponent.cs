@@ -132,30 +132,6 @@ namespace Content.Server.Atmos.Components
             return gas;
         }
 
-        public GasMixture RemoveAirVolume(float volume)
-        {
-            if (Air == null)
-                return new GasMixture(volume);
-
-            var tankPressure = Air.Pressure;
-            if (tankPressure < OutputPressure)
-            {
-                OutputPressure = tankPressure;
-                UpdateUserInterface();
-            }
-
-            var molesNeeded = OutputPressure * volume / (Atmospherics.R * Air.Temperature);
-
-            var air = RemoveAir(molesNeeded);
-
-            if (air != null)
-                air.Volume = volume;
-            else
-                return new GasMixture(volume);
-
-            return air;
-        }
-
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
             if (!_entMan.TryGetComponent(eventArgs.User, out ActorComponent? actor)) return false;

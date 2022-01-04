@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using Content.Server.Body.Systems;
+using Content.Server.Chemistry.ReagentEffects;
 using Content.Shared.Atmos;
 using Content.Shared.Damage;
 using Robust.Shared.Analyzers;
@@ -9,24 +11,31 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Body.Components
 {
-    [RegisterComponent, Friend(typeof(RespiratorSystem))]
+    [RegisterComponent, Friend(typeof(RespiratorSystem), typeof(Oxygenate))]
     public class RespiratorComponent : Component
     {
         public override string Name => "Respirator";
 
-        [ViewVariables]
-        [DataField("needsGases")]
-        public Dictionary<Gas, float> NeedsGases { get; set; } = new();
+        /// <summary>
+        ///     Saturation level. Reduced by CycleDelay each tick.
+        ///     Can be thought of as 'how many seconds you have until you start suffocating' in this configuration.
+        /// </summary>
+        [DataField("saturation")]
+        public float Saturation = 5.0f;
 
-        [ViewVariables]
-        [DataField("producesGases")]
-        public Dictionary<Gas, float> ProducesGases { get; set; } = new();
+        /// <summary>
+        ///     At what level of saturation will you begin to suffocate?
+        /// </summary>
+        [DataField("suffocationThreshold")]
+        public float SuffocationThreshold = 0.0f;
 
-        [ViewVariables]
-        [DataField("deficitGases")]
-        public Dictionary<Gas, float> DeficitGases { get; set; } = new();
+        // TODO HYPEROXIA
 
-        [ViewVariables] public bool Suffocating { get; set; }
+        /// <summary>
+        ///     What volume of gas should be inhaled at once?
+        /// </summary>
+        [DataField("inhaleAmount")]
+        public float InhaleAmount = Atmospherics.BreathVolume;
 
         [DataField("damage", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
@@ -36,6 +45,27 @@ namespace Content.Server.Body.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public DamageSpecifier DamageRecovery = default!;
 
+        [DataField("gaspPopupCooldown")]
+        public TimeSpan GaspPopupCooldown { get; private set; } = TimeSpan.FromSeconds(8);
+
+        [ViewVariables]
+        public TimeSpan LastGaspPopupTime;
+
+        [ViewVariables]
+        public bool Suffocating = false;
+
+        [ViewVariables]
+        public RespiratorStatus Status = RespiratorStatus.Inhaling;
+
+        [DataField("cycleDelay")]
+        public float CycleDelay = 2.0f;
+
         public float AccumulatedFrametime;
     }
+}
+
+public enum RespiratorStatus
+{
+    Inhaling,
+    Exhaling
 }

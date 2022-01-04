@@ -133,15 +133,6 @@
   meltingPoint: -210.0
 
 - type: reagent
-  id: Oxygen
-  name: oxygen
-  desc: An oxidizing, colorless gas.
-  physicalDesc: gaseous
-  color: "#808080"
-  boilingPoint: -183.0
-  meltingPoint: -218.4
-
-- type: reagent
   id: Potassium
   name: potassium
   desc: A soft, shiny grey metal. Even more reactive than lithium.

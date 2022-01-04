@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Atmos;
@@ -40,11 +40,6 @@ namespace Content.IntegrationTests.Tests.Body
     normalBodyTemperature: 310.15
     thermalRegulationTemperatureThreshold: 25
   - type: Respirator
-    needsGases:
-      Oxygen: 0.00060763888
-    producesGases:
-      Oxygen: 0.00045572916
-      CarbonDioxide: 0.00015190972
 ";
 
         [Test]
@@ -191,4 +186,4 @@ namespace Content.IntegrationTests.Tests.Body
             await server.WaitIdleAsync();
         }
     }
-}
+}*/

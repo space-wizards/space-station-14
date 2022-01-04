@@ -5,6 +5,7 @@
   heatCapacityRatio: 1.4
   molarMass: 32
   color: 2887E8
+  reagent: Oxygen
 
 - type: gas
   id: 1
