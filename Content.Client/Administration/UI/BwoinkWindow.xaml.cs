@@ -62,10 +62,10 @@ namespace Content.Client.Administration.UI
                     return 0;
 
                 if (!aChannelExists)
-                    return -1;
+                    return 1;
 
                 if (!bChannelExists)
-                    return 1;
+                    return -1;
 
                 return bch!.LastMessage.CompareTo(ach!.LastMessage);
             };
@@ -103,7 +103,8 @@ namespace Content.Client.Administration.UI
             var open = IsOpen;
             Open();
 
-            ChannelSelector.Refresh();
+            ChannelSelector.RefreshDecorators();
+            ChannelSelector.Sort();
 
             if (!open)
             {
