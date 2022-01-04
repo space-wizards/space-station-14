@@ -52,7 +52,7 @@ ui-options-fps-counter = Показать счетчик FPS
 ## Controls menu
 
 ui-options-binds-reset-all = Сбросить ВСЕ привязки
-ui-options-binds-explanation = ЛКМ чтобы изменить кнопку, ПКМ чтобы убрать кнопку
+ui-options-binds-explanation = ЛКМ — изменить кнопку, ПКМ — убрать кнопку
 ui-options-unbound = Пусто
 ui-options-bind-reset = Сбросить
 ui-options-key-prompt = Нажмите кнопку...

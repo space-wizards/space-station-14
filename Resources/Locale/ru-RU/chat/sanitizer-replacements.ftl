@@ -15,5 +15,5 @@ chatsan-stick-out-tongue = показывает язык
 chatsan-wide-eyed = выглядит шокированным
 chatsan-surprised = выглядит удивленным
 chatsan-confused = выглядит смущенным
-chatsan-unimpressed = кажется не впечатленным
+chatsan-unimpressed = кажется не впечатлённым
 chatsan-waves = машет

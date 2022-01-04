@@ -7,10 +7,10 @@ comp-climbable-verb-climb = Забраться
 ### Interaction Messages
 
 # Shown to you when your character climbs on $climbable
-comp-climbable-user-climbs = Вы запрыгмваете на { THE($climbable) }!
+comp-climbable-user-climbs = Вы запрыгиваете на { THE($climbable) }!
 
 # Shown to others when $user climbs on $climbable
-comp-climbable-user-climbs-other  = { CAPITALIZE(THE($user)) } запрыгмвает на { THE($climbable) }!
+comp-climbable-user-climbs-other = { CAPITALIZE(THE($user)) } запрыгивает на { THE($climbable) }!
 
 # Shown to you when your character force someone to climb on $climbable
 comp-climbable-user-climbs-force = Вы заставляете { CAPITALIZE(THE($moved-user)) } забраться на { THE($climbable) }!
@@ -25,4 +25,4 @@ comp-climbable-cant-reach = Вы не можете туда достать!
 comp-climbable-cant-interact = Вы не можете этого сделать!
 
 # Shown to you when your character can't climb
-comp-climbable-cant-climb = Вы не способны взбераться!
+comp-climbable-cant-climb = Вы не способны взбираться!
