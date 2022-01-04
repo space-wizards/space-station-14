@@ -41,6 +41,20 @@
     Botanist: [ 1, 1 ]
 
 - type: gameMap
+  id: Gladius
+  mapName: 'Gladius'
+  mapNameTemplate: '{0} Gladius {1}'
+  fallback: true
+  nameGenerator:
+    !type:IndependentNameGenerator
+    prefixCreator: 'OR'
+  mapPath: Maps/gladius.yml
+  minPlayers: 0
+  overflowJobs: []
+  availableJobs:
+    Vagabond: [6, 6]
+
+- type: gameMap
   id: saltern
   mapName: 'Saltern'
   mapNameTemplate: '{0} Saltern {1}'
