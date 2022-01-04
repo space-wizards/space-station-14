@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Content.Client.Administration.UI.CustomControls;
 using Content.Shared.Administration;

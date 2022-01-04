@@ -1,0 +1,35 @@
+- type: construction
+  name: air alarm
+  id: AirAlarmFixture
+  graph: air_alarm
+  startNode: start
+  targetNode: air_alarm
+  category: Structures
+  description: An air alarm. Alarms... air?
+  icon:
+    sprite: Structures/Wallmounts/air_monitors.rsi
+    state: alarm0
+  placementMode: SnapgridCenter
+  objectType: Structure
+  canRotate: true
+  canBuildInImpassable: true
+  conditions:
+  - !type:WallmountCondition {}
+
+- type: construction
+  name: fire alarm
+  id: FireAlarm
+  graph: fire_alarm
+  startNode: start
+  targetNode: fire_alarm
+  category: Structures
+  description: A fire alarm. Spicy!
+  icon:
+    sprite: Structures/Wallmounts/air_monitors.rsi
+    state: fire0
+  placementMode: SnapgridCenter
+  objectType: Structure
+  canRotate: true
+  canBuildInImpassable: true
+  conditions:
+  - !type:WallmountCondition {}

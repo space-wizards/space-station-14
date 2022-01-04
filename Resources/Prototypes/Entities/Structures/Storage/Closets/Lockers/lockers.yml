@@ -76,7 +76,7 @@
       state_open: ce_open
       state_closed: ce_door
   - type: AccessReader
-    access: [ [ "Engineering", "Command" ] ]
+    access: [ [ "ChiefEngineer" ] ]
 
 # Electrical supplies
 - type: entity
@@ -151,7 +151,7 @@
       state_open: freezer_open
       state_closed: freezer_door
   - type: AccessReader
-    access: [ [ "Service" ] ]
+    access: [ [ "Kitchen" ] ]
 
 # Botanist
 - type: entity
@@ -166,7 +166,7 @@
       state_open: hydro_open
       state_closed: hydro_door
   - type: AccessReader
-    access: [ [ "Service" ] ]
+    access: [ [ "Hydroponics" ] ]
 
 # Medicine
 - type: entity
@@ -227,7 +227,7 @@
       state_open: cmo_open
       state_closed: cmo_door
   - type: AccessReader
-    access: [ [ "Medical", "Command" ] ]
+    access: [ [ "ChiefMedicalOfficer" ] ]
 
 # Science
 - type: entity
@@ -242,7 +242,7 @@
       state_open: rd_open
       state_closed: rd_door
   - type: AccessReader
-    access: [ [ "Research", "Command" ] ]
+    access: [ [ "ResearchDirector" ] ]
 
 - type: entity
   id: LockerScientist
@@ -271,7 +271,7 @@
       state_open: hos_open
       state_closed: hos_door
   - type: AccessReader
-    access: [["Security", "Command"]]
+    access: [["HeadOfSecurity"]]
 
 # Warden
 - type: entity
@@ -311,7 +311,7 @@
   description: Usually cold and empty... like your heart.
   components:
   - type: AccessReader
-    access: [["Service"]] # TODO access [["Detective"]]
+    access: [["Security"]] # TODO access [["Detective"]]
 
 # Syndicate
 - type: entity

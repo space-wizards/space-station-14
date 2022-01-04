@@ -14,10 +14,10 @@
 - type: startingGear
   id: BotanistGear
   equipment:
-    innerclothing: ClothingUniformJumpsuitHydroponics
-    backpack: ClothingBackpackHydroponicsFilled
+    jumpsuit: ClothingUniformJumpsuitHydroponics
+    back: ClothingBackpackHydroponicsFilled
     shoes: ClothingShoesColorBrown
-    idcard: BotanistPDA
+    id: BotanistPDA
     ears: ClothingHeadsetService
     outerclothing: ClothingOuterApronBotanist
   innerclothingskirt: ClothingUniformJumpskirtHydroponics
