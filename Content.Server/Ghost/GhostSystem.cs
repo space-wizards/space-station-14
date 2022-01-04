@@ -8,6 +8,7 @@ using Content.Server.Visible;
 using Content.Server.Warps;
 using Content.Shared.Examine;
 using Content.Shared.Ghost;
+using Content.Shared.MobState.Components;
 using Content.Shared.Movement.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -53,6 +54,7 @@ namespace Content.Server.Ghost
             // Let's not ghost if our mind is visiting...
             if (EntityManager.HasComponent<VisitingMindComponent>(uid)) return;
             if (!EntityManager.TryGetComponent<MindComponent>(uid, out var mind) || !mind.HasMind || mind.Mind!.IsVisitingEntity) return;
+            if (component.MustBeDead && TryComp<MobStateComponent>(uid, out var state) && !state.IsDead()) return;
 
             _ticker.OnGhostAttempt(mind.Mind!, component.CanReturn);
         }
