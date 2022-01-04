@@ -213,6 +213,35 @@
   - type: Icon
     state: pda-bartender
 
+- type: entity
+  parent: BasePDA
+  id: LibrarianPDA
+  name: librarian PDA
+  description: Smells like books.
+  components:
+  - type: PDA
+    id: LibrarianIDCard
+  - type: Appearance
+    visuals:
+      - type: PDAVisualizer
+        state: pda-library
+  - type: Icon
+    state: pda-library
+
+- type: entity
+  parent: BasePDA
+  id: LawyerPDA
+  name: lawyer PDA
+  description: For lawyers to poach dubious clients.
+  components:
+  - type: PDA
+    id: LawyerIDCard
+  - type: Appearance
+    visuals:
+      - type: PDAVisualizer
+        state: pda-lawyer
+  - type: Icon
+    state: pda-lawyer
 
 - type: entity
   parent: BasePDA
