@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Alert;
@@ -58,7 +59,7 @@ namespace Content.Server.Body.Systems
                 if (respirator.AccumulatedFrametime < respirator.CycleDelay)
                     continue;
                 respirator.AccumulatedFrametime -= respirator.CycleDelay;
-                respirator.Saturation -= respirator.CycleDelay;
+                UpdateSaturation(respirator.Owner, -respirator.CycleDelay, respirator);
 
                 switch (respirator.Status)
                 {
@@ -173,6 +174,17 @@ namespace Content.Server.Body.Systems
             }
 
             _damageableSys.TryChangeDamage(uid, respirator.DamageRecovery, true);
+        }
+
+        public void UpdateSaturation(EntityUid uid, float amount,
+            RespiratorComponent? respirator = null)
+        {
+            if (!Resolve(uid, ref respirator, false))
+                return;
+
+            respirator.Saturation += amount;
+            respirator.Saturation =
+                Math.Clamp(respirator.Saturation, respirator.MinSaturation, respirator.MaxSaturation);
         }
     }
 }

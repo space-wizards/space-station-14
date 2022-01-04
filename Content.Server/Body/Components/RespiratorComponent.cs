@@ -11,7 +11,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Body.Components
 {
-    [RegisterComponent, Friend(typeof(RespiratorSystem), typeof(Oxygenate))]
+    [RegisterComponent, Friend(typeof(RespiratorSystem))]
     public class RespiratorComponent : Component
     {
         public override string Name => "Respirator";
@@ -28,6 +28,12 @@ namespace Content.Server.Body.Components
         /// </summary>
         [DataField("suffocationThreshold")]
         public float SuffocationThreshold = 0.0f;
+
+        [DataField("maxSaturation")]
+        public float MaxSaturation = 10.0f;
+
+        [DataField("minSaturation")]
+        public float MinSaturation = -10.0f;
 
         // TODO HYPEROXIA
 

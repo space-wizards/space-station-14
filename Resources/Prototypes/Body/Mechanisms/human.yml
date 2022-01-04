@@ -101,12 +101,13 @@
     compatibility: Biological
   - type: Lung
   - type: Metabolizer
+    removeEmpty: true
     solutionOnBody: false
     solution: "Lung"
-    metabolizerTypes: [ Animal ]
+    metabolizerTypes: [ Human ]
     groups:
     - id: Gas
-
+      rateModifier: 10.0
 
 - type: entity
   id: OrganHumanHeart

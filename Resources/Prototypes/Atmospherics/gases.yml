@@ -32,6 +32,7 @@
   gasOverlaySprite: /Textures/Effects/atmospherics.rsi
   gasOverlayState: plasma
   color: FF3300
+  reagent: Plasma
 
 - type: gas
   id: 4
@@ -42,6 +43,7 @@
   gasOverlaySprite: /Textures/Effects/atmospherics.rsi
   gasOverlayState: tritium
   color: 13FF4B
+  reagent: Tritium
 
 - type: gas
   id: 5

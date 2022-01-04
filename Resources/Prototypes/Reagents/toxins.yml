@@ -132,33 +132,6 @@
   # TODO MIRROR acid!
 
 - type: reagent
-  id: Plasma
-  name: plasma
-  desc: Funky, space-magic pixie dust. You probably shouldn't eat this, but we both know you will anyways.
-  physicalDesc: gaseous
-  color: "#7e009e"
-  boilingPoint: -127.3 # Random values picked between the actual values for CO2 and O2
-  meltingPoint: -186.4
-  tileReactions:
-  - !type:FlammableTileReaction
-    temperatureMultiplier: 1.5
-  metabolisms:
-    Poison:
-      effects:
-      - !type:HealthChange
-        damage:
-          types:
-            Poison: 3
-      - !type:AdjustReagent
-        reagent: Inaprovaline
-        amount: -2.0
-  reactiveEffects:
-    Flammable:
-      methods: [ Touch ]
-      effects:
-      - !type:FlammableReaction
-
-- type: reagent
   id: UnstableMutagen
   name: unstable mutagen
   desc: Causes mutations when injected into living people or plants. High doses may be lethal, especially in humans.

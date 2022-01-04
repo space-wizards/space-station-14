@@ -143,6 +143,10 @@ namespace Content.Server.Body.Systems
                     if (entry.MetabolismRate > mostToRemove)
                         mostToRemove = entry.MetabolismRate;
 
+                    mostToRemove *= group.MetabolismRateModifier;
+
+                    mostToRemove = FixedPoint2.Clamp(mostToRemove, 0, reagent.Quantity);
+
                     // if it's possible for them to be dead, and they are,
                     // then we shouldn't process any effects, but should probably
                     // still remove reagents
@@ -152,7 +156,7 @@ namespace Content.Server.Body.Systems
                             continue;
                     }
 
-                    var args = new ReagentEffectArgs(solutionEntityUid.Value, (meta).Owner, solution, proto, entry.MetabolismRate,
+                    var args = new ReagentEffectArgs(solutionEntityUid.Value, (meta).Owner, solution, proto, mostToRemove,
                         EntityManager, null);
 
                     // do all effects, if conditions apply

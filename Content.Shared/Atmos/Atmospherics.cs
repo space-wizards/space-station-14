@@ -256,12 +256,9 @@ namespace Content.Shared.Atmos
         public const float NormalBodyTemperature = 37f;
 
         /// <summary>
-        ///     I hereby decree.
-        ///     I literally don't remember how I got this number
-        ///     and I did the calculations 5 seconds ago
-        ///     TODO make it make sense
+        ///     I hereby decree. This is Arbitrary Suck my Dick
         /// </summary>
-        public const float BreathMolesToReagentMultiplier = 343.191156101f;
+        public const float BreathMolesToReagentMultiplier = 686.38f;
 
         #region Pipes
 
