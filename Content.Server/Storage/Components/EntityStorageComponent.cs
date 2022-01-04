@@ -183,7 +183,7 @@ namespace Content.Server.Storage.Components
         {
             if (IsWeldedShut)
             {
-                if (!user.IsInContainer() && !silent)
+                if (!silent && !user.IsInContainer())
                     Owner.PopupMessage(user, Loc.GetString("entity-storage-component-welded-shut-message"));
 
                 return false;

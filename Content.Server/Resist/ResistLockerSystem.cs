@@ -18,8 +18,8 @@ namespace Content.Server.Resist
         {
             base.Initialize();
             SubscribeLocalEvent<ResistLockerComponent, RelayMovementEntityEvent>(OnRelayMovement);
-            SubscribeLocalEvent<ResistDoAfterComplete>(OnDoAfterComplete);
-            SubscribeLocalEvent<ResistDoAfterCancelled>(OnDoAfterCancelled);
+            SubscribeLocalEvent<ResistLockerComponent, ResistDoAfterComplete>(OnDoAfterComplete);
+            SubscribeLocalEvent<ResistLockerComponent, ResistDoAfterCancelled>(OnDoAfterCancelled);
             SubscribeLocalEvent<ResistLockerComponent, EntRemovedFromContainerMessage>(OnRemovedFromContainer);
         }
 
@@ -35,7 +35,7 @@ namespace Content.Server.Resist
                 if (TryComp<LockComponent>(uid, out var lockComponent) && lockComponent.Locked || storageComponent.IsWeldedShut)
                 {
                     AttemptResist(args.Entity, uid, storageComponent, component);
-                } 
+                }
             }
 
         }
@@ -52,8 +52,8 @@ namespace Content.Server.Resist
                 BreakOnDamage = true,
                 BreakOnStun = true,
                 NeedHand = false, //No hands 'cause we be kickin'
-                BroadcastFinishedEvent = new ResistDoAfterComplete(storageComponent, resistLockerComponent, user, target),
-                BroadcastCancelledEvent = new ResistDoAfterCancelled(user, resistLockerComponent)
+                TargetFinishedEvent = new ResistDoAfterComplete(storageComponent, user, target),
+                TargetCancelledEvent = new ResistDoAfterCancelled(user, resistLockerComponent)
             };
 
             resistLockerComponent.IsResisting = true;
@@ -61,9 +61,9 @@ namespace Content.Server.Resist
             _doAfterSystem.DoAfter(doAfterEventArgs);
         }
 
-        private void OnDoAfterComplete(ResistDoAfterComplete ev)
+        private void OnDoAfterComplete(EntityUid uid, ResistLockerComponent component, ResistDoAfterComplete ev)
         {
-            ev.ResistComponent.IsResisting = false;
+            component.IsResisting = false;
 
             if (ev.StorageComponent.IsWeldedShut)
             {
@@ -75,12 +75,14 @@ namespace Content.Server.Resist
                 lockComponent.Locked = false;
             }
 
+            component.CancelToken = null;
             ev.StorageComponent.TryOpenStorage(ev.User);
         }
 
-        private void OnDoAfterCancelled(ResistDoAfterCancelled ev)
+        private void OnDoAfterCancelled(EntityUid uid, ResistLockerComponent component, ResistDoAfterCancelled ev)
         {
-            ev.ResistComponent.IsResisting = false;
+            component.IsResisting = false;
+            component.CancelToken = null;
             _popupSystem.PopupEntity(Loc.GetString("resist-locker-component-resist-interrupted"), ev.User, Filter.Entities(ev.User));
         }
 
@@ -91,18 +93,16 @@ namespace Content.Server.Resist
                 component.IsResisting = false;
                 component.CancelToken.Cancel();
             }
-              
+
         }
         private class ResistDoAfterComplete : EntityEventArgs
         {
             public EntityStorageComponent StorageComponent;
-            public ResistLockerComponent ResistComponent;
             public readonly EntityUid User;
             public readonly EntityUid Target;
-            public ResistDoAfterComplete(EntityStorageComponent component, ResistLockerComponent resistComponent, EntityUid userUid, EntityUid target)
+            public ResistDoAfterComplete(EntityStorageComponent component, EntityUid userUid, EntityUid target)
             {
                 StorageComponent = component;
-                ResistComponent = resistComponent;
                 User = userUid;
                 Target = target;
             }
@@ -111,12 +111,10 @@ namespace Content.Server.Resist
         private class ResistDoAfterCancelled : EntityEventArgs
         {
             public readonly EntityUid User;
-            public ResistLockerComponent ResistComponent;
 
             public ResistDoAfterCancelled(EntityUid userUid, ResistLockerComponent resistComponent)
             {
                 User = userUid;
-                ResistComponent = resistComponent;
             }
         }
 
