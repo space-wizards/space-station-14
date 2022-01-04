@@ -246,6 +246,18 @@ namespace Content.Server.Chat.Managers
                 return;
             }
 
+            if (_adminManager.IsAdmin(actor.PlayerSession))
+            {
+                if (!_adminOocEnabled)
+                {
+                    return;
+                }
+            }
+            else if (!_oocEnabled)
+            {
+                return;
+            }
+
             // Check if message exceeds the character limit
             if (message.Length > MaxMessageLength)
             {
@@ -253,7 +265,7 @@ namespace Content.Server.Chat.Managers
                 return;
             }
 
-            message = Basic.EscapeText(message);
+            message = FormattedMessage.EscapeText(message);
 
             var clients = Filter.Empty()
                 .AddInRange(_entManager.GetComponent<TransformComponent>(source).MapPosition, VoiceRange)

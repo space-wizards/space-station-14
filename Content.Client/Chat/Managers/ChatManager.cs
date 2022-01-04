@@ -228,8 +228,6 @@ namespace Content.Client.Chat.Managers
             // Necessary so that we always have a channel to fall back to.
             DebugTools.Assert((SelectableChannels & ChatSelectChannel.OOC) != 0, "OOC must always be available");
             DebugTools.Assert((FilterableChannels & ChatChannel.OOC) != 0, "OOC must always be available");
-            DebugTools.Assert((SelectableChannels & ChatSelectChannel.LOOC) != 0, "LOOC must always be available");
-            DebugTools.Assert((FilterableChannels & ChatChannel.LOOC) != 0, "LOOC must always be available");
 
             // let our chatbox know all the new settings
             ChatPermissionsUpdated?.Invoke(new ChatPermissionsUpdatedEventArgs {OldSelectableChannels = oldSelectable});
