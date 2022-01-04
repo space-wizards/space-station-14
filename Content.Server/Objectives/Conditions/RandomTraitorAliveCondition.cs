@@ -7,6 +7,8 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Content.Server.Objectives.Interfaces;
+using Content.Server.Traitor;
 
 namespace Content.Server.Objectives.Conditions
 {
@@ -17,28 +19,23 @@ namespace Content.Server.Objectives.Conditions
         public override IObjectiveCondition GetAssigned(Mind.Mind mind)
         {
             var entityMgr = IoCManager.Resolve<IEntityManager>();
-            var allHumans = entityMgr.EntityQuery<MindComponent>(true).Where(mc =>
+            var allOtherTraitors = entityMgr.EntityQuery<MindComponent>(true).Where(mc =>
             {
                 var entity = mc.Mind?.OwnedEntity;
-
+                
                 if (entity == default)
                     return false;
 
                 return entityMgr.TryGetComponent(entity, out MobStateComponent mobState) &&
                        mobState.IsAlive() &&
-                       mc.Mind != mind;
+                       mc.Mind != mind &&
+                       mc.Mind?.HasRole<TraitorRole>() == true;
             }).Select(mc => mc.Mind).ToList();
 
-            if (allHumans.Count == 0)
-                return new DieCondition(); // I guess I'll die
-                
-            var allTraitors = allHumans; //Sorry I can't finesse these wild lambda expressions so I'm going to initialize it like this
-            
-            for human in allTraitors
-            {
-                if human.
-
-            return new RandomTraitorAliveCondition {Target = IoCManager.Resolve<IRobustRandom>().Pick(allHumans)};
+            if (allOtherTraitors.Count == 0)
+                return new StayAliveCondition(); // This can duplicate but it can be addressed when there's an objective conflict/selection refactor (which is needed right now for other issues too)
+ 
+            return new RandomTraitorAliveCondition {Target = IoCManager.Resolve<IRobustRandom>().Pick(allOtherTraitors)};
         }
     }
 }
