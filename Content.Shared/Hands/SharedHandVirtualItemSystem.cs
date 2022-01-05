@@ -14,10 +14,12 @@ public abstract class SharedHandVirtualItemSystem : EntitySystem
         SubscribeLocalEvent<HandVirtualItemComponent, BeingEquippedAttemptEvent>(OnBeingEquippedAttempt);
         SubscribeLocalEvent<HandVirtualItemComponent, BeforeInteractEvent>(HandleBeforeInteract);
     }
+
     private void OnBeingEquippedAttempt(EntityUid uid, HandVirtualItemComponent component, BeingEquippedAttemptEvent args)
     {
         args.Cancel();
     }
+
     private static void HandleBeforeInteract(
         EntityUid uid,
         HandVirtualItemComponent component,
