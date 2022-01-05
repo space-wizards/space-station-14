@@ -1,4 +1,5 @@
-﻿using Robust.Server.Player;
+﻿using Content.Server.Mind.Commands;
+using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -56,10 +57,17 @@ namespace Content.Server.Ghost.Roles.Components
         }
 
         [ViewVariables(VVAccess.ReadOnly)]
-        public bool Taken { get; protected set; }
+        public bool Taken { get; set; }
 
         [ViewVariables]
         public uint Identifier { get; set; }
+
+        /// <summary>
+        /// Reregisters the ghost role when the current player ghosts.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("reregister")]
+        public bool ReregisterOnGhost { get; set; } = true;
 
         protected override void Initialize()
         {

@@ -87,7 +87,7 @@
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetHardsuitRd
-  name: research director's hardsuit helmet
+  name: experimental research hardsuit helmet
   description: Lightweight hardsuit helmet that doesn't restrict your head movements.
   components:
   - type: Sprite
@@ -130,7 +130,7 @@
   parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetHardsuitSecurityRed
   name: head of security's hardsuit helmet
-  description: Red armored hardsuit helmet for security needs. Belongs to the HoS.
+  description: Security hardsuit helmet with the latest top secret NT-HUD software. Belongs to the HoS.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/security-red.rsi
