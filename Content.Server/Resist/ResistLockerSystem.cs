@@ -89,12 +89,8 @@ namespace Content.Server.Resist
 
         private void OnRemovedFromContainer(EntityUid uid, ResistLockerComponent component, EntRemovedFromContainerMessage message)
         {
-            if (component.CancelToken != null)
-            {
-                component.IsResisting = false;
-                component.CancelToken.Cancel();
-            }
-
+            component.CancelToken?.Cancel();
+            component.CancelToken = null;
         }
         private class ResistDoAfterComplete : EntityEventArgs
         {
