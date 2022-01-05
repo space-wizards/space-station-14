@@ -1,4 +1,5 @@
-﻿### Stunbaton component
+### Stunbaton component
+
 
 ## Used when examining the stunbaton
 
@@ -9,7 +10,6 @@ comp-stunbaton-examined-off = The light is currently [color=darkred]off[/color]
 
 comp-stunbaton-activated-dead-cell = Dead cell...
 comp-stunbaton-activated-missing-cell = Missing cell...
-
 stunbaton-component-no-cell = Cell missing...
 stunbaton-component-dead-cell = Dead cell...
 stunbaton-component-on-examine = The light is currently [color=darkgreen]on[/color].

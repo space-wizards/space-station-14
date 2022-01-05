@@ -1,1 +1,1 @@
-holiday-greet = Счастливого {$holidayName}!
+holiday-greet = Счастливого { $holidayName }!

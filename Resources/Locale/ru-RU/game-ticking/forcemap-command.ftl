@@ -1,4 +1,4 @@
-﻿## Forcemap command loc.
+## Forcemap command loc.
 
 forcemap-command-description = Заставляет игру начать с заданной карты в следующем раунде.
 forcemap-command-help = forcemap <map_path>

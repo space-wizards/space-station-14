@@ -1,8 +1,8 @@
 apc-menu-title = APC
-apc-menu-breaker-label = Main Breaker:{" "}
+apc-menu-breaker-label = Main Breaker:{ " " }
 apc-menu-breaker-button = Toggle
-apc-menu-external-label = External Power:{" "}
-apc-menu-charge-label = Charge:{" "}
+apc-menu-external-label = External Power:{ " " }
+apc-menu-charge-label = Charge:{ " " }
 
 # For the power state label
 

@@ -1,4 +1,4 @@
-﻿spacevillain-menu-title = Space Villain
+spacevillain-menu-title = Space Villain
 spacevillain-menu-label-player = Игрок
 spacevillain-menu-button-attack = АТАКА
 spacevillain-menu-button-heal = ЛЕЧЕНИЕ

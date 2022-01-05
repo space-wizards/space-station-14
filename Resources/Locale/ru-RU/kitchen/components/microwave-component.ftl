@@ -4,17 +4,17 @@ microwave-component-interact-using-no-power = It has no power!
 microwave-component-interact-using-broken = It's broken!
 microwave-component-interact-using-no-active-hand = You have no active hand!
 microwave-component-interact-using-container-full = Container is full
-microwave-component-interact-using-transfer-success = Transferred {$amount}u
+microwave-component-interact-using-transfer-success = Transferred { $amount }u
 microwave-component-interact-using-transfer-fail = That won't work!
-microwave-component-suicide-multi-head-others-message = {$victim} is trying to cook their heads!
-microwave-component-suicide-others-message = {$victim} is trying to cook their head!
+microwave-component-suicide-multi-head-others-message = { $victim } is trying to cook their heads!
+microwave-component-suicide-others-message = { $victim } is trying to cook their head!
 microwave-component-suicide-multi-head-message = You cook your heads!
 microwave-component-suicide-message = You cook your head!
 
 ## Bound UI
 
 microwave-bound-user-interface-instant-button = INSTANT
-microwave-bound-user-interface-cook-time-label = COOK TIME: {$time}
+microwave-bound-user-interface-cook-time-label = COOK TIME: { $time }
 
 ## UI
 

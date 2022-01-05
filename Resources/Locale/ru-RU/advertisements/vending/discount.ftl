@@ -1,4 +1,4 @@
-﻿advertisement-discount-1 = Discount Dan's, он — мужик!
+advertisement-discount-1 = Discount Dan's, он — мужик!
 advertisement-discount-2 = Нет ничего лучше в этом мире, чем кусочек тайны.
 advertisement-discount-3 = Не слушайте другие машины, купите мой продукт!
 advertisement-discount-4 = Количество превыше Качества!

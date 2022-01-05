@@ -1,11 +1,8 @@
 verb-system-waiting-on-server-text = Ожидание сервера...
 verb-system-null-server-response = Сущность не в поле зрения. Вы не должны видеть этого.
-
-
 # if verbs have a range of targets (e.g., multiple ejectables) you can
 # usually just use Entity.Name. But it is a bit odd when targeting yourself
 verb-self-target-pronoun = Вы
-
 
 # verb categories & common verbs. These appear across multiple systems, so they may as well go here.
 
@@ -19,7 +16,6 @@ verb-categories-rotate = Повернуть
 verb-categories-transfer = Установить значение перемещения
 verb-categories-split = Разделить
 verb-categories-set-sensor = Сенсоры
-
 verb-common-toggle-light = Переключить свет
 verb-common-close = Закрыть
 verb-common-open = Открыть

@@ -1,7 +1,7 @@
-biological-surgery-data-component-has-incision-not-clamped-message = На коже {$bodyPart} есть разрез, но он склонен к кровотечению.
-biological-surgery-data-component-has-clamped-incision-not-retracted-message = На коже {$bodyPart} есть разрез, но он не затянут.
-biological-surgery-data-component-has-fully-open-incision-message = На {$bodyPart} имеется разрез.
-biological-surgery-data-component-part-is-loose-message = {$owner} {$bodyPart} не закреплен(а).
+biological-surgery-data-component-has-incision-not-clamped-message = На коже { $bodyPart } есть разрез, но он склонен к кровотечению.
+biological-surgery-data-component-has-clamped-incision-not-retracted-message = На коже { $bodyPart } есть разрез, но он не затянут.
+biological-surgery-data-component-has-fully-open-incision-message = На { $bodyPart } имеется разрез.
+biological-surgery-data-component-part-is-loose-message = { $owner } { $bodyPart } не закреплен(а).
 biological-surgery-data-component-open-skin-message = Надрез кожи...
 biological-surgery-data-component-clamp-vessels-message = Зажатие сосудов...
 biological-surgery-data-component-retract-skin-message = Оттягивание кожи...

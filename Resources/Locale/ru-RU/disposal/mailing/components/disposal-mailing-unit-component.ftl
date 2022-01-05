@@ -21,5 +21,4 @@ disposal-self-insert-verb-get-data-text = Залезть
 ## FlushVerb
 
 disposal-flush-verb-get-data-text = Смыть
-
 disposal-eject-verb-contents = содержимое

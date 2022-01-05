@@ -7,4 +7,3 @@ solar-control-window-panel-angle = Panel Angle:
 solar-control-window-panel-angular-velocity = Panel Angular Velocity:
 solar-control-window-degrees-per-minute = °/min.
 solar-control-window-press-enter-to-confirm = Press Enter to confirm.
-

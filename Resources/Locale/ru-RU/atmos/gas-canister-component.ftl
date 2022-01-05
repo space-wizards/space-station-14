@@ -1,5 +1,6 @@
 ## UI
 
+
 # Bound Interface
 
 gas-canister-bound-user-interface-title = Газовый канистра
@@ -14,4 +15,4 @@ gas-canister-window-release-pressure-label = Выпускное давления
 gas-canister-window-valve-label = Клапан:
 gas-canister-window-valve-closed-text = Закрыт
 gas-canister-window-valve-open-text = Открыт
-gas-canister-window-pressure-format-text = {$pressure}кПа
+gas-canister-window-pressure-format-text = { $pressure }кПа

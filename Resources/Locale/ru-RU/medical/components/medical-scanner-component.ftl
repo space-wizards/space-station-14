@@ -12,8 +12,8 @@ medical-scanner-verb-noun-occupant = пациента
 
 medical-scanner-window-save-button-text = Скан и сохранить ДНК
 medical-scanner-window-no-patient-data-text = Нет данных о пациенте.
-medical-scanner-window-entity-health-text = Состояние {$entityName}:
-medical-scanner-window-entity-damage-total-text = Общие повреждения: {$amount}
-medical-scanner-window-damage-group-text = {$damageGroup}: {$amount}
-medical-scanner-window-damage-type-text = {$damageType}: {$amount}
-medical-scanner-window-damage-type-duplicate-text = {$damageType}: {$amount} (дубликат)
+medical-scanner-window-entity-health-text = Состояние { $entityName }:
+medical-scanner-window-entity-damage-total-text = Общие повреждения: { $amount }
+medical-scanner-window-damage-group-text = { $damageGroup }: { $amount }
+medical-scanner-window-damage-type-text = { $damageType }: { $amount }
+medical-scanner-window-damage-type-duplicate-text = { $damageType }: { $amount } (дубликат)

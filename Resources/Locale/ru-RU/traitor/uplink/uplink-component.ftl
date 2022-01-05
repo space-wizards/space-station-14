@@ -1,9 +1,6 @@
 uplink-bound-user-interface-insufficient-funds-popup = Недостаточно средств!
-
-uplink-bound-user-interface-tc-balance-popup = ТК Баланс: [color={$weightedColor}]{$balance}[/color]
-
+uplink-bound-user-interface-tc-balance-popup = ТК Баланс: [color={ $weightedColor }]{ $balance }[/color]
 uplink-user-interface-title = Аплинк
-
 uplink-user-interface-search-label = Поиск
 
 # Withdraw UI

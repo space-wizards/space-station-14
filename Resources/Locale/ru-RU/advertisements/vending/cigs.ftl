@@ -1,4 +1,4 @@
-﻿advertisement-cigs-1 = Космические сигареты приятны на вкус, как и положено сигарете.
+advertisement-cigs-1 = Космические сигареты приятны на вкус, как и положено сигарете.
 advertisement-cigs-2 = I'd rather toolbox than switch.
 advertisement-cigs-3 = Затянись!
 advertisement-cigs-4 = Не верьте исследованиям — курите!

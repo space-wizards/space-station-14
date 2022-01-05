@@ -5,4 +5,3 @@ ui-escape-options = Настройки
 ui-escape-ahelp = Админ помощь
 ui-escape-disconnect = Отключиться
 ui-escape-quit = Выйти
-

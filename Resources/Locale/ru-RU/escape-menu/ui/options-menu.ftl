@@ -4,7 +4,6 @@ ui-options-title = Игровые настройки
 ui-options-tab-graphics = Графика
 ui-options-tab-controls = Управление
 ui-options-tab-audio = Аудио
-
 ui-options-apply = Применить
 ui-options-reset-all = Сбросить всё
 
@@ -42,10 +41,11 @@ ui-options-hud-theme-classic = Классический
 ui-options-vp-stretch = Stretch viewport to fit game window
 ui-options-vp-scale = Fixed viewport scale: x{ $scale }
 ui-options-vp-integer-scaling = Prefer integer scaling (might cause black bars/clipping)
-ui-options-vp-integer-scaling-tooltip = If this option is enabled, the viewport will be scaled using an integer value
-                                        at specific resolutions. While this results in crisp textures, it also often
-                                        means that black bars appear at the top/bottom of the screen or that part
-                                        of the viewport is not visible.
+ui-options-vp-integer-scaling-tooltip =
+    If this option is enabled, the viewport will be scaled using an integer value
+    at specific resolutions. While this results in crisp textures, it also often
+    means that black bars appear at the top/bottom of the screen or that part
+    of the viewport is not visible.
 ui-options-vp-low-res = Low-resolution viewport
 ui-options-fps-counter = Показать счетчик FPS
 
@@ -56,7 +56,6 @@ ui-options-binds-explanation = ЛКМ — изменить кнопку, ПКМ 
 ui-options-unbound = Пусто
 ui-options-bind-reset = Сбросить
 ui-options-key-prompt = Нажмите кнопку...
-
 ui-options-header-movement = Перемещение
 ui-options-header-interaction-basic = Базовые взаимодействия
 ui-options-header-interaction-adv = Продвинутые взаимодействия
@@ -66,15 +65,12 @@ ui-options-header-hotbar = Hotbar
 ui-options-header-map-editor = Редактор карт
 ui-options-header-dev = Разработка
 ui-options-header-general = Основное
-
 ui-options-hotkey-keymap = Использовать клавиши QWERTY (США)
-
 ui-options-function-move-up = Move Up
 ui-options-function-move-left = Move Left
 ui-options-function-move-down = Move Down
 ui-options-function-move-right = Move Right
 ui-options-function-walk = Walk
-
 ui-options-function-use = Use
 ui-options-function-wide-attack = Wide attack
 ui-options-function-activate-item-in-hand = Activate item in hand
@@ -84,7 +80,6 @@ ui-options-function-alt-activate-item-in-world = Alternative activate item in wo
 ui-options-function-drop = Drop item
 ui-options-function-examine-entity = Examine
 ui-options-function-swap-hands = Swap hands
-
 ui-options-function-smart-equip-backpack = Smart-equip to backpack
 ui-options-function-smart-equip-belt = Smart-equip to belt
 ui-options-function-throw-item-in-hand = Throw item
@@ -92,7 +87,6 @@ ui-options-function-try-pull-object = Pull object
 ui-options-function-move-pulled-object = Move pulled object
 ui-options-function-release-pulled-object = Release pulled object
 ui-options-function-point = Point at location
-
 ui-options-function-focus-chat-input-window = Focus chat
 ui-options-function-focus-local-chat-window = Focus chat (IC)
 ui-options-function-focus-radio-window = Focus chat (Radio)
@@ -112,21 +106,17 @@ ui-options-function-open-entity-spawn-window = Open entity spawn menu
 ui-options-function-open-sandbox-window = Open sandbox menu
 ui-options-function-open-tile-spawn-window = Open tile spawn menu
 ui-options-function-open-admin-menu = Open admin menu
-
 ui-options-function-take-screenshot = Take screenshot
 ui-options-function-take-screenshot-no-ui = Take screenshot (without UI)
-
 ui-options-function-editor-place-object = Place object
 ui-options-function-editor-cancel-place = Cancel placement
 ui-options-function-editor-grid-place = Place in grid
 ui-options-function-editor-line-place = Place line
 ui-options-function-editor-rotate-object = Rotate
-
 ui-options-function-open-abilities-menu = Open action menu
 ui-options-function-show-debug-console = Open Console
 ui-options-function-show-debug-monitors = Show Debug Monitors
 ui-options-function-hide-ui = Hide UI
-
 ui-options-function-hotbar1 = Hotbar slot 1
 ui-options-function-hotbar2 = Hotbar slot 2
 ui-options-function-hotbar3 = Hotbar slot 3

@@ -9,8 +9,8 @@ create-vote-command-invalid-vote-type = You can't call a vote right now!
 
 create-custom-command-description = Creates a custom vote
 create-custom-command-help = customvote <title> <option1> <option2> [option3...]
-create-custom-command-on-finished-tie = Tie between {$ties}!
-create-custom-command-on-finished-win = {$winner} wins!
+create-custom-command-on-finished-tie = Tie between { $ties }!
+create-custom-command-on-finished-win = { $winner } wins!
 
 ## VoteCommand
 
@@ -31,7 +31,8 @@ list-votes-command-help = Usage: listvotes
 ## CancelVoteCommand
 
 cancel-vote-command-description = Cancels an active vote
-cancel-vote-command-help = Usage: cancelvote <id>
-                           You can get the ID from the listvotes command.
+cancel-vote-command-help =
+    Usage: cancelvote <id>
+    You can get the ID from the listvotes command.
 cancel-vote-command-on-execute-error-invalid-vote-id = Invalid vote ID
 cancel-vote-command-on-execute-error-missing-vote-id = Missing ID

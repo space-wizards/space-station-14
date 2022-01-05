@@ -1,4 +1,4 @@
-﻿ui-lobby-title = Лобби
+ui-lobby-title = Лобби
 ui-lobby-options-button = Настройки
 ui-lobby-leave-button = Выйти
 ui-lobby-observe-button = Наблюдать
