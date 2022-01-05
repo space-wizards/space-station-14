@@ -1,6 +1,7 @@
+using Content.Server.Clothing.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
-using Content.Shared.MobState.Components;
+using Content.Shared.Hands.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
@@ -37,8 +38,16 @@ public class SpawnArtifactSystem : EntitySystem
         var spawnCord = artifactCord.Offset(new Vector2(dx, dy));
 
         // spawn entity
-        EntityManager.SpawnEntity(component.Prototype, spawnCord);
+        var spawned = EntityManager.SpawnEntity(component.Prototype, spawnCord);
         component.SpawnsCount++;
+
+        // if there is an user - try to put artifact in their hands
+        if (args.User != null &&
+            EntityManager.TryGetComponent(args.User.Value, out SharedHandsComponent? hands) &&
+            EntityManager.HasComponent<ItemComponent>(spawned))
+        {
+            hands.TryPutInAnyHand(spawned);
+        }
     }
 
     private void ChooseRandomPrototype(EntityUid uid, SpawnArtifactComponent? component = null)

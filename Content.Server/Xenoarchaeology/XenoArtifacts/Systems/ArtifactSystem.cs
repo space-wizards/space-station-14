@@ -41,7 +41,8 @@ public class ArtifactSystem : EntitySystem
         EntityManager.AddComponent(uid, trigger);
     }
 
-    public bool TryActivateArtifact(EntityUid uid, ArtifactComponent? component = null)
+    public bool TryActivateArtifact(EntityUid uid, EntityUid? user = null,
+        ArtifactComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return false;
@@ -51,16 +52,22 @@ public class ArtifactSystem : EntitySystem
         if (timeDif.TotalSeconds < component.CooldownTime)
             return false;
 
-        ForceActivateArtifact(uid, component);
+        ForceActivateArtifact(uid, user, component);
         return true;
     }
 
-    public void ForceActivateArtifact(EntityUid uid, ArtifactComponent? component = null)
+    public void ForceActivateArtifact(EntityUid uid, EntityUid? user = null,
+        ArtifactComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
 
         component.LastActivationTime = _gameTiming.CurTime;
-        RaiseLocalEvent(uid, new ArtifactActivatedEvent());
+
+        var ev = new ArtifactActivatedEvent()
+        {
+            User = user
+        };
+        RaiseLocalEvent(uid, ev);
     }
 }

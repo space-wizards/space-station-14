@@ -18,6 +18,6 @@ public class ArtifactInteractionTriggerSystem : EntitySystem
 
     private void OnInteract(EntityUid uid, ArtifactInteractionTriggerComponent component, InteractHandEvent args)
     {
-        _artifactSystem.TryActivateArtifact(uid);
+        _artifactSystem.TryActivateArtifact(uid, args.User);
     }
 }
