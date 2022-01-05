@@ -153,6 +153,16 @@
       state: Librarian      
 
 - type: entity
+  id: SpawnPointLawyer
+  parent: SpawnPointJobBase
+  name: lawyer
+  components:
+    - type: SpawnPoint
+      job_id: Lawyer
+    - type: Sprite
+      state: Lawyer   
+
+- type: entity
   id: SpawnPointJanitor
   parent: SpawnPointJobBase
   name: janitor
