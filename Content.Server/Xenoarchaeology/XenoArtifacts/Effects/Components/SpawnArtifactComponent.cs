@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -7,6 +6,10 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 
+/// <summary>
+///     When activated artifact will spawn an entity from prototype.
+///     It could be an angry mob or some random item.
+/// </summary>
 [RegisterComponent]
 public class SpawnArtifactComponent : Component
 {

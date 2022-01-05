@@ -1,5 +1,4 @@
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Xenoarchaeology.XenoArtifacts.Systems;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -22,8 +21,8 @@ public class ArtifactGasTriggerSystem : EntitySystem
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
-        var ents = EntityManager.EntityQuery<ArtifactGasTriggerComponent>();
-        foreach (var component in ents)
+        var query = EntityManager.EntityQuery<ArtifactGasTriggerComponent>();
+        foreach (var component in query)
         {
             if (component.ActivationGas == null)
                 return;

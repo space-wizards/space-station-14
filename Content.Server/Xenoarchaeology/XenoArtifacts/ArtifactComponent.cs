@@ -3,7 +3,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.Xenoarchaeology.XenoArtifacts.Components;
+namespace Content.Server.Xenoarchaeology.XenoArtifacts;
 
 [RegisterComponent]
 public class ArtifactComponent : Component

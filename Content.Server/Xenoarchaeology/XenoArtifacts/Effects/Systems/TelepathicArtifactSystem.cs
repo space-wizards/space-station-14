@@ -42,7 +42,5 @@ public class TelepathicArtifactSystem : EntitySystem
             // show it as a popup, but only for the victim
             _popupSystem.PopupEntity(msg, victimUid, Filter.Entities(victimUid));
         }
-
-
     }
 }
