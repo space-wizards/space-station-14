@@ -1,0 +1,13 @@
+ent-BaseComputerCircuitboard = circuit board
+ent-SupplyComputerCircuitboard = supply board
+ent-SupplyRequestComputerCircuitboard = supply request board
+ent-ResearchComputerCircuitboard = R&D computer board
+ent-CrewMonitoringComputerCircuitboard = crew monitoring console board
+ent-IDComputerCircuitboard = ID card terminal board
+ent-BodyScannerComputerCircuitboard = body scanner computer board
+ent-CommsComputerCircuitboard = communications computer board
+ent-SolarControlComputerCircuitboard = solar control computer board
+ent-SpaceVillainArcadeComputerCircuitboard = space villain arcade board
+ent-BlockGameArcadeComputerCircuitboard = block game arcade board
+ent-ParticleAcceleratorComputerCircuitboard = PA control box
+    .suffix = Circuit Board

@@ -1,0 +1,13 @@
+ent-SeatBase = chair
+    .desc = You sit in this. Either by will or force.
+ent-Chair = chair
+ent-Stool = stool
+    .desc = Apply butt.
+ent-StoolBar = bar stool
+ent-ChairOfficeLight = white office chair
+ent-ChairOfficeDark = dark office chair
+ent-ComfyChair = comfy chair
+    .desc = It looks comfy.
+ent-ChairWood = wooden chair
+ent-ChairPilotSeat = pilot seat
+    .desc = The pilot seat of a prestigious ship.

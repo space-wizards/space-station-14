@@ -1,0 +1,9 @@
+ent-CrateSecurityArmor = armor crate
+    .desc = Three vests of well-rounded, decently-protective armor. Requires Security access to open.
+ent-CrateSecurityHelmet = helmet crate
+    .desc = Contains three standard-issue brain buckets. Requires Security access to open.
+ent-CrateSecurityNonlethal = nonlethals crate
+ent-CrateSecurityLaser = lasers crate
+ent-CrateSecurityRiot = swat crate
+ent-CrateSecuritySupplies = security supplies crate
+ent-CrateRestraints = restraints crate

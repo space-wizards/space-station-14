@@ -1,0 +1,15 @@
+ent-CableStack = cable stack
+    .suffix = Full
+ent-CableHVStack = HV cable coil
+    .suffix = Full
+ent-CableHVStack1 = { "" }
+    .suffix = 1
+ent-CableMVStack = MV cable coil
+    .suffix = Full
+ent-CableMVStack1 = { "" }
+    .suffix = 1
+ent-CableApcStack = LV cable coil
+    .desc = Low-Voltage stack of wires for connecting APCs to machines and other purposes.
+    .suffix = Full
+ent-CableApcStack1 = { "" }
+    .suffix = 1

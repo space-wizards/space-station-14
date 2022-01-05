@@ -1,0 +1,11 @@
+ent-PartVox = vox body part
+ent-TorsoVox = vox torso
+ent-HeadVox = vox head
+ent-LeftArmVox = left vox arm
+ent-RightArmVox = right vox arm
+ent-LeftHandVox = left vox hand
+ent-RightHandVox = right vox hand
+ent-LeftLegVox = left vox leg
+ent-RightLegVox = right vox leg
+ent-LeftFootVox = left vox foot
+ent-RightFootVox = right vox foot

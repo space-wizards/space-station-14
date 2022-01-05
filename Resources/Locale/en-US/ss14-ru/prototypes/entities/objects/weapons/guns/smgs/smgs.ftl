@@ -1,0 +1,15 @@
+ent-SmgBase = BaseSMG
+    .desc = A rooty tooty point and shooty.
+ent-SmgAtreides = Atreides
+    .desc = Pla-ket-ket-ket-ket!
+ent-SmgC20r = C-20r sub machine gun
+    .desc = A firearm that is often used by the infamous nuclear operatives.
+ent-SmgDrozd = Drozd
+    .desc = An excellent fully automatic Heavy SMG.
+ent-SmgWt550 = WT550
+    .desc = An excellent SMG, produced by NanoTrasen's Small Arms Division.
+ent-SmgZoric = Zoric
+    .desc = A compact, robust SMG that uses high caliber rounds.
+ent-SmgDrozdRiot = Drozd
+    .desc = An excellent fully automatic Heavy SMG.
+    .suffix = Non-Lethal

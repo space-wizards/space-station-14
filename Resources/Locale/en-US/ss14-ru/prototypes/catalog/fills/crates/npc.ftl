@@ -1,0 +1,14 @@
+ent-CrateNPCBee = crate of bees
+ent-CrateNPCButterflies = crate of butterflies
+ent-CrateNPCCat = cat crate
+ent-CrateNPCChicken = chicken crate
+ent-CrateNPCDuck = duck crate
+ent-CrateNPCCorgi = corgi crate
+ent-CrateNPCCow = cow crate
+ent-CrateNPCGoat = goat crate
+ent-CrateNPCGoose = goose crate
+ent-CrateNPCGorilla = gorilla crate
+ent-CrateNPCMonkeyCube = monkey cube crate
+ent-CrateNPCParrot = parrot crate
+ent-CrateNPCPenguin = penguin crate
+ent-CrateNPCSnake = snake crate

@@ -1,0 +1,2 @@
+ent-WardrobeWhiteFilled = { "" }
+    .suffix = Filled

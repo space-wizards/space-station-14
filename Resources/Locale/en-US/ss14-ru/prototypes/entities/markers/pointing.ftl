@@ -1,0 +1,1 @@
+ent-pointingarrow = pointing arrow

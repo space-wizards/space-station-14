@@ -1,0 +1,16 @@
+ent-ShotgunBase = ShotgunBase
+    .desc = A rooty tooty point and shooty.
+ent-ShotgunBojevic = Bojevic
+    .desc = It's a magazine-fed shotgun designed for close quarters combat.
+ent-ShotgunDB = double-barreled shotgun
+    .desc = An immortal classic.
+ent-ShotgunBull = Bull
+    .desc = A Frozen Star pump-action shotgun.
+ent-ShotgunGladstone = Gladstone
+    .desc = A next-generation Frozen Star shotgun.
+ent-ShotgunRegulator = Regulator 1000
+    .desc = Ol' reliable.
+ent-ShotgunPump = Kammerer
+    .desc = When an old Remington design meets modern materials, this is the result. A favourite weapon of militia forces throughout many worlds.
+ent-ShotgunSawn = sawn-off shotgun
+    .desc = Omar's coming!

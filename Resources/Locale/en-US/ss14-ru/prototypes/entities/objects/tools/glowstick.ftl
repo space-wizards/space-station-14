@@ -1,0 +1,12 @@
+ent-GlowstickBase = green glowstick
+    .desc = Useful for raves and emergencies.
+ent-GlowstickRed = red glowstick
+ent-GlowstickPurple = purple glowstick
+ent-GlowstickYellow = yellow glowstick
+ent-GlowstickBlue = blue glowstick
+ent-LightBehaviourTest1 = light pulse test
+ent-LightBehaviourTest2 = color cycle test
+ent-LightBehaviourTest3 = multi-behaviour light test
+ent-LightBehaviourTest4 = light fade in test
+ent-LightBehaviourTest5 = light pulse radius test
+ent-LightBehaviourTest6 = light randomize radius test

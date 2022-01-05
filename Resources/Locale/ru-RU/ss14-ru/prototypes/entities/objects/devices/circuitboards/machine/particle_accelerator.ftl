@@ -1,0 +1,6 @@
+ent-MachineParticleAcceleratorEndCapCircuitboard = PA End Cap
+ent-MachineParticleAcceleratorFuelChamberCircuitboard = PA Fuel Chamber
+ent-MachineParticleAcceleratorPowerBoxCircuitboard = PA Power Box
+ent-MachineParticleAcceleratorEmitterLeftCircuitboard = PA Emitter Left
+ent-MachineParticleAcceleratorEmitterCenterCircuitboard = PA Emitter Center
+ent-MachineParticleAcceleratorEmitterRightCircuitboard = PA Emitter Right

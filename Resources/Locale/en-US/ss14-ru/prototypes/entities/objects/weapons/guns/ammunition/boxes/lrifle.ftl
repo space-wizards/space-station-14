@@ -1,0 +1,6 @@
+ent-BoxLRifleBase = ammunition box (.30 rifle)
+ent-BoxLRifleBigBox = ammunition box (.30 rifle)
+ent-BoxLRifleBox = ammunition box (.30 rifle)
+ent-BoxLRifleBoxHV = ammunition box (.30 rifle high-velocity)
+ent-BoxLRifleBoxPractice = ammunition box (.30 rifle practice)
+ent-BoxLRifleBoxRubber = ammunition box (.30 rifle rubber)

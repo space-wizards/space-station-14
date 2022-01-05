@@ -1,0 +1,5 @@
+ent-BoxMagnum = ammunition box (.40 magnum)
+ent-BoxMagnumFlash = ammunition box (.40 magnum flash)
+ent-BoxMagnumHV = ammunition box (.40 magnum high-velocity)
+ent-BoxMagnumPractice = ammunition box (.40 magnum practice)
+ent-BoxMagnumRubber = ammunition box (.40 magnum rubber)

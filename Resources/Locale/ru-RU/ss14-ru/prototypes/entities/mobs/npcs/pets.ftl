@@ -1,0 +1,12 @@
+ent-MobCorgi = corgi
+    .desc = Finally, a space corgi!
+ent-MobCorgiOld = Ian
+    .desc = Favorite pet corgi.
+ent-MobCat = cat
+    .desc = Feline pet, very funny.
+ent-MobCatCalico = calico cat
+    .desc = Feline pet, very funny.
+ent-MobCatCaracal = caracal cat
+    .desc = Hilarious.
+ent-MobSloth = sloth
+    .desc = Very slow animal. For people with low energy.

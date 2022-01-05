@@ -1,0 +1,11 @@
+ent-CarpetBase = { "" }
+    .desc = Fancy walking surface.
+ent-Carpet = red carpet
+ent-CarpetBlack = black carpet
+ent-CarpetPink = pink carpet
+ent-CarpetBlue = blue carpet
+ent-CarpetGreen = green carpet
+ent-CarpetOrange = orange carpet
+ent-CarpetSBlue = skyblue carpet
+ent-CarpetPurple = purple carpet
+ent-CarpetChapel = chapel's carpet

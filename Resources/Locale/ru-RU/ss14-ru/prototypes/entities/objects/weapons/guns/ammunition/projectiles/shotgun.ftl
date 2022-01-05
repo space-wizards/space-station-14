@@ -1,0 +1,7 @@
+ent-PelletShotgunSlug = pellet (.50 slug)
+ent-PelletShotgunBeanbag = beanbag (.50)
+ent-PelletShotgun = pellet (.50)
+ent-PelletShotgunFlash = pellet (.50 flash)
+ent-PelletShotgunIncendiary = pellet (.50 incendiary)
+ent-PelletShotgunPractice = pellet (.50 practice)
+ent-PelletShotgunTranquilizer = pellet (.50 tranquilizer)

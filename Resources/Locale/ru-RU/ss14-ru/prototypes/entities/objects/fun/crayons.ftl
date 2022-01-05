@@ -1,0 +1,13 @@
+ent-Crayon = crayon
+    .desc = A colourful crayon. Looks tasty. Mmmm...
+ent-CrayonWhite = white crayon
+ent-CrayonMime = mime crayon
+ent-CrayonBlack = black crayon
+ent-CrayonRed = red crayon
+ent-CrayonOrange = orange crayon
+ent-CrayonYellow = yellow crayon
+ent-CrayonGreen = green crayon
+ent-CrayonBlue = blue crayon
+ent-CrayonPurple = purple crayon
+ent-CrayonBox = crayon box
+    .desc = It's a box of crayons.

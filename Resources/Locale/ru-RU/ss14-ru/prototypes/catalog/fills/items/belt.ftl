@@ -1,0 +1,10 @@
+ent-ClothingBeltUtilityFilled = { "" }
+    .suffix = Filled
+ent-ClothingBeltChiefEngineerFilled = { "" }
+    .suffix = Filled
+ent-ClothingBeltSecurityFilled = { "" }
+    .suffix = Filled
+ent-ClothingBeltJanitorFilled = { "" }
+    .suffix = Filled
+ent-ClothingBeltMedicalFilled = { "" }
+    .suffix = Filled

@@ -1,0 +1,6 @@
+ent-CartridgeClRifleBase = cartridge (.25 rifle)
+ent-CartridgeClRifle = cartridge (.25 caseless)
+ent-CartridgeClRifleFlash = cartridge (.25 caseless flash)
+ent-CartridgeClRifleHV = cartridge (.25 caseless high-velocity)
+ent-CartridgeClRiflePractice = cartridge (.25 caseless practice)
+ent-CartridgeClRifleRubber = cartridge (.25 caseless rubber)

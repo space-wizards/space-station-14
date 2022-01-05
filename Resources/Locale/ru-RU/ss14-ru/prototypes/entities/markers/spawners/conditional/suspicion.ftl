@@ -1,0 +1,15 @@
+ent-SuspicionRifleSpawner = Suspicion Rifle Spawner
+ent-SuspicionPistolSpawner = Suspicion Pistol Spawner
+ent-SuspicionMeleeSpawner = Suspicion Melee Spawner
+ent-SuspicionRevolverSpawner = Suspicion Revolver Spawner
+ent-SuspicionShotgunSpawner = Suspicion Shotgun Spawner
+ent-SuspicionSMGSpawner = Suspicion SMG Spawner
+ent-SuspicionSniperSpawner = Suspicion Sniper Spawner
+ent-SuspicionHitscanSpawner = Suspicion Hitscan Spawner
+ent-SuspicionLaunchersSpawner = Suspicion Launchers Spawner
+ent-SuspicionGrenadesSpawner = Suspicion Grenades Spawner
+ent-SuspicionRifleMagazineSpawner = Suspicion Rifle Ammo Spawner
+ent-SuspicionShotgunMagazineSpawner = Suspicion Shotgun Ammo Spawner
+ent-SuspicionPistolMagazineSpawner = Suspicion Pistol Ammo Spawner
+ent-SuspicionMagnumMagazineSpawner = Suspicion Magnum Ammo Spawner
+ent-SuspicionLauncherAmmoSpawner = Suspicion Launcher Ammo Spawner

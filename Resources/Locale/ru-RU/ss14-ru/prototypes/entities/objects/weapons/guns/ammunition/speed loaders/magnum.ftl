@@ -1,0 +1,6 @@
+ent-SLMagnumBase = speed loader (.40 magnum)
+ent-SLMagnum = speed loader (.40 magnum)
+ent-SLMagnumFlash = speed loader (.40 magnum flash)
+ent-SLMagnumHV = speed loader (.40 magnum high-velocity)
+ent-SLMagnumPractice = speed loader (.40 magnum practice)
+ent-SLMagnumRubber = speed loader (.40 magnum rubber)

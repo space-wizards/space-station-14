@@ -1,0 +1,15 @@
+ent-ChessBoard = chessboard
+    .desc = A chessboard. Pieces included!
+ent-ChessBoardTabletop = chessboard
+ent-WhiteKing = white king
+ent-WhiteQueen = white queen
+ent-WhiteRook = white rook
+ent-WhiteBishop = white bishop
+ent-WhiteKnight = white knight
+ent-WhitePawn = white pawn
+ent-BlackKing = black king
+ent-BlackQueen = black queen
+ent-BlackRook = black rook
+ent-BlackBishop = black bishop
+ent-BlackKnight = black knight
+ent-BlackPawn = black pawn

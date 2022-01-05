@@ -1,0 +1,17 @@
+ent-OxygenTankFilled = { "" }
+    .suffix = Filled
+ent-YellowOxygenTankFilled = { "" }
+    .suffix = Filled
+ent-RedOxygenTankFilled = { "" }
+    .suffix = Filled
+ent-EmergencyOxygenTankFilled = { "" }
+    .suffix = Filled
+ent-ExtendedEmergencyOxygenTankFilled = { "" }
+    .suffix = Filled
+ent-DoubleEmergencyOxygenTankFilled = { "" }
+    .suffix = Filled
+ent-AirTankFilled = { "" }
+    .suffix = Filled
+ent-PlasmaTankFilled = plasma tank
+    .desc = Contains dangerous plasma. Do not inhale. Warning: extremely flammable.
+    .suffix = Filled

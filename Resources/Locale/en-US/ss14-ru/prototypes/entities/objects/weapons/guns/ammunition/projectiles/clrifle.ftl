@@ -1,0 +1,5 @@
+ent-BulletClRifle = bullet (.25 caseless)
+ent-BulletClRifleFlash = bullet (.25 caseless flash)
+ent-BulletClRifleHV = bullet (.25 caseless high-velocity)
+ent-BulletClRiflePractice = bullet (.25 caseless practice)
+ent-BulletClRifleRubber = bullet (.25 caseless rubber)

@@ -1,0 +1,8 @@
+ent-ShellShotgunBase = shell (.50)
+ent-ShellShotgunBeanbag = shell (.50 beanbag)
+ent-ShellShotgunSlug = shell (.50 slug)
+ent-ShellShotgun = shell (.50)
+ent-ShellShotgunFlash = shell (.50 flash)
+ent-ShellShotgunIncendiary = shell (.50 incendiary)
+ent-ShellShotgunPractice = shell (.50 practice)
+ent-ShellTranquilizer = shell (.50 tranquilizer)

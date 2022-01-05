@@ -1,0 +1,10 @@
+ent-PartAnimal = animal body part
+ent-HandsAnimal = animal hands
+ent-LegsAnimal = animal legs
+ent-FeetAnimal = animal feet
+ent-TorsoAnimal = animal torso
+ent-OrganAnimalLungs = lungs
+ent-OrganAnimalStomach = stomach
+ent-OrganAnimalLiver = liver
+ent-OrganAnimalHeart = heart
+ent-OrganAnimalKidneys = kidneys

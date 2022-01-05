@@ -1,0 +1,6 @@
+ent-CartridgeMagnumBase = cartridge (.40 magnum)
+ent-CartridgeMagnum = cartridge (.40 magnum)
+ent-CartridgeMagnumFlash = cartridge (.40 magnum flash)
+ent-CartridgeMagnumHV = cartridge (.40 magnum high-velocity)
+ent-CartridgeMagnumPractice = cartridge (.40 magnum practice)
+ent-CartridgeMagnumRubber = cartridge (.40 magnum rubber)

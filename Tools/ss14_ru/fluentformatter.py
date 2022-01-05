@@ -6,6 +6,7 @@ import typing
 
 from file import FluentFile
 from project import Project
+from fluent.syntax import ast, FluentParser, FluentSerializer
 
 
 ######################################### Class defifitions ############################################################
@@ -18,6 +19,13 @@ class FluentFormatter:
             parsed_file_data = file.parse_data(file_data)
             serialized_file_data = file.serialize_data(parsed_file_data)
             file.save_data(serialized_file_data)
+
+    @classmethod
+    def format_serialized_file_data(cls, file_data: typing.AnyStr):
+        parsed_data = FluentParser().parse(file_data)
+
+        return FluentSerializer(with_junk=True).serialize(parsed_data)
+
 
 
 ######################################## Var definitions ###############################################################

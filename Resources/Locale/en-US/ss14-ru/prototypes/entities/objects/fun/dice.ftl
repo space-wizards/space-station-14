@@ -1,0 +1,14 @@
+ent-d100Dice = d100
+    .desc = A die with one hundred sides! Probably not fairly weighted...
+ent-d20Dice = d20
+    .desc = A die with twenty sides. The preferred die to throw at the GM.
+ent-d12Dice = d12
+    .desc = A die with twelve sides. There's an air of neglect about it.
+ent-d10Dice = d10
+    .desc = A die with ten sides. Useful for percentages.
+ent-d8Dice = d8
+    .desc = A die with eight sides. It feels... lucky.
+ent-d6Dice = d6
+    .desc = A die with six sides. Basic and serviceable.
+ent-d4Dice = d4
+    .desc = A die with four sides. The nerd's caltrop.

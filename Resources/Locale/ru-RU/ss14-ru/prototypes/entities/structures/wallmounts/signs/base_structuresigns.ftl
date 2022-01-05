@@ -1,0 +1,1 @@
+ent-BaseSign = base sign

@@ -1,0 +1,15 @@
+ent-BulletBase = bulletbase
+    .desc = If you can see this you're probably dead!
+ent-BulletBaseFlash = base bullet flash
+ent-BulletBaseHV = base bullet high-velocity
+ent-BulletBasePractice = base bullet practice
+ent-BulletBaseRubber = base bullet rubber
+ent-BulletTaser = taser bolt
+ent-EmitterBolt = emitter bolt
+ent-BulletRocket = rocket
+ent-BulletGrenadeBaton = baton grenade
+ent-BulletGrenadeBlast = blast grenade
+ent-BulletGrenadeFlash = flash grenade
+ent-BulletGrenadeFrag = frag grenade
+ent-BulletFoam = foam dart
+ent-BulletCap = cap bullet

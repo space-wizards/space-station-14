@@ -1,0 +1,1 @@
+ent-RandomSpawner = Trash Spawner

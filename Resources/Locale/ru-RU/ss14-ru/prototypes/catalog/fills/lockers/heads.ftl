@@ -1,0 +1,14 @@
+ent-LockerQuarterMasterFilled = { "" }
+    .suffix = Filled
+ent-LockerCaptainFilled = { "" }
+    .suffix = Filled
+ent-LockerHeadOfPersonnelFilled = { "" }
+    .suffix = Filled
+ent-LockerChiefEngineerFilled = { "" }
+    .suffix = Filled
+ent-LockerChiefMedicalOfficerFilled = { "" }
+    .suffix = Filled
+ent-LockerResearchDirectorFilled = { "" }
+    .suffix = Filled
+ent-LockerHeadOfSecurityFilled = { "" }
+    .suffix = Filled

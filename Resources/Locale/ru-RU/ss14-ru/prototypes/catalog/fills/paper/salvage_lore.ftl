@@ -1,0 +1,11 @@
+ent-PaperWrittenSalvageLoreMedium1PlasmaTrap = { "" }
+    .suffix = Salvage: Lore: Medium 1: Plasma Trap
+ent-SalvageLorePaperGamingSpawner = Salvage Lore Paper Gaming Spawner
+ent-PaperWrittenSalvageLoreGaming1 = { "" }
+    .suffix = Salvage: Lore: Gaming 1
+ent-PaperWrittenSalvageLoreGaming2 = { "" }
+    .suffix = Salvage: Lore: Gaming 2
+ent-PaperWrittenSalvageLoreGaming3 = { "" }
+    .suffix = Salvage: Lore: Gaming 3
+ent-PaperWrittenSalvageLoreGaming4 = { "" }
+    .suffix = Salvage: Lore: Gaming 4

@@ -1,0 +1,12 @@
+ent-ClosetToolFilled = { "" }
+    .suffix = Filled
+ent-LockerElectricalSuppliesFilled = { "" }
+    .suffix = Filled
+ent-LockerWeldingSuppliesFilled = { "" }
+    .suffix = Filled
+ent-LockerAtmosphericsFilled = { "" }
+    .suffix = Filled
+ent-LockerEngineerFilled = { "" }
+    .suffix = Filled
+ent-ClosetRadiationSuitFilled = { "" }
+    .suffix = Filled

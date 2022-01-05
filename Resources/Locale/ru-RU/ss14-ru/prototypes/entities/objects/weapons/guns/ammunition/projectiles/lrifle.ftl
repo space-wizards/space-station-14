@@ -1,0 +1,5 @@
+ent-BulletLRifle = bullet (.20 rifle)
+ent-BulletLRifleFlash = bullet (.20 rifle flash)
+ent-BulletLRifleHV = bullet (.20 rifle high-velocity)
+ent-BulletLRiflePractice = bullet (.20 rifle practice)
+ent-BulletLRifleRubber = bullet (.20 rifle rubber)
