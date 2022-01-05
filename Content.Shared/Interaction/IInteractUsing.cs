@@ -71,7 +71,8 @@ namespace Content.Shared.Interaction
         public EntityCoordinates ClickLocation { get; }
 
         /// <summary>
-        ///     Whether this is a predicted interaction. If it is, care as to be taken to avoid audio duplication.
+        ///     If true, this prediction is also being predicted client-side. So care has to be taken to avoid audio
+        ///     duplication.
         /// </summary>
         public bool Predicted { get; }
 
