@@ -42,7 +42,10 @@ public class TraitorRuleSystem : GameRuleSystem
 
     private const string TraitorPrototypeID = "Traitor";
     
-    public int TotalTraitors = -1;
+    public int TotalTraitors
+    {
+        get { return _traitors.Count; }
+    }
 
     public override void Initialize()
     {
@@ -164,7 +167,6 @@ public class TraitorRuleSystem : GameRuleSystem
             _traitors.Add(traitorRole);
         }
 
-        TotalTraitors = _traitors.Count;
         var adjectives = _prototypeManager.Index<DatasetPrototype>("adjectives").Values;
         var verbs = _prototypeManager.Index<DatasetPrototype>("verbs").Values;
 
