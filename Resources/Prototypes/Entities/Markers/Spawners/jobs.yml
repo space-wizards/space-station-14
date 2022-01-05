@@ -141,6 +141,16 @@
       job_id: Chaplain
     - type: Sprite
       state: Chaplain
+      
+- type: entity
+  id: SpawnPointLibrarian
+  parent: SpawnPointJobBase
+  name: librarian
+  components:
+    - type: SpawnPoint
+      job_id: Librarian
+    - type: Sprite
+      state: Librarian      
 
 - type: entity
   id: SpawnPointJanitor
