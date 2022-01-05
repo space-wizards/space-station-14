@@ -14,6 +14,7 @@ namespace Content.Server.Resist
     {
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -22,7 +23,6 @@ namespace Content.Server.Resist
             SubscribeLocalEvent<ResistLockerComponent, ResistDoAfterCancelled>(OnDoAfterCancelled);
             SubscribeLocalEvent<ResistLockerComponent, EntRemovedFromContainerMessage>(OnRemovedFromContainer);
         }
-
 
         private void OnRelayMovement(EntityUid uid, ResistLockerComponent component, RelayMovementEntityEvent args)
         {
@@ -37,8 +37,8 @@ namespace Content.Server.Resist
                     AttemptResist(args.Entity, uid, storageComponent, component);
                 }
             }
-
         }
+
         private void AttemptResist(EntityUid user, EntityUid target, EntityStorageComponent? storageComponent, ResistLockerComponent? resistLockerComponent)
         {
             if (!Resolve(target, ref storageComponent, ref resistLockerComponent))
