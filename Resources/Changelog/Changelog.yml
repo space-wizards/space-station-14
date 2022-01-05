@@ -1,46 +1,4 @@
 Entries:
-- author: YggOne
-  changes:
-  - {message: Added foaming agent sound to prevent a crash., type: Fix}
-  id: 316
-  time: '2021-08-16T02:44:35.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: Bedsheets are pickupable again, type: Fix}
-  id: 317
-  time: '2021-08-17T21:27:17.0000000+00:00'
-- author: SweptWasTaken
-  changes:
-  - {message: Crayons/Crayonbox now have inhands, type: Add}
-  id: 318
-  time: '2021-08-17T22:28:59.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: Cig and Match animations work again, type: Fix}
-  id: 319
-  time: '2021-08-17T23:26:35.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: You can equip the scythe on your back now, type: Tweak}
-  - {message: Updated spade/scythe/hoe sprites, type: Tweak}
-  - {message: Plant clippers for hydroponics, type: Add}
-  id: 320
-  time: '2021-08-18T02:42:35.0000000+00:00'
-- author: SweptWasTaken
-  changes:
-  - {message: 'Can equip bat, fireaxe, spear and claymore on your back now', type: Tweak}
-  id: 321
-  time: '2021-08-18T02:42:50.0000000+00:00'
-- author: SweptWasTaken
-  changes:
-  - {message: Adds seclite and duck related content, type: Add}
-  id: 322
-  time: '2021-08-19T23:23:49.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: Missing vending machine descriptions found, type: Fix}
-  id: 323
-  time: '2021-08-20T05:23:02.0000000+00:00'
 - author: Swept
   changes:
   - {message: Adds a ton of inhands for various items, type: Add}
@@ -2903,3 +2861,53 @@ Entries:
   - {message: 'Spears can now be wielded, same as fire-axes.', type: Add}
   id: 817
   time: '2022-01-03T09:53:09.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Spawned salvage now synced with a station rotation., type: Tweak}
+  id: 818
+  time: '2022-01-03T21:32:16.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Fire and Air Alarm Electronics can now be printed in the lathe after
+      unlocking Industrial Engineering., type: Add}
+  id: 819
+  time: '2022-01-03T21:32:28.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: 'Due to a few incidents during the first deployment of the Holoparasite,
+      the Syndicate have now integrated a safety to prevent Holoparasites from attacking
+      their host.', type: Fix}
+  id: 820
+  time: '2022-01-04T09:22:28.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: The Syndicate now considers certain steal targets to be easier or harder
+      than others., type: Tweak}
+  id: 821
+  time: '2022-01-04T12:05:06.0000000+00:00'
+- author: router
+  changes:
+  - {message: Added paying respects, type: Add}
+  id: 822
+  time: '2022-01-04T13:05:21.0000000+00:00'
+- author: Schiene
+  changes:
+  - {message: 'Added a spawnable Boarding Shuttle map called Dart, comes with a small
+      force equipped for Vacuum with heavy weaponry.', type: Add}
+  id: 823
+  time: '2022-01-04T13:23:13.0000000+00:00'
+- author: Schiene
+  changes:
+  - {message: 'Added Shuttle SS Reach, atmospherics not included yet.', type: Add}
+  id: 824
+  time: '2022-01-04T13:36:37.0000000+00:00'
+- author: MeltedPixel
+  changes:
+  - {message: Added Hydroponics plant - Chilis!, type: Add}
+  - {message: Added Hot Chili Soup Recipe + Meal, type: Add}
+  - {message: Added Clown Chili Soup Recipe + Meal, type: Add}
+  - {message: Added Enchiladas Recipe + Meal, type: Add}
+  - {message: Added Queso Recipe + Meal, type: Add}
+  - {message: Added new reagent Capsaicin Oil from Chilis, type: Add}
+  id: 825
+  time: '2022-01-04T13:51:23.0000000+00:00'

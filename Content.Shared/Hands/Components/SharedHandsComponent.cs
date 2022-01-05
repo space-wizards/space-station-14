@@ -710,8 +710,11 @@ namespace Content.Shared.Hands.Components
             if (!TryGetActiveHeldEntity(out var heldEntity))
                 return;
 
-            EntitySystem.Get<SharedInteractionSystem>()
-                .TryUseInteraction(Owner, heldEntity.Value, altInteract);
+            var sys = EntitySystem.Get<SharedInteractionSystem>();
+            if (altInteract)
+                sys.AltInteract(Owner, heldEntity.Value);
+            else
+                sys.TryUseInteraction(Owner, heldEntity.Value);
         }
 
         public void ActivateHeldEntity(string handName)

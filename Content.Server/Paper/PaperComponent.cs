@@ -16,7 +16,9 @@ namespace Content.Server.Paper
 {
     [RegisterComponent]
 #pragma warning disable 618
-    public class PaperComponent : SharedPaperComponent, IExamine, IInteractUsing, IUse
+    [ComponentReference(typeof(SharedPaperComponent))]
+    [ComponentReference(typeof(IActivate))]
+    public sealed class PaperComponent : SharedPaperComponent, IExamine, IInteractUsing, IActivate
 #pragma warning restore 618
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
@@ -74,15 +76,15 @@ namespace Content.Server.Paper
             );
         }
 
-        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
+        void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             if (!_entMan.TryGetComponent(eventArgs.User, out ActorComponent? actor))
-                return false;
+                return;
 
             _mode = PaperAction.Read;
             UpdateUserInterface();
             UserInterface?.Toggle(actor.PlayerSession);
-            return true;
+            return;
         }
 
         private void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
