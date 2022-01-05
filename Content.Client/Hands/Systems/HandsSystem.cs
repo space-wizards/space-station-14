@@ -192,6 +192,7 @@ namespace Content.Client.Hands
 
             hands.Gui.Update(new HandsGuiState(states, hands.ActiveHand));
         }
+
         protected override void HandleContainerModified(EntityUid uid, SharedHandsComponent component, ContainerModifiedMessage args)
         {
             base.HandleContainerModified(uid, component, args);
@@ -199,7 +200,6 @@ namespace Content.Client.Hands
             if (uid == _playerManager.LocalPlayer?.ControlledEntity)
                 UpdateGui();
         }
-
 
         public override bool TrySetActiveHand(EntityUid uid, string? value, SharedHandsComponent? handComp = null)
         {
