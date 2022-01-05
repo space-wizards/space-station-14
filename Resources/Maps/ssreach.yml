@@ -4580,12 +4580,17 @@ entities:
   - pos: 25.599106,-3.305048
     parent: 4
     type: Transform
+  - cellSlot:
+      startingItem: PowerCellSmallStandard
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
   - containers:
       BatteryBarrel-powercell-container: !type:ContainerSlot
         ent: 153
       BatteryBarrel-ammo-container: !type:ContainerSlot {}
+      cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 153
   type: PowerCellSmallStandard
@@ -4600,12 +4605,17 @@ entities:
   - pos: 26.317856,-3.508173
     parent: 4
     type: Transform
+  - cellSlot:
+      startingItem: PowerCellSmallStandard
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
   - containers:
       BatteryBarrel-powercell-container: !type:ContainerSlot
         ent: 155
       BatteryBarrel-ammo-container: !type:ContainerSlot {}
+      cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 155
   type: PowerCellSmallStandard
@@ -4622,6 +4632,7 @@ entities:
     type: Transform
   - containers:
       WeaponCapacitorCharger-powerCellContainer: !type:ContainerSlot {}
+      charger-slot: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 157
   type: FoodBoxDonut
@@ -6994,9 +7005,14 @@ entities:
 - uid: 497
   type: BarSign
   components:
+  - desc: Holder of the 'Most Lethal Barfights' record 5 years uncontested.
+    name: The Robusta Cafe
+    type: MetaData
   - pos: 1.5,1.5
     parent: 4
     type: Transform
+  - current: RobustaCafe
+    type: BarSign
 - uid: 498
   type: SignSmoking
   components:
@@ -15085,10 +15101,9 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - cellInsertSound: !type:SoundPathSpecifier
-      path: /Audio/Items/pistol_magout.ogg
-    cellRemoveSound: !type:SoundPathSpecifier
-      path: /Audio/Items/pistol_magin.ogg
+  - cellSlot:
+      startingItem: PowerCellSmallStandard
+      name: power-cell-slot-component-slot-name-default
     type: PowerCellSlot
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
@@ -15101,10 +15116,9 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - cellInsertSound: !type:SoundPathSpecifier
-      path: /Audio/Items/pistol_magout.ogg
-    cellRemoveSound: !type:SoundPathSpecifier
-      path: /Audio/Items/pistol_magin.ogg
+  - cellSlot:
+      startingItem: PowerCellSmallStandard
+      name: power-cell-slot-component-slot-name-default
     type: PowerCellSlot
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
@@ -20784,13 +20798,12 @@ entities:
     pos: 0.29553476,6.734992
     parent: 4
     type: Transform
+  - cellSlot:
+      startingItem: PowerCellSmallStandard
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
-  - cellInsertSound: !type:SoundPathSpecifier
-      path: /Audio/Items/pistol_magout.ogg
-    cellRemoveSound: !type:SoundPathSpecifier
-      path: /Audio/Items/pistol_magin.ogg
-    type: PowerCellSlot
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
@@ -20801,13 +20814,12 @@ entities:
     pos: 2.327779,8.734997
     parent: 4
     type: Transform
+  - cellSlot:
+      startingItem: PowerCellSmallStandard
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
-  - cellInsertSound: !type:SoundPathSpecifier
-      path: /Audio/Items/pistol_magout.ogg
-    cellRemoveSound: !type:SoundPathSpecifier
-      path: /Audio/Items/pistol_magin.ogg
-    type: PowerCellSlot
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
@@ -20817,13 +20829,12 @@ entities:
   - pos: 2.375757,6.8272552
     parent: 4
     type: Transform
+  - cellSlot:
+      startingItem: PowerCellSmallStandard
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
-  - cellInsertSound: !type:SoundPathSpecifier
-      path: /Audio/Items/pistol_magout.ogg
-    cellRemoveSound: !type:SoundPathSpecifier
-      path: /Audio/Items/pistol_magin.ogg
-    type: PowerCellSlot
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
@@ -20833,13 +20844,12 @@ entities:
   - pos: 7.3755507,11.8511915
     parent: 4
     type: Transform
+  - cellSlot:
+      startingItem: PowerCellSmallStandard
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
-  - cellInsertSound: !type:SoundPathSpecifier
-      path: /Audio/Items/pistol_magout.ogg
-    cellRemoveSound: !type:SoundPathSpecifier
-      path: /Audio/Items/pistol_magin.ogg
-    type: PowerCellSlot
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
@@ -20849,13 +20859,12 @@ entities:
   - pos: 10.281801,11.8668165
     parent: 4
     type: Transform
+  - cellSlot:
+      startingItem: PowerCellSmallStandard
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
-  - cellInsertSound: !type:SoundPathSpecifier
-      path: /Audio/Items/pistol_magout.ogg
-    cellRemoveSound: !type:SoundPathSpecifier
-      path: /Audio/Items/pistol_magin.ogg
-    type: PowerCellSlot
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
@@ -20865,13 +20874,12 @@ entities:
   - pos: 10.344301,9.7574415
     parent: 4
     type: Transform
+  - cellSlot:
+      startingItem: PowerCellSmallStandard
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
-  - cellInsertSound: !type:SoundPathSpecifier
-      path: /Audio/Items/pistol_magout.ogg
-    cellRemoveSound: !type:SoundPathSpecifier
-      path: /Audio/Items/pistol_magin.ogg
-    type: PowerCellSlot
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
@@ -21408,12 +21416,16 @@ entities:
   - pos: 21.5,4.5
     parent: 4
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 2060
   type: VendingMachineCola
   components:
   - pos: 23.5,4.5
     parent: 4
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 2061
   type: SalternApc
   components:
@@ -21515,4 +21527,26 @@ entities:
     type: Sprite
   - canCollide: False
     type: Physics
+- uid: 2071
+  type: ComputerRadar
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 33.5,0.5
+    parent: 4
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 2072
+  type: ComputerCrewMonitoring
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 33.5,-1.5
+    parent: 4
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 ...
