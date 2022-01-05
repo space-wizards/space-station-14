@@ -108,7 +108,7 @@
   parent: Poweredlight
   components:
   - type: PoweredLight
-    hasLampOnSpawn: "LedLightTube"
+    hasLampOnSpawn: LedLightTube
     damage:
       types:
         Heat: 20
