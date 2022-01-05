@@ -379,6 +379,7 @@ namespace Content.Server.Database
                 .Include(p => p.Flags)
                 .Include(p => p.AdminRank)
                 .ThenInclude(p => p!.Flags)
+                .AsSplitQuery() // tests fail because of a random warning if you dont have this!
                 .SingleOrDefaultAsync(p => p.UserId == userId.UserId, cancel);
         }
 
@@ -667,6 +668,33 @@ namespace Content.Server.Database
             {
                 yield return json;
             }
+        }
+
+        #endregion
+
+        #region Whitelist
+
+        public async Task<bool> GetWhitelistStatusAsync(NetUserId player)
+        {
+            await using var db = await GetDb();
+
+            return await db.DbContext.Whitelist.AnyAsync(w => w.UserId == player);
+        }
+
+        public async Task AddToWhitelistAsync(NetUserId player)
+        {
+            await using var db = await GetDb();
+
+            db.DbContext.Whitelist.Add(new Whitelist { UserId = player });
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        public async Task RemoveFromWhitelistAsync(NetUserId player)
+        {
+            await using var db = await GetDb();
+            var entry = await db.DbContext.Whitelist.SingleAsync(w => w.UserId == player);
+            db.DbContext.Whitelist.Remove(entry);
+            await db.DbContext.SaveChangesAsync();
         }
 
         #endregion

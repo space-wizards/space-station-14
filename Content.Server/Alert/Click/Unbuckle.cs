@@ -1,4 +1,4 @@
-﻿using Content.Server.Buckle.Components;
+using Content.Server.Buckle.Components;
 using Content.Shared.Alert;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -14,11 +14,11 @@ namespace Content.Server.Alert.Click
     [DataDefinition]
     public class Unbuckle : IAlertClick
     {
-        public void AlertClicked(ClickAlertEventArgs args)
+        public void AlertClicked(EntityUid player)
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(args.Player, out BuckleComponent? buckle))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(player, out BuckleComponent? buckle))
             {
-                buckle.TryUnbuckle(args.Player);
+                buckle.TryUnbuckle(player);
             }
         }
     }
