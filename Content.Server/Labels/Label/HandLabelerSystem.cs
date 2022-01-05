@@ -27,7 +27,7 @@ namespace Content.Server.Labels
             base.Initialize();
 
             SubscribeLocalEvent<HandLabelerComponent, AfterInteractEvent>(AfterInteractOn);
-            SubscribeLocalEvent<HandLabelerComponent, UseInHandEvent>(OnUseInHand);
+            SubscribeLocalEvent<HandLabelerComponent, ActivateInWorldEvent>(OnActivate);
             // Bound UI subscriptions
             SubscribeLocalEvent<HandLabelerComponent, HandLabelerLabelChangedMessage>(OnHandLabelerLabelChanged);
         }
@@ -70,7 +70,7 @@ namespace Content.Server.Labels
             result = Loc.GetString("hand-labeler-successfully-applied");
         }
 
-        private void OnUseInHand(EntityUid uid, HandLabelerComponent handLabeler, UseInHandEvent args)
+        private void OnActivate(EntityUid uid, HandLabelerComponent handLabeler, ActivateInWorldEvent args)
         {
             if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;

@@ -1,9 +1,6 @@
-using Content.Server.Alert;
-using Content.Server.Atmos.Components;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Behaviors.Item;
 using Content.Shared.Actions.Components;
-using Content.Shared.Alert;
 using Content.Shared.Clothing;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
@@ -21,13 +18,11 @@ namespace Content.Server.Clothing.Components
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(SharedMagbootsComponent))]
-    public sealed class MagbootsComponent : SharedMagbootsComponent, IUse, IActivate
+    public sealed class MagbootsComponent : SharedMagbootsComponent, IActivate
     {
         [ComponentDependency] private SharedItemComponent? _item = null;
         [ComponentDependency] private ItemActionsComponent? _itemActions = null;
         [ComponentDependency] private SpriteComponent? _sprite = null;
-
-        [Dependency] private readonly IEntityManager _entMan = default!;
 
         private bool _on;
 
@@ -57,12 +52,6 @@ namespace Content.Server.Clothing.Components
         public void Toggle(EntityUid user)
         {
             On = !On;
-        }
-
-        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
-        {
-            Toggle(eventArgs.User);
-            return true;
         }
 
         void IActivate.Activate(ActivateEventArgs eventArgs)

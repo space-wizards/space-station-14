@@ -162,7 +162,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (args.Handled)
                 return;
 
-            if (!EntityManager.TryGetComponent(args.User, out SharedHandsComponent? hands))
+            if (!EntityManager.TryGetComponent(args.User, out SharedHandsComponent hands))
                 return;
 
             foreach (var slot in itemSlots.Slots.Values)
@@ -242,10 +242,7 @@ namespace Content.Shared.Containers.ItemSlots
                 return false;
             }
 
-            // We should also check ContainerSlot.CanInsert, but that prevents swapping interactions. Given that
-            // ContainerSlot.CanInsert gets called when the item is actually inserted anyways, we can just get away with
-            // fudging CanInsert and not performing those checks.
-            return true;
+            return slot.ContainerSlot.CanInsertIfEmpty(usedUid, EntityManager);
         }
 
         /// <summary>
@@ -302,6 +299,15 @@ namespace Content.Shared.Containers.ItemSlots
         #endregion
 
         #region Eject
+
+        public bool CanEject(ItemSlot slot)
+        {
+            if (slot.Locked || slot.Item == null)
+                return false;
+
+            return slot.ContainerSlot.CanRemove(slot.Item.Value, EntityManager);
+        }
+
         /// <summary>
         ///     Eject an item into a slot. This does not perform checks (e.g., is the slot locked?), so you should
         ///     probably just use <see cref="TryEject"/> instead.
@@ -324,11 +330,11 @@ namespace Content.Shared.Containers.ItemSlots
         {
             item = null;
 
-            if (slot.Locked || slot.Item == null)
+            if (!CanEject(slot))
                 return false;
 
             item = slot.Item;
-            Eject(uid, slot, item.Value, user, excludeUserAudio);
+            Eject(uid, slot, item!.Value, user, excludeUserAudio);
             return true;
         }
 
@@ -364,7 +370,7 @@ namespace Content.Shared.Containers.ItemSlots
                 return false;
 
             if (user != null && EntityManager.TryGetComponent(user.Value, out SharedHandsComponent? hands))
-                hands.TryPutInActiveHandOrAny(item.Value);
+                hands.PutInHand(item.Value);
 
             return true;
         }
@@ -381,7 +387,7 @@ namespace Content.Shared.Containers.ItemSlots
 
             foreach (var slot in itemSlots.Slots.Values)
             {
-                if (slot.Locked || !slot.HasItem)
+                if (!CanEject(slot))
                     continue;
 
                 if (slot.EjectOnInteract)
@@ -421,7 +427,7 @@ namespace Content.Shared.Containers.ItemSlots
             {
                 foreach (var slot in itemSlots.Slots.Values)
                 {
-                    if (!slot.EjectOnInteract || slot.Locked || !slot.HasItem)
+                    if (!slot.EjectOnInteract || !CanEject(slot))
                         continue;
 
                     var verbSubject = slot.Name != string.Empty
@@ -452,7 +458,7 @@ namespace Content.Shared.Containers.ItemSlots
 
                 var verbSubject = slot.Name != string.Empty
                     ? Loc.GetString(slot.Name)
-                    : EntityManager.GetComponent<MetaDataComponent>(args.Using.Value).EntityName ?? string.Empty;
+                    : Name(args.Using.Value) ?? string.Empty;
 
                 Verb insertVerb = new();
                 insertVerb.Act = () => Insert(uid, slot, args.Using.Value, args.User, excludeUserAudio: true);

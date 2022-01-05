@@ -100,11 +100,29 @@ namespace Content.Client.Administration
             return EnsurePlain(channelId);
         }
 
-        public void EnsurePanelForLocalPlayer()
+        public void Open(NetUserId? channelId = null)
         {
-            var localPlayer = _playerManager.LocalPlayer;
-            if (localPlayer != null)
-                EnsurePanel(localPlayer.UserId);
+            if (channelId == null)
+            {
+                var localPlayer = _playerManager.LocalPlayer;
+                if (localPlayer != null)
+                    Open(localPlayer.UserId);
+                return;
+            }
+
+            if (_adminManager.HasFlag(AdminFlags.Adminhelp))
+            {
+                SelectChannel(channelId.Value);
+                return;
+            }
+
+            EnsurePlain(channelId.Value);
+        }
+
+        private void SelectChannel(NetUserId uid)
+        {
+            _adminWindow ??= new BwoinkWindow(this);
+            _adminWindow.SelectChannel(uid);
         }
 
         public void Send(NetUserId channelId, string text)
