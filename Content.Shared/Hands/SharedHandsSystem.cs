@@ -140,15 +140,15 @@ namespace Content.Shared.Hands
         #endregion
 
         #region visuals
-        protected virtual void HandleContainerModified(EntityUid uid, SharedHandsComponent hands, ContainerModifiedMessage args)
+        private void HandleContainerModified(EntityUid uid, SharedHandsComponent hands, ContainerModifiedMessage args)
         {
-            UpdateHandVisualizer(uid, hands);
+            UpdateHandVisuals(uid, hands);
         }
 
         /// <summary>
         ///     Update the In-Hand sprites
         /// </summary>
-        public void UpdateHandVisualizer(EntityUid uid, SharedHandsComponent? handComp = null, AppearanceComponent? appearance = null)
+        public virtual void UpdateHandVisuals(EntityUid uid, SharedHandsComponent? handComp = null, AppearanceComponent? appearance = null)
         {
             if (!Resolve(uid, ref handComp, ref appearance, false))
                 return;

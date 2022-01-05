@@ -140,7 +140,7 @@ namespace Content.Shared.Item
         private void OnEquippedPrefixChange()
         {
             if (Owner.TryGetContainer(out var container))
-                EntitySystem.Get<SharedHandsSystem>().UpdateHandVisualizer(container.Owner);
+                EntitySystem.Get<SharedHandsSystem>().UpdateHandVisuals(container.Owner);
         }
 
         public void RemovedFromSlot()
