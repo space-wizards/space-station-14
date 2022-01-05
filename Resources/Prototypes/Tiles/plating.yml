@@ -1,6 +1,6 @@
 ﻿- type: tile
+  id: plating
   name: plating
-  display_name: plating
   texture: plating
   base_turfs:
   - lattice
@@ -12,8 +12,8 @@
   heatCapacity: 10000
 
 - type: tile
+  id: lattice
   name: lattice
-  display_name: lattice
   texture: lattice
   base_turfs:
   - space
@@ -27,8 +27,8 @@
 
 # TODO kill underplating and all its usages since it is deprecated
 - type: tile
+  id: underplating
   name: underplating
-  display_name: underplating
   texture: underplating
   base_turfs:
   - lattice
