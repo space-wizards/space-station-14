@@ -247,7 +247,7 @@
 - type: technology
   name: "avionics systems"
   id: AvionicsSystems
-  description: Fly-by-LV-wire
+  description: The latest in fly-by-LV-wire technology
   icon:
     sprite: Structures/Machines/computers.rsi
     state: avionics-systems

@@ -40,7 +40,7 @@
       key: generic_key
       screen: shuttle
   - type: Computer
-  board: ShuttleConsoleCircuitboard
+    board: ShuttleConsoleCircuitboard
 
 - type: entity
   parent: ComputerShuttleBase
