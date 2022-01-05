@@ -24,23 +24,3 @@ public class TryEquipNetworkMessage : EntityEventArgs
         Force = force;
     }
 }
-
-
-[NetSerializable, Serializable]
-public class TryEquipFromHandsNetworkMessage : EntityEventArgs
-{
-    public readonly EntityUid Actor;
-    public readonly EntityUid Target;
-    public readonly string Slot;
-    public readonly bool Silent;
-    public readonly bool Force;
-
-    public TryEquipFromHandsNetworkMessage(EntityUid actor, EntityUid target, string slot, bool silent, bool force)
-    {
-        Actor = actor;
-        Target = target;
-        Slot = slot;
-        Silent = silent;
-        Force = force;
-    }
-}

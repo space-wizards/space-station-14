@@ -77,14 +77,6 @@ namespace Content.Client.Inventory
             return base.TryEquip(actor, target, itemUid, slot, silent, force, inventory, item);
         }
 
-        public override bool TryEquipActiveHandTo(EntityUid actor, EntityUid target, string slot, bool silent = false, bool force = false, 
-            InventoryComponent? inventory = null, SharedHandsComponent? hands = null)
-        {
-            if (!target.IsClientSide() && !actor.IsClientSide()) RaiseNetworkEvent(new TryEquipFromHandsNetworkMessage(actor, target, slot, silent, force));
-            return base.TryEquipActiveHandTo(actor, target, slot, silent, force, inventory, hands);
-        }
-
-
         public override bool TryUnequip(EntityUid actor, EntityUid target, string slot, [NotNullWhen(true)] out EntityUid? removedItem, bool silent = false, bool force = false,
             InventoryComponent? inventory = null)
         {
@@ -231,7 +223,7 @@ namespace Content.Client.Inventory
             }
 
             if (args.Function != EngineKeyFunctions.UIClick) return;
-            TryEquipActiveHandTo(uid, uid, slot);
+            TryEquipActiveHandTo(uid, slot);
         }
 
         private bool TryGetUIElements(EntityUid uid, [NotNullWhen(true)] out SS14Window? invWindow,
