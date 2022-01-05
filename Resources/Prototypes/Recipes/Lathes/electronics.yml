@@ -117,7 +117,7 @@
 
 - type: latheRecipe
   id: ShuttleConsoleCircuitboard
-  icon: objects/Misc/module.rsi/id_mod.png
+  icon: Objects/Misc/module.rsi/id_mod.png
   result: ShuttleConsoleCircuitboard
   completetime: 1000
   materials:
