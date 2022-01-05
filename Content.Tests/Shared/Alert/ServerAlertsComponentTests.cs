@@ -1,4 +1,5 @@
-﻿using System.IO;
+using System;
+using System.IO;
 using Content.Server.Alert;
 using Content.Shared.Alert;
 using NUnit.Framework;
@@ -7,10 +8,10 @@ using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager;
 
-namespace Content.Tests.Server.GameObjects.Components.Mobs
+namespace Content.Tests.Shared.Alert
 {
     [TestFixture]
-    [TestOf(typeof(ServerAlertsComponent))]
+    [TestOf(typeof(AlertsComponent))]
     public class ServerAlertsComponentTests : ContentUnitTest
     {
         const string PROTOTYPES = @"
@@ -28,6 +29,7 @@ namespace Content.Tests.Server.GameObjects.Components.Mobs
 ";
 
         [Test]
+        [Ignore("There is no way to load extra Systems in a unit test, fixing RobustUnitTest is out of scope.")]
         public void ShowAlerts()
         {
             // this is kind of unnecessary because there's integration test coverage of Alert components
@@ -38,31 +40,31 @@ namespace Content.Tests.Server.GameObjects.Components.Mobs
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             prototypeManager.Initialize();
             var factory = IoCManager.Resolve<IComponentFactory>();
-            factory.RegisterClass<ServerAlertsComponent>();
+            factory.RegisterClass<AlertsComponent>();
             prototypeManager.LoadFromStream(new StringReader(PROTOTYPES));
             prototypeManager.Resync();
-            var alertManager = IoCManager.Resolve<AlertManager>();
-            alertManager.Initialize();
 
+            var entSys = IoCManager.Resolve<IEntitySystemManager>();
+            entSys.LoadExtraSystemType<ServerAlertsSystem>();
 
-            var alertsComponent = new ServerAlertsComponent();
+            var alertsComponent = new AlertsComponent();
             alertsComponent = IoCManager.InjectDependencies(alertsComponent);
 
-            Assert.That(alertManager.TryGet(AlertType.LowPressure, out var lowpressure));
-            Assert.That(alertManager.TryGet(AlertType.HighPressure, out var highpressure));
+            Assert.That(EntitySystem.Get<AlertsSystem>().TryGet(AlertType.LowPressure, out var lowpressure));
+            Assert.That(EntitySystem.Get<AlertsSystem>().TryGet(AlertType.HighPressure, out var highpressure));
 
-            alertsComponent.ShowAlert(AlertType.LowPressure);
+            EntitySystem.Get<AlertsSystem>().ShowAlert(alertsComponent.Owner, AlertType.LowPressure, null, null);
             var alertState = alertsComponent.GetComponentState() as AlertsComponentState;
             Assert.NotNull(alertState);
             Assert.That(alertState.Alerts.Count, Is.EqualTo(1));
             Assert.That(alertState.Alerts.ContainsKey(lowpressure.AlertKey));
 
-            alertsComponent.ShowAlert(AlertType.HighPressure);
+            EntitySystem.Get<AlertsSystem>().ShowAlert(alertsComponent.Owner, AlertType.HighPressure, null, null);
             alertState = alertsComponent.GetComponentState() as AlertsComponentState;
             Assert.That(alertState.Alerts.Count, Is.EqualTo(1));
             Assert.That(alertState.Alerts.ContainsKey(highpressure.AlertKey));
 
-            alertsComponent.ClearAlertCategory(AlertCategory.Pressure);
+            EntitySystem.Get<AlertsSystem>().ClearAlertCategory(alertsComponent.Owner, AlertCategory.Pressure);
             alertState = alertsComponent.GetComponentState() as AlertsComponentState;
             Assert.That(alertState.Alerts.Count, Is.EqualTo(0));
         }
