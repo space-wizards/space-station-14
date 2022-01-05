@@ -24,7 +24,6 @@ namespace Content.Server.PDA
             base.Initialize();
 
             SubscribeLocalEvent<PDAComponent, ActivateInWorldEvent>(OnActivateInWorld);
-            SubscribeLocalEvent<PDAComponent, UseInHandEvent>(OnUse);
             SubscribeLocalEvent<PDAComponent, LightToggleEvent>(OnLightToggle);
         }
 
@@ -35,15 +34,6 @@ namespace Content.Server.PDA
             var ui = pda.Owner.GetUIOrNull(PDAUiKey.Key);
             if (ui != null)
                 ui.OnReceiveMessage += (msg) => OnUIMessage(pda, msg);
-        }
-
-
-
-        private void OnUse(EntityUid uid, PDAComponent pda, UseInHandEvent args)
-        {
-            if (args.Handled)
-                return;
-            args.Handled = OpenUI(pda, args.User);
         }
 
         private void OnActivateInWorld(EntityUid uid, PDAComponent pda, ActivateInWorldEvent args)

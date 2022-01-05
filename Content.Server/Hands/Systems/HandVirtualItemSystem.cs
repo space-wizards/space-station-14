@@ -4,12 +4,15 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Hands.Systems
 {
     [UsedImplicitly]
     public sealed class HandVirtualItemSystem : SharedHandVirtualItemSystem
     {
+        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -34,7 +37,7 @@ namespace Content.Server.Hands.Systems
                     var virtualItem = EntityManager.SpawnEntity("HandVirtualItem", pos);
                     var virtualItemComp = EntityManager.GetComponent<HandVirtualItemComponent>(virtualItem);
                     virtualItemComp.BlockingEntity = blockingEnt;
-                    hands.PutEntityIntoHand(hand, virtualItem);
+                    _handsSystem.PutEntityIntoHand(user, hand, virtualItem, hands);
                     return true;
                 }
             }

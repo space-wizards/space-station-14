@@ -1,10 +1,12 @@
 using System;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Inventory;
 using Content.Shared.Sound;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
@@ -123,7 +125,7 @@ namespace Content.Shared.Item
             if (!CanPickup(user))
                 return false;
 
-            if (!_entMan.TryGetComponent(user, out SharedHandsComponent? hands))
+            if (!_entMan.TryGetComponent(user, out SharedHandsComponent hands))
                 return false;
 
             var activeHand = hands.ActiveHand;
@@ -131,15 +133,27 @@ namespace Content.Shared.Item
             if (activeHand == null)
                 return false;
 
-            hands.TryPickupEntityToActiveHand(Owner);
+            hands.TryPickupEntityToActiveHand(Owner, animateUser: true);
             return true;
         }
 
-        protected virtual void OnEquippedPrefixChange() { }
+        private void OnEquippedPrefixChange()
+        {
+            if (Owner.TryGetContainer(out var container))
+                EntitySystem.Get<SharedHandsSystem>().UpdateHandVisualizer(container.Owner);
+        }
 
-        public virtual void RemovedFromSlot() { }
+        public void RemovedFromSlot()
+        {
+            if (_entMan.TryGetComponent(Owner, out SharedSpriteComponent component))
+                component.Visible = true;
+        }
 
-        public virtual void EquippedToSlot() { }
+        public virtual void EquippedToSlot()
+        {
+            if (_entMan.TryGetComponent(Owner, out SharedSpriteComponent component))
+                component.Visible = false;
+        }
     }
 
     [Serializable, NetSerializable]
