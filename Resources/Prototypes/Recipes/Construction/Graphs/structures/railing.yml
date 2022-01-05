@@ -20,7 +20,7 @@
             - material: MetalRod
               amount: 2
               doAfter: 2.5
-	- to: railingCornerSmall
+        - to: railingCornerSmall
           completed:
             - !type:SnapToGrid
               southRotation: true
