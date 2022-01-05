@@ -1,4 +1,4 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
 using Content.Server.Mind.Components;
 using Content.Server.Objectives.Interfaces;
 using Content.Shared.MobState.Components;
@@ -19,15 +19,17 @@ namespace Content.Server.Objectives.Conditions
         public override IObjectiveCondition GetAssigned(Mind.Mind mind)
         {
             var entityMgr = IoCManager.Resolve<IEntityManager>();
-            var allOtherTraitors = entityMgr.EntityQuery<MindComponent>(true).Where(mc =>
+            List<Mind.Mind> _allOtherTraitors = new List<Mind.Mind>();
+            
+            foreach (var targetMind in entityMgr.EntityQuery<MindComponent>())
             {
-                return entityMgr.TryGetComponent(mc.Mind?.OwnedEntity, out MobStateComponent mobState) &&
-                       mc.Mind?.CharacterDeadIC == false &&
-                       mc.Mind != mind &&
-                       mc.Mind?.HasRole<TraitorRole>() == true;
-            }).Select(mc => mc.Mind).ToList();
+                if (targetMind.Mind?.CharacterDeadIC == false && targetMind.Mind != mind && targetMind.Mind?.HasRole<TraitorRole>() == true)
+                {
+                        _allOtherTraitors.Add(targetMind.Mind);
+                }
+            }
  
-            return new RandomTraitorAliveCondition {Target = IoCManager.Resolve<IRobustRandom>().Pick(allOtherTraitors)};
+            return new RandomTraitorAliveCondition {Target = IoCManager.Resolve<IRobustRandom>().Pick(_allOtherTraitors)};
         }
     }
 }
