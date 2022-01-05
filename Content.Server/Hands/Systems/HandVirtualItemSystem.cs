@@ -9,7 +9,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.Hands.Systems
 {
     [UsedImplicitly]
-    public sealed class HandVirtualItemSystem : EntitySystem
+    public sealed class HandVirtualItemSystem : SharedHandVirtualItemSystem
     {
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
 

@@ -1,11 +1,11 @@
-﻿using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Shared.Inventory.Events;
 
 public abstract class EquipAttemptBase : CancellableEntityEventArgs
 {
     /// <summary>
-    /// The entity equipping.
+    /// The entity performing the action. NOT necessarily the one actually "receiving" the equipment.
     /// </summary>
     public readonly EntityUid Equipee;
 

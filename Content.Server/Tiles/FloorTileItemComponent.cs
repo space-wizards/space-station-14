@@ -82,7 +82,7 @@ namespace Content.Server.Tiles
                     var tile = mapGrid.GetTileRef(location);
                     var baseTurf = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
 
-                    if (HasBaseTurf(currentTileDefinition, baseTurf.Name))
+                    if (HasBaseTurf(currentTileDefinition, baseTurf.ID))
                     {
                         if (!EntitySystem.Get<StackSystem>().Use(Owner, 1, stack))
                             continue;

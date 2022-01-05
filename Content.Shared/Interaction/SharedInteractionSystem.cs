@@ -641,32 +641,29 @@ namespace Content.Shared.Interaction
         #region Hands
         #region Use
         /// <summary>
-        /// Activates the IUse behaviors of an entity
-        /// Verifies that the user is capable of doing the use interaction first
+        /// Attempt to perform a use-interaction on an entity. If no interaction occurs, it will instead attempt to
+        /// activate the entity.
         /// </summary>
-        /// <param name="user"></param>
-        /// <param name="used"></param>
-        public void TryUseInteraction(EntityUid user, EntityUid used, bool altInteract = false)
+        public void TryUseInteraction(EntityUid user, EntityUid used)
         {
-            if (_actionBlockerSystem.CanUse(user))
-            {
-                if (altInteract)
-                    AltInteract(user, used);
-                else
-                    UseInteraction(user, used);
-            }
+            if (_actionBlockerSystem.CanUse(user) && UseInteraction(user, used))
+                return;
+
+            // no use-interaction occurred. Attempt to activate the item instead.
+            InteractionActivate(user, used);
         }
 
         /// <summary>
         /// Activates the IUse behaviors of an entity without first checking
         /// if the user is capable of doing the use interaction.
         /// </summary>
-        public void UseInteraction(EntityUid user, EntityUid used)
+        /// <returns>True if the interaction was handled. False otherwise</returns>
+        public bool UseInteraction(EntityUid user, EntityUid used)
         {
             if (TryComp(used, out UseDelayComponent? delayComponent))
             {
                 if (delayComponent.ActiveDelay)
-                    return;
+                    return true; // if the item is on cooldown, we consider this handled.
 
                 delayComponent.BeginDelay();
             }
@@ -674,7 +671,7 @@ namespace Content.Shared.Interaction
             var useMsg = new UseInHandEvent(user, used);
             RaiseLocalEvent(used, useMsg);
             if (useMsg.Handled)
-                return;
+                return true;
 
             var uses = AllComps<IUse>(used).ToList();
 
@@ -683,8 +680,10 @@ namespace Content.Shared.Interaction
             {
                 // If a Use returns a status completion we finish our interaction
                 if (use.UseEntity(new UseEntityEventArgs(user)))
-                    return;
+                    return true;
             }
+
+            return false;
         }
 
         /// <summary>
@@ -693,12 +692,17 @@ namespace Content.Shared.Interaction
         /// <remarks>
         ///     Uses the context menu verb list, and acts out the highest priority alternative interaction verb.
         /// </remarks>
-        public void AltInteract(EntityUid user, EntityUid target)
+        /// <returns>True if the interaction was handled, false otherwise.</returns>
+        public bool AltInteract(EntityUid user, EntityUid target)
         {
             // Get list of alt-interact verbs
             var verbs = _verbSystem.GetLocalVerbs(target, user, VerbType.Alternative)[VerbType.Alternative];
-            if (verbs.Any())
-                _verbSystem.ExecuteVerb(verbs.First(), user, target, false);
+
+            if (!verbs.Any())
+                return false;
+
+            _verbSystem.ExecuteVerb(verbs.First(), user, target);
+            return true;
         }
         #endregion
 

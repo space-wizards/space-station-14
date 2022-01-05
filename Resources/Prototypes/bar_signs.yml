@@ -35,12 +35,6 @@
   description: "A very controversial bar known for its wide variety of constantly-changing drinks."
 
 - type: barSign
-  id: TheWretchedHive
-  name: "The Wretched Hive"
-  icon: "thewretchedhive"
-  description: "Legally obligated to instruct you to check your drinks for acid before consumption."
-
-- type: barSign
   id: RobustaCafe
   name: "The Robusta Cafe"
   icon: "robustacafe"

@@ -112,7 +112,7 @@ namespace Content.Server.Strip
                     return false;
                 }
 
-                if (!invSystem.CanEquip(Owner, item.Owner, slot, out _))
+                if (!invSystem.CanEquip(user, Owner, item.Owner, slot, out _))
                 {
                     user.PopupMessageCursor(Loc.GetString("strippable-component-cannot-equip-message",("owner", Owner)));
                     return false;
@@ -137,7 +137,7 @@ namespace Content.Server.Strip
             if (result != DoAfterStatus.Finished) return;
 
             userHands.Drop(item!.Owner, false);
-            invSystem.TryEquip(Owner, item.Owner, slot);
+            invSystem.TryEquip(user, Owner, item.Owner, slot);
 
             UpdateState();
         }
@@ -254,7 +254,7 @@ namespace Content.Server.Strip
             var result = await doAfterSystem.WaitDoAfter(doAfterArgs);
             if (result != DoAfterStatus.Finished) return;
 
-            if (invSystem.TryGetSlotEntity(Owner, slot, out var item) && invSystem.TryUnequip(Owner, slot))
+            if (invSystem.TryGetSlotEntity(Owner, slot, out var item) && invSystem.TryUnequip(user, Owner, slot))
             {
                 userHands.PutInHandOrDrop(item.Value);
             }

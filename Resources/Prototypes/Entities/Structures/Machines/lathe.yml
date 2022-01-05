@@ -168,14 +168,16 @@
       - ShellShotgun
       - CartridgeLRifle
       - CartridgeMagnum
-      - FirelockElectronics
       - MicroManipulatorStockPart
       - ScanningModuleStockPart
       - MicroLaserStockPart
       - MatterBinStockPart
       - CapacitorStockPart
+      - FirelockElectronics
       - DoorElectronics
       - APCElectronics
+      - AirAlarmElectronics
+      - FireAlarmElectronics
       - CloningPodMachineCircuitboard
       - MedicalScannerMachineCircuitboard
       - ChemMasterMachineCircuitboard

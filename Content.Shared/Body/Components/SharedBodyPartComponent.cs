@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Body.Events;
 using Content.Shared.Body.Part;
-using Content.Shared.Body.Surgery;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
@@ -16,7 +15,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.Body.Components
 {
     [NetworkedComponent()]
-    public abstract class SharedBodyPartComponent : Component, IBodyPartContainer
+    public abstract class SharedBodyPartComponent : Component
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
@@ -30,7 +29,7 @@ namespace Content.Shared.Body.Components
         public IReadOnlyList<string> MechanismIds => _mechanismIds;
 
         [ViewVariables]
-        private readonly HashSet<SharedMechanismComponent> _mechanisms = new();
+        private readonly HashSet<MechanismComponent> _mechanisms = new();
 
         [ViewVariables]
         public SharedBodyComponent? Body
@@ -59,12 +58,6 @@ namespace Content.Shared.Body.Components
         }
 
         /// <summary>
-        ///     The string to show when displaying this part's name to players.
-        /// </summary>
-        [ViewVariables]
-        public string DisplayName => Name;
-
-        /// <summary>
         ///     <see cref="BodyPartType"/> that this <see cref="IBodyPart"/> is considered
         ///     to be.
         ///     For example, <see cref="BodyPartType.Arm"/>.
@@ -91,11 +84,11 @@ namespace Content.Shared.Body.Components
         /// </summary>
         [ViewVariables]
         [DataField("compatibility")]
-        public BodyPartCompatibility Compatibility { get; private set; } = BodyPartCompatibility.Universal;
+        public BodyPartCompatibility Compatibility = BodyPartCompatibility.Universal;
 
         // TODO BODY Mechanisms occupying different parts at the body level
         [ViewVariables]
-        public IReadOnlyCollection<SharedMechanismComponent> Mechanisms => _mechanisms;
+        public IReadOnlyCollection<MechanismComponent> Mechanisms => _mechanisms;
 
         // TODO BODY Replace with a simulation of organs
         /// <summary>
@@ -104,16 +97,13 @@ namespace Content.Shared.Body.Components
         /// </summary>
         [ViewVariables]
         [DataField("vital")]
-        public bool IsVital { get; private set; } = false;
+        public bool IsVital = false;
 
         [ViewVariables]
         [DataField("symmetry")]
-        public BodyPartSymmetry Symmetry { get; private set; } = BodyPartSymmetry.None;
+        public BodyPartSymmetry Symmetry = BodyPartSymmetry.None;
 
-        [ViewVariables]
-        public ISurgeryData? SurgeryDataComponent => _entMan.GetComponentOrNull<ISurgeryData>(Owner);
-
-        protected virtual void OnAddMechanism(SharedMechanismComponent mechanism)
+        protected virtual void OnAddMechanism(MechanismComponent mechanism)
         {
             var prototypeId = _entMan.GetComponent<MetaDataComponent>(mechanism.Owner).EntityPrototype!.ID;
 
@@ -128,7 +118,7 @@ namespace Content.Shared.Body.Components
             Dirty();
         }
 
-        protected virtual void OnRemoveMechanism(SharedMechanismComponent mechanism)
+        protected virtual void OnRemoveMechanism(MechanismComponent mechanism)
         {
             _mechanismIds.Remove(_entMan.GetComponent<MetaDataComponent>(mechanism.Owner).EntityPrototype!.ID);
             mechanism.Part = null;
@@ -179,39 +169,13 @@ namespace Content.Shared.Body.Components
             }
         }
 
-        public bool SurgeryCheck(SurgeryType surgery)
+        public virtual bool CanAddMechanism(MechanismComponent mechanism)
         {
-            return SurgeryDataComponent?.CheckSurgery(surgery) ?? false;
-        }
-
-        public bool AttemptSurgery(SurgeryType toolType, IBodyPartContainer target, ISurgeon surgeon, EntityUid performer)
-        {
-            DebugTools.AssertNotNull(toolType);
-            DebugTools.AssertNotNull(target);
-            DebugTools.AssertNotNull(surgeon);
-            DebugTools.AssertNotNull(performer);
-
-            return SurgeryDataComponent?.PerformSurgery(toolType, target, surgeon, performer) ?? false;
-        }
-
-        public bool CanAttachPart(SharedBodyPartComponent part)
-        {
-            DebugTools.AssertNotNull(part);
-
-            return SurgeryDataComponent?.CanAttachBodyPart(part) ?? false;
-        }
-
-        public virtual bool CanAddMechanism(SharedMechanismComponent mechanism)
-        {
-            DebugTools.AssertNotNull(mechanism);
-
-            return SurgeryDataComponent != null &&
-                   SizeUsed + mechanism.Size <= Size &&
-                   SurgeryDataComponent.CanAddMechanism(mechanism);
+            return SizeUsed + mechanism.Size <= Size;
         }
 
         /// <summary>
-        ///     Tries to add a <see cref="SharedMechanismComponent"/> to this part.
+        ///     Tries to add a <see cref="MechanismComponent"/> to this part.
         /// </summary>
         /// <param name="mechanism">The mechanism to add.</param>
         /// <param name="force">
@@ -220,7 +184,7 @@ namespace Content.Shared.Body.Components
         ///     it was already added before.
         /// </param>
         /// <returns>true if added, false otherwise even if it was already added.</returns>
-        public bool TryAddMechanism(SharedMechanismComponent mechanism, bool force = false)
+        public bool TryAddMechanism(MechanismComponent mechanism, bool force = false)
         {
             DebugTools.AssertNotNull(mechanism);
 
@@ -244,7 +208,7 @@ namespace Content.Shared.Body.Components
         /// </summary>
         /// <param name="mechanism">The mechanism to remove.</param>
         /// <returns>True if it was removed, false otherwise.</returns>
-        public bool RemoveMechanism(SharedMechanismComponent mechanism)
+        public bool RemoveMechanism(MechanismComponent mechanism)
         {
             DebugTools.AssertNotNull(mechanism);
 
@@ -265,7 +229,7 @@ namespace Content.Shared.Body.Components
         /// <param name="mechanism">The mechanism to remove.</param>
         /// <param name="coordinates">The coordinates to drop it at.</param>
         /// <returns>True if it was removed, false otherwise.</returns>
-        public bool RemoveMechanism(SharedMechanismComponent mechanism, EntityCoordinates coordinates)
+        public bool RemoveMechanism(MechanismComponent mechanism, EntityCoordinates coordinates)
         {
             if (RemoveMechanism(mechanism))
             {
@@ -277,7 +241,7 @@ namespace Content.Shared.Body.Components
         }
 
         /// <summary>
-        ///     Tries to destroy the given <see cref="SharedMechanismComponent"/> from
+        ///     Tries to destroy the given <see cref="MechanismComponent"/> from
         ///     this part.
         ///     The mechanism won't be deleted if it is not in this body part.
         /// </summary>
@@ -285,7 +249,7 @@ namespace Content.Shared.Body.Components
         ///     True if the mechanism was in this body part and destroyed,
         ///     false otherwise.
         /// </returns>
-        public bool DeleteMechanism(SharedMechanismComponent mechanism)
+        public bool DeleteMechanism(MechanismComponent mechanism)
         {
             DebugTools.AssertNotNull(mechanism);
 
@@ -344,7 +308,7 @@ namespace Content.Shared.Body.Components
     [Serializable, NetSerializable]
     public class BodyPartComponentState : ComponentState
     {
-        [NonSerialized] private List<SharedMechanismComponent>? _mechanisms;
+        [NonSerialized] private List<MechanismComponent>? _mechanisms;
 
         public readonly EntityUid[] MechanismIds;
 
@@ -353,7 +317,7 @@ namespace Content.Shared.Body.Components
             MechanismIds = mechanismIds;
         }
 
-        public List<SharedMechanismComponent> Mechanisms(IEntityManager? entityManager = null)
+        public List<MechanismComponent> Mechanisms(IEntityManager? entityManager = null)
         {
             if (_mechanisms != null)
             {
@@ -362,7 +326,7 @@ namespace Content.Shared.Body.Components
 
             IoCManager.Resolve(ref entityManager);
 
-            var mechanisms = new List<SharedMechanismComponent>(MechanismIds.Length);
+            var mechanisms = new List<MechanismComponent>(MechanismIds.Length);
 
             foreach (var id in MechanismIds)
             {
@@ -371,7 +335,7 @@ namespace Content.Shared.Body.Components
                     continue;
                 }
 
-                if (!entityManager.TryGetComponent(id, out SharedMechanismComponent? mechanism))
+                if (!entityManager.TryGetComponent(id, out MechanismComponent? mechanism))
                 {
                     continue;
                 }
