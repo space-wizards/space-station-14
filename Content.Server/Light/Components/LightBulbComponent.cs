@@ -30,7 +30,7 @@ namespace Content.Server.Light.Components
         public int BurningTemperature = 1400;
 
         [DataField("lightEnergy")]
-        public float lightEnergy = 0.8F;
+        public float lightEnergy = 0.8f;
 
         [DataField("lightRadius")]
         public float lightRadius = 10;
