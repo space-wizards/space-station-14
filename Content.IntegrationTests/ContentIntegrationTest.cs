@@ -36,7 +36,10 @@ namespace Content.IntegrationTests
             (CCVars.GameMap.Name, "empty", true),
 
             // Makes sure IGameMapManager actually listens.
-            (CCVars.GameMapForced.Name, "true", true)
+            (CCVars.GameMapForced.Name, "true", true),
+
+            // Avoid worldgen trampling over tests.
+            (CCVars.WorldGenEnabled.Name, "false", true)
         };
 
         private static void SetServerTestCvars(IntegrationOptions options)

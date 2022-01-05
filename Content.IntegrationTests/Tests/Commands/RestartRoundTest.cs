@@ -25,7 +25,6 @@ namespace Content.IntegrationTests.Tests.Commands
                 CVarOverrides =
                 {
                     [CCVars.GameMap.Name] = "knightship",
-                    [CCVars.SpawnRadius.Name] = "0.0",
                 }
             });
 

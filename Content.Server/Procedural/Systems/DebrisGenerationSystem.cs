@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Content.Server.Procedural.Components;
 using Content.Server.Procedural.Prototypes;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -18,7 +19,8 @@ public class DebrisGenerationSystem : EntitySystem
     public EntityUid GenerateDebris(DebrisPrototype proto, MapCoordinates location)
     {
         var (grid, gridEnt) = GenerateFloorplan(proto, location);
-        proto.Populator.Populate(gridEnt, grid);
+        var unpop = AddComp<UnpopulatedComponent>(gridEnt);
+        unpop.Populator = proto.Populator;
         return gridEnt;
     }
 

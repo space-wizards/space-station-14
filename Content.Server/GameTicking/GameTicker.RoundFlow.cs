@@ -38,8 +38,8 @@ namespace Content.Server.GameTicking
             "Round length in seconds.");
 
         [Dependency] private readonly IServerDbManager _db = default!;
-        [Dependency] private readonly SimpleWorldPopulatorSystem _swps = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly WorldChunkSystem _world = default!;
 
         [ViewVariables]
         private TimeSpan _roundStartTimeSpan;
@@ -87,7 +87,9 @@ namespace Content.Server.GameTicking
 
             _spawnPoint = grid.ToCoordinates();
 
-            _swps.SpawnDebrisField(_spawnPoint.ToMap(_entityManager), 35f);
+            _world.Reset();
+            _world.WorldMap = DefaultMap;
+            _world.ForceEmptyChunk(Vector2i.Zero);
 
             var timeSpan = _gameTiming.RealTime - startTime;
             Logger.InfoS("ticker", $"Loaded map in {timeSpan.TotalMilliseconds:N2}ms.");

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Content.Server.Procedural.Systems;
 using Content.Server.Storage;
 using Content.Shared.Maps;
 using Robust.Shared.GameObjects;
@@ -22,6 +23,7 @@ public class ScrapyardPopulator : DebrisPopulator
     {
         var entityManager = IoCManager.Resolve<IEntityManager>();
         var random = IoCManager.Resolve<IRobustRandom>();
+        var deferred = EntitySystem.Get<DeferredSpawnSystem>();
 
         foreach (var tile in grid.GetAllTiles())
         {
@@ -40,7 +42,7 @@ public class ScrapyardPopulator : DebrisPopulator
 
                 for (var i = 0; i < entry.Amount; i++)
                 {
-                    entityManager.SpawnEntity(entry.PrototypeId, coords);
+                    deferred.SpawnEntityDeferred(entry.PrototypeId, coords);
                 }
 
                 if (!string.IsNullOrEmpty(entry.GroupId)) alreadySpawnedGroups.Add(entry.GroupId);

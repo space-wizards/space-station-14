@@ -1,5 +1,7 @@
+using Content.Server.Procedural.Systems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -18,10 +20,14 @@ public class FillDebrisPopulator : DebrisPopulator
     public override void Populate(EntityUid gridEnt, IMapGrid grid)
     {
         var entityManager = IoCManager.Resolve<IEntityManager>();
+        var deferred = EntitySystem.Get<DeferredSpawnSystem>();
+        var i = 0;
         foreach (var tile in grid.GetAllTiles())
         {
+            i++;
             var coords = grid.GridTileToLocal(tile.GridIndices);
-            entityManager.SpawnEntity(FillerEntity, coords);
+            deferred.SpawnEntityDeferred(FillerEntity, coords);
         }
+        Logger.InfoS("worldgen", $"Filled {i} tiles with {FillerEntity}.");
     }
 }

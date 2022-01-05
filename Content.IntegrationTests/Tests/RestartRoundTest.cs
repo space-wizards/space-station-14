@@ -18,7 +18,6 @@ namespace Content.IntegrationTests.Tests
                 CVarOverrides =
                 {
                     [CCVars.GameMap.Name] = "saltern",
-                    [CCVars.SpawnRadius.Name] = "0.0",
                 }
             });
 
