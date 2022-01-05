@@ -27,7 +27,7 @@ public class ScrapyardPopulator : DebrisPopulator
 
         foreach (var tile in grid.GetAllTiles())
         {
-            var name = tile.Tile.GetContentTileDefinition().DisplayName;
+            var name = tile.Tile.GetContentTileDefinition().Name;
             if (!EntityTable.ContainsKey(name)) continue;
 
             var coords = grid.GridTileToLocal(tile.GridIndices);
