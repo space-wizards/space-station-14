@@ -35,7 +35,7 @@ public class CharacterInfoSystem : EntitySystem
         if (!EntityManager.TryGetComponent(msg.EntityUid, out CharacterInfoComponent characterInfoComponent))
             return;
 
-        UpdateUI(characterInfoComponent, msg.JobTitle, msg.Objectives);
+        UpdateUI(characterInfoComponent, msg.JobTitle, msg.Objectives, msg.Briefing);
         if (EntityManager.TryGetComponent(msg.EntityUid, out ISpriteComponent? spriteComponent))
         {
             characterInfoComponent.Control.SpriteView.Sprite = spriteComponent;
@@ -46,7 +46,7 @@ public class CharacterInfoSystem : EntitySystem
         characterInfoComponent.Control.NameLabel.Text = metadata.EntityName;
     }
 
-    private void UpdateUI(CharacterInfoComponent comp, string jobTitle, Dictionary<string, List<ConditionInfo>> objectives)
+    private void UpdateUI(CharacterInfoComponent comp, string jobTitle, Dictionary<string, List<ConditionInfo>> objectives, string briefing)
     {
         comp.Control.SubText.Text = jobTitle;
 
@@ -93,6 +93,18 @@ public class CharacterInfoSystem : EntitySystem
                 );
                 vbox.AddChild(hbox);
             }
+            var briefinghBox = new BoxContainer
+            {
+                Orientation = BoxContainer.LayoutOrientation.Horizontal
+            };
+            
+            briefinghBox.AddChild(new Label
+            {
+                Text = briefing,
+                Modulate = Color.Yellow
+            });
+            
+            vbox.AddChild(briefinghBox);
             comp.Control.ObjectivesContainer.AddChild(vbox);
         }
     }
