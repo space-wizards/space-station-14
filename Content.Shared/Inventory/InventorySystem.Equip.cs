@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
@@ -74,17 +74,20 @@ public abstract partial class InventorySystem
         hands.TryGetActiveHeldEntity(out var held);
         TryGetSlotEntity(actor, ev.Slot, out var itemUid, inventory);
 
+        // attempt to perform some interaction
         if (held != null && itemUid != null)
         {
-            // attempt to perform some interaction
             _interactionSystem.InteractUsing(actor, held.Value, itemUid.Value,
-                new EntityCoordinates());
+                new EntityCoordinates(), predicted: true);
+            return;
         }
-        else if (itemUid != null)
+
+        // un-equip to hands
+        if (itemUid != null)
         {
-            // un-equip to hands
             if (hands.CanPickupEntityToActiveHand(itemUid.Value) && TryUnequip(actor, ev.Slot, inventory: inventory))
                 hands.PutInHand(itemUid.Value, false);
+            return;
         }
 
         // finally, just try to equip the held item.

@@ -70,12 +70,18 @@ namespace Content.Shared.Interaction
         /// </summary>
         public EntityCoordinates ClickLocation { get; }
 
-        public InteractUsingEvent(EntityUid user, EntityUid used, EntityUid target, EntityCoordinates clickLocation)
+        /// <summary>
+        ///     Whether this is a predicted interaction. If it is, care as to be taken to avoid audio duplication.
+        /// </summary>
+        public bool Predicted { get; }
+
+        public InteractUsingEvent(EntityUid user, EntityUid used, EntityUid target, EntityCoordinates clickLocation, bool predicted = false)
         {
             User = user;
             Used = used;
             Target = target;
             ClickLocation = clickLocation;
+            Predicted = predicted;
         }
     }
 }
