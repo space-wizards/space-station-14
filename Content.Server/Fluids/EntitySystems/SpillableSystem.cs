@@ -121,7 +121,7 @@ public class SpillableSystem : EntitySystem
 
     public bool TryGetPuddle(TileRef tileRef, [NotNullWhen(true)] out PuddleComponent? puddle)
     {
-        foreach (var entity in tileRef.GetEntitiesInTileFast(_lookup))
+        foreach (var entity in _lookup.GetEntitiesIntersecting(tileRef))
         {
             if (EntityManager.TryGetComponent(entity, out PuddleComponent? p))
             {
