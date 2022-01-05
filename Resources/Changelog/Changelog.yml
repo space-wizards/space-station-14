@@ -1,28 +1,6 @@
 Entries:
 - author: Swept
   changes:
-  - {message: You can equip the scythe on your back now, type: Tweak}
-  - {message: Updated spade/scythe/hoe sprites, type: Tweak}
-  - {message: Plant clippers for hydroponics, type: Add}
-  id: 320
-  time: '2021-08-18T02:42:35.0000000+00:00'
-- author: SweptWasTaken
-  changes:
-  - {message: 'Can equip bat, fireaxe, spear and claymore on your back now', type: Tweak}
-  id: 321
-  time: '2021-08-18T02:42:50.0000000+00:00'
-- author: SweptWasTaken
-  changes:
-  - {message: Adds seclite and duck related content, type: Add}
-  id: 322
-  time: '2021-08-19T23:23:49.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: Missing vending machine descriptions found, type: Fix}
-  id: 323
-  time: '2021-08-20T05:23:02.0000000+00:00'
-- author: Swept
-  changes:
   - {message: Adds a ton of inhands for various items, type: Add}
   id: 324
   time: '2021-08-20T05:36:32.0000000+00:00'
@@ -2907,3 +2885,29 @@ Entries:
       than others., type: Tweak}
   id: 821
   time: '2022-01-04T12:05:06.0000000+00:00'
+- author: router
+  changes:
+  - {message: Added paying respects, type: Add}
+  id: 822
+  time: '2022-01-04T13:05:21.0000000+00:00'
+- author: Schiene
+  changes:
+  - {message: 'Added a spawnable Boarding Shuttle map called Dart, comes with a small
+      force equipped for Vacuum with heavy weaponry.', type: Add}
+  id: 823
+  time: '2022-01-04T13:23:13.0000000+00:00'
+- author: Schiene
+  changes:
+  - {message: 'Added Shuttle SS Reach, atmospherics not included yet.', type: Add}
+  id: 824
+  time: '2022-01-04T13:36:37.0000000+00:00'
+- author: MeltedPixel
+  changes:
+  - {message: Added Hydroponics plant - Chilis!, type: Add}
+  - {message: Added Hot Chili Soup Recipe + Meal, type: Add}
+  - {message: Added Clown Chili Soup Recipe + Meal, type: Add}
+  - {message: Added Enchiladas Recipe + Meal, type: Add}
+  - {message: Added Queso Recipe + Meal, type: Add}
+  - {message: Added new reagent Capsaicin Oil from Chilis, type: Add}
+  id: 825
+  time: '2022-01-04T13:51:23.0000000+00:00'

@@ -638,6 +638,19 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.ToTable("round", (string)null);
                 });
 
+            modelBuilder.Entity("Content.Server.Database.Whitelist", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("UserId")
+                        .HasName("PK_whitelist");
+
+                    b.ToTable("whitelist", (string)null);
+                });
+
             modelBuilder.Entity("PlayerRound", b =>
                 {
                     b.Property<int>("PlayersId")
