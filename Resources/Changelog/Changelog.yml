@@ -1,9 +1,4 @@
 Entries:
-- author: Swept
-  changes:
-  - {message: Adds a 6pack of cola, type: Add}
-  id: 326
-  time: '2021-08-20T05:41:17.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: The keybinding to stop pulling an object now works., type: Fix}
@@ -2914,3 +2909,8 @@ Entries:
       with an LED tube, for brighter-lit areas.', type: Add}
   id: 827
   time: '2022-01-05T05:25:37.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Traitors can now see their codewords in the objective menu., type: Add}
+  id: 828
+  time: '2022-01-05T05:46:41.0000000+00:00'
