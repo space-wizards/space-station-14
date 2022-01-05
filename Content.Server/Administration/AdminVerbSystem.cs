@@ -3,6 +3,8 @@ using System.Threading;
 using Content.Server.Administration.Commands;
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.UI;
+using Content.Server.Body.Components;
+using Content.Server.Body.Systems;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Configurable;
@@ -46,6 +48,7 @@ namespace Content.Server.Administration
         [Dependency] private readonly EuiManager _euiManager = default!;
         [Dependency] private readonly ExplosionSystem _explosions = default!;
         [Dependency] private readonly GhostRoleSystem _ghostRoleSystem = default!;
+        [Dependency] private readonly BodySystem _bodySystem = default!;
 
         private readonly Dictionary<IPlayerSession, EditSolutionsEui> _openSolutionUis = new();
 
@@ -110,9 +113,9 @@ namespace Content.Server.Administration
                 {
                     var coords = Transform(args.Target).Coordinates;
                     Timer.Spawn(_gameTiming.TickPeriod, () => _explosions.SpawnExplosion(coords, 0, 1, 2, 1), CancellationToken.None);
-                    if (TryComp(args.Target, out SharedBodyComponent? body))
+                    if (TryComp(args.Target, out BodyComponent? body))
                     {
-                        body.Gib();
+                        _bodySystem.Gib(args.Target, false, body);
                     }
                 };
                 verb.Impact = LogImpact.Extreme; // if you're just outright killing a person, I guess that deserves to be extreme?

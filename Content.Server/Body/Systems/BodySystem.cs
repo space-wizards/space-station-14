@@ -3,6 +3,7 @@ using Content.Server.GameTicking;
 using Content.Server.Mind.Components;
 using Content.Shared.Audio;
 using Content.Shared.Body.Components;
+using Content.Shared.Body.Part;
 using Content.Shared.Body.Prototypes;
 using Content.Shared.Body.Systems;
 using Content.Shared.MobState.Components;
@@ -30,6 +31,8 @@ namespace Content.Server.Body.Systems
             SubscribeLocalEvent<BodyComponent, ComponentStartup>(OnComponentStartup);
         }
 
+        #region Overrides
+
         protected override void OnComponentInit(EntityUid uid, SharedBodyComponent component, ComponentInit args)
         {
             var preset = _prototypeManager.Index<BodyPresetPrototype>(component.PresetId);
@@ -45,9 +48,19 @@ namespace Content.Server.Body.Systems
                     continue;
                 }
 
-                SetPart(slot.Id, part);
+                AddPart(uid, slot.Id, part, component);
             }
         }
+
+        protected override void OnPartRemoved(EntityUid uid, BodyPartSlot slot, SharedBodyPartComponent part,
+            SharedBodyComponent? body=null)
+        {
+            base.OnPartRemoved(uid, slot, part, body);
+
+            part.Owner.RandomOffset(0.25f);
+        }
+
+        #endregion
 
         private void OnComponentStartup(EntityUid uid, BodyComponent component, ComponentStartup args)
         {

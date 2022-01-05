@@ -110,6 +110,7 @@ public abstract partial class SharedBodySystem
         slot.Part = part;
         body.Parts[part] = slot;
         part.Body = body;
+        body.PartContainer.Insert(part.Owner);
 
         OnPartAdded(uid, slot, part, body);
 
@@ -154,15 +155,12 @@ public abstract partial class SharedBodySystem
 
         slot.Part = null;
         body.Parts.Remove(old);
+        body.PartContainer.Remove(old.Owner);
         old.Body = null;
 
-        foreach (var connectedSlot in slot.Connections)
+        foreach (var part in GetHangingParts(uid, slot, body))
         {
-            if (connectedSlot.Part != null &&
-                !ConnectedToCenter(uid, connectedSlot.Part, body))
-            {
-                RemovePart(uid, connectedSlot.Part, body);
-            }
+            RemovePart(uid, part.Value, body);
         }
 
         OnPartRemoved(uid, slot, old, body);
@@ -187,7 +185,7 @@ public abstract partial class SharedBodySystem
         return false;
     }
 
-    public bool TryDropPart(EntityUid uid, BodyPartSlot slot, [NotNullWhen(true)] out Dictionary<BodyPartSlot, SharedBodyPartComponent>? dropped,
+    public bool TryRemovePart(EntityUid uid, BodyPartSlot slot, [NotNullWhen(true)] out Dictionary<BodyPartSlot, SharedBodyPartComponent>? dropped,
         SharedBodyComponent? body=null)
     {
         if (!Resolve(uid, ref body))
