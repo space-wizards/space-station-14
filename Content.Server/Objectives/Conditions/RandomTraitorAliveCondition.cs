@@ -31,9 +31,6 @@ namespace Content.Server.Objectives.Conditions
                        mc.Mind != mind &&
                        mc.Mind?.HasRole<TraitorRole>() == true;
             }).Select(mc => mc.Mind).ToList();
-
-            if (allOtherTraitors.Count == 0)
-                return new StayAliveCondition(); // This can duplicate but it can be addressed when there's an objective conflict/selection refactor (which is needed right now for other issues too)
  
             return new RandomTraitorAliveCondition {Target = IoCManager.Resolve<IRobustRandom>().Pick(allOtherTraitors)};
         }
