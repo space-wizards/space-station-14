@@ -69,6 +69,6 @@
     # so hardsuit helmet just have small battery inside
   - type: HandheldLight
   - type: PowerCellSlot
-    cellSlot:
-      startingItem: PowerCellHardsuitHelmet # self recharging
-      locked: true # no need to recharge manually
+    startingCellType: PowerCellHardsuitHelmet
+    canRemoveCell: false
+    showVerb: false

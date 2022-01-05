@@ -53,34 +53,34 @@ namespace Content.Client.Items.Managers
                 button.StorageButton.Visible = _entityManager.HasComponent<ClientStorageComponent>(entity);
             }
 
-            button.Entity = entity ?? default;
+            button.Entity = entity;
 
             // im lazy
             button.UpdateSlotHighlighted();
             return true;
         }
 
-        public bool OnButtonPressed(GUIBoundKeyEventArgs args, EntityUid? item)
+        public bool OnButtonPressed(GUIBoundKeyEventArgs args, EntityUid item)
         {
-            if (item == null)
+            if (item == default)
                 return false;
 
             if (args.Function == ContentKeyFunctions.ExamineEntity)
             {
                 _entitySystemManager.GetEntitySystem<ExamineSystem>()
-                    .DoExamine(item.Value);
+                    .DoExamine(item);
             }
             else if (args.Function == ContentKeyFunctions.OpenContextMenu)
             {
-                _entitySystemManager.GetEntitySystem<VerbSystem>().VerbMenu.OpenVerbMenu(item.Value);
+                _entitySystemManager.GetEntitySystem<VerbSystem>().VerbMenu.OpenVerbMenu(item);
             }
             else if (args.Function == ContentKeyFunctions.ActivateItemInWorld)
             {
-                _entityManager.EntityNetManager?.SendSystemNetworkMessage(new InteractInventorySlotEvent(item.Value, altInteract: false));
+                _entityManager.EntityNetManager?.SendSystemNetworkMessage(new InteractInventorySlotEvent(item, altInteract: false));
             }
             else if (args.Function == ContentKeyFunctions.AltActivateItemInWorld)
             {
-                _entityManager.RaisePredictiveEvent(new InteractInventorySlotEvent(item.Value, altInteract: true));
+                _entityManager.RaisePredictiveEvent(new InteractInventorySlotEvent(item, altInteract: true));
             }
             else
             {
@@ -90,7 +90,7 @@ namespace Content.Client.Items.Managers
             return true;
         }
 
-        public void UpdateCooldown(ItemSlotButton? button, EntityUid? entity)
+        public void UpdateCooldown(ItemSlotButton? button, EntityUid entity)
         {
             var cooldownDisplay = button?.CooldownDisplay;
 
@@ -99,7 +99,7 @@ namespace Content.Client.Items.Managers
                 return;
             }
 
-            if (entity == null || _entityManager.Deleted(entity) ||
+            if (entity == default || _entityManager.Deleted(entity) ||
                 !_entityManager.TryGetComponent(entity, out ItemCooldownComponent? cooldown) ||
                 !cooldown.CooldownStart.HasValue ||
                 !cooldown.CooldownEnd.HasValue)
@@ -119,9 +119,9 @@ namespace Content.Client.Items.Managers
             cooldownDisplay.Visible = ratio > -1f;
         }
 
-        public void HoverInSlot(ItemSlotButton button, EntityUid? entity, bool fits)
+        public void HoverInSlot(ItemSlotButton button, EntityUid entity, bool fits)
         {
-            if (entity == null || !button.MouseIsHovering)
+            if (entity == default || !button.MouseIsHovering)
             {
                 button.ClearHover();
                 return;
@@ -135,7 +135,7 @@ namespace Content.Client.Items.Managers
             // Set green / red overlay at 50% transparency
             var hoverEntity = _entityManager.SpawnEntity("hoverentity", MapCoordinates.Nullspace);
             var hoverSprite = _entityManager.GetComponent<SpriteComponent>(hoverEntity);
-            hoverSprite.CopyFrom(_entityManager.GetComponent<SpriteComponent>(entity.Value));
+            hoverSprite.CopyFrom(_entityManager.GetComponent<SpriteComponent>(entity));
             hoverSprite.Color = fits ? new Color(0, 255, 0, 127) : new Color(255, 0, 0, 127);
 
             button.HoverSpriteView.Sprite = hoverSprite;

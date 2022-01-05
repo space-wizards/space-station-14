@@ -332,8 +332,9 @@ namespace Content.Server.Construction
                 }
             }
 
-            if (await Construct(user, "item_construction", constructionGraph, edge, targetNode) is {Valid: true} item)
-                hands.PutInHandOrDrop(item);
+            if (await Construct(user, "item_construction", constructionGraph, edge, targetNode) is {Valid: true} item &&
+                EntityManager.TryGetComponent(item, out SharedItemComponent? itemComp))
+                hands.PutInHandOrDrop(itemComp);
         }
 
         // LEGACY CODE. See warning at the top of the file!

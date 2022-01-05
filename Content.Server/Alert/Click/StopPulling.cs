@@ -15,10 +15,10 @@ namespace Content.Server.Alert.Click
     [DataDefinition]
     public class StopPulling : IAlertClick
     {
-        public void AlertClicked(EntityUid player)
+        public void AlertClicked(ClickAlertEventArgs args)
         {
             var ps = EntitySystem.Get<SharedPullingSystem>();
-            var playerTarget = ps.GetPulled(player);
+            var playerTarget = ps.GetPulled(args.Player);
             if (playerTarget != default && IoCManager.Resolve<IEntityManager>().TryGetComponent(playerTarget, out SharedPullableComponent playerPullable))
             {
                 ps.TryStopPull(playerPullable);

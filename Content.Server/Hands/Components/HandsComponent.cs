@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Act;
+using Content.Server.Interaction;
 using Content.Server.Popups;
 using Content.Server.Pulling;
 using Content.Shared.Audio;
@@ -12,10 +13,12 @@ using Content.Shared.Item;
 using Content.Shared.Popups;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Sound;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -33,6 +36,32 @@ namespace Content.Server.Hands.Components
         [DataField("disarmedSound")] SoundSpecifier _disarmedSound = new SoundPathSpecifier("/Audio/Effects/thudswoosh.ogg");
 
         int IDisarmedAct.Priority => int.MaxValue; // We want this to be the last disarm act to run.
+
+        protected override void OnHeldEntityRemovedFromHand(EntityUid heldEntity, HandState handState)
+        {
+            if (_entities.TryGetComponent(heldEntity, out SharedItemComponent? item))
+            {
+                item.RemovedFromSlot();
+                _entitySystemManager.GetEntitySystem<InteractionSystem>().UnequippedHandInteraction(Owner, heldEntity, handState);
+            }
+            if (_entities.TryGetComponent(heldEntity, out SpriteComponent? sprite))
+            {
+                sprite.RenderOrder = _entities.CurrentTick.Value;
+            }
+        }
+
+        protected override void HandlePickupAnimation(EntityUid entity)
+        {
+            var initialPosition = EntityCoordinates.FromMap(_entities.GetComponent<TransformComponent>(Owner).Parent?.Owner ?? Owner, _entities.GetComponent<TransformComponent>(entity).MapPosition);
+
+            var finalPosition = _entities.GetComponent<TransformComponent>(Owner).LocalPosition;
+
+            if (finalPosition.EqualsApprox(initialPosition.Position))
+                return;
+
+            _entities.EntityNetManager!.SendSystemNetworkMessage(
+                new PickupAnimationMessage(entity, finalPosition, initialPosition));
+        }
 
         #region Pull/Disarm
 
@@ -168,6 +197,24 @@ namespace Content.Server.Hands.Components
                 if (_entities.TryGetComponent(entity, out SharedItemComponent? item))
                     yield return item;
             }
+        }
+
+        /// <summary>
+        ///     Checks if any hand can pick up an item.
+        /// </summary>
+        public bool CanPutInHand(SharedItemComponent item, bool mobCheck = true)
+        {
+            var entity = item.Owner;
+
+            if (mobCheck && !PlayerCanPickup())
+                return false;
+
+            foreach (var hand in Hands)
+            {
+                if (CanInsertEntityIntoHand(hand, entity))
+                    return true;
+            }
+            return false;
         }
         #endregion
     }

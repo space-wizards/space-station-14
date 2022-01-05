@@ -59,18 +59,24 @@ namespace Content.Client.Hands
         {
             base.EnteredTree();
 
+            _handsSystem.GuiStateUpdated += HandsSystemOnGuiStateUpdated;
             _configManager.OnValueChanged(CCVars.HudTheme, UpdateHudTheme);
+
+            HandsSystemOnGuiStateUpdated();
         }
 
         protected override void ExitedTree()
         {
             base.ExitedTree();
 
+            _handsSystem.GuiStateUpdated -= HandsSystemOnGuiStateUpdated;
             _configManager.UnsubValueChanged(CCVars.HudTheme, UpdateHudTheme);
         }
 
-        public void Update(HandsGuiState state)
+        private void HandsSystemOnGuiStateUpdated()
         {
+            var state = _handsSystem.GetGuiState();
+
             ActiveHand = state.ActiveHand;
             _hands = state.GuiHands;
             Array.Sort(_hands, HandOrderComparer.Instance);
@@ -91,7 +97,7 @@ namespace Content.Client.Hands
                 newButton.OnPressed += args => OnHandPressed(args, handName);
                 newButton.OnStoragePressed += _ => OnStoragePressed(handName);
 
-                _itemSlotManager.SetItemSlot(newButton, hand.HeldItem);
+                _itemSlotManager.SetItemSlot(newButton, hand.HeldItem ?? EntityUid.Invalid);
 
                 // Show blocked overlay if hand is blocked.
                 newButton.Blocked.Visible =
@@ -101,7 +107,7 @@ namespace Content.Client.Hands
             if (TryGetActiveHand(out var activeHand))
             {
                 activeHand.HandButton.SetActiveHand(true);
-                StatusPanel.Update(activeHand.HeldItem);
+                StatusPanel.Update(activeHand.HeldItem ?? EntityUid.Invalid);
             }
         }
 
@@ -113,7 +119,7 @@ namespace Content.Client.Hands
             }
             else if (TryGetHand(handName, out var hand))
             {
-                _itemSlotManager.OnButtonPressed(args, hand.HeldItem);
+                _itemSlotManager.OnButtonPressed(args, hand.HeldItem ?? EntityUid.Invalid);
             }
         }
 
@@ -150,7 +156,7 @@ namespace Content.Client.Hands
 
             foreach (var hand in _hands)
             {
-                _itemSlotManager.UpdateCooldown(hand.HandButton, hand.HeldItem);
+                _itemSlotManager.UpdateCooldown(hand.HandButton, hand.HeldItem ?? EntityUid.Invalid);
             }
         }
 

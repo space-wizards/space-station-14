@@ -190,6 +190,7 @@ namespace Content.Client.Entry
             IoCManager.Resolve<IClientPreferencesManager>().Initialize();
             IoCManager.Resolve<IStationEventManager>().Initialize();
             IoCManager.Resolve<EuiManager>().Initialize();
+            IoCManager.Resolve<AlertManager>().Initialize();
             IoCManager.Resolve<ActionManager>().Initialize();
             IoCManager.Resolve<IVoteManager>().Initialize();
             IoCManager.Resolve<IGamePrototypeLoadManager>().Initialize();

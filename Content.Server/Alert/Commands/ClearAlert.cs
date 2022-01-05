@@ -34,21 +34,21 @@ namespace Content.Server.Alert.Commands
                 if (!CommandUtils.TryGetAttachedEntityByUsernameOrId(shell, target, player, out attachedEntity)) return;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(attachedEntity, out AlertsComponent? alertsComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(attachedEntity, out ServerAlertsComponent? alertsComponent))
             {
                 shell.WriteLine("user has no alerts component");
                 return;
             }
 
             var alertType = args[0];
-            var alertsSystem = EntitySystem.Get<AlertsSystem>();
-            if (!alertsSystem.TryGet(Enum.Parse<AlertType>(alertType), out var alert))
+            var alertMgr = IoCManager.Resolve<AlertManager>();
+            if (!alertMgr.TryGet(Enum.Parse<AlertType>(alertType), out var alert))
             {
                 shell.WriteLine("unrecognized alertType " + alertType);
                 return;
             }
 
-            alertsSystem.ClearAlert(attachedEntity, alert.AlertType);
+            alertsComponent.ClearAlert(alert.AlertType);
         }
     }
 }

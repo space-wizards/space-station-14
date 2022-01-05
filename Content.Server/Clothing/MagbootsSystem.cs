@@ -7,15 +7,12 @@ using Content.Shared.Movement.EntitySystems;
 using Content.Shared.Slippery;
 using Content.Shared.Verbs;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 
 namespace Content.Server.Clothing
 {
     public sealed class MagbootsSystem : EntitySystem
     {
-        [Dependency] private readonly AlertsSystem _alertsSystem = default!;
-
         public override void Initialize()
         {
             base.Initialize();
@@ -38,13 +35,16 @@ namespace Content.Server.Clothing
                 movedByPressure.Enabled = state;
             }
 
-            if (state)
+            if (TryComp(parent, out ServerAlertsComponent? alerts))
             {
-                _alertsSystem.ShowAlert(parent, AlertType.Magboots);
-            }
-            else
-            {
-                _alertsSystem.ClearAlert(parent, AlertType.Magboots);
+                if (state)
+                {
+                    alerts.ShowAlert(AlertType.Magboots);
+                }
+                else
+                {
+                    alerts.ClearAlert(AlertType.Magboots);
+                }
             }
         }
 

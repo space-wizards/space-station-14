@@ -1,12 +1,15 @@
 using System;
-using Content.Server.PowerCell;
+using Content.Server.Power.Components;
 using Content.Server.Projectiles.Components;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Player;
+using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -22,6 +25,9 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
         public override string Name => "BatteryBarrel";
 
+        [DataField("cellSlot", required: true)]
+        public ItemSlot CellSlot = new();
+
         // The minimum change we need before we can fire
         [DataField("lowerChargeLimit")]
         [ViewVariables] private float _lowerChargeLimit = 10;
@@ -31,19 +37,19 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         [DataField("ammoPrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         [ViewVariables] private string? _ammoPrototype;
 
+        public BatteryComponent? PowerCell => _entities.GetComponentOrNull<BatteryComponent>(CellSlot.Item);
         private ContainerSlot _ammoContainer = default!;
 
         public override int ShotsLeft
         {
             get
             {
-
-                if (!EntitySystem.Get<PowerCellSystem>().TryGetBatteryFromSlot(Owner, out var battery))
+                if (CellSlot.Item is not {} powerCell)
                 {
                     return 0;
                 }
 
-                return (int) Math.Ceiling(battery.CurrentCharge / _baseFireCost);
+                return (int) Math.Ceiling(_entities.GetComponent<BatteryComponent>(powerCell).CurrentCharge / _baseFireCost);
             }
         }
 
@@ -51,12 +57,12 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         {
             get
             {
-                if (!EntitySystem.Get<PowerCellSystem>().TryGetBatteryFromSlot(Owner, out var battery))
+                if (CellSlot.Item is not {} powerCell)
                 {
                     return 0;
                 }
 
-                return (int) Math.Ceiling(battery.MaxCharge / _baseFireCost);
+                return (int) Math.Ceiling(_entities.GetComponent<BatteryComponent>(powerCell).MaxCharge / _baseFireCost);
             }
         }
 
@@ -75,6 +81,8 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         {
             base.Initialize();
 
+            EntitySystem.Get<ItemSlotsSystem>().AddItemSlot(Owner, $"{Name}-powercell-container", CellSlot);
+
             if (_ammoPrototype != null)
             {
                 _ammoContainer = Owner.EnsureContainer<ContainerSlot>($"{Name}-ammo-container");
@@ -87,6 +95,12 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             Dirty();
         }
 
+        protected override void OnRemove()
+        {
+            base.OnRemove();
+            EntitySystem.Get<ItemSlotsSystem>().RemoveItemSlot(Owner, CellSlot);
+        }
+
         protected override void Startup()
         {
             base.Startup();
@@ -95,7 +109,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
         public void UpdateAppearance()
         {
-            _appearanceComponent?.SetData(MagazineBarrelVisuals.MagLoaded, EntitySystem.Get<PowerCellSystem>().TryGetBatteryFromSlot(Owner, out _));
+            _appearanceComponent?.SetData(MagazineBarrelVisuals.MagLoaded, CellSlot.HasItem);
             _appearanceComponent?.SetData(AmmoVisuals.AmmoCount, ShotsLeft);
             _appearanceComponent?.SetData(AmmoVisuals.AmmoMax, Capacity);
             Dirty();
@@ -117,9 +131,14 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
         public override EntityUid? TakeProjectile(EntityCoordinates spawnAt)
         {
-            if (!EntitySystem.Get<PowerCellSystem>().TryGetBatteryFromSlot(Owner, out var capacitor))
-                return null;
+            var powerCellEntity = CellSlot.Item;
 
+            if (powerCellEntity == null)
+            {
+                return null;
+            }
+
+            var capacitor = _entities.GetComponent<BatteryComponent>(powerCellEntity.Value);
             if (capacitor.CurrentCharge < _lowerChargeLimit)
             {
                 return null;

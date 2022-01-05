@@ -47,14 +47,18 @@ namespace Content.Server.Strip
 
             _strippableSystem = EntitySystem.Get<StrippableSystem>();
             Owner.EnsureComponentWarn<ServerInventoryComponent>();
+            var hands = Owner.EnsureComponentWarn<HandsComponent>();
             var cuffed = Owner.EnsureComponentWarn<CuffableComponent>();
             cuffed.OnCuffedStateChanged += UpdateState;
+            hands.OnItemChanged += UpdateState;
         }
 
         protected override void Shutdown()
         {
             base.Shutdown();
 
+            if(_entities.TryGetComponent<HandsComponent>(Owner, out var hands))
+                hands.OnItemChanged -= UpdateState;
             if(_entities.TryGetComponent<CuffableComponent>(Owner, out var cuffed))
                 cuffed.OnCuffedStateChanged -= UpdateState;
         }
@@ -204,8 +208,8 @@ namespace Content.Server.Strip
             if (result != DoAfterStatus.Finished) return;
 
             userHands.Drop(hand);
-            hands.TryPickupEntity(hand, item!.Owner, checkActionBlocker: false, animateUser: true);
-            // hand update will trigger strippable update
+            hands.TryPickupEntity(hand, item!.Owner, checkActionBlocker: false);
+            UpdateState();
         }
 
         /// <summary>
@@ -310,12 +314,10 @@ namespace Content.Server.Strip
             var result = await doAfterSystem.WaitDoAfter(doAfterArgs);
             if (result != DoAfterStatus.Finished) return;
 
-            if (!hands.TryGetHeldEntity(hand, out var entity))
-                return;
-
+            var item = hands.GetItem(hand);
             hands.Drop(hand, false);
-            userHands.PutInHandOrDrop(entity.Value);
-            // hand update will trigger strippable update
+            userHands.PutInHandOrDrop(item!);
+            UpdateState();
         }
 
         private void HandleUserInterfaceMessage(ServerBoundUserInterfaceMessage obj)

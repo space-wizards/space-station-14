@@ -5,7 +5,6 @@
   abstract: true
   components:
   - type: HandheldLight
-  - type: PowerCellSlot
   - type: ItemActions
     actions:
         - actionType: ToggleLight

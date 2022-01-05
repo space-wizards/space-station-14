@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Content.Client.Items.UI;
 using Robust.Client.UserInterface;
 using Robust.Shared.GameObjects;
@@ -7,10 +7,10 @@ namespace Content.Client.Items.Managers
 {
     public interface IItemSlotManager
     {
-        bool OnButtonPressed(GUIBoundKeyEventArgs args, EntityUid? item);
-        void UpdateCooldown(ItemSlotButton? cooldownTexture, EntityUid? entity);
+        bool OnButtonPressed(GUIBoundKeyEventArgs args, EntityUid item);
+        void UpdateCooldown(ItemSlotButton? cooldownTexture, EntityUid entity);
         bool SetItemSlot(ItemSlotButton button, EntityUid? entity);
-        void HoverInSlot(ItemSlotButton button, EntityUid? entity, bool fits);
+        void HoverInSlot(ItemSlotButton button, EntityUid entity, bool fits);
         event Action<EntitySlotHighlightedEventArgs>? EntityHighlightedUpdated;
         bool IsHighlighted(EntityUid? uid);
 

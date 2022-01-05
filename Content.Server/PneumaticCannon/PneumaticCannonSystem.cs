@@ -322,7 +322,7 @@ namespace Content.Server.PneumaticCannon
             {
                 if (EntityManager.TryGetComponent<HandsComponent?>(user, out var hands))
                 {
-                    hands.PutInHand(contained);
+                    hands.TryPutInActiveHandOrAny(contained);
                 }
 
                 user.PopupMessage(Loc.GetString("pneumatic-cannon-component-gas-tank-remove",

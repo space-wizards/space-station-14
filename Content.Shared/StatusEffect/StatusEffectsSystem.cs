@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Alert;
 using Robust.Shared.GameObjects;
@@ -15,7 +15,6 @@ namespace Content.Shared.StatusEffect
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IComponentFactory _componentFactory = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly AlertsSystem _alertsSystem = default!;
 
         public override void Initialize()
         {
@@ -81,16 +80,20 @@ namespace Content.Shared.StatusEffect
         /// <param name="time">How long the effect should last for.</param>
         /// <param name="refresh">The status effect cooldown should be refreshed (true) or accumulated (false).</param>
         /// <param name="status">The status effects component to change, if you already have it.</param>
+        /// <param name="alerts">The alerts component to modify, if the status effect has an alert.</param>
         /// <returns>False if the effect could not be added or the component already exists, true otherwise.</returns>
         /// <typeparam name="T">The component type to add and remove from the entity.</typeparam>
         public bool TryAddStatusEffect<T>(EntityUid uid, string key, TimeSpan time, bool refresh,
-            StatusEffectsComponent? status = null)
+            StatusEffectsComponent? status=null,
+            SharedAlertsComponent? alerts=null)
             where T: Component, new()
         {
             if (!Resolve(uid, ref status, false))
                 return false;
 
-            if (TryAddStatusEffect(uid, key, time, refresh, status))
+            Resolve(uid, ref alerts, false);
+
+            if (TryAddStatusEffect(uid, key, time, refresh, status, alerts))
             {
                 // If they already have the comp, we just won't bother updating anything.
                 if (!EntityManager.HasComponent<T>(uid))
@@ -105,12 +108,15 @@ namespace Content.Shared.StatusEffect
         }
 
         public bool TryAddStatusEffect(EntityUid uid, string key, TimeSpan time, bool refresh, string component,
-            StatusEffectsComponent? status = null)
+            StatusEffectsComponent? status = null,
+            SharedAlertsComponent? alerts = null)
         {
             if (!Resolve(uid, ref status, false))
                 return false;
 
-            if (TryAddStatusEffect(uid, key, time, refresh, status))
+            Resolve(uid, ref alerts, false);
+
+            if (TryAddStatusEffect(uid, key, time, refresh, status, alerts))
             {
                 // If they already have the comp, we just won't bother updating anything.
                 if (!EntityManager.HasComponent(uid, _componentFactory.GetRegistration(component).Type))
@@ -136,21 +142,25 @@ namespace Content.Shared.StatusEffect
         /// <param name="time">How long the effect should last for.</param>
         /// <param name="refresh">The status effect cooldown should be refreshed (true) or accumulated (false).</param>
         /// <param name="status">The status effects component to change, if you already have it.</param>
+        /// <param name="alerts">The alerts component to modify, if the status effect has an alert.</param>
         /// <returns>False if the effect could not be added, or if the effect already existed.</returns>
         /// <remarks>
         ///     This obviously does not add any actual 'effects' on its own. Use the generic overload,
         ///     which takes in a component type, if you want to automatically add and remove a component.
-        /// 
+        ///
         ///     If the effect already exists, it will simply replace the cooldown with the new one given.
         ///     If you want special 'effect merging' behavior, do it your own damn self!
         /// </remarks>
         public bool TryAddStatusEffect(EntityUid uid, string key, TimeSpan time, bool refresh,
-            StatusEffectsComponent? status=null)
+            StatusEffectsComponent? status=null,
+            SharedAlertsComponent? alerts=null)
         {
             if (!Resolve(uid, ref status, false))
                 return false;
             if (!CanApplyEffect(uid, key, status))
                 return false;
+
+            Resolve(uid, ref alerts, false);
 
             // we already checked if it has the index in CanApplyEffect so a straight index and not tryindex here
             // is fine
@@ -181,10 +191,9 @@ namespace Content.Shared.StatusEffect
                 status.ActiveEffects.Add(key, new StatusEffectState(cooldown, refresh, null));
             }
 
-            if (proto.Alert != null)
+            if (proto.Alert != null && alerts != null)
             {
-                var cooldown1 = GetAlertCooldown(uid, proto.Alert.Value, status);
-                _alertsSystem.ShowAlert(uid, proto.Alert.Value, null, cooldown1);
+                alerts.ShowAlert(proto.Alert.Value, cooldown: GetAlertCooldown(uid, proto.Alert.Value, status));
             }
 
             status.Dirty();
@@ -224,13 +233,15 @@ namespace Content.Shared.StatusEffect
         /// <param name="uid">The entity to remove an effect from.</param>
         /// <param name="key">The effect ID to remove.</param>
         /// <param name="status">The status effects component to change, if you already have it.</param>
+        /// <param name="alerts">The alerts component to modify, if the status effect has an alert.</param>
         /// <returns>False if the effect could not be removed, true otherwise.</returns>
         /// <remarks>
         ///     Obviously this doesn't automatically clear any effects a status effect might have.
         ///     That's up to the removed component to handle itself when it's removed.
         /// </remarks>
         public bool TryRemoveStatusEffect(EntityUid uid, string key,
-            StatusEffectsComponent? status=null)
+            StatusEffectsComponent? status=null,
+            SharedAlertsComponent? alerts=null)
         {
             if (!Resolve(uid, ref status, false))
                 return false;
@@ -238,6 +249,8 @@ namespace Content.Shared.StatusEffect
                 return false;
             if (!_prototypeManager.TryIndex<StatusEffectPrototype>(key, out var proto))
                 return false;
+
+            Resolve(uid, ref alerts, false);
 
             var state = status.ActiveEffects[key];
 
@@ -254,9 +267,9 @@ namespace Content.Shared.StatusEffect
                     EntityManager.RemoveComponent(uid, type);
             }
 
-            if (proto.Alert != null)
+            if (proto.Alert != null && alerts != null)
             {
-                _alertsSystem.ClearAlert(uid, proto.Alert.Value);
+                alerts.ClearAlert(proto.Alert.Value);
             }
 
             status.ActiveEffects.Remove(key);
@@ -271,17 +284,21 @@ namespace Content.Shared.StatusEffect
         /// </summary>
         /// <param name="uid">The entity to remove effects from.</param>
         /// <param name="status">The status effects component to change, if you already have it.</param>
+        /// <param name="alerts">The alerts component to modify, if the status effect has an alert.</param>
         /// <returns>False if any status effects failed to be removed, true if they all did.</returns>
         public bool TryRemoveAllStatusEffects(EntityUid uid,
-            StatusEffectsComponent? status = null)
+            StatusEffectsComponent? status = null,
+            SharedAlertsComponent? alerts = null)
         {
             if (!Resolve(uid, ref status, false))
                 return false;
 
+            Resolve(uid, ref alerts, false);
+
             bool failed = false;
             foreach (var effect in status.ActiveEffects)
             {
-                if(!TryRemoveStatusEffect(uid, effect.Key, status))
+                if(!TryRemoveStatusEffect(uid, effect.Key, status, alerts))
                     failed = true;
             }
 
@@ -333,10 +350,13 @@ namespace Content.Shared.StatusEffect
         /// <param name="time">The amount of time to add.</param>
         /// <param name="status">The status effect component, should you already have it.</param>
         public bool TryAddTime(EntityUid uid, string key, TimeSpan time,
-            StatusEffectsComponent? status=null)
+            StatusEffectsComponent? status=null,
+            SharedAlertsComponent? alert=null)
         {
             if (!Resolve(uid, ref status, false))
                 return false;
+
+            Resolve(uid, ref alert, false);
 
             if (!HasStatusEffect(uid, key, status))
                 return false;
@@ -346,10 +366,11 @@ namespace Content.Shared.StatusEffect
             status.ActiveEffects[key].Cooldown = timer;
 
             if (_prototypeManager.TryIndex<StatusEffectPrototype>(key, out var proto)
+                && alert != null
                 && proto.Alert != null)
             {
-                (TimeSpan, TimeSpan)? cooldown = GetAlertCooldown(uid, proto.Alert.Value, status);
-                _alertsSystem.ShowAlert(uid, proto.Alert.Value, null, cooldown);
+                alert.ShowAlert(proto.Alert.Value, cooldown: GetAlertCooldown(uid, proto.Alert.Value, status));
+
             }
 
             return true;
@@ -363,10 +384,13 @@ namespace Content.Shared.StatusEffect
         /// <param name="time">The amount of time to add.</param>
         /// <param name="status">The status effect component, should you already have it.</param>
         public bool TryRemoveTime(EntityUid uid, string key, TimeSpan time,
-            StatusEffectsComponent? status=null)
+            StatusEffectsComponent? status=null,
+            SharedAlertsComponent? alert=null)
         {
             if (!Resolve(uid, ref status, false))
                 return false;
+
+            Resolve(uid, ref alert, false);
 
             if (!HasStatusEffect(uid, key, status))
                 return false;
@@ -381,10 +405,11 @@ namespace Content.Shared.StatusEffect
             status.ActiveEffects[key].Cooldown = timer;
 
             if (_prototypeManager.TryIndex<StatusEffectPrototype>(key, out var proto)
+                && alert != null
                 && proto.Alert != null)
             {
-                (TimeSpan, TimeSpan)? cooldown = GetAlertCooldown(uid, proto.Alert.Value, status);
-                _alertsSystem.ShowAlert(uid, proto.Alert.Value, null, cooldown);
+                alert.ShowAlert(proto.Alert.Value, cooldown: GetAlertCooldown(uid, proto.Alert.Value, status));
+
             }
 
             return true;

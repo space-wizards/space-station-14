@@ -1,11 +1,13 @@
+using Content.Server.Power.Components;
 using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Popups;
-using Content.Shared.PowerCell.Components;
 using Content.Shared.Verbs;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using System;
 
 namespace Content.Server.Weapon.Ranged.Barrels
 {
@@ -16,9 +18,11 @@ namespace Content.Server.Weapon.Ranged.Barrels
         public override void Initialize()
         {
             base.Initialize();
+
             SubscribeLocalEvent<RevolverBarrelComponent, GetAlternativeVerbsEvent>(AddSpinVerb);
 
-            SubscribeLocalEvent<ServerBatteryBarrelComponent, PowerCellChangedEvent>(OnCellSlotUpdated);
+            SubscribeLocalEvent<ServerBatteryBarrelComponent, EntInsertedIntoContainerMessage>(OnCellSlotUpdated);
+            SubscribeLocalEvent<ServerBatteryBarrelComponent, EntRemovedFromContainerMessage>(OnCellSlotUpdated);
 
             SubscribeLocalEvent<BoltActionBarrelComponent, GetInteractionVerbsEvent>(AddToggleBoltVerb);
 
@@ -26,9 +30,10 @@ namespace Content.Server.Weapon.Ranged.Barrels
             SubscribeLocalEvent<ServerMagazineBarrelComponent, GetAlternativeVerbsEvent>(AddEjectMagazineVerb);
         }
 
-        private void OnCellSlotUpdated(EntityUid uid, ServerBatteryBarrelComponent component, PowerCellChangedEvent args)
+        private void OnCellSlotUpdated(EntityUid uid, ServerBatteryBarrelComponent component, ContainerModifiedMessage args)
         {
-            component.UpdateAppearance();
+            if (args.Container.ID == component.CellSlot.ID)
+                component.UpdateAppearance();
         }
 
         private void AddSpinVerb(EntityUid uid, RevolverBarrelComponent component, GetAlternativeVerbsEvent args)

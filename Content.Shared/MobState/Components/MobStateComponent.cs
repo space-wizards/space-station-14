@@ -10,6 +10,7 @@ using Content.Shared.MobState.State;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -68,7 +69,10 @@ namespace Content.Shared.MobState.Components
 
         protected override void OnRemove()
         {
-            EntitySystem.Get<AlertsSystem>().ClearAlert(Owner, AlertType.HumanHealth);
+            if (_entMan.TryGetComponent(Owner, out SharedAlertsComponent? status))
+            {
+                status.ClearAlert(AlertType.HumanHealth);
+            }
 
             base.OnRemove();
         }

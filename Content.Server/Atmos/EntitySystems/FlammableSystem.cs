@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Content.Server.Administration.Logs;
+using Content.Server.Alert;
 using Content.Server.Atmos.Components;
 using Content.Server.Stunnable;
 using Content.Server.Temperature.Systems;
@@ -27,7 +28,6 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly StunSystem _stunSystem = default!;
         [Dependency] private readonly TemperatureSystem _temperatureSystem = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-        [Dependency] private readonly AlertsSystem _alertsSystem = default!;
         [Dependency] private readonly AdminLogSystem _logSystem = default!;
 
         private const float MinimumFireStacks = -10f;
@@ -167,9 +167,10 @@ namespace Content.Server.Atmos.EntitySystems
         }
 
         public void Resist(EntityUid uid,
-            FlammableComponent? flammable = null)
+            FlammableComponent? flammable = null,
+            ServerAlertsComponent? alerts = null)
         {
-            if (!Resolve(uid, ref flammable))
+            if (!Resolve(uid, ref flammable, ref alerts))
                 return;
 
             if (!flammable.OnFire || !_actionBlockerSystem.CanInteract(flammable.Owner) || flammable.Resisting)
@@ -178,7 +179,7 @@ namespace Content.Server.Atmos.EntitySystems
             flammable.Resisting = true;
 
             flammable.Owner.PopupMessage(Loc.GetString("flammable-component-resist-message"));
-            _stunSystem.TryParalyze(uid, TimeSpan.FromSeconds(2f), true);
+            _stunSystem.TryParalyze(uid, TimeSpan.FromSeconds(2f), true, alerts: alerts);
 
             // TODO FLAMMABLE: Make this not use TimerComponent...
             flammable.Owner.SpawnTimer(2000, () =>
@@ -223,13 +224,15 @@ namespace Content.Server.Atmos.EntitySystems
                     flammable.FireStacks = MathF.Min(0, flammable.FireStacks + 1);
                 }
 
+                EntityManager.TryGetComponent(flammable.Owner, out ServerAlertsComponent? status);
+
                 if (!flammable.OnFire)
                 {
-                    _alertsSystem.ClearAlert(uid, AlertType.Fire);
+                    status?.ClearAlert(AlertType.Fire);
                     continue;
                 }
 
-                _alertsSystem.ShowAlert(uid, AlertType.Fire, null, null);
+                status?.ShowAlert(AlertType.Fire);
 
                 if (flammable.FireStacks > 0)
                 {

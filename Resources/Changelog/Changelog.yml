@@ -1,4 +1,19 @@
 Entries:
+- author: Swept
+  changes:
+  - {message: Adds a ton of inhands for various items, type: Add}
+  id: 324
+  time: '2021-08-20T05:36:32.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Added sound for fire extinguisher safety, type: Add}
+  id: 325
+  time: '2021-08-20T05:37:17.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Adds a 6pack of cola, type: Add}
+  id: 326
+  time: '2021-08-20T05:41:17.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: The keybinding to stop pulling an object now works., type: Fix}
@@ -2896,21 +2911,3 @@ Entries:
   - {message: Added new reagent Capsaicin Oil from Chilis, type: Add}
   id: 825
   time: '2022-01-04T13:51:23.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Energy weapons now only accept small power cells., type: Fix}
-  id: 826
-  time: '2022-01-05T04:20:26.0000000+00:00'
-- author: Matz05
-  changes:
-  - {message: Made LED tubes increase the brightness of lights they're installed in,
-    type: Tweak}
-  - {message: 'Provided an admin/sandbox/map-spawnable light fixture that starts out
-      with an LED tube, for brighter-lit areas.', type: Add}
-  id: 827
-  time: '2022-01-05T05:25:37.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Traitors can now see their codewords in the objective menu., type: Add}
-  id: 828
-  time: '2022-01-05T05:46:41.0000000+00:00'

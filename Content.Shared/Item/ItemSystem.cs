@@ -57,7 +57,7 @@ namespace Content.Shared.Item
                 return;
 
             Verb verb = new();
-            verb.Act = () => args.Hands.PutInHand(args.Target);
+            verb.Act = () => args.Hands.TryPutInActiveHandOrAny(args.Target);
             verb.IconTexture = "/Textures/Interface/VerbIcons/pickup.svg.192dpi.png";
 
             // if the item already in a container (that is not the same as the user's), then change the text.

@@ -1,4 +1,4 @@
-using System;
+using Content.Server.Alert;
 using Content.Server.Power.Components;
 using Content.Server.Shuttles.Components;
 using Content.Shared.ActionBlocker;
@@ -18,7 +18,6 @@ namespace Content.Server.Shuttles.EntitySystems
     internal sealed class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     {
         [Dependency] private readonly ActionBlockerSystem _blocker = default!;
-        [Dependency] private readonly AlertsSystem _alertsSystem = default!;
 
         public override void Initialize()
         {
@@ -142,7 +141,10 @@ namespace Content.Server.Shuttles.EntitySystems
 
             component.SubscribedPilots.Add(pilotComponent);
 
-            _alertsSystem.ShowAlert(entity, AlertType.PilotingShuttle);
+            if (EntityManager.TryGetComponent(entity, out ServerAlertsComponent? alertsComponent))
+            {
+                alertsComponent.ShowAlert(AlertType.PilotingShuttle);
+            }
 
             entity.PopupMessage(Loc.GetString("shuttle-pilot-start"));
             pilotComponent.Console = component;
@@ -161,7 +163,10 @@ namespace Content.Server.Shuttles.EntitySystems
 
             if (!helmsman.SubscribedPilots.Remove(pilotComponent)) return;
 
-            _alertsSystem.ClearAlert(pilotComponent.Owner, AlertType.PilotingShuttle);
+            if (EntityManager.TryGetComponent(pilotComponent.Owner, out ServerAlertsComponent? alertsComponent))
+            {
+                alertsComponent.ClearAlert(AlertType.PilotingShuttle);
+            }
 
             pilotComponent.Owner.PopupMessage(Loc.GetString("shuttle-pilot-end"));
 

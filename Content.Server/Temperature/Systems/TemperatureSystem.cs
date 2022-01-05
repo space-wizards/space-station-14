@@ -2,12 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Administration.Logs;
+using Content.Server.Alert;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Temperature.Components;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.Database;
+using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
@@ -17,7 +20,6 @@ namespace Content.Server.Temperature.Systems
     {
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-        [Dependency] private readonly AlertsSystem _alertsSystem = default!;
         [Dependency] private readonly AdminLogSystem _logSystem = default!;
 
         /// <summary>
@@ -29,13 +31,13 @@ namespace Content.Server.Temperature.Systems
 
         public float UpdateInterval = 1.0f;
 
-        private float _accumulatedFrametime;
+        private float _accumulatedFrametime = 0.0f;
 
         public override void Initialize()
         {
             SubscribeLocalEvent<TemperatureComponent, OnTemperatureChangeEvent>(EnqueueDamage);
             SubscribeLocalEvent<TemperatureComponent, AtmosExposedUpdateEvent>(OnAtmosExposedUpdate);
-            SubscribeLocalEvent<AlertsComponent, OnTemperatureChangeEvent>(ServerAlert);
+            SubscribeLocalEvent<ServerAlertsComponent, OnTemperatureChangeEvent>(ServerAlert);
             SubscribeLocalEvent<TemperatureProtectionComponent, ModifyChangedTemperatureEvent>(OnTemperatureChangeAttempt);
         }
 
@@ -101,43 +103,43 @@ namespace Content.Server.Temperature.Systems
             ChangeHeat(uid, heat * temperature.AtmosTemperatureTransferEfficiency, temperature: temperature );
         }
 
-        private void ServerAlert(EntityUid uid, AlertsComponent status, OnTemperatureChangeEvent args)
+        private void ServerAlert(EntityUid uid, ServerAlertsComponent status, OnTemperatureChangeEvent args)
         {
             switch (args.CurrentTemperature)
             {
                 // Cold strong.
                 case <= 260:
-                    _alertsSystem.ShowAlert(uid, AlertType.Cold, 3);
+                    status.ShowAlert(AlertType.Cold, 3);
                     break;
 
                 // Cold mild.
                 case <= 280 and > 260:
-                    _alertsSystem.ShowAlert(uid, AlertType.Cold, 2);
+                    status.ShowAlert(AlertType.Cold, 2);
                     break;
 
                 // Cold weak.
                 case <= 292 and > 280:
-                    _alertsSystem.ShowAlert(uid, AlertType.Cold, 1);
+                    status.ShowAlert(AlertType.Cold, 1);
                     break;
 
                 // Safe.
                 case <= 327 and > 292:
-                    _alertsSystem.ClearAlertCategory(uid, AlertCategory.Temperature);
+                    status.ClearAlertCategory(AlertCategory.Temperature);
                     break;
 
                 // Heat weak.
                 case <= 335 and > 327:
-                    _alertsSystem.ShowAlert(uid, AlertType.Hot, 1);
+                    status.ShowAlert(AlertType.Hot, 1);
                     break;
 
                 // Heat mild.
                 case <= 360 and > 335:
-                    _alertsSystem.ShowAlert(uid, AlertType.Hot, 2);
+                    status.ShowAlert(AlertType.Hot, 2);
                     break;
 
                 // Heat strong.
                 case > 360:
-                    _alertsSystem.ShowAlert(uid, AlertType.Hot, 3);
+                    status.ShowAlert(AlertType.Hot, 3);
                     break;
             }
         }
@@ -149,7 +151,7 @@ namespace Content.Server.Temperature.Systems
 
         private void ChangeDamage(EntityUid uid, TemperatureComponent temperature)
         {
-            if (!EntityManager.HasComponent<DamageableComponent>(uid))
+            if (!EntityManager.TryGetComponent<DamageableComponent>(uid, out var damage))
                 return;
 
             // See this link for where the scaling func comes from:

@@ -17,8 +17,7 @@
     arc: default
   - type: PowerCellSlot
     slotSize: Medium
-    cellSlot:
-      startingItem: PowerCellMediumHigh
+    startingCellType: PowerCellMediumHigh
   - type: ItemCooldown
   - type: Clothing
     sprite: Objects/Weapons/Melee/stunbaton.rsi
