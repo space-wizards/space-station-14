@@ -17,7 +17,7 @@
     - !type:TraitorRequirement {}
     - !type:IncompatibleConditionsRequirement
         conditions:
-          - RandomTraitorAliveObjective
+          - RandomTraitorAliveCondition
   conditions:
     - !type:KillRandomPersonCondition {}
   canBeDuplicate: true
@@ -29,7 +29,8 @@
     - !type:TraitorRequirement {}
     - !type:IncompatibleConditionsRequirement
         conditions:
-          - KillRandomObjective
+          - KillRandomPersonCondition
+    - !type:MultipleTraitorsRequirement
   conditions:
     - !type:RandomTraitorAliveCondition {}
   canBeDuplicate: true

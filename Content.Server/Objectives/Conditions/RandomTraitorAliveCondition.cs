@@ -21,13 +21,8 @@ namespace Content.Server.Objectives.Conditions
             var entityMgr = IoCManager.Resolve<IEntityManager>();
             var allOtherTraitors = entityMgr.EntityQuery<MindComponent>(true).Where(mc =>
             {
-                var entity = mc.Mind?.OwnedEntity;
-                
-                if (entity == default)
-                    return false;
-
-                return entityMgr.TryGetComponent(entity, out MobStateComponent mobState) &&
-                       mobState.IsAlive() &&
+                return entityMgr.TryGetComponent(mc.Mind?.OwnedEntity, out MobStateComponent mobState) &&
+                       mc.Mind?.CharacterDeadIC == false &&
                        mc.Mind != mind &&
                        mc.Mind?.HasRole<TraitorRole>() == true;
             }).Select(mc => mc.Mind).ToList();
