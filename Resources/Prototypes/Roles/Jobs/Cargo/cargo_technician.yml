@@ -1,8 +1,6 @@
 - type: job
   id: CargoTechnician
   name: "cargo technician"
-  positions: 2
-  spawnPositions: 1
   startingGear: CargoTechGear
   departments:
   - Cargo
@@ -11,15 +9,16 @@
   access:
   - Cargo
   - Maintenance
+  - External
 
 - type: startingGear
   id: CargoTechGear
   equipment:
     head: ClothingHeadHatCargosoft
-    innerclothing: ClothingUniformJumpsuitCargo
-    backpack: ClothingBackpackFilled
+    jumpsuit: ClothingUniformJumpsuitCargo
+    back: ClothingBackpackFilled
     shoes: ClothingShoesColorBlack
-    idcard: CargoPDA
+    id: CargoPDA
     ears: ClothingHeadsetCargo
   innerclothingskirt: ClothingUniformJumpskirtCargo
   satchel: ClothingBackpackSatchelFilled

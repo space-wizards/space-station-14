@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using Content.Shared.Pulling;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Controllers;
-using Robust.Shared.Maths;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Physics.Controllers
 {
@@ -65,30 +64,31 @@ namespace Content.Server.Physics.Controllers
                     continue;
                 }
 
-                if (pullable.Puller == null)
+                if (pullable.Puller is not {Valid: true} puller)
                 {
                     continue;
                 }
 
                 // Now that's over with...
 
-                var pullerPosition = pullable.Puller!.Transform.MapPosition;
-                if (pullable.MovingTo.Value.MapId != pullerPosition.MapId)
+                var pullerPosition = EntityManager.GetComponent<TransformComponent>(puller).MapPosition;
+                var movingTo = pullable.MovingTo.Value.ToMap(EntityManager);
+                if (movingTo.MapId != pullerPosition.MapId)
                 {
                     _pullableSystem.StopMoveTo(pullable);
                     continue;
                 }
 
-                if (!pullable.Owner.TryGetComponent<PhysicsComponent>(out var physics) ||
+                if (!EntityManager.TryGetComponent<PhysicsComponent?>(pullable.Owner, out var physics) ||
                     physics.BodyType == BodyType.Static ||
-                    pullable.MovingTo.Value.MapId != pullable.Owner.Transform.MapID)
+                    movingTo.MapId != EntityManager.GetComponent<TransformComponent>(pullable.Owner).MapID)
                 {
                     _pullableSystem.StopMoveTo(pullable);
                     continue;
                 }
 
-                var movingPosition = pullable.MovingTo.Value.Position;
-                var ownerPosition = pullable.Owner.Transform.MapPosition.Position;
+                var movingPosition = movingTo.Position;
+                var ownerPosition = EntityManager.GetComponent<TransformComponent>(pullable.Owner).MapPosition.Position;
 
                 var diff = movingPosition - ownerPosition;
                 var diffLength = diff.Length;
@@ -113,7 +113,14 @@ namespace Content.Server.Physics.Controllers
                     accel -= physics.LinearVelocity * SettleShutdownMultiplier * scaling;
                 }
                 physics.WakeBody();
-                physics.ApplyLinearImpulse(accel * physics.Mass * frameTime);
+                var impulse = accel * physics.Mass * frameTime;
+                physics.ApplyLinearImpulse(impulse);
+
+                if (EntityManager.TryGetComponent<PhysicsComponent?>(puller, out var pullerPhysics))
+                {
+                    pullerPhysics.WakeBody();
+                    pullerPhysics.ApplyLinearImpulse(-impulse);
+                }
             }
         }
     }

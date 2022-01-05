@@ -15,7 +15,7 @@
     size: 100
     sprite: Objects/Tools/bucket.rsi
     Slots:
-    - Helmet
+    - HEAD
   - type: Bucket
   - type: SolutionContainerManager
     solutions:
@@ -32,6 +32,7 @@
       type: TransferAmountBoundUserInterface
   - type: Physics
     bodyType: Dynamic
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -40,4 +41,10 @@
       mask:
       - Impassable
   - type: Spillable
+    solution: bucket
+  - type: DrawableSolution
+    solution: bucket
+  - type: RefillableSolution
+    solution: bucket
+  - type: DrainableSolution
     solution: bucket

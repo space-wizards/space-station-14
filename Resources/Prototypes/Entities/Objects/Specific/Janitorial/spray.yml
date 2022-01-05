@@ -23,8 +23,6 @@
   - type: DrainableSolution
     solution: spray
   - type: SolutionTransfer
-  - type: Spillable
-    solution: spray
   - type: ItemCooldown
   - type: Spray
     transferAmount: 10
@@ -77,17 +75,20 @@
   - type: Sprite
     netsync: false
     sprite: Effects/chempuff.rsi
+    rotation: 90
     layers:
     - state: chempuff
       map: ["enum.VaporVisualLayers.Base"]
   - type: Physics
     bodyType: Dynamic
+  - type: Fixtures
     fixtures:
     - shape:
-              !type:PhysShapeAabb
+        !type:PhysShapeAabb
         bounds: "-0.25,-0.25,0.25,0.25"
       hard: false
       mask:
+      - Opaque
       - Impassable
       - MobImpassable
       - SmallImpassable

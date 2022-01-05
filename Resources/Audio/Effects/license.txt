@@ -9,3 +9,8 @@ adminhelp.ogg taken from https://github.com/tgstation/tgstation/blob/d775e1ac804
  Actual source is https://freesound.org/people/martian/sounds/19261/ (CC0)
  The sound had been reversed and the volume altered.
 
+voteding.ogg taken from "Bike, Bell Ding, Single, 01-01.wav" by InspectorJ (www.jshaw.co.uk) of Freesound.org at https://freesound.org/people/InspectorJ/sounds/484344/ under CC BY 3.0. The volume has been reduced.
+
+poster_broken.ogg taken from https://github.com/tgstation/tgstation/blob/2834383245d2129a106acef3afd17b81e1e64777/sound/items/poster_ripped.ogg
+
+poster_being_set.ogg taken from https://github.com/tgstation/tgstation/blob/2834383245d2129a106acef3afd17b81e1e64777/sound/items/poster_ripped.ogg

@@ -1,10 +1,12 @@
 using System.Collections.Generic;
-using Content.Shared.DrawDepth;
 using Content.Shared.MobState;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
+using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
 namespace Content.Client.MobState
 {
@@ -50,7 +52,7 @@ namespace Content.Client.MobState
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
-            var sprite = component.Owner.GetComponent<ISpriteComponent>();
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner);
             if (!component.TryGetData(DamageStateVisuals.State, out DamageState data))
             {
                 return;
@@ -69,10 +71,10 @@ namespace Content.Client.MobState
             }
 
             // So they don't draw over mobs anymore
-            if (_data == DamageState.Dead)
+            if (_data == DamageState.Dead && sprite.DrawDepth > (int) DrawDepth.Items)
             {
                 _originalDrawDepth = sprite.DrawDepth;
-                sprite.DrawDepth = (int) DrawDepth.FloorObjects;
+                sprite.DrawDepth = (int) DrawDepth.Items;
             }
             else if (_originalDrawDepth != null)
             {

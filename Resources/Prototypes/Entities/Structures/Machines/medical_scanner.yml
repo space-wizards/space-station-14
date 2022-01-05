@@ -14,6 +14,19 @@
       map: ["enum.MedicalScannerVisualLayers.Machine"]
     - state: idle_unlit
       map: ["enum.MedicalScannerVisualLayers.Terminal"]
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.25,-0.5,0.25,0.5"
+      mass: 25
+      layer:
+      - SmallImpassable
+      - Opaque
+      mask:
+      - MobMask
   - type: Construction
     graph: machine
     node: machine

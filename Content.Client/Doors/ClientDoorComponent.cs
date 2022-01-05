@@ -2,6 +2,12 @@ using System;
 using Content.Shared.Doors;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using DrawDepthTag = Robust.Shared.GameObjects.DrawDepth;
+using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
+
 
 namespace Content.Client.Doors
 {
@@ -13,6 +19,12 @@ namespace Content.Client.Doors
     [ComponentReference(typeof(SharedDoorComponent))]
     public class ClientDoorComponent : SharedDoorComponent
     {
+        [DataField("openDrawDepth", customTypeSerializer: typeof(ConstantSerializer<DrawDepthTag>))]
+        public int OpenDrawDepth = (int) DrawDepth.Doors;
+
+        [DataField("closedDrawDepth", customTypeSerializer: typeof(ConstantSerializer<DrawDepthTag>))]
+        public int ClosedDrawDepth = (int) DrawDepth.Doors;
+
         private bool _stateChangeHasProgressed = false;
         private TimeSpan _timeOffset;
 
@@ -27,7 +39,7 @@ namespace Content.Client.Doors
 
                 base.State = value;
 
-                Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new DoorStateMessage(this, State));
+                IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, new DoorStateChangedEvent(State), false);
             }
         }
 
@@ -83,18 +95,6 @@ namespace Content.Client.Doors
                 _stateChangeHasProgressed = true;
                 Dirty();
             }
-        }
-    }
-
-    public sealed class DoorStateMessage : EntityEventArgs
-    {
-        public ClientDoorComponent Component { get; }
-        public SharedDoorComponent.DoorState State { get; }
-
-        public DoorStateMessage(ClientDoorComponent component, SharedDoorComponent.DoorState state)
-        {
-            Component = component;
-            State = state;
         }
     }
 }

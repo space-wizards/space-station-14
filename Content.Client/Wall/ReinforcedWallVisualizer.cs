@@ -1,6 +1,8 @@
 ﻿using Content.Shared.Wall;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Client.Wall
 {
@@ -21,7 +23,8 @@ namespace Content.Client.Wall
         {
             var entity = component.Owner;
 
-            if (!entity.TryGetComponent(out ISpriteComponent? sprite)) return;
+            var entities = IoCManager.Resolve<IEntityManager>();
+            if (!entities.TryGetComponent(entity, out ISpriteComponent? sprite)) return;
 
             if (stage < 0)
             {

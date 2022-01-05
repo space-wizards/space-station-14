@@ -10,9 +10,9 @@ namespace Content.Shared.Construction.Steps
     {
         [DataField("prototype")] public string Prototype { get; } = string.Empty;
 
-        public override bool EntityValid(IEntity entity)
+        public override bool EntityValid(EntityUid uid, IEntityManager entityManager)
         {
-            return entity.Prototype?.ID == Prototype;
+            return entityManager.GetComponent<MetaDataComponent>(uid).EntityPrototype?.ID == Prototype;
         }
 
         public override void DoExamine(ExaminedEvent examinedEvent)

@@ -1,11 +1,12 @@
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.Access.Components;
-using Content.Shared.Containers.ItemSlots;
 using Content.Server.Hands.Components;
-using Content.Server.Inventory.Components;
-using Content.Server.Items;
 using Content.Server.PDA;
+using Content.Shared.Access.Components;
+using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Inventory;
+using Content.Shared.Item;
+using Content.Shared.PDA;
 using NUnit.Framework;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
@@ -29,13 +30,12 @@ namespace Content.IntegrationTests.Tests.PDA
   id: {PdaDummy}
   name: {PdaDummy}
   components:
-  - type: ItemSlots
-    slots:
-      pdaIdSlot:
-        whitelist:
-          components:
-            - IdCard
   - type: PDA
+    idSlot:
+      name: ID Card
+      whitelist:
+        components:
+        - IdCard
   - type: Item";
 
         [Test]
@@ -58,11 +58,13 @@ namespace Content.IntegrationTests.Tests.PDA
             var sPlayerManager = server.ResolveDependency<IPlayerManager>();
             var sEntityManager = server.ResolveDependency<IEntityManager>();
 
+            var invSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<InventorySystem>();
+
             await server.WaitAssertion(() =>
             {
-                var player = sPlayerManager.GetAllPlayers().Single().AttachedEntity;
+                var player = sPlayerManager.Sessions.Single().AttachedEntity.GetValueOrDefault();
 
-                Assert.NotNull(player);
+                Assert.That(player != default);
 
                 // The player spawns with an ID on by default
                 Assert.NotNull(player.GetHeldId());
@@ -70,16 +72,16 @@ namespace Content.IntegrationTests.Tests.PDA
                 Assert.NotNull(id);
 
                 // Put PDA in hand
-                var dummyPda = sEntityManager.SpawnEntity(PdaDummy, player.Transform.MapPosition);
-                var pdaItemComponent = dummyPda.GetComponent<ItemComponent>();
-                player.GetComponent<IHandsComponent>().PutInHand(pdaItemComponent);
+                var dummyPda = sEntityManager.SpawnEntity(PdaDummy, sEntityManager.GetComponent<TransformComponent>(player).MapPosition);
+                var pdaItemComponent = sEntityManager.GetComponent<SharedItemComponent>(dummyPda);
+                sEntityManager.GetComponent<HandsComponent>(player).PutInHand(pdaItemComponent);
 
-                var pdaComponent = dummyPda.GetComponent<PDAComponent>();
-                var pdaIdCard = sEntityManager.SpawnEntity(IdCardDummy, player.Transform.MapPosition);
+                var pdaComponent = sEntityManager.GetComponent<PDAComponent>(dummyPda);
+                var pdaIdCard = sEntityManager.SpawnEntity(IdCardDummy, sEntityManager.GetComponent<TransformComponent>(player).MapPosition);
 
-                var itemSlots = dummyPda.GetComponent<SharedItemSlotsComponent>();
-                sEntityManager.EntitySysManager.GetEntitySystem<SharedItemSlotsSystem>()
-                    .TryInsertContent(itemSlots, pdaIdCard, pdaComponent.IdSlot);
+                var itemSlots = sEntityManager.GetComponent<ItemSlotsComponent>(dummyPda);
+                sEntityManager.EntitySysManager.GetEntitySystem<ItemSlotsSystem>()
+                    .TryInsert(dummyPda, pdaComponent.IdSlot, pdaIdCard, null);
                 var pdaContainedId = pdaComponent.ContainedID;
 
                 // The PDA in the hand should be found first
@@ -90,11 +92,11 @@ namespace Content.IntegrationTests.Tests.PDA
                 Assert.That(id, Is.EqualTo(pdaContainedId));
 
                 // Put ID card in hand
-                var idDummy = sEntityManager.SpawnEntity(IdCardDummy, player.Transform.MapPosition);
-                var idItemComponent = idDummy.GetComponent<ItemComponent>();
-                player.GetComponent<IHandsComponent>().PutInHand(idItemComponent);
+                var idDummy = sEntityManager.SpawnEntity(IdCardDummy, sEntityManager.GetComponent<TransformComponent>(player).MapPosition);
+                var idItemComponent = sEntityManager.GetComponent<SharedItemComponent>(idDummy);
+                sEntityManager.GetComponent<HandsComponent>(player).PutInHand(idItemComponent);
 
-                var idCardComponent = idDummy.GetComponent<IdCardComponent>();
+                var idCardComponent = sEntityManager.GetComponent<IdCardComponent>(idDummy);
 
                 // The ID in the hand should be found first
                 Assert.NotNull(player.GetHeldId());
@@ -103,24 +105,20 @@ namespace Content.IntegrationTests.Tests.PDA
                 Assert.That(id, Is.EqualTo(idCardComponent));
 
                 // Remove all IDs and PDAs
-                var inventory = player.GetComponent<InventoryComponent>();
+                Assert.That(invSystem.TryGetSlots(player, out var slots));
 
-                foreach (var slot in inventory.Slots)
+                foreach (var slot in slots)
                 {
-                    var item = inventory.GetSlotItem(slot);
-
-                    if (item == null)
-                    {
+                    if(!invSystem.TryGetSlotEntity(player, slot.Name, out var item))
                         continue;
-                    }
 
-                    if (item.Owner.HasComponent<PDAComponent>())
+                    if (sEntityManager.HasComponent<PDAComponent>(item))
                     {
-                        inventory.ForceUnequip(slot);
+                        invSystem.TryUnequip(player, slot.Name, force: true);
                     }
                 }
 
-                var hands = player.GetComponent<IHandsComponent>();
+                var hands = sEntityManager.GetComponent<HandsComponent>(player);
 
                 hands.Drop(dummyPda, false);
                 hands.Drop(idDummy, false);

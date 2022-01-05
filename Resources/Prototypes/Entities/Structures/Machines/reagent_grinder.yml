@@ -16,6 +16,7 @@
     visuals:
     - type: ReagentGrinderVisualizer
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -28,4 +29,4 @@
     netsync: false
     sprite: Structures/Machines/juicer.rsi
     state: juicer0
-    drawdepth: Items
+    drawdepth: SmallObjects

@@ -6,13 +6,16 @@ using Robust.Shared.Timing;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Movement.Components;
+using Content.Shared.Movement.EntitySystems;
 using static Content.Shared.Chemistry.Components.MovespeedModifierMetabolismComponent;
 
 namespace Content.Shared.Chemistry
 {
+    // TODO CONVERT THIS TO A STATUS EFFECT!!!!!!!!!!!!!!!!!!!!!!!!
     public class MetabolismMovespeedModifierSystem : EntitySystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly MovementSpeedModifierSystem _movespeed = default!;
 
         private readonly List<MovespeedModifierMetabolismComponent> _components = new();
 
@@ -20,8 +23,11 @@ namespace Content.Shared.Chemistry
         {
             base.Initialize();
 
+            UpdatesOutsidePrediction = true;
+
             SubscribeLocalEvent<MovespeedModifierMetabolismComponent, ComponentHandleState>(OnMovespeedHandleState);
             SubscribeLocalEvent<MovespeedModifierMetabolismComponent, ComponentStartup>(AddComponent);
+            SubscribeLocalEvent<MovespeedModifierMetabolismComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
         }
 
         private void OnMovespeedHandleState(EntityUid uid, MovespeedModifierMetabolismComponent component, ref ComponentHandleState args)
@@ -33,7 +39,7 @@ namespace Content.Shared.Chemistry
                 (!component.WalkSpeedModifier.Equals(cast.WalkSpeedModifier) ||
                  !component.SprintSpeedModifier.Equals(cast.SprintSpeedModifier)))
             {
-                modifier.RefreshMovementSpeedModifiers();
+                _movespeed.RefreshMovementSpeedModifiers(uid);
             }
 
             component.WalkSpeedModifier = cast.WalkSpeedModifier;
@@ -41,6 +47,12 @@ namespace Content.Shared.Chemistry
             component.ModifierTimer = cast.ModifierTimer;
 
         }
+
+        private void OnRefreshMovespeed(EntityUid uid, MovespeedModifierMetabolismComponent component, RefreshMovementSpeedModifiersEvent args)
+        {
+            args.ModifySpeed(component.WalkSpeedModifier, component.SprintSpeedModifier);
+        }
+
         private void AddComponent(EntityUid uid, MovespeedModifierMetabolismComponent component, ComponentStartup args)
         {
             _components.Add(component);
@@ -65,12 +77,9 @@ namespace Content.Shared.Chemistry
                 if (component.ModifierTimer > currentTime) continue;
 
                 _components.RemoveAt(i);
-                EntityManager.RemoveComponent<MovespeedModifierMetabolismComponent>(component.Owner.Uid);
+                EntityManager.RemoveComponent<MovespeedModifierMetabolismComponent>(component.Owner);
 
-                if (component.Owner.TryGetComponent(out MovementSpeedModifierComponent? modifier))
-                {
-                    modifier.RefreshMovementSpeedModifiers();
-                }
+                _movespeed.RefreshMovementSpeedModifiers(component.Owner);
             }
         }
     }

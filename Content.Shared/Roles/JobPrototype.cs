@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
+using Content.Shared.Access;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Roles
@@ -33,6 +36,12 @@ namespace Content.Shared.Roles
         [DataField("requireAdminNotify")]
         public bool RequireAdminNotify { get; } = false;
 
+        [DataField("setPreference")]
+        public bool SetPreference { get; } = true;
+
+        [DataField("canBeAntag")]
+        public bool CanBeAntag { get; } = true;
+
         /// <summary>
         ///     Whether this job is a head.
         ///     The job system will try to pick heads before other jobs on the same priority level.
@@ -40,21 +49,7 @@ namespace Content.Shared.Roles
         [DataField("head")]
         public bool IsHead { get; private set; }
 
-        /// <summary>
-        ///     The total amount of people that can start with this job round-start.
-        /// </summary>
-        public int SpawnPositions => _spawnPositions ?? TotalPositions;
-
-        [DataField("spawnPositions")]
-        private int? _spawnPositions;
-
-        /// <summary>
-        ///     The total amount of positions available.
-        /// </summary>
-        [DataField("positions")]
-        public int TotalPositions { get; private set; }
-
-        [DataField("startingGear")]
+        [DataField("startingGear", customTypeSerializer: typeof(PrototypeIdSerializer<StartingGearPrototype>))]
         public string? StartingGear { get; private set; }
 
         [DataField("icon")] public string Icon { get; } = string.Empty;
@@ -65,7 +60,7 @@ namespace Content.Shared.Roles
         [DataField("departments")]
         public IReadOnlyCollection<string> Departments { get; } = Array.Empty<string>();
 
-        [DataField("access")]
+        [DataField("access", customTypeSerializer: typeof(PrototypeIdListSerializer<AccessLevelPrototype>))]
         public IReadOnlyCollection<string> Access { get; } = Array.Empty<string>();
     }
 }

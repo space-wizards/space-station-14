@@ -11,13 +11,13 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Doors
 {
-    [NetworkedComponent()]
+    [NetworkedComponent]
     public abstract class SharedDoorComponent : Component
     {
         public override string Name => "Door";
 
         [ComponentDependency]
-        protected readonly SharedAppearanceComponent? AppearanceComponent = null;
+        protected readonly AppearanceComponent? AppearanceComponent = null;
 
         [ComponentDependency]
         protected readonly IPhysBody? PhysicsComponent = null;
@@ -97,9 +97,9 @@ namespace Content.Shared.Doors
         /// </summary>
         protected List<EntityUid> CurrentlyCrushing = new();
 
-        public bool IsCrushing(IEntity entity)
+        public bool IsCrushing(EntityUid entity)
         {
-            return CurrentlyCrushing.Contains(entity.Uid);
+            return CurrentlyCrushing.Contains(entity);
         }
 
         protected void SetAppearance(DoorVisualState state)
@@ -176,5 +176,15 @@ namespace Content.Shared.Doors
             CurrentlyCrushing = currentlyCrushing;
             CurTime = curTime;
         }
+    }
+
+    public sealed class DoorOpenAttemptEvent : CancellableEntityEventArgs
+    {
+
+    }
+
+    public sealed class DoorCloseAttemptEvent : CancellableEntityEventArgs
+    {
+
     }
 }

@@ -18,9 +18,9 @@ namespace Content.Shared.Slippery
     {
         public override string Name => "Slippery";
 
-        private float _paralyzeTime = 3f;
+        private float _paralyzeTime = 5f;
         private float _intersectPercentage = 0.3f;
-        private float _requiredSlipSpeed = 0.1f;
+        private float _requiredSlipSpeed = 5f;
         private float _launchForwardsMultiplier = 1f;
         private bool _slippery = true;
         private SoundSpecifier _slipSound = new SoundPathSpecifier("/Audio/Effects/slip.ogg");
@@ -138,7 +138,7 @@ namespace Content.Shared.Slippery
             }
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new SlipperyComponentState(ParalyzeTime, IntersectPercentage, RequiredSlipSpeed, LaunchForwardsMultiplier, Slippery, SlipSound.GetSound(), Slipped.ToArray());
         }

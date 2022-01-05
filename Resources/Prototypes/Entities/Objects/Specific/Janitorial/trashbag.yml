@@ -8,6 +8,7 @@
     state: icon-3
   - type: Item
     sprite: Objects/Specific/Janitorial/trashbag.rsi
+    size: 125
   - type: Storage
     capacity: 125
     quickInsert: true
@@ -18,6 +19,16 @@
 - type: entity
   name: trash bag
   id: TrashBagBlue
+  parent: TrashBag
+  components:
+  - type: Sprite
+    state: blue-icon-3
+  - type: Item
+    HeldPrefix: blue
+
+- type: entity
+  name: spell of all-consuming cleanliness
+  id: BagOfSummoningGarbage
   parent: BaseItem
   components:
   - type: Sprite
@@ -27,8 +38,9 @@
     sprite: Objects/Specific/Janitorial/trashbag.rsi
     HeldPrefix: blue
   - type: Storage
-    capacity: 125
+    capacity: 125000
     quickInsert: true
     areaInsert: true
+    areaInsertRadius: 1000
     storageSoundCollection:
       collection: trashBagRustle

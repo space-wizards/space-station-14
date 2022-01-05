@@ -66,7 +66,7 @@
 - type: entity
   parent: ClothingBeltBase
   id: ClothingBeltChiefEngineer
-  name: chief's toolbelt
+  name: chief engineer's toolbelt
   description: Holds tools, looks snazzy.
   components:
   - type: Sprite
@@ -237,9 +237,9 @@
         - Ointment
         - CigPack
         - Pill
+        - PillCanister
       components:
         - Hypospray
-        - SurgeryTool
         - Radio
   - type: ItemMapper
     mapLayers:
@@ -255,6 +255,7 @@
         whitelist:
           tags:
           - Pill
+          - PillCanister
       bottle_spray:
         whitelist:
           tags:

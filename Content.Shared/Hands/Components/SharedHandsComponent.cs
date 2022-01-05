@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 using Content.Shared.Interaction;
+using Content.Shared.Item;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
@@ -11,16 +14,17 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Hands.Components
 {
-    [NetworkedComponent()]
-    public abstract class SharedHandsComponent : Component, ISharedHandsComponent
+    [NetworkedComponent]
+    public abstract class SharedHandsComponent : Component
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public sealed override string Name => "Hands";
 
         public event Action? OnItemChanged; //TODO: Try to replace C# event
@@ -75,7 +79,7 @@ namespace Content.Shared.Hands.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public float ThrowRange { get; set; } = 8f;
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             var hands = new HandState[Hands.Count];
 
@@ -90,9 +94,34 @@ namespace Content.Shared.Hands.Components
         public virtual void HandsModified()
         {
             // todo axe all this for ECS.
+            // todo burn it all down.
+            UpdateHandVisualizer();
             Dirty();
 
-            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new HandsModifiedMessage { Hands = this });
+            _entMan.EventBus.RaiseEvent(EventSource.Local, new HandsModifiedMessage { Hands = this });
+        }
+
+        public void UpdateHandVisualizer()
+        {
+            var entMan = _entMan;
+
+            if (!entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
+                return;
+
+            var hands = new List<HandVisualState>();
+            foreach (var hand in Hands)
+            {
+                if (hand.HeldEntity == null)
+                    continue;
+
+                if (!entMan.TryGetComponent(hand.HeldEntity, out SharedItemComponent? item) || item.RsiPath == null)
+                    continue;
+
+                var handState = new HandVisualState(item.RsiPath, item.EquippedPrefix, hand.Location, item.Color);
+                hands.Add(handState);
+            }
+
+            appearance.SetData(HandsVisuals.VisualState, new HandsVisualState(hands));
         }
 
         public void AddHand(string handName, HandLocation handLocation)
@@ -100,13 +129,12 @@ namespace Content.Shared.Hands.Components
             if (HasHand(handName))
                 return;
 
-            var container = ContainerHelpers.CreateContainer<ContainerSlot>(Owner, handName);
+            var container = Owner.CreateContainer<ContainerSlot>(handName);
             container.OccludesLight = false;
 
             Hands.Add(new Hand(handName, handLocation, container));
 
-            if (ActiveHand == null)
-                ActiveHand = handName;
+            ActiveHand ??= handName;
 
             HandCountChanged();
 
@@ -123,7 +151,7 @@ namespace Content.Shared.Hands.Components
 
         private void RemoveHand(Hand hand)
         {
-            DropHeldEntityToFloor(hand, intentionalDrop: false);
+            DropHeldEntityToFloor(hand);
             hand.Container?.Shutdown();
             Hands.Remove(hand);
 
@@ -192,7 +220,7 @@ namespace Content.Shared.Hands.Components
             return hand.HeldEntity != null;
         }
 
-        public bool TryGetHeldEntity(string handName, [NotNullWhen(true)] out IEntity? heldEntity)
+        public bool TryGetHeldEntity(string handName,[NotNullWhen(true)] out EntityUid? heldEntity)
         {
             heldEntity = null;
 
@@ -200,16 +228,16 @@ namespace Content.Shared.Hands.Components
                 return false;
 
             heldEntity = hand.HeldEntity;
-            return heldEntity != null;
+            return hand.HeldEntity != null;
         }
 
-        public bool TryGetActiveHeldEntity([NotNullWhen(true)] out IEntity? heldEntity)
+        public bool TryGetActiveHeldEntity([NotNullWhen(true)] out EntityUid? heldEntity)
         {
             heldEntity = GetActiveHand()?.HeldEntity;
             return heldEntity != null;
         }
 
-        public bool IsHolding(IEntity entity)
+        public bool IsHolding(EntityUid entity)
         {
             foreach (var hand in Hands)
             {
@@ -219,12 +247,12 @@ namespace Content.Shared.Hands.Components
             return false;
         }
 
-        public IEnumerable<IEntity> GetAllHeldEntities()
+        public IEnumerable<EntityUid> GetAllHeldEntities()
         {
             foreach (var hand in Hands)
             {
-                if (hand.HeldEntity != null)
-                    yield return hand.HeldEntity;
+                if (hand.HeldEntity.HasValue)
+                    yield return hand.HeldEntity.Value;
             }
         }
 
@@ -244,7 +272,7 @@ namespace Content.Shared.Hands.Components
             return acc;
         }
 
-        public bool TryGetHandHoldingEntity(IEntity entity, [NotNullWhen(true)] out Hand? handFound)
+        public bool TryGetHandHoldingEntity(EntityUid entity, [NotNullWhen(true)] out Hand? handFound)
         {
             handFound = null;
 
@@ -283,34 +311,34 @@ namespace Content.Shared.Hands.Components
         /// <summary>
         ///     Tries to drop the contents of the active hand to the target location.
         /// </summary>
-        public bool TryDropActiveHand(EntityCoordinates targetDropLocation, bool doMobChecks = true, bool intentional = true)
+        public bool TryDropActiveHand(EntityCoordinates targetDropLocation, bool doMobChecks = true)
         {
             if (!TryGetActiveHand(out var hand))
                 return false;
 
-            return TryDropHeldEntity(hand, targetDropLocation, doMobChecks, intentional);
+            return TryDropHeldEntity(hand, targetDropLocation, doMobChecks);
         }
 
         /// <summary>
         ///     Tries to drop the contents of a hand to the target location.
         /// </summary>
-        public bool TryDropHand(string handName, EntityCoordinates targetDropLocation, bool checkActionBlocker = true, bool intentional = true)
+        public bool TryDropHand(string handName, EntityCoordinates targetDropLocation, bool checkActionBlocker = true)
         {
             if (!TryGetHand(handName, out var hand))
                 return false;
 
-            return TryDropHeldEntity(hand, targetDropLocation, checkActionBlocker, intentional);
+            return TryDropHeldEntity(hand, targetDropLocation, checkActionBlocker);
         }
 
         /// <summary>
         ///     Tries to drop a held entity to the target location.
         /// </summary>
-        public bool TryDropEntity(IEntity entity, EntityCoordinates coords, bool doMobChecks = true, bool intentional = true)
+        public bool TryDropEntity(EntityUid entity, EntityCoordinates coords, bool doMobChecks = true)
         {
             if (!TryGetHandHoldingEntity(entity, out var hand))
                 return false;
 
-            return TryDropHeldEntity(hand, coords, doMobChecks, intentional);
+            return TryDropHeldEntity(hand, coords, doMobChecks);
         }
 
         /// <summary>
@@ -329,9 +357,9 @@ namespace Content.Shared.Hands.Components
         }
 
         /// <summary>
-        ///     Attempts to move a held item from a hand into a container that is not another hand, without dropping it on the floor inbetween.
+        ///     Attempts to move a held item from a hand into a container that is not another hand, without dropping it on the floor in-between.
         /// </summary>
-        public bool TryPutEntityIntoContainer(IEntity entity, BaseContainer targetContainer, bool checkActionBlocker = true)
+        public bool Drop(EntityUid entity, BaseContainer targetContainer, bool checkActionBlocker = true)
         {
             if (!TryGetHandHoldingEntity(entity, out var hand))
                 return false;
@@ -346,29 +374,30 @@ namespace Content.Shared.Hands.Components
         /// <summary>
         ///     Tries to drop the contents of a hand directly under the player.
         /// </summary>
-        public bool TryDropHandToFloor(string handName, bool checkActionBlocker = true, bool intentionalDrop = true)
+        public bool Drop(string handName, bool checkActionBlocker = true)
         {
             if (!TryGetHand(handName, out var hand))
                 return false;
 
-            return TryDropHeldEntity(hand, Owner.Transform.Coordinates, checkActionBlocker, intentionalDrop);
+            return TryDropHeldEntity(hand, _entMan.GetComponent<TransformComponent>(Owner).Coordinates, checkActionBlocker);
         }
 
         /// <summary>
         ///     Tries to drop a held entity directly under the player.
         /// </summary>
-        public bool TryDropEntityToFloor(IEntity entity, bool checkActionBlocker = true, bool intentionalDrop = true)
+        public bool Drop(EntityUid entity, bool checkActionBlocker = true)
         {
             if (!TryGetHandHoldingEntity(entity, out var hand))
                 return false;
 
-            return TryDropHeldEntity(hand, Owner.Transform.Coordinates, checkActionBlocker, intentionalDrop);
+            return TryDropHeldEntity(hand, _entMan.GetComponent<TransformComponent>(Owner).Coordinates, checkActionBlocker);
         }
 
         /// <summary>
         ///     Tries to remove the item in the active hand, without dropping it.
-        ///     For transfering the held item to anothe rlocation, like an inventory slot,
-        ///     which souldn't trigger the drop interaction
+        ///     For transferring the held item to another location, like an inventory slot,
+        ///     which shouldn't trigger the drop interaction
+        /// </summary>
         public bool TryDropNoInteraction()
         {
             if (!TryGetActiveHand(out var hand))
@@ -386,19 +415,11 @@ namespace Content.Shared.Hands.Components
         /// </summary>
         private bool CanRemoveHeldEntityFromHand(Hand hand)
         {
-            var heldEntity = hand.HeldEntity;
-
-            if (heldEntity == null)
+            if (hand.HeldEntity == null)
                 return false;
 
-            var handContainer = hand.Container;
-            if (handContainer == null)
-                return false;
 
-            if (!handContainer.CanRemove(heldEntity))
-                return false;
-
-            return true;
+            return hand.Container?.CanRemove(hand.HeldEntity.Value) ?? false;
         }
 
         /// <summary>
@@ -417,9 +438,7 @@ namespace Content.Shared.Hands.Components
         /// </summary>
         private void RemoveHeldEntityFromHand(Hand hand)
         {
-            var heldEntity = hand.HeldEntity;
-
-            if (heldEntity == null)
+            if (hand.HeldEntity is not { } heldEntity)
                 return;
 
             var handContainer = hand.Container;
@@ -443,18 +462,16 @@ namespace Content.Shared.Hands.Components
         /// <summary>
         ///     Drops a hands contents to the target location.
         /// </summary>
-        public void DropHeldEntity(Hand hand, EntityCoordinates targetDropLocation, bool intentionalDrop = true)
+        public void DropHeldEntity(Hand hand, EntityCoordinates targetDropLocation)
         {
-            var heldEntity = hand.HeldEntity;
-
-            if (heldEntity == null)
+            if (hand.HeldEntity is not { } heldEntity)
                 return;
 
             RemoveHeldEntityFromHand(hand);
 
-            DoDroppedInteraction(heldEntity, intentionalDrop);
+            EntitySystem.Get<SharedInteractionSystem>().DroppedInteraction(Owner, heldEntity);
 
-            heldEntity.Transform.WorldPosition = GetFinalDropCoordinates(targetDropLocation);
+            _entMan.GetComponent<TransformComponent>(heldEntity).WorldPosition = GetFinalDropCoordinates(targetDropLocation);
 
             OnItemChanged?.Invoke();
         }
@@ -464,8 +481,8 @@ namespace Content.Shared.Hands.Components
         /// </summary>
         private Vector2 GetFinalDropCoordinates(EntityCoordinates targetCoords)
         {
-            var origin = Owner.Transform.MapPosition;
-            var target = targetCoords.ToMap(Owner.EntityManager);
+            var origin = _entMan.GetComponent<TransformComponent>(Owner).MapPosition;
+            var target = targetCoords.ToMap(_entMan);
 
             var dropVector = target.Position - origin.Position;
             var requestedDropDistance = dropVector.Length;
@@ -486,7 +503,7 @@ namespace Content.Shared.Hands.Components
         /// <summary>
         ///     Tries to drop a hands contents to the target location.
         /// </summary>
-        private bool TryDropHeldEntity(Hand hand, EntityCoordinates location, bool checkActionBlocker, bool intentionalDrop = true)
+        private bool TryDropHeldEntity(Hand hand, EntityCoordinates location, bool checkActionBlocker)
         {
             if (!CanRemoveHeldEntityFromHand(hand))
                 return false;
@@ -494,23 +511,21 @@ namespace Content.Shared.Hands.Components
             if (checkActionBlocker && !PlayerCanDrop())
                 return false;
 
-            DropHeldEntity(hand, location, intentionalDrop);
+            DropHeldEntity(hand, location);
             return true;
         }
 
         /// <summary>
         ///     Drops the contents of a hand directly under the player.
         /// </summary>
-        private void DropHeldEntityToFloor(Hand hand, bool intentionalDrop = true)
+        private void DropHeldEntityToFloor(Hand hand)
         {
-            DropHeldEntity(hand, Owner.Transform.Coordinates, intentionalDrop);
+            DropHeldEntity(hand, _entMan.GetComponent<TransformComponent>(Owner).Coordinates);
         }
 
         private bool CanPutHeldEntityIntoContainer(Hand hand, IContainer targetContainer, bool checkActionBlocker)
         {
-            var heldEntity = hand.HeldEntity;
-
-            if (heldEntity == null)
+            if (hand.HeldEntity is not { } heldEntity)
                 return false;
 
             if (checkActionBlocker && !PlayerCanDrop())
@@ -527,9 +542,7 @@ namespace Content.Shared.Hands.Components
         /// </summary>
         private void PutHeldEntityIntoContainer(Hand hand, IContainer targetContainer)
         {
-            var heldEntity = hand.HeldEntity;
-
-            if (heldEntity == null)
+            if (hand.HeldEntity is not { } heldEntity)
                 return;
 
             RemoveHeldEntityFromHand(hand);
@@ -545,7 +558,7 @@ namespace Content.Shared.Hands.Components
 
         #region Pickup
 
-        public bool CanPickupEntity(string handName, IEntity entity, bool checkActionBlocker = true)
+        public bool CanPickupEntity(string handName, EntityUid entity, bool checkActionBlocker = true)
         {
             if (!TryGetHand(handName, out var hand))
                 return false;
@@ -559,7 +572,7 @@ namespace Content.Shared.Hands.Components
             return true;
         }
 
-        public bool CanPickupEntityToActiveHand(IEntity entity, bool checkActionBlocker = true)
+        public bool CanPickupEntityToActiveHand(EntityUid entity, bool checkActionBlocker = true)
         {
             return ActiveHand != null && CanPickupEntity(ActiveHand, entity, checkActionBlocker);
         }
@@ -567,7 +580,7 @@ namespace Content.Shared.Hands.Components
         /// <summary>
         ///     Tries to pick up an entity to a specific hand.
         /// </summary>
-        public bool TryPickupEntity(string handName, IEntity entity, bool checkActionBlocker = true)
+        public bool TryPickupEntity(string handName, EntityUid entity, bool checkActionBlocker = true)
         {
             if (!TryGetHand(handName, out var hand))
                 return false;
@@ -575,7 +588,7 @@ namespace Content.Shared.Hands.Components
             return TryPickupEntity(hand, entity, checkActionBlocker);
         }
 
-        public bool TryPickupEntityToActiveHand(IEntity entity, bool checkActionBlocker = true)
+        public bool TryPickupEntityToActiveHand(EntityUid entity, bool checkActionBlocker = true)
         {
             return ActiveHand != null && TryPickupEntity(ActiveHand, entity, checkActionBlocker);
         }
@@ -583,14 +596,17 @@ namespace Content.Shared.Hands.Components
         /// <summary>
         ///     Checks if an entity can be put into a hand's container.
         /// </summary>
-        protected bool CanInsertEntityIntoHand(Hand hand, IEntity entity)
+        protected bool CanInsertEntityIntoHand(Hand hand, EntityUid entity)
         {
             var handContainer = hand.Container;
-            if (handContainer == null)
-                return false;
+            if (handContainer == null) return false;
 
-            if (!handContainer.CanInsert(entity))
-                return false;
+            if (!handContainer.CanInsert(entity)) return false;
+
+            var @event = new AttemptItemPickupEvent();
+            _entMan.EventBus.RaiseLocalEvent(entity, @event);
+
+            if (@event.Cancelled) return false;
 
             return true;
         }
@@ -601,7 +617,7 @@ namespace Content.Shared.Hands.Components
         /// <returns></returns>
         protected bool PlayerCanPickup()
         {
-            if (!IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ActionBlockerSystem>().CanPickup(Owner))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanPickup(Owner))
                 return false;
 
             return true;
@@ -610,7 +626,7 @@ namespace Content.Shared.Hands.Components
         /// <summary>
         ///     Puts an entity into the player's hand, assumes that the insertion is allowed.
         /// </summary>
-        public void PutEntityIntoHand(Hand hand, IEntity entity)
+        public void PutEntityIntoHand(Hand hand, EntityUid entity)
         {
             var handContainer = hand.Container;
             if (handContainer == null)
@@ -622,19 +638,19 @@ namespace Content.Shared.Hands.Components
                 return;
             }
 
-            DoEquippedHandInteraction(entity, hand.ToHandState());
+            EntitySystem.Get<SharedInteractionSystem>().EquippedHandInteraction(Owner, entity, hand.ToHandState());
 
             if (hand.Name == ActiveHand)
                 SelectActiveHeldEntity();
 
-            entity.Transform.LocalPosition = Vector2.Zero;
+            _entMan.GetComponent<TransformComponent>(entity).LocalPosition = Vector2.Zero;
 
             OnItemChanged?.Invoke();
 
             HandsModified();
         }
 
-        private bool TryPickupEntity(Hand hand, IEntity entity, bool checkActionBlocker = true)
+        private bool TryPickupEntity(Hand hand, EntityUid entity, bool checkActionBlocker = true)
         {
             if (!CanInsertEntityIntoHand(hand, entity))
                 return false;
@@ -644,6 +660,7 @@ namespace Content.Shared.Hands.Components
 
             HandlePickupAnimation(entity);
             PutEntityIntoHand(hand, entity);
+            EntitySystem.Get<SharedAdminLogSystem>().Add(LogType.Pickup, LogImpact.Low, $"{_entMan.ToPrettyString(Owner):user} picked up {_entMan.ToPrettyString(entity):entity}");
             return true;
         }
 
@@ -673,7 +690,7 @@ namespace Content.Shared.Hands.Components
         /// <summary>
         ///     Attempts to interact with the item in a hand using the active held item.
         /// </summary>
-        public void InteractHandWithActiveHand(string handName)
+        public async void InteractHandWithActiveHand(string handName)
         {
             if (!TryGetActiveHeldEntity(out var activeHeldEntity))
                 return;
@@ -684,15 +701,17 @@ namespace Content.Shared.Hands.Components
             if (activeHeldEntity == heldEntity)
                 return;
 
-            DoInteraction(activeHeldEntity, heldEntity);
+            await EntitySystem.Get<SharedInteractionSystem>()
+                .InteractUsing(Owner, activeHeldEntity.Value, heldEntity.Value, EntityCoordinates.Invalid);
         }
 
-        public void UseActiveHeldEntity(bool altInteract = false)
+        public void ActivateItem(bool altInteract = false)
         {
             if (!TryGetActiveHeldEntity(out var heldEntity))
                 return;
 
-            DoUse(heldEntity, altInteract);
+            EntitySystem.Get<SharedInteractionSystem>()
+                .TryUseInteraction(Owner, heldEntity.Value, altInteract);
         }
 
         public void ActivateHeldEntity(string handName)
@@ -700,7 +719,8 @@ namespace Content.Shared.Hands.Components
             if (!TryGetHeldEntity(handName, out var heldEntity))
                 return;
 
-            DoActivate(heldEntity);
+            EntitySystem.Get<SharedInteractionSystem>()
+                .TryInteractionActivate(Owner, heldEntity);
         }
 
         /// <summary>
@@ -714,14 +734,14 @@ namespace Content.Shared.Hands.Components
             if (!TryGetHeldEntity(handName, out var heldEntity))
                 return false;
 
-            if (!CanInsertEntityIntoHand(activeHand, heldEntity) || !CanRemoveHeldEntityFromHand(hand))
+            if (!CanInsertEntityIntoHand(activeHand, heldEntity.Value) || !CanRemoveHeldEntityFromHand(hand))
                 return false;
 
             if (checkActionBlocker && (!PlayerCanDrop() || !PlayerCanPickup()))
                 return false;
 
             RemoveHeldEntityFromHand(hand);
-            PutEntityIntoHand(activeHand, heldEntity);
+            PutEntityIntoHand(activeHand, heldEntity.Value);
             return true;
         }
 
@@ -730,24 +750,53 @@ namespace Content.Shared.Hands.Components
         private void DeselectActiveHeldEntity()
         {
             if (TryGetActiveHeldEntity(out var entity))
-                DoHandDeselectedInteraction(entity);
+                EntitySystem.Get<SharedInteractionSystem>().HandDeselectedInteraction(Owner, entity.Value);
         }
 
         private void SelectActiveHeldEntity()
         {
             if (TryGetActiveHeldEntity(out var entity))
-                DoHandSelectedInteraction(entity);
+                EntitySystem.Get<SharedInteractionSystem>().HandSelectedInteraction(Owner, entity.Value);
         }
 
         private void HandCountChanged()
         {
-            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new HandCountChangedEvent(Owner));
+            _entMan.EventBus.RaiseEvent(EventSource.Local, new HandCountChangedEvent(Owner));
         }
 
         /// <summary>
         ///     Tries to pick up an entity into the active hand. If it cannot, tries to pick up the entity into each other hand.
         /// </summary>
-        public bool TryPutInActiveHandOrAny(IEntity entity, bool checkActionBlocker = true)
+        public bool PutInHand(SharedItemComponent item, bool checkActionBlocker = true)
+        {
+            return TryPutInActiveHandOrAny(item.Owner, checkActionBlocker);
+        }
+
+        /// <summary>
+        ///     Tries to pick up an entity into the active hand. If it cannot, tries to pick up the entity into each other hand.
+        /// </summary>
+        public bool PutInHand(EntityUid uid, bool checkActionBlocker = true)
+        {
+            return TryPutInActiveHandOrAny(uid, checkActionBlocker);
+        }
+
+        /// <summary>
+        ///     Puts an item any hand, prefering the active hand, or puts it on the floor under the player.
+        /// </summary>
+        public void PutInHandOrDrop(SharedItemComponent item, bool checkActionBlocker = true) =>
+            PutInHandOrDrop(item.Owner, checkActionBlocker);
+
+        public void PutInHandOrDrop(EntityUid uid, bool checkActionBlocker = true)
+        {
+            if (!TryPutInActiveHandOrAny(uid, checkActionBlocker))
+                _entMan.GetComponent<TransformComponent>(uid).Coordinates = _entMan.GetComponent<TransformComponent>(Owner).Coordinates;
+
+        }
+
+        /// <summary>
+        ///     Tries to pick up an entity into the active hand. If it cannot, tries to pick up the entity into each other hand.
+        /// </summary>
+        public bool TryPutInActiveHandOrAny(EntityUid entity, bool checkActionBlocker = true)
         {
             return TryPutInAnyHand(entity, GetActiveHand(), checkActionBlocker);
         }
@@ -755,7 +804,7 @@ namespace Content.Shared.Hands.Components
         /// <summary>
         ///     Tries to pick up an entity into the priority hand, if provided. If it cannot, tries to pick up the entity into each other hand.
         /// </summary>
-        public bool TryPutInAnyHand(IEntity entity, string? priorityHandName = null, bool checkActionBlocker = true)
+        public bool TryPutInAnyHand(EntityUid entity, string? priorityHandName = null, bool checkActionBlocker = true)
         {
             Hand? priorityHand = null;
 
@@ -768,7 +817,7 @@ namespace Content.Shared.Hands.Components
         /// <summary>
         ///     Tries to pick up an entity into the priority hand, if provided. If it cannot, tries to pick up the entity into each other hand.
         /// </summary>
-        private bool TryPutInAnyHand(IEntity entity, Hand? priorityHand = null, bool checkActionBlocker = true)
+        private bool TryPutInAnyHand(EntityUid entity, Hand? priorityHand = null, bool checkActionBlocker = true)
         {
             if (priorityHand != null)
             {
@@ -784,24 +833,46 @@ namespace Content.Shared.Hands.Components
             return false;
         }
 
-        protected virtual void OnHeldEntityRemovedFromHand(IEntity heldEntity, HandState handState) { }
+        protected virtual void OnHeldEntityRemovedFromHand(EntityUid heldEntity, HandState handState) { }
 
-        protected virtual void DoDroppedInteraction(IEntity heldEntity, bool intentionalDrop) { }
-
-        protected virtual void DoEquippedHandInteraction(IEntity entity, HandState handState) { }
-
-        protected virtual void DoHandSelectedInteraction(IEntity entity) { }
-
-        protected virtual void DoHandDeselectedInteraction(IEntity entity) { }
-
-        protected virtual void DoInteraction(IEntity activeHeldEntity, IEntity heldEntity) { }
-
-        protected virtual void DoUse(IEntity heldEntity, bool altInteract = false) { }
-
-        protected virtual void DoActivate(IEntity heldEntity) { }
-
-        protected virtual void HandlePickupAnimation(IEntity entity) { }
+        protected virtual void HandlePickupAnimation(EntityUid entity) { }
     }
+
+    #region visualizerData
+    [Serializable, NetSerializable]
+    public enum HandsVisuals : byte
+    {
+        VisualState
+    }
+
+    [Serializable, NetSerializable]
+    public class HandsVisualState
+    {
+        public List<HandVisualState> Hands { get; } = new();
+
+        public HandsVisualState(List<HandVisualState> hands)
+        {
+            Hands = hands;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public class HandVisualState
+    {
+        public string RsiPath { get; }
+        public string? EquippedPrefix { get; }
+        public HandLocation Location { get; }
+        public Color Color { get; }
+
+        public HandVisualState(string rsiPath, string? equippedPrefix, HandLocation location, Color color)
+        {
+            RsiPath = rsiPath;
+            EquippedPrefix = equippedPrefix;
+            Location = location;
+            Color = color;
+        }
+    }
+    #endregion
 
     public class Hand
     {
@@ -819,9 +890,8 @@ namespace Content.Shared.Hands.Components
         public IContainer? Container { get; set; }
 
         [ViewVariables]
-        public IEntity? HeldEntity => Container?.ContainedEntities?.FirstOrDefault();
+        public EntityUid? HeldEntity => Container?.ContainedEntities?.Count > 0 ? Container.ContainedEntities[0] : null;
 
-        public bool IsEmpty => HeldEntity == null;
 
         public Hand(string name, HandLocation location, IContainer? container = null)
         {
@@ -924,12 +994,12 @@ namespace Content.Shared.Hands.Components
 
     public class HandCountChangedEvent : EntityEventArgs
     {
-        public HandCountChangedEvent(IEntity sender)
+        public HandCountChangedEvent(EntityUid sender)
         {
             Sender = sender;
         }
 
-        public IEntity Sender { get; }
+        public EntityUid Sender { get; }
     }
 
     [Serializable, NetSerializable]

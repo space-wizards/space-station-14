@@ -17,6 +17,7 @@ namespace Content.Server.Storage.Components
     [RegisterComponent]
     public class CursedEntityStorageComponent : EntityStorageComponent
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
         public override string Name => "CursedEntityStorage";
@@ -31,16 +32,16 @@ namespace Content.Server.Storage.Components
             // No contents, we do nothing
             if (Contents.ContainedEntities.Count == 0) return;
 
-            var lockers = Owner.EntityManager.EntityQuery<EntityStorageComponent>().Select(c => c.Owner).ToList();
+            var lockers = _entMan.EntityQuery<EntityStorageComponent>().Select(c => c.Owner).ToList();
 
             if (lockers.Contains(Owner))
                 lockers.Remove(Owner);
 
+            if (lockers.Count == 0) return;
+
             var lockerEnt = _robustRandom.Pick(lockers);
 
-            if (lockerEnt == null) return; // No valid lockers anywhere.
-
-            var locker = lockerEnt.GetComponent<EntityStorageComponent>();
+            var locker = _entMan.GetComponent<EntityStorageComponent>(lockerEnt);
 
             if (locker.Open)
                 locker.TryCloseStorage(Owner);

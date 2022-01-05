@@ -17,7 +17,8 @@ namespace Content.Server.Entry
             "RadiatingLight",
             "Icon",
             "ClientEntitySpawner",
-            "ToySingularity"
+            "ToySingularity",
+            "CharacterInfo"
         };
     }
 }

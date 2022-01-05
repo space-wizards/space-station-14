@@ -5,13 +5,14 @@
   - type: Sprite
     netsync: false
     sprite: Structures/Power/cell_recharger.rsi
-    drawdepth: Items
+    drawdepth: SmallObjects
   - type: Icon
     sprite: Structures/Power/cell_recharger.rsi
     state: empty
   - type: PowerCellCharger
     transfer_efficiency: 0.85
   - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
   - type: Appearance
     visuals:
     - type: PowerChargerVisualizer
@@ -26,13 +27,14 @@
   - type: Sprite
     netsync: false
     sprite: Structures/Power/recharger.rsi
-    drawdepth: Items
+    drawdepth: SmallObjects
   - type: Icon
     sprite: Structures/Power/recharger.rsi
     state: empty
   - type: WeaponCapacitorCharger
     transfer_efficiency: 0.85
   - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
   - type: Appearance
     visuals:
     - type: PowerChargerVisualizer
@@ -47,13 +49,14 @@
   - type: Sprite
     netsync: false
     sprite: Structures/Power/wall_recharger.rsi
-    drawdepth: Items
+    drawdepth: SmallObjects
   - type: Icon
     sprite: Structures/Power/wall_recharger.rsi
     state: empty
   - type: WeaponCapacitorCharger
     transfer_efficiency: 0.95
   - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
   - type: Appearance
     visuals:
     - type: PowerChargerVisualizer

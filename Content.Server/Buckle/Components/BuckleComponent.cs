@@ -3,18 +3,15 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Server.Alert;
 using Content.Server.Hands.Components;
 using Content.Server.Pulling;
-using Content.Server.Stunnable.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.MobState.Components;
 using Content.Shared.Popups;
-using Content.Shared.Pulling;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Standing;
 using Content.Shared.Stunnable;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -22,7 +19,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Player;
-using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
@@ -36,6 +32,7 @@ namespace Content.Server.Buckle.Components
     [ComponentReference(typeof(SharedBuckleComponent))]
     public class BuckleComponent : SharedBuckleComponent
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         [ComponentDependency] public readonly AppearanceComponent? Appearance = null;
@@ -118,63 +115,52 @@ namespace Content.Server.Buckle.Components
         /// <param name="strap">The strap to reattach to.</param>
         public void ReAttach(StrapComponent strap)
         {
-            var ownTransform = Owner.Transform;
-            var strapTransform = strap.Owner.Transform;
+            var ownTransform = _entMan.GetComponent<TransformComponent>(Owner);
+            var strapTransform = _entMan.GetComponent<TransformComponent>(strap.Owner);
 
             ownTransform.AttachParent(strapTransform);
+            ownTransform.LocalRotation = Angle.Zero;
 
             switch (strap.Position)
             {
                 case StrapPosition.None:
-                    ownTransform.WorldRotation = strapTransform.WorldRotation;
                     break;
                 case StrapPosition.Stand:
-                    EntitySystem.Get<StandingStateSystem>().Stand(Owner.Uid);
-                    ownTransform.WorldRotation = strapTransform.WorldRotation;
+                    EntitySystem.Get<StandingStateSystem>().Stand(Owner);
                     break;
                 case StrapPosition.Down:
-                    EntitySystem.Get<StandingStateSystem>().Down(Owner.Uid, false, false);
-                    ownTransform.LocalRotation = Angle.Zero;
+                    EntitySystem.Get<StandingStateSystem>().Down(Owner, false, false);
                     break;
             }
 
-            // Assign BuckleOffset first, before causing a MoveEvent to fire
-            if (strapTransform.WorldRotation.GetCardinalDir() == Direction.North)
-            {
-                BuckleOffset = (0, 0.15f);
-                ownTransform.WorldPosition = strapTransform.WorldPosition + BuckleOffset;
-            }
-            else
-            {
-                BuckleOffset = Vector2.Zero;
-                ownTransform.WorldPosition = strapTransform.WorldPosition;
-            }
+            ownTransform.LocalPosition = strap.BuckleOffset;
         }
 
-        public bool CanBuckle(IEntity? user, IEntity to, [NotNullWhen(true)] out StrapComponent? strap)
+        public bool CanBuckle(EntityUid user, EntityUid to, [NotNullWhen(true)] out StrapComponent? strap)
         {
+            var popupSystem = EntitySystem.Get<SharedPopupSystem>();
             strap = null;
 
-            if (user == null || user == to)
+            if (user == to)
             {
                 return false;
             }
 
             if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
             {
-                user.PopupMessage(Loc.GetString("buckle-component-cannot-do-that-message"));
+                popupSystem.PopupEntity(Loc.GetString("buckle-component-cannot-do-that-message"), user, Filter.Entities(user));
                 return false;
             }
 
-            if (!to.TryGetComponent(out strap))
+            if (!_entMan.TryGetComponent(to, out strap))
             {
                 return false;
             }
 
-            var component = strap;
-            bool Ignored(IEntity entity) => entity == Owner || entity == user || entity == component.Owner;
+            var strapUid = strap.Owner;
+            bool Ignored(EntityUid entity) => entity == Owner || entity == user || entity == strapUid;
 
-            if (!Owner.InRangeUnobstructed(strap, Range, predicate: Ignored, popup: true))
+            if (!Owner.InRangeUnobstructed(strapUid, Range, predicate: Ignored, popup: true))
             {
                 return false;
             }
@@ -190,9 +176,9 @@ namespace Content.Server.Buckle.Components
                 }
             }
 
-            if (!user.HasComponent<HandsComponent>())
+            if (!_entMan.HasComponent<HandsComponent>(user))
             {
-                user.PopupMessage(Loc.GetString("buckle-component-no-hands-message "));
+                popupSystem.PopupEntity(Loc.GetString("buckle-component-no-hands-message"), user, Filter.Entities(user));
                 return false;
             }
 
@@ -201,20 +187,20 @@ namespace Content.Server.Buckle.Components
                 var message = Loc.GetString(Owner == user
                     ? "buckle-component-already-buckled-message"
                     : "buckle-component-other-already-buckled-message", ("owner", Owner));
-                Owner.PopupMessage(user, message);
+                popupSystem.PopupEntity(message, user, Filter.Entities(user));
 
                 return false;
             }
 
-            var parent = to.Transform.Parent;
+            var parent = _entMan.GetComponent<TransformComponent>(to).Parent;
             while (parent != null)
             {
-                if (parent == user.Transform)
+                if (parent == _entMan.GetComponent<TransformComponent>(user))
                 {
                     var message = Loc.GetString(Owner == user
                         ? "buckle-component-cannot-buckle-message"
                         : "buckle-component-other-cannot-buckle-message", ("owner", Owner));
-                    Owner.PopupMessage(user, message);
+                    popupSystem.PopupEntity(message, user, Filter.Entities(user));
 
                     return false;
                 }
@@ -227,7 +213,7 @@ namespace Content.Server.Buckle.Components
                 var message = Loc.GetString(Owner == user
                     ? "buckle-component-cannot-fit-message"
                     : "buckle-component-other-cannot-fit-message", ("owner", Owner));
-                Owner.PopupMessage(user, message);
+                popupSystem.PopupEntity(message, user, Filter.Entities(user));
 
                 return false;
             }
@@ -235,9 +221,10 @@ namespace Content.Server.Buckle.Components
             return true;
         }
 
-        public override bool TryBuckle(IEntity? user, IEntity to)
+        public override bool TryBuckle(EntityUid user, EntityUid to)
         {
-            if (user == null || !CanBuckle(user, to, out var strap))
+            var popupSystem = EntitySystem.Get<SharedPopupSystem>();
+            if (!CanBuckle(user, to, out var strap))
             {
                 return false;
             }
@@ -249,7 +236,7 @@ namespace Content.Server.Buckle.Components
                 var message = Loc.GetString(Owner == user
                     ? "buckle-component-cannot-buckle-message"
                     : "buckle-component-other-cannot-buckle-message", ("owner", Owner));
-                Owner.PopupMessage(user, message);
+                popupSystem.PopupEntity(message, user, Filter.Entities(user));
                 return false;
             }
 
@@ -258,14 +245,16 @@ namespace Content.Server.Buckle.Components
             ReAttach(strap);
 
             BuckledTo = strap;
-            LastEntityBuckledTo = BuckledTo.Owner.Uid;
+            LastEntityBuckledTo = BuckledTo.Owner;
             DontCollide = true;
 
             UpdateBuckleStatus();
 
+#pragma warning disable 618
             SendMessage(new BuckleMessage(Owner, to));
+#pragma warning restore 618
 
-            if (Owner.TryGetComponent(out SharedPullableComponent? ownerPullable))
+            if (_entMan.TryGetComponent(Owner, out SharedPullableComponent? ownerPullable))
             {
                 if (ownerPullable.Puller != null)
                 {
@@ -273,7 +262,7 @@ namespace Content.Server.Buckle.Components
                 }
             }
 
-            if (to.TryGetComponent(out SharedPullableComponent? toPullable))
+            if (_entMan.TryGetComponent(to, out SharedPullableComponent? toPullable))
             {
                 if (toPullable.Puller == Owner)
                 {
@@ -297,7 +286,7 @@ namespace Content.Server.Buckle.Components
         ///     true if the owner was unbuckled, otherwise false even if the owner
         ///     was previously already unbuckled.
         /// </returns>
-        public bool TryUnbuckle(IEntity user, bool force = false)
+        public bool TryUnbuckle(EntityUid user, bool force = false)
         {
             if (BuckledTo == null)
             {
@@ -315,11 +304,12 @@ namespace Content.Server.Buckle.Components
 
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {
-                    user.PopupMessage(Loc.GetString("buckle-component-cannot-do-that-message"));
+                    var popupSystem = EntitySystem.Get<SharedPopupSystem>();
+                    popupSystem.PopupEntity(Loc.GetString("buckle-component-cannot-do-that-message"), user, Filter.Entities(user));
                     return false;
                 }
 
-                if (!user.InRangeUnobstructed(oldBuckledTo, Range, popup: true))
+                if (!user.InRangeUnobstructed(oldBuckledTo.Owner, Range, popup: true))
                 {
                     return false;
                 }
@@ -327,32 +317,41 @@ namespace Content.Server.Buckle.Components
 
             BuckledTo = null;
 
-            if (Owner.Transform.Parent == oldBuckledTo.Owner.Transform)
+            var entManager = IoCManager.Resolve<IEntityManager>();
+            var xform = entManager.GetComponent<TransformComponent>(Owner);
+            var oldBuckledXform = entManager.GetComponent<TransformComponent>(oldBuckledTo.Owner);
+
+            if (xform.ParentUid == oldBuckledXform.Owner)
             {
-                Owner.Transform.AttachParentToContainerOrGrid();
-                Owner.Transform.WorldRotation = oldBuckledTo.Owner.Transform.WorldRotation;
+                xform.AttachParentToContainerOrGrid();
+                xform.WorldRotation = oldBuckledXform.WorldRotation;
+
+                if (oldBuckledTo.UnbuckleOffset != Vector2.Zero)
+                    xform.Coordinates = oldBuckledXform.Coordinates.Offset(oldBuckledTo.UnbuckleOffset);
             }
 
             Appearance?.SetData(BuckleVisuals.Buckled, false);
 
-            if (Owner.HasComponent<KnockedDownComponent>()
+            if (_entMan.HasComponent<KnockedDownComponent>(Owner)
                 || (_mobState?.IsIncapacitated() ?? false))
             {
-                EntitySystem.Get<StandingStateSystem>().Down(Owner.Uid);
+                EntitySystem.Get<StandingStateSystem>().Down(Owner);
             }
             else
             {
-                EntitySystem.Get<StandingStateSystem>().Stand(Owner.Uid);
+                EntitySystem.Get<StandingStateSystem>().Stand(Owner);
             }
 
-            _mobState?.CurrentState?.EnterState(Owner);
+            _mobState?.CurrentState?.EnterState(Owner, _entMan);
 
             UpdateBuckleStatus();
 
             oldBuckledTo.Remove(this);
             SoundSystem.Play(Filter.Pvs(Owner), oldBuckledTo.UnbuckleSound.GetSound(), Owner);
 
+#pragma warning disable 618
             SendMessage(new UnbuckleMessage(Owner, oldBuckledTo.Owner));
+#pragma warning restore 618
 
             return true;
         }
@@ -371,7 +370,7 @@ namespace Content.Server.Buckle.Components
         ///     unbuckled afterwards.
         /// </param>
         /// <returns>true if the buckling status was changed, false otherwise.</returns>
-        public bool ToggleBuckle(IEntity user, IEntity to, bool force = false)
+        public bool ToggleBuckle(EntityUid user, EntityUid to, bool force = false)
         {
             if (BuckledTo?.Owner == to)
             {
@@ -398,35 +397,18 @@ namespace Content.Server.Buckle.Components
             base.Shutdown();
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             int? drawDepth = null;
 
             if (BuckledTo != null &&
-                Owner.Transform.WorldRotation.GetCardinalDir() == Direction.North &&
+                _entMan.GetComponent<TransformComponent>(BuckledTo.Owner).LocalRotation.GetCardinalDir() == Direction.North &&
                 BuckledTo.SpriteComponent != null)
             {
                 drawDepth = BuckledTo.SpriteComponent.DrawDepth - 1;
             }
 
             return new BuckleComponentState(Buckled, drawDepth, LastEntityBuckledTo, DontCollide);
-        }
-
-        public void Update(PhysicsComponent physics)
-        {
-            if (!DontCollide)
-                return;
-
-            physics.WakeBody();
-
-            if (!IsOnStrapEntityThisFrame && DontCollide)
-            {
-                DontCollide = false;
-                TryUnbuckle(Owner);
-                Dirty();
-            }
-
-            IsOnStrapEntityThisFrame = false;
         }
     }
 }

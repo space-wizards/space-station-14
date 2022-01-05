@@ -5,6 +5,7 @@
   description: An interstellar-grade space farmplot allowing for rapid growth and selective breeding of crops. Just... keep in mind the space weeds.
   components:
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb {}
@@ -17,7 +18,6 @@
   - type: Sprite
     sprite: Structures/Hydroponics/containers.rsi
     state: hydrotray3
-    drawdepth: FloorObjects
   - type: PlantHolder
     drawWarnings: true
   - type: Construction

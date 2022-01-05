@@ -2,27 +2,33 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.Hands.Components;
-using Content.Server.Items;
 using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Item;
 using Content.Shared.Popups;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
-using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Weapon.Ranged.Ammunition.Components
 {
     [RegisterComponent]
+#pragma warning disable 618
     public class RangedMagazineComponent : Component, IMapInit, IInteractUsing, IUse, IExamine
+#pragma warning restore 618
     {
+        [Dependency] private readonly IEntityManager _entities = default!;
+
         public override string Name => "RangedMagazine";
 
-        private readonly Stack<IEntity> _spawnedAmmo = new();
+        private readonly Stack<EntityUid> _spawnedAmmo = new();
         private Container _ammoContainer = default!;
 
         public int ShotsLeft => _spawnedAmmo.Count + _unspawnedCount;
@@ -40,7 +46,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
         private AppearanceComponent? _appearanceComponent;
 
         // If there's anything already in the magazine
-        [DataField("fillPrototype")]
+        [DataField("fillPrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         private string? _fillPrototype;
 
         // By default the magazine won't spawn the entity until needed so we need to keep track of how many left we can spawn
@@ -75,7 +81,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
                 }
             }
 
-            if (Owner.TryGetComponent(out AppearanceComponent? appearanceComponent))
+            if (_entities.TryGetComponent(Owner, out AppearanceComponent? appearanceComponent))
             {
                 _appearanceComponent = appearanceComponent;
             }
@@ -89,9 +95,9 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             _appearanceComponent?.SetData(AmmoVisuals.AmmoMax, Capacity);
         }
 
-        public bool TryInsertAmmo(IEntity user, IEntity ammo)
+        public bool TryInsertAmmo(EntityUid user, EntityUid ammo)
         {
-            if (!ammo.TryGetComponent(out AmmoComponent? ammoComponent))
+            if (!_entities.TryGetComponent(ammo, out AmmoComponent? ammoComponent))
             {
                 return false;
             }
@@ -114,9 +120,9 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             return true;
         }
 
-        public IEntity? TakeAmmo()
+        public EntityUid? TakeAmmo()
         {
-            IEntity? ammo = null;
+            EntityUid? ammo = null;
             // If anything's spawned use that first, otherwise use the fill prototype as a fallback (if we have spawn count left)
             if (_spawnedAmmo.TryPop(out var entity))
             {
@@ -126,7 +132,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             else if (_unspawnedCount > 0)
             {
                 _unspawnedCount--;
-                ammo = Owner.EntityManager.SpawnEntity(_fillPrototype, Owner.Transform.Coordinates);
+                ammo = _entities.SpawnEntity(_fillPrototype, _entities.GetComponent<TransformComponent>(Owner).Coordinates);
             }
 
             UpdateAppearance();
@@ -140,21 +146,20 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out HandsComponent? handsComponent))
+            if (!_entities.TryGetComponent(eventArgs.User, out HandsComponent? handsComponent))
             {
                 return false;
             }
 
-            var ammo = TakeAmmo();
-            if (ammo == null)
+            if (TakeAmmo() is not {Valid: true} ammo)
             {
                 return false;
             }
 
-            var itemComponent = ammo.GetComponent<ItemComponent>();
+            var itemComponent = _entities.GetComponent<SharedItemComponent>(ammo);
             if (!handsComponent.CanPutInHand(itemComponent))
             {
-                ammo.Transform.Coordinates = eventArgs.User.Transform.Coordinates;
+                _entities.GetComponent<TransformComponent>(ammo).Coordinates = _entities.GetComponent<TransformComponent>(eventArgs.User).Coordinates;
                 ServerRangedBarrelComponent.EjectCasing(ammo);
             }
             else

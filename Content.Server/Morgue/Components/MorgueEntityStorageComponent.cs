@@ -16,9 +16,12 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -28,16 +31,20 @@ namespace Content.Server.Morgue.Components
     [ComponentReference(typeof(EntityStorageComponent))]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IStorageComponent))]
+#pragma warning disable 618
     public class MorgueEntityStorageComponent : EntityStorageComponent, IExamine
+#pragma warning restore 618
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "MorgueEntityStorage";
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("trayPrototype")]
+        [DataField("trayPrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         private string? _trayPrototypeId;
 
         [ViewVariables]
-        private IEntity? _tray;
+        private EntityUid? _tray;
 
         [ViewVariables]
         public ContainerSlot? TrayContainer { get; private set; }
@@ -62,21 +69,21 @@ namespace Content.Server.Morgue.Components
         public override Vector2 ContentsDumpPosition()
         {
             if (_tray != null)
-                return _tray.Transform.WorldPosition;
+                return _entMan.GetComponent<TransformComponent>(_tray.Value).WorldPosition;
             return base.ContentsDumpPosition();
         }
 
-        protected override bool AddToContents(IEntity entity)
+        protected override bool AddToContents(EntityUid entity)
         {
-            if (entity.HasComponent<SharedBodyComponent>() && !EntitySystem.Get<StandingStateSystem>().IsDown(entity.Uid))
+            if (_entMan.HasComponent<SharedBodyComponent>(entity) && !EntitySystem.Get<StandingStateSystem>().IsDown(entity))
                 return false;
             return base.AddToContents(entity);
         }
 
-        public override bool CanOpen(IEntity user, bool silent = false)
+        public override bool CanOpen(EntityUid user, bool silent = false)
         {
             if (!Owner.InRangeUnobstructed(
-                Owner.Transform.Coordinates.Offset(Owner.Transform.LocalRotation.GetCardinalDir()),
+                _entMan.GetComponent<TransformComponent>(Owner).Coordinates.Offset(_entMan.GetComponent<TransformComponent>(Owner).LocalRotation.GetCardinalDir()),
                 collisionMask: CollisionGroup.Impassable | CollisionGroup.VaultImpassable
             ))
             {
@@ -97,17 +104,16 @@ namespace Content.Server.Morgue.Components
 
             if (_tray == null)
             {
-                _tray = Owner.EntityManager.SpawnEntity(_trayPrototypeId, Owner.Transform.Coordinates);
-                var trayComp = _tray.EnsureComponent<MorgueTrayComponent>();
+                _tray = _entMan.SpawnEntity(_trayPrototypeId, _entMan.GetComponent<TransformComponent>(Owner).Coordinates);
+                var trayComp = _tray.Value.EnsureComponent<MorgueTrayComponent>();
                 trayComp.Morgue = Owner;
             }
             else
             {
-                TrayContainer?.Remove(_tray);
+                TrayContainer?.Remove(_tray.Value);
             }
 
-            _tray.Transform.WorldPosition = Owner.Transform.WorldPosition + Owner.Transform.LocalRotation.GetCardinalDir().ToVec();
-            _tray.Transform.AttachParent(Owner);
+            _entMan.GetComponent<TransformComponent>(_tray.Value).Coordinates = new EntityCoordinates(Owner, 0, -1);
 
             base.OpenStorage();
         }
@@ -120,9 +126,9 @@ namespace Content.Server.Morgue.Components
             foreach (var entity in Contents.ContainedEntities)
             {
                 count++;
-                if (!hasMob && entity.HasComponent<SharedBodyComponent>())
+                if (!hasMob && _entMan.HasComponent<SharedBodyComponent>(entity))
                     hasMob = true;
-                if (!hasSoul && entity.TryGetComponent<ActorComponent>(out var actor) && actor.PlayerSession != null)
+                if (!hasSoul && _entMan.TryGetComponent<ActorComponent?>(entity, out var actor) && actor.PlayerSession != null)
                     hasSoul = true;
             }
             Appearance?.SetData(MorgueVisuals.HasContents, count > 0);
@@ -139,11 +145,11 @@ namespace Content.Server.Morgue.Components
 
             if (_tray != null)
             {
-                TrayContainer?.Insert(_tray);
+                TrayContainer?.Insert(_tray.Value);
             }
         }
 
-        protected override IEnumerable<IEntity> DetermineCollidingEntities()
+        protected override IEnumerable<EntityUid> DetermineCollidingEntities()
         {
             if (_tray == null)
             {
@@ -151,7 +157,7 @@ namespace Content.Server.Morgue.Components
             }
 
             var entityLookup = IoCManager.Resolve<IEntityLookup>();
-            foreach (var entity in entityLookup.GetEntitiesIntersecting(_tray))
+            foreach (var entity in entityLookup.GetEntitiesIntersecting(_tray.Value, flags: LookupFlags.None))
             {
                 yield return entity;
             }

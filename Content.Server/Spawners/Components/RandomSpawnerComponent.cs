@@ -12,6 +12,7 @@ namespace Content.Server.Spawners.Components
     [RegisterComponent]
     public class RandomSpawnerComponent : ConditionalSpawnerComponent
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
         public override string Name => "RandomSpawner";
@@ -32,7 +33,7 @@ namespace Content.Server.Spawners.Components
         {
             if (RarePrototypes.Count > 0 && (RareChance == 1.0f || _robustRandom.Prob(RareChance)))
             {
-                Owner.EntityManager.SpawnEntity(_robustRandom.Pick(RarePrototypes), Owner.Transform.Coordinates);
+                _entMan.SpawnEntity(_robustRandom.Pick(RarePrototypes), _entMan.GetComponent<TransformComponent>(Owner).Coordinates);
                 return;
             }
 
@@ -47,15 +48,15 @@ namespace Content.Server.Spawners.Components
                 return;
             }
 
-            if(!Owner.Deleted)
+            if(!_entMan.Deleted(Owner))
             {
                 var random = IoCManager.Resolve<IRobustRandom>();
 
                 var x_negative = random.Prob(0.5f) ? -1 : 1;
                 var y_negative = random.Prob(0.5f) ? -1 : 1;
 
-                var entity = Owner.EntityManager.SpawnEntity(_robustRandom.Pick(Prototypes), Owner.Transform.Coordinates);
-                entity.Transform.LocalPosition += new Vector2(random.NextFloat() * Offset * x_negative, random.NextFloat() * Offset * y_negative);
+                var entity = _entMan.SpawnEntity(_robustRandom.Pick(Prototypes), _entMan.GetComponent<TransformComponent>(Owner).Coordinates);
+                _entMan.GetComponent<TransformComponent>(entity).LocalPosition += new Vector2(random.NextFloat() * Offset * x_negative, random.NextFloat() * Offset * y_negative);
             }
 
         }
@@ -63,7 +64,7 @@ namespace Content.Server.Spawners.Components
         public override void MapInit()
         {
             Spawn();
-            Owner.Delete();
+            _entMan.QueueDeleteEntity(Owner);
         }
     }
 }

@@ -7,6 +7,7 @@ using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 
 namespace Content.Server.Buckle.Systems
@@ -40,10 +41,13 @@ namespace Content.Server.Buckle.Systems
         {
             if (!args.CanAccess || !args.CanInteract || !component.Buckled)
                 return;
-            
-            Verb verb = new();
-            verb.Act = () => component.TryUnbuckle(args.User);
-            verb.Category = VerbCategory.Unbuckle;
+
+            Verb verb = new()
+            {
+                Act = () => component.TryUnbuckle(args.User),
+                Text = Loc.GetString("verb-categories-unbuckle"),
+                IconTexture = "/Textures/Interface/VerbIcons/unbuckle.svg.192dpi.png"
+            };
 
             if (args.Target == args.User && args.Using == null)
             {
@@ -60,14 +64,6 @@ namespace Content.Server.Buckle.Systems
             args.Handled = component.TryUnbuckle(args.User);
         }
 
-        public override void Update(float frameTime)
-        {
-            foreach (var (buckle, physics) in EntityManager.EntityQuery<BuckleComponent, PhysicsComponent>())
-            {
-                buckle.Update(physics);
-            }
-        }
-
         private void MoveEvent(EntityUid uid, BuckleComponent buckle, ref MoveEvent ev)
         {
             var strap = buckle.BuckledTo;
@@ -77,9 +73,9 @@ namespace Content.Server.Buckle.Systems
                 return;
             }
 
-            var strapPosition = strap.Owner.Transform.Coordinates.Offset(buckle.BuckleOffset);
+            var strapPosition = EntityManager.GetComponent<TransformComponent>(strap.Owner).Coordinates.Offset(buckle.BuckleOffset);
 
-            if (ev.NewPosition.InRange(EntityManager, strapPosition, 0.2f))
+            if (ev.NewPosition.InRange(EntityManager, strapPosition, strap.MaxBuckleDistance))
             {
                 return;
             }
@@ -93,7 +89,7 @@ namespace Content.Server.Buckle.Systems
             // This fixes buckle offsets and draw depths.
             foreach (var buckledEntity in strap.BuckledEntities)
             {
-                if (!buckledEntity.TryGetComponent(out BuckleComponent? buckled))
+                if (!EntityManager.TryGetComponent(buckledEntity, out BuckleComponent? buckled))
                 {
                     continue;
                 }
@@ -110,7 +106,7 @@ namespace Content.Server.Buckle.Systems
         {
             foreach (var buckledEntity in strap.BuckledEntities)
             {
-                if (!buckledEntity.TryGetComponent(out BuckleComponent? buckled))
+                if (!EntityManager.TryGetComponent(buckledEntity, out BuckleComponent? buckled))
                 {
                     continue;
                 }

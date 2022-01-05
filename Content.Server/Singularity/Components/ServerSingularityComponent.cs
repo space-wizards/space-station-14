@@ -2,14 +2,10 @@ using Content.Shared.Singularity;
 using Content.Shared.Singularity.Components;
 using Content.Shared.Sound;
 using Robust.Shared.Audio;
-using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Physics.Collision;
-using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.IoC;
 using Robust.Shared.Player;
-using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Singularity.Components
@@ -18,6 +14,8 @@ namespace Content.Server.Singularity.Components
     [ComponentReference(typeof(SharedSingularityComponent))]
     public class ServerSingularityComponent : SharedSingularityComponent
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         private SharedSingularitySystem _singularitySystem = default!;
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -31,7 +29,7 @@ namespace Content.Server.Singularity.Components
                 _energy = value;
                 if (_energy <= 0)
                 {
-                    Owner.Delete();
+                    _entMan.DeleteEntity(Owner);
                     return;
                 }
 
@@ -73,7 +71,7 @@ namespace Content.Server.Singularity.Components
         [DataField("singularityFormingSound")] private SoundSpecifier _singularityFormingSound = new SoundPathSpecifier("/Audio/Effects/singularity_form.ogg");
         [DataField("singularityCollapsingSound")] private SoundSpecifier _singularityCollapsingSound = new SoundPathSpecifier("/Audio/Effects/singularity_collapse.ogg");
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new SingularityComponentState(Level);
         }
@@ -93,10 +91,10 @@ namespace Content.Server.Singularity.Components
             _singularitySystem.ChangeSingularityLevel(this, 1);
         }
 
-        protected override void OnRemove()
+        protected override void Shutdown()
         {
-            SoundSystem.Play(Filter.Pvs(Owner), _singularityCollapsingSound.GetSound(), Owner.Transform.Coordinates);
-            base.OnRemove();
+            base.Shutdown();
+            SoundSystem.Play(Filter.Pvs(Owner), _singularityCollapsingSound.GetSound(), _entMan.GetComponent<TransformComponent>(Owner).Coordinates);
         }
     }
 }

@@ -3,7 +3,6 @@ using Content.Server.MachineLinking.Components;
 using Content.Server.MachineLinking.Events;
 using Content.Shared.Interaction;
 using Content.Shared.MachineLinking;
-using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 

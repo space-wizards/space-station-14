@@ -18,15 +18,15 @@ namespace Content.Server.Construction.Completions
 
         [DataField("else")] public IGraphAction? Else { get; } = null;
 
-        public async Task PerformAction(IEntity entity, IEntity? user)
+        public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {
             if (Condition == null || Action == null)
                 return;
 
-            if (await Condition.Condition(PassUser && user != null ? user : entity))
-                await Action.PerformAction(entity, user);
-            else if (Else != null)
-                await Else.PerformAction(entity, user);
+            if (Condition.Condition(PassUser && userUid != null ? userUid.Value : uid, entityManager))
+                Action.PerformAction(uid, userUid, entityManager);
+            else
+                Else?.PerformAction(uid, userUid, entityManager);
         }
     }
 }

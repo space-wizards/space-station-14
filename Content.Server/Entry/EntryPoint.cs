@@ -8,17 +8,20 @@ using Content.Server.Connection;
 using Content.Server.Database;
 using Content.Server.EUI;
 using Content.Server.GameTicking;
-using Content.Server.Holiday.Interfaces;
+using Content.Server.Info;
 using Content.Server.IoC;
+using Content.Server.Maps;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.Preferences.Managers;
 using Content.Server.Sandbox;
-using Content.Server.Speech;
 using Content.Server.Voting.Managers;
 using Content.Shared.Actions;
+using Content.Shared.Administration;
 using Content.Shared.Alert;
 using Content.Shared.Kitchen;
+using Robust.Server.Bql;
 using Robust.Server.Player;
+using Robust.Server.ServerStatus;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -36,6 +39,9 @@ namespace Content.Server.Entry
         public override void Init()
         {
             base.Init();
+
+            IoCManager.Resolve<IStatusHost>().SetAczInfo("Content.Client",
+                new[] { "Content.Client", "Content.Shared", "Content.Shared.Database" });
 
             var factory = IoCManager.Resolve<IComponentFactory>();
 
@@ -60,6 +66,7 @@ namespace Content.Server.Entry
             _euiManager = IoCManager.Resolve<EuiManager>();
             _voteManager = IoCManager.Resolve<IVoteManager>();
 
+            IoCManager.Resolve<IChatSanitizationManager>().Initialize();
             IoCManager.Resolve<IChatManager>().Initialize();
 
             var playerManager = IoCManager.Resolve<IPlayerManager>();
@@ -72,6 +79,7 @@ namespace Content.Server.Entry
             IoCManager.Resolve<IServerDbManager>().Init();
             IoCManager.Resolve<IServerPreferencesManager>().Init();
             IoCManager.Resolve<INodeGroupFactory>().Initialize();
+            IoCManager.Resolve<IGamePrototypeLoadManager>().Initialize();
             _voteManager.Initialize();
         }
 
@@ -88,9 +96,12 @@ namespace Content.Server.Entry
             IoCManager.Resolve<IAdminManager>().Initialize();
             IoCManager.Resolve<INpcBehaviorManager>().Initialize();
             IoCManager.Resolve<IAfkManager>().Initialize();
+            IoCManager.Resolve<RulesManager>().Initialize();
             _euiManager.Initialize();
 
+            IoCManager.Resolve<IGameMapManager>().Initialize();
             IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<GameTicker>().PostInitialize();
+            IoCManager.Resolve<IBqlQueryManager>().DoAutoRegistrations();
         }
 
         public override void Update(ModUpdateLevel level, FrameEventArgs frameEventArgs)

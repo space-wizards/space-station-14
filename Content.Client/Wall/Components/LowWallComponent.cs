@@ -26,6 +26,7 @@ namespace Content.Client.Wall.Components
     {
         public override string Name => "LowWall";
 
+        [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
 
         public CornerFill LastCornerNE { get; private set; }
@@ -33,7 +34,7 @@ namespace Content.Client.Wall.Components
         public CornerFill LastCornerSW { get; private set; }
         public CornerFill LastCornerNW { get; private set; }
 
-        [ViewVariables] private IEntity? _overlayEntity;
+        [ViewVariables] private EntityUid _overlayEntity;
 
         [ViewVariables]
         private ISpriteComponent? _overlaySprite;
@@ -42,11 +43,11 @@ namespace Content.Client.Wall.Components
         {
             base.Startup();
 
-            _overlayEntity = Owner.EntityManager.SpawnEntity("LowWallOverlay", Owner.Transform.Coordinates);
-            _overlayEntity.Transform.AttachParent(Owner);
-            _overlayEntity.Transform.LocalPosition = Vector2.Zero;
+            _overlayEntity = _entMan.SpawnEntity("LowWallOverlay", _entMan.GetComponent<TransformComponent>(Owner).Coordinates);
+            _entMan.GetComponent<TransformComponent>(_overlayEntity).AttachParent(Owner);
+            _entMan.GetComponent<TransformComponent>(_overlayEntity).LocalPosition = Vector2.Zero;
 
-            _overlaySprite = _overlayEntity.GetComponent<ISpriteComponent>();
+            _overlaySprite = _entMan.GetComponent<ISpriteComponent>(_overlayEntity);
 
             var overState0 = $"{StateBase}over_0";
             _overlaySprite.LayerMapSet(OverCornerLayers.SE, _overlaySprite.AddLayerState(overState0));
@@ -63,20 +64,25 @@ namespace Content.Client.Wall.Components
         {
             base.Shutdown();
 
-            _overlayEntity?.Delete();
+            // _overlayEntity is non-nullable as it is set on startup.
+            // Should also never be default but might as well check.
+            if (_overlayEntity.Valid)
+            {
+                _entMan.DeleteEntity(_overlayEntity);
+            }
         }
 
         internal override void CalculateNewSprite()
         {
             base.CalculateNewSprite();
 
-            if (Sprite == null || !Owner.Transform.Anchored || _overlaySprite == null)
+            if (Sprite == null || !_entMan.GetComponent<TransformComponent>(Owner).Anchored || _overlaySprite == null)
             {
                 return;
             }
 
-            var grid = _mapManager.GetGrid(Owner.Transform.GridID);
-            var coords = Owner.Transform.Coordinates;
+            var grid = _mapManager.GetGrid(_entMan.GetComponent<TransformComponent>(Owner).GridID);
+            var coords = _entMan.GetComponent<TransformComponent>(Owner).Coordinates;
 
             var (n, nl) = MatchingWall(grid.GetInDir(coords, Direction.North));
             var (ne, nel) = MatchingWall(grid.GetInDir(coords, Direction.NorthEast));
@@ -204,7 +210,7 @@ namespace Content.Client.Wall.Components
 
             foreach (var entity in grid.GetLocal(coords))
             {
-                if (Owner.EntityManager.TryGetComponent(entity, out WindowComponent? window))
+                if (_entMan.TryGetComponent(entity, out WindowComponent? window))
                 {
                     //window.UpdateSprite();
                 }
@@ -216,7 +222,7 @@ namespace Content.Client.Wall.Components
         {
             foreach (var entity in candidates)
             {
-                if (!Owner.EntityManager.TryGetComponent(entity, out IconSmoothComponent? other))
+                if (!_entMan.TryGetComponent(entity, out IconSmoothComponent? other))
                 {
                     continue;
                 }

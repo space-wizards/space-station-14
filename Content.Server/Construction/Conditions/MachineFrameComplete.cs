@@ -1,9 +1,11 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.Construction.Components;
 using Content.Shared.Construction;
 using Content.Shared.Examine;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
@@ -17,9 +19,16 @@ namespace Content.Server.Construction.Conditions
     [DataDefinition]
     public class MachineFrameComplete : IGraphCondition
     {
-        public async Task<bool> Condition(IEntity entity)
+        [DataField("guideIconBoard")]
+        public SpriteSpecifier? GuideIconBoard { get; }
+
+        [DataField("guideIconParts")]
+        public SpriteSpecifier? GuideIconPart { get; }
+
+
+        public bool Condition(EntityUid uid, IEntityManager entityManager)
         {
-            if (entity.Deleted || !entity.TryGetComponent<MachineFrameComponent>(out var machineFrame))
+            if (!entityManager.TryGetComponent(uid, out MachineFrameComponent? machineFrame))
                 return false;
 
             return machineFrame.IsComplete;
@@ -29,7 +38,7 @@ namespace Content.Server.Construction.Conditions
         {
             var entity = args.Examined;
 
-            if (!entity.TryGetComponent<MachineFrameComponent>(out var machineFrame))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<MachineFrameComponent?>(entity, out var machineFrame))
                 return false;
 
             if (!machineFrame.HasBoard)
@@ -90,6 +99,23 @@ namespace Content.Server.Construction.Conditions
             }
 
             return true;
+        }
+
+        public IEnumerable<ConstructionGuideEntry> GenerateGuideEntry()
+        {
+            yield return new ConstructionGuideEntry()
+            {
+                Localization = "construction-step-condition-machine-frame-board",
+                Icon = GuideIconBoard,
+                EntryNumber = 0, // Set this to anything so the guide generation takes this as a numbered step.
+            };
+
+            yield return new ConstructionGuideEntry()
+            {
+                Localization = "construction-step-condition-machine-frame-parts",
+                Icon = GuideIconPart,
+                EntryNumber = 0, // Set this to anything so the guide generation takes this as a numbered step.
+            };
         }
     }
 }

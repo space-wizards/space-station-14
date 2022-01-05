@@ -21,8 +21,18 @@
   placement:
     mode: SnapgridCenter
   components:
+    - type: ApcPowerReceiver
+    - type: ExtensionCableReceiver
+    - type: DeviceNetworkComponent
+      deviceNetId: Apc
+      frequency: 1621
+    - type: ApcNetworkConnection
+    - type: AtmosAlarmable
+      alarmedBy:
+      - AirAlarm
     - type: Sprite
       netsync: false
+      drawdepth: FloorObjects
       sprite: Structures/Piping/Atmospherics/vent.rsi
       layers:
         - sprite: Structures/Piping/Atmospherics/pipe.rsi
@@ -49,6 +59,7 @@
     # TODO ATMOS: Find sprite for this.
     - type: Sprite
       netsync: false
+      drawdepth: FloorObjects
       sprite: Structures/Piping/Atmospherics/vent.rsi
       layers:
         - sprite: Structures/Piping/Atmospherics/pipe.rsi
@@ -71,8 +82,18 @@
   placement:
     mode: SnapgridCenter
   components:
+    - type: ApcPowerReceiver
+    - type: ExtensionCableReceiver
+    - type: DeviceNetworkComponent
+      deviceNetId: Apc
+      frequency: 1621
+    - type: ApcNetworkConnection
+    - type: AtmosAlarmable
+      alarmedBy:
+      - AirAlarm
     - type: Sprite
       netsync: false
+      drawdepth: FloorObjects
       sprite: Structures/Piping/Atmospherics/scrubber.rsi
       layers:
         - sprite: Structures/Piping/Atmospherics/pipe.rsi
@@ -100,6 +121,7 @@
 
     # TODO ATMOS: Actual sprite for this.
     - type: Sprite
+      drawdepth: FloorObjects
       netsync: false
       layers:
         - state: pipeHalf
@@ -124,10 +146,12 @@
     - type: Sprite
       netsync: false
       sprite: Structures/Piping/Atmospherics/thermomachine.rsi
+      noRot: true
     - type: Appearance
       visuals:
         - type: PipeConnectorVisualizer
         - type: PipeColorVisualizer
+    - type: Rotatable
     - type: GasThermoMachine
     - type: AtmosPipeColor
     - type: AtmosDevice

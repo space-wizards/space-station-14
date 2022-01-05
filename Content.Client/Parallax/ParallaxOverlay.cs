@@ -50,7 +50,7 @@ namespace Content.Client.Parallax
             var o = new Vector2(posX * Slowness, posY * Slowness);
 
             // Remove offset so we can floor.
-            var (l, b) = args.WorldBounds.BottomLeft - o;
+            var (l, b) = args.WorldAABB.BottomLeft - o;
 
             // Floor to background size.
             l = sizeX * MathF.Floor(l / sizeX);
@@ -60,9 +60,9 @@ namespace Content.Client.Parallax
             l += o.X;
             b += o.Y;
 
-            for (var x = l; x < args.WorldBounds.Right; x += sizeX)
+            for (var x = l; x < args.WorldAABB.Right; x += sizeX)
             {
-                for (var y = b; y < args.WorldBounds.Top; y += sizeY)
+                for (var y = b; y < args.WorldAABB.Top; y += sizeY)
                 {
                     screenHandle.DrawTexture(_parallaxTexture, (x, y));
                 }

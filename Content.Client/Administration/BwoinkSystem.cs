@@ -1,69 +1,110 @@
 ﻿#nullable enable
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using Content.Client.Administration.Managers;
 using Content.Client.Administration.UI;
+using Content.Client.Administration.UI.CustomControls;
 using Content.Shared.Administration;
 using JetBrains.Annotations;
+using Robust.Client.Graphics;
+using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.Player;
-using Robust.Shared.Localization;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.Network;
-using Robust.Shared.Players;
 using Robust.Shared.Player;
+using Robust.Shared.Localization;
 using Robust.Shared.Audio;
 using Robust.Shared.IoC;
+using Robust.Shared.Network;
 
 namespace Content.Client.Administration
 {
     [UsedImplicitly]
     public class BwoinkSystem : SharedBwoinkSystem
     {
+        [Dependency] private readonly IClientAdminManager _adminManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-        private readonly Dictionary<NetUserId, BwoinkWindow> _activeWindowMap = new();
+        [Dependency] private readonly IClyde _clyde = default!;
+
+        private BwoinkWindow? _adminWindow;
+        private DefaultWindow? _plainWindow;
+        private readonly Dictionary<NetUserId, BwoinkPanel> _activePanelMap = new();
 
         protected override void OnBwoinkTextMessage(BwoinkTextMessage message, EntitySessionEventArgs eventArgs)
         {
             base.OnBwoinkTextMessage(message, eventArgs);
             LogBwoink(message);
             // Actual line
-            var window = EnsureWindow(message.ChannelId);
-            window.ReceiveLine(message.Text);
+            var window = EnsurePanel(message.ChannelId);
+            window.ReceiveLine(message);
             // Play a sound if we didn't send it
             var localPlayer = _playerManager.LocalPlayer;
             if (localPlayer?.UserId != message.TrueSender)
             {
                 SoundSystem.Play(Filter.Local(), "/Audio/Effects/adminhelp.ogg");
+                _clyde.RequestWindowAttention();
             }
+
+            _adminWindow?.OnBwoink(message.ChannelId);
         }
 
-        public BwoinkWindow EnsureWindow(NetUserId channelId)
+        public bool TryGetChannel(NetUserId ch, [NotNullWhen(true)] out BwoinkPanel? bp) => _activePanelMap.TryGetValue(ch, out bp);
+
+        private BwoinkPanel EnsureAdmin(NetUserId channelId)
         {
-            if (_activeWindowMap.TryGetValue(channelId, out var existingWindow))
+            _adminWindow ??= new BwoinkWindow(this);
+
+            if (!_activePanelMap.TryGetValue(channelId, out var existingPanel))
             {
-                existingWindow.Open();
-                return existingWindow;
+                _activePanelMap[channelId] = existingPanel = new BwoinkPanel(this, channelId);
+                existingPanel.Visible = false;
+                if (!_adminWindow.BwoinkArea.Children.Contains(existingPanel))
+                    _adminWindow.BwoinkArea.AddChild(existingPanel);
             }
-            string title;
-            if (_playerManager.SessionsDict.TryGetValue(channelId, out var otherSession))
+
+            if(!_adminWindow.IsOpen) _adminWindow.Open();
+
+            return existingPanel;
+        }
+
+        private BwoinkPanel EnsurePlain(NetUserId channelId)
+        {
+            BwoinkPanel bp;
+            if (_plainWindow is null)
             {
-                title = otherSession.Name;
+                bp = new BwoinkPanel(this, channelId);
+                _plainWindow = new DefaultWindow()
+                {
+                    TitleClass="windowTitleAlert",
+                    HeaderClass="windowHeaderAlert",
+                    Title=Loc.GetString("bwoink-user-title"),
+                    SetSize=(400, 200),
+                };
+
+                _plainWindow.Contents.AddChild(bp);
             }
             else
             {
-                title = channelId.ToString();
+                bp = (BwoinkPanel) _plainWindow.Contents.GetChild(0);
             }
-            var window = new BwoinkWindow(channelId, title);
-            _activeWindowMap[channelId] = window;
-            window.Open();
-            return window;
+
+            _plainWindow.Open();
+            return bp;
         }
 
-        public void EnsureWindowForLocalPlayer()
+        public BwoinkPanel EnsurePanel(NetUserId channelId)
+        {
+            if (_adminManager.HasFlag(AdminFlags.Adminhelp))
+                return EnsureAdmin(channelId);
+
+            return EnsurePlain(channelId);
+        }
+
+        public void EnsurePanelForLocalPlayer()
         {
             var localPlayer = _playerManager.LocalPlayer;
             if (localPlayer != null)
-                EnsureWindow(localPlayer.UserId);
+                EnsurePanel(localPlayer.UserId);
         }
 
         public void Send(NetUserId channelId, string text)

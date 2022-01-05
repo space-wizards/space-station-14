@@ -1,0 +1,23 @@
+﻿<SS14Window xmlns="https://spacestation14.io"
+            Title="{Loc 'crew-monitoring-user-interface-title'}"
+            MinSize="450 400">
+    <ScrollContainer HorizontalExpand="True"
+                     VerticalExpand="True">
+        <GridContainer Name="SensorsTable"
+                       HorizontalExpand="True"
+                       VerticalExpand="True"
+                       HSeparationOverride="5"
+                       VSeparationOverride="20"
+                       Columns="3">
+            <!-- Table header -->
+            <Label Text="{Loc 'crew-monitoring-user-interface-name'}"
+                   StyleClasses="LabelHeading"/>
+            <Label Text="{Loc 'crew-monitoring-user-interface-status'}"
+                   StyleClasses="LabelHeading"/>
+            <Label Text="{Loc 'crew-monitoring-user-interface-location'}"
+                   StyleClasses="LabelHeading"/>
+
+            <!-- Table rows are filled by code -->
+        </GridContainer>
+    </ScrollContainer>
+</SS14Window>

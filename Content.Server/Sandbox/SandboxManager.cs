@@ -1,12 +1,13 @@
 using System.Linq;
-using Content.Server.Access.Components;
-using Content.Shared.Containers.ItemSlots;
 using Content.Server.GameTicking;
 using Content.Server.Hands.Components;
-using Content.Server.Inventory.Components;
-using Content.Server.Items;
-using Content.Server.PDA;
 using Content.Shared.Access;
+using Content.Shared.Access.Components;
+using Content.Shared.Access.Systems;
+using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Inventory;
+using Content.Shared.Item;
+using Content.Shared.PDA;
 using Content.Shared.Sandbox;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
@@ -18,7 +19,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.ViewVariables;
-using static Content.Shared.Inventory.EquipmentSlotDefines;
 
 namespace Content.Server.Sandbox
 {
@@ -114,7 +114,7 @@ namespace Content.Server.Sandbox
             }
 
             var player = _playerManager.GetSessionByChannel(message.MsgChannel);
-            if (player.AttachedEntity == null)
+            if (player.AttachedEntity is not {} attached)
             {
                 return;
             }
@@ -123,22 +123,23 @@ namespace Content.Server.Sandbox
                 .EnumeratePrototypes<AccessLevelPrototype>()
                 .Select(p => p.ID).ToArray();
 
-            if (player.AttachedEntity.TryGetComponent(out InventoryComponent? inv)
-                && inv.TryGetSlotItem(Slots.IDCARD, out ItemComponent? wornItem))
+            var invSystem = EntitySystem.Get<InventorySystem>();
+
+            if (invSystem.TryGetSlotEntity(attached, "id", out var slotEntity))
             {
-                if (wornItem.Owner.HasComponent<AccessComponent>())
+                if (_entityManager.HasComponent<AccessComponent>(slotEntity))
                 {
-                    UpgradeId(wornItem.Owner);
+                    UpgradeId(slotEntity.Value);
                 }
-                else if (wornItem.Owner.TryGetComponent(out PDAComponent? pda))
+                else if (_entityManager.TryGetComponent(slotEntity, out PDAComponent? pda))
                 {
                     if (pda.ContainedID == null)
                     {
                         var newID = CreateFreshId();
-                        if (pda.Owner.TryGetComponent(out SharedItemSlotsComponent? itemSlots))
+                        if (_entityManager.TryGetComponent(pda.Owner, out ItemSlotsComponent? itemSlots))
                         {
-                            _entityManager.EntitySysManager.GetEntitySystem<SharedItemSlotsSystem>().
-                                TryInsertContent(itemSlots, newID, pda.IdSlot);
+                            _entityManager.EntitySysManager.GetEntitySystem<ItemSlotsSystem>().
+                                TryInsert(slotEntity.Value, pda.IdSlot, newID, null);
                         }
                     }
                     else
@@ -147,32 +148,32 @@ namespace Content.Server.Sandbox
                     }
                 }
             }
-            else if (player.AttachedEntity.TryGetComponent<HandsComponent>(out var hands))
+            else if (_entityManager.TryGetComponent<HandsComponent?>(attached, out var hands))
             {
                 var card = CreateFreshId();
-                if (!player.AttachedEntity.TryGetComponent(out inv) || !inv.Equip(Slots.IDCARD, card))
+                if (!invSystem.TryEquip(attached, card, "id", true, true))
                 {
-                    hands.PutInHandOrDrop(card.GetComponent<ItemComponent>());
+                    hands.PutInHandOrDrop(_entityManager.GetComponent<SharedItemComponent>(card));
                 }
             }
 
-            void UpgradeId(IEntity id)
+            void UpgradeId(EntityUid id)
             {
-                var access = id.GetComponent<AccessComponent>();
-                access.SetTags(allAccess);
+                var accessSystem = EntitySystem.Get<AccessSystem>();
+                accessSystem.TrySetTags(id, allAccess);
 
-                if (id.TryGetComponent(out SpriteComponent? sprite))
+                if (_entityManager.TryGetComponent(id, out SpriteComponent? sprite))
                 {
                     sprite.LayerSetState(0, "gold");
                 }
             }
 
-            IEntity CreateFreshId()
+            EntityUid CreateFreshId()
             {
-                var card = _entityManager.SpawnEntity("CaptainIDCard", player.AttachedEntity.Transform.Coordinates);
+                var card = _entityManager.SpawnEntity("CaptainIDCard", _entityManager.GetComponent<TransformComponent>(attached).Coordinates);
                 UpgradeId(card);
 
-                card.GetComponent<IdCardComponent>().FullName = player.AttachedEntity.Name;
+                _entityManager.GetComponent<IdCardComponent>(card).FullName = _entityManager.GetComponent<MetaDataComponent>(attached).EntityName;
                 return card;
             }
         }

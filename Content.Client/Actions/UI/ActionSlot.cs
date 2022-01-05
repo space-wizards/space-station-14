@@ -4,6 +4,7 @@ using Content.Client.Stylesheets;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
 using Content.Shared.Actions.Prototypes;
+using Content.Shared.Inventory;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
@@ -62,7 +63,7 @@ namespace Content.Client.Actions.UI
         /// Item the action is provided by, only valid if Action is an ItemActionPrototype. May be null
         /// if the item action is not yet tied to an item.
         /// </summary>
-        public IEntity? Item { get; private set; }
+        public EntityUid? Item { get; private set; }
 
         /// <summary>
         /// Whether the action in this slot should be shown as toggled on. Separate from Depressed.
@@ -231,8 +232,8 @@ namespace Content.Client.Actions.UI
             {
                 ActionPrototype actionPrototype => new ActionAttempt(actionPrototype),
                 ItemActionPrototype itemActionPrototype =>
-                    (Item != null && Item.TryGetComponent<ItemActionsComponent>(out var itemActions)) ?
-                        new ItemActionAttempt(itemActionPrototype, Item, itemActions) : null,
+                    Item.HasValue && IoCManager.Resolve<IEntityManager>().TryGetComponent<ItemActionsComponent?>(Item, out var itemActions) ?
+                        new ItemActionAttempt(itemActionPrototype, Item.Value, itemActions) : null,
                 _ => null
             };
             return attempt;
@@ -246,7 +247,7 @@ namespace Content.Client.Actions.UI
             DrawModeChanged();
             if (Action is not ItemActionPrototype) return;
             if (Item == null) return;
-            _actionsComponent.HighlightItemSlot(Item);
+            _actionsComponent.HighlightItemSlot(Item.Value);
         }
 
         protected override void MouseExited()
@@ -376,7 +377,7 @@ namespace Content.Client.Actions.UI
             if (Action != null && Action == action) return;
 
             Action = action;
-            Item = null;
+            Item = default;
             _depressed = false;
             ToggledOn = false;
             ActionEnabled = actionEnabled;
@@ -395,10 +396,10 @@ namespace Content.Client.Actions.UI
         public void Assign(ItemActionPrototype action)
         {
             // already assigned
-            if (Action != null && Action == action && Item == null) return;
+            if (Action != null && Action == action && Item == default) return;
 
             Action = action;
-            Item = null;
+            Item = default;
             _depressed = false;
             ToggledOn = false;
             ActionEnabled = false;
@@ -415,7 +416,7 @@ namespace Content.Client.Actions.UI
         /// <param name="action">action to assign</param>
         /// <param name="item">item the action is provided by</param>
         /// <param name="actionEnabled">whether action should initially appear enable or disabled</param>
-        public void Assign(ItemActionPrototype action, IEntity item, bool actionEnabled)
+        public void Assign(ItemActionPrototype action, EntityUid item, bool actionEnabled)
         {
             // already assigned
             if (Action != null && Action == action && Item == item) return;
@@ -439,7 +440,7 @@ namespace Content.Client.Actions.UI
         {
             if (!HasAssignment) return;
             Action = null;
-            Item = null;
+            Item = default;
             ToggledOn = false;
             _depressed = false;
             Cooldown = null;
@@ -502,9 +503,9 @@ namespace Content.Client.Actions.UI
                 SetActionIcon(Action.Icon.Frame0());
             }
 
-            if (Item != null)
+            if (Item != default)
             {
-                SetItemIcon(Item.TryGetComponent<ISpriteComponent>(out var spriteComponent) ? spriteComponent : null);
+                SetItemIcon(IoCManager.Resolve<IEntityManager>().TryGetComponent<ISpriteComponent?>(Item, out var spriteComponent) ? spriteComponent : null);
             }
             else
             {

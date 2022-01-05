@@ -1,6 +1,4 @@
 using System;
-using Content.Shared.ActionBlocker;
-using Content.Shared.Pulling.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Maths;
@@ -10,23 +8,12 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.Cuffs.Components
 {
     [NetworkedComponent()]
-    public class SharedCuffableComponent : Component, IActionBlocker
+    public class SharedCuffableComponent : Component
     {
         public override string Name => "Cuffable";
 
         [ViewVariables]
         public bool CanStillInteract { get; set; } = true;
-
-        #region ActionBlockers
-
-        bool IActionBlocker.CanInteract() => CanStillInteract;
-        bool IActionBlocker.CanUse() => CanStillInteract;
-        bool IActionBlocker.CanPickup() => CanStillInteract;
-        bool IActionBlocker.CanDrop() => CanStillInteract;
-        bool IActionBlocker.CanAttack() => CanStillInteract;
-        bool IActionBlocker.CanEquip() => CanStillInteract;
-        bool IActionBlocker.CanUnequip() => CanStillInteract;
-        #endregion
 
         [Serializable, NetSerializable]
         protected sealed class CuffableComponentState : ComponentState

@@ -11,22 +11,24 @@
       path: /Audio/Effects/singularity.ogg
   - type: Physics
     bodyType: Dynamic
+  - type: Fixtures
     fixtures:
     - id: DeleteCircle
       shape:
         !type:PhysShapeCircle
           radius: 0.5
       restitution: 0.9
+      mass: 99999
       mask:
       - AllMask
       layer:
       - AllMask
   - type: Singularity
   - type: SingularityDistortion
-  #- type: RadiationPulse
-  #  range: 15
-  #  decay: false
-  #  dps: 1
+  - type: RadiationPulse
+    range: 15
+    decay: false
+    dps: 1
   - type: Sprite
     sprite: Structures/Power/Generation/Singularity/singularity_1.rsi
     state: singularity_1

@@ -33,3 +33,27 @@
   cost: 2000
   category: Service
   group: market
+
+- type: cargoProduct
+  name: "DIY lung cancer crate"
+  id: ServiceCustomSmokable
+  description: "Want to get a little creative with what you use to destroy your lungs? Then this crate is for you! Has everything you need to roll your own Cigarettes."
+  icon:
+    sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/green.rsi
+    state: closed
+  product: CrateServiceCustomSmokable
+  cost: 1000
+  category: Service
+  group: market
+
+- type: cargoProduct
+  name: "bureaucracy crate"
+  id: ServiceBureaucracy
+  description: "Several stacks of paper and a few pens, what more can you ask for."
+  icon:
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: pen
+  product: CrateServiceBureaucracy
+  cost: 1000
+  category: Service
+  group: market

@@ -4,11 +4,12 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Inventory;
+using Content.Shared.Sound;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -19,8 +20,10 @@ namespace Content.Shared.Item
     ///    Players can pick up, drop, and put items in bags, and they can be seen in player's hands.
     /// </summary>
     [NetworkedComponent()]
-    public abstract class SharedItemComponent : Component, IEquipped, IUnequipped, IInteractHand
+    public class SharedItemComponent : Component, IInteractHand
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "Item";
 
         /// <summary>
@@ -42,6 +45,7 @@ namespace Content.Shared.Item
         /// <summary>
         ///     Part of the state of the sprite shown on the player when this item is in their hands.
         /// </summary>
+        // todo paul make this update slotvisuals on client on change
         [ViewVariables(VVAccess.ReadWrite)]
         public string? EquippedPrefix
         {
@@ -56,6 +60,13 @@ namespace Content.Shared.Item
         [DataField("HeldPrefix")]
         private string? _equippedPrefix;
 
+        [ViewVariables]
+        [DataField("Slots")]
+        public SlotFlags SlotFlags = SlotFlags.PREVENTEQUIP; //Different from None, NONE allows equips if no slot flags are required
+
+        [DataField("EquipSound")]
+        public SoundSpecifier? EquipSound { get; set; } = default!;
+
         /// <summary>
         ///     Color of the sprite shown on the player when this item is in their hands.
         /// </summary>
@@ -63,7 +74,7 @@ namespace Content.Shared.Item
         public Color Color
         {
             get => _color;
-            protected set
+            set
             {
                 _color = value;
                 Dirty();
@@ -88,49 +99,21 @@ namespace Content.Shared.Item
         [DataField("sprite")]
         private string? _rsiPath;
 
-        public override ComponentState GetComponentState(ICommonSession player)
-        {
-            return new ItemComponentState(Size, EquippedPrefix, Color, RsiPath);
-        }
-
-        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
-        {
-            base.HandleComponentState(curState, nextState);
-
-            if (curState is not ItemComponentState state)
-                return;
-
-            Size = state.Size;
-            EquippedPrefix = state.EquippedPrefix;
-            Color = state.Color;
-            RsiPath = state.RsiPath;
-        }
-
         /// <summary>
         ///     If a player can pick up this item.
         /// </summary>
-        public bool CanPickup(IEntity user, bool popup = true)
+        public bool CanPickup(EntityUid user, bool popup = true)
         {
             if (!EntitySystem.Get<ActionBlockerSystem>().CanPickup(user))
                 return false;
 
-            if (user.Transform.MapID != Owner.Transform.MapID)
+            if (_entMan.GetComponent<TransformComponent>(user).MapID != _entMan.GetComponent<TransformComponent>(Owner).MapID)
                 return false;
 
-            if (!Owner.TryGetComponent(out IPhysBody? physics) || physics.BodyType == BodyType.Static)
+            if (!_entMan.TryGetComponent(Owner, out IPhysBody? physics) || physics.BodyType == BodyType.Static)
                 return false;
 
             return user.InRangeUnobstructed(Owner, ignoreInsideBlocker: true, popup: popup);
-        }
-
-        void IEquipped.Equipped(EquippedEventArgs eventArgs)
-        {
-            EquippedToSlot();
-        }
-
-        void IUnequipped.Unequipped(UnequippedEventArgs eventArgs)
-        {
-            RemovedFromSlot();
         }
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
@@ -140,7 +123,7 @@ namespace Content.Shared.Item
             if (!CanPickup(user))
                 return false;
 
-            if (!user.TryGetComponent(out SharedHandsComponent? hands))
+            if (!_entMan.TryGetComponent(user, out SharedHandsComponent? hands))
                 return false;
 
             var activeHand = hands.ActiveHand;

@@ -1,23 +1,9 @@
-# These signs would not have collision otherwise, they simply
-# need collision in order for them to be destructible. Once the
-# SmallImpassable etc. stuff actually gets implemented in this
-# shitheap of a videogame bother swept to go back and fix these.
-
 - type: entity
   parent: BaseSign
   id: PaintingMonkey
   name: monkey painting
   description: Return to monky.
   components:
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.4,-0.1,0.4,0.1"
-      layer:
-      - SmallImpassable
-      mask:
-      - VaultImpassable
   - type: Sprite
     state: monkey_painting
 
@@ -29,16 +15,6 @@
   name: sec sign
   description: A direction sign, pointing out which way Security is.
   components:
-  - type: Rotatable
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.4,-0.1,0.4,0.1"
-      layer:
-      - SmallImpassable
-      mask:
-      - VaultImpassable
   - type: Sprite
     state: direction_sec
 
@@ -48,19 +24,8 @@
   name: evac sign
   description: A direction sign, pointing out which way evac is.
   components:
-  - type: Rotatable
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.4,-0.1,0.4,0.1"
-      layer:
-      - SmallImpassable
-      mask:
-      - VaultImpassable
   - type: Sprite
     state: direction_evac
-
 
 - type: entity
   parent: BaseSign
@@ -68,19 +33,8 @@
   name: bridge sign
   description: A direction sign, pointing out which way the Bridge is.
   components:
-  - type: Rotatable
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.4,-0.1,0.4,0.1"
-      layer:
-      - SmallImpassable
-      mask:
-      - VaultImpassable
   - type: Sprite
     state: direction_bridge
-
 
 - type: entity
   parent: BaseSign
@@ -88,19 +42,8 @@
   name: medical sign
   description: A direction sign, pointing out which way the Medical department is.
   components:
-  - type: Rotatable
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.4,-0.1,0.4,0.1"
-      layer:
-      - SmallImpassable
-      mask:
-      - VaultImpassable
   - type: Sprite
     state: direction_med
-
 
 - type: entity
   parent: BaseSign
@@ -108,16 +51,6 @@
   name: engineering sign
   description: A direction sign, pointing out which way the Engineering department is.
   components:
-  - type: Rotatable
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.4,-0.1,0.4,0.1"
-      layer:
-      - SmallImpassable
-      mask:
-      - VaultImpassable
   - type: Sprite
     state: direction_eng
 
@@ -127,16 +60,6 @@
   name: science sign
   description: A direction sign, pointing out which way the Science department is.
   components:
-  - type: Rotatable
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.4,-0.1,0.4,0.1"
-      layer:
-      - SmallImpassable
-      mask:
-      - VaultImpassable
   - type: Sprite
     state: direction_sci
 
@@ -146,16 +69,6 @@
   name: supply sign
   description: A direction sign, pointing to some supplies.
   components:
-  - type: Rotatable
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.4,-0.1,0.4,0.1"
-      layer:
-      - SmallImpassable
-      mask:
-      - VaultImpassable
   - type: Sprite
     state: direction_supply
 
@@ -164,180 +77,113 @@
 
 - type: entity
   parent: BaseSign
+  id: SignAi
+  name: ai sign
+  components:
+  - type: Sprite
+    state: ai
+
+- type: entity
+  parent: BaseSign
   id: SignArmory
   name: armory sign
   components:
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.3,-0.4,0.3,0.4"
-      layer:
-      - SmallImpassable
-      mask:
-      - VaultImpassable
   - type: Sprite
     state: armory
-
 
 - type: entity
   parent: BaseSign
   id: SignToolStorage
   name: tool storage sign
   components:
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.3,-0.4,0.3,0.4"
-      layer:
-      - SmallImpassable
-      mask:
-      - VaultImpassable
   - type: Sprite
     state: ass
-
 
 - type: entity
   parent: BaseSign
   id: SignAnomaly
   name: anomaly lab sign
   components:
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.3,-0.4,0.3,0.4"
-      layer:
-      - SmallImpassable
-      mask:
-      - VaultImpassable
   - type: Sprite
     state: anomaly
-
 
 - type: entity
   parent: BaseSign
   id: SignAtmos
   name: atmos sign
   components:
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.3,-0.4,0.3,0.4"
-      layer:
-      - SmallImpassable
-      mask:
-      - VaultImpassable
   - type: Sprite
     state: atmos
-
 
 - type: entity
   parent: BaseSign
   id: SignBar
   name: bar sign
   components:
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.3,-0.4,0.3,0.4"
-      layer:
-      - SmallImpassable
-      mask:
-      - VaultImpassable
   - type: Sprite
     state: bar
 
+- type: entity
+  parent: BaseSign
+  id: SignHydro1
+  name: hydro sign
+  components:
+  - type: Sprite
+    state: hydro1
+
+- type: entity
+  parent: BaseSign
+  id: SignHydro2
+  name: hydro sign
+  components:
+  - type: Sprite
+    state: hydro2
+
+- type: entity
+  parent: BaseSign
+  id: SignHydro3
+  name: hydro sign
+  components:
+  - type: Sprite
+    state: hydro3
 
 - type: entity
   parent: BaseSign
   id: SignLibrary
   name: library sign
   components:
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.3,-0.4,0.3,0.4"
-      layer:
-      - SmallImpassable
-      mask:
-      - VaultImpassable
   - type: Sprite
     state: biblio
-
 
 - type: entity
   parent: BaseSign
   id: SignChapel
   name: chapel sign
   components:
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.3,-0.4,0.3,0.4"
-      layer:
-      - SmallImpassable
-      mask:
-      - VaultImpassable
   - type: Sprite
     state: chapel
-
 
 - type: entity
   parent: BaseSign
   id: SignHead
   name: head sign
   components:
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.3,-0.4,0.3,0.4"
-      layer:
-      - SmallImpassable
-      mask:
-      - VaultImpassable
   - type: Sprite
     state: commander
-
 
 - type: entity
   parent: BaseSign
   id: SignConference
   name: conference room sign
   components:
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.3,-0.4,0.3,0.4"
-      layer:
-      - SmallImpassable
-      mask:
-      - VaultImpassable
   - type: Sprite
     state: conference_room
-
 
 - type: entity
   parent: BaseSign
   id: SignDrones
   name: drones sign
   components:
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.3,-0.4,0.3,0.4"
-      layer:
-      - SmallImpassable
-      mask:
-      - VaultImpassable
   - type: Sprite
     state: drones
 
@@ -346,15 +192,6 @@
   id: SignEngine
   name: engine sign
   components:
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.3,-0.4,0.3,0.4"
-      layer:
-      - SmallImpassable
-      mask:
-      - VaultImpassable
   - type: Sprite
     state: engine
 
@@ -363,15 +200,6 @@
   id: SignCloning
   name: cloning sign
   components:
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.3,-0.4,0.3,0.4"
-      layer:
-      - SmallImpassable
-      mask:
-      - VaultImpassable
   - type: Sprite
     state: cloning
 
@@ -380,15 +208,6 @@
   id: SignInterrogation
   name: interrogation sign
   components:
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.3,-0.4,0.3,0.4"
-      layer:
-      - SmallImpassable
-      mask:
-      - VaultImpassable
   - type: Sprite
     state: interrogation
 
@@ -397,15 +216,6 @@
   id: SignSurgery
   name: surgery sign
   components:
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.3,-0.4,0.3,0.4"
-      layer:
-      - SmallImpassable
-      mask:
-      - VaultImpassable
   - type: Sprite
     state: surgery
 
@@ -414,15 +224,6 @@
   id: SignTelecomms
   name: telecomms sign
   components:
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.3,-0.4,0.3,0.4"
-      layer:
-      - SmallImpassable
-      mask:
-      - VaultImpassable
   - type: Sprite
     state: telecoms
 
@@ -431,15 +232,6 @@
   id: SignCargo
   name: cargo sign
   components:
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.3,-0.4,0.3,0.4"
-      layer:
-      - SmallImpassable
-      mask:
-      - VaultImpassable
   - type: Sprite
     state: cargo
 
@@ -448,15 +240,6 @@
   id: SignCargoDock
   name: cargo dock sign
   components:
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.3,-0.4,0.3,0.4"
-      layer:
-      - SmallImpassable
-      mask:
-      - VaultImpassable
   - type: Sprite
     state: cargo_dock
 
@@ -465,32 +248,30 @@
   id: SignChem
   name: chemistry sign
   components:
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.3,-0.4,0.3,0.4"
-      layer:
-      - SmallImpassable
-      mask:
-      - VaultImpassable
   - type: Sprite
     state: chem
+
+- type: entity
+  parent: BaseSign
+  id: SignChemistry1
+  name: chemistry sign
+  components:
+  - type: Sprite
+    state: chemistry1
+
+- type: entity
+  parent: BaseSign
+  id: SignChemistry2
+  name: chemistry sign
+  components:
+  - type: Sprite
+    state: chemistry2
 
 - type: entity
   parent: BaseSign
   id: SignShipDock
   name: docking sign
   components:
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.3,-0.4,0.3,0.4"
-      layer:
-      - SmallImpassable
-      mask:
-      - VaultImpassable
   - type: Sprite
     state: dock
 
@@ -499,15 +280,6 @@
   id: SignEngineering
   name: engineering sign
   components:
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.3,-0.4,0.3,0.4"
-      layer:
-      - SmallImpassable
-      mask:
-      - VaultImpassable
   - type: Sprite
     state: eng
 
@@ -516,15 +288,6 @@
   id: SignEVA
   name: EVA sign
   components:
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.3,-0.4,0.3,0.4"
-      layer:
-      - SmallImpassable
-      mask:
-      - VaultImpassable
   - type: Sprite
     state: eva
 
@@ -533,15 +296,6 @@
   id: SignGravity
   name: gravity sign
   components:
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.3,-0.4,0.3,0.4"
-      layer:
-      - SmallImpassable
-      mask:
-      - VaultImpassable
   - type: Sprite
     state: gravi
 
@@ -550,15 +304,6 @@
   id: SignMedical
   name: medbay sign
   components:
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.3,-0.4,0.3,0.4"
-      layer:
-      - SmallImpassable
-      mask:
-      - VaultImpassable
   - type: Sprite
     state: medbay
 
@@ -567,15 +312,6 @@
   id: SignMorgue
   name: morgue sign
   components:
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.3,-0.4,0.3,0.4"
-      layer:
-      - SmallImpassable
-      mask:
-      - VaultImpassable
   - type: Sprite
     state: morgue
 
@@ -584,15 +320,6 @@
   id: SignPrison
   name: prison sign
   components:
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.3,-0.4,0.3,0.4"
-      layer:
-      - SmallImpassable
-      mask:
-      - VaultImpassable
   - type: Sprite
     state: prison
 
@@ -601,15 +328,6 @@
   id: SignRND
   name: research and development sign
   components:
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.3,-0.4,0.3,0.4"
-      layer:
-      - SmallImpassable
-      mask:
-      - VaultImpassable
   - type: Sprite
     state: rnd
 
@@ -618,51 +336,313 @@
   id: SignScience
   name: science sign
   components:
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.3,-0.4,0.3,0.4"
-      layer:
-      - SmallImpassable
-      mask:
-      - VaultImpassable
   - type: Sprite
     state: sci
+
+- type: entity
+  parent: BaseSign
+  id: SignScience1
+  name: science sign
+  components:
+  - type: Sprite
+    state: science1
+
+- type: entity
+  parent: BaseSign
+  id: SignScience2
+  name: science sign
+  components:
+  - type: Sprite
+    state: science2
 
 - type: entity
   parent: BaseSign
   id: SignToxins
   name: toxins sign
   components:
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.3,-0.4,0.3,0.4"
-      layer:
-      - SmallImpassable
-      mask:
-      - VaultImpassable
   - type: Sprite
     state: toxins
+
+- type: entity
+  parent: BaseSign
+  id: SignToxins2
+  name: toxins sign
+  components:
+  - type: Sprite
+    state: toxins2
 
 - type: entity
   parent: BaseSign
   id: SignBridge
   name: bridge sign
   components:
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.3,-0.4,0.3,0.4"
-      layer:
-      - SmallImpassable
-      mask:
-      - VaultImpassable
   - type: Sprite
     state: bridge
+
+- type: entity
+  parent: BaseSign
+  id: SignBio
+  name: bio sign
+  components:
+  - type: Sprite
+    state: bio
+
+- type: entity
+  parent: BaseSign
+  id: SignBiohazard
+  name: biohazard sign
+  components:
+  - type: Sprite
+    state: biohazard
+
+- type: entity
+  parent: BaseSign
+  id: SignCanisters
+  name: canisters sign
+  components:
+  - type: Sprite
+    state: canisters
+
+- type: entity
+  parent: BaseSign
+  id: SignCorrosives
+  name: corrosives sign
+  components:
+  - type: Sprite
+    state: corrosives
+
+- type: entity
+  parent: BaseSign
+  id: SignCryogenics
+  name: cryogenics sign
+  components:
+  - type: Sprite
+    state: cryogenics
+
+- type: entity
+  parent: BaseSign
+  id: SignDanger
+  name: danger sign
+  components:
+  - type: Sprite
+    state: danger
+
+- type: entity
+  parent: BaseSign
+  id: SignDisposalSpace
+  name: disposal sign
+  description: "Disposal: Leads to space"
+  components:
+  - type: Sprite
+    state: deathsposal
+
+- type: entity
+  parent: BaseSign
+  id: SignDoors
+  name: doors sign
+  components:
+  - type: Sprite
+    state: doors
+
+- type: entity
+  parent: BaseSign
+  id: SignElectrical
+  name: electrical sign
+  components:
+  - type: Sprite
+    state: electrical
+
+- type: entity
+  parent: BaseSign
+  id: SignExamroom
+  name: examination room sign
+  components:
+  - type: Sprite
+    state: examroom
+
+- type: entity
+  parent: BaseSign
+  id: SignExplosives
+  name: explosives sign
+  components:
+  - type: Sprite
+    state: explosives
+
+- type: entity
+  parent: BaseSign
+  id: SignFire
+  name: fire sign
+  components:
+  - type: Sprite
+    state: fire
+
+- type: entity
+  parent: BaseSign
+  id: SignFlammable
+  name: flammable sign
+  components:
+  - type: Sprite
+    state: flammable
+
+- type: entity
+  parent: BaseSign
+  id: SignLaser
+  name: laser sign
+  components:
+  - type: Sprite
+    state: laser
+
+- type: entity
+  parent: BaseSign
+  id: SignMagnetics
+  name: magnetics sign
+  components:
+  - type: Sprite
+    state: magnetics
+
+- type: entity
+  parent: BaseSign
+  id: SignMail
+  name: mail sign
+  components:
+  - type: Sprite
+    state: mail
+
+- type: entity
+  parent: BaseSign
+  id: SignMemetic
+  name: memetic sign
+  components:
+  - type: Sprite
+    state: memetic
+
+- type: entity
+  parent: BaseSign
+  id: SignMinerDock
+  name: miner dock sign
+  components:
+  - type: Sprite
+    state: miner_dock
+
+- type: entity
+  parent: BaseSign
+  id: SignNosmoking
+  name: nosmoking sign
+  components:
+  - type: Sprite
+    state: nosmoking
+
+- type: entity
+  parent: BaseSign
+  id: SignOptical
+  name: optical sign
+  components:
+  - type: Sprite
+    state: optical
+
+- type: entity
+  parent: BaseSign
+  id: SigN
+  name: oxidants signoxidants
+  components:
+  - type: Sprite
+    state: oxidants
+
+- type: entity
+  parent: BaseSign
+  id: SignPods
+  name: pods sign
+  components:
+  - type: Sprite
+    state: pods
+
+- type: entity
+  parent: BaseSign
+  id: SignRadiation
+  name: radiation sign
+  components:
+  - type: Sprite
+    state: radiation
+
+- type: entity
+  parent: BaseSign
+  id: SignRobo
+  name: robo sign
+  components:
+  - type: Sprite
+    state: robo
+
+- type: entity
+  parent: BaseSign
+  id: SignSecure
+  name: secure sign
+  components:
+  - type: Sprite
+    state: secure
+
+- type: entity
+  parent: BaseSign
+  id: SignSecurearea
+  name: securearea sign
+  components:
+  - type: Sprite
+    state: securearea
+
+- type: entity
+  parent: BaseSign
+  id: SignShield
+  name: shield sign
+  components:
+  - type: Sprite
+    state: shield
+
+- type: entity
+  parent: BaseSign
+  id: SignShock
+  name: shock sign
+  components:
+  - type: Sprite
+    state: shock
+
+- type: entity
+  parent: BaseSign
+  id: SignSpace
+  name: space sign
+  components:
+  - type: Sprite
+    state: space
+
+- type: entity
+  parent: BaseSign
+  id: SignVirology
+  name: virology sign
+  components:
+  - type: Sprite
+    state: virology
+
+- type: entity
+  parent: BaseSign
+  id: SignXenobio
+  name: xenobio sign
+  components:
+  - type: Sprite
+    state: xenobio
+
+- type: entity
+  parent: BaseSign
+  id: SignXenobio2
+  name: xenobio sign
+  components:
+  - type: Sprite
+    state: xenobio2
+
+- type: entity
+  parent: BaseSign
+  id: SignXenolab
+  name: xenolab sign
+  components:
+  - type: Sprite
+    state: xenolab
 
 # Atmos Warnings
 
@@ -672,15 +652,6 @@
   name: air warning sign
   description: WARNING! Air flow tube. Ensure the flow is disengaged before working.
   components:
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.3,-0.2,0.3,0.2"
-      layer:
-      - SmallImpassable
-      mask:
-      - VaultImpassable
   - type: Sprite
     state: atmos_air
 
@@ -690,15 +661,6 @@
   name: CO2 warning sign
   description: WARNING! CO2 flow tube. Ensure the flow is disengaged before working.
   components:
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.3,-0.2,0.3,0.2"
-      layer:
-      - SmallImpassable
-      mask:
-      - VaultImpassable
   - type: Sprite
     state: atmos_co2
 
@@ -708,15 +670,6 @@
   name: N2 warning sign
   description: WARNING! N2 flow tube. Ensure the flow is disengaged before working.
   components:
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.3,-0.2,0.3,0.2"
-      layer:
-      - SmallImpassable
-      mask:
-      - VaultImpassable
   - type: Sprite
     state: atmos_n2
 
@@ -726,15 +679,6 @@
   name: N2O warning sign
   description: WARNING! N2O flow tube. Ensure the flow is disengaged before working.
   components:
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.3,-0.2,0.3,0.2"
-      layer:
-      - SmallImpassable
-      mask:
-      - VaultImpassable
   - type: Sprite
     state: atmos_n2o
 
@@ -744,15 +688,6 @@
   name: O2 warning sign
   description: WARNING! O2 flow tube. Ensure the flow is disengaged before working.
   components:
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.3,-0.2,0.3,0.2"
-      layer:
-      - SmallImpassable
-      mask:
-      - VaultImpassable
   - type: Sprite
     state: atmos_o2
 
@@ -762,15 +697,6 @@
   name: plasma waste sign
   description: WARNING! Plasma flow tube. Ensure the flow is disengaged before working.
   components:
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.3,-0.2,0.3,0.2"
-      layer:
-      - SmallImpassable
-      mask:
-      - VaultImpassable
   - type: Sprite
     state: atmos_plasma
 
@@ -780,15 +706,6 @@
   name: atmos waste sign
   description: WARNING! Waste flow tube. Ensure the flow is disengaged before working.
   components:
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.3,-0.2,0.3,0.2"
-      layer:
-      - SmallImpassable
-      mask:
-      - VaultImpassable
   - type: Sprite
     state: atmos_waste
 
@@ -798,15 +715,6 @@
   name: no smoking sign
   description: A warning sign which reads 'NO SMOKING'
   components:
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.3,-0.4,0.3,0.4"
-      layer:
-      - SmallImpassable
-      mask:
-      - VaultImpassable
   - type: Sprite
     state: nosmoking2
 
@@ -816,15 +724,6 @@
   name: old sign
   description: Technical information of some sort, shame its too worn-out to read.
   components:
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.3,-0.4,0.3,0.4"
-      layer:
-      - SmallImpassable
-      mask:
-      - VaultImpassable
   - type: Sprite
     state: something-old1
 
@@ -834,14 +733,5 @@
   name: old sign
   description: Looks like a planet crashing by some station above it. Its kinda scary.
   components:
-  - type: Physics
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.3,-0.4,0.3,0.4"
-      layer:
-      - SmallImpassable
-      mask:
-      - VaultImpassable
   - type: Sprite
     state: something-old2

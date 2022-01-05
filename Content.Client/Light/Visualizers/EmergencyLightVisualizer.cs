@@ -1,5 +1,7 @@
 ﻿using Content.Shared.Light.Component;
 using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.Light.Visualizers
@@ -11,7 +13,8 @@ namespace Content.Client.Light.Visualizers
         {
             base.OnChangeData(component);
 
-            if (!component.Owner.TryGetComponent(out SpriteComponent? sprite))
+            var entities = IoCManager.Resolve<IEntityManager>();
+            if (!entities.TryGetComponent(component.Owner, out SpriteComponent? sprite))
                 return;
 
             if (!component.TryGetData(EmergencyLightVisuals.On, out bool on))

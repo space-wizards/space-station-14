@@ -2,21 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Shared.Body.Behavior;
 using Content.Shared.Body.Part;
-using Content.Shared.Body.Part.Property;
-using Content.Shared.Body.Preset;
-using Content.Shared.Body.Slot;
-using Content.Shared.Body.Template;
+using Content.Shared.Body.Prototypes;
 using Content.Shared.CharacterAppearance.Systems;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
-using Content.Shared.Movement.Components;
 using Content.Shared.Standing;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
-using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -28,7 +22,7 @@ namespace Content.Shared.Body.Components
     // TODO BODY Damage methods for collections of IDamageableComponents
 
     [NetworkedComponent()]
-    public abstract class SharedBodyComponent : Component, IBodyPartContainer, ISerializationHooks
+    public abstract class SharedBodyComponent : Component, ISerializationHooks
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
@@ -36,11 +30,11 @@ namespace Content.Shared.Body.Components
 
         [ViewVariables]
         [DataField("template", required: true)]
-        private string? TemplateId { get; } = default;
+        private string? TemplateId { get; }
 
         [ViewVariables]
         [DataField("preset", required: true)]
-        private string? PresetId { get; } = default;
+        private string? PresetId { get; }
 
         [ViewVariables]
         public BodyTemplatePrototype? Template => TemplateId == null
@@ -63,9 +57,6 @@ namespace Content.Shared.Body.Components
 
         [ViewVariables]
         public IEnumerable<KeyValuePair<SharedBodyPartComponent, BodyPartSlot>> Parts => SlotParts;
-
-        [ViewVariables]
-        public IEnumerable<BodyPartSlot> EmptySlots => Slots.Where(slot => slot.Part == null);
 
         public BodyPartSlot? CenterSlot =>
             Template?.CenterSlot is { } centerSlot
@@ -152,8 +143,8 @@ namespace Content.Shared.Body.Components
 
             var argsAdded = new BodyPartAddedEventArgs(slot.Id, part);
 
-            EntitySystem.Get<SharedHumanoidAppearanceSystem>().BodyPartAdded(Owner.Uid, argsAdded);
-            foreach (var component in Owner.GetAllComponents<IBodyPartAdded>().ToArray())
+            EntitySystem.Get<SharedHumanoidAppearanceSystem>().BodyPartAdded(Owner, argsAdded);
+            foreach (var component in IoCManager.Resolve<IEntityManager>().GetComponents<IBodyPartAdded>(Owner).ToArray())
             {
                 component.BodyPartAdded(argsAdded);
             }
@@ -180,8 +171,8 @@ namespace Content.Shared.Body.Components
             var args = new BodyPartRemovedEventArgs(slot.Id, part);
 
 
-            EntitySystem.Get<SharedHumanoidAppearanceSystem>().BodyPartRemoved(Owner.Uid, args);
-            foreach (var component in Owner.GetAllComponents<IBodyPartRemoved>())
+            EntitySystem.Get<SharedHumanoidAppearanceSystem>().BodyPartRemoved(Owner, args);
+            foreach (var component in IoCManager.Resolve<IEntityManager>().GetComponents<IBodyPartRemoved>(Owner))
             {
                 component.BodyPartRemoved(args);
             }
@@ -190,14 +181,14 @@ namespace Content.Shared.Body.Components
             if (part.PartType == BodyPartType.Leg &&
                 GetPartsOfType(BodyPartType.Leg).ToArray().Length == 0)
             {
-                EntitySystem.Get<StandingStateSystem>().Down(Owner.Uid);
+                EntitySystem.Get<StandingStateSystem>().Down(Owner);
             }
 
             if (part.IsVital && SlotParts.Count(x => x.Value.PartType == part.PartType) == 0)
             {
                 // TODO BODY SYSTEM KILL : Find a more elegant way of killing em than just dumping bloodloss damage.
                 var damage = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Bloodloss"), 300);
-                EntitySystem.Get<DamageableSystem>().TryChangeDamage(part.Owner.Uid, damage);
+                EntitySystem.Get<DamageableSystem>().TryChangeDamage(part.Owner, damage);
             }
 
             OnBodyChanged();
@@ -229,14 +220,6 @@ namespace Content.Shared.Body.Components
             slot.SetPart(part);
         }
 
-        public bool HasPart(string slotId)
-        {
-            DebugTools.AssertNotNull(slotId);
-
-            return SlotIds.TryGetValue(slotId, out var slot) &&
-                   slot.Part != null;
-        }
-
         public bool HasPart(SharedBodyPartComponent part)
         {
             DebugTools.AssertNotNull(part);
@@ -250,34 +233,6 @@ namespace Content.Shared.Body.Components
 
             return SlotParts.TryGetValue(part, out var slot) &&
                    slot.RemovePart();
-        }
-
-        public bool RemovePart(string slotId)
-        {
-            DebugTools.AssertNotNull(slotId);
-
-            return SlotIds.TryGetValue(slotId, out var slot) &&
-                   slot.RemovePart();
-        }
-
-        public bool RemovePart(SharedBodyPartComponent part, [NotNullWhen(true)] out BodyPartSlot? slotId)
-        {
-            DebugTools.AssertNotNull(part);
-
-            if (!SlotParts.TryGetValue(part, out var slot))
-            {
-                slotId = null;
-                return false;
-            }
-
-            if (!slot.RemovePart())
-            {
-                slotId = null;
-                return false;
-            }
-
-            slotId = slot;
-            return true;
         }
 
         public bool TryDropPart(BodyPartSlot slot, [NotNullWhen(true)] out Dictionary<BodyPartSlot, SharedBodyPartComponent>? dropped)
@@ -339,84 +294,14 @@ namespace Content.Shared.Body.Components
             return false;
         }
 
-        public bool HasSlot(string slot)
-        {
-            return SlotIds.ContainsKey(slot);
-        }
-
-        public IEnumerable<SharedBodyPartComponent> GetParts()
-        {
-            foreach (var slot in SlotIds.Values)
-            {
-                if (slot.Part != null)
-                {
-                    yield return slot.Part;
-                }
-            }
-        }
-
-        public bool TryGetPart(string slotId, [NotNullWhen(true)] out SharedBodyPartComponent? result)
-        {
-            result = null;
-
-            return SlotIds.TryGetValue(slotId, out var slot) &&
-                   (result = slot.Part) != null;
-        }
-
-        public BodyPartSlot? GetSlot(string id)
-        {
-            return SlotIds.GetValueOrDefault(id);
-        }
-
         public BodyPartSlot? GetSlot(SharedBodyPartComponent part)
         {
             return SlotParts.GetValueOrDefault(part);
         }
 
-        public bool TryGetSlot(string slotId, [NotNullWhen(true)] out BodyPartSlot? slot)
-        {
-            return (slot = GetSlot(slotId)) != null;
-        }
-
         public bool TryGetSlot(SharedBodyPartComponent part, [NotNullWhen(true)] out BodyPartSlot? slot)
         {
             return (slot = GetSlot(part)) != null;
-        }
-
-        public bool TryGetPartConnections(string slotId, [NotNullWhen(true)] out List<SharedBodyPartComponent>? connections)
-        {
-            if (!SlotIds.TryGetValue(slotId, out var slot))
-            {
-                connections = null;
-                return false;
-            }
-
-            connections = new List<SharedBodyPartComponent>();
-            foreach (var connection in slot.Connections)
-            {
-                if (connection.Part != null)
-                {
-                    connections.Add(connection.Part);
-                }
-            }
-
-            if (connections.Count <= 0)
-            {
-                connections = null;
-                return false;
-            }
-
-            return true;
-        }
-
-        public bool HasSlotOfType(BodyPartType type)
-        {
-            foreach (var _ in GetSlotsOfType(type))
-            {
-                return true;
-            }
-
-            return false;
         }
 
         public IEnumerable<BodyPartSlot> GetSlotsOfType(BodyPartType type)
@@ -451,91 +336,9 @@ namespace Content.Shared.Body.Components
             }
         }
 
-        /// <returns>A list of parts with that property.</returns>
-        public IEnumerable<(SharedBodyPartComponent part, IBodyPartProperty property)> GetPartsWithProperty(Type type)
-        {
-            foreach (var slot in SlotIds.Values)
-            {
-                if (slot.Part != null && slot.Part.TryGetProperty(type, out var property))
-                {
-                    yield return (slot.Part, property);
-                }
-            }
-        }
-
-        public IEnumerable<(SharedBodyPartComponent part, T property)> GetPartsWithProperty<T>() where T : class, IBodyPartProperty
-        {
-            foreach (var part in SlotParts.Keys)
-            {
-                if (part.TryGetProperty<T>(out var property))
-                {
-                    yield return (part, property);
-                }
-            }
-        }
-
-
         private void OnBodyChanged()
         {
             Dirty();
-        }
-
-        public float DistanceToNearestFoot(SharedBodyPartComponent source)
-        {
-            if (source.PartType == BodyPartType.Foot &&
-                source.TryGetProperty<ExtensionComponent>(out var extension))
-            {
-                return extension.Distance;
-            }
-
-            return LookForFootRecursion(source);
-        }
-
-        private float LookForFootRecursion(SharedBodyPartComponent current, HashSet<BodyPartSlot>? searched = null)
-        {
-            searched ??= new HashSet<BodyPartSlot>();
-
-            if (!current.TryGetProperty<ExtensionComponent>(out var extProperty))
-            {
-                return float.MinValue;
-            }
-
-            if (!TryGetSlot(current, out var slot))
-            {
-                return float.MinValue;
-            }
-
-            foreach (var connection in slot.Connections)
-            {
-                if (connection.PartType == BodyPartType.Foot &&
-                    !searched.Contains(connection))
-                {
-                    return extProperty.Distance;
-                }
-            }
-
-            var distances = new List<float>();
-            foreach (var connection in slot.Connections)
-            {
-                if (connection.Part == null || !searched.Contains(connection))
-                {
-                    continue;
-                }
-
-                var result = LookForFootRecursion(connection.Part, searched);
-
-                if (Math.Abs(result - float.MinValue) > 0.001f)
-                {
-                    distances.Add(result);
-                }
-            }
-
-            if (distances.Count > 0)
-            {
-                return distances.Min<float>() + extProperty.Distance;
-            }
-
-            return float.MinValue;
         }
 
         // TODO BODY optimize this
@@ -549,14 +352,14 @@ namespace Content.Shared.Body.Components
             return SlotParts.ElementAt(index);
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             var parts = new (string slot, EntityUid partId)[SlotParts.Count];
 
             var i = 0;
             foreach (var (part, slot) in SlotParts)
             {
-                parts[i] = (slot.Id, part.Owner.Uid);
+                parts[i] = (slot.Id, Owner: part.Owner);
                 i++;
             }
 
@@ -603,62 +406,6 @@ namespace Content.Shared.Body.Components
                     part.Gib();
             }
         }
-
-        public bool TryGetMechanismBehaviors([NotNullWhen(true)] out List<SharedMechanismBehavior>? behaviors)
-        {
-            behaviors = GetMechanismBehaviors().ToList();
-
-            if (behaviors.Count == 0)
-            {
-                behaviors = null;
-                return false;
-            }
-
-            return true;
-        }
-
-        public bool HasMechanismBehavior<T>() where T : SharedMechanismBehavior
-        {
-            return Parts.Any(p => p.Key.HasMechanismBehavior<T>());
-        }
-
-        // TODO cache these 2 methods jesus
-        public IEnumerable<SharedMechanismBehavior> GetMechanismBehaviors()
-        {
-            foreach (var (part, _) in Parts)
-            foreach (var mechanism in part.Mechanisms)
-            foreach (var behavior in mechanism.Behaviors.Values)
-            {
-                yield return behavior;
-            }
-        }
-
-        public IEnumerable<T> GetMechanismBehaviors<T>() where T : SharedMechanismBehavior
-        {
-            foreach (var (part, _) in Parts)
-            foreach (var mechanism in part.Mechanisms)
-            foreach (var behavior in mechanism.Behaviors.Values)
-            {
-                if (behavior is T tBehavior)
-                {
-                    yield return tBehavior;
-                }
-            }
-        }
-
-        public bool TryGetMechanismBehaviors<T>([NotNullWhen(true)] out List<T>? behaviors)
-            where T : SharedMechanismBehavior
-        {
-            behaviors = GetMechanismBehaviors<T>().ToList();
-
-            if (behaviors.Count == 0)
-            {
-                behaviors = null;
-                return false;
-            }
-
-            return true;
-        }
     }
 
     [Serializable, NetSerializable]
@@ -686,12 +433,12 @@ namespace Content.Shared.Body.Components
 
             foreach (var (slot, partId) in PartIds)
             {
-                if (!entityManager.TryGetEntity(partId, out var entity))
+                if (!entityManager.EntityExists(partId))
                 {
                     continue;
                 }
 
-                if (!entity.TryGetComponent(out SharedBodyPartComponent? part))
+                if (!entityManager.TryGetComponent(partId, out SharedBodyPartComponent? part))
                 {
                     continue;
                 }

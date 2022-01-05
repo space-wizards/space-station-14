@@ -4,15 +4,14 @@ using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Cooldown;
+using Content.Shared.FixedPoint;
 using Content.Shared.Fluids;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Content.Shared.Vapor;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -20,22 +19,25 @@ using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Fluids.Components
 {
     [RegisterComponent]
-    internal sealed class SprayComponent : SharedSprayComponent, IAfterInteract, IUse, IActivate, IDropped
+    internal sealed class SprayComponent : SharedSprayComponent, IAfterInteract
     {
         public const float SprayDistance = 3f;
         public const string SolutionName = "spray";
 
+        [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         [DataField("transferAmount")]
-        private ReagentUnit _transferAmount = ReagentUnit.New(10);
+        private FixedPoint2 _transferAmount = FixedPoint2.New(10);
         [DataField("sprayVelocity")]
         private float _sprayVelocity = 1.5f;
         [DataField("sprayAliveTime")]
@@ -44,16 +46,12 @@ namespace Content.Server.Fluids.Components
         private TimeSpan _cooldownEnd;
         [DataField("cooldownTime")]
         private float _cooldownTime = 0.5f;
-        [DataField("sprayedPrototype")]
+        [DataField("sprayedPrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         private string _vaporPrototype = "Vapor";
         [DataField("vaporAmount")]
         private int _vaporAmount = 1;
         [DataField("vaporSpread")]
         private float _vaporSpread = 90f;
-        [DataField("hasSafety")]
-        private bool _hasSafety;
-        [DataField("safety")]
-        private bool _safety = true;
         [DataField("impulse")]
         private float _impulse = 0f;
 
@@ -61,7 +59,7 @@ namespace Content.Server.Fluids.Components
         ///     The amount of solution to be sprayer from this solution when using it
         /// </summary>
         [ViewVariables]
-        public ReagentUnit TransferAmount
+        public FixedPoint2 TransferAmount
         {
             get => _transferAmount;
             set => _transferAmount = value;
@@ -80,25 +78,11 @@ namespace Content.Server.Fluids.Components
         [DataField("spraySound", required: true)]
         public SoundSpecifier SpraySound { get; } = default!;
 
-        [DataField("safetySound")]
-        public SoundSpecifier SafetySound { get; } = new SoundPathSpecifier("/Audio/Machines/button.ogg");
-
-
-        public ReagentUnit CurrentVolume {
+        public FixedPoint2 CurrentVolume {
             get
             {
                 EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution);
-                return solution?.CurrentVolume ?? ReagentUnit.Zero;
-            }
-        }
-
-        protected override void Initialize()
-        {
-            base.Initialize();
-
-            if (_hasSafety)
-            {
-                SetSafety(Owner, _safety);
+                return solution?.CurrentVolume ?? FixedPoint2.Zero;
             }
         }
 
@@ -106,12 +90,6 @@ namespace Content.Server.Fluids.Components
         {
             if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User))
                 return false;
-
-            if (_hasSafety && _safety)
-            {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("spray-component-safety-on-message"));
-                return true;
-            }
 
             if (CurrentVolume <= 0)
             {
@@ -124,8 +102,8 @@ namespace Content.Server.Fluids.Components
             if(curTime < _cooldownEnd)
                 return true;
 
-            var playerPos = eventArgs.User.Transform.Coordinates;
-            var entManager = Owner.EntityManager;
+            var playerPos = _entMan.GetComponent<TransformComponent>(eventArgs.User).Coordinates;
+            var entManager = _entMan;
 
             if (eventArgs.ClickLocation.GetGridId(entManager) != playerPos.GetGridId(entManager))
                 return true;
@@ -149,36 +127,37 @@ namespace Content.Server.Fluids.Components
                 var diffNorm = diffPos.Normalized;
                 var diffLength = diffPos.Length;
 
-                var target = eventArgs.User.Transform.Coordinates.Offset((diffNorm + rotation.ToVec()).Normalized * diffLength + quarter);
+                var target = _entMan.GetComponent<TransformComponent>(eventArgs.User).Coordinates.Offset((diffNorm + rotation.ToVec()).Normalized * diffLength + quarter);
 
-                if (target.TryDistance(Owner.EntityManager, playerPos, out var distance) && distance > SprayDistance)
-                    target = eventArgs.User.Transform.Coordinates.Offset(diffNorm * SprayDistance);
+                if (target.TryDistance(_entMan, playerPos, out var distance) && distance > SprayDistance)
+                    target = _entMan.GetComponent<TransformComponent>(eventArgs.User).Coordinates.Offset(diffNorm * SprayDistance);
 
-                var solution = EntitySystem.Get<SolutionContainerSystem>().SplitSolution(Owner.Uid, contents, _transferAmount);
+                var solution = EntitySystem.Get<SolutionContainerSystem>().SplitSolution(Owner, contents, _transferAmount);
 
-                if (solution.TotalVolume <= ReagentUnit.Zero)
+                if (solution.TotalVolume <= FixedPoint2.Zero)
                     break;
 
                 var vapor = entManager.SpawnEntity(_vaporPrototype, playerPos.Offset(distance < 1 ? quarter : threeQuarters));
-                vapor.Transform.LocalRotation = rotation;
+                _entMan.GetComponent<TransformComponent>(vapor).LocalRotation = rotation;
 
-                if (vapor.TryGetComponent(out AppearanceComponent? appearance)) // Vapor sprite should face down.
+                if (_entMan.TryGetComponent(vapor, out AppearanceComponent? appearance))
                 {
-                    appearance.SetData(VaporVisuals.Rotation, -Angle.Zero + rotation);
                     appearance.SetData(VaporVisuals.Color, contents.Color.WithAlpha(1f));
                     appearance.SetData(VaporVisuals.State, true);
                 }
 
                 // Add the solution to the vapor and actually send the thing
-                var vaporComponent = vapor.GetComponent<VaporComponent>();
+                var vaporComponent = _entMan.GetComponent<VaporComponent>(vapor);
                 var vaporSystem = EntitySystem.Get<VaporSystem>();
                 vaporSystem.TryAddSolution(vaporComponent, solution);
 
-                vaporSystem.Start(vaporComponent, rotation.ToVec(), _sprayVelocity, target, _sprayAliveTime);
+                // impulse direction is defined in world-coordinates, not local coordinates
+                var impulseDirection = _entMan.GetComponent<TransformComponent>(vapor).WorldRotation.ToVec();
+                vaporSystem.Start(vaporComponent, impulseDirection, _sprayVelocity, target, _sprayAliveTime);
 
-                if (_impulse > 0f && eventArgs.User.TryGetComponent(out IPhysBody? body))
+                if (_impulse > 0f && _entMan.TryGetComponent(eventArgs.User, out IPhysBody? body))
                 {
-                    body.ApplyLinearImpulse(-direction * _impulse);
+                    body.ApplyLinearImpulse(-impulseDirection * _impulse);
                 }
             }
 
@@ -187,47 +166,13 @@ namespace Content.Server.Fluids.Components
             _lastUseTime = curTime;
             _cooldownEnd = _lastUseTime + TimeSpan.FromSeconds(_cooldownTime);
 
-            if (Owner.TryGetComponent(out ItemCooldownComponent? cooldown))
+            if (_entMan.TryGetComponent(Owner, out ItemCooldownComponent? cooldown))
             {
                 cooldown.CooldownStart = _lastUseTime;
                 cooldown.CooldownEnd = _cooldownEnd;
             }
 
             return true;
-        }
-
-        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
-        {
-            ToggleSafety(eventArgs.User);
-            return true;
-        }
-
-        void IActivate.Activate(ActivateEventArgs eventArgs)
-        {
-            ToggleSafety(eventArgs.User);
-        }
-
-        private void ToggleSafety(IEntity user)
-        {
-            SoundSystem.Play(Filter.Pvs(Owner), SafetySound.GetSound(), Owner, AudioHelpers.WithVariation(0.125f).WithVolume(-4f));
-            SetSafety(user, !_safety);
-        }
-
-        private void SetSafety(IEntity user, bool state)
-        {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) || !_hasSafety)
-                return;
-
-            _safety = state;
-
-            if(Owner.TryGetComponent(out AppearanceComponent? appearance))
-                appearance.SetData(SprayVisuals.Safety, _safety);
-        }
-
-        void IDropped.Dropped(DroppedEventArgs eventArgs)
-        {
-            if(_hasSafety && Owner.TryGetComponent(out AppearanceComponent? appearance))
-                appearance.SetData(SprayVisuals.Safety, _safety);
         }
     }
 }

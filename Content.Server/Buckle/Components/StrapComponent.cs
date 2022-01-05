@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Acts;
 using Content.Shared.Alert;
 using Content.Shared.Buckle.Components;
@@ -9,7 +8,8 @@ using Content.Shared.Interaction;
 using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Players;
+using Robust.Shared.IoC;
+using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -22,7 +22,7 @@ namespace Content.Server.Buckle.Components
     {
         [ComponentDependency] public readonly SpriteComponent? SpriteComponent = null;
 
-        private readonly HashSet<IEntity> _buckledEntities = new();
+        private readonly HashSet<EntityUid> _buckledEntities = new();
 
         /// <summary>
         /// The angle in degrees to rotate the player by when they get strapped
@@ -37,9 +37,53 @@ namespace Content.Server.Buckle.Components
         private int _occupiedSize;
 
         /// <summary>
+        /// The buckled entity will be offset by this amount from the center of the strap object.
+        /// If this offset it too big, it will be clamped to <see cref="MaxBuckleDistance"/>
+        /// </summary>
+        [DataField("buckleOffset", required: false)]
+        private Vector2 _buckleOffset = Vector2.Zero;
+
+        private bool _enabled = true;
+
+        /// <summary>
+        /// If disabled, nothing can be buckled on this object, and it will unbuckle anything that's already buckled
+        /// </summary>
+        public bool Enabled
+        {
+            get => _enabled;
+            set
+            {
+                _enabled = value;
+                if (_enabled == value) return;
+                RemoveAll();
+            }
+        }
+
+        /// <summary>
+        /// The distance above which a buckled entity will be automatically unbuckled.
+        /// Don't change it unless you really have to
+        /// </summary>
+        [DataField("maxBuckleDistance", required: false)]
+        public float MaxBuckleDistance = 0.1f;
+
+        /// <summary>
+        /// You can specify the offset the entity will have after unbuckling.
+        /// </summary>
+        [DataField("unbuckleOffset", required: false)]
+        public Vector2 UnbuckleOffset = Vector2.Zero;
+
+        /// <summary>
+        /// Gets and clamps the buckle offset to MaxBuckleDistance
+        /// </summary>
+        public Vector2 BuckleOffset => Vector2.Clamp(
+            _buckleOffset,
+            Vector2.One * -MaxBuckleDistance,
+            Vector2.One * MaxBuckleDistance);
+
+        /// <summary>
         /// The entity that is currently buckled here, synced from <see cref="BuckleComponent.BuckledTo"/>
         /// </summary>
-        public IReadOnlyCollection<IEntity> BuckledEntities => _buckledEntities;
+        public IReadOnlyCollection<EntityUid> BuckledEntities => _buckledEntities;
 
         /// <summary>
         /// The change in position to the strapped mob
@@ -95,6 +139,8 @@ namespace Content.Server.Buckle.Components
         /// <returns>True if added, false otherwise</returns>
         public bool TryAdd(BuckleComponent buckle, bool force = false)
         {
+            if (!Enabled) return false;
+
             if (!force && !HasSpace(buckle))
             {
                 return false;
@@ -109,7 +155,15 @@ namespace Content.Server.Buckle.Components
 
             buckle.Appearance?.SetData(StrapVisuals.RotationAngle, _rotation);
 
+            // Update the visuals of the strap object
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<AppearanceComponent>(Owner, out var appearance))
+            {
+                appearance.SetData("StrapState", true);
+            }
+
+#pragma warning disable 618
             SendMessage(new StrapMessage(buckle.Owner, Owner));
+#pragma warning restore 618
 
             return true;
         }
@@ -123,8 +177,15 @@ namespace Content.Server.Buckle.Components
         {
             if (_buckledEntities.Remove(buckle.Owner))
             {
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<AppearanceComponent>(Owner, out var appearance))
+                {
+                    appearance.SetData("StrapState", false);
+                }
+
                 _occupiedSize -= buckle.Size;
+#pragma warning disable 618
                 SendMessage(new UnStrapMessage(buckle.Owner, Owner));
+#pragma warning restore 618
             }
         }
 
@@ -142,9 +203,11 @@ namespace Content.Server.Buckle.Components
 
         private void RemoveAll()
         {
+            var entManager = IoCManager.Resolve<IEntityManager>();
+
             foreach (var entity in _buckledEntities.ToArray())
             {
-                if (entity.TryGetComponent<BuckleComponent>(out var buckle))
+                if (entManager.TryGetComponent<BuckleComponent>(entity, out var buckle))
                 {
                     buckle.TryUnbuckle(entity, true);
                 }
@@ -154,14 +217,16 @@ namespace Content.Server.Buckle.Components
             _occupiedSize = 0;
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new StrapComponentState(Position);
         }
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent<BuckleComponent>(out var buckle))
+            var entManager = IoCManager.Resolve<IEntityManager>();
+
+            if (!entManager.TryGetComponent<BuckleComponent>(eventArgs.User, out var buckle))
             {
                 return false;
             }
@@ -171,7 +236,9 @@ namespace Content.Server.Buckle.Components
 
         public override bool DragDropOn(DragDropEvent eventArgs)
         {
-            if (!eventArgs.Dragged.TryGetComponent(out BuckleComponent? buckleComponent)) return false;
+            var entManager = IoCManager.Resolve<IEntityManager>();
+
+            if (!entManager.TryGetComponent(eventArgs.Dragged, out BuckleComponent? buckleComponent)) return false;
             return buckleComponent.TryBuckle(eventArgs.User, Owner);
         }
     }

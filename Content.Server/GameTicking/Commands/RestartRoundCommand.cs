@@ -8,7 +8,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.GameTicking.Commands
 {
-    [AdminCommand(AdminFlags.Server)]
+    [AdminCommand(AdminFlags.Round)]
     public class RestartRoundCommand : IConsoleCommand
     {
         public string Command => "restartround";
@@ -17,11 +17,19 @@ namespace Content.Server.GameTicking.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
+            var ticker = EntitySystem.Get<GameTicker>();
+
+            if (ticker.RunLevel != GameRunLevel.InRound)
+            {
+                shell.WriteLine("This can only be executed while the game is in a round - try restartroundnow");
+                return;
+            }
+
             EntitySystem.Get<RoundEndSystem>().EndRound();
         }
     }
 
-    [AdminCommand(AdminFlags.Server)]
+    [AdminCommand(AdminFlags.Round)]
     public class RestartRoundNowCommand : IConsoleCommand
     {
         public string Command => "restartroundnow";

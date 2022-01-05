@@ -56,13 +56,18 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitChiefEngineer
-  name: ce jumpsuit
+  name: chief engineer's jumpsuit
   description: It's a high visibility jumpsuit given to those engineers insane enough to achieve the rank of Chief Engineer. It has minor radiation shielding.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/ce.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/ce.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Radiation: 0.8
+
 
 - type: entity
   parent: ClothingUniformBase
@@ -133,7 +138,7 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitCMO
-  name: cmo jumpsuit
+  name: chief medical officer's jumpsuit
   description: It's a jumpsuit worn by those with the experience to be Chief Medical Officer. It provides minor biological protection.
   components:
   - type: Sprite
@@ -177,7 +182,7 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitHoP
-  name: hop jumpsuit
+  name: head of personnel's jumpsuit
   description: Rather bland and inoffensive. Perfect for vanishing off the face of the universe.
   components:
   - type: Sprite
@@ -188,7 +193,7 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitHoS
-  name: head of security jumpsuit
+  name: head of security's jumpsuit
   description: It's bright red and rather crisp, much like security's victims tend to be.
   components:
   - type: Sprite
@@ -199,7 +204,7 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitHoSAlt
-  name: head of security turtleneck
+  name: head of security's turtleneck
   description: It's a turtleneck worn by those strong and disciplined enough to achieve the position of Head of Security. Its sturdy fabric provides minor protection from mechanical damage.
   components:
   - type: Sprite
@@ -305,6 +310,10 @@
     sprite: Clothing/Uniforms/Jumpsuit/prisoner.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/prisoner.rsi
+  - type: SuitSensor
+    controlsLocked: true
+    randomMode: false
+    mode: SensorCords
 
 - type: entity
   parent: ClothingUniformBase

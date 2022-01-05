@@ -42,8 +42,8 @@
   requiredTechnologies:
     - BasicResearch
   unlockedRecipes:
-    - Scythe
-    - Hatchet
+    - HydroponicsToolScythe
+    - HydroponicsToolHatchet
     - KitchenKnife
 
 - type: technology
@@ -75,7 +75,7 @@
     - Retractor
     - Cautery
     - Drill
-    - BoneSaw
+    - Saw
     - Hemostat
 
 # Chemistry Technology Tree
@@ -96,6 +96,26 @@
     - CryostasisBeaker
     - Dropper
     - Syringe
+    - KitchenReagentGrinderMachineCircuitboard
+    - PillCanister
+
+- type: technology
+  name: "medical machinery"
+  id: MedicalMachinery
+  description: More machine power for more healing efficiency.
+  icon:
+    sprite: Structures/Machines/cloning.rsi
+    state: pod_0
+  requiredPoints: 15000
+  requiredTechnologies:
+    - BiologicalTechnology
+    - ChemistryTechnology
+  unlockedRecipes:
+    - CloningPodMachineCircuitboard
+    - MedicalScannerMachineCircuitboard
+    - ChemMasterMachineCircuitboard
+    - ChemDispenserMachineCircuitboard
+    - CrewMonitoringComputerCircuitboard
 
 # Security Technology Tree
 
@@ -125,10 +145,10 @@
   requiredTechnologies:
      - SecurityTechnology
   unlockedRecipes:
-    - CartridgePistolBase
-    - ShellShotgunBase
-    - CartridgeLRifleBase
-    - CartridgeMagnumBase
+    - CartridgePistol
+    - ShellShotgun
+    - CartridgeLRifle
+    - CartridgeMagnum
 
 #- type: technology
 #   name: "ballistic technology"
@@ -200,11 +220,15 @@
   requiredTechnologies:
     - BasicResearch
   unlockedRecipes:
-    - ConveyorAssembly
+    - ConveyorBeltAssembly
     - RCD
     - RCDAmmo
     - FlashlightLantern
     - FireExtinguisher
+    - AutolatheMachineCircuitboard
+    - ProtolatheMachineCircuitboard
+    - AirAlarmElectronics
+    - FireAlarmElectronics
 
 - type: technology
   name: material sheet printing
@@ -218,7 +242,7 @@
     - SheetSteel
     - SheetPlastic
     - SheetRGlass
-    - GlassStack
+    - SheetGlass1
 
 # Electromagnetic Theory Technology Tree
 
@@ -228,7 +252,7 @@
   description: Try not to fry yourself.
   icon:
     sprite: Structures/Power/apc.rsi
-    state: apcewires
+    state: apc0
   requiredPoints: 10000
   requiredTechnologies:
     - BasicResearch
@@ -241,8 +265,6 @@
     - FirelockElectronics
     - DoorElectronics
     - APCElectronics
-    - CloningPodMachineCircuitboard
-    - MedicalScannerMachineCircuitboard
     - HydroponicsTrayMachineCircuitboard
     - SolarControlComputerCircuitboard
 

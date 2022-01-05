@@ -1,4 +1,7 @@
-﻿using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
+using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -18,10 +21,10 @@ namespace Content.Shared.Chemistry.Components
         ///     Volume needed to fill this container.
         /// </summary>
         [ViewVariables]
-        public ReagentUnit AvailableVolume => MaxVolume - CurrentVolume;
+        public FixedPoint2 AvailableVolume => MaxVolume - CurrentVolume;
 
-        public ReagentUnit DrawAvailable => CurrentVolume;
-        public ReagentUnit DrainAvailable => CurrentVolume;
+        public FixedPoint2 DrawAvailable => CurrentVolume;
+        public FixedPoint2 DrainAvailable => CurrentVolume;
 
         /// <summary>
         ///     Checks if a solution can fit into the container.
@@ -34,18 +37,58 @@ namespace Content.Shared.Chemistry.Components
         }
 
         [DataField("maxSpillRefill")]
-        public ReagentUnit MaxSpillRefill { get; set; }
+        public FixedPoint2 MaxSpillRefill { get; set; }
 
         /// <summary>
         /// Initially set <see cref="MaxVolume"/>. If empty will be calculated based
-        /// on sum of <see cref="Contents"/> reagent units.
+        /// on sum of <see cref="Contents"/> fixed units.
         /// </summary>
-        [DataField("maxVol")] public ReagentUnit InitialMaxVolume; 
+        [DataField("maxVol")] public FixedPoint2 InitialMaxVolume;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public ReagentUnit MaxVolume { get; set; } = ReagentUnit.Zero;
+        public FixedPoint2 MaxVolume { get; set; } = FixedPoint2.Zero;
 
         [ViewVariables]
-        public ReagentUnit CurrentVolume => TotalVolume;
+        public FixedPoint2 CurrentVolume => TotalVolume;
+
+        /// <summary>
+        ///     The total heat capacity of all reagents in the solution.
+        /// </summary>
+        [ViewVariables]
+        public float HeatCapacity => GetHeatCapacity();
+
+        /// <summary>
+        ///     The average specific heat of all reagents in the solution.
+        /// </summary>
+        [ViewVariables]
+        public float SpecificHeat => HeatCapacity / (float) TotalVolume;
+
+        /// <summary>
+        ///     The total thermal energy of the reagents in the solution.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float ThermalEnergy {
+            get { return Temperature * HeatCapacity; }
+            set { Temperature = ((HeatCapacity == 0.0f) ? 0.0f : (value / HeatCapacity)); }
+        }
+
+        /// <summary>
+        ///     Returns the total heat capacity of the reagents in this solution.
+        /// </summary>
+        /// <returns>The total heat capacity of the reagents in this solution.</returns>
+        private float GetHeatCapacity()
+        {
+            var heatCapacity = 0.0f;
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+            foreach(var reagent in Contents)
+            {
+                if (!prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype? proto))
+                    proto = new ReagentPrototype();
+
+                heatCapacity += (float) reagent.Quantity * proto.SpecificHeat;
+            }
+
+            return heatCapacity;
+        }
     }
 }

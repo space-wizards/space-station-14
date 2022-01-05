@@ -13,9 +13,9 @@
   - type: Sprite
     sprite: Structures/Furniture/furniture.rsi
     state: rack
-    drawdepth: FloorObjects
   - type: Physics
     bodyType: Static
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb

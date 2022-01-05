@@ -1,7 +1,7 @@
 - type: entity
   id: CrateFunPlushie
   name: plushie crate
-  parent: CrateGenericonimo
+  parent: CrateGenericSteel
   components:
   - type: StorageFill
     contents:
@@ -26,7 +26,7 @@
   id: CrateFunInstruments
   name: big band instrument collection
   description: Get your sad station movin' and groovin' with this fine collection! Contains thirteen different instruments.
-  parent: CrateGenericonimo
+  parent: CrateGenericSteel
   components:
   - type: StorageFill
     contents:
@@ -60,7 +60,7 @@
 - type: entity
   id: CrateFunArtSupplies
   name: art supplies
-  parent: CrateGenericonimo
+  parent: CrateGenericSteel
   components:
   - type: StorageFill
     contents:
@@ -68,3 +68,19 @@
         amount: 1
       - id: CrayonWhite
         amount: 1
+
+- type: entity
+  id: CrateFunBoardGames
+  name: board game crate
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: ChessBoard
+        amount: 1
+      - id: BackgammonBoard
+        amount: 1
+      - id: ParchisBoard
+        amount: 1
+      - id: d6Dice
+        amount: 4

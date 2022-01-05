@@ -1,5 +1,13 @@
+# Alphabetical order is now apparently required.
+
+- type: Tag
+  id: AirAlarmElectronics
+
 - type: Tag
   id: Baguette
+
+- type: Tag
+  id: Bee
 
 - type: Tag
   id: Brutepack
@@ -26,10 +34,16 @@
   id: Carrot
 
 - type: Tag
+  id: Carpet
+
+- type: Tag
   id: CanPilot
 
 - type: Tag
   id: CaptainSabre
+
+- type: Tag
+  id: CigFilter
 
 - type: Tag
   id: CigPack
@@ -83,13 +97,22 @@
   id: DoorElectronics
 
 - type: Tag
+  id: DonkPocket
+
+- type: Tag
   id: Donut
 
 - type: Tag
   id: Egg
 
 - type: Tag
+  id: EmitterBolt
+
+- type: Tag
   id: ExplosivePassable
+
+- type: Tag
+  id: FireAlarmElectronics
 
 - type: Tag
   id: FireAxe
@@ -107,10 +130,22 @@
   id: FootstepSound
 
 - type: Tag
+  id: ForceFixRotations # fixrotations command WILL target this
+
+- type: Tag
+  id: ForceNoFixRotations # fixrotations command WON'T target this
+
+- type: Tag
   id: Gauze
 
 - type: Tag
   id: GlassBeaker
+
+- type: Tag
+  id: Handcuffs
+
+- type: Tag
+  id: HideContextMenu
 
 - type: Tag
   id: Hoe
@@ -140,6 +175,9 @@
   id: NoSpinOnThrow
 
 - type: Tag
+  id: NukeDisk
+
+- type: Tag
   id: Ointment
 
 - type: Tag
@@ -147,6 +185,12 @@
 
 - type: Tag
   id: Pill
+
+- type: Tag
+  id: PillCanister
+
+- type: Tag
+  id: Pipe
 
 - type: Tag
   id: Pizza
@@ -162,6 +206,9 @@
 
 - type: Tag
   id: Powerdrill
+
+- type: Tag
+  id: RCDDeconstructWhitelist
 
 - type: Tag
   id: RodMetal1
@@ -200,20 +247,10 @@
   id: Wirecutter
 
 - type: Tag
+  id: Wooden # just like our atmos
+
+- type: Tag
   id: Wrench
 
 - type: Tag
   id: Write
-
-- type: Tag
-  id: Wooden # just like our atmos
-
-- type: Tag
-  id: EmitterBolt
-  
-- type: Tag
-  id: HideContextMenu
-
-- type: Tag
-  id: AtmosFixBlocking
-

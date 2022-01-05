@@ -38,12 +38,15 @@ SHARED_IGNORED_RESOURCES = {
 CLIENT_IGNORED_RESOURCES = {
     "Maps",
     "emotes.xml",
-    "Groups"
+    "Groups",
+    "engineCommandPerms.yml",
+    "clientCommandPerms.yml"
 }
 
 CLIENT_CONTENT_ASSEMBLIES = [
     "Content.Client",
-    "Content.Shared"
+    "Content.Shared",
+    "Content.Shared.Database"
 ]
 
 def main() -> None:
@@ -78,7 +81,7 @@ def wipe_bin():
     if os.path.exists("bin"):
         shutil.rmtree("bin")
 
-
+# Be advised this is called from package_server_build during a Hybrid-ACZ build.
 def build(skip_build: bool) -> None:
     # Run a full build.
     print(Fore.GREEN + "Building project..." + Style.RESET_ALL)

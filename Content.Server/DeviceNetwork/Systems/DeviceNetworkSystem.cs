@@ -17,7 +17,7 @@ namespace Content.Server.DeviceNetwork.Systems
     {
         [Dependency] private readonly IRobustRandom _random = default!;
 
-        private readonly Dictionary<int, List<DeviceNetworkComponent>> _connections = new();
+        private readonly Dictionary<DeviceNetworkComponent.ConnectionType, List<DeviceNetworkComponent>> _connections = new();
         private readonly Queue<NetworkPacket> _packets = new();
 
         public override void Initialize()
@@ -51,7 +51,7 @@ namespace Content.Server.DeviceNetwork.Systems
         /// <param name="uid">The Entity containing a DeviceNetworkComponent</param>
         public void Connect(EntityUid uid)
         {
-            if (EntityManager.GetEntity(uid).TryGetComponent<DeviceNetworkComponent>(out var component))
+            if (EntityManager.TryGetComponent<DeviceNetworkComponent>(uid, out var component))
             {
                 AddConnection(component);
             }
@@ -90,7 +90,7 @@ namespace Content.Server.DeviceNetwork.Systems
         /// <param name="uid">The Entity containing a DeviceNetworkComponent</param>
         public void Disconnect(EntityUid uid)
         {
-            if (EntityManager.GetEntity(uid).TryGetComponent<DeviceNetworkComponent>(out var component))
+            if (EntityManager.TryGetComponent<DeviceNetworkComponent>(uid, out var component))
             {
                 RemoveConnection(component);
             }
@@ -139,7 +139,7 @@ namespace Content.Server.DeviceNetwork.Systems
         /// <summary>
         /// Generates a valid address by randomly generating one and checking if it already exists on the device network with the given device netId.
         /// </summary>
-        private string GenerateValidAddress(int netId)
+        private string GenerateValidAddress(DeviceNetworkComponent.ConnectionType netId)
         {
             var unique = false;
             var connections = _connections[netId];
@@ -154,7 +154,7 @@ namespace Content.Server.DeviceNetwork.Systems
             return address;
         }
 
-        private List<DeviceNetworkComponent> ConnectionsForFrequency(int netId, int frequency)
+        private List<DeviceNetworkComponent> ConnectionsForFrequency(DeviceNetworkComponent.ConnectionType netId, int frequency)
         {
             if (!_connections.ContainsKey(netId))
                 return new List<DeviceNetworkComponent>();
@@ -164,7 +164,7 @@ namespace Content.Server.DeviceNetwork.Systems
             return result;
         }
 
-        private bool TryGetConnectionWithAddress(int netId, int frequency, string address, [NotNullWhen(true)] out DeviceNetworkComponent connection)
+        private bool TryGetConnectionWithAddress(DeviceNetworkComponent.ConnectionType netId, int frequency, string address, [NotNullWhen(true)] out DeviceNetworkComponent connection)
         {
             var connections = ConnectionsForFrequency(netId, frequency);
 
@@ -180,7 +180,7 @@ namespace Content.Server.DeviceNetwork.Systems
             return false;
         }
 
-        private List<DeviceNetworkComponent> ConnectionsWithReceiveAll(int netId, int frequency)
+        private List<DeviceNetworkComponent> ConnectionsWithReceiveAll(DeviceNetworkComponent.ConnectionType netId, int frequency)
         {
             if (!_connections.ContainsKey(netId))
                 return new List<DeviceNetworkComponent>();
@@ -195,7 +195,7 @@ namespace Content.Server.DeviceNetwork.Systems
             if (!TryGetConnectionWithAddress(packet.NetId, packet.Frequency, packet.Address, out var connection))
                 return;
 
-            var receivers = ConnectionsWithReceiveAll(packet.Frequency, packet.NetId);
+            var receivers = ConnectionsWithReceiveAll(packet.NetId, packet.Frequency);
             receivers.Add(connection);
 
             SendToConnections(receivers, packet);
@@ -203,7 +203,7 @@ namespace Content.Server.DeviceNetwork.Systems
 
         private void BroadcastPacket(NetworkPacket packet)
         {
-            var receivers = ConnectionsForFrequency(packet.Frequency, packet.NetId);
+            var receivers = ConnectionsForFrequency(packet.NetId, packet.Frequency);
             SendToConnections(receivers, packet);
         }
 
@@ -211,19 +211,19 @@ namespace Content.Server.DeviceNetwork.Systems
         {
             foreach (var connection in connections)
             {
-                var beforeEvent = new BeforePacketSentEvent(packet.Sender.Owner.Uid);
-                RaiseLocalEvent(connection.Owner.Uid, beforeEvent, false);
+                var beforeEvent = new BeforePacketSentEvent(packet.Sender.Owner);
+                RaiseLocalEvent(connection.Owner, beforeEvent, false);
 
                 if (!beforeEvent.Cancelled)
                 {
-                    RaiseLocalEvent(connection.Owner.Uid, new PacketSentEvent(connection.Frequency, packet.Sender.Address, packet.Data, packet.Broadcast) , false);
+                    RaiseLocalEvent(connection.Owner, new PacketSentEvent(connection.Frequency, packet.Sender.Address, packet.Data, packet.Broadcast) , false);
                 }
             }
         }
 
         internal struct NetworkPacket
         {
-            public int NetId;
+            public DeviceNetworkComponent.ConnectionType NetId;
             public int Frequency;
             public string Address;
             public bool Broadcast;

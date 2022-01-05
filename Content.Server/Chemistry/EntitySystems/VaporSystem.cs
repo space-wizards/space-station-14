@@ -1,8 +1,8 @@
 ﻿using Content.Server.Chemistry.Components;
+using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Components.SolutionManager;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using Content.Shared.Physics;
 using Content.Shared.Vapor;
 using JetBrains.Annotations;
@@ -52,7 +52,7 @@ namespace Content.Server.Chemistry.EntitySystems
             vapor.Target = target;
             vapor.AliveTime = aliveTime;
             // Set Move
-            if (vapor.Owner.TryGetComponent(out PhysicsComponent? physics))
+            if (EntityManager.TryGetComponent(vapor.Owner, out PhysicsComponent? physics))
             {
                 physics.BodyStatus = BodyStatus.InAir;
                 physics.ApplyLinearImpulse(dir * speed);
@@ -72,7 +72,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 return false;
             }
 
-            return _solutionContainerSystem.TryAddSolution(vapor.Owner.Uid, vaporSolution, solution);
+            return _solutionContainerSystem.TryAddSolution(vapor.Owner, vaporSolution, solution);
         }
 
         public override void Update(float frameTime)
@@ -97,24 +97,24 @@ namespace Content.Server.Chemistry.EntitySystems
             vapor.Timer += frameTime;
             vapor.ReactTimer += frameTime;
 
-            if (vapor.ReactTimer >= ReactTime && vapor.Owner.Transform.GridID.IsValid())
+            if (vapor.ReactTimer >= ReactTime && EntityManager.GetComponent<TransformComponent>(vapor.Owner).GridID.IsValid())
             {
                 vapor.ReactTimer = 0;
-                var mapGrid = _mapManager.GetGrid(entity.Transform.GridID);
+                var mapGrid = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(entity).GridID);
 
-                var tile = mapGrid.GetTileRef(entity.Transform.Coordinates.ToVector2i(EntityManager, _mapManager));
+                var tile = mapGrid.GetTileRef(EntityManager.GetComponent<TransformComponent>(entity).Coordinates.ToVector2i(EntityManager, _mapManager));
                 foreach (var reagentQuantity in contents.Contents.ToArray())
                 {
-                    if (reagentQuantity.Quantity == ReagentUnit.Zero) continue;
+                    if (reagentQuantity.Quantity == FixedPoint2.Zero) continue;
                     var reagent = _protoManager.Index<ReagentPrototype>(reagentQuantity.ReagentId);
-                    _solutionContainerSystem.TryRemoveReagent(vapor.Owner.Uid, contents, reagentQuantity.ReagentId,
+                    _solutionContainerSystem.TryRemoveReagent(vapor.Owner, contents, reagentQuantity.ReagentId,
                         reagent.ReactionTile(tile, (reagentQuantity.Quantity / vapor.TransferAmount) * 0.25f));
                 }
             }
 
             // Check if we've reached our target.
             if (!vapor.Reached &&
-                vapor.Target.TryDistance(EntityManager, entity.Transform.Coordinates, out var distance) &&
+                vapor.Target.TryDistance(EntityManager, EntityManager.GetComponent<TransformComponent>(entity).Coordinates, out var distance) &&
                 distance <= 0.5f)
             {
                 vapor.Reached = true;
@@ -123,7 +123,7 @@ namespace Content.Server.Chemistry.EntitySystems
             if (contents.CurrentVolume == 0 || vapor.Timer > vapor.AliveTime)
             {
                 // Delete this
-                entity.QueueDelete();
+                EntityManager.QueueDeleteEntity(entity);
             }
         }
     }

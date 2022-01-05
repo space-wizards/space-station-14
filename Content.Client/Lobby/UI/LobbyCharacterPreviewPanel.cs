@@ -4,6 +4,7 @@ using Content.Client.Inventory;
 using Content.Client.Preferences;
 using Content.Shared.CharacterAppearance.Systems;
 using Content.Shared.GameTicking;
+using Content.Shared.Inventory;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Client.GameObjects;
@@ -15,15 +16,15 @@ using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
-using static Content.Shared.Inventory.EquipmentSlotDefines;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Lobby.UI
 {
     public class LobbyCharacterPreviewPanel : Control
     {
+        private readonly IEntityManager _entMan;
         private readonly IClientPreferencesManager _preferencesManager;
-        private IEntity _previewDummy;
+        private EntityUid _previewDummy;
         private readonly Label _summaryLabel;
         private readonly BoxContainer _loaded;
         private readonly Label _unloaded;
@@ -31,6 +32,7 @@ namespace Content.Client.Lobby.UI
         public LobbyCharacterPreviewPanel(IEntityManager entityManager,
             IClientPreferencesManager preferencesManager)
         {
+            _entMan = entityManager;
             _preferencesManager = preferencesManager;
             _previewDummy = entityManager.SpawnEntity("MobHumanDummy", MapCoordinates.Nullspace);
 
@@ -98,15 +100,15 @@ namespace Content.Client.Lobby.UI
             _preferencesManager.OnServerDataLoaded -= UpdateUI;
 
             if (!disposing) return;
-            _previewDummy.Delete();
-            _previewDummy = null!;
+            _entMan.DeleteEntity(_previewDummy);
+            _previewDummy = default;
         }
 
-        private static SpriteView MakeSpriteView(IEntity entity, Direction direction)
+        private SpriteView MakeSpriteView(EntityUid entity, Direction direction)
         {
             return new()
             {
-                Sprite = entity.GetComponent<ISpriteComponent>(),
+                Sprite = _entMan.GetComponent<ISpriteComponent>(entity),
                 OverrideDirection = direction,
                 Scale = (2, 2)
             };
@@ -130,37 +132,39 @@ namespace Content.Client.Lobby.UI
                 else
                 {
                     _summaryLabel.Text = selectedCharacter.Summary;
-                    EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(_previewDummy.Uid, selectedCharacter);
+                    EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(_previewDummy, selectedCharacter);
                     GiveDummyJobClothes(_previewDummy, selectedCharacter);
                 }
             }
         }
 
-        public static void GiveDummyJobClothes(IEntity dummy, HumanoidCharacterProfile profile)
+        public static void GiveDummyJobClothes(EntityUid dummy, HumanoidCharacterProfile profile)
         {
             var protoMan = IoCManager.Resolve<IPrototypeManager>();
-
-            var inventory = dummy.GetComponent<ClientInventoryComponent>();
+            var entMan = IoCManager.Resolve<IEntityManager>();
+            var invSystem = EntitySystem.Get<ClientInventorySystem>();
 
             var highPriorityJob = profile.JobPriorities.FirstOrDefault(p => p.Value == JobPriority.High).Key;
 
-            var job = protoMan.Index<JobPrototype>(highPriorityJob ?? SharedGameTicker.OverflowJob);
+            // ReSharper disable once ConstantNullCoalescingCondition
+            var job = protoMan.Index<JobPrototype>(highPriorityJob ?? SharedGameTicker.FallbackOverflowJob);
 
-            inventory.ClearAllSlotVisuals();
-
-            if (job.StartingGear != null)
+            if (job.StartingGear != null && invSystem.TryGetSlots(dummy, out var slots))
             {
-                var entityMan = IoCManager.Resolve<IEntityManager>();
                 var gear = protoMan.Index<StartingGearPrototype>(job.StartingGear);
 
-                foreach (var slot in AllSlots)
+                foreach (var slot in slots)
                 {
-                    var itemType = gear.GetGear(slot, profile);
+                    var itemType = gear.GetGear(slot.Name, profile);
+                    if(invSystem.TryUnequip(dummy, slot.Name, out var unequippedItem, true, true))
+                    {
+                        entMan.DeleteEntity(unequippedItem.Value);
+                    }
+
                     if (itemType != string.Empty)
                     {
-                        var item = entityMan.SpawnEntity(itemType, MapCoordinates.Nullspace);
-                        inventory.SetSlotVisuals(slot, item);
-                        item.Delete();
+                        var item = entMan.SpawnEntity(itemType, MapCoordinates.Nullspace);
+                        invSystem.TryEquip(dummy, item, slot.Name, true, true);
                     }
                 }
             }

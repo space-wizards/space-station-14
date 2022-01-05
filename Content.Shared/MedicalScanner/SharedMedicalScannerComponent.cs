@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using Content.Shared.Body.Components;
 using Content.Shared.Damage;
 using Content.Shared.DragDrop;
+using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.MedicalScanner
@@ -16,8 +18,8 @@ namespace Content.Shared.MedicalScanner
         public class MedicalScannerBoundUserInterfaceState : BoundUserInterfaceState
         {
             public readonly EntityUid? Entity;
-            public readonly IReadOnlyDictionary<string, int> DamagePerGroup;
-            public readonly IReadOnlyDictionary<string, int> DamagePerType;
+            public readonly IReadOnlyDictionary<string, FixedPoint2> DamagePerGroup;
+            public readonly IReadOnlyDictionary<string, FixedPoint2> DamagePerType;
             public readonly bool IsScanned;
 
             public MedicalScannerBoundUserInterfaceState(
@@ -77,9 +79,9 @@ namespace Content.Shared.MedicalScanner
             }
         }
 
-        public bool CanInsert(IEntity entity)
+        public bool CanInsert(EntityUid entity)
         {
-            return entity.HasComponent<SharedBodyComponent>();
+            return IoCManager.Resolve<IEntityManager>().HasComponent<SharedBodyComponent>(entity);
         }
 
         bool IDragDropOn.CanDragDropOn(DragDropEvent eventArgs)

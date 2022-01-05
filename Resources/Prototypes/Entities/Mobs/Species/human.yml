@@ -11,24 +11,15 @@
     - CanPilot
     - FootstepSound
   - type: Reactive
+    groups:
+      Flammable: [ Touch ]
+      Extinguish: [ Touch ]
+      Acidic: [Touch, Ingestion]
     reactions:
-    - !type:ExtinguishReaction
-      touch: true
-      reagents:
-      - Water
-    - !type:FlammableReaction
-      touch: true
-      reagents:
-      - WeldingFuel
-      - Thermite
-      - Plasma
-      - Ethanol
-      - Oil
-    - !type:WashCreamPieReaction
-      touch: true
-      reagents:
-      - Water
-      - SpaceCleaner
+    - reagents: [Water, SpaceCleaner]
+      methods: [Touch]
+      effects:
+      - !type:WashCreamPieReaction
   - type: Flashable
   - type: Hands
   - type: MovementSpeedModifier
@@ -68,6 +59,7 @@
     - KnockedDown
     - SlowedDown
     - Stutter
+    - Electrocution
   # Other
   - type: Inventory
   - type: Clickable
@@ -116,7 +108,7 @@
       sprite: Mobs/Customization/masking_helpers.rsi
       state: female_full
       visible: false
-    - map: [ "enum.Slots.INNERCLOTHING" ]
+    - map: [ "jumpsuit" ]
       shader: StencilDraw
     - map: [ "enum.HumanoidVisualLayers.LHand" ]
       color: "#e8b59b"
@@ -139,27 +131,28 @@
       sprite: Objects/Misc/handcuffs.rsi
       state: body-overlay-2
       visible: false
-    - map: [ "enum.Slots.IDCARD" ]
-    - map: [ "enum.Slots.GLOVES" ]
-    - map: [ "enum.Slots.SHOES" ]
-    - map: [ "enum.Slots.EARS" ]
-    - map: [ "enum.Slots.OUTERCLOTHING" ]
-    - map: [ "enum.Slots.EYES" ]
-    - map: [ "enum.Slots.BELT" ]
-    - map: [ "enum.Slots.NECK" ]
-    - map: [ "enum.Slots.BACKPACK" ]
+    - map: [ "id" ]
+    - map: [ "gloves" ]
+    - map: [ "shoes" ]
+    - map: [ "ears" ]
+    - map: [ "outerClothing" ]
+    - map: [ "eyes" ]
+    - map: [ "belt" ]
+    - map: [ "neck" ]
+    - map: [ "back" ]
     - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
       state: shaved
       sprite: Mobs/Customization/human_facial_hair.rsi
     - map: [ "enum.HumanoidVisualLayers.Hair" ]
       state: bald
       sprite: Mobs/Customization/human_hair.rsi
-    - map: [ "enum.Slots.MASK" ]
-    - map: [ "enum.Slots.HEAD" ]
-    - map: [ "enum.Slots.POCKET1" ]
-    - map: [ "enum.Slots.POCKET2" ]
+    - map: [ "mask" ]
+    - map: [ "head" ]
+    - map: [ "pocket1" ]
+    - map: [ "pocket2" ]
   - type: Physics
     bodyType: KinematicController
+  - type: Fixtures
     fixtures: # TODO: This needs a second fixture just for mob collisions.
     - shape:
         !type:PhysShapeCircle
@@ -179,13 +172,12 @@
     canResistFire: true
     damage:
       types:
-        Heat : 1 #per second, scales with number of fire 'stacks'
+        Heat: 1 #per second, scales with number of fire 'stacks'
   - type: Temperature
     heatDamageThreshold: 360
     coldDamageThreshold: 260
     currentTemperature: 310.15
     specificHeat: 42
-    tempDamageCoefficient: 0.1
     coldDamage:
       types:
         Cold : 1 #per second, scales with temperature & other constants
@@ -198,14 +190,15 @@
     preset: HumanPreset
   - type: Damageable
     damageContainer: Biological
-  - type: Respirator
-    metabolismHeat: 5000
-    radiatedHeat: 400
-    implicitHeatRegulation: 5000
-    sweatHeatRegulation: 5000
-    shiveringHeatRegulation: 5000
+  - type: ThermalRegulator
+    metabolismHeat: 800
+    radiatedHeat: 100
+    implicitHeatRegulation: 500
+    sweatHeatRegulation: 2000
+    shiveringHeatRegulation: 2000
     normalBodyTemperature: 310.15
     thermalRegulationTemperatureThreshold: 25
+  - type: Respirator
     needsGases:
       Oxygen: 0.00060763888
     producesGases:
@@ -231,6 +224,12 @@
         damage: 400
       behaviors:
       - !type:GibBehavior { }
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      40: 0.8
+      60: 0.6
+      80: 0.4
+      90: 0.2
   - type: HeatResistance
   - type: Appearance
     visuals:
@@ -244,6 +243,21 @@
     - type: CreamPiedVisualizer
       state: creampie_human
     - type: HandsVisualizer
+    - type: DamageVisualizer
+      thresholds: [20, 40, 100]
+      targetLayers:
+      - "enum.HumanoidVisualLayers.Chest"
+      - "enum.HumanoidVisualLayers.Head"
+      - "enum.HumanoidVisualLayers.LArm"
+      - "enum.HumanoidVisualLayers.LLeg"
+      - "enum.HumanoidVisualLayers.RArm"
+      - "enum.HumanoidVisualLayers.RLeg"
+      damageOverlayGroups:
+        Brute:
+          sprite: Mobs/Effects/brute_damage.rsi
+          color: "#FF0000"
+        Burn:
+          sprite: Mobs/Effects/burn_damage.rsi
   - type: CombatMode
   - type: Climbing
   - type: Cuffable
@@ -251,6 +265,8 @@
   - type: AnimationPlayer
   - type: Buckle
   - type: UnarmedCombat
+    hitSound:
+      collection: Punch
     range: 0.8
     arcwidth: 30
     arc: fist
@@ -278,7 +294,6 @@
       proper: true
   - type: StandingState
   - type: DoorBumpOpener
-
 - type: entity
   save: false
   name: Urist McHands
@@ -288,6 +303,7 @@
   components:
     - type: Hands
     - type: Inventory
+    - type: ContainerContainer
     - type: Icon
       sprite: Mobs/Species/Human/parts.rsi
       state: full
@@ -325,13 +341,21 @@
         color: "#e8b59b"
         sprite: Mobs/Species/Human/parts.rsi
         state: l_leg
+      - map: [ "enum.HumanoidVisualLayers.LFoot" ]
+        color: "#e8b59b"
+        sprite: Mobs/Species/Human/parts.rsi
+        state: l_foot
+      - map: [ "enum.HumanoidVisualLayers.RFoot" ]
+        color: "#e8b59b"
+        sprite: Mobs/Species/Human/parts.rsi
+        state: r_foot
       - shader: StencilClear
       - shader: StencilMask
         map: ["enum.HumanoidVisualLayers.StencilMask"]
         sprite: Mobs/Customization/masking_helpers.rsi
         state: female_full
         visible: false
-      - map: ["enum.Slots.INNERCLOTHING"]
+      - map: ["jumpsuit"]
         shader: StencilDraw
       - map: ["enum.HumanoidVisualLayers.LHand"]
         color: "#e8b59b"
@@ -346,29 +370,30 @@
         sprite: Objects/Misc/handcuffs.rsi
         state: body-overlay-2
         visible: false
-      - map: ["enum.Slots.IDCARD"]
-      - map: ["enum.Slots.GLOVES"]
-      - map: ["enum.Slots.SHOES"]
-      - map: ["enum.Slots.EARS"]
-      - map: ["enum.Slots.OUTERCLOTHING"]
-      - map: ["enum.Slots.EYES"]
-      - map: ["enum.Slots.BELT"]
-      - map: ["enum.Slots.NECK"]
-      - map: ["enum.Slots.BACKPACK"]
+      - map: ["id"]
+      - map: ["gloves"]
+      - map: ["shoes"]
+      - map: ["ears"]
+      - map: ["outerClothing"]
+      - map: ["eyes"]
+      - map: ["belt"]
+      - map: ["neck"]
+      - map: ["back"]
       - map: ["enum.HumanoidVisualLayers.FacialHair"]
         state: shaved
         sprite: Mobs/Customization/human_facial_hair.rsi
       - map: ["enum.HumanoidVisualLayers.Hair"]
         state: bald
         sprite: Mobs/Customization/human_hair.rsi
-      - map: ["enum.Slots.MASK"]
-      - map: ["enum.Slots.HEAD"]
-      - map: [ "enum.Slots.POCKET1" ]
-      - map: [ "enum.Slots.POCKET2" ]
+      - map: ["mask"]
+      - map: ["head"]
+      - map: [ "pocket1" ]
+      - map: [ "pocket2" ]
       - map: ["hand-left"]
       - map: ["hand-right"]
     - type: Physics
       bodyType: Dynamic
+    - type: Fixtures
       fixtures:
       - shape:
           !type:PhysShapeAabb

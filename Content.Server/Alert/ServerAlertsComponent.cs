@@ -2,6 +2,7 @@
 using Content.Server.Gravity.EntitySystems;
 using Content.Shared.Alert;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Network;
 using Robust.Shared.Players;
@@ -41,6 +42,7 @@ namespace Content.Server.Alert
             base.OnRemove();
         }
 
+        [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession? session = null)
         {
             base.HandleNetworkMessage(message, netChannel, session);
@@ -54,7 +56,7 @@ namespace Content.Server.Alert
             {
                 case ClickAlertMessage msg:
                 {
-                    var player = session.AttachedEntity;
+                    var player = session.AttachedEntity.GetValueOrDefault();
 
                     if (player != Owner)
                     {
@@ -65,7 +67,7 @@ namespace Content.Server.Alert
                     {
                         Logger.DebugS("alert", "user {0} attempted to" +
                                               " click alert {1} which is not currently showing for them",
-                            player.Name, msg.Type);
+                            IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(player).EntityName, msg.Type);
                         break;
                     }
 

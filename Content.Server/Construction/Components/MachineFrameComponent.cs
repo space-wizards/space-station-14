@@ -4,10 +4,10 @@ using Content.Server.Stack;
 using Content.Shared.Construction;
 using Content.Shared.Interaction;
 using Content.Shared.Tag;
-using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Construction.Components
@@ -15,6 +15,7 @@ namespace Content.Server.Construction.Components
     [RegisterComponent]
     public class MachineFrameComponent : Component, IInteractUsing
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IComponentFactory _componentFactory = default!;
 
         public const string PartContainer = "machine_parts";
@@ -121,19 +122,19 @@ namespace Content.Server.Construction.Components
 
             RegenerateProgress();
 
-            if (Owner.TryGetComponent<ConstructionComponent>(out var construction))
+            if (_entMan.TryGetComponent<ConstructionComponent?>(Owner, out var construction))
             {
                 // Attempt to set pathfinding to the machine node...
-                construction.SetNewTarget("machine");
+                EntitySystem.Get<ConstructionSystem>().SetPathfindingTarget(Owner, "machine", construction);
             }
         }
 
         private void ResetProgressAndRequirements(MachineBoardComponent machineBoard)
         {
-            _requirements = machineBoard.Requirements;
-            _materialRequirements = machineBoard.MaterialIdRequirements;
-            _componentRequirements = machineBoard.ComponentRequirements;
-            _tagRequirements = machineBoard.TagRequirements;
+            _requirements = new Dictionary<MachinePart, int>(machineBoard.Requirements);
+            _materialRequirements = new Dictionary<string, int>(machineBoard.MaterialIdRequirements);
+            _componentRequirements = new Dictionary<string, GenericPartInfo>(machineBoard.ComponentRequirements);
+            _tagRequirements = new Dictionary<string, GenericPartInfo>(machineBoard.TagRequirements);
 
             _progress.Clear();
             _materialProgress.Clear();
@@ -167,7 +168,7 @@ namespace Content.Server.Construction.Components
 
             if (!HasBoard)
             {
-                if (Owner.TryGetComponent(out appearance))
+                if (_entMan.TryGetComponent(Owner, out appearance))
                 {
                     appearance.SetData(MachineFrameVisuals.State, 1);
                 }
@@ -186,10 +187,10 @@ namespace Content.Server.Construction.Components
 
             var board = _boardContainer.ContainedEntities[0];
 
-            if (!board.TryGetComponent<MachineBoardComponent>(out var machineBoard))
+            if (!_entMan.TryGetComponent<MachineBoardComponent?>(board, out var machineBoard))
                 return;
 
-            if (Owner.TryGetComponent(out appearance))
+            if (_entMan.TryGetComponent(Owner, out appearance))
             {
                 appearance.SetData(MachineFrameVisuals.State, 2);
             }
@@ -198,7 +199,7 @@ namespace Content.Server.Construction.Components
 
             foreach (var part in _partContainer.ContainedEntities)
             {
-                if (part.TryGetComponent<MachinePartComponent>(out var machinePart))
+                if (_entMan.TryGetComponent<MachinePartComponent?>(part, out var machinePart))
                 {
                     // Check this is part of the requirements...
                     if (!Requirements.ContainsKey(machinePart.PartType))
@@ -210,7 +211,7 @@ namespace Content.Server.Construction.Components
                         _progress[machinePart.PartType]++;
                 }
 
-                if (part.TryGetComponent<StackComponent>(out var stack))
+                if (_entMan.TryGetComponent<StackComponent?>(part, out var stack))
                 {
                     var type = stack.StackTypeId;
                     // Check this is part of the requirements...
@@ -228,7 +229,7 @@ namespace Content.Server.Construction.Components
                 {
                     var registration = _componentFactory.GetRegistration(compName);
 
-                    if (!part.HasComponent(registration.Type))
+                    if (!_entMan.HasComponent(part, registration.Type))
                         continue;
 
                     if (!_componentProgress.ContainsKey(compName))
@@ -253,7 +254,7 @@ namespace Content.Server.Construction.Components
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!HasBoard && eventArgs.Using.TryGetComponent<MachineBoardComponent>(out var machineBoard))
+            if (!HasBoard && _entMan.TryGetComponent<MachineBoardComponent?>(eventArgs.Using, out var machineBoard))
             {
                 if (eventArgs.Using.TryRemoveFromContainer())
                 {
@@ -263,15 +264,15 @@ namespace Content.Server.Construction.Components
                     // Setup requirements and progress...
                     ResetProgressAndRequirements(machineBoard);
 
-                    if (Owner.TryGetComponent<AppearanceComponent>(out var appearance))
+                    if (_entMan.TryGetComponent<AppearanceComponent?>(Owner, out var appearance))
                     {
                         appearance.SetData(MachineFrameVisuals.State, 2);
                     }
 
-                    if (Owner.TryGetComponent(out ConstructionComponent? construction))
+                    if (_entMan.TryGetComponent(Owner, out ConstructionComponent? construction))
                     {
                         // So prying the components off works correctly.
-                        construction.ResetEdge();
+                        EntitySystem.Get<ConstructionSystem>().ResetEdge(Owner, construction);
                     }
 
                     return true;
@@ -279,7 +280,7 @@ namespace Content.Server.Construction.Components
             }
             else if (HasBoard)
             {
-                if (eventArgs.Using.TryGetComponent<MachinePartComponent>(out var machinePart))
+                if (_entMan.TryGetComponent<MachinePartComponent?>(eventArgs.Using, out var machinePart))
                 {
                     if (!Requirements.ContainsKey(machinePart.PartType))
                         return false;
@@ -292,7 +293,7 @@ namespace Content.Server.Construction.Components
                     }
                 }
 
-                if (eventArgs.Using.TryGetComponent<StackComponent>(out var stack))
+                if (_entMan.TryGetComponent<StackComponent?>(eventArgs.Using, out var stack))
                 {
                     var type = stack.StackTypeId;
                     if (!MaterialRequirements.ContainsKey(type))
@@ -313,12 +314,12 @@ namespace Content.Server.Construction.Components
                         return true;
                     }
 
-                    var splitStack = EntitySystem.Get<StackSystem>().Split(eventArgs.Using.Uid, needed, Owner.Transform.Coordinates, stack);
+                    var splitStack = EntitySystem.Get<StackSystem>().Split(eventArgs.Using, needed, _entMan.GetComponent<TransformComponent>(Owner).Coordinates, stack);
 
                     if (splitStack == null)
                         return false;
 
-                    if(!_partContainer.Insert(splitStack))
+                    if(!_partContainer.Insert(splitStack.Value))
                         return false;
 
                     _materialProgress[type] += needed;
@@ -332,7 +333,7 @@ namespace Content.Server.Construction.Components
 
                     var registration = _componentFactory.GetRegistration(compName);
 
-                    if (!eventArgs.Using.HasComponent(registration.Type))
+                    if (!_entMan.HasComponent(eventArgs.Using, registration.Type))
                         continue;
 
                     if (!eventArgs.Using.TryRemoveFromContainer() || !_partContainer.Insert(eventArgs.Using)) continue;
@@ -356,5 +357,10 @@ namespace Content.Server.Construction.Components
 
             return false;
         }
+    }
+
+    [DataDefinition]
+    public class MachineDeconstructedEvent : EntityEventArgs
+    {
     }
 }

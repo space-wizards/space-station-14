@@ -1,6 +1,8 @@
-﻿using Content.Shared.Morgue;
+using Content.Shared.Labels;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Client.Morgue.Visualizers
 {
@@ -11,14 +13,19 @@ namespace Content.Client.Morgue.Visualizers
         {
             base.OnChangeData(component);
 
-            if (!component.Owner.TryGetComponent(out ISpriteComponent? sprite))
+            var entities = IoCManager.Resolve<IEntityManager>();
+            if (!entities.TryGetComponent(component.Owner, out ISpriteComponent? sprite))
             {
                 return;
             }
 
-            if (component.TryGetData(BodyBagVisuals.Label, out bool labelVal))
+            if (component.TryGetData(PaperLabelVisuals.HasLabel, out bool labelVal))
             {
                 sprite.LayerSetVisible(BodyBagVisualLayers.Label, labelVal);
+            }
+            else
+            {
+                sprite.LayerSetVisible(BodyBagVisualLayers.Label, false);
             }
         }
     }

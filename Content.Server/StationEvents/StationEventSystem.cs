@@ -2,10 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Content.Server.Administration.Logs;
 using Content.Server.GameTicking;
 using Content.Server.StationEvents.Events;
 using Content.Shared;
+using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
+using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Content.Shared.StationEvents;
 using JetBrains.Annotations;
@@ -30,8 +33,10 @@ namespace Content.Server.StationEvents
         [Dependency] private readonly IServerNetManager _netManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IConGroupController _conGroupController = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly GameTicker _gameTicker = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+
+        [Dependency] private readonly AdminLogSystem _adminLog = default!;
 
         public StationEvent? CurrentEvent { get; private set; }
         public IReadOnlyCollection<StationEvent> StationEvents => _stationEvents;
@@ -91,6 +96,8 @@ namespace Content.Server.StationEvents
         /// <returns></returns>
         public string RunEvent(string name)
         {
+            _adminLog.Add(LogType.EventRan, LogImpact.High, $"Event run: {name}");
+
             // Could use a dictionary but it's such a minor thing, eh.
             // Wasn't sure on whether to localize this given it's a command
             var upperName = name.ToUpperInvariant();
@@ -241,7 +248,8 @@ namespace Content.Server.StationEvents
                 return;
             }
 
-            if (_timeUntilNextEvent > 0)
+            // Make sure we only count down when no event is running.
+            if (_timeUntilNextEvent > 0 && CurrentEvent == null)
             {
                 _timeUntilNextEvent -= frameTime;
                 return;
@@ -315,7 +323,7 @@ namespace Content.Server.StationEvents
             // playerCount does a lock so we'll just keep the variable here
             if (!ignoreEarliestStart)
             {
-                currentTime = _gameTiming.CurTime;
+                currentTime = _gameTicker.RoundDuration();
             }
             else
             {

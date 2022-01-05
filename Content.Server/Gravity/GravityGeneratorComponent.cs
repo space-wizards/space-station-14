@@ -1,186 +1,52 @@
-﻿using Content.Server.Power.Components;
-using Content.Server.UserInterface;
-using Content.Shared.Acts;
-using Content.Shared.Audio;
+﻿using Content.Server.Gravity.EntitySystems;
 using Content.Shared.Gravity;
-using Content.Shared.Interaction;
-using Robust.Server.GameObjects;
-using Robust.Server.Player;
+using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Map;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Gravity
 {
     [RegisterComponent]
-    public class GravityGeneratorComponent : SharedGravityGeneratorComponent, IBreakAct, IInteractHand
+    [Friend(typeof(GravityGeneratorSystem))]
+    public sealed class GravityGeneratorComponent : SharedGravityGeneratorComponent
     {
-        [ComponentDependency] private readonly AppearanceComponent? _appearance = default!;
-
-        [DataField("switchedOn")]
-        private bool _switchedOn = true;
-
-        [DataField("intact")]
-        private bool _intact = true;
-
-        private GravityGeneratorStatus _status;
-
-        public bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
-
-        public bool SwitchedOn => _switchedOn;
-
-        public bool Intact => _intact;
-
-        public GravityGeneratorStatus Status => _status;
-
-        public bool NeedsUpdate
-        {
-            get
-            {
-                switch (_status)
-                {
-                    case GravityGeneratorStatus.On:
-                        return !(Powered && SwitchedOn && Intact);
-                    case GravityGeneratorStatus.Off:
-                        return SwitchedOn || !(Powered && Intact);
-                    case GravityGeneratorStatus.Unpowered:
-                        return SwitchedOn || Powered || !Intact;
-                    case GravityGeneratorStatus.Broken:
-                        return SwitchedOn || Powered || Intact;
-                    default:
-                        return true; // This _should_ be unreachable
-                }
-            }
-        }
-
         public override string Name => "GravityGenerator";
 
-        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(GravityGeneratorUiKey.Key);
+        // 1% charge per second.
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("chargeRate")] public float ChargeRate { get; set; } = 0.01f;
+        // The gravity generator has two power values.
+        // Idle power is assumed to be the power needed to run the control systems and interface.
+        [DataField("idlePower")] public float IdlePowerUse { get; set; }
+        // Active power is the power needed to keep the gravity field stable.
+        [DataField("activePower")] public float ActivePowerUse { get; set; }
+        [DataField("lightRadiusMin")] public float LightRadiusMin { get; set; }
+        [DataField("lightRadiusMax")] public float LightRadiusMax { get; set; }
 
-        protected override void Initialize()
-        {
-            base.Initialize();
 
-            if (UserInterface != null)
-            {
-                UserInterface.OnReceiveMessage += HandleUIMessage;
-            }
+        /// <summary>
+        /// Is the power switch on?
+        /// </summary>
+        [DataField("switchedOn")]
+        public bool SwitchedOn { get; set; } = true;
 
-            _switchedOn = true;
-            _intact = true;
-            _status = GravityGeneratorStatus.On;
-            UpdateState();
-        }
+        /// <summary>
+        /// Is the gravity generator intact?
+        /// </summary>
+        [DataField("intact")]
+        public bool Intact { get; set; } = true;
 
-        bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
-        {
-            if (!eventArgs.User.TryGetComponent<ActorComponent>(out var actor))
-                return false;
-            if (Status != GravityGeneratorStatus.Off && Status != GravityGeneratorStatus.On)
-            {
-                return false;
-            }
-            OpenUserInterface(actor.PlayerSession);
-            return true;
-        }
+        // 0 -> 1
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("charge")] public float Charge { get; set; } = 1;
 
-        public void OnBreak(BreakageEventArgs eventArgs)
-        {
-            _intact = false;
-            _switchedOn = false;
-        }
+        /// <summary>
+        /// Is the gravity generator currently "producing" gravity?
+        /// </summary>
+        [DataField("active")]
+        public bool GravityActive { get; set; } = true;
 
-        public void UpdateState()
-        {
-            if (!Intact)
-            {
-                MakeBroken();
-            }
-            else if (!Powered)
-            {
-                MakeUnpowered();
-            }
-            else if (!SwitchedOn)
-            {
-                MakeOff();
-            }
-            else
-            {
-                MakeOn();
-            }
-
-            var msg = new GravityGeneratorUpdateEvent(Owner.Transform.GridID, Status);
-            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, msg);
-        }
-
-        private void HandleUIMessage(ServerBoundUserInterfaceMessage message)
-        {
-            switch (message.Message)
-            {
-                case GeneratorStatusRequestMessage _:
-                    UserInterface?.SetState(new GeneratorState(Status == GravityGeneratorStatus.On));
-                    break;
-                case SwitchGeneratorMessage msg:
-                    _switchedOn = msg.On;
-                    UpdateState();
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        private void OpenUserInterface(IPlayerSession playerSession)
-        {
-            UserInterface?.Open(playerSession);
-        }
-
-        private void MakeBroken()
-        {
-            _status = GravityGeneratorStatus.Broken;
-            EntitySystem.Get<SharedAmbientSoundSystem>().SetAmbience(Owner.Uid, false);
-
-            _appearance?.SetData(GravityGeneratorVisuals.State, Status);
-            _appearance?.SetData(GravityGeneratorVisuals.CoreVisible, false);
-        }
-
-        private void MakeUnpowered()
-        {
-            _status = GravityGeneratorStatus.Unpowered;
-            EntitySystem.Get<SharedAmbientSoundSystem>().SetAmbience(Owner.Uid, false);
-
-            _appearance?.SetData(GravityGeneratorVisuals.State, Status);
-            _appearance?.SetData(GravityGeneratorVisuals.CoreVisible, false);
-        }
-
-        private void MakeOff()
-        {
-            _status = GravityGeneratorStatus.Off;
-            EntitySystem.Get<SharedAmbientSoundSystem>().SetAmbience(Owner.Uid, false);
-
-            _appearance?.SetData(GravityGeneratorVisuals.State, Status);
-            _appearance?.SetData(GravityGeneratorVisuals.CoreVisible, false);
-        }
-
-        private void MakeOn()
-        {
-            _status = GravityGeneratorStatus.On;
-            EntitySystem.Get<SharedAmbientSoundSystem>().SetAmbience(Owner.Uid, true);
-
-            _appearance?.SetData(GravityGeneratorVisuals.State, Status);
-            _appearance?.SetData(GravityGeneratorVisuals.CoreVisible, true);
-        }
-    }
-
-    public sealed class GravityGeneratorUpdateEvent : EntityEventArgs
-    {
-        public GridId GridId { get; }
-        public GravityGeneratorStatus Status { get; }
-
-        public GravityGeneratorUpdateEvent(GridId gridId, GravityGeneratorStatus status)
-        {
-            GridId = gridId;
-            Status = status;
-        }
+        // Do we need a UI update even if the charge doesn't change? Used by power button.
+        [ViewVariables] public bool NeedUIUpdate { get; set; }
+        [ViewVariables] public bool NeedGravityUpdate { get; set; }
     }
 }

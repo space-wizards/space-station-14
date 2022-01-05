@@ -15,7 +15,7 @@ namespace Content.Server.DoAfter
         // we'll just send them the index. Doesn't matter if it wraps around.
         private byte _runningIndex;
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             var toAdd = new List<ClientDoAfter>();
 
@@ -52,7 +52,9 @@ namespace Content.Server.DoAfter
                 return;
 
             _doAfters.Remove(doAfter);
+#pragma warning disable 618
             SendNetworkMessage(new CancelledDoAfterMessage(index));
+#pragma warning restore 618
         }
 
         /// <summary>

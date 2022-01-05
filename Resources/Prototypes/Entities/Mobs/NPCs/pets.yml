@@ -14,13 +14,15 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: corgi
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.25,-0.50,0.25,0.30"
+        !type:PhysShapeCircle
+        radius: 0.35
       mass: 10
       mask:
       - Impassable
+      - MobImpassable #Bullets?!
       - VaultImpassable
       - SmallImpassable
       layer:
@@ -29,7 +31,13 @@
     visuals:
     - type: DamageStateVisualizer
       normal: corgi
+      crit: corgi_dead
       dead: corgi_dead
+  - type: Butcherable
+    meat: FoodMeat
+    pieces: 3
+  - type: ReplacementAccent
+    accent: dog
 
 - type: entity
   name: Ian
@@ -47,6 +55,7 @@
     visuals:
     - type: DamageStateVisualizer
       normal: ian
+      crit: ian_dead
       dead: ian_dead
 
 - type: entity
@@ -62,13 +71,15 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: cat
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.20,-0.45,0.20,0.30"
+        !type:PhysShapeCircle
+        radius: 0.35
       mass: 10
       mask:
       - Impassable
+      - MobImpassable #Bullets?!
       - VaultImpassable
       - SmallImpassable
       layer:
@@ -77,7 +88,13 @@
     visuals:
     - type: DamageStateVisualizer
       normal: cat
+      crit: cat_dead
       dead: cat_dead
+  - type: Butcherable
+    meat: FoodMeat
+    pieces: 2
+  - type: ReplacementAccent
+    accent: cat
 
 - type: entity
   name: calico cat
@@ -95,6 +112,7 @@
     visuals:
     - type: DamageStateVisualizer
       normal: cat2
+      crit: cat2_dead
       dead: cat2_dead
 
 - type: entity
@@ -113,6 +131,7 @@
     visuals:
     - type: DamageStateVisualizer
       normal: caracal_flop
+      crit: caracal_dead
       dead: caracal_dead
 
 - type: entity
@@ -131,13 +150,15 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: sloth
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.35,-0.45,0.35,0.15"
+        !type:PhysShapeCircle
+        radius: 0.35
       mass: 10
       mask:
       - Impassable
+      - MobImpassable #Bullets?!
       - VaultImpassable
       - SmallImpassable
       layer:
@@ -146,4 +167,8 @@
     visuals:
     - type: DamageStateVisualizer
       normal: sloth
+      crit: sloth_dead
       dead: sloth_dead
+  - type: Butcherable
+    meat: FoodMeat
+    pieces: 3

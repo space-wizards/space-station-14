@@ -1,13 +1,11 @@
-using System.Collections.Generic;
 using Content.Shared.Hands.Components;
-using Content.Shared.Item;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Client.Hands
 {
     [RegisterComponent]
-    [ComponentReference(typeof(ISharedHandsComponent))]
     [ComponentReference(typeof(SharedHandsComponent))]
     public class HandsComponent : SharedHandsComponent
     {
@@ -28,22 +26,19 @@ namespace Content.Client.Hands
 
             ActiveHand = state.ActiveHand;
 
-            UpdateHandContainers();
-            UpdateHandVisualizer();
-            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new HandsModifiedMessage { Hands = this });
+            HandsModified();
         }
 
         public override void HandsModified()
         {
             UpdateHandContainers();
-            UpdateHandVisualizer();
 
             base.HandsModified();
         }
 
         public void UpdateHandContainers()
         {
-            if (!Owner.TryGetComponent<ContainerManagerComponent>(out var containerMan))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ContainerManagerComponent?>(Owner, out var containerMan))
                 return;
 
             foreach (var hand in Hands)
@@ -54,29 +49,6 @@ namespace Content.Client.Hands
                     hand.Container = container;
                 }
             }
-        }
-
-        public void UpdateHandVisualizer()
-        {
-            if (Owner.TryGetComponent(out SharedAppearanceComponent? appearance))
-                appearance.SetData(HandsVisuals.VisualState, GetHandsVisualState());
-        }
-
-        private HandsVisualState GetHandsVisualState()
-        {
-            var hands = new List<HandVisualState>();
-            foreach (var hand in Hands)
-            {
-                if (hand.HeldEntity == null)
-                    continue;
-
-                if (!hand.HeldEntity.TryGetComponent(out SharedItemComponent? item) || item.RsiPath == null)
-                    continue;
-
-                var handState = new HandVisualState(item.RsiPath, item.EquippedPrefix, hand.Location, item.Color);
-                hands.Add(handState);
-            }
-            return new(hands);
         }
     }
 }

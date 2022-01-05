@@ -11,6 +11,7 @@ ui-options-reset-all = Reset All
 ## Audio menu
 
 ui-options-master-volume = Master Volume:
+ui-options-midi-volume = MIDI (Instrument) Volume:
 ui-options-ambient-hum = Ambient Hum
 ui-options-lobby-music = Lobby Music
 ui-options-volume-label = Volume
@@ -18,6 +19,7 @@ ui-options-volume-percent = { TOSTRING($volume, "P0") }
 
 ## Graphics menu
 
+ui-options-show-held-item = Show held item next to cursor?
 ui-options-vsync = VSync
 ui-options-fullscreen = Fullscreen
 ui-options-lighting-label = Lighting Quality:
@@ -45,6 +47,7 @@ ui-options-vp-integer-scaling-tooltip = If this option is enabled, the viewport 
                                         means that black bars appear at the top/bottom of the screen or that part
                                         of the viewport is not visible.
 ui-options-vp-low-res = Low-resolution viewport
+ui-options-fps-counter = Show FPS counter
 
 ## Controls menu
 
@@ -62,6 +65,9 @@ ui-options-header-misc = Miscellaneous
 ui-options-header-hotbar = Hotbar
 ui-options-header-map-editor = Map Editor
 ui-options-header-dev = Development
+ui-options-header-general = General
+
+ui-options-hotkey-keymap = Use US QWERTY Keys
 
 ui-options-function-move-up = Move Up
 ui-options-function-move-left = Move Left

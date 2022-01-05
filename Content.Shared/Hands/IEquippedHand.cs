@@ -20,14 +20,16 @@ namespace Content.Shared.Hands
         void EquippedHand(EquippedHandEventArgs eventArgs);
     }
 
-    public class EquippedHandEventArgs : UserEventArgs
+    public class EquippedHandEventArgs : EntityEventArgs
     {
-        public EquippedHandEventArgs(IEntity user, HandState hand) : base(user)
+        public EquippedHandEventArgs(EntityUid user, HandState hand)
         {
             Hand = hand;
+            User = user;
         }
 
-        public HandState Hand { get; }
+        public readonly HandState Hand;
+        public readonly EntityUid User;
     }
 
     /// <summary>
@@ -39,19 +41,19 @@ namespace Content.Shared.Hands
         /// <summary>
         ///     Entity that equipped the item.
         /// </summary>
-        public IEntity User { get; }
+        public EntityUid User { get; }
 
         /// <summary>
         ///     Item that was equipped.
         /// </summary>
-        public IEntity Equipped { get; }
+        public EntityUid Equipped { get; }
 
         /// <summary>
         ///     Hand that the item was placed into.
         /// </summary>
         public HandState Hand { get; }
 
-        public EquippedHandEvent(IEntity user, IEntity equipped, HandState hand)
+        public EquippedHandEvent(EntityUid user, EntityUid equipped, HandState hand)
         {
             User = user;
             Equipped = equipped;

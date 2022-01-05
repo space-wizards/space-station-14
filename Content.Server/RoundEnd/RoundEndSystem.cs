@@ -1,7 +1,9 @@
 using System;
 using System.Threading;
+using Content.Server.Administration.Logs;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
+using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -17,6 +19,8 @@ namespace Content.Server.RoundEnd
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
+
+        [Dependency] private readonly AdminLogSystem _adminLog = default!;
 
         public const float RestartRoundTime = 20f;
 
@@ -74,12 +78,12 @@ namespace Content.Server.RoundEnd
             Timer.Spawn(CallCooldown, () => OnCallCooldownEnded?.Invoke(), _callCooldownEndedTokenSource.Token);
         }
 
-        public void RequestRoundEnd(bool checkCooldown = true)
+        public void RequestRoundEnd(EntityUid? requester = null, bool checkCooldown = true)
         {
-            RequestRoundEnd(RoundEndCountdownTime, checkCooldown);
+            RequestRoundEnd(RoundEndCountdownTime, requester, checkCooldown);
         }
 
-        public void RequestRoundEnd(TimeSpan countdownTime, bool checkCooldown = true)
+        public void RequestRoundEnd(TimeSpan countdownTime, EntityUid? requester = null, bool checkCooldown = true)
         {
             if (IsRoundEndCountdownStarted)
                 return;
@@ -89,9 +93,18 @@ namespace Content.Server.RoundEnd
                 return;
             }
 
+            if (requester != null)
+            {
+                _adminLog.Add(LogType.ShuttleCalled, LogImpact.High, $"Shuttle called by {ToPrettyString(requester.Value):user}");
+            }
+            else
+            {
+                _adminLog.Add(LogType.ShuttleCalled, LogImpact.High, $"Shuttle called");
+            }
+
             IsRoundEndCountdownStarted = true;
 
-            _chatManager.DispatchStationAnnouncement(Loc.GetString("round-end-system-shuttle-called-announcement",("minutes", countdownTime.Minutes)), Loc.GetString("Station"));
+            _chatManager.DispatchStationAnnouncement(Loc.GetString("round-end-system-shuttle-called-announcement",("minutes", countdownTime.Minutes)), Loc.GetString("Station"), false);
 
             SoundSystem.Play(Filter.Broadcast(), "/Audio/Announcements/shuttlecalled.ogg");
 
@@ -103,7 +116,7 @@ namespace Content.Server.RoundEnd
             OnRoundEndCountdownStarted?.Invoke();
         }
 
-        public void CancelRoundEndCountdown( bool checkCooldown = true)
+        public void CancelRoundEndCountdown(EntityUid? requester = null, bool checkCooldown = true)
         {
             if (!IsRoundEndCountdownStarted)
                 return;
@@ -113,9 +126,18 @@ namespace Content.Server.RoundEnd
                 return;
             }
 
+            if (requester != null)
+            {
+                _adminLog.Add(LogType.ShuttleRecalled, LogImpact.High, $"Shuttle recalled by {ToPrettyString(requester.Value):user}");
+            }
+            else
+            {
+                _adminLog.Add(LogType.ShuttleRecalled, LogImpact.High, $"Shuttle recalled");
+            }
+
             IsRoundEndCountdownStarted = false;
 
-            _chatManager.DispatchStationAnnouncement(Loc.GetString("round-end-system-shuttle-recalled-announcement"), Loc.GetString("Station"));
+            _chatManager.DispatchStationAnnouncement(Loc.GetString("round-end-system-shuttle-recalled-announcement"), Loc.GetString("Station"), false);
 
             SoundSystem.Play(Filter.Broadcast(), "/Audio/Announcements/shuttlerecalled.ogg");
 

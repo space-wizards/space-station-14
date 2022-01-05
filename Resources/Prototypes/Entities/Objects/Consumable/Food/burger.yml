@@ -1,3 +1,24 @@
+# Bun
+
+- type: entity
+  name: bun
+  parent: FoodBreadSliceBase
+  id: FoodBreadBun
+  description: A hamburger bun. Round and convenient to hold.
+  components:
+  - type: Food
+  - type: Sprite
+    sprite: Objects/Consumable/Food/burger.rsi
+    layers:
+    - state: bun
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6.66 # 1/3 of a loaf of bread, technically losing 0.01 nutriment per batch of three buns over making bread loaves/slices
+
 # Base
 
 - type: entity
@@ -281,6 +302,16 @@
   - type: Sprite
     state: chicken
 # Tastes like bun, chicken.
+
+- type: entity
+  name: duck sandwich # Burger for you sick bastards
+  parent: FoodBurgerBase
+  id: FoodBurgerDuck
+  description: A duck sandwich, only the criminally insane would dare to eat the meat of such an adorable creature.
+  components:
+  - type: Sprite
+    state: chicken
+# Tastes like bun, duck.
 
 - type: entity
   name: cheese burger

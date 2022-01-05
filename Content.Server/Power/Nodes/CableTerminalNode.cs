@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Server.NodeContainer.Nodes;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -12,11 +12,18 @@ namespace Content.Server.Power.Nodes
     {
         public override IEnumerable<Node> GetReachableNodes()
         {
-            var entMan = IoCManager.Resolve<IEntityManager>();
-            var grid = IoCManager.Resolve<IMapManager>().GetGrid(Owner.Transform.GridID);
-            var gridIndex = grid.TileIndicesFor(Owner.Transform.Coordinates);
+            if (!Anchored)
+                yield break;
 
-            var dir = Owner.Transform.LocalRotation.GetDir();
+            if (IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).GridID == GridId.Invalid)
+                yield break; // No funny nodes in spess.
+
+
+            var entMan = IoCManager.Resolve<IEntityManager>();
+            var grid = IoCManager.Resolve<IMapManager>().GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).GridID);
+            var gridIndex = grid.TileIndicesFor(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
+
+            var dir = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).LocalRotation.GetDir();
             var targetIdx = gridIndex + NodeHelpers.TileOffsetForDir(dir);
 
             foreach (var node in NodeHelpers.GetNodesInTile(entMan, grid, targetIdx))

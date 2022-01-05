@@ -337,6 +337,7 @@
   description: A thin glass bottle used to store condiments.
   components:
   - type: Drink
+    solution: food
     openSounds:
       collection: pop
   - type: SolutionContainerManager
@@ -344,6 +345,8 @@
       food:
         maxVol: 30
   - type: SolutionTransfer
+    canChangeTransferAmount: true
+    minTransferAmount: 5
     maxTransferAmount: 30
   - type: Sprite
     netsync: false
@@ -480,6 +483,7 @@
   description: A smaller glass bottle used to store condiments.
   components:
   - type: Drink
+    solution: food
     openSounds:
       collection: pop
   - type: SolutionContainerManager
