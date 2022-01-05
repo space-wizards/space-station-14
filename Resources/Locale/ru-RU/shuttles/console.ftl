@@ -1,2 +1,2 @@
-shuttle-pilot-start = Piloting ship
-shuttle-pilot-end = Stopped piloting
+shuttle-pilot-start = Пилотирование начато
+shuttle-pilot-end = Пилотирование прекращено

@@ -1,2 +1,2 @@
-echo-command-description = Prints parameter into console
-echo-command-help-text = Usage: { $command } <text>
+echo-command-description = Выводит параметр в консоль
+echo-command-help-text = Использование: { $command } <text>
