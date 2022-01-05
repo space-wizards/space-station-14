@@ -195,7 +195,7 @@
   - type: Sprite
     state: off
   - type: PoweredLight
-    hasLampOnSpawn: "LightBulb"
+    hasLampOnSpawn: LightBulb
     damage:
       types:
         Heat: 20
