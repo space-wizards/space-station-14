@@ -7,12 +7,12 @@ namespace Content.Shared.Inventory.Events;
 [NetSerializable, Serializable]
 public class UseSlotNetworkMessage : EntityEventArgs
 {
-    public readonly EntityUid Uid;
+    // The slot-owner is implicitly the client that is sending this message.
+    // Otherwise clients could start forcefully undressing other clients.
     public readonly string Slot;
 
-    public UseSlotNetworkMessage(EntityUid uid, string slot)
+    public UseSlotNetworkMessage(string slot)
     {
-        Uid = uid;
         Slot = slot;
     }
 }
