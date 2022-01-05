@@ -132,15 +132,15 @@
       - state: green
       - state: mime
 
-#- type: entity
-#  id: SpawnPointChaplain
-#  parent: SpawnPointJobBase
-#  name: chaplain
-#  components:
-#    - type: SpawnPoint
-#      job_id: Chaplain
-#    - type: Sprite
-#      state: Chaplain
+- type: entity
+  id: SpawnPointChaplain
+  parent: SpawnPointJobBase
+  name: chaplain
+  components:
+    - type: SpawnPoint
+      job_id: Chaplain
+    - type: Sprite
+      state: Chaplain
 
 - type: entity
   id: SpawnPointJanitor
