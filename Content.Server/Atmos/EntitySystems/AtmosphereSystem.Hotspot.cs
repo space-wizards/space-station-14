@@ -9,7 +9,7 @@ namespace Content.Server.Atmos.EntitySystems
 {
     public partial class AtmosphereSystem
     {
-        [Dependency] private readonly EntityLookup _lookup = default!;
+        [Dependency] private readonly IEntityLookup _lookup = default!;
 
         private void ProcessHotspot(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile)
         {
