@@ -183,7 +183,7 @@ namespace Content.Server.Light.EntitySystems
             if (userUid != null)
             {
                 if (EntityManager.TryGetComponent(userUid.Value, out SharedHandsComponent? hands))
-                    hands.TryPutInActiveHandOrAny(bulb);
+                    hands.PutInHand(bulb);
             }
 
             UpdateLight(uid, light);
