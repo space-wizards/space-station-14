@@ -1,27 +1,33 @@
 ﻿- type: dataset
   id: names_wizard_first
   values:
-  - Alatar
-  - Archchancellor
-  - Boccob
+  - Ashenzari
+  - Chancellor
+  - Cleric
   - Circe
   - Doctor
+  - Dithmenos
+  - Elyvilon
+  - Faustus
   - Grimm
-  - Gulstaff
+  - Gozag
   - Jim
-  - Kaschei
-  - Khelben
+  - Jiyva
+  - Lirazel
+  - Lugonu
+  - Koschei
   - Kreol
   - Lina
   - Merlin
-  - Mogan
   - Morgan
-  - Nihilus
-  - Palando
-  - Prospero
-  - Raistlin
+  - Nemelex
   - Rasputin
-  - Terefi
-  - Urza
-  - Vaarsuvius
-  - Zagyg
+  - Ru
+  - Sif
+  - Trivia
+  - Trog
+  - Uskayaw
+  - Vehumet
+  - Xom
+  - Yredelemnul
+  - Zin
