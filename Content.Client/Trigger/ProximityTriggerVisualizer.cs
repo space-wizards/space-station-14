@@ -4,6 +4,7 @@ using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.Trigger
@@ -20,13 +21,14 @@ namespace Content.Client.Trigger
 
         private static Animation _animation = default!;
 
-        public override void InitializeEntity(IEntity entity)
+        public override void InitializeEntity(EntityUid entityUid)
         {
-            base.InitializeEntity(entity);
+            
+            base.InitializeEntity(entityUid);
 
             if (_animationState == null) return;
 
-            entity.EnsureComponent<AnimationPlayerComponent>();
+            IoCManager.Resolve<IEntityManager>().EnsureComponent<AnimationPlayerComponent>(entityUid);
 
             _animation = new Animation
             {
@@ -56,11 +58,11 @@ namespace Content.Client.Trigger
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
-
-            if (!component.Owner.TryGetComponent(out SpriteComponent? spriteComponent)) return;
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+            if (entityManager.TryGetComponent(component.Owner, out SpriteComponent spriteComponent)) return;
 
             var animSystem = EntitySystem.Get<AnimationPlayerSystem>();
-            component.Owner.TryGetComponent(out AnimationPlayerComponent? player);
+            entityManager.TryGetComponent(component.Owner, out AnimationPlayerComponent? player);
             component.TryGetData(ProximityTriggerVisualState.State, out ProximityTriggerVisuals state);
 
             switch (state)

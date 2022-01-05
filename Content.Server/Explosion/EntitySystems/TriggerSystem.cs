@@ -4,11 +4,8 @@ using Content.Server.Doors.Components;
 using Content.Server.Explosion.Components;
 using Content.Server.Flash;
 using Content.Server.Flash.Components;
-using Content.Server.Projectiles.Components;
 using Content.Shared.Audio;
-using Content.Shared.Database;
 using Content.Shared.Doors;
-using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -17,11 +14,11 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
-using System;
 using System.Threading;
 using Content.Server.Construction.Components;
 using Content.Shared.Trigger;
 using Timer = Robust.Shared.Timing.Timer;
+using Content.Shared.Physics;
 
 namespace Content.Server.Explosion.EntitySystems
 {
@@ -43,9 +40,11 @@ namespace Content.Server.Explosion.EntitySystems
     [UsedImplicitly]
     public sealed class TriggerSystem : EntitySystem
     {
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly ExplosionSystem _explosions = default!;
         [Dependency] private readonly FlashSystem _flashSystem = default!;
         [Dependency] private readonly AdminLogSystem _logSystem = default!;
+        
 
         public override void Initialize()
         {
@@ -69,7 +68,7 @@ namespace Content.Server.Explosion.EntitySystems
         private void OnStartup(EntityUid uid, TriggerOnProximityComponent component, ComponentStartup args)
         {
             component.Enabled = component.Enabled && (!component.RequiresAnchored ||
-                                                      EntityManager.GetComponent<ITransformComponent>(uid).Anchored);
+                                                      EntityManager.GetComponent<TransformComponent>(uid).Anchored);
 
             SetProximityFixture(uid, component, component.Enabled, true);
         }
@@ -106,7 +105,6 @@ namespace Content.Server.Explosion.EntitySystems
         {
             // TODO Make flash durations sane ffs.
             _flashSystem.FlashArea(uid, args.User, component.Range, component.Duration * 1000f);
-            component.Flashed = true;
         }
         #endregion
 
@@ -176,7 +174,7 @@ namespace Content.Server.Explosion.EntitySystems
 
         private void SetProximityAppearance(EntityUid uid, TriggerOnProximityComponent component)
         {
-            if (EntityManager.TryGetComponent(uid, out SharedAppearanceComponent? appearanceComponent))
+            if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearanceComponent))
             {
                 appearanceComponent.SetData(ProximityTriggerVisualState.State, ProximityTriggerVisuals.Active);
                 if (component.AnimationDuration > 0f)
@@ -213,12 +211,11 @@ namespace Content.Server.Explosion.EntitySystems
             Timer.Spawn((int) (component.Cooldown * 1000), () =>
             {
                 if (component.Colliding.Count == 0 ||
-                    !EntityManager.TryGetEntity(uid, out var entity) ||
                     component.Deleted) return;
 
                 SetProximityAppearance(uid, component);
                 component.NextTrigger = TimeSpan.FromSeconds(_gameTiming.CurTime.TotalSeconds + component.Cooldown);
-                Trigger(entity);
+                Trigger(component.Owner);
                 SetRepeating(uid, component);
             }, component.RepeatCancelTokenSource.Token);
         }
@@ -229,18 +226,19 @@ namespace Content.Server.Explosion.EntitySystems
                 !EntityManager.TryGetComponent(uid, out PhysicsComponent? body)) return;
 
             component.Enabled = value;
+            FixtureSystem fixtureSystem = Get<FixtureSystem>();
 
             if (value)
             {
-                if (EntityManager.TryGetComponent(uid, out SharedAppearanceComponent? appearanceComponent))
+                if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearanceComponent))
                 {
                     appearanceComponent.SetData(ProximityTriggerVisualState.State, ProximityTriggerVisuals.Inactive);
                 }
 
                 // Already has it so don't worry about it.
-                if (body.GetFixture(TriggerOnProximityComponent.FixtureID) != null) return;
+                if (fixtureSystem.GetFixtureOrNull(body, TriggerOnProximityComponent.FixtureID) != null) return;
 
-                _broadphaseSystem.CreateFixture(body, new Fixture(body, component.Shape)
+                fixtureSystem.CreateFixture(body, new Fixture(body, component.Shape)
                 {
                     // TODO: Should probably have these settable via datafield but I'm lazy and it's a pain
                     CollisionLayer = (int) (CollisionGroup.MobImpassable | CollisionGroup.SmallImpassable | CollisionGroup.VaultImpassable), Hard = false, ID = TriggerOnProximityComponent.FixtureID
@@ -248,17 +246,17 @@ namespace Content.Server.Explosion.EntitySystems
             }
             else
             {
-                if (EntityManager.TryGetComponent(uid, out SharedAppearanceComponent? appearanceComponent))
+                if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearanceComponent))
                 {
                     appearanceComponent.SetData(ProximityTriggerVisualState.State, ProximityTriggerVisuals.Off);
                 }
 
                 // Don't disable token in case we get enabled and re-enabled multiple times before it's triggered.
-                var fixture = body.GetFixture(TriggerOnProximityComponent.FixtureID);
+                var fixture = fixtureSystem.GetFixtureOrNull(body, TriggerOnProximityComponent.FixtureID);
 
                 if (fixture == null) return;
 
-                _broadphaseSystem.DestroyFixture(fixture);
+                fixtureSystem.DestroyFixture(fixture);
             }
         }
 
