@@ -28,7 +28,6 @@ public class SpillableSystem : EntitySystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IEntityLookup _entityLookup = default!;
-    [Dependency] private readonly EntityLookup _lookup = default!;
     [Dependency] private readonly AdminLogSystem _logSystem = default!;
 
     public override void Initialize()
@@ -121,7 +120,7 @@ public class SpillableSystem : EntitySystem
 
     public bool TryGetPuddle(TileRef tileRef, [NotNullWhen(true)] out PuddleComponent? puddle)
     {
-        foreach (var entity in _lookup.GetEntitiesIntersecting(tileRef))
+        foreach (var entity in _entityLookup.GetEntitiesIntersecting(tileRef))
         {
             if (EntityManager.TryGetComponent(entity, out PuddleComponent? p))
             {
