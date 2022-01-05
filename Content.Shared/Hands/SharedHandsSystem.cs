@@ -17,7 +17,6 @@ namespace Content.Shared.Hands
 {
     public abstract class SharedHandsSystem : EntitySystem
     {
-        [Dependency] private readonly SharedHandVirtualItemSystem _virtualSystem = default!;
         [Dependency] private readonly SharedAdminLogSystem _adminLogSystem = default!;
 
         public override void Initialize()
@@ -134,14 +133,8 @@ namespace Content.Shared.Hands
         public abstract void PickupAnimation(EntityUid item, EntityCoordinates initialPosition, Vector2 finalPosition,
             EntityUid? exclude);
 
-        private void HandleContainerRemoved(
-            EntityUid uid,
-            SharedHandsComponent component,
-            ContainerModifiedMessage args)
+        protected virtual void HandleContainerRemoved(EntityUid uid, SharedHandsComponent component, ContainerModifiedMessage args)
         {
-            if (TryComp(args.Entity, out HandVirtualItemComponent? @virtual))
-                _virtualSystem.Delete(@virtual, uid);
-
             HandleContainerModified(uid, component, args);
         }
         #endregion
