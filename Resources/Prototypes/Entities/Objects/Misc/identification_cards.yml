@@ -227,12 +227,12 @@
 - type: entity
   parent: IDCardStandard
   id: LibrarianIDCard
-  name: Librarian ID card
+  name: librarian ID card
   components:
     - type: Sprite
       layers:
         - state: default
-        - state: idassistant
+        - state: idcurator
     - type: PresetIdCard
       job: Librarian
 
