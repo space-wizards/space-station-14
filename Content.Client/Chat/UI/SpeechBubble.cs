@@ -66,7 +66,7 @@ namespace Content.Client.Chat.UI
             }
         }
 
-        public SpeechBubble(string text, EntityUid senderEntity, IEyeManager eyeManager, IChatManager chatManager, IEntityManager entityManager, string speechClass)
+        public SpeechBubble(string text, EntityUid senderEntity, IEyeManager eyeManager, IChatManager chatManager, IEntityManager entityManager, string speechStyleClass)
         {
             _chatManager = chatManager;
             _senderEntity = senderEntity;
@@ -76,7 +76,7 @@ namespace Content.Client.Chat.UI
             // Use text clipping so new messages don't overlap old ones being pushed up.
             RectClipContent = true;
 
-            var bubble = BuildBubble(text, speechClass);
+            var bubble = BuildBubble(text, speechStyleClass);
 
             AddChild(bubble);
 
@@ -87,7 +87,7 @@ namespace Content.Client.Chat.UI
             _verticalOffsetAchieved = -ContentHeight;
         }
 
-        protected abstract Control BuildBubble(string text, string speechClass);
+        protected abstract Control BuildBubble(string text, string speechStyleClass);
 
         protected override void FrameUpdate(FrameEventArgs args)
         {
@@ -169,12 +169,12 @@ namespace Content.Client.Chat.UI
     public class TextSpeechBubble : SpeechBubble
 
     {
-        public TextSpeechBubble(string text, EntityUid senderEntity, IEyeManager eyeManager, IChatManager chatManager, IEntityManager entityManager, string speechClass)
-            : base(text, senderEntity, eyeManager, chatManager, entityManager, speechClass)
+        public TextSpeechBubble(string text, EntityUid senderEntity, IEyeManager eyeManager, IChatManager chatManager, IEntityManager entityManager, string speechStyleClass)
+            : base(text, senderEntity, eyeManager, chatManager, entityManager, speechStyleClass)
         {
         }
 
-        protected override Control BuildBubble(string text, string speechClass)
+        protected override Control BuildBubble(string text, string speechStyleClass)
         {
             var label = new RichTextLabel
             {
@@ -184,7 +184,7 @@ namespace Content.Client.Chat.UI
 
             var panel = new PanelContainer
             {
-                StyleClasses = { "speechBox", speechClass },
+                StyleClasses = { "speechBox", speechStyleClass },
                 Children = { label },
                 ModulateSelfOverride = Color.White.WithAlpha(0.75f)
             };
