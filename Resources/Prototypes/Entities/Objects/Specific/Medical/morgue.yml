@@ -17,6 +17,8 @@
   - type: Icon
     sprite: Objects/Specific/Medical/Morgue/bodybags.rsi
     state: bag
+  - type: Item
+    size: 6
   - type: Clickable
   - type: InteractionOutline
   - type: MovedByPressure
@@ -67,8 +69,6 @@
   - type: Tag
     tags:
     - BodyBag
-  - type: Item
-    size: 6
 #  - type: BodyBagItem #TODO: we need some kind of generic placable, like thus:
 # - type: Placeable
 #   prototype: someId
