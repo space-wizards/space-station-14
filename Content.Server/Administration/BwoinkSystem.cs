@@ -47,10 +47,12 @@ namespace Content.Server.Administration
         public override void Initialize()
         {
             base.Initialize();
+            SubscribeNetworkEvent<FetchBwoinkLogMessage>(OnFetchLogRequest);
+            SubscribeNetworkEvent<BwoinkReadMessage>(OnReadMessage);
             _config.OnValueChanged(CCVars.DiscordAHelpWebhook, OnWebhookChanged, true);
             _config.OnValueChanged(CVars.GameHostName, OnServerNameChanged, true);
             _sawmill = IoCManager.Resolve<ILogManager>().GetSawmill("AHELP");
-            _maxAdditionalChars = GenerateAHelpMessage("", "", true).Length + Header("").Length;
+            _maxAdditionalChars = GenerateAHelpMessage("", "", true, true).Length + Header("").Length;
         }
 
         private void OnServerNameChanged(string obj)
@@ -103,6 +105,7 @@ namespace Content.Server.Administration
                 oldMessage.content += "\n" + GenerateAHelpMessage(
                         playerSession.Name,
                         FormattedMessage.RemoveMarkup(chLog[i].Text),
+                        chLog[i].Status != SharedBwoinkSystem.Status.Delivered,
                         chLog[i].TrueSender != channelId
                 );
             }
@@ -182,10 +185,7 @@ namespace Content.Server.Administration
 
             // TODO: Sanitize text?
             // Confirm that this person is actually allowed to send a message here.
-            var personalChannel = senderSession.UserId == message.ChannelId;
-            var senderAdmin = _adminManager.GetAdminData(senderSession);
-            var authorized = personalChannel || senderAdmin != null;
-            if (!authorized)
+            if (!IsAuthorizedForChannel(senderSession, message.ChannelId))
             {
                 // Unauthorized bwoink (log?)
                 return;
@@ -193,7 +193,7 @@ namespace Content.Server.Administration
 
             var escapedText = FormattedMessage.EscapeText(message.Text);
 
-            var bwoinkText = senderAdmin?.Flags switch
+            var bwoinkText = _adminManager.GetAdminData(senderSession)?.Flags switch
             {
                 AdminFlags.Adminhelp => $"[color=purple]{senderSession.Name}[/color]: {escapedText}",
                 > AdminFlags.Adminhelp => $"[color=red]{senderSession.Name}[/color]: {escapedText}",
@@ -243,18 +243,53 @@ namespace Content.Server.Administration
                     Loc.GetString("bwoink-system-starmute-message-no-other-users");
                 var starMuteMsg = new BwoinkTextMessage(message.ChannelId, SystemUserId, systemText);
                 RaiseNetworkEvent(starMuteMsg, senderSession.ConnectedClient);
+            } else {
+                message.Status = SharedBwoinkSystem.Status.Delivered;
             }
         }
 
-        private string GenerateAHelpMessage(string username, string message, bool admin)
+        private bool IsAuthorizedForChannel(IPlayerSession session, NetUserId channelId)
+        {
+            var personalChannel = session.UserId == channelId;
+            var senderAdmin = _adminManager.GetAdminData(session);
+            return personalChannel || senderAdmin != null;
+        }
+
+        private string GenerateAHelpMessage(string username, string message, bool delivered, bool admin)
         {
             var stringbuilder = new StringBuilder();
+            if (delivered)
+                stringbuilder.Append(":sos:");
             stringbuilder.Append(admin ? ":outbox_tray:" : ":inbox_tray:");
             stringbuilder.Append(' ');
             stringbuilder.Append(username);
             stringbuilder.Append(": ");
             stringbuilder.Append(message);
             return stringbuilder.ToString();
+        }
+
+        private void OnFetchLogRequest(FetchBwoinkLogMessage message, EntitySessionEventArgs eventArgs)
+        {
+            if (!IsAuthorizedForChannel((IPlayerSession) eventArgs.SenderSession, message.ChannelId))
+                return;
+
+            if (!_history.ContainsKey(message.ChannelId))
+                return;
+
+            foreach (var m in _history[message.ChannelId])
+                RaiseNetworkEvent(m, eventArgs.SenderSession.ConnectedClient);
+        }
+
+        private void OnReadMessage(BwoinkReadMessage message, EntitySessionEventArgs eventArgs)
+        {
+            if (!IsAuthorizedForChannel((IPlayerSession) eventArgs.SenderSession, message.ChannelId))
+                return;
+
+            if (!_history.ContainsKey(message.ChannelId))
+                return;
+
+            foreach (var m in _history[message.ChannelId])
+                m.Status = Status.Read;
         }
 
         private struct WebhookPayload

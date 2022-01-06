@@ -37,15 +37,15 @@ namespace Content.Client.Administration
             // Actual line
             var window = EnsurePanel(message.ChannelId);
             window.ReceiveLine(message);
-            // Play a sound if we didn't send it
+            // Play a sound if we didn't send it and it's not a replay
             var localPlayer = _playerManager.LocalPlayer;
-            if (localPlayer?.UserId != message.TrueSender)
+            if (message.Status != Status.Read && localPlayer?.UserId != message.TrueSender)
             {
                 SoundSystem.Play(Filter.Local(), "/Audio/Effects/adminhelp.ogg");
                 _clyde.RequestWindowAttention();
             }
 
-            _adminWindow?.OnBwoink(message.ChannelId);
+            _adminWindow?.OnBwoink(message);
         }
 
         public bool TryGetChannel(NetUserId ch, [NotNullWhen(true)] out BwoinkPanel? bp) => _activePanelMap.TryGetValue(ch, out bp);
@@ -60,6 +60,7 @@ namespace Content.Client.Administration
                 existingPanel.Visible = false;
                 if (!_adminWindow.BwoinkArea.Children.Contains(existingPanel))
                     _adminWindow.BwoinkArea.AddChild(existingPanel);
+                RaiseNetworkEvent(new FetchBwoinkLogMessage(channelId));
             }
 
             if(!_adminWindow.IsOpen) _adminWindow.Open();
@@ -82,6 +83,7 @@ namespace Content.Client.Administration
                 };
 
                 _plainWindow.Contents.AddChild(bp);
+                RaiseNetworkEvent(new FetchBwoinkLogMessage(channelId));
             }
             else
             {
@@ -129,7 +131,14 @@ namespace Content.Client.Administration
         {
             // Reuse the channel ID as the 'true sender'.
             // Server will ignore this and if someone makes it not ignore this (which is bad, allows impersonation!!!), that will help.
-            RaiseNetworkEvent(new BwoinkTextMessage(channelId, channelId, text));
+            var btm = new BwoinkTextMessage(channelId, channelId, text);
+            btm.Status = Status.Sent;
+            RaiseNetworkEvent(btm);
+        }
+
+        public void SendRead(NetUserId channelId)
+        {
+            RaiseNetworkEvent(new BwoinkReadMessage(channelId));
         }
     }
 }
