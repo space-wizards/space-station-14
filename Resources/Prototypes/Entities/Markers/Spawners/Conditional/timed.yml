@@ -24,12 +24,12 @@
   components:
     - type: Sprite
       layers:
-        - state: blue
-        - texture: Mobs/Aliens/Xenos/xeno.rsi/crit.png
-        - state: ai
+      - state: blue
+      - texture: Mobs/Aliens/Xenos/burrower.rsi/crit.png
+      - state: ai
     - type: TimedSpawner
       prototypes:
-        - MobXeno
+      - MobXeno
       chance: 0.85
       intervalSeconds: 30
       minimumEntitiesSpawned: 2
