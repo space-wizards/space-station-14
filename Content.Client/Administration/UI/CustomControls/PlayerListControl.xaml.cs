@@ -37,7 +37,13 @@ namespace Content.Client.Administration.UI.CustomControls
 
             PlayerItemList.TooltipSupplier = TooltipSupplier = SupplyTooltip;
 
-            PlayerItemList.OnItemHover += (args) => _hovered = args.ItemList[args.ItemIndex];
+            PlayerItemList.OnItemHover += (args) =>
+            {
+                var oldHovered = _hovered;
+                _hovered = args.ItemList[args.ItemIndex];
+                if (oldHovered != _hovered)
+                    PlayerItemList.HideTooltip();
+            };
         }
 
         private Control? SupplyTooltip(Control sender)
