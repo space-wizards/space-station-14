@@ -2,7 +2,6 @@
   id: LockerMedicineFilled
   suffix: Filled
   parent: LockerMedicine
-  description: "Ze healing leaves little time for ze hurting."
   components:
   - type: StorageFill
     contents:
