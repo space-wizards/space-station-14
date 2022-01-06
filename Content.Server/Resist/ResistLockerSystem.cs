@@ -28,8 +28,7 @@ public class ResistLockerSystem : EntitySystem
 
     private void OnRelayMovement(EntityUid uid, ResistLockerComponent component, RelayMovementEntityEvent args)
     {
-        TryComp(uid, out EntityStorageComponent? storageComponent);
-        if (!Resolve(uid, ref storageComponent))
+        if (!TryComp(uid, out EntityStorageComponent? storageComponent))
             return;
 
         if (!component.IsResisting)
@@ -41,7 +40,7 @@ public class ResistLockerSystem : EntitySystem
         }
     }
 
-    private void AttemptResist(EntityUid user, EntityUid target, EntityStorageComponent? storageComponent, ResistLockerComponent? resistLockerComponent)
+    private void AttemptResist(EntityUid user, EntityUid target, EntityStorageComponent? storageComponent = null, ResistLockerComponent? resistLockerComponent = null)
     {
         if (!Resolve(target, ref storageComponent, ref resistLockerComponent))
             return;
@@ -94,6 +93,7 @@ public class ResistLockerSystem : EntitySystem
         component.CancelToken?.Cancel();
         component.CancelToken = null;
     }
+    
     private class ResistDoAfterComplete : EntityEventArgs
     {
         public readonly EntityUid User;
