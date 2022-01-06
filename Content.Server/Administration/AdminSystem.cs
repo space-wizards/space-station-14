@@ -43,13 +43,13 @@ namespace Content.Server.Administration
             SubscribeLocalEvent<MobStateChangedEvent>(OnMobState);
         }
 
-        private void UpdatePlayerList(IPlayerSession player)
+        private void UpdatePlayerList(NetUserId uid, IPlayerSession? player = null, Mind.Mind? mind = null)
         {
-            _playerList[player.UserId] = GetPlayerInfo(player);
+            _playerList[uid] = GetPlayerInfo(uid, player, mind);
 
             var playerInfoChangedEvent = new PlayerInfoChangedEvent
             {
-                PlayerInfo = _playerList[player.UserId]
+                PlayerInfo = _playerList[uid]
             };
 
             foreach (var admin in _adminManager.ActiveAdmins)
@@ -61,6 +61,7 @@ namespace Content.Server.Administration
         private void OnDisconnect(object? sender, NetDisconnectedArgs args)
         {
             _disconnections[args.Channel.UserId] = new PlayerDisconnect(DateTime.Now, args.Reason);
+            UpdatePlayerList(args.Channel.UserId);
         }
 
         private void OnRoleEvent(RoleEvent ev)
@@ -68,7 +69,7 @@ namespace Content.Server.Administration
             if (!ev.Role.Antagonist || ev.Role.Mind.Session == null)
                 return;
 
-            UpdatePlayerList(ev.Role.Mind.Session);
+            UpdatePlayerList(ev.Role.Mind.OriginalOwnerUserId, ev.Role.Mind.Session, ev.Role.Mind);
         }
 
         private void OnAdminPermsChanged(AdminPermsChangedEventArgs obj)
@@ -88,22 +89,23 @@ namespace Content.Server.Administration
             // The disconnected state gets sent by OnPlayerStatusChanged.
             if(ev.Player.Status == SessionStatus.Disconnected) return;
 
-            UpdatePlayerList(ev.Player);
+            UpdatePlayerList(ev.Player.UserId, ev.Player);
         }
 
         private void OnPlayerAttached(PlayerAttachedEvent ev)
         {
             if(ev.Player.Status == SessionStatus.Disconnected) return;
 
-            UpdatePlayerList(ev.Player);
+            UpdatePlayerList(ev.Player.UserId, ev.Player);
         }
 
         private void OnMobState(MobStateChangedEvent ev)
         {
             if (TryComp<MindComponent>(ev.Entity, out var mind)
-                && mind.Mind is not null
-                && mind.Mind.TryGetSession(out var session))
-                    UpdatePlayerList(session);
+                && mind.Mind is not null)
+            {
+                UpdatePlayerList(mind.Mind.OriginalOwnerUserId, mind.Mind.Session, mind.Mind);
+            }
         }
 
         public override void Shutdown()
@@ -116,7 +118,7 @@ namespace Content.Server.Administration
 
         private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
         {
-            UpdatePlayerList(e.Session);
+            UpdatePlayerList(e.Session.UserId, e.Session);
         }
 
         private void SendFullPlayerList(IPlayerSession playerSession)
@@ -128,41 +130,53 @@ namespace Content.Server.Administration
             RaiseNetworkEvent(ev, playerSession.ConnectedClient);
         }
 
-        private PlayerInfo GetPlayerInfo(IPlayerSession session)
+        private PlayerInfo GetPlayerInfo(NetUserId uid, IPlayerSession? session = null, Mind.Mind? mind = null)
         {
-            var username = session.Name;
-            var name = string.Empty;
-            MobStateFlags msf = MobStateFlags.Unknown;
+            var last = _playerList.GetValueOrDefault(uid) ?? new PlayerInfo();
 
-            if (session.AttachedEntity != null)
+            mind ??= session?.ContentData()?.Mind;
+
+            last.SessionId = uid;
+
+            var ent = mind?.OwnedEntity
+                ?? session?.AttachedEntity
+                ?? null;
+
+            if (ent is not null && !Deleted(ent))
             {
-                name = Comp<MetaDataComponent>(session.AttachedEntity.Value).EntityName;
-                if (TryComp<MobStateComponent>(session.AttachedEntity.Value, out var mobState))
-                    msf = mobState.CurrentState?.ToFlags() ?? msf;
+                last.EntityUid = ent.Value;
+                if (TryComp<MetaDataComponent>(ent, out var meta))
+                    last!.CharacterName = meta.EntityName;
+
+                if (TryComp<MobStateComponent>(ent, out var mobState))
+                    last!.MobState = mobState.CurrentState!.ToFlags();
             }
 
-            var mind = session.ContentData()?.Mind;
-            var antag = mind?.AllRoles.Any(r => r.Antagonist) ?? false;
-            var roles = mind?.AllRoles.Select(r => r.Name).ToArray() ?? Array.Empty<string>();
+            if (mind is not null)
+            {
+                last.Antag = mind.AllRoles.Any(r => r.Antagonist);
+                last.Roles = mind.AllRoles.Select(r => r.Name).ToArray();
+                last.DeadIC = mind.CharacterDeadIC;
+                last.DeadPhysically = mind.CharacterDeadPhysically;
+                last.TimeOfDeath = mind.TimeOfDeath;
+            }
 
-            return new PlayerInfo
-            (
-                Username: username,
-                SessionId: session.UserId,
-                Ping: session.Ping,
-                EntityUid: session.AttachedEntity.GetValueOrDefault(),
-                Connected: session.Status,
-                Disconnected: _disconnections.GetValueOrDefault(session.UserId),
-                Afk: _afkManager.IsAfk(session),
+            var dc = _disconnections.GetValueOrDefault(uid);
+            if (dc is not null)
+                last.Disconnected=dc;
 
-                CharacterName: name,
-                Antag: antag,
-                Roles: roles,
-                DeadIC: mind?.CharacterDeadIC ?? true,
-                DeadPhysically: mind?.CharacterDeadPhysically ?? true,
-                TimeOfDeath: mind?.TimeOfDeath,
-                MobState: msf
-            );
+            if (session is not null)
+            {
+                last = last with
+                {
+                    Username=session.Name,
+                    Ping=session.Ping,
+                    Connected=session.Status,
+                    Afk=_afkManager.IsAfk(session),
+                };
+            }
+
+            return last;
         }
     }
 }

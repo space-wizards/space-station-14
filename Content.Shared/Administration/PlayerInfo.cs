@@ -9,25 +9,25 @@ namespace Content.Shared.Administration
 {
     [Serializable, NetSerializable]
     public record PlayerInfo
-    (
+    {
         /* Net stuff */
-        string Username,
-        NetUserId SessionId,
-        short Ping,
-        EntityUid EntityUid,
-        SessionStatus Connected,
-        PlayerDisconnect? Disconnected,
-        bool Afk,
+        public string Username = String.Empty;
+        public NetUserId SessionId = new NetUserId();
+        public short Ping = 0;
+        public EntityUid EntityUid = EntityUid.Invalid;
+        public SessionStatus Connected = SessionStatus.Zombie;
+        public PlayerDisconnect? Disconnected = default;
+        public bool Afk = false;
 
         /* IC stuff */
-        string CharacterName,
-        bool Antag,
-        string[] Roles,
-        bool DeadIC,
-        bool DeadPhysically,
-        TimeSpan? TimeOfDeath,
-        MobStateFlags MobState
-    );
+        public string CharacterName = String.Empty;
+        public bool Antag = false;
+        public string[] Roles = Array.Empty<string>();
+        public bool DeadIC = false;
+        public bool DeadPhysically = false;
+        public TimeSpan? TimeOfDeath = default!;
+        public MobStateFlags MobState = MobStateFlags.Unknown;
+    }
 
     [Serializable, NetSerializable]
     public record PlayerDisconnect(DateTime stamp, string reason);
