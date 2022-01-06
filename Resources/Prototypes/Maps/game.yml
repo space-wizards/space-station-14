@@ -117,20 +117,20 @@
     SecurityOfficer: [ 1, 2 ]
     Janitor: [ 1, 1 ]
 
-- type: gameMap
-  id: dart
-  mapName: 'Dart'
-  mapNameTemplate: '{0} Dart {1}'
-  nameGenerator:
-    !type:NanotrasenNameGenerator
-    prefixCreator: '14'
-  mapPath: Maps/dart.yml
-  minPlayers: 0
-  votable: false
-  overflowJobs: []
-  availableJobs:
-    Captain: [ 1, 1 ]
-    ChiefEngineer: [ 1, 1 ]
-    ChiefMedicalOfficer: [ 1, 1 ]
-    HeadOfSecurity: [ 1, 1 ]
-    SecurityOfficer: [ 2, 4 ]
+#- type: gameMap
+#  id: dart
+#  mapName: 'Dart'
+#  mapNameTemplate: '{0} Dart {1}'
+#  nameGenerator:
+#    !type:NanotrasenNameGenerator
+#    prefixCreator: '14'
+#  mapPath: Maps/dart.yml
+#  minPlayers: 0
+#  votable: false
+#  overflowJobs: []
+#  availableJobs:
+#    Captain: [ 1, 1 ]
+#    ChiefEngineer: [ 1, 1 ]
+#    ChiefMedicalOfficer: [ 1, 1 ]
+#    HeadOfSecurity: [ 1, 1 ]
+#    SecurityOfficer: [ 2, 4 ]
