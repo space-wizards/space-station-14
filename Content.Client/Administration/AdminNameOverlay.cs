@@ -62,8 +62,8 @@ namespace Content.Client.Administration
                 {
                     args.ScreenHandle.DrawString(_font, screenCoordinates + (lineoffset * 2), "ANTAG", Color.OrangeRed);
                 }
-                args.ScreenHandle.DrawString(_font, screenCoordinates+lineoffset, playerInfo.Username, playerInfo.Connected ? Color.Yellow : Color.White);
-                args.ScreenHandle.DrawString(_font, screenCoordinates, playerInfo.CharacterName, playerInfo.Connected ? Color.Aquamarine : Color.White);
+                args.ScreenHandle.DrawString(_font, screenCoordinates+lineoffset, playerInfo.Username, (playerInfo.Connected is SessionStatus.InGame or SessionStatus.Connected) ? Color.Yellow : Color.White);
+                args.ScreenHandle.DrawString(_font, screenCoordinates, playerInfo.CharacterName, (playerInfo.Connected is SessionStatus.InGame or SessionStatus.Connected) ? Color.Aquamarine : Color.White);
             }
         }
     }
