@@ -20,6 +20,7 @@
     id: BotanistPDA
     ears: ClothingHeadsetService
     outerclothing: ClothingOuterApronBotanist
+    belt: ClothingBeltPlantFilled
   innerclothingskirt: ClothingUniformJumpskirtHydroponics
   satchel: ClothingBackpackSatchelHydroponicsFilled
   duffelbag: ClothingBackpackDuffelFilled
