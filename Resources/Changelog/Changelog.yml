@@ -1,9 +1,4 @@
 Entries:
-- author: SweptWasTaken
-  changes:
-  - {message: Admin ghosts can interact with stuff, type: Add}
-  id: 334
-  time: '2021-08-23T03:14:52.0000000+00:00'
 - author: Seth
   changes:
   - {message: Added basic parts technology, type: Add}
@@ -2903,3 +2898,9 @@ Entries:
   - {message: Smoking is cool again (fixed animation/sprite)., type: Fix}
   id: 835
   time: '2022-01-06T12:45:02.0000000+00:00'
+- author: LittleBuilderJane
+  changes:
+  - {message: Adjusted aspects of Reach and Dart to fix issues., type: Add}
+  - {message: Removed one Security Officer slot on Dart to fit new airlock., type: Remove}
+  id: 836
+  time: '2022-01-06T13:31:37.0000000+00:00'
