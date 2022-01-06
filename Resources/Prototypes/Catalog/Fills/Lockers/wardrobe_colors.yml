@@ -2,7 +2,6 @@
   id: WardrobeGreyFilled
   suffix: Filled
   parent: WardrobeGrey
-  description: "A wardrobe packed with a tide of grey clothing."
   components:
   - type: StorageFill
     contents:
@@ -23,7 +22,6 @@
   id: WardrobeMixedFilled
   suffix: Filled
   parent: WardrobeMixed
-  description: "A wardrobe packed with a mix of colorful clothing."
   components:
   - type: StorageFill
     contents:
@@ -82,7 +80,6 @@
   id: WardrobeYellowFilled
   suffix: Filled
   parent: WardrobeYellow
-  description: "A wardrobe packed with stylish yellow clothing."
   components:
   - type: StorageFill
     contents:
@@ -100,7 +97,6 @@
   id: WardrobeWhiteFilled
   suffix: Filled
   parent: WardrobeWhite
-  description: "A wardrobe packed with stylish white clothing."
   components:
   - type: StorageFill
     contents:
@@ -117,7 +113,6 @@
   id: WardrobeBlueFilled
   suffix: Filled
   parent: WardrobeBlue
-  description: "A wardrobe packed with stylish blue clothing."
   components:
   - type: StorageFill
     contents:
@@ -132,7 +127,6 @@
   id: WardrobePinkFilled
   suffix: Filled
   parent: WardrobePink
-  description: "A wardrobe packed with fabulous pink clothing."
   components:
   - type: StorageFill
     contents:
@@ -147,7 +141,6 @@
   id: WardrobeBlackFilled
   suffix: Filled
   parent: WardrobeBlack
-  description: "A wardrobe packed with stylish black clothing."
   components:
   - type: StorageFill
     contents:
@@ -166,7 +159,6 @@
   id: WardrobeGreenFilled
   suffix: Filled
   parent: WardrobeGreen
-  description: "A wardrobe packed with stylish green clothing."
   components:
   - type: StorageFill
     contents:
