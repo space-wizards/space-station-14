@@ -17,7 +17,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Procedural.Systems;
 
-public class WorldChunkSystem : EntitySystem
+public partial class WorldChunkSystem : EntitySystem
 {
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly PoissonDiskSampler _sampler = default!;
@@ -35,9 +35,10 @@ public class WorldChunkSystem : EntitySystem
     private float _frameAccumulator = 0.0f;
 
     // CVar replicas
-    private float _debrisSeparation = 0;
+    private float _debrisSeparation;
     private DebrisLayoutPrototype _defaultLayout = default!;
-    private bool _enabled = false;
+    private bool _enabled;
+    private float _maxDebrisLoadTimeMs;
 
     public override void Initialize()
     {
@@ -47,6 +48,7 @@ public class WorldChunkSystem : EntitySystem
             _defaultLayout = _prototypeManager.Index<DebrisLayoutPrototype>(l);
         }, true);
         _configuration.OnValueChanged(CCVars.WorldGenEnabled, e => _enabled = e, true);
+        _configuration.OnValueChanged(CCVars.MaxDebrisLoadTimeMs, t => _maxDebrisLoadTimeMs = t, true);
 
         SubscribeLocalEvent<WorldManagedComponent, MoveEvent>(OnDebrisMoved);
     }
@@ -126,103 +128,6 @@ public class WorldChunkSystem : EntitySystem
             Logger.DebugS("worldgen", $"Loading chunk {v}.");
             _loadQueue.Enqueue(v);
         }
-    }
-
-    public void ForceEmptyChunk(Vector2i chunk)
-    {
-        if (_currLoaded.Contains(chunk))
-        {
-            Logger.ErrorS("worldgen", "Tried to empty a chunk that's already loaded!");
-            return;
-        }
-
-        _chunks[chunk] = new WorldChunk()
-        {
-            Debris = new HashSet<DebrisData>()
-        };
-    }
-
-    private void LoadChunks()
-    {
-        foreach (var chunk in _loadQueue)
-        {
-            if (_chunks.ContainsKey(chunk))
-            {
-                LoadChunk(chunk);
-            }
-            else
-            {
-                MakeChunk(chunk);
-                LoadChunk(chunk);
-            }
-        }
-        _loadQueue.Clear();
-    }
-
-    private void LoadChunk(Vector2i chunk)
-    {
-        foreach (var debris in _chunks[chunk].Debris)
-        {
-            if (debris.CurrGrid is not null && Exists(debris.CurrGrid))
-                continue;
-
-            debris.CurrGrid = _debrisGeneration.GenerateDebris(debris.Kind!, debris.Coords);
-            var comp = AddComp<WorldManagedComponent>(debris.CurrGrid.Value);
-            comp.DebrisData = debris;
-            comp.CurrentChunk = chunk;
-        }
-    }
-
-    private void MakeChunk(Vector2i chunk)
-    {
-        Logger.DebugS("worldgen", $"Made chunk {chunk}.");
-        var offs = (int)((ChunkSize - (_debrisSeparation / 2)) / 2);
-        var center = chunk * ChunkSize;
-        var topLeft = (-offs, -offs);
-        var lowerRight = (offs, offs);
-        var debrisPoints = _sampler.SampleRectangle(topLeft, lowerRight, _debrisSeparation);
-        var debris = new HashSet<DebrisData>(debrisPoints.Count);
-
-        foreach (var p in debrisPoints)
-        {
-            var kind = _defaultLayout.Pick();
-            if (kind is null)
-                continue;
-
-            debris.Add(new DebrisData()
-            {
-                CurrGrid = null,
-                Kind = kind,
-                Coords = new MapCoordinates(p + center, WorldMap),
-            });
-        }
-
-        _chunks[chunk] = new WorldChunk()
-        {
-            Debris = debris,
-        };
-    }
-
-    private void UnloadChunks()
-    {
-        foreach (var chunk in _unloadQueue)
-        {
-            if (!_chunks.ContainsKey(chunk) || _currLoaded.Contains(chunk))
-                continue;
-
-            foreach (var debris in _chunks[chunk].Debris)
-            {
-                UnloadDebris(debris);
-            }
-        }
-        _unloadQueue.Clear();
-    }
-
-    private void UnloadDebris(DebrisData debris)
-    {
-        if (debris.CurrGrid is not null)
-            Del(debris.CurrGrid.Value);
-        debris.CurrGrid = null;
     }
 
     public IEnumerable<Vector2i> ChunksNear(EntityUid ent)
