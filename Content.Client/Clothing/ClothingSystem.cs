@@ -4,6 +4,7 @@ using Content.Shared.CharacterAppearance;
 using Content.Shared.Clothing;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
+using Content.Shared.Item;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
@@ -46,7 +47,22 @@ public class ClothingSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<ClothingComponent, GotEquippedEvent>(OnGotEquipped);
+        SubscribeLocalEvent<ClothingComponent, GotUnequippedEvent>(OnGotUnequipped);
+        SubscribeLocalEvent<ClientInventoryComponent, ItemPrefixChangeEvent>(OnPrefixChanged);
         SubscribeLocalEvent<SpriteComponent, DidUnequipEvent>(OnDidUnequip);
+    }
+
+    private void OnPrefixChanged(EntityUid uid, ClientInventoryComponent component, ItemPrefixChangeEvent args)
+    {
+        if (!TryComp(args.Item, out ClothingComponent? clothing) || clothing.InSlot == null)
+            return;
+
+        RenderEquipment(uid, args.Item, clothing.InSlot, component, null, clothing);
+    }
+
+    private void OnGotUnequipped(EntityUid uid, ClothingComponent component, GotUnequippedEvent args)
+    {
+        component.InSlot = null;
     }
 
     private void OnDidUnequip(EntityUid uid, SpriteComponent component, DidUnequipEvent args)
@@ -71,6 +87,8 @@ public class ClothingSystem : EntitySystem
 
     private void OnGotEquipped(EntityUid uid, ClothingComponent component, GotEquippedEvent args)
     {
+        component.InSlot = args.Slot;
+
         if (!TryComp<SpriteComponent>(args.Equipee, out var sprite) || !TryComp<ClientInventoryComponent>(args.Equipee, out var invComp))
         {
             return;

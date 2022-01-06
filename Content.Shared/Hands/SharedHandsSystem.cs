@@ -27,11 +27,24 @@ namespace Content.Shared.Hands
 
             SubscribeLocalEvent<SharedHandsComponent, EntRemovedFromContainerMessage>(HandleContainerModified);
             SubscribeLocalEvent<SharedHandsComponent, EntInsertedIntoContainerMessage>(HandleContainerModified);
+            SubscribeLocalEvent<SharedHandsComponent, ItemPrefixChangeEvent>(OnPrefixChanged);
 
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.Drop, new PointerInputCmdHandler(DropPressed))
                 .Bind(ContentKeyFunctions.SwapHands, InputCmdHandler.FromDelegate(SwapHandsPressed, handle: false))
                 .Register<SharedHandsSystem>();
+        }
+
+        private void OnPrefixChanged(EntityUid uid, SharedHandsComponent component, ItemPrefixChangeEvent args)
+        {
+            foreach (var ent in component.GetAllHeldEntities())
+            {
+                if (args.Item == ent)
+                {
+                    UpdateHandVisualizer(uid, component);
+                    return;
+                }
+            }
         }
 
         public override void Shutdown()
