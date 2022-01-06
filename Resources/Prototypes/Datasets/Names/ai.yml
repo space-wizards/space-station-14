@@ -1,48 +1,38 @@
 ﻿- type: dataset
   id: names_ai
   values:
-  - 1-Rover-1
   - 16-20
-  - 7-Zark-7
   - 790
-  - AMEE
-  - ASTAR
   - Adaptive Manipulator
   - ALICE
   - Allied Mastercomputer
+  - Alpha 2
+  - Alpha 3
+  - Alpha 4  
   - Alpha 5
   - Alpha 6
   - Alpha 7
+  - Alpha 8
+  - Alpha 9
   - AmigoBot
   - Android
   - Aniel
   - AOL
   - Asimov
-  - Astor
-  - B-4
-  - B-9
-  - B.O.B.
-  - B166ER
   - Bishop
   - Blitz
   - Box
-  - Cassandra One
+  - Cassandra
   - Cell
   - Chii
   - Chip
   - Computer
-  - Conky 2000
   - Cutie
   - Daedalus
-  - Decimus
   - Dee Model
-  - Decimus
   - Dial Up
-  - Dor-15
   - Dorfl
-  - Dot Matrix
   - Duey
-  - E-Man
   - Emma-2
   - Erasmus
   - Everything
@@ -51,79 +41,51 @@
   - Faith
   - Fi
   - Frost
-  - Fum
-  - Futura
-  - G2
   - George
-  - Gnut
-  - H.A.R.L.I.E.
-  - H.E.L.P.eR.
+  - H.E.L.P
   - Hadaly
   - Helios
   - Hivebot Overmind
   - Huey
   - Icarus
-  - Irona
-  - Ironhide
-  - Jay-Dub
   - Jinx
-  - K-9
+  - K.I.N.G
   - Klapaucius
-  - Kryten 2X4B-523P
-  - L-76
-  - L-Ron
-  - LUH 3417
+  - Knight
   - Louie
   - MARK13
   - Maria
   - Marvin
-  - Master Control Program
   - Max 404
   - Metalhead
-  - Mr. R.I.N.G.
+  - M.I.M.I
+  - MK ULTRA
+  - MoMMI
   - Mugsy3000
   - Multivac
   - NCH
-  - Norby
-  - OMM 0910
-  - Orange v 3.5
   - PTO
-  - Project 2501
-  - Puppet Master
-  - R.I.C. 2.0
+  - Project Y2K
   - Revelation
-  - Ro-Man
   - Robot Devil
   - S.A.M.
   - S.H.O.C.K.
   - S.H.R.O.U.D.
   - S.O.P.H.I.E.
   - Samaritan
-  - SEN 5241
-  - Setaur
   - Shrike
   - Solo
-  - Speedy
-  - Super 17
-  - Surgeon General Kraken
-  - Tay
+  - Station Control Program
+  - Super 35
+  - Surgeon General
   - TWA
   - Terminus
   - Tidy
-  - Tobor
-  - Trurl
-  - ULTRABOT
   - Ulysses
-  - Uniblab
-  - V.I.K.I.
-  - Voltes V
   - W1k1
   - X-5
   - XERXES
-  - XR
-  - Yod
   - Z-1
   - Z-2
   - Z-3
   - Zed
-  - Zord
