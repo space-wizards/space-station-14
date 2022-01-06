@@ -1,35 +1,13 @@
-<p align="center"> <img alt="Space Station 14" width="880" height="300" src="https://raw.githubusercontent.com/space-wizards/asset-dump/de329a7898bb716b9d5ba9a0cd07f38e61f1ed05/github-logo.svg" /></p>
+<p align="center"> <img alt="Space Station 14" src="https://raw.githubusercontent.com/moonheart08/outer-rim-14/master/Resources/Textures/Logo/logo.png" /></p>
 
-Space Station 14 is a remake of SS13 that runs on [Robust Toolbox](https://github.com/space-wizards/RobustToolbox), our homegrown engine written in C#.
+Outer Rim 14 is a fork of [Space Station 14](https://spacestation14.io/), with a focus on space flight, asteroid mining, and exploration instead of Space Station 14's round-to-round destructive chaos.
+Due to the capabilities of RobustToolbox, Space Station 14's game engine, Outer Rim 14 is a drop-in replacement for the standard game when hosting or playing, requiring no extra effort on the player's part.
 
-This is the primary repo for Space Station 14. To prevent people forking RobustToolbox, a "content" pack is loaded by the client and server. This content pack contains everything needed to play the game on one specific server.
+Outer Rim 14 is still early in development; please wait if you wish to see more content, or, better, help code the game yourself.
+Like the main game, all code added to Outer Rim 14 is under the same license as the main Space Station 14 repo.
+All assets unique to Outer Rim 14 are ideally to be licensed under CC-BY-NC-SA 4.0, if possible.
 
-If you want to host or create content for SS14, this is the repo you need. It contains both RobustToolbox and the content pack for development of new content packs.
-
-## Links
-
-[Website](https://spacestation14.io/) | [Discord](https://discord.gg/t2jac3p) | [Forum](https://forum.spacestation14.io/) | [Steam](https://store.steampowered.com/app/1255460/Space_Station_14/) | [Standalone Download](https://spacestation14.io/about/nightlies/)
-
-## Documentation/Wiki
-
-Our [docs site](https://docs.spacestation14.io/) has documentation on SS14s content, engine, game design and more. We also have lots of resources for new contributors to the project.
-
-## Contributing
-
-We are happy to accept contributions from anybody. Get in Discord if you want to help. We've got a [list of issues](https://github.com/space-wizards/space-station-14-content/issues) that need to be done and anybody can pick them up. Don't be afraid to ask for help either!
-
-We are not currently accepting translations of the game on our main repository. If you would like to translate the game into another language consider creating a fork or contributing to a fork.
-
-## Building
-
-1. Clone this repo.
-2. Run `RUN_THIS.py` to init submodules and download the engine.
-3. Compile the solution.
-
-[More detailed instructions on building the project.](https://docs.spacestation14.io/getting-started/dev-setup)
-
-## License
-
-All code for the content repository is licensed under [MIT](https://github.com/space-wizards/space-station-14/blob/master/LICENSE.TXT).
-
-Most assets are licensed under [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/) unless stated otherwise. Assets have their license and the copyright in the metadata file. [Example](https://github.com/space-wizards/space-station-14/blob/master/Resources/Textures/Objects/Tools/crowbar.rsi/meta.json).
+# Links
+- [Discord](https://discord.gg/G89SKfzMGq)
+- [SS14 Development Docs](https://docs.spacestation14.io/)
+- [SS14 Discord](https://discord.gg/MwDDf6t)
