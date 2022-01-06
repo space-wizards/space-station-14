@@ -29,6 +29,8 @@
     range: 15
     decay: false
     dps: 1
+    minPulseLifespan: 1
+    maxPulseLifespan: 1
   - type: Sprite
     sprite: Structures/Power/Generation/Singularity/singularity_1.rsi
     state: singularity_1

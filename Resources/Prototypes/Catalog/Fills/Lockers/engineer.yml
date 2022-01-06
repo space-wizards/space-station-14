@@ -98,3 +98,9 @@
   id: ClosetRadiationSuitFilled
   parent: ClosetRadiationSuit
   suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingOuterSuitRad
+      - id: ClothingHeadHatHoodRad
+

@@ -15,7 +15,7 @@ namespace Content.Server.Radiation
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IEntityLookup _lookup = default!;
 
-        private const float RadiationCooldown = 0.5f;
+        private const float RadiationCooldown = 1.0f;
         private float _accumulator;
 
         public override void Update(float frameTime)
