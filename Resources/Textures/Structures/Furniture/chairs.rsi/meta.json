@@ -76,6 +76,10 @@
       "directions": 4
     },
     {
+      "name": "ritual",
+      "directions": 4
+    },
+    {
       "name": "cursed",
       "directions": 4
     },
