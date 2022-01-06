@@ -602,3 +602,47 @@
     sprite: Clothing/Uniforms/Jumpsuit/librarian.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/librarian.rsi
+    
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformLawyerRed
+  name: red lawyer jumpsuit
+  description: A flashy red suit worn by lawyers and show-offs.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/lawyerred.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/lawyerred.rsi
+    
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformLawyerBlue
+  name: blue lawyer jumpsuit
+  description: A flashy blue suit worn by lawyers and show-offs.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/lawyerblue.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/lawyerblue.rsi
+    
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformLawyerBlack
+  name: black lawyer jumpsuit
+  description: A subtle black suit worn by lawyers and gangsters.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/lawyerblack.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/lawyerblack.rsi
+    
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformLawyerPurple
+  name: purple lawyer jumpsuit
+  description: A stylish purple piece worn by lawyers and show people.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/lawyerpurple.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/lawyerpurple.rsi
