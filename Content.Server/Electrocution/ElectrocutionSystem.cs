@@ -8,6 +8,7 @@ using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Power.NodeGroups;
+using Content.Server.Tiles;
 using Content.Server.Window;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
@@ -145,6 +146,10 @@ namespace Content.Server.Electrocution
         private void OnElectrifiedInteractUsing(EntityUid uid, ElectrifiedComponent electrified, InteractUsingEvent args)
         {
             if (!electrified.OnInteractUsing)
+                return;
+
+            // Make an exception for floor tiles, to make placing them around exposed wires less of a hassle.
+            if (HasComp<FloorTileItemComponent>(args.Used))
                 return;
 
             TryDoElectrifiedAct(uid, args.User, electrified);
