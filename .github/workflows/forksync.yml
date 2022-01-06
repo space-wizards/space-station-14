@@ -15,4 +15,5 @@ jobs:
           owner: space-syndicate
           base: master
           head: master
+          auto_merge: false
           pr_title: '[AUTO] Fork Sync'
