@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Singulo slightly less janky., type: Fix}
-  id: 331
-  time: '2021-08-22T14:54:03.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: Particle Accelerator construction won't cause an error when finishing
@@ -2906,3 +2901,8 @@ Entries:
   - {message: Xenomorph sprites now match their physics bounds more accurately, type: Tweak}
   id: 832
   time: '2022-01-06T01:51:53.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Capsaicin Oil will no longer appear in the chemical dispenser., type: Fix}
+  id: 833
+  time: '2022-01-06T04:50:39.0000000+00:00'
