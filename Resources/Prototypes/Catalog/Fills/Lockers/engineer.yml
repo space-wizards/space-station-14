@@ -98,7 +98,7 @@
   id: ClosetRadiationSuitFilled
   parent: ClosetRadiationSuit
   suffix: Filled
-  description: "More comfortable then radiation poisioning."
+  description: "More comfortable than radiation poisioning."
   components:
   - type: StorageFill
     contents:
