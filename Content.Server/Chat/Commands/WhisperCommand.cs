@@ -1,5 +1,4 @@
-﻿using Content.Server.Administration;
-using Content.Server.Chat.Managers;
+﻿using Content.Server.Chat.Managers;
 using Content.Server.Ghost.Components;
 using Content.Server.Players;
 using Content.Shared.Administration;
@@ -44,6 +43,9 @@ namespace Content.Server.Chat.Commands
 
             var chat = IoCManager.Resolve<IChatManager>();
 
+            // If player is ghost, send dead chat instead
+            // Else Check for mind component of Entity.
+            // If Entity has no mind, we return without sending a message and display an error.
             if (IoCManager.Resolve<IEntityManager>().HasComponent<GhostComponent>(playerEntity))
                 chat.SendDeadChat(player, message);
             else
@@ -62,7 +64,14 @@ namespace Content.Server.Chat.Commands
                     return;
                 }
 
-                chat.EntityWhisper(owned, message);
+                // Check if string contains a written smiley.
+                // If string does contain a smiley, remove it and generate emote instead.
+                var chatSanitizer = IoCManager.Resolve<IChatSanitizationManager>();
+                var emote = chatSanitizer.TrySanitizeOutSmilies(message, owned, out var sanitized, out var emoteStr);
+                if (sanitized.Length != 0)
+                    chat.EntityWhisper(owned, sanitized);
+                if (emote)
+                    chat.EntityMe(owned, emoteStr!);
             }
 
         }
