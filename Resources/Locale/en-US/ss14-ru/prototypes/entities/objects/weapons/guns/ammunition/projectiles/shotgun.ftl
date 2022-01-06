@@ -1,7 +1,14 @@
 ent-PelletShotgunSlug = pellet (.50 slug)
+    .desc = { ent-BulletBase.desc }
 ent-PelletShotgunBeanbag = beanbag (.50)
+    .desc = { ent-BulletBase.desc }
 ent-PelletShotgun = pellet (.50)
+    .desc = { ent-BulletBase.desc }
 ent-PelletShotgunFlash = pellet (.50 flash)
+    .desc = { ent-BulletBaseFlash.desc }
 ent-PelletShotgunIncendiary = pellet (.50 incendiary)
+    .desc = { ent-BulletBase.desc }
 ent-PelletShotgunPractice = pellet (.50 practice)
+    .desc = { ent-BulletBasePractice.desc }
 ent-PelletShotgunTranquilizer = pellet (.50 tranquilizer)
+    .desc = { ent-BulletBasePractice.desc }

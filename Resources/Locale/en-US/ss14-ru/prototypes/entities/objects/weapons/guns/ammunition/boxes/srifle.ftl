@@ -1,7 +1,16 @@
+ent-BoxSRifleBase = { ent-BaseItem }
+    .desc = { ent-BaseItem.desc }
 ent-BoxSRifleBigBox = ammunition box (.20 rifle)
+    .desc = { ent-BoxSRifleBase.desc }
 ent-BoxSRifleBigBoxRubber = ammunition box (.20 rifle rubber)
+    .desc = { ent-BoxSRifleBase.desc }
 ent-BoxSRifleBox = ammunition box (.20 rifle)
+    .desc = { ent-BoxSRifleBase.desc }
 ent-BoxSRifleBoxFlash = ammunition box (.20 rifle flash)
+    .desc = { ent-BoxSRifleBase.desc }
 ent-BoxSRifleBoxHV = ammunition box (.20 rifle high-velocity)
+    .desc = { ent-BoxSRifleBase.desc }
 ent-BoxSRifleBoxPractice = ammunition box (.20 rifle practice)
+    .desc = { ent-BoxSRifleBase.desc }
 ent-BoxSRifleBoxRubber = ammunition box (.20 rifle rubber)
+    .desc = { ent-BoxSRifleBase.desc }

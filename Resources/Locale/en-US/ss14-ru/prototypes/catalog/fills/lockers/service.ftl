@@ -1,8 +1,12 @@
-ent-LockerBoozeFilled = { "" }
+ent-LockerBoozeFilled = { ent-LockerBooze }
     .suffix = Filled
-ent-ClosetChefFilled = { "" }
+    .desc = { ent-LockerBooze.desc }
+ent-ClosetChefFilled = { ent-ClosetChef }
     .suffix = Filled
-ent-ClosetJanitorFilled = { "" }
+    .desc = { ent-ClosetChef.desc }
+ent-ClosetJanitorFilled = { ent-ClosetJanitor }
     .suffix = Filled
-ent-LockerBotanistFilled = { "" }
+    .desc = { ent-ClosetJanitor.desc }
+ent-LockerBotanistFilled = { ent-LockerBotanist }
     .suffix = Filled
+    .desc = { ent-LockerBotanist.desc }

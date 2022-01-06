@@ -1,6 +1,12 @@
 ent-MagazineSRifleBase = magazine (.20 rifle)
+    .desc = { ent-BaseItem.desc }
 ent-MagazineSRifle = magazine (.20 rifle)
+    .desc = { ent-MagazineSRifleBase.desc }
 ent-MagazineSRifleFlash = magazine (.20 rifle flash)
+    .desc = { ent-MagazineSRifleBase.desc }
 ent-MagazineSRifleHV = magazine (.20 rifle high-velocity)
+    .desc = { ent-MagazineSRifleBase.desc }
 ent-MagazineSRiflePractice = magazine (.20 rifle practice)
+    .desc = { ent-MagazineSRifleBase.desc }
 ent-MagazineSRifleRubber = magazine (.20 rifle rubber)
+    .desc = { ent-MagazineSRifleBase.desc }

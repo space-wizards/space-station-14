@@ -1,3 +1,5 @@
+ent-BaseDice = { ent-BaseItem }
+    .desc = { ent-BaseItem.desc }
 ent-d100Dice = d100
     .desc = A die with one hundred sides! Probably not fairly weighted...
 ent-d20Dice = d20

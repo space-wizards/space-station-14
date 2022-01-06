@@ -1,8 +1,14 @@
 ent-GasMinerBase = gas miner
     .desc = Gases mined from the gas giant below (above?) flow out through this massive vent.
 ent-GasMinerOxygen = O2 gas miner
+    .desc = { ent-GasMinerBase.desc }
 ent-GasMinerNitrogen = N2 gas miner
+    .desc = { ent-GasMinerBase.desc }
 ent-GasMinerCarbonDioxide = CO2 gas miner
+    .desc = { ent-GasMinerBase.desc }
 ent-GasMinerPlasma = Plasma gas miner
+    .desc = { ent-GasMinerBase.desc }
 ent-GasMinerTritium = Tritium gas miner
+    .desc = { ent-GasMinerBase.desc }
 ent-GasMinerWaterVapor = Water Vapor gas miner
+    .desc = { ent-GasMinerBase.desc }

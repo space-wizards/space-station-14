@@ -1,6 +1,12 @@
 ent-CartridgeSRifleBase = cartridge (.20 rifle)
+    .desc = { ent-BaseItem.desc }
 ent-CartridgeSRifle = cartridge (.20 rifle)
+    .desc = { ent-CartridgeSRifleBase.desc }
 ent-CartridgeSRifleFlash = cartridge (.20 rifle flash)
+    .desc = { ent-CartridgeSRifleBase.desc }
 ent-CartridgeSRifleHV = cartridge (.20 rifle high-velocity)
+    .desc = { ent-CartridgeSRifleBase.desc }
 ent-CartridgeSRiflePractice = cartridge (.20 rifle practice)
+    .desc = { ent-CartridgeSRifleBase.desc }
 ent-CartridgeSRifleRubber = cartridge (.20 rifle rubber)
+    .desc = { ent-CartridgeSRifleBase.desc }

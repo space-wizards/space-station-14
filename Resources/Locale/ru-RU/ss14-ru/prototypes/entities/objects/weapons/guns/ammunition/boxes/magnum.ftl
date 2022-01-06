@@ -1,5 +1,12 @@
+ent-BoxMagnumBase = { ent-BaseItem }
+    .desc = { ent-BaseItem.desc }
 ent-BoxMagnum = ammunition box (.40 magnum)
+    .desc = { ent-BoxMagnumBase.desc }
 ent-BoxMagnumFlash = ammunition box (.40 magnum flash)
+    .desc = { ent-BoxMagnumBase.desc }
 ent-BoxMagnumHV = ammunition box (.40 magnum high-velocity)
+    .desc = { ent-BoxMagnumBase.desc }
 ent-BoxMagnumPractice = ammunition box (.40 magnum practice)
+    .desc = { ent-BoxMagnumBase.desc }
 ent-BoxMagnumRubber = ammunition box (.40 magnum rubber)
+    .desc = { ent-BoxMagnumBase.desc }

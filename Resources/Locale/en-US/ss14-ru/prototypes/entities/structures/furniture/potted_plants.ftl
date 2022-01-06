@@ -1,3 +1,5 @@
+ent-PottedPlantBase = { ent-BaseStructureDynamic }
+    .desc = { ent-BaseStructureDynamic.desc }
 ent-PottedPlantRandom = potted plant
     .desc = A little bit of nature contained in a pot.
 ent-PottedPlantRandomPlastic = plastic potted plant

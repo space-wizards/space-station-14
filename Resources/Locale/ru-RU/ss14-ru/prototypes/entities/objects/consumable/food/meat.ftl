@@ -1,3 +1,5 @@
+ent-FoodMeatBase = { ent-FoodInjectableBase }
+    .desc = { ent-FoodInjectableBase.desc }
 ent-FoodMeat = raw meat
     .desc = A slab of raw meat.
 ent-FoodMeatBacon = raw bacon

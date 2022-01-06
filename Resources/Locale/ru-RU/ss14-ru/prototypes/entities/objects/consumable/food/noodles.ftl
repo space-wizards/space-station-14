@@ -1,4 +1,4 @@
-ent-FoodNoodlesBase = { "" }
+ent-FoodNoodlesBase = { ent-FoodInjectableBase }
     .desc = Now that's a nice pasta!
 ent-FoodNoodlesBoiled = boiled spaghetti
     .desc = A plain dish of noodles, this needs more ingredients.

@@ -1,4 +1,5 @@
 ent-BasePlaceableInstrument = baseinstrument
+    .desc = { ent-BaseStructureDynamic.desc }
 ent-PianoInstrument = piano
     .desc = Play Needles Piano Now.
 ent-MinimoogInstrument = minimoog

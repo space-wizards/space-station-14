@@ -5,6 +5,7 @@ ent-DrinkDetFlask = inspector's flask
 ent-DrinkFlask = captain's flask
     .desc = A metal flask belonging to the captain
 ent-DrinkFlaskOld = flask
+    .desc = { ent-DrinkGlassBase.desc }
 ent-DrinkLithiumFlask = lithium flask
     .desc = A flask with a Lithium Atom symbol on it.
 ent-DrinkVacuumFlask = vacuum flask

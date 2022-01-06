@@ -1,3 +1,5 @@
+ent-BaseHumanOrgan = { ent-BaseItem }
+    .desc = { ent-BaseItem.desc }
 ent-OrganHumanBrain = brain
     .desc = The source of incredible, unending intelligence. Honk.
 ent-OrganHumanEyes = eyes
@@ -5,6 +7,7 @@ ent-OrganHumanEyes = eyes
 ent-OrganHumanTongue = tongue
     .desc = A fleshy muscle mostly used for lying.
 ent-OrganHumanAppendix = appendix
+    .desc = { ent-BaseHumanOrgan.desc }
 ent-OrganHumanEars = ears
     .desc = There are three parts to the ear. Inner, middle and outer. Only one of these parts should normally be visible.
 ent-OrganHumanLungs = lungs

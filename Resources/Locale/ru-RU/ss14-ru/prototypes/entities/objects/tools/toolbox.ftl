@@ -1,3 +1,5 @@
+ent-ToolboxBase = { ent-BaseItem }
+    .desc = { ent-BaseItem.desc }
 ent-ToolboxEmergency = emergency toolbox
     .desc = A bright red toolbox, stocked with emergency tools.
 ent-ToolboxMechanical = mechanical toolbox

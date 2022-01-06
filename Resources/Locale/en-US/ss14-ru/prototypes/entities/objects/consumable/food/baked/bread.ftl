@@ -1,3 +1,7 @@
+ent-FoodBreadBase = { ent-FoodInjectableBase }
+    .desc = { ent-FoodInjectableBase.desc }
+ent-FoodBreadSliceBase = { ent-FoodBreadBase }
+    .desc = { ent-FoodBreadBase.desc }
 ent-FoodBreadVolcanic = volcanic loaf
     .desc = A dark loaf. Resembles pumice.
 ent-FoodBreadVolcanicSlice = volcanic slice

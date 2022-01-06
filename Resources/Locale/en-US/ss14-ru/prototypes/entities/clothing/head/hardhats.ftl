@@ -1,3 +1,5 @@
+ent-ClothingHeadHatHardhatBase = { ent-ClothingHeadBase }
+    .desc = { ent-ClothingHeadBase.desc }
 ent-ClothingHeadHatHardhatBlue = blue hard hat
     .desc = A hard hat, painted in blue, used in dangerous working conditions to protect the head. Comes with a built-in flashlight.
 ent-ClothingHeadHatHardhatOrange = orange hard hat

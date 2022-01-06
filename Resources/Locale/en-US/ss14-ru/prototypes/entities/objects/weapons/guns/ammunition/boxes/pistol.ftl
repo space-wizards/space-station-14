@@ -1,6 +1,12 @@
 ent-BoxPistolBase = ammunition box (.35 auto)
+    .desc = { ent-BaseItem.desc }
 ent-BoxPistolBox = ammunition box (.35 auto)
+    .desc = { ent-BoxPistolBase.desc }
 ent-BoxPistolBoxFlash = ammunition box (.35 auto flash)
+    .desc = { ent-BoxPistolBase.desc }
 ent-BoxPistolBoxHV = ammunition box (.35 auto high-velocity)
+    .desc = { ent-BoxPistolBase.desc }
 ent-BoxPistolBoxPractice = ammunition box (.35 auto practice)
+    .desc = { ent-BoxPistolBase.desc }
 ent-BoxPistolBoxRubber = ammunition box (.35 auto rubber)
+    .desc = { ent-BoxPistolBase.desc }

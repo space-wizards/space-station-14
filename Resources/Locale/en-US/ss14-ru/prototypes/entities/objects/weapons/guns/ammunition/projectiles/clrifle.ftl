@@ -1,5 +1,10 @@
 ent-BulletClRifle = bullet (.25 caseless)
+    .desc = { ent-BulletBase.desc }
 ent-BulletClRifleFlash = bullet (.25 caseless flash)
+    .desc = { ent-BulletBaseFlash.desc }
 ent-BulletClRifleHV = bullet (.25 caseless high-velocity)
+    .desc = { ent-BulletBaseHV.desc }
 ent-BulletClRiflePractice = bullet (.25 caseless practice)
+    .desc = { ent-BulletBasePractice.desc }
 ent-BulletClRifleRubber = bullet (.25 caseless rubber)
+    .desc = { ent-BulletBaseRubber.desc }

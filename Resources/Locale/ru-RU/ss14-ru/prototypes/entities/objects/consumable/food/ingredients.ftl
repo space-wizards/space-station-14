@@ -1,5 +1,7 @@
 ent-PuddleFlour = flour
     .desc = Call the janitor.
+ent-ReagentContainerBase = { ent-BaseItem }
+    .desc = { ent-BaseItem.desc }
 ent-ReagentContainerFlour = flour bag
     .desc = A big bag of flour. Good for baking!
 ent-ReagentContainerFlourSmall = flour pack
@@ -20,7 +22,7 @@ ent-ReagentContainerMilkOat = oat milk
     .desc = It's oat milk. Tan and nutritious goodness!
 ent-ReagentContainerOliveoil = olive oil
     .desc = Olive oil. From space olives presumably.
-ent-FoodBakingBase = { "" }
+ent-FoodBakingBase = { ent-BaseItem }
     .desc = Used in various recipes.
 ent-FoodDough = dough
     .desc = A piece of dough.

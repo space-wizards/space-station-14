@@ -7,6 +7,7 @@ ent-Wrench = wrench
 ent-Crowbar = crowbar
     .desc = A multipurpose tool to pry open doors and fight interdimensional invaders.
 ent-CrowbarRed = emergency crowbar
+    .desc = { ent-Crowbar.desc }
 ent-Multitool = multitool
     .desc = An advanced tool to copy, store, and send electrical pulses and signals through wires and machines
 ent-PowerDrill = power drill

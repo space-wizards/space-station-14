@@ -5,3 +5,4 @@ ent-MorgueTray = morgue tray
 ent-Crematorium = crematorium
     .desc = A human incinerator. Works well on barbecue nights.
 ent-CrematoriumTray = crematorium tray
+    .desc = { ent-MorgueTray.desc }

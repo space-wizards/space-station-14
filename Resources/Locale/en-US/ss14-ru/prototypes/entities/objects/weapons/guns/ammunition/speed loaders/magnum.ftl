@@ -1,6 +1,12 @@
 ent-SLMagnumBase = speed loader (.40 magnum)
+    .desc = { ent-BaseItem.desc }
 ent-SLMagnum = speed loader (.40 magnum)
+    .desc = { ent-SLMagnumBase.desc }
 ent-SLMagnumFlash = speed loader (.40 magnum flash)
+    .desc = { ent-SLMagnumBase.desc }
 ent-SLMagnumHV = speed loader (.40 magnum high-velocity)
+    .desc = { ent-SLMagnumBase.desc }
 ent-SLMagnumPractice = speed loader (.40 magnum practice)
+    .desc = { ent-SLMagnumBase.desc }
 ent-SLMagnumRubber = speed loader (.40 magnum rubber)
+    .desc = { ent-SLMagnumBase.desc }

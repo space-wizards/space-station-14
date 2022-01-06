@@ -1,4 +1,5 @@
 ent-WeldingMaskBase = welding mask
+    .desc = { ent-ClothingHeadBase.desc }
 ent-ClothingHeadHatWelding = welding mask
     .desc = A head-mounted face cover designed to protect the wearer completely from space-arc eye.
 ent-ClothingHeadHatWeldingMaskFlame = flame welding mask
