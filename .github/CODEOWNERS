@@ -1,10 +1,4 @@
 # Last match in file takes precedence.
 
-# I pretend to have authority over these things.
-/Resources/ @SweptWasTaken
-
-# Be they Fluent translations or Freemarker templates, I know them both!
-*.ftl @RemieRichards
-
 # Ping for all PRs
-* @PJB3005 @Zumorica
+* @Morb0 @SS14-RU
