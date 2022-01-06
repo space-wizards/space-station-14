@@ -1,3 +1,5 @@
+ent-BasePlushie = { ent-BaseItem }
+    .desc = { ent-BaseItem.desc }
 ent-PlushieBee = bee plushie
     .desc = A cute toy that resembles an even cuter programmer. You'd have to be a monster to grind this up.
 ent-PlushieNuke = nukie plushie
@@ -56,6 +58,8 @@ ent-ToyDurand = durand toy
     .desc = Mini-Mecha action figure! 'Mecha No. 5/12' is written on the back.
 ent-ToySkeleton = skeleton toy
     .desc = Spooked ya!
+ent-FoamWeaponBase = { ent-BaseItem }
+    .desc = { ent-BaseItem.desc }
 ent-FoamCrossbow = foam crossbow
     .desc = Aiming this at Security may get you filled with lead.
 ent-ToyGunBase = ToyGunBase

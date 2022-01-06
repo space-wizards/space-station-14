@@ -1,3 +1,5 @@
+ent-BaseKnife = { ent-BaseItem }
+    .desc = { ent-BaseItem.desc }
 ent-KitchenKnife = kitchen knife
     .desc = A general purpose Chef's Knife made by Asters Merchant Guild. Guaranteed to stay sharp for years to come..
 ent-ButchCleaver = butcher's cleaver

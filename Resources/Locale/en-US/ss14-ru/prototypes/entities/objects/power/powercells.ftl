@@ -1,3 +1,9 @@
+ent-PowerCellSmallBase = { ent-BaseItem }
+    .desc = { ent-BaseItem.desc }
+ent-PowerCellMediumBase = { ent-PowerCellSmallBase }
+    .desc = { ent-PowerCellSmallBase.desc }
+ent-PowerCellLargeBase = { ent-PowerCellSmallBase }
+    .desc = { ent-PowerCellSmallBase.desc }
 ent-PowerCellMediumPotato = potato battery
     .desc = Someone's stuck two nails and some wire in a large potato. Somehow it provides a little charge. You might be able to cram it into an M-sized slot.
 ent-PowerCellSmallStandard = small standard power cell

@@ -1,3 +1,5 @@
+ent-GasUnaryBase = { ent-GasPipeBase }
+    .desc = { ent-GasPipeBase.desc }
 ent-GasVentPump = air vent
     .desc = Has a valve and a pump attached to it.
 ent-GasPassiveVent = passive vent
@@ -9,4 +11,6 @@ ent-GasOutletInjector = air injector
 ent-BaseGasThermoMachine = thermomachine
     .desc = Heats or cools gas in connected pipes.
 ent-GasThermoMachineFreezer = freezer
+    .desc = { ent-BaseGasThermoMachine.desc }
 ent-GasThermoMachineHeater = heater
+    .desc = { ent-BaseGasThermoMachine.desc }

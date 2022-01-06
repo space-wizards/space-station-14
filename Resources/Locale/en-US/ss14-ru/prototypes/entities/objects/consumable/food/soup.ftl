@@ -1,3 +1,5 @@
+ent-FoodBowlBase = { ent-BaseItem }
+    .desc = { ent-BaseItem.desc }
 ent-FoodSoupPea = pea soup
     .desc = A humble split pea soup.
 ent-FoodSaladAesir = aesir salad
@@ -44,7 +46,7 @@ ent-FoodSoupNettle = nettle soup
     .desc = To think, the botanist would've beat you to death with one of these.
 ent-FoodSoupMystery = mystery soup
     .desc = The mystery is, why aren't you eating it?
-ent-FoodSoupChiliHot = hot chili
+ent-FoodSoupChiliHot = bowl of hot chili
     .desc = A Texan five-alarm chili!
 ent-FoodSoupChiliCold = cold chili
     .desc = This slush is barely a liquid!

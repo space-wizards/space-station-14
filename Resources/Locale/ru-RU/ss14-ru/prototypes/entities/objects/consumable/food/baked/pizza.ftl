@@ -1,3 +1,7 @@
+ent-FoodPizzaBase = { ent-FoodInjectableBase }
+    .desc = { ent-FoodInjectableBase.desc }
+ent-FoodPizzaSliceBase = { ent-FoodInjectableBase }
+    .desc = { ent-FoodInjectableBase.desc }
 ent-FoodPizzaMargherita = margherita pizza
     .desc = The cheesiest pizza in the galaxy.
 ent-FoodPizzaMargheritaSlice = slice of margherita pizza

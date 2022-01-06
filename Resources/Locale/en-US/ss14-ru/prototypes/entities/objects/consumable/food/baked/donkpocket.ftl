@@ -1,3 +1,5 @@
+ent-FoodDonkpocketBase = { ent-FoodInjectableBase }
+    .desc = { ent-FoodInjectableBase.desc }
 ent-FoodDonkpocket = donk-pocket
     .desc = The food of choice for the seasoned traitor.
 ent-FoodDonkpocketWarm = warm donk-pocket
@@ -29,5 +31,6 @@ ent-FoodDonkpocketBerryWarm = warm berry-pocket
 ent-FoodDonkpocketGondola = gondola-pocket
     .desc = The choice to use real gondola meat in the recipe is controversial, to say the least.
 ent-FoodDonkpocketGondolaWarm = warm gondola-pocket
+    .desc = { ent-FoodDonkpocketGondola.desc }
 ent-FoodDonkpocketDink = dink-pocket
     .desc = An off-brand lizard donk-pocket, filled with pickled carrot and wrapped with seaweed. Best eaten cold, or even better, not eaten at all.

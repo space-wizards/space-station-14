@@ -16,3 +16,4 @@ ent-CowToolbox = cow toolbox
     .desc = A weirdly shaped box, stocked with... tools?
 ent-CowToolboxFilled = cow toolbox
     .suffix = Filled
+    .desc = { ent-CowToolbox.desc }

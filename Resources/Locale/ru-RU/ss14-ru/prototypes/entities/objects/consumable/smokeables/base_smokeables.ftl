@@ -1,2 +1,4 @@
-ent-BaseSmokable = { "" }
+ent-BaseSmokable = { ent-BaseItem }
     .desc = If you want to get cancer, might as well do it in style.
+ent-BaseCigar = { ent-BaseSmokable }
+    .desc = { ent-BaseSmokable.desc }

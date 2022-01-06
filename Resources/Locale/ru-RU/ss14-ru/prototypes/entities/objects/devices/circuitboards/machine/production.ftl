@@ -1,8 +1,16 @@
 ent-AutolatheMachineCircuitboard = Autolathe (Machine Board)
+    .desc = { ent-BaseMachineCircuitboard.desc }
 ent-ProtolatheMachineCircuitboard = Protolathe (Machine Board)
+    .desc = { ent-BaseMachineCircuitboard.desc }
 ent-CloningPodMachineCircuitboard = Cloning Pod (Machine Board)
+    .desc = { ent-BaseMachineCircuitboard.desc }
 ent-MedicalScannerMachineCircuitboard = Medical Scanner (Machine Board)
+    .desc = { ent-BaseMachineCircuitboard.desc }
 ent-ChemMasterMachineCircuitboard = Chem Master (Machine Board)
+    .desc = { ent-BaseMachineCircuitboard.desc }
 ent-ChemDispenserMachineCircuitboard = Chem Dispenser (Machine Board)
+    .desc = { ent-BaseMachineCircuitboard.desc }
 ent-HydroponicsTrayMachineCircuitboard = Hydroponics Tray (Machine Board)
+    .desc = { ent-BaseMachineCircuitboard.desc }
 ent-KitchenReagentGrinderMachineCircuitboard = Reagent Grinder (Machine Board)
+    .desc = { ent-BaseMachineCircuitboard.desc }

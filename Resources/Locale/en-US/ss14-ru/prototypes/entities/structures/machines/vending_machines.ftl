@@ -9,6 +9,7 @@ ent-VendingBarDrobe = BarDrobe
 ent-VendingMachineCart = PTech
     .desc = PTech vending! Providing a ROBUST selection of PDA cartridges.
 ent-VendingMachineChapel = PietyVend
+    .desc = { ent-VendingMachine.desc }
 ent-VendingMachineCigs = ShadyCigs Deluxe
     .desc = If you want to get cancer, might as well do it in style.
 ent-VendingMachineClothing = ClothesMate

@@ -1,4 +1,5 @@
 ent-CigPackBase = cigarette pack
+    .desc = { ent-BaseItem.desc }
 ent-CigPackGreen = Spessman's Smokes packet
     .desc = A label on the packaging reads, Wouldn't a slow death make a change?
 ent-CigPackRed = DromedaryCo packet

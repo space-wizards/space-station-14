@@ -1,8 +1,16 @@
 ent-CrateMaterialGlass = glass sheet crate
+    .desc = { ent-CrateGenericSteel.desc }
 ent-CrateMaterialSteel = steel sheet crate
+    .desc = { ent-CrateGenericSteel.desc }
 ent-CrateMaterialPlastic = plastic sheet crate
+    .desc = { ent-CrateGenericSteel.desc }
 ent-CrateMaterialWood = wood crate
+    .desc = { ent-CrateGenericSteel.desc }
 ent-CrateMaterialFuelTank = fueltank crate
+    .desc = { ent-CrateGenericSteel.desc }
 ent-CrateMaterialWaterTank = watertank crate
+    .desc = { ent-CrateGenericSteel.desc }
 ent-CrateMaterialPlasteel = plasteel crate
+    .desc = { ent-CrateGenericSteel.desc }
 ent-CrateMaterialPlasma = solid plasma crate
+    .desc = { ent-CrateGenericSteel.desc }

@@ -1,3 +1,5 @@
+ent-UtensilBase = { ent-BaseItem }
+    .desc = { ent-BaseItem.desc }
 ent-Fork = fork
     .desc = An eating utensil, perfect for stabbing.
 ent-ForkPlastic = plastic fork

@@ -1,6 +1,12 @@
 ent-CrateEngineeringGear = engineering gear crate
+    .desc = { ent-CrateEngineering.desc }
 ent-CrateEngineeringToolbox = toolbox crate
+    .desc = { ent-CrateEngineering.desc }
 ent-CrateEngineeringCableLV = LV cable crate
+    .desc = { ent-CrateElectrical.desc }
 ent-CrateEngineeringCableMV = MV cable crate
+    .desc = { ent-CrateElectrical.desc }
 ent-CrateEngineeringCableHV = HV cable crate
+    .desc = { ent-CrateElectrical.desc }
 ent-CrateEngineeringCableBulk = bulk cable crate
+    .desc = { ent-CrateElectrical.desc }

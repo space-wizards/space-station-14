@@ -36,7 +36,7 @@ class YAMLExtractor:
 
     def get_serialized_fluent_from_yaml_elements(self, yaml_elements):
         fluent_serialized_messages = list(
-                map(lambda el: FluentSerializedMessage.from_yaml_element(el.id, el.name, FluentAstAttributeFactory.from_yaml_element(el)), yaml_elements)
+                map(lambda el: FluentSerializedMessage.from_yaml_element(el.id, el.name, FluentAstAttributeFactory.from_yaml_element(el), el.parent_id), yaml_elements)
             )
         fluent_exist_serialized_messages = list(filter(lambda m: m, fluent_serialized_messages))
 
@@ -59,6 +59,9 @@ class YAMLExtractor:
         if os.path.isfile(ru_file_full_path):
             return
         else:
+            en_file = FluentFile(f'{en_analog_file_path}')
+            file = FluentFile(f'{ru_file_full_path}')
+            file.save_data(en_file.read_data())
             logging.info(f'Создан файл русской локали {ru_file_full_path}')
 
         return ru_file_full_path

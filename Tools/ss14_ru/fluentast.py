@@ -1,4 +1,5 @@
 from fluent.syntax import ast, FluentParser, FluentSerializer
+from pydash import py_
 
 class FluentAstAbstract:
     @classmethod
@@ -49,17 +50,27 @@ class FluentAstJunk:
 
 class FluentSerializedMessage:
     @classmethod
-    def from_yaml_element(cls, id, value, attributes):
-        if not value and (not attributes or not len(attributes)):
+    def from_yaml_element(cls, id, value, attributes, parent_id = None):
+        if not value and not id and not parent_id:
             return None
 
-        message = f'{cls.get_key(id)} = {cls.get_value(value)}\n'
+        if not attributes or not len(attributes):
+            if parent_id:
+                attributes = [FluentAstAttribute('desc', '{ ' + FluentSerializedMessage.get_key(parent_id) + '.desc' + ' }')]
+            else:
+                return None
+
+        message = f'{cls.get_key(id)} = {cls.get_value(value, parent_id)}\n'
 
         if attributes and len(attributes):
             full_message = message
 
             for attr in attributes:
                 full_message = cls.add_attr(full_message, attr.id, attr.value)
+
+            desc_attr = py_.find(attributes, lambda a: a.id == 'desc')
+            if not desc_attr and parent_id:
+                full_message = cls.add_attr(full_message, 'desc', '{ ' + FluentSerializedMessage.get_key(parent_id) + '.desc' + ' }')
 
             return full_message
 
@@ -80,8 +91,13 @@ class FluentSerializedMessage:
         return f'{message_str}\n  .{attr_key} = {attr_value}'
 
     @staticmethod
-    def get_value(value):
-        return value if value else '{ "" }'
+    def get_value(value, parent_id):
+        if value:
+            return value
+        elif parent_id:
+            return '{ ' + FluentSerializedMessage.get_key(parent_id) + ' }'
+        else:
+            return '{ "" }'
 
     @staticmethod
     def get_key(id):
