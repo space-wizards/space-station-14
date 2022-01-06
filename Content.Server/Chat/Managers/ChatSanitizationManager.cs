@@ -11,7 +11,7 @@ namespace Content.Server.Chat.Managers;
 
 public class ChatSanitizationManager : IChatSanitizationManager
 {
-    [Dependency] private IConfigurationManager _configurationManager = default!;
+    [Dependency] private readonly IConfigurationManager _configurationManager = default!;
 
     private static readonly Dictionary<string, string> SmileyToEmote = new()
     {
@@ -63,16 +63,16 @@ public class ChatSanitizationManager : IChatSanitizationManager
         { "lol", "chatsan-laughs" },
     };
 
-    private bool doSanitize = false;
+    private bool _doSanitize;
 
     public void Initialize()
     {
-        _configurationManager.OnValueChanged(CCVars.ChatSanitizerEnabled, x => doSanitize = x, true);
+        _configurationManager.OnValueChanged(CCVars.ChatSanitizerEnabled, x => _doSanitize = x, true);
     }
 
     public bool TrySanitizeOutSmilies(string input, EntityUid speaker, out string sanitized, [NotNullWhen(true)] out string? emote)
     {
-        if (!doSanitize)
+        if (!_doSanitize)
         {
             sanitized = input;
             emote = null;
