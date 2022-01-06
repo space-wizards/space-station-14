@@ -4,7 +4,7 @@
   animationDuration: 1.1
   spriteName: youtool
   startingInventory:
-    CableApcStack1: 10
+    CableApcStack: 5
     Crowbar: 5
     Welder: 3
     Wirecutter: 5
@@ -12,3 +12,4 @@
     Screwdriver: 5
     trayScanner: 5
     ClothingHandsGlovesColorYellowBudget: 5
+    ClothingBeltUtility: 3
