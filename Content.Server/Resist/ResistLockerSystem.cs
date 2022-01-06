@@ -2,6 +2,7 @@ using Content.Shared.Movement;
 using Robust.Shared.GameObjects;
 using Content.Server.Storage.Components;
 using Content.Server.DoAfter;
+using Content.Server.Lock;
 using Robust.Shared.IoC;
 using Robust.Shared.Player;
 using Robust.Shared.Containers;
@@ -14,6 +15,7 @@ public class ResistLockerSystem : EntitySystem
 {
     [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly LockSystem _lockSystem = default!;
 
     public override void Initialize()
     {
@@ -72,7 +74,7 @@ public class ResistLockerSystem : EntitySystem
 
             if (TryComp<LockComponent>(ev.Target, out var lockComponent))
             {
-                lockComponent.Locked = false;
+                _lockSystem.Unlock(uid, ev.User, lockComponent);
             }
 
             component.CancelToken = null;
