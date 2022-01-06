@@ -29,9 +29,18 @@ namespace Content.Shared.Administration
             Logger.InfoS("c.s.go.es.bwoink", $"@{message.ChannelId}: {message.Text}");
         }
 
+        public enum Status
+        {
+            Unknown,
+            Sent,
+            Delivered,
+            Read
+        }
+
         [Serializable, NetSerializable]
         public sealed class BwoinkTextMessage : EntityEventArgs
         {
+            public Status Status { get; set; }
             public DateTime SentAt { get; }
             public NetUserId ChannelId { get; }
             // This is ignored from the client.
@@ -46,6 +55,31 @@ namespace Content.Shared.Administration
                 ChannelId = channelId;
                 TrueSender = trueSender;
                 Text = text;
+            }
+        }
+
+        // Mark all messages in a channel as "read"
+        [Serializable, NetSerializable]
+        public sealed class BwoinkReadMessage : EntityEventArgs
+        {
+            public DateTime ReadAt { get; }
+            public NetUserId ChannelId { get; }
+
+            public BwoinkReadMessage(NetUserId channelId, DateTime? readAt = default)
+            {
+                ReadAt = readAt ?? DateTime.Now;
+                ChannelId = channelId;
+            }
+        }
+
+        [Serializable, NetSerializable]
+        public sealed class FetchBwoinkLogMessage : EntityEventArgs
+        {
+            public NetUserId ChannelId { get; }
+
+            public FetchBwoinkLogMessage(NetUserId channelId)
+            {
+                ChannelId = channelId;
             }
         }
     }
