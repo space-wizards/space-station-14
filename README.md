@@ -5,7 +5,7 @@ Due to the capabilities of RobustToolbox, Space Station 14's game engine, Outer 
 
 Outer Rim 14 is still early in development; please wait if you wish to see more content, or, better, help code the game yourself.
 Like the main game, all code added to Outer Rim 14 is under the same license as the main Space Station 14 repo.
-All assets unique to Outer Rim 14 are ideally to be licensed under CC-BY-NC-SA 4.0, if possible.
+All audio and image assets unique to Outer Rim 14 are ideally to be licensed under CC-BY-NC-SA 4.0, if possible.
 
 # Links
 - [Discord](https://discord.gg/G89SKfzMGq)
