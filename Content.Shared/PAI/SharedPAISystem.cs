@@ -1,12 +1,10 @@
 using System;
 using Content.Shared.DragDrop;
-using Content.Shared.Emoting;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
+using Content.Shared.Movement;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.PAI
 {
@@ -29,6 +27,12 @@ namespace Content.Shared.PAI
             SubscribeLocalEvent<PAIComponent, AttackAttemptEvent>(OnAttackAttempt);
             SubscribeLocalEvent<PAIComponent, DropAttemptEvent>(OnDropAttempt);
             SubscribeLocalEvent<PAIComponent, PickupAttemptEvent>(OnPickupAttempt);
+            SubscribeLocalEvent<PAIComponent, MovementAttemptEvent>(OnMoveAttempt);
+        }
+
+        private void OnMoveAttempt(EntityUid uid, PAIComponent component, MovementAttemptEvent args)
+        {
+            args.Cancel(); // no more scurrying around on lil robot legs.
         }
 
         private void OnUseAttempt(EntityUid uid, PAIComponent component, UseAttemptEvent args)
