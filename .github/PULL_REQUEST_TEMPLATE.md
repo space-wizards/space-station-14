@@ -1,27 +1,27 @@
-<!-- The text between the arrows are comments - they will not be visible on your PR. -->
+<!-- Текст между стрелками - это комментарии - они не будут видны в вашем PR. -->
 
-## About the PR <!-- Describe the Pull Request here. What does it change? What other things could this impact? -->
+## Описание PR <!-- Опишите здесь ваш Pull Request. Что он изменяет? На что еще это может повлиять? -->
 
-**Screenshots**
+**Скриншоты**
 <!-- If applicable, add screenshots to showcase your PR. If your PR is a visual change, add
 screenshots or it's liable to be closed by maintainers. -->
 
-**Changelog**
+**Изменения**
 <!--
-Here you can fill out a changelog that will automatically be added to the game when your PR is merged
-There are 4 icons for changelog entries: add, remove, tweak, fix. I trust you can figure out the rest.
+Здесь вы можете написать список изменений, который будет автоматически добавлен в игру, когда ваш PR будет принят
+Для записей в списке изменений есть 4 значка: add, remove, tweak, fix. Думаю, вы сможете разобраться с остальным.
 
-You can put your name after the :cl: symbol to change the name that shows in the changelog (otherwise it takes your GitHub username)
-Like so: :cl: PJB
+Вы можете поставить свое имя после символа :cl:, чтобы изменить имя, которое будет отображаться в журнале изменений (в противном случае будет использоваться ваше имя пользователя GitHub)
+Например: :cl: PJB
 
-Generally, only put things in changelogs that players actually care about. Stuff like "Refactored X system, no changes should be visible" shouldn't be on a changelog.
+Как правило, в журналы изменений следует помещать только то, что действительно важно игрокам. Вещи вроде "Переработана система X, изменения не должны быть видны" не должны быть в журнале изменений.
 
-For writing actual entries, don't consider the entry type suffix (e.g. add) to be "part" of the sentence:
-bad: - add: a new tool for engineers
-good: - add: added a new tool for engineers
+При написании списка изминений не считайте суффикс типа записи (например, add) "частью" предложения:
+плохо: - add: новый инструмент для инженеров
+хорошо: - add: добавлен новый инструмент для инженеров
 -->
 
 :cl:
-- add: Added fun!
-- remove: Removed fun!
+- add: Добавлено веселье!
+- remove: Убрано веселье!
 
