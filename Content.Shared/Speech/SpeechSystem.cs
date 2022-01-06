@@ -1,5 +1,4 @@
 ﻿using Robust.Shared.GameObjects;
-using System;
 
 namespace Content.Shared.Speech
 {
