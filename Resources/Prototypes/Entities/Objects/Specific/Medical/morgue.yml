@@ -64,6 +64,11 @@
   components:
   - type: Foldable
     folded: true
+  - type: Tag
+    tags:
+    - BodyBag
+  - type: Item
+    size: 6
 #  - type: BodyBagItem #TODO: we need some kind of generic placable, like thus:
 # - type: Placeable
 #   prototype: someId
