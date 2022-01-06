@@ -170,3 +170,26 @@
   - type: Sprite
     state: shuttle
     netsync: false
+
+- type: entity
+  name: cursed chair
+  id: ChairCursed
+  parent: SeatBase
+  description: It's staring back.
+  components:
+  - type: Rotatable
+  - type: Sprite
+    state: cursed
+  - type: Strap
+    buckleSound: /Audio/Voice/Human/science_scream1.ogg
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Voice/Human/science_scream4.ogg
