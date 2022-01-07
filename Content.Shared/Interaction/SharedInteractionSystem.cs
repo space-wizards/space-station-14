@@ -139,7 +139,6 @@ namespace Content.Shared.Interaction
             if (!TryComp(user, out SharedHandsComponent? hands))
                 return;
 
-
             // TODO: Replace with body interaction range when we get something like arm length or telekinesis or something.
             var inRangeUnobstructed = user.InRangeUnobstructed(coordinates, ignoreInsideBlocker: true);
             if (target == null || !inRangeUnobstructed)
@@ -602,13 +601,8 @@ namespace Content.Shared.Interaction
 
         protected void InteractionActivate(EntityUid user, EntityUid used)
         {
-            if (TryComp(used, out UseDelayComponent? delayComponent))
-            {
-                if (delayComponent.ActiveDelay)
-                    return;
-
-                delayComponent.BeginDelay();
-            }
+            if (TryComp(used, out UseDelayComponent? delayComponent) && delayComponent.ActiveDelay)
+                return;
 
             if (!_actionBlockerSystem.CanInteract(user) || !_actionBlockerSystem.CanUse(user))
                 return;
@@ -626,6 +620,7 @@ namespace Content.Shared.Interaction
             RaiseLocalEvent(used, activateMsg);
             if (activateMsg.Handled)
             {
+                delayComponent?.BeginDelay();
                 _adminLogSystem.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user):user} activated {ToPrettyString(used):used}");
                 return;
             }
@@ -635,6 +630,7 @@ namespace Content.Shared.Interaction
 
             var activateEventArgs = new ActivateEventArgs(user, used);
             activateComp.Activate(activateEventArgs);
+            delayComponent?.BeginDelay();
             _adminLogSystem.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user):user} activated {ToPrettyString(used):used}"); // No way to check success.
         }
         #endregion
@@ -642,40 +638,35 @@ namespace Content.Shared.Interaction
         #region Hands
         #region Use
         /// <summary>
-        /// Activates the IUse behaviors of an entity
-        /// Verifies that the user is capable of doing the use interaction first
+        /// Attempt to perform a use-interaction on an entity. If no interaction occurs, it will instead attempt to
+        /// activate the entity.
         /// </summary>
-        /// <param name="user"></param>
-        /// <param name="used"></param>
-        public void TryUseInteraction(EntityUid user, EntityUid used, bool altInteract = false)
+        public void TryUseInteraction(EntityUid user, EntityUid used)
         {
-            if (_actionBlockerSystem.CanUse(user))
-            {
-                if (altInteract)
-                    AltInteract(user, used);
-                else
-                    UseInteraction(user, used);
-            }
+            if (_actionBlockerSystem.CanUse(user) && UseInteraction(user, used))
+                return;
+
+            // no use-interaction occurred. Attempt to activate the item instead.
+            InteractionActivate(user, used);
         }
 
         /// <summary>
         /// Activates the IUse behaviors of an entity without first checking
         /// if the user is capable of doing the use interaction.
         /// </summary>
-        public void UseInteraction(EntityUid user, EntityUid used)
+        /// <returns>True if the interaction was handled. False otherwise</returns>
+        public bool UseInteraction(EntityUid user, EntityUid used)
         {
-            if (TryComp(used, out UseDelayComponent? delayComponent))
-            {
-                if (delayComponent.ActiveDelay)
-                    return;
-
-                delayComponent.BeginDelay();
-            }
+            if (TryComp(used, out UseDelayComponent? delayComponent) && delayComponent.ActiveDelay)
+                return true; // if the item is on cooldown, we consider this handled.
 
             var useMsg = new UseInHandEvent(user, used);
             RaiseLocalEvent(used, useMsg);
             if (useMsg.Handled)
-                return;
+            {
+                delayComponent?.BeginDelay();
+                return true;
+            }
 
             var uses = AllComps<IUse>(used).ToList();
 
@@ -684,8 +675,13 @@ namespace Content.Shared.Interaction
             {
                 // If a Use returns a status completion we finish our interaction
                 if (use.UseEntity(new UseEntityEventArgs(user)))
-                    return;
+                {
+                    delayComponent?.BeginDelay();
+                    return true;
+                }
             }
+
+            return false;
         }
 
         /// <summary>
@@ -694,12 +690,17 @@ namespace Content.Shared.Interaction
         /// <remarks>
         ///     Uses the context menu verb list, and acts out the highest priority alternative interaction verb.
         /// </remarks>
-        public void AltInteract(EntityUid user, EntityUid target)
+        /// <returns>True if the interaction was handled, false otherwise.</returns>
+        public bool AltInteract(EntityUid user, EntityUid target)
         {
             // Get list of alt-interact verbs
             var verbs = _verbSystem.GetLocalVerbs(target, user, VerbType.Alternative)[VerbType.Alternative];
-            if (verbs.Any())
-                _verbSystem.ExecuteVerb(verbs.First(), user, target);
+
+            if (!verbs.Any())
+                return false;
+
+            _verbSystem.ExecuteVerb(verbs.First(), user, target);
+            return true;
         }
         #endregion
 
@@ -727,46 +728,6 @@ namespace Content.Shared.Interaction
                 comp.Thrown(args);
             }
             _adminLogSystem.Add(LogType.Throw, LogImpact.Low,$"{ToPrettyString(user):user} threw {ToPrettyString(thrown):entity}");
-        }
-        #endregion
-
-        #region Equip Hand
-        /// <summary>
-        ///     Calls EquippedHand on all components that implement the IEquippedHand interface
-        ///     on an item.
-        /// </summary>
-        public void EquippedHandInteraction(EntityUid user, EntityUid item, HandState hand)
-        {
-            var equippedHandMessage = new EquippedHandEvent(user, item, hand);
-            RaiseLocalEvent(item, equippedHandMessage);
-            if (equippedHandMessage.Handled)
-                return;
-
-            var comps = AllComps<IEquippedHand>(item).ToList();
-
-            foreach (var comp in comps)
-            {
-                comp.EquippedHand(new EquippedHandEventArgs(user, hand));
-            }
-        }
-
-        /// <summary>
-        ///     Calls UnequippedHand on all components that implement the IUnequippedHand interface
-        ///     on an item.
-        /// </summary>
-        public void UnequippedHandInteraction(EntityUid user, EntityUid item, HandState hand)
-        {
-            var unequippedHandMessage = new UnequippedHandEvent(user, item, hand);
-            RaiseLocalEvent(item, unequippedHandMessage);
-            if (unequippedHandMessage.Handled)
-                return;
-
-            var comps = AllComps<IUnequippedHand>(item).ToList();
-
-            foreach (var comp in comps)
-            {
-                comp.UnequippedHand(new UnequippedHandEventArgs(user, hand));
-            }
         }
         #endregion
 
@@ -809,47 +770,6 @@ namespace Content.Shared.Interaction
             _adminLogSystem.Add(LogType.Drop, LogImpact.Low, $"{ToPrettyString(user):user} dropped {ToPrettyString(item):entity}");
         }
         #endregion
-
-        #region Hand Selected
-        /// <summary>
-        ///     Calls HandSelected on all components that implement the IHandSelected interface
-        ///     on an item entity on a hand that has just been selected.
-        /// </summary>
-        public void HandSelectedInteraction(EntityUid user, EntityUid item)
-        {
-            var handSelectedMsg = new HandSelectedEvent(user, item);
-            RaiseLocalEvent(item, handSelectedMsg);
-            if (handSelectedMsg.Handled)
-                return;
-
-            var comps = AllComps<IHandSelected>(item).ToList();
-
-            // Call Land on all components that implement the interface
-            foreach (var comp in comps)
-            {
-                comp.HandSelected(new HandSelectedEventArgs(user));
-            }
-        }
-
-        /// <summary>
-        ///     Calls HandDeselected on all components that implement the IHandDeselected interface
-        ///     on an item entity on a hand that has just been deselected.
-        /// </summary>
-        public void HandDeselectedInteraction(EntityUid user, EntityUid item)
-        {
-            var handDeselectedMsg = new HandDeselectedEvent(user, item);
-            RaiseLocalEvent(item, handDeselectedMsg);
-            if (handDeselectedMsg.Handled)
-                return;
-
-            var comps = AllComps<IHandDeselected>(item).ToList();
-
-            // Call Land on all components that implement the interface
-            foreach (var comp in comps)
-            {
-                comp.HandDeselected(new HandDeselectedEventArgs(user));
-            }
-        }
         #endregion
 
         /// <summary>
@@ -887,8 +807,6 @@ namespace Content.Shared.Interaction
 
             return true;
         }
-
-        #endregion
     }
 
     /// <summary>
