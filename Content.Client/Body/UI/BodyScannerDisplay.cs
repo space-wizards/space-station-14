@@ -13,7 +13,7 @@ namespace Content.Client.Body.UI
 {
     public sealed class BodyScannerDisplay : SS14Window
     {
-        private EntityUid _currentEntity;
+        private EntityUid? _currentEntity;
         private SharedBodyPartComponent? _currentBodyPart;
 
         public BodyScannerDisplay(BodyScannerBoundUserInterface owner)
@@ -104,9 +104,6 @@ namespace Content.Client.Body.UI
 
         public void UpdateDisplay(EntityUid entity)
         {
-            if(entity == null)
-                return;
-
             _currentEntity = entity;
             BodyPartList.Clear();
 
@@ -125,12 +122,7 @@ namespace Content.Client.Body.UI
 
         public void BodyPartOnItemSelected(ItemListSelectedEventArgs args)
         {
-            if (_currentEntity == null)
-                return;
-
-            var body = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<SharedBodyComponent>(_currentEntity);
-
-            if (body == null)
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedBodyComponent>(_currentEntity, out var body))
             {
                 return;
             }
@@ -169,7 +161,7 @@ namespace Content.Client.Body.UI
             UpdateMechanismBox(_currentBodyPart?.Mechanisms.ElementAt(args.ItemIndex));
         }
 
-        private void UpdateMechanismBox(SharedMechanismComponent? mechanism)
+        private void UpdateMechanismBox(MechanismComponent? mechanism)
         {
             // TODO BODY Improve UI
             if (mechanism == null)

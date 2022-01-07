@@ -1,5 +1,7 @@
-﻿using Content.Shared.Actions.Components;
+using Content.Shared.Actions.Components;
+using Content.Shared.Hands;
 using Robust.Shared.GameObjects;
+using System;
 
 namespace Content.Shared.Actions
 {
@@ -11,6 +13,24 @@ namespace Content.Shared.Actions
         private const float CooldownCheckIntervalSeconds = 10;
         private float _timeSinceCooldownCheck;
 
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            UpdatesOutsidePrediction = true;
+            SubscribeLocalEvent<ItemActionsComponent, UnequippedHandEvent>(OnHandUnequipped);
+            SubscribeLocalEvent<ItemActionsComponent, EquippedHandEvent>(OnHandEquipped);
+        }
+
+        private void OnHandEquipped(EntityUid uid, ItemActionsComponent component, EquippedHandEvent args)
+        {
+            component.EquippedHand(args.User, args.Hand);
+        }
+
+        private void OnHandUnequipped(EntityUid uid, ItemActionsComponent component, UnequippedHandEvent args)
+        {
+            component.UnequippedHand();
+        }
 
         public override void Update(float frameTime)
         {

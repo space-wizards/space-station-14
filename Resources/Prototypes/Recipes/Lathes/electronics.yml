@@ -24,6 +24,24 @@
   materials:
      Steel: 50
      Glass: 50
+     
+- type: latheRecipe
+  id: AirAlarmElectronics
+  icon: Objects/Misc/module.rsi/airalarm_electronics.png
+  result: AirAlarmElectronics
+  completetime: 500
+  materials:
+     Steel: 50
+     Glass: 50
+
+- type: latheRecipe
+  id: FireAlarmElectronics
+  icon: Objects/Misc/module.rsi/door_electronics.png
+  result: FireAlarmElectronics
+  completetime: 500
+  materials:
+     Steel: 50
+     Glass: 50
 
 - type: latheRecipe
   id: CloningPodMachineCircuitboard
@@ -92,6 +110,24 @@
   id: ProtolatheMachineCircuitboard
   icon: Objects/Misc/module.rsi/id_mod.png
   result: ProtolatheMachineCircuitboard
+  completetime: 1000
+  materials:
+     Steel: 100
+     Glass: 100
+
+- type: latheRecipe
+  id: KitchenReagentGrinderMachineCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: KitchenReagentGrinderMachineCircuitboard
+  completetime: 1000
+  materials:
+     Steel: 100
+     Glass: 100
+
+- type: latheRecipe
+  id: CrewMonitoringComputerCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: CrewMonitoringComputerCircuitboard
   completetime: 1000
   materials:
      Steel: 100

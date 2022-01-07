@@ -1,12 +1,10 @@
 using System;
 using Content.Shared.DragDrop;
-using Content.Shared.Emoting;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
+using Content.Shared.Movement;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.PAI
 {
@@ -29,6 +27,21 @@ namespace Content.Shared.PAI
             SubscribeLocalEvent<PAIComponent, AttackAttemptEvent>(OnAttackAttempt);
             SubscribeLocalEvent<PAIComponent, DropAttemptEvent>(OnDropAttempt);
             SubscribeLocalEvent<PAIComponent, PickupAttemptEvent>(OnPickupAttempt);
+            SubscribeLocalEvent<PAIComponent, MovementAttemptEvent>(OnMoveAttempt);
+            SubscribeLocalEvent<PAIComponent, ChangeDirectionAttemptEvent>(OnChangeDirectionAttempt);
+        }
+
+        private void OnMoveAttempt(EntityUid uid, PAIComponent component, MovementAttemptEvent args)
+        {
+            args.Cancel(); // no more scurrying around on lil robot legs.
+        }
+
+        private void OnChangeDirectionAttempt(EntityUid uid, PAIComponent component, ChangeDirectionAttemptEvent args)
+        {
+            // PAIs can't rotate, but decapitated heads and sentient crowbars can, life isn't fair. Seriously though, why
+            // tf does this have to be actively blocked, surely this should just not be blanket enabled for any player
+            // controlled entity. Same goes for moving really.
+            args.Cancel();
         }
 
         private void OnUseAttempt(EntityUid uid, PAIComponent component, UseAttemptEvent args)

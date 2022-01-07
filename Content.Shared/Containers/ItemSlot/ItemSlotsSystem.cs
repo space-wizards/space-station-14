@@ -162,7 +162,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (args.Handled)
                 return;
 
-            if (!EntityManager.TryGetComponent(args.User, out SharedHandsComponent? hands))
+            if (!EntityManager.TryGetComponent(args.User, out SharedHandsComponent hands))
                 return;
 
             foreach (var slot in itemSlots.Slots.Values)
@@ -177,7 +177,7 @@ namespace Content.Shared.Containers.ItemSlots
                 if (slot.Item != null)
                     hands.TryPutInAnyHand(slot.Item.Value);
 
-                Insert(uid, slot, args.Used, args.User, true);
+                Insert(uid, slot, args.Used, args.User);
                 args.Handled = true;
                 return;
             }
@@ -189,12 +189,14 @@ namespace Content.Shared.Containers.ItemSlots
         ///     Insert an item into a slot. This does not perform checks, so make sure to also use <see
         ///     cref="CanInsert"/> or just use <see cref="TryInsert"/> instead.
         /// </summary>
-        private void Insert(EntityUid uid, ItemSlot slot, EntityUid item, EntityUid? user, bool userAudio = false)
+        /// <param name="excludeUserAudio">If true, will exclude the user when playing sound. Does nothing client-side.
+        /// Useful for predicted interactions</param>
+        private void Insert(EntityUid uid, ItemSlot slot, EntityUid item, EntityUid? user, bool excludeUserAudio = false)
         {
             slot.ContainerSlot.Insert(item);
             // ContainerSlot automatically raises a directed EntInsertedIntoContainerMessage
 
-            PlaySound(uid, slot.InsertSound, slot.SoundOptions, userAudio ? null : user);
+            PlaySound(uid, slot.InsertSound, slot.SoundOptions, excludeUserAudio ? user : null);
         }
 
         /// <summary>
@@ -203,7 +205,7 @@ namespace Content.Shared.Containers.ItemSlots
         /// <param name="uid">Source of the sound</param>
         /// <param name="sound">The sound</param>
         /// <param name="excluded">Optional (server-side) argument used to prevent sending the audio to a specific
-        /// user.</param>
+        /// user. When run client-side, exclusion does nothing.</param>
         private void PlaySound(EntityUid uid, SoundSpecifier? sound, AudioParams audioParams, EntityUid? excluded)
         {
             if (sound == null || !_gameTiming.IsFirstTimePredicted)
@@ -240,10 +242,7 @@ namespace Content.Shared.Containers.ItemSlots
                 return false;
             }
 
-            // We should also check ContainerSlot.CanInsert, but that prevents swapping interactions. Given that
-            // ContainerSlot.CanInsert gets called when the item is actually inserted anyways, we can just get away with
-            // fudging CanInsert and not performing those checks.
-            return true;
+            return slot.ContainerSlot.CanInsertIfEmpty(usedUid, EntityManager);
         }
 
         /// <summary>
@@ -285,45 +284,57 @@ namespace Content.Shared.Containers.ItemSlots
 
             if (!hands.TryGetActiveHeldEntity(out var item))
                 return false;
+            var heldItem = item.Value;
 
-            if (!CanInsert(uid, item, slot))
+            if (!CanInsert(uid, item.Value, slot))
                 return false;
 
             // hands.Drop(item) checks CanDrop action blocker
-            if (!_actionBlockerSystem.CanInteract(user) && hands.Drop(item))
+            if (!_actionBlockerSystem.CanInteract(user) && hands.Drop(heldItem))
                 return false;
 
-            Insert(uid, slot, item, user);
+            Insert(uid, slot, heldItem, user);
             return true;
         }
         #endregion
 
         #region Eject
+
+        public bool CanEject(ItemSlot slot)
+        {
+            if (slot.Locked || slot.Item == null)
+                return false;
+
+            return slot.ContainerSlot.CanRemove(slot.Item.Value, EntityManager);
+        }
+
         /// <summary>
         ///     Eject an item into a slot. This does not perform checks (e.g., is the slot locked?), so you should
         ///     probably just use <see cref="TryEject"/> instead.
         /// </summary>
-        private void Eject(EntityUid uid, ItemSlot slot, EntityUid item, EntityUid? user)
+        /// <param name="excludeUserAudio">If true, will exclude the user when playing sound. Does nothing client-side.
+        /// Useful for predicted interactions</param>
+        private void Eject(EntityUid uid, ItemSlot slot, EntityUid item, EntityUid? user, bool excludeUserAudio = false)
         {
             slot.ContainerSlot.Remove(item);
             // ContainerSlot automatically raises a directed EntRemovedFromContainerMessage
 
-            PlaySound(uid, slot.EjectSound, slot.SoundOptions, user);
+            PlaySound(uid, slot.EjectSound, slot.SoundOptions, excludeUserAudio ? user : null);
         }
 
         /// <summary>
         ///     Try to eject an item from a slot.
         /// </summary>
         /// <returns>False if item slot is locked or has no item inserted</returns>
-        public bool TryEject(EntityUid uid, ItemSlot slot, EntityUid? user, [NotNullWhen(true)] out EntityUid? item)
+        public bool TryEject(EntityUid uid, ItemSlot slot, EntityUid? user, [NotNullWhen(true)] out EntityUid? item, bool excludeUserAudio = false)
         {
             item = null;
 
-            if (slot.Locked || slot.Item == null)
+            if (!CanEject(slot))
                 return false;
 
             item = slot.Item;
-            Eject(uid, slot, item.Value, user);
+            Eject(uid, slot, item!.Value, user, excludeUserAudio);
             return true;
         }
 
@@ -332,7 +343,7 @@ namespace Content.Shared.Containers.ItemSlots
         /// </summary>
         /// <returns>False if the id is not valid, the item slot is locked, or it has no item inserted</returns>
         public bool TryEject(EntityUid uid, string id, EntityUid user,
-            [NotNullWhen(true)] out EntityUid? item, ItemSlotsComponent? itemSlots = null)
+            [NotNullWhen(true)] out EntityUid? item, ItemSlotsComponent? itemSlots = null, bool excludeUserAudio = false)
         {
             item = null;
 
@@ -342,7 +353,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (!itemSlots.Slots.TryGetValue(id, out var slot))
                 return false;
 
-            return TryEject(uid, slot, user, out item);
+            return TryEject(uid, slot, user, out item, excludeUserAudio);
         }
 
         /// <summary>
@@ -353,13 +364,13 @@ namespace Content.Shared.Containers.ItemSlots
         ///     False if the id is not valid, the item slot is locked, or it has no item inserted. True otherwise, even
         ///     if the user has no hands.
         /// </returns>
-        public bool TryEjectToHands(EntityUid uid, ItemSlot slot, EntityUid? user)
+        public bool TryEjectToHands(EntityUid uid, ItemSlot slot, EntityUid? user, bool excludeUserAudio = false)
         {
-            if (!TryEject(uid, slot, user, out var item))
+            if (!TryEject(uid, slot, user, out var item, excludeUserAudio))
                 return false;
 
             if (user != null && EntityManager.TryGetComponent(user.Value, out SharedHandsComponent? hands))
-                hands.TryPutInActiveHandOrAny(item.Value);
+                hands.PutInHand(item.Value);
 
             return true;
         }
@@ -376,7 +387,7 @@ namespace Content.Shared.Containers.ItemSlots
 
             foreach (var slot in itemSlots.Slots.Values)
             {
-                if (slot.Locked || !slot.HasItem)
+                if (!CanEject(slot))
                     continue;
 
                 if (slot.EjectOnInteract)
@@ -389,7 +400,7 @@ namespace Content.Shared.Containers.ItemSlots
                     : EntityManager.GetComponent<MetaDataComponent>(slot.Item!.Value).EntityName ?? string.Empty;
 
                 Verb verb = new();
-                verb.Act = () => TryEjectToHands(uid, slot, args.User);
+                verb.Act = () => TryEjectToHands(uid, slot, args.User, excludeUserAudio: true);
 
                 if (slot.EjectVerbText == null)
                 {
@@ -416,7 +427,7 @@ namespace Content.Shared.Containers.ItemSlots
             {
                 foreach (var slot in itemSlots.Slots.Values)
                 {
-                    if (!slot.EjectOnInteract || slot.Locked || !slot.HasItem)
+                    if (!slot.EjectOnInteract || !CanEject(slot))
                         continue;
 
                     var verbSubject = slot.Name != string.Empty
@@ -424,7 +435,7 @@ namespace Content.Shared.Containers.ItemSlots
                         : EntityManager.GetComponent<MetaDataComponent>(slot.Item!.Value).EntityName ?? string.Empty;
 
                     Verb takeVerb = new();
-                    takeVerb.Act = () => TryEjectToHands(uid, slot, args.User);
+                    takeVerb.Act = () => TryEjectToHands(uid, slot, args.User, excludeUserAudio: true);
                     takeVerb.IconTexture = "/Textures/Interface/VerbIcons/pickup.svg.192dpi.png";
 
                     if (slot.EjectVerbText == null)
@@ -447,10 +458,10 @@ namespace Content.Shared.Containers.ItemSlots
 
                 var verbSubject = slot.Name != string.Empty
                     ? Loc.GetString(slot.Name)
-                    : EntityManager.GetComponent<MetaDataComponent>(args.Using.Value).EntityName ?? string.Empty;
+                    : Name(args.Using.Value) ?? string.Empty;
 
                 Verb insertVerb = new();
-                insertVerb.Act = () => Insert(uid, slot, args.Using.Value, args.User);
+                insertVerb.Act = () => Insert(uid, slot, args.Using.Value, args.User, excludeUserAudio: true);
 
                 if (slot.InsertVerbText != null)
                 {

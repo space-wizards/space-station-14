@@ -6,7 +6,7 @@
     backpack: ClothingBackpackFilled
     head: ClothingHeadHelmetIHSVoidHelm
     gloves: ClothingHandsGlovesIhscombat
-    outerclothing: IHSVoidsuit
+    outerClothing: IHSVoidsuit
     shoes: ClothingShoesBootsJack
     idcard: AssistantPDA
     ears: ClothingHeadsetService

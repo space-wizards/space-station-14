@@ -3,36 +3,38 @@ using System.Threading;
 using Content.Server.Cuffs.Components;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
-using Content.Server.Inventory.Components;
-using Content.Server.Items;
+using Content.Server.Inventory;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.DragDrop;
 using Content.Shared.Hands.Components;
+using Content.Shared.Inventory;
 using Content.Shared.Popups;
 using Content.Shared.Strip.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.ViewVariables;
-using static Content.Shared.Inventory.EquipmentSlotDefines;
 
 namespace Content.Server.Strip
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedStrippableComponent))]
+    [Friend(typeof(StrippableSystem))]
     public sealed class StrippableComponent : SharedStrippableComponent
     {
         [Dependency] private readonly IEntityManager _entities = default!;
+        private StrippableSystem _strippableSystem = default!;
 
         public const float StripDelay = 2f;
 
         // TODO: This component needs localization.
 
         [ViewVariables]
-        private BoundUserInterface? UserInterface => Owner.GetUIOrNull(StrippingUiKey.Key);
+        public BoundUserInterface? UserInterface => Owner.GetUIOrNull(StrippingUiKey.Key);
 
         protected override void Initialize()
         {
@@ -43,41 +45,23 @@ namespace Content.Server.Strip
                 UserInterface.OnReceiveMessage += HandleUserInterfaceMessage;
             }
 
-            Owner.EnsureComponentWarn<InventoryComponent>();
-            Owner.EnsureComponentWarn<HandsComponent>();
-            Owner.EnsureComponentWarn<CuffableComponent>();
-
-            if (_entities.TryGetComponent(Owner, out CuffableComponent? cuffed))
-            {
-                cuffed.OnCuffedStateChanged += UpdateSubscribed;
-            }
-
-            if (_entities.TryGetComponent(Owner, out InventoryComponent? inventory))
-            {
-                inventory.OnItemChanged += UpdateSubscribed;
-            }
-
-            if (_entities.TryGetComponent(Owner, out HandsComponent? hands))
-            {
-                hands.OnItemChanged += UpdateSubscribed;
-            }
-
-            // Initial update.
-            UpdateSubscribed();
+            _strippableSystem = EntitySystem.Get<StrippableSystem>();
+            Owner.EnsureComponentWarn<ServerInventoryComponent>();
+            var cuffed = Owner.EnsureComponentWarn<CuffableComponent>();
+            cuffed.OnCuffedStateChanged += UpdateState;
         }
 
-        private void UpdateSubscribed()
+        protected override void Shutdown()
         {
-            if (UserInterface == null)
-            {
-                return;
-            }
+            base.Shutdown();
 
-            var inventory = GetInventorySlots();
-            var hands = GetHandSlots();
-            var cuffs = GetHandcuffs();
+            if(_entities.TryGetComponent<CuffableComponent>(Owner, out var cuffed))
+                cuffed.OnCuffedStateChanged -= UpdateState;
+        }
 
-            UserInterface.SetState(new StrippingBoundUserInterfaceState(inventory, hands, cuffs));
+        private void UpdateState()
+        {
+            _strippableSystem.SendUpdate(Owner, this);
         }
 
         public override bool Drop(DragDropEvent args)
@@ -88,71 +72,6 @@ namespace Content.Server.Strip
             return true;
         }
 
-        private Dictionary<EntityUid, string> GetHandcuffs()
-        {
-            var dictionary = new Dictionary<EntityUid, string>();
-
-            if (!_entities.TryGetComponent(Owner, out CuffableComponent? cuffed))
-            {
-                return dictionary;
-            }
-
-            foreach (var entity in cuffed.StoredEntities)
-            {
-                var name = _entities.GetComponent<MetaDataComponent>(entity).EntityName;
-                dictionary.Add(entity, name);
-            }
-
-            return dictionary;
-        }
-
-        private Dictionary<Slots, string> GetInventorySlots()
-        {
-            var dictionary = new Dictionary<Slots, string>();
-
-            if (!_entities.TryGetComponent(Owner, out InventoryComponent? inventory))
-            {
-                return dictionary;
-            }
-
-            foreach (var slot in inventory.Slots)
-            {
-                var name = "None";
-
-                if (inventory.GetSlotItem(slot) is { } item)
-                    name = _entities.GetComponent<MetaDataComponent>(item.Owner).EntityName;
-
-                dictionary[slot] = name;
-            }
-
-            return dictionary;
-        }
-
-        private Dictionary<string, string> GetHandSlots()
-        {
-            var dictionary = new Dictionary<string, string>();
-
-            if (!_entities.TryGetComponent(Owner, out HandsComponent? hands))
-            {
-                return dictionary;
-            }
-
-            foreach (var hand in hands.HandNames)
-            {
-                var owner = hands.GetItem(hand)?.Owner;
-
-                if (!owner.HasValue || _entities.HasComponent<HandVirtualItemComponent>(owner.Value))
-                {
-                    dictionary[hand] = "None";
-                    continue;
-                }
-
-                dictionary[hand] = _entities.GetComponent<MetaDataComponent>(owner.Value).EntityName;
-            }
-
-            return dictionary;
-        }
-
         public void OpenUserInterface(IPlayerSession session)
         {
             UserInterface?.Open(session);
@@ -161,11 +80,11 @@ namespace Content.Server.Strip
         /// <summary>
         ///     Places item in user's active hand to an inventory slot.
         /// </summary>
-        private async void PlaceActiveHandItemInInventory(EntityUid user, Slots slot)
+        private async void PlaceActiveHandItemInInventory(EntityUid user, string slot)
         {
-            var inventory = _entities.GetComponent<InventoryComponent>(Owner);
             var userHands = _entities.GetComponent<HandsComponent>(user);
             var item = userHands.GetActiveHand;
+            var invSystem = EntitySystem.Get<InventorySystem>();
 
             bool Check()
             {
@@ -184,16 +103,16 @@ namespace Content.Server.Strip
                     return false;
                 }
 
-                if (!inventory.HasSlot(slot))
+                if (!invSystem.HasSlot(Owner, slot))
                     return false;
 
-                if (inventory.TryGetSlotItem(slot, out ItemComponent? _))
+                if (invSystem.TryGetSlotEntity(Owner, slot, out _))
                 {
                     user.PopupMessageCursor(Loc.GetString("strippable-component-item-slot-occupied",("owner", Owner)));
                     return false;
                 }
 
-                if (!inventory.CanEquip(slot, item, false))
+                if (!invSystem.CanEquip(user, Owner, item.Owner, slot, out _))
                 {
                     user.PopupMessageCursor(Loc.GetString("strippable-component-cannot-equip-message",("owner", Owner)));
                     return false;
@@ -218,9 +137,9 @@ namespace Content.Server.Strip
             if (result != DoAfterStatus.Finished) return;
 
             userHands.Drop(item!.Owner, false);
-            inventory.Equip(slot, item!.Owner, false);
+            invSystem.TryEquip(user, Owner, item.Owner, slot);
 
-            UpdateSubscribed();
+            UpdateState();
         }
 
         /// <summary>
@@ -285,33 +204,34 @@ namespace Content.Server.Strip
             if (result != DoAfterStatus.Finished) return;
 
             userHands.Drop(hand);
-            hands.TryPickupEntity(hand, item!.Owner, checkActionBlocker: false);
-            UpdateSubscribed();
+            hands.TryPickupEntity(hand, item!.Owner, checkActionBlocker: false, animateUser: true);
+            // hand update will trigger strippable update
         }
 
         /// <summary>
         ///     Takes an item from the inventory and places it in the user's active hand.
         /// </summary>
-        private async void TakeItemFromInventory(EntityUid user, Slots slot)
+        private async void TakeItemFromInventory(EntityUid user, string slot)
         {
             var inventory = _entities.GetComponent<InventoryComponent>(Owner);
             var userHands = _entities.GetComponent<HandsComponent>(user);
+            var invSystem = EntitySystem.Get<InventorySystem>();
 
             bool Check()
             {
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                     return false;
 
-                if (!inventory.HasSlot(slot))
+                if (!invSystem.HasSlot(Owner, slot))
                     return false;
 
-                if (!inventory.TryGetSlotItem(slot, out ItemComponent? itemToTake))
+                if (!invSystem.TryGetSlotEntity(Owner, slot, out var item))
                 {
                     user.PopupMessageCursor(Loc.GetString("strippable-component-item-slot-free-message",("owner", Owner)));
                     return false;
                 }
 
-                if (!inventory.CanUnequip(slot, false))
+                if (!invSystem.CanUnequip(user, Owner, slot, out _))
                 {
                     user.PopupMessageCursor(Loc.GetString("strippable-component-cannot-unequip-message",("owner", Owner)));
                     return false;
@@ -334,15 +254,12 @@ namespace Content.Server.Strip
             var result = await doAfterSystem.WaitDoAfter(doAfterArgs);
             if (result != DoAfterStatus.Finished) return;
 
-            var item = inventory.GetSlotItem(slot);
-            inventory.Unequip(slot, false);
-
-            if (item != null)
+            if (invSystem.TryGetSlotEntity(Owner, slot, out var item) && invSystem.TryUnequip(user, Owner, slot))
             {
-                userHands.PutInHandOrDrop(item);
+                userHands.PutInHandOrDrop(item.Value);
             }
 
-            UpdateSubscribed();
+            UpdateState();
         }
 
         /// <summary>
@@ -393,10 +310,12 @@ namespace Content.Server.Strip
             var result = await doAfterSystem.WaitDoAfter(doAfterArgs);
             if (result != DoAfterStatus.Finished) return;
 
-            var item = hands.GetItem(hand);
+            if (!hands.TryGetHeldEntity(hand, out var entity))
+                return;
+
             hands.Drop(hand, false);
-            userHands.PutInHandOrDrop(item!);
-            UpdateSubscribed();
+            userHands.PutInHandOrDrop(entity.Value);
+            // hand update will trigger strippable update
         }
 
         private void HandleUserInterfaceMessage(ServerBoundUserInterfaceMessage obj)
@@ -410,10 +329,9 @@ namespace Content.Server.Strip
             switch (obj.Message)
             {
                 case StrippingInventoryButtonPressed inventoryMessage:
-
                     if (_entities.TryGetComponent<InventoryComponent?>(Owner, out var inventory))
                     {
-                        if (inventory.TryGetSlotItem(inventoryMessage.Slot, out ItemComponent? _))
+                        if (EntitySystem.Get<InventorySystem>().TryGetSlotEntity(Owner, inventoryMessage.Slot, out _, inventory))
                             placingItem = false;
 
                         if (placingItem)

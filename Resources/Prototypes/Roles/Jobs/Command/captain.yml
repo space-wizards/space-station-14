@@ -39,18 +39,18 @@
   - Kitchen
   - Chapel
   - Hydroponics
-  
+
 - type: startingGear
   id: CaptainGear
   equipment:
-    innerclothing: ClothingUniformJumpsuitCaptain
-    backpack: ClothingBackpackCaptainFilled
+    jumpsuit: ClothingUniformJumpsuitCaptain
+    back: ClothingBackpackCaptainFilled
     shoes: ClothingShoesColorBlack
     head: ClothingHeadHatCaptain
     eyes: ClothingEyesGlassesSunglasses
     gloves: ClothingHandsGlovesCaptain
-    outerclothing: ClothingOuterHardsuitCap
-    idcard: CaptainPDA
+    outerClothing: ClothingOuterHardsuitCap
+    id: CaptainPDA
     ears: ClothingHeadsetAltCommand
   innerclothingskirt: ClothingUniformJumpskirtCaptain
   satchel: ClothingBackpackSatchelCaptainFilled

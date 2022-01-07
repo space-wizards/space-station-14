@@ -15,11 +15,11 @@
   id: StationEngineerGear
   equipment:
     head: ClothingHeadHatHardhatYellow
-    innerclothing: ClothingUniformJumpsuitEngineering
-    backpack: ClothingBackpackEngineeringFilled
+    jumpsuit: ClothingUniformJumpsuitEngineering
+    back: ClothingBackpackEngineeringFilled
     shoes: ClothingShoesBootsWork
-    outerclothing: ClothingOuterVestHazard
-    idcard: EngineerPDA
+    outerClothing: ClothingOuterVestHazard
+    id: EngineerPDA
     belt: ClothingBeltUtilityFilled
     ears: ClothingHeadsetEngineering
   innerclothingskirt: ClothingUniformJumpskirtEngineering

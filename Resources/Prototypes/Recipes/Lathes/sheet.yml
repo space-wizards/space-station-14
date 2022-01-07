@@ -9,7 +9,7 @@
     Steel: 100
 
 - type: latheRecipe
-  id: GlassStack
+  id: SheetGlass1
   icon:
     sprite: Objects/Materials/Sheets/glass.rsi
     state: glass

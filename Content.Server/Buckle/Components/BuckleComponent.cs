@@ -1,6 +1,5 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
-using Content.Server.Alert;
 using Content.Server.Hands.Components;
 using Content.Server.Pulling;
 using Content.Shared.ActionBlocker;
@@ -36,7 +35,6 @@ namespace Content.Server.Buckle.Components
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         [ComponentDependency] public readonly AppearanceComponent? Appearance = null;
-        [ComponentDependency] private readonly ServerAlertsComponent? _serverAlerts = null;
         [ComponentDependency] private readonly MobStateComponent? _mobState = null;
 
         [DataField("size")]
@@ -94,18 +92,14 @@ namespace Content.Server.Buckle.Components
         /// </summary>
         private void UpdateBuckleStatus()
         {
-            if (_serverAlerts == null)
-            {
-                return;
-            }
-
             if (Buckled)
             {
-                _serverAlerts.ShowAlert(BuckledTo?.BuckledAlertType ?? AlertType.Buckled);
+                AlertType alertType = BuckledTo?.BuckledAlertType ?? AlertType.Buckled;
+                EntitySystem.Get<AlertsSystem>().ShowAlert(Owner, alertType);
             }
             else
             {
-                _serverAlerts.ClearAlertCategory(AlertCategory.Buckled);
+                EntitySystem.Get<AlertsSystem>().ClearAlertCategory(Owner, AlertCategory.Buckled);
             }
         }
 
@@ -133,7 +127,7 @@ namespace Content.Server.Buckle.Components
                     break;
             }
 
-            ownTransform.LocalPosition = Vector2.Zero + BuckleOffset;
+            ownTransform.LocalPosition = strap.BuckleOffset;
         }
 
         public bool CanBuckle(EntityUid user, EntityUid to, [NotNullWhen(true)] out StrapComponent? strap)
@@ -317,10 +311,17 @@ namespace Content.Server.Buckle.Components
 
             BuckledTo = null;
 
-            if (_entMan.GetComponent<TransformComponent>(Owner).Parent == _entMan.GetComponent<TransformComponent>(oldBuckledTo.Owner))
+            var entManager = IoCManager.Resolve<IEntityManager>();
+            var xform = entManager.GetComponent<TransformComponent>(Owner);
+            var oldBuckledXform = entManager.GetComponent<TransformComponent>(oldBuckledTo.Owner);
+
+            if (xform.ParentUid == oldBuckledXform.Owner)
             {
-                _entMan.GetComponent<TransformComponent>(Owner).AttachParentToContainerOrGrid();
-                _entMan.GetComponent<TransformComponent>(Owner).WorldRotation = _entMan.GetComponent<TransformComponent>(oldBuckledTo.Owner).WorldRotation;
+                xform.AttachParentToContainerOrGrid();
+                xform.WorldRotation = oldBuckledXform.WorldRotation;
+
+                if (oldBuckledTo.UnbuckleOffset != Vector2.Zero)
+                    xform.Coordinates = oldBuckledXform.Coordinates.Offset(oldBuckledTo.UnbuckleOffset);
             }
 
             Appearance?.SetData(BuckleVisuals.Buckled, false);
@@ -402,23 +403,6 @@ namespace Content.Server.Buckle.Components
             }
 
             return new BuckleComponentState(Buckled, drawDepth, LastEntityBuckledTo, DontCollide);
-        }
-
-        public void Update(PhysicsComponent physics)
-        {
-            if (!DontCollide)
-                return;
-
-            physics.WakeBody();
-
-            if (!IsOnStrapEntityThisFrame && DontCollide)
-            {
-                DontCollide = false;
-                TryUnbuckle(Owner);
-                Dirty();
-            }
-
-            IsOnStrapEntityThisFrame = false;
         }
     }
 }

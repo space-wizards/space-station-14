@@ -1,15 +1,18 @@
-﻿using Content.Server.Hands.Components;
+using Content.Server.Hands.Components;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Hands.Systems
 {
     [UsedImplicitly]
-    public sealed class HandVirtualItemSystem : EntitySystem
+    public sealed class HandVirtualItemSystem : SharedHandVirtualItemSystem
     {
+        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -27,14 +30,14 @@ namespace Content.Server.Hands.Systems
                 foreach (var handName in hands.ActivePriorityEnumerable())
                 {
                     var hand = hands.GetHand(handName);
-                    if (!hand.IsEmpty)
+                    if (hand.HeldEntity != null)
                         continue;
 
                     var pos = EntityManager.GetComponent<TransformComponent>(hands.Owner).Coordinates;
                     var virtualItem = EntityManager.SpawnEntity("HandVirtualItem", pos);
                     var virtualItemComp = EntityManager.GetComponent<HandVirtualItemComponent>(virtualItem);
                     virtualItemComp.BlockingEntity = blockingEnt;
-                    hands.PutEntityIntoHand(hand, virtualItem);
+                    _handsSystem.PutEntityIntoHand(user, hand, virtualItem, hands);
                     return true;
                 }
             }
@@ -87,13 +90,11 @@ namespace Content.Server.Hands.Systems
             foreach (var handName in hands.ActivePriorityEnumerable())
             {
                 var hand = hands.GetHand(handName);
-                if (hand.IsEmpty)
+
+                if (!(hand.HeldEntity is { } heldEntity))
                     continue;
 
-                if (hand.HeldEntity == default)
-                    continue;
-
-                if (EntityManager.TryGetComponent<HandVirtualItemComponent>(hand.HeldEntity, out var virt)
+                if (EntityManager.TryGetComponent<HandVirtualItemComponent>(heldEntity, out var virt)
                     && virt.BlockingEntity == matching)
                 {
                     Delete(virt, user);

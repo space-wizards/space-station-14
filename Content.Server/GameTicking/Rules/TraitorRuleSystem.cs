@@ -10,6 +10,7 @@ using Content.Server.Traitor.Uplink;
 using Content.Server.Traitor.Uplink.Account;
 using Content.Shared.CCVar;
 using Content.Shared.Dataset;
+using Content.Shared.Roles;
 using Content.Shared.Sound;
 using Content.Shared.Traitor.Uplink;
 using Robust.Server.Player;
@@ -38,6 +39,8 @@ public class TraitorRuleSystem : GameRuleSystem
 
     private readonly SoundSpecifier _addedSound = new SoundPathSpecifier("/Audio/Misc/tatoralert.ogg");
     private readonly List<TraitorRole> _traitors = new ();
+
+    private const string TraitorPrototypeID = "Traitor";
 
     public override void Initialize()
     {
@@ -105,7 +108,7 @@ public class TraitorRuleSystem : GameRuleSystem
                 continue;
             }
             var profile = ev.Profiles[player.UserId];
-            if (profile.AntagPreferences.Contains("Traitor"))
+            if (profile.AntagPreferences.Contains(TraitorPrototypeID))
             {
                 prefList.Add(player);
             }
@@ -117,7 +120,7 @@ public class TraitorRuleSystem : GameRuleSystem
         for (var i = 0; i < numTraitors; i++)
         {
             IPlayerSession traitor;
-            if(prefList.Count < numTraitors)
+            if(prefList.Count == 0)
             {
                 if (list.Count == 0)
                 {
@@ -153,7 +156,8 @@ public class TraitorRuleSystem : GameRuleSystem
                     .AddUplink(mind.OwnedEntity!.Value, uplinkAccount))
                 continue;
 
-            var traitorRole = new TraitorRole(mind);
+            var antagPrototype = _prototypeManager.Index<AntagPrototype>(TraitorPrototypeID);
+            var traitorRole = new TraitorRole(mind, antagPrototype);
             mind.AddRole(traitorRole);
             _traitors.Add(traitorRole);
         }
@@ -182,6 +186,9 @@ public class TraitorRuleSystem : GameRuleSystem
                 if (traitor.Mind.TryAddObjective(objective))
                     difficulty += objective.Difficulty;
             }
+            
+            //give traitors their codewords to keep in their character info menu
+            traitor.Mind.Briefing = Loc.GetString("traitor-role-codewords", ("codewords", string.Join(", ",codewords)));
         }
 
         SoundSystem.Play(Filter.Empty().AddWhere(s => ((IPlayerSession)s).Data.ContentData()?.Mind?.HasRole<TraitorRole>() ?? false), _addedSound.GetSound(), AudioParams.Default);

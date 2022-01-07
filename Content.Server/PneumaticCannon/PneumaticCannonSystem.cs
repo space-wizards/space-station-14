@@ -1,18 +1,18 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Camera;
 using Content.Server.Hands.Components;
-using Content.Server.Items;
 using Content.Server.Nutrition.Components;
 using Content.Server.Storage.Components;
 using Content.Server.Stunnable;
 using Content.Server.Throwing;
 using Content.Server.Tools.Components;
+using Content.Shared.Camera;
 using Content.Shared.CombatMode;
 using Content.Shared.Interaction;
+using Content.Shared.Item;
 using Content.Shared.PneumaticCannon;
 using Content.Shared.Popups;
 using Content.Shared.StatusEffect;
@@ -34,6 +34,7 @@ namespace Content.Server.PneumaticCannon
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly StunSystem _stun = default!;
         [Dependency] private readonly AtmosphereSystem _atmos = default!;
+        [Dependency] private readonly CameraRecoilSystem _cameraRecoil = default!;
 
         private HashSet<PneumaticCannonComponent> _currentlyFiring = new();
 
@@ -133,7 +134,7 @@ namespace Content.Server.PneumaticCannon
             // this overrides the ServerStorageComponent's insertion stuff because
             // it's not event-based yet and I can't cancel it, so tools and stuff
             // will modify mode/power then get put in anyway
-            if (EntityManager.TryGetComponent<ItemComponent?>(args.Used, out var item)
+            if (EntityManager.TryGetComponent<SharedItemComponent?>(args.Used, out var item)
                 && EntityManager.TryGetComponent<ServerStorageComponent?>(component.Owner, out var storage))
             {
                 if (storage.CanInsert(args.Used))
@@ -229,9 +230,10 @@ namespace Content.Server.PneumaticCannon
             storage.Remove(ent);
 
             SoundSystem.Play(Filter.Pvs(data.User), comp.FireSound.GetSound(), ((IComponent) comp).Owner, AudioParams.Default);
-            if (EntityManager.TryGetComponent<CameraRecoilComponent?>(data.User, out var recoil))
+            if (EntityManager.HasComponent<CameraRecoilComponent>(data.User))
             {
-                recoil.Kick(Vector2.One * data.Strength);
+                var kick = Vector2.One * data.Strength;
+                _cameraRecoil.KickCamera(data.User, kick);
             }
 
             ent.TryThrow(data.Direction, data.Strength, data.User, GetPushbackRatioFromPower(comp.Power));
@@ -320,7 +322,7 @@ namespace Content.Server.PneumaticCannon
             {
                 if (EntityManager.TryGetComponent<HandsComponent?>(user, out var hands))
                 {
-                    hands.TryPutInActiveHandOrAny(contained);
+                    hands.PutInHand(contained);
                 }
 
                 user.PopupMessage(Loc.GetString("pneumatic-cannon-component-gas-tank-remove",

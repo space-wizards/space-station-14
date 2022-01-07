@@ -1,6 +1,8 @@
+using Content.Shared.Inventory.Events;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Localization;
 
 namespace Content.Shared.Item
@@ -11,6 +13,38 @@ namespace Content.Shared.Item
         {
             base.Initialize();
             SubscribeLocalEvent<SharedItemComponent, GetInteractionVerbsEvent>(AddPickupVerb);
+
+            SubscribeLocalEvent<SharedSpriteComponent, GotEquippedEvent>(OnEquipped);
+            SubscribeLocalEvent<SharedSpriteComponent, GotUnequippedEvent>(OnUnequipped);
+
+            SubscribeLocalEvent<SharedItemComponent, ComponentGetState>(OnGetState);
+            SubscribeLocalEvent<SharedItemComponent, ComponentHandleState>(OnHandleState);
+        }
+
+        private void OnHandleState(EntityUid uid, SharedItemComponent component, ref ComponentHandleState args)
+        {
+            if (args.Current is not ItemComponentState state)
+                return;
+
+            component.Size = state.Size;
+            component.EquippedPrefix = state.EquippedPrefix;
+            component.Color = state.Color;
+            component.RsiPath = state.RsiPath;
+        }
+
+        private void OnGetState(EntityUid uid, SharedItemComponent component, ref ComponentGetState args)
+        {
+            args.State = new ItemComponentState(component.Size, component.EquippedPrefix, component.Color, component.RsiPath);
+        }
+
+        private void OnUnequipped(EntityUid uid, SharedSpriteComponent component, GotUnequippedEvent args)
+        {
+            component.Visible = true;
+        }
+
+        private void OnEquipped(EntityUid uid, SharedSpriteComponent component, GotEquippedEvent args)
+        {
+            component.Visible = false;
         }
 
         private void AddPickupVerb(EntityUid uid, SharedItemComponent component, GetInteractionVerbsEvent args)
@@ -19,11 +53,11 @@ namespace Content.Shared.Item
                 args.Using != null ||
                 !args.CanAccess ||
                 !args.CanInteract ||
-                !component.CanPickup(args.User, popup: false))
+                !args.Hands.CanPickupEntityToActiveHand(args.Target))
                 return;
 
             Verb verb = new();
-            verb.Act = () => args.Hands.TryPutInActiveHandOrAny(args.Target);
+            verb.Act = () => args.Hands.TryPickupEntityToActiveHand(args.Target);
             verb.IconTexture = "/Textures/Interface/VerbIcons/pickup.svg.192dpi.png";
 
             // if the item already in a container (that is not the same as the user's), then change the text.

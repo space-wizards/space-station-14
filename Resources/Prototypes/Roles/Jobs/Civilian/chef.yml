@@ -14,13 +14,13 @@
 - type: startingGear
   id: ChefGear
   equipment:
-    innerclothing: ClothingUniformJumpsuitChef
+    jumpsuit: ClothingUniformJumpsuitChef
     head: ClothingHeadHatChef
-    backpack: ClothingBackpackFilled
+    back: ClothingBackpackFilled
     shoes: ClothingShoesColorBlack
-    idcard: ChefPDA
+    id: ChefPDA
     ears: ClothingHeadsetService
-    outerclothing: ClothingOuterApronChef
+    outerClothing: ClothingOuterApronChef
   innerclothingskirt: ClothingUniformJumpskirtChef
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled

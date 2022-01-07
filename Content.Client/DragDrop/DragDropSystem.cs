@@ -77,6 +77,8 @@ namespace Content.Client.DragDrop
 
         public override void Initialize()
         {
+            UpdatesOutsidePrediction = true;
+
             _dragDropHelper = new DragDropHelper<EntityUid>(OnBeginDrag, OnContinueDrag, OnEndDrag);
 
             _dropTargetInRangeShader = _prototypeManager.Index<ShaderPrototype>(ShaderDropTargetInRange).Instance();
