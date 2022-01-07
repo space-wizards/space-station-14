@@ -10,13 +10,13 @@ using Content.Server.AI.Utility.Actions;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States.Utility;
 using Content.Server.CPUJob.JobQueues;
-using Content.Shared.MobState;
 using Content.Shared.Movement.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
 namespace Content.Server.AI.Utility.AiLogic
 {
@@ -36,7 +36,7 @@ namespace Content.Server.AI.Utility.AiLogic
         /// <summary>
         ///     The sum of all BehaviorSets gives us what actions the AI can take
         /// </summary>
-        [DataField("behaviorSets")]
+        [DataField("behaviorSets", customTypeSerializer:typeof(PrototypeIdHashSetSerializer<BehaviorSetPrototype>))]
         public HashSet<string> BehaviorSets { get; } = new();
 
         public List<IAiUtility> AvailableActions { get; set; } = new();

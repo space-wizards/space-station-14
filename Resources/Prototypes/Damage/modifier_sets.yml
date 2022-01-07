@@ -26,9 +26,9 @@
     Piercing: 0.7
     Shock: 1.2
   flatReductions:
-    Blunt: 16
-    Slash: 16
-    Piercing: 16
+    Blunt: 14
+    Slash: 14
+    Piercing: 14
     Shock: 10
     Heat: 10
 

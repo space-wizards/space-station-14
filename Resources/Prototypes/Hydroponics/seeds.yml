@@ -424,7 +424,7 @@
       Min: 1
       Max: 10
       PotencyDivisor: 10
-      
+
 - type: seed
   id: nettle
   name: nettle
@@ -447,3 +447,25 @@
       Min: 1
       Max: 25
       PotencyDivisor: 4
+
+- type: seed
+  id: chili
+  name: chili
+  seedName: chili
+  displayName: chilis
+  plantRsi: Objects/Specific/Hydroponics/chili.rsi
+  productPrototypes:
+    - FoodChili
+  harvestRepeat: Repeat
+  lifespan: 25
+  maturation: 6
+  production: 6
+  yield: 3
+  potency: 20
+  idealLight: 9
+  idealHeat: 298
+  chemicals:
+    CapsaicinOil:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
