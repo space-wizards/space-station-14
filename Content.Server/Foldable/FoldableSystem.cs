@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Server.Buckle.Components;
 using Content.Server.Storage.Components;
+using Content.Shared.Foldable;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Verbs;
