@@ -20,14 +20,6 @@
             - material: MetalRod
               amount: 2
               doAfter: 2.5
-        - to: railingCornerSmall
-          completed:
-            - !type:SnapToGrid
-              southRotation: true
-          steps:
-            - material: MetalRod
-              amount: 1
-              doAfter: 2
 
     - node: railing
       entity: Railing
@@ -54,16 +46,3 @@
           steps:
             - tool: Screwing
               doAfter: 0.5
-
-    - node: railingCornerSmall
-      entity: RailingCornerSmall
-      edges:
-        - to: start
-          completed:
-            - !type:SpawnPrototype
-              prototype: PartRodMetal1
-              amount: 1
-            - !type:DeleteEntity
-          steps:
-            - tool: Screwing
-              doAfter: 0.25

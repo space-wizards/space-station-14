@@ -26,6 +26,8 @@ namespace Content.Server.DoAfter
 
         public EntityCoordinates TargetGrid { get; }
 
+        public bool TookDamage { get; set; }
+
         public DoAfterStatus Status => AsTask.IsCompletedSuccessfully ? AsTask.Result : DoAfterStatus.Running;
 
         // NeedHand
@@ -58,12 +60,6 @@ namespace Content.Server.DoAfter
 
             Tcs = new TaskCompletionSource<DoAfterStatus>();
             AsTask = Tcs.Task;
-        }
-
-        public void Cancel()
-        {
-            if (Status == DoAfterStatus.Running)
-                Tcs.SetResult(DoAfterStatus.Cancelled);
         }
 
         public void Run(float frameTime, IEntityManager entityManager)
@@ -124,6 +120,11 @@ namespace Content.Server.DoAfter
 
             if (EventArgs.BreakOnTargetMove && !entityManager.GetComponent<TransformComponent>(EventArgs.Target!.Value).Coordinates.InRange(
                 entityManager, TargetGrid, EventArgs.MovementThreshold))
+            {
+                return true;
+            }
+
+            if (EventArgs.BreakOnDamage && TookDamage)
             {
                 return true;
             }

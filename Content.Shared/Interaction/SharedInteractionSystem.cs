@@ -601,8 +601,13 @@ namespace Content.Shared.Interaction
 
         protected void InteractionActivate(EntityUid user, EntityUid used)
         {
-            if (TryComp(used, out UseDelayComponent? delayComponent) && delayComponent.ActiveDelay)
-                return;
+            if (TryComp(used, out UseDelayComponent? delayComponent))
+            {
+                if (delayComponent.ActiveDelay)
+                    return;
+
+                delayComponent.BeginDelay();
+            }
 
             if (!_actionBlockerSystem.CanInteract(user) || !_actionBlockerSystem.CanUse(user))
                 return;
@@ -620,7 +625,6 @@ namespace Content.Shared.Interaction
             RaiseLocalEvent(used, activateMsg);
             if (activateMsg.Handled)
             {
-                delayComponent?.BeginDelay();
                 _adminLogSystem.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user):user} activated {ToPrettyString(used):used}");
                 return;
             }
@@ -630,7 +634,6 @@ namespace Content.Shared.Interaction
 
             var activateEventArgs = new ActivateEventArgs(user, used);
             activateComp.Activate(activateEventArgs);
-            delayComponent?.BeginDelay();
             _adminLogSystem.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user):user} activated {ToPrettyString(used):used}"); // No way to check success.
         }
         #endregion
@@ -657,16 +660,18 @@ namespace Content.Shared.Interaction
         /// <returns>True if the interaction was handled. False otherwise</returns>
         public bool UseInteraction(EntityUid user, EntityUid used)
         {
-            if (TryComp(used, out UseDelayComponent? delayComponent) && delayComponent.ActiveDelay)
-                return true; // if the item is on cooldown, we consider this handled.
+            if (TryComp(used, out UseDelayComponent? delayComponent))
+            {
+                if (delayComponent.ActiveDelay)
+                    return true; // if the item is on cooldown, we consider this handled.
+
+                delayComponent.BeginDelay();
+            }
 
             var useMsg = new UseInHandEvent(user, used);
             RaiseLocalEvent(used, useMsg);
             if (useMsg.Handled)
-            {
-                delayComponent?.BeginDelay();
                 return true;
-            }
 
             var uses = AllComps<IUse>(used).ToList();
 
@@ -675,10 +680,7 @@ namespace Content.Shared.Interaction
             {
                 // If a Use returns a status completion we finish our interaction
                 if (use.UseEntity(new UseEntityEventArgs(user)))
-                {
-                    delayComponent?.BeginDelay();
                     return true;
-                }
             }
 
             return false;

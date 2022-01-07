@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Shared.Damage;
-using Content.Shared.MobState;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
@@ -20,30 +19,20 @@ namespace Content.Server.DoAfter
         {
             base.Initialize();
             SubscribeLocalEvent<DoAfterComponent, DamageChangedEvent>(HandleDamage);
-            SubscribeLocalEvent<DoAfterComponent, MobStateChangedEvent>(HandleStateChanged);
-        }
-
-        private void HandleStateChanged(EntityUid uid, DoAfterComponent component, MobStateChangedEvent args)
-        {
-            if (!args.CurrentMobState.IsIncapacitated())
-                return;
-
-            foreach (var doAfter in component.DoAfters)
-            {
-                doAfter.Cancel();
-            }
         }
 
         public void HandleDamage(EntityUid _, DoAfterComponent component, DamageChangedEvent args)
         {
-            if (!args.InterruptsDoAfters || !args.DamageIncreased)
+            if (component.DoAfters.Count == 0 || !args.InterruptsDoAfters)
+            {
                 return;
+            }
 
             foreach (var doAfter in component.DoAfters)
             {
                 if (doAfter.EventArgs.BreakOnDamage)
                 {
-                    doAfter.Cancel();
+                    doAfter.TookDamage = true;
                 }
             }
         }

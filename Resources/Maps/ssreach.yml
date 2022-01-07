@@ -52,7 +52,7 @@ grids:
   - ind: "-1,0"
     tiles: EQAAABEAAAAJAAAAIAAAACAAAAAgAAAAIAAAABcAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAAAkAAAAJAAAACQAAACAAAAAgAAAAIAAAACAAAAAlAAAAJQAAACUAAAAlAAAAJQAAACIAAAAiAAAAIgAAACIAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAJQAAABIAAAASAAAAEgAAACUAAAAiAAAAIgAAACIAAAAiAAAAJQAAACUAAAAlAAAAIAAAACAAAAAgAAAAIAAAACUAAAASAAAAEgAAABIAAAASAAAAIgAAACIAAAAiAAAAIgAAACMAAAAjAAAAJQAAACUAAAAlAAAAGAAAABgAAAAlAAAAEgAAABIAAAASAAAAJQAAACIAAAAiAAAAIgAAACIAAAAAAAAAIwAAACMAAAAjAAAAJQAAABgAAAAYAAAAJQAAACUAAAAlAAAAJQAAACUAAAAlAAAAJQAAACUAAAAlAAAAAAAAAAAAAAAAAAAAIwAAACQAAAAkAAAAJAAAACMAAAAjAAAAIwAAACMAAAAjAAAAIwAAACMAAAAjAAAAJQAAAAAAAAAAAAAAAAAAACMAAAAjAAAAIwAAACMAAAAjAAAAIwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
   - ind: "0,-1"
-    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJQAAACUAAAAlAAAAJQAAACUAAAAlAAAAIAAAACAAAAARAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJQAAACUAAAAlAAAAJQAAACUAAAAlAAAAJQAAABEAAAARAAAAEQAAABEAAAAAAAAAAAAAAAAAAAAAAAAAJQAAACUAAAAlAAAAJQAAABkAAAAlAAAAJQAAACUAAAAgAAAAIAAAABEAAAAgAAAAAAAAAAAAAAAAAAAAJQAAACUAAAAlAAAAJQAAABkAAAAZAAAAIAAAACAAAAAgAAAAIAAAACAAAAARAAAAIAAAAAAAAAAAAAAAJQAAACUAAAAlAAAAGQAAABkAAAAZAAAAGQAAACAAAAAgAAAAIAAAACAAAAAgAAAAEQAAACAAAAAAAAAAJQAAACUAAAAfAAAAJQAAABkAAAAZAAAAGQAAABkAAAAlAAAAJQAAACUAAAAgAAAAIAAAABEAAAAgAAAAJQAAACUAAAAfAAAAHwAAAB8AAAAZAAAAGQAAABkAAAAjAAAAJQAAACUAAAARAAAAEQAAABEAAAARAAAAEQAAACUAAAAfAAAAHwAAAB8AAAAlAAAAGQAAABkAAAAZAAAAJQAAACUAAAAlAAAAIAAAACAAAAAgAAAAEQAAACAAAAAfAAAAHwAAAB8AAAAfAAAAJQAAABkAAAAZAAAAGQAAACUAAAAlAAAAJQAAACUAAAAlAAAAJQAAACUAAAAlAAAAJQAAACUAAAAlAAAAJQAAACUAAAAZAAAAGQAAABkAAAAlAAAAJQAAACUAAAAlAAAAJQAAACUAAAAlAAAAJQAAACIAAAAiAAAAIgAAACIAAAAlAAAAGQAAABkAAAAZAAAAJQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAiAAAAIgAAACIAAAAiAAAAJQAAABkAAAAZAAAAGQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIgAAACIAAAAiAAAAIgAAACUAAAAZAAAAGQAAABkAAAAlAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACIAAAAiAAAAIgAAACIAAAAlAAAAGQAAABkAAAAZAAAAJQAAACUAAAAlAAAAJQAAACUAAAAlAAAAJQAAACUAAAAZAAAAGQAAABkAAAAZAAAAFwAAABkAAAAZAAAAGQAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAGQAAABkAAAAZAAAAGQAAABcAAAAZAAAAGQAAABkAAAAlAAAAJQAAACUAAAAlAAAAJQAAACUAAAAgAAAAJQAAAA==
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJQAAACUAAAAlAAAAJQAAACUAAAAlAAAAIAAAACAAAAARAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJQAAACUAAAAjAAAAIwAAACUAAAAlAAAAJQAAABEAAAARAAAAEQAAABEAAAAAAAAAAAAAAAAAAAAAAAAAJQAAACUAAAAjAAAAIwAAABkAAAAlAAAAJQAAACUAAAAgAAAAIAAAABEAAAAgAAAAAAAAAAAAAAAAAAAAJQAAACUAAAAjAAAAIwAAABkAAAAZAAAAIAAAACAAAAAgAAAAIAAAACAAAAARAAAAIAAAAAAAAAAAAAAAJQAAACUAAAAjAAAAGQAAABkAAAAZAAAAGQAAACAAAAAgAAAAIAAAACAAAAAgAAAAEQAAACAAAAAAAAAAJQAAACUAAAAfAAAAIwAAABkAAAAZAAAAGQAAABkAAAAlAAAAJQAAACUAAAAgAAAAIAAAABEAAAAgAAAAJQAAACUAAAAfAAAAHwAAAB8AAAAZAAAAGQAAABkAAAAjAAAAJQAAACUAAAARAAAAEQAAABEAAAARAAAAEQAAACUAAAAfAAAAHwAAAB8AAAAjAAAAGQAAABkAAAAZAAAAIwAAACUAAAAlAAAAIAAAACAAAAAgAAAAEQAAACAAAAAfAAAAHwAAAB8AAAAfAAAAIwAAABkAAAAZAAAAGQAAACMAAAAlAAAAJQAAACUAAAAlAAAAJQAAACUAAAAlAAAAJQAAACUAAAAlAAAAJQAAACUAAAAZAAAAGQAAABkAAAAlAAAAJQAAACUAAAAlAAAAJQAAACUAAAAlAAAAJQAAACIAAAAiAAAAIgAAACIAAAAlAAAAGQAAABkAAAAZAAAAJQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAiAAAAIgAAACIAAAAiAAAAJQAAABkAAAAZAAAAGQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIgAAACIAAAAiAAAAIgAAACUAAAAZAAAAGQAAABkAAAAlAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACIAAAAiAAAAIgAAACIAAAAlAAAAGQAAABkAAAAZAAAAJQAAACUAAAAlAAAAJQAAACUAAAAlAAAAJQAAACUAAAAZAAAAGQAAABkAAAAZAAAAFwAAABkAAAAZAAAAGQAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAGQAAABkAAAAZAAAAGQAAABcAAAAZAAAAGQAAABkAAAAlAAAAJQAAACUAAAAlAAAAJQAAACUAAAAgAAAAJQAAAA==
   - ind: "0,0"
     tiles: GQAAABkAAAAZAAAAGQAAABcAAAAZAAAAGQAAABkAAAAlAAAAGwAAABsAAAAbAAAAGwAAACUAAAAgAAAAJQAAACUAAAAlAAAAJQAAACUAAAAlAAAAGQAAABkAAAAZAAAAJQAAABsAAAAbAAAAGwAAABsAAAAlAAAAIAAAACUAAAAlAAAAIQAAACEAAAAhAAAAJQAAABkAAAAZAAAAGQAAABcAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAIQAAACEAAAAhAAAAIQAAACUAAAAZAAAAGQAAABkAAAAXAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAACUAAAAhAAAAIQAAACEAAAAlAAAAGQAAABkAAAAZAAAAFwAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAlAAAAJQAAACUAAAAlAAAAJQAAABcAAAAXAAAAFwAAACUAAAAXAAAAFwAAACUAAAAlAAAAFwAAABcAAAAXAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAlAAAAJQAAABgAAAAYAAAAGAAAACUAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAJQAAACUAAAAYAAAAGAAAABgAAAAlAAAAJQAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACUAAAAlAAAAGAAAABgAAAAYAAAAAAAAACUAAAAlAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAlAAAAJQAAABgAAAAYAAAAGAAAAAAAAAAAAAAAJQAAACUAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAJQAAACUAAAAYAAAAGAAAABgAAAAAAAAAAAAAAAAAAAAlAAAAJQAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACUAAAAlAAAAGAAAABgAAAAYAAAAAAAAAAAAAAAAAAAAAAAAACUAAAAlAAAAIAAAACAAAAAgAAAAIAAAACAAAAAlAAAAJQAAABgAAAAYAAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJQAAACUAAAAgAAAAIAAAACAAAAAgAAAAJQAAACUAAAAYAAAAGAAAABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlAAAAJQAAACUAAAAlAAAAJQAAACUAAAAlAAAAGAAAABgAAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAjAAAAIwAAACUAAAAlAAAAJQAAABgAAAAYAAAAGAAAAA==
   - ind: "1,-1"
@@ -318,7 +318,7 @@ entities:
       -5,0: 0
       -5,1: 1
       -5,2: 1
-      -5,3: 2
+      -5,3: 0
       -5,4: 1
       -5,5: 0
       -5,6: 0
@@ -344,7 +344,7 @@ entities:
       -2,5: 0
       -2,6: 0
       -1,0: 0
-      -1,1: 3
+      -1,1: 0
       -1,2: 0
       -1,3: 0
       -1,4: 0
@@ -394,7 +394,7 @@ entities:
       4,-14: 0
       4,-13: 0
       4,-8: 0
-      4,-7: 3
+      4,-7: 2
       4,-6: 1
       4,-5: 1
       4,-4: 1
@@ -435,11 +435,11 @@ entities:
       8,-14: 0
       8,-13: 0
       8,-12: 0
-      8,-11: 3
+      8,-11: 2
       8,-10: 0
       8,-9: 0
       8,-8: 0
-      8,-7: 3
+      8,-7: 2
       8,-6: 1
       8,-5: 0
       8,-4: 1
@@ -481,8 +481,8 @@ entities:
       11,-16: 1
       11,-15: 1
       11,-14: 1
-      11,-13: 4
-      11,-12: 3
+      11,-13: 3
+      11,-12: 2
       11,-11: 1
       11,-10: 0
       11,-9: 0
@@ -561,7 +561,7 @@ entities:
       0,0: 0
       0,1: 1
       0,2: 1
-      0,3: 2
+      0,3: 0
       0,4: 1
       0,5: 0
       0,6: 0
@@ -642,7 +642,7 @@ entities:
       8,10: 0
       8,11: 0
       8,12: 0
-      8,13: 5
+      8,13: 4
       8,14: 0
       8,15: 0
       9,0: 0
@@ -650,15 +650,15 @@ entities:
       9,2: 0
       9,3: 0
       9,4: 0
-      9,5: 6
-      9,6: 3
-      9,7: 4
+      9,5: 5
+      9,6: 2
+      9,7: 3
       9,8: 0
-      9,9: 3
-      9,10: 4
-      9,11: 7
-      9,12: 8
-      9,13: 9
+      9,9: 2
+      9,10: 3
+      9,11: 6
+      9,12: 7
+      9,13: 8
       9,14: 0
       9,15: 0
       10,0: 0
@@ -666,15 +666,15 @@ entities:
       10,2: 0
       10,3: 0
       10,4: 0
-      10,5: 10
-      10,6: 11
-      10,7: 12
-      10,8: 13
-      10,9: 14
-      10,10: 15
-      10,11: 16
-      10,12: 17
-      10,13: 18
+      10,5: 9
+      10,6: 10
+      10,7: 11
+      10,8: 12
+      10,9: 13
+      10,10: 14
+      10,11: 15
+      10,12: 16
+      10,13: 17
       10,14: 0
       10,15: 0
       11,0: 0
@@ -683,15 +683,15 @@ entities:
       11,3: 0
       11,4: 0
       11,5: 0
-      11,6: 19
-      11,7: 13
-      11,8: 20
-      11,9: 21
-      11,10: 22
-      11,11: 23
-      11,12: 24
-      11,13: 25
-      11,14: 26
+      11,6: 18
+      11,7: 12
+      11,8: 19
+      11,9: 20
+      11,10: 21
+      11,11: 22
+      11,12: 23
+      11,13: 24
+      11,14: 25
       11,15: 1
       12,0: 0
       12,1: 0
@@ -835,7 +835,7 @@ entities:
       20,-5: 0
       20,-4: 0
       20,-3: 0
-      20,-2: 3
+      20,-2: 2
       20,-1: 1
       21,-8: 0
       21,-7: 0
@@ -987,9 +987,9 @@ entities:
       19,15: 0
       20,0: 1
       20,1: 1
-      20,2: 3
-      20,3: 27
-      20,4: 28
+      20,2: 2
+      20,3: 5
+      20,4: 26
       20,5: 0
       20,6: 0
       20,7: 0
@@ -1023,14 +1023,14 @@ entities:
       23,5: 0
       23,6: 0
       24,0: 0
-      24,1: 4
-      24,2: 29
+      24,1: 3
+      24,2: 27
       24,3: 0
       24,4: 0
       24,5: 0
       24,6: 0
       25,0: 0
-      25,1: 3
+      25,1: 2
       25,2: 0
       25,3: 0
       25,4: 0
@@ -1384,17 +1384,6 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 10.912439
-      - 41.05156
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.15
-      moles:
       - 16.36866
       - 61.57734
       - 0
@@ -1650,17 +1639,6 @@ entities:
       moles:
       - 14.911353
       - 56.095093
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.15
-      moles:
-      - 20.37557
-      - 76.650955
       - 0
       - 0
       - 0
@@ -3424,14 +3402,17 @@ entities:
   - chunkCollection: {}
     type: DecalGrid
 - uid: 5
-  type: AirlockHydroponicsLocked
+  type: CrateEngineeringAMEJar
   components:
-  - pos: -4.5,3.5
+  - pos: -12.5,-2.5
     parent: 4
     type: Transform
+  - isPlaceable: False
+    type: PlaceableSurface
   - containers:
-      board: !type:Container
+      EntityStorageComponent: !type:Container
         ents: []
+      PaperLabel: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 6
   type: AMEController
@@ -3443,17 +3424,20 @@ entities:
       AMEController-fuelJarContainer: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 7
-  type: AirlockBarGlassLocked
+  type: CrateEngineeringAMEJar
   components:
-  - pos: -0.5,1.5
+  - pos: -12.5,-3.5
     parent: 4
     type: Transform
+  - isPlaceable: False
+    type: PlaceableSurface
   - containers:
-      board: !type:Container
+      EntityStorageComponent: !type:Container
         ents: []
+      PaperLabel: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 8
-  type: CrateEngineeringAMEShielding
+  type: CrateEngineeringAMEJar
   components:
   - pos: -13.5,-3.5
     parent: 4
@@ -3813,16 +3797,15 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 49
-  type: CableTerminal
+  type: AirlockBarGlassLocked
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -13.5,-3.5
+  - pos: -0.5,1.5
     parent: 4
     type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 50
   type: AirlockMaintLocked
   components:
@@ -3860,7 +3843,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 54
-  type: AirlockKitchenLocked
+  type: AirlockFreezerLocked
   components:
   - pos: 0.5,3.5
     parent: 4
@@ -3870,17 +3853,14 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 55
-  type: CrateEngineeringAMEShielding
+  type: AirlockServiceLocked
   components:
-  - pos: -12.5,-3.5
+  - pos: -4.5,3.5
     parent: 4
     type: Transform
-  - isPlaceable: False
-    type: PlaceableSurface
   - containers:
-      EntityStorageComponent: !type:Container
+      board: !type:Container
         ents: []
-      PaperLabel: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 56
   type: SpawnPointBartender
@@ -4600,17 +4580,12 @@ entities:
   - pos: 25.599106,-3.305048
     parent: 4
     type: Transform
-  - cellSlot:
-      startingItem: PowerCellSmallStandard
-      name: power-cell-slot-component-slot-name-default
-    type: PowerCellSlot
   - canCollide: False
     type: Physics
   - containers:
       BatteryBarrel-powercell-container: !type:ContainerSlot
         ent: 153
       BatteryBarrel-ammo-container: !type:ContainerSlot {}
-      cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 153
   type: PowerCellSmallStandard
@@ -4625,17 +4600,12 @@ entities:
   - pos: 26.317856,-3.508173
     parent: 4
     type: Transform
-  - cellSlot:
-      startingItem: PowerCellSmallStandard
-      name: power-cell-slot-component-slot-name-default
-    type: PowerCellSlot
   - canCollide: False
     type: Physics
   - containers:
       BatteryBarrel-powercell-container: !type:ContainerSlot
         ent: 155
       BatteryBarrel-ammo-container: !type:ContainerSlot {}
-      cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 155
   type: PowerCellSmallStandard
@@ -4652,7 +4622,6 @@ entities:
     type: Transform
   - containers:
       WeaponCapacitorCharger-powerCellContainer: !type:ContainerSlot {}
-      charger-slot: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 157
   type: FoodBoxDonut
@@ -6606,11 +6575,14 @@ entities:
 - uid: 446
   type: Bucket
   components:
-  - pos: -7.692582,3.616344
+  - rot: 1.6828704247018322E-05 rad
+    pos: -6.7195354,4.7349987
     parent: 4
     type: Transform
   - solution: bucket
     type: Drink
+  - canCollide: False
+    type: Physics
 - uid: 447
   type: HydroponicsToolSpade
   components:
@@ -7022,14 +6994,9 @@ entities:
 - uid: 497
   type: BarSign
   components:
-  - desc: Enjoyed by fanatics, heretics, and brain-damaged patrons alike.
-    name: 4 The Emprah
-    type: MetaData
   - pos: 1.5,1.5
     parent: 4
     type: Transform
-  - current: Emprah
-    type: BarSign
 - uid: 498
   type: SignSmoking
   components:
@@ -7133,11 +7100,15 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 509
-  type: BaseResearchAndDevelopmentPointSource
+  type: CableHV
   components:
-  - pos: 13.5,-5.5
+  - pos: -14.5,-3.5
     parent: 4
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
 - uid: 510
   type: CableHV
   components:
@@ -15114,9 +15085,10 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - cellSlot:
-      startingItem: PowerCellSmallStandard
-      name: power-cell-slot-component-slot-name-default
+  - cellInsertSound: !type:SoundPathSpecifier
+      path: /Audio/Items/pistol_magout.ogg
+    cellRemoveSound: !type:SoundPathSpecifier
+      path: /Audio/Items/pistol_magin.ogg
     type: PowerCellSlot
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
@@ -15129,9 +15101,10 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - cellSlot:
-      startingItem: PowerCellSmallStandard
-      name: power-cell-slot-component-slot-name-default
+  - cellInsertSound: !type:SoundPathSpecifier
+      path: /Audio/Items/pistol_magout.ogg
+    cellRemoveSound: !type:SoundPathSpecifier
+      path: /Audio/Items/pistol_magin.ogg
     type: PowerCellSlot
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
@@ -16686,31 +16659,21 @@ entities:
     parent: 4
     type: Transform
 - uid: 1586
-  type: DisposalPipe
+  type: SprayBottleSpaceCleaner
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 1.5,-9.5
+  - pos: 2.7057152,-9.255201
     parent: 4
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      DisposalTransit: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 1587
-  type: DisposalBend
+  type: SprayBottleSpaceCleaner
   components:
-  - rot: 3.141592653589793 rad
-    pos: 0.5,-9.5
+  - pos: 2.4713402,-9.473951
     parent: 4
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      DisposalBend: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 1588
   type: MopItem
   components:
@@ -16738,20 +16701,11 @@ entities:
     parent: 4
     type: Transform
 - uid: 1591
-  type: DisposalTrunk
+  type: Table
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 2.5,-9.5
+  - pos: 2.5,-9.5
     parent: 4
     type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-  - containers:
-      DisposalEntry: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 1592
   type: Catwalk
   components:
@@ -17065,17 +17019,13 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1624
-  type: DisposalBend
+  type: SprayBottleSpaceCleaner
   components:
-  - pos: 0.5,-8.5
+  - pos: 2.2682152,-9.177076
     parent: 4
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      DisposalBend: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 1625
   type: MopBucket
   components:
@@ -17113,7 +17063,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 1629
-  type: AirlockJanitorLocked
+  type: AirlockServiceLocked
   components:
   - pos: 4.5,-9.5
     parent: 4
@@ -20834,12 +20784,13 @@ entities:
     pos: 0.29553476,6.734992
     parent: 4
     type: Transform
-  - cellSlot:
-      startingItem: PowerCellSmallStandard
-      name: power-cell-slot-component-slot-name-default
-    type: PowerCellSlot
   - canCollide: False
     type: Physics
+  - cellInsertSound: !type:SoundPathSpecifier
+      path: /Audio/Items/pistol_magout.ogg
+    cellRemoveSound: !type:SoundPathSpecifier
+      path: /Audio/Items/pistol_magin.ogg
+    type: PowerCellSlot
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
@@ -20850,12 +20801,13 @@ entities:
     pos: 2.327779,8.734997
     parent: 4
     type: Transform
-  - cellSlot:
-      startingItem: PowerCellSmallStandard
-      name: power-cell-slot-component-slot-name-default
-    type: PowerCellSlot
   - canCollide: False
     type: Physics
+  - cellInsertSound: !type:SoundPathSpecifier
+      path: /Audio/Items/pistol_magout.ogg
+    cellRemoveSound: !type:SoundPathSpecifier
+      path: /Audio/Items/pistol_magin.ogg
+    type: PowerCellSlot
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
@@ -20865,12 +20817,13 @@ entities:
   - pos: 2.375757,6.8272552
     parent: 4
     type: Transform
-  - cellSlot:
-      startingItem: PowerCellSmallStandard
-      name: power-cell-slot-component-slot-name-default
-    type: PowerCellSlot
   - canCollide: False
     type: Physics
+  - cellInsertSound: !type:SoundPathSpecifier
+      path: /Audio/Items/pistol_magout.ogg
+    cellRemoveSound: !type:SoundPathSpecifier
+      path: /Audio/Items/pistol_magin.ogg
+    type: PowerCellSlot
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
@@ -20880,12 +20833,13 @@ entities:
   - pos: 7.3755507,11.8511915
     parent: 4
     type: Transform
-  - cellSlot:
-      startingItem: PowerCellSmallStandard
-      name: power-cell-slot-component-slot-name-default
-    type: PowerCellSlot
   - canCollide: False
     type: Physics
+  - cellInsertSound: !type:SoundPathSpecifier
+      path: /Audio/Items/pistol_magout.ogg
+    cellRemoveSound: !type:SoundPathSpecifier
+      path: /Audio/Items/pistol_magin.ogg
+    type: PowerCellSlot
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
@@ -20895,12 +20849,13 @@ entities:
   - pos: 10.281801,11.8668165
     parent: 4
     type: Transform
-  - cellSlot:
-      startingItem: PowerCellSmallStandard
-      name: power-cell-slot-component-slot-name-default
-    type: PowerCellSlot
   - canCollide: False
     type: Physics
+  - cellInsertSound: !type:SoundPathSpecifier
+      path: /Audio/Items/pistol_magout.ogg
+    cellRemoveSound: !type:SoundPathSpecifier
+      path: /Audio/Items/pistol_magin.ogg
+    type: PowerCellSlot
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
@@ -20910,12 +20865,13 @@ entities:
   - pos: 10.344301,9.7574415
     parent: 4
     type: Transform
-  - cellSlot:
-      startingItem: PowerCellSmallStandard
-      name: power-cell-slot-component-slot-name-default
-    type: PowerCellSlot
   - canCollide: False
     type: Physics
+  - cellInsertSound: !type:SoundPathSpecifier
+      path: /Audio/Items/pistol_magout.ogg
+    cellRemoveSound: !type:SoundPathSpecifier
+      path: /Audio/Items/pistol_magin.ogg
+    type: PowerCellSlot
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
@@ -21452,16 +21408,12 @@ entities:
   - pos: 21.5,4.5
     parent: 4
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 2060
   type: VendingMachineCola
   components:
   - pos: 23.5,4.5
     parent: 4
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 2061
   type: SalternApc
   components:
@@ -21563,100 +21515,4 @@ entities:
     type: Sprite
   - canCollide: False
     type: Physics
-- uid: 2071
-  type: WindowReinforcedDirectional
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -1.5,1.5
-    parent: 4
-    type: Transform
-- uid: 2072
-  type: DisposalBend
-  components:
-  - rot: 3.141592653589793 rad
-    pos: -0.5,-8.5
-    parent: 4
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      DisposalBend: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 2073
-  type: DisposalBend
-  components:
-  - pos: -0.5,-7.5
-    parent: 4
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      DisposalBend: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 2074
-  type: DisposalBend
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -1.5,-7.5
-    parent: 4
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      DisposalBend: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 2075
-  type: DisposalUnit
-  components:
-  - pos: 2.5,-9.5
-    parent: 4
-    type: Transform
-  - containers:
-      DisposalUnit: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 2076
-  type: SeedExtractor
-  components:
-  - pos: -6.5,4.5
-    parent: 4
-    type: Transform
-- uid: 2077
-  type: WheatSeeds
-  components:
-  - pos: -6.817582,2.772594
-    parent: 4
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 2078
-  type: WheatSeeds
-  components:
-  - pos: -6.598832,2.585094
-    parent: 4
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 2079
-  type: SalvageMagnet
-  components:
-  - rot: 3.141592653589793 rad
-    pos: 5.5,11.5
-    parent: 4
-    type: Transform
-- uid: 2080
-  type: SpawnPointSecurityOfficer
-  components:
-  - pos: 22.5,-4.5
-    parent: 4
-    type: Transform
-- uid: 2081
-  type: SpawnPointSecurityOfficer
-  components:
-  - pos: 21.5,-4.5
-    parent: 4
-    type: Transform
 ...

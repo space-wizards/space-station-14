@@ -3,7 +3,6 @@ using System.Linq;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.EntitySystems;
-using Content.Server.Clothing.Components;
 using Content.Server.Nutrition.Components;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
@@ -39,21 +38,13 @@ namespace Content.Server.Nutrition.EntitySystems
             InitializeCigars();
         }
 
-        public void SetSmokableState(EntityUid uid, SmokableState state, SmokableComponent? smokable = null,
-            AppearanceComponent? appearance = null, ClothingComponent? clothing = null)
+        public void SetSmokableState(EntityUid uid, SmokableState state, SmokableComponent? smokable = null, AppearanceComponent? appearance = null)
         {
-            if (!Resolve(uid, ref smokable, ref appearance, ref clothing))
+            if (!Resolve(uid, ref smokable, ref appearance))
                 return;
 
             smokable.State = state;
             appearance.SetData(SmokingVisuals.Smoking, state);
-
-            clothing.EquippedPrefix = state switch
-            {
-                SmokableState.Lit => smokable.LitPrefix,
-                SmokableState.Burnt => smokable.BurntPrefix,
-                _ => smokable.UnlitPrefix
-            };
 
             if (state == SmokableState.Lit)
                 _active.Add(uid);

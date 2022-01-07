@@ -1,4 +1,5 @@
 using System;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
@@ -10,6 +11,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -99,11 +101,28 @@ namespace Content.Shared.Item
         [DataField("sprite")]
         private string? _rsiPath;
 
+        /// <summary>
+        ///     If a player can pick up this item.
+        /// </summary>
+        public bool CanPickup(EntityUid user, bool popup = true)
+        {
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanPickup(user))
+                return false;
+
+            if (_entMan.GetComponent<TransformComponent>(user).MapID != _entMan.GetComponent<TransformComponent>(Owner).MapID)
+                return false;
+
+            if (!_entMan.TryGetComponent(Owner, out IPhysBody? physics) || physics.BodyType == BodyType.Static)
+                return false;
+
+            return user.InRangeUnobstructed(Owner, ignoreInsideBlocker: true, popup: popup);
+        }
+
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
             var user = eventArgs.User;
 
-            if (!user.InRangeUnobstructed(Owner, ignoreInsideBlocker: true))
+            if (!CanPickup(user))
                 return false;
 
             if (!_entMan.TryGetComponent(user, out SharedHandsComponent hands))
@@ -114,8 +133,8 @@ namespace Content.Shared.Item
             if (activeHand == null)
                 return false;
 
-            // hands checks action blockers
-            return hands.TryPickupEntityToActiveHand(Owner, animateUser: true);
+            hands.TryPickupEntityToActiveHand(Owner, animateUser: true);
+            return true;
         }
 
         private void OnEquippedPrefixChange()

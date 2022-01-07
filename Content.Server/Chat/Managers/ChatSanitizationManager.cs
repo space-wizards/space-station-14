@@ -35,6 +35,7 @@ public class ChatSanitizationManager : IChatSanitizationManager
         { ":D", "chatsan-smiles-widely" },
         { "D:", "chatsan-frowns-deeply" },
         { ":O", "chatsan-surprised" },
+        { ":О", "chatsan-surprised" },
         { ":3", "chatsan-smiles" }, //nope
         { ":S", "chatsan-uncertain" },
         { ":>", "chatsan-grins" },
@@ -43,7 +44,6 @@ public class ChatSanitizationManager : IChatSanitizationManager
         { "хд", "chatsan-laughs" },
         { ";-;", "chatsan-cries" },
         { ";_;", "chatsan-cries" },
-        { "qwq", "chatsan-cries" },
         { ":u", "chatsan-smiles-smugly" },
         { ":v", "chatsan-smiles-smugly" },
         { ">:i", "chatsan-annoyed" },
@@ -67,11 +67,8 @@ public class ChatSanitizationManager : IChatSanitizationManager
         { "lmao", "chatsan-laughs" },
         { "lol", "chatsan-laughs" },
         { "лол", "chatsan-laughs" },
-        { "lel", "chatsan-laughs" },
-        { "kek", "chatsan-laughs" },
         { "o7", "chatsan-salutes" },
-        { "о7", "chatsan-salutes" }, // cyrillic о
-        { "idk", "chatsan-shrugs" }
+        { "о7", "chatsan-salutes" } // cyrillic о
     };
 
     private bool doSanitize = false;

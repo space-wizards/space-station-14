@@ -18,42 +18,34 @@ namespace Content.Client.MobState
         private int? _originalDrawDepth;
 
         [DataField("normal")]
-        private string? _normal;
-
+        private string? normal;
         [DataField("crit")]
-        private string? _crit;
-
+        private string? crit;
         [DataField("dead")]
-        private string? _dead;
-
-        /// <summary>
-        /// Should noRot be turned off when crit / dead.
-        /// </summary>
-        [DataField("rotate")]
-        private bool _rotate;
+        private string? dead;
 
         void ISerializationHooks.BeforeSerialization()
         {
-            _stateMap.TryGetValue(DamageState.Alive, out _normal);
-            _stateMap.TryGetValue(DamageState.Critical, out _crit);
-            _stateMap.TryGetValue(DamageState.Dead, out _dead);
+            _stateMap.TryGetValue(DamageState.Alive, out normal);
+            _stateMap.TryGetValue(DamageState.Critical, out crit);
+            _stateMap.TryGetValue(DamageState.Dead, out dead);
         }
 
         void ISerializationHooks.AfterDeserialization()
         {
-            if (_normal != null)
+            if (normal != null)
             {
-                _stateMap.Add(DamageState.Alive, _normal);
+                _stateMap.Add(DamageState.Alive, normal);
             }
 
-            if (_crit != null)
+            if (crit != null)
             {
-                _stateMap.Add(DamageState.Critical, _crit);
+                _stateMap.Add(DamageState.Critical, crit);
             }
 
-            if (_dead != null)
+            if (dead != null)
             {
-                _stateMap.Add(DamageState.Dead, _dead);
+                _stateMap.Add(DamageState.Dead, dead);
             }
         }
 
@@ -72,16 +64,6 @@ namespace Content.Client.MobState
             }
 
             _data = data;
-
-            if (_rotate)
-            {
-                sprite.NoRotation = data switch
-                {
-                    DamageState.Critical => false,
-                    DamageState.Dead => false,
-                    _ => true
-                };
-            }
 
             if (_stateMap.TryGetValue(_data, out var state))
             {

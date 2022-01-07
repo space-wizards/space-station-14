@@ -100,7 +100,7 @@
     prefixCreator: '14'
   mapPath: Maps/ssreach.yml
   minPlayers: 0
-  maxPlayers: 17
+  maxPlayers: 15
   overflowJobs: []
   availableJobs:
     CargoTechnician: [ 1, 1 ]
@@ -114,7 +114,7 @@
     MedicalDoctor: [ 1, 1 ]
     Chemist: [ 1, 1 ]
     HeadOfSecurity: [ 1, 1 ]
-    SecurityOfficer: [ 2, 4 ]
+    SecurityOfficer: [ 1, 2 ]
     Janitor: [ 1, 1 ]
 
 #- type: gameMap
@@ -133,4 +133,4 @@
 #    ChiefEngineer: [ 1, 1 ]
 #    ChiefMedicalOfficer: [ 1, 1 ]
 #    HeadOfSecurity: [ 1, 1 ]
-#    SecurityOfficer: [ 2, 3 ]
+#    SecurityOfficer: [ 2, 4 ]

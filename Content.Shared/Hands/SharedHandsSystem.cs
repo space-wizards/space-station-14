@@ -81,6 +81,9 @@ namespace Content.Shared.Hands
                 return;
             }
 
+            if (TryComp(entity, out SharedSpriteComponent? component))
+                component.Visible = true;
+
             hands.Dirty();
 
             var unequippedHandMessage = new UnequippedHandEvent(uid, entity, hand);
@@ -111,6 +114,9 @@ namespace Content.Shared.Hands
             }
 
             _adminLogSystem.Add(LogType.Pickup, LogImpact.Low, $"{ToPrettyString(uid):user} picked up {ToPrettyString(entity):entity}");
+
+            if (TryComp(entity, out SharedSpriteComponent? component))
+                component.Visible = false;
 
             hands.Dirty();
 

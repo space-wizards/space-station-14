@@ -1,4 +1,65 @@
 Entries:
+- author: ElectroJr
+  changes:
+  - {message: The keybinding to stop pulling an object now works., type: Fix}
+  id: 327
+  time: '2021-08-20T05:47:59.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Announcements now play announcement sound, type: Add}
+  id: 328
+  time: '2021-08-21T05:19:39.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes pie cannon shooting errors instead of cream pies., type: Fix}
+  id: 329
+  time: '2021-08-21T07:18:23.0000000+00:00'
+- author: ElectroSR
+  changes:
+  - {message: 'Alt+E, Alt+Z and Alt+Left-Mouse keybindings can trigger alternative
+      interactions on entities.', type: Add}
+  - {message: Some existing context-menu actions are now considered "alternative interactions".
+      For example ejecting IDs/beakers/magazines or locking & unlocking lockers can
+      be done via these new keybindings., type: Add}
+  - {message: More context menu icons and two new actions (open inventory & eject
+      items from disposal unit), type: Add}
+  - {message: Using 'E' to interact with items in your inventory or hands works again.,
+    type: Fix}
+  id: 330
+  time: '2021-08-21T17:20:18.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Singulo slightly less janky., type: Fix}
+  id: 331
+  time: '2021-08-22T14:54:03.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Particle Accelerator construction won't cause an error when finishing
+      the power box., type: Fix}
+  - {message: Cables are now called lv cables when referred to in a construction step
+      for clarity., type: Tweak}
+  id: 332
+  time: '2021-08-22T15:50:44.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Add security barriers to codebase, type: Add}
+  id: 333
+  time: '2021-08-22T16:32:24.0000000+00:00'
+- author: SweptWasTaken
+  changes:
+  - {message: Admin ghosts can interact with stuff, type: Add}
+  id: 334
+  time: '2021-08-23T03:14:52.0000000+00:00'
+- author: Seth
+  changes:
+  - {message: Added basic parts technology, type: Add}
+  id: 335
+  time: '2021-08-23T03:28:37.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Add meteor swarm event., type: Add}
+  id: 336
+  time: '2021-08-23T03:28:48.0000000+00:00'
 - author: Swept
   changes:
   - {message: Fix grav gen losing power after only a bit, type: Fix}
@@ -2853,56 +2914,3 @@ Entries:
   - {message: Traitors can now see their codewords in the objective menu., type: Add}
   id: 828
   time: '2022-01-05T05:46:41.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed a bug preventing hand-labellers from being used., type: Fix}
-  id: 829
-  time: '2022-01-06T01:51:35.0000000+00:00'
-- author: Delete69
-  changes:
-  - {message: 'Added small railing corners, making railing more versatile.', type: Add}
-  id: 830
-  time: '2022-01-06T01:51:41.0000000+00:00'
-- author: Daemon
-  changes:
-  - {message: Added new chat filters for emotes, type: Add}
-  id: 831
-  time: '2022-01-06T01:51:48.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Xenomorph sprites now match their physics bounds more accurately, type: Tweak}
-  id: 832
-  time: '2022-01-06T01:51:53.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Capsaicin Oil will no longer appear in the chemical dispenser., type: Fix}
-  id: 833
-  time: '2022-01-06T04:50:39.0000000+00:00'
-- author: JustinTime
-  changes:
-  - {message: Added ability to resist out of lockers or locked closets, type: Tweak}
-  id: 834
-  time: '2022-01-06T06:18:48.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Smoking is cool again (fixed animation/sprite)., type: Fix}
-  id: 835
-  time: '2022-01-06T12:45:02.0000000+00:00'
-- author: LittleBuilderJane
-  changes:
-  - {message: Adjusted aspects of Reach and Dart to fix issues., type: Add}
-  - {message: Removed one Security Officer slot on Dart to fit new airlock., type: Remove}
-  id: 836
-  time: '2022-01-06T13:31:37.0000000+00:00'
-- author: Lamrr
-  changes:
-  - {message: Spare jumpsuits and jumpskirts are now available in the form of various
-      colour themed wardrobes. Collect them all!, type: Add}
-  id: 837
-  time: '2022-01-07T03:58:41.0000000+00:00'
-- author: Lamrr
-  changes:
-  - {message: Radiation closets and medicine lockers now come with supplies inside.,
-    type: Tweak}
-  id: 838
-  time: '2022-01-07T04:03:20.0000000+00:00'

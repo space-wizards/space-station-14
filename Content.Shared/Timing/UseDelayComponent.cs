@@ -46,9 +46,12 @@ namespace Content.Shared.Timing
 
             _lastUseTime = IoCManager.Resolve<IGameTiming>().CurTime;
 
-            var cooldown = IoCManager.Resolve<IEntityManager>().EnsureComponent<ItemCooldownComponent>(Owner);
-            cooldown.CooldownStart = _lastUseTime;
-            cooldown.CooldownEnd = _lastUseTime + TimeSpan.FromSeconds(Delay);
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out ItemCooldownComponent? cooldown))
+            {
+                cooldown.CooldownStart = _lastUseTime;
+                cooldown.CooldownEnd = _lastUseTime + TimeSpan.FromSeconds(Delay);
+            }
+
         }
 
         public void Cancel()
