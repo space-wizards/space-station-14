@@ -1,12 +1,6 @@
 Entries:
 - author: ShadowCommander
   changes:
-  - {message: Removed the ability for chairs to catch items thrown by people sitting
-      on them., type: Fix}
-  id: 338
-  time: '2021-08-25T10:35:37.0000000+00:00'
-- author: ShadowCommander
-  changes:
   - {message: Fixed deconstruction verb on partially deconstructed windows., type: Fix}
   id: 339
   time: '2021-08-25T11:45:33.0000000+00:00'
@@ -2906,3 +2900,9 @@ Entries:
   - {message: PAIs can no longer run around on their little robot legs., type: Fix}
   id: 839
   time: '2022-01-07T11:57:20.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Station staff should once again spawn with their "outer clothing" (lab
+      coats, vests, etc) equipped.', type: Fix}
+  id: 840
+  time: '2022-01-07T15:58:55.0000000+00:00'
