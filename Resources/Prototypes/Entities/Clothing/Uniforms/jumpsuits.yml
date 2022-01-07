@@ -594,7 +594,7 @@
 
 - type: entity
   parent: ClothingUniformBase
-  id: ClothingUniformLibrarian
+  id: ClothingUniformJumpsuitLibrarian
   name: librarian jumpsuit
   description: A cosy green jumper fit for a curator of books.
   components:
@@ -605,7 +605,7 @@
     
 - type: entity
   parent: ClothingUniformBase
-  id: ClothingUniformLawyerRed
+  id: ClothingUniformJumpsuitLawyerRed
   name: red lawyer jumpsuit
   description: A flashy red suit worn by lawyers and show-offs.
   components:
@@ -616,7 +616,7 @@
     
 - type: entity
   parent: ClothingUniformBase
-  id: ClothingUniformLawyerBlue
+  id: ClothingUniformJumpsuitLawyerBlue
   name: blue lawyer jumpsuit
   description: A flashy blue suit worn by lawyers and show-offs.
   components:
@@ -627,7 +627,7 @@
     
 - type: entity
   parent: ClothingUniformBase
-  id: ClothingUniformLawyerBlack
+  id: ClothingUniformJumpsuitLawyerBlack
   name: black lawyer jumpsuit
   description: A subtle black suit worn by lawyers and gangsters.
   components:
@@ -638,7 +638,7 @@
     
 - type: entity
   parent: ClothingUniformBase
-  id: ClothingUniformLawyerPurple
+  id: ClothingUniformJumpsuitLawyerPurple
   name: purple lawyer jumpsuit
   description: A stylish purple piece worn by lawyers and show people.
   components:

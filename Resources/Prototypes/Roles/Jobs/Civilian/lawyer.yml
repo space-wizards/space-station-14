@@ -13,7 +13,7 @@
 - type: startingGear
   id: LawyerGear
   equipment:
-    jumpsuit: ClothingUniformLawyerBlack  #TODO change jumpsuit to randomiser of the 4 variants
+    jumpsuit: ClothingUniformJumpsuitLawyerBlack  #TODO change jumpsuit to randomiser of the 4 variants
     back: ClothingBackpackFilled
     shoes: ClothingShoesColorBlack
     id: LawyerPDA

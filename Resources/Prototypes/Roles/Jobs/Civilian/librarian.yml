@@ -13,7 +13,7 @@
 - type: startingGear
   id: LibrarianGear
   equipment:
-    jumpsuit: ClothingUniformLibrarian
+    jumpsuit: ClothingUniformJumpsuitLibrarian
     back: ClothingBackpackFilled
     shoes: ClothingShoesColorBlack
     id: LibrarianPDA
