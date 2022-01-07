@@ -18,9 +18,3 @@
 
 - type: accessLevel
   id: Chapel
-
-- type: accessLevel
-  id: Library
-  
-- type: accessLevel
-  id: Lawyer

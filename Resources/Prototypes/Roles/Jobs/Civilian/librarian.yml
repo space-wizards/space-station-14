@@ -7,7 +7,7 @@
   icon: "Librarian"
   supervisors: "the head of personnel"
   access:
-  - Library
+  - Service
   - Maintenance
 
 - type: startingGear

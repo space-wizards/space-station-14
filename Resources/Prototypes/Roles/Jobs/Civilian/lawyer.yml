@@ -7,7 +7,7 @@
   icon: "Lawyer"
   supervisors: "the head of personnel"
   access:
-  - Lawyer
+  - Service
   - Maintenance
 
 - type: startingGear
