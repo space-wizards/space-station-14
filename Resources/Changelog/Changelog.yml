@@ -1,25 +1,4 @@
 Entries:
-- author: Seth
-  changes:
-  - {message: Added basic parts technology, type: Add}
-  id: 335
-  time: '2021-08-23T03:28:37.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Add meteor swarm event., type: Add}
-  id: 336
-  time: '2021-08-23T03:28:48.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: Fix grav gen losing power after only a bit, type: Fix}
-  id: 337
-  time: '2021-08-24T15:36:50.0000000+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: Removed the ability for chairs to catch items thrown by people sitting
-      on them., type: Fix}
-  id: 338
-  time: '2021-08-25T10:35:37.0000000+00:00'
 - author: ShadowCommander
   changes:
   - {message: Fixed deconstruction verb on partially deconstructed windows., type: Fix}
@@ -2904,3 +2883,26 @@ Entries:
   - {message: Removed one Security Officer slot on Dart to fit new airlock., type: Remove}
   id: 836
   time: '2022-01-06T13:31:37.0000000+00:00'
+- author: Lamrr
+  changes:
+  - {message: Spare jumpsuits and jumpskirts are now available in the form of various
+      colour themed wardrobes. Collect them all!, type: Add}
+  id: 837
+  time: '2022-01-07T03:58:41.0000000+00:00'
+- author: Lamrr
+  changes:
+  - {message: Radiation closets and medicine lockers now come with supplies inside.,
+    type: Tweak}
+  id: 838
+  time: '2022-01-07T04:03:20.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: PAIs can no longer run around on their little robot legs., type: Fix}
+  id: 839
+  time: '2022-01-07T11:57:20.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Station staff should once again spawn with their "outer clothing" (lab
+      coats, vests, etc) equipped.', type: Fix}
+  id: 840
+  time: '2022-01-07T15:58:55.0000000+00:00'
