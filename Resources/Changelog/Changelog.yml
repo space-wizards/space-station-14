@@ -1,9 +1,4 @@
 Entries:
-- author: Seth
-  changes:
-  - {message: Added basic parts technology, type: Add}
-  id: 335
-  time: '2021-08-23T03:28:37.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Add meteor swarm event., type: Add}
@@ -2904,3 +2899,9 @@ Entries:
   - {message: Removed one Security Officer slot on Dart to fit new airlock., type: Remove}
   id: 836
   time: '2022-01-06T13:31:37.0000000+00:00'
+- author: Lamrr
+  changes:
+  - {message: Spare jumpsuits and jumpskirts are now available in the form of various
+      colour themed wardrobes. Collect them all!, type: Add}
+  id: 837
+  time: '2022-01-07T03:58:41.0000000+00:00'
