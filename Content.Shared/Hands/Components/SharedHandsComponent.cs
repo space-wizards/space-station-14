@@ -14,6 +14,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -497,11 +498,14 @@ namespace Content.Shared.Hands.Components
         /// </summary>
         protected bool CanInsertEntityIntoHand(Hand hand, EntityUid entity)
         {
+            var handContainer = hand.Container;
+            if (handContainer == null) return false;
+
             if (!_entMan.HasComponent<SharedItemComponent>(entity))
                 return false;
 
-            var handContainer = hand.Container;
-            if (handContainer == null) return false;
+            if (_entMan.TryGetComponent(entity, out IPhysBody? physics) && physics.BodyType == BodyType.Static)
+                return false;
 
             if (!handContainer.CanInsert(entity)) return false;
 
