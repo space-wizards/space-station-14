@@ -3,6 +3,8 @@
   name: body bag
   description: A plastic bag designed for the storage and transportation of cadavers.
   components:
+  - type: Item
+    size: 6
   - type: Sprite
     netsync: false
     drawdepth: SmallObjects # I guess body bags need appear above a coroner's table?
@@ -17,8 +19,9 @@
   - type: Icon
     sprite: Objects/Specific/Medical/Morgue/bodybags.rsi
     state: bag
-  - type: Item
-    size: 6
+  - type: Tag
+    tags:
+    - BodyBag
   - type: Clickable
   - type: InteractionOutline
   - type: MovedByPressure
@@ -66,9 +69,6 @@
   components:
   - type: Foldable
     folded: true
-  - type: Tag
-    tags:
-    - BodyBag
 #  - type: BodyBagItem #TODO: we need some kind of generic placable, like thus:
 # - type: Placeable
 #   prototype: someId
