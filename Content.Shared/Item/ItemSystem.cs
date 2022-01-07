@@ -53,7 +53,7 @@ namespace Content.Shared.Item
                 args.Using != null ||
                 !args.CanAccess ||
                 !args.CanInteract ||
-                !component.CanPickup(args.User, popup: false))
+                !args.Hands.CanPickupEntityToActiveHand(args.Target))
                 return;
 
             Verb verb = new();
