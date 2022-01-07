@@ -2,13 +2,12 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using Robust.Server.GameObjects;
+using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 using SixLabors.ImageSharp;
 using static Robust.UnitTesting.RobustIntegrationTest;
-using SpriteComponent = Robust.Client.GameObjects.SpriteComponent;
 
 namespace Content.MapRenderer.Painters
 {
@@ -59,7 +58,7 @@ namespace Content.MapRenderer.Painters
 
             foreach (var entity in _sEntityManager.GetEntities())
             {
-                if (!_sEntityManager.HasComponent<ISpriteRenderableComponent>(entity))
+                if (!_sEntityManager.HasComponent<ISpriteComponent>(entity))
                 {
                     continue;
                 }
