@@ -31,6 +31,9 @@
     Scientist: [ 2, 3 ]
     HeadOfSecurity: [ 1, 1 ]
     SecurityOfficer: [ 2, 3 ]
+    Chaplain: [ 1, 1 ]
+    Librarian: [ 1, 1 ]
+    Lawyer: [ 1, 1 ]
 
 - type: gameMap
   id: packedstation
@@ -69,6 +72,8 @@
     SecurityOfficer: [ 2, 3 ]
     Chaplain: [ 1, 1 ]
     Warden: [ 1, 1 ]
+    Librarian: [ 1, 1 ]
+    Lawyer: [ 1, 2 ]
 
 - type: gameMap
   id: knightship
