@@ -25,7 +25,7 @@ namespace Content.Server.DoAfter
 
         private void HandleStateChanged(EntityUid uid, DoAfterComponent component, MobStateChangedEvent args)
         {
-            if (component.DoAfters.Count == 0 || !args.CurrentMobState.IsIncapacitated())
+            if (!args.CurrentMobState.IsIncapacitated())
                 return;
 
             foreach (var doAfter in component.DoAfters)
@@ -36,10 +36,8 @@ namespace Content.Server.DoAfter
 
         public void HandleDamage(EntityUid _, DoAfterComponent component, DamageChangedEvent args)
         {
-            if (component.DoAfters.Count == 0 || !args.InterruptsDoAfters || args.DamageIncreased)
-            {
+            if (!args.InterruptsDoAfters || !args.DamageIncreased)
                 return;
-            }
 
             foreach (var doAfter in component.DoAfters)
             {
