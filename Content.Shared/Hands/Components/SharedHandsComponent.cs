@@ -504,7 +504,7 @@ namespace Content.Shared.Hands.Components
             if (!_entMan.HasComponent<SharedItemComponent>(entity))
                 return false;
 
-            if (!_entMan.TryGetComponent(entity, out IPhysBody? physics) || physics.BodyType == BodyType.Static)
+            if (_entMan.TryGetComponent(entity, out IPhysBody? physics) && physics.BodyType == BodyType.Static)
                 return false;
 
             if (!handContainer.CanInsert(entity)) return false;

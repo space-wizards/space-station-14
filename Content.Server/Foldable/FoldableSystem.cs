@@ -40,16 +40,15 @@ namespace Content.Server.Foldable
             if (!Resolve(uid, ref fold))
                 return false;
 
-            // can't un-fold in hands / inventory
+            // Can't un-fold in hands / inventory
             if (_container.IsEntityInContainer(uid))
                 return false;
 
-            // First we check if the foldable object has a strap component.
             // If an entity is buckled to the object we can't pick it up or fold it
             if (TryComp(uid, out StrapComponent? strap) && strap.BuckledEntities.Any())
                 return false;
 
-            // also check if this entity is "open" (e.g., body bags)
+            // Also check if this entity is "open" (e.g., body bags)
             return !TryComp(uid, out EntityStorageComponent? storage) || !storage.Open;
 
         }

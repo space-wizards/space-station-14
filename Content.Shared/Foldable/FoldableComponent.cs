@@ -19,7 +19,6 @@ public class FoldableComponent : Component
     public override string Name => "Foldable";
 
     [DataField("folded")]
-    [ViewVariables]
     public bool IsFolded = false;
 }
 

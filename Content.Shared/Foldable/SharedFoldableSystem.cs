@@ -54,12 +54,6 @@ public abstract class SharedFoldableSystem : EntitySystem
             appearance.SetData(FoldKey, folded);
     }
 
-    /// <summary>
-    /// Prevents foldable objects to be picked up when unfolded
-    /// </summary>
-    /// <param name="uid"></param>
-    /// <param name="component"></param>
-    /// <param name="args"></param>
     private void OnPickedUpAttempt(EntityUid uid, FoldableComponent component, AttemptItemPickupEvent args)
     {
         if (!component.IsFolded)
