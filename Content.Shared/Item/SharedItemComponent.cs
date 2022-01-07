@@ -115,8 +115,7 @@ namespace Content.Shared.Item
                 return false;
 
             // hands checks action blockers
-            hands.TryPickupEntityToActiveHand(Owner, animateUser: true);
-            return true;
+            return hands.TryPickupEntityToActiveHand(Owner, animateUser: true);
         }
 
         private void OnEquippedPrefixChange()

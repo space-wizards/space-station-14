@@ -21,8 +21,6 @@ public class FoldableComponent : Component
     [DataField("folded")]
     [ViewVariables]
     public bool IsFolded = false;
-
-    public bool CanBeFolded = true;
 }
 
 // ahhh, the ol' "state thats just a copy of the component".
@@ -30,11 +28,9 @@ public class FoldableComponent : Component
 public class FoldableComponentState : ComponentState
 {
     public readonly bool IsFolded;
-    public readonly bool CanBeFolded;
 
-    public FoldableComponentState(bool isFolded, bool canBeFolded)
+    public FoldableComponentState(bool isFolded)
     {
         IsFolded = isFolded;
-        CanBeFolded = canBeFolded;
     }
 }

@@ -1,24 +1,38 @@
 using Content.Shared.Item;
 using JetBrains.Annotations;
-using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Foldable;
 
 [UsedImplicitly]
 public abstract class SharedFoldableSystem : EntitySystem
 {
-    [Dependency] private SharedContainerSystem _container = default!;
-
     private const string FoldKey = "FoldedState";
 
     public override void Initialize()
     {
         base.Initialize();
 
+        SubscribeLocalEvent<FoldableComponent, ComponentGetState>(OnGetState);
+        SubscribeLocalEvent<FoldableComponent, ComponentHandleState>(OnHandleState);
+
         SubscribeLocalEvent<FoldableComponent, ComponentInit>(OnFoldableInit);
         SubscribeLocalEvent<FoldableComponent, AttemptItemPickupEvent>(OnPickedUpAttempt);
+    }
+
+    private void OnGetState(EntityUid uid, FoldableComponent component, ref ComponentGetState args)
+    {
+        args.State = new FoldableComponentState(component.IsFolded);
+    }
+
+    private void OnHandleState(EntityUid uid, FoldableComponent component, ref ComponentHandleState args)
+    {
+        if (args.Current is not FoldableComponentState state)
+            return;
+
+        if (state.IsFolded != component.IsFolded)
+            SetFolded(component, state.IsFolded);
     }
 
     private void OnFoldableInit(EntityUid uid, FoldableComponent component, ComponentInit args)
@@ -33,12 +47,10 @@ public abstract class SharedFoldableSystem : EntitySystem
     /// <param name="folded">If true, the component will become folded, else unfolded</param>
     public virtual void SetFolded(FoldableComponent component, bool folded)
     {
-        component.Dirty();
         component.IsFolded = folded;
-        component.CanBeFolded = !_container.IsEntityInContainer(component.Owner);
+        component.Dirty();
 
-        // Update visuals only if the value has changed
-        if (EntityManager.TryGetComponent(component.Owner, out AppearanceComponent? appearance))
+        if (TryComp(component.Owner, out AppearanceComponent? appearance))
             appearance.SetData(FoldKey, folded);
     }
 

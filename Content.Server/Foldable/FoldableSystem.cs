@@ -35,6 +35,25 @@ namespace Content.Server.Foldable
             return TrySetFolded(comp, !comp.IsFolded);
         }
 
+        public bool CanToggleFold(EntityUid uid, FoldableComponent? fold = null)
+        {
+            if (!Resolve(uid, ref fold))
+                return false;
+
+            // can't un-fold in hands / inventory
+            if (_container.IsEntityInContainer(uid))
+                return false;
+
+            // First we check if the foldable object has a strap component.
+            // If an entity is buckled to the object we can't pick it up or fold it
+            if (TryComp(uid, out StrapComponent? strap) && strap.BuckledEntities.Any())
+                return false;
+
+            // also check if this entity is "open" (e.g., body bags)
+            return !TryComp(uid, out EntityStorageComponent? storage) || !storage.Open;
+
+        }
+
         /// <summary>
         /// Try to fold/unfold
         /// </summary>
@@ -46,16 +65,8 @@ namespace Content.Server.Foldable
             if (state == comp.IsFolded)
                 return false;
 
-            if (_container.IsEntityInContainer(comp.Owner))
+            if (!CanToggleFold(comp.Owner, comp))
                 return false;
-
-            // First we check if the foldable object has a strap component
-            if (EntityManager.TryGetComponent(comp.Owner, out StrapComponent? strap))
-            {
-                // If an entity is buckled to the object we can't pick it up or fold it
-                if (strap.BuckledEntities.Any())
-                    return false;
-            }
 
             SetFolded(comp, state);
             return true;
@@ -71,7 +82,7 @@ namespace Content.Server.Foldable
             base.SetFolded(component, folded);
 
             // You can't buckle an entity to a folded object
-            if (EntityManager.TryGetComponent(component.Owner, out StrapComponent? strap))
+            if (TryComp(component.Owner, out StrapComponent? strap))
                 strap.Enabled = !component.IsFolded;
         }
 
@@ -79,7 +90,7 @@ namespace Content.Server.Foldable
 
         private void AddFoldVerb(EntityUid uid, FoldableComponent component, GetAlternativeVerbsEvent args)
         {
-            if (!args.CanAccess || !args.CanInteract)
+            if (!args.CanAccess || !args.CanInteract || !CanToggleFold(uid, component))
                 return;
 
             Verb verb = new()

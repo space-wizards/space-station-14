@@ -20,6 +20,7 @@
   - type: Clickable
   - type: InteractionOutline
   - type: MovedByPressure
+  - type: Item
   - type: Physics
     bodyType: Dynamic
   - type: Fixtures
