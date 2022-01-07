@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Add meteor swarm event., type: Add}
-  id: 336
-  time: '2021-08-23T03:28:48.0000000+00:00'
 - author: Swept
   changes:
   - {message: Fix grav gen losing power after only a bit, type: Fix}
@@ -2905,3 +2900,9 @@ Entries:
       colour themed wardrobes. Collect them all!, type: Add}
   id: 837
   time: '2022-01-07T03:58:41.0000000+00:00'
+- author: Lamrr
+  changes:
+  - {message: Radiation closets and medicine lockers now come with supplies inside.,
+    type: Tweak}
+  id: 838
+  time: '2022-01-07T04:03:20.0000000+00:00'
