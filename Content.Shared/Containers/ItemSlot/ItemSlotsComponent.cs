@@ -99,7 +99,12 @@ namespace Content.Shared.Containers.ItemSlots
         /// <summary>
         ///     The entity prototype that is spawned into this slot on map init.
         /// </summary>
-        [DataField("startingItem", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        /// <remarks>
+        ///     Marked as readOnly because some components (e.g. PowerCellSlot) set the starting item based on some
+        ///     property of that component (e.g., cell slot size category), and this can lead to unnecessary changes
+        ///     when mapping.
+        /// </remarks>
+        [DataField("startingItem", readOnly: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string? StartingItem;
 
         /// <summary>
