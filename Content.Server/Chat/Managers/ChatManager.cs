@@ -142,7 +142,7 @@ namespace Content.Server.Chat.Managers
 
             message = FormattedMessage.EscapeText(message);
 
-            var messageWrap = Loc.GetString("chat-manager-entity-say-wrap-message",("entityName", Name: _entManager.GetComponent<MetaDataComponent>(source).EntityName));
+            var messageWrap = Loc.GetString("chat-manager-entity-say-wrap-message",("entityName", _entManager.GetComponent<MetaDataComponent>(source).EntityName));
             NetMessageToMany(ChatChannel.Local, message, messageWrap, source, hideChat, clients);
         }
 
@@ -177,7 +177,7 @@ namespace Content.Server.Chat.Managers
             var nearClients = new List<INetChannel>();
             ClientDistanceToList(source, VoiceRange, farClients, nearClients, WhisperRange);
 
-            var messageWrap = Loc.GetString("chat-manager-entity-whisper-wrap-message",("entityName", Name: _entManager.GetComponent<MetaDataComponent>(source).EntityName));
+            var messageWrap = Loc.GetString("chat-manager-entity-whisper-wrap-message",("entityName", _entManager.GetComponent<MetaDataComponent>(source).EntityName));
             NetMessageToMany(ChatChannel.Whisper, message, messageWrap, source, hideChat, nearClients);
 
             if (farClients.Count >= 1)
@@ -195,7 +195,7 @@ namespace Content.Server.Chat.Managers
             }
 
             // Check if entity is a player
-            if (!_entManager.TryGetComponent(source, out ActorComponent? actor))
+            if (!_entManager.HasComponent<ActorComponent>(source))
             {
                 return;
             }
@@ -211,7 +211,7 @@ namespace Content.Server.Chat.Managers
 
             ClientDistanceToList(source, VoiceRange, clients);
 
-            var messageWrap = Loc.GetString("chat-manager-entity-me-wrap-message", ("entityName",Name: _entManager.GetComponent<MetaDataComponent>(source).EntityName));
+            var messageWrap = Loc.GetString("chat-manager-entity-me-wrap-message", ("entityName", _entManager.GetComponent<MetaDataComponent>(source).EntityName));
             NetMessageToMany(ChatChannel.Emotes, action, messageWrap, source, true, clients);
         }
 
