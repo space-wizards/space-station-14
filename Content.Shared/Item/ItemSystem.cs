@@ -53,11 +53,11 @@ namespace Content.Shared.Item
                 args.Using != null ||
                 !args.CanAccess ||
                 !args.CanInteract ||
-                !component.CanPickup(args.User, popup: false))
+                !args.Hands.CanPickupEntityToActiveHand(args.Target))
                 return;
 
             Verb verb = new();
-            verb.Act = () => args.Hands.PutInHand(args.Target);
+            verb.Act = () => args.Hands.TryPickupEntityToActiveHand(args.Target);
             verb.IconTexture = "/Textures/Interface/VerbIcons/pickup.svg.192dpi.png";
 
             // if the item already in a container (that is not the same as the user's), then change the text.
