@@ -325,7 +325,6 @@ namespace Content.Client.Entry
             "MonkeyAccent",
             "ReplacementAccent",
             "ResistLocker",
-            "ReplacementAccent",
             "Meltable",
             "Reprocessor",
             "RadarConsole",
