@@ -9,27 +9,22 @@ on:
   workflow_dispatch:
 
 jobs:
-  check_changes:
+  check_commits:
     runs-on: ubuntu-latest
 
-    name: Check latest commit
-  
     outputs:
-      should_run: ${{ steps.should_run.outputs.should_run }}
-    steps:
-      - uses: actions/checkout@v2
-      - name: print latest_commit
-        run: echo ${{ github.sha }}
+      can_run: ${{ steps.check_changes.outputs.has-new-commits }}
 
-      - id: should_run
-        continue-on-error: true
-        name: check latest commit is less than a day
-        if: ${{ github.event_name == 'schedule' }}
-        run: test -z $(git rev-list  --after="24 hours"  ${{ github.sha }}) && echo "::set-output name=should_run::false"
+    steps:
+    - id: check_changes
+      uses: adriangl/check-new-commits-action@v1
+      with:
+        token: ${{ github.token }}
+        seconds: 86400 # 24h
 
   build:
-    needs: check_changes
-    if: ${{ needs.check_changes.outputs.should_run != 'false' }}
+    needs: check_commits
+    if: needs.check_commits.outputs.can_run == 'true'
     
     runs-on: ubuntu-latest
 
