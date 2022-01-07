@@ -1,3 +1,4 @@
+using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -12,6 +13,7 @@ namespace Content.Shared.Foldable
     /// </summary>
     [RegisterComponent]
     [NetworkedComponent]
+    [Friend(typeof(SharedFoldableSystem))]
     public class FoldableComponent : Component
     {
         public override string Name => "Foldable";
