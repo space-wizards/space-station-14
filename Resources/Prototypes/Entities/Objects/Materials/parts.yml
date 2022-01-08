@@ -13,19 +13,19 @@
 
 - type: entity
   parent: PartBase
-  id: PartRodMetal
-  name: metals rods
+  id: PartRodSteel
+  name: steel rods
   suffix: Full
   components:
   - type: Stack
-    stackType: MetalRod
+    stackType: SteelRod
   - type: Sprite
     state: rods_5
 #  - type: Item
 #    HeldPrefix: rods
   - type: Construction
-    graph: metalRod
-    node: MetalRod
+    graph: steelRod
+    node: SteelRod
   - type: Appearance
     visuals:
     - type: StackVisualizer
@@ -41,14 +41,14 @@
     - floor_reinforced
 
 - type: entity
-  parent: PartRodMetal
-  id: PartRodMetal1
-  name: metal rod
+  parent: PartRodSteel
+  id: PartRodSteel1
+  name: steel rod
   suffix: Single
   components:
   - type: Tag
     tags:
-    - RodMetal1
+    - RodSteel1
   - type: Sprite
     state: rods
   - type: Stack

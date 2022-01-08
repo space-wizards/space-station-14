@@ -9,7 +9,7 @@
             - !type:SnapToGrid
               southRotation: true
           steps:
-            - material: MetalRod
+            - material: SteelRod
               amount: 2
               doAfter: 1
 
@@ -19,7 +19,7 @@
         - to: start
           completed:
             - !type:SpawnPrototype
-              prototype: PartRodMetal1
+              prototype: PartRodSteel1
               amount: 2
             - !type:DeleteEntity
           steps:
@@ -32,13 +32,13 @@
         - to: start
           completed:
             - !type:SpawnPrototype
-              prototype: PartRodMetal1
+              prototype: PartRodSteel1
               amount: 1
             - !type:DeleteEntity
           steps:
             - tool: Cutting
         - to: grille
           steps:
-            - material: MetalRod
+            - material: SteelRod
               amount: 1
               doAfter: 0.5

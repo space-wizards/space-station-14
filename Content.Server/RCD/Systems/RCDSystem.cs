@@ -127,7 +127,7 @@ namespace Content.Server.RCD.Systems
                 //Walls are a special behaviour, and require us to build a new object with a transform rather than setting a grid tile,
                 // thus we early return to avoid the tile set code.
                 case RcdMode.Walls:
-                    var ent = EntityManager.SpawnEntity("WallSolid", mapGrid.GridTileToLocal(snapPos));
+                    var ent = EntityManager.SpawnEntity("WallSteel", mapGrid.GridTileToLocal(snapPos));
                     EntityManager.GetComponent<TransformComponent>(ent).LocalRotation = Angle.Zero; // Walls always need to point south.
                     break;
                 case RcdMode.Airlock:

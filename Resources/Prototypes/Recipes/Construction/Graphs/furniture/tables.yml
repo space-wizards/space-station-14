@@ -11,7 +11,7 @@
             - !type:SnapToGrid
               southRotation: true
           steps:
-            - material: MetalRod
+            - material: SteelRod
               amount: 2
               doAfter: 1
 
@@ -21,7 +21,7 @@
         - to: start
           completed:
             - !type:SpawnPrototype
-                prototype: PartRodMetal
+                prototype: PartRodSteel
                 amount: 2
           steps:
             - tool: Anchoring

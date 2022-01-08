@@ -197,13 +197,13 @@ entities:
       path: /Audio/Effects/alert.ogg
     type: Gravity
 - uid: 1
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: -1.5,1.5
     parent: 0
     type: Transform
 - uid: 2
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: 0.5,1.5
     parent: 0

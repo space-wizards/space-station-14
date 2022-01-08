@@ -313,7 +313,7 @@
     state: rgeneric
   - type: Construction
     graph: girder
-    node: reinforcedWall
+    node: plasteelWall
   - type: Destructible
     thresholds:
     - trigger:
@@ -324,6 +324,7 @@
         node: girder
       - !type:DoActsBehavior
         acts: ["Destruction"]
+# This should probably be renamed at some point.
   - type: ReinforcedWall
     key: walls
     base: solid
@@ -436,7 +437,7 @@
     sprite: Structures/Walls/solid.rsi
   - type: Construction
     graph: girder
-    node: wall
+    node: steelWall
   - type: Icon
     sprite: Structures/Walls/solid.rsi
   - type: Destructible

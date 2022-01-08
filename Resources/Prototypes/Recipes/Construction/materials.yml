@@ -1,11 +1,11 @@
 ﻿- type: construction
-  name: Metal Rod
-  id: metalRod
-  graph: metalRod
+  name: Steel Rod
+  id: steelRod
+  graph: steelRod
   startNode: start
-  targetNode: MetalRod
+  targetNode: SteelRod
   category: Materials
-  description: A sturdy metal rod that can be used for various purposes.
+  description: A sturdy steel rod that can be used for various purposes.
   icon: Objects/Materials/parts.rsi/rods.png
   objectType: Item
 

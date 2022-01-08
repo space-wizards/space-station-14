@@ -34,7 +34,7 @@
             - tool: Screwing
               doAfter: 2
 
-        - to: wall
+        - to: steelWall
           completed:
             - !type:SnapToGrid
               southRotation: true
@@ -54,8 +54,8 @@
             - material: Plasteel
               amount: 2
 
-    - node: wall
-      entity: WallSolid
+    - node: steelWall
+      entity: WallSteel
       edges:
         - to: girder
           completed:
@@ -73,7 +73,7 @@
             sprite: /Textures/Structures/Walls/solid.rsi
             state: reinforced_wall_girder
       edges:
-        - to: reinforcedWall
+        - to: plasteelWall
           completed:
             - !type:SnapToGrid
               southRotation: true
@@ -94,8 +94,8 @@
             - tool: Welding
               doAfter: 2
 
-    - node: reinforcedWall
-      entity: WallReinforced
+    - node: plasteelWall
+      entity: WallPlasteel
       edges:
         - to: girder
           steps:

@@ -1149,19 +1149,19 @@ entities:
     parent: 0
     type: Transform
 - uid: 11
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: 9.5,-11.5
     parent: 0
     type: Transform
 - uid: 12
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: 9.5,-9.5
     parent: 0
     type: Transform
 - uid: 13
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: 9.5,-7.5
     parent: 0
@@ -1227,49 +1227,49 @@ entities:
     parent: 0
     type: Transform
 - uid: 24
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: 9.5,-12.5
     parent: 0
     type: Transform
 - uid: 25
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: 9.5,-10.5
     parent: 0
     type: Transform
 - uid: 26
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: 9.5,-8.5
     parent: 0
     type: Transform
 - uid: 27
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: -3.5,2.5
     parent: 0
     type: Transform
 - uid: 28
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: -4.5,2.5
     parent: 0
     type: Transform
 - uid: 29
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: -5.5,2.5
     parent: 0
     type: Transform
 - uid: 30
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: 9.5,-6.5
     parent: 0
     type: Transform
 - uid: 31
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: 9.5,-13.5
     parent: 0
@@ -1292,55 +1292,55 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 34
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: -2.5,2.5
     parent: 0
     type: Transform
 - uid: 35
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: -5.5,0.5
     parent: 0
     type: Transform
 - uid: 36
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: -4.5,0.5
     parent: 0
     type: Transform
 - uid: 37
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: -3.5,0.5
     parent: 0
     type: Transform
 - uid: 38
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: -0.5,-13.5
     parent: 0
     type: Transform
 - uid: 39
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: -3.5,-14.5
     parent: 0
     type: Transform
 - uid: 40
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: -5.5,-14.5
     parent: 0
     type: Transform
 - uid: 41
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: -1.5,-14.5
     parent: 0
     type: Transform
 - uid: 42
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: -2.5,-14.5
     parent: 0
@@ -1354,7 +1354,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 44
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: -0.5,-14.5
     parent: 0
@@ -1403,37 +1403,37 @@ entities:
     parent: 0
     type: Transform
 - uid: 50
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: -5.5,-8.5
     parent: 0
     type: Transform
 - uid: 51
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: -5.5,-9.5
     parent: 0
     type: Transform
 - uid: 52
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: -5.5,-10.5
     parent: 0
     type: Transform
 - uid: 53
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: -5.5,-11.5
     parent: 0
     type: Transform
 - uid: 54
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: -5.5,-12.5
     parent: 0
     type: Transform
 - uid: 55
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: -5.5,-13.5
     parent: 0
@@ -1447,115 +1447,115 @@ entities:
   - enabled: False
     type: AmbientSound
 - uid: 57
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: -5.5,-7.5
     parent: 0
     type: Transform
 - uid: 58
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: -5.5,-6.5
     parent: 0
     type: Transform
 - uid: 59
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: -5.5,-5.5
     parent: 0
     type: Transform
 - uid: 60
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: -5.5,-4.5
     parent: 0
     type: Transform
 - uid: 61
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: -5.5,-3.5
     parent: 0
     type: Transform
 - uid: 62
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: -5.5,-2.5
     parent: 0
     type: Transform
 - uid: 63
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: -5.5,-1.5
     parent: 0
     type: Transform
 - uid: 64
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: -5.5,-0.5
     parent: 0
     type: Transform
 - uid: 65
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: 9.5,-5.5
     parent: 0
     type: Transform
 - uid: 66
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: 9.5,-4.5
     parent: 0
     type: Transform
 - uid: 67
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: 9.5,-3.5
     parent: 0
     type: Transform
 - uid: 68
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: 9.5,-2.5
     parent: 0
     type: Transform
 - uid: 69
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: 9.5,-1.5
     parent: 0
     type: Transform
 - uid: 70
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: 9.5,-0.5
     parent: 0
     type: Transform
 - uid: 71
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: 9.5,0.5
     parent: 0
     type: Transform
 - uid: 72
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: 9.5,1.5
     parent: 0
     type: Transform
 - uid: 73
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: 9.5,2.5
     parent: 0
     type: Transform
 - uid: 74
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: 8.5,2.5
     parent: 0
     type: Transform
 - uid: 75
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: 7.5,2.5
     parent: 0
@@ -1603,7 +1603,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 83
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: 7.5,3.5
     parent: 0
@@ -1657,7 +1657,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 92
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: 8.5,-10.5
     parent: 0
@@ -1681,7 +1681,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 95
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: 5.5,-9.5
     parent: 0
@@ -1699,7 +1699,7 @@ entities:
   - radius: 2.5
     type: PointLight
 - uid: 97
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: 4.5,-9.5
     parent: 0
@@ -1723,31 +1723,31 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 100
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: -0.5,-12.5
     parent: 0
     type: Transform
 - uid: 101
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: -0.5,-8.5
     parent: 0
     type: Transform
 - uid: 102
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: -0.5,-9.5
     parent: 0
     type: Transform
 - uid: 103
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: -0.5,-10.5
     parent: 0
     type: Transform
 - uid: 104
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: -0.5,-11.5
     parent: 0
@@ -1792,7 +1792,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 110
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: 2.5,-9.5
     parent: 0
@@ -1874,79 +1874,79 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 118
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: -0.5,-6.5
     parent: 0
     type: Transform
 - uid: 119
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: -0.5,-5.5
     parent: 0
     type: Transform
 - uid: 120
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: -0.5,-4.5
     parent: 0
     type: Transform
 - uid: 121
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: -4.5,-3.5
     parent: 0
     type: Transform
 - uid: 122
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: -3.5,-3.5
     parent: 0
     type: Transform
 - uid: 123
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: -2.5,-3.5
     parent: 0
     type: Transform
 - uid: 124
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: -1.5,-3.5
     parent: 0
     type: Transform
 - uid: 125
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: -0.5,-3.5
     parent: 0
     type: Transform
 - uid: 126
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: -2.5,0.5
     parent: 0
     type: Transform
 - uid: 127
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: -1.5,0.5
     parent: 0
     type: Transform
 - uid: 128
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: -0.5,0.5
     parent: 0
     type: Transform
 - uid: 129
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: -0.5,-0.5
     parent: 0
     type: Transform
 - uid: 130
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: -0.5,-1.5
     parent: 0
@@ -2571,7 +2571,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 202
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: 5.5,3.5
     parent: 0
@@ -2607,13 +2607,13 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 207
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: 6.5,3.5
     parent: 0
     type: Transform
 - uid: 208
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: 4.5,3.5
     parent: 0
@@ -2686,7 +2686,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 218
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: 5.5,-4.5
     parent: 0
@@ -2704,13 +2704,13 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 220
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: 7.5,-4.5
     parent: 0
     type: Transform
 - uid: 221
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: 8.5,-4.5
     parent: 0
@@ -2840,7 +2840,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 238
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: 5.5,-8.5
     parent: 0
@@ -2870,13 +2870,13 @@ entities:
   - enabled: False
     type: AmbientSound
 - uid: 242
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: 6.5,-9.5
     parent: 0
     type: Transform
 - uid: 243
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: 6.5,-10.5
     parent: 0
@@ -2914,7 +2914,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 248
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: 1.5,-9.5
     parent: 0
@@ -2971,7 +2971,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 255
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: 5.5,-7.5
     parent: 0
@@ -3010,7 +3010,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 260
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: 1.5,0.5
     parent: 0
@@ -3022,7 +3022,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 262
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: 5.5,-0.5
     parent: 0
@@ -3036,7 +3036,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 264
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: 5.5,0.5
     parent: 0
@@ -3054,7 +3054,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 266
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: 4.5,0.5
     parent: 0
@@ -3071,7 +3071,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 268
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: 4.5,2.5
     parent: 0
@@ -3338,13 +3338,13 @@ entities:
     parent: 0
     type: Transform
 - uid: 299
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: 1.5,-2.5
     parent: 0
     type: Transform
 - uid: 300
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: 4.5,-2.5
     parent: 0
@@ -3362,19 +3362,19 @@ entities:
     parent: 0
     type: Transform
 - uid: 303
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: 3.5,0.5
     parent: 0
     type: Transform
 - uid: 304
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: 2.5,-2.5
     parent: 0
     type: Transform
 - uid: 305
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: 3.5,-2.5
     parent: 0
@@ -3439,25 +3439,25 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 312
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: 4.5,-1.5
     parent: 0
     type: Transform
 - uid: 313
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: 1.5,-1.5
     parent: 0
     type: Transform
 - uid: 314
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: 2.5,0.5
     parent: 0
     type: Transform
 - uid: 315
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: 5.5,-1.5
     parent: 0
@@ -3517,13 +3517,13 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 322
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: 5.5,-5.5
     parent: 0
     type: Transform
 - uid: 323
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: 4.5,-5.5
     parent: 0
@@ -3541,19 +3541,19 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 325
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: 2.5,-5.5
     parent: 0
     type: Transform
 - uid: 326
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: 1.5,-5.5
     parent: 0
     type: Transform
 - uid: 327
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: 1.5,-3.5
     parent: 0
@@ -3689,13 +3689,13 @@ entities:
         reagents: []
     type: SolutionContainerManager
 - uid: 339
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: 4.5,-3.5
     parent: 0
     type: Transform
 - uid: 340
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: 5.5,-3.5
     parent: 0
@@ -5155,55 +5155,55 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 500
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: 9.5,-14.5
     parent: 0
     type: Transform
 - uid: 501
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: 8.5,-14.5
     parent: 0
     type: Transform
 - uid: 502
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: 7.5,-14.5
     parent: 0
     type: Transform
 - uid: 503
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: 6.5,-14.5
     parent: 0
     type: Transform
 - uid: 504
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: 5.5,-14.5
     parent: 0
     type: Transform
 - uid: 505
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: 4.5,-14.5
     parent: 0
     type: Transform
 - uid: 506
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: 3.5,-14.5
     parent: 0
     type: Transform
 - uid: 507
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: 2.5,-14.5
     parent: 0
     type: Transform
 - uid: 508
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: 1.5,-14.5
     parent: 0
@@ -5467,7 +5467,7 @@ entities:
   - enabled: False
     type: AmbientSound
 - uid: 539
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: -4.5,-14.5
     parent: 0
@@ -5498,7 +5498,7 @@ entities:
   - enabled: False
     type: AmbientSound
 - uid: 543
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: 0.5,-14.5
     parent: 0
@@ -5574,7 +5574,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 552
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: 4.5,-16.5
     parent: 0

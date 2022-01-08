@@ -40,7 +40,7 @@
           path: /Audio/Effects/metalbreak.ogg
       - !type:SpawnEntitiesBehavior
         spawn:
-          PartRodMetal1:
+          PartRodSteel1:
             min: 0
             max: 1
       - !type:DoActsBehavior
@@ -100,7 +100,7 @@
           path: /Audio/Effects/metalbreak.ogg
       - !type:SpawnEntitiesBehavior
         spawn:
-          PartRodMetal1:
+          PartRodSteel1:
             min: 0
             max: 2
       - !type:DoActsBehavior
@@ -152,7 +152,7 @@
           path: /Audio/Effects/metalbreak.ogg
       - !type:SpawnEntitiesBehavior
         spawn:
-          PartRodMetal1:
+          PartRodSteel1:
             min: 0
             max: 2
       - !type:DoActsBehavior

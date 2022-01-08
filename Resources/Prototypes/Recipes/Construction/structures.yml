@@ -17,11 +17,11 @@
     - !type:TileNotBlocked
 
 - type: construction
-  name: wall
-  id: wall
+  name: steel wall
+  id: steelWall
   graph: girder
   startNode: start
-  targetNode: wall
+  targetNode: steelWall
   category: Structures
   description: Keeps the air in and the greytide out.
   icon:
@@ -36,10 +36,10 @@
 
 - type: construction
   name: reinforced wall
-  id: reinforcedWall
+  id: plasteelWall
   graph: girder
   startNode: start
-  targetNode: reinforcedWall
+  targetNode: plasteelWall
   category: Structures
   description: Keeps the air in and the greytide out.
   icon:

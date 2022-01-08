@@ -1579,7 +1579,7 @@ entities:
     pos: 0.5,10.5
     type: Transform
 - uid: 190
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - parent: 0
     pos: 3.5,17.5
@@ -1615,145 +1615,145 @@ entities:
     pos: 2.5,13.5
     type: Transform
 - uid: 196
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - parent: 0
     pos: 4.5,17.5
     type: Transform
 - uid: 197
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - parent: 0
     pos: 5.5,17.5
     type: Transform
 - uid: 198
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - parent: 0
     pos: 6.5,17.5
     type: Transform
 - uid: 199
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - parent: 0
     pos: 7.5,17.5
     type: Transform
 - uid: 200
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - parent: 0
     pos: 7.5,16.5
     type: Transform
 - uid: 201
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - parent: 0
     pos: 7.5,15.5
     type: Transform
 - uid: 202
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - parent: 0
     pos: 7.5,14.5
     type: Transform
 - uid: 203
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - parent: 0
     pos: 7.5,13.5
     type: Transform
 - uid: 204
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - parent: 0
     pos: 7.5,12.5
     type: Transform
 - uid: 205
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - parent: 0
     pos: 7.5,11.5
     type: Transform
 - uid: 206
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - parent: 0
     pos: 7.5,10.5
     type: Transform
 - uid: 207
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - parent: 0
     pos: 7.5,9.5
     type: Transform
 - uid: 208
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - parent: 0
     pos: 1.5,17.5
     type: Transform
 - uid: 209
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - parent: 0
     pos: 2.5,17.5
     type: Transform
 - uid: 210
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - parent: 0
     pos: -0.5,9.5
     type: Transform
 - uid: 211
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - parent: 0
     pos: -0.5,10.5
     type: Transform
 - uid: 212
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - parent: 0
     pos: -0.5,11.5
     type: Transform
 - uid: 213
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - parent: 0
     pos: -0.5,12.5
     type: Transform
 - uid: 214
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - parent: 0
     pos: -0.5,13.5
     type: Transform
 - uid: 215
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - parent: 0
     pos: -0.5,14.5
     type: Transform
 - uid: 216
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - parent: 0
     pos: -0.5,15.5
     type: Transform
 - uid: 217
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - parent: 0
     pos: -0.5,16.5
     type: Transform
 - uid: 218
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - parent: 0
     pos: -0.5,17.5
     type: Transform
 - uid: 219
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - parent: 0
     pos: 0.5,17.5

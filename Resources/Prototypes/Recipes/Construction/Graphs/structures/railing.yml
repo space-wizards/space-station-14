@@ -9,7 +9,7 @@
             - !type:SnapToGrid
               southRotation: true
           steps:
-            - material: MetalRod
+            - material: SteelRod
               amount: 1
               doAfter: 2
         - to: railingCorner
@@ -17,7 +17,7 @@
             - !type:SnapToGrid
               southRotation: true
           steps:
-            - material: MetalRod
+            - material: SteelRod
               amount: 2
               doAfter: 2.5
         - to: railingCornerSmall
@@ -25,7 +25,7 @@
             - !type:SnapToGrid
               southRotation: true
           steps:
-            - material: MetalRod
+            - material: SteelRod
               amount: 1
               doAfter: 2
 
@@ -35,7 +35,7 @@
         - to: start
           completed:
             - !type:SpawnPrototype
-              prototype: PartRodMetal1
+              prototype: PartRodSteel1
               amount: 1
             - !type:DeleteEntity
           steps:
@@ -48,7 +48,7 @@
         - to: start
           completed:
             - !type:SpawnPrototype
-              prototype: PartRodMetal1
+              prototype: PartRodSteel1
               amount: 2
             - !type:DeleteEntity
           steps:
@@ -61,7 +61,7 @@
         - to: start
           completed:
             - !type:SpawnPrototype
-              prototype: PartRodMetal1
+              prototype: PartRodSteel1
               amount: 1
             - !type:DeleteEntity
           steps:

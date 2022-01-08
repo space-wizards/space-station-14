@@ -25,7 +25,7 @@
           ShardGlassPlasma:
             min: 1
             max: 2
-          PartRodMetal:
+          PartRodSteel:
             min: 1
             max: 2
       - !type:DoActsBehavior
@@ -79,7 +79,7 @@
           ShardGlassPlasma:
             min: 1
             max: 2
-          PartRodMetal:
+          PartRodSteel:
             min: 1
             max: 2
       - !type:DoActsBehavior

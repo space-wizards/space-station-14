@@ -358,7 +358,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 2
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: 0.5,-3.5
     parent: 0
@@ -429,7 +429,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 11
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: 0.5,-2.5
     parent: 0
@@ -441,13 +441,13 @@ entities:
     parent: 0
     type: Transform
 - uid: 13
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: 1.5,-1.5
     parent: 0
     type: Transform
 - uid: 14
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: 1.5,-0.5
     parent: 0
@@ -459,25 +459,25 @@ entities:
     parent: 0
     type: Transform
 - uid: 16
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: 2.5,0.5
     parent: 0
     type: Transform
 - uid: 17
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: 2.5,1.5
     parent: 0
     type: Transform
 - uid: 18
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: 1.5,1.5
     parent: 0
     type: Transform
 - uid: 19
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: 1.5,2.5
     parent: 0
@@ -503,61 +503,61 @@ entities:
     parent: 0
     type: Transform
 - uid: 23
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: -2.5,2.5
     parent: 0
     type: Transform
 - uid: 24
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: -2.5,1.5
     parent: 0
     type: Transform
 - uid: 25
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: -3.5,1.5
     parent: 0
     type: Transform
 - uid: 26
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: -3.5,0.5
     parent: 0
     type: Transform
 - uid: 27
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: -3.5,-0.5
     parent: 0
     type: Transform
 - uid: 28
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: -2.5,-0.5
     parent: 0
     type: Transform
 - uid: 29
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: -2.5,-1.5
     parent: 0
     type: Transform
 - uid: 30
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: -2.5,-2.5
     parent: 0
     type: Transform
 - uid: 31
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: -1.5,-2.5
     parent: 0
     type: Transform
 - uid: 32
-  type: WallReinforced
+  type: WallPlasteel
   components:
   - pos: -1.5,-3.5
     parent: 0

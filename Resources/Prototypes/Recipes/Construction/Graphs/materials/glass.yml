@@ -11,7 +11,7 @@
           steps:
             - material: Glass
               amount: 1
-            - material: MetalRod
+            - material: SteelRod
               amount: 1
         - to: SheetPGlass
           completed:
@@ -31,7 +31,7 @@
               amount: 1
             - material: Plasma
               amount: 1
-            - material: MetalRod
+            - material: SteelRod
               amount: 1
 
     - node: SheetGlass

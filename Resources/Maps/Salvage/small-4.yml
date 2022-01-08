@@ -435,7 +435,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 9
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: -2.5,-3.5
     parent: 0
@@ -451,7 +451,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 11
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: 0.5,-3.5
     parent: 0
@@ -556,7 +556,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 25
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: -3.5,-1.5
     parent: 0
@@ -848,7 +848,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 55
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: -0.5,-3.5
     parent: 0

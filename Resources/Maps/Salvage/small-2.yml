@@ -314,19 +314,19 @@ entities:
       path: /Audio/Effects/alert.ogg
     type: Gravity
 - uid: 1
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: -3.5,1.5
     parent: 0
     type: Transform
 - uid: 2
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: -2.5,1.5
     parent: 0
     type: Transform
 - uid: 3
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: -1.5,1.5
     parent: 0
@@ -344,19 +344,19 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 5
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: 0.5,1.5
     parent: 0
     type: Transform
 - uid: 6
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: 1.5,1.5
     parent: 0
     type: Transform
 - uid: 7
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: 2.5,1.5
     parent: 0
@@ -392,7 +392,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 13
-  type: WallSolid
+  type: WallSteel
   components:
   - pos: 2.5,-2.5
     parent: 0
