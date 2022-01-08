@@ -1,1 +1,1 @@
-vote-options-server-initiator-text = Сервер
+vote-options-server-initiator-text = The server
