@@ -1,5 +1,4 @@
 using System;
-using Content.Server.Alert;
 using Content.Server.Stunnable.Components;
 using Content.Shared.Standing;
 using Content.Shared.StatusEffect;
@@ -27,20 +26,19 @@ namespace Content.Server.Stunnable
 
             if (EntityManager.TryGetComponent<StatusEffectsComponent>(otherUid, out var status))
             {
-                ServerAlertsComponent? alerts = null;
                 StandingStateComponent? standingState = null;
                 AppearanceComponent? appearance = null;
 
                 // Let the actual methods log errors for these.
-                Resolve(otherUid, ref alerts, ref standingState, ref appearance, false);
+                Resolve(otherUid, ref standingState, ref appearance, false);
 
-                _stunSystem.TryStun(otherUid, TimeSpan.FromSeconds(component.StunAmount), true, status, alerts);
+                _stunSystem.TryStun(otherUid, TimeSpan.FromSeconds(component.StunAmount), true, status);
 
                 _stunSystem.TryKnockdown(otherUid, TimeSpan.FromSeconds(component.KnockdownAmount), true,
-                    status, alerts);
+                    status);
 
                 _stunSystem.TrySlowdown(otherUid, TimeSpan.FromSeconds(component.SlowdownAmount), true,
-                    component.WalkSpeedMultiplier, component.RunSpeedMultiplier, status, alerts);
+                    component.WalkSpeedMultiplier, component.RunSpeedMultiplier, status);
             }
         }
     }

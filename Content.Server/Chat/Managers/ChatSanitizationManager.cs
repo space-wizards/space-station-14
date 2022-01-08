@@ -42,6 +42,7 @@ public class ChatSanitizationManager : IChatSanitizationManager
         { "xD", "chatsan-laughs" },
         { ";-;", "chatsan-cries" },
         { ";_;", "chatsan-cries" },
+        { "qwq", "chatsan-cries" },
         { ":u", "chatsan-smiles-smugly" },
         { ":v", "chatsan-smiles-smugly" },
         { ">:i", "chatsan-annoyed" },
@@ -61,6 +62,10 @@ public class ChatSanitizationManager : IChatSanitizationManager
         { ":\\", "chatsan-uncertain" },
         { "lmao", "chatsan-laughs" },
         { "lol", "chatsan-laughs" },
+        { "lel", "chatsan-laughs" },
+        { "kek", "chatsan-laughs" },
+        { "o7", "chatsan-salutes" },
+        { "idk", "chatsan-shrugs" }
     };
 
     private bool doSanitize = false;
