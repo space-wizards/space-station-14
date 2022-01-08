@@ -1,4 +1,5 @@
-﻿using Robust.Server.Player;
+﻿using Content.Server.Mind.Commands;
+using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
