@@ -630,7 +630,6 @@ entities:
     type: Transform
   - containers:
       PowerCellCharger-powerCellContainer: !type:ContainerSlot {}
-      charger-slot: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 70
   type: FirelockGlass
@@ -7346,9 +7345,6 @@ entities:
   - pos: 12.5,-29.5
     parent: 853
     type: Transform
-  - cellSlot:
-      name: power-cell-slot-component-slot-name-default
-    type: PowerCellSlot
   - canCollide: False
     type: Physics
   - containers:
@@ -7835,7 +7831,6 @@ entities:
     type: Transform
   - containers:
       WeaponCapacitorCharger-powerCellContainer: !type:ContainerSlot {}
-      charger-slot: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 769
   type: PottedPlantRD
@@ -14199,45 +14194,6 @@ entities:
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
-        - 24.99,16.01
-        - 24.99,18.99
-        - 21.01,18.99
-        - 21.01,16.01
-      id: grid_chunk-21.01-16.01
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 47.441586
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 31.99,16.01
-        - 31.99,18.99
-        - 29.01,18.99
-        - 29.01,16.01
-      id: grid_chunk-29.01-16.01
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 35.521587
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 31.99,19.01
-        - 31.99,19.99
-        - 26.01,19.99
-        - 26.01,19.01
-      id: grid_chunk-26.01-19.01
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 23.441587
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
         - 31.99,20.01
         - 31.99,20.99
         - 27.01,20.99
@@ -14313,6 +14269,32 @@ entities:
       layer:
       - MapGrid
       mass: 15.601591
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 24.99,16.01
+        - 24.99,18.99
+        - 21.01,18.99
+        - 21.01,16.01
+      id: grid_chunk-21.01-16.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 47.441586
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 31.99,16.01
+        - 31.99,18.99
+        - 29.01,18.99
+        - 29.01,16.01
+      id: grid_chunk-29.01-16.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 35.521587
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -18109,6 +18091,19 @@ entities:
       layer:
       - MapGrid
       mass: 16
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 31.99,19.01
+        - 31.99,19.99
+        - 26.01,19.99
+        - 26.01,19.01
+      id: grid_chunk-26.01-19.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 23.441587
       restitution: 0.1
     type: Fixtures
   - chunkCollection: {}
@@ -23313,9 +23308,6 @@ entities:
   - pos: 31.506327,-4.3631177
     parent: 853
     type: Transform
-  - cellSlot:
-      name: power-cell-slot-component-slot-name-default
-    type: PowerCellSlot
   - canCollide: False
     type: Physics
   - containers:
@@ -23362,9 +23354,6 @@ entities:
   - pos: 31.693827,-4.1131177
     parent: 853
     type: Transform
-  - cellSlot:
-      name: power-cell-slot-component-slot-name-default
-    type: PowerCellSlot
   - canCollide: False
     type: Physics
   - containers:
@@ -23887,17 +23876,12 @@ entities:
   - pos: -13.462238,16.135218
     parent: 853
     type: Transform
-  - cellSlot:
-      startingItem: PowerCellSmallStandard
-      name: power-cell-slot-component-slot-name-default
-    type: PowerCellSlot
   - canCollide: False
     type: Physics
   - containers:
       BatteryBarrel-powercell-container: !type:ContainerSlot
         ent: 1133
       BatteryBarrel-ammo-container: !type:ContainerSlot {}
-      cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1567
   type: Catwalk
@@ -47368,9 +47352,6 @@ entities:
   - pos: 30.584452,-4.2068677
     parent: 853
     type: Transform
-  - cellSlot:
-      name: power-cell-slot-component-slot-name-default
-    type: PowerCellSlot
   - canCollide: False
     type: Physics
   - containers:
@@ -47440,15 +47421,10 @@ entities:
 - uid: 4176
   type: BarSign
   components:
-  - desc: Recently relicensed after a long closure.
-    name: The Emergency Rum Party
-    type: MetaData
   - rot: 4.371139006309477E-08 rad
     pos: -5.5,2.5
     parent: 853
     type: Transform
-  - current: EmergencyRumParty
-    type: BarSign
 - uid: 4177
   type: SignBar
   components:
@@ -47818,7 +47794,6 @@ entities:
     type: ApcPowerReceiver
   - containers:
       WeaponCapacitorCharger-powerCellContainer: !type:ContainerSlot {}
-      charger-slot: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4224
   type: Table
@@ -47938,7 +47913,6 @@ entities:
     type: ApcPowerReceiver
   - containers:
       WeaponCapacitorCharger-powerCellContainer: !type:ContainerSlot {}
-      charger-slot: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4240
   type: FlashlightLantern
@@ -47946,9 +47920,6 @@ entities:
   - pos: 30.350077,-4.5818677
     parent: 853
     type: Transform
-  - cellSlot:
-      name: power-cell-slot-component-slot-name-default
-    type: PowerCellSlot
   - canCollide: False
     type: Physics
   - containers:
@@ -48179,13 +48150,14 @@ entities:
     pos: 9.434699,18.224125
     parent: 853
     type: Transform
-  - cellSlot:
-      startingItem: PowerCellSmallStandard
-      name: power-cell-slot-component-slot-name-default
-    type: PowerCellSlot
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
+  - cellInsertSound: !type:SoundPathSpecifier
+      path: /Audio/Items/pistol_magout.ogg
+    cellRemoveSound: !type:SoundPathSpecifier
+      path: /Audio/Items/pistol_magin.ogg
+    type: PowerCellSlot
 - uid: 4271
   type: Table
   components:
@@ -52030,9 +52002,6 @@ entities:
   - pos: -11.587238,16.635218
     parent: 853
     type: Transform
-  - cellSlot:
-      name: power-cell-slot-component-slot-name-default
-    type: PowerCellSlot
   - canCollide: False
     type: Physics
   - containers:
@@ -52044,9 +52013,6 @@ entities:
   - pos: -11.305988,16.541468
     parent: 853
     type: Transform
-  - cellSlot:
-      name: power-cell-slot-component-slot-name-default
-    type: PowerCellSlot
   - canCollide: False
     type: Physics
   - containers:
@@ -52058,15 +52024,10 @@ entities:
   - pos: -13.462238,16.735422
     parent: 853
     type: Transform
-  - cellSlot:
-      startingItem: PowerCellSmallStandard
-      name: power-cell-slot-component-slot-name-default
-    type: PowerCellSlot
   - containers:
       BatteryBarrel-powercell-container: !type:ContainerSlot
         ent: 4733
       BatteryBarrel-ammo-container: !type:ContainerSlot {}
-      cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4733
   type: PowerCellSmallStandard
@@ -52081,17 +52042,12 @@ entities:
   - pos: -13.462238,16.432093
     parent: 853
     type: Transform
-  - cellSlot:
-      startingItem: PowerCellSmallStandard
-      name: power-cell-slot-component-slot-name-default
-    type: PowerCellSlot
   - canCollide: False
     type: Physics
   - containers:
       BatteryBarrel-powercell-container: !type:ContainerSlot
         ent: 1210
       BatteryBarrel-ammo-container: !type:ContainerSlot {}
-      cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4735
   type: WallSolid
@@ -52304,9 +52260,6 @@ entities:
   - pos: 31.334452,-4.0662427
     parent: 853
     type: Transform
-  - cellSlot:
-      name: power-cell-slot-component-slot-name-default
-    type: PowerCellSlot
   - canCollide: False
     type: Physics
   - containers:
@@ -75207,14 +75160,14 @@ entities:
   - pos: 22.5,24.5
     parent: 853
     type: Transform
-- uid: 7125
-  type: WallSolid
+- uid: 7129
+  type: WallMetal
   components:
   - pos: 21.5,23.5
     parent: 853
     type: Transform
-- uid: 7126
-  type: WallSolid
+- uid: 7130
+  type: WallMetal
   components:
   - pos: 24.5,23.5
     parent: 853

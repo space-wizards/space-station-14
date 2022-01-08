@@ -243,6 +243,36 @@
 
 - type: entity
   parent: WallBase
+  id: WallMetal
+  name: metal wall
+  components:
+  - type: Tag
+    tags:
+      - Wall
+      - RCDDeconstructWhitelist
+  - type: Sprite
+    sprite: Structures/Walls/metal.rsi
+  - type: Icon
+    sprite: Structures/Walls/metal.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Girder:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: walls
+    base: metal
+
+- type: entity
+  parent: WallBase
   id: WallPlasma
   name: plasma wall
   components:
