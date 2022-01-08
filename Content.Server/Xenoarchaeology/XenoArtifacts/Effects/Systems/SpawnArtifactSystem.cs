@@ -41,7 +41,8 @@ public class SpawnArtifactSystem : EntitySystem
         var spawned = EntityManager.SpawnEntity(component.Prototype, spawnCord);
         component.SpawnsCount++;
 
-        // if there is an user - try to put artifact in their hands
+        // if there is an user - try to put spawned item in their hands
+        // doesn't work for spawners
         if (args.User != null &&
             EntityManager.TryGetComponent(args.User.Value, out SharedHandsComponent? hands) &&
             EntityManager.HasComponent<ItemComponent>(spawned))
