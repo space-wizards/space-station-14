@@ -177,6 +177,8 @@ namespace Content.Server.Chat.Managers
 
             message = FormattedMessage.EscapeText(message);
 
+            var obfuscatedMessage = ObfuscateMessageReadability(message, 0.2f);
+
             var clients = new List<ICommonSession>();
             ClientDistanceToList(source, VoiceRange, clients);
 
@@ -197,7 +199,6 @@ namespace Content.Server.Chat.Managers
                 }
                 else
                 {
-                    var obfuscatedMessage = ObfuscateMessageReadability(message, 0.2f);
                     NetMessageToOne(ChatChannel.Whisper, obfuscatedMessage, messageWrap, source, hideChat, client.ConnectedClient);
                 }
             }
