@@ -40,6 +40,7 @@ namespace Content.Shared.Administration
         [Serializable, NetSerializable]
         public sealed class BwoinkTextMessage : EntityEventArgs
         {
+            public Guid MessageId { get; }
             public Status Status { get; set; }
             public DateTime SentAt { get; }
             public NetUserId ChannelId { get; }
@@ -51,6 +52,7 @@ namespace Content.Shared.Administration
 
             public BwoinkTextMessage(NetUserId channelId, NetUserId trueSender, string text, DateTime? sentAt = default)
             {
+                MessageId = Guid.NewGuid();
                 SentAt = sentAt ?? DateTime.Now;
                 ChannelId = channelId;
                 TrueSender = trueSender;
@@ -76,10 +78,12 @@ namespace Content.Shared.Administration
         public sealed class FetchBwoinkLogMessage : EntityEventArgs
         {
             public NetUserId ChannelId { get; }
+            public Guid? Since { get; }
 
-            public FetchBwoinkLogMessage(NetUserId channelId)
+            public FetchBwoinkLogMessage(NetUserId channelId, Guid? since = default)
             {
                 ChannelId = channelId;
+                Since = since;
             }
         }
     }

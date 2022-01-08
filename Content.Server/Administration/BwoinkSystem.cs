@@ -117,18 +117,31 @@ namespace Content.Server.Administration
 
         private void OnFetchLogRequest(FetchBwoinkLogMessage message, EntitySessionEventArgs eventArgs)
         {
+            Logger.DebugS("ahelp", "got log req: {0} -> {1}/{2}", eventArgs.SenderSession.UserId, message.ChannelId, message.Since);
             if (!IsAuthorizedForChannel((IPlayerSession) eventArgs.SenderSession, message.ChannelId))
                 return;
 
             if (!_history.ContainsKey(message.ChannelId))
                 return;
 
-            foreach (var m in _history[message.ChannelId])
+            IEnumerable<BwoinkTextMessage> iter = _history[message.ChannelId];
+
+            var seen = false;
+            if (message.Since is not null)
+                iter = iter.SkipWhile(m => seen = seen || m.MessageId == message.Since);
+
+            foreach (var m in iter.OrderBy(m => m.SentAt))
                 RaiseNetworkEvent(m, eventArgs.SenderSession.ConnectedClient);
         }
 
         private void OnReadMessage(BwoinkReadMessage message, EntitySessionEventArgs eventArgs)
         {
+            // We don't care so much about if a player has seen a message, since admins are shown the online/offline
+            // state of clients, and can infer the read-ness of the message from that. Plain users, however, have no
+            // such tools for admins.
+            if (_adminManager.GetAdminData((IPlayerSession) eventArgs.SenderSession) is not null)
+                return;
+
             if (!IsAuthorizedForChannel((IPlayerSession) eventArgs.SenderSession, message.ChannelId))
                 return;
 
