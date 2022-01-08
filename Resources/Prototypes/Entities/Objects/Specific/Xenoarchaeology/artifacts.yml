@@ -108,7 +108,8 @@
     - type: SpawnArtifact
       maxSpawns: 10
       possiblePrototypes:
-        - RandomSpawner
+        - FoodPacketSyndiTrash
+        - FoodPacketSemkiTrash
         - RandomInstruments
         - ToySpawner
 
