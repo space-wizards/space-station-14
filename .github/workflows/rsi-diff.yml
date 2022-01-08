@@ -18,10 +18,10 @@ jobs:
         uses: Ana06/get-changed-files@v1.2
         with:
           format: 'space-delimited'
-       
+
       - name: Diff changed RSIs
         id: diff
-        uses: mirrorcult/RSIDiffBot@v1.0
+        uses: space-wizards/RSIDiffBot@v1.1
         with:
           modified: ${{ steps.files.outputs.modified }}
           removed: ${{ steps.files.outputs.removed }}
@@ -30,7 +30,7 @@ jobs:
           basesha: ${{ github.event.pull_request.base.sha }}
           headname: ${{ github.event.pull_request.head.repo.full_name }}
           headsha: ${{ github.event.pull_request.head.sha }}
-      
+
       - name: Potentially find comment
         uses: peter-evans/find-comment@v1
         id: fc
@@ -38,7 +38,7 @@ jobs:
           issue-number: ${{ github.event.number }}
           comment-author: 'github-actions[bot]'
           body-includes: RSI Diff Bot
-          
+
       - name: Create comment if it doesn't exist
         if: steps.fc.outputs.comment-id == ''
         uses: peter-evans/create-or-update-comment@v1
@@ -46,7 +46,7 @@ jobs:
           issue-number: ${{ github.event.number }}
           body: |
             ${{ steps.diff.outputs.summary-details }}
-            
+
       - name: Update comment if it exists
         if: steps.fc.outputs.comment-id != ''
         uses: peter-evans/create-or-update-comment@v1
@@ -55,7 +55,7 @@ jobs:
           edit-mode: replace
           body: |
             ${{ steps.diff.outputs.summary-details }}
-       
+
       - name: Update comment to read that it has been edited
         if: steps.fc.outputs.comment-id != ''
         uses: peter-evans/create-or-update-comment@v1
