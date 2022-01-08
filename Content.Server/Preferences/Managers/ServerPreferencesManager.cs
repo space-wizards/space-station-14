@@ -271,9 +271,11 @@ namespace Content.Server.Preferences.Managers
                                 hp.AntagPreferences.Where(antag =>
                                     _protos.HasIndex<AntagPrototype>(antag)))
                             .WithSpecies(
-                                IoCManager.Resolve<IPrototypeManager>().HasIndex<SpeciesPrototype>(hp.Species)
-                                ? hp.Species
-                                : SpeciesManager.DefaultSpecies);
+                                IoCManager.Resolve<IPrototypeManager>()
+                                    .TryIndex<SpeciesPrototype>(hp.Species, out var species)
+                                && species.RoundStart
+                                    ? hp.Species
+                                    : SpeciesManager.DefaultSpecies);
                         break;
                     }
                     default:
