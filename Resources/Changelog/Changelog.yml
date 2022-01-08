@@ -1,9 +1,4 @@
 Entries:
-- author: ShadowCommander
-  changes:
-  - {message: Fixed deconstruction verb on partially deconstructed windows., type: Fix}
-  id: 339
-  time: '2021-08-25T11:45:33.0000000+00:00'
 - author: Macoron
   changes:
   - {message: Fix admin events UI tab, type: Fix}
@@ -2906,3 +2901,8 @@ Entries:
       coats, vests, etc) equipped.', type: Fix}
   id: 840
   time: '2022-01-07T15:58:55.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Drinking welder fuel now does toxin damage. Tasty., type: Fix}
+  id: 841
+  time: '2022-01-08T02:44:14.0000000+00:00'
