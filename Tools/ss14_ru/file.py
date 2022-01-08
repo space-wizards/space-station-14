@@ -59,9 +59,6 @@ class FluentFile(File):
     def read_serialized_data(self):
         return self.serialize_data(self.parse_data(self.read_data()))
 
-    def read_parsed_data(self):
-        return self.parse_data(self.read_data())
-
 
 class YAMLFluentFileAdapter(File):
     def __init__(self, full_path):
