@@ -1,4 +1,4 @@
 ### Messages that pop up when metabolizing histamine.
 
-histamine-effect-light-itchiness = You feel a little itchy...
-histamine-effect-heavy-itchiness = You feel REALLY itchy!
+histamine-effect-light-itchiness = Вы чувствуете легкий зуд...
+histamine-effect-heavy-itchiness = Вы чувствуете НАСТОЯЩИЙ зуд!
