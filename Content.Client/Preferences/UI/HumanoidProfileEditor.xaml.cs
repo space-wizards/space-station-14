@@ -493,10 +493,9 @@ namespace Content.Client.Preferences.UI
 
         private void RebuildSpriteView()
         {
-            _previewDummy =
-                _entMan.SpawnEntity(
-                    _prototypeManager.Index<SpeciesPrototype>(Profile?.Species ?? SpeciesManager.DefaultSpecies)
-                        .DollPrototype, MapCoordinates.Nullspace);
+            var dollProto = _prototypeManager.Index<SpeciesPrototype>(Profile?.Species ?? SpeciesManager.DefaultSpecies).DollPrototype;
+            _previewDummy = _entMan.SpawnEntity(dollProto, MapCoordinates.Nullspace);
+
             var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(_previewDummy);
 
             _previewSpriteControl.DisposeAllChildren();
