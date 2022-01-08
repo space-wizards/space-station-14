@@ -186,7 +186,7 @@ namespace Content.Client.Preferences.UI
             {
                 CSpeciesButton.SelectId(args.Id);
                 SetSpecies(options[args.Id].ID);
-                OnSkinColorOnOnValueChanged(CSkin);
+                OnSkinColorOnValueChanged(CSkin);
             };
 
             #endregion Species
@@ -201,7 +201,7 @@ namespace Content.Client.Preferences.UI
             // 0 is 45 - 20 - 100
             // 20 is 25 - 20 - 100
             // 100 is 25 - 100 - 20
-            _skinColor.OnValueChanged += OnSkinColorOnOnValueChanged;
+            _skinColor.OnValueChanged += OnSkinColorOnValueChanged;
 
             #endregion
 
@@ -438,7 +438,7 @@ namespace Content.Client.Preferences.UI
             IsDirty = false;
         }
 
-        private void OnSkinColorOnOnValueChanged(Range range)
+        private void OnSkinColorOnValueChanged(Range range)
         {
             if (Profile is null) return;
 
