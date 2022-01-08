@@ -7,6 +7,7 @@ using Content.Shared.Examine;
 using Content.Shared.PowerCell;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Rounding;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -48,6 +49,14 @@ public class PowerCellSystem : SharedPowerCellSystem
         var frac = battery.CurrentCharge / battery.MaxCharge;
         var level = (byte) ContentHelpers.RoundToNearestLevels(frac, 1, PowerCellComponent.PowerCellVisualsLevels);
         appearance.SetData(PowerCellVisuals.ChargeLevel, level);
+
+        // If this power cell is inside a cell-slot, inform that entity that the power has changed (for updating visuals n such).
+        if (uid.TryGetContainer(out var container)
+            && TryComp(container.Owner, out PowerCellSlotComponent? slot)
+            && slot.CellSlot.Item == uid)
+        {
+            RaiseLocalEvent(container.Owner, new PowerCellChangedEvent(false), false);
+        }
     }
 
     private void Explode(EntityUid uid, BatteryComponent? battery = null)
