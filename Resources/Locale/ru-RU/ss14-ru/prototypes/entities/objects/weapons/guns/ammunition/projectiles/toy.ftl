@@ -1,4 +1,4 @@
-ent-BulletDonkSoftBase = foam dart
+ent-BulletDonkSoftBase = поролоновый дротик
     .desc = { ent-BaseItem.desc }
-ent-BulletDonkSoft = foam dart
-    .desc = I hope you're wearing eye protection.
+ent-BulletDonkSoft = поролоновый дротик
+    .desc = Надеюсь, вы носите защиту для глаз.
