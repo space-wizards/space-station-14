@@ -6,7 +6,6 @@ namespace Content.Server.Entry
         public static string[] List => new [] {
             "ConstructionGhost",
             "IconSmooth",
-            "LowWall",
             "ReinforcedWall",
             "InteractionOutline",
             "MeleeWeaponArcAnimation",
