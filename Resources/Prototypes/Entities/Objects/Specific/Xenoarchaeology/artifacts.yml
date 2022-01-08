@@ -23,6 +23,10 @@
             - VaultImpassable
     - type: InteractionOutline
     - type: Artifact
+    - type: RandomArtifactSprite
+    - type: Appearance
+      visuals:
+        - type: RandomArtifactVisualizer
 
 # Telepathic
 - type: entity
