@@ -1,9 +1,4 @@
 Entries:
-- author: Macoron
-  changes:
-  - {message: Fix admin events UI tab, type: Fix}
-  id: 340
-  time: '2021-08-26T09:45:06.0000000+00:00'
 - author: Swept
   changes:
   - {message: Adds unique screen for NTBlockGame, type: Add}
@@ -2906,3 +2901,9 @@ Entries:
   - {message: Drinking welder fuel now does toxin damage. Tasty., type: Fix}
   id: 841
   time: '2022-01-08T02:44:14.0000000+00:00'
+- author: the maintainer team
+  changes:
+  - {message: Running speed has been lowered by two meters per second. Walking speed
+      has been lowered by one., type: Tweak}
+  id: 842
+  time: '2022-01-08T23:04:06.0000000+00:00'
