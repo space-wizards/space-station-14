@@ -18,7 +18,7 @@
     jumpsuit: ClothingUniformJumpsuitEngineering
     back: ClothingBackpackEngineeringFilled
     shoes: ClothingShoesBootsWork
-    outerclothing: ClothingOuterVestHazard
+    outerClothing: ClothingOuterVestHazard
     id: EngineerPDA
     belt: ClothingBeltUtilityFilled
     ears: ClothingHeadsetEngineering

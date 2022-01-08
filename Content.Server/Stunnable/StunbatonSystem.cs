@@ -1,6 +1,6 @@
 using System;
 using System.Linq;
-using Content.Server.PowerCell.Components;
+using Content.Server.PowerCell;
 using Content.Server.Speech.EntitySystems;
 using Content.Server.Stunnable.Components;
 using Content.Server.Weapon.Melee;
@@ -11,6 +11,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Jittering;
 using Content.Shared.Popups;
+using Content.Shared.PowerCell.Components;
 using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
@@ -29,6 +30,7 @@ namespace Content.Server.Stunnable
         [Dependency] private readonly StunSystem _stunSystem = default!;
         [Dependency] private readonly StutteringSystem _stutteringSystem = default!;
         [Dependency] private readonly SharedJitteringSystem _jitterSystem = default!;
+        [Dependency] private readonly PowerCellSystem _cellSystem = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
         public override void Initialize()
@@ -40,7 +42,6 @@ namespace Content.Server.Stunnable
             SubscribeLocalEvent<StunbatonComponent, UseInHandEvent>(OnUseInHand);
             SubscribeLocalEvent<StunbatonComponent, ThrowDoHitEvent>(OnThrowCollide);
             SubscribeLocalEvent<StunbatonComponent, PowerCellChangedEvent>(OnPowerCellChanged);
-            SubscribeLocalEvent<StunbatonComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<StunbatonComponent, ExaminedEvent>(OnExamined);
         }
 
@@ -49,7 +50,7 @@ namespace Content.Server.Stunnable
             if (!comp.Activated || !args.HitEntities.Any())
                 return;
 
-            if (!EntityManager.TryGetComponent<PowerCellSlotComponent>(uid, out var slot) || slot.Cell == null || !slot.Cell.TryUseCharge(comp.EnergyPerUse))
+            if (!_cellSystem.TryGetBatteryFromSlot(uid, out var battery) || !battery.TryUseCharge(comp.EnergyPerUse))
                 return;
 
             foreach (EntityUid entity in args.HitEntities)
@@ -63,7 +64,7 @@ namespace Content.Server.Stunnable
             if (!comp.Activated)
                 return;
 
-            if (!EntityManager.TryGetComponent<PowerCellSlotComponent>(uid, out var slot) || slot.Cell == null || !slot.Cell.TryUseCharge(comp.EnergyPerUse))
+            if (!_cellSystem.TryGetBatteryFromSlot(uid, out var battery) || !battery.TryUseCharge(comp.EnergyPerUse))
                 return;
 
             args.CanInteract = true;
@@ -87,8 +88,11 @@ namespace Content.Server.Stunnable
 
         private void OnThrowCollide(EntityUid uid, StunbatonComponent comp, ThrowDoHitEvent args)
         {
-            if (!EntityManager.TryGetComponent<PowerCellSlotComponent>(uid, out var slot)) return;
-            if (!comp.Activated || slot.Cell == null || !slot.Cell.TryUseCharge(comp.EnergyPerUse)) return;
+            if (!comp.Activated)
+                return;
+
+            if (!_cellSystem.TryGetBatteryFromSlot(uid, out var battery) || !battery.TryUseCharge(comp.EnergyPerUse))
+                return;
 
             StunEntity(args.Target, comp);
         }
@@ -99,15 +103,6 @@ namespace Content.Server.Stunnable
             {
                 TurnOff(comp);
             }
-        }
-
-        private void OnInteractUsing(EntityUid uid, StunbatonComponent comp, InteractUsingEvent args)
-        {
-            if (!Get<ActionBlockerSystem>().CanInteract(args.User))
-                return;
-
-            if (EntityManager.TryGetComponent<PowerCellSlotComponent>(uid, out var cellslot))
-                cellslot.InsertCell(args.Used);
         }
 
         private void OnExamined(EntityUid uid, StunbatonComponent comp, ExaminedEvent args)
@@ -144,7 +139,7 @@ namespace Content.Server.Stunnable
             _jitterSystem.DoJitter(entity, slowdownTime, true, status:status);
             _stutteringSystem.DoStutter(entity, slowdownTime, true, status);
 
-            if (!EntityManager.TryGetComponent<PowerCellSlotComponent?>(comp.Owner, out var slot) || slot.Cell == null || !(slot.Cell.CurrentCharge < comp.EnergyPerUse))
+            if (!_cellSystem.TryGetBatteryFromSlot(comp.Owner, out var battery) || !(battery.CurrentCharge < comp.EnergyPerUse))
                 return;
 
             SoundSystem.Play(Filter.Pvs(comp.Owner), comp.SparksSound.GetSound(), comp.Owner, AudioHelpers.WithVariation(0.25f));
@@ -183,14 +178,14 @@ namespace Content.Server.Stunnable
             if (!EntityManager.TryGetComponent<PowerCellSlotComponent?>(comp.Owner, out var slot))
                 return;
 
-            if (slot.Cell == null)
+            if (!_cellSystem.TryGetBatteryFromSlot(comp.Owner, out var battery))
             {
                 SoundSystem.Play(playerFilter, comp.TurnOnFailSound.GetSound(), comp.Owner, AudioHelpers.WithVariation(0.25f));
                 user.PopupMessage(Loc.GetString("comp-stunbaton-activated-missing-cell"));
                 return;
             }
 
-            if (slot.Cell != null && slot.Cell.CurrentCharge < comp.EnergyPerUse)
+            if (battery.CurrentCharge < comp.EnergyPerUse)
             {
                 SoundSystem.Play(playerFilter, comp.TurnOnFailSound.GetSound(), comp.Owner, AudioHelpers.WithVariation(0.25f));
                 user.PopupMessage(Loc.GetString("comp-stunbaton-activated-dead-cell"));
