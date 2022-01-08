@@ -421,17 +421,6 @@ namespace Content.Server.Chat.Managers
             return message;
         }
 
-        public void NetMessageToMany(ChatChannel channel, string message, string messageWrap, EntityUid source, bool hideChat,  List<INetChannel> clients)
-        {
-            var msg = _netManager.CreateNetMessage<MsgChatMessage>();
-            msg.Channel = channel;
-            msg.Message = message;
-            msg.MessageWrap = messageWrap;
-            msg.SenderEntity = source;
-            msg.HideChat = hideChat;
-            _netManager.ServerSendToMany(msg, clients);
-        }
-
         public void NetMessageToOne(ChatChannel channel, string message, string messageWrap, EntityUid source, bool hideChat, INetChannel client)
         {
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
