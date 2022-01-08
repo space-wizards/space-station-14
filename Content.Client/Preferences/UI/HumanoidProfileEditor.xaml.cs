@@ -201,7 +201,7 @@ namespace Content.Client.Preferences.UI
             // 0 is 45 - 20 - 100
             // 20 is 25 - 20 - 100
             // 100 is 25 - 100 - 20
-            _skinColor.OnValueChanged += OnSkinColorOnOnValueChanged;
+            _skinColor.OnValueChanged += OnSkinColorOnValueChanged;
 
             #endregion
 
