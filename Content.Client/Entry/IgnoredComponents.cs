@@ -323,7 +323,13 @@ namespace Content.Client.Entry
             "GrowingKudzu",
             "MonkeyAccent",
             "ReplacementAccent",
-            "ResistLocker"
+            "ResistLocker",
+            "SpawnArtifact",
+            "TelepathicArtifact",
+            "ArtifactGasTrigger",
+            "ArtifactInteractionTrigger",
+            "Artifact",
+            "RandomArtifactSprite"
         };
     }
 }
