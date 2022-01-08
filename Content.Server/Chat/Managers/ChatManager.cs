@@ -498,7 +498,7 @@ namespace Content.Server.Chat.Managers
                 }
                 else
                 {
-                    modifiedMessage[i] = '*';
+                    modifiedMessage[i] = '~';
                 }
             }
 
