@@ -186,7 +186,7 @@ namespace Content.Client.Preferences.UI
             {
                 CSpeciesButton.SelectId(args.Id);
                 SetSpecies(options[args.Id].ID);
-                OnSkinColorOnOnValueChanged(CSkin);
+                OnSkinColorOnValueChanged(CSkin);
             };
 
             #endregion Species
