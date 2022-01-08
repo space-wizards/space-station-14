@@ -438,7 +438,7 @@ namespace Content.Client.Preferences.UI
             IsDirty = false;
         }
 
-        private void OnSkinColorOnOnValueChanged(Range range)
+        private void OnSkinColorOnValueChanged(Range range)
         {
             if (Profile is null) return;
 
