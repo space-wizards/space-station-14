@@ -3756,7 +3756,7 @@ entities:
       30,-55: 0
       30,-54: 0
       30,-53: 0
-      30,-52: 0
+      30,-52: 2
       30,-51: 0
       30,-50: 0
       30,-49: 0
@@ -8270,6 +8270,17 @@ entities:
       moles:
       - 0
       - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 220.5375
+      moles:
+      - 16.36866
+      - 61.57734
       - 0
       - 0
       - 0
@@ -19052,11 +19063,14 @@ entities:
     parent: 0
     type: Transform
 - uid: 296
-  type: WallSolid
+  type: FireAlarm
   components:
-  - pos: 7.5,2.5
+  - rot: -1.5707963267948966 rad
+    pos: 7.5,2.5
     parent: 0
     type: Transform
+  - fixtures: []
+    type: Fixtures
 - uid: 297
   type: WallSolid
   components:
@@ -24267,7 +24281,8 @@ entities:
 - uid: 1043
   type: WallReinforced
   components:
-  - pos: 14.5,-43.5
+  - rot: 1.5707963267948966 rad
+    pos: 30.5,-51.5
     parent: 0
     type: Transform
 - uid: 1044
@@ -25960,9 +25975,9 @@ entities:
     parent: 0
     type: Transform
 - uid: 1291
-  type: WallReinforced
+  type: AirAlarm
   components:
-  - pos: 30.5,-51.5
+  - pos: 31.5,-48.5
     parent: 0
     type: Transform
 - uid: 1292
@@ -27594,9 +27609,14 @@ entities:
 - uid: 1554
   type: BarSign
   components:
+  - desc: Where people go that'd rather not be called by their name.
+    name: The Singulo
+    type: MetaData
   - pos: 31.897861,-1.5027537
     parent: 0
     type: Transform
+  - current: TheSingulo
+    type: BarSign
 - uid: 1555
   type: StoolBar
   components:
@@ -37308,9 +37328,14 @@ entities:
 - uid: 2913
   type: BarSign
   components:
+  - desc: Don't drink and swim.
+    name: The Drunk Carp
+    type: MetaData
   - pos: 67.998146,-18.498177
     parent: 0
     type: Transform
+  - current: TheDrunkCarp
+    type: BarSign
 - uid: 2914
   type: Window
   components:
@@ -118735,6 +118760,19 @@ entities:
   - pos: 39.5,52.5
     parent: 0
     type: Transform
+- uid: 11738
+  type: AirAlarm
+  components:
+  - pos: 12.5,2.5
+    parent: 0
+    type: Transform
+- uid: 11739
+  type: WallSolid
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 7.5,2.5
+    parent: 0
+    type: Transform
 - uid: 11740
   type: CableMV
   components:
@@ -118788,6 +118826,18 @@ entities:
     pos: 3.5,-32.5
     parent: 0
     type: Transform
+- uid: 11747
+  type: AirAlarm
+  components:
+  - pos: 9.5,11.5
+    parent: 0
+    type: Transform
+- uid: 11748
+  type: FireAlarm
+  components:
+  - pos: 10.5,2.5
+    parent: 0
+    type: Transform
 - uid: 11749
   type: CableMV
   components:
@@ -118828,6 +118878,20 @@ entities:
     type: Sprite
   - canCollide: False
     type: Physics
+- uid: 11753
+  type: FireAlarm
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 0.5,8.5
+    parent: 0
+    type: Transform
+- uid: 11754
+  type: AirAlarm
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 0.5,2.5
+    parent: 0
+    type: Transform
 - uid: 11755
   type: CableMV
   components:
@@ -118996,6 +119060,16 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+- uid: 11772
+  type: CableApcExtension
+  components:
+  - pos: 1.5,3.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
 - uid: 11773
   type: CableMV
   components:
@@ -119016,6 +119090,372 @@ entities:
     type: Sprite
   - canCollide: False
     type: Physics
+- uid: 11775
+  type: CableApcExtension
+  components:
+  - pos: 1.5,2.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 11776
+  type: AirAlarm
+  components:
+  - pos: -5.5,1.5
+    parent: 0
+    type: Transform
+- uid: 11777
+  type: AirAlarm
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 24.5,-7.5
+    parent: 0
+    type: Transform
+- uid: 11778
+  type: FireAlarm
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 2.5,-7.5
+    parent: 0
+    type: Transform
+- uid: 11779
+  type: AirAlarm
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 7.5,11.5
+    parent: 0
+    type: Transform
+- uid: 11780
+  type: FireAlarm
+  components:
+  - pos: 22.5,2.5
+    parent: 0
+    type: Transform
+- uid: 11781
+  type: AirAlarm
+  components:
+  - pos: 23.5,2.5
+    parent: 0
+    type: Transform
+- uid: 11782
+  type: AirAlarm
+  components:
+  - pos: 28.5,2.5
+    parent: 0
+    type: Transform
+- uid: 11783
+  type: FireAlarm
+  components:
+  - pos: 33.5,2.5
+    parent: 0
+    type: Transform
+- uid: 11784
+  type: FireAlarm
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 32.5,-8.5
+    parent: 0
+    type: Transform
+- uid: 11785
+  type: AirAlarm
+  components:
+  - pos: 35.5,-8.5
+    parent: 0
+    type: Transform
+- uid: 11786
+  type: AirAlarm
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 24.5,-15.5
+    parent: 0
+    type: Transform
+- uid: 11787
+  type: AirAlarm
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 24.5,-22.5
+    parent: 0
+    type: Transform
+- uid: 11788
+  type: FireAlarm
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 28.5,-20.5
+    parent: 0
+    type: Transform
+- uid: 11789
+  type: FireAlarm
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 28.5,-13.5
+    parent: 0
+    type: Transform
+- uid: 11790
+  type: FireAlarm
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 28.5,-10.5
+    parent: 0
+    type: Transform
+- uid: 11791
+  type: FireAlarm
+  components:
+  - pos: 20.5,11.5
+    parent: 0
+    type: Transform
+- uid: 11792
+  type: AirAlarm
+  components:
+  - pos: 17.5,11.5
+    parent: 0
+    type: Transform
+- uid: 11793
+  type: FireAlarm
+  components:
+  - pos: 13.5,11.5
+    parent: 0
+    type: Transform
+- uid: 11794
+  type: FireAlarm
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 48.5,-2.5
+    parent: 0
+    type: Transform
+- uid: 11795
+  type: AirAlarm
+  components:
+  - pos: 48.5,1.5
+    parent: 0
+    type: Transform
+- uid: 11796
+  type: AirAlarm
+  components:
+  - pos: 57.5,4.5
+    parent: 0
+    type: Transform
+- uid: 11797
+  type: FireAlarm
+  components:
+  - pos: 55.5,4.5
+    parent: 0
+    type: Transform
+- uid: 11798
+  type: FireAlarm
+  components:
+  - pos: 70.5,3.5
+    parent: 0
+    type: Transform
+- uid: 11799
+  type: FireAlarm
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 63.5,-7.5
+    parent: 0
+    type: Transform
+- uid: 11800
+  type: AirAlarm
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 63.5,-3.5
+    parent: 0
+    type: Transform
+- uid: 11801
+  type: CableApcExtension
+  components:
+  - pos: 62.5,-4.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 11802
+  type: AirAlarm
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 73.5,-8.5
+    parent: 0
+    type: Transform
+- uid: 11803
+  type: FireAlarm
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 73.5,-6.5
+    parent: 0
+    type: Transform
+- uid: 11804
+  type: FireAlarm
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 72.5,-18.5
+    parent: 0
+    type: Transform
+- uid: 11805
+  type: AirAlarm
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 72.5,-17.5
+    parent: 0
+    type: Transform
+- uid: 11806
+  type: AirAlarm
+  components:
+  - pos: 79.5,-14.5
+    parent: 0
+    type: Transform
+- uid: 11807
+  type: FireAlarm
+  components:
+  - pos: 77.5,-14.5
+    parent: 0
+    type: Transform
+- uid: 11808
+  type: FireAlarm
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 88.5,-9.5
+    parent: 0
+    type: Transform
+- uid: 11809
+  type: AirAlarm
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 88.5,-8.5
+    parent: 0
+    type: Transform
+- uid: 11810
+  type: AirAlarm
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 70.5,9.5
+    parent: 0
+    type: Transform
+- uid: 11811
+  type: FireAlarm
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 71.5,9.5
+    parent: 0
+    type: Transform
+- uid: 11812
+  type: FireAlarm
+  components:
+  - pos: 73.5,19.5
+    parent: 0
+    type: Transform
+- uid: 11813
+  type: AirAlarm
+  components:
+  - pos: 74.5,19.5
+    parent: 0
+    type: Transform
+- uid: 11814
+  type: FireAlarm
+  components:
+  - pos: 28.5,11.5
+    parent: 0
+    type: Transform
+- uid: 11815
+  type: AirAlarm
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 43.5,5.5
+    parent: 0
+    type: Transform
+- uid: 11816
+  type: FireAlarm
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 39.5,10.5
+    parent: 0
+    type: Transform
+- uid: 11817
+  type: AirAlarm
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 27.5,9.5
+    parent: 0
+    type: Transform
+- uid: 11818
+  type: AirAlarm
+  components:
+  - pos: 28.5,16.5
+    parent: 0
+    type: Transform
+- uid: 11819
+  type: FireAlarm
+  components:
+  - pos: 36.5,16.5
+    parent: 0
+    type: Transform
+- uid: 11820
+  type: FireAlarm
+  components:
+  - pos: 44.5,16.5
+    parent: 0
+    type: Transform
+- uid: 11821
+  type: AirAlarm
+  components:
+  - pos: 46.5,20.5
+    parent: 0
+    type: Transform
+- uid: 11822
+  type: AirAlarm
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 23.5,19.5
+    parent: 0
+    type: Transform
+- uid: 11823
+  type: FireAlarm
+  components:
+  - pos: 24.5,26.5
+    parent: 0
+    type: Transform
+- uid: 11824
+  type: FireAlarm
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 28.5,30.5
+    parent: 0
+    type: Transform
+- uid: 11825
+  type: AirAlarm
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 28.5,31.5
+    parent: 0
+    type: Transform
+- uid: 11826
+  type: AirAlarm
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 25.5,40.5
+    parent: 0
+    type: Transform
+- uid: 11827
+  type: FireAlarm
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 25.5,42.5
+    parent: 0
+    type: Transform
+- uid: 11828
+  type: FireAlarm
+  components:
+  - pos: 21.5,47.5
+    parent: 0
+    type: Transform
+- uid: 11829
+  type: AirAlarm
+  components:
+  - pos: 33.5,47.5
+    parent: 0
+    type: Transform
 - uid: 11830
   type: Catwalk
   components:
@@ -119082,6 +119522,46 @@ entities:
     type: Sprite
   - canCollide: False
     type: Physics
+- uid: 11839
+  type: AirAlarm
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 31.5,22.5
+    parent: 0
+    type: Transform
+- uid: 11840
+  type: FireAlarm
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 31.5,19.5
+    parent: 0
+    type: Transform
+- uid: 11841
+  type: AirAlarm
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 42.5,35.5
+    parent: 0
+    type: Transform
+- uid: 11842
+  type: FireAlarm
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 42.5,34.5
+    parent: 0
+    type: Transform
+- uid: 11843
+  type: FireAlarm
+  components:
+  - pos: 42.5,43.5
+    parent: 0
+    type: Transform
+- uid: 11844
+  type: AirAlarm
+  components:
+  - pos: 41.5,43.5
+    parent: 0
+    type: Transform
 - uid: 11845
   type: CableMV
   components:
@@ -119180,6 +119660,19 @@ entities:
     type: Sprite
   - canCollide: False
     type: Physics
+- uid: 11855
+  type: AirAlarm
+  components:
+  - pos: 32.5,33.5
+    parent: 0
+    type: Transform
+- uid: 11856
+  type: FireAlarm
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 33.5,34.5
+    parent: 0
+    type: Transform
 - uid: 11857
   type: CableMV
   components:
@@ -119188,6 +119681,13 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+- uid: 11858
+  type: FireAlarm
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 47.5,30.5
+    parent: 0
+    type: Transform
 - uid: 11859
   type: CableMV
   components:
@@ -119587,6 +120087,27 @@ entities:
     type: Sprite
   - canCollide: False
     type: Physics
+- uid: 11910
+  type: AirAlarm
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 47.5,31.5
+    parent: 0
+    type: Transform
+- uid: 11911
+  type: AirAlarm
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 65.5,22.5
+    parent: 0
+    type: Transform
+- uid: 11912
+  type: FireAlarm
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 65.5,25.5
+    parent: 0
+    type: Transform
 - uid: 11913
   type: PoweredSmallLight
   components:
@@ -119949,6 +120470,13 @@ entities:
   - containers:
       PowerCellCharger-powerCellContainer: !type:ContainerSlot {}
     type: ContainerContainer
+- uid: 11952
+  type: AirAlarm
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 56.5,12.5
+    parent: 0
+    type: Transform
 - uid: 11953
   type: Autolathe
   components:
@@ -120206,6 +120734,13 @@ entities:
   type: RandomSpawner
   components:
   - pos: 31.5,-14.5
+    parent: 0
+    type: Transform
+- uid: 11989
+  type: FireAlarm
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 56.5,10.5
     parent: 0
     type: Transform
 - uid: 11990
@@ -120622,4 +121157,572 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+- uid: 12047
+  type: FireAlarm
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 51.5,12.5
+    parent: 0
+    type: Transform
+- uid: 12048
+  type: FireAlarm
+  components:
+  - pos: 50.5,12.5
+    parent: 0
+    type: Transform
+- uid: 12049
+  type: AirAlarm
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 49.5,12.5
+    parent: 0
+    type: Transform
+- uid: 12050
+  type: AirAlarm
+  components:
+  - pos: 52.5,12.5
+    parent: 0
+    type: Transform
+- uid: 12051
+  type: AirAlarm
+  components:
+  - pos: 14.5,-43.5
+    parent: 0
+    type: Transform
+- uid: 12052
+  type: AirAlarm
+  components:
+  - pos: 23.5,-34.5
+    parent: 0
+    type: Transform
+- uid: 12053
+  type: AirAlarm
+  components:
+  - pos: 35.5,-31.5
+    parent: 0
+    type: Transform
+- uid: 12054
+  type: AirAlarm
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 16.5,-32.5
+    parent: 0
+    type: Transform
+- uid: 12055
+  type: FireAlarm
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 19.5,-33.5
+    parent: 0
+    type: Transform
+- uid: 12056
+  type: FireAlarm
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 27.5,-37.5
+    parent: 0
+    type: Transform
+- uid: 12057
+  type: AirAlarm
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 39.5,-41.5
+    parent: 0
+    type: Transform
+- uid: 12058
+  type: FireAlarm
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 39.5,-47.5
+    parent: 0
+    type: Transform
+- uid: 12059
+  type: FireAlarm
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 45.5,-39.5
+    parent: 0
+    type: Transform
+- uid: 12060
+  type: AirAlarm
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 42.5,-39.5
+    parent: 0
+    type: Transform
+- uid: 12061
+  type: AirAlarm
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 12.5,-25.5
+    parent: 0
+    type: Transform
+- uid: 12062
+  type: FireAlarm
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 12.5,-28.5
+    parent: 0
+    type: Transform
+- uid: 12063
+  type: FireAlarm
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 24.5,-29.5
+    parent: 0
+    type: Transform
+- uid: 12064
+  type: AirAlarm
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 25.5,-30.5
+    parent: 0
+    type: Transform
+- uid: 12065
+  type: AirAlarm
+  components:
+  - pos: 26.5,-30.5
+    parent: 0
+    type: Transform
+- uid: 12066
+  type: FireAlarm
+  components:
+  - pos: 27.5,-30.5
+    parent: 0
+    type: Transform
+- uid: 12067
+  type: AirAlarm
+  components:
+  - pos: 42.5,-21.5
+    parent: 0
+    type: Transform
+- uid: 12068
+  type: FireAlarm
+  components:
+  - pos: 40.5,-21.5
+    parent: 0
+    type: Transform
+- uid: 12069
+  type: PlasmaCanister
+  components:
+  - pos: 43.5,-25.5
+    parent: 0
+    type: Transform
+- uid: 12070
+  type: PlasmaCanister
+  components:
+  - pos: 43.5,-26.5
+    parent: 0
+    type: Transform
+- uid: 12071
+  type: PlasmaCanister
+  components:
+  - pos: 13.5,-31.5
+    parent: 0
+    type: Transform
+- uid: 12072
+  type: PlasmaCanister
+  components:
+  - pos: 13.5,-30.5
+    parent: 0
+    type: Transform
+- uid: 12073
+  type: PlasmaCanister
+  components:
+  - pos: 11.5,-29.5
+    parent: 0
+    type: Transform
+- uid: 12074
+  type: PlasmaCanister
+  components:
+  - pos: 11.5,-28.5
+    parent: 0
+    type: Transform
+- uid: 12075
+  type: PlasmaCanister
+  components:
+  - pos: 64.5,22.5
+    parent: 0
+    type: Transform
+- uid: 12076
+  type: AirAlarm
+  components:
+  - pos: 18.5,-13.5
+    parent: 0
+    type: Transform
+- uid: 12077
+  type: FireAlarm
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 17.5,-15.5
+    parent: 0
+    type: Transform
+- uid: 12078
+  type: SalternApc
+  components:
+  - pos: 31.5,-48.5
+    parent: 0
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - loadingNetworkDemand: 5
+    supplyRampPosition: 2.4463015
+    type: PowerNetworkBattery
+- uid: 12079
+  type: CableMV
+  components:
+  - pos: 29.5,-38.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 12080
+  type: CableMV
+  components:
+  - pos: 29.5,-39.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 12081
+  type: CableMV
+  components:
+  - pos: 29.5,-40.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 12082
+  type: CableMV
+  components:
+  - pos: 29.5,-41.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 12083
+  type: CableMV
+  components:
+  - pos: 30.5,-41.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 12084
+  type: CableMV
+  components:
+  - pos: 31.5,-41.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 12085
+  type: CableMV
+  components:
+  - pos: 31.5,-42.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 12086
+  type: CableMV
+  components:
+  - pos: 31.5,-43.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 12087
+  type: CableMV
+  components:
+  - pos: 31.5,-44.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 12088
+  type: CableMV
+  components:
+  - pos: 31.5,-45.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 12089
+  type: CableMV
+  components:
+  - pos: 31.5,-46.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 12090
+  type: CableMV
+  components:
+  - pos: 31.5,-47.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 12091
+  type: CableMV
+  components:
+  - pos: 31.5,-48.5
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 12092
+  type: FireAlarm
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 3.5,-26.5
+    parent: 0
+    type: Transform
+- uid: 12093
+  type: AirAlarm
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 3.5,-25.5
+    parent: 0
+    type: Transform
+- uid: 12094
+  type: AirAlarm
+  components:
+  - pos: 2.5,-27.5
+    parent: 0
+    type: Transform
+- uid: 12095
+  type: FireAlarm
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 0.5,-32.5
+    parent: 0
+    type: Transform
+- uid: 12096
+  type: CableApcExtension
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 1.5,-31.5
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 12097
+  type: FireAlarm
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 11.5,-19.5
+    parent: 0
+    type: Transform
+- uid: 12098
+  type: AirAlarm
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 9.5,-21.5
+    parent: 0
+    type: Transform
+- uid: 12099
+  type: AirAlarm
+  components:
+  - pos: 59.5,26.5
+    parent: 0
+    type: Transform
+- uid: 12100
+  type: FireAlarm
+  components:
+  - pos: 60.5,26.5
+    parent: 0
+    type: Transform
+- uid: 12101
+  type: CableApcExtension
+  components:
+  - pos: 59.5,24.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 12102
+  type: CableApcExtension
+  components:
+  - pos: 60.5,19.5
+    parent: 0
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 12103
+  type: FireAlarm
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 61.5,19.5
+    parent: 0
+    type: Transform
+- uid: 12104
+  type: AirAlarm
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 61.5,18.5
+    parent: 0
+    type: Transform
+- uid: 12105
+  type: AirAlarm
+  components:
+  - pos: 51.5,-3.5
+    parent: 0
+    type: Transform
+- uid: 12106
+  type: FireAlarm
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 53.5,-8.5
+    parent: 0
+    type: Transform
+- uid: 12107
+  type: FirelockEdge
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 50.5,-4.5
+    parent: 0
+    type: Transform
+- uid: 12108
+  type: FirelockEdge
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 53.5,-4.5
+    parent: 0
+    type: Transform
+- uid: 12109
+  type: FirelockEdge
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 53.5,-6.5
+    parent: 0
+    type: Transform
+- uid: 12110
+  type: FirelockEdge
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 53.5,-5.5
+    parent: 0
+    type: Transform
+- uid: 12111
+  type: FireAlarm
+  components:
+  - pos: 14.5,26.5
+    parent: 0
+    type: Transform
+- uid: 12112
+  type: FireAlarm
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 16.5,30.5
+    parent: 0
+    type: Transform
+- uid: 12113
+  type: AirAlarm
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 16.5,31.5
+    parent: 0
+    type: Transform
+- uid: 12114
+  type: AirAlarm
+  components:
+  - pos: 15.5,26.5
+    parent: 0
+    type: Transform
+- uid: 12115
+  type: AirAlarm
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 8.5,14.5
+    parent: 0
+    type: Transform
+- uid: 12116
+  type: FireAlarm
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 7.5,14.5
+    parent: 0
+    type: Transform
+- uid: 12117
+  type: FireAlarm
+  components:
+  - pos: 4.5,15.5
+    parent: 0
+    type: Transform
+- uid: 12118
+  type: AirAlarm
+  components:
+  - pos: -1.5,16.5
+    parent: 0
+    type: Transform
+- uid: 12119
+  type: FireAlarm
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 16.5,5.5
+    parent: 0
+    type: Transform
+- uid: 12120
+  type: AirAlarm
+  components:
+  - pos: 16.5,4.5
+    parent: 0
+    type: Transform
+- uid: 12121
+  type: AirAlarm
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 87.5,-17.5
+    parent: 0
+    type: Transform
+- uid: 12122
+  type: FireAlarm
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 89.5,-17.5
+    parent: 0
+    type: Transform
+- uid: 12123
+  type: FireAlarm
+  components:
+  - pos: 73.5,9.5
+    parent: 0
+    type: Transform
+- uid: 12124
+  type: AirAlarm
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 79.5,7.5
+    parent: 0
+    type: Transform
 ...
