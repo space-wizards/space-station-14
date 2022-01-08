@@ -23,6 +23,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
+using Robust.Shared.Players;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using static Content.Server.Chat.Managers.IChatManager;
@@ -131,10 +132,6 @@ namespace Content.Server.Chat.Managers
 
             message = message.Trim();
 
-            var clients = new List<INetChannel>();
-
-            ClientDistanceToList(source, VoiceRange, clients);
-
             message = SanitizeMessageCapital(source, message);
 
             var listeners = EntitySystem.Get<ListeningSystem>();
@@ -142,8 +139,15 @@ namespace Content.Server.Chat.Managers
 
             message = FormattedMessage.EscapeText(message);
 
+            var clients = new List<ICommonSession>();
+            ClientDistanceToList(source, VoiceRange, clients);
+
             var messageWrap = Loc.GetString("chat-manager-entity-say-wrap-message",("entityName", _entManager.GetComponent<MetaDataComponent>(source).EntityName));
-            NetMessageToMany(ChatChannel.Local, message, messageWrap, source, hideChat, clients);
+
+            foreach (var client in clients)
+            {
+                NetMessageToOne(ChatChannel.Local, message, messageWrap, source, hideChat, client.ConnectedClient);
+            }
         }
 
         public void EntityWhisper(EntityUid source, string message, bool hideChat=false)
@@ -173,17 +177,29 @@ namespace Content.Server.Chat.Managers
 
             message = FormattedMessage.EscapeText(message);
 
-            var farClients = new List<INetChannel>();
-            var nearClients = new List<INetChannel>();
-            ClientDistanceToList(source, VoiceRange, farClients, nearClients, WhisperRange);
+            var clients = new List<ICommonSession>();
+            ClientDistanceToList(source, VoiceRange, clients);
 
+            var transformSource = _entManager.GetComponent<TransformComponent>(source);
+            var sourceCoords = transformSource.Coordinates;
             var messageWrap = Loc.GetString("chat-manager-entity-whisper-wrap-message",("entityName", _entManager.GetComponent<MetaDataComponent>(source).EntityName));
-            NetMessageToMany(ChatChannel.Whisper, message, messageWrap, source, hideChat, nearClients);
 
-            if (farClients.Count >= 1)
+            foreach (var client in clients)
             {
-                var obfuscatedMessage = ObfuscateMessageReadability(message, 0.2f);
-                NetMessageToMany(ChatChannel.Whisper, obfuscatedMessage, messageWrap, source, hideChat, farClients);
+                if (client.AttachedEntity is not {Valid: true} playerEntity)
+                    continue;
+
+                var transformEntity = _entManager.GetComponent<TransformComponent>(playerEntity);
+
+                if (sourceCoords.InRange(_entManager, transformEntity.Coordinates, WhisperRange))
+                {
+                    NetMessageToOne(ChatChannel.Whisper, message, messageWrap, source, hideChat, client.ConnectedClient);
+                }
+                else
+                {
+                    var obfuscatedMessage = ObfuscateMessageReadability(message, 0.2f);
+                    NetMessageToOne(ChatChannel.Whisper, obfuscatedMessage, messageWrap, source, hideChat, client.ConnectedClient);
+                }
             }
         }
 
@@ -207,12 +223,16 @@ namespace Content.Server.Chat.Managers
 
             action = FormattedMessage.EscapeText(action);
 
-            var clients = new List<INetChannel>();
+            var clients = new List<ICommonSession>();
 
             ClientDistanceToList(source, VoiceRange, clients);
 
             var messageWrap = Loc.GetString("chat-manager-entity-me-wrap-message", ("entityName", _entManager.GetComponent<MetaDataComponent>(source).EntityName));
-            NetMessageToMany(ChatChannel.Emotes, action, messageWrap, source, true, clients);
+
+            foreach (var client in clients)
+            {
+                NetMessageToOne(ChatChannel.Emotes, action, messageWrap, source, true, client.ConnectedClient);
+            }
         }
 
         public void SendOOC(IPlayerSession player, string message)
@@ -411,6 +431,17 @@ namespace Content.Server.Chat.Managers
             _netManager.ServerSendToMany(msg, clients);
         }
 
+        public void NetMessageToOne(ChatChannel channel, string message, string messageWrap, EntityUid source, bool hideChat, INetChannel client)
+        {
+            var msg = _netManager.CreateNetMessage<MsgChatMessage>();
+            msg.Channel = channel;
+            msg.Message = message;
+            msg.MessageWrap = messageWrap;
+            msg.SenderEntity = source;
+            msg.HideChat = hideChat;
+            _netManager.ServerSendMessage(msg, client);
+        }
+
         public void NetMessageToAll(ChatChannel channel, string message, string messageWrap)
         {
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
@@ -438,7 +469,7 @@ namespace Content.Server.Chat.Managers
             return isOverLength;
         }
 
-        public void ClientDistanceToList(EntityUid source, int voiceRange, List<INetChannel> clientsRangeOutside, List<INetChannel>? clientsRangeInside = null, float? shortVoiceRange = null)
+        public void ClientDistanceToList(EntityUid source, int voiceRange, List<ICommonSession> clients)
         {
             var transformSource = _entManager.GetComponent<TransformComponent>(source);
             var sourceMapId = transformSource.MapID;
@@ -456,14 +487,7 @@ namespace Content.Server.Chat.Managers
                     !sourceCoords.InRange(_entManager, transformEntity.Coordinates, voiceRange))
                     continue;
 
-                if (clientsRangeInside != null && shortVoiceRange != null && sourceCoords.InRange(_entManager, transformEntity.Coordinates, shortVoiceRange.Value))
-                {
-                    clientsRangeInside.Add(player.ConnectedClient);
-                }
-                else
-                {
-                    clientsRangeOutside.Add(player.ConnectedClient);
-                }
+                clients.Add(player);
             }
         }
 
