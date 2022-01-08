@@ -42,6 +42,7 @@ namespace Content.Tests.Server.Preferences
         {
             return new(
                 "Charlie Charlieson",
+                "Human",
                 21,
                 Sex.Male,
                 Gender.Epicene,
