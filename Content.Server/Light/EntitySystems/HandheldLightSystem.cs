@@ -1,10 +1,8 @@
 using System.Collections.Generic;
-using System.Linq;
 using Content.Server.Clothing.Components;
-using Content.Server.Items;
 using Content.Server.Light.Components;
 using Content.Server.Popups;
-using Content.Server.PowerCell.Components;
+using Content.Server.PowerCell;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
@@ -31,6 +29,7 @@ namespace Content.Server.Light.EntitySystems
     {
         [Dependency] private readonly ActionBlockerSystem _blocker = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
+        [Dependency] private readonly PowerCellSystem _powerCell = default!;
 
         // TODO: Ideally you'd be able to subscribe to power stuff to get events at certain percentages.. or something?
         // But for now this will be better anyway.
@@ -46,8 +45,8 @@ namespace Content.Server.Light.EntitySystems
 
             SubscribeLocalEvent<HandheldLightComponent, ExaminedEvent>(OnExamine);
             SubscribeLocalEvent<HandheldLightComponent, GetActivationVerbsEvent>(AddToggleLightVerb);
-            SubscribeLocalEvent<HandheldLightComponent, InteractUsingEvent>(OnInteractUsing);
-            SubscribeLocalEvent<HandheldLightComponent, UseInHandEvent>(OnUse);
+
+            SubscribeLocalEvent<HandheldLightComponent, ActivateInWorldEvent>(OnActivate);
         }
 
         private void OnGetState(EntityUid uid, HandheldLightComponent component, ref ComponentGetState args)
@@ -59,21 +58,19 @@ namespace Content.Server.Light.EntitySystems
         {
             // Curently every single flashlight has the same number of levels for status and that's all it uses the charge for
             // Thus we'll just check if the level changes.
-            if (component.Cell == null)
+
+            if (!_powerCell.TryGetBatteryFromSlot(component.Owner, out var battery))
                 return null;
 
-            var currentCharge = component.Cell.CurrentCharge;
-
-            if (MathHelper.CloseToPercent(currentCharge, 0) || component.Wattage > currentCharge)
+            if (MathHelper.CloseToPercent(battery.CurrentCharge, 0) || component.Wattage > battery.CurrentCharge)
                 return 0;
 
-            return (byte?) ContentHelpers.RoundToNearestLevels(currentCharge / component.Cell.MaxCharge * 255, 255, SharedHandheldLightComponent.StatusLevels);
+            return (byte?) ContentHelpers.RoundToNearestLevels(battery.CurrentCharge / battery.MaxCharge * 255, 255, SharedHandheldLightComponent.StatusLevels);
         }
 
         private void OnInit(EntityUid uid, HandheldLightComponent component, ComponentInit args)
         {
             EntityManager.EnsureComponent<PointLightComponent>(uid);
-            component.CellSlot = EntityManager.EnsureComponent<PowerCellSlotComponent>(uid);
 
             // Want to make sure client has latest data on level so battery displays properly.
             component.Dirty(EntityManager);
@@ -84,18 +81,7 @@ namespace Content.Server.Light.EntitySystems
             _activeLights.Remove(component);
         }
 
-        private void OnInteractUsing(EntityUid uid, HandheldLightComponent component, InteractUsingEvent args)
-        {
-            // TODO: https://github.com/space-wizards/space-station-14/pull/5864#discussion_r775191916
-            if (args.Handled) return;
-
-            if (!_blocker.CanInteract(args.User)) return;
-            if (!component.CellSlot.InsertCell(args.Used)) return;
-            component.Dirty(EntityManager);
-            args.Handled = true;
-        }
-
-        private void OnUse(EntityUid uid, HandheldLightComponent component, UseInHandEvent args)
+        private void OnActivate(EntityUid uid, HandheldLightComponent component, ActivateInWorldEvent args)
         {
             if (args.Handled) return;
 
@@ -185,7 +171,7 @@ namespace Content.Server.Light.EntitySystems
         {
             if (component.Activated) return false;
 
-            if (component.Cell == null)
+            if (!_powerCell.TryGetBatteryFromSlot(component.Owner, out var battery))
             {
                 SoundSystem.Play(Filter.Pvs(component.Owner), component.TurnOnFailSound.GetSound(), component.Owner);
                 _popup.PopupEntity(Loc.GetString("handheld-light-component-cell-missing-message"), component.Owner, Filter.Entities(user));
@@ -196,7 +182,7 @@ namespace Content.Server.Light.EntitySystems
             // To prevent having to worry about frame time in here.
             // Let's just say you need a whole second of charge before you can turn it on.
             // Simple enough.
-            if (component.Wattage > component.Cell.CurrentCharge)
+            if (component.Wattage > battery.CurrentCharge)
             {
                 SoundSystem.Play(Filter.Pvs(component.Owner), component.TurnOnFailSound.GetSound(), component.Owner);
                 _popup.PopupEntity(Loc.GetString("handheld-light-component-cell-dead-message"), component.Owner, Filter.Entities(user));
@@ -228,11 +214,6 @@ namespace Content.Server.Light.EntitySystems
                 light.Enabled = on;
             }
 
-            if (EntityManager.TryGetComponent(component.Owner, out ClothingComponent? clothing))
-            {
-                clothing.ClothingEquippedPrefix = Loc.GetString(on ? "on" : "off");
-            }
-
             if (EntityManager.TryGetComponent(component.Owner, out ItemComponent? item))
             {
                 item.EquippedPrefix = Loc.GetString(on ? "on" : "off");
@@ -248,7 +229,7 @@ namespace Content.Server.Light.EntitySystems
 
         public void TryUpdate(HandheldLightComponent component, float frameTime)
         {
-            if (component.Cell == null)
+            if (!_powerCell.TryGetBatteryFromSlot(component.Owner, out var battery))
             {
                 TurnOff(component, false);
                 return;
@@ -256,11 +237,12 @@ namespace Content.Server.Light.EntitySystems
 
             var appearanceComponent = EntityManager.GetComponent<AppearanceComponent>(component.Owner);
 
-            if (component.Cell.MaxCharge - component.Cell.CurrentCharge < component.Cell.MaxCharge * 0.70)
+            var fraction = battery.CurrentCharge / battery.MaxCharge;
+            if (fraction >= 0.30)
             {
                 appearanceComponent.SetData(HandheldLightVisuals.Power, HandheldLightPowerStates.FullPower);
             }
-            else if (component.Cell.MaxCharge - component.Cell.CurrentCharge < component.Cell.MaxCharge * 0.90)
+            else if (fraction >= 0.10)
             {
                 appearanceComponent.SetData(HandheldLightVisuals.Power, HandheldLightPowerStates.LowPower);
             }
@@ -269,7 +251,8 @@ namespace Content.Server.Light.EntitySystems
                 appearanceComponent.SetData(HandheldLightVisuals.Power, HandheldLightPowerStates.Dying);
             }
 
-            if (component.Activated && !component.Cell.TryUseCharge(component.Wattage * frameTime)) TurnOff(component, false);
+            if (component.Activated && !battery.TryUseCharge(component.Wattage * frameTime))
+                TurnOff(component, false);
 
             var level = GetLevel(component);
 

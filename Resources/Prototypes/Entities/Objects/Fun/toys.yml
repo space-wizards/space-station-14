@@ -55,6 +55,15 @@
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: plushie_lizard
+  - type: ItemCooldown
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/weh.ogg
+  - type: EmitSoundOnLand
+    sound:
+       path: /Audio/Items/Toys/weh.ogg
+  - type: UseDelay
+    delay: 1.0
 
 - type: entity
   parent: BasePlushie
@@ -134,7 +143,7 @@
     QuickEquip: false
     sprite: Objects/Fun/ducky.rsi
     Slots:
-    - Helmet
+    - HEAD
   - type: ItemCooldown
   - type: EmitSoundOnUse
     sound:
@@ -155,6 +164,9 @@
   - type: EmitSoundOnUse
     sound:
       path: /Audio/Voice/Vox/shriek1.ogg
+  - type: EmitSoundOnLand
+    sound:
+       path: /Audio/Voice/Vox/shriek1.ogg
   - type: UseDelay
     delay: 1.0
 

@@ -1,16 +1,15 @@
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
-using Content.Server.Items;
 using Content.Server.Tools.Components;
 using Content.Server.Weapon.Melee;
 using Content.Shared.Audio;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
+using Content.Shared.Item;
 using Content.Shared.Popups;
 using Content.Shared.Temperature;
 using Content.Shared.Tools.Components;
@@ -36,7 +35,6 @@ namespace Content.Server.Tools
             SubscribeLocalEvent<WelderComponent, IsHotEvent>(OnWelderIsHotEvent);
             SubscribeLocalEvent<WelderComponent, ExaminedEvent>(OnWelderExamine);
             SubscribeLocalEvent<WelderComponent, SolutionChangedEvent>(OnWelderSolutionChange);
-            SubscribeLocalEvent<WelderComponent, UseInHandEvent>(OnWelderUseInHand);
             SubscribeLocalEvent<WelderComponent, ActivateInWorldEvent>(OnWelderActivate);
             SubscribeLocalEvent<WelderComponent, AfterInteractEvent>(OnWelderAfterInteract);
             SubscribeLocalEvent<WelderComponent, ToolUseAttemptEvent>(OnWelderToolUseAttempt);
@@ -64,7 +62,7 @@ namespace Content.Server.Tools
         public bool TryToggleWelder(EntityUid uid, EntityUid? user,
             WelderComponent? welder = null,
             SolutionContainerManagerComponent? solutionContainer = null,
-            ItemComponent? item = null,
+            SharedItemComponent? item = null,
             PointLightComponent? light = null,
             SpriteComponent? sprite = null)
         {
@@ -81,7 +79,7 @@ namespace Content.Server.Tools
         public bool TryTurnWelderOn(EntityUid uid, EntityUid? user,
             WelderComponent? welder = null,
             SolutionContainerManagerComponent? solutionContainer = null,
-            ItemComponent? item = null,
+            SharedItemComponent? item = null,
             PointLightComponent? light = null,
             SpriteComponent? sprite = null)
         {
@@ -132,7 +130,7 @@ namespace Content.Server.Tools
 
         public bool TryTurnWelderOff(EntityUid uid, EntityUid? user,
             WelderComponent? welder = null,
-            ItemComponent? item = null,
+            SharedItemComponent? item = null,
             PointLightComponent? light = null,
             SpriteComponent? sprite = null)
         {
@@ -237,11 +235,6 @@ namespace Content.Server.Tools
             }
 
             args.Handled = true;
-        }
-
-        private void OnWelderUseInHand(EntityUid uid, WelderComponent welder, UseInHandEvent args)
-        {
-            args.Handled = TryToggleWelder(uid, args.User, welder);
         }
 
         private void OnWelderToolUseAttempt(EntityUid uid, WelderComponent welder, ToolUseAttemptEvent args)

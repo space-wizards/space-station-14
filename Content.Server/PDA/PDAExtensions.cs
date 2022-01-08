@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Hands.Components;
-using Content.Server.Inventory.Components;
 using Content.Shared.Access.Components;
+using Content.Shared.Inventory;
 using Content.Shared.PDA;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -18,7 +18,7 @@ namespace Content.Server.PDA
         /// <returns>The id card component.</returns>
         public static IdCardComponent? GetHeldId(this EntityUid player)
         {
-            IdCardComponent? firstIdInPda = null;
+            IdCardComponent? foundPDAId = null;
 
             var entMan = IoCManager.Resolve<IEntityManager>();
 
@@ -26,11 +26,10 @@ namespace Content.Server.PDA
             {
                 foreach (var item in hands.GetAllHeldItems())
                 {
-                    if (firstIdInPda == null &&
-                        entMan.TryGetComponent(item.Owner, out PDAComponent? pda) &&
+                    if (entMan.TryGetComponent(item.Owner, out PDAComponent? pda) &&
                         pda.ContainedID != null)
                     {
-                        firstIdInPda = pda.ContainedID;
+                        foundPDAId = pda.ContainedID;
                     }
 
                     if (entMan.TryGetComponent(item.Owner, out IdCardComponent? card))
@@ -40,32 +39,32 @@ namespace Content.Server.PDA
                 }
             }
 
-            if (firstIdInPda != null)
-            {
-                return firstIdInPda;
-            }
+            if (foundPDAId != null) return foundPDAId;
 
-            IdCardComponent? firstIdInInventory = null;
+            var invSystem = EntitySystem.Get<InventorySystem>();
 
-            if (entMan.TryGetComponent(player, out InventoryComponent? inventory))
+            if (invSystem.TryGetContainerSlotEnumerator(player, out var enumerator))
             {
-                foreach (var item in inventory.GetAllHeldItems())
+                while (enumerator.MoveNext(out var containerSlot))
                 {
-                    if (firstIdInInventory == null &&
-                        entMan.TryGetComponent(item, out PDAComponent? pda) &&
+                    if(!containerSlot.ContainedEntity.HasValue) continue;
+
+                    if (entMan.TryGetComponent(containerSlot.ContainedEntity.Value, out PDAComponent? pda) &&
                         pda.ContainedID != null)
                     {
-                        firstIdInInventory = pda.ContainedID;
+                        foundPDAId = pda.ContainedID;
                     }
 
-                    if (entMan.TryGetComponent(item, out IdCardComponent? card))
+                    if (entMan.TryGetComponent(containerSlot.ContainedEntity.Value, out IdCardComponent? card))
                     {
                         return card;
                     }
                 }
             }
 
-            return firstIdInInventory;
+            if (foundPDAId != null) return foundPDAId;
+
+            return null;
         }
 
         /// <summary>

@@ -2,12 +2,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameTicking;
 using Content.Server.Ghost.Components;
+using Content.Server.Mind;
 using Content.Server.Mind.Components;
 using Content.Server.Players;
 using Content.Server.Visible;
 using Content.Server.Warps;
 using Content.Shared.Examine;
 using Content.Shared.Ghost;
+using Content.Shared.MobState.Components;
 using Content.Shared.Movement.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -26,6 +28,8 @@ namespace Content.Server.Ghost
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly GameTicker _ticker = default!;
+        [Dependency] private readonly MindSystem _mindSystem = default!;
+        [Dependency] private readonly VisibilitySystem _visibilitySystem = default!;
 
         public override void Initialize()
         {
@@ -52,6 +56,7 @@ namespace Content.Server.Ghost
             // Let's not ghost if our mind is visiting...
             if (EntityManager.HasComponent<VisitingMindComponent>(uid)) return;
             if (!EntityManager.TryGetComponent<MindComponent>(uid, out var mind) || !mind.HasMind || mind.Mind!.IsVisitingEntity) return;
+            if (component.MustBeDead && TryComp<MobStateComponent>(uid, out var state) && !state.IsDead()) return;
 
             _ticker.OnGhostAttempt(mind.Mind!, component.CanReturn);
         }
@@ -59,10 +64,11 @@ namespace Content.Server.Ghost
         private void OnGhostStartup(EntityUid uid, GhostComponent component, ComponentStartup args)
         {
             // Allow this entity to be seen by other ghosts.
-            var visibility = component.Owner.EnsureComponent<VisibilityComponent>();
+            var visibility = EntityManager.EnsureComponent<VisibilityComponent>(component.Owner);
 
-            visibility.Layer |= (int) VisibilityFlags.Ghost;
-            visibility.Layer &= ~(int) VisibilityFlags.Normal;
+            _visibilitySystem.AddLayer(visibility, (int) VisibilityFlags.Ghost, false);
+            _visibilitySystem.RemoveLayer(visibility, (int) VisibilityFlags.Normal, false);
+            _visibilitySystem.RefreshVisibility(visibility);
 
             if (EntityManager.TryGetComponent(component.Owner, out EyeComponent? eye))
             {
@@ -80,8 +86,9 @@ namespace Content.Server.Ghost
                 // Entity can't be seen by ghosts anymore.
                 if (EntityManager.TryGetComponent(component.Owner, out VisibilityComponent? visibility))
                 {
-                    visibility.Layer &= ~(int) VisibilityFlags.Ghost;
-                    visibility.Layer |= (int) VisibilityFlags.Normal;
+                    _visibilitySystem.RemoveLayer(visibility, (int) VisibilityFlags.Ghost, false);
+                    _visibilitySystem.AddLayer(visibility, (int) VisibilityFlags.Normal, false);
+                    _visibilitySystem.RefreshVisibility(visibility);
                 }
 
                 // Entity can't see ghosts anymore.
@@ -180,7 +187,7 @@ namespace Content.Server.Ghost
                 return;
 
             if (EntityManager.TryGetComponent<MindComponent?>(uid, out var mind))
-                mind.GhostOnShutdown = false;
+                _mindSystem.SetGhostOnShutdown(uid, false, mind);
             EntityManager.DeleteEntity(uid);
         }
 

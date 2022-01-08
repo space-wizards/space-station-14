@@ -6,14 +6,18 @@
       "x": 32,
       "y": 32
     },
-    "states": [
-        {
-            "name": "side",
-            "directions": 4
-        },
-        {
-            "name": "corner",
-            "directions": 4
-        }
-    ]
+  "states": [
+    {
+      "name": "side",
+      "directions": 4
+    },
+    {
+      "name": "corner",
+      "directions": 4
+    },
+    {
+        "name": "corner_small",
+        "directions": 4
+    }
+  ]
 }

@@ -232,6 +232,10 @@
     sprite: Clothing/Uniforms/Jumpskirt/prisoner.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpskirt/prisoner.rsi
+  - type: SuitSensor
+    controlsLocked: true
+    randomMode: false
+    mode: SensorCords
 
 - type: entity
   parent: ClothingUniformSkirtBase

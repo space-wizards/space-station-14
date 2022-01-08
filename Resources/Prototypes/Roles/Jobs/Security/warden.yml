@@ -17,12 +17,12 @@
   id: WardenGear
   equipment:
     head: ClothingHeadHatWarden
-    innerclothing: ClothingUniformJumpsuitWarden
-    backpack: ClothingBackpackSecurityFilled
+    jumpsuit: ClothingUniformJumpsuitWarden
+    back: ClothingBackpackSecurityFilled
     shoes: ClothingShoesBootsJack
     eyes: ClothingEyesGlassesSecurity
-    outerclothing: ClothingOuterCoatWarden
-    idcard: WardenPDA
+    outerClothing: ClothingOuterCoatWarden
+    id: WardenPDA
     ears: ClothingHeadsetSecurity
     belt: ClothingBeltSecurityFilled
   innerclothingskirt: ClothingUniformJumpskirtWarden

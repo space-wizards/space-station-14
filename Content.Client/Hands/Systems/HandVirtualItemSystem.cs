@@ -1,4 +1,5 @@
 ﻿using Content.Client.Items;
+using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -6,7 +7,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Client.Hands.Systems
 {
     [UsedImplicitly]
-    public sealed class HandVirtualItemSystem : EntitySystem
+    public sealed class HandVirtualItemSystem : SharedHandVirtualItemSystem
     {
         public override void Initialize()
         {

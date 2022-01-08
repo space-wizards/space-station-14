@@ -237,9 +237,9 @@
         - Ointment
         - CigPack
         - Pill
+        - PillCanister
       components:
         - Hypospray
-        - SurgeryTool
         - Radio
   - type: ItemMapper
     mapLayers:
@@ -255,6 +255,7 @@
         whitelist:
           tags:
           - Pill
+          - PillCanister
       bottle_spray:
         whitelist:
           tags:

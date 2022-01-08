@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Content.Client.HUD;
+using Content.Client.Inventory;
 using Content.Client.Items.Managers;
 using Content.Client.Items.UI;
 using Content.Client.Resources;
@@ -32,7 +33,7 @@ namespace Content.Client.Hands
         private readonly HandsSystem _handsSystem;
         private readonly HandsComponent _handsComponent;
 
-        private Texture StorageTexture => _gameHud.GetHudTexture("back.png");
+        private string StorageTexture => "back.png";
         private Texture BlockedTexture => _resourceCache.GetTexture("/Textures/Interface/Inventory/blocked.png");
 
         private ItemStatusPanel StatusPanel { get; }
@@ -58,24 +59,18 @@ namespace Content.Client.Hands
         {
             base.EnteredTree();
 
-            _handsSystem.GuiStateUpdated += HandsSystemOnGuiStateUpdated;
             _configManager.OnValueChanged(CCVars.HudTheme, UpdateHudTheme);
-
-            HandsSystemOnGuiStateUpdated();
         }
 
         protected override void ExitedTree()
         {
             base.ExitedTree();
 
-            _handsSystem.GuiStateUpdated -= HandsSystemOnGuiStateUpdated;
             _configManager.UnsubValueChanged(CCVars.HudTheme, UpdateHudTheme);
         }
 
-        private void HandsSystemOnGuiStateUpdated()
+        public void Update(HandsGuiState state)
         {
-            var state = _handsSystem.GetGuiState();
-
             ActiveHand = state.ActiveHand;
             _hands = state.GuiHands;
             Array.Sort(_hands, HandOrderComparer.Instance);
@@ -85,7 +80,7 @@ namespace Content.Client.Hands
         private void UpdateGui()
         {
             HandsContainer.DisposeAllChildren();
-
+            var entManager = IoCManager.Resolve<IEntityManager>();
             foreach (var hand in _hands)
             {
                 var newButton = MakeHandButton(hand.HandLocation);
@@ -100,7 +95,7 @@ namespace Content.Client.Hands
 
                 // Show blocked overlay if hand is blocked.
                 newButton.Blocked.Visible =
-                    hand.HeldItem != null && IoCManager.Resolve<IEntityManager>().HasComponent<HandVirtualItemComponent>(hand.HeldItem);
+                    hand.HeldItem != null && entManager.HasComponent<HandVirtualItemComponent>(hand.HeldItem.Value);
             }
 
             if (TryGetActiveHand(out var activeHand))
@@ -166,9 +161,8 @@ namespace Content.Client.Hands
                 HandLocation.Right => "hand_r.png",
                 _ => "hand_l.png"
             };
-            var buttonTexture = _gameHud.GetHudTexture(buttonTextureName);
 
-            return new HandButton(buttonTexture, StorageTexture, buttonTextureName, BlockedTexture, buttonLocation);
+            return new HandButton(ClientInventorySystem.ButtonSize, buttonTextureName, StorageTexture, _gameHud, BlockedTexture, buttonLocation);
         }
 
         private void UpdateHudTheme(int idx)
@@ -250,7 +244,7 @@ namespace Content.Client.Hands
         ///     The item being held in this hand.
         /// </summary>
         [ViewVariables]
-        public EntityUid HeldItem { get; }
+        public EntityUid? HeldItem { get; }
 
         /// <summary>
         ///     The button in the gui associated with this hand. Assumed to be set by gui shortly after being received from the client HandsComponent.
@@ -258,7 +252,7 @@ namespace Content.Client.Hands
         [ViewVariables]
         public HandButton HandButton { get; set; } = default!;
 
-        public GuiHand(string name, HandLocation handLocation, EntityUid heldItem)
+        public GuiHand(string name, HandLocation handLocation, EntityUid? heldItem)
         {
             Name = name;
             HandLocation = handLocation;

@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
 using Content.Server.Interaction;
-using Content.Server.Items;
 using Content.Shared.Acts;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
@@ -42,7 +41,8 @@ namespace Content.Server.Storage.Components
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IStorageComponent))]
-    public class ServerStorageComponent : SharedStorageComponent, IInteractUsing, IUse, IActivate, IStorageComponent, IDestroyAct, IExAct, IAfterInteract
+    [ComponentReference(typeof(SharedStorageComponent))]
+    public class ServerStorageComponent : SharedStorageComponent, IInteractUsing, IActivate, IStorageComponent, IDestroyAct, IExAct, IAfterInteract
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
@@ -471,7 +471,7 @@ namespace Content.Server.Storage.Components
                         break;
                     }
 
-                    if (!_entityManager.TryGetComponent(remove.EntityUid, out ItemComponent? item) || !_entityManager.TryGetComponent(player, out HandsComponent? hands))
+                    if (!_entityManager.TryGetComponent(remove.EntityUid, out SharedItemComponent? item) || !_entityManager.TryGetComponent(player, out HandsComponent? hands))
                     {
                         break;
                     }
@@ -540,18 +540,10 @@ namespace Content.Server.Storage.Components
         /// </summary>
         /// <param name="eventArgs"></param>
         /// <returns></returns>
-        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
+        void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             EnsureInitialCalculated();
             OpenStorageUI(eventArgs.User);
-            return false;
-        }
-
-        void IActivate.Activate(ActivateEventArgs eventArgs)
-        {
-#pragma warning disable 618
-            ((IUse) this).UseEntity(new UseEntityEventArgs(eventArgs.User));
-#pragma warning restore 618
         }
 
         /// <summary>

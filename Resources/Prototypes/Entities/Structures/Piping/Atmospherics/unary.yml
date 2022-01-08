@@ -21,6 +21,15 @@
   placement:
     mode: SnapgridCenter
   components:
+    - type: ApcPowerReceiver
+    - type: ExtensionCableReceiver
+    - type: DeviceNetworkComponent
+      deviceNetId: Apc
+      frequency: 1621
+    - type: ApcNetworkConnection
+    - type: AtmosAlarmable
+      alarmedBy:
+      - AirAlarm
     - type: Sprite
       netsync: false
       drawdepth: FloorObjects
@@ -73,6 +82,15 @@
   placement:
     mode: SnapgridCenter
   components:
+    - type: ApcPowerReceiver
+    - type: ExtensionCableReceiver
+    - type: DeviceNetworkComponent
+      deviceNetId: Apc
+      frequency: 1621
+    - type: ApcNetworkConnection
+    - type: AtmosAlarmable
+      alarmedBy:
+      - AirAlarm
     - type: Sprite
       netsync: false
       drawdepth: FloorObjects

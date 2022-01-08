@@ -15,13 +15,13 @@
 - type: startingGear
   id: SecurityOfficerGear
   equipment:
-    innerclothing: ClothingUniformJumpsuitSec
-    backpack: ClothingBackpackSecurityFilled
+    jumpsuit: ClothingUniformJumpsuitSec
+    back: ClothingBackpackSecurityFilled
     shoes: ClothingShoesBootsJack
     eyes: ClothingEyesGlassesSecurity
     head: ClothingHeadHelmetHelmetOld
-    outerclothing: ClothingOuterVestKevlar
-    idcard: SecurityPDA
+    outerClothing: ClothingOuterVestKevlar
+    id: SecurityPDA
     ears: ClothingHeadsetSecurity
     belt: ClothingBeltSecurityFilled
   innerclothingskirt: ClothingUniformJumpskirtSec

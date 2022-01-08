@@ -58,7 +58,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MSBuild", "MSBuild", "{5040
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{806ED41A-411B-4B3B-BEB6-DEC6DCA4C205}"
 	ProjectSection(SolutionItems) = preProject
-		.appveyor.yml = .appveyor.yml
 		Tools\gen_build_info.py = Tools\gen_build_info.py
 		Tools\generate_hashes.ps1 = Tools\generate_hashes.ps1
 		Tools\package_client_build.py = Tools\package_client_build.py
@@ -100,6 +99,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pow3r", "Pow3r\Pow3r.csproj", "{1C048C9F-00A9-4796-BE4D-BB36B7769720}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content.Shared.Database", "Content.Shared.Database\Content.Shared.Database.csproj", "{8842381D-3426-4BA8-93DA-599AB14D88E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content.MapRenderer", "Content.MapRenderer\Content.MapRenderer.csproj", "{199BBEA1-7627-434B-B6F6-0F52A7C0E1E0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -234,6 +235,10 @@ Global
 		{8842381D-3426-4BA8-93DA-599AB14D88E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8842381D-3426-4BA8-93DA-599AB14D88E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8842381D-3426-4BA8-93DA-599AB14D88E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{199BBEA1-7627-434B-B6F6-0F52A7C0E1E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{199BBEA1-7627-434B-B6F6-0F52A7C0E1E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{199BBEA1-7627-434B-B6F6-0F52A7C0E1E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{199BBEA1-7627-434B-B6F6-0F52A7C0E1E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
