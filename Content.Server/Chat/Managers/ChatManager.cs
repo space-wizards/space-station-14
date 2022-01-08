@@ -139,14 +139,14 @@ namespace Content.Server.Chat.Managers
 
             message = FormattedMessage.EscapeText(message);
 
-            var clients = new List<ICommonSession>();
-            ClientDistanceToList(source, VoiceRange, clients);
+            var sessions = new List<ICommonSession>();
+            ClientDistanceToList(source, VoiceRange, sessions);
 
             var messageWrap = Loc.GetString("chat-manager-entity-say-wrap-message",("entityName", _entManager.GetComponent<MetaDataComponent>(source).EntityName));
 
-            foreach (var client in clients)
+            foreach (var session in sessions)
             {
-                NetMessageToOne(ChatChannel.Local, message, messageWrap, source, hideChat, client.ConnectedClient);
+                NetMessageToOne(ChatChannel.Local, message, messageWrap, source, hideChat, session.ConnectedClient);
             }
         }
 
@@ -179,27 +179,27 @@ namespace Content.Server.Chat.Managers
 
             var obfuscatedMessage = ObfuscateMessageReadability(message, 0.2f);
 
-            var clients = new List<ICommonSession>();
-            ClientDistanceToList(source, VoiceRange, clients);
+            var sessions = new List<ICommonSession>();
+            ClientDistanceToList(source, VoiceRange, sessions);
 
             var transformSource = _entManager.GetComponent<TransformComponent>(source);
             var sourceCoords = transformSource.Coordinates;
             var messageWrap = Loc.GetString("chat-manager-entity-whisper-wrap-message",("entityName", _entManager.GetComponent<MetaDataComponent>(source).EntityName));
 
-            foreach (var client in clients)
+            foreach (var session in sessions)
             {
-                if (client.AttachedEntity is not {Valid: true} playerEntity)
+                if (session.AttachedEntity is not {Valid: true} playerEntity)
                     continue;
 
                 var transformEntity = _entManager.GetComponent<TransformComponent>(playerEntity);
 
                 if (sourceCoords.InRange(_entManager, transformEntity.Coordinates, WhisperRange))
                 {
-                    NetMessageToOne(ChatChannel.Whisper, message, messageWrap, source, hideChat, client.ConnectedClient);
+                    NetMessageToOne(ChatChannel.Whisper, message, messageWrap, source, hideChat, session.ConnectedClient);
                 }
                 else
                 {
-                    NetMessageToOne(ChatChannel.Whisper, obfuscatedMessage, messageWrap, source, hideChat, client.ConnectedClient);
+                    NetMessageToOne(ChatChannel.Whisper, obfuscatedMessage, messageWrap, source, hideChat, session.ConnectedClient);
                 }
             }
         }
@@ -224,15 +224,15 @@ namespace Content.Server.Chat.Managers
 
             action = FormattedMessage.EscapeText(action);
 
-            var clients = new List<ICommonSession>();
+            var sessions = new List<ICommonSession>();
 
-            ClientDistanceToList(source, VoiceRange, clients);
+            ClientDistanceToList(source, VoiceRange, sessions);
 
             var messageWrap = Loc.GetString("chat-manager-entity-me-wrap-message", ("entityName", _entManager.GetComponent<MetaDataComponent>(source).EntityName));
 
-            foreach (var client in clients)
+            foreach (var session in sessions)
             {
-                NetMessageToOne(ChatChannel.Emotes, action, messageWrap, source, true, client.ConnectedClient);
+                NetMessageToOne(ChatChannel.Emotes, action, messageWrap, source, true, session.ConnectedClient);
             }
         }
 
@@ -459,7 +459,7 @@ namespace Content.Server.Chat.Managers
             return isOverLength;
         }
 
-        public void ClientDistanceToList(EntityUid source, int voiceRange, List<ICommonSession> clients)
+        public void ClientDistanceToList(EntityUid source, int voiceRange, List<ICommonSession> playerSessions)
         {
             var transformSource = _entManager.GetComponent<TransformComponent>(source);
             var sourceMapId = transformSource.MapID;
@@ -477,7 +477,7 @@ namespace Content.Server.Chat.Managers
                     !sourceCoords.InRange(_entManager, transformEntity.Coordinates, voiceRange))
                     continue;
 
-                clients.Add(player);
+                playerSessions.Add(player);
             }
         }
 
