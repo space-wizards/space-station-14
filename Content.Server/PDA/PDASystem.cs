@@ -110,31 +110,34 @@ namespace Content.Server.PDA
             if (ui == null)
                 return;
 
-            ui.SetState(new PDAUpdateState(pda.FlashlightOn, pda.PenSlot.HasItem, ownerInfo, ShouldShowUplink(pda, ui, user)));
+            ui.SetState(new PDAUpdateState(pda.FlashlightOn, pda.PenSlot.HasItem, ownerInfo, ShouldShowUplink(pda.Owner, ui, user)));
         }
 
         /// <summary>
-        ///     Check whether the PDA has an uplink, and ensure that the only person that can see the UI is a traitor.
+        ///     Check whether the PDA has an uplink, and ensure that the only person that can see the PDA UI has an
+        ///     uplink account.
         /// </summary>
-        public bool ShouldShowUplink(PDAComponent pda, BoundUserInterface ui, EntityUid? user = null)
+        public bool ShouldShowUplink(EntityUid uid, BoundUserInterface ui, EntityUid? user = null)
         {
-            // TODO UPLINK RINGTONES/SECRETS
-            // This is just a janky placeholder way of hiding uplinks from non syndicate players.
+            // TODO UPLINK RINGTONES/SECRETS This is just a janky placeholder way of hiding uplinks from non syndicate
+            // players. This should really use a sort of key-code entry system that selects an account which is not directly tied to
+            // a player entity.
 
-            if (!HasComp<UplinkComponent>(pda.Owner))
+            if (!HasComp<UplinkComponent>(uid))
                 return false;
 
             // If a user is trying to open the UI, make sure that they have an uplink account before showing the UI.
-            if (user is not null && !_uplinkAccounts.HasAccount(user.Value))
+            if (user != null && !_uplinkAccounts.HasAccount(user.Value))
                 return false;
 
-            // If other users currently have the UI open, we might not want to show the uplink button.
+            // If other users currently have the UI open, check that they too should be allowed to see the button..
             foreach (var session in ui.SubscribedSessions)
             {
                 if (session.AttachedEntity != null && !_uplinkAccounts.HasAccount(session.AttachedEntity.Value))
                     return false;
             }
 
+            // everyone has an uplink account, show the button.
             return true;
         }
 
