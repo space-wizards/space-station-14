@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Add ambient sounds coming from objects., type: Add}
-  id: 346
-  time: '2021-09-07T08:47:24.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: 'In Saltern, removed some duplicate APC wires and unbridged two APCs',
@@ -2920,3 +2915,8 @@ Entries:
       be found in maintenance tunnels near you., type: Add}
   id: 847
   time: '2022-01-09T05:34:46.0000000+00:00'
+- author: DubiousDoggo
+  changes:
+  - {message: Added crafting recipe for substations, type: Add}
+  id: 848
+  time: '2022-01-09T06:05:54.0000000+00:00'
