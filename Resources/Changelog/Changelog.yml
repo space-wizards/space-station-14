@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Some engineering items now play sounds when landing, type: Add}
-  id: 345
-  time: '2021-09-03T20:45:02.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Add ambient sounds coming from objects., type: Add}
   id: 346
   time: '2021-09-07T08:47:24.0000000+00:00'
@@ -2919,3 +2914,9 @@ Entries:
       been removed from Cargo''s ordering list.', type: Tweak}
   id: 846
   time: '2022-01-09T03:20:30.0000000+00:00'
+- author: Lamrr
+  changes:
+  - {message: The construction classic has returned! Wearable warning cones can now
+      be found in maintenance tunnels near you., type: Add}
+  id: 847
+  time: '2022-01-09T05:34:46.0000000+00:00'
