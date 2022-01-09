@@ -83,6 +83,7 @@ namespace Content.Server.PDA
             if (!EntityManager.TryGetComponent(user, out ActorComponent? actor))
                 return false;
 
+            UpdatePDAUserInterface(pda, user);
             var ui = pda.Owner.GetUIOrNull(PDAUiKey.Key);
             ui?.Toggle(actor.PlayerSession);
 
