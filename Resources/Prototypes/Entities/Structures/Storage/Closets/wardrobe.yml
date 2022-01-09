@@ -12,6 +12,7 @@
   id: WardrobeBlue
   parent: WardrobeBase
   name: blue wardrobe
+  description: "A wardrobe packed with stylish blue clothing."
   components:
   - type: Appearance
     visuals:
@@ -25,6 +26,7 @@
   id: WardrobePink
   parent: WardrobeBase
   name: pink wardrobe
+  description: "A wardrobe packed with fabulous pink clothing."
   components:
   - type: Appearance
     visuals:
@@ -38,6 +40,7 @@
   id: WardrobeBlack
   parent: WardrobeBase
   name: black wardrobe
+  description: "A wardrobe packed with stylish black clothing."
   components:
   - type: Appearance
     visuals:
@@ -51,6 +54,7 @@
   id: WardrobeGreen
   parent: WardrobeBase
   name: green wardrobe
+  description: "A wardrobe packed with stylish green clothing."
   components:
   - type: Appearance
     visuals:
@@ -77,6 +81,7 @@
   id: WardrobeYellow
   parent: WardrobeBase
   name: yellow wardrobe
+  description: "A wardrobe packed with stylish yellow clothing."
   components:
   - type: Appearance
     visuals:
@@ -90,6 +95,7 @@
   id: WardrobeWhite
   parent: WardrobeBase
   name: white wardrobe
+  description: "A wardrobe packed with stylish white clothing."
   components:
   - type: Appearance
     visuals:
@@ -103,6 +109,7 @@
   id: WardrobeGrey
   parent: WardrobeBase
   name: grey wardrobe
+  description: "A wardrobe packed with a tide of grey clothing."
   components:
   - type: Appearance
     visuals:
@@ -116,6 +123,7 @@
   id: WardrobeMixed
   parent: WardrobeBase
   name: mixed wardrobe
+  description: "A wardrobe packed with a mix of colorful clothing."
   components:
   - type: Appearance
     visuals:

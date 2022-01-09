@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: ComputerBase
   id: ComputerAlert
   name: alerts computer
@@ -306,12 +306,13 @@
       - HydroponicsSeedsExotic
       - LivestockMonkeyCube
       - LivestockCow
+      - LivestockChicken
+      - LivestockDuck
       - FoodPizza
       - ServiceJanitorial
       - ServiceLightsReplacement
       - ServiceSmokeables
       - ServiceCustomSmokable
-      - SalvageEquipment
       - ServiceBureaucracy
       - EngineeringCableLv
       - EngineeringCableMv
