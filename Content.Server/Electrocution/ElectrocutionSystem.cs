@@ -123,7 +123,7 @@ namespace Content.Server.Electrocution
             if (!electrified.OnBump)
                 return;
 
-            TryDoElectrifiedAct(uid, args.OtherFixture.Body.Owner, electrified);
+            TryDoElectrifiedAct(uid, args.OtherFixture.Body.Owner, 1, electrified);
         }
 
         private void OnElectrifiedAttacked(EntityUid uid, ElectrifiedComponent electrified, AttackedEvent args)
@@ -131,7 +131,7 @@ namespace Content.Server.Electrocution
             if (!electrified.OnAttacked)
                 return;
 
-            TryDoElectrifiedAct(uid, args.User, electrified);
+            TryDoElectrifiedAct(uid, args.User, 1, electrified);
         }
 
         private void OnElectrifiedHandInteract(EntityUid uid, ElectrifiedComponent electrified, InteractHandEvent args)
@@ -139,7 +139,7 @@ namespace Content.Server.Electrocution
             if (!electrified.OnHandInteract)
                 return;
 
-            TryDoElectrifiedAct(uid, args.User, electrified);
+            TryDoElectrifiedAct(uid, args.User, 1, electrified);
         }
 
         private void OnElectrifiedInteractUsing(EntityUid uid, ElectrifiedComponent electrified, InteractUsingEvent args)
@@ -147,10 +147,15 @@ namespace Content.Server.Electrocution
             if (!electrified.OnInteractUsing)
                 return;
 
-            TryDoElectrifiedAct(uid, args.User, electrified);
+            var siemens = TryComp(args.Used, out InsulatedComponent? insulation)
+                ? insulation.SiemensCoefficient
+                : 1;
+
+            TryDoElectrifiedAct(uid, args.User, siemens, electrified);
         }
 
         public bool TryDoElectrifiedAct(EntityUid uid, EntityUid targetUid,
+            float siemens = 1,
             ElectrifiedComponent? electrified = null,
             NodeContainerComponent? nodeContainer = null,
             TransformComponent? transform = null)
@@ -171,7 +176,7 @@ namespace Content.Server.Electrocution
                 }
             }
 
-            var siemens = electrified.SiemensCoefficient;
+            siemens *= electrified.SiemensCoefficient;
             if (!DoCommonElectrocutionAttempt(targetUid, uid, ref siemens) || siemens <= 0)
                 return false; // If electrocution would fail, do nothing.
 
