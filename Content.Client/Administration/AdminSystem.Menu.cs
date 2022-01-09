@@ -94,7 +94,12 @@ namespace Content.Client.Administration
 
         public void Open()
         {
-            _window ??= new AdminMenuWindow();
+            if (_window == null)
+            {
+                _window = new AdminMenuWindow();
+                _window.OnClose += Close;
+            }
+
             _window.PlayerTabControl.OnEntryPressed += PlayerTabEntryPressed;
             _window.OpenCentered();
         }

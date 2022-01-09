@@ -75,12 +75,10 @@ namespace Content.Shared.Containers.ItemSlots
         public EntityWhitelist? Whitelist;
 
         [DataField("insertSound")]
-        public SoundSpecifier? InsertSound;
-        // maybe default to /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg ??
+        public SoundSpecifier InsertSound = new SoundPathSpecifier("/Audio/Weapons/Guns/MagIn/revolver_magin.ogg");
 
         [DataField("ejectSound")]
-        public SoundSpecifier? EjectSound;
-        // maybe default to /Audio/Machines/id_swipe.ogg?
+        public SoundSpecifier EjectSound = new SoundPathSpecifier("/Audio/Weapons/Guns/MagOut/revolver_magout.ogg");
 
         /// <summary>
         ///     Options used for playing the insert/eject sounds.
@@ -98,6 +96,9 @@ namespace Content.Shared.Containers.ItemSlots
         [DataField("name")]
         public string Name = string.Empty;
 
+        /// <summary>
+        ///     The entity prototype that is spawned into this slot on map init.
+        /// </summary>
         [DataField("startingItem", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string? StartingItem;
 
@@ -136,15 +137,15 @@ namespace Content.Shared.Containers.ItemSlots
         public bool EjectOnUse = false;
 
         /// <summary>
-        ///     Override the insert verb text. Defaults to [insert category] -> [item-name]. If not null, the verb will
-        ///     not be given a category.
+        ///     Override the insert verb text. Defaults to using the slot's name (if specified) or the name of the
+        ///     targeted item. If specified, the verb will not be added to the default insert verb category.
         /// </summary>
         [DataField("insertVerbText")]
         public string? InsertVerbText;
 
         /// <summary>
-        ///     Override the insert verb text. Defaults to [eject category] -> [item-name]. If not null, the verb will
-        ///     not be given a category.
+        ///     Override the eject verb text. Defaults to using the slot's name (if specified) or the name of the
+        ///     targeted item. If specified, the verb will not be added to the default eject verb category
         /// </summary>
         [DataField("ejectVerbText")]
         public string? EjectVerbText;
