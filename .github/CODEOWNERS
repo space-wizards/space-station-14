@@ -36,9 +36,9 @@
 /Content.*/Chemistry/ @mirrorcult
 /Content.*/StatusEffect/ @mirrorcult
 /Content.*/Whitelist/ @mirrorcult
-/Resources/Prototypes/Reagents/
-/Resources/Prototypes/Recipes/Reactions
-/Resources/Prototypes/Chemistry
+/Resources/Prototypes/Reagents/ @mirrorcult
+/Resources/Prototypes/Recipes/Reactions @mirrorcult
+/Resources/Prototypes/Chemistry @mirrorcult
 
 # Be they Fluent translations or Freemarker templates, I know them both!
 *.ftl @RemieRichards
