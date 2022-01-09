@@ -1,4 +1,5 @@
-﻿using Robust.Shared.GameObjects;
+using Content.Shared.Inventory;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.Atmos
 {
@@ -34,13 +35,15 @@ namespace Content.Server.Atmos
         }
     }
 
-    public class LowPressureEvent : PressureEvent
+    public class LowPressureEvent : PressureEvent, IInventoryRelayEvent
     {
+        public SlotFlags TargetSlots { get; } = ~SlotFlags.POCKET;
         public LowPressureEvent(float pressure) : base(pressure) { }
     }
 
-    public class HighPressureEvent : PressureEvent
+    public class HighPressureEvent : PressureEvent, IInventoryRelayEvent
     {
+        public SlotFlags TargetSlots { get; } = ~SlotFlags.POCKET;
         public HighPressureEvent(float pressure) : base(pressure) { }
     }
 }
