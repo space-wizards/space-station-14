@@ -1,1 +1,2 @@
 ent-BaseItem = item
+    .desc = { "" }
