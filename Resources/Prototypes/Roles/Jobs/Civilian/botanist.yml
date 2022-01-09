@@ -19,7 +19,7 @@
     shoes: ClothingShoesColorBrown
     id: BotanistPDA
     ears: ClothingHeadsetService
-    outerclothing: ClothingOuterApronBotanist
+    outerClothing: ClothingOuterApronBotanist
     belt: ClothingBeltPlantFilled
   innerclothingskirt: ClothingUniformJumpskirtHydroponics
   satchel: ClothingBackpackSatchelHydroponicsFilled
