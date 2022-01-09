@@ -19,6 +19,7 @@ using Content.Shared.Inventory;
 using Content.Shared.PDA;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
+using Content.Shared.Species;
 using Content.Shared.Station;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
@@ -33,7 +34,6 @@ namespace Content.Server.GameTicking
 {
     public partial class GameTicker
     {
-        private const string PlayerPrototypeName = "MobHuman";
         private const string ObserverPrototypeName = "MobObserver";
 
         [Dependency] private readonly IdCardSystem _cardSystem = default!;
@@ -213,7 +213,9 @@ namespace Content.Server.GameTicking
         private EntityUid SpawnPlayerMob(Job job, HumanoidCharacterProfile? profile, StationId station, bool lateJoin = true)
         {
             var coordinates = lateJoin ? GetLateJoinSpawnPoint(station) : GetJobSpawnPoint(job.Prototype.ID, station);
-            var entity = EntityManager.SpawnEntity(PlayerPrototypeName, coordinates);
+            var entity = EntityManager.SpawnEntity(
+                _prototypeManager.Index<SpeciesPrototype>(profile?.Species ?? SpeciesManager.DefaultSpecies).Prototype,
+                coordinates);
 
             if (job.StartingGear != null)
             {

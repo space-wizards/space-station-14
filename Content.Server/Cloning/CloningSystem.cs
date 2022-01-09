@@ -158,6 +158,7 @@ namespace Content.Server.Cloning
     struct ClonerDNAEntry {
         public Mind.Mind Mind;
         public HumanoidCharacterProfile Profile;
+
         public ClonerDNAEntry(Mind.Mind m, HumanoidCharacterProfile hcp)
         {
             Mind = m;
