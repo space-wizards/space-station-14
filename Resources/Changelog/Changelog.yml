@@ -1,10 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: 'In Saltern, removed some duplicate APC wires and unbridged two APCs',
-    type: Fix}
-  id: 347
-  time: '2021-09-09T06:37:20.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: Sunglasses now protect you against flashes., type: Tweak}
@@ -2920,3 +2914,8 @@ Entries:
   - {message: Added crafting recipe for substations, type: Add}
   id: 848
   time: '2022-01-09T06:05:54.0000000+00:00'
+- author: DubiousDoggo
+  changes:
+  - {message: 'Added SMES construction - no more easy power crippling :)', type: Add}
+  id: 849
+  time: '2022-01-09T07:31:07.0000000+00:00'
