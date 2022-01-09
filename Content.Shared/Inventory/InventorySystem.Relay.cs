@@ -18,7 +18,10 @@ public partial class InventorySystem
 
     protected void RelayInventoryEvent<T>(EntityUid uid, InventoryComponent component, T args) where T : EntityEventArgs
     {
-        var containerEnumerator = new ContainerSlotEnumerator(uid, component.TemplateId, _prototypeManager, this);
+        // Insulated gloves in you pockets ain't gonna save you.
+        var flags = ~SlotFlags.POCKET; 
+
+        var containerEnumerator = new ContainerSlotEnumerator(uid, component.TemplateId, _prototypeManager, this, flags);
         while(containerEnumerator.MoveNext(out var container))
         {
             if(!container.ContainedEntity.HasValue) continue;
