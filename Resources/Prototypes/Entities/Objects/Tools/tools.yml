@@ -225,7 +225,7 @@
   description: An advanced construction device which can place/remove walls, floors, and airlocks quickly.
   components:
   - type: RCD
-  - type: Insulated # It has a rubber grip. Let's not sock users if they want to build tiles over exposed wires. 
+  - type: Insulated # It has a rubber grip. Let's not shock users if they want to build tiles over exposed wires. 
   - type: UseDelay
     delay: 1.0
   - type: Sprite

@@ -14,7 +14,7 @@
         Blunt: 10
   - type: Stack
     count: 1
-  - type: Insulated # Let's not sock users if they want to place tiles over exposed wires.
+  - type: Insulated # Let's not shock users if they want to place tiles over exposed wires.
 
 - type: entity
   name: steel tile
