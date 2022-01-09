@@ -21,7 +21,9 @@ namespace Content.Server.Database
         }
 
         public void ApplyServices(IServiceCollection services)
-            => services.AddSnakeCase();
+        {
+            services.AddSnakeCase();
+        }
 
         public void Validate(IDbContextOptions options) {}
 
@@ -33,7 +35,10 @@ namespace Content.Server.Database
 
             public override string LogFragment => "Snake Case Extension";
 
-            public override int GetServiceProviderHashCode() => 0;
+            public override int GetServiceProviderHashCode()
+            {
+                return 0;
+            }
 
             public override bool ShouldUseSameServiceProvider(DbContextOptionsExtensionInfo other)
             {
@@ -154,7 +159,9 @@ namespace Content.Server.Database
         public virtual void ProcessPropertyAdded(
             IConventionPropertyBuilder propertyBuilder,
             IConventionContext<IConventionPropertyBuilder> context)
-            => RewriteColumnName(propertyBuilder);
+        {
+            RewriteColumnName(propertyBuilder);
+        }
 
         public void ProcessForeignKeyOwnershipChanged(IConventionForeignKeyBuilder relationshipBuilder, IConventionContext<bool?> context)
         {
@@ -237,7 +244,9 @@ namespace Content.Server.Database
         public void ProcessForeignKeyAdded(
             IConventionForeignKeyBuilder relationshipBuilder,
             IConventionContext<IConventionForeignKeyBuilder> context)
-            => relationshipBuilder.HasConstraintName(RewriteName(relationshipBuilder.Metadata.GetDefaultName()));
+        {
+            relationshipBuilder.HasConstraintName(RewriteName(relationshipBuilder.Metadata.GetDefaultName()));
+        }
 
         public void ProcessKeyAdded(IConventionKeyBuilder keyBuilder, IConventionContext<IConventionKeyBuilder> context)
         {
@@ -289,7 +298,7 @@ namespace Content.Server.Database
             }
         }
 
-        private void RewriteColumnName(IConventionPropertyBuilder propertyBuilder)
+        private static void RewriteColumnName(IConventionPropertyBuilder propertyBuilder)
         {
             var property = propertyBuilder.Metadata;
             var entityType = property.DeclaringEntityType;
