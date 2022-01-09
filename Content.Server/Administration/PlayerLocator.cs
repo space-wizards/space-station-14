@@ -7,7 +7,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Database;
 using JetBrains.Annotations;
-using Newtonsoft.Json;
 using Robust.Server.Player;
 using Robust.Shared;
 using Robust.Shared.Configuration;

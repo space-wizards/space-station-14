@@ -64,6 +64,9 @@ public sealed class PowerCellSlotComponent : Component
     public bool FitsInCharger = true;
 }
 
+/// <summary>
+///     Raised directed at an entity with a power cell slot when the power cell inside has its charge updated or is ejected/inserted.
+/// </summary>
 public class PowerCellChangedEvent : EntityEventArgs
 {
     public readonly bool Ejected;

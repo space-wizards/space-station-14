@@ -53,6 +53,15 @@
      Glass: 100
 
 - type: latheRecipe
+  id: SMESMachineCircuitboard
+  icon: Objects/Misc/module.rsi/power_mod.png
+  result: SMESMachineCircuitboard
+  completetime: 1000
+  materials:
+     Steel: 100
+     Glass: 100
+
+- type: latheRecipe
   id: CloningPodMachineCircuitboard
   icon: Objects/Misc/module.rsi/id_mod.png
   result: CloningPodMachineCircuitboard

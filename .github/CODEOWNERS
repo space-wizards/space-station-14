@@ -1,6 +1,10 @@
 # Last match in file takes precedence.
 
-# Moony's Gargantuan List Of Things She Cares About, or MGLOTSCA for short
+# Ping for all PRs except ones with specific pings
+* @PJB3005 @Zumorica
+
+# Moony's Gargantuan List Of Things She Cares About, or MGLOTSCA for short.
+# You need to add your name to these entries, not make a new one, if you care about them.
 /Content.*/Bql/ @moonheart08
 /Content.*/Administration/ @moonheart08
 /Content.*/Station/ @moonheart08
@@ -15,11 +19,5 @@
 /Resources/Prototypes/Entities/Mobs/Player/ @moonheart08
 /Resources/Prototypes/Entities/Mobs/Species/ @moonheart08
 
-# I pretend to have authority over these things.
-/Resources/ @SweptWasTaken
-
 # Be they Fluent translations or Freemarker templates, I know them both!
 *.ftl @RemieRichards
-
-# Ping for all PRs
-* @PJB3005 @Zumorica
