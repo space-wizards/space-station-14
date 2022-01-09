@@ -19,7 +19,7 @@ public class SpawnArtifactComponent : Component
     public bool RandomPrototype = true;
 
     [DataField("possiblePrototypes")]
-    public string[] PossiblePrototypes = default!;
+    public string[] PossiblePrototypes = {};
 
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("prototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
