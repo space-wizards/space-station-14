@@ -10,10 +10,13 @@ using Content.Server.Administration.Logs;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CharacterAppearance;
 using Content.Shared.Preferences;
+using Content.Shared.Species;
 using Microsoft.EntityFrameworkCore;
 using Robust.Shared.Enums;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Database
@@ -177,6 +180,7 @@ namespace Content.Server.Database
 
             return new HumanoidCharacterProfile(
                 profile.CharacterName,
+                profile.Species,
                 profile.Age,
                 sex,
                 gender,
@@ -204,6 +208,7 @@ namespace Content.Server.Database
             var entity = new Profile
             {
                 CharacterName = humanoid.Name,
+                Species = humanoid.Species,
                 Age = humanoid.Age,
                 Sex = humanoid.Sex.ToString(),
                 Gender = humanoid.Gender.ToString(),
