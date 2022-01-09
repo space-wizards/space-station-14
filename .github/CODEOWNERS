@@ -1,7 +1,7 @@
 # Last match in file takes precedence.
 
 # Ping for all PRs except ones with specific pings
-* @PJB3005 @Zumorica
+* @PJB3005
 
 # Moony's Gargantuan List Of Things She Cares About, or MGLOTSCA for short.
 # You need to add your name to these entries, not make a new one, if you care about them.
@@ -9,7 +9,7 @@
 /Content.*/Administration/ @moonheart08
 /Content.*/Station/ @moonheart08
 /Content.*/Maps/ @moonheart08
-/Content.*/GameTicking/ @moonheart08
+/Content.*/GameTicking/ @moonheart08 @Zumorica
 /Resources/Server\ Info/ @moonheart08
 /Resources/engineCommandPerms.yml @moonheart08
 /Resources/clientCommandPerms.yml @moonheart08
@@ -18,6 +18,19 @@
 /Resources/Prototypes/Maps/ @moonheart08
 /Resources/Prototypes/Entities/Mobs/Player/ @moonheart08
 /Resources/Prototypes/Entities/Mobs/Species/ @moonheart08
+
+/Content.*/Atmos/ @Zumorica
+/Content.*/Botany/ @Zumorica
+/Content.*/Construction/ @Zumorica
+/Content.*/Holiday/ @Zumorica
+/Content.*/Instruments/ @Zumorica
+/Content.*/Stunnable/ @Zumorica
+/Resources/Prototypes/game_* @Zumorica # Both game_presets.yml and game_rules.yml
+/Resources/Prototypes/holidays.yml @Zumorica
+/Resources/Prototypes/tool_qualities.yml @Zumorica
+/Resources/Prototypes/Atmospherics/ @Zumorica
+/Resources/Prototypes/Recipes/Construction @Zumorica
+/Resources/Prototypes/Recipes/Crafting @Zumorica
 
 # Be they Fluent translations or Freemarker templates, I know them both!
 *.ftl @RemieRichards
