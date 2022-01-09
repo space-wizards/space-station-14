@@ -75,7 +75,8 @@ namespace Content.Client.Preferences.UI
         private readonly List<JobPrioritySelector> _jobPriorities;
         private OptionButton _preferenceUnavailableButton => CPreferenceUnavailableButton;
         private readonly Dictionary<string, BoxContainer> _jobCategories;
-
+        // Mildly hacky, as I don't trust prototype order to stay consistent and don't want the UI to break should a new one get added mid-edit. --moony
+        private readonly List<SpeciesPrototype> _speciesList;
         private readonly List<AntagPreferenceSelector> _antagPreferences;
 
         private EntityUid _previewDummy;
@@ -176,16 +177,16 @@ namespace Content.Client.Preferences.UI
 
             #region Species
 
-            var options = prototypeManager.EnumeratePrototypes<SpeciesPrototype>().ToArray();
-            for (var i = 0; i < options.Length; i++)
+            _speciesList = prototypeManager.EnumeratePrototypes<SpeciesPrototype>().ToList();
+            for (var i = 0; i < _speciesList.Count; i++)
             {
-                CSpeciesButton.AddItem(options[i].Name, i);
+                CSpeciesButton.AddItem(_speciesList[i].Name, i);
             }
 
             CSpeciesButton.OnItemSelected += args =>
             {
                 CSpeciesButton.SelectId(args.Id);
-                SetSpecies(options[args.Id].ID);
+                SetSpecies(_speciesList[args.Id].ID);
                 OnSkinColorOnValueChanged(CSkin);
             };
 
@@ -552,6 +553,7 @@ namespace Content.Client.Preferences.UI
         private void SetSpecies(string newSpecies)
         {
             Profile = Profile?.WithSpecies(newSpecies);
+            OnSkinColorOnValueChanged(CSkin); // Species may have special color prefs, make sure to update it.
             IsDirty = true;
         }
 
@@ -650,6 +652,16 @@ namespace Content.Client.Preferences.UI
 
         }
 
+        private void UpdateSpecies()
+        {
+            if (Profile == null)
+            {
+                return;
+            }
+
+            CSpeciesButton.Select(_speciesList.FindIndex(x => x.ID == Profile.Species));
+        }
+
         private void UpdateGenderControls()
         {
             if (Profile == null)
@@ -731,6 +743,7 @@ namespace Content.Client.Preferences.UI
             UpdateSexControls();
             UpdateGenderControls();
             UpdateSkinColor();
+            UpdateSpecies();
             UpdateClothingControls();
             UpdateBackpackControls();
             UpdateAgeEdit();
