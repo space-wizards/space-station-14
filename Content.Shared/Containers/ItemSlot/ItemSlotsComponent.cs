@@ -93,7 +93,7 @@ namespace Content.Shared.Containers.ItemSlots
         ///     This will be passed through Loc.GetString. If the name is an empty string, then verbs will use the name
         ///     of the currently held or currently inserted entity instead.
         /// </remarks>
-        [DataField("name")]
+        [DataField("name", readOnly: true)]
         public string Name = string.Empty;
 
         /// <summary>
