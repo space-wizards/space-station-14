@@ -454,15 +454,14 @@ namespace Content.Client.Preferences.UI
                     float sat = 20;
                     float val = 100;
 
-                    switch (rangeOffset)
+                    if (rangeOffset <= 0)
                     {
-                        case < 0:
-                            hue += Math.Abs(rangeOffset);
-                            break;
-                        case > 0:
-                            sat += rangeOffset;
-                            val -= rangeOffset;
-                            break;
+                        hue += Math.Abs(rangeOffset);
+                    }
+                    else
+                    {
+                        sat += rangeOffset;
+                        val -= rangeOffset;
                     }
 
                     var color = Color.FromHsv(new Vector4(hue / 360, sat / 100, val / 100, 1.0f));
