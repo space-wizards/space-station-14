@@ -5,6 +5,7 @@ using Content.Shared.Verbs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
+using Robust.Shared.Maths;
 
 namespace Content.Shared.Follower;
 
