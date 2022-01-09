@@ -40,7 +40,7 @@
     shoes: ClothingShoesColorBlack
     id: ChefPDA
     ears: ClothingHeadsetService
-    outerclothing: ClothingOuterApronChef
+    outerClothing: ClothingOuterApronChef
   innerclothingskirt: ClothingUniformJumpskirtChef
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled

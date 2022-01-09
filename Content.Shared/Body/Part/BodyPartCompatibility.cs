@@ -4,6 +4,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Body.Part
 {
+    //TODO: This should be a prototype. --DrSmugleaf
     /// <summary>
     ///     Determines whether two <see cref="SharedBodyPartComponent"/>s can connect.
     /// </summary>
@@ -13,6 +14,6 @@ namespace Content.Shared.Body.Part
         Universal = 0,
         Biological,
         Mechanical,
-        Slime,
+        Slime
     }
 }

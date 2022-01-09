@@ -41,9 +41,10 @@ namespace Content.Client.CharacterAppearance.Systems
             HumanoidVisualLayers.LFoot
         };
 
-        private void UpdateLooks(EntityUid uid, HumanoidAppearanceComponent component, ChangedHumanoidAppearanceEvent args)
+        private void UpdateLooks(EntityUid uid, HumanoidAppearanceComponent component,
+            ChangedHumanoidAppearanceEvent args)
         {
-            if(!EntityManager.TryGetComponent(uid, out SpriteComponent? sprite))
+            if (!EntityManager.TryGetComponent(uid, out SpriteComponent? sprite))
                 return;
 
             if (EntityManager.TryGetComponent(uid, out SharedBodyComponent? body))
@@ -58,14 +59,13 @@ namespace Content.Client.CharacterAppearance.Systems
                 }
             }
 
-            sprite.LayerSetColor(HumanoidVisualLayers.Hair,
-                (!component.HairMatchesSkin
-                    ? (component.CanColorHair ? component.Appearance.HairColor : Color.White)
-                    : component.Appearance.SkinColor).WithAlpha(component.HairAlpha));
-            sprite.LayerSetColor(HumanoidVisualLayers.FacialHair,
-                (!component.HairMatchesSkin
-                    ? (component.CanColorFacialHair ? component.Appearance.FacialHairColor : Color.White)
-                    : component.Appearance.SkinColor).WithAlpha(component.HairAlpha));
+            var hairColor = component.CanColorHair ? component.Appearance.HairColor : Color.White;
+            hairColor = component.HairMatchesSkin ? component.Appearance.SkinColor : hairColor;
+            sprite.LayerSetColor(HumanoidVisualLayers.Hair, hairColor.WithAlpha(component.HairAlpha));
+
+            var facialHairColor = component.CanColorHair ? component.Appearance.FacialHairColor : Color.White;
+            facialHairColor = component.HairMatchesSkin ? component.Appearance.SkinColor : facialHairColor;
+            sprite.LayerSetColor(HumanoidVisualLayers.FacialHair, facialHairColor.WithAlpha(component.HairAlpha));
 
             foreach (var layer in _bodyPartLayers)
             {

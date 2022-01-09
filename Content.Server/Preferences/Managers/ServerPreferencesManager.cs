@@ -263,6 +263,14 @@ namespace Content.Server.Preferences.Managers
                 {
                     case HumanoidCharacterProfile hp:
                     {
+                        var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+                        var selectedSpecies = SpeciesManager.DefaultSpecies;
+
+                        if (prototypeManager.TryIndex<SpeciesPrototype>(hp.Species, out var species) && species.RoundStart)
+                        {
+                            selectedSpecies = hp.Species;
+                        }
+
                         newProf = hp
                             .WithJobPriorities(
                                 hp.JobPriorities.Where(job =>
@@ -270,10 +278,7 @@ namespace Content.Server.Preferences.Managers
                             .WithAntagPreferences(
                                 hp.AntagPreferences.Where(antag =>
                                     _protos.HasIndex<AntagPrototype>(antag)))
-                            .WithSpecies(
-                                IoCManager.Resolve<IPrototypeManager>().HasIndex<SpeciesPrototype>(hp.Species)
-                                ? hp.Species
-                                : SpeciesManager.DefaultSpecies);
+                            .WithSpecies(selectedSpecies);
                         break;
                     }
                     default:

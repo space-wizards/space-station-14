@@ -158,13 +158,13 @@ namespace Content.Client.Preferences.UI
                 {
                     var dummy = prototypeManager.Index<SpeciesPrototype>(humanoid.Species).DollPrototype;
                     _previewDummy = entityManager.SpawnEntity(dummy, MapCoordinates.Nullspace);
-                    EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(_previewDummy, profile);
                 }
                 else
                 {
                     _previewDummy = entityManager.SpawnEntity(prototypeManager.Index<SpeciesPrototype>(SpeciesManager.DefaultSpecies).DollPrototype, MapCoordinates.Nullspace);
-                    EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(_previewDummy, profile);
                 }
+
+                EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(_previewDummy, profile);
 
                 if (humanoid != null)
                 {

@@ -6,7 +6,7 @@
     backpack: ClothingBackpackFilled
     head: ClothingHeadHelmetCult
     neck: BedsheetCult
-    outerclothing: ClothingOuterArmorCult
+    outerClothing: ClothingOuterArmorCult
     shoes: ClothingShoesCult
     idcard: AssistantPDA
     ears: ClothingHeadsetService
@@ -20,7 +20,7 @@
     innerclothing: ClothingUniformJumpsuitColorBlack
     backpack: ClothingBackpackFilled
     head: ClothingHeadHatHoodCulthood
-    outerclothing: ClothingOuterRobesCult
+    outerClothing: ClothingOuterRobesCult
     shoes: ClothingShoesColorRed
     idcard: AssistantPDA
     ears: ClothingHeadsetService

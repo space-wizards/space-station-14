@@ -41,7 +41,7 @@
     jumpsuit: ClothingUniformJumpsuitResearchDirector
     back: ClothingBackpackScienceFilled
     shoes: ClothingShoesColorBrown
-    outerclothing: ClothingOuterCoatLab
+    outerClothing: ClothingOuterCoatLab
     id: RnDPDA
     ears: ClothingHeadsetScience
   innerclothingskirt: ClothingUniformJumpskirtResearchDirector

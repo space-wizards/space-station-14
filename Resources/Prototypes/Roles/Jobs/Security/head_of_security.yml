@@ -41,7 +41,7 @@
     jumpsuit: ClothingUniformJumpsuitHoS
     back: ClothingBackpackSecurityFilled
     shoes: ClothingShoesBootsJack
-    outerclothing: ClothingOuterCoatHoSTrench
+    outerClothing: ClothingOuterCoatHoSTrench
     eyes: ClothingEyesGlassesSecurity
     head: ClothingHeadHatBeretHoS
     id: HoSPDA

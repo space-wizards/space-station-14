@@ -293,7 +293,6 @@ namespace Content.Client.Entry
             "IncreaseDamageOnWield",
             "TabletopGame",
             "LitOnPowered",
-            "Foldable",
             "TriggerOnSignalReceived",
             "ToggleDoorOnTrigger",
             "DeviceNetworkComponent",

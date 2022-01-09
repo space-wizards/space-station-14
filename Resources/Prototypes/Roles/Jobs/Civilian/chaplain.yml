@@ -40,4 +40,5 @@
     id: ChaplainPDA
     ears: ClothingHeadsetService
   innerclothingskirt: ClothingUniformJumpskirtChaplain
-
+  satchel: ClothingBackpackSatchelFilled
+  duffelbag: ClothingBackpackDuffelFilled

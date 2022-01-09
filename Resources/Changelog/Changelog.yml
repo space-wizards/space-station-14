@@ -1,55 +1,4 @@
 Entries:
-- author: Swept
-  changes:
-  - {message: Fix grav gen losing power after only a bit, type: Fix}
-  id: 337
-  time: '2021-08-24T15:36:50.0000000+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: Removed the ability for chairs to catch items thrown by people sitting
-      on them., type: Fix}
-  id: 338
-  time: '2021-08-25T10:35:37.0000000+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: Fixed deconstruction verb on partially deconstructed windows., type: Fix}
-  id: 339
-  time: '2021-08-25T11:45:33.0000000+00:00'
-- author: Macoron
-  changes:
-  - {message: Fix admin events UI tab, type: Fix}
-  id: 340
-  time: '2021-08-26T09:45:06.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: Adds unique screen for NTBlockGame, type: Add}
-  id: 341
-  time: '2021-08-30T22:25:08.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Thrown items no longer land if they're caught., type: Tweak}
-  id: 342
-  time: '2021-08-31T12:46:11.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Stop lobby UI from crashing, type: Fix}
-  id: 343
-  time: '2021-09-01T23:39:19.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Mob pulling no longer locked to server tickrate, type: Fix}
-  id: 344
-  time: '2021-09-02T02:35:16.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Some engineering items now play sounds when landing, type: Add}
-  id: 345
-  time: '2021-09-03T20:45:02.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Add ambient sounds coming from objects., type: Add}
-  id: 346
-  time: '2021-09-07T08:47:24.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: 'In Saltern, removed some duplicate APC wires and unbridged two APCs',
@@ -2906,3 +2855,68 @@ Entries:
     type: Tweak}
   id: 838
   time: '2022-01-07T04:03:20.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: PAIs can no longer run around on their little robot legs., type: Fix}
+  id: 839
+  time: '2022-01-07T11:57:20.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Station staff should once again spawn with their "outer clothing" (lab
+      coats, vests, etc) equipped.', type: Fix}
+  id: 840
+  time: '2022-01-07T15:58:55.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Drinking welder fuel now does toxin damage. Tasty., type: Fix}
+  id: 841
+  time: '2022-01-08T02:44:14.0000000+00:00'
+- author: the maintainer team
+  changes:
+  - {message: Running speed has been lowered by two meters per second. Walking speed
+      has been lowered by one., type: Tweak}
+  id: 842
+  time: '2022-01-08T23:04:06.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Removed the Z8 Bulldog bundle until it works as advertised., type: Remove}
+  id: 843
+  time: '2022-01-08T23:21:51.0000000+00:00'
+- author: moony
+  changes:
+  - {message: Support for picking a species to play as in the character editor has
+      been upstreamed from Outer Rim 14., type: Add}
+  - {message: 'Dwarves have been added, a shorter race that.. well you know what a
+      dwarf is, don''t you?', type: Add}
+  - {message: 'Slimes have been made playable, with enhancements such as hair actually
+      working.', type: Add}
+  id: 844
+  time: '2022-01-09T01:53:14.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'Botanists now spawn with a botanical belt, which has some tools and
+      a bottle of Robust Harvest. Now all Botanists should become more familiar with
+      the core of the enthralling botanist gameplay loop; increasing potency.', type: Add}
+  - {message: 'Doctors now have medikits removed from their satchels and duffles too,
+      not just backpacks.', type: Fix}
+  id: 845
+  time: '2022-01-09T02:49:49.0000000+00:00'
+- author: BubblegumBlue
+  changes:
+  - {message: YouTool vending machines now start with 3 utility belts and actual cable
+      supplies., type: Tweak}
+  - {message: 'Salvage crates spawn with a utility belt and wirecutters, and have
+      been removed from Cargo''s ordering list.', type: Tweak}
+  id: 846
+  time: '2022-01-09T03:20:30.0000000+00:00'
+- author: Lamrr
+  changes:
+  - {message: The construction classic has returned! Wearable warning cones can now
+      be found in maintenance tunnels near you., type: Add}
+  id: 847
+  time: '2022-01-09T05:34:46.0000000+00:00'
+- author: DubiousDoggo
+  changes:
+  - {message: Added crafting recipe for substations, type: Add}
+  id: 848
+  time: '2022-01-09T06:05:54.0000000+00:00'

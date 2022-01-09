@@ -36,7 +36,7 @@
   equipment:
     head: ClothingHeadHatTophat
     jumpsuit: ClothingUniformJumpsuitBartender
-    outerclothing: ClothingOuterVestKevlar
+    outerClothing: ClothingOuterVestKevlar
     back: ClothingBackpackFilled
     shoes: ClothingShoesColorBlack
     id: BartenderPDA

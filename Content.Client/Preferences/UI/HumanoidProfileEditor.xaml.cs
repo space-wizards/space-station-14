@@ -75,7 +75,8 @@ namespace Content.Client.Preferences.UI
         private readonly List<JobPrioritySelector> _jobPriorities;
         private OptionButton _preferenceUnavailableButton => CPreferenceUnavailableButton;
         private readonly Dictionary<string, BoxContainer> _jobCategories;
-
+        // Mildly hacky, as I don't trust prototype order to stay consistent and don't want the UI to break should a new one get added mid-edit. --moony
+        private readonly List<SpeciesPrototype> _speciesList;
         private readonly List<AntagPreferenceSelector> _antagPreferences;
 
         private EntityUid _previewDummy;
@@ -176,17 +177,17 @@ namespace Content.Client.Preferences.UI
 
             #region Species
 
-            var options = prototypeManager.EnumeratePrototypes<SpeciesPrototype>().ToArray();
-            for (var i = 0; i < options.Length; i++)
+            _speciesList = prototypeManager.EnumeratePrototypes<SpeciesPrototype>().ToList();
+            for (var i = 0; i < _speciesList.Count; i++)
             {
-                CSpeciesButton.AddItem(options[i].Name, i);
+                CSpeciesButton.AddItem(_speciesList[i].Name, i);
             }
 
             CSpeciesButton.OnItemSelected += args =>
             {
                 CSpeciesButton.SelectId(args.Id);
-                SetSpecies(options[args.Id].ID);
-                OnSkinColorOnOnValueChanged(CSkin);
+                SetSpecies(_speciesList[args.Id].ID);
+                OnSkinColorOnValueChanged(CSkin);
             };
 
             #endregion Species
@@ -201,7 +202,7 @@ namespace Content.Client.Preferences.UI
             // 0 is 45 - 20 - 100
             // 20 is 25 - 20 - 100
             // 100 is 25 - 100 - 20
-            _skinColor.OnValueChanged += OnSkinColorOnOnValueChanged;
+            _skinColor.OnValueChanged += OnSkinColorOnValueChanged;
 
             #endregion
 
@@ -438,7 +439,7 @@ namespace Content.Client.Preferences.UI
             IsDirty = false;
         }
 
-        private void OnSkinColorOnOnValueChanged(Range range)
+        private void OnSkinColorOnValueChanged(Range range)
         {
             if (Profile is null) return;
 
@@ -454,15 +455,14 @@ namespace Content.Client.Preferences.UI
                     float sat = 20;
                     float val = 100;
 
-                    switch (rangeOffset)
+                    if (rangeOffset <= 0)
                     {
-                        case < 0:
-                            hue += Math.Abs(rangeOffset);
-                            break;
-                        case > 0:
-                            sat += rangeOffset;
-                            val -= rangeOffset;
-                            break;
+                        hue += Math.Abs(rangeOffset);
+                    }
+                    else
+                    {
+                        sat += rangeOffset;
+                        val -= rangeOffset;
                     }
 
                     var color = Color.FromHsv(new Vector4(hue / 360, sat / 100, val / 100, 1.0f));
@@ -487,17 +487,16 @@ namespace Content.Client.Preferences.UI
             if (!disposing)
                 return;
 
-            IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) _previewDummy);
+            _entMan.DeleteEntity(_previewDummy);
             _preferencesManager.OnServerDataLoaded -= LoadServerData;
         }
 
         private void RebuildSpriteView()
         {
-            _previewDummy =
-                _entMan.SpawnEntity(
-                    _prototypeManager.Index<SpeciesPrototype>(Profile?.Species ?? SpeciesManager.DefaultSpecies)
-                        .DollPrototype, MapCoordinates.Nullspace);
-            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(_previewDummy);
+            var dollProto = _prototypeManager.Index<SpeciesPrototype>(Profile?.Species ?? SpeciesManager.DefaultSpecies).DollPrototype;
+            _previewDummy = _entMan.SpawnEntity(dollProto, MapCoordinates.Nullspace);
+
+            var sprite = _entMan.GetComponent<SpriteComponent>(_previewDummy);
 
             _previewSpriteControl.DisposeAllChildren();
 
@@ -554,6 +553,7 @@ namespace Content.Client.Preferences.UI
         private void SetSpecies(string newSpecies)
         {
             Profile = Profile?.WithSpecies(newSpecies);
+            OnSkinColorOnValueChanged(CSkin); // Species may have special color prefs, make sure to update it.
             IsDirty = true;
         }
 
@@ -652,6 +652,16 @@ namespace Content.Client.Preferences.UI
 
         }
 
+        private void UpdateSpecies()
+        {
+            if (Profile == null)
+            {
+                return;
+            }
+
+            CSpeciesButton.Select(_speciesList.FindIndex(x => x.ID == Profile.Species));
+        }
+
         private void UpdateGenderControls()
         {
             if (Profile == null)
@@ -733,6 +743,7 @@ namespace Content.Client.Preferences.UI
             UpdateSexControls();
             UpdateGenderControls();
             UpdateSkinColor();
+            UpdateSpecies();
             UpdateClothingControls();
             UpdateBackpackControls();
             UpdateAgeEdit();
