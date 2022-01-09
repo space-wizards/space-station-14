@@ -21,6 +21,7 @@ public class PowerCellSystem : SharedPowerCellSystem
     [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
     [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
     [Dependency] private readonly AdminLogSystem _logSystem = default!;
+    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
 
     public override void Initialize()
     {
@@ -51,7 +52,7 @@ public class PowerCellSystem : SharedPowerCellSystem
         appearance.SetData(PowerCellVisuals.ChargeLevel, level);
 
         // If this power cell is inside a cell-slot, inform that entity that the power has changed (for updating visuals n such).
-        if (uid.TryGetContainer(out var container)
+        if (_containerSystem.TryGetContainingContainer(uid, out var container)
             && TryComp(container.Owner, out PowerCellSlotComponent? slot)
             && slot.CellSlot.Item == uid)
         {
