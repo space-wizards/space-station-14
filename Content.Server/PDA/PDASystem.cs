@@ -18,6 +18,7 @@ namespace Content.Server.PDA
     public sealed class PDASystem : SharedPDASystem
     {
         [Dependency] private readonly UplinkSystem _uplinkSystem = default!;
+        [Dependency] private readonly UplinkAccountsSystem _uplinkAccounts = default!;
         [Dependency] private readonly UnpoweredFlashlightSystem _unpoweredFlashlight = default!;
 
         public override void Initialize()
@@ -107,9 +108,8 @@ namespace Content.Server.PDA
 
             var hasUplink = EntityManager.HasComponent<UplinkComponent>(pda.Owner);
 
-            var acctSys = Get<UplinkAccountsSystem>();
             if (user is not null)
-                hasUplink &= acctSys.HasAccount(user.Value);
+                hasUplink &= _uplinkAccounts.HasAccount(user.Value);
 
             var ui = pda.Owner.GetUIOrNull(PDAUiKey.Key);
             ui?.SetState(new PDAUpdateState(pda.FlashlightOn, pda.PenSlot.HasItem, ownerInfo, hasUplink));
