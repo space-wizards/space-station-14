@@ -1,9 +1,4 @@
 Entries:
-- author: Swept
-  changes:
-  - {message: Audio tweaking/additions, type: Tweak}
-  id: 349
-  time: '2021-09-10T01:31:55.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Items now land when they stop moving and not when their physics goes
@@ -2921,3 +2916,9 @@ Entries:
   - {message: Removed PDA checks., type: Remove}
   id: 850
   time: '2022-01-09T08:02:07.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed the charge indicators on tasers and laser weapons not properly
+      updating after charging., type: Fix}
+  id: 851
+  time: '2022-01-09T12:48:59.0000000+00:00'
