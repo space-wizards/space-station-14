@@ -6,18 +6,18 @@
   dollPrototype: MobHumanDummy
   skinColoration: HumanToned
 
-- type: species
-  id: Dwarf
-  name: Dwarf
-  roundStart: true
-  prototype: MobDwarf
-  dollPrototype: MobDwarfDummy
-  skinColoration: HumanToned
+#- type: species
+#  id: Dwarf
+#  name: Dwarf
+#  roundStart: true
+#  prototype: MobDwarf
+#  dollPrototype: MobDwarfDummy
+#  skinColoration: HumanToned
 
-- type: species
-  id: SlimePerson
-  name: Slime Person
-  roundStart: true
-  prototype: MobSlimePerson
-  dollPrototype: MobSlimePersonDummy
-  skinColoration: Hues
+#- type: species
+#  id: SlimePerson
+#  name: Slime Person
+#  roundStart: true
+#  prototype: MobSlimePerson
+#  dollPrototype: MobSlimePersonDummy
+#  skinColoration: Hues
