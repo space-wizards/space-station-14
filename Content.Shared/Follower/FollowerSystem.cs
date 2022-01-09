@@ -42,9 +42,6 @@ public class FollowerSystem : EntitySystem
 
     private void OnFollowerMove(EntityUid uid, FollowerComponent component, RelayMoveInputEvent args)
     {
-        RemComp<FollowerComponent>(uid);
-        Transform(uid).AttachToGridOrMap();
-
         StopFollowingEntity(uid);
     }
 
@@ -76,11 +73,16 @@ public class FollowerSystem : EntitySystem
     /// <summary>
     ///     Forces an entity to stop following another entity, if it is doing so.
     /// </summary>
-    public void StopFollowingEntity(EntityUid uid)
+    public void StopFollowingEntity(EntityUid uid, EntityUid target,
+        FollowedComponent? followed=null)
     {
+        if (!Resolve(target, ref followed))
+            return;
+
         if (!HasComp<FollowerComponent>(uid))
             return;
 
+        followed.Following.Remove(uid);
         RemComp<FollowerComponent>(uid);
         Transform(uid).AttachToGridOrMap();
     }
@@ -96,7 +98,7 @@ public class FollowerSystem : EntitySystem
 
         foreach (var player in followed.Following)
         {
-            StopFollowingEntity(player);
+            StopFollowingEntity(player, uid, followed);
         }
     }
 }
