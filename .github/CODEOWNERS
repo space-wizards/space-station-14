@@ -1,18 +1,19 @@
 # Last match in file takes precedence.
 
-/Content.Server/Bql/ @moonheart08
-/Content.Shared/Administration/ @moonheart08
-/Content.Server/Administration/ @moonheart08
-/Content.Client/Administration/ @moonheart08
-/Content.Shared/Station/ @moonheart08
-/Content.Server/Station/ @moonheart08
-/Content.Client/Station/ @moonheart08
-/Content.Server/Maps/ @moonheart08
-/Content.Shared/GameTicking/ @moonheart08
-/Content.Client/GameTicking/ @moonheart08
-/Content.Server/GameTicking/ @moonheart08
+# Moony's Gargantuan List Of Things She Cares About, or MGLOTSCA for short
+/Content.*/Bql/ @moonheart08
+/Content.*/Administration/ @moonheart08
+/Content.*/Station/ @moonheart08
+/Content.*/Maps/ @moonheart08
+/Content.*/GameTicking/ @moonheart08
 /Resources/Server\ Info/ @moonheart08
 /Resources/engineCommandPerms.yml @moonheart08
+/Resources/clientCommandPerms.yml @moonheart08
+/Resources/Prototypes/species.yml @moonheart08
+/Resources/Prototypes/Body/ @moonheart08 # suffering
+/Resources/Prototypes/Maps/ @moonheart08
+/Resources/Prototypes/Entities/Mobs/Player/ @moonheart08
+/Resources/Prototypes/Entities/Mobs/Species/ @moonheart08
 
 # I pretend to have authority over these things.
 /Resources/ @SweptWasTaken
