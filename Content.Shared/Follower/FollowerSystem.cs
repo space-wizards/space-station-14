@@ -42,7 +42,7 @@ public class FollowerSystem : EntitySystem
 
     private void OnFollowerMove(EntityUid uid, FollowerComponent component, RelayMoveInputEvent args)
     {
-        StopFollowingEntity(uid);
+        StopFollowingEntity(uid, component.Following);
     }
 
     // Since we parent our observer to the followed entity, we need to detach
