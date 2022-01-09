@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Stop lobby UI from crashing, type: Fix}
-  id: 343
-  time: '2021-09-01T23:39:19.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Mob pulling no longer locked to server tickrate, type: Fix}
   id: 344
   time: '2021-09-02T02:35:16.0000000+00:00'
@@ -2912,3 +2907,12 @@ Entries:
       working.', type: Add}
   id: 844
   time: '2022-01-09T01:53:14.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'Botanists now spawn with a botanical belt, which has some tools and
+      a bottle of Robust Harvest. Now all Botanists should become more familiar with
+      the core of the enthralling botanist gameplay loop; increasing potency.', type: Add}
+  - {message: 'Doctors now have medikits removed from their satchels and duffles too,
+      not just backpacks.', type: Fix}
+  id: 845
+  time: '2022-01-09T02:49:49.0000000+00:00'
