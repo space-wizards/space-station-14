@@ -322,6 +322,7 @@ namespace Content.Client.Entry
             "Spreader",
             "GrowingKudzu",
             "MonkeyAccent",
+            "OwOAccent",
             "ReplacementAccent",
             "ResistLocker"
         };

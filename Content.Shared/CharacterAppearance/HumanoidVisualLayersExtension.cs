@@ -13,6 +13,9 @@ namespace Content.Shared.CharacterAppearance
             {
                 case BodyPartType.Other:
                     yield break;
+                case BodyPartType.Tail:
+                    yield return HumanoidVisualLayers.Tail;
+                    break;
                 case BodyPartType.Torso:
                     yield return HumanoidVisualLayers.Chest;
                     break;
@@ -21,6 +24,8 @@ namespace Content.Shared.CharacterAppearance
                     yield return HumanoidVisualLayers.Eyes;
                     yield return HumanoidVisualLayers.FacialHair;
                     yield return HumanoidVisualLayers.Hair;
+                    yield return HumanoidVisualLayers.HeadOrgan;
+                    yield return HumanoidVisualLayers.FaceOrgan;
                     yield return HumanoidVisualLayers.StencilMask;
                     break;
                 case BodyPartType.Arm:
@@ -78,6 +83,21 @@ namespace Content.Shared.CharacterAppearance
                             break;
                         case BodyPartSymmetry.Right:
                             yield return HumanoidVisualLayers.RFoot;
+                            break;
+                        default:
+                            yield break;
+                    }
+                    yield break;
+                case BodyPartType.Wing:
+                    switch (part.Symmetry)
+                    {
+                        case BodyPartSymmetry.None:
+                            yield break;
+                        case BodyPartSymmetry.Left:
+                            yield return HumanoidVisualLayers.LWing;
+                            break;
+                        case BodyPartSymmetry.Right:
+                            yield return HumanoidVisualLayers.RWing;
                             break;
                         default:
                             yield break;

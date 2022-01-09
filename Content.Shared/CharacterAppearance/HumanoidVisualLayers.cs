@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.CharacterAppearance
@@ -10,6 +10,11 @@ namespace Content.Shared.CharacterAppearance
         FacialHair,
         Chest,
         Head,
+        HeadOrgan, //Ears, Horns
+        FaceOrgan, // Muzzle, Snout
+        Tail,
+        LWing, //Moths, etc
+        RWing, //Moths, etc
         Eyes,
         RArm,
         LArm,

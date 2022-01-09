@@ -21,3 +21,11 @@
   prototype: MobSlimePerson
   dollPrototype: MobSlimePersonDummy
   skinColoration: Hues
+
+- type: species
+  id: Felinids
+  name: Felinid
+  roundStart: true
+  prototype: MobFelinid
+  dollPrototype: MobFelinidDummy
+  skinColoration: HumanToned
