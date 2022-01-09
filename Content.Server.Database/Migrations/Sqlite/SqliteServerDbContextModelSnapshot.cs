@@ -454,6 +454,11 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("INTEGER")
                         .HasColumnName("slot");
 
+                    b.Property<string>("Species")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("species");
+
                     b.HasKey("Id")
                         .HasName("PK_profile");
 

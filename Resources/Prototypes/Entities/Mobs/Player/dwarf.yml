@@ -1,7 +1,9 @@
 - type: entity
   save: false
-  parent: MobSlimePersonBase
-  id: MobSlimePerson
+  name: Urist McHands The Dwarf
+  parent: MobDwarfBase
+  id: MobDwarf
+  description: A miserable pile of secrets.
   components:
     - type: Mind
       showExamineInfo: true

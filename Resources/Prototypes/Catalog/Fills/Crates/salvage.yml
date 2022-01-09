@@ -14,12 +14,12 @@
       - id: FireExtinguisher
       - id: ClothingShoesBootsMag
       - id: Pickaxe
-      # bare-minimum for cutting apart walls
-      # not giving them wirecutters/etc. for balance reasons
       - id: Welder
       - id: Wrench
       - id: Screwdriver
       - id: Crowbar
+      - id: Wirecutter
+      - id: ClothingBeltUtility
 
 - type: entity
   id: CrateSalvageAssortedGoodies
