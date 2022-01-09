@@ -1,9 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: Sunglasses now protect you against flashes., type: Tweak}
-  id: 348
-  time: '2021-09-09T14:20:41.0000000+00:00'
 - author: Swept
   changes:
   - {message: Audio tweaking/additions, type: Tweak}
@@ -2919,3 +2914,10 @@ Entries:
   - {message: 'Added SMES construction - no more easy power crippling :)', type: Add}
   id: 849
   time: '2022-01-09T07:31:07.0000000+00:00'
+- author: Efruit
+  changes:
+  - {message: 'The Syndicate has gotten smarter. Now, only traitors can access the
+      Uplink menu.', type: Tweak}
+  - {message: Removed PDA checks., type: Remove}
+  id: 850
+  time: '2022-01-09T08:02:07.0000000+00:00'
