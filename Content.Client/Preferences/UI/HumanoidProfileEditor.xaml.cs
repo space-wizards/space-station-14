@@ -487,7 +487,7 @@ namespace Content.Client.Preferences.UI
             if (!disposing)
                 return;
 
-            IoCManager.Resolve<IEntityManager>().DeleteEntity((EntityUid) _previewDummy);
+            _entMan.DeleteEntity(_previewDummy);
             _preferencesManager.OnServerDataLoaded -= LoadServerData;
         }
 
@@ -496,7 +496,7 @@ namespace Content.Client.Preferences.UI
             var dollProto = _prototypeManager.Index<SpeciesPrototype>(Profile?.Species ?? SpeciesManager.DefaultSpecies).DollPrototype;
             _previewDummy = _entMan.SpawnEntity(dollProto, MapCoordinates.Nullspace);
 
-            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(_previewDummy);
+            var sprite = _entMan.GetComponent<SpriteComponent>(_previewDummy);
 
             _previewSpriteControl.DisposeAllChildren();
 

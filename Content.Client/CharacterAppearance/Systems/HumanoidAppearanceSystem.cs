@@ -63,7 +63,7 @@ namespace Content.Client.CharacterAppearance.Systems
             hairColor = component.HairMatchesSkin ? component.Appearance.SkinColor : hairColor;
             sprite.LayerSetColor(HumanoidVisualLayers.Hair, hairColor.WithAlpha(component.HairAlpha));
 
-            var facialHairColor = component.CanColorHair ? component.Appearance.HairColor : Color.White;
+            var facialHairColor = component.CanColorHair ? component.Appearance.FacialHairColor : Color.White;
             facialHairColor = component.HairMatchesSkin ? component.Appearance.SkinColor : facialHairColor;
             sprite.LayerSetColor(HumanoidVisualLayers.FacialHair, facialHairColor.WithAlpha(component.HairAlpha));
 
