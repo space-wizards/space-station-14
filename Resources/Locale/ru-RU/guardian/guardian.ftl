@@ -17,7 +17,7 @@ guardian-entity-taking-damage = Your guardian is taking damage!
 
 ## Health warnings
 
-guardian-host-critical-warn = YOUR HOST IS WOUNDED!
-guardian-host-death-warn = YOUR FORM SUCCUMBS TO NONEXISTENCE!
-guardian-death-warn = YOUR BODY IS PIERCED BY SUBATOMIC PAIN AS IT DISINTEGRATES!
+guardian-host-critical-warn = ВАШ ХОЗЯИН РАНЕН!
+guardian-host-death-warn = ВЫ ПЕРЕСТАЁТЕ СУЩЕСТВОВАТЬ
+guardian-death-warn = ВАШЕ ТЕЛО ПРОНЗАЕТ СУБАТОМНАЯ БОЛЬ, КОГДА ОНО РАСПАДАЕТСЯ!
 guardian-attack-host = You cannot attack your host.

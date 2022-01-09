@@ -1,2 +1,2 @@
-ent-BaseSlimePerson = Slime Person
-    .desc = A miserable pile of slime.
+ent-BaseSlimePerson = Слизечеловек
+    .desc = Жалкая кучка слизи.

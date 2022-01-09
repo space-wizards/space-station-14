@@ -5,12 +5,10 @@ ui-vote-type-map = Следующая карта
 ui-vote-create-title = Голосование
 # Submit button in the vote create button
 ui-vote-create-button = Запустить
-# Timeout text if a standard vote type is currently on timeout.
-ui-vote-type-timeout = Это голосование уже было недавно запущено ({ $remaining })
+ui-vote-type-timeout = Это голосование было недавно запущено ({ $remaining })
 # Unavailable text if a vote type has been disabled manually.
 ui-vote-type-not-available = Этот тип голосования был отключен
-# Hue hue hue
-ui-vote-fluff = Powered by Robust™ Anti-Tamper Technology
+ui-vote-fluff = На основе Robust™ СЗИ-НСД
 
 ## Vote menu command
 

@@ -1,4 +1,4 @@
-ent-MobHumanBase = Urist McHands
-    .desc = A miserable pile of secrets.
-ent-MobHumanDummy = Urist McHands
-    .desc = A dummy human meant to be used in character setup.
+ent-MobHumanBase = Урист МакХэндс
+    .desc = Жалкая кучка тайн.
+ent-MobHumanDummy = Урист МакХэндс
+    .desc = Манекен-человек, предназначенный для использования при настройке персонажа.

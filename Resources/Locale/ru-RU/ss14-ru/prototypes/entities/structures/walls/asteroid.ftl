@@ -1,2 +1,2 @@
-ent-AsteroidRock = asteroid rock
-    .desc = That's an asteroid
+ent-AsteroidRock = астероидная порода
+    .desc = Это астероид

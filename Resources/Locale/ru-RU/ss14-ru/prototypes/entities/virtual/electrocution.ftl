@@ -1,3 +1,3 @@
-ent-VirtualElectrocutionLoadHVPower = ELECTROCUTION ENTITY YOU SHOULD NOT SEE THIS
-ent-VirtualElectrocutionLoadMVPower = ELECTROCUTION ENTITY YOU SHOULD NOT SEE THIS
-ent-VirtualElectrocutionLoadApc = ELECTROCUTION ENTITY YOU SHOULD NOT SEE THIS
+ent-VirtualElectrocutionLoadHVPower = ЭЛЕКТРИЧЕСКИЙ УДАР, ВЫ НЕ ДОЛЖНЫ ВИДЕТЬ ЭТО
+ent-VirtualElectrocutionLoadMVPower = ЭЛЕКТРИЧЕСКИЙ УДАР, ВЫ НЕ ДОЛЖНЫ ВИДЕТЬ ЭТО
+ent-VirtualElectrocutionLoadApc = ЭЛЕКТРИЧЕСКИЙ УДАР, ВЫ НЕ ДОЛЖНЫ ВИДЕТЬ ЭТО
