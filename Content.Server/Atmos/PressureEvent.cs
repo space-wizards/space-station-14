@@ -3,7 +3,7 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Server.Atmos
 {
-    public abstract class PressureEvent : EntityEventArgs
+    public abstract class PressureEvent : EntityEventArgs, IInventoryRelayEvent
     {
         /// <summary>
         ///     The environment pressure.
@@ -29,21 +29,24 @@ namespace Content.Server.Atmos
         /// </remarks>
         public float Multiplier { get; set; } = 1f;
 
+        /// <summary>
+        ///     The inventory slots that should be checked for pressure protecting equipment.
+        /// </summary>
+        public SlotFlags TargetSlots { get; } = ~SlotFlags.POCKET;
+
         protected PressureEvent(float pressure)
         {
             Pressure = pressure;
         }
     }
 
-    public class LowPressureEvent : PressureEvent, IInventoryRelayEvent
+    public class LowPressureEvent : PressureEvent
     {
-        public SlotFlags TargetSlots { get; } = ~SlotFlags.POCKET;
         public LowPressureEvent(float pressure) : base(pressure) { }
     }
 
-    public class HighPressureEvent : PressureEvent, IInventoryRelayEvent
+    public class HighPressureEvent : PressureEvent
     {
-        public SlotFlags TargetSlots { get; } = ~SlotFlags.POCKET;
         public HighPressureEvent(float pressure) : base(pressure) { }
     }
 }
