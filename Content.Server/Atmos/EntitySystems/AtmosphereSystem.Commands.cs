@@ -3,7 +3,6 @@ using Content.Server.Atmos.Components;
 using Content.Shared.Administration;
 using Content.Shared.Atmos;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
@@ -19,6 +18,11 @@ public partial class AtmosphereSystem
         _consoleHost.RegisterCommand("fixgridatmos",
             "Makes every tile on a grid have a roundstart gas mix.",
             "fixgridatmos <grid Ids>", FixGridAtmosCommand);
+    }
+
+    private void ShutdownCommands()
+    {
+        _consoleHost.UnregisterCommand("fixgridatmos");
     }
 
     [AdminCommand(AdminFlags.Debug)]

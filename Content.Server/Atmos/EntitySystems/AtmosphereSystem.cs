@@ -52,6 +52,8 @@ namespace Content.Server.Atmos.EntitySystems
             base.Shutdown();
 
             _mapManager.TileChanged -= OnTileChanged;
+
+            ShutdownCommands();
         }
 
         private void OnTileChanged(object? sender, TileChangedEventArgs eventArgs)
