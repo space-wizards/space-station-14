@@ -31,8 +31,8 @@ public class FollowerSystem : EntitySystem
                 var follower = EnsureComp<FollowerComponent>(ev.User);
                 follower.Following = ev.Target;
                 var xform = Transform(ev.User);
-                xform.Coordinates = Transform(ev.Target).Coordinates;
                 xform.AttachParent(ev.Target);
+                xform.LocalPosition = Vector2.Zero;
             }),
             Impact = LogImpact.Low,
             Text = Loc.GetString("verb-follow-text"),
