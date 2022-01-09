@@ -265,6 +265,7 @@
     - FirelockElectronics
     - DoorElectronics
     - APCElectronics
+    - SMESMachineCircuitboard
     - SubstationMachineCircuitboard
     - HydroponicsTrayMachineCircuitboard
     - SolarControlComputerCircuitboard

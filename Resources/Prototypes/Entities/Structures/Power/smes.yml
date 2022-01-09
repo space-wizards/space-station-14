@@ -49,3 +49,11 @@
       energy: 1.6
       color: "#c9c042"
       castShadows: false
+    - type: Construction
+      graph: machine
+      node: machine
+    - type: Wires
+      BoardName: "SMES"
+      LayoutId: SMES
+    - type: Machine
+      board: SMESMachineCircuitboard

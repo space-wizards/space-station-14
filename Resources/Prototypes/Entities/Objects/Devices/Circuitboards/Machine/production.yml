@@ -111,6 +111,19 @@
           ExamineName: Glass Beaker
 
 - type: entity
+  id: SMESMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: SMES (Machine Board)
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/module.rsi
+      state: power_mod
+    - type: MachineBoard
+      prototype: BaseSmes
+      requirements:
+        Capacitor: 10
+
+- type: entity
   id: SubstationMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: Substation (Machine Board)
