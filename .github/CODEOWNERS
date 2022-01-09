@@ -14,10 +14,10 @@
 /Resources/engineCommandPerms.yml @moonheart08
 /Resources/clientCommandPerms.yml @moonheart08
 /Resources/Prototypes/species.yml @moonheart08
-/Resources/Prototypes/Body/ @moonheart08 # suffering
+/Resources/Prototypes/Body/ @moonheart08 @mirrorcult # suffering
 /Resources/Prototypes/Maps/ @moonheart08
-/Resources/Prototypes/Entities/Mobs/Player/ @moonheart08
-/Resources/Prototypes/Entities/Mobs/Species/ @moonheart08
+/Resources/Prototypes/Entities/Mobs/Player/ @moonheart08 @mirrorcult
+/Resources/Prototypes/Entities/Mobs/Species/ @moonheart08 @mirrorcult
 
 /Content.*/Atmos/ @Zumorica
 /Content.*/Botany/ @Zumorica
@@ -31,6 +31,14 @@
 /Resources/Prototypes/Atmospherics/ @Zumorica
 /Resources/Prototypes/Recipes/Construction @Zumorica
 /Resources/Prototypes/Recipes/Crafting @Zumorica
+
+/Content.*/Body/ @mirrorcult
+/Content.*/Chemistry/ @mirrorcult
+/Content.*/StatusEffect/ @mirrorcult
+/Content.*/Whitelist/ @mirrorcult
+/Resources/Prototypes/Reagents/
+/Resources/Prototypes/Recipes/Reactions
+/Resources/Prototypes/Chemistry
 
 # Be they Fluent translations or Freemarker templates, I know them both!
 *.ftl @RemieRichards
