@@ -47,6 +47,21 @@ namespace Content.Shared.Singularity
             };
         }
 
+        private float GetRads(int level)
+        {
+            return level switch
+            {
+                0 => 0.0f,
+                1 => 1.0f,
+                2 => 2.0f,
+                3 => 3.0f,
+                4 => 4.0f,
+                5 => 5.0f,
+                6 => 6.0f,
+                _ => 0.0f
+            };
+        }
+
         public override void Initialize()
         {
             base.Initialize();
@@ -111,7 +126,7 @@ namespace Content.Shared.Singularity
 
             if (EntityManager.TryGetComponent(singularity.Owner, out SharedRadiationPulseComponent? pulse))
             {
-                pulse.RadsPerSecond = pulse.RadsPerSecondBase * value;
+                pulse.RadsPerSecond = GetRads(value); // Currently hardcoded. Radiation needs to be refactored to allow this to be in a prototype easier.
             }
 
             if (EntityManager.TryGetComponent(singularity.Owner, out AppearanceComponent? appearance))

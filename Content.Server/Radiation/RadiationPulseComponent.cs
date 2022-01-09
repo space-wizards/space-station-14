@@ -49,16 +49,6 @@ namespace Content.Server.Radiation
         public float MaxPulseLifespan { get; set; } = 2.5f;
 
         [DataField("dps")]
-        public override float RadsPerSecondBase
-        {
-            get => _radsPerSecond;
-            set
-            {
-                _radsPerSecond = value;
-                Dirty();
-            }
-        }
-
         public override float RadsPerSecond
         {
             get => _radsPerSecond;
