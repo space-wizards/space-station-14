@@ -298,6 +298,11 @@ namespace Content.Server.Database
                     entity.Name = name;
                     logEntities.Add(entity);
                 }
+                
+                foreach (var player in log.Players)
+                {
+                    player.LogId = log.Id;
+                }
 
                 log.Entities = logEntities;
                 db.DbContext.AdminLog.Add(log);

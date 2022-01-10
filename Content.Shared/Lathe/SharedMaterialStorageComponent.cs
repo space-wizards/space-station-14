@@ -17,13 +17,13 @@ namespace Content.Shared.Lathe
         [ViewVariables]
         protected virtual Dictionary<string, int> Storage { get; set; } = new();
 
-        public int this[string ID]
+        public int this[string id]
         {
             get
             {
-                if (!Storage.ContainsKey(ID))
+                if (!Storage.ContainsKey(id))
                     return 0;
-                return Storage[ID];
+                return Storage[id];
             }
         }
 
@@ -31,10 +31,10 @@ namespace Content.Shared.Lathe
         {
             get
             {
-                var ID = material.ID;
-                if (!Storage.ContainsKey(ID))
+                var id = material.ID;
+                if (!Storage.ContainsKey(id))
                     return 0;
-                return Storage[ID];
+                return Storage[id];
             }
         }
 
