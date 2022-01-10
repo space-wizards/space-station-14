@@ -16,16 +16,11 @@
     - Single
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser.ogg
+  - type: PowerCellSlot
     cellSlot:
       ejectOnUse: true
-      insertSound: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
-      ejectSound: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
       soundOptions: 
         volume: -2
-      startingItem: PowerCellSmallStandard
-      whitelist:
-        components:
-        - Battery
   - type: Appearance
     visuals:
     - type: MagVisualizer
@@ -148,16 +143,12 @@
     ammoPrototype: RedHeavyLaser
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+  - type: PowerCellSlot
     cellSlot:
       ejectOnUse: true
-      insertSound: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
-      ejectSound: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
       soundOptions: 
         volume: -2
       startingItem: PowerCellSmallSuper
-      whitelist:
-        components:
-        - Battery
 
 - type: entity
   name: x-ray cannon
@@ -182,16 +173,12 @@
     ammoPrototype: XrayLaser
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
+  - type: PowerCellSlot
     cellSlot:
       ejectOnUse: true
-      insertSound: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
-      ejectSound: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
       soundOptions: 
         volume: -2
       startingItem: PowerCellSmallSuper
-      whitelist:
-        components:
-        - Battery
   - type: Appearance
     visuals:
     - type: MagVisualizer
@@ -231,16 +218,12 @@
     ammoPrototype: BulletTaser
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser.ogg
+  - type: PowerCellSlot
+    descFormatString : "" # empty string for no examine-text (cell is not ejectable)
     cellSlot:
-      insertSound: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
-      ejectSound: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
       soundOptions: 
         volume: -2
       locked: true
-      startingItem: PowerCellSmallStandard
-      whitelist:
-        components:
-        - Battery
   - type: Appearance
     visuals:
     - type: MagVisualizer

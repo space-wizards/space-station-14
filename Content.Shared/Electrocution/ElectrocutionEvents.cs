@@ -1,9 +1,12 @@
+using Content.Shared.Inventory;
 using Robust.Shared.GameObjects;
 
 namespace Content.Shared.Electrocution
 {
-    public class ElectrocutionAttemptEvent : CancellableEntityEventArgs
+    public class ElectrocutionAttemptEvent : CancellableEntityEventArgs, IInventoryRelayEvent
     {
+        public SlotFlags TargetSlots { get; } = ~SlotFlags.POCKET;
+
         public readonly EntityUid TargetUid;
         public readonly EntityUid? SourceUid;
         public float SiemensCoefficient = 1f;

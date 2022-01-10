@@ -685,7 +685,7 @@ namespace Content.Server.Botany.Components
                 }
 
                 user.PopupMessageCursor(Loc.GetString("plant-holder-component-already-seeded-message",
-                    ("name", Name: _entMan.GetComponent<MetaDataComponent>(Owner).EntityName)));
+                    ("name", _entMan.GetComponent<MetaDataComponent>(Owner).EntityName)));
                 return false;
             }
 
@@ -694,9 +694,9 @@ namespace Content.Server.Botany.Components
                 if (WeedLevel > 0)
                 {
                     user.PopupMessageCursor(Loc.GetString("plant-holder-component-remove-weeds-message",
-                        ("name", Name: _entMan.GetComponent<MetaDataComponent>(Owner).EntityName)));
+                        ("name", _entMan.GetComponent<MetaDataComponent>(Owner).EntityName)));
                     user.PopupMessageOtherClients(Loc.GetString("plant-holder-component-remove-weeds-others-message",
-                        ("otherName", Name: _entMan.GetComponent<MetaDataComponent>(user).EntityName)));
+                        ("otherName", _entMan.GetComponent<MetaDataComponent>(user).EntityName)));
                     WeedLevel = 0;
                     UpdateSprite();
                 }
@@ -713,9 +713,9 @@ namespace Content.Server.Botany.Components
                 if (Seed != null)
                 {
                     user.PopupMessageCursor(Loc.GetString("plant-holder-component-remove-plant-message",
-                        ("name", Name: _entMan.GetComponent<MetaDataComponent>(Owner).EntityName)));
+                        ("name", _entMan.GetComponent<MetaDataComponent>(Owner).EntityName)));
                     user.PopupMessageOtherClients(Loc.GetString("plant-holder-component-remove-plant-others-message",
-                        ("name", Name: _entMan.GetComponent<MetaDataComponent>(user).EntityName)));
+                        ("name", _entMan.GetComponent<MetaDataComponent>(user).EntityName)));
                     RemovePlant();
                 }
                 else

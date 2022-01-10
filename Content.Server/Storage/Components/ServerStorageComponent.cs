@@ -41,7 +41,8 @@ namespace Content.Server.Storage.Components
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IStorageComponent))]
-    public class ServerStorageComponent : SharedStorageComponent, IInteractUsing, IUse, IActivate, IStorageComponent, IDestroyAct, IExAct, IAfterInteract
+    [ComponentReference(typeof(SharedStorageComponent))]
+    public class ServerStorageComponent : SharedStorageComponent, IInteractUsing, IActivate, IStorageComponent, IDestroyAct, IExAct, IAfterInteract
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
@@ -539,18 +540,10 @@ namespace Content.Server.Storage.Components
         /// </summary>
         /// <param name="eventArgs"></param>
         /// <returns></returns>
-        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
+        void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             EnsureInitialCalculated();
             OpenStorageUI(eventArgs.User);
-            return false;
-        }
-
-        void IActivate.Activate(ActivateEventArgs eventArgs)
-        {
-#pragma warning disable 618
-            ((IUse) this).UseEntity(new UseEntityEventArgs(eventArgs.User));
-#pragma warning restore 618
         }
 
         /// <summary>
