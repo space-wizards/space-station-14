@@ -1,10 +1,4 @@
 Entries:
-- author: Visne
-  changes:
-  - {message: 'Added chess! To play, right click on a chessboard and press "Play Game".',
-    type: Add}
-  id: 351
-  time: '2021-09-13T09:58:45.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: 'Many components have had damage values & types adjusted. E.g., knives
@@ -2922,3 +2916,9 @@ Entries:
       actually have to wear them., type: Fix}
   id: 852
   time: '2022-01-10T04:37:21.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Ghosts can now automatically follow entities by using a right click
+      Follow verb., type: Add}
+  id: 853
+  time: '2022-01-10T05:47:38.0000000+00:00'
