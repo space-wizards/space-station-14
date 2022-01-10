@@ -51,11 +51,7 @@ public class TraitorRuleSystem : GameRuleSystem
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
     }
 
-    public override void Added()
-    {
-        // This seems silly, but I'll leave it.
-        _chatManager.DispatchServerAnnouncement(Loc.GetString("rule-traitor-added-announcement"));
-    }
+    public override void Added() { }
 
     public override void Removed()
     {
@@ -186,7 +182,7 @@ public class TraitorRuleSystem : GameRuleSystem
                 if (traitor.Mind.TryAddObjective(objective))
                     difficulty += objective.Difficulty;
             }
-            
+
             //give traitors their codewords to keep in their character info menu
             traitor.Mind.Briefing = Loc.GetString("traitor-role-codewords", ("codewords", string.Join(", ",codewords)));
         }
