@@ -390,10 +390,6 @@
         whitelist:
           tags:
           - CaptainSabre
-      sheath-sabre-equipped-BELT:
-        whitelist:
-          tags:
-          - CaptainSabre
   - type: Appearance
     visuals:
     - type: MappedItemVisualizer
