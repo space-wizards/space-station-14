@@ -42,20 +42,34 @@ namespace Content.IntegrationTests.Tests.Body
             var options = new ServerContentIntegrationOption{ExtraPrototypes = Prototypes};
             var server = StartServer(options);
 
-            server.Assert(() =>
+            var mapLoader = server.ResolveDependency<IMapLoader>();
+            var mapManager = server.ResolveDependency<IMapManager>();
+            var entityManager = server.ResolveDependency<IEntityManager>();
+
+            MapId mapId;
+            IMapGrid grid = null;
+            RespiratorComponent respirator = null;
+            EntityUid human = default;
+
+            var testMapName = "Maps/Test/Breathing/3by3-20oxy-80nit.yml";
+
+            await server.WaitPost(() =>
             {
-                var mapManager = IoCManager.Resolve<IMapManager>();
+                mapId = mapManager.CreateMap();
+                grid = mapLoader.LoadBlueprint(mapId, testMapName);
+            });
 
-                var mapId = mapManager.CreateMap();
+            Assert.NotNull(grid, $"Test blueprint {testMapName} not found.");
 
-                var entityManager = IoCManager.Resolve<IEntityManager>();
+            await server.WaitAssertion(() =>
+            {
+                var center = new Vector2(0.5f, -1.5f);
+                var coordinates = new EntityCoordinates(grid.GridEntityId, center);
+                human = entityManager.SpawnEntity("HumanBodyDummy", coordinates);
 
-                var human = entityManager.SpawnEntity("HumanBodyDummy", new MapCoordinates(Vector2.Zero, mapId));
-
-                var bodySys = EntitySystem.Get<BodySystem>();
-                var lungSys = EntitySystem.Get<LungSystem>();
-                var respSys = EntitySystem.Get<RespiratorSystem>();
-
+                Assert.True(entityManager.HasComponent<SharedBodyComponent>(human));
+                Assert.True(entityManager.TryGetComponent(human, out respirator));
+                Assert.False(respirator.SuffocationCycles > respirator.SuffocationCycleThreshold);
             });
 
             await server.WaitIdleAsync();
@@ -96,7 +110,7 @@ namespace Content.IntegrationTests.Tests.Body
 
                 Assert.True(entityManager.HasComponent<SharedBodyComponent>(human));
                 Assert.True(entityManager.TryGetComponent(human, out respirator));
-                Assert.False(respirator.Suffocating);
+                Assert.False(respirator.SuffocationCycles > respirator.SuffocationCycleThreshold);
             });
 
             var increment = 10;
@@ -106,7 +120,7 @@ namespace Content.IntegrationTests.Tests.Body
                 await server.WaitRunTicks(increment);
                 await server.WaitAssertion(() =>
                 {
-                    Assert.False(respirator.Suffocating, $"Entity {entityManager.GetComponent<MetaDataComponent>(human).EntityName} is suffocating on tick {tick}");
+                    Assert.False(respirator.SuffocationCycles > respirator.SuffocationCycleThreshold, $"Entity {entityManager.GetComponent<MetaDataComponent>(human).EntityName} is suffocating on tick {tick}");
                 });
             }
 
