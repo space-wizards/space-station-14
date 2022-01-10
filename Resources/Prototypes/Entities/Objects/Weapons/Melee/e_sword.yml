@@ -13,12 +13,10 @@
         color: "#FFFFFF"
         visible: false
         shader: unshaded
-      #- state: flare_unlit
-       # color: "#FF0000"
   - type: MeleeWeapon
     damage:
       types:
-        Blunt: 5
+        Blunt: 7
   - type: Item
     size: 5
     sprite: Objects/Weapons/Melee/e_sword.rsi
