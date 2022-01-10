@@ -172,6 +172,7 @@ namespace Content.Client.Verbs.UI
             if (element is not VerbMenuElement verbElement)
                 return;
 
+            args.Handle();
             var verb = verbElement.Verb;
 
             if (verb == null)
@@ -185,7 +186,7 @@ namespace Content.Client.Verbs.UI
                 if (verbElement.SubMenu.MenuBody.ChildCount != 1
                     || verbElement.SubMenu.MenuBody.Children.First() is not VerbMenuElement verbCategoryElement)
                 {
-                    verbElement.SubMenu.Visible = true;
+                    OpenSubMenu(verbElement);
                     return;
                 }
 
@@ -198,8 +199,6 @@ namespace Content.Client.Verbs.UI
             _verbSystem.ExecuteVerb(CurrentTarget, verb, verbElement.Type);
             if (verb.CloseMenu)
                 _verbSystem.CloseAllMenus();
-
-            args.Handle();
         }
     }
 }

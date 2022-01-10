@@ -130,6 +130,9 @@ namespace Content.Client.ContextMenu.UI
 
             // Close any currently open sub-menus up to this element's parent menu.
             CloseSubMenus(element.ParentMenu);
+            CancelClose?.Cancel();
+            CancelClose = null;
+
 
             if (element.SubMenu == null)
                 return;
@@ -139,13 +142,13 @@ namespace Content.Client.ContextMenu.UI
             var altPos = element.GlobalPosition;
             var pos = altPos + (element.Width + 2*ContextMenuElement.ElementMargin, - 2*ContextMenuElement.ElementMargin);
             element.SubMenu.Open(UIBox2.FromDimensions(pos, (1, 1)), altPos);
-            element.SubMenu.Close();
-            element.SubMenu.Open(UIBox2.FromDimensions(pos, (1, 1)), altPos);
 
             // draw on top of other menus
             element.SubMenu.SetPositionLast();
 
             Menus.Push(element.SubMenu);
+            CancelOpen?.Cancel();
+            CancelOpen = null;
         }
 
         /// <summary>
