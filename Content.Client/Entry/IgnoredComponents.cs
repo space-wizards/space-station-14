@@ -330,6 +330,7 @@ namespace Content.Client.Entry
             "GrowingKudzu",
             "MonkeyAccent",
             "ReplacementAccent",
+            "ResistLocker",
             "Esword"
         };
     }

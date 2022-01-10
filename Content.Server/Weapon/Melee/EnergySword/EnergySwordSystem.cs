@@ -136,6 +136,7 @@ namespace Content.Server.Weapon.Melee.Esword
                     {
                         sprite.LayerSetVisible(1, false);
                         sprite.LayerSetColor(1, Color.White);
+                        //todo: figure out how to use the RGBLightControllerSystem to phase out the rainbow sprite AND add lights.
                         sprite.LayerSetState(0, "e_sword_rainbow_on");
 
                         item.Color = Color.White;
