@@ -182,8 +182,12 @@ namespace Content.Client.Verbs.UI
                 if (verbElement.SubMenu == null || verbElement.SubMenu.ChildCount == 0)
                     return;
 
-                if (verbElement.SubMenu.MenuBody.Children.First() is not VerbMenuElement verbCategoryElement)
+                if (verbElement.SubMenu.MenuBody.ChildCount != 1
+                    || verbElement.SubMenu.MenuBody.Children.First() is not VerbMenuElement verbCategoryElement)
+                {
+                    verbElement.SubMenu.Visible = true;
                     return;
+                }
 
                 verb = verbCategoryElement.Verb;
 
