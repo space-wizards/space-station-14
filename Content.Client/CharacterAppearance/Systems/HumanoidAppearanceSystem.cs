@@ -30,6 +30,10 @@ namespace Content.Client.CharacterAppearance.Systems
         {
             HumanoidVisualLayers.Chest,
             HumanoidVisualLayers.Head,
+            HumanoidVisualLayers.Snout,
+            HumanoidVisualLayers.Frills,
+            HumanoidVisualLayers.TailBehind,
+            HumanoidVisualLayers.TailFront,
             HumanoidVisualLayers.Eyes,
             HumanoidVisualLayers.RArm,
             HumanoidVisualLayers.LArm,
