@@ -87,33 +87,28 @@ public partial class InventorySystem : EntitySystem
         private readonly EntityUid _uid;
         private readonly SlotDefinition[] _slots;
         private readonly SlotFlags _flags;
-        private int _nextIdx = int.MaxValue;
+        private int _nextIdx = 0;
 
         public ContainerSlotEnumerator(EntityUid uid, string prototypeId, IPrototypeManager prototypeManager, InventorySystem inventorySystem, SlotFlags flags = SlotFlags.All)
         {
             _uid = uid;
             _inventorySystem = inventorySystem;
             _flags = flags;
+
             if (prototypeManager.TryIndex<InventoryTemplatePrototype>(prototypeId, out var prototype))
-            {
                 _slots = prototype.Slots;
-                if(_slots.Length > 0)
-                    _nextIdx = 0;
-            }
             else
-            {
                 _slots = Array.Empty<SlotDefinition>();
-            }
         }
 
         public bool MoveNext([NotNullWhen(true)] out ContainerSlot? container)
         {
             container = null;
-            if (_nextIdx >= _slots.Length) return false;
 
-            for (; _nextIdx < _slots.Length; _nextIdx++)
+            while (_nextIdx < _slots.Length)
             {
                 var slot = _slots[_nextIdx];
+                _nextIdx++;
 
                 if ((slot.SlotFlags & _flags) == 0)
                     continue;
