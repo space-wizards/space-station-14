@@ -144,9 +144,9 @@
   description: A lightweight space suit for prisoners to protect them from the vacuum of space during emergencies.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/evaprisone.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/evaprisoner.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/evaprisone.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/evaprisoner.rsi
   - type: PressureProtection
     highPressureMultiplier: 1
     lowPressureMultiplier: 100
