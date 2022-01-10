@@ -76,8 +76,16 @@ namespace Content.Server.Weapon.Melee.Esword
             SoundSystem.Play(Filter.Pvs(comp.Owner), comp.DeActivateSound.GetSound(), comp.Owner);
 
             item.EquippedPrefix = "off";
-            sprite.LayerSetVisible(1, false);
 
+            if (comp.Hacked == true)
+            {
+                sprite.LayerSetState(0, "e_sword");
+            }
+            else
+            {
+                sprite.LayerSetVisible(1, false);
+            }
+            
             comp.Activated = false;
         }
 
@@ -125,7 +133,11 @@ namespace Content.Server.Weapon.Melee.Esword
                     if (comp.Activated == true && TryComp(comp.Owner, out SpriteComponent? sprite)
                         && TryComp(comp.Owner, out SharedItemComponent? item))
                     {
+                        sprite.LayerSetVisible(1, false);
+                        sprite.LayerSetColor(1, Color.White);
                         sprite.LayerSetState(0, "e_sword_rainbow_on");
+
+                        item.Color = Color.White;
                         item.EquippedPrefix = "on-rainbow";
                     }
                 }
