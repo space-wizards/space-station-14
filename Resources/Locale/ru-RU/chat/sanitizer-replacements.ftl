@@ -18,3 +18,4 @@ chatsan-confused = выглядит смущенным
 chatsan-unimpressed = кажется не впечатлённым
 chatsan-waves = машет
 chatsan-salutes = отдаёт честь
+chatsan-shrugs = shrugs

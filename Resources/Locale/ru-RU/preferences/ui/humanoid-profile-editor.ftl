@@ -7,6 +7,7 @@ humanoid-profile-editor-sex-male-button = Мужской
 humanoid-profile-editor-sex-female-button = Женский
 humanoid-profile-editor-age-label = Возраст:
 humanoid-profile-editor-skin-color-label = Цвет кожи:
+humanoid-profile-editor-species-label = Species:
 humanoid-profile-editor-pronouns-label = Личное местоимение:
 humanoid-profile-editor-pronouns-male-text = Он / Его
 humanoid-profile-editor-pronouns-female-text = Она / Её
