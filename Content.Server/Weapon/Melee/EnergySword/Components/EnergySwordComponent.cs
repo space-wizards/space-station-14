@@ -2,11 +2,12 @@ using Content.Shared.Sound;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Maths;
+using Robust.Server.GameObjects;
 
 namespace Content.Server.Weapon.Melee.Esword
 {
     [RegisterComponent]
-    internal class EswordComponent : Component
+    internal class EnergySwordComponent : Component
     {
         public override string Name => "Esword";
 

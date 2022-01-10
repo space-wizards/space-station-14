@@ -113,7 +113,7 @@ namespace Content.Server.Weapon.Melee.Esword
 
         private void OnInteractUsing(EntityUid uid, EswordComponent comp, InteractUsingEvent args)
         {
-            if (_blockerSystem.CanInteract(args.User) || comp.Hacked == true)
+            if (!_blockerSystem.CanInteract(args.User) || comp.Hacked == true)
                 return;
 
             if (TryComp(args.Used, out ToolComponent? tool))
