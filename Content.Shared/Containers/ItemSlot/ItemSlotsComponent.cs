@@ -93,13 +93,18 @@ namespace Content.Shared.Containers.ItemSlots
         ///     This will be passed through Loc.GetString. If the name is an empty string, then verbs will use the name
         ///     of the currently held or currently inserted entity instead.
         /// </remarks>
-        [DataField("name")]
+        [DataField("name", readOnly: true)]
         public string Name = string.Empty;
 
         /// <summary>
         ///     The entity prototype that is spawned into this slot on map init.
         /// </summary>
-        [DataField("startingItem", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        /// <remarks>
+        ///     Marked as readOnly because some components (e.g. PowerCellSlot) set the starting item based on some
+        ///     property of that component (e.g., cell slot size category), and this can lead to unnecessary changes
+        ///     when mapping.
+        /// </remarks>
+        [DataField("startingItem", readOnly: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string? StartingItem;
 
         /// <summary>

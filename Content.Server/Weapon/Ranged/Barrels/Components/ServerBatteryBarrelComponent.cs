@@ -163,8 +163,8 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 throw new InvalidOperationException("Ammo doesn't have hitscan or projectile?");
             }
 
-            Dirty();
-            UpdateAppearance();
+            // capacitor.UseCharge() triggers a PowerCellChangedEvent which will cause appearance to be updated.
+            // So let's not double-call UpdateAppearance() here.
             return entity.Value;
         }
     }

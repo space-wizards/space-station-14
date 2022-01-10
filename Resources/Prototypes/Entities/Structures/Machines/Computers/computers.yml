@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: ComputerBase
   id: ComputerAlert
   name: alerts computer
@@ -313,7 +313,6 @@
       - ServiceLightsReplacement
       - ServiceSmokeables
       - ServiceCustomSmokable
-      - SalvageEquipment
       - ServiceBureaucracy
       - EngineeringCableLv
       - EngineeringCableMv

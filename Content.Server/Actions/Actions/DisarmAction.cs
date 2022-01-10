@@ -83,10 +83,10 @@ namespace Content.Server.Actions.Actions
                 SoundSystem.Play(Filter.Pvs(args.Performer), PunchMissSound.GetSound(), args.Performer, AudioHelpers.WithVariation(0.025f));
 
                 args.Performer.PopupMessageOtherClients(Loc.GetString("disarm-action-popup-message-other-clients",
-                                                                      ("performerName", Name: entMan.GetComponent<MetaDataComponent>(args.Performer).EntityName),
-                                                                      ("targetName", Name: entMan.GetComponent<MetaDataComponent>(args.Target).EntityName)));
+                                                                      ("performerName", entMan.GetComponent<MetaDataComponent>(args.Performer).EntityName),
+                                                                      ("targetName", entMan.GetComponent<MetaDataComponent>(args.Target).EntityName)));
                 args.Performer.PopupMessageCursor(Loc.GetString("disarm-action-popup-message-cursor",
-                                                                ("targetName", Name: entMan.GetComponent<MetaDataComponent>(args.Target).EntityName)));
+                                                                ("targetName", entMan.GetComponent<MetaDataComponent>(args.Target).EntityName)));
                 system.SendLunge(angle, args.Performer);
                 return;
             }
