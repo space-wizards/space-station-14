@@ -10,6 +10,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Random;
 using System;
 
 namespace Content.Server.Weapon.Melee.Esword
@@ -17,6 +18,7 @@ namespace Content.Server.Weapon.Melee.Esword
     internal class EnergySwordSystem : EntitySystem
     {
         [Dependency] private readonly ActionBlockerSystem _blockerSystem = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
         public override void Initialize()
         {
             base.Initialize();
@@ -29,9 +31,8 @@ namespace Content.Server.Weapon.Melee.Esword
 
         private void OnComponentInit(EntityUid uid, EnergySwordComponent comp, ComponentInit args)
         {
-            string[] possibleColors = { "Tomato", "DodgerBlue", "Aqua", "MediumSpringGreen", "MediumOrchid" };
-            Random random = new Random();
-            comp.BladeColor = Color.FromName(possibleColors[random.Next(5)]);
+            if (comp.ColorOptions.Count != 0)
+                comp.BladeColor = _random.Pick(comp.ColorOptions);
         }
 
         private void OnMeleeHit(EntityUid uid, EnergySwordComponent comp, MeleeHitEvent args)

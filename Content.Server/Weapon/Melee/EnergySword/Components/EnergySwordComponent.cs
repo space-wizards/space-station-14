@@ -2,7 +2,7 @@ using Content.Shared.Sound;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Maths;
-using Robust.Server.GameObjects;
+using System.Collections.Generic;
 
 namespace Content.Server.Weapon.Melee.Esword
 {
@@ -24,5 +24,15 @@ namespace Content.Server.Weapon.Melee.Esword
 
         [DataField("deActivateSound")]
         public SoundSpecifier DeActivateSound { get; set; } = new SoundPathSpecifier("/Audio/Weapons/ebladeoff.ogg");
+
+        [DataField("colorOptions")]
+        public List<Color> ColorOptions = new()
+        {
+            Color.Tomato,
+            Color.DodgerBlue,
+            Color.Aqua,
+            Color.MediumSpringGreen,
+            Color.MediumOrchid
+        };
     }
 }
