@@ -14,27 +14,27 @@ using System;
 
 namespace Content.Server.Weapon.Melee.Esword
 {
-    internal class EswordSystem : EntitySystem
+    internal class EnergySwordSystem : EntitySystem
     {
         [Dependency] private readonly ActionBlockerSystem _blockerSystem = default!;
         public override void Initialize()
         {
             base.Initialize();
 
-            SubscribeLocalEvent<EswordComponent, ComponentInit>(OnComponentInit);
-            SubscribeLocalEvent<EswordComponent, MeleeHitEvent>(OnMeleeHit);
-            SubscribeLocalEvent<EswordComponent, UseInHandEvent>(OnUseInHand);
-            SubscribeLocalEvent<EswordComponent, InteractUsingEvent>(OnInteractUsing);
+            SubscribeLocalEvent<EnergySwordComponent, ComponentInit>(OnComponentInit);
+            SubscribeLocalEvent<EnergySwordComponent, MeleeHitEvent>(OnMeleeHit);
+            SubscribeLocalEvent<EnergySwordComponent, UseInHandEvent>(OnUseInHand);
+            SubscribeLocalEvent<EnergySwordComponent, InteractUsingEvent>(OnInteractUsing);
         }
 
-        private void OnComponentInit(EntityUid uid, EswordComponent comp, ComponentInit args)
+        private void OnComponentInit(EntityUid uid, EnergySwordComponent comp, ComponentInit args)
         {
             string[] possibleColors = { "Tomato", "DodgerBlue", "Aqua", "MediumSpringGreen", "MediumOrchid" };
             Random random = new Random();
             comp.BladeColor = Color.FromName(possibleColors[random.Next(5)]);
         }
 
-        private void OnMeleeHit(EntityUid uid, EswordComponent comp, MeleeHitEvent args)
+        private void OnMeleeHit(EntityUid uid, EnergySwordComponent comp, MeleeHitEvent args)
         {
             
             if (comp.Activated == true)
@@ -47,7 +47,7 @@ namespace Content.Server.Weapon.Melee.Esword
             }
         }
 
-        private void OnUseInHand(EntityUid uid, EswordComponent comp, UseInHandEvent args)
+        private void OnUseInHand(EntityUid uid, EnergySwordComponent comp, UseInHandEvent args)
         {
             if (!_blockerSystem.CanUse(args.User))
                 return;
@@ -62,7 +62,7 @@ namespace Content.Server.Weapon.Melee.Esword
             }
         }
 
-        private void TurnOff(EswordComponent comp)
+        private void TurnOff(EnergySwordComponent comp)
         {
             if (!comp.Activated)
                 return;
@@ -81,7 +81,7 @@ namespace Content.Server.Weapon.Melee.Esword
             comp.Activated = false;
         }
 
-        private void TurnOn(EswordComponent comp, EntityUid user)
+        private void TurnOn(EnergySwordComponent comp, EntityUid user)
         {
             if (comp.Activated)
                 return;
@@ -111,9 +111,9 @@ namespace Content.Server.Weapon.Melee.Esword
             comp.Activated = true;
         }
 
-        private void OnInteractUsing(EntityUid uid, EswordComponent comp, InteractUsingEvent args)
+        private void OnInteractUsing(EntityUid uid, EnergySwordComponent comp, InteractUsingEvent args)
         {
-            if (!_blockerSystem.CanInteract(args.User) || comp.Hacked == true)
+            if (comp.Hacked == true || !_blockerSystem.CanInteract(args.User))
                 return;
 
             if (TryComp(args.Used, out ToolComponent? tool))
