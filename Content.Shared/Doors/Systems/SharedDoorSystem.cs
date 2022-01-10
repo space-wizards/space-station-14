@@ -384,8 +384,7 @@ public abstract class SharedDoorSystem : EntitySystem
             if (door.CrushDamage != null)
                 _damageableSystem.TryChangeDamage(entity, door.CrushDamage);
 
-            if (TryComp(entity, out StatusEffectsComponent? status))
-                _stunSystem.TryParalyze(entity, stunTime, true, status);
+            _stunSystem.TryParalyze(entity, stunTime, true);
         }
 
         if (door.CurrentlyCrushing.Count == 0)
