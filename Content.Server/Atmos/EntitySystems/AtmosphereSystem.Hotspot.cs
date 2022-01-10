@@ -9,7 +9,7 @@ namespace Content.Server.Atmos.EntitySystems
 {
     public partial class AtmosphereSystem
     {
-        [Dependency] private readonly GridTileLookupSystem _gridtileLookupSystem = default!;
+        [Dependency] private readonly IEntityLookup _lookup = default!;
 
         private void ProcessHotspot(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile)
         {
@@ -142,7 +142,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             var fireEvent = new TileFireEvent(tile.Hotspot.Temperature, tile.Hotspot.Volume);
 
-            foreach (var entity in _gridtileLookupSystem.GetEntitiesIntersecting(tile.GridIndex, tile.GridIndices))
+            foreach (var entity in _lookup.GetEntitiesIntersecting(tile.GridIndex, tile.GridIndices))
             {
                 RaiseLocalEvent(entity, fireEvent, false);
             }

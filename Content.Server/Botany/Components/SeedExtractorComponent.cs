@@ -30,7 +30,7 @@ namespace Content.Server.Botany.Components
 
             if (_entMan.TryGetComponent(eventArgs.Using, out ProduceComponent? produce) && produce.Seed != null)
             {
-                eventArgs.User.PopupMessageCursor(Loc.GetString("seed-extractor-component-interact-message",("name", Name: _entMan.GetComponent<MetaDataComponent>(eventArgs.Using).EntityName)));
+                eventArgs.User.PopupMessageCursor(Loc.GetString("seed-extractor-component-interact-message",("name", _entMan.GetComponent<MetaDataComponent>(eventArgs.Using).EntityName)));
 
                 _entMan.QueueDeleteEntity(eventArgs.Using);
 
