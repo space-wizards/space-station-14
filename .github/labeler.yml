@@ -5,7 +5,7 @@
 - any: ['Resources/Maps/*.yml', 'Resources/Prototypes/Maps/*.yml']
 
 "Changes: UI":
-- '*.xaml'
+- '**/*.xaml*'
 
 "No C#":
-- all: ["!*.cs"]
+- all: ["!**/*.cs"]
