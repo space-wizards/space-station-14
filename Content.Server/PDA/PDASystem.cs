@@ -2,6 +2,7 @@ using Content.Server.Light.Components;
 using Content.Server.Light.EntitySystems;
 using Content.Server.Light.Events;
 using Content.Server.Traitor.Uplink;
+using Content.Server.Traitor.Uplink.Account;
 using Content.Server.Traitor.Uplink.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Containers.ItemSlots;
@@ -17,6 +18,7 @@ namespace Content.Server.PDA
     public sealed class PDASystem : SharedPDASystem
     {
         [Dependency] private readonly UplinkSystem _uplinkSystem = default!;
+        [Dependency] private readonly UplinkAccountsSystem _uplinkAccounts = default!;
         [Dependency] private readonly UnpoweredFlashlightSystem _unpoweredFlashlight = default!;
 
         public override void Initialize()
@@ -24,7 +26,6 @@ namespace Content.Server.PDA
             base.Initialize();
 
             SubscribeLocalEvent<PDAComponent, ActivateInWorldEvent>(OnActivateInWorld);
-            SubscribeLocalEvent<PDAComponent, UseInHandEvent>(OnUse);
             SubscribeLocalEvent<PDAComponent, LightToggleEvent>(OnLightToggle);
         }
 
@@ -35,15 +36,6 @@ namespace Content.Server.PDA
             var ui = pda.Owner.GetUIOrNull(PDAUiKey.Key);
             if (ui != null)
                 ui.OnReceiveMessage += (msg) => OnUIMessage(pda, msg);
-        }
-
-
-
-        private void OnUse(EntityUid uid, PDAComponent pda, UseInHandEvent args)
-        {
-            if (args.Handled)
-                return;
-            args.Handled = OpenUI(pda, args.User);
         }
 
         private void OnActivateInWorld(EntityUid uid, PDAComponent pda, ActivateInWorldEvent args)
@@ -92,6 +84,7 @@ namespace Content.Server.PDA
             if (!EntityManager.TryGetComponent(user, out ActorComponent? actor))
                 return false;
 
+            UpdatePDAUserInterface(pda, user);
             var ui = pda.Owner.GetUIOrNull(PDAUiKey.Key);
             ui?.Toggle(actor.PlayerSession);
 
@@ -104,7 +97,7 @@ namespace Content.Server.PDA
                 appearance.SetData(PDAVisuals.IDCardInserted, pda.ContainedID != null);
         }
 
-        private void UpdatePDAUserInterface(PDAComponent pda)
+        private void UpdatePDAUserInterface(PDAComponent pda, EntityUid? user = null)
         {
             var ownerInfo = new PDAIdInfoText
             {
@@ -113,10 +106,39 @@ namespace Content.Server.PDA
                 JobTitle = pda.ContainedID?.JobTitle
             };
 
-            var hasUplink = EntityManager.HasComponent<UplinkComponent>(pda.Owner);
-
             var ui = pda.Owner.GetUIOrNull(PDAUiKey.Key);
-            ui?.SetState(new PDAUpdateState(pda.FlashlightOn, pda.PenSlot.HasItem, ownerInfo, hasUplink));
+            if (ui == null)
+                return;
+
+            ui.SetState(new PDAUpdateState(pda.FlashlightOn, pda.PenSlot.HasItem, ownerInfo, ShouldShowUplink(pda.Owner, ui, user)));
+        }
+
+        /// <summary>
+        ///     Check whether the PDA has an uplink, and ensure that the only person that can see the PDA UI has an
+        ///     uplink account.
+        /// </summary>
+        public bool ShouldShowUplink(EntityUid uid, BoundUserInterface ui, EntityUid? user = null)
+        {
+            // TODO UPLINK RINGTONES/SECRETS This is just a janky placeholder way of hiding uplinks from non syndicate
+            // players. This should really use a sort of key-code entry system that selects an account which is not directly tied to
+            // a player entity.
+
+            if (!HasComp<UplinkComponent>(uid))
+                return false;
+
+            // If a user is trying to open the UI, make sure that they have an uplink account before showing the UI.
+            if (user != null && !_uplinkAccounts.HasAccount(user.Value))
+                return false;
+
+            // If other users currently have the UI open, check that they too should be allowed to see the button..
+            foreach (var session in ui.SubscribedSessions)
+            {
+                if (session.AttachedEntity != null && !_uplinkAccounts.HasAccount(session.AttachedEntity.Value))
+                    return false;
+            }
+
+            // everyone has an uplink account, show the button.
+            return true;
         }
 
         private void OnUIMessage(PDAComponent pda, ServerBoundUserInterfaceMessage msg)
@@ -128,7 +150,7 @@ namespace Content.Server.PDA
             switch (msg.Message)
             {
                 case PDARequestUpdateInterfaceMessage _:
-                    UpdatePDAUserInterface(pda);
+                    UpdatePDAUserInterface(pda, playerUid);
                     break;
                 case PDAToggleFlashlightMessage _:
                     {

@@ -1,4 +1,4 @@
-﻿using System.Linq.Expressions;
+using System.Linq.Expressions;
 using System.Net;
 using System.Reflection;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -42,26 +42,27 @@ namespace Content.Server.Database
         }
 
         protected override RelationalTypeMapping Clone(RelationalTypeMappingParameters parameters)
-            => new NpgsqlInetWithMaskTypeMapping(parameters);
+        {
+            return new NpgsqlInetWithMaskTypeMapping(parameters);
+        }
 
         protected override string GenerateNonNullSqlLiteral(object value)
         {
-            var cidr = ((IPAddress Address, int Subnet)) value;
-            return $"INET '{cidr.Address}/{cidr.Subnet}'";
+            var (address, subnet) = ((IPAddress, int)) value;
+            return $"INET '{address}/{subnet}'";
         }
 
         public override Expression GenerateCodeLiteral(object value)
         {
-            var cidr = ((IPAddress Address, int Subnet)) value;
+            var (address, subnet) = ((IPAddress, int)) value;
             return Expression.New(
                 Constructor,
-                Expression.Call(ParseMethod, Expression.Constant(cidr.Address.ToString())),
-                Expression.Constant(cidr.Subnet));
+                Expression.Call(ParseMethod, Expression.Constant(address.ToString())),
+                Expression.Constant(subnet));
         }
 
-        static readonly MethodInfo ParseMethod = typeof(IPAddress).GetMethod("Parse", new[] {typeof(string)})!;
-
-        static readonly ConstructorInfo Constructor =
+        private static readonly MethodInfo ParseMethod = typeof(IPAddress).GetMethod("Parse", new[] {typeof(string)})!;
+        private static readonly ConstructorInfo Constructor =
             typeof((IPAddress, int)).GetConstructor(new[] {typeof(IPAddress), typeof(int)})!;
     }
 }

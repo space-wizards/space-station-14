@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using Content.Server.Administration.Logs;
-using Content.Server.Alert;
 using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
@@ -170,10 +169,7 @@ namespace Content.Server.Body.Systems
 
             respirator.Suffocating = false;
 
-            if (EntityManager.TryGetComponent(uid, out ServerAlertsComponent? alertsComponent))
-            {
-                alertsComponent.ClearAlert(AlertType.LowOxygen);
-            }
+            _alertsSystem.ClearAlert(uid, AlertType.LowOxygen);
 
             _damageableSys.TryChangeDamage(uid, respirator.DamageRecovery, true);
         }

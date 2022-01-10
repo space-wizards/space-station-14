@@ -82,9 +82,9 @@ namespace Content.Shared.ActionBlocker
             return !ev.Cancelled;
         }
 
-        public bool CanAttack(EntityUid uid)
+        public bool CanAttack(EntityUid uid, EntityUid? target = null)
         {
-            var ev = new AttackAttemptEvent(uid);
+            var ev = new AttackAttemptEvent(uid, target);
             RaiseLocalEvent(uid, ev);
 
             return !ev.Cancelled;

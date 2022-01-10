@@ -176,6 +176,8 @@
       - FirelockElectronics
       - DoorElectronics
       - APCElectronics
+      - SMESMachineCircuitboard
+      - SubstationMachineCircuitboard
       - AirAlarmElectronics
       - FireAlarmElectronics
       - CloningPodMachineCircuitboard

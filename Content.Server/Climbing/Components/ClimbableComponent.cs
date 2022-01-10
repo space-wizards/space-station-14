@@ -13,6 +13,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -160,7 +161,7 @@ namespace Content.Server.Climbing.Components
 
             var result = await EntitySystem.Get<DoAfterSystem>().WaitDoAfter(doAfterEventArgs);
 
-            if (result != DoAfterStatus.Cancelled && _entities.TryGetComponent(entityToMove, out PhysicsComponent? body) && body.Fixtures.Count >= 1)
+            if (result != DoAfterStatus.Cancelled && _entities.TryGetComponent(entityToMove, out FixturesComponent? body) && body.FixtureCount >= 1)
             {
                 var entityPos = _entities.GetComponent<TransformComponent>(entityToMove).WorldPosition;
 

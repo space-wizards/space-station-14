@@ -1,15 +1,15 @@
 using System;
-using Content.Shared.ActionBlocker;
+using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Inventory;
 using Content.Shared.Sound;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
-using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -99,31 +99,14 @@ namespace Content.Shared.Item
         [DataField("sprite")]
         private string? _rsiPath;
 
-        /// <summary>
-        ///     If a player can pick up this item.
-        /// </summary>
-        public bool CanPickup(EntityUid user, bool popup = true)
-        {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanPickup(user))
-                return false;
-
-            if (_entMan.GetComponent<TransformComponent>(user).MapID != _entMan.GetComponent<TransformComponent>(Owner).MapID)
-                return false;
-
-            if (!_entMan.TryGetComponent(Owner, out IPhysBody? physics) || physics.BodyType == BodyType.Static)
-                return false;
-
-            return user.InRangeUnobstructed(Owner, ignoreInsideBlocker: true, popup: popup);
-        }
-
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
             var user = eventArgs.User;
 
-            if (!CanPickup(user))
+            if (!user.InRangeUnobstructed(Owner, ignoreInsideBlocker: true))
                 return false;
 
-            if (!_entMan.TryGetComponent(user, out SharedHandsComponent? hands))
+            if (!_entMan.TryGetComponent(user, out SharedHandsComponent hands))
                 return false;
 
             var activeHand = hands.ActiveHand;
@@ -131,15 +114,27 @@ namespace Content.Shared.Item
             if (activeHand == null)
                 return false;
 
-            hands.TryPickupEntityToActiveHand(Owner);
-            return true;
+            // hands checks action blockers
+            return hands.TryPickupEntityToActiveHand(Owner, animateUser: true);
         }
 
-        protected virtual void OnEquippedPrefixChange() { }
+        private void OnEquippedPrefixChange()
+        {
+            if (Owner.TryGetContainer(out var container))
+                EntitySystem.Get<SharedHandsSystem>().UpdateHandVisuals(container.Owner);
+        }
 
-        public virtual void RemovedFromSlot() { }
+        public void RemovedFromSlot()
+        {
+            if (_entMan.TryGetComponent(Owner, out SharedSpriteComponent component))
+                component.Visible = true;
+        }
 
-        public virtual void EquippedToSlot() { }
+        public virtual void EquippedToSlot()
+        {
+            if (_entMan.TryGetComponent(Owner, out SharedSpriteComponent component))
+                component.Visible = false;
+        }
     }
 
     [Serializable, NetSerializable]

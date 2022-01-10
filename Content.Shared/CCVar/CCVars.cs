@@ -491,6 +491,16 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<int> EntityMenuGroupingType = CVarDef.Create("entity_menu", 0, CVar.CLIENTONLY);
 
         /*
+         * Whitelist
+         */
+
+        /// <summary>
+        ///     Controls whether the server will deny any players that are not whitelisted in the DB.
+        /// </summary>
+        public static readonly CVarDef<bool> WhitelistEnabled =
+            CVarDef.Create("whitelist.enabled", false, CVar.SERVERONLY);
+
+        /*
          * VOTE
          */
 
