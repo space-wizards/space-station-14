@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Items now land when they stop moving and not when their physics goes
-      to sleep., type: Tweak}
-  id: 350
-  time: '2021-09-10T12:59:50.0000000+00:00'
 - author: Visne
   changes:
   - {message: 'Added chess! To play, right click on a chessboard and press "Play Game".',
@@ -2922,3 +2916,9 @@ Entries:
       updating after charging., type: Fix}
   id: 851
   time: '2022-01-09T12:48:59.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Insulated gloves and galoshes no longer work when in your pockets. You
+      actually have to wear them., type: Fix}
+  id: 852
+  time: '2022-01-10T04:37:21.0000000+00:00'
