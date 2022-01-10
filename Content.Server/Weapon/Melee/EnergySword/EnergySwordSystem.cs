@@ -69,7 +69,8 @@ namespace Content.Server.Weapon.Melee.Esword
                 return;
 
             if (!TryComp(comp.Owner, out SpriteComponent? sprite)
-                || !TryComp(comp.Owner, out SharedItemComponent? item))
+                || !TryComp(comp.Owner, out SharedItemComponent? item)
+                || !TryComp(comp.Owner, out SharedPointLightComponent? light))
                 return;
 
             item.Size = 5;
@@ -86,7 +87,8 @@ namespace Content.Server.Weapon.Melee.Esword
             {
                 sprite.LayerSetVisible(1, false);
             }
-            
+
+            light.Enabled = false;
             comp.Activated = false;
         }
 
@@ -96,7 +98,8 @@ namespace Content.Server.Weapon.Melee.Esword
                 return;
 
             if (!TryComp(comp.Owner, out SpriteComponent? sprite)
-                || !TryComp(comp.Owner, out SharedItemComponent? item))
+                || !TryComp(comp.Owner, out SharedItemComponent? item)
+                || !TryComp(comp.Owner, out SharedPointLightComponent? light))
                 return;
 
             item.Size = 9999;
@@ -115,6 +118,9 @@ namespace Content.Server.Weapon.Melee.Esword
 
                 sprite.LayerSetColor(1, comp.BladeColor);
                 sprite.LayerSetVisible(1, true);
+
+                light.Color = comp.BladeColor;
+                light.Enabled = true;
             }
             
             comp.Activated = true;

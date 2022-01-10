@@ -24,6 +24,7 @@
     delay: 1.0
   - type: PointLight
     enabled: false
-    radius: 1.5
+    radius: 2
+    energy: 2
     color: white
     
