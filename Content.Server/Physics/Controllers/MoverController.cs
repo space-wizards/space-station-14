@@ -178,7 +178,7 @@ namespace Content.Server.Physics.Controllers
                     var angle = linearInput.ToWorldAngle();
                     var linearDir = angle.GetDir();
                     var dockFlag = linearDir.AsFlag();
-                    var shuttleNorth = EntityManager.GetComponent<TransformComponent>((body).Owner).WorldRotation.ToWorldVec();
+                    var shuttleNorth = EntityManager.GetComponent<TransformComponent>(body.Owner).WorldRotation.ToWorldVec();
 
                     // Won't just do cardinal directions.
                     foreach (DirectionFlag dir in Enum.GetValues(typeof(DirectionFlag)))
@@ -202,20 +202,25 @@ namespace Content.Server.Physics.Controllers
                         }
 
                         float length;
+                        Angle thrustAngle;
 
                         switch (dir)
                         {
                             case DirectionFlag.North:
                                 length = linearInput.Y;
+                                thrustAngle = new Angle(MathF.PI);
                                 break;
                             case DirectionFlag.South:
                                 length = -linearInput.Y;
+                                thrustAngle = new Angle(0f);
                                 break;
                             case DirectionFlag.East:
                                 length = linearInput.X;
+                                thrustAngle = new Angle(MathF.PI / 2f);
                                 break;
                             case DirectionFlag.West:
                                 length = -linearInput.X;
+                                thrustAngle = new Angle(-MathF.PI / 2f);
                                 break;
                             default:
                                 throw new ArgumentOutOfRangeException();
@@ -232,7 +237,7 @@ namespace Content.Server.Physics.Controllers
                         }
 
                         body.ApplyLinearImpulse(
-                            angle.RotateVec(shuttleNorth) *
+                            thrustAngle.RotateVec(shuttleNorth) *
                             speed *
                             frameTime);
                     }
