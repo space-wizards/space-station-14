@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Administration.Logs;
-using Content.Server.Alert;
 using Content.Server.Atmos;
 using Content.Server.Body.Components;
 using Content.Shared.Alert;
@@ -24,6 +23,7 @@ namespace Content.Server.Body.Systems
         [Dependency] private readonly AdminLogSystem _logSys = default!;
         [Dependency] private readonly BodySystem _bodySystem = default!;
         [Dependency] private readonly LungSystem _lungSystem = default!;
+        [Dependency] private readonly AlertsSystem _alertsSystem = default!;
 
         public override void Update(float frameTime)
         {
@@ -199,10 +199,7 @@ namespace Content.Server.Body.Systems
 
             respirator.Suffocating = true;
 
-            if (EntityManager.TryGetComponent(uid, out ServerAlertsComponent? alertsComponent))
-            {
-                alertsComponent.ShowAlert(AlertType.LowOxygen);
-            }
+            _alertsSystem.ShowAlert(uid, AlertType.LowOxygen);
 
             _damageableSys.TryChangeDamage(uid, respirator.Damage, true, false);
         }
@@ -214,10 +211,7 @@ namespace Content.Server.Body.Systems
 
             respirator.Suffocating = false;
 
-            if (EntityManager.TryGetComponent(uid, out ServerAlertsComponent? alertsComponent))
-            {
-                alertsComponent.ClearAlert(AlertType.LowOxygen);
-            }
+            _alertsSystem.ClearAlert(uid, AlertType.LowOxygen);
 
             _damageableSys.TryChangeDamage(uid, respirator.DamageRecovery, true);
         }

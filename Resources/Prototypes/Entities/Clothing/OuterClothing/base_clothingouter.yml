@@ -5,7 +5,7 @@
   components:
   - type: Clothing
     Slots:
-    - outerclothing
+    - outerClothing
   - type: Sprite
     state: icon
 

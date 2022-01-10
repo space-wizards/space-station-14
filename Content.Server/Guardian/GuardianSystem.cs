@@ -8,6 +8,7 @@ using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.MobState;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -48,6 +49,8 @@ namespace Content.Server.Guardian
             SubscribeLocalEvent<GuardianHostComponent, MoveEvent>(OnHostMove);
             SubscribeLocalEvent<GuardianHostComponent, MobStateChangedEvent>(OnHostStateChange);
             SubscribeLocalEvent<GuardianHostComponent, ComponentShutdown>(OnHostShutdown);
+
+            SubscribeLocalEvent<GuardianComponent, AttackAttemptEvent>(OnGuardianAttackAttempt);
         }
 
         private void OnGuardianUnplayer(EntityUid uid, GuardianComponent component, PlayerDetachedEvent args)
@@ -77,6 +80,15 @@ namespace Content.Server.Guardian
         {
             if (component.HostedGuardian == null) return;
             EntityManager.QueueDeleteEntity(component.HostedGuardian.Value);
+        }
+
+        private void OnGuardianAttackAttempt(EntityUid uid, GuardianComponent component, AttackAttemptEvent args)
+        {
+            if (args.Cancelled || args.Target != component.Host)
+                return;
+
+            _popupSystem.PopupCursor(Loc.GetString("guardian-attack-host"), Filter.Entities(uid));
+            args.Cancel();
         }
 
         public void ToggleGuardian(GuardianHostComponent hostComponent)

@@ -454,6 +454,11 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("INTEGER")
                         .HasColumnName("slot");
 
+                    b.Property<string>("Species")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("species");
+
                     b.HasKey("Id")
                         .HasName("PK_profile");
 
@@ -582,6 +587,19 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .IsUnique();
 
                     b.ToTable("unban", (string)null);
+                });
+
+            modelBuilder.Entity("Content.Server.Database.Whitelist", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("UserId")
+                        .HasName("PK_whitelist");
+
+                    b.ToTable("whitelist", (string)null);
                 });
 
             modelBuilder.Entity("PlayerRound", b =>

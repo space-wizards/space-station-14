@@ -6,3 +6,6 @@
 
 - type: metabolizerType
   id: Animal
+
+- type: metabolizerType
+  id: Slime
