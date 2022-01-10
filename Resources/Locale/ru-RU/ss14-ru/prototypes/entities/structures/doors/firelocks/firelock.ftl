@@ -1,6 +1,6 @@
-ent-Firelock = firelock
-    .desc = Apply crowbar.
-ent-FirelockGlass = glass firelock
+ent-Firelock = пожарный шлюз
+    .desc = Примените лом.
+ent-FirelockGlass = стеклянный пожарный шлюз
     .desc = { ent-Firelock.desc }
-ent-FirelockEdge = firelock
+ent-FirelockEdge = пожарный шлюз
     .desc = { ent-Firelock.desc }

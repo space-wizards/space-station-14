@@ -1,25 +1,24 @@
-nuke-component-cant-anchor = The bolts seems to be blocked without disk!
-nuke-component-announcement-sender = Nuclear Fission Explosive
-nuke-component-announcement-armed = Attention! The station's self-destruct mechanism has been engaged. { $time } seconds until detonation.
-nuke-component-announcement-unarmed = The station's self-destruct was deactivated! Have a nice day!
-nuke-component-announcement-send-codes = Attention! Requested self-destruction codes was sent to communication consoles.
-# Nuke UI
-nuke-user-interface-title = Nuclear Fission Explosive
-nuke-user-interface-arm-button = ARM
-nuke-user-interface-anchor-button = ANCHOR
-nuke-user-interface-eject-button = EJECT
+nuke-component-cant-anchor = Болты, похоже, заблокированы без диска!
+nuke-component-announcement-sender = Ядерная Боеголовка
+nuke-component-announcement-armed = Внимание! Задействован механизм самоуничтожения станции. { $time } секунд до детонации.
+nuke-component-announcement-unarmed = Механизм самоуничтожение станции деактивирован! Хорошего дня!
+nuke-component-announcement-send-codes = Внимание! Запрошенные коды самоуничтожения были отправлены на консоли связи.
+nuke-user-interface-title = Ядерная Боеголовка
+nuke-user-interface-arm-button = ВЗВЕСТИ
+nuke-user-interface-anchor-button = ЯКОРЬ
+nuke-user-interface-eject-button = ИЗВЛЕЧЬ
 
 ## Upper status
 
-nuke-user-interface-first-status-device-locked = DEVICE LOCKED
-nuke-user-interface-first-status-input-code = INPUT CODE
-nuke-user-interface-first-status-input-time = INPUT TIME
-nuke-user-interface-first-status-device-ready = DEVICE READY
-nuke-user-interface-first-status-device-armed = DEVICE ARMED
-nuke-user-interface-status-error = ERROR
+nuke-user-interface-first-status-device-locked = УСТРОЙСТВО ЗАБЛОКИРОВАНО
+nuke-user-interface-first-status-input-code = ВВЕДИТЕ КОД
+nuke-user-interface-first-status-input-time = ВВЕДИТЕ ВРЕМЯ
+nuke-user-interface-first-status-device-ready = УСТРОЙСТВО ГОТОВО
+nuke-user-interface-first-status-device-armed = УСТРОЙСТВО ВООРУЖЕНО
+nuke-user-interface-status-error = ОШИБКА
 
 ## Lower status
 
-nuke-user-interface-second-status-await-disk = AWAIT DISK
-nuke-user-interface-second-status-time = TIME: { $time }
-nuke-user-interface-second-status-current-code = CODE: { $code }
+nuke-user-interface-second-status-await-disk = ОЖИДАНИЕ ДИСКА
+nuke-user-interface-second-status-time = ВРЕМЯ: { $time }
+nuke-user-interface-second-status-current-code = КОД: { $code }

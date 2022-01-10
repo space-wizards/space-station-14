@@ -1,2 +1,2 @@
-ent-Pickaxe = pickaxe
-    .desc = Notched to perfection, for jebbing it into rocks
+ent-Pickaxe = кирка
+    .desc = Зазубренная до совершенства, чтобы вбивать её в камни

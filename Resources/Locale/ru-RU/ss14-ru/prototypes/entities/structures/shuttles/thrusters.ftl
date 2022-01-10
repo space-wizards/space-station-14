@@ -1,6 +1,6 @@
-ent-BaseThruster = Двигатель
+ent-BaseThruster = двигатель
     .desc = Он делает ньооооооом.
-ent-Thruster = Двигатель
+ent-Thruster = двигатель
     .desc = Он делает ньооооооом.
 ent-Gyroscope = Гироскоп
     .desc = Увеличивает потенциальное угловое вращение шаттла.

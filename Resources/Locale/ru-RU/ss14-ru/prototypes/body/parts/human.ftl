@@ -18,5 +18,4 @@ ent-RightLegHuman = right human leg
     .desc = { ent-PartHuman.desc }
 ent-LeftFootHuman = left human foot
     .desc = { ent-PartHuman.desc }
-ent-RightFootHuman = right human foot
-    .desc = { ent-PartHuman.desc }
+ent-RightFootHuman = правая стопа человека

@@ -1,6 +1,6 @@
-ent-CableHV = HV power cable
-    .desc = An orange high voltage power cable.
-ent-CableMV = MV power cable
-    .desc = A medium voltage power cable.
-ent-CableApcExtension = LV power cable
-    .desc = A cable used to connect machines to an APC.
+ent-CableHV = Высоковольтный кабель
+    .desc = Оранжевый высоковольтный кабель.
+ent-CableMV = Кабель среднего напряжения
+    .desc = Кабель среднего напряжения.
+ent-CableApcExtension = Низковольтный кабель
+    .desc = Кабель, используемый для подключения устройств к APC.

@@ -1,4 +1,4 @@
-ent-BarSign = bar sign
+ent-BarSign = вывеска бара
     .desc = { ent-BaseStructure.desc }
-ent-BarSignEngineChange = The Engine Change
+ent-BarSignEngineChange = Замена двигателя
     .desc = { ent-BarSign.desc }

@@ -1,2 +1,2 @@
-ent-trayScanner = t-ray scanner
+ent-trayScanner = т-лучевой сканер
     .desc = { ent-BaseItem.desc }

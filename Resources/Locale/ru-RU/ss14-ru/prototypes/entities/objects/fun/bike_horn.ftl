@@ -1,2 +1,2 @@
-ent-BikeHorn = bike horn
-    .desc = A horn off of a bicycle.
+ent-BikeHorn = велосипедный клаксон
+    .desc = Клаксон с велосипеда. Хонк!

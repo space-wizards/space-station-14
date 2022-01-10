@@ -1,8 +1,8 @@
 ent-BaseLightbulb = { ent-BaseItem }
     .desc = { ent-BaseItem.desc }
-ent-LightBulb = incandescent light bulb
-    .desc = That's a light bulb.
-ent-LightTube = fluorescent light tube
-    .desc = That's a light fixture.
-ent-LedLightTube = led light tube
+ent-LightBulb = лампочка накаливания
+    .desc = Это лампочка.
+ent-LightTube = люминесцентная световая трубка
+    .desc = Это световая трубка.
+ent-LedLightTube = светодиодная световая трубка
     .desc = { ent-BaseLightbulb.desc }
