@@ -111,9 +111,9 @@ public partial class InventorySystem : EntitySystem
             container = null;
             if (_nextIdx >= _slots.Length) return false;
 
-            while (_nextIdx < _slots.Length)
+            for (; _nextIdx < _slots.Length; _nextIdx++)
             {
-                var slot = _slots[_nextIdx++];
+                var slot = _slots[_nextIdx];
 
                 if ((slot.SlotFlags & _flags) == 0)
                     continue;
