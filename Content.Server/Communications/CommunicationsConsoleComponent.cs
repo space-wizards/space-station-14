@@ -17,12 +17,11 @@ using Timer = Robust.Shared.Timing.Timer;
 namespace Content.Server.Communications
 {
     [RegisterComponent]
-    public class CommunicationsConsoleComponent : SharedCommunicationsConsoleComponent, IEntityEventSubscriber
+    public class CommunicationsConsoleComponent : SharedCommunicationsConsoleComponent
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IEntityManager _entities = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private bool Powered => !_entities.TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
@@ -43,7 +42,10 @@ namespace Content.Server.Communications
                 UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
             }
 
-            _entityManager.EventBus.SubscribeEvent<RoundEndSystemChangedEvent>(EventSource.Local, this, (s) => UpdateBoundInterface());
+            RoundEndSystem.OnRoundEndCountdownStarted += UpdateBoundInterface;
+            RoundEndSystem.OnRoundEndCountdownCancelled += UpdateBoundInterface;
+            RoundEndSystem.OnRoundEndCountdownFinished += UpdateBoundInterface;
+            RoundEndSystem.OnCallCooldownEnded += UpdateBoundInterface;
         }
 
         protected override void Startup()
@@ -74,7 +76,9 @@ namespace Content.Server.Communications
 
         protected override void OnRemove()
         {
-            _entityManager.EventBus.UnsubscribeEvent<RoundEndSystemChangedEvent>(EventSource.Local, this);
+            RoundEndSystem.OnRoundEndCountdownStarted -= UpdateBoundInterface;
+            RoundEndSystem.OnRoundEndCountdownCancelled -= UpdateBoundInterface;
+            RoundEndSystem.OnRoundEndCountdownFinished -= UpdateBoundInterface;
             base.OnRemove();
         }
 
