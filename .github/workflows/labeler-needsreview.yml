@@ -1,8 +1,8 @@
 ﻿name: "Labels: Review"
 
 on:
-  pull_request:
-    types: [review_requested, opened]
+  pull_request_target:
+    types: [review_requested]
 
 jobs:
   add_label:
