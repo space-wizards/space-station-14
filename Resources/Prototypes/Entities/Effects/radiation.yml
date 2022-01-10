@@ -7,4 +7,4 @@
   - type: RadiationPulse
     minPulseLifespan: 0.8
     maxPulseLifespan: 2.5
-    dps: 5
+    radsPerSecond: 5

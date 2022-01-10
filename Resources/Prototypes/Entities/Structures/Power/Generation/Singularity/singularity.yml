@@ -25,10 +25,10 @@
       - AllMask
   - type: Singularity
   - type: SingularityDistortion
+    radsPerSecond: 1 # determines RadiationPulse's radiation per second.
   - type: RadiationPulse
     range: 15
     decay: false
-    dps: 1 # This is multiplied by the singularity's currentl level (0 - 6)
     minPulseLifespan: 1
     maxPulseLifespan: 1
   - type: Sprite

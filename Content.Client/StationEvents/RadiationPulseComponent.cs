@@ -10,12 +10,10 @@ namespace Content.Client.StationEvents
     {
         private bool _draw;
         private bool _decay;
-        private float _radsPerSecond;
         private float _range;
         private TimeSpan _startTime;
         private TimeSpan _endTime;
 
-        public override float RadsPerSecond => _radsPerSecond;
         public override float Range => _range;
         public override TimeSpan StartTime => _startTime;
         public override TimeSpan EndTime => _endTime;
@@ -31,7 +29,6 @@ namespace Content.Client.StationEvents
                 return;
             }
 
-            _radsPerSecond = state.RadsPerSecond;
             _range = state.Range;
             _draw = state.Draw;
             _decay = state.Decay;
