@@ -42,6 +42,7 @@ namespace Content.Server.Hands.Systems
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly AdminLogSystem _logSystem = default!;
         [Dependency] private readonly StrippableSystem _strippableSystem = default!;
+        [Dependency] private readonly SharedHandVirtualItemSystem _virtualSystem = default!;
 
         public override void Initialize()
         {
@@ -114,6 +115,14 @@ namespace Content.Server.Hands.Systems
                 filter = filter.RemoveWhereAttachedEntity(entity => entity == exclude);
 
             RaiseNetworkEvent(new PickupAnimationEvent(item, initialPosition, finalPosition), filter);
+        }
+
+        protected override void HandleContainerRemoved(EntityUid uid, SharedHandsComponent component, ContainerModifiedMessage args)
+        {
+            if (!Deleted(args.Entity) && TryComp(args.Entity, out HandVirtualItemComponent? @virtual))
+                _virtualSystem.Delete(@virtual, uid);
+
+            base.HandleContainerRemoved(uid, component, args);
         }
         #endregion
 

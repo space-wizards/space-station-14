@@ -8,6 +8,7 @@ using Content.Server.Temperature.Components;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.Database;
+using Content.Shared.Inventory;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
@@ -212,8 +213,10 @@ namespace Content.Server.Temperature.Systems
         }
     }
 
-    public class ModifyChangedTemperatureEvent : EntityEventArgs
+    public class ModifyChangedTemperatureEvent : EntityEventArgs, IInventoryRelayEvent
     {
+        public SlotFlags TargetSlots { get; } = ~SlotFlags.POCKET;
+
         public float TemperatureDelta;
 
         public ModifyChangedTemperatureEvent(float temperature)
