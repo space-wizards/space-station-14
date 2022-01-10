@@ -53400,12 +53400,6 @@ entities:
   - pos: 12.5,-29.5
     parent: 853
     type: Transform
-- uid: 4871
-  type: SpawnPointLawyer
-  components:
-  - pos: -24.5,-7.5
-    parent: 853
-    type: Transform
 - uid: 4872
   type: Grille
   components:

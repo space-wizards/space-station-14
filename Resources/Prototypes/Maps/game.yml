@@ -33,7 +33,6 @@
     SecurityOfficer: [ 2, 3 ]
     Chaplain: [ 1, 1 ]
     Librarian: [ 1, 1 ]
-    Lawyer: [ 1, 1 ]
 
 - type: gameMap
   id: packedstation
