@@ -20,17 +20,17 @@ public class RenameCommand : IConsoleCommand
 {
     public string Command => "rename";
     public string Description => "Renames an entity and its cloner entries, ID cards, and PDAs.";
-    public string Help => "rename <Username|EntityUid> <New character name...>";
+    public string Help => "rename <Username|EntityUid> <New character name>";
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        if (args.Length < 2)
+        if (args.Length != 2)
         {
             shell.WriteLine(Help);
             return;
         }
 
-        var name = string.Join(" ", args[1..]);
+        var name = args[1];
         if (name.Length > SharedIdCardConsoleComponent.MaxFullNameLength)
         {
             shell.WriteLine("Name is too long.");
