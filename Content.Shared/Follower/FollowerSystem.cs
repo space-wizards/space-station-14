@@ -83,6 +83,8 @@ public class FollowerSystem : EntitySystem
             return;
 
         followed.Following.Remove(uid);
+        if (followed.Following.Count == 0)
+            RemComp<FollowedComponent>(target);
         RemComp<FollowerComponent>(uid);
         Transform(uid).AttachToGridOrMap();
     }
