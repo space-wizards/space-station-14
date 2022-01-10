@@ -9,6 +9,8 @@ namespace Content.Shared.Radiation
     public abstract class SharedRadiationPulseComponent : Component
     {
         public override string Name => "RadiationPulse";
+
+        public virtual float RadsPerSecondBase { get; set; }
         public virtual float RadsPerSecond { get; set; }
 
         /// <summary>
@@ -29,6 +31,7 @@ namespace Content.Shared.Radiation
     [Serializable, NetSerializable]
     public class RadiationPulseState : ComponentState
     {
+        public readonly float RadsPerSecondBase;
         public readonly float RadsPerSecond;
         public readonly float Range;
         public readonly bool Draw;
