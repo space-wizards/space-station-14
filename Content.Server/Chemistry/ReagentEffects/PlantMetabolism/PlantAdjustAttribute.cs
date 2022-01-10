@@ -37,6 +37,7 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
             if (Prob >= 1f)
                 return true;
 
+            // Dependencies are never injected for reagents if you intend to do that for this.
             return !(Prob <= 0f) && IoCManager.Resolve<IRobustRandom>().Prob(Prob);
         }
     }
