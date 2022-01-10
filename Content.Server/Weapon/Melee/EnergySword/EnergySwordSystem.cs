@@ -36,7 +36,7 @@ namespace Content.Server.Weapon.Melee.Esword
         private void OnMeleeHit(EntityUid uid, EnergySwordComponent comp, MeleeHitEvent args)
         {
             
-            if (comp.Activated == true)
+            if (comp.Activated)
             {
                 // Overrides basic blunt damage with burn+slash as set in yaml
                 args.BonusDamage = comp.LitDamageBonus;
@@ -75,7 +75,7 @@ namespace Content.Server.Weapon.Melee.Esword
 
             item.EquippedPrefix = "off";
 
-            if (comp.Hacked == true)
+            if (comp.Hacked)
             {
                 sprite.LayerSetState(0, "e_sword");
             }
@@ -102,7 +102,7 @@ namespace Content.Server.Weapon.Melee.Esword
 
             SoundSystem.Play(Filter.Pvs(comp.Owner), comp.ActivateSound.GetSound(), comp.Owner);
 
-            if (comp.Hacked == true)
+            if (comp.Hacked)
             {
                 item.EquippedPrefix = "on-rainbow";
                 sprite.LayerSetState(0, "e_sword_rainbow_on");
@@ -124,14 +124,14 @@ namespace Content.Server.Weapon.Melee.Esword
 
         private void OnInteractUsing(EntityUid uid, EnergySwordComponent comp, InteractUsingEvent args)
         {
-            if (comp.Hacked == true || !_blockerSystem.CanInteract(args.User))
+            if (comp.Hacked || !_blockerSystem.CanInteract(args.User))
                 return;
 
             if (TryComp(args.Used, out ToolComponent? tool) && tool.Qualities.ContainsAny("Pulsing"))
             {
                 comp.Hacked = true;
 
-                if (comp.Activated == true && TryComp(comp.Owner, out SpriteComponent? sprite)
+                if (comp.Activated && TryComp(comp.Owner, out SpriteComponent? sprite)
                     && TryComp(comp.Owner, out SharedItemComponent? item))
                 {
                     sprite.LayerSetVisible(1, false);
