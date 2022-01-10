@@ -7,10 +7,6 @@
   components:
   - type: Sprite
     netsync: false
-  - type: UserInterface
-    interfaces:
-    - key: enum.SurgeryUIKey.Key
-      type: SurgeryBoundUserInterface
 
 # Cautery
 
@@ -20,9 +16,6 @@
   parent: BaseToolSurgery
   description: A surgical tool used to cauterize open wounds.
   components:
-  - type: SurgeryTool
-    surgeryType: Cauterization
-    baseOperateTime: 3
   - type: Sprite
     sprite: Objects/Specific/Medical/Surgery/cautery.rsi
     state: cautery
@@ -38,10 +31,6 @@
   parent: BaseToolSurgery
   description: A surgical drill for making holes into hard material.
   components:
-#  - type: PowerCellSlot
-  - type: SurgeryTool
-    surgeryType: Drilling
-    baseOperateTime: 3
   - type: Sprite
     sprite: Objects/Specific/Medical/Surgery/drill.rsi
     state: drill
@@ -66,9 +55,6 @@
   - type: Utensil
     types:
       - Knife
-  - type: SurgeryTool
-    surgeryType: Incision
-    baseOperateTime: 5
   - type: Sprite
     sprite: Objects/Specific/Medical/Surgery/scalpel.rsi
     state: scalpel
@@ -88,9 +74,6 @@
   parent: Scalpel
   description: A pointy piece of glass, abraded to an edge and wrapped in tape for a handle. # Could become a decent tool or weapon with right tool mods.
   components:
-  - type: SurgeryTool
-    surgeryType: Incision
-    baseOperateTime: 8
   - type: Sprite
     state: shiv
   - type: Item
@@ -102,9 +85,6 @@
   parent: Scalpel
   description: Made of more expensive materials, sharper and generally more reliable.
   components:
-  - type: SurgeryTool
-    surgeryType: Incision
-    baseOperateTime: 4
   - type: Sprite
     state: advanced
   - type: Item
@@ -116,10 +96,6 @@
   parent: Scalpel
   description: A scalpel which uses a directed laser to slice instead of a blade, for more precise surgery while also cauterizing as it cuts.
   components:
-#  - type: PowerCellSlot
-  - type: SurgeryTool
-    surgeryType: Incision
-    baseOperateTime: 2
   - type: Sprite
     state: laser
   - type: Item
@@ -133,29 +109,12 @@
   parent: BaseToolSurgery
   description: A surgical tool used to hold open incisions.
   components:
-  - type: SurgeryTool
-    surgeryType: Retraction
-    baseOperateTime: 3
   - type: Sprite
     sprite: Objects/Specific/Medical/Surgery/scissors.rsi
     state: retractor
   - type: Item
     sprite: Objects/Specific/Medical/Surgery/scissors.rsi
   - type: ItemCooldown
-# Would do this, but inhands don't change. Also doesn't work for SurgeryTool yet.
-#  - type: MultiTool
-#    tools:
-#    - behavior: VesselCompression
-#      state: hemostat
-#      useSound:
-#        path: /Audio/Items/jaws_pry.ogg
-#      changeSound:
-#        path: /Audio/Items/change_jaws.ogg
-#    - behavior: Setting
-#      state: setter
-#      useSound:
-#      changeSound:
-#        path: /Audio/Items/change_jaws.ogg
 
 - type: entity
   name: hemostat
@@ -163,8 +122,6 @@
   parent: Retractor
   description: A surgical tool used to compress blood vessels to prevent bleeding.
   components:
-  - type: SurgeryTool
-    surgeryType: VesselCompression
   - type: Sprite
     state: hemostat
   - type: Item
@@ -176,13 +133,6 @@
   #   parent: Retractor
   #   description: A surgical tool used for setting bones.
   #   components:
-  #   - type: SurgeryTool
-  #     surgeryType: Setting
-  #   - type: Sprite
-  #     state: setter
-  #   - type: Item
-  #     HeldPrefix: setter
-
 # Saws
 
 - type: entity
@@ -194,9 +144,6 @@
   - type: Utensil
     types:
       - Knife
-  - type: SurgeryTool
-    surgeryType: Amputation
-    baseOperateTime: 6
   - type: Sprite
     sprite: Objects/Specific/Medical/Surgery/saw.rsi
     state: saw
@@ -211,9 +158,6 @@
   parent: Saw
   description: A wicked serrated blade made of whatever nasty sharp things you could find. # It would make a pretty decent weapon, given there are more space for some tool mods too.
   components:
-  - type: SurgeryTool
-    surgeryType: Amputation
-    baseOperateTime: 8
   - type: Sprite
     state: improv
   - type: Item
@@ -231,10 +175,6 @@
   parent: Saw
   description: For heavy duty cutting.
   components:
-#  - type: PowerCellSlot
-  - type: SurgeryTool
-    surgeryType: Amputation
-    baseOperateTime: 4
   - type: Sprite
     state: electric
   - type: Item
@@ -252,10 +192,6 @@
   parent: Saw
   description: You think you can cut anything with it.
   components:
-#  - type: PowerCellSlot
-  - type: SurgeryTool
-    surgeryType: Amputation
-    baseOperateTime: 2
   - type: Sprite
     state: advanced
   - type: Item

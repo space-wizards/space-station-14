@@ -17,3 +17,5 @@ chatsan-surprised = looks surpised
 chatsan-confused = looks confused
 chatsan-unimpressed = seems unimpressed
 chatsan-waves = waves
+chatsan-salutes = salutes
+chatsan-shrugs = shrugs

@@ -110,3 +110,55 @@
     graph: railing
     node: railingCorner
 
+- type: entity
+  parent: BaseStructure
+  id: RailingCornerSmall
+  name: railing
+  description: Basic railing meant to protect idiots like you from falling.
+  components:
+  - type: Sprite
+    netsync: false
+    drawdepth: WallTops
+    sprite: Structures/Walls/railing.rsi
+    state: corner_small
+  - type: Icon
+    sprite: Structures/Walls/railing.rsi
+    state: corner_small
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.49,0.49,-0.3,0.3"
+      mass: 50
+      layer:
+      - SmallImpassable
+      mask:
+      - Impassable
+  - type: InteractionOutline
+  - type: Repairable
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: FlimsyMetallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 20
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          PartRodMetal1:
+            min: 0
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Climbable
+  - type: Construction
+    graph: railing
+    node: railingCornerSmall
+

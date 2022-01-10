@@ -42,6 +42,14 @@ namespace Content.Shared.CharacterAppearance.Components
         [ViewVariables]
         [DataField("canColorFacialHair")]
         public bool CanColorFacialHair { get; set; } = true;
+
+        [ViewVariables]
+        [DataField("hairMatchesSkin")]
+        public bool HairMatchesSkin { get; set; } = false;
+
+        [ViewVariables]
+        [DataField("hairAlpha")]
+        public float HairAlpha { get; set; } = 1.0f;
     }
 
     [Serializable, NetSerializable]
