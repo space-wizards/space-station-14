@@ -35,6 +35,11 @@ public sealed class DoorSystem : SharedDoorSystem
 
         SubscribeLocalEvent<DoorComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<DoorComponent, InteractUsingEvent>(OnInteractUsing);
+
+        SubscribeLocalEvent<DoorComponent, PryFinishedEvent>(OnPryFinished);
+        SubscribeLocalEvent<DoorComponent, PryCancelledEvent>(OnPryCancelled);
+        SubscribeLocalEvent<DoorComponent, WeldFinishedEvent>(OnWeldFinished);
+        SubscribeLocalEvent<DoorComponent, WeldCancelledEvent>(OnWeldCancelled);
     }
 
     // TODO AUDIO PREDICT Figure out a better way to handle sound and prediction. For now, this works well enough?
@@ -78,6 +83,7 @@ public sealed class DoorSystem : SharedDoorSystem
         SoundSystem.Play(filter, sound, uid, AudioParams.Default.WithVolume(-5));
     }
 
+    #region DoAfters
     /// <summary>
     ///     Weld or pry open a door.
     /// </summary>
@@ -118,16 +124,8 @@ public sealed class DoorSystem : SharedDoorSystem
 
         // perform a do-after delay
         door.BeingWelded = true;
-        var result = await _toolSystem.UseTool(used, user, target, 3f, 3f, door.WeldingQuality);
-        door.BeingWelded = false;
-
-        if (!result || !door.Weldable)
-            return;
-
-        if (door.State == DoorState.Closed)
-            SetState(target, DoorState.Welded, door);
-        else if (door.State == DoorState.Welded)
-            SetState(target, DoorState.Closed, door);
+        _toolSystem.UseTool(used, user, target, 3f, 3f, door.WeldingQuality,
+            new WeldFinishedEvent(), new WeldCancelledEvent(), target);
     }
 
     /// <summary>
@@ -147,17 +145,43 @@ public sealed class DoorSystem : SharedDoorSystem
         var modEv = new DoorGetPryTimeModifierEvent();
         RaiseLocalEvent(target, modEv, false);
 
-        var successfulPry = await _toolSystem.UseTool(tool, user, target,
-                0f, modEv.PryTimeModifier * door.PryTime, door.PryingQuality);
-
-        if (successfulPry)
-        {
-            if (door.State == DoorState.Closed)
-                StartOpening(target, door);
-            else if (door.State == DoorState.Open)
-                StartClosing(target, door);
-        }
+        _toolSystem.UseTool(tool, user, target, 0f, modEv.PryTimeModifier * door.PryTime, door.PryingQuality,
+                new PryFinishedEvent(), new PryCancelledEvent(), target);
     }
+
+    private void OnWeldCancelled(EntityUid uid, DoorComponent door, WeldCancelledEvent args)
+    {
+        door.BeingWelded = false;
+    }
+
+    private void OnWeldFinished(EntityUid uid, DoorComponent door, WeldFinishedEvent args)
+    {
+        door.BeingWelded = false;
+
+        if (!door.Weldable)
+            return;
+
+        if (door.State == DoorState.Closed)
+            SetState(uid, DoorState.Welded, door);
+        else if (door.State == DoorState.Welded)
+            SetState(uid, DoorState.Closed, door);
+    }
+
+    private void OnPryCancelled(EntityUid uid, DoorComponent door, PryCancelledEvent args)
+    {
+        door.BeingPried = false;
+    }
+
+    private void OnPryFinished(EntityUid uid, DoorComponent door, PryFinishedEvent args)
+    {
+        door.BeingPried = false;
+
+        if (door.State == DoorState.Closed)
+            StartOpening(uid, door);
+        else if (door.State == DoorState.Open)
+            StartClosing(uid, door);
+    }
+    #endregion
 
     /// <summary>
     ///     Does the user have the permissions required to open this door?
@@ -262,3 +286,8 @@ public sealed class DoorSystem : SharedDoorSystem
         */
     }
 }
+
+public class PryFinishedEvent : EntityEventArgs { }
+public class PryCancelledEvent : EntityEventArgs { }
+public class WeldFinishedEvent : EntityEventArgs { }
+public class WeldCancelledEvent : EntityEventArgs { }
