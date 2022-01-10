@@ -13,7 +13,7 @@ namespace Content.Shared.Singularity.Components
         public override string Name => "Singularity";
 
         /// <summary>
-        ///     The radiation pulse component's radsPerSecond is set to the singularity's level times multiplied by this number.
+        ///     The radiation pulse component's radsPerSecond is set to the singularity's level multiplied by this number.
         /// </summary>
         [DataField("radsPerLevel")]
         public float RadsPerLevel = 1;
