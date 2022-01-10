@@ -25,19 +25,19 @@ namespace Content.Server.Tabletop
             const float boardDistanceX = 1.25f;
             const float pieceDistanceY = 0.80f;
 
-            float getXPosition(float distanceFromSide, bool isLeftSide)
+            float GetXPosition(float distanceFromSide, bool isLeftSide)
             {
                 var pos = borderLengthX - (distanceFromSide * boardDistanceX);
                 return isLeftSide ? -pos : pos;
             }
 
-            float getYPosition(float positionNumber, bool isTop)
+            float GetYPosition(float positionNumber, bool isTop)
             {
                 var pos = borderLengthY - (pieceDistanceY * positionNumber);
                 return isTop ? pos : -pos;
             }
 
-            void addPieces(
+            void AddPieces(
                 float distanceFromSide,
                 int numberOfPieces,
                 bool isBlackPiece,
@@ -46,26 +46,26 @@ namespace Content.Server.Tabletop
             {
                 for (int i = 0; i < numberOfPieces; i++)
                 {
-                    session.Entities.Add(entityManager.SpawnEntity(isBlackPiece ? BlackPiecePrototype : WhitePiecePrototype, session.Position.Offset(getXPosition(distanceFromSide, isLeftSide), getYPosition(i, isTop))));
+                    session.Entities.Add(entityManager.SpawnEntity(isBlackPiece ? BlackPiecePrototype : WhitePiecePrototype, session.Position.Offset(GetXPosition(distanceFromSide, isLeftSide), GetYPosition(i, isTop))));
                 }
             }
 
             // Top left
-            addPieces(0, 5, true, true, true);
+            AddPieces(0, 5, true, true, true);
             // top middle left
-            addPieces(4, 3, false, true, true);
+            AddPieces(4, 3, false, true, true);
             // top middle right
-            addPieces(5, 5, false, true, false);
+            AddPieces(5, 5, false, true, false);
             // top far right
-            addPieces(0, 2, true, true, false);
+            AddPieces(0, 2, true, true, false);
             // bottom left
-            addPieces(0, 5, false, false, true);
+            AddPieces(0, 5, false, false, true);
             // bottom middle left
-            addPieces(4, 3, true, false, true);
+            AddPieces(4, 3, true, false, true);
             // bottom middle right
-            addPieces(5, 5, true, false, false);
+            AddPieces(5, 5, true, false, false);
             // bottom far right
-            addPieces(0, 2, false, false, false);
+            AddPieces(0, 2, false, false, false);
         }
     }
 }

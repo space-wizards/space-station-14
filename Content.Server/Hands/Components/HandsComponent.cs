@@ -74,13 +74,13 @@ namespace Content.Server.Hands.Components
 
             if (ActiveHand != null && Drop(ActiveHand, false))
             {
-                source.PopupMessageOtherClients(Loc.GetString("hands-component-disarm-success-others-message", ("disarmer", Name: _entities.GetComponent<MetaDataComponent>(source).EntityName), ("disarmed", Name: _entities.GetComponent<MetaDataComponent>(target).EntityName)));
-                source.PopupMessageCursor(Loc.GetString("hands-component-disarm-success-message", ("disarmed", Name: _entities.GetComponent<MetaDataComponent>(target).EntityName)));
+                source.PopupMessageOtherClients(Loc.GetString("hands-component-disarm-success-others-message", ("disarmer", _entities.GetComponent<MetaDataComponent>(source).EntityName), ("disarmed", _entities.GetComponent<MetaDataComponent>(target).EntityName)));
+                source.PopupMessageCursor(Loc.GetString("hands-component-disarm-success-message", ("disarmed", _entities.GetComponent<MetaDataComponent>(target).EntityName)));
             }
             else
             {
-                source.PopupMessageOtherClients(Loc.GetString("hands-component-shove-success-others-message", ("shover", Name: _entities.GetComponent<MetaDataComponent>(source).EntityName), ("shoved", Name: _entities.GetComponent<MetaDataComponent>(target).EntityName)));
-                source.PopupMessageCursor(Loc.GetString("hands-component-shove-success-message", ("shoved", Name: _entities.GetComponent<MetaDataComponent>(target).EntityName)));
+                source.PopupMessageOtherClients(Loc.GetString("hands-component-shove-success-others-message", ("shover", _entities.GetComponent<MetaDataComponent>(source).EntityName), ("shoved", _entities.GetComponent<MetaDataComponent>(target).EntityName)));
+                source.PopupMessageCursor(Loc.GetString("hands-component-shove-success-message", ("shoved", _entities.GetComponent<MetaDataComponent>(target).EntityName)));
             }
 
             return true;
