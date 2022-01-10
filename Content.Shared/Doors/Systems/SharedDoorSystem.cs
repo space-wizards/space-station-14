@@ -505,14 +505,13 @@ public abstract class SharedDoorSystem : EntitySystem
     /// </summary>
     public override void Update(float frameTime)
     {
-        HashSet<DoorComponent> toRemove = new();
         var time = GameTiming.CurTime;
 
-        foreach (var door in _activeDoors)
+        foreach (var door in _activeDoors.ToList())
         {
             if (door.Deleted || door.NextStateChange == null)
             {
-                toRemove.Add(door);
+                _activeDoors.Remove(door);
                 continue;
             }
 
@@ -520,15 +519,8 @@ public abstract class SharedDoorSystem : EntitySystem
                 continue;
 
             if (door.NextStateChange.Value < time)
-            {
-                // Progress the door to the next state. This may sometimes call ActiveDoors.Add(...), but these doors
-                // are already in the set, so it should never result in an enumerator modification error.
                 NextState(door, time);
-            }
         }
-
-        // remove doors with no queued state changes.
-        _activeDoors.ExceptWith(toRemove);
     }
 
     /// <summary>
