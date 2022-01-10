@@ -22,4 +22,8 @@
     sprite: Objects/Weapons/Melee/e_sword.rsi
   - type: UseDelay
     delay: 1.0
+  - type: PointLight
+    enabled: false
+    radius: 1.5
+    color: white
     
