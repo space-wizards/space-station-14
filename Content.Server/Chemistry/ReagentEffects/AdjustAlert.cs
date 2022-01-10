@@ -20,15 +20,16 @@ public class AdjustAlert : ReagentEffect
     public bool Cooldown;
 
     [DataField("time")]
-    public float Time = 0.0f;
+    public float Time;
 
     public override void Effect(ReagentEffectArgs args)
     {
-        if (args.EntityManager.TryGetComponent<SharedAlertsComponent>(args.SolutionEntity, out var alert))
+        var alertSys = EntitySystem.Get<AlertsSystem>();
+        if (args.EntityManager.HasComponent<AlertsComponent>(args.SolutionEntity))
         {
             if (Clear)
             {
-                alert.ClearAlert(Type);
+                alertSys.ClearAlert(args.SolutionEntity, Type);
             }
             else
             {
@@ -38,7 +39,7 @@ public class AdjustAlert : ReagentEffect
                     var timing = IoCManager.Resolve<IGameTiming>();
                     cooldown = (timing.CurTime, timing.CurTime + TimeSpan.FromSeconds(Time));
                 }
-                alert.ShowAlert(Type, cooldown: cooldown);
+                alertSys.ShowAlert(args.SolutionEntity, Type, cooldown: cooldown);
             }
         }
     }

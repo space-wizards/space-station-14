@@ -61,9 +61,6 @@ namespace Content.Server.Body.Components
         public int SuffocationCycleThreshold = 3;
 
         [ViewVariables]
-        public bool Suffocating = false;
-
-        [ViewVariables]
         public RespiratorStatus Status = RespiratorStatus.Inhaling;
 
         [DataField("cycleDelay")]

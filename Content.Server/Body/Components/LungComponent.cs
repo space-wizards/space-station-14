@@ -1,4 +1,5 @@
-﻿using Content.Server.Atmos;
+﻿using System.Collections.Generic;
+using Content.Server.Atmos;
 using Content.Server.Body.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.Chemistry.Components;
@@ -20,6 +21,9 @@ public class LungComponent : Component
         Volume = 6,
         Temperature = Atmospherics.NormalBodyTemperature
     };
+
+    [DataField("validReagentGases", required: true)]
+    public HashSet<Gas> ValidGases = default!;
 
     [ViewVariables]
     public Solution LungSolution = default!;

@@ -12,6 +12,10 @@
       size: 5
       compatibility: Slime
     - type: Lung
+      validReagentGases:
+      - Oxygen
+      - Plasma
+      - Tritium
     - type: Brain
     - type: Stomach
       maxVolume: 250

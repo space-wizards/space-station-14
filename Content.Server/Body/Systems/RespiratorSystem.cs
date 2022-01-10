@@ -29,6 +29,7 @@ namespace Content.Server.Body.Systems
         [Dependency] private readonly LungSystem _lungSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosSys = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly AlertsSystem _alertsSystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         public override void Initialize()
@@ -80,13 +81,13 @@ namespace Content.Server.Body.Systems
                         _popupSystem.PopupEntity(Loc.GetString("lung-behavior-gasp"), uid, Filter.Pvs(uid));
                     }
 
-                    respirator.SuffocationCycles += 1;
                     TakeSuffocationDamage(uid, respirator);
+                    respirator.SuffocationCycles += 1;
                     continue;
                 }
 
-                respirator.SuffocationCycles = 0;
                 StopSuffocation(uid, respirator);
+                respirator.SuffocationCycles = 0;
             }
         }
 
@@ -148,15 +149,12 @@ namespace Content.Server.Body.Systems
 
         private void TakeSuffocationDamage(EntityUid uid, RespiratorComponent respirator)
         {
-            if (!respirator.Suffocating)
+            if (respirator.SuffocationCycles == 2)
                 _logSys.Add(LogType.Asphyxiation, $"{ToPrettyString(uid):entity} started suffocating");
 
-            respirator.Suffocating = true;
-
-            if (EntityManager.TryGetComponent(uid, out ServerAlertsComponent? alertsComponent)
-                && respirator.SuffocationCycles >= respirator.SuffocationCycleThreshold)
+            if (respirator.SuffocationCycles >= respirator.SuffocationCycleThreshold)
             {
-                alertsComponent.ShowAlert(AlertType.LowOxygen);
+                _alertsSystem.ShowAlert(uid, AlertType.LowOxygen);
             }
 
             _damageableSys.TryChangeDamage(uid, respirator.Damage, true, false);
@@ -164,10 +162,8 @@ namespace Content.Server.Body.Systems
 
         private void StopSuffocation(EntityUid uid, RespiratorComponent respirator)
         {
-            if (respirator.Suffocating)
+            if (respirator.SuffocationCycles >= 2)
                 _logSys.Add(LogType.Asphyxiation, $"{ToPrettyString(uid):entity} stopped suffocating");
-
-            respirator.Suffocating = false;
 
             _alertsSystem.ClearAlert(uid, AlertType.LowOxygen);
 

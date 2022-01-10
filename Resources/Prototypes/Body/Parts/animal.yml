@@ -82,6 +82,10 @@
     size: 1
     compatibility: Biological
   - type: Lung
+    validReagentGases:
+    - Oxygen
+    - Plasma
+    - Tritium
   - type: Metabolizer
     removeEmpty: true
     solutionOnBody: false

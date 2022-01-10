@@ -171,9 +171,8 @@ namespace Content.Server.Body.Systems
 
                         if (effect.ShouldLog)
                         {
-                            var entity = bodyEntityUid != null ? bodyEntityUid.Value : args.SolutionEntity;
                             _logSystem.Add(LogType.ReagentEffect, effect.LogImpact,
-                                $"Metabolism effect {effect.GetType().Name:effect} of reagent {args.Reagent.Name:reagent} applied on entity {entity} at {Transform(entity).Coordinates:coordinates}");
+                                $"Metabolism effect {effect.GetType().Name:effect} of reagent {args.Reagent.Name:reagent} applied on entity {actualEntity:entity} at {Transform(actualEntity).Coordinates:coordinates}");
                         }
 
                         effect.Effect(args);

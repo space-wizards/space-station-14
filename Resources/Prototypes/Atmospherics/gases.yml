@@ -14,6 +14,7 @@
   heatCapacityRatio: 1.4
   molarMass: 28
   color: DA1010
+  reagent: Nitrogen
 
 - type: gas
   id: 2
@@ -54,3 +55,4 @@
   gasOverlaySprite: /Textures/Effects/atmospherics.rsi
   gasOverlayState: water_vapor
   color: bffffd
+  reagent: Water

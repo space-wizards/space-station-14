@@ -124,15 +124,6 @@
             Poison: 2
 
 - type: reagent
-  id: Nitrogen
-  name: nitrogen
-  desc: A colorless, odorless unreactive gas. Highly stable.
-  physicalDesc: gaseous
-  color: "#808080"
-  boilingPoint: -195.8
-  meltingPoint: -210.0
-
-- type: reagent
   id: Potassium
   name: potassium
   desc: A soft, shiny grey metal. Even more reactive than lithium.

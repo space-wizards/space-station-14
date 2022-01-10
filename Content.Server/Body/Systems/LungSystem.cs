@@ -53,6 +53,8 @@ public class LungSystem : EntitySystem
     {
         for (int i = 0; i < Atmospherics.TotalNumberOfGases; i++)
         {
+            if (!lung.ValidGases.Contains((Gas) i))
+                continue;
             var moles = lung.Air.Moles[i];
             if (moles <= 0)
                 continue;
@@ -61,8 +63,8 @@ public class LungSystem : EntitySystem
 
             var amount = moles * Atmospherics.BreathMolesToReagentMultiplier;
             _solutionContainerSystem.TryAddReagent(uid, lung.LungSolution, reagent, amount, out _);
+            lung.Air.AdjustMoles(i, -moles);
         }
 
-        lung.Air.Clear();
     }
 }

@@ -89,3 +89,12 @@
       # Cant be added until I add metabolism effects on reagent removal
       #- !type:AdjustAlert
       #  alertType: Toxins
+
+- type: reagent
+  id: Nitrogen
+  name: nitrogen
+  desc: A colorless, odorless unreactive gas. Highly stable.
+  physicalDesc: gaseous
+  color: "#808080"
+  boilingPoint: -195.8
+  meltingPoint: -210.0
