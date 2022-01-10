@@ -11,10 +11,6 @@ namespace Content.Server.Body.Components
     [ComponentReference(typeof(SharedBodyPartComponent))]
     public class BodyPartComponent : SharedBodyPartComponent
     {
-        [Dependency] private readonly IEntityManager _entMan = default!;
-
-        private Container _mechanismContainer = default!;
-
         public override bool CanAddMechanism(MechanismComponent mechanism)
         {
             return base.CanAddMechanism(mechanism) &&

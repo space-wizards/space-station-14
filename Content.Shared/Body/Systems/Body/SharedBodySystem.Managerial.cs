@@ -9,7 +9,7 @@ using Content.Shared.Damage.Prototypes;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.Body.Systems;
+namespace Content.Shared.Body.Systems.Body;
 
 public abstract partial class SharedBodySystem
 {

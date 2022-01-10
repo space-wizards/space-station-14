@@ -3,7 +3,7 @@ using Content.Shared.Body.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Body.Systems;
+namespace Content.Shared.Body.Systems.Body;
 
 public abstract partial class SharedBodySystem
 {

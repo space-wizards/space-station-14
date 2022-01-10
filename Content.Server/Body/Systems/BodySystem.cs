@@ -6,6 +6,7 @@ using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Prototypes;
 using Content.Shared.Body.Systems;
+using Content.Shared.Body.Systems.Body;
 using Content.Shared.MobState.Components;
 using Content.Shared.Movement.EntitySystems;
 using Content.Shared.Random.Helpers;

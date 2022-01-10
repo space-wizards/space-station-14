@@ -6,7 +6,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Body.Systems;
+namespace Content.Shared.Body.Systems.Body;
 
 public abstract partial class SharedBodySystem : EntitySystem
 {

@@ -6,7 +6,7 @@ using Content.Shared.Body.Part;
 using Content.Shared.Body.Prototypes;
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.Body.Systems;
+namespace Content.Shared.Body.Systems.Body;
 
 public abstract partial class SharedBodySystem
 {

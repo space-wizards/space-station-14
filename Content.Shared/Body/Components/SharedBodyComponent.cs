@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Systems;
+using Content.Shared.Body.Systems.Body;
 using Robust.Shared.Analyzers;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;

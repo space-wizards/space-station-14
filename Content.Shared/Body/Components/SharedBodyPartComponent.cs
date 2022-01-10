@@ -21,15 +21,15 @@ namespace Content.Shared.Body.Components
 
         public override string Name => "BodyPart";
 
-        private SharedBodyComponent? _body;
+        public SharedBodyComponent? Body;
 
-        // TODO BODY Remove
         [DataField("mechanisms")]
-        private readonly List<string> _mechanismIds = new();
-        public IReadOnlyList<string> MechanismIds => _mechanismIds;
+        private readonly List<string> InitialMechanisms = new();
+
+        public Container MechanismContainer = default!;
 
         [ViewVariables]
-        private readonly HashSet<MechanismComponent> _mechanisms = new();
+        public readonly HashSet<MechanismComponent> Mechanisms = new();
 
         [ViewVariables]
         public SharedBodyComponent? Body
