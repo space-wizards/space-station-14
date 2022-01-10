@@ -183,7 +183,7 @@ namespace Content.Server.Ghost.Roles
             if (!role.Take(player)) return;
 
             if (player.AttachedEntity != null)
-                _adminLogSystem.Add(LogType.GhostRoleTaken, LogImpact.Low, $"{player:player} took the {role.RoleName:roleName} ghost role entity {ToPrettyString(player.AttachedEntity.Value):entity}");
+                _adminLogSystem.Add(LogType.GhostRoleTaken, LogImpact.Low, $"{player:player} took the {role.RoleName:roleName} ghost role {ToPrettyString(player.AttachedEntity.Value):entity}");
 
             CloseEui(player);
         }
