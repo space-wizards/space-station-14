@@ -74,3 +74,12 @@
     - id: HydroponicsToolMiniHoe
     - id: HydroponicsToolSpade
     - id: RobustHarvestChemistryBottle
+
+- type: entity
+  id: ClothingBeltSheathFilled
+  parent: ClothingBeltSheath
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: CaptainSabre
