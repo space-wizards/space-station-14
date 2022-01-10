@@ -1,3 +1,4 @@
+using Content.Shared.Access.Components;
 using Content.Shared.Damage;
 using Content.Shared.Doors.Components;
 using Content.Shared.Examine;
@@ -80,8 +81,7 @@ public abstract class SharedDoorSystem : EntitySystem
 
     private void OnShutdown(EntityUid uid, DoorComponent door, ComponentShutdown args)
     {
-        if (_activeDoors.Contains(door))
-            _activeDoors.Remove(door);
+        _activeDoors.Remove(door);
     }
 
     #region StateManagement
@@ -134,6 +134,8 @@ public abstract class SharedDoorSystem : EntitySystem
             case DoorState.Open:
             case DoorState.Closed:
                 door.Partial = false;
+                if (door.NextStateChange == null)
+                    _activeDoors.Remove(door);
                 break;
         }
 
@@ -336,13 +338,13 @@ public abstract class SharedDoorSystem : EntitySystem
             return false;
 
         door.Partial = true;
+        door.Dirty();
 
         // Make sure no entity waled into the airlock when it started closing.
         if (!CanClose(uid, door))
         {
             door.NextStateChange = GameTiming.CurTime + door.OpenTimeTwo;
             door.State = DoorState.Opening;
-            door.Dirty();
             UpdateAppearance(uid, door);
             return false;
         }
@@ -350,7 +352,6 @@ public abstract class SharedDoorSystem : EntitySystem
         physics.CanCollide = true;
         door.NextStateChange = GameTiming.CurTime + door.CloseTimeTwo;
         _activeDoors.Add(door);
-        door.Dirty();
 
         if (door.Occludes && TryComp(uid, out OccluderComponent? occluder))
             occluder.Enabled = true;
@@ -396,12 +397,14 @@ public abstract class SharedDoorSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Get all entities that collide with this door by more than <see cref="IntersectPercentage"/> percent.
+    ///     Get all entities that collide with this door by more than <see cref="IntersectPercentage"/> percent.\
+    /// </summary>
     public IEnumerable<EntityUid> GetColliding(EntityUid uid, PhysicsComponent? physics = null)
     {
         if (!Resolve(uid, ref physics))
             yield break;
 
+        // TODO SLOTH fix electro's code.
         var doorAABB = physics.GetWorldAABB();
 
         foreach (var body in _physicsSystem.GetCollidingEntities(Transform(uid).MapID, doorAABB))
@@ -433,9 +436,12 @@ public abstract class SharedDoorSystem : EntitySystem
     #endregion
 
     #region Access
-    public virtual bool HasAccess(EntityUid uid, EntityUid? user = null)
+    public virtual bool HasAccess(EntityUid uid, EntityUid? user = null, AccessReaderComponent? access = null)
     {
-        // TODO move access reader to shared for predicting door opening
+        // TODO network AccessComponent for predicting doors
+
+        // Currently all door open/close & door-bumper collision stuff is done server side.
+        // so this return value means nothing.
         return true;
     }
 

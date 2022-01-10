@@ -162,15 +162,15 @@ public sealed class DoorSystem : SharedDoorSystem
     /// <summary>
     ///     Does the user have the permissions required to open this door?
     /// </summary>
-    public override bool HasAccess(EntityUid uid, EntityUid? user = null)
+    public override bool HasAccess(EntityUid uid, EntityUid? user = null, AccessReaderComponent? access = null)
     {
-        // TODO move access reader to shared for predicting door opening
+        // TODO network AccessComponent for predicting doors
 
         // if there is no "user" we skip the access checks. Access is also ignored in some game-modes.
         if (user == null || AccessType == AccessTypes.AllowAll)
             return true;
 
-        if (!TryComp(uid, out AccessReaderComponent? access))
+        if (!Resolve(uid, ref access))
             return true;
 
         var isExternal = access.AccessLists.Any(list => list.Contains("External"));
