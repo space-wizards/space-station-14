@@ -1,4 +1,5 @@
 using Content.Shared.Sound;
+using Content.Shared.Damage;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Maths;
@@ -9,7 +10,7 @@ namespace Content.Server.Weapon.Melee.Esword
     [RegisterComponent]
     internal class EnergySwordComponent : Component
     {
-        public override string Name => "Esword";
+        public override string Name => "EnergySword";
 
         public Color BladeColor = Color.Blue;
 
@@ -34,5 +35,8 @@ namespace Content.Server.Weapon.Melee.Esword
             Color.MediumSpringGreen,
             Color.MediumOrchid
         };
+
+        [DataField("litDamageBonus", required: true)]
+        public DamageSpecifier LitDamageBonus = default!;
     }
 }

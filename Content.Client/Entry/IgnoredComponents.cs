@@ -324,7 +324,7 @@ namespace Content.Client.Entry
             "MonkeyAccent",
             "ReplacementAccent",
             "ResistLocker",
-            "Esword"
+            "EnergySword"
         };
     }
 }

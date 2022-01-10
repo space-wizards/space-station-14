@@ -4,7 +4,12 @@
   id: EnergySword
   description: A very dangerous energy sword. Can be stored in pockets when turned off. Makes a lot of noise when used or turned on.
   components:
-  - type: Esword
+  - type: EnergySword
+    litDamageBonus:
+        types:
+            Slash: 12.5
+            Heat: 12.5
+            Blunt: -7
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_sword.rsi
     layers:

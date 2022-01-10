@@ -1,9 +1,7 @@
-using System.Collections.Generic;
 using Content.Shared.Item;
 using Content.Server.Tools.Components;
 using Content.Shared.Interaction;
 using Content.Shared.ActionBlocker;
-using Content.Shared.FixedPoint;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Audio;
@@ -11,7 +9,7 @@ using Robust.Shared.Player;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
-using System;
+using Robust.Shared.Log;
 
 namespace Content.Server.Weapon.Melee.Esword
 {
@@ -40,10 +38,8 @@ namespace Content.Server.Weapon.Melee.Esword
             
             if (comp.Activated == true)
             {
-                args.BonusDamage.DamageDict = new Dictionary<string, FixedPoint2>()
-                {
-                    {"Slash", FixedPoint2.New(25)},
-                };
+                // Overrides basic blunt damage with burn+slash as set in yaml
+                args.BonusDamage = comp.LitDamageBonus;
                 args.HitSoundOverride = comp.HitSound;
             }
         }
