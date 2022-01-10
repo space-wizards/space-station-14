@@ -1,0 +1,15 @@
+name: "Labels: Map"
+
+on:
+  pull_request:
+    paths:
+      - 'Resources/Maps/**.yml'
+      - 'Resources/Prototypes/Maps/**.yml'
+
+jobs:
+  add_label:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions-ecosystem/action-add-labels@v1
+      with:
+        labels: "Changes: Map"
