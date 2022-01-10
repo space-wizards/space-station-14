@@ -16,7 +16,7 @@ namespace Content.Server.GameTicking
     {
         public const float PresetFailedCooldownIncrease = 30f;
 
-        private GamePresetPrototype? _preset;
+        public GamePresetPrototype? Preset { get; private set; }
 
         private void InitializeGamePreset()
         {
@@ -29,7 +29,7 @@ namespace Content.Server.GameTicking
             if (DummyTicker)
                 return;
 
-            _preset = preset;
+            Preset = preset;
             UpdateInfoText();
 
             if (force)
@@ -71,10 +71,10 @@ namespace Content.Server.GameTicking
 
         private bool AddGamePresetRules()
         {
-            if (DummyTicker || _preset == null)
+            if (DummyTicker || Preset == null)
                 return false;
 
-            foreach (var rule in _preset.Rules)
+            foreach (var rule in Preset.Rules)
             {
                 if (!_prototypeManager.TryIndex(rule, out GameRulePrototype? ruleProto))
                     continue;

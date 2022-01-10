@@ -160,7 +160,7 @@ namespace Content.Server.GameTicking
                 var startAttempt = new RoundStartAttemptEvent(origReadyPlayers, force);
                 RaiseLocalEvent(startAttempt);
 
-                var presetTitle = _preset != null ? Loc.GetString(_preset.ModeTitle) : string.Empty;
+                var presetTitle = Preset != null ? Loc.GetString(Preset.ModeTitle) : string.Empty;
 
                 void FailedPresetRestart()
                 {
@@ -174,7 +174,7 @@ namespace Content.Server.GameTicking
                 {
                     if (_configurationManager.GetCVar(CCVars.GameLobbyFallbackEnabled))
                     {
-                        var oldPreset = _preset;
+                        var oldPreset = Preset;
                         ClearGameRules();
                         SetGamePreset(_configurationManager.GetCVar(CCVars.GameLobbyFallbackPreset));
                         AddGamePresetRules();
@@ -185,7 +185,7 @@ namespace Content.Server.GameTicking
                         _chatManager.DispatchServerAnnouncement(
                             Loc.GetString("game-ticker-start-round-cannot-start-game-mode-fallback",
                                 ("failedGameMode", presetTitle),
-                                ("fallbackMode", Loc.GetString(_preset!.ModeTitle))));
+                                ("fallbackMode", Loc.GetString(Preset!.ModeTitle))));
 
                         if (startAttempt.Cancelled)
                         {
@@ -299,7 +299,7 @@ namespace Content.Server.GameTicking
             RunLevel = GameRunLevel.PostRound;
 
             //Tell every client the round has ended.
-            var gamemodeTitle = _preset != null ? Loc.GetString(_preset.ModeTitle) : string.Empty;
+            var gamemodeTitle = Preset != null ? Loc.GetString(Preset.ModeTitle) : string.Empty;
 
             // Let things add text here.
             var textEv = new RoundEndTextAppendEvent();
