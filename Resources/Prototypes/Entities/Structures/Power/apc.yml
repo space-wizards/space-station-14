@@ -62,6 +62,10 @@
     interfaces:
     - key: enum.ApcUiKey.Key
       type: ApcBoundUserInterface
+  - type: ActivatableUI
+    inHandsOnly: false
+    singleUser: true
+    key: enum.ApcUiKey.Key
   - type: Construction
     graph: apc
     node: apc
