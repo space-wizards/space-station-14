@@ -76,7 +76,7 @@ namespace Content.Server.GameTicking
             _mapLoader.LoadMap(DefaultMap, map.MapPath);
 
             var grids = _mapManager.GetAllMapGrids(DefaultMap).ToList();
-            StationId stationId;
+            StationId stationId = default;
 
             if (grids.Count > 0)
             {
