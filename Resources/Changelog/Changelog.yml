@@ -1,9 +1,4 @@
 Entries:
-- author: Ygg01
-  changes:
-  - {message: FireExtinguisher interactions, type: Fix}
-  id: 354
-  time: '2021-09-15T10:48:08.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix some issues with station rotation, type: Fix}
@@ -2919,3 +2914,8 @@ Entries:
   - {message: Some Autolathe recipes now require plastic instead of glass., type: Fix}
   id: 855
   time: '2022-01-11T02:20:35.0000000+00:00'
+- author: TaralGit
+  changes:
+  - {message: Increased laser damage, type: Tweak}
+  id: 856
+  time: '2022-01-11T04:11:47.0000000+00:00'
