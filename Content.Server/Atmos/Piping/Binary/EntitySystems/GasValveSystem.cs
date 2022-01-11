@@ -52,18 +52,30 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             if (args.User.InRangeUnobstructed(args.Target) && Get<ActionBlockerSystem>().CanInteract(args.User))
             {
                 Toggle(uid, component);
-                SoundSystem.Play(Filter.Pvs(component.Owner), component._valveSound.GetSound(), component.Owner, AudioHelpers.WithVariation(0.25f));
+                SoundSystem.Play(Filter.Pvs(component.Owner), component.ValveSound.GetSound(), component.Owner, AudioHelpers.WithVariation(0.25f));
             }
         }
 
         public void Set(EntityUid uid, GasValveComponent component, bool value)
         {
             component.Open = value;
+            var appearance = EntityManager.GetComponentOrNull<AppearanceComponent>(component.Owner);
 
             if (EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
-                && nodeContainer.TryGetNode(component.PipeName, out PipeNode? pipe))
+                && nodeContainer.TryGetNode(component.InletName, out PipeNode? inlet)
+                && nodeContainer.TryGetNode(component.OutletName, out PipeNode? outlet))
             {
-                pipe.ConnectionsEnabled = component.Open;
+                appearance?.SetData(FilterVisuals.Enabled, component.Open);
+                if (component.Open)
+                {
+                    inlet.AddAlwaysReachable(outlet);
+                    outlet.AddAlwaysReachable(inlet);
+                }
+                else
+                {
+                    inlet.RemoveAlwaysReachable(outlet);
+                    outlet.RemoveAlwaysReachable(inlet);
+                }
             }
         }
 
