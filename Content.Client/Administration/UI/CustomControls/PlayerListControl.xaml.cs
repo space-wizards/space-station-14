@@ -25,16 +25,13 @@ namespace Content.Client.Administration.UI.CustomControls
             _adminSystem = EntitySystem.Get<AdminSystem>();
             IoCManager.InjectDependencies(this);
             RobustXamlLoader.Load(this);
-        }
-
-        protected override void EnteredTree()
-        {
             // Fill the Option data
             PopulateList();
             PlayerItemList.OnItemSelected += PlayerItemListOnOnItemSelected;
             PlayerItemList.OnItemDeselected += PlayerItemListOnOnItemDeselected;
             FilterLineEdit.OnTextChanged += FilterLineEditOnOnTextEntered;
             _adminSystem.PlayerListChanged += PopulateList;
+
         }
 
         private void FilterLineEditOnOnTextEntered(LineEdit.LineEditEventArgs obj)

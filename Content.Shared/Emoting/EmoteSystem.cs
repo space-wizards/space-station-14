@@ -8,13 +8,13 @@ namespace Content.Shared.Emoting
         {
             base.Initialize();
 
-            SubscribeLocalEvent<SharedEmotingComponent, EmoteAttemptEvent>(OnEmoteAttempt);
+            SubscribeLocalEvent<EmoteAttemptEvent>(OnEmoteAttempt);
         }
 
-        private void OnEmoteAttempt(EntityUid entity, SharedEmotingComponent component, EmoteAttemptEvent ev)
+        private void OnEmoteAttempt(EmoteAttemptEvent args)
         {
-            if (!component.Enabled)
-                ev.Cancel();
+            if (!TryComp(args.Uid, out SharedEmotingComponent? emote) || !emote.Enabled)
+                args.Cancel();
         }
     }
 }

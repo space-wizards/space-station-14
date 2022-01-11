@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
+using Content.Shared.Inventory;
 using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;
 using JetBrains.Annotations;
@@ -158,7 +159,8 @@ namespace Content.Shared.Slippery
     /// <summary>
     ///     Raised on an entity to determine if it can slip or not.
     /// </summary>
-    public class SlipAttemptEvent : CancellableEntityEventArgs
+    public class SlipAttemptEvent : CancellableEntityEventArgs, IInventoryRelayEvent
     {
+        public SlotFlags TargetSlots { get; } = SlotFlags.FEET;
     }
 }

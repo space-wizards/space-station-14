@@ -10,6 +10,7 @@ namespace Content.Client.Entry
             "Pickaxe",
             "IngestionBlocker",
             "Interactable",
+            "Charger",
             "CloningPod",
             "Destructible",
             "Temperature",
@@ -35,11 +36,6 @@ namespace Content.Client.Entry
             "Material",
             "RangedMagazine",
             "Ammo",
-            "HitscanWeaponCapacitor",
-            "PowerCell",
-            "PowerCellCharger",
-            "PowerCellSlot",
-            "WeaponCapacitorCharger",
             "AiController",
             "Computer",
             "AsteroidRock",
@@ -297,7 +293,6 @@ namespace Content.Client.Entry
             "IncreaseDamageOnWield",
             "TabletopGame",
             "LitOnPowered",
-            "Foldable",
             "TriggerOnSignalReceived",
             "ToggleDoorOnTrigger",
             "DeviceNetworkComponent",
@@ -327,7 +322,8 @@ namespace Content.Client.Entry
             "Spreader",
             "GrowingKudzu",
             "MonkeyAccent",
-            "ReplacementAccent"
+            "ReplacementAccent",
+            "ResistLocker"
         };
     }
 }

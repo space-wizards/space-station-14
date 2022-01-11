@@ -16,8 +16,6 @@ namespace Content.Client.Light.Components
     [Friend(typeof(HandheldLightSystem))]
     public sealed class HandheldLightComponent : SharedHandheldLightComponent, IItemStatus
     {
-        [ViewVariables] protected override bool HasCell => Level != null;
-
         public byte? Level;
 
         public Control MakeControl()
@@ -69,9 +67,6 @@ namespace Content.Client.Light.Components
             {
                 base.FrameUpdate(args);
 
-                if (!_parent.HasCell)
-                    return;
-
                 _timer += args.DeltaSeconds;
                 _timer %= TimerCycle;
 
@@ -81,7 +76,7 @@ namespace Content.Client.Light.Components
                 {
                     if (i == 0)
                     {
-                        if (level == 0)
+                        if (level == 0 || level == null)
                         {
                             _sections[0].PanelOverride = StyleBoxUnlit;
                         }

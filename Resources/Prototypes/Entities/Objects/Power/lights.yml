@@ -60,6 +60,9 @@
   - type: LightBulb
     bulb: Bulb
     color: "#FFD1A3" # 4000K color temp
+    lightEnergy: 1.0
+    lightRadius: 6
+    lightSoftness: 1.1
   - type: Sprite
     sprite: Objects/Power/light_bulb.rsi
     state: normal
@@ -73,6 +76,9 @@
   - type: LightBulb
     bulb: Tube
     color: "#FFE4CE" # 5000K color temp
+    lightEnergy: 0.8
+    lightRadius: 10
+    lightSoftness: 1
   - type: Sprite
     sprite:  Objects/Power/light_tube.rsi
     state: normal
@@ -85,6 +91,9 @@
   - type: LightBulb
     bulb: Tube
     color: "#EEEEFF"
+    lightEnergy: 4
+    lightRadius: 10
+    lightSoftness: 0.9
     BurningTemperature: 350
     PowerUse: 9
   - type: Sprite
