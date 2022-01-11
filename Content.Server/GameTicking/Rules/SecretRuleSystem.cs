@@ -19,7 +19,7 @@ public class SecretRuleSystem : GameRuleSystem
         { "Traitor", 0.75f },
     };
 
-    private readonly List<string> _attachedRules = new();
+    private string? _attachedRule;
 
     public override void Added()
     {
@@ -28,12 +28,8 @@ public class SecretRuleSystem : GameRuleSystem
 
     public override void Removed()
     {
-        foreach (var rule in _attachedRules)
-        {
-            _ticker.RemoveGameRule(_prototypeManager.Index<GameRulePrototype>(rule));
-        }
-
-        _attachedRules.Clear();
+        if (_attachedRule != null)
+            _ticker.RemoveGameRule(_prototypeManager.Index<GameRulePrototype>(_attachedRule));
     }
 
     private void PickRule()
@@ -47,7 +43,7 @@ public class SecretRuleSystem : GameRuleSystem
 
             if (_ticker.AddGameRule(_prototypeManager.Index<GameRulePrototype>(rule.Key)))
             {
-                _attachedRules.Add(rule.Key);
+                _attachedRule = rule.Key;
                 break;
             }
         }
