@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Shuttles now have accurate boundaries., type: Add}
-  id: 361
-  time: '2021-09-20T11:08:10.0000000+00:00'
 - author: Swept
   changes:
   - {message: The librarian visited and cleaned up the library, type: Fix}
@@ -2917,3 +2912,8 @@ Entries:
   - {message: Docking ports can now be saved to and loaded from maps, type: Add}
   id: 862
   time: '2022-01-11T13:47:13.0000000+00:00'
+- author: MeltedPixel
+  changes:
+  - {message: Added Whisper chat functionality, type: Add}
+  id: 863
+  time: '2022-01-11T14:48:18.0000000+00:00'
