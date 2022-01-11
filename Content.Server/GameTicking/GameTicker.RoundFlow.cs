@@ -17,6 +17,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
+using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
@@ -74,30 +75,44 @@ namespace Content.Server.GameTicking
             var map = _gameMapManager.GetSelectedMapChecked(true);
             _mapLoader.LoadMap(DefaultMap, map.MapPath);
 
-            foreach (var grid in _mapManager.GetAllMapGrids(DefaultMap))
+            var grids = _mapManager.GetAllMapGrids(DefaultMap).ToList();
+            StationId stationId;
+
+            if (grids.Count > 0)
             {
-                _stationSystem.InitialSetupStationGrid(grid.GridEntityId, map);
-
-                var stationXform = EntityManager.GetComponent<TransformComponent>(grid.GridEntityId);
-
-                if (StationOffset)
-                {
-                    // Apply a random offset to the station grid entity.
-                    var x = _robustRandom.NextFloat() * MaxStationOffset * 2 - MaxStationOffset;
-                    var y = _robustRandom.NextFloat() * MaxStationOffset * 2 - MaxStationOffset;
-                    stationXform.LocalPosition = new Vector2(x, y);
-                }
-
-                if (StationRotation)
-                {
-                    stationXform.LocalRotation = _robustRandom.NextFloat(MathF.Tau);
-                }
-
+                var grid = grids[0];
+                stationId = _stationSystem.InitialSetupStationGrid(grid.GridEntityId, map);
+                SetupGridStation(grid);
                 _spawnPoint = grid.ToCoordinates();
+            }
+
+            for (var i = 1; i < grids.Count; i++)
+            {
+                var grid = grids[i];
+                SetupGridStation(grid);
+                _stationSystem.AddGridToStation(grid.GridEntityId, stationId);
             }
 
             var timeSpan = _gameTiming.RealTime - startTime;
             Logger.InfoS("ticker", $"Loaded map in {timeSpan.TotalMilliseconds:N2}ms.");
+        }
+
+        private void SetupGridStation(IMapGrid grid)
+        {
+            var stationXform = EntityManager.GetComponent<TransformComponent>(grid.GridEntityId);
+
+            if (StationOffset)
+            {
+                // Apply a random offset to the station grid entity.
+                var x = _robustRandom.NextFloat(-MaxStationOffset, MaxStationOffset);
+                var y = _robustRandom.NextFloat(-MaxStationOffset, MaxStationOffset);
+                stationXform.LocalPosition = new Vector2(x, y);
+            }
+
+            if (StationRotation)
+            {
+                stationXform.LocalRotation = _robustRandom.NextFloat(MathF.Tau);
+            }
         }
 
         public async void StartRound(bool force = false)
