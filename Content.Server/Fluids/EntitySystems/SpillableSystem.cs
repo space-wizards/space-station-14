@@ -45,7 +45,7 @@ public class SpillableSystem : EntitySystem
         if (!component.SpillWorn)
             return;
 
-        if (!EntityManager.TryGetComponent(uid, out ClothingComponent? clothing))
+        if (!TryComp(uid, out ClothingComponent? clothing))
             return;
 
         // check if entity was actually used as clothing
