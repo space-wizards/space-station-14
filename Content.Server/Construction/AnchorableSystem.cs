@@ -77,7 +77,7 @@ namespace Content.Server.Construction
                 return false;
 
             // Optional resolves.
-            Resolve(uid, ref pullable);
+            Resolve(uid, ref pullable, false);
 
             if (!Resolve(usingUid, ref usingTool))
                 return false;
