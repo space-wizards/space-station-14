@@ -15,6 +15,7 @@ using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.Preferences.Managers;
 using Content.Server.Sandbox;
 using Content.Server.Voting.Managers;
+using Content.Shared;
 using Content.Shared.Actions;
 using Content.Shared.Administration;
 using Content.Shared.Alert;
@@ -47,7 +48,7 @@ namespace Content.Server.Entry
 
             factory.DoAutoRegistrations();
 
-            foreach (var ignoreName in IgnoredComponents.List)
+            foreach (var ignoreName in ComponentLocations.GetIgnoredServerComponentNames())
             {
                 factory.RegisterIgnore(ignoreName);
             }

@@ -24,6 +24,7 @@ using Content.Client.StationEvents.Managers;
 using Content.Client.Stylesheets;
 using Content.Client.Viewport;
 using Content.Client.Voting;
+using Content.Shared;
 using Content.Shared.Actions;
 using Content.Shared.Administration;
 using Content.Shared.Alert;
@@ -68,7 +69,7 @@ namespace Content.Client.Entry
 
             factory.DoAutoRegistrations();
 
-            foreach (var ignoreName in IgnoredComponents.List)
+            foreach (var ignoreName in ComponentLocations.GetIgnoredClientComponentNames())
             {
                 factory.RegisterIgnore(ignoreName);
             }
