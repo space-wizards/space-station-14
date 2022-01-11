@@ -50,7 +50,6 @@ namespace Content.Server.Ghost.Roles
             SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttached);
             SubscribeLocalEvent<GhostTakeoverAvailableComponent, MindRemovedMessage>(OnMindRemoved);
             SubscribeLocalEvent<GhostTakeoverAvailableComponent, MobStateChangedEvent>(OnMobStateChanged);
-
             _playerManager.PlayerStatusChanged += PlayerStatusChanged;
         }
 
@@ -231,8 +230,10 @@ namespace Content.Server.Ghost.Roles
 
         private void OnMindRemoved(EntityUid uid, GhostRoleComponent component, MindRemovedMessage args)
         {
-            if (!component.ReregisterOnGhost)
+            // Avoid re-registering it for duplicate entries and potential exceptions.
+            if (!component.ReregisterOnGhost || component.LifeStage > ComponentLifeStage.Running)
                 return;
+
             component.Taken = false;
             RegisterGhostRole(component);
         }

@@ -36,6 +36,11 @@ namespace Content.Shared.Chat
         Radio = 1 << 4,
 
         /// <summary>
+        ///     Local out-of-character channel
+        /// </summary>
+        LOOC = 1 << 4,
+
+        /// <summary>
         ///     Out-of-character channel
         /// </summary>
         OOC = 1 << 5,

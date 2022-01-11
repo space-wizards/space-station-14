@@ -40,5 +40,15 @@
 /Resources/Prototypes/Recipes/Reactions @mirrorcult
 /Resources/Prototypes/Chemistry @mirrorcult
 
+/Content.*/Verbs/ @ElectroJr
+/Content.Client/ContextMenu/ @ElectroJr
+/Content.Shared/Damage/ @ElectroJr
+/Content.Shared/Containers/ItemSlot/ @ElectroJr
+/Content.*/PowerCell/ @ElectroJr
+
+# Only some of this shit code is my responsibility, but I wanna get notified:
+/Content.*/Interaction/ @ElectroJr
+/Content.*/Hands/ @ElectroJr
+
 # Be they Fluent translations or Freemarker templates, I know them both!
 *.ftl @RemieRichards

@@ -26,6 +26,7 @@ namespace Content.Server.Chat.Managers
         void EntitySay(EntityUid source, string message, bool hideChat=false);
         void EntityWhisper(EntityUid source, string message, bool hideChat = false);
         void EntityMe(EntityUid source, string action);
+        void EntityLOOC(EntityUid source, string message);
 
         void SendOOC(IPlayerSession player, string message);
         void SendAdminChat(IPlayerSession player, string message);
