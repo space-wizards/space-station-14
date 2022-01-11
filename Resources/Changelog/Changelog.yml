@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix some issues with station rotation, type: Fix}
-  id: 355
-  time: '2021-09-16T03:02:10.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: Fix bug which prevented players from equipping most items in their pockets.,
@@ -2919,3 +2914,8 @@ Entries:
   - {message: Increased laser damage, type: Tweak}
   id: 856
   time: '2022-01-11T04:11:47.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Bodies once again fit in body bags., type: Fix}
+  id: 857
+  time: '2022-01-11T04:55:27.0000000+00:00'
