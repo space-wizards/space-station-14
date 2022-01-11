@@ -1,12 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: 'Items like fireaxes can now actually be wielded, which increases their
-      damage.', type: Add}
-  - {message: The fireaxe now deals increased damage to objects like windows or wooden
-      furniture., type: Add}
-  id: 357
-  time: '2021-09-17T14:16:13.0000000+00:00'
 - author: boiled-water-tsar
   changes:
   - {message: replace being able to construct out of a container, type: Fix}
@@ -2920,3 +2912,8 @@ Entries:
   - {message: Saltern medical has been renovated., type: Tweak}
   id: 858
   time: '2022-01-11T06:27:30.0000000+00:00'
+- author: Pancake
+  changes:
+  - {message: The singularity will no longer vaporize engineers in 2 seconds., type: Fix}
+  id: 859
+  time: '2022-01-11T06:30:17.0000000+00:00'
