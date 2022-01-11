@@ -24,7 +24,7 @@ public class RandomAppearanceComponent : Component, ISerializationHooks
     /// <summary>
     ///     The actual enum after reflection.
     /// </summary>
-    public object? EnumKey;
+    public System.Enum? EnumKey;
 
     void ISerializationHooks.AfterDeserialization()
     {

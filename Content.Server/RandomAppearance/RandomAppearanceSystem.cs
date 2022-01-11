@@ -21,7 +21,7 @@ public class RandomAppearanceSystem : EntitySystem
     {
         if (TryComp(uid, out AppearanceComponent? appearance) && component.EnumKey != null)
         {
-            appearance.SetData((System.Enum) component.EnumKey, _random.Pick(component.SpriteStates));
+            appearance.SetData(component.EnumKey, _random.Pick(component.SpriteStates));
         }
     }
 }
