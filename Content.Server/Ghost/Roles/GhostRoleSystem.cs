@@ -48,6 +48,7 @@ namespace Content.Server.Ghost.Roles
 
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttached);
+            SubscribeLocalEvent<GhostTakeoverAvailableComponent, MindAddedMessage>(OnMindAdded);
             SubscribeLocalEvent<GhostTakeoverAvailableComponent, MindRemovedMessage>(OnMindRemoved);
             SubscribeLocalEvent<GhostTakeoverAvailableComponent, MobStateChangedEvent>(OnMobStateChanged);
             _playerManager.PlayerStatusChanged += PlayerStatusChanged;
@@ -226,6 +227,12 @@ namespace Content.Server.Ghost.Roles
             if (!_openUis.ContainsKey(message.Player)) return;
             if (EntityManager.HasComponent<GhostComponent>(message.Entity)) return;
             CloseEui(message.Player);
+        }
+
+        private void OnMindAdded(EntityUid uid, GhostTakeoverAvailableComponent component, MindAddedMessage args)
+        {
+            component.Taken = true;
+            UnregisterGhostRole(component);
         }
 
         private void OnMindRemoved(EntityUid uid, GhostRoleComponent component, MindRemovedMessage args)
