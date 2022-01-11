@@ -1,12 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: 'Many components have had damage values & types adjusted. E.g., knives
-      are no longer dull and actually deal slash damage.', type: Tweak}
-  - {message: 'Eggs, tomatoes, and beakers are now destroyed on impact when thrown,
-      instead of only when they land.', type: Tweak}
-  id: 352
-  time: '2021-09-14T17:07:38.0000000+00:00'
 - author: Ygg01
   changes:
   - {message: bottles filled with drinks now spill as expected, type: Fix}
@@ -2922,3 +2914,8 @@ Entries:
       Follow verb., type: Add}
   id: 853
   time: '2022-01-10T05:47:38.0000000+00:00'
+- author: Zyme
+  changes:
+  - {message: Added ritual and cursed chair, type: Add}
+  id: 854
+  time: '2022-01-11T02:17:22.0000000+00:00'
