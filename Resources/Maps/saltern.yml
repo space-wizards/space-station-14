@@ -641,6 +641,7 @@ entities:
     type: Transform
   - containers:
       PowerCellCharger-powerCellContainer: !type:ContainerSlot {}
+      charger-slot: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 70
   type: FirelockGlass
@@ -5840,11 +5841,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - cellInsertSound: !type:SoundPathSpecifier
-      path: /Audio/Items/pistol_magout.ogg
-    cellRemoveSound: !type:SoundPathSpecifier
-      path: /Audio/Items/pistol_magin.ogg
-    type: PowerCellSlot
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
@@ -7856,6 +7852,7 @@ entities:
     type: Transform
   - containers:
       WeaponCapacitorCharger-powerCellContainer: !type:ContainerSlot {}
+      charger-slot: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 769
   type: PottedPlantRD
@@ -23926,6 +23923,7 @@ entities:
       BatteryBarrel-powercell-container: !type:ContainerSlot
         ent: 1133
       BatteryBarrel-ammo-container: !type:ContainerSlot {}
+      cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1567
   type: Catwalk
@@ -38958,6 +38956,12 @@ entities:
     pos: 42.5,5.5
     parent: 853
     type: Transform
+  - containers:
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 3296
   type: SalternSmes
   components:
@@ -38965,6 +38969,12 @@ entities:
     pos: 40.5,5.5
     parent: 853
     type: Transform
+  - containers:
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 3297
   type: CableHV
   components:
@@ -39729,6 +39739,12 @@ entities:
     type: Transform
   - startingCharge: 2366791.8
     type: Battery
+  - containers:
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 3380
   type: SalternApc
   components:
@@ -41950,6 +41966,12 @@ entities:
     type: Transform
   - startingCharge: 3200172
     type: Battery
+  - containers:
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 3614
   type: SalternSubstation
   components:
@@ -41959,6 +41981,12 @@ entities:
     type: Transform
   - startingCharge: 3200172
     type: Battery
+  - containers:
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 3615
   type: SalternSubstation
   components:
@@ -41968,6 +41996,12 @@ entities:
     type: Transform
   - startingCharge: 3200172
     type: Battery
+  - containers:
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 3616
   type: SalternSubstation
   components:
@@ -41977,6 +42011,12 @@ entities:
     type: Transform
   - startingCharge: 3200172
     type: Battery
+  - containers:
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 3617
   type: BedsheetSpawner
   components:
@@ -41993,6 +42033,12 @@ entities:
     type: Transform
   - startingCharge: 3200172
     type: Battery
+  - containers:
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 3619
   type: CableHV
   components:
@@ -42011,6 +42057,12 @@ entities:
     type: Transform
   - startingCharge: 3200172
     type: Battery
+  - containers:
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 3621
   type: SalternSubstation
   components:
@@ -42020,6 +42072,12 @@ entities:
     type: Transform
   - startingCharge: 3200172
     type: Battery
+  - containers:
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 3622
   type: SalternSubstation
   components:
@@ -42029,6 +42087,12 @@ entities:
     type: Transform
   - startingCharge: 3200172
     type: Battery
+  - containers:
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 3623
   type: CableMV
   components:
@@ -47808,6 +47872,7 @@ entities:
     type: ApcPowerReceiver
   - containers:
       WeaponCapacitorCharger-powerCellContainer: !type:ContainerSlot {}
+      charger-slot: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4224
   type: Table
@@ -47927,6 +47992,7 @@ entities:
     type: ApcPowerReceiver
   - containers:
       WeaponCapacitorCharger-powerCellContainer: !type:ContainerSlot {}
+      charger-slot: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4240
   type: FlashlightLantern
@@ -48160,11 +48226,6 @@ entities:
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
-  - cellInsertSound: !type:SoundPathSpecifier
-      path: /Audio/Items/pistol_magout.ogg
-    cellRemoveSound: !type:SoundPathSpecifier
-      path: /Audio/Items/pistol_magin.ogg
-    type: PowerCellSlot
 - uid: 4271
   type: Table
   components:
@@ -48893,12 +48954,24 @@ entities:
   - pos: 45.5,-11.5
     parent: 853
     type: Transform
+  - containers:
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 4356
   type: SalternSubstation
   components:
   - pos: 45.5,-12.5
     parent: 853
     type: Transform
+  - containers:
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 4357
   type: CableHV
   components:
@@ -48975,6 +49048,12 @@ entities:
   - pos: -22.5,25.5
     parent: 853
     type: Transform
+  - containers:
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 4367
   type: CableHV
   components:
@@ -49599,6 +49678,12 @@ entities:
   - pos: 53.5,-11.5
     parent: 853
     type: Transform
+  - containers:
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 4444
   type: CableHV
   components:
@@ -49932,6 +50017,12 @@ entities:
   - pos: 14.5,-28.5
     parent: 853
     type: Transform
+  - containers:
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 4480
   type: CableHV
   components:
@@ -50008,6 +50099,12 @@ entities:
   - pos: 53.5,-12.5
     parent: 853
     type: Transform
+  - containers:
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 4488
   type: RandomSpawner
   components:
@@ -51899,6 +51996,12 @@ entities:
     type: Transform
   - startingCharge: 3969174
     type: Battery
+  - containers:
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 4717
   type: HydroponicsToolSpade
   components:
@@ -52035,6 +52138,7 @@ entities:
       BatteryBarrel-powercell-container: !type:ContainerSlot
         ent: 4733
       BatteryBarrel-ammo-container: !type:ContainerSlot {}
+      cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4733
   type: PowerCellSmallStandard
@@ -52055,6 +52159,7 @@ entities:
       BatteryBarrel-powercell-container: !type:ContainerSlot
         ent: 1210
       BatteryBarrel-ammo-container: !type:ContainerSlot {}
+      cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4735
   type: WallSolid
@@ -75333,15 +75438,16 @@ entities:
     parent: 853
     type: Transform
 - uid: 7145
-  type: BodyBag_Folded
+  type: BoxBodyBag
   components:
-  - pos: 14.55099,-13.192887
+  - pos: 14.418289,-13.443992
     parent: 853
     type: Transform
+  - canCollide: False
+    type: Physics
   - containers:
-      EntityStorageComponent: !type:Container
+      storagebase: !type:Container
         ents: []
-      PaperLabel: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 7146
   type: BoxLatex
@@ -75356,16 +75462,13 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 7147
-  type: BodyBag_Folded
+  type: SprayBottleSpaceCleaner
   components:
-  - pos: 14.092656,-13.130387
+  - pos: 13.965164,-13.443992
     parent: 853
     type: Transform
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-      PaperLabel: !type:ContainerSlot {}
-    type: ContainerContainer
+  - canCollide: False
+    type: Physics
 - uid: 7148
   type: Catwalk
   components:
@@ -75402,36 +75505,6 @@ entities:
   - pos: 14.5,-13.5
     parent: 853
     type: Transform
-- uid: 7154
-  type: BodyBag_Folded
-  components:
-  - pos: 14.17599,-13.317887
-    parent: 853
-    type: Transform
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-      PaperLabel: !type:ContainerSlot {}
-    type: ContainerContainer
-- uid: 7155
-  type: BodyBag_Folded
-  components:
-  - pos: 14.55099,-13.505387
-    parent: 853
-    type: Transform
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-      PaperLabel: !type:ContainerSlot {}
-    type: ContainerContainer
-- uid: 7156
-  type: SprayBottleSpaceCleaner
-  components:
-  - pos: 13.203393,-13.455385
-    parent: 853
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 7157
   type: CableApcExtension
   components:
