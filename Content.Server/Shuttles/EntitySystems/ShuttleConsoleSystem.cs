@@ -53,7 +53,7 @@ namespace Content.Server.Shuttles.EntitySystems
 
             Verb verb = new()
             {
-                Text = "Toggle mode",
+                Text = Loc.GetString("shuttle-mode-toggle"),
                 Act = () => ToggleShuttleMode(args.User, component, shuttle),
                 Disabled = !xform.Anchored || EntityManager.TryGetComponent(uid, out ApcPowerReceiverComponent? receiver) && !receiver.Powered,
             };
