@@ -59,12 +59,15 @@ namespace Content.Server.Chat.Managers
         private readonly List<TransformChat> _chatTransformHandlers = new();
         private bool _oocEnabled = true;
         private bool _adminOocEnabled = true;
+        private bool _loocEnabled = true;
+        private bool _adminLoocEnabled = true;
 
         public void Initialize()
         {
             _netManager.RegisterNetMessage<MsgChatMessage>();
 
             _configurationManager.OnValueChanged(CCVars.OocEnabled, OnOocEnabledChanged, true);
+            _configurationManager.OnValueChanged(CCVars.LoocEnabled, OnLoocEnabledChanged, true);
             _configurationManager.OnValueChanged(CCVars.AdminOocEnabled, OnAdminOocEnabledChanged, true);
         }
 
@@ -72,6 +75,12 @@ namespace Content.Server.Chat.Managers
         {
             _oocEnabled = val;
             DispatchServerAnnouncement(Loc.GetString(val ? "chat-manager-ooc-chat-enabled-message" : "chat-manager-ooc-chat-disabled-message"));
+        }
+
+        private void OnLoocEnabledChanged(bool val)
+        {
+            _loocEnabled = val;
+            DispatchServerAnnouncement(Loc.GetString(val ? "chat-manager-looc-chat-enabled-message" : "chat-manager-looc-chat-disabled-message"));
         }
 
         private void OnAdminOocEnabledChanged(bool val)
@@ -238,6 +247,47 @@ namespace Content.Server.Chat.Managers
             _netManager.ServerSendToMany(msg, clients);
         }
 
+        public void EntityLOOC(EntityUid source, string message)
+        {
+            // Check if entity is a player
+            if (!_entManager.TryGetComponent(source, out ActorComponent? actor))
+            {
+                return;
+            }
+
+            if (_adminManager.IsAdmin(actor.PlayerSession))
+            {
+                if (!_adminLoocEnabled)
+                {
+                    return;
+                }
+            }
+            else if (!_loocEnabled)
+            {
+                return;
+            }
+
+            // Check if message exceeds the character limit
+            if (message.Length > MaxMessageLength)
+            {
+                DispatchServerMessage(actor.PlayerSession, Loc.GetString("chat-manager-max-message-length-exceeded-message", ("limit", MaxMessageLength)));
+                return;
+            }
+
+            message = FormattedMessage.EscapeText(message);
+
+            var clients = Filter.Empty()
+                .AddInRange(_entManager.GetComponent<TransformComponent>(source).MapPosition, VoiceRange)
+                .Recipients
+                .Select(p => p.ConnectedClient)
+                .ToList();
+
+            var msg = _netManager.CreateNetMessage<MsgChatMessage>();
+            msg.Channel = ChatChannel.LOOC;
+            msg.Message = message;
+            msg.MessageWrap = Loc.GetString("chat-manager-entity-looc-wrap-message", ("entityName", Name: _entManager.GetComponent<MetaDataComponent>(source).EntityName));
+            _netManager.ServerSendToMany(msg, clients);
+        }
         public void SendOOC(IPlayerSession player, string message)
         {
             if (_adminManager.IsAdmin(player))

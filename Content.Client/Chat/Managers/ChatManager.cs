@@ -188,6 +188,8 @@ namespace Content.Client.Chat.Managers
             // can always send/recieve OOC
             SelectableChannels |= ChatSelectChannel.OOC;
             FilterableChannels |= ChatChannel.OOC;
+            SelectableChannels |= ChatSelectChannel.LOOC;
+            FilterableChannels |= ChatChannel.LOOC;
 
             // can always hear server (nobody can actually send server messages).
             FilterableChannels |= ChatChannel.Server;
@@ -316,6 +318,10 @@ namespace Content.Client.Chat.Managers
                 case ChatSelectChannel.Console:
                     // run locally
                     _consoleHost.ExecuteCommand(text.ToString());
+                    break;
+
+                case ChatSelectChannel.LOOC:
+                    _consoleHost.ExecuteCommand($"looc \"{CommandParsing.Escape(str)}\"");
                     break;
 
                 case ChatSelectChannel.OOC:
