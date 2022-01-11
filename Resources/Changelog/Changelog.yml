@@ -1,9 +1,4 @@
 Entries:
-- author: boiled-water-tsar
-  changes:
-  - {message: replace being able to construct out of a container, type: Fix}
-  id: 358
-  time: '2021-09-18T08:38:42.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: "Added parch\xEDs game board. A great way to lose your friends!", type: Add}
@@ -2917,3 +2912,9 @@ Entries:
   - {message: The singularity will no longer vaporize engineers in 2 seconds., type: Fix}
   id: 859
   time: '2022-01-11T06:30:17.0000000+00:00'
+- author: Lamrr
+  changes:
+  - {message: The captain's sabre has returned! Cut down the enemies of the station
+      with wonderful bourgeois excellence!, type: Add}
+  id: 860
+  time: '2022-01-11T06:50:11.0000000+00:00'
