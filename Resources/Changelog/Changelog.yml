@@ -1,11 +1,6 @@
 Entries:
 - author: Ygg01
   changes:
-  - {message: bottles filled with drinks now spill as expected, type: Fix}
-  id: 353
-  time: '2021-09-15T10:46:43.0000000+00:00'
-- author: Ygg01
-  changes:
   - {message: FireExtinguisher interactions, type: Fix}
   id: 354
   time: '2021-09-15T10:48:08.0000000+00:00'
@@ -2919,3 +2914,8 @@ Entries:
   - {message: Added ritual and cursed chair, type: Add}
   id: 854
   time: '2022-01-11T02:17:22.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Some Autolathe recipes now require plastic instead of glass., type: Fix}
+  id: 855
+  time: '2022-01-11T02:20:35.0000000+00:00'
