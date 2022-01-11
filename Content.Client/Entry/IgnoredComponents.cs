@@ -293,7 +293,6 @@ namespace Content.Client.Entry
             "IncreaseDamageOnWield",
             "TabletopGame",
             "LitOnPowered",
-            "Foldable",
             "TriggerOnSignalReceived",
             "ToggleDoorOnTrigger",
             "DeviceNetworkComponent",
@@ -323,7 +322,8 @@ namespace Content.Client.Entry
             "Spreader",
             "GrowingKudzu",
             "MonkeyAccent",
-            "ReplacementAccent"
+            "ReplacementAccent",
+            "ResistLocker"
         };
     }
 }

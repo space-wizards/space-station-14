@@ -5,3 +5,6 @@
   description: Looking at this anomaly makes you feel strange, like something is pushing at your eyes.
   components:
   - type: RadiationPulse
+    minPulseLifespan: 0.8
+    maxPulseLifespan: 2.5
+    radsPerSecond: 5

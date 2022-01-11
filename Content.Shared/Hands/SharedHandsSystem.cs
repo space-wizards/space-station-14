@@ -24,8 +24,7 @@ namespace Content.Shared.Hands
             base.Initialize();
 
             SubscribeAllEvent<RequestSetHandEvent>(HandleSetHand);
-
-            SubscribeLocalEvent<SharedHandsComponent, EntRemovedFromContainerMessage>(HandleContainerModified);
+            SubscribeLocalEvent<SharedHandsComponent, EntRemovedFromContainerMessage>(HandleContainerRemoved);
             SubscribeLocalEvent<SharedHandsComponent, EntInsertedIntoContainerMessage>(HandleContainerModified);
 
             CommandBinds.Builder
@@ -81,9 +80,6 @@ namespace Content.Shared.Hands
                 return;
             }
 
-            if (TryComp(entity, out SharedSpriteComponent? component))
-                component.Visible = true;
-
             hands.Dirty();
 
             var unequippedHandMessage = new UnequippedHandEvent(uid, entity, hand);
@@ -115,9 +111,6 @@ namespace Content.Shared.Hands
 
             _adminLogSystem.Add(LogType.Pickup, LogImpact.Low, $"{ToPrettyString(uid):user} picked up {ToPrettyString(entity):entity}");
 
-            if (TryComp(entity, out SharedSpriteComponent? component))
-                component.Visible = false;
-
             hands.Dirty();
 
             var equippedHandMessage = new EquippedHandEvent(uid, entity, hand);
@@ -133,18 +126,23 @@ namespace Content.Shared.Hands
 
         public abstract void PickupAnimation(EntityUid item, EntityCoordinates initialPosition, Vector2 finalPosition,
             EntityUid? exclude);
+
+        protected virtual void HandleContainerRemoved(EntityUid uid, SharedHandsComponent component, ContainerModifiedMessage args)
+        {
+            HandleContainerModified(uid, component, args);
+        }
         #endregion
 
         #region visuals
-        protected virtual void HandleContainerModified(EntityUid uid, SharedHandsComponent hands, ContainerModifiedMessage args)
+        private void HandleContainerModified(EntityUid uid, SharedHandsComponent hands, ContainerModifiedMessage args)
         {
-            UpdateHandVisualizer(uid, hands);
+            UpdateHandVisuals(uid, hands);
         }
 
         /// <summary>
         ///     Update the In-Hand sprites
         /// </summary>
-        public void UpdateHandVisualizer(EntityUid uid, SharedHandsComponent? handComp = null, AppearanceComponent? appearance = null)
+        public virtual void UpdateHandVisuals(EntityUid uid, SharedHandsComponent? handComp = null, AppearanceComponent? appearance = null)
         {
             if (!Resolve(uid, ref handComp, ref appearance, false))
                 return;
