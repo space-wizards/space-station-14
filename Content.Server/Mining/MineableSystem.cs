@@ -19,6 +19,8 @@ public class MineableSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<MineableComponent, InteractUsingEvent>(OnInteractUsing);
+        SubscribeLocalEvent<MiningDoafterCancel>(OnDoafterCancel);
+        SubscribeLocalEvent<MiningDoafterSuccess>(OnDoafterSuccess);
     }
 
     private async void OnInteractUsing(EntityUid uid, MineableComponent component, InteractUsingEvent args)
@@ -40,17 +42,44 @@ public class MineableSystem : EntitySystem
             BreakOnStun = true,
             BreakOnTargetMove = true,
             BreakOnUserMove = true,
-            MovementThreshold = 0.5f
+            MovementThreshold = 0.5f,
+            BroadcastCancelledEvent = new MiningDoafterCancel() { Pickaxe = args.Used, Rock = uid },
+            BroadcastFinishedEvent = new MiningDoafterSuccess() { Pickaxe = args.Used, Rock = uid }
         };
 
         pickaxe.MiningEntities.Add(uid);
 
-        if (await _doAfterSystem.WaitDoAfter(doAfter) == DoAfterStatus.Finished)
-        {
-            _damageableSystem.TryChangeDamage(uid, pickaxe.Damage);
-            SoundSystem.Play(Filter.Pvs(uid), pickaxe.MiningSound.GetSound(), AudioParams.Default);
-        }
-
-        pickaxe.MiningEntities.Remove(uid);
+        _doAfterSystem.DoAfter(doAfter);
     }
+
+    private void OnDoafterSuccess(MiningDoafterSuccess ev)
+    {
+        if (!TryComp(ev.Pickaxe, out PickaxeComponent? pickaxe))
+            return;
+
+        _damageableSystem.TryChangeDamage(ev.Rock, pickaxe.Damage);
+        SoundSystem.Play(Filter.Pvs(ev.Rock), pickaxe.MiningSound.GetSound(), AudioParams.Default);
+        pickaxe.MiningEntities.Remove(ev.Rock);
+    }
+
+    private void OnDoafterCancel(MiningDoafterCancel ev)
+    {
+        if (!TryComp(ev.Pickaxe, out PickaxeComponent? pickaxe))
+            return;
+
+        pickaxe.MiningEntities.Remove(ev.Rock);
+    }
+}
+
+// grumble grumble
+public class MiningDoafterSuccess : EntityEventArgs
+{
+    public EntityUid Pickaxe;
+    public EntityUid Rock;
+}
+
+public class MiningDoafterCancel : EntityEventArgs
+{
+    public EntityUid Pickaxe;
+    public EntityUid Rock;
 }
