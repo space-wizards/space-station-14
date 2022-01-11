@@ -4,14 +4,14 @@
   name: asteroid rock
   description: That's an asteroid
   components:
-  - type: AsteroidRock
-  - type: InteractionOutline
+  - type: RandomAppearance
+    key: enum.AsteroidRockVisuals.State
+  - type: Mineable
   - type: Sprite
     sprite: Structures/Walls/asteroid_rock.rsi
     state: 0
   - type: Damageable
     damageContainer: Inorganic
-    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:

@@ -8,6 +8,9 @@
     sprite: Objects/Weapons/Melee/pickaxe.rsi
     state: pickaxe
   - type: Pickaxe
+    damage:
+      types:
+        Piercing: 25
   - type: ItemCooldown
   - type: MeleeWeapon
     damage:

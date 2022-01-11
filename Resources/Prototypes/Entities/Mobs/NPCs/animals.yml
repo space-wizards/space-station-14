@@ -49,7 +49,9 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 7
     baseSprintSpeed : 7
-  - type: AsteroidRock
+  - type: RandomAppearance
+    # relic
+    key: enum.AsteroidRockVisuals.State
   - type: Sprite
     drawdepth: Mobs
     layers:
