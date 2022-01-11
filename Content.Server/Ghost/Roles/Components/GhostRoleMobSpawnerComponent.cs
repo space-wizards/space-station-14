@@ -5,7 +5,9 @@ using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Ghost.Roles.Components
@@ -31,7 +33,7 @@ namespace Content.Server.Ghost.Roles.Components
 
         [CanBeNull]
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("prototype")]
+        [DataField("prototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string? Prototype { get; private set; }
 
         public override bool Take(IPlayerSession session)
