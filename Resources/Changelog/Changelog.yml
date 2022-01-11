@@ -1,10 +1,4 @@
 Entries:
-- author: Ygg01
-  changes:
-  - {message: Welder and tank interaction now shows fuel tank is empty and doesn't
-      explode., type: Fix}
-  id: 360
-  time: '2021-09-19T05:15:34.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Shuttles now have accurate boundaries., type: Add}
@@ -2918,3 +2912,8 @@ Entries:
   - {message: You can now toggle shuttle modes via the console., type: Add}
   id: 861
   time: '2022-01-11T07:17:55.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Docking ports can now be saved to and loaded from maps, type: Add}
+  id: 862
+  time: '2022-01-11T13:47:13.0000000+00:00'
