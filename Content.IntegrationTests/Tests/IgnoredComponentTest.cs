@@ -1,7 +1,6 @@
 using Content.Shared;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,48 +14,31 @@ namespace Content.IntegrationTests.Tests
         {
             var (client, server) = await StartConnectedServerClientPair();
             var serverComponents = server.ResolveDependency<IComponentFactory>();
+            var ignoredServerNames = ComponentLocations.GetIgnoredServerComponentNames().ToHashSet();
             var clientComponents = client.ResolveDependency<IComponentFactory>();
-            foreach ( (var componentName, var componentLocation) in ComponentLocations.List)
+            var ignoredClientNames = ComponentLocations.GetIgnoredClientComponentNames().ToHashSet();
+
+            foreach(var clientIgnored in ignoredClientNames)
             {
-                if ((componentLocation & ComponentLocation.Client) != 0)
+                if (clientComponents.TryGetRegistration(clientIgnored, out _))
                 {
-                    if (!clientComponents.TryGetRegistration(componentName, out _))
-                    {
-                        Assert.Fail($"Component {componentName} is set to {componentLocation}, but was not registered on the client");
-                    }
+                    Assert.Fail($"Component {clientIgnored} was ignored on client, but exists on client");
                 }
-                if ((componentLocation & ComponentLocation.Server) != 0)
+                if (!serverComponents.TryGetRegistration(clientIgnored, out _))
                 {
-                    if (!serverComponents.TryGetRegistration(componentName, out _))
-                    {
-                        Assert.Fail($"Component {componentName} is set to {componentLocation}, but was not registered on the server");
-                    }
+                    Assert.Fail($"Component {clientIgnored} was ignored on client, but does not exist on server");
                 }
             }
 
-            foreach (var clientCompType in clientComponents.AllRegisteredTypes)
+            foreach (var serverIgnored in ignoredServerNames)
             {
-                var clientCompName = clientComponents.GetRegistration(clientCompType).Name;
-
-                // This handles robust engine adding its own ignores
-                if (serverComponents.GetComponentAvailability(clientCompName) == ComponentAvailability.Ignore) continue;
-
-                if (!ComponentLocations.List.Any(c=>c.componentName == clientCompName))
+                if (serverComponents.TryGetRegistration(serverIgnored, out _))
                 {
-                    Assert.Fail($"Component {clientCompName} was found on the client, but is missing from the component location list");
+                    Assert.Fail($"Component {serverIgnored} was ignored on server, but exists on server");
                 }
-            }
-
-            foreach (var serverCompType in serverComponents.AllRegisteredTypes)
-            {
-                var serverCompName = serverComponents.GetRegistration(serverCompType).Name;
-
-                // This handles robust engine adding its own ignores
-                if (clientComponents.GetComponentAvailability(serverCompName) == ComponentAvailability.Ignore) continue;
-
-                if (!ComponentLocations.List.Any(c => c.componentName == serverCompName))
+                if (!clientComponents.TryGetRegistration(serverIgnored, out _))
                 {
-                    Assert.Fail($"Component {serverCompName} was found on the server, but is missing from the component location list");
+                    Assert.Fail($"Component {serverIgnored} was ignored on server, but does not exist on client");
                 }
             }
         }
