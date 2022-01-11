@@ -33,7 +33,7 @@ namespace Content.Server.Construction
 
         private void AddDeconstructVerb(EntityUid uid, ConstructionComponent component, GetOtherVerbsEvent args)
         {
-            if (!args.CanAccess)
+            if (!args.CanAccess || !args.CanInteract)
                 return;
 
             if (component.TargetNode == component.DeconstructionNode ||
