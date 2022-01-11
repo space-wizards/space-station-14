@@ -1,11 +1,6 @@
 Entries:
 - author: Swept
   changes:
-  - {message: The librarian visited and cleaned up the library, type: Fix}
-  id: 362
-  time: '2021-09-21T02:50:56.0000000+00:00'
-- author: Swept
-  changes:
   - {message: Most green text/buttons now looks better, type: Tweak}
   id: 363
   time: '2021-09-21T04:50:02.0000000+00:00'
@@ -2917,3 +2912,8 @@ Entries:
   - {message: Added Whisper chat functionality, type: Add}
   id: 863
   time: '2022-01-11T14:48:18.0000000+00:00'
+- author: MeltedPixel
+  changes:
+  - {message: Ghost's now see unobfuscated messages when whispered., type: Fix}
+  id: 864
+  time: '2022-01-11T23:51:49.0000000+00:00'
