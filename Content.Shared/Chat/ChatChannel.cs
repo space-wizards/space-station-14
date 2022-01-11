@@ -38,38 +38,38 @@ namespace Content.Shared.Chat
         /// <summary>
         ///     Local out-of-character channel
         /// </summary>
-        LOOC = 1 << 4,
+        LOOC = 1 << 5,
 
         /// <summary>
         ///     Out-of-character channel
         /// </summary>
-        OOC = 1 << 5,
+        OOC = 1 << 6,
 
         /// <summary>
         ///     Visual events the player can see.
         ///     Basically like visual_message in SS13.
         /// </summary>
-        Visual = 1 << 6,
+        Visual = 1 << 7,
 
         /// <summary>
         ///     Emotes
         /// </summary>
-        Emotes = 1 << 7,
+        Emotes = 1 << 8,
 
         /// <summary>
         ///     Deadchat
         /// </summary>
-        Dead = 1 << 8,
+        Dead = 1 << 9,
 
         /// <summary>
         ///     Admin chat
         /// </summary>
-        Admin = 1 << 9,
+        Admin = 1 << 10,
 
         /// <summary>
         ///     Unspecified.
         /// </summary>
-        Unspecified = 1 << 10,
+        Unspecified = 1 << 11,
 
         /// <summary>
         ///     Channels considered to be IC.

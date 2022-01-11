@@ -18,14 +18,13 @@ namespace Content.Server.Chat.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var player = shell.Player as IPlayerSession;
-            if (player == null)
+            if (shell.Player is not IPlayerSession player)
             {
-                shell.WriteLine("This command cannot be run from the server.");
+                shell.WriteError("This command cannot be run from the server.");
                 return;
             }
 
-            if (player.Status != SessionStatus.InGame || player.AttachedEntity == null)
+            if (player.Status != SessionStatus.InGame)
                 return;
 
             if (args.Length < 1)
@@ -35,22 +34,7 @@ namespace Content.Server.Chat.Commands
             if (string.IsNullOrEmpty(message))
                 return;
 
-            var chat = IoCManager.Resolve<IChatManager>();
-            var mindComponent = player.ContentData()?.Mind;
-
-            if (mindComponent == null)
-            {
-                shell.WriteError("You don't have a mind!");
-                return;
-            }
-
-            if (mindComponent.OwnedEntity == null)
-            {
-                shell.WriteError("You don't have an entity!");
-                return;
-            }
-
-            chat.EntityLOOC(mindComponent.OwnedEntity.Value, message);
+            IoCManager.Resolve<IChatManager>().SendLOOC(player, message);
         }
     }
 }

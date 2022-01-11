@@ -5,6 +5,7 @@ using Content.Server.Administration.Managers;
 using Content.Server.Ghost.Components;
 using Content.Server.Headset;
 using Content.Server.MoMMI;
+using Content.Server.Players;
 using Content.Server.Preferences.Managers;
 using Content.Server.Radio.EntitySystems;
 using Content.Shared.ActionBlocker;
@@ -17,6 +18,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
+using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -43,6 +45,7 @@ namespace Content.Server.Chat.Managers
             { "revolutionary", "#aa00ff" }
         };
 
+        [Dependency] private readonly IChatSanitizationManager _sanitizer = default!;
         [Dependency] private readonly IEntityManager _entManager = default!;
         [Dependency] private readonly IServerNetManager _netManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -119,6 +122,45 @@ namespace Content.Server.Chat.Managers
             msg.Message = message;
             msg.MessageWrap = messageWrap;
             _netManager.ServerSendMessage(msg, player.ConnectedClient);
+        }
+
+        public void TrySpeak(EntityUid source, string message, bool whisper = false, IConsoleShell? shell = null, IPlayerSession? player = null)
+        {
+            // Listen it avoids the 30 lines being copy-paste and means only 1 source needs updating if something changes.
+            if (_entManager.HasComponent<GhostComponent>(source))
+            {
+                if (player == null) return;
+                SendDeadChat(player, message);
+            }
+            else
+            {
+                var mindComponent = player?.ContentData()?.Mind;
+
+                if (mindComponent == null)
+                {
+                    shell?.WriteError("You don't have a mind!");
+                    return;
+                }
+
+                if (mindComponent.OwnedEntity is not {Valid: true} owned)
+                {
+                    shell?.WriteError("You don't have an entity!");
+                    return;
+                }
+
+                var emote = _sanitizer.TrySanitizeOutSmilies(message, owned, out var sanitized, out var emoteStr);
+
+                if (sanitized.Length != 0)
+                {
+                    if (whisper)
+                        EntityWhisper(owned, sanitized);
+                    else
+                        EntitySay(owned, sanitized);
+                }
+
+                if (emote)
+                    EntityMe(owned, emoteStr!);
+            }
         }
 
         public void EntitySay(EntityUid source, string message, bool hideChat=false)
@@ -220,12 +262,6 @@ namespace Content.Server.Chat.Managers
                 return;
             }
 
-            // Check if entity is a player
-            if (!_entManager.HasComponent<ActorComponent>(source))
-            {
-                return;
-            }
-
             if (MessageCharacterLimit(source, action))
             {
                 return;
@@ -245,15 +281,9 @@ namespace Content.Server.Chat.Managers
             }
         }
 
-        public void EntityLOOC(EntityUid source, string message)
+        public void SendLOOC(IPlayerSession player, string message)
         {
-            // Check if entity is a player
-            if (!_entManager.TryGetComponent(source, out ActorComponent? actor))
-            {
-                return;
-            }
-
-            if (_adminManager.IsAdmin(actor.PlayerSession))
+            if (_adminManager.IsAdmin(player))
             {
                 if (!_adminLoocEnabled)
                 {
@@ -265,17 +295,23 @@ namespace Content.Server.Chat.Managers
                 return;
             }
 
+            // Check they're even attached to an entity before we potentially send a message length error.
+            if (player.AttachedEntity is not { } entity)
+            {
+                return;
+            }
+
             // Check if message exceeds the character limit
             if (message.Length > MaxMessageLength)
             {
-                DispatchServerMessage(actor.PlayerSession, Loc.GetString("chat-manager-max-message-length-exceeded-message", ("limit", MaxMessageLength)));
+                DispatchServerMessage(player, Loc.GetString("chat-manager-max-message-length-exceeded-message", ("limit", MaxMessageLength)));
                 return;
             }
 
             message = FormattedMessage.EscapeText(message);
 
             var clients = Filter.Empty()
-                .AddInRange(_entManager.GetComponent<TransformComponent>(source).MapPosition, VoiceRange)
+                .AddInRange(_entManager.GetComponent<TransformComponent>(entity).MapPosition, VoiceRange)
                 .Recipients
                 .Select(p => p.ConnectedClient)
                 .ToList();
@@ -283,9 +319,10 @@ namespace Content.Server.Chat.Managers
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.LOOC;
             msg.Message = message;
-            msg.MessageWrap = Loc.GetString("chat-manager-entity-looc-wrap-message", ("entityName", Name: _entManager.GetComponent<MetaDataComponent>(source).EntityName));
+            msg.MessageWrap = Loc.GetString("chat-manager-entity-looc-wrap-message", ("entityName", Name: _entManager.GetComponent<MetaDataComponent>(entity).EntityName));
             _netManager.ServerSendToMany(msg, clients);
         }
+
         public void SendOOC(IPlayerSession player, string message)
         {
             if (_adminManager.IsAdmin(player))
@@ -493,7 +530,7 @@ namespace Content.Server.Chat.Managers
 
         public bool MessageCharacterLimit(EntityUid source, string message)
         {
-            bool isOverLength = false;
+            var isOverLength = false;
 
             // Check if message exceeds the character limit if the sender is a player
             if (_entManager.TryGetComponent(source, out ActorComponent? actor) &&
