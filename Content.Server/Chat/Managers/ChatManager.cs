@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Content.Server.Administration.Managers;
 using Content.Server.Ghost.Components;
 using Content.Server.Headset;
 using Content.Server.MoMMI;
+using Content.Server.Players;
 using Content.Server.Preferences.Managers;
 using Content.Server.Radio.EntitySystems;
 using Content.Shared.ActionBlocker;
@@ -16,12 +18,15 @@ using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
+using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
+using Robust.Shared.Players;
+using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using static Content.Server.Chat.Managers.IChatManager;
 
@@ -40,6 +45,7 @@ namespace Content.Server.Chat.Managers
             { "revolutionary", "#aa00ff" }
         };
 
+        [Dependency] private readonly IChatSanitizationManager _sanitizer = default!;
         [Dependency] private readonly IEntityManager _entManager = default!;
         [Dependency] private readonly IServerNetManager _netManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -47,6 +53,7 @@ namespace Content.Server.Chat.Managers
         [Dependency] private readonly IAdminManager _adminManager = default!;
         [Dependency] private readonly IServerPreferencesManager _preferencesManager = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
 
         /// <summary>
         /// The maximum length a player-sent message can be sent
@@ -54,6 +61,7 @@ namespace Content.Server.Chat.Managers
         public int MaxMessageLength => _configurationManager.GetCVar(CCVars.ChatMaxMessageLength);
 
         private const int VoiceRange = 7; // how far voice goes in world units
+        private const int WhisperRange = 2; // how far whisper goes in world units
 
         //TODO: make prio based?
         private readonly List<TransformChat> _chatTransformHandlers = new();
@@ -91,21 +99,15 @@ namespace Content.Server.Chat.Managers
 
         public void DispatchServerAnnouncement(string message)
         {
-            var msg = _netManager.CreateNetMessage<MsgChatMessage>();
-            msg.Channel = ChatChannel.Server;
-            msg.Message = message;
-            msg.MessageWrap = Loc.GetString("chat-manager-server-wrap-message");
-            _netManager.ServerSendToAll(msg);
+            var messageWrap = Loc.GetString("chat-manager-server-wrap-message");
+            NetMessageToAll(ChatChannel.Server, message, messageWrap);
             Logger.InfoS("SERVER", message);
         }
 
         public void DispatchStationAnnouncement(string message, string sender = "CentComm", bool playDefaultSound = true)
         {
-            var msg = _netManager.CreateNetMessage<MsgChatMessage>();
-            msg.Channel = ChatChannel.Radio;
-            msg.Message = message;
-            msg.MessageWrap = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", sender));
-            _netManager.ServerSendToAll(msg);
+            var messageWrap = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", sender));
+            NetMessageToAll(ChatChannel.Radio, message, messageWrap);
             if (playDefaultSound)
             {
                 SoundSystem.Play(Filter.Broadcast(), "/Audio/Announcements/announce.ogg", AudioParams.Default.WithVolume(-2f));
@@ -114,11 +116,51 @@ namespace Content.Server.Chat.Managers
 
         public void DispatchServerMessage(IPlayerSession player, string message)
         {
+            var messageWrap = Loc.GetString("chat-manager-server-wrap-message");
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.Server;
             msg.Message = message;
-            msg.MessageWrap = Loc.GetString("chat-manager-server-wrap-message");
+            msg.MessageWrap = messageWrap;
             _netManager.ServerSendMessage(msg, player.ConnectedClient);
+        }
+
+        public void TrySpeak(EntityUid source, string message, bool whisper = false, IConsoleShell? shell = null, IPlayerSession? player = null)
+        {
+            // Listen it avoids the 30 lines being copy-paste and means only 1 source needs updating if something changes.
+            if (_entManager.HasComponent<GhostComponent>(source))
+            {
+                if (player == null) return;
+                SendDeadChat(player, message);
+            }
+            else
+            {
+                var mindComponent = player?.ContentData()?.Mind;
+
+                if (mindComponent == null)
+                {
+                    shell?.WriteError("You don't have a mind!");
+                    return;
+                }
+
+                if (mindComponent.OwnedEntity is not {Valid: true} owned)
+                {
+                    shell?.WriteError("You don't have an entity!");
+                    return;
+                }
+
+                var emote = _sanitizer.TrySanitizeOutSmilies(message, owned, out var sanitized, out var emoteStr);
+
+                if (sanitized.Length != 0)
+                {
+                    if (whisper)
+                        EntityWhisper(owned, sanitized);
+                    else
+                        EntitySay(owned, sanitized);
+                }
+
+                if (emote)
+                    EntityMe(owned, emoteStr!);
+            }
         }
 
         public void EntitySay(EntityUid source, string message, bool hideChat=false)
@@ -128,14 +170,8 @@ namespace Content.Server.Chat.Managers
                 return;
             }
 
-            // Check if message exceeds the character limit if the sender is a player
-            if (_entManager.TryGetComponent(source, out ActorComponent? actor) &&
-                message.Length > MaxMessageLength)
+            if (MessageCharacterLimit(source, message))
             {
-                var feedback = Loc.GetString("chat-manager-max-message-length-exceeded-message", ("limit", MaxMessageLength));
-
-                DispatchServerMessage(actor.PlayerSession, feedback);
-
                 return;
             }
 
@@ -147,68 +183,76 @@ namespace Content.Server.Chat.Managers
 
             message = message.Trim();
 
-            // We'll try to avoid using MapPosition as EntityCoordinates can early-out and potentially be faster for common use cases
-            // Downside is it may potentially convert to MapPosition unnecessarily.
-            var sourceMapId = _entManager.GetComponent<TransformComponent>(source).MapID;
-            var sourceCoords = _entManager.GetComponent<TransformComponent>(source).Coordinates;
-
-            var clients = new List<INetChannel>();
-
-            foreach (var player in _playerManager.Sessions)
-            {
-                if (player.AttachedEntity is not {Valid: true} playerEntity)
-                    continue;
-
-                var transform = _entManager.GetComponent<TransformComponent>(playerEntity);
-
-                if (transform.MapID != sourceMapId ||
-                    !_entManager.HasComponent<GhostComponent>(playerEntity) &&
-                    !sourceCoords.InRange(_entManager, transform.Coordinates, VoiceRange))
-                    continue;
-
-                clients.Add(player.ConnectedClient);
-            }
-
-            if (message.StartsWith(';'))
-            {
-                // Remove semicolon
-                message = message.Substring(1).TrimStart();
-
-                // Capitalize first letter
-                message = message[0].ToString().ToUpper() +
-                          message.Remove(0, 1);
-
-                var invSystem = EntitySystem.Get<InventorySystem>();
-
-                if (invSystem.TryGetSlotEntity(source, "ears", out var entityUid) &&
-                    _entManager.TryGetComponent(entityUid, out HeadsetComponent? headset))
-                {
-                    headset.RadioRequested = true;
-                }
-                else
-                {
-                    source.PopupMessage(Loc.GetString("chat-manager-no-headset-on-message"));
-                }
-            }
-            else
-            {
-                // Capitalize first letter
-                message = message[0].ToString().ToUpper() +
-                          message.Remove(0, 1);
-            }
+            message = SanitizeMessageCapital(source, message);
 
             var listeners = EntitySystem.Get<ListeningSystem>();
             listeners.PingListeners(source, message);
 
             message = FormattedMessage.EscapeText(message);
 
-            var msg = _netManager.CreateNetMessage<MsgChatMessage>();
-            msg.Channel = ChatChannel.Local;
-            msg.Message = message;
-            msg.MessageWrap = Loc.GetString("chat-manager-entity-say-wrap-message",("entityName", _entManager.GetComponent<MetaDataComponent>(source).EntityName));
-            msg.SenderEntity = source;
-            msg.HideChat = hideChat;
-            _netManager.ServerSendToMany(msg, clients);
+            var sessions = new List<ICommonSession>();
+            ClientDistanceToList(source, VoiceRange, sessions);
+
+            var messageWrap = Loc.GetString("chat-manager-entity-say-wrap-message",("entityName", _entManager.GetComponent<MetaDataComponent>(source).EntityName));
+
+            foreach (var session in sessions)
+            {
+                NetMessageToOne(ChatChannel.Local, message, messageWrap, source, hideChat, session.ConnectedClient);
+            }
+        }
+
+        public void EntityWhisper(EntityUid source, string message, bool hideChat=false)
+        {
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanSpeak(source))
+            {
+                return;
+            }
+
+            if (MessageCharacterLimit(source, message))
+            {
+                return;
+            }
+
+            foreach (var handler in _chatTransformHandlers)
+            {
+                //TODO: rather return a bool and use a out var?
+                message = handler(source, message);
+            }
+
+            message = message.Trim();
+
+            message = SanitizeMessageCapital(source, message);
+
+            var listeners = EntitySystem.Get<ListeningSystem>();
+            listeners.PingListeners(source, message);
+
+            message = FormattedMessage.EscapeText(message);
+
+            var obfuscatedMessage = ObfuscateMessageReadability(message, 0.2f);
+
+            var sessions = new List<ICommonSession>();
+            ClientDistanceToList(source, VoiceRange, sessions);
+
+            var transformSource = _entManager.GetComponent<TransformComponent>(source);
+            var sourceCoords = transformSource.Coordinates;
+            var messageWrap = Loc.GetString("chat-manager-entity-whisper-wrap-message",("entityName", _entManager.GetComponent<MetaDataComponent>(source).EntityName));
+
+            foreach (var session in sessions)
+            {
+                if (session.AttachedEntity is not {Valid: true} playerEntity)
+                    continue;
+
+                var transformEntity = _entManager.GetComponent<TransformComponent>(playerEntity);
+
+                if (sourceCoords.InRange(_entManager, transformEntity.Coordinates, WhisperRange))
+                {
+                    NetMessageToOne(ChatChannel.Whisper, message, messageWrap, source, hideChat, session.ConnectedClient);
+                }
+                else
+                {
+                    NetMessageToOne(ChatChannel.Whisper, obfuscatedMessage, messageWrap, source, hideChat, session.ConnectedClient);
+                }
+            }
         }
 
         public void EntityMe(EntityUid source, string action)
@@ -218,44 +262,28 @@ namespace Content.Server.Chat.Managers
                 return;
             }
 
-            // Check if entity is a player
-            if (!_entManager.TryGetComponent(source, out ActorComponent? actor))
+            if (MessageCharacterLimit(source, action))
             {
-                return;
-            }
-
-            // Check if message exceeds the character limit
-            if (action.Length > MaxMessageLength)
-            {
-                DispatchServerMessage(actor.PlayerSession, Loc.GetString("chat-manager-max-message-length-exceeded-message",("limit", MaxMessageLength)));
                 return;
             }
 
             action = FormattedMessage.EscapeText(action);
 
-            var clients = Filter.Empty()
-                .AddInRange(_entManager.GetComponent<TransformComponent>(source).MapPosition, VoiceRange)
-                .Recipients
-                .Select(p => p.ConnectedClient)
-                .ToList();
+            var sessions = new List<ICommonSession>();
 
-            var msg = _netManager.CreateNetMessage<MsgChatMessage>();
-            msg.Channel = ChatChannel.Emotes;
-            msg.Message = action;
-            msg.MessageWrap = Loc.GetString("chat-manager-entity-me-wrap-message", ("entityName", _entManager.GetComponent<MetaDataComponent>(source).EntityName));
-            msg.SenderEntity = source;
-            _netManager.ServerSendToMany(msg, clients);
+            ClientDistanceToList(source, VoiceRange, sessions);
+
+            var messageWrap = Loc.GetString("chat-manager-entity-me-wrap-message", ("entityName", _entManager.GetComponent<MetaDataComponent>(source).EntityName));
+
+            foreach (var session in sessions)
+            {
+                NetMessageToOne(ChatChannel.Emotes, action, messageWrap, source, true, session.ConnectedClient);
+            }
         }
 
-        public void EntityLOOC(EntityUid source, string message)
+        public void SendLOOC(IPlayerSession player, string message)
         {
-            // Check if entity is a player
-            if (!_entManager.TryGetComponent(source, out ActorComponent? actor))
-            {
-                return;
-            }
-
-            if (_adminManager.IsAdmin(actor.PlayerSession))
+            if (_adminManager.IsAdmin(player))
             {
                 if (!_adminLoocEnabled)
                 {
@@ -267,17 +295,23 @@ namespace Content.Server.Chat.Managers
                 return;
             }
 
+            // Check they're even attached to an entity before we potentially send a message length error.
+            if (player.AttachedEntity is not { } entity)
+            {
+                return;
+            }
+
             // Check if message exceeds the character limit
             if (message.Length > MaxMessageLength)
             {
-                DispatchServerMessage(actor.PlayerSession, Loc.GetString("chat-manager-max-message-length-exceeded-message", ("limit", MaxMessageLength)));
+                DispatchServerMessage(player, Loc.GetString("chat-manager-max-message-length-exceeded-message", ("limit", MaxMessageLength)));
                 return;
             }
 
             message = FormattedMessage.EscapeText(message);
 
             var clients = Filter.Empty()
-                .AddInRange(_entManager.GetComponent<TransformComponent>(source).MapPosition, VoiceRange)
+                .AddInRange(_entManager.GetComponent<TransformComponent>(entity).MapPosition, VoiceRange)
                 .Recipients
                 .Select(p => p.ConnectedClient)
                 .ToList();
@@ -285,9 +319,10 @@ namespace Content.Server.Chat.Managers
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.LOOC;
             msg.Message = message;
-            msg.MessageWrap = Loc.GetString("chat-manager-entity-looc-wrap-message", ("entityName", Name: _entManager.GetComponent<MetaDataComponent>(source).EntityName));
+            msg.MessageWrap = Loc.GetString("chat-manager-entity-looc-wrap-message", ("entityName", Name: _entManager.GetComponent<MetaDataComponent>(entity).EntityName));
             _netManager.ServerSendToMany(msg, clients);
         }
+
         public void SendOOC(IPlayerSession player, string message)
         {
             if (_adminManager.IsAdmin(player))
@@ -432,18 +467,129 @@ namespace Content.Server.Chat.Managers
         public void SendHookOOC(string sender, string message)
         {
             message = FormattedMessage.EscapeText(message);
-
-            var msg = _netManager.CreateNetMessage<MsgChatMessage>();
-            msg.Channel = ChatChannel.OOC;
-            msg.Message = message;
-            msg.MessageWrap = Loc.GetString("chat-manager-send-hook-ooc-wrap-message", ("senderName", sender));
-            _netManager.ServerSendToAll(msg);
+            var messageWrap = Loc.GetString("chat-manager-send-hook-ooc-wrap-message", ("senderName", sender));
+            NetMessageToAll(ChatChannel.OOC, message, messageWrap);
         }
 
         public void RegisterChatTransform(TransformChat handler)
         {
             // TODO: Literally just make this an event...
             _chatTransformHandlers.Add(handler);
+        }
+
+        public string SanitizeMessageCapital(EntityUid source, string message)
+        {
+            if (message.StartsWith(';'))
+            {
+                // Remove semicolon
+                message = message.Substring(1).TrimStart();
+
+                // Capitalize first letter
+                message = message[0].ToString().ToUpper() + message.Remove(0, 1);
+
+                var invSystem = EntitySystem.Get<InventorySystem>();
+
+                if (invSystem.TryGetSlotEntity(source, "ears", out var entityUid) &&
+                    _entManager.TryGetComponent(entityUid, out HeadsetComponent? headset))
+                {
+                    headset.RadioRequested = true;
+                }
+                else
+                {
+                    source.PopupMessage(Loc.GetString("chat-manager-no-headset-on-message"));
+                }
+            }
+            else
+            {
+                // Capitalize first letter
+                message = message[0].ToString().ToUpper() + message.Remove(0, 1);
+            }
+
+            return message;
+        }
+
+        public void NetMessageToOne(ChatChannel channel, string message, string messageWrap, EntityUid source, bool hideChat, INetChannel client)
+        {
+            var msg = _netManager.CreateNetMessage<MsgChatMessage>();
+            msg.Channel = channel;
+            msg.Message = message;
+            msg.MessageWrap = messageWrap;
+            msg.SenderEntity = source;
+            msg.HideChat = hideChat;
+            _netManager.ServerSendMessage(msg, client);
+        }
+
+        public void NetMessageToAll(ChatChannel channel, string message, string messageWrap)
+        {
+            var msg = _netManager.CreateNetMessage<MsgChatMessage>();
+            msg.Channel = channel;
+            msg.Message = message;
+            msg.MessageWrap = messageWrap;
+            _netManager.ServerSendToAll(msg);
+        }
+
+        public bool MessageCharacterLimit(EntityUid source, string message)
+        {
+            var isOverLength = false;
+
+            // Check if message exceeds the character limit if the sender is a player
+            if (_entManager.TryGetComponent(source, out ActorComponent? actor) &&
+                message.Length > MaxMessageLength)
+            {
+                var feedback = Loc.GetString("chat-manager-max-message-length-exceeded-message", ("limit", MaxMessageLength));
+
+                DispatchServerMessage(actor.PlayerSession, feedback);
+
+                isOverLength = true;
+            }
+
+            return isOverLength;
+        }
+
+        public void ClientDistanceToList(EntityUid source, int voiceRange, List<ICommonSession> playerSessions)
+        {
+            var transformSource = _entManager.GetComponent<TransformComponent>(source);
+            var sourceMapId = transformSource.MapID;
+            var sourceCoords = transformSource.Coordinates;
+
+            foreach (var player in _playerManager.Sessions)
+            {
+                if (player.AttachedEntity is not {Valid: true} playerEntity)
+                    continue;
+
+                var transformEntity = _entManager.GetComponent<TransformComponent>(playerEntity);
+
+                if (transformEntity.MapID != sourceMapId ||
+                    !_entManager.HasComponent<GhostComponent>(playerEntity) &&
+                    !sourceCoords.InRange(_entManager, transformEntity.Coordinates, voiceRange))
+                    continue;
+
+                playerSessions.Add(player);
+            }
+        }
+
+        public string ObfuscateMessageReadability(string message, float chance)
+        {
+            var modifiedMessage = new StringBuilder(message);
+
+            for (var i = 0; i < message.Length; i++)
+            {
+                if (char.IsWhiteSpace((modifiedMessage[i])))
+                {
+                    continue;
+                }
+
+                if (_random.Prob(chance))
+                {
+                    modifiedMessage[i] = modifiedMessage[i];
+                }
+                else
+                {
+                    modifiedMessage[i] = '~';
+                }
+            }
+
+            return modifiedMessage.ToString();
         }
     }
 }

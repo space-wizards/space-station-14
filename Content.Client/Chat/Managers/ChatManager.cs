@@ -198,6 +198,7 @@ namespace Content.Client.Chat.Managers
             {
                 // can always hear local / radio / emote when in the game
                 FilterableChannels |= ChatChannel.Local;
+                FilterableChannels |= ChatChannel.Whisper;
                 FilterableChannels |= ChatChannel.Radio;
                 FilterableChannels |= ChatChannel.Emotes;
 
@@ -206,6 +207,7 @@ namespace Content.Client.Chat.Managers
                 if (!IsGhost)
                 {
                     SelectableChannels |= ChatSelectChannel.Local;
+                    SelectableChannels |= ChatSelectChannel.Whisper;
                     SelectableChannels |= ChatSelectChannel.Radio;
                     SelectableChannels |= ChatSelectChannel.Emotes;
                 }
@@ -353,6 +355,10 @@ namespace Content.Client.Chat.Managers
                     _consoleHost.ExecuteCommand($"say \"{CommandParsing.Escape(str)}\"");
                     break;
 
+                case ChatSelectChannel.Whisper:
+                    _consoleHost.ExecuteCommand($"whisper \"{CommandParsing.Escape(str)}\"");
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(channel), channel, null);
             }
@@ -403,6 +409,10 @@ namespace Content.Client.Chat.Managers
             {
                 case ChatChannel.Local:
                     AddSpeechBubble(msg, SpeechBubble.SpeechType.Say);
+                    break;
+
+                case ChatChannel.Whisper:
+                    AddSpeechBubble(msg, SpeechBubble.SpeechType.Whisper);
                     break;
 
                 case ChatChannel.Dead:

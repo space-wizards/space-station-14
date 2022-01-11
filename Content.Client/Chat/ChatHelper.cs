@@ -14,7 +14,8 @@ namespace Content.Client.Chat
                 ChatChannel.OOC => Color.RoyalBlue,
                 ChatChannel.Dead => Color.MediumPurple,
                 ChatChannel.Admin => Color.Red,
-                _ => Color.DarkGray
+                ChatChannel.Whisper => Color.DarkGray,
+                _ => Color.LightGray
             };
     }
 }
