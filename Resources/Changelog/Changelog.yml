@@ -1,9 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: "Added parch\xEDs game board. A great way to lose your friends!", type: Add}
-  id: 359
-  time: '2021-09-18T08:40:38.0000000+00:00'
 - author: Ygg01
   changes:
   - {message: Welder and tank interaction now shows fuel tank is empty and doesn't
@@ -2918,3 +2913,8 @@ Entries:
       with wonderful bourgeois excellence!, type: Add}
   id: 860
   time: '2022-01-11T06:50:11.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: You can now toggle shuttle modes via the console., type: Add}
+  id: 861
+  time: '2022-01-11T07:17:55.0000000+00:00'
