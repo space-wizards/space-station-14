@@ -32,9 +32,9 @@ namespace Content.Shared.Lathe
             return true;
         }
 
-        public bool CanProduce(string ID, int quantity = 1)
+        public bool CanProduce(string id, int quantity = 1)
         {
-            return PrototypeManager.TryIndex(ID, out LatheRecipePrototype? recipe) && CanProduce(recipe, quantity);
+            return PrototypeManager.TryIndex(id, out LatheRecipePrototype? recipe) && CanProduce(recipe, quantity);
         }
 
         /// <summary>

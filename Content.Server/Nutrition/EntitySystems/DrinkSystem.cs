@@ -263,7 +263,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!drink.Opened)
             {
                 _popupSystem.PopupEntity(Loc.GetString("drink-component-try-use-drink-not-open",
-                    ("owner", Name: EntityManager.GetComponent<MetaDataComponent>(drink.Owner).EntityName)), uid, Filter.Entities(userUid));
+                    ("owner", EntityManager.GetComponent<MetaDataComponent>(drink.Owner).EntityName)), uid, Filter.Entities(userUid));
                 return true;
             }
 
@@ -274,7 +274,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 drinkSolution.DrainAvailable <= 0)
             {
                 _popupSystem.PopupEntity(Loc.GetString("drink-component-try-use-drink-is-empty",
-                    ("entity", Name: EntityManager.GetComponent<MetaDataComponent>(drink.Owner).EntityName)), uid, Filter.Entities(userUid));
+                    ("entity", EntityManager.GetComponent<MetaDataComponent>(drink.Owner).EntityName)), uid, Filter.Entities(userUid));
                 return true;
             }
 
@@ -345,7 +345,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!drink.Opened)
             {
                 _popupSystem.PopupEntity(Loc.GetString("drink-component-try-use-drink-not-open",
-                    ("owner", Name: EntityManager.GetComponent<MetaDataComponent>(drink.Owner).EntityName)), uid, Filter.Entities(userUid));
+                    ("owner", EntityManager.GetComponent<MetaDataComponent>(drink.Owner).EntityName)), uid, Filter.Entities(userUid));
                 return true;
             }
 
@@ -353,7 +353,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 drinkSolution.DrainAvailable <= 0)
             {
                 _popupSystem.PopupEntity(Loc.GetString("drink-component-try-use-drink-is-empty",
-                    ("entity", Name: EntityManager.GetComponent<MetaDataComponent>(drink.Owner).EntityName)), uid, Filter.Entities(userUid));
+                    ("entity", EntityManager.GetComponent<MetaDataComponent>(drink.Owner).EntityName)), uid, Filter.Entities(userUid));
                 return true;
             }
 

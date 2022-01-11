@@ -5,7 +5,7 @@
   completetime: 500
   materials:
      Steel: 50
-     Glass: 50
+     Plastic: 50
 
 - type: latheRecipe
   id: DoorElectronics
@@ -14,7 +14,7 @@
   completetime: 500
   materials:
      Steel: 50
-     Glass: 50
+     Plastic: 50
 
 - type: latheRecipe
   id: APCElectronics
@@ -23,7 +23,7 @@
   completetime: 500
   materials:
      Steel: 50
-     Glass: 50
+     Plastic: 50
      
 - type: latheRecipe
   id: AirAlarmElectronics
@@ -32,7 +32,7 @@
   completetime: 500
   materials:
      Steel: 50
-     Glass: 50
+     Plastic: 50
 
 - type: latheRecipe
   id: FireAlarmElectronics
@@ -41,7 +41,7 @@
   completetime: 500
   materials:
      Steel: 50
-     Glass: 50
+     Plastic: 50
 
 - type: latheRecipe
   id: SubstationMachineCircuitboard
@@ -68,7 +68,7 @@
   completetime: 1000
   materials:
      Steel: 100
-     Glass: 100
+     Plastic: 100
 
 - type: latheRecipe
   id: MedicalScannerMachineCircuitboard
@@ -77,7 +77,7 @@
   completetime: 1000
   materials:
      Steel: 100
-     Glass: 100
+     Plastic: 100
 
 - type: latheRecipe
   id: ChemMasterMachineCircuitboard
@@ -86,7 +86,7 @@
   completetime: 1000
   materials:
      Steel: 100
-     Glass: 100
+     Plastic: 100
 
 - type: latheRecipe
   id: ChemDispenserMachineCircuitboard
@@ -95,7 +95,7 @@
   completetime: 1000
   materials:
      Steel: 100
-     Glass: 100
+     Plastic: 100
 
 - type: latheRecipe
   id: SolarControlComputerCircuitboard
@@ -104,7 +104,7 @@
   completetime: 1000
   materials:
      Steel: 100
-     Glass: 100
+     Plastic: 100
 
 - type: latheRecipe
   id: HydroponicsTrayMachineCircuitboard
@@ -113,7 +113,7 @@
   completetime: 1000
   materials:
      Steel: 100
-     Glass: 100
+     Plastic: 100
 
 - type: latheRecipe
   id: AutolatheMachineCircuitboard
@@ -122,7 +122,7 @@
   completetime: 1000
   materials:
      Steel: 100
-     Glass: 100
+     Plastic: 100
 
 - type: latheRecipe
   id: ProtolatheMachineCircuitboard
@@ -131,7 +131,7 @@
   completetime: 1000
   materials:
      Steel: 100
-     Glass: 100
+     Plastic: 100
 
 - type: latheRecipe
   id: KitchenReagentGrinderMachineCircuitboard
@@ -140,7 +140,7 @@
   completetime: 1000
   materials:
      Steel: 100
-     Glass: 100
+     Plastic: 100
 
 - type: latheRecipe
   id: CrewMonitoringComputerCircuitboard
@@ -149,4 +149,4 @@
   completetime: 1000
   materials:
      Steel: 100
-     Glass: 100
+     Plastic: 100
