@@ -244,7 +244,8 @@ namespace Content.Server.Chat.Managers
 
                 var transformEntity = _entManager.GetComponent<TransformComponent>(playerEntity);
 
-                if (sourceCoords.InRange(_entManager, transformEntity.Coordinates, WhisperRange))
+                if (sourceCoords.InRange(_entManager, transformEntity.Coordinates, WhisperRange) ||
+                    _entManager.HasComponent<GhostComponent>(playerEntity))
                 {
                     NetMessageToOne(ChatChannel.Whisper, message, messageWrap, source, hideChat, session.ConnectedClient);
                 }
