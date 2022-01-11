@@ -1,10 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: Fix bug which prevented players from equipping most items in their pockets.,
-    type: Fix}
-  id: 356
-  time: '2021-09-16T10:18:08.191474+00:00'
 - author: mirrorcult
   changes:
   - {message: 'Items like fireaxes can now actually be wielded, which increases their
@@ -2919,3 +2913,10 @@ Entries:
   - {message: Bodies once again fit in body bags., type: Fix}
   id: 857
   time: '2022-01-11T04:55:27.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Saltern now has all the latest & greatest objects from the past 2 months.,
+    type: Add}
+  - {message: Saltern medical has been renovated., type: Tweak}
+  id: 858
+  time: '2022-01-11T06:27:30.0000000+00:00'
