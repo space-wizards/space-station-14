@@ -104,6 +104,7 @@
     - Oxygen
     - Plasma
     - Tritium
+    - CarbonDioxide
   - type: Metabolizer
     removeEmpty: true
     solutionOnBody: false

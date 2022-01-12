@@ -23,6 +23,7 @@
   heatCapacityRatio: 1.3
   molarMass: 44
   color: 4e4e4e
+  reagent: CarbonDioxide
 
 - type: gas
   id: 3

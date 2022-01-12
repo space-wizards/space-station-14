@@ -16,6 +16,7 @@
       - Oxygen
       - Plasma
       - Tritium
+      - CarbonDioxide
     - type: Brain
     - type: Stomach
       maxVolume: 250
