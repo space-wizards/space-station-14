@@ -175,7 +175,7 @@ namespace Content.Shared.Item
 
     /// <summary>
     ///     Raised when an item's EquippedPrefix is changed. The event is directed at the entity that contains this item (if any), so
-    ///     that it can properly update it's sprite/GUI.
+    ///     that it can properly update its sprite/GUI.
     /// </summary>
     [Serializable, NetSerializable]
     public class ItemPrefixChangeEvent : EntityEventArgs
