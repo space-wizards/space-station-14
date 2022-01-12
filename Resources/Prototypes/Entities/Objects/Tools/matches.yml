@@ -17,6 +17,7 @@
   - type: Tag
     tags:
     - Matchstick
+    - Trash
   - type: Sprite
     netsync: false
     sprite: Objects/Tools/matches.rsi
@@ -40,9 +41,6 @@
         unlitIcon: match_unlit
         litIcon: match_lit
         burntIcon: match_burnt
-  - type: Tag
-    tags:
-    - Trash
 
 - type: entity
   name: match box
