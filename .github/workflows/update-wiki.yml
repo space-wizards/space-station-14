@@ -39,6 +39,7 @@ jobs:
       continue-on-error: true
   publish:
     runs-on: ubuntu-latest
+    needs: build
 
     steps:
     - name: Upload chem_prototypes.json
@@ -47,7 +48,7 @@ jobs:
         wiki_text_file: ./bin/Content.Server/data/chem_prototypes.json
         edit_summary: Update chem_prototypes.json via GitHub Actions
         page_name: "User:NexBot/chem_prototypes.json"
-        api_url: https://wiki.spacestation14.io/wiki/api.php
+        api_url: https://wiki.spacestation14.io/w/api.php
         username: ${{ secrets.WIKI_BOT_USER }}
         password: ${{ secrets.WIKI_BOT_PASS }}
 
