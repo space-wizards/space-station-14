@@ -289,9 +289,10 @@ namespace Content.IntegrationTests
                 foreach (var channel in net.Channels)
                 {
                     net.DisconnectChannel(channel, "Test pooling disconnect");
+                    net.Shutdown("Server is restarting");
                 }
             });
-
+            await server.WaitIdleAsync();
             await WaitUntil(server, () => players.PlayerCount == 0);
 
             await server.WaitPost(() =>
