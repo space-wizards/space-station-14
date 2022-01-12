@@ -76,10 +76,11 @@
           map: ["enum.ProximityTriggerVisualLayers.Base"]
     - type: InteractionOutline
     - type: Physics
+    - type: Fixtures  
       fixtures:
       - shape:
           !type:PhysShapeAabb
-            bounds: "-0.4,-0.3,0.4,0.3"
+            bounds: "-0.15,-0.3,0.15,0.3"
         mask:
         - Impassable
         - VaultImpassable
