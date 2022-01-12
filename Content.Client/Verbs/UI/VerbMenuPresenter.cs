@@ -174,6 +174,7 @@ namespace Content.Client.Verbs.UI
                 if (element is not ConfirmationMenuElement confElement)
                     return;
 
+                args.Handle();
                 ExecuteVerb(confElement.Verb, confElement.Type);
                 return;
             }
