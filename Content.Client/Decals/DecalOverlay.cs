@@ -4,10 +4,8 @@ using Robust.Client.Graphics;
 using Robust.Client.Utility;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
-using Robust.Shared.Maths;
 
 namespace Content.Client.Decals
 {

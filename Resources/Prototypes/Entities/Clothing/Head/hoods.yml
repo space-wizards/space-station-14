@@ -106,7 +106,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatHoodRad
-  name: rad
+  name: radiation hood
   description: A hood of the hazmat suit, designed for protection from high radioactivity.
   components:
   - type: Sprite

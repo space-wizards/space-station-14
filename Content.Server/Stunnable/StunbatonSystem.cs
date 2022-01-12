@@ -99,7 +99,12 @@ namespace Content.Server.Stunnable
 
         private void OnPowerCellChanged(EntityUid uid, StunbatonComponent comp, PowerCellChangedEvent args)
         {
-            if (args.Ejected)
+            if (!comp.Activated)
+                return;
+
+            if (args.Ejected
+                || !_cellSystem.TryGetBatteryFromSlot(comp.Owner, out var battery)
+                || battery.CurrentCharge < comp.EnergyPerUse)
             {
                 TurnOff(comp);
             }
@@ -175,9 +180,6 @@ namespace Content.Server.Stunnable
                 return;
 
             var playerFilter = Filter.Pvs(comp.Owner);
-            if (!EntityManager.TryGetComponent<PowerCellSlotComponent?>(comp.Owner, out var slot))
-                return;
-
             if (!_cellSystem.TryGetBatteryFromSlot(comp.Owner, out var battery))
             {
                 SoundSystem.Play(playerFilter, comp.TurnOnFailSound.GetSound(), comp.Owner, AudioHelpers.WithVariation(0.25f));

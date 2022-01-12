@@ -10,10 +10,12 @@ namespace Content.Client.Chat
             {
                 ChatChannel.Server => Color.Orange,
                 ChatChannel.Radio => Color.LimeGreen,
-                ChatChannel.OOC => Color.LightSkyBlue,
+                ChatChannel.LOOC => Color.LightSkyBlue,
+                ChatChannel.OOC => Color.RoyalBlue,
                 ChatChannel.Dead => Color.MediumPurple,
                 ChatChannel.Admin => Color.Red,
-                _ => Color.DarkGray
+                ChatChannel.Whisper => Color.DarkGray,
+                _ => Color.LightGray
             };
     }
 }

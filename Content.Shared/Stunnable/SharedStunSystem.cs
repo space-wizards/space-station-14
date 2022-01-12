@@ -150,7 +150,7 @@ namespace Content.Shared.Stunnable
         public bool TryParalyze(EntityUid uid, TimeSpan time, bool refresh,
             StatusEffectsComponent? status = null)
         {
-            if (!Resolve(uid, ref status))
+            if (!Resolve(uid, ref status, false))
                 return false;
 
             return TryKnockdown(uid, time, refresh, status) && TryStun(uid, time, refresh, status);
@@ -163,7 +163,7 @@ namespace Content.Shared.Stunnable
             float walkSpeedMultiplier = 1f, float runSpeedMultiplier = 1f,
             StatusEffectsComponent? status = null)
         {
-            if (!Resolve(uid, ref status))
+            if (!Resolve(uid, ref status, false))
                 return false;
 
             if (time <= TimeSpan.Zero)
