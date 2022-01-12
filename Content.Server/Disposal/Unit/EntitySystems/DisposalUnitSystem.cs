@@ -52,7 +52,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
             // Component lifetime
             SubscribeLocalEvent<DisposalUnitComponent, ComponentInit>(HandleDisposalInit);
-            SubscribeLocalEvent<DisposalUnitComponent, ComponentShutdown>(HandleDisposalShutdown);
+            SubscribeLocalEvent<DisposalUnitComponent, ComponentRemove>(HandleDisposalRemove);
 
             SubscribeLocalEvent<DisposalUnitComponent, ThrowHitByEvent>(HandleThrowCollide);
 
@@ -243,7 +243,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             }
         }
 
-        private void HandleDisposalShutdown(EntityUid uid, DisposalUnitComponent component, ComponentShutdown args)
+        private void HandleDisposalRemove(EntityUid uid, DisposalUnitComponent component, ComponentRemove args)
         {
             foreach (var entity in component.Container.ContainedEntities.ToArray())
             {
