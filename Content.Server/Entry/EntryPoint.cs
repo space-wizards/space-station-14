@@ -103,29 +103,31 @@ namespace Content.Server.Entry
             var resPath = new ResourcePath(dest).ToRootedPath();
             if (dest != "")
             {
-                var file = resourceManager.UserData.OpenWriteText(resPath.WithName("chem_"+dest));
+                var file = resourceManager.UserData.OpenWriteText(resPath.WithName("chem_" + dest));
                 ChemistryJsonGenerator.PublishJson(file);
                 file.Flush();
-                file = resourceManager.UserData.OpenWriteText(resPath.WithName("react_"+dest));
+                file = resourceManager.UserData.OpenWriteText(resPath.WithName("react_" + dest));
                 ReactionJsonGenerator.PublishJson(file);
                 file.Flush();
                 IoCManager.Resolve<IBaseServer>().Shutdown("Data generation done");
             }
+            else
+            {
+                IoCManager.Resolve<ISandboxManager>().Initialize();
+                IoCManager.Resolve<RecipeManager>().Initialize();
+                IoCManager.Resolve<ActionManager>().Initialize();
+                IoCManager.Resolve<BlackboardManager>().Initialize();
+                IoCManager.Resolve<ConsiderationsManager>().Initialize();
+                IoCManager.Resolve<IAdminManager>().Initialize();
+                IoCManager.Resolve<INpcBehaviorManager>().Initialize();
+                IoCManager.Resolve<IAfkManager>().Initialize();
+                IoCManager.Resolve<RulesManager>().Initialize();
+                _euiManager.Initialize();
 
-            IoCManager.Resolve<ISandboxManager>().Initialize();
-            IoCManager.Resolve<RecipeManager>().Initialize();
-            IoCManager.Resolve<ActionManager>().Initialize();
-            IoCManager.Resolve<BlackboardManager>().Initialize();
-            IoCManager.Resolve<ConsiderationsManager>().Initialize();
-            IoCManager.Resolve<IAdminManager>().Initialize();
-            IoCManager.Resolve<INpcBehaviorManager>().Initialize();
-            IoCManager.Resolve<IAfkManager>().Initialize();
-            IoCManager.Resolve<RulesManager>().Initialize();
-            _euiManager.Initialize();
-
-            IoCManager.Resolve<IGameMapManager>().Initialize();
-            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<GameTicker>().PostInitialize();
-            IoCManager.Resolve<IBqlQueryManager>().DoAutoRegistrations();
+                IoCManager.Resolve<IGameMapManager>().Initialize();
+                IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<GameTicker>().PostInitialize();
+                IoCManager.Resolve<IBqlQueryManager>().DoAutoRegistrations();
+            }
         }
 
         public override void Update(ModUpdateLevel level, FrameEventArgs frameEventArgs)
@@ -135,11 +137,11 @@ namespace Content.Server.Entry
             switch (level)
             {
                 case ModUpdateLevel.PostEngine:
-                {
-                    _euiManager.SendUpdates();
-                    _voteManager.Update();
-                    break;
-                }
+                    {
+                        _euiManager.SendUpdates();
+                        _voteManager.Update();
+                        break;
+                    }
             }
         }
     }
