@@ -19,7 +19,7 @@ namespace Content.IntegrationTests.Tests
         {
             var eventCount = 0;
 
-            var (_, server) = await StartConnectedServerClientPair();
+            var server = StartServer();
 
             await server.WaitAssertion(() =>
             {

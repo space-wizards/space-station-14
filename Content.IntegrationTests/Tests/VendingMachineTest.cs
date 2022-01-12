@@ -13,7 +13,10 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task Test()
         {
-            var server = StartServer();
+            var server = StartServer(new ServerIntegrationOptions
+            {
+                Pool = false
+            });
 
             server.Assert(() =>
             {

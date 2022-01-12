@@ -17,7 +17,10 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
         [Test]
         public async Task AlertsTest()
         {
-            var (client, server) = await StartConnectedServerClientPair();
+            var (client, server) = await StartConnectedServerClientPair(null, new ServerIntegrationOptions
+            {
+                Pool = false
+            });
 
             await server.WaitIdleAsync();
             await client.WaitIdleAsync();

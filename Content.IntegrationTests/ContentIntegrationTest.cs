@@ -200,7 +200,7 @@ namespace Content.IntegrationTests
 
             if (server)
             {
-                if (options.CVarOverrides.Count != 3)
+                if (options.CVarOverrides.Count != ServerTestCvars.Length)
                 {
                     return false;
                 }
