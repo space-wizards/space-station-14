@@ -308,6 +308,23 @@
   - !type:TileNotBlocked
 
 - type: construction
+  name: railing corner small
+  id: RailingCornerSmall	
+  graph: railing
+  startNode: start
+  targetNode: railingCornerSmall
+  category: Structures
+  description: Basic railing meant to protect idiots like you from falling.
+  icon:
+    sprite: Structures/Walls/railing.rsi
+    state: corner_small
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
   name: airlock
   id: airlock
   graph: airlock

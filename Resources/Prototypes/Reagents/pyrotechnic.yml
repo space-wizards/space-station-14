@@ -139,6 +139,15 @@
   meltingPoint: -80.7
   tileReactions:
   - !type:FlammableTileReaction {}
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 1
+      - !type:FlammableReaction
+        multiplier: 0.4
 
 - type: reagent
   id: Fluorosurfactant

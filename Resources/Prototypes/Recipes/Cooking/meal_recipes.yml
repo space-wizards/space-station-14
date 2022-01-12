@@ -433,6 +433,51 @@
   solids:
     FoodDonkpocketGondola: 1
 
+- type: microwaveMealRecipe
+  id: RecipeHotChili
+  name: hot chili recipe
+  result: FoodSoupChiliHot
+  time: 20
+  solids:
+    FoodChili: 1
+    FoodMeatCutlet: 1
+    FoodOnionSlice: 1
+    FoodTomato: 1
+
+- type: microwaveMealRecipe
+  id: RecipeChiliClown
+  name: chili con carnival recipe
+  result: FoodSoupChiliClown
+  time: 30
+  solids:
+    FoodChili: 1
+    FoodMeatCutlet: 1
+    FoodOnionSlice: 1
+    FoodTomato: 1
+    ClothingShoesClown: 1
+
+- type: microwaveMealRecipe
+  id: RecipeQueso
+  name: queso recipe
+  result: FoodMealQueso
+  time: 15
+  #todo Add blackpepper
+  #reagents:
+    #blackpepper: 5
+  solids:
+    FoodChili: 1
+    FoodCheeseSlice: 2
+
+- type: microwaveMealRecipe
+  id: RecipeEnchiladas
+  name: enchiladas recipe
+  result: FoodMealEnchiladas
+  time: 20
+  solids:
+    FoodChili: 2
+    FoodMeatCutlet: 1
+    FoodCorn: 1
+
 # NOT ACTUAL FOOD
 
 - type: microwaveMealRecipe

@@ -46,7 +46,6 @@ namespace Content.Server.Inventory
             {
                 hands.PutInHand(itemUid.Value);
             }
-
         }
 
         private void OnOpenSlotStorage(OpenSlotStorageNetworkMessage ev)

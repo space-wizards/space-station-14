@@ -108,13 +108,18 @@ namespace Content.Client.Administration.UI
 
             if (!open)
             {
-                var pi = ChannelSelector
-                    .PlayerItemList
-                    .FirstOrDefault(i => ((PlayerInfo) i.Metadata!).SessionId == channel);
-
-                if (pi is not null)
-                    pi.Selected = true;
+                SelectChannel(channel);
             }
+        }
+
+        public void SelectChannel(NetUserId channel)
+        {
+            var pi = ChannelSelector
+                .PlayerItemList
+                .FirstOrDefault(i => ((PlayerInfo) i.Metadata!).SessionId == channel);
+
+            if (pi is not null)
+                pi.Selected = true;
         }
 
         private void FixButtons()
@@ -157,11 +162,12 @@ namespace Content.Client.Administration.UI
             return sb.ToString();
         }
 
-        public void SwitchToChannel(NetUserId ch)
+        private void SwitchToChannel(NetUserId ch)
         {
             foreach (var bw in BwoinkArea.Children)
                 bw.Visible = false;
-            _bwoinkSystem.EnsurePanel(ch).Visible = true;
+            var panel = _bwoinkSystem.EnsurePanel(ch);
+            panel.Visible = true;
         }
     }
 }

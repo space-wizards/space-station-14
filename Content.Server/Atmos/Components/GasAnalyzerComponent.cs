@@ -18,7 +18,9 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Atmos.Components
 {
     [RegisterComponent]
-    public class GasAnalyzerComponent : SharedGasAnalyzerComponent, IAfterInteract, IDropped, IUse
+    [ComponentReference(typeof(IActivate))]
+    [ComponentReference(typeof(SharedGasAnalyzerComponent))]
+    public class GasAnalyzerComponent : SharedGasAnalyzerComponent, IAfterInteract, IDropped, IActivate
     {
         [Dependency] private readonly IEntityManager _entities = default!;
 
@@ -271,14 +273,14 @@ namespace Content.Server.Atmos.Components
             }
         }
 
-        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
+        void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             if (_entities.TryGetComponent(eventArgs.User, out ActorComponent? actor))
             {
                 ToggleInterface(actor.PlayerSession);
-                return true;
+                return;
             }
-            return false;
+            return;
         }
     }
 }
