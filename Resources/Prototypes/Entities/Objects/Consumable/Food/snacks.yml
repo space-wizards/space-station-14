@@ -206,6 +206,9 @@
   - type: Item
     sprite: Objects/Consumable/Food/snacks.rsi
     HeldPrefix: packet
+  - type: Tag
+    tags:
+    - Trash
 
 - type: entity
   abstract: true

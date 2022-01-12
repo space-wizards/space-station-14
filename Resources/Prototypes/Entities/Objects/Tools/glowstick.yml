@@ -60,6 +60,9 @@
           startValue: 5.0
           endValue: 1.5
           property: Radius
+  - type: Tag
+    tags:
+    - Trash
 
 - type: entity
   name: red glowstick

@@ -23,6 +23,9 @@
   - type: Appearance
     visuals:
     - type: SpentAmmoVisualizer
+  - type: Tag
+    tags:
+    - Cartridge
 
 - type: entity
   id: ShellShotgunBeanbag

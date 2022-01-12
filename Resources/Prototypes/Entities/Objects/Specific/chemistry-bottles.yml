@@ -37,6 +37,9 @@
     sprite: Objects/Specific/Chemistry/beaker.rsi
   - type: Spillable
     solution: drink
+  - type: Tag
+    tags:
+    - Trash
 
 - type: entity
   name: bottle
