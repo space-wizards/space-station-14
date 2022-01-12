@@ -12,7 +12,8 @@ on:
       - 'RobustToolbox/'
 
 jobs:
-  build:
+  wiki:
+    name: Build and publish JSON for the wiki
     runs-on: ubuntu-latest
 
     steps:
@@ -37,11 +38,6 @@ jobs:
     - name: Generate JSON
       run: dotnet ./bin/Content.Server/Content.Server.dll --cvar autogen.destination_file=prototypes.json
       continue-on-error: true
-  publish:
-    runs-on: ubuntu-latest
-    needs: build
-
-    steps:
     - name: Upload chem_prototypes.json
       uses: jtmullen/mediawiki-edit-action@v0.1.1
       with:
