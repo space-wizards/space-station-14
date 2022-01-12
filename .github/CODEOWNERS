@@ -52,14 +52,14 @@
 
 /Content.YAMLLinter @PaulRitter
 /Content.*/Inventory @PaulRitter
-/Content.*/Arcade
-/Content.*/Conveyor
-/Content.*/Decals
-/Content.*/Objectives
-/Content.*/MachineLinking
-/Content.*/Crayon
-/Content.*/Administration
-/Content.*/Clothing
+/Content.*/Arcade @PaulRitter
+/Content.*/Conveyor @PaulRitter
+/Content.*/Decals @PaulRitter
+/Content.*/Objectives @PaulRitter
+/Content.*/MachineLinking @PaulRitter
+/Content.*/Crayon @PaulRitter
+/Content.*/Administration @PaulRitter
+/Content.*/Clothing @PaulRitter
 
 # Be they Fluent translations or Freemarker templates, I know them both!
 *.ftl @RemieRichards
