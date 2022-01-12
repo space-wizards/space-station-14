@@ -170,7 +170,15 @@ namespace Content.Client.Verbs.UI
                 return;
 
             if (element is not VerbMenuElement verbElement)
+            {
+                if (element is not ConfirmationMenuElement confElement)
+                    return;
+
+                _verbSystem.ExecuteVerb(CurrentTarget, confElement.Verb, confElement.Type);
+                if (confElement.Verb.CloseMenu)
+                    _verbSystem.CloseAllMenus();
                 return;
+            }
 
             args.Handle();
             var verb = verbElement.Verb;
@@ -196,9 +204,23 @@ namespace Content.Client.Verbs.UI
                     return;
             }
 
-            _verbSystem.ExecuteVerb(CurrentTarget, verb, verbElement.Type);
-            if (verb.CloseMenu)
-                _verbSystem.CloseAllMenus();
+            if (verb.ConfirmationPopup)
+            {
+                if (verbElement.SubMenu == null)
+                {
+                    var popupElement = new ConfirmationMenuElement(verb, "Confirm", verbElement.Type);
+                    verbElement.SubMenu = new ContextMenuPopup(this, verbElement);
+                    AddElement(verbElement.SubMenu, popupElement);
+                }
+
+                OpenSubMenu(verbElement);
+            }
+            else
+            {
+                _verbSystem.ExecuteVerb(CurrentTarget, verb, verbElement.Type);
+                if (verb.CloseMenu)
+                    _verbSystem.CloseAllMenus();
+            }
         }
     }
 }
