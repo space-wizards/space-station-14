@@ -55,7 +55,6 @@ public class CableSystem : EntitySystem
     }
 }
 
-
 // TODO: if #5887 gets merged, just use a directed event instead of broadcast-with-target
 public class CuttingFinishedEvent : EntityEventArgs
 {
