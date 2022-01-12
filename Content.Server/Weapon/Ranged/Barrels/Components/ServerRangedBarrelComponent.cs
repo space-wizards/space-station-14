@@ -397,9 +397,17 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 var distance = result.Distance;
                 hitscan.FireEffects(shooter, distance, angle, result.HitEntity);
                 var dmg = EntitySystem.Get<DamageableSystem>().TryChangeDamage(result.HitEntity, hitscan.Damage);
+                var logImpact = LogImpact.High;
+
                 if (dmg != null)
-                    EntitySystem.Get<AdminLogSystem>().Add(LogType.HitScanHit,
+                {
+                    if (dmg.Total > 15)
+                        logImpact = LogImpact.Extreme;
+
+                    EntitySystem.Get<AdminLogSystem>().Add(LogType.HitScanHit, logImpact,
                         $"{Entities.ToPrettyString(shooter):user} hit {Entities.ToPrettyString(result.HitEntity):target} using {Entities.ToPrettyString(hitscan.Owner):used} and dealt {dmg.Total:damage} damage");
+                }
+
             }
             else
             {
