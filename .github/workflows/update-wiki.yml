@@ -36,6 +36,7 @@ jobs:
       run: dotnet build --configuration Release --no-restore /p:WarningsAsErrors=nullable /m
     - name: Generate JSON
       run: dotnet ./bin/Content.Server/Content.Server.dll --cvar autogen.destination_file=prototypes.json
+      continue-on-error: true
   publish:
     runs-on: ubuntu-latest
 
