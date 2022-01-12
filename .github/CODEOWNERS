@@ -50,5 +50,10 @@
 /Content.*/Interaction/ @ElectroJr
 /Content.*/Hands/ @ElectroJr
 
+/Content.YAMLLinter @PaulRitter
+/Content.Shared/Inventory @PaulRitter
+/Content.Server/Inventory @PaulRitter
+/Content.Client/Inventory @PaulRitter
+
 # Be they Fluent translations or Freemarker templates, I know them both!
 *.ftl @RemieRichards
