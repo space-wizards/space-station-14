@@ -86,7 +86,6 @@
         - VaultImpassable
         - SmallImpassable
         layer:
-        - Opaque
         - MobImpassable
         mass: 70
     - type: Appearance

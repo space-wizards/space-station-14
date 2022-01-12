@@ -60,7 +60,13 @@ namespace Content.Server.Explosion.Components
         }
 
         [DataField("cooldown")]
-        public float Cooldown { get; set; } = 10;
+        public float Cooldown { get; set; } = 3f;
+
+        /// <summary>
+        /// What speed should the other object be moving at to trigger the proximity fixture?
+        /// </summary>
+        [DataField("triggerSpeed")]
+        public float TriggerSpeed { get; set; } = 3.0f;
 
         /// <summary>
         /// If this proximity is triggered should we continually repeat it?

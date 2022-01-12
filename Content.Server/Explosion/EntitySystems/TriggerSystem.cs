@@ -19,6 +19,7 @@ using Content.Server.Construction.Components;
 using Content.Shared.Trigger;
 using Timer = Robust.Shared.Timing.Timer;
 using Content.Shared.Physics;
+using System.Collections.Generic;
 
 namespace Content.Server.Explosion.EntitySystems
 {
@@ -44,8 +45,8 @@ namespace Content.Server.Explosion.EntitySystems
         [Dependency] private readonly ExplosionSystem _explosions = default!;
         [Dependency] private readonly FlashSystem _flashSystem = default!;
         [Dependency] private readonly AdminLogSystem _logSystem = default!;
-        
 
+        private readonly List<TriggerOnProximityComponent> _proximityComponents = new();
         public override void Initialize()
         {
             base.Initialize();
@@ -60,9 +61,15 @@ namespace Content.Server.Explosion.EntitySystems
             SubscribeLocalEvent<ToggleDoorOnTriggerComponent, TriggerEvent>(HandleDoorTrigger);
 
             SubscribeLocalEvent<TriggerOnProximityComponent, ComponentStartup>(OnStartup);
+            SubscribeLocalEvent<TriggerOnProximityComponent, ComponentRemove>(OnRemoval);
 
             SubscribeLocalEvent<TriggerOnProximityComponent, UnanchoredEvent>(OnUnanchor);
             SubscribeLocalEvent<TriggerOnProximityComponent, AnchoredEvent>(OnAnchor);
+        }
+
+        private void OnRemoval(EntityUid uid, TriggerOnProximityComponent component, ComponentRemove args)
+        {
+            _proximityComponents.Remove(component);
         }
 
         private void OnStartup(EntityUid uid, TriggerOnProximityComponent component, ComponentStartup args)
@@ -71,6 +78,7 @@ namespace Content.Server.Explosion.EntitySystems
                                                       EntityManager.GetComponent<TransformComponent>(uid).Anchored);
 
             SetProximityFixture(uid, component, component.Enabled, true);
+            _proximityComponents.Add(component);
         }
 
         #region Explosions
@@ -158,18 +166,19 @@ namespace Content.Server.Explosion.EntitySystems
         private void OnProximityStartCollide(EntityUid uid, TriggerOnProximityComponent component, StartCollideEvent args)
         {
             if (args.OurFixture.ID != TriggerOnProximityComponent.FixtureID ||
-                args.OtherFixture.Body.LinearVelocity.LengthSquared <= 0f) return;
+                args.OtherFixture.Body.LinearVelocity.LengthSquared <= Math.Pow(component.TriggerSpeed, 2f)) return;
 
             var curTime = _gameTiming.CurTime;
 
             if (!component.Colliding.Add(uid) ||
                 component.NextTrigger > curTime) return;
 
+            component.Colliding.Add(args.OtherFixture.Body.Owner);
+
             SetProximityAppearance(uid, component);
             Trigger(component.Owner);
             component.NextTrigger = TimeSpan.FromSeconds(curTime.TotalSeconds + component.Cooldown);
 
-            SetRepeating(uid, component);
         }
 
         private void SetProximityAppearance(EntityUid uid, TriggerOnProximityComponent component)
@@ -194,31 +203,9 @@ namespace Content.Server.Explosion.EntitySystems
 
             // We won't stop the timer because we may have a repeating one already running and we don't want to cancel it if
             // something comes back into range.
-            component.Colliding.Remove(uid);
+            component.Colliding.Remove(args.OtherFixture.Body.Owner);
         }
 
-        private void SetRepeating(EntityUid uid, TriggerOnProximityComponent component)
-        {
-            // Setup the proximity timer to re-trigger in cooldown seconds. Also pass in a token in case we need to cancel it.
-            component.RepeatCancelTokenSource?.Cancel();
-
-            if (!component.Repeating || !(component.Cooldown > 0f)) return;
-
-            // TODO: Should just use an update + accumulator for this and also have a velocity threshold so people walking don't trigger it.
-            // also need to reduce cooldown to 1.5s I think (once threshold in).
-            component.RepeatCancelTokenSource = new CancellationTokenSource();
-
-            Timer.Spawn((int) (component.Cooldown * 1000), () =>
-            {
-                if (component.Colliding.Count == 0 ||
-                    component.Deleted) return;
-
-                SetProximityAppearance(uid, component);
-                component.NextTrigger = TimeSpan.FromSeconds(_gameTiming.CurTime.TotalSeconds + component.Cooldown);
-                Trigger(component.Owner);
-                SetRepeating(uid, component);
-            }, component.RepeatCancelTokenSource.Token);
-        }
 
         public void SetProximityFixture(EntityUid uid, TriggerOnProximityComponent component, bool value, bool force = false)
         {
@@ -282,6 +269,31 @@ namespace Content.Server.Explosion.EntitySystems
                 if (Deleted(triggered)) return;
                 Trigger(triggered, user);
             });
+        }
+
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+
+            foreach (var comp in _proximityComponents)
+            {
+                if (comp.NextTrigger >= _gameTiming.CurTime)
+                    return;
+
+                foreach (var colliding in comp.Colliding)
+                {
+                    EntityManager.TryGetComponent(colliding, out FixturesComponent fixtureComp);
+                    foreach (var fixture in fixtureComp.Fixtures)
+                    {
+                        if (fixture.Value.Body.LinearVelocity.LengthSquared <= Math.Pow(comp.TriggerSpeed, 2f))
+                            break;
+                        
+                        Trigger(comp.Owner);
+                        comp.NextTrigger = TimeSpan.FromSeconds(_gameTiming.CurTime.TotalSeconds + comp.Cooldown);
+                    }
+
+                }
+            }
         }
     }
 }
