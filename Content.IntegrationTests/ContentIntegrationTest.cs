@@ -293,7 +293,14 @@ namespace Content.IntegrationTests
                 }
             });
             await server.WaitIdleAsync();
-            await WaitUntil(server, () => players.PlayerCount == 0);
+            try
+            {
+                await WaitUntil(server, () => players.PlayerCount == 0, 60);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine($"weh... {ex.Message}");
+            }
 
             await server.WaitPost(() =>
             {
