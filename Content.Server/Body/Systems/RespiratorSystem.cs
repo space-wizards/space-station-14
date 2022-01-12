@@ -142,6 +142,7 @@ namespace Content.Server.Body.Systems
             foreach (var (lung, _) in organs)
             {
                 _atmosSys.Merge(outGas, lung.Air);
+                lung.Air.Clear();
             }
 
             _atmosSys.Merge(ev.Gas, outGas);

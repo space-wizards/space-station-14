@@ -65,6 +65,5 @@ public class LungSystem : EntitySystem
             _solutionContainerSystem.TryAddReagent(uid, lung.LungSolution, reagent, amount, out _);
             lung.Air.AdjustMoles(i, -moles);
         }
-
     }
 }
