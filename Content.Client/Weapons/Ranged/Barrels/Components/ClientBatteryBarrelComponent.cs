@@ -23,9 +23,6 @@ namespace Content.Client.Weapons.Ranged.Barrels.Components
 
         private StatusControl? _statusControl;
 
-        [DataField("cellSlot", required: true)]
-        public ItemSlot CellSlot = default!;
-
         /// <summary>
         ///     Count of bullets in the magazine.
         /// </summary>
@@ -34,18 +31,6 @@ namespace Content.Client.Weapons.Ranged.Barrels.Components
         /// </remarks>
         [ViewVariables]
         public (int count, int max)? MagazineCount { get; private set; }
-
-        protected override void Initialize()
-        {
-            base.Initialize();
-            EntitySystem.Get<ItemSlotsSystem>().AddItemSlot(Owner, $"{Name}-powercell-container", CellSlot);
-        }
-
-        protected override void OnRemove()
-        {
-            base.OnRemove();
-            EntitySystem.Get<ItemSlotsSystem>().RemoveItemSlot(Owner, CellSlot);
-        }
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {

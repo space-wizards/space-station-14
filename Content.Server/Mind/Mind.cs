@@ -35,6 +35,8 @@ namespace Content.Server.Mind
         private readonly ISet<Role> _roles = new HashSet<Role>();
 
         private readonly List<Objective> _objectives = new();
+        
+        public string Briefing = String.Empty;
 
         /// <summary>
         ///     Creates the new mind.

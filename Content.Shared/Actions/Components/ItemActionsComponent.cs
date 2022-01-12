@@ -24,7 +24,7 @@ namespace Content.Shared.Actions.Components
     /// Currently only maintained server side and not synced to client, as are all the equip/unequip events.
     /// </summary>
     [RegisterComponent]
-    public class ItemActionsComponent : Component, IEquippedHand, IUnequippedHand
+    public class ItemActionsComponent : Component
     {
         public override string Name => "ItemActions";
 
@@ -40,7 +40,7 @@ namespace Content.Shared.Actions.Components
         /// <summary>
         /// hand it's currently in, null if not in a hand.
         /// </summary>
-        public HandState? InHand;
+        public Hand? InHand;
 
         /// <summary>
         /// Entity currently holding this in hand or equip slot. Null if not held.
@@ -179,19 +179,19 @@ namespace Content.Shared.Actions.Components
             GrantOrUpdate(actionType, toggleOn: toggleOn);
         }
 
-        void IEquippedHand.EquippedHand(EquippedHandEventArgs eventArgs)
+        public void EquippedHand(EntityUid user, Hand hand)
         {
             // this entity cannot be granted actions if no actions component
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedActionsComponent?>(eventArgs.User, out var actionsComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedActionsComponent?>(user, out var actionsComponent))
                 return;
-            Holder = eventArgs.User;
+            Holder = user;
             HolderActionsComponent = actionsComponent;
             IsEquipped = true;
-            InHand = eventArgs.Hand;
+            InHand = hand;
             GrantOrUpdateAllToHolder();
         }
 
-        void IUnequippedHand.UnequippedHand(UnequippedHandEventArgs eventArgs)
+        public void UnequippedHand()
         {
             RevokeAllFromHolder();
             Holder = null;

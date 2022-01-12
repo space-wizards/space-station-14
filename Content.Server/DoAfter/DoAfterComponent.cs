@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Shared.DoAfter;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Players;
@@ -31,7 +31,7 @@ namespace Content.Server.DoAfter
                     doAfter.EventArgs.BreakOnUserMove,
                     doAfter.EventArgs.BreakOnTargetMove,
                     doAfter.EventArgs.MovementThreshold,
-                    doAfter.EventArgs.Target ?? EntityUid.Invalid);
+                    doAfter.EventArgs.Target);
 
                 toAdd.Add(clientDoAfter);
             }

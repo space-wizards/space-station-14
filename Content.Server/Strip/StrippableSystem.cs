@@ -43,7 +43,7 @@ namespace Content.Server.Strip
 
         public void SendUpdate(EntityUid uid, StrippableComponent? strippableComponent = null)
         {
-            if (!Resolve(uid, ref strippableComponent) || strippableComponent.UserInterface == null)
+            if (!Resolve(uid, ref strippableComponent, false) || strippableComponent.UserInterface == null)
             {
                 return;
             }

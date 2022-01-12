@@ -2,6 +2,19 @@
   id: LockerMedicineFilled
   suffix: Filled
   parent: LockerMedicine
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxPillCanister
+        amount: 1
+      - id: BoxSyringe
+        amount: 1
+      - id: EpinephrineChemistryBottle
+        amount: 3
+      - id: Brutepack
+        amount: 2
+      - id: Ointment
+        amount: 2
 
 - type: entity
   id: LockerMedicalFilled

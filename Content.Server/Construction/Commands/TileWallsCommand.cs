@@ -100,7 +100,7 @@ namespace Content.Server.Construction.Commands
                 var tile = grid.GetTileRef(childTransform.Coordinates);
                 var tileDef = (ContentTileDefinition) tileDefinitionManager[tile.Tile.TypeId];
 
-                if (tileDef.Name == "underplating")
+                if (tileDef.ID == "underplating")
                 {
                     continue;
                 }
