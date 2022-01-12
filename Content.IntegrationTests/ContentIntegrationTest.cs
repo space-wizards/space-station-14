@@ -286,21 +286,11 @@ namespace Content.IntegrationTests
 
             await server.WaitPost(() =>
             {
-                foreach (var channel in net.Channels)
-                {
-                    net.DisconnectChannel(channel, "Test pooling disconnect");
-                    net.Shutdown("Server is restarting");
-                }
+                net.Shutdown("Test pooling disconnect");
             });
+
             await server.WaitIdleAsync();
-            try
-            {
-                await WaitUntil(server, () => players.PlayerCount == 0, 60);
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine($"weh... {ex.Message}");
-            }
+            await WaitUntil(server, () => players.PlayerCount == 0, 60);
 
             await server.WaitPost(() =>
             {
