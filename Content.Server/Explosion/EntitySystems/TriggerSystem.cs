@@ -63,8 +63,13 @@ namespace Content.Server.Explosion.EntitySystems
             SubscribeLocalEvent<TriggerOnProximityComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<TriggerOnProximityComponent, ComponentRemove>(OnRemoval);
 
-            SubscribeLocalEvent<TriggerOnProximityComponent, UnanchoredEvent>(OnUnanchor);
-            SubscribeLocalEvent<TriggerOnProximityComponent, AnchoredEvent>(OnAnchor);
+            SubscribeLocalEvent<TriggerOnProximityComponent, AnchorStateChangedEvent>(OnAnchorChange);
+            
+        }
+
+        private void OnAnchorChange(EntityUid uid, TriggerOnProximityComponent component, ref AnchorStateChangedEvent args)
+        {
+            SetProximityFixture(uid, component, args.Anchored);
         }
 
         private void OnRemoval(EntityUid uid, TriggerOnProximityComponent component, ComponentRemove args)
@@ -152,16 +157,6 @@ namespace Content.Server.Explosion.EntitySystems
         }
 
         #region Proximity
-
-        private void OnAnchor(EntityUid uid, TriggerOnProximityComponent component, AnchoredEvent args)
-        {
-            SetProximityFixture(uid, component, true);
-        }
-
-        private void OnUnanchor(EntityUid uid, TriggerOnProximityComponent component, UnanchoredEvent args)
-        {
-            SetProximityFixture(uid, component, false);
-        }
 
         private void OnProximityStartCollide(EntityUid uid, TriggerOnProximityComponent component, StartCollideEvent args)
         {
