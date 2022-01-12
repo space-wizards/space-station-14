@@ -1,9 +1,4 @@
 Entries:
-- author: Swept
-  changes:
-  - {message: Most green text/buttons now looks better, type: Tweak}
-  id: 363
-  time: '2021-09-21T04:50:02.0000000+00:00'
 - author: TimrodDX
   changes:
   - {message: Fixes disposal outlets in Chemistry which had been erroneously rotated.,
@@ -2917,3 +2912,8 @@ Entries:
   - {message: Ghost's now see unobfuscated messages when whispered., type: Fix}
   id: 864
   time: '2022-01-11T23:51:49.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Mining entities with pickaxes now has a delay., type: Tweak}
+  id: 865
+  time: '2022-01-12T02:12:08.0000000+00:00'
