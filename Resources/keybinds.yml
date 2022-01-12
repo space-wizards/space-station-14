@@ -65,6 +65,9 @@ binds:
 - function: FocusLocalChatWindow
   type: State
   key: Period
+- function: FocusWhisperChatWindow
+  type: State
+  key: Comma
 - function: FocusRadioWindow
   type: State
   key: SemiColon

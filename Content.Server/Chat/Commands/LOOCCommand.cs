@@ -1,4 +1,6 @@
+using Content.Server.Administration;
 using Content.Server.Chat.Managers;
+using Content.Server.Players;
 using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Console;
@@ -8,11 +10,11 @@ using Robust.Shared.IoC;
 namespace Content.Server.Chat.Commands
 {
     [AnyCommand]
-    internal class SayCommand : IConsoleCommand
+    internal class LOOCCommand : IConsoleCommand
     {
-        public string Command => "say";
-        public string Description => "Send chat messages to the local channel or a specified radio channel.";
-        public string Help => "say <text>";
+        public string Command => "looc";
+        public string Description => "Send Local Out Of Character chat messages.";
+        public string Help => "looc <text>";
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
@@ -25,12 +27,6 @@ namespace Content.Server.Chat.Commands
             if (player.Status != SessionStatus.InGame)
                 return;
 
-            if (player.AttachedEntity is not {} playerEntity)
-            {
-                shell.WriteError("You don't have an entity!");
-                return;
-            }
-
             if (args.Length < 1)
                 return;
 
@@ -38,7 +34,7 @@ namespace Content.Server.Chat.Commands
             if (string.IsNullOrEmpty(message))
                 return;
 
-            IoCManager.Resolve<IChatManager>().TrySpeak(playerEntity, message, false, shell, player);
+            IoCManager.Resolve<IChatManager>().SendLOOC(player, message);
         }
     }
 }
