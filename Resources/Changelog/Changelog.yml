@@ -1,10 +1,4 @@
 Entries:
-- author: TimrodDX
-  changes:
-  - {message: Fixes disposal outlets in Chemistry which had been erroneously rotated.,
-    type: Fix}
-  id: 364
-  time: '2021-09-21T04:50:26.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: Dice now show a popup with the number they rolled when used., type: Tweak}
@@ -2917,3 +2911,8 @@ Entries:
   - {message: Mining entities with pickaxes now has a delay., type: Tweak}
   id: 865
   time: '2022-01-12T02:12:08.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Remove duplicate ghost takeovers when an admin controls a mob., type: Fix}
+  id: 866
+  time: '2022-01-12T07:25:05.0000000+00:00'
