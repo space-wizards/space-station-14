@@ -51,9 +51,15 @@
 /Content.*/Hands/ @ElectroJr
 
 /Content.YAMLLinter @PaulRitter
-/Content.Shared/Inventory @PaulRitter
-/Content.Server/Inventory @PaulRitter
-/Content.Client/Inventory @PaulRitter
+/Content.*/Inventory @PaulRitter
+/Content.*/Arcade
+/Content.*/Conveyor
+/Content.*/Decals
+/Content.*/Objectives
+/Content.*/MachineLinking
+/Content.*/Crayon
+/Content.*/Administration
+/Content.*/Clothing
 
 # Be they Fluent translations or Freemarker templates, I know them both!
 *.ftl @RemieRichards
