@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using Content.Server.Body.Components;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
-using Newtonsoft.Json;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -11,28 +11,28 @@ namespace Content.Server.GuideGenerator;
 
 public class ReagentEntry
 {
-    [JsonProperty("id")]
+    [JsonPropertyName("id")]
     public string Id { get; }
 
-    [JsonProperty("name")]
+    [JsonPropertyName("name")]
     public string Name { get; }
 
-    [JsonProperty("group")]
+    [JsonPropertyName("group")]
     public string Group { get; }
 
-    [JsonProperty("desc")]
+    [JsonPropertyName("desc")]
     public string Description { get; }
 
-    [JsonProperty("physicalDesc")]
+    [JsonPropertyName("physicalDesc")]
     public string PhysicalDescription { get; }
 
-    [JsonProperty("color")]
+    [JsonPropertyName("color")]
     public string SubstanceColor { get; }
 
-    [JsonProperty("recipes")]
+    [JsonPropertyName("recipes")]
     public List<string> Recipes { get; } = new();
 
-    [JsonProperty("metabolisms")]
+    [JsonPropertyName("metabolisms")]
     public Dictionary<string, ReagentEffectsEntry>? Metabolisms { get; }
 
     public ReagentEntry(ReagentPrototype proto)
@@ -49,19 +49,19 @@ public class ReagentEntry
 
 public class ReactionEntry
 {
-    [JsonProperty("id")]
+    [JsonPropertyName("id")]
     public string Id { get; }
 
-    [JsonProperty("name")]
+    [JsonPropertyName("name")]
     public string Name { get; }
 
-    [JsonProperty("reactants")]
+    [JsonPropertyName("reactants")]
     public Dictionary<string, ReactantEntry> Reactants { get; }
 
-    [JsonProperty("products")]
+    [JsonPropertyName("products")]
     public Dictionary<string, float> Products { get; }
 
-    [JsonProperty("effects")]
+    [JsonPropertyName("effects")]
     public List<ReagentEffect> Effects { get; }
 
     public ReactionEntry(ReactionPrototype proto)
@@ -82,10 +82,10 @@ public class ReactionEntry
 
 public class ReactantEntry
 {
-    [JsonProperty("amount")]
+    [JsonPropertyName("amount")]
     public float Amount { get; }
 
-    [JsonProperty("catalyst")]
+    [JsonPropertyName("catalyst")]
     public bool Catalyst { get; }
 
     public ReactantEntry(float amnt, bool cata)
