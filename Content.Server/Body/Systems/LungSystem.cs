@@ -51,10 +51,9 @@ public class LungSystem : EntitySystem
 
     public void GasToReagent(EntityUid uid, LungComponent lung)
     {
-        for (int i = 0; i < Atmospherics.TotalNumberOfGases; i++)
+        foreach (var gas in lung.ValidGases)
         {
-            if (!lung.ValidGases.Contains((Gas) i))
-                continue;
+            var i = (int) gas;
             var moles = lung.Air.Moles[i];
             if (moles <= 0)
                 continue;

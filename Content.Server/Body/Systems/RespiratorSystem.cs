@@ -112,9 +112,10 @@ namespace Content.Server.Body.Systems
             var actualGas = ev.Gas.RemoveRatio(ratio);
 
             var lungRatio = 1.0f / organs.Length;
+            var gas = organs.Length == 1 ? actualGas : actualGas.RemoveRatio(lungRatio);
             foreach (var (lung, _) in organs)
             {
-                var gas = organs.Length == 1 ? actualGas : actualGas.RemoveRatio(lungRatio);
+                // Merge doesn't remove gas from the giver.
                 _atmosSys.Merge(lung.Air, gas);
                 _lungSystem.GasToReagent(lung.Owner, lung);
             }
