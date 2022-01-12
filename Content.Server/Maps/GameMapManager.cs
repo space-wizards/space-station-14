@@ -21,6 +21,7 @@ public class GameMapManager : IGameMapManager
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
+    [Dependency] private readonly IMapLoader _mapLoader = default!;
 
     private GameMapPrototype _currentMap = default!;
     private bool _currentMapForced;
