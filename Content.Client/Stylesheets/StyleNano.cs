@@ -349,6 +349,15 @@ namespace Content.Client.Stylesheets
             tooltipBox.SetPatchMargin(StyleBox.Margin.All, 2);
             tooltipBox.SetContentMarginOverride(StyleBox.Margin.Horizontal, 7);
 
+            // Whisper box
+            var whisperTexture = resCache.GetTexture("/Textures/Interface/Nano/whisper.png");
+            var whisperBox = new StyleBoxTexture
+            {
+                Texture = whisperTexture,
+            };
+            whisperBox.SetPatchMargin(StyleBox.Margin.All, 2);
+            whisperBox.SetContentMarginOverride(StyleBox.Margin.Horizontal, 7);
+
             // Placeholder
             var placeholderTexture = resCache.GetTexture("/Textures/Interface/Nano/placeholder.png");
             var placeholder = new StyleBoxTexture {Texture = placeholderTexture};
@@ -776,6 +785,11 @@ namespace Content.Client.Stylesheets
                 new StyleRule(new SelectorElement(typeof(PanelContainer), new[] {"speechBox", "sayBox"}, null, null), new[]
                 {
                     new StyleProperty(PanelContainer.StylePropertyPanel, tooltipBox)
+                }),
+
+                new StyleRule(new SelectorElement(typeof(PanelContainer), new[] {"speechBox", "whisperBox"}, null, null), new[]
+                {
+                    new StyleProperty(PanelContainer.StylePropertyPanel, whisperBox)
                 }),
 
                 new StyleRule(new SelectorChild(
