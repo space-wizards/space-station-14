@@ -36,13 +36,10 @@ namespace Content.Shared.Hands
 
         private void OnPrefixChanged(EntityUid uid, SharedHandsComponent component, ItemPrefixChangeEvent args)
         {
-            foreach (var ent in component.GetAllHeldEntities())
+            // update hands visuals if this item is in a hand (rather then inventory or other container).
+            if (component.HasHand(args.ContainerId))
             {
-                if (args.Item == ent)
-                {
-                    UpdateHandVisuals(uid, component);
-                    return;
-                }
+                UpdateHandVisuals(uid, component);
             }
         }
 
