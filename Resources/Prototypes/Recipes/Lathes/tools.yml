@@ -5,6 +5,7 @@
   completetime: 500
   materials:
     Steel: 200
+    Plastic: 50
 
 - type: latheRecipe
   id: Screwdriver
@@ -15,6 +16,7 @@
   completetime: 500
   materials:
     Steel: 200
+    Plastic: 50
 
 - type: latheRecipe
   id: Welder
