@@ -253,6 +253,7 @@ namespace Content.Server.Database
 
         public List<AdminLog> AdminLogs { get; set; } = default!;
 
+        [ForeignKey("Server")] public int? ServerId { get; set; }
         public Server? Server { get; set; }
     }
 
@@ -263,7 +264,7 @@ namespace Content.Server.Database
         public int Id { get; set; }
 
         public string Name { get; set; } = default!;
-
+        [InverseProperty(nameof(Round.Server))]
         public List<Round> Rounds { get; set; } = default!;
     }
 

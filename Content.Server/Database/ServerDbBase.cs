@@ -455,7 +455,7 @@ namespace Content.Server.Database
             var round = new Round
             {
                 Players = players,
-                Server = server
+                ServerId = server?.Id
             };
 
             db.DbContext.Round.Add(round);
