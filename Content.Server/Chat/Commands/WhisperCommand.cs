@@ -1,4 +1,4 @@
-using Content.Server.Chat.Managers;
+﻿using Content.Server.Chat.Managers;
 using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Console;
@@ -8,11 +8,11 @@ using Robust.Shared.IoC;
 namespace Content.Server.Chat.Commands
 {
     [AnyCommand]
-    internal class SayCommand : IConsoleCommand
+    internal class WhisperCommand : IConsoleCommand
     {
-        public string Command => "say";
-        public string Description => "Send chat messages to the local channel or a specified radio channel.";
-        public string Help => "say <text>";
+        public string Command => "whisper";
+        public string Description => "Send chat messages to the local channel as a whisper";
+        public string Help => "whisper <text>";
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
@@ -38,7 +38,7 @@ namespace Content.Server.Chat.Commands
             if (string.IsNullOrEmpty(message))
                 return;
 
-            IoCManager.Resolve<IChatManager>().TrySpeak(playerEntity, message, false, shell, player);
+            IoCManager.Resolve<IChatManager>().TrySpeak(playerEntity, message, true, shell, player);
         }
     }
 }
