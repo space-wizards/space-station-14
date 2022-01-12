@@ -136,7 +136,9 @@ namespace Content.Server.GameTicking
                 RoundLengthMetric.Set(0);
 
                 var playerIds = _playersInLobby.Keys.Select(player => player.UserId.UserId).ToArray();
-                RoundId = await _db.AddNewRound(playerIds);
+                var serverName = _configurationManager.GetCVar(CCVars.ServerId);
+                var server = await _db.AddOrGetServer(serverName);
+                RoundId = await _db.AddNewRound(server, playerIds);
 
                 var startingEvent = new RoundStartingEvent();
                 RaiseLocalEvent(startingEvent);

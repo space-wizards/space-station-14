@@ -125,7 +125,7 @@ namespace Content.Server.Database
 
         #region Rounds
 
-        Task<int> AddNewRound(params Guid[] playerIds);
+        Task<int> AddNewRound(Server? server, params Guid[] playerIds);
         Task<Round> GetRound(int id);
         Task AddRoundPlayers(int id, params Guid[] playerIds);
 
@@ -133,6 +133,7 @@ namespace Content.Server.Database
 
         #region Admin Logs
 
+        Task<Server> AddOrGetServer(string serverName);
         Task AddAdminLogs(List<QueuedLog> logs);
         IAsyncEnumerable<string> GetAdminLogMessages(LogFilter? filter = null);
         IAsyncEnumerable<LogRecord> GetAdminLogs(LogFilter? filter = null);
@@ -316,9 +317,9 @@ namespace Content.Server.Database
             return _db.AddAdminRankAsync(rank, cancel);
         }
 
-        public Task<int> AddNewRound(params Guid[] playerIds)
+        public Task<int> AddNewRound(Server? server, params Guid[] playerIds)
         {
-            return _db.AddNewRound(playerIds);
+            return _db.AddNewRound(server, playerIds);
         }
 
         public Task<Round> GetRound(int id)
@@ -334,6 +335,11 @@ namespace Content.Server.Database
         public Task UpdateAdminRankAsync(AdminRank rank, CancellationToken cancel = default)
         {
             return _db.UpdateAdminRankAsync(rank, cancel);
+        }
+
+        public Task<Server> AddOrGetServer(string serverName)
+        {
+            return _db.AddOrGetServer(serverName);
         }
 
         public Task AddAdminLogs(List<QueuedLog> logs)

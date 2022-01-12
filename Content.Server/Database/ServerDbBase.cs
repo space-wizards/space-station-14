@@ -444,7 +444,7 @@ namespace Content.Server.Database
             await db.DbContext.SaveChangesAsync(cancel);
         }
 
-        public virtual async Task<int> AddNewRound(params Guid[] playerIds)
+        public virtual async Task<int> AddNewRound(Server? server, params Guid[] playerIds)
         {
             await using var db = await GetDb();
 
@@ -454,7 +454,8 @@ namespace Content.Server.Database
 
             var round = new Round
             {
-                Players = players
+                Players = players,
+                Server = server
             };
 
             db.DbContext.Round.Add(round);
@@ -508,6 +509,27 @@ namespace Content.Server.Database
         #endregion
 
         #region Admin Logs
+
+        public async Task<Server> AddOrGetServer(string serverName)
+        {
+            await using var db = await GetDb();
+            var servers = db.DbContext.Server.Where(server => server.Name.Equals(serverName));
+            if (servers.Any())
+            {
+                return servers.First();
+            }
+
+            var server = new Server
+            {
+                Name = serverName
+            };
+
+            db.DbContext.Server.Add(server);
+
+            await db.DbContext.SaveChangesAsync();
+
+            return server;
+        }
 
         public virtual async Task AddAdminLogs(List<QueuedLog> logs)
         {
