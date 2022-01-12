@@ -23,7 +23,7 @@ public class MineableSystem : EntitySystem
         SubscribeLocalEvent<MiningDoafterSuccess>(OnDoafterSuccess);
     }
 
-    private async void OnInteractUsing(EntityUid uid, MineableComponent component, InteractUsingEvent args)
+    private void OnInteractUsing(EntityUid uid, MineableComponent component, InteractUsingEvent args)
     {
         if (!TryComp<PickaxeComponent>(args.Used, out var pickaxe))
             return;
@@ -33,7 +33,7 @@ public class MineableSystem : EntitySystem
             return;
 
         // Can't mine one object multiple times.
-        if (pickaxe.MiningEntities.Contains(uid))
+        if (!pickaxe.MiningEntities.Add(uid))
             return;
 
         var doAfter = new DoAfterEventArgs(args.User, component.BaseMineTime * pickaxe.MiningTimeMultiplier, default, uid)
@@ -46,8 +46,6 @@ public class MineableSystem : EntitySystem
             BroadcastCancelledEvent = new MiningDoafterCancel() { Pickaxe = args.Used, Rock = uid },
             BroadcastFinishedEvent = new MiningDoafterSuccess() { Pickaxe = args.Used, Rock = uid }
         };
-
-        pickaxe.MiningEntities.Add(uid);
 
         _doAfterSystem.DoAfter(doAfter);
     }
