@@ -95,7 +95,8 @@ namespace Content.Client.ContextMenu.UI
             if (_subMenu?.Visible ?? true)
                 return;
 
-            RemoveStylePseudoClass(StylePseudoClassHover);
+            if (HasStylePseudoClass(StylePseudoClassHover))
+                RemoveStylePseudoClass(StylePseudoClassHover);
         }
     }
 }
