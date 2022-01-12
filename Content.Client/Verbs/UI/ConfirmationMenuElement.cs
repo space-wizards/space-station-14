@@ -27,7 +27,6 @@ public partial class ConfirmationMenuElement : ContextMenuElement
     {
         Verb = verb;
         Type = type;
-        SubMenu = null;
 
         SetOnlyStyleClass(StyleClassConfirmationContextMenuButton);
     }

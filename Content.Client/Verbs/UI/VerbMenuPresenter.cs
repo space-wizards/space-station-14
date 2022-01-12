@@ -174,9 +174,7 @@ namespace Content.Client.Verbs.UI
                 if (element is not ConfirmationMenuElement confElement)
                     return;
 
-                _verbSystem.ExecuteVerb(CurrentTarget, confElement.Verb, confElement.Type);
-                if (confElement.Verb.CloseMenu)
-                    _verbSystem.CloseAllMenus();
+                ExecuteVerb(confElement.Verb, confElement.Type);
                 return;
             }
 
@@ -217,10 +215,15 @@ namespace Content.Client.Verbs.UI
             }
             else
             {
-                _verbSystem.ExecuteVerb(CurrentTarget, verb, verbElement.Type);
-                if (verb.CloseMenu)
-                    _verbSystem.CloseAllMenus();
+                ExecuteVerb(verb, verbElement.Type);
             }
+        }
+
+        private void ExecuteVerb(Verb verb, VerbType verbType)
+        {
+            _verbSystem.ExecuteVerb(CurrentTarget, verb, verbType);
+            if (verb.CloseMenu)
+                _verbSystem.CloseAllMenus();
         }
     }
 }
