@@ -22,8 +22,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             base.Initialize();
 
             SubscribeLocalEvent<GasPortableComponent, AnchorAttemptEvent>(OnPortableAnchorAttempt);
-            SubscribeLocalEvent<GasPortableComponent, AnchoredEvent>(OnPortableAnchored);
-            SubscribeLocalEvent<GasPortableComponent, UnanchoredEvent>(OnPortableUnanchored);
+            SubscribeLocalEvent<GasPortableComponent, AnchorStateChangedEvent>(OnAnchorChanged);
         }
 
         private void OnPortableAnchorAttempt(EntityUid uid, GasPortableComponent component, AnchorAttemptEvent args)
@@ -36,7 +35,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 args.Cancel();
         }
 
-        private void OnPortableAnchored(EntityUid uid, GasPortableComponent portable, AnchoredEvent args)
+        private void OnAnchorChanged(EntityUid uid, GasPortableComponent portable, ref AnchorStateChangedEvent args)
         {
             if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
                 return;
@@ -44,27 +43,11 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (!nodeContainer.TryGetNode(portable.PortName, out PipeNode? portableNode))
                 return;
 
-            portableNode.ConnectionsEnabled = true;
+            portableNode.ConnectionsEnabled = args.Anchored;
 
             if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
             {
-                appearance.SetData(GasPortableVisuals.ConnectedState, true);
-            }
-        }
-
-        private void OnPortableUnanchored(EntityUid uid, GasPortableComponent portable, UnanchoredEvent args)
-        {
-            if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
-                return;
-
-            if (!nodeContainer.TryGetNode(portable.PortName, out PipeNode? portableNode))
-                return;
-
-            portableNode.ConnectionsEnabled = false;
-
-            if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
-            {
-                appearance.SetData(GasPortableVisuals.ConnectedState, false);
+                appearance.SetData(GasPortableVisuals.ConnectedState, args.Anchored);
             }
         }
 
