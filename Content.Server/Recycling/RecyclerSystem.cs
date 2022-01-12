@@ -1,3 +1,4 @@
+using Content.Server.Body.Systems;
 using Content.Server.Power.Components;
 using Content.Server.Recycling.Components;
 using Content.Shared.Body.Components;
@@ -10,6 +11,8 @@ namespace Content.Server.Recycling
 {
     internal sealed class RecyclerSystem : EntitySystem
     {
+        [Dependency] private readonly BodySystem _bodySystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -31,7 +34,7 @@ namespace Content.Server.Recycling
             // Mobs are a special case!
             if (CanGib(component, entity))
             {
-                EntityManager.GetComponent<SharedBodyComponent>(entity).Gib(true);
+                _bodySystem.Gib(entity, true);
                 Bloodstain(component);
                 return;
             }

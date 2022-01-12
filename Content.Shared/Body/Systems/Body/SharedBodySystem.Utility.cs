@@ -10,6 +10,8 @@ namespace Content.Shared.Body.Systems.Body;
 
 public abstract partial class SharedBodySystem
 {
+    #region Mechanisms
+
     /// <summary>
     ///     Returns a list of ValueTuples of <see cref="T"/> and MechanismComponent on each mechanism
     ///     in the given body.
@@ -61,10 +63,13 @@ public abstract partial class SharedBodySystem
         return true;
     }
 
+    #endregion
+
     #region Slots
 
-    // TODO BODY optimize this
-    public BodyPartSlot SlotAt(SharedBodyComponent body, int index)
+    // TODO BODY optimize this (apparently)
+    public BodyPartSlot SlotAt(EntityUid uid, int index,
+        SharedBodyComponent body)
     {
         return body.SlotIds.Values.ElementAt(index);
     }
@@ -117,6 +122,12 @@ public abstract partial class SharedBodySystem
 
     #region Parts
 
+    public SharedBodyPartComponent PartAt(EntityUid uid, int index,
+        SharedBodyComponent body)
+    {
+        return body.Parts.Keys.ElementAt(index);
+    }
+
     public SharedBodyPartComponent? GetCenterPart(EntityUid uid,
         SharedBodyComponent? body = null)
     {
@@ -124,6 +135,15 @@ public abstract partial class SharedBodySystem
             return null;
 
         return GetCenterSlot(uid, body)?.Part;
+    }
+
+    public bool HasPartOfType(EntityUid uid, BodyPartType type,
+        SharedBodyComponent? body = null)
+    {
+        if (!Resolve(uid, ref body, false))
+            return false;
+
+        return GetPartsOfType(uid, type).Any();
     }
 
     public IEnumerable<SharedBodyPartComponent> GetPartsOfType(EntityUid uid, BodyPartType type,
@@ -209,5 +229,4 @@ public abstract partial class SharedBodySystem
     }
 
     #endregion
-
 }

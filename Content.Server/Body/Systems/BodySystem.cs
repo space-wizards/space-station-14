@@ -5,7 +5,6 @@ using Content.Shared.Audio;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Prototypes;
-using Content.Shared.Body.Systems;
 using Content.Shared.Body.Systems.Body;
 using Content.Shared.MobState.Components;
 using Content.Shared.Movement.EntitySystems;
@@ -24,6 +23,7 @@ namespace Content.Server.Body.Systems
     {
         [Dependency] private readonly GameTicker _ticker = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly BodyPartSystem _bodyPartSystem = default!;
 
         public override void Initialize()
         {
@@ -101,7 +101,7 @@ namespace Content.Server.Body.Systems
                 RemovePart(uid, part, body);
 
                 if (gibParts)
-                    part.Gib();
+                    _bodyPartSystem.Gib(uid, part);
             }
 
             SoundSystem.Play(Filter.Pvs(uid), body.GibSound.GetSound(), Transform(uid).Coordinates, AudioHelpers.WithVariation(0.025f));

@@ -27,7 +27,7 @@ public class LungSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<LungComponent, AddedToBodyEvent>(OnAddedToBody);
+        SubscribeLocalEvent<LungComponent, MechanismAddedToBodyEvent>(OnAddedToBody);
         SubscribeLocalEvent<BreathToolComponent, GotEquippedEvent>(OnGotEquipped);
         SubscribeLocalEvent<BreathToolComponent, GotUnequippedEvent>(OnGotUnequipped);
     }
@@ -50,7 +50,7 @@ public class LungSystem : EntitySystem
         }
     }
 
-    private void OnAddedToBody(EntityUid uid, LungComponent component, AddedToBodyEvent args)
+    private void OnAddedToBody(EntityUid uid, LungComponent component, MechanismAddedToBodyEvent args)
     {
         Inhale(uid, component.CycleDelay);
     }

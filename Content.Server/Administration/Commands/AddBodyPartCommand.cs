@@ -1,5 +1,7 @@
 using Content.Server.Body.Components;
 using Content.Shared.Administration;
+using Content.Shared.Body.Components;
+using Content.Shared.Body.Systems.Body;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -35,11 +37,12 @@ namespace Content.Server.Administration.Commands
             }
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
+            var bodySys = EntitySystem.Get<SharedBodySystem>();
 
             if (entityManager.TryGetComponent<BodyComponent>(storageUid, out var storage)
-                && entityManager.TryGetComponent<BodyPartComponent>(entityUid, out var bodyPart))
+                && entityManager.TryGetComponent<SharedBodyPartComponent>(entityUid, out var bodyPart))
             {
-                if (storage.TryAddPart(args[3], bodyPart))
+                if (bodySys.TryAddPart(storageUid, args[3], bodyPart))
                 {
                     shell.WriteLine($@"Added {entityUid} to {storageUid}.");
                 }

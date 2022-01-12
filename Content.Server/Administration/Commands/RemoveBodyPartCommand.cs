@@ -1,5 +1,7 @@
 using Content.Server.Body.Components;
 using Content.Shared.Administration;
+using Content.Shared.Body.Components;
+using Content.Shared.Body.Systems.Body;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -33,11 +35,11 @@ namespace Content.Server.Administration.Commands
             if (!entityManager.TryGetComponent<TransformComponent>(entityUid, out var transform)) return;
 
             var parent = transform.ParentUid;
-
+            var bodySys = EntitySystem.Get<SharedBodySystem>();
             if (entityManager.TryGetComponent<BodyComponent>(parent, out var body) &&
-                entityManager.TryGetComponent<BodyPartComponent>(entityUid, out var part))
+                entityManager.TryGetComponent<SharedBodyPartComponent>(entityUid, out var part))
             {
-                body.RemovePart(part);
+                bodySys.RemovePart(parent, part, body);
 
             }
             else

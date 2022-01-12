@@ -9,11 +9,11 @@ namespace Content.Shared.Body.Events
     /// <summary>
     ///     Raised on a mechanism when it is added to a body.
     /// </summary>
-    public class AddedToBodyEvent : EntityEventArgs
+    public class MechanismAddedToBodyEvent : EntityEventArgs
     {
         public SharedBodyComponent Body;
 
-        public AddedToBodyEvent(SharedBodyComponent body)
+        public MechanismAddedToBodyEvent(SharedBodyComponent body)
         {
             Body = body;
         }
@@ -22,11 +22,11 @@ namespace Content.Shared.Body.Events
     /// <summary>
     ///     Raised on a mechanism when it is added to a body part.
     /// </summary>
-    public class AddedToPartEvent : EntityEventArgs
+    public class MechanismAddedToPartEvent : EntityEventArgs
     {
         public SharedBodyPartComponent Part;
 
-        public AddedToPartEvent(SharedBodyPartComponent part)
+        public MechanismAddedToPartEvent(SharedBodyPartComponent part)
         {
             Part = part;
         }
@@ -35,12 +35,12 @@ namespace Content.Shared.Body.Events
     /// <summary>
     ///     Raised on a mechanism when it is added to a body part within a body.
     /// </summary>
-    public class AddedToPartInBodyEvent : EntityEventArgs
+    public class MechanismAddedToPartInBodyEvent : EntityEventArgs
     {
         public SharedBodyComponent Body;
         public SharedBodyPartComponent Part;
 
-        public AddedToPartInBodyEvent(SharedBodyComponent body, SharedBodyPartComponent part)
+        public MechanismAddedToPartInBodyEvent(SharedBodyComponent body, SharedBodyPartComponent part)
         {
             Body = body;
             Part = part;
@@ -50,11 +50,11 @@ namespace Content.Shared.Body.Events
     /// <summary>
     ///     Raised on a mechanism when it is removed from a body.
     /// </summary>
-    public class RemovedFromBodyEvent : EntityEventArgs
+    public class MechanismRemovedFromBodyEvent : EntityEventArgs
     {
         public SharedBodyComponent Old;
 
-        public RemovedFromBodyEvent(SharedBodyComponent old)
+        public MechanismRemovedFromBodyEvent(SharedBodyComponent old)
         {
             Old = old;
         }
@@ -63,11 +63,11 @@ namespace Content.Shared.Body.Events
     /// <summary>
     ///     Raised on a mechanism when it is removed from a body part.
     /// </summary>
-    public class RemovedFromPartEvent : EntityEventArgs
+    public class MechanismRemovedFromPartEvent : EntityEventArgs
     {
         public SharedBodyPartComponent Old;
 
-        public RemovedFromPartEvent(SharedBodyPartComponent old)
+        public MechanismRemovedFromPartEvent(SharedBodyPartComponent old)
         {
             Old = old;
         }
@@ -76,12 +76,12 @@ namespace Content.Shared.Body.Events
     /// <summary>
     ///     Raised on a mechanism when it is removed from a body part within a body.
     /// </summary>
-    public class RemovedFromPartInBodyEvent : EntityEventArgs
+    public class MechanismRemovedFromPartInBodyEvent : EntityEventArgs
     {
         public SharedBodyComponent OldBody;
         public SharedBodyPartComponent OldPart;
 
-        public RemovedFromPartInBodyEvent(SharedBodyComponent oldBody, SharedBodyPartComponent oldPart)
+        public MechanismRemovedFromPartInBodyEvent(SharedBodyComponent oldBody, SharedBodyPartComponent oldPart)
         {
             OldBody = oldBody;
             OldPart = oldPart;

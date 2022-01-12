@@ -4,6 +4,7 @@ using Content.Server.Popups;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
+using Content.Shared.Body.Systems.Body;
 using Content.Shared.Climbing;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction.Helpers;
@@ -82,8 +83,9 @@ namespace Content.Server.Climbing.Components
                 return false;
             }
 
-            if (!body.HasPartOfType(BodyPartType.Leg) ||
-                !body.HasPartOfType(BodyPartType.Foot))
+            var bodySystem = EntitySystem.Get<SharedBodySystem>();
+            if (!bodySystem.HasPartOfType(user, BodyPartType.Leg, body) ||
+                !bodySystem.HasPartOfType(user, BodyPartType.Foot, body))
             {
                 reason = Loc.GetString("comp-climbable-cant-climb");
                 return false;

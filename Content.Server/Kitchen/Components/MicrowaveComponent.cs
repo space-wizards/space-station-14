@@ -12,6 +12,7 @@ using Content.Server.UserInterface;
 using Content.Shared.Acts;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
+using Content.Shared.Body.Systems.Body;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
@@ -519,14 +520,15 @@ namespace Content.Server.Kitchen.Components
 
             if (_entities.TryGetComponent<SharedBodyComponent?>(victim, out var body))
             {
-                var headSlots = body.GetSlotsOfType(BodyPartType.Head);
+                var bodySys = EntitySystem.Get<SharedBodySystem>();
+                var headSlots = bodySys.GetSlotsOfType(victim, BodyPartType.Head, body);
 
                 foreach (var slot in headSlots)
                 {
                     var part = slot.Part;
 
                     if (part == null ||
-                        !body.TryDropPart(slot, out var dropped))
+                        !bodySys.TryDropPart(slot, out var dropped))
                     {
                         continue;
                     }

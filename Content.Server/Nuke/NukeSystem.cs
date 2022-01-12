@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using Content.Server.Body.Components;
+using Content.Server.Body.Systems;
 using Content.Server.Chat.Managers;
 using Content.Server.Construction.Components;
 using Content.Server.Coordinates.Helpers;
@@ -7,6 +9,7 @@ using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
 using Content.Shared.Body.Components;
+using Content.Shared.Body.Systems.Body;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
@@ -29,6 +32,7 @@ namespace Content.Server.Nuke
         [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
         [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
         [Dependency] private readonly PopupSystem _popups = default!;
+        [Dependency] private readonly BodySystem _body = default!;
         [Dependency] private readonly IEntityLookup _lookup = default!;
         [Dependency] private readonly IChatManager _chat = default!;
 
@@ -420,10 +424,10 @@ namespace Content.Server.Nuke
             {
                 var entUid = ent;
                 if (!EntityManager.EntityExists(entUid))
-                    continue;;
+                    continue;
 
-                if (EntityManager.TryGetComponent(entUid, out SharedBodyComponent? body))
-                    body.Gib();
+                if (EntityManager.TryGetComponent(entUid, out BodyComponent? body))
+                    _body.Gib(entUid, true, body);
             }
 
             EntityManager.DeleteEntity(uid);

@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Shared.Body.Components;
+using Content.Shared.Body.Systems.Body;
 using Content.Shared.Damage;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
@@ -127,8 +128,9 @@ namespace Content.Client.Body.UI
                 return;
             }
 
-            var slot = body.SlotAt(args.ItemIndex);
-            _currentBodyPart = body.PartAt(args.ItemIndex).Key;
+            var bodySys = EntitySystem.Get<SharedBodySystem>();
+            var slot = bodySys.SlotAt(body.Owner, args.ItemIndex, body);
+            _currentBodyPart = bodySys.PartAt(body.Owner, args.ItemIndex, body);
 
             if (slot.Part != null)
             {
@@ -173,7 +175,7 @@ namespace Content.Client.Body.UI
             // TODO BODY Mechanism description
             var message =
                 Loc.GetString(
-                    $"{mechanism.Name}\nHealth: {mechanism.CurrentDurability}/{mechanism.MaxDurability}");
+                    $"{mechanism.Name}");
 
             MechanismInfoLabel.SetMessage(message);
         }

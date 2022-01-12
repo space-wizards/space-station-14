@@ -2,6 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Body.Components;
+using Content.Shared.Body.Events;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Prototypes;
 using Content.Shared.Damage;
@@ -109,6 +110,7 @@ public abstract partial class SharedBodySystem
 
         slot.Part = part;
         body.Parts[part] = slot;
+        RaiseLocalEvent(new PartAddedToBodyEvent(part.Body, body));
         part.Body = body;
         body.PartContainer.Insert(part.Owner);
 
@@ -153,6 +155,7 @@ public abstract partial class SharedBodySystem
 
         var old = slot.Part;
 
+        RaiseLocalEvent(new PartRemovedFromBodyEvent(body, null));
         slot.Part = null;
         body.Parts.Remove(old);
         body.PartContainer.Remove(old.Owner);

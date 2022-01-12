@@ -21,11 +21,11 @@ public class MechanismSystem : EntitySystem
             // It's on a body
             if (mech.Part.Body != null)
             {
-                RaiseLocalEvent(uid, new RemovedFromPartInBodyEvent(mech.Part.Body, mech.Part), false);
+                RaiseLocalEvent(uid, new MechanismRemovedFromPartInBodyEvent(mech.Part.Body, mech.Part), false);
             }
             else
             {
-                RaiseLocalEvent(uid, new RemovedFromPartEvent(mech.Part), false);
+                RaiseLocalEvent(uid, new MechanismRemovedFromPartEvent(mech.Part), false);
             }
         }
 
@@ -33,11 +33,11 @@ public class MechanismSystem : EntitySystem
         {
             if (part.Body != null)
             {
-                RaiseLocalEvent(uid, new AddedToPartInBodyEvent(part.Body, part), false);
+                RaiseLocalEvent(uid, new MechanismAddedToPartInBodyEvent(part.Body, part), false);
             }
             else
             {
-                RaiseLocalEvent(uid, new AddedToPartEvent(part), false);
+                RaiseLocalEvent(uid, new MechanismAddedToPartEvent(part), false);
             }
         }
     }

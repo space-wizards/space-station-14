@@ -1,9 +1,12 @@
 using Content.Server.Act;
+using Content.Server.Body.Components;
+using Content.Server.Body.Systems;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Server.Players;
 using Content.Server.Popups;
 using Content.Shared.Body.Components;
+using Content.Shared.Body.Systems.Body;
 using Content.Shared.Popups;
 using Content.Shared.Recycling;
 using Robust.Server.GameObjects;
@@ -55,11 +58,12 @@ namespace Content.Server.Recycling.Components
                 mind.OwnedEntity?.PopupMessage(Loc.GetString("recycler-component-suicide-message"));
             }
 
+            var bobby = EntitySystem.Get<BodySystem>();
             victim.PopupMessageOtherClients(Loc.GetString("recycler-component-suicide-message-others", ("victim",victim)));
 
-            if (_entMan.TryGetComponent<SharedBodyComponent?>(victim, out var body))
+            if (_entMan.TryGetComponent<BodyComponent?>(victim, out var body))
             {
-                body.Gib(true);
+                bobby.Gib(victim, true, body);
             }
 
             EntitySystem.Get<RecyclerSystem>().Bloodstain(this);
