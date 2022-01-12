@@ -45,8 +45,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<DisposalUnitComponent, AnchoredEvent>(OnAnchored);
-            SubscribeLocalEvent<DisposalUnitComponent, UnanchoredEvent>(OnUnanchored);
+            SubscribeLocalEvent<DisposalUnitComponent, AnchorStateChangedEvent>(OnAnchorChanged);
             // TODO: Predict me when hands predicted
             SubscribeLocalEvent<DisposalUnitComponent, RelayMovementEntityEvent>(HandleMovement);
             SubscribeLocalEvent<DisposalUnitComponent, PowerChangedEvent>(HandlePowerChange);
@@ -313,15 +312,11 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             Remove(component, args.Entity);
         }
 
-        private void OnAnchored(EntityUid uid, DisposalUnitComponent component, AnchoredEvent args)
+        private void OnAnchorChanged(EntityUid uid, DisposalUnitComponent component, ref AnchorStateChangedEvent args)
         {
             UpdateVisualState(component);
-        }
-
-        private void OnUnanchored(EntityUid uid, DisposalUnitComponent component, UnanchoredEvent args)
-        {
-            UpdateVisualState(component);
-            TryEjectContents(component);
+            if (!args.Anchored)
+                TryEjectContents(component);
         }
         #endregion
 
