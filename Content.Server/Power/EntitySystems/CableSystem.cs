@@ -26,9 +26,6 @@ public class CableSystem : EntitySystem
         if (args.Handled)
             return;
 
-        if (cable.CableDroppedOnCutPrototype == null)
-            return;
-
         var ev = new CuttingFinishedEvent(uid, args.User);
         _toolSystem.UseTool(args.Used, args.User, uid, 0, cable.CuttingDelay, new[] { cable.CuttingQuality }, doAfterCompleteEvent: ev);
         args.Handled = true;
