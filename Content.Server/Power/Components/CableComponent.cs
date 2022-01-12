@@ -17,7 +17,7 @@ namespace Content.Server.Power.Components
     public class CableComponent : Component
     {
         [DataField("cableDroppedOnCutPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public readonly string? CableDroppedOnCutPrototype = "CableHVStack1";
+        public readonly string CableDroppedOnCutPrototype = "CableHVStack1";
 
         [DataField("cuttingQuality", customTypeSerializer:typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
         public string CuttingQuality = "Cutting";
