@@ -59,7 +59,7 @@ namespace Content.Client.Trigger
         {
             base.OnChangeData(component);
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            if (entityManager.TryGetComponent(component.Owner, out SpriteComponent spriteComponent)) return;
+            if (!entityManager.TryGetComponent(component.Owner, out SpriteComponent spriteComponent)) return;
 
             var animSystem = EntitySystem.Get<AnimationPlayerSystem>();
             entityManager.TryGetComponent(component.Owner, out AnimationPlayerComponent? player);

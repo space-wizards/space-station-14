@@ -165,7 +165,7 @@ namespace Content.Server.Explosion.EntitySystems
 
             var curTime = _gameTiming.CurTime;
 
-            if (!component.Colliding.Add(uid) ||
+            if (!component.Colliding.Add(args.OtherFixture.Body.Owner) ||
                 component.NextTrigger > curTime) return;
 
             component.Colliding.Add(args.OtherFixture.Body.Owner);
@@ -272,7 +272,7 @@ namespace Content.Server.Explosion.EntitySystems
 
             foreach (var comp in _proximityComponents)
             {
-                if (comp.NextTrigger >= _gameTiming.CurTime)
+                if (comp.NextTrigger > _gameTiming.CurTime)
                     return;
 
                 foreach (var colliding in comp.Colliding)
@@ -280,9 +280,10 @@ namespace Content.Server.Explosion.EntitySystems
                     EntityManager.TryGetComponent(colliding, out FixturesComponent fixtureComp);
                     foreach (var fixture in fixtureComp.Fixtures)
                     {
-                        if (fixture.Value.Body.LinearVelocity.LengthSquared <= Math.Pow(comp.TriggerSpeed, 2f))
+                        if (fixture.Value.Body.LinearVelocity.LengthSquared < Math.Pow(comp.TriggerSpeed, 2f))
                             break;
-                        
+
+                        SetProximityAppearance(comp.Owner, comp);
                         Trigger(comp.Owner);
                         comp.NextTrigger = TimeSpan.FromSeconds(_gameTiming.CurTime.TotalSeconds + comp.Cooldown);
                     }

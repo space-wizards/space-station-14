@@ -60,7 +60,7 @@ namespace Content.Server.Explosion.Components
         }
 
         [DataField("cooldown")]
-        public float Cooldown { get; set; } = 3f;
+        public float Cooldown { get; set; } = 5f;
 
         /// <summary>
         /// What speed should the other object be moving at to trigger the proximity fixture?
