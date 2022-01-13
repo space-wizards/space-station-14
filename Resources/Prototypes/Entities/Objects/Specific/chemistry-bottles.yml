@@ -8,6 +8,7 @@
   - type: Tag
     tags:
     - Bottle
+    - Trash
   - type: Sprite
     sprite: Objects/Specific/Chemistry/bottle.rsi
     netsync: false
@@ -37,9 +38,6 @@
     sprite: Objects/Specific/Chemistry/beaker.rsi
   - type: Spillable
     solution: drink
-  - type: Tag
-    tags:
-    - Trash
 
 - type: entity
   name: bottle
