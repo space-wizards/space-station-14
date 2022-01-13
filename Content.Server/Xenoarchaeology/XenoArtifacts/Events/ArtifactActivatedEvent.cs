@@ -8,5 +8,9 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Events;
 /// </summary>
 public class ArtifactActivatedEvent : EntityEventArgs
 {
-    public EntityUid? User;
+    /// <summary>
+    ///     Entity that activate this artifact.
+    ///     Usually player, but can also be another object.
+    /// </summary>
+    public EntityUid? Activator;
 }

@@ -43,8 +43,8 @@ public class SpawnArtifactSystem : EntitySystem
 
         // if there is an user - try to put spawned item in their hands
         // doesn't work for spawners
-        if (args.User != null &&
-            EntityManager.TryGetComponent(args.User.Value, out SharedHandsComponent? hands) &&
+        if (args.Activator != null &&
+            EntityManager.TryGetComponent(args.Activator.Value, out SharedHandsComponent? hands) &&
             EntityManager.HasComponent<ItemComponent>(spawned))
         {
             hands.TryPutInAnyHand(spawned);

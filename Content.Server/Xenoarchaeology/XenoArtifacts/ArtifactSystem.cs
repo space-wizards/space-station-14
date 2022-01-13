@@ -63,7 +63,7 @@ public class ArtifactSystem : EntitySystem
 
         var ev = new ArtifactActivatedEvent()
         {
-            User = user
+            Activator = user
         };
         RaiseLocalEvent(uid, ev);
     }
