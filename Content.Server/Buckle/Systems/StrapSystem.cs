@@ -31,7 +31,7 @@ namespace Content.Server.Buckle.Systems
             // This strap is being inserted into a container. In general this is fine, But maybe, just maybe, there is a
             // player strapped to some object that is somehow being bugged into a backpack.
 
-            // Firstly, is the container a backpack/storage entity?
+            // Firstly, check if the container is a backpack/storage entity?
             if (!HasComp<SharedStorageComponent>(args.Container.Owner))
                 return;
 

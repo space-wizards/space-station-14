@@ -46,14 +46,13 @@ namespace Content.Server.Storage.EntitySystems
             // This entity-storage is being inserted into a container. In general this is fine (e.g., pizza box in a
             // locker). But maybe, just maybe, this is a player somehow being bugged into a backpack.
 
-            // Firstly, the container a backpack/storage entity?
+            // Firstly, check if the container is a backpack/storage entity?
             if (!HasComp<SharedStorageComponent>(args.Container.Owner))
                 return;
 
             // Ok, so we will check if any of the entities we contain is a mob, and if it is, we cancel this attempt. In
-            // general, nesting entity-storage inside of a storage is rare. So checking every contained entity should be
-            // fine. The only instances I can think of is pizza boxes and body-bags (which should only be insertable if
-            // they are folded up anyways).
+            // general, nesting entity-storage inside of a storage is rare. So just checking every contained entity
+            // every time should be fine. The only instances I can think of is pizza boxes and body-bags.
 
             foreach (var ent in component.Contents.ContainedEntities)
             {
