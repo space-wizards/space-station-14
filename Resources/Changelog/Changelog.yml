@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Can no longer throw items while in a container., type: Tweak}
-  id: 368
-  time: '2021-09-23T22:44:25.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: 'Chairs, stools, etc. no longer rotate to unusual angles.', type: Fix}
@@ -2918,3 +2913,8 @@ Entries:
     type: Add}
   id: 869
   time: '2022-01-13T14:13:26.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Atmos fires now play a sound effect., type: Tweak}
+  id: 870
+  time: '2022-01-13T14:18:17.0000000+00:00'
