@@ -1,9 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: Dice now show a popup with the number they rolled when used., type: Tweak}
-  id: 365
-  time: '2021-09-21T15:05:28.382048+00:00'
 - author: 20kdc
   changes:
   - {message: Un-rotated gravity generator, type: Fix}
@@ -2916,3 +2911,8 @@ Entries:
   - {message: Remove duplicate ghost takeovers when an admin controls a mob., type: Fix}
   id: 866
   time: '2022-01-12T07:25:05.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Fixed trashbag so now only trash can be picked up., type: Fix}
+  id: 867
+  time: '2022-01-13T12:53:14.0000000+00:00'
