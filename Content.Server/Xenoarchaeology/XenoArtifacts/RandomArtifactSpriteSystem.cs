@@ -38,6 +38,7 @@ public class RandomArtifactSpriteSystem : EntitySystem
         var activationTime = TimeSpan.FromSeconds(component.ActivationTime);
         Timer.Spawn(activationTime, () =>
         {
+            if (appearance.Deleted) return;
             appearance.SetData(SharedArtifactsVisuals.IsActivated, false);
         });
 
