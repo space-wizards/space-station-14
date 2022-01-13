@@ -23,13 +23,13 @@ namespace Content.Client.Commands
             }
             if (args.Length == 0)
             {
-                EntitySystem.Get<BwoinkSystem>().EnsureWindowForLocalPlayer();
+                EntitySystem.Get<BwoinkSystem>().Open();
             }
             else
             {
                 if (Guid.TryParse(args[0], out var guid))
                 {
-                    EntitySystem.Get<BwoinkSystem>().EnsureWindow(new NetUserId(guid));
+                    EntitySystem.Get<BwoinkSystem>().Open(new NetUserId(guid));
                 }
                 else
                 {

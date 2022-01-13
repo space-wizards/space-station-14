@@ -1,4 +1,4 @@
-using Content.Server.Alert;
+using System;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
@@ -19,11 +19,6 @@ namespace Content.Server.MobState.States
                 return;
             }
 
-            if (!entityManager.TryGetComponent(entity, out ServerAlertsComponent? alerts))
-            {
-                return;
-            }
-
             if (!entityManager.TryGetComponent(entity, out MobStateComponent? stateComponent))
             {
                 return;
@@ -36,7 +31,7 @@ namespace Content.Server.MobState.States
                 modifier = (short) (damageable.TotalDamage / (earliestThreshold / 7f));
             }
 
-            alerts.ShowAlert(AlertType.HumanHealth, modifier);
+            EntitySystem.Get<AlertsSystem>().ShowAlert(entity, AlertType.HumanHealth, modifier);
         }
     }
 }

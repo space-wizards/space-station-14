@@ -140,6 +140,27 @@
     slice: FoodMeatChickenCutlet
 
 - type: entity
+  name: raw duck meat
+  parent: FoodMeatBase
+  id: FoodMeatDuck
+  description: A slab of raw duck. Remember to wash your hands!
+  components:
+  - type: Tag
+    tags:
+    - Raw
+  - type: Sprite
+    state: bird
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Toxin
+          Quantity: 1
+  - type: SliceableFood
+    count: 3
+    slice: FoodMeatDuckCutlet
+
+- type: entity
   name: raw crab meat
   parent: FoodMeatBase
   id: FoodMeatCrab
@@ -509,6 +530,31 @@
           Quantity: 15
 
 - type: entity
+  name: cooked duck
+  parent: FoodMeatBase
+  id: FoodMeatDuckCooked
+  description: A cooked piece of duck. Best used in other recipes.
+  components:
+  - type: Tag
+    tags:
+    - Cooked
+  - type: Food
+    trash: FoodPlateSmall
+  - type: Sprite
+    layers:
+    - state: plate-meat
+    - state: bird-cooked
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+  - type: SliceableFood
+    count: 3
+    slice: FoodMeatDuckCutletCooked
+
+- type: entity
   name: cooked crab
   parent: FoodMeatBase
   id: FoodMeatCrabCooked
@@ -687,6 +733,26 @@
   parent: FoodMeatBase
   id: FoodMeatChickenCutlet
   description: A cutlet of raw chicken. Remember to wash your hands!
+  components:
+  - type: Tag
+    tags:
+    - Raw
+    - Cutlet
+  - type: Sprite
+    state: cutlet
+    color: white
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Toxin
+          Quantity: 1
+
+- type: entity
+  name: raw duck cutlet
+  parent: FoodMeatBase
+  id: FoodMeatDuckCutlet
+  description: A cutlet of raw duck. Remember to wash your hands!
   components:
   - type: Tag
     tags:
@@ -886,6 +952,25 @@
         - ReagentId: Nutriment
           Quantity: 10
 
+- type: entity
+  name: duck cutlet
+  parent: FoodMeatBase
+  id: FoodMeatDuckCutletCooked
+  description: A cutlet of cooked duck. Remember to wash your hands!
+  components:
+  - type: Tag
+    tags:
+    - Cooked
+    - Cutlet
+  - type: Sprite
+    state: cutlet-cooked
+    color: white
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
 
 - type: entity
   name: lizard cutlet

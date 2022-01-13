@@ -29,6 +29,15 @@ namespace Content.Server.Light.Components
         [DataField("BurningTemperature")]
         public int BurningTemperature = 1400;
 
+        [DataField("lightEnergy")]
+        public float LightEnergy = 0.8f;
+
+        [DataField("lightRadius")]
+        public float LightRadius = 10;
+
+        [DataField("lightSoftness")]
+        public float LightSoftness = 1;
+
         [DataField("PowerUse")]
         public int PowerUse = 40;
 

@@ -227,6 +227,8 @@
     - FireExtinguisher
     - AutolatheMachineCircuitboard
     - ProtolatheMachineCircuitboard
+    - AirAlarmElectronics
+    - FireAlarmElectronics
 
 - type: technology
   name: material sheet printing
@@ -278,6 +280,8 @@
     - FirelockElectronics
     - DoorElectronics
     - APCElectronics
+    - SMESMachineCircuitboard
+    - SubstationMachineCircuitboard
     - HydroponicsTrayMachineCircuitboard
     - SolarControlComputerCircuitboard
 

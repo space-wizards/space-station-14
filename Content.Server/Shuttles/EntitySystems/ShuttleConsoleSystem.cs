@@ -1,4 +1,5 @@
-using Content.Server.Alert;
+using System;
+using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Shuttles.Components;
 using Content.Shared.ActionBlocker;
@@ -8,25 +9,80 @@ using Content.Shared.Popups;
 using Content.Shared.Shuttles;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Tag;
+using Content.Shared.Verbs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Map;
+using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Shuttles.EntitySystems
 {
     internal sealed class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     {
+        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly ActionBlockerSystem _blocker = default!;
+        [Dependency] private readonly AlertsSystem _alertsSystem = default!;
+        [Dependency] private readonly PopupSystem _popup = default!;
 
         public override void Initialize()
         {
             base.Initialize();
+
             SubscribeLocalEvent<ShuttleConsoleComponent, ComponentShutdown>(HandleConsoleShutdown);
-            SubscribeLocalEvent<PilotComponent, ComponentShutdown>(HandlePilotShutdown);
             SubscribeLocalEvent<ShuttleConsoleComponent, ActivateInWorldEvent>(HandleConsoleInteract);
-            SubscribeLocalEvent<PilotComponent, MoveEvent>(HandlePilotMove);
             SubscribeLocalEvent<ShuttleConsoleComponent, PowerChangedEvent>(HandlePowerChange);
+            SubscribeLocalEvent<ShuttleConsoleComponent, GetInteractionVerbsEvent>(OnConsoleInteract);
+
+            SubscribeLocalEvent<PilotComponent, ComponentShutdown>(HandlePilotShutdown);
+            SubscribeLocalEvent<PilotComponent, MoveEvent>(HandlePilotMove);
+        }
+
+        private void OnConsoleInteract(EntityUid uid, ShuttleConsoleComponent component, GetInteractionVerbsEvent args)
+        {
+            if (!args.CanAccess ||
+                !args.CanInteract)
+                return;
+
+            var xform = EntityManager.GetComponent<TransformComponent>(uid);
+
+            // Maybe move mode onto the console instead?
+            if (!_mapManager.TryGetGrid(xform.GridID, out var grid) ||
+                !EntityManager.TryGetComponent(grid.GridEntityId, out ShuttleComponent? shuttle)) return;
+
+            Verb verb = new()
+            {
+                Text = Loc.GetString("shuttle-mode-toggle"),
+                Act = () => ToggleShuttleMode(args.User, component, shuttle),
+                Disabled = !xform.Anchored || EntityManager.TryGetComponent(uid, out ApcPowerReceiverComponent? receiver) && !receiver.Powered,
+            };
+
+            args.Verbs.Add(verb);
+        }
+
+        private void ToggleShuttleMode(EntityUid user, ShuttleConsoleComponent consoleComponent, ShuttleComponent shuttleComponent, TransformComponent? consoleXform = null)
+        {
+            // Re-validate
+            if (EntityManager.TryGetComponent(consoleComponent.Owner, out ApcPowerReceiverComponent? receiver) && !receiver.Powered) return;
+
+            if (!Resolve(consoleComponent.Owner, ref consoleXform)) return;
+
+            if (!consoleXform.Anchored || consoleXform.GridID != EntityManager.GetComponent<TransformComponent>(shuttleComponent.Owner).GridID) return;
+
+            switch (shuttleComponent.Mode)
+            {
+                case ShuttleMode.Cruise:
+                    shuttleComponent.Mode = ShuttleMode.Docking;
+                    _popup.PopupEntity(Loc.GetString("shuttle-mode-docking"), consoleComponent.Owner, Filter.Entities(user));
+                    break;
+                case ShuttleMode.Docking:
+                    shuttleComponent.Mode = ShuttleMode.Cruise;
+                    _popup.PopupEntity(Loc.GetString("shuttle-mode-cruise"), consoleComponent.Owner, Filter.Entities(user));
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         public override void Update(float frameTime)
@@ -141,10 +197,7 @@ namespace Content.Server.Shuttles.EntitySystems
 
             component.SubscribedPilots.Add(pilotComponent);
 
-            if (EntityManager.TryGetComponent(entity, out ServerAlertsComponent? alertsComponent))
-            {
-                alertsComponent.ShowAlert(AlertType.PilotingShuttle);
-            }
+            _alertsSystem.ShowAlert(entity, AlertType.PilotingShuttle);
 
             entity.PopupMessage(Loc.GetString("shuttle-pilot-start"));
             pilotComponent.Console = component;
@@ -163,10 +216,7 @@ namespace Content.Server.Shuttles.EntitySystems
 
             if (!helmsman.SubscribedPilots.Remove(pilotComponent)) return;
 
-            if (EntityManager.TryGetComponent(pilotComponent.Owner, out ServerAlertsComponent? alertsComponent))
-            {
-                alertsComponent.ClearAlert(AlertType.PilotingShuttle);
-            }
+            _alertsSystem.ClearAlert(pilotComponent.Owner, AlertType.PilotingShuttle);
 
             pilotComponent.Owner.PopupMessage(Loc.GetString("shuttle-pilot-end"));
 

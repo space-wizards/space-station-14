@@ -57,7 +57,7 @@ public class LungSystem : EntitySystem
 
     public void Gasp(EntityUid uid,
         LungComponent? lung=null,
-        SharedMechanismComponent? mech=null)
+        MechanismComponent? mech=null)
     {
         if (!Resolve(uid, ref lung, ref mech))
             return;
@@ -76,7 +76,7 @@ public class LungSystem : EntitySystem
 
     public void UpdateLung(EntityUid uid,
         LungComponent? lung=null,
-        SharedMechanismComponent? mech=null)
+        MechanismComponent? mech=null)
     {
         if (!Resolve(uid, ref lung, ref mech))
             return;
@@ -128,7 +128,7 @@ public class LungSystem : EntitySystem
     /// </summary>
     public void Inhale(EntityUid uid, float frameTime,
         LungComponent? lung=null,
-        SharedMechanismComponent? mech=null)
+        MechanismComponent? mech=null)
     {
         if (!Resolve(uid, ref lung, ref mech))
             return;
@@ -159,7 +159,7 @@ public class LungSystem : EntitySystem
     /// </summary>
     public void TakeGasFrom(EntityUid uid, float frameTime, GasMixture from,
         LungComponent? lung=null,
-        SharedMechanismComponent? mech=null)
+        MechanismComponent? mech=null)
     {
         if (!Resolve(uid, ref lung, ref mech))
             return;
@@ -186,7 +186,7 @@ public class LungSystem : EntitySystem
     /// </summary>
     public void Exhale(EntityUid uid, float frameTime,
         LungComponent? lung=null,
-        SharedMechanismComponent? mech=null)
+        MechanismComponent? mech=null)
     {
         if (!Resolve(uid, ref lung, ref mech))
             return;
@@ -204,7 +204,7 @@ public class LungSystem : EntitySystem
     /// </summary>
     public void PushGasTo(EntityUid uid, GasMixture to,
         LungComponent? lung=null,
-        SharedMechanismComponent? mech=null)
+        MechanismComponent? mech=null)
     {
         if (!Resolve(uid, ref lung, ref mech))
             return;

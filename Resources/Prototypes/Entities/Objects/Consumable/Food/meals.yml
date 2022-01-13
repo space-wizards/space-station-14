@@ -240,3 +240,23 @@
   - type: Sprite
     state: saltysweet
 # Tastes awesome.
+
+- type: entity
+  name: queso
+  parent: FoodMealBase
+  id: FoodMealQueso
+  description: A classic dipping sauce that you can't go wrong with.
+  components:
+    - type: Sprite
+      state: queso
+# Its queso! Everyone loves queso... Right?.
+
+- type: entity
+  name: enchiladas
+  parent: FoodMealBase
+  id: FoodMealEnchiladas
+  description: Viva La Mexico!
+  components:
+    - type: Sprite
+      state: enchiladas
+# What do Europeans eat instead of enchiladas? 25.4 millimeter-iladas.

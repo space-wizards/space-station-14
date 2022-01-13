@@ -1,6 +1,6 @@
 ﻿- type: tile
-  name: floor_steel
-  display_name: steel floor
+  id: floor_steel
+  name: steel floor
   texture: "steel"
   base_turfs:
   - plating
@@ -14,8 +14,8 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_wood
-  display_name: wood
+  id: floor_wood
+  name: wood
   texture: "wood"
   base_turfs:
   - space
@@ -30,8 +30,8 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_white
-  display_name: white floor
+  id: floor_white
+  name: white floor
   texture: "white"
   base_turfs:
   - plating
@@ -45,8 +45,8 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_dark
-  display_name: dark floor
+  id: floor_dark
+  name: dark floor
   texture: "dark"
   base_turfs:
   - plating
@@ -60,8 +60,8 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_techmaint
-  display_name: techmaint floor
+  id: floor_techmaint
+  name: techmaint floor
   texture: "tech_maint"
   base_turfs:
   - plating
@@ -75,8 +75,8 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_reinforced
-  display_name: reinforced floor
+  id: floor_reinforced
+  name: reinforced floor
   texture: "reinforced"
   base_turfs:
   - plating
@@ -90,8 +90,8 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_mono
-  display_name: mono floor
+  id: floor_mono
+  name: mono floor
   texture: "mono"
   base_turfs:
   - plating
@@ -105,8 +105,8 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_lino
-  display_name: linoleum floor
+  id: floor_lino
+  name: linoleum floor
   texture: "lino"
   base_turfs:
   - plating
@@ -120,8 +120,8 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_steel_dirty
-  display_name: dirty steel floor
+  id: floor_steel_dirty
+  name: dirty steel floor
   texture: "steel_dirty"
   base_turfs:
   - plating
@@ -135,8 +135,8 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_elevator_shaft
-  display_name: elevator shaft
+  id: floor_elevator_shaft
+  name: elevator shaft
   texture: "elevator_shaft"
   base_turfs:
   - plating
@@ -150,8 +150,8 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_rock_vault
-  display_name: rock floor
+  id: floor_rock_vault
+  name: rock floor
   texture: "rock_vault"
   base_turfs:
   - plating
@@ -165,8 +165,8 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_blue
-  display_name: blue tile
+  id: floor_blue
+  name: blue tile
   texture: blue
   base_turfs:
   - plating
@@ -180,8 +180,8 @@
 
 # Departamental
 - type: tile
-  name: floor_freezer
-  display_name: freezer
+  id: floor_freezer
+  name: freezer
   texture: "freezer"
   base_turfs:
   - plating
@@ -195,8 +195,8 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_showroom
-  display_name: showroom floor
+  id: floor_showroom
+  name: showroom floor
   texture: "showroom"
   base_turfs:
   - plating
@@ -210,8 +210,8 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_hydro
-  display_name: hydro floor
+  id: floor_hydro
+  name: hydro floor
   texture: "hydro"
   base_turfs:
   - plating
@@ -225,8 +225,8 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_bar
-  display_name: bar floor
+  id: floor_bar
+  name: bar floor
   texture: "bar"
   base_turfs:
   - plating
@@ -240,8 +240,8 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_clown
-  display_name: clown floor
+  id: floor_clown
+  name: clown floor
   texture: "clown"
   base_turfs:
   - plating
@@ -255,8 +255,8 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_mime
-  display_name: mime floor
+  id: floor_mime
+  name: mime floor
   texture: "mime"
   base_turfs:
   - plating
@@ -270,8 +270,8 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_kitchen
-  display_name: kitchen floor
+  id: floor_kitchen
+  name: kitchen floor
   texture: "kitchen"
   base_turfs:
   - plating
@@ -285,8 +285,8 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_laundry
-  display_name: laundry floor
+  id: floor_laundry
+  name: laundry floor
   texture: "laundry"
   base_turfs:
   - plating
@@ -301,8 +301,8 @@
 
 # Materials
 - type: tile
-  name: floor_gold
-  display_name: gold tile
+  id: floor_gold
+  name: gold tile
   texture: gold
   base_turfs:
   - plating
@@ -316,8 +316,8 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_silver
-  display_name: silver tile
+  id: floor_silver
+  name: silver tile
   texture: silver
   base_turfs:
   - plating
@@ -331,8 +331,8 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_glass
-  display_name: glass floor
+  id: floor_glass
+  name: glass floor
   texture: glass
   base_turfs:
   - plating
@@ -346,8 +346,8 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_rglass
-  display_name: reinforced glass floor
+  id: floor_rglass
+  name: reinforced glass floor
   texture: rglass
   base_turfs:
   - plating
@@ -362,8 +362,8 @@
 
 # Circuits
 - type: tile
-  name: floor_green_circuit
-  display_name: green circuit floor
+  id: floor_green_circuit
+  name: green circuit floor
   texture: "green_circuit"
   base_turfs:
   - plating
@@ -377,8 +377,8 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_blue_circuit
-  display_name: blue circuit floor
+  id: floor_blue_circuit
+  name: blue circuit floor
   texture: "blue_circuit"
   base_turfs:
   - plating
@@ -393,8 +393,8 @@
 
 # Terrain
 - type: tile
-  name: floor_snow
-  display_name: snow
+  id: floor_snow
+  name: snow
   texture: snow
   base_turfs:
   - plating
@@ -408,8 +408,8 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_grass
-  display_name: grass floor
+  id: floor_grass
+  name: grass floor
   texture: "grass"
   base_turfs:
   - plating
@@ -424,8 +424,8 @@
 
 # Asteroid
 - type: tile
-  name: floor_asteroid_sand
-  display_name: asteroid floor
+  id: floor_asteroid_sand
+  name: asteroid floor
   texture: Asteroid/asteroid_sand
   base_turfs:
   - space
@@ -438,8 +438,8 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_asteroid_tile
-  display_name: asteroid tile
+  id: floor_asteroid_tile
+  name: asteroid tile
   texture: Asteroid/asteroid_tile
   base_turfs:
   - plating
@@ -452,8 +452,8 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_asteroid_coarse_sand0
-  display_name: asteroid coarse sand 0
+  id: floor_asteroid_coarse_sand0
+  name: asteroid coarse sand 0
   texture: Asteroid/asteroid_coarse_sand0
   base_turfs:
   - space
@@ -466,8 +466,8 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_asteroid_coarse_sand1
-  display_name: asteroid coarse sand 1
+  id: floor_asteroid_coarse_sand1
+  name: asteroid coarse sand 1
   texture: Asteroid/asteroid_coarse_sand1
   base_turfs:
   - space
@@ -480,8 +480,8 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_asteroid_coarse_sand2
-  display_name: asteroid coarse sand 2
+  id: floor_asteroid_coarse_sand2
+  name: asteroid coarse sand 2
   texture: Asteroid/asteroid_coarse_sand2
   base_turfs:
   - space
@@ -494,8 +494,8 @@
   heatCapacity: 10000
 
 - type: tile
-  name: floor_asteroid_coarse_sand_dug
-  display_name: asteroid dug coarse sand
+  id: floor_asteroid_coarse_sand_dug
+  name: asteroid dug coarse sand
   texture: Asteroid/asteroid_coarse_sand_dug
   base_turfs:
   - space

@@ -6,7 +6,7 @@
   - type: Hitscan
     damage:
       types:
-        Heat: 10
+        Heat: 15
     spriteName: Objects/Weapons/Guns/Projectiles/laser.png
     muzzleFlash: Objects/Weapons/Guns/Projectiles/laser_muzzle.png
     impactFlash: Objects/Weapons/Guns/Projectiles/laser_impact.png
@@ -22,7 +22,7 @@
     impactFlash: Objects/Weapons/Guns/Projectiles/heavy_laser_impact.png
     damage:
       types:
-        Heat: 30
+        Heat: 45
 
 - type: entity
   name: x-ray laser

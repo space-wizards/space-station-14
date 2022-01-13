@@ -1,12 +1,11 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Content.IntegrationTests;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 
-namespace Content.Tests.Server.GameObjects.Components.Access
+namespace Content.IntegrationTests.Tests.Access
 {
     [TestFixture]
     [TestOf(typeof(AccessReaderComponent))]

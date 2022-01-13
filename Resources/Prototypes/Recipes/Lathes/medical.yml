@@ -1,22 +1,4 @@
 - type: latheRecipe
-  id: Brutepack
-  icon: Objects/Specific/Medical/medical.rsi/brutepack.png
-  result: Brutepack
-  completetime: 500
-  materials:
-    Steel: 400
-    Glass: 100
-
-- type: latheRecipe
-  id: Ointment
-  icon: Objects/Specific/Medical/medical.rsi/ointment.png
-  result: Ointment
-  completetime: 500
-  materials:
-    Steel: 400
-    Glass: 100
-
-- type: latheRecipe
   id: Gauze
   icon: Objects/Specific/Medical/medical.rsi/gauze.png
   result: Gauze
@@ -55,6 +37,7 @@
   completetime: 500
   materials:
     Steel: 200
+    Plastic: 100
 
 - type: latheRecipe
   id: Saw
