@@ -185,19 +185,20 @@ namespace Content.Client.Verbs.UI
             if (verb == null)
             {
                 // The user probably clicked on a verb category.
-                // We will act as if they clicked on the first verb in that category.
+                // If there's only one verb in the category, then it will act as if they clicked on that verb.
+                // Otherwise it opens the category menu.
 
                 if (verbElement.SubMenu == null || verbElement.SubMenu.ChildCount == 0)
                     return;
 
                 if (verbElement.SubMenu.MenuBody.ChildCount != 1
-                    || verbElement.SubMenu.MenuBody.Children.First() is not VerbMenuElement verbCategoryElement)
+                    || verbElement.SubMenu.MenuBody.Children.First() is not VerbMenuElement verbMenuElement)
                 {
                     OpenSubMenu(verbElement);
                     return;
                 }
 
-                verb = verbCategoryElement.Verb;
+                verb = verbMenuElement.Verb;
 
                 if (verb == null)
                     return;
