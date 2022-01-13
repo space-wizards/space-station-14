@@ -1,9 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: Un-rotated gravity generator, type: Fix}
-  id: 366
-  time: '2021-09-22T10:55:00.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix pulling permanently decreasing your speed., type: Fix}
@@ -2916,3 +2911,9 @@ Entries:
   - {message: Fixed trashbag so now only trash can be picked up., type: Fix}
   id: 867
   time: '2022-01-13T12:53:14.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Makes smoking even cooler (visuals fixed, but hopefully properly this
+      time)', type: Fix}
+  id: 868
+  time: '2022-01-13T14:09:46.0000000+00:00'
