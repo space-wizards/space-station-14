@@ -1,13 +1,8 @@
 using System.Collections.Generic;
 using Content.Server.Hands.Components;
-using Content.Server.Interaction;
-using Content.Server.Morgue.Components;
 using Content.Server.Storage.Components;
-using Content.Shared.Body.Components;
 using Content.Shared.Interaction;
-using Content.Shared.MobState.Components;
 using Content.Shared.Movement;
-using Content.Shared.Storage;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -38,30 +33,6 @@ namespace Content.Server.Storage.EntitySystems
             SubscribeLocalEvent<EntityStorageComponent, GetInteractionVerbsEvent>(AddToggleOpenVerb);
             SubscribeLocalEvent<ServerStorageComponent, GetActivationVerbsEvent>(AddOpenUiVerb);
             SubscribeLocalEvent<EntityStorageComponent, RelayMovementEntityEvent>(OnRelayMovement);
-            SubscribeLocalEvent<EntityStorageComponent, ContainerGettingInsertedAttemptEvent>(OnInsertAttempt);
-        }
-
-        private void OnInsertAttempt(EntityUid uid, EntityStorageComponent component, ContainerGettingInsertedAttemptEvent args)
-        {
-            // This entity-storage is being inserted into a container. In general this is fine (e.g., pizza box in a
-            // locker). But maybe, just maybe, this is a player somehow being bugged into a backpack.
-
-            // Firstly, check if the container is a backpack/storage entity?
-            if (!HasComp<SharedStorageComponent>(args.Container.Owner))
-                return;
-
-            // Ok, so we will check if any of the entities we contain is a mob, and if it is, we cancel this attempt. In
-            // general, nesting entity-storage inside of a storage is rare. So just checking every contained entity
-            // every time should be fine. The only instances I can think of is pizza boxes and body-bags.
-
-            foreach (var ent in component.Contents.ContainedEntities)
-            {
-                if (HasComp<MobStateComponent>(ent) || HasComp<SharedBodyComponent>(ent))
-                {
-                    args.Cancel();
-                    return;
-                }
-            }
         }
 
         private void OnRelayMovement(EntityUid uid, EntityStorageComponent component, RelayMovementEntityEvent args)
