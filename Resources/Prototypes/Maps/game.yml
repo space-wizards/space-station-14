@@ -92,7 +92,6 @@
     Botanist: [ 1, 1 ]
 
 - type: gameMap
-<<<<<<< HEAD
   id: sunrise
   mapName: 'Sunrise'
   mapNameTemplate: '{0} Sunrise {1}'
@@ -112,7 +111,8 @@
     MedicalDoctor: [ 1, 1 ]
     ResearchDirector: [ 1, 1 ]
     Botanist: [ 1, 1 ]
-=======
+
+- type: gameMap
   id: ssreach
   mapName: 'Reach'
   mapNameTemplate: '{0} Reach {1}'
@@ -155,4 +155,3 @@
     ChiefMedicalOfficer: [ 1, 1 ]
     HeadOfSecurity: [ 1, 1 ]
     SecurityOfficer: [ 2, 3 ]
->>>>>>> 67eaa7bfe63ccc4111418aeeec30ac7b81522c7a
