@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
@@ -61,11 +61,11 @@ namespace Content.Shared.Arcade
         public class BlockGameSetScreenMessage : BoundUserInterfaceMessage
         {
             public readonly BlockGameScreen Screen;
-            public readonly bool isStarted;
+            public readonly bool IsStarted;
             public BlockGameSetScreenMessage(BlockGameScreen screen, bool isStarted = true)
             {
                 Screen = screen;
-                this.isStarted = isStarted;
+                IsStarted = isStarted;
             }
         }
 

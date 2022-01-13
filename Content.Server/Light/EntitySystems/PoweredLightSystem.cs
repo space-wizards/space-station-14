@@ -251,7 +251,7 @@ namespace Content.Server.Light.EntitySystems
                     case LightBulbState.Normal:
                         if (powerReceiver.Powered && light.On)
                         {
-                            SetLight(uid, true, lightBulb.Color, light, lightBulb.lightRadius, lightBulb.lightEnergy, lightBulb.lightSoftness);
+                            SetLight(uid, true, lightBulb.Color, light, lightBulb.LightRadius, lightBulb.LightEnergy, lightBulb.LightSoftness);
                             appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.On);
                             var time = _gameTiming.CurTime;
                             if (time > light.LastThunk + ThunkDelay)
