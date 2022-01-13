@@ -27,6 +27,7 @@ public partial class ConfirmationMenuElement : ContextMenuElement
     {
         Verb = verb;
         Type = type;
+        Icon.Visible = false;
 
         SetOnlyStyleClass(StyleClassConfirmationContextMenuButton);
     }
