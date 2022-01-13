@@ -1,0 +1,22 @@
+- type: job
+  id: Lawyer
+  name: "lawyer"
+  startingGear: LawyerGear
+  departments:
+  - Civilian
+  icon: "Lawyer"
+  supervisors: "the head of personnel"
+  access:
+  - Service
+  - Maintenance
+
+- type: startingGear
+  id: LawyerGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitLawyerBlack  #TODO change jumpsuit to randomiser of the 4 variants
+    back: ClothingBackpackFilled
+    shoes: ClothingShoesColorBlack
+    id: LawyerPDA
+    ears: ClothingHeadsetService
+    #TODO add copy of space law
+

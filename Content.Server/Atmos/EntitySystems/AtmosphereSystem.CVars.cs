@@ -9,7 +9,6 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly IConfigurationManager _cfg = default!;
 
         public bool SpaceWind { get; private set; }
-        public string? SpaceWindSound { get; private set; }
         public bool MonstermosEqualization { get; private set; }
         public bool MonstermosDepressurization { get; private set; }
         public bool MonstermosRipTiles { get; private set; }
@@ -24,7 +23,6 @@ namespace Content.Server.Atmos.EntitySystems
         private void InitializeCVars()
         {
             _cfg.OnValueChanged(CCVars.SpaceWind, value => SpaceWind = value, true);
-            _cfg.OnValueChanged(CCVars.SpaceWindSound, value => SpaceWindSound = value, true);
             _cfg.OnValueChanged(CCVars.MonstermosEqualization, value => MonstermosEqualization = value, true);
             _cfg.OnValueChanged(CCVars.MonstermosDepressurization, value => MonstermosDepressurization = value, true);
             _cfg.OnValueChanged(CCVars.MonstermosRipTiles, value => MonstermosRipTiles = value, true);

@@ -1,0 +1,23 @@
+- type: job
+  id: Librarian
+  name: "librarian"
+  startingGear: LibrarianGear
+  departments:
+  - Civilian
+  icon: "Librarian"
+  supervisors: "the head of personnel"
+  access:
+  - Service
+  - Maintenance
+
+- type: startingGear
+  id: LibrarianGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitLibrarian
+    back: ClothingBackpackFilled
+    shoes: ClothingShoesColorBlack
+    id: LibrarianPDA
+    ears: ClothingHeadsetService
+    pocket1: d10Dice
+  innerclothingskirt: ClothingUniformJumpskirtColorLightBrown
+

@@ -1,8 +1,12 @@
 using Content.Server.Buckle.Components;
 using Content.Server.Interaction;
+using Content.Shared.Body.Components;
+using Content.Shared.MobState.Components;
+using Content.Shared.Storage;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -19,6 +23,14 @@ namespace Content.Server.Buckle.Systems
             base.Initialize();
 
             SubscribeLocalEvent<StrapComponent, GetInteractionVerbsEvent>(AddStrapVerbs);
+            SubscribeLocalEvent<StrapComponent, ContainerGettingInsertedAttemptEvent>(OnInsertAttempt);
+        }
+
+        private void OnInsertAttempt(EntityUid uid, StrapComponent component, ContainerGettingInsertedAttemptEvent args)
+        {
+            // If someone is attempting to put this item inside of a backpack, ensure that it has no entities strapped to it.
+            if (HasComp<SharedStorageComponent>(args.Container.Owner) && component.BuckledEntities.Count != 0)
+                args.Cancel();
         }
 
         // TODO ECS BUCKLE/STRAP These 'Strap' verbs are an incestuous mess of buckle component and strap component
