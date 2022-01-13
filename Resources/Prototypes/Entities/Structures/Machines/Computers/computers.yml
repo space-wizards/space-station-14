@@ -316,6 +316,7 @@
       - ServiceSmokeables
       - ServiceCustomSmokable
       - ServiceBureaucracy
+      - ServicePersonnel
       - EngineeringCableLv
       - EngineeringCableMv
       - EngineeringCableHv
