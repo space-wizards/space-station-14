@@ -20,7 +20,7 @@ public class ReactionJsonGenerator
                 .Select(x => new ReactionEntry(x))
                 .ToDictionary(x => x.Id, x => x);
 
-        file.Write(JsonSerializer.Serialize(reactions, new JsonSerializerOptions { WriteIndented = true }));
+        file.Write(JsonSerializer.Serialize(reactions, new JsonSerializerOptions { WriteIndented = true, IncludeFields = true }));
     }
 }
 

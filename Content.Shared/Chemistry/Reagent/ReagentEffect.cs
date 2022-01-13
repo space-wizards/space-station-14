@@ -22,7 +22,7 @@ namespace Content.Shared.Chemistry.Reagent
     [MeansImplicitUse]
     public abstract class ReagentEffect
     {
-        [JsonPropertyName("id")] private string _id => this.GetType().Name;
+        [JsonPropertyName("id")] public string _id => this.GetType().Name;
         /// <summary>
         ///     The list of conditions required for the effect to activate. Not required.
         /// </summary>
