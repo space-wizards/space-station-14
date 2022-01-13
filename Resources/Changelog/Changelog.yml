@@ -1,12 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: Syringes can inject into/draw from beakers and drinks again., type: Fix}
-  - {message: Syringe messages on failure to inject/draw are less confusing., type: Fix}
-  - {message: Drinks that have been transformed (i.e. beer glasses) can be put back
-      into the dispenser., type: Fix}
-  id: 377
-  time: '2021-10-01T10:06:50.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: Fixes bar sign not changing its sprite correctly., type: Fix}
@@ -2918,3 +2910,9 @@ Entries:
     type: Tweak}
   id: 878
   time: '2022-01-13T15:06:43.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added librarian and lawyer roles to the game and all associated clothing
+      to the clothing vendor., type: Add}
+  id: 879
+  time: '2022-01-13T15:11:09.0000000+00:00'
