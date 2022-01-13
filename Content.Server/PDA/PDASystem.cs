@@ -2,6 +2,7 @@ using Content.Server.Light.Components;
 using Content.Server.Light.EntitySystems;
 using Content.Server.Light.Events;
 using Content.Server.Traitor.Uplink;
+using Content.Server.Traitor.Uplink.Account;
 using Content.Server.Traitor.Uplink.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Containers.ItemSlots;
@@ -17,6 +18,7 @@ namespace Content.Server.PDA
     public sealed class PDASystem : SharedPDASystem
     {
         [Dependency] private readonly UplinkSystem _uplinkSystem = default!;
+        [Dependency] private readonly UplinkAccountsSystem _uplinkAccounts = default!;
         [Dependency] private readonly UnpoweredFlashlightSystem _unpoweredFlashlight = default!;
 
         public override void Initialize()
@@ -82,6 +84,7 @@ namespace Content.Server.PDA
             if (!EntityManager.TryGetComponent(user, out ActorComponent? actor))
                 return false;
 
+            UpdatePDAUserInterface(pda, user);
             var ui = pda.Owner.GetUIOrNull(PDAUiKey.Key);
             ui?.Toggle(actor.PlayerSession);
 
@@ -94,7 +97,7 @@ namespace Content.Server.PDA
                 appearance.SetData(PDAVisuals.IDCardInserted, pda.ContainedID != null);
         }
 
-        private void UpdatePDAUserInterface(PDAComponent pda)
+        private void UpdatePDAUserInterface(PDAComponent pda, EntityUid? user = default)
         {
             var ownerInfo = new PDAIdInfoText
             {
@@ -104,6 +107,9 @@ namespace Content.Server.PDA
             };
 
             var hasUplink = EntityManager.HasComponent<UplinkComponent>(pda.Owner);
+
+            if (user is not null)
+                hasUplink &= _uplinkAccounts.HasAccount(user.Value);
 
             var ui = pda.Owner.GetUIOrNull(PDAUiKey.Key);
             ui?.SetState(new PDAUpdateState(pda.FlashlightOn, pda.PenSlot.HasItem, ownerInfo, hasUplink));
@@ -118,7 +124,7 @@ namespace Content.Server.PDA
             switch (msg.Message)
             {
                 case PDARequestUpdateInterfaceMessage _:
-                    UpdatePDAUserInterface(pda);
+                    UpdatePDAUserInterface(pda, playerUid);
                     break;
                 case PDAToggleFlashlightMessage _:
                     {
