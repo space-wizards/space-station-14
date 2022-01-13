@@ -1,11 +1,6 @@
 Entries:
 - author: Zumorica
   changes:
-  - {message: Fix uplink UI text going above limits., type: Fix}
-  id: 375
-  time: '2021-09-30T11:36:50.044677+00:00'
-- author: Zumorica
-  changes:
   - {message: Fixes ghost pointing arrows being seen by mere mortals., type: Fix}
   id: 376
   time: '2021-09-30T11:58:35.620628+00:00'
@@ -2916,3 +2911,9 @@ Entries:
       other agents., type: Add}
   id: 876
   time: '2022-01-13T14:53:51.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added Personnel Crate to cargo. Includes a box of spare PDAs and ID
+      cards., type: Add}
+  id: 877
+  time: '2022-01-13T15:04:30.0000000+00:00'
