@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Fix pulling permanently decreasing your speed., type: Fix}
-  id: 367
-  time: '2021-09-23T22:43:59.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Can no longer throw items while in a container., type: Tweak}
   id: 368
   time: '2021-09-23T22:44:25.0000000+00:00'
@@ -2917,3 +2912,9 @@ Entries:
       time)', type: Fix}
   id: 868
   time: '2022-01-13T14:09:46.0000000+00:00'
+- author: moonheart08
+  changes:
+  - {message: 'Magboots now allow you to ignore a lack of gravity, as they should.',
+    type: Add}
+  id: 869
+  time: '2022-01-13T14:13:26.0000000+00:00'
