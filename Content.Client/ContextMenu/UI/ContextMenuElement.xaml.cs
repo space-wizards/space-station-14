@@ -18,6 +18,7 @@ namespace Content.Client.ContextMenu.UI
     public partial class ContextMenuElement : ContainerButton
     {
         public const string StyleClassContextMenuButton = "contextMenuButton";
+        public const string StyleClassContextMenuExpansionTexture = "contextMenuExpansionTexture";
 
         public const float ElementMargin = 2;
         public const float ElementHeight = 32;
@@ -55,9 +56,6 @@ namespace Content.Client.ContextMenu.UI
 
             if (text != null)
                 Text = text;
-
-            ExpansionIndicator.Texture = IoCManager.Resolve<IResourceCache>()
-                .GetTexture("/Textures/Interface/VerbIcons/group.svg.192dpi.png");
         }
 
         protected override void Dispose(bool disposing)

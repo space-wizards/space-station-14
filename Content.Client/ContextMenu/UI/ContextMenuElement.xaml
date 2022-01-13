@@ -11,13 +11,14 @@
         <RichTextLabel
             Name="Label"
             MaxWidth="300"
-            HorizontalExpand="True" 
+            HorizontalExpand="True"
             VerticalAlignment="Center"
             Margin ="4 0 4 0"/>
         <TextureRect
             Name="ExpansionIndicator"
             HorizontalAlignment="Right"
             Stretch="KeepCentered"
+            StyleClasses="contextMenuExpansionTexture"
             TextureScale="0.5 0.5"
             SetWidth="{x:Static ui:ContextMenuElement.ElementHeight}"
             SetHeight="{x:Static ui:ContextMenuElement.ElementHeight}"
