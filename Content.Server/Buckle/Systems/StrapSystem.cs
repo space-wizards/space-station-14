@@ -28,25 +28,9 @@ namespace Content.Server.Buckle.Systems
 
         private void OnInsertAttempt(EntityUid uid, StrapComponent component, ContainerGettingInsertedAttemptEvent args)
         {
-            // This strap is being inserted into a container. In general this is fine, But maybe, just maybe, there is a
-            // player strapped to some object that is somehow being bugged into a backpack.
-
-            // Firstly, check if the container is a backpack/storage entity?
-            if (!HasComp<SharedStorageComponent>(args.Container.Owner))
-                return;
-
-            // Ok, so we will check if any of the entities we contain is a mob, and if it is, we cancel this attempt. In
-            // general, nesting strap-entities inside of a storage is rare. This could happen for folded up roller-beds,
-            // but those should have no entities strapped to them anyways
-
-            foreach (var ent in component.BuckledEntities)
-            {
-                if (HasComp<MobStateComponent>(ent) || HasComp<SharedBodyComponent>(ent))
-                {
-                    args.Cancel();
-                    return;
-                }
-            }
+            // If someone is attempting to put this item inside of a backpack, ensure that it has no entities strapped to it.
+            if (HasComp<SharedStorageComponent>(args.Container.Owner) && component.BuckledEntities.Count != 0)
+                args.Cancel();
         }
 
         // TODO ECS BUCKLE/STRAP These 'Strap' verbs are an incestuous mess of buckle component and strap component
