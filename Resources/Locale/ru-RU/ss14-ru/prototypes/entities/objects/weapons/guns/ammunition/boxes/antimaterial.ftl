@@ -1,2 +1,2 @@
-ent-BoxAntiMaterial = ammunition box (.60 anti-material)
+ent-BoxAntiMaterial = ящик боеприпасов (.60 антиматериальные)
     .desc = { ent-BaseItem.desc }

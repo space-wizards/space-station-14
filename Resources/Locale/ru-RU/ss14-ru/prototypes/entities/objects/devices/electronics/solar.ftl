@@ -1,2 +1,2 @@
-ent-SolarTrackerElectronics = solar tracker electronics
-    .desc = Advanced circuit board used to detect differences in pressure, temperature and gas concentrations between the two sides of the door.
+ent-SolarTrackerElectronics = микросхема трекера солнечных лучей
+    .desc = Отслеживает направление солнечных лучей и автоматически изменяет поворот солнечных панелей, что значительно повышает их эффективность.

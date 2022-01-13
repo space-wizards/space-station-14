@@ -1,4 +1,4 @@
-ent-PinpointerBase = pinpointer
-    .desc = A handheld tracking device that locks onto certain signals.
-ent-PinpointerNuclear = pinpointer
+ent-PinpointerBase = поисковый навигатор
+    .desc = Портативное устройство слежения, которое фиксирует определенные сигналы.
+ent-PinpointerNuclear = поисковый навигатор
     .desc = { ent-PinpointerBase.desc }

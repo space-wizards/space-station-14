@@ -1,1 +1,1 @@
-ent-constructionghost = construction ghost
+ent-constructionghost = призрак конструкции
