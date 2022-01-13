@@ -195,9 +195,6 @@ namespace Content.Client.Hands
 
         public override void UpdateHandVisuals(EntityUid uid, SharedHandsComponent? handComp = null, AppearanceComponent? appearance = null)
         {
-            if (!Resolve(uid, ref handComp, ref appearance, false))
-                return;
-
             base.UpdateHandVisuals(uid, handComp, appearance);
 
             if (uid == _playerManager.LocalPlayer?.ControlledEntity)
