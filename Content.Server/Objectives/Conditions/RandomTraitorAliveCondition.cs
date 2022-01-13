@@ -16,12 +16,12 @@ namespace Content.Server.Objectives.Conditions
     public class RandomTraitorAliveCondition : IObjectiveCondition
     {
         protected Mind.Mind? Target;
-        
+
         public IObjectiveCondition GetAssigned(Mind.Mind mind)
         {
             var entityMgr = IoCManager.Resolve<IEntityManager>();
             List<Mind.Mind> _allOtherTraitors = new List<Mind.Mind>();
-            
+
             foreach (var targetMind in entityMgr.EntityQuery<MindComponent>())
             {
                 if (targetMind.Mind?.CharacterDeadIC == false && targetMind.Mind != mind && targetMind.Mind?.HasRole<TraitorRole>() == true)
@@ -29,7 +29,7 @@ namespace Content.Server.Objectives.Conditions
                         _allOtherTraitors.Add(targetMind.Mind);
                 }
             }
- 
+
             return new RandomTraitorAliveCondition {Target = IoCManager.Resolve<IRobustRandom>().Pick(_allOtherTraitors)};
         }
 
@@ -68,8 +68,7 @@ namespace Content.Server.Objectives.Conditions
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != GetType()) return false;
-            return Equals((RandomTraitorAliveCondition) obj);
+            return obj is RandomTraitorAliveCondition alive && alive.Equals(this);
         }
 
         public override int GetHashCode()

@@ -12,15 +12,10 @@ namespace Content.Server.Objectives.Requirements
     {
         [DataField("traitors")]
         private readonly int _requiredTraitors = 2;
-        
+
         public bool CanBeAssigned(Mind.Mind mind)
         {
-                if (EntitySystem.Get<TraitorRuleSystem>().TotalTraitors >= _requiredTraitors)
-                {
-                        return true;
-                }
-                return false;
+            return EntitySystem.Get<TraitorRuleSystem>().TotalTraitors >= _requiredTraitors;
         }
-        
     }
 }
