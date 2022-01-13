@@ -14,12 +14,6 @@ public class ArtifactGasTriggerComponent : Component
     public override string Name => "ArtifactGasTrigger";
 
     /// <summary>
-    ///     Should activation gas be picked on startup?
-    /// </summary>
-    [DataField("randomGas")]
-    public bool RandomGas = true;
-
-    /// <summary>
     ///     List of possible activation gases to pick on startup.
     /// </summary>
     [DataField("possibleGas")]

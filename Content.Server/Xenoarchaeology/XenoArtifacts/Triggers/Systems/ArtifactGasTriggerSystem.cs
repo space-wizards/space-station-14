@@ -44,7 +44,7 @@ public class ArtifactGasTriggerSystem : EntitySystem
 
     private void OnInit(EntityUid uid, ArtifactGasTriggerComponent component, ComponentInit args)
     {
-        if (component.RandomGas)
+        if (component.ActivationGas == null)
         {
             var gas = _random.Pick(component.PossibleGases);
             component.ActivationGas = gas;
