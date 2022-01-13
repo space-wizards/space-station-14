@@ -12,6 +12,8 @@ namespace Content.Server.Chat.Commands
     [AnyCommand]
     internal class MeCommand : IConsoleCommand
     {
+        [Dependency] private readonly IChatSanitizationManager _sanitizer = default!;
+
         public string Command => "me";
         public string Description => "Perform an action.";
         public string Help => "me <text>";
@@ -50,7 +52,15 @@ namespace Content.Server.Chat.Commands
                 return;
             }
 
-            chat.EntityMe(mindComponent.OwnedEntity.Value, action);
+            var isEmote = _sanitizer.TrySanitizeOutSmilies(action, mindComponent.OwnedEntity.Value, out var sanitized, out var emoteStr);
+
+            if (sanitized.Length != 0)
+            {
+                chat.EntityMe(mindComponent.OwnedEntity.Value, sanitized);
+            }
+
+            if (isEmote)
+                chat.EntityMe(mindComponent.OwnedEntity.Value, emoteStr!);
         }
     }
 }
