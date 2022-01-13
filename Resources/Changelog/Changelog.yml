@@ -1,9 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: Fixes ghost pointing arrows being seen by mere mortals., type: Fix}
-  id: 376
-  time: '2021-09-30T11:58:35.620628+00:00'
 - author: 20kdc
   changes:
   - {message: Syringes can inject into/draw from beakers and drinks again., type: Fix}
@@ -2917,3 +2912,9 @@ Entries:
       cards., type: Add}
   id: 877
   time: '2022-01-13T15:04:30.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Antimatter Engine Shielding can now be deconstructed with a welder.,
+    type: Tweak}
+  id: 878
+  time: '2022-01-13T15:06:43.0000000+00:00'
