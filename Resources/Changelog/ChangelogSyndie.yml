@@ -155,3 +155,15 @@ Entries:
     type: Add
   id: 18
   time: '2022-01-13T16:07:41.0000000+00:00'
+- author: Morty
+  changes:
+  - message: "\u0412\u043E\u0437\u0432\u0440\u0430\u0449\u0435\u043D Dart \u0448\u0430\
+      \u0442\u0442\u043B \u0434\u043B\u044F \u0430\u0434\u043C\u0438\u043D\u043E\u0432\
+      ."
+    type: Add
+  - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D Syndie \u0448\u0430\
+      \u0442\u0442\u043B \u0434\u043B\u044F \u0430\u0434\u043C\u0438\u043D\u043E\u0432\
+      ."
+    type: Add
+  id: 19
+  time: '2022-01-13T22:42:02.0000000+00:00'
