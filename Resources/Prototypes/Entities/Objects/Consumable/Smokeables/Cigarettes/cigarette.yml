@@ -22,3 +22,19 @@
   - type: Construction
     graph: smokeableCigarette
     node: cigarette
+
+- type: entity
+  id: CigaretteSyndicate
+  suffix: syndicate
+  parent: Cigarette
+  name: cigarette
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      smokable:
+        maxVol: 20
+        reagents:
+          - ReagentId: Nicotine
+            Quantity: 10
+          - ReagentId: Omnizine
+            Quantity: 10
