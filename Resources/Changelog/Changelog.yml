@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Weightless items stop moving sooner., type: Tweak}
-  - {message: Shuttles handle a bit better., type: Tweak}
-  id: 373
-  time: '2021-09-29T10:07:01.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: Fix bug where you couldn't join as clown under certain circumstances.,
@@ -2916,3 +2910,9 @@ Entries:
   - {message: Changed Smart Fridge Sprite, type: Tweak}
   id: 874
   time: '2022-01-13T14:32:17.0000000+00:00'
+- author: weaver
+  changes:
+  - {message: Deconstructing complex tiles (like reinforced windows and walls) now
+      correctly show each step rather than breaking after the first step, type: Fix}
+  id: 875
+  time: '2022-01-13T14:33:39.0000000+00:00'
