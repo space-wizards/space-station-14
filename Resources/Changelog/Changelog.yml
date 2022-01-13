@@ -1,12 +1,6 @@
 Entries:
 - author: Zumorica
   changes:
-  - {message: Fix bug where you couldn't join as clown under certain circumstances.,
-    type: Fix}
-  id: 374
-  time: '2021-09-30T11:36:50.043933+00:00'
-- author: Zumorica
-  changes:
   - {message: Fix uplink UI text going above limits., type: Fix}
   id: 375
   time: '2021-09-30T11:36:50.044677+00:00'
@@ -2916,3 +2910,9 @@ Entries:
       correctly show each step rather than breaking after the first step, type: Fix}
   id: 875
   time: '2022-01-13T14:33:39.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: The Syndicate will now assign some agents to ensure the survival of
+      other agents., type: Add}
+  id: 876
+  time: '2022-01-13T14:53:51.0000000+00:00'
