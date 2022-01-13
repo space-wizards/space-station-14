@@ -42,10 +42,7 @@ public class TraitorRuleSystem : GameRuleSystem
 
     private const string TraitorPrototypeID = "Traitor";
     
-    public int TotalTraitors
-    {
-        get { return _traitors.Count; }
-    }
+    public int TotalTraitors => _traitors.Count;
 
     public override void Initialize()
     {
