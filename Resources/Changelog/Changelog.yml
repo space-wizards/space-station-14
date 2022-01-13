@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Items can be thrown into disposals more easily again., type: Fix}
-  id: 372
-  time: '2021-09-28T14:16:00.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Weightless items stop moving sooner., type: Tweak}
   - {message: Shuttles handle a bit better., type: Tweak}
   id: 373
@@ -2916,3 +2911,8 @@ Entries:
   - {message: Fixed issue where players couldn't smile into the radio, type: Fix}
   id: 873
   time: '2022-01-13T14:26:58.0000000+00:00'
+- author: MeltedPixel
+  changes:
+  - {message: Changed Smart Fridge Sprite, type: Tweak}
+  id: 874
+  time: '2022-01-13T14:32:17.0000000+00:00'
