@@ -31,7 +31,7 @@ namespace Content.Server.Atmos.EntitySystems
                 }
             }
 
-            foreach (var entity in _gridtileLookupSystem.GetEntitiesIntersecting(tile.GridIndex, tile.GridIndices))
+            foreach (var entity in _lookup.GetEntitiesIntersecting(tile.GridIndex, tile.GridIndices))
             {
                 if (!HasComp<IPhysBody>(entity)
                     || !entity.IsMovedByPressure(out var pressure)

@@ -61,7 +61,7 @@
 - type: entity
   parent: ClothingOuterBase
   id: ClothingOuterSuitRad
-  name: rad suit
+  name: radiation suit
   description: "A suit that protects against radiation. The label reads, 'Made with lead. Please do not consume insulation.'"
   components:
   - type: Sprite

@@ -61,14 +61,14 @@
 
 - type: entity
   name: light
-  description: "A powered wall light emitting... light."
-  id: Poweredlight
-  suffix: Powered
+  description: "A light fixture. Draws power and produces light when equipped with a light tube."
+  id: PoweredlightEmpty
+  suffix: Empty, Powered
   parent: WallLight
   components:
   - type: Sprite
     sprite: Structures/Wallmounts/Lighting/light_tube.rsi
-    state: off
+    state: empty
   - type: PointLight
     enabled: false
   - type: PoweredLight
@@ -88,15 +88,27 @@
         path: "/Audio/Machines/light_tube_on.ogg"
 
 - type: entity
-  id: PoweredlightEmpty
-  description: "A wall light. It's empty."
-  suffix: Empty, Powered
-  parent: Poweredlight
+  id: Poweredlight
+  description: "A light fixture. Draws power and produces light when equipped with a light tube."
+  suffix: Powered
+  parent: PoweredlightEmpty
   components:
   - type: Sprite
-    state: empty
+    state: off
   - type: PoweredLight
-    hasLampOnSpawn: False
+    hasLampOnSpawn: LightTube
+    damage:
+      types:
+        Heat: 20
+
+- type: entity
+  id: PoweredlightLED
+  description: "A light fixture. Draws power and produces light when equipped with a light tube."
+  suffix: LED tube, Powered
+  parent: Poweredlight
+  components:
+  - type: PoweredLight
+    hasLampOnSpawn: LedLightTube
     damage:
       types:
         Heat: 20
@@ -143,14 +155,14 @@
 
 - type: entity
   name: small light
-  description: "A powered wall light emitting... light."
-  id: PoweredSmallLight
-  suffix: Powered
+  description: "A light fixture. Draws power and produces light when equipped with a light bulb."
+  id: PoweredSmallLightEmpty
+  suffix: Empty, Powered
   parent: SmallLight
   components:
   - type: Sprite
     sprite: Structures/Wallmounts/Lighting/light_small.rsi
-    state: off
+    state: empty
   - type: PointLight
     enabled: false
     offset: "0, -0.5"
@@ -176,14 +188,14 @@
     - type: PoweredLightVisualizer
 
 - type: entity
-  id: PoweredSmallLightEmpty
-  suffix: Empty, Powered
-  parent: PoweredSmallLight
+  id: PoweredSmallLight
+  suffix: Powered
+  parent: PoweredSmallLightEmpty
   components:
   - type: Sprite
-    state: empty
+    state: off
   - type: PoweredLight
-    hasLampOnSpawn: False
+    hasLampOnSpawn: LightBulb
     damage:
       types:
         Heat: 20

@@ -17,7 +17,7 @@
   id: ClosetRadiationSuit
   name: radiation suit closet
   parent: ClosetBase
-  description: It's a storage unit for rad-protective suits.
+  description: "More comfortable than radiation poisioning."
   components:
   - type: Appearance
     visuals:

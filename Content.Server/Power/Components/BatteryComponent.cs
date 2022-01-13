@@ -1,5 +1,6 @@
 using System;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -12,6 +13,8 @@ namespace Content.Server.Power.Components
     [RegisterComponent]
     public class BatteryComponent : Component
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "Battery";
 
         /// <summary>
@@ -71,7 +74,10 @@ namespace Content.Server.Power.Components
             }
         }
 
-        protected virtual void OnChargeChanged() { }
+        protected virtual void OnChargeChanged()
+        {
+            _entMan.EventBus.RaiseLocalEvent(Owner, new ChargeChangedEvent(), false);
+        }
 
         private void SetMaxCharge(float newMax)
         {
@@ -86,4 +92,6 @@ namespace Content.Server.Power.Components
             OnChargeChanged();
         }
     }
+
+    public class ChargeChangedEvent : EventArgs { }
 }

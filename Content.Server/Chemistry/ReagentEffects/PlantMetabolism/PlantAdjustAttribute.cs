@@ -13,8 +13,6 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
     [ImplicitDataDefinitionForInheritors]
     public abstract class PlantAdjustAttribute : ReagentEffect
     {
-        [Dependency] private readonly IRobustRandom _robustRandom = default!;
-
         [DataField("amount")] public float Amount { get; protected set; } = 1;
         [DataField("prob")] public float Prob { get; protected set; } = 1; // = (80);
 
@@ -39,7 +37,8 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
             if (Prob >= 1f)
                 return true;
 
-            return !(Prob <= 0f) && _robustRandom.Prob(Prob);
+            // Dependencies are never injected for reagents if you intend to do that for this.
+            return !(Prob <= 0f) && IoCManager.Resolve<IRobustRandom>().Prob(Prob);
         }
     }
 }
