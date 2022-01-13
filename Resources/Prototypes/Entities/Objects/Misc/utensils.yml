@@ -7,6 +7,9 @@
     sprite: Objects/Misc/utensils.rsi
   - type: Item
     sprite: Objects/Misc/utensils.rsi
+  - type: Tag
+    tags:
+    - Trash
 
 - type: entity
   parent: UtensilBase

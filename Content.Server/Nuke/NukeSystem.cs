@@ -46,8 +46,7 @@ namespace Content.Server.Nuke
             // anchoring logic
             SubscribeLocalEvent<NukeComponent, AnchorAttemptEvent>(OnAnchorAttempt);
             SubscribeLocalEvent<NukeComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
-            SubscribeLocalEvent<NukeComponent, AnchoredEvent>(OnWasAnchored);
-            SubscribeLocalEvent<NukeComponent, UnanchoredEvent>(OnWasUnanchored);
+            SubscribeLocalEvent<NukeComponent, AnchorStateChangedEvent>(OnAnchorChanged);
 
             // ui events
             SubscribeLocalEvent<NukeComponent, NukeEjectMessage>(OnEjectButtonPressed);
@@ -154,12 +153,7 @@ namespace Content.Server.Nuke
             }
         }
 
-        private void OnWasUnanchored(EntityUid uid, NukeComponent component, UnanchoredEvent args)
-        {
-            UpdateUserInterface(uid, component);
-        }
-
-        private void OnWasAnchored(EntityUid uid, NukeComponent component, AnchoredEvent args)
+        private void OnAnchorChanged(EntityUid uid, NukeComponent component, ref AnchorStateChangedEvent args)
         {
             UpdateUserInterface(uid, component);
         }
