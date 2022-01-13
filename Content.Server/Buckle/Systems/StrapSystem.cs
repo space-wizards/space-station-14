@@ -1,8 +1,12 @@
 using Content.Server.Buckle.Components;
 using Content.Server.Interaction;
+using Content.Shared.Body.Components;
+using Content.Shared.MobState.Components;
+using Content.Shared.Storage;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -19,6 +23,30 @@ namespace Content.Server.Buckle.Systems
             base.Initialize();
 
             SubscribeLocalEvent<StrapComponent, GetInteractionVerbsEvent>(AddStrapVerbs);
+            SubscribeLocalEvent<StrapComponent, ContainerGettingInsertedAttemptEvent>(OnInsertAttempt);
+        }
+
+        private void OnInsertAttempt(EntityUid uid, StrapComponent component, ContainerGettingInsertedAttemptEvent args)
+        {
+            // This strap is being inserted into a container. In general this is fine, But maybe, just maybe, there is a
+            // player strapped to some object that is somehow being bugged into a backpack.
+
+            // Firstly, is the container a backpack/storage entity?
+            if (!HasComp<SharedStorageComponent>(args.Container.Owner))
+                return;
+
+            // Ok, so we will check if any of the entities we contain is a mob, and if it is, we cancel this attempt. In
+            // general, nesting strap-entities inside of a storage is rare. This could happen for folded up roller-beds,
+            // but those should have no entities strapped to them anyways
+
+            foreach (var ent in component.BuckledEntities)
+            {
+                if (HasComp<MobStateComponent>(ent) || HasComp<SharedBodyComponent>(ent))
+                {
+                    args.Cancel();
+                    return;
+                }
+            }
         }
 
         // TODO ECS BUCKLE/STRAP These 'Strap' verbs are an incestuous mess of buckle component and strap component
