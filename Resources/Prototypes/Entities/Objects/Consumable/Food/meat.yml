@@ -384,7 +384,7 @@
     tags:
     - Raw
   - type: Sprite
-    state: meatball #TODO
+    state: slime
 
 # Cooked
 
