@@ -37,7 +37,7 @@ public class CableSystem : EntitySystem
             return;
 
         Spawn(cable.CableDroppedOnCutPrototype, Transform(uid).Coordinates);
-        Del(uid);
+        QueueDel(uid);
     }
 
     private void OnAnchorChanged(EntityUid uid, CableComponent cable, ref AnchorStateChangedEvent args)
@@ -45,10 +45,15 @@ public class CableSystem : EntitySystem
         if (args.Anchored)
             return; // huh? it wasn't anchored?
 
+        // anchor state can change as a result of deletion (detach to null).
+        // We don't want to spawn an entity when deleted.
+        if (!TryLifeStage(uid, out var life) || life >= EntityLifeStage.Terminating)
+            return;
+
         // This entity should not be un-anchorable. But this can happen if the grid-tile is deleted (RCD, explosion,
         // etc). In that case: behave as if the cable had been cut.
         Spawn(cable.CableDroppedOnCutPrototype, Transform(uid).Coordinates);
-        Del(uid);
+        QueueDel(uid);
     }
 }
 
