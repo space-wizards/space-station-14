@@ -23,19 +23,15 @@ public class ApcComponent : BaseApcNetComponent
     public ApcChargeState LastChargeState;
     public TimeSpan LastChargeStateTime;
 
-    // We don't need to cache last charge because we already only run on every charge change
-    // and can thus assume that it will be different.
-    public TimeSpan LastChargeChange;
-
     [ViewVariables]
     public ApcExternalPowerState LastExternalState;
-    public TimeSpan LastExternalStateTime;
+    public TimeSpan LastUiUpdate;
 
     [ViewVariables]
     public bool MainBreakerEnabled = true;
 
     public const float HighPowerThreshold = 0.9f;
-    public const int VisualsChangeDelay = 1;
+    public static TimeSpan VisualsChangeDelay = TimeSpan.FromSeconds(1);
 
     public static readonly Color LackColor = Color.FromHex("#d1332e");
     public static readonly Color ChargingColor = Color.FromHex("#2e8ad1");

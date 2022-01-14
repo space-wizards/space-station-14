@@ -76,7 +76,7 @@ namespace Content.Server.Power.EntitySystems
                 return;
 
             var newState = CalcChargeState(uid, apc, battery);
-            if (newState != apc.LastChargeState && apc.LastChargeStateTime + TimeSpan.FromSeconds(ApcComponent.VisualsChangeDelay) < _gameTiming.CurTime)
+            if (newState != apc.LastChargeState && apc.LastChargeStateTime + ApcComponent.VisualsChangeDelay < _gameTiming.CurTime)
             {
                 apc.LastChargeState = newState;
                 apc.LastChargeStateTime = _gameTiming.CurTime;
@@ -99,25 +99,12 @@ namespace Content.Server.Power.EntitySystems
                 }
             }
 
-            bool uiDirty = false;
-            var newCharge = battery.CurrentCharge;
-            if (apc.LastChargeChange + TimeSpan.FromSeconds(ApcComponent.VisualsChangeDelay) < _gameTiming.CurTime)
-            {
-                apc.LastChargeChange = _gameTiming.CurTime;
-                uiDirty = true;
-            }
-
             var extPowerState = CalcExtPowerState(uid, apc, battery);
             if (extPowerState != apc.LastExternalState
-                && apc.LastExternalStateTime + TimeSpan.FromSeconds(ApcComponent.VisualsChangeDelay) < _gameTiming.CurTime)
+                && apc.LastUiUpdate + ApcComponent.VisualsChangeDelay < _gameTiming.CurTime)
             {
                 apc.LastExternalState = extPowerState;
-                apc.LastExternalStateTime = _gameTiming.CurTime;
-                uiDirty = true;
-            }
-
-            if (uiDirty)
-            {
+                apc.LastUiUpdate = _gameTiming.CurTime;
                 UpdateUIState(uid, apc, battery);
             }
         }
@@ -164,7 +151,7 @@ namespace Content.Server.Power.EntitySystems
                 return ApcExternalPowerState.None;
 
             var netBat = Comp<PowerNetworkBatteryComponent>(uid);
-            if (netBat.CurrentReceiving == 0 && netBat.LoadingNetworkDemand != 0)
+            if (netBat.CurrentReceiving == 0 && !MathHelper.CloseTo(battery.CurrentCharge / battery.MaxCharge, 1))
             {
                 return ApcExternalPowerState.None;
             }
