@@ -119,7 +119,9 @@ namespace Content.Server.Power.EntitySystems
             var xform = Transform(owner);
             var coordinates = xform.Coordinates;
 
-            var grid = _mapManager.GetGrid(xform.GridID);
+            if (!_mapManager.TryGetGrid(xform.GridID, out var grid))
+                yield break;
+
             var nearbyEntities = grid.GetCellsInSquareArea(coordinates, (int) Math.Ceiling(range / grid.TileSize));
 
             foreach (var entity in nearbyEntities)
@@ -223,14 +225,13 @@ namespace Content.Server.Power.EntitySystems
 
         private bool TryFindAvailableProvider(EntityUid owner, float range, [NotNullWhen(true)] out ExtensionCableProviderComponent? foundProvider, TransformComponent? xform = null)
         {
-            if (!Resolve(owner, ref xform))
+            if (!Resolve(owner, ref xform) || !_mapManager.TryGetGrid(xform.GridID, out var grid))
             {
                 foundProvider = null;
                 return false;
             }
 
             var coordinates = xform.Coordinates;
-            var grid = _mapManager.GetGrid(xform.GridID);
             var nearbyEntities = grid.GetCellsInSquareArea(coordinates, (int) Math.Ceiling(range / grid.TileSize));
 
             foreach (var entity in nearbyEntities)
