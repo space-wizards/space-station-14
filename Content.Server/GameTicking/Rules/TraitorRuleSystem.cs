@@ -41,6 +41,8 @@ public class TraitorRuleSystem : GameRuleSystem
     private readonly List<TraitorRole> _traitors = new ();
 
     private const string TraitorPrototypeID = "Traitor";
+    
+    public int TotalTraitors => _traitors.Count;
 
     public override void Initialize()
     {

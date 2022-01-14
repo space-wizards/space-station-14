@@ -226,6 +226,30 @@
 
 - type: entity
   parent: IDCardStandard
+  id: LibrarianIDCard
+  name: librarian ID card
+  components:
+    - type: Sprite
+      layers:
+        - state: default
+        - state: idcurator
+    - type: PresetIdCard
+      job: Librarian
+
+- type: entity
+  parent: IDCardStandard
+  id: LawyerIDCard
+  name: lawyer ID card
+  components:
+    - type: Sprite
+      layers:
+        - state: default
+        - state: idlawyer
+    - type: PresetIdCard
+      job: Lawyer
+
+- type: entity
+  parent: IDCardStandard
   id: HoPIDCard
   name: head of personnel ID card
   components:

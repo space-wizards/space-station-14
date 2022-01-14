@@ -22,7 +22,7 @@
       - id: Multitool
         prob: 0.2
       - id: trayScanner
-        prob: 0.7      
+        prob: 0.7
       - id: ClothingBeltUtility
         prob: 0.2
       - id: ClothingHandsGlovesColorYellow
@@ -107,5 +107,3 @@
         amount: 2
       - id: ClothingEyesGlassesMeson
         amount: 2
-
-  

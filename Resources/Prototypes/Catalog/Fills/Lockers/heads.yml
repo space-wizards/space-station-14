@@ -61,6 +61,7 @@
         prob: 0.1
       - id: CigarGoldCase
         prob: 0.25
+      - id: ClothingBeltSheathFilled
 
 - type: entity
   id: LockerHeadOfPersonnelFilled

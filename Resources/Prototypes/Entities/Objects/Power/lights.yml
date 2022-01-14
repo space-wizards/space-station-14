@@ -47,6 +47,9 @@
   - type: Appearance
     visuals:
     - type: LightBulbVisualizer
+  - type: Tag
+    tags:
+    - Trash
 
 # Lighting color values gathered from
 # https://andi-siess.de/rgb-to-color-temperature/

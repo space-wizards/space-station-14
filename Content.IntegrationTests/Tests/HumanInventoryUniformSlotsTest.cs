@@ -64,7 +64,6 @@ namespace Content.IntegrationTests.Tests
             EntityUid uniform = default;
             EntityUid idCard = default;
             EntityUid pocketItem = default;
-            InventoryComponent inventory = null;
 
             InventorySystem invSystem = default!;
 

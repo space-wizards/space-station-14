@@ -1,4 +1,3 @@
-﻿#nullable enable
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -22,6 +21,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Network;
 using Robust.Shared.Utility;
+using System.Text.Json.Serialization;
 
 namespace Content.Server.Administration
 {
@@ -94,8 +94,8 @@ namespace Content.Server.Administration
 
             var payload = new WebhookPayload()
             {
-                username = oldMessage.username,
-                content = oldMessage.content
+                Username = oldMessage.username,
+                Content = oldMessage.content
             };
 
             if (oldMessage.id == string.Empty)
@@ -242,14 +242,14 @@ namespace Content.Server.Administration
 
         private struct WebhookPayload
         {
-            // ReSharper disable once InconsistentNaming
-            public string username { get; set; } = "";
+            [JsonPropertyName("username")]
+            public string Username { get; set; } = "";
 
-            // ReSharper disable once InconsistentNaming
-            public string content { get; set; } = "";
+            [JsonPropertyName("content")]
+            public string Content { get; set; } = "";
 
-            // ReSharper disable once InconsistentNaming
-            public Dictionary<string, string[]> allowed_mentions { get; set; } =
+            [JsonPropertyName("allowed_mentions")]
+            public Dictionary<string, string[]> AllowedMentions { get; set; } =
                 new()
                 {
                     { "parse", Array.Empty<string>() }

@@ -8,6 +8,7 @@
   - type: Tag
     tags:
     - Bottle
+    - Trash
   - type: Sprite
     sprite: Objects/Specific/Chemistry/bottle.rsi
     netsync: false
