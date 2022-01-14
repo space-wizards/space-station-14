@@ -81,10 +81,10 @@ namespace Content.Server.AI.Pathfinding
             }
         }
 
-        public bool InBounds(Vector2i Vector2i)
+        public bool InBounds(Vector2i vector)
         {
-            if (Vector2i.X < _indices.X || Vector2i.Y < _indices.Y) return false;
-            if (Vector2i.X >= _indices.X + ChunkSize || Vector2i.Y >= _indices.Y + ChunkSize) return false;
+            if (vector.X < _indices.X || vector.Y < _indices.Y) return false;
+            if (vector.X >= _indices.X + ChunkSize || vector.Y >= _indices.Y + ChunkSize) return false;
             return true;
         }
 

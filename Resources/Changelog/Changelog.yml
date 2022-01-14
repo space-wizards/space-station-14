@@ -1,170 +1,4 @@
 Entries:
-- author: Swept
-  changes:
-  - {message: Audio tweaking/additions, type: Tweak}
-  id: 349
-  time: '2021-09-10T01:31:55.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Items now land when they stop moving and not when their physics goes
-      to sleep., type: Tweak}
-  id: 350
-  time: '2021-09-10T12:59:50.0000000+00:00'
-- author: Visne
-  changes:
-  - {message: 'Added chess! To play, right click on a chessboard and press "Play Game".',
-    type: Add}
-  id: 351
-  time: '2021-09-13T09:58:45.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: 'Many components have had damage values & types adjusted. E.g., knives
-      are no longer dull and actually deal slash damage.', type: Tweak}
-  - {message: 'Eggs, tomatoes, and beakers are now destroyed on impact when thrown,
-      instead of only when they land.', type: Tweak}
-  id: 352
-  time: '2021-09-14T17:07:38.0000000+00:00'
-- author: Ygg01
-  changes:
-  - {message: bottles filled with drinks now spill as expected, type: Fix}
-  id: 353
-  time: '2021-09-15T10:46:43.0000000+00:00'
-- author: Ygg01
-  changes:
-  - {message: FireExtinguisher interactions, type: Fix}
-  id: 354
-  time: '2021-09-15T10:48:08.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix some issues with station rotation, type: Fix}
-  id: 355
-  time: '2021-09-16T03:02:10.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Fix bug which prevented players from equipping most items in their pockets.,
-    type: Fix}
-  id: 356
-  time: '2021-09-16T10:18:08.191474+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Items like fireaxes can now actually be wielded, which increases their
-      damage.', type: Add}
-  - {message: The fireaxe now deals increased damage to objects like windows or wooden
-      furniture., type: Add}
-  id: 357
-  time: '2021-09-17T14:16:13.0000000+00:00'
-- author: boiled-water-tsar
-  changes:
-  - {message: replace being able to construct out of a container, type: Fix}
-  id: 358
-  time: '2021-09-18T08:38:42.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: "Added parch\xEDs game board. A great way to lose your friends!", type: Add}
-  id: 359
-  time: '2021-09-18T08:40:38.0000000+00:00'
-- author: Ygg01
-  changes:
-  - {message: Welder and tank interaction now shows fuel tank is empty and doesn't
-      explode., type: Fix}
-  id: 360
-  time: '2021-09-19T05:15:34.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Shuttles now have accurate boundaries., type: Add}
-  id: 361
-  time: '2021-09-20T11:08:10.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: The librarian visited and cleaned up the library, type: Fix}
-  id: 362
-  time: '2021-09-21T02:50:56.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: Most green text/buttons now looks better, type: Tweak}
-  id: 363
-  time: '2021-09-21T04:50:02.0000000+00:00'
-- author: TimrodDX
-  changes:
-  - {message: Fixes disposal outlets in Chemistry which had been erroneously rotated.,
-    type: Fix}
-  id: 364
-  time: '2021-09-21T04:50:26.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Dice now show a popup with the number they rolled when used., type: Tweak}
-  id: 365
-  time: '2021-09-21T15:05:28.382048+00:00'
-- author: 20kdc
-  changes:
-  - {message: Un-rotated gravity generator, type: Fix}
-  id: 366
-  time: '2021-09-22T10:55:00.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix pulling permanently decreasing your speed., type: Fix}
-  id: 367
-  time: '2021-09-23T22:43:59.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Can no longer throw items while in a container., type: Tweak}
-  id: 368
-  time: '2021-09-23T22:44:25.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: 'Chairs, stools, etc. no longer rotate to unusual angles.', type: Fix}
-  - {message: Metal chairs are properly anchored and so don't need to be re-anchored
-      and unanchored again., type: Fix}
-  id: 369
-  time: '2021-09-23T22:45:00.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Smoking actually makes you inhale reagents now., type: Add}
-  - {message: You can put out a cigar or cigarette by "activating" it., type: Add}
-  - {message: Cigars and cigarettes now contain nicotine., type: Tweak}
-  - {message: Blunts now contain THC., type: Tweak}
-  id: 370
-  time: '2021-09-26T13:19:00.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: Fixes pointing localization, type: Fix}
-  id: 371
-  time: '2021-09-27T06:03:10.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Items can be thrown into disposals more easily again., type: Fix}
-  id: 372
-  time: '2021-09-28T14:16:00.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Weightless items stop moving sooner., type: Tweak}
-  - {message: Shuttles handle a bit better., type: Tweak}
-  id: 373
-  time: '2021-09-29T10:07:01.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Fix bug where you couldn't join as clown under certain circumstances.,
-    type: Fix}
-  id: 374
-  time: '2021-09-30T11:36:50.043933+00:00'
-- author: Zumorica
-  changes:
-  - {message: Fix uplink UI text going above limits., type: Fix}
-  id: 375
-  time: '2021-09-30T11:36:50.044677+00:00'
-- author: Zumorica
-  changes:
-  - {message: Fixes ghost pointing arrows being seen by mere mortals., type: Fix}
-  id: 376
-  time: '2021-09-30T11:58:35.620628+00:00'
-- author: 20kdc
-  changes:
-  - {message: Syringes can inject into/draw from beakers and drinks again., type: Fix}
-  - {message: Syringe messages on failure to inject/draw are less confusing., type: Fix}
-  - {message: Drinks that have been transformed (i.e. beer glasses) can be put back
-      into the dispenser., type: Fix}
-  id: 377
-  time: '2021-10-01T10:06:50.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: Fixes bar sign not changing its sprite correctly., type: Fix}
@@ -2921,3 +2755,164 @@ Entries:
   - {message: Removed PDA checks., type: Remove}
   id: 850
   time: '2022-01-09T08:02:07.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed the charge indicators on tasers and laser weapons not properly
+      updating after charging., type: Fix}
+  id: 851
+  time: '2022-01-09T12:48:59.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Insulated gloves and galoshes no longer work when in your pockets. You
+      actually have to wear them., type: Fix}
+  id: 852
+  time: '2022-01-10T04:37:21.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Ghosts can now automatically follow entities by using a right click
+      Follow verb., type: Add}
+  id: 853
+  time: '2022-01-10T05:47:38.0000000+00:00'
+- author: Zyme
+  changes:
+  - {message: Added ritual and cursed chair, type: Add}
+  id: 854
+  time: '2022-01-11T02:17:22.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Some Autolathe recipes now require plastic instead of glass., type: Fix}
+  id: 855
+  time: '2022-01-11T02:20:35.0000000+00:00'
+- author: TaralGit
+  changes:
+  - {message: Increased laser damage, type: Tweak}
+  id: 856
+  time: '2022-01-11T04:11:47.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Bodies once again fit in body bags., type: Fix}
+  id: 857
+  time: '2022-01-11T04:55:27.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Saltern now has all the latest & greatest objects from the past 2 months.,
+    type: Add}
+  - {message: Saltern medical has been renovated., type: Tweak}
+  id: 858
+  time: '2022-01-11T06:27:30.0000000+00:00'
+- author: Pancake
+  changes:
+  - {message: The singularity will no longer vaporize engineers in 2 seconds., type: Fix}
+  id: 859
+  time: '2022-01-11T06:30:17.0000000+00:00'
+- author: Lamrr
+  changes:
+  - {message: The captain's sabre has returned! Cut down the enemies of the station
+      with wonderful bourgeois excellence!, type: Add}
+  id: 860
+  time: '2022-01-11T06:50:11.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: You can now toggle shuttle modes via the console., type: Add}
+  id: 861
+  time: '2022-01-11T07:17:55.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Docking ports can now be saved to and loaded from maps, type: Add}
+  id: 862
+  time: '2022-01-11T13:47:13.0000000+00:00'
+- author: MeltedPixel
+  changes:
+  - {message: Added Whisper chat functionality, type: Add}
+  id: 863
+  time: '2022-01-11T14:48:18.0000000+00:00'
+- author: MeltedPixel
+  changes:
+  - {message: Ghost's now see unobfuscated messages when whispered., type: Fix}
+  id: 864
+  time: '2022-01-11T23:51:49.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Mining entities with pickaxes now has a delay., type: Tweak}
+  id: 865
+  time: '2022-01-12T02:12:08.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Remove duplicate ghost takeovers when an admin controls a mob., type: Fix}
+  id: 866
+  time: '2022-01-12T07:25:05.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Fixed trashbag so now only trash can be picked up., type: Fix}
+  id: 867
+  time: '2022-01-13T12:53:14.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Makes smoking even cooler (visuals fixed, but hopefully properly this
+      time)', type: Fix}
+  id: 868
+  time: '2022-01-13T14:09:46.0000000+00:00'
+- author: moonheart08
+  changes:
+  - {message: 'Magboots now allow you to ignore a lack of gravity, as they should.',
+    type: Add}
+  id: 869
+  time: '2022-01-13T14:13:26.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Atmos fires now play a sound effect., type: Tweak}
+  id: 870
+  time: '2022-01-13T14:18:17.0000000+00:00'
+- author: BubblegumBlue
+  changes:
+  - {message: 'Added circuit boards for the Shuttle Console and Syndicate Shuttle
+      Console. Cargonia can now truly secede the station, hooray!', type: Add}
+  - {message: New research category that adds the Shuttle Console Board to the Protolathe's
+      menu., type: Tweak}
+  id: 871
+  time: '2022-01-13T14:21:41.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Filled bucket will spill player when it is worn on their head., type: Tweak}
+  id: 872
+  time: '2022-01-13T14:22:19.0000000+00:00'
+- author: MeltedPixel
+  changes:
+  - {message: Fixed issue where players couldn't smile into the radio, type: Fix}
+  id: 873
+  time: '2022-01-13T14:26:58.0000000+00:00'
+- author: MeltedPixel
+  changes:
+  - {message: Changed Smart Fridge Sprite, type: Tweak}
+  id: 874
+  time: '2022-01-13T14:32:17.0000000+00:00'
+- author: weaver
+  changes:
+  - {message: Deconstructing complex tiles (like reinforced windows and walls) now
+      correctly show each step rather than breaking after the first step, type: Fix}
+  id: 875
+  time: '2022-01-13T14:33:39.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: The Syndicate will now assign some agents to ensure the survival of
+      other agents., type: Add}
+  id: 876
+  time: '2022-01-13T14:53:51.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added Personnel Crate to cargo. Includes a box of spare PDAs and ID
+      cards., type: Add}
+  id: 877
+  time: '2022-01-13T15:04:30.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Antimatter Engine Shielding can now be deconstructed with a welder.,
+    type: Tweak}
+  id: 878
+  time: '2022-01-13T15:06:43.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added librarian and lawyer roles to the game and all associated clothing
+      to the clothing vendor., type: Add}
+  id: 879
+  time: '2022-01-13T15:11:09.0000000+00:00'

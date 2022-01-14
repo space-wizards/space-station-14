@@ -21,6 +21,10 @@ namespace Content.Server.Atmos.EntitySystems
         ///     List of gas reactions ordered by priority.
         /// </summary>
         public IEnumerable<GasReactionPrototype> GasReactions => _gasReactions!;
+
+        /// <summary>
+        ///     Cached array of gas specific heats.
+        /// </summary>
         public float[] GasSpecificHeats => _gasSpecificHeats;
 
         private void InitializeGases()
@@ -36,11 +40,17 @@ namespace Content.Server.Atmos.EntitySystems
             }
         }
 
+        /// <summary>
+        ///     Calculates the heat capacity for a gas mixture.
+        /// </summary>
         public float GetHeatCapacity(GasMixture mixture)
         {
             return GetHeatCapacityCalculation(mixture.Moles, mixture.Immutable);
         }
 
+        /// <summary>
+        ///     Calculates the heat capacity for a gas mixture, using the archived values.
+        /// </summary>
         public float GetHeatCapacityArchived(GasMixture mixture)
         {
             return GetHeatCapacityCalculation(mixture.MolesArchived, mixture.Immutable);
@@ -60,16 +70,26 @@ namespace Content.Server.Atmos.EntitySystems
             return MathF.Max(NumericsHelpers.HorizontalAdd(tmp), Atmospherics.MinimumHeatCapacity);
         }
 
+        /// <summary>
+        ///     Calculates the thermal energy for a gas mixture.
+        /// </summary>
         public float GetThermalEnergy(GasMixture mixture)
         {
             return mixture.Temperature * GetHeatCapacity(mixture);
         }
 
+        /// <summary>
+        ///     Calculates the thermal energy for a gas mixture, using a cached heat capacity value.
+        /// </summary>
         public float GetThermalEnergy(GasMixture mixture, float cachedHeatCapacity)
         {
             return mixture.Temperature * cachedHeatCapacity;
         }
 
+        /// <summary>
+        ///     Merges the <see cref="giver"/> gas mixture into the <see cref="receiver"/> gas mixture.
+        ///     The <see cref="giver"/> gas mixture is not modified by this method.
+        /// </summary>
         public void Merge(GasMixture receiver, GasMixture giver)
         {
             if (receiver.Immutable) return;
@@ -88,6 +108,9 @@ namespace Content.Server.Atmos.EntitySystems
             NumericsHelpers.Add(receiver.Moles, giver.Moles);
         }
 
+        /// <summary>
+        ///     Shares gas between two gas mixtures. Part of LINDA.
+        /// </summary>
         public float Share(GasMixture receiver, GasMixture sharer, int atmosAdjacentTurfs)
         {
             var temperatureDelta = receiver.TemperatureArchived - sharer.TemperatureArchived;
@@ -169,6 +192,9 @@ namespace Content.Server.Atmos.EntitySystems
 
         }
 
+        /// <summary>
+        ///     Shares temperature between two mixtures, taking a conduction coefficient into account.
+        /// </summary>
         public float TemperatureShare(GasMixture receiver, GasMixture sharer, float conductionCoefficient)
         {
             var temperatureDelta = receiver.TemperatureArchived - sharer.TemperatureArchived;
@@ -192,6 +218,9 @@ namespace Content.Server.Atmos.EntitySystems
             return sharer.Temperature;
         }
 
+        /// <summary>
+        ///     Shares temperature between a gas mixture and an abstract sharer, taking a conduction coefficient into account.
+        /// </summary>
         public float TemperatureShare(GasMixture receiver, float conductionCoefficient, float sharerTemperature, float sharerHeatCapacity)
         {
             var temperatureDelta = receiver.TemperatureArchived - sharerTemperature;
@@ -271,6 +300,9 @@ namespace Content.Server.Atmos.EntitySystems
             return true;
         }
 
+        /// <summary>
+        ///     Scrubs specified gases from a gas mixture into a <see cref="destination"/> gas mixture.
+        /// </summary>
         public void ScrubInto(GasMixture mixture, GasMixture destination, IReadOnlyCollection<Gas> filterGases)
         {
             var buffer = new GasMixture(mixture.Volume){Temperature = mixture.Temperature};
@@ -284,6 +316,9 @@ namespace Content.Server.Atmos.EntitySystems
             Merge(destination, buffer);
         }
 
+        /// <summary>
+        ///     Performs reactions for a given gas mixture on an optional holder.
+        /// </summary>
         public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder)
         {
             var reaction = ReactionResult.NoReaction;
@@ -300,7 +335,7 @@ namespace Content.Server.Atmos.EntitySystems
                 var doReaction = true;
                 for (var i = 0; i < prototype.MinimumRequirements.Length; i++)
                 {
-                    if(i > Atmospherics.TotalNumberOfGases)
+                    if(i >= Atmospherics.TotalNumberOfGases)
                         throw new IndexOutOfRangeException("Reaction Gas Minimum Requirements Array Prototype exceeds total number of gases!");
 
                     var req = prototype.MinimumRequirements[i];
