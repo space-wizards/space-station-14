@@ -375,7 +375,7 @@
     state: meatball
 
 - type: entity
-  name: meatball
+  name: slimeball
   parent: FoodMeatBase
   id: FoodMeatSlime
   description: A gelatinous shaping of slime jelly.
