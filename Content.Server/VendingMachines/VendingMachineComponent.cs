@@ -1,283 +1,246 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Server.WireHacking;
-using Content.Shared.Access.Components;
-using Content.Shared.Access.Systems;
 using Content.Shared.Acts;
-using Content.Shared.Interaction;
 using Content.Shared.Sound;
 using Content.Shared.VendingMachines;
 using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
-using static Content.Shared.Wires.SharedWiresComponent;
+using System.Threading;
+using Robust.Shared.Maths;
+using Content.Server.VendingMachines.systems;
 
+using static Content.Shared.Wires.SharedWiresComponent;
+using static Content.Shared.Wires.SharedWiresComponent.WiresAction;
 namespace Content.Server.VendingMachines
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IActivate))]
-    public class VendingMachineComponent : SharedVendingMachineComponent, IActivate, IBreakAct, IWires
+    public class VendingMachineComponent : SharedVendingMachineComponent, IWires, IBreakAct
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [ComponentDependency] private readonly WiresComponent? WiresComponent = null;
 
-        private bool _ejecting;
-        private TimeSpan _animationDuration = TimeSpan.Zero;
+        private VendingMachineSystem? _vendingMachineSystem;
+        public bool Ejecting;
+        public TimeSpan _animationDuration = TimeSpan.Zero;
         [DataField("pack")]
-        private string _packPrototypeId = string.Empty;
-        private string _spriteName = "";
-
-        private bool Powered => !_entMan.TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
-        private bool _broken;
-
+        public string PackPrototypeId = string.Empty;
+        public string SpriteName = "";
+        public bool Powered => (PowerPulsed || PowerCut) ? false : !_entMan.TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
+        public bool Broken;
+        [DataField("allAccess")]
+        public bool AllAccess = false;
+        [DataField("speedLimiter")]
+        public bool SpeedLimiter = true;
         [DataField("soundVend")]
         // Grabbed from: https://github.com/discordia-space/CEV-Eris/blob/f702afa271136d093ddeb415423240a2ceb212f0/sound/machines/vending_drop.ogg
-        private SoundSpecifier _soundVend = new SoundPathSpecifier("/Audio/Machines/machine_vend.ogg");
+        public SoundSpecifier soundVend = new SoundPathSpecifier("/Audio/Machines/machine_vend.ogg");
         [DataField("soundDeny")]
         // Yoinked from: https://github.com/discordia-space/CEV-Eris/blob/35bbad6764b14e15c03a816e3e89aa1751660ba9/sound/machines/Custom_deny.ogg
-        private SoundSpecifier _soundDeny = new SoundPathSpecifier("/Audio/Machines/custom_deny.ogg");
+        public SoundSpecifier _soundDeny = new SoundPathSpecifier("/Audio/Machines/custom_deny.ogg");
+        [ViewVariables] public BoundUserInterface? UserInterface => Owner.GetUIOrNull(VendingMachineUiKey.Key);
+        private CancellationTokenSource _powerPulsedCancel = new();
+        private int PowerPulsedTimeout = 10;
+        public float NonLimitedEjectForce = 7.5f;
+        public float NonLimitedEjectRange = 5f;
 
-        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(VendingMachineUiKey.Key);
-
-        public bool Broken => _broken;
-
-        void IActivate.Activate(ActivateEventArgs eventArgs)
-        {
-            if(!_entMan.TryGetComponent(eventArgs.User, out ActorComponent? actor))
-            {
-                return;
-            }
-            if (!Powered)
-                return;
-
-            var wires = _entMan.GetComponent<WiresComponent>(Owner);
-            if (wires.IsPanelOpen)
-            {
-                wires.OpenInterface(actor.PlayerSession);
-            } else
-            {
-                UserInterface?.Toggle(actor.PlayerSession);
-            }
-        }
-
-        private void InitializeFromPrototype()
-        {
-            if (string.IsNullOrEmpty(_packPrototypeId)) { return; }
-            if (!_prototypeManager.TryIndex(_packPrototypeId, out VendingMachineInventoryPrototype? packPrototype))
-            {
-                return;
-            }
-
-            _entMan.GetComponent<MetaDataComponent>(Owner).EntityName = packPrototype.Name;
-            _animationDuration = TimeSpan.FromSeconds(packPrototype.AnimationDuration);
-            _spriteName = packPrototype.SpriteName;
-            if (!string.IsNullOrEmpty(_spriteName))
-            {
-                var spriteComponent = _entMan.GetComponent<SpriteComponent>(Owner);
-                const string vendingMachineRSIPath = "Structures/Machines/VendingMachines/{0}.rsi";
-                spriteComponent.BaseRSIPath = string.Format(vendingMachineRSIPath, _spriteName);
-            }
-
-            var inventory = new List<VendingMachineInventoryEntry>();
-            foreach(var (id, amount) in packPrototype.StartingInventory)
-            {
-                inventory.Add(new VendingMachineInventoryEntry(id, amount));
-            }
-            Inventory = inventory;
-        }
-
-        protected override void Initialize()
-        {
-            base.Initialize();
-
-            if (UserInterface != null)
-            {
-                UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
-            }
-
-            if (_entMan.TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver))
-            {
-                TrySetVisualState(receiver.Powered ? VendingMachineVisualState.Normal : VendingMachineVisualState.Off);
-            }
-
-            InitializeFromPrototype();
-        }
-
-        [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-#pragma warning disable 618
-            base.HandleMessage(message, component);
-#pragma warning restore 618
-            switch (message)
-            {
-                case PowerChangedMessage powerChanged:
-                    UpdatePower(powerChanged);
-                    break;
-            }
-        }
-
-        private void UpdatePower(PowerChangedMessage args)
-        {
-            var state = args.Powered ? VendingMachineVisualState.Normal : VendingMachineVisualState.Off;
-            TrySetVisualState(state);
-        }
-
-        private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage serverMsg)
+        public void OnUiReceiveMessage(ServerBoundUserInterfaceMessage serverMsg)
         {
             if (!Powered)
                 return;
+
+            if (_vendingMachineSystem == null)
+                _vendingMachineSystem = EntitySystem.Get<VendingMachineSystem>();
 
             var message = serverMsg.Message;
             switch (message)
             {
                 case VendingMachineEjectMessage msg:
-                    TryEject(msg.ID, serverMsg.Session.AttachedEntity);
+                    _vendingMachineSystem.AuthorizedVend(this, msg.ID, serverMsg.Session.AttachedEntity);
                     break;
                 case InventorySyncRequestMessage _:
                     UserInterface?.SendMessage(new VendingMachineInventoryMessage(Inventory));
                     break;
             }
         }
-
-        private void TryEject(string id)
-        {
-            if (_ejecting || _broken)
-            {
-                return;
-            }
-
-            var entry = Inventory.Find(x => x.ID == id);
-            if (entry == null)
-            {
-                Owner.PopupMessageEveryone(Loc.GetString("vending-machine-component-try-eject-invalid-item"));
-                Deny();
-                return;
-            }
-
-            if (entry.Amount <= 0)
-            {
-                Owner.PopupMessageEveryone(Loc.GetString("vending-machine-component-try-eject-out-of-stock"));
-                Deny();
-                return;
-            }
-
-            _ejecting = true;
-            entry.Amount--;
-            UserInterface?.SendMessage(new VendingMachineInventoryMessage(Inventory));
-            TrySetVisualState(VendingMachineVisualState.Eject);
-
-            Owner.SpawnTimer(_animationDuration, () =>
-            {
-                _ejecting = false;
-                TrySetVisualState(VendingMachineVisualState.Normal);
-                _entMan.SpawnEntity(id, _entMan.GetComponent<TransformComponent>(Owner).Coordinates);
-            });
-
-            SoundSystem.Play(Filter.Pvs(Owner), _soundVend.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
-        }
-
-        private void TryEject(string id, EntityUid? sender)
-        {
-            if (_entMan.TryGetComponent<AccessReaderComponent?>(Owner, out var accessReader))
-            {
-                var accessSystem = EntitySystem.Get<AccessReaderSystem>();
-                if (sender == null || !accessSystem.IsAllowed(accessReader, sender.Value))
-                {
-                    Owner.PopupMessageEveryone(Loc.GetString("vending-machine-component-try-eject-access-denied"));
-                    Deny();
-                    return;
-                }
-            }
-            TryEject(id);
-        }
-
-        private void Deny()
-        {
-            SoundSystem.Play(Filter.Pvs(Owner), _soundDeny.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
-
-            // Play the Deny animation
-            TrySetVisualState(VendingMachineVisualState.Deny);
-            //TODO: This duration should be a distinct value specific to the deny animation
-            Owner.SpawnTimer(_animationDuration, () =>
-            {
-                TrySetVisualState(VendingMachineVisualState.Normal);
-            });
-        }
-
-        private void TrySetVisualState(VendingMachineVisualState state)
-        {
-            var finalState = state;
-            if (_broken)
-            {
-                finalState = VendingMachineVisualState.Broken;
-            }
-            else if (_ejecting)
-            {
-                finalState = VendingMachineVisualState.Eject;
-            }
-            else if (!Powered)
-            {
-                finalState = VendingMachineVisualState.Off;
-            }
-
-            if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
-            {
-                appearance.SetData(VendingMachineVisuals.VisualState, finalState);
-            }
-        }
-
         public void OnBreak(BreakageEventArgs eventArgs)
         {
-            _broken = true;
-            TrySetVisualState(VendingMachineVisualState.Broken);
+
+            if (_vendingMachineSystem == null)
+                _vendingMachineSystem = EntitySystem.Get<VendingMachineSystem>();
+
+            Broken = true;
+            _vendingMachineSystem.TryUpdateVisualState(this, VendingMachineVisualState.Broken);
+        }
+        private enum Wires
+        {
+            // Pulsing it disrupts power.
+            // Cutting this kills power.
+            Power,
+            // Pulsing allows anyone to dispense.
+            // Cutting does nothing.
+            Access,
+            // Pulsing shoots a random item out.
+            // Cutting will make any dispensed item fire out.
+            Limiter,
+            // Pulsing causes an ad to play immediately
+            // Cutting stops ads from playing
+            Advertisement
         }
 
-        public enum Wires
+        public void RegisterWires(WiresComponent.WiresBuilder builder)
         {
-            /// <summary>
-            /// Shoots a random item when pulsed.
-            /// </summary>
-            Shoot
+            foreach (var wire in Enum.GetValues<Wires>())
+                builder.CreateWire(wire);
+
+            UpdateWires();
         }
 
-        void IWires.RegisterWires(WiresComponent.WiresBuilder builder)
+        public void UpdateWires()
         {
-            builder.CreateWire(Wires.Shoot);
+            if (_vendingMachineSystem == null)
+                _vendingMachineSystem = EntitySystem.Get<VendingMachineSystem>();
+
+            if (WiresComponent == null) return;
+
+            var pwrLightState = (PowerPulsed, PowerCut) switch {
+                (true, false) => StatusLightState.BlinkingFast,
+                (_, true) => StatusLightState.Off,
+                (_, _) => StatusLightState.On
+            };
+
+            var powerLight = new StatusLightData(Color.Yellow, pwrLightState, "POWER");
+
+            var accessLight = new StatusLightData(
+                Color.Red,
+                AllAccess ? StatusLightState.Off : StatusLightState.On,
+                "ACCESS"
+            );
+
+            bool? hasAdvert = _vendingMachineSystem.GetAdvertisementState(this);
+
+            StatusLightState adState = hasAdvert != null ?
+            (hasAdvert == true ? StatusLightState.On : StatusLightState.BlinkingSlow)
+            : StatusLightState.Off;
+
+            var advertisementLight = new StatusLightData(
+                Color.Green,
+                adState,
+                "ADVERT"
+            );
+
+            var limiterLight = new StatusLightData(
+                Color.DarkSalmon,
+                (SpeedLimiter ? StatusLightState.On : StatusLightState.Off),
+                "LIMITER"
+            );
+
+            WiresComponent.SetStatus(VendingMachineWireStatus.Power, powerLight);
+            WiresComponent.SetStatus(VendingMachineWireStatus.Access, accessLight);
+            WiresComponent.SetStatus(VendingMachineWireStatus.Advertisement, advertisementLight);
+            WiresComponent.SetStatus(VendingMachineWireStatus.Limiter, limiterLight);
         }
 
-        void IWires.WiresUpdate(WiresUpdateEventArgs args)
+        private bool _powerCut;
+        private bool PowerCut
         {
-            var identifier = (Wires) args.Identifier;
-            if (identifier == Wires.Shoot && args.Action == WiresAction.Pulse)
+            get => _powerCut;
+            set
             {
-                EjectRandom();
+                _powerCut = value;
             }
         }
 
-        /// <summary>
-        /// Ejects a random item if present.
-        /// </summary>
-        private void EjectRandom()
+        private bool _powerPulsed;
+        private bool PowerPulsed
         {
-            var availableItems = Inventory.Where(x => x.Amount > 0).ToList();
-            if (availableItems.Count <= 0)
+            get => _powerPulsed && !_powerCut;
+            set
             {
-                return;
+                _powerPulsed = value;
             }
-            TryEject(_random.Pick(availableItems).ID);
+        }
+
+        public void WiresUpdate(WiresUpdateEventArgs args)
+        {
+
+            if (_vendingMachineSystem == null)
+                _vendingMachineSystem = EntitySystem.Get<VendingMachineSystem>();
+
+            switch (args.Action)
+            {
+                case Pulse:
+                    switch (args.Identifier)
+                    {
+                        case Wires.Power:
+                            PowerPulsed = true;
+                            _vendingMachineSystem.TryUpdateVisualState(this);
+                            _powerPulsedCancel.Cancel();
+                            _powerPulsedCancel = new CancellationTokenSource();
+                            Owner.SpawnTimer(TimeSpan.FromSeconds(PowerPulsedTimeout),
+                                () => {
+                                    PowerPulsed = false;
+                                    UpdateWires();
+                                    _vendingMachineSystem.TryUpdateVisualState(this);
+                                },
+                                _powerPulsedCancel.Token);
+                            break;
+                        case Wires.Access:
+                            if (!PowerPulsed && !PowerCut) {
+                                AllAccess = !AllAccess;
+                            }
+                            break;
+
+                        case Wires.Advertisement:
+                            if (!PowerPulsed && !PowerCut) {
+                                _vendingMachineSystem.SayAdvertisement(this);
+                            }
+                            break;
+                        case Wires.Limiter:
+                            if (!PowerPulsed && !PowerCut) {
+                                _vendingMachineSystem.EjectRandom(this);
+                            }
+                            break;
+                    }
+                    break;
+                case Mend:
+                    switch (args.Identifier)
+                    {
+                        case Wires.Power:
+                            _powerPulsedCancel.Cancel();
+                            PowerPulsed = false;
+                            PowerCut = false;
+                            _vendingMachineSystem.TryUpdateVisualState(this);
+                            break;
+                        case Wires.Advertisement:
+                            _vendingMachineSystem.SetAdvertisementState(this, true);
+                        break;
+                        case Wires.Limiter:
+                            SpeedLimiter = true;
+                        break;
+                    }
+                    break;
+                case Cut:
+                    switch (args.Identifier)
+                    {
+                        case Wires.Power:
+                            PowerCut = true;
+                            _vendingMachineSystem.TryUpdateVisualState(this);
+                            break;
+                        case Wires.Advertisement:
+                            _vendingMachineSystem.SetAdvertisementState(this, false);
+                        break;
+                        case Wires.Limiter:
+                            SpeedLimiter = false;
+                        break;
+                    }
+                    break;
+            }
+            UpdateWires();
         }
     }
 

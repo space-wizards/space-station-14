@@ -75,5 +75,13 @@ namespace Content.Shared.VendingMachines
                 Amount = amount;
             }
         }
+        [Serializable, NetSerializable]
+        public enum VendingMachineWireStatus
+        {
+            Power,
+            Access,
+            Advertisement,
+            Limiter
+        }
     }
 }
