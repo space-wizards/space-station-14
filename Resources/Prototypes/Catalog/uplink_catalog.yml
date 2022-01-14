@@ -238,6 +238,12 @@
   price: 2
 
 - type: uplinkListing
+  id: UplinkCigarettes
+  category: Misc
+  itemId: CigPackSyndicate
+  price: 2
+
+- type: uplinkListing
   id: UplinkSoapSyndie
   category: Misc
   itemId: SoapSyndie
