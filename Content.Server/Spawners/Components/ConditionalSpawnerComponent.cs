@@ -33,7 +33,7 @@ namespace Content.Server.Spawners.Components
         [DataField("chance")]
         public float Chance { get; set; } = 1.0f;
 
-        public void RuleAdded(GameRuleAddedEvent obj)
+        public void RuleAdded(GameRuleStartedEvent obj)
         {
             if(_gameRules.Contains(obj.Rule.ID))
                 Spawn();

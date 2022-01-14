@@ -12,10 +12,10 @@ namespace Content.Server.Spawners.EntitySystems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<GameRuleAddedEvent>(OnRuleAdded);
+            SubscribeLocalEvent<GameRuleStartedEvent>(OnRuleAdded);
         }
 
-        private void OnRuleAdded(GameRuleAddedEvent args)
+        private void OnRuleAdded(GameRuleStartedEvent args)
         {
             foreach (var spawner in EntityManager.EntityQuery<ConditionalSpawnerComponent>())
             {

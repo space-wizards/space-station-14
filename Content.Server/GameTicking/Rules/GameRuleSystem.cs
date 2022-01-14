@@ -26,36 +26,52 @@ public abstract class GameRuleSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<GameRuleAddedEvent>(OnGameRuleAdded);
-        SubscribeLocalEvent<GameRuleRemovedEvent>(OnGameRuleRemoved);
+        SubscribeLocalEvent<GameRuleEnabledEvent>(OnGameRuleEnabled);
+        SubscribeLocalEvent<GameRuleDisabledEvent>(OnGameRuleDisabled);
 
+        SubscribeLocalEvent<GameRuleStartedEvent>(OnGameRuleStarted);
+        SubscribeLocalEvent<GameRuleEndedEvent>(OnGameRuleEnded);
     }
 
-    private void OnGameRuleAdded(GameRuleAddedEvent ev)
+    private void OnGameRuleEnabled(GameRuleEnabledEvent ev)
     {
         if (ev.Rule.ID != Prototype)
             return;
 
         Enabled = true;
-        Added();
     }
 
-    private void OnGameRuleRemoved(GameRuleRemovedEvent ev)
+    private void OnGameRuleDisabled(GameRuleDisabledEvent ev)
     {
         if (ev.Rule.ID != Prototype)
             return;
 
         Enabled = false;
-        Removed();
+    }
+
+    private void OnGameRuleStarted(GameRuleStartedEvent ev)
+    {
+        if (ev.Rule.ID != Prototype)
+            return;
+
+        Started();
+    }
+
+    private void OnGameRuleEnded(GameRuleEndedEvent ev)
+    {
+        if (ev.Rule.ID != Prototype)
+            return;
+
+        Ended();
     }
 
     /// <summary>
-    ///     Called when the game rule has been added and this system has been enabled.
+    ///     Called when the game rule has been started..
     /// </summary>
-    public abstract void Added();
+    public abstract void Started();
 
     /// <summary>
-    ///     Called when the game rule has been removed and this system has been disabled.
+    ///     Called when the game rule has ended..
     /// </summary>
-    public abstract void Removed();
+    public abstract void Ended();
 }

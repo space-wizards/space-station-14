@@ -69,7 +69,7 @@ namespace Content.Server.GameTicking
             return prototype != null;
         }
 
-        private bool AddGamePresetRules()
+        private bool EnableGamePresetRules()
         {
             if (DummyTicker || _preset == null)
                 return false;
@@ -79,10 +79,18 @@ namespace Content.Server.GameTicking
                 if (!_prototypeManager.TryIndex(rule, out GameRulePrototype? ruleProto))
                     continue;
 
-                AddGameRule(ruleProto);
+                EnableGameRule(ruleProto);
             }
 
             return true;
+        }
+
+        private void StartGamePresetRules()
+        {
+            foreach (var rule in _gameRules)
+            {
+                StartGameRule(rule);
+            }
         }
 
         public bool OnGhostAttempt(Mind.Mind mind, bool canReturnGlobal)

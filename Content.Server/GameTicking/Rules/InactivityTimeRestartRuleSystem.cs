@@ -28,12 +28,12 @@ public class InactivityTimeRestartRuleSystem : GameRuleSystem
         SubscribeLocalEvent<GameRunLevelChangedEvent>(RunLevelChanged);
     }
 
-    public override void Added()
+    public override void Started()
     {
         _playerManager.PlayerStatusChanged += PlayerStatusChanged;
     }
 
-    public override void Removed()
+    public override void Ended()
     {
         _playerManager.PlayerStatusChanged -= PlayerStatusChanged;
 

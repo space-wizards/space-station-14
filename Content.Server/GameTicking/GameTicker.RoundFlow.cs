@@ -68,6 +68,8 @@ namespace Content.Server.GameTicking
 
         private void PreRoundSetup()
         {
+            EnableGamePresetRules();
+
             DefaultMap = _mapManager.CreateMap();
             _pauseManager.AddUninitializedMap(DefaultMap);
             _startingRound = false;
@@ -132,7 +134,7 @@ namespace Content.Server.GameTicking
 
                 SendServerMessage(Loc.GetString("game-ticker-start-round"));
 
-                AddGamePresetRules();
+                StartGamePresetRules();
 
                 List<IPlayerSession> readyPlayers;
                 if (LobbyEnabled)
@@ -189,7 +191,8 @@ namespace Content.Server.GameTicking
                         var oldPreset = _preset;
                         ClearGameRules();
                         SetGamePreset(_configurationManager.GetCVar(CCVars.GameLobbyFallbackPreset));
-                        AddGamePresetRules();
+                        EnableGamePresetRules();
+                        StartGamePresetRules();
 
                         startAttempt.Uncancel();
                         RaiseLocalEvent(startAttempt);

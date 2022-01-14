@@ -202,14 +202,14 @@ public class TraitorDeathMatchRuleSystem : GameRuleSystem
         ev.AddLine(string.Join('\n', lines));
     }
 
-    public override void Added()
+    public override void Started()
     {
         _restarter.RoundMaxTime = TimeSpan.FromMinutes(30);
         _restarter.RestartTimer();
         _safeToEndRound = true;
     }
 
-    public override void Removed()
+    public override void Ended()
     {
     }
 

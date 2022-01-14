@@ -11,21 +11,38 @@ namespace Content.Server.GameTicking
         [ViewVariables] private readonly HashSet<GameRulePrototype> _gameRules = new();
         public IEnumerable<GameRulePrototype> ActiveGameRules => _gameRules;
 
-        public bool AddGameRule(GameRulePrototype rule)
+        public void StartGameRule(GameRulePrototype rule)
+        {
+            if (!HasGameRule(rule))
+                EnableGameRule(rule);
+
+            RaiseLocalEvent(new GameRuleStartedEvent(rule));
+        }
+
+        public void EndGameRule(GameRulePrototype rule)
+        {
+            if (!HasGameRule(rule))
+                return;
+
+            DisableGameRule(rule);
+            RaiseLocalEvent(new GameRuleEndedEvent(rule));
+        }
+
+        public bool EnableGameRule(GameRulePrototype rule)
         {
             if (!_gameRules.Add(rule))
                 return false;
 
-            RaiseLocalEvent(new GameRuleAddedEvent(rule));
+            RaiseLocalEvent(new GameRuleEnabledEvent(rule));
             return true;
         }
 
-        public bool RemoveGameRule(GameRulePrototype rule)
+        public bool DisableGameRule(GameRulePrototype rule)
         {
             if (!_gameRules.Remove(rule))
                 return false;
 
-            RaiseLocalEvent(new GameRuleRemovedEvent(rule));
+            RaiseLocalEvent(new GameRuleDisabledEvent(rule));
             return true;
         }
 
@@ -49,26 +66,46 @@ namespace Content.Server.GameTicking
         {
             foreach (var rule in _gameRules.ToArray())
             {
-                RemoveGameRule(rule);
+                EndGameRule(rule);
             }
         }
     }
 
-    public class GameRuleAddedEvent
+    public class GameRuleEnabledEvent
     {
         public GameRulePrototype Rule { get; }
 
-        public GameRuleAddedEvent(GameRulePrototype rule)
+        public GameRuleEnabledEvent(GameRulePrototype rule)
         {
             Rule = rule;
         }
     }
 
-    public class GameRuleRemovedEvent
+    public class GameRuleDisabledEvent
     {
         public GameRulePrototype Rule { get; }
 
-        public GameRuleRemovedEvent(GameRulePrototype rule)
+        public GameRuleDisabledEvent(GameRulePrototype rule)
+        {
+            Rule = rule;
+        }
+    }
+
+    public class GameRuleStartedEvent
+    {
+        public GameRulePrototype Rule { get; }
+
+        public GameRuleStartedEvent(GameRulePrototype rule)
+        {
+            Rule = rule;
+        }
+    }
+
+    public class GameRuleEndedEvent
+    {
+        public GameRulePrototype Rule { get; }
+
+        public GameRuleEndedEvent(GameRulePrototype rule)
         {
             Rule = rule;
         }
