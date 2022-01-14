@@ -1,1 +1,1 @@
-ent-HandVirtualItem = VIRTUAL ITEM YOU SHOULD NOT SEE THIS
+ent-HandVirtualItem = ВИРТУАЛЬНЫЙ ПРЕДМЕТ, КОТОРЫЙ ВЫ НЕ ДОЛЖНЫ ВИДЕТЬ

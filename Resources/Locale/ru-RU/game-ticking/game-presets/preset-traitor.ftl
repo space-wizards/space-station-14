@@ -28,8 +28,8 @@ traitor-no-one-ready = Нет готовых игроков! Не удалось
 traitor-death-match-title = Бой насмерть предателей
 traitor-death-match-description = Все — предатели. Все хотят смерти друг друга.
 traitor-death-match-station-is-too-unsafe-announcement = На станции слишком опасно, чтобы продолжать. У вас есть одна минута.
-traitor-death-match-end-round-description-first-line = ПДА были восстановлены...
-traitor-death-match-end-round-description-entry = ПДА { $originalName }, с { $tcBalance } TC
+traitor-death-match-end-round-description-first-line = КПК были восстановлены...
+traitor-death-match-end-round-description-entry = КПК { $originalName }, с { $tcBalance } ТК
 
 ## TraitorRole
 
