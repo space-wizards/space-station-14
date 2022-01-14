@@ -61,7 +61,7 @@ namespace Content.Client.Lobby.UI
 
             vBox.AddChild(header);
 
-            _unloaded = new Label {Text = Loc.GetString("lobby-character-preview-panel-unloaded-preferences-label")};
+            _unloaded = new Label { Text = Loc.GetString("lobby-character-preview-panel-unloaded-preferences-label") };
 
             _loaded = new BoxContainer
             {
@@ -162,7 +162,7 @@ namespace Content.Client.Lobby.UI
                 foreach (var slot in slots)
                 {
                     var itemType = gear.GetGear(slot.Name, profile);
-                    if(invSystem.TryUnequip(dummy, slot.Name, out var unequippedItem, true, true))
+                    if (invSystem.TryUnequip(dummy, slot.Name, out var unequippedItem, true, true))
                     {
                         entMan.DeleteEntity(unequippedItem.Value);
                     }
