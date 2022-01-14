@@ -1,0 +1,147 @@
+﻿- type: objective
+  id: CaptainIDStealObjective
+  issuer: syndicate
+  requirements:
+    - !type:TraitorRequirement {}
+    - !type:IncompatibleConditionsRequirement
+      conditions:
+        - DieCondition
+  conditions:
+    - !type:StealCondition
+      prototype: CaptainIDCard
+
+- type: objective
+  id: KillRandomObjective
+  issuer: syndicate
+  requirements:
+    - !type:TraitorRequirement {}
+    - !type:IncompatibleConditionsRequirement
+        conditions:
+          - RandomTraitorAliveCondition
+  conditions:
+    - !type:KillRandomPersonCondition {}
+  canBeDuplicate: true
+  
+- type: objective
+  id: RandomTraitorAliveObjective
+  issuer: syndicate
+  requirements:
+    - !type:TraitorRequirement {}
+    - !type:IncompatibleConditionsRequirement
+        conditions:
+          - KillRandomPersonCondition
+    - !type:MultipleTraitorsRequirement
+  conditions:
+    - !type:RandomTraitorAliveCondition {}
+  canBeDuplicate: true
+
+- type: objective
+  id: StayAliveObjective
+  issuer: syndicate
+  requirements:
+    - !type:TraitorRequirement {}
+    - !type:IncompatibleConditionsRequirement
+        conditions:
+          - DieCondition
+  conditions:
+    - !type:StayAliveCondition {}
+
+- type: objective
+  id: DieObjective
+  issuer: syndicate
+  requirements:
+    - !type:TraitorRequirement {}
+    - !type:IncompatibleConditionsRequirement
+      conditions:
+        - StayAliveCondition
+        - StealCondition
+  conditions:
+    - !type:DieCondition {}
+
+- type: objective
+  id: CMOHyposprayStealObjective
+  issuer: syndicate
+  difficultyOverride: 2.25
+  requirements:
+    - !type:TraitorRequirement {}
+    - !type:IncompatibleConditionsRequirement
+      conditions:
+        - DieCondition
+  conditions:
+    - !type:StealCondition
+      prototype: Hypospray
+      
+- type: objective
+  id: RDHardsuitStealObjective
+  issuer: syndicate
+  difficultyOverride: 2.5
+  requirements:
+    - !type:TraitorRequirement {}
+    - !type:IncompatibleConditionsRequirement
+      conditions:
+        - DieCondition
+  conditions:
+    - !type:StealCondition
+      prototype: ClothingOuterHardsuitRd
+      
+- type: objective
+  id: NukeDiskStealObjective
+  issuer: syndicate
+  requirements:
+    - !type:TraitorRequirement {}
+    - !type:IncompatibleConditionsRequirement
+      conditions:
+        - DieCondition
+  conditions:
+    - !type:StealCondition
+      prototype: NukeDisk
+      
+- type: objective
+  id: IDComputerBoardStealObjective
+  issuer: syndicate
+  requirements:
+    - !type:TraitorRequirement {}
+    - !type:IncompatibleConditionsRequirement
+      conditions:
+        - DieCondition
+  conditions:
+    - !type:StealCondition
+      prototype: IDComputerCircuitboard
+      
+- type: objective
+  id: MagbootsStealObjective #Replace this with CE magboots when we get those
+  issuer: syndicate
+  difficultyOverride: 1.5
+  requirements:
+    - !type:TraitorRequirement {}
+    - !type:IncompatibleConditionsRequirement
+      conditions:
+        - DieCondition
+  conditions:
+    - !type:StealCondition
+      prototype: ClothingShoesBootsMag
+      
+- type: objective
+  id: HOSHardsuitHelmStealObjective
+  issuer: syndicate
+  difficultyOverride: 2.5
+  requirements:
+    - !type:TraitorRequirement {}
+    - !type:IncompatibleConditionsRequirement
+      conditions:
+        - DieCondition
+  conditions:
+    - !type:StealCondition
+      prototype: ClothingHeadHelmetHardsuitSecurityRed
+      
+- type: objective
+  id: SupplyConsoleBoardStealObjective
+  issuer: syndicate
+  requirements:
+    - !type:TraitorRequirement {}
+    - !type:IncompatibleConditionsRequirement
+      conditions:
+        - DieCondition
+  conditions:
+    - !type:StealCondition
+      prototype: SupplyComputerCircuitboard

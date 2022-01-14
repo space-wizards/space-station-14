@@ -349,6 +349,15 @@ namespace Content.Client.Stylesheets
             tooltipBox.SetPatchMargin(StyleBox.Margin.All, 2);
             tooltipBox.SetContentMarginOverride(StyleBox.Margin.Horizontal, 7);
 
+            // Whisper box
+            var whisperTexture = resCache.GetTexture("/Textures/Interface/Nano/whisper.png");
+            var whisperBox = new StyleBoxTexture
+            {
+                Texture = whisperTexture,
+            };
+            whisperBox.SetPatchMargin(StyleBox.Margin.All, 2);
+            whisperBox.SetContentMarginOverride(StyleBox.Margin.Horizontal, 7);
+
             // Placeholder
             var placeholderTexture = resCache.GetTexture("/Textures/Interface/Nano/placeholder.png");
             var placeholder = new StyleBoxTexture {Texture = placeholderTexture};
@@ -436,6 +445,9 @@ namespace Content.Client.Stylesheets
                 Modulate = Color.FromHex("#202023"),
             };
             insetBack.SetPatchMargin(StyleBox.Margin.All, 10);
+
+            var contextMenuExpansionTexture = resCache.GetTexture("/Textures/Interface/VerbIcons/group.svg.192dpi.png");
+            var verbMenuConfirmationTexture = resCache.GetTexture("/Textures/Interface/VerbIcons/group.svg.192dpi.png");
 
             Stylesheet = new Stylesheet(BaseRules.Concat(new[]
             {
@@ -614,6 +626,32 @@ namespace Content.Client.Stylesheets
                 Element<RichTextLabel>().Class(VerbMenuElement.StyleClassVerbOtherText)
                     .Prop(Label.StylePropertyFont, notoSans12),
 
+                Element<TextureRect>().Class(ContextMenuElement.StyleClassContextMenuExpansionTexture)
+                    .Prop(TextureRect.StylePropertyTexture, contextMenuExpansionTexture),
+
+                Element<TextureRect>().Class(VerbMenuElement.StyleClassVerbMenuConfirmationTexture)
+                    .Prop(TextureRect.StylePropertyTexture, verbMenuConfirmationTexture),
+
+                // Context menu confirm buttons
+                Element<ContextMenuElement>().Class(ConfirmationMenuElement.StyleClassConfirmationContextMenuButton)
+                    .Prop(ContainerButton.StylePropertyStyleBox, buttonContext),
+
+                Element<ContextMenuElement>().Class(ConfirmationMenuElement.StyleClassConfirmationContextMenuButton)
+                    .Pseudo(ContainerButton.StylePseudoClassNormal)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionDefault),
+
+                Element<ContextMenuElement>().Class(ConfirmationMenuElement.StyleClassConfirmationContextMenuButton)
+                    .Pseudo(ContainerButton.StylePseudoClassHover)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionHovered),
+
+                Element<ContextMenuElement>().Class(ConfirmationMenuElement.StyleClassConfirmationContextMenuButton)
+                    .Pseudo(ContainerButton.StylePseudoClassPressed)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionPressed),
+
+                Element<ContextMenuElement>().Class(ConfirmationMenuElement.StyleClassConfirmationContextMenuButton)
+                    .Pseudo(ContainerButton.StylePseudoClassDisabled)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionDisabled),
+
                 // Thin buttons (No padding nor vertical margin)
                 Element<EntityContainerButton>().Class(StyleClassStorageButton)
                     .Prop(ContainerButton.StylePropertyStyleBox, buttonStorage),
@@ -776,6 +814,11 @@ namespace Content.Client.Stylesheets
                 new StyleRule(new SelectorElement(typeof(PanelContainer), new[] {"speechBox", "sayBox"}, null, null), new[]
                 {
                     new StyleProperty(PanelContainer.StylePropertyPanel, tooltipBox)
+                }),
+
+                new StyleRule(new SelectorElement(typeof(PanelContainer), new[] {"speechBox", "whisperBox"}, null, null), new[]
+                {
+                    new StyleProperty(PanelContainer.StylePropertyPanel, whisperBox)
                 }),
 
                 new StyleRule(new SelectorChild(

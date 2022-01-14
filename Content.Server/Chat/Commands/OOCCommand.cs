@@ -16,11 +16,9 @@ namespace Content.Server.Chat.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var player = (IPlayerSession?) shell.Player;
-
-            if (player == null)
+            if (shell.Player is not IPlayerSession player)
             {
-                shell.WriteError("You can't run this command locally.");
+                shell.WriteError("This command cannot be run from the server.");
                 return;
             }
 
@@ -31,8 +29,7 @@ namespace Content.Server.Chat.Commands
             if (string.IsNullOrEmpty(message))
                 return;
 
-            var chat = IoCManager.Resolve<IChatManager>();
-            chat.SendOOC(player, message);
+            IoCManager.Resolve<IChatManager>().SendOOC(player, message);
         }
     }
 }
