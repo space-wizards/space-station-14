@@ -59,8 +59,6 @@ namespace Content.Server.Power.Components
 
         public BatteryComponent? Battery => _entMan.TryGetComponent(Owner, out BatteryComponent? batteryComponent) ? batteryComponent : null;
 
-        [ComponentDependency] private AccessReaderComponent? _accessReader = null;
-
         protected override void Initialize()
         {
             base.Initialize();
@@ -92,7 +90,7 @@ namespace Content.Server.Power.Components
                 return;
 
             var accessSystem = EntitySystem.Get<AccessReaderSystem>();
-            if (_accessReader == null || accessSystem.IsAllowed(_accessReader, attached))
+            if (_entMan.TryGetComponent<AccessReaderComponent>(Owner, out var accessReaderComponent) || accessSystem.IsAllowed(accessReaderComponent, attached))
             {
                 MainBreakerEnabled = !MainBreakerEnabled;
                 _entMan.GetComponent<PowerNetworkBatteryComponent>(Owner).CanDischarge = MainBreakerEnabled;

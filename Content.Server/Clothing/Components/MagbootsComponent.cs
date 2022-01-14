@@ -19,9 +19,7 @@ namespace Content.Server.Clothing.Components
     [ComponentReference(typeof(IActivate))]
     public sealed class MagbootsComponent : SharedMagbootsComponent, IActivate
     {
-        [ComponentDependency] private SharedItemComponent? _item = null;
-        [ComponentDependency] private ItemActionsComponent? _itemActions = null;
-        [ComponentDependency] private SpriteComponent? _sprite = null;
+        [Dependency] private readonly IEntityManager _entMan = default!;
 
         private bool _on;
 
@@ -39,10 +37,12 @@ namespace Content.Server.Clothing.Components
                     EntitySystem.Get<MagbootsSystem>().UpdateMagbootEffects(container.Owner, Owner, true, this);
                 }
 
-                _itemActions?.Toggle(ItemActionType.ToggleMagboots, On);
-                if (_item != null)
-                    _item.EquippedPrefix = On ? "on" : null;
-                _sprite?.LayerSetState(0, On ? "icon-on" : "icon");
+                if(_entMan.TryGetComponent<ItemActionsComponent>(Owner, out var itemActions))
+                    itemActions.Toggle(ItemActionType.ToggleMagboots, On);
+                if (_entMan.TryGetComponent<SharedItemComponent>(Owner, out var item))
+                    item.EquippedPrefix = On ? "on" : null;
+                if(_entMan.TryGetComponent<SpriteComponent>(Owner, out var sprite))
+                    sprite.LayerSetState(0, On ? "icon-on" : "icon");
                 OnChanged();
                 Dirty();
             }
