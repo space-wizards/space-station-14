@@ -140,3 +140,25 @@
     ChiefMedicalOfficer: [ 1, 1 ]
     HeadOfSecurity: [ 1, 1 ]
     SecurityOfficer: [ 2, 3 ]
+
+- type: gameMap
+  id: commander
+  mapName: 'Commander'
+  mapNameTemplate: '{0} Commander {1}'
+  nameGenerator:
+    !type:NanotrasenNameGenerator
+    prefixCreator: '14'
+  mapPath: Maps/commander.yml
+  minPlayers: 0
+  votable: false
+  overflowJobs: []
+  availableJobs:
+    Assistant: [ 2, 3 ]
+    Bartender: [ 1, 1 ]
+    Captain: [ 1, 1 ]
+    HeadOfPersonnel: [ 1, 1 ]
+    StationEngineer: [ 2, 5 ]
+    MedicalDoctor: [ 2, 4 ]
+    HeadOfSecurity: [ 1, 1 ]
+    SecurityOfficer: [ 5, 10 ]
+    Warden: [ 1, 1 ]
