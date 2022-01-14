@@ -1,2 +1,2 @@
-ent-Kudzu = kudzu
-    .desc = A rapidly growing, dangerous plant. WHY ARE YOU STOPPING TO LOOK AT IT?!
+ent-Kudzu = кудзю
+    .desc = Быстрорастущее, опасное растение. ЗАЧЕМ ВЫ ВСТАЛИ, ЧТОБЫ ПОСМОТРЕТЬ НА НЕГО?!

@@ -1,4 +1,4 @@
-ent-Autolathe = autolathe
-    .desc = It produces items using metal and glass.
-ent-Protolathe = protolathe
-    .desc = Converts raw materials into useful objects.
+ent-Autolathe = автолат
+    .desc = Он производит изделия из металла и стекла.
+ent-Protolathe = протолат
+    .desc = Преобразует сырье в полезные предметы.

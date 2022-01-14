@@ -1,2 +1,2 @@
-ent-FirelockFrame = Firelock Frame
-    .desc = That is a firelock frame.
+ent-FirelockFrame = рама пожарного шлюза
+    .desc = Это рама пожарного шлюза.

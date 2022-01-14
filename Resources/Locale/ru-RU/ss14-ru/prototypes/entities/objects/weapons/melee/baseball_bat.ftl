@@ -1,2 +1,2 @@
-ent-BaseBallBat = baseball bat
-    .desc = A robust baseball bat.
+ent-BaseBallBat = бейсбольная бита
+    .desc = Прочная бейсбольная бита.
