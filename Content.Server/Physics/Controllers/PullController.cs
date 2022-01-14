@@ -38,9 +38,9 @@ namespace Content.Server.Physics.Controllers
 
         public override void Initialize()
         {
-            base.Initialize();
-
             UpdatesAfter.Add(typeof(MoverController));
+
+            base.Initialize();
         }
 
         public override void UpdateBeforeSolve(bool prediction, float frameTime)
