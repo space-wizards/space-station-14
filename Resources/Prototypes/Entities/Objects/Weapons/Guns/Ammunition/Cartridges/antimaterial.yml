@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseItem
+  parent: BaseItemCartridge
   id: CartridgeAntiMaterial
   name: cartridge (.60 anti-material)
   components:

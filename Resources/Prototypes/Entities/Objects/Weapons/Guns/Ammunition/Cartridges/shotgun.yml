@@ -1,13 +1,12 @@
 ﻿- type: entity
   id: ShellShotgunBase
   name: shell (.50)
-  parent: BaseItem
+  parent: BaseItemCartridge
   abstract: true
   components:
   - type: Tag
     tags:
     - ShotgunShell
-    - Cartridge
   - type: Ammo
     caliber: Shotgun
     ammoSpread: 40
