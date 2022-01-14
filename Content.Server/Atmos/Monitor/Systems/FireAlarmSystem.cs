@@ -20,7 +20,7 @@ namespace Content.Server.Atmos.Monitor.Systems
 
         private void OnInteractHand(EntityUid uid, FireAlarmComponent component, InteractHandEvent args)
         {
-            if (!_interactionSystem.InRangeUnobstructed(args.User, args.Target))
+            if (!_interactionSystem.InRangeUnobstructed(args.User, args.Target, 2, Shared.Physics.CollisionGroup.Impassable, null, true))
                 return;
 
             if (EntityManager.TryGetComponent(args.User, out ActorComponent? actor)

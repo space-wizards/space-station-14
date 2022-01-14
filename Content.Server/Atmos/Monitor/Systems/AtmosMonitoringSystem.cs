@@ -9,7 +9,6 @@ using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Power.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
-using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.IoC;
@@ -119,32 +118,23 @@ namespace Content.Server.Atmos.Monitor.Systems
         public override void Update(float frameTime)
         {
             foreach (var uid in _checkPos)
-                OpenAirOrReposition(uid);
+                GetOpenAir(uid);
         }
 
-        private void OpenAirOrReposition(EntityUid uid, AtmosMonitorComponent? component = null, AppearanceComponent? appearance = null)
+        private void GetOpenAir(EntityUid uid, AtmosMonitorComponent? component = null, AppearanceComponent? appearance = null)
         {
             if (!Resolve(uid, ref component, ref appearance)) return;
 
             var transform = Transform(component.Owner);
             // atmos alarms will first attempt to get the air
             // directly underneath it - if not, then it will
-            // instead place itself directly in front of the tile
-            // it is facing, and then visually shift itself back
-            // via sprite offsets (SS13 style but fuck it)
+            // instead get the air from the tile in front of it
             var coords = transform.Coordinates;
 
             if (_atmosphereSystem.IsTileAirBlocked(coords))
             {
-
                 var rotPos = transform.LocalRotation.RotateVec(new Vector2(0, -1));
-                transform.Anchored = false;
                 coords = coords.Offset(rotPos);
-                transform.Coordinates = coords;
-
-                appearance.SetData("offset", -rotPos);
-
-                transform.Anchored = true;
             }
 
             GasMixture? air = _atmosphereSystem.GetTileMixture(coords);
