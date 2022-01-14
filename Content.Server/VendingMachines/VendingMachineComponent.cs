@@ -38,10 +38,10 @@ namespace Content.Server.VendingMachines
         public bool SpeedLimiter = true;
         [DataField("soundVend")]
         // Grabbed from: https://github.com/discordia-space/CEV-Eris/blob/f702afa271136d093ddeb415423240a2ceb212f0/sound/machines/vending_drop.ogg
-        public SoundSpecifier soundVend = new SoundPathSpecifier("/Audio/Machines/machine_vend.ogg");
+        public SoundSpecifier SoundVend = new SoundPathSpecifier("/Audio/Machines/machine_vend.ogg");
         [DataField("soundDeny")]
         // Yoinked from: https://github.com/discordia-space/CEV-Eris/blob/35bbad6764b14e15c03a816e3e89aa1751660ba9/sound/machines/Custom_deny.ogg
-        public SoundSpecifier _soundDeny = new SoundPathSpecifier("/Audio/Machines/custom_deny.ogg");
+        public SoundSpecifier SoundDeny = new SoundPathSpecifier("/Audio/Machines/custom_deny.ogg");
         [ViewVariables] public BoundUserInterface? UserInterface => Owner.GetUIOrNull(VendingMachineUiKey.Key);
         private CancellationTokenSource _powerPulsedCancel = new();
         private int PowerPulsedTimeout = 10;

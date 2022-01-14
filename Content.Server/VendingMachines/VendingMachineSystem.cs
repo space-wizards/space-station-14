@@ -105,7 +105,7 @@ namespace Content.Server.VendingMachines.systems
 
         public void Deny(VendingMachineComponent component)
         {
-            SoundSystem.Play(Filter.Pvs(component.Owner), component._soundDeny.GetSound(), component.Owner, AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(Filter.Pvs(component.Owner), component.SoundDeny.GetSound(), component.Owner, AudioParams.Default.WithVolume(-2f));
 
             // Play the Deny animation
             TryUpdateVisualState(component, VendingMachineVisualState.Deny);
@@ -175,7 +175,7 @@ namespace Content.Server.VendingMachines.systems
                 }
             });
 
-            SoundSystem.Play(Filter.Pvs(component.Owner), component.soundVend.GetSound(), component.Owner, AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(Filter.Pvs(component.Owner), component.SoundVend.GetSound(), component.Owner, AudioParams.Default.WithVolume(-2f));
         }
         public void AuthorizedVend(VendingMachineComponent component, string id, EntityUid? sender)
         {
