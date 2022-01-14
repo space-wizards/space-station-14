@@ -1,11 +1,6 @@
 Entries:
 - author: Zumorica
   changes:
-  - {message: Fixes bar sign not changing its sprite correctly., type: Fix}
-  id: 378
-  time: '2021-10-01T10:29:58.504452+00:00'
-- author: Zumorica
-  changes:
   - {message: Fixes drinking glasses not fitting in reagent dispensers., type: Fix}
   id: 379
   time: '2021-10-01T10:29:58.505241+00:00'
@@ -2916,3 +2911,9 @@ Entries:
       to the clothing vendor., type: Add}
   id: 879
   time: '2022-01-13T15:11:09.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Added Syndicate Smokes to the uplink; a cool but very slow way to trade
+      future lung health for short term healing., type: Add}
+  id: 880
+  time: '2022-01-14T01:06:32.0000000+00:00'
