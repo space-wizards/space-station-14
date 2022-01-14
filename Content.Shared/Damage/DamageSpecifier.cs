@@ -9,8 +9,8 @@ using Robust.Shared.ViewVariables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using Content.Shared.FixedPoint;
-using Newtonsoft.Json;
 
 namespace Content.Shared.Damage
 {
@@ -24,11 +24,11 @@ namespace Content.Shared.Damage
     [DataDefinition]
     public class DamageSpecifier
     {
-        [JsonProperty("types")]
+        [JsonPropertyName("types")]
         [DataField("types", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, DamageTypePrototype>))]
         private readonly Dictionary<string,FixedPoint2>? _damageTypeDictionary;
 
-        [JsonProperty("groups")]
+        [JsonPropertyName("groups")]
         [DataField("groups", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, DamageGroupPrototype>))]
         private readonly Dictionary<string, FixedPoint2>? _damageGroupDictionary;
 

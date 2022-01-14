@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Prototypes;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
-using Newtonsoft.Json;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -148,14 +148,14 @@ namespace Content.Shared.Chemistry.Reagent
         /// <summary>
         ///     Amount of reagent to metabolize, per metabolism cycle.
         /// </summary>
-        [JsonProperty("rate")]
+        [JsonPropertyName("rate")]
         [DataField("metabolismRate")]
         public FixedPoint2 MetabolismRate = FixedPoint2.New(0.5f);
 
         /// <summary>
         ///     A list of effects to apply when these reagents are metabolized.
         /// </summary>
-        [JsonProperty("effects")]
+        [JsonPropertyName("effects")]
         [DataField("effects", required: true)]
         public ReagentEffect[] Effects = default!;
     }
