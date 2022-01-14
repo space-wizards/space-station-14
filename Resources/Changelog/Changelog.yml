@@ -1,11 +1,6 @@
 Entries:
 - author: Zumorica
   changes:
-  - {message: Fixes drinking glasses not fitting in reagent dispensers., type: Fix}
-  id: 379
-  time: '2021-10-01T10:29:58.505241+00:00'
-- author: Zumorica
-  changes:
   - {message: Fixes drinking glasses not breaking when thrown., type: Fix}
   id: 380
   time: '2021-10-01T10:29:58.505975+00:00'
@@ -2917,3 +2912,8 @@ Entries:
       future lung health for short term healing., type: Add}
   id: 880
   time: '2022-01-14T01:06:32.0000000+00:00'
+- author: Daemon
+  changes:
+  - {message: Fixed dummy on lobby screen, type: Fix}
+  id: 881
+  time: '2022-01-14T18:19:07.0000000+00:00'
