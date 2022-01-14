@@ -50,7 +50,9 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-
+  - type: Tag
+    tags:
+    - Trash
 
 # Containers
 - type: entity

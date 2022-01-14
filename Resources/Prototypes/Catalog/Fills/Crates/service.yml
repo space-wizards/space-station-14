@@ -87,3 +87,16 @@
       amount: 15
     - id: Pen
       amount: 2
+
+- type: entity
+  id: CrateServicePersonnel
+  name: personnel crate
+  description: Contains a box of blank ID cards and PDAs.
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+    - id: BoxPDA
+      amount: 1
+    - id: BoxID
+      amount: 1

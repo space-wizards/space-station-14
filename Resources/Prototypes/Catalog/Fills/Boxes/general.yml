@@ -76,7 +76,7 @@
       - LightBulb
 
 - type: entity
-  name: pda box
+  name: PDA box
   parent: BoxCardboard
   id: BoxPDA
   description: A box of spare PDA microcomputers.
@@ -94,6 +94,27 @@
     whitelist:
       components:
       - PDA
+
+- type: entity
+  name: ID card box
+  parent: BoxCardboard
+  id: BoxID
+  description: A box of spare blank ID cards.
+  components:
+  - type: StorageFill
+    contents:
+      - id: AssistantIDCard
+        amount: 6
+  - type: Sprite
+    layers:
+      - state: box
+      - state: pda
+  - type: Storage
+    capacity: 60
+    whitelist:
+      components:
+      - IdCard
+
 
 - type: entity
   name: meson box
