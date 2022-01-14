@@ -70,8 +70,6 @@ namespace Content.Server.GameTicking
 
         private void PreRoundSetup()
         {
-            AddGamePresetRules();
-
             DefaultMap = _mapManager.CreateMap();
             _pauseManager.AddUninitializedMap(DefaultMap);
             _startingRound = false;
@@ -188,6 +186,8 @@ namespace Content.Server.GameTicking
                 Logger.InfoS("ticker", "Starting round!");
 
                 SendServerMessage(Loc.GetString("game-ticker-start-round"));
+
+                AddGamePresetRules();
 
                 List<IPlayerSession> readyPlayers;
                 if (LobbyEnabled)
