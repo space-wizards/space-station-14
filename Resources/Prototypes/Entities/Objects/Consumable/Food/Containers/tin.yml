@@ -31,7 +31,7 @@
 
 - type: entity
   abstract: true
-  parent: BaseItem
+  parent: BaseItemSmall
   id: FoodTinBaseTrash
   name: empty tin
   description: An empty tin. Could get a bit of metal from this.

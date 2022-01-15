@@ -196,7 +196,7 @@
 
 - type: entity
   abstract: true
-  parent: BaseItem
+  parent: BaseItemSmall
   id: FoodPacketTrash
   description: This is rubbish.
   components:
@@ -206,9 +206,6 @@
   - type: Item
     sprite: Objects/Consumable/Food/snacks.rsi
     HeldPrefix: packet
-  - type: Tag
-    tags:
-    - Trash
 
 - type: entity
   abstract: true
