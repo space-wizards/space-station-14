@@ -90,7 +90,7 @@ namespace Content.Server.Power.Components
                 return;
 
             var accessSystem = EntitySystem.Get<AccessReaderSystem>();
-            if (_entMan.TryGetComponent<AccessReaderComponent>(Owner, out var accessReaderComponent) || accessSystem.IsAllowed(accessReaderComponent, attached))
+            if (!_entMan.TryGetComponent<AccessReaderComponent>(Owner, out var accessReaderComponent) || accessSystem.IsAllowed(accessReaderComponent, attached))
             {
                 MainBreakerEnabled = !MainBreakerEnabled;
                 _entMan.GetComponent<PowerNetworkBatteryComponent>(Owner).CanDischarge = MainBreakerEnabled;
