@@ -368,13 +368,13 @@ namespace Content.Server.Shuttles.EntitySystems
             dockA.DockJoint = joint;
             dockB.DockJoint = joint;
 
-            if (TryComp(dockA.Owner, out ServerDoorComponent? doorA))
+            if (TryComp(dockA.Owner, out DoorComponent? doorA))
             {
                 doorA.ChangeAirtight = false;
                 _doorSystem.StartOpening(doorA.Owner, doorA);
             }
 
-            if (TryComp(dockB.Owner, out ServerDoorComponent? doorB))
+            if (TryComp(dockB.Owner, out DoorComponent? doorB))
             {
                 doorB.ChangeAirtight = false;
                 _doorSystem.StartOpening(doorB.Owner, doorB);
@@ -451,13 +451,13 @@ namespace Content.Server.Shuttles.EntitySystems
                 return;
             }
 
-            if (TryComp(dock.Owner, out ServerDoorComponent? doorA))
+            if (TryComp(dock.Owner, out DoorComponent? doorA))
             {
                 doorA.ChangeAirtight = true;
                 _doorSystem.TryClose(doorA.Owner, doorA);
             }
 
-            if (TryComp(dock.DockedWith, out ServerDoorComponent? doorB))
+            if (TryComp(dock.DockedWith, out DoorComponent? doorB))
             {
                 doorB.ChangeAirtight = true;
                 _doorSystem.TryClose(doorB.Owner, doorB);

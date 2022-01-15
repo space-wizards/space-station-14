@@ -29,7 +29,7 @@ namespace Content.Server.Doors.Components
         public bool EmergencyPressureStop()
         {
             var doorSys = EntitySystem.Get<DoorSystem>();
-            if (_entMan.TryGetComponent<ServerDoorComponent>(Owner, out var door) &&
+            if (_entMan.TryGetComponent<DoorComponent>(Owner, out var door) &&
                 door.State == DoorState.Open &&
                 doorSys.CanClose(Owner, door))
             {

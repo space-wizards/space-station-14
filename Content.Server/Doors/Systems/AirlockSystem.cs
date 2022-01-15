@@ -115,7 +115,7 @@ namespace Content.Server.Doors.Systems
         private void OnActivate(EntityUid uid, AirlockComponent component, ActivateInWorldEvent args)
         {
             if (TryComp<WiresComponent>(uid, out var wiresComponent) && wiresComponent.IsPanelOpen &&
-                EntityManager.TryGetComponent(args.Args.User, out ActorComponent? actor))
+                EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
             {
                 wiresComponent.OpenInterface(actor.PlayerSession);
                 args.Handled = true;

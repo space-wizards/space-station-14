@@ -9,6 +9,7 @@ using Content.Shared.Doors.Components;
 using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -270,7 +271,7 @@ namespace Content.Server.Doors.Components
 
         public void WiresUpdate(WiresUpdateEventArgs args)
         {
-            if (!_entityManager.TryGetComponent<ServerDoorComponent>(Owner, out var doorComponent))
+            if (!_entityManager.TryGetComponent<DoorComponent>(Owner, out var doorComponent))
             {
                 return;
             }

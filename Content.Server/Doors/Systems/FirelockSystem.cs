@@ -1,4 +1,4 @@
-﻿using Content.Server.Atmos.Monitor.Components;
+using Content.Server.Atmos.Monitor.Components;
 using Content.Server.Atmos.Monitor.Systems;
 using Content.Server.Doors.Components;
 using Content.Shared.Atmos.Monitor;
@@ -48,7 +48,7 @@ namespace Content.Server.Doors.Systems
 
         private void OnBeforeDoorPry(EntityUid uid, FirelockComponent component, BeforeDoorPryEvent args)
         {
-            if (!TryComp<ServerDoorComponent>(uid, out var door) || door.State != DoorState.Closed)
+            if (!TryComp<DoorComponent>(uid, out var door) || door.State != DoorState.Closed)
             {
                 return;
             }
@@ -79,7 +79,7 @@ namespace Content.Server.Doors.Systems
 
         private void OnAtmosAlarm(EntityUid uid, FirelockComponent component, AtmosMonitorAlarmEvent args)
         {
-            if (!TryComp<ServerDoorComponent>(uid, out var doorComponent)) return;
+            if (!TryComp<DoorComponent>(uid, out var doorComponent)) return;
 
             if (args.HighestNetworkType == AtmosMonitorAlarmType.Normal)
             {
