@@ -17,7 +17,7 @@ public class CableSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<CableComponent, InteractUsingEvent>(OnInteractUsing);
-        SubscribeLocalEvent<CableComponent, CuttingFinishedEvent>(OnCableCut);
+        SubscribeLocalEvent<CuttingFinishedEvent>(OnCableCut);
         SubscribeLocalEvent<CableComponent, AnchorStateChangedEvent>(OnAnchorChanged);
     }
 
@@ -31,13 +31,16 @@ public class CableSystem : EntitySystem
         args.Handled = true;
     }
 
-    private void OnCableCut(EntityUid uid, CableComponent cable, CuttingFinishedEvent args)
+    private void OnCableCut(CuttingFinishedEvent args)
     {
-        if (_electrocutionSystem.TryDoElectrifiedAct(uid, args.User))
+        if (!TryComp(args.Target, out CableComponent? cable))
             return;
 
-        Spawn(cable.CableDroppedOnCutPrototype, Transform(uid).Coordinates);
-        QueueDel(uid);
+        if (_electrocutionSystem.TryDoElectrifiedAct(args.Target, args.User))
+            return;
+
+        Spawn(cable.CableDroppedOnCutPrototype, Transform(args.Target).Coordinates);
+        QueueDel(args.Target);
     }
 
     private void OnAnchorChanged(EntityUid uid, CableComponent cable, ref AnchorStateChangedEvent args)
