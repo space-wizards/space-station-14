@@ -50,7 +50,7 @@ namespace Content.Server.Morgue.Components
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
-            if (_entities.TryGetComponent<AppearanceComponent>(Owner, out var appearance)) return;
+            if (!_entities.TryGetComponent<AppearanceComponent>(Owner, out var appearance)) return;
 
             if (inDetailsRange)
             {

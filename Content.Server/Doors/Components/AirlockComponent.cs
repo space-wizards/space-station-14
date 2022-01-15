@@ -131,7 +131,7 @@ namespace Content.Server.Doors.Components
 
         public bool IsPowered()
         {
-            return _entityManager.TryGetComponent<ApcPowerReceiverComponent>(Owner, out var receiverComponent) && receiverComponent.Powered;
+            return !_entityManager.TryGetComponent<ApcPowerReceiverComponent>(Owner, out var receiverComponent) || receiverComponent.Powered;
         }
 
         public void UpdateBoltLightStatus()
@@ -144,7 +144,7 @@ namespace Content.Server.Doors.Components
 
         public void UpdateWiresStatus()
         {
-            if (_entityManager.TryGetComponent<WiresComponent>(Owner, out var wiresComponent)) return;
+            if (!_entityManager.TryGetComponent<WiresComponent>(Owner, out var wiresComponent)) return;
 
             var mainPowerCut = wiresComponent.IsWireCut(Wires.MainPower);
             var backupPowerCut = wiresComponent.IsWireCut(Wires.BackupPower);
