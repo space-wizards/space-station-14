@@ -98,10 +98,10 @@ namespace Content.Server.Atmos.Monitor.Systems
 
         private void OnAtmosMonitorStartup(EntityUid uid, AtmosMonitorComponent component, ComponentStartup args)
         {
-            if (component.PowerRecvComponent == null
-                && component.AtmosDeviceComponent != null)
+            if (!HasComp<ApcPowerReceiverComponent>(uid)
+                && TryComp<AtmosDeviceComponent>(uid, out var atmosDeviceComponent))
             {
-                _atmosDeviceSystem.LeaveAtmosphere(component.AtmosDeviceComponent);
+                _atmosDeviceSystem.LeaveAtmosphere(atmosDeviceComponent);
                 return;
             }
 
@@ -204,28 +204,29 @@ namespace Content.Server.Atmos.Monitor.Systems
 
         private void OnPowerChangedEvent(EntityUid uid, AtmosMonitorComponent component, PowerChangedEvent args)
         {
-            if (!args.Powered)
+            if (TryComp<AtmosDeviceComponent>(uid, out var atmosDeviceComponent))
             {
-                if (component.AtmosDeviceComponent != null
-                    && component.AtmosDeviceComponent.JoinedGrid != null)
+                if (!args.Powered)
                 {
-                    _atmosDeviceSystem.LeaveAtmosphere(component.AtmosDeviceComponent);
-                    component.TileGas = null;
-                }
+                    if (atmosDeviceComponent.JoinedGrid != null)
+                    {
+                        _atmosDeviceSystem.LeaveAtmosphere(atmosDeviceComponent);
+                        component.TileGas = null;
+                    }
 
-                // clear memory when power cycled
-                component.LastAlarmState = AtmosMonitorAlarmType.Normal;
-                component.NetworkAlarmStates.Clear();
-            }
-            else if (args.Powered)
-            {
-                if (component.AtmosDeviceComponent != null
-                    && component.AtmosDeviceComponent.JoinedGrid == null)
+                    // clear memory when power cycled
+                    component.LastAlarmState = AtmosMonitorAlarmType.Normal;
+                    component.NetworkAlarmStates.Clear();
+                }
+                else if (args.Powered)
                 {
-                    _atmosDeviceSystem.JoinAtmosphere(component.AtmosDeviceComponent);
-                    var coords = Transform(component.Owner).Coordinates;
-                    var air = _atmosphereSystem.GetTileMixture(coords);
-                    component.TileGas = air;
+                    if (atmosDeviceComponent.JoinedGrid == null)
+                    {
+                        _atmosDeviceSystem.JoinAtmosphere(atmosDeviceComponent);
+                        var coords = Transform(component.Owner).Coordinates;
+                        var air = _atmosphereSystem.GetTileMixture(coords);
+                        component.TileGas = air;
+                    }
                 }
             }
 
@@ -238,8 +239,8 @@ namespace Content.Server.Atmos.Monitor.Systems
 
         private void OnFireEvent(EntityUid uid, AtmosMonitorComponent component, TileFireEvent args)
         {
-            if (component.PowerRecvComponent == null
-                || !component.PowerRecvComponent.Powered)
+            if (!TryComp<ApcPowerReceiverComponent>(uid, out var powerReceiverComponent)
+                || !powerReceiverComponent.Powered)
                 return;
 
             // if we're monitoring for atmos fire, then we make it similar to a smoke detector
@@ -261,15 +262,15 @@ namespace Content.Server.Atmos.Monitor.Systems
 
         private void OnAtmosUpdate(EntityUid uid, AtmosMonitorComponent component, AtmosDeviceUpdateEvent args)
         {
-            if (component.PowerRecvComponent == null
-                || !component.PowerRecvComponent.Powered)
+            if (!TryComp<ApcPowerReceiverComponent>(uid, out var powerReceiverComponent)
+                || !powerReceiverComponent.Powered)
                 return;
 
             // can't hurt
             // (in case something is making AtmosDeviceUpdateEvents
             // outside the typical device loop)
-            if (component.AtmosDeviceComponent == null
-                || component.AtmosDeviceComponent.JoinedGrid == null)
+            if (!TryComp<AtmosDeviceComponent>(uid, out var atmosDeviceComponent)
+                || atmosDeviceComponent.JoinedGrid == null)
                 return;
 
             // if we're not monitoring atmos, don't bother

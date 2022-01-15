@@ -46,7 +46,6 @@ namespace Content.Server.Botany.Components
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IEntityManager _entMan = default!;
-        [ComponentDependency] private readonly AppearanceComponent? _appearanceComponent = default!;
 
         public override string Name => "PlantHolder";
 
@@ -583,50 +582,50 @@ namespace Content.Server.Botany.Components
         {
             _updateSpriteAfterUpdate = false;
 
-            if (_appearanceComponent == null)
+            if (!_entMan.TryGetComponent<AppearanceComponent>(Owner, out var appearanceComponent))
                 return;
 
             if (Seed != null)
             {
                 if (DrawWarnings)
-                    _appearanceComponent.SetData(PlantHolderVisuals.HealthLight, Health <= (Seed.Endurance / 2f));
+                    appearanceComponent.SetData(PlantHolderVisuals.HealthLight, Health <= (Seed.Endurance / 2f));
 
                 if (Dead)
                 {
-                    _appearanceComponent.SetData(PlantHolderVisuals.Plant,
+                    appearanceComponent.SetData(PlantHolderVisuals.Plant,
                         new SpriteSpecifier.Rsi(Seed.PlantRsi, "dead"));
                 }
                 else if (Harvest)
                 {
-                    _appearanceComponent.SetData(PlantHolderVisuals.Plant,
+                    appearanceComponent.SetData(PlantHolderVisuals.Plant,
                         new SpriteSpecifier.Rsi(Seed.PlantRsi, "harvest"));
                 }
                 else if (Age < Seed.Maturation)
                 {
                     var growthStage = Math.Max(1, (int) ((Age * Seed.GrowthStages) / Seed.Maturation));
-                    _appearanceComponent.SetData(PlantHolderVisuals.Plant,
+                    appearanceComponent.SetData(PlantHolderVisuals.Plant,
                         new SpriteSpecifier.Rsi(Seed.PlantRsi, $"stage-{growthStage}"));
                     _lastProduce = Age;
                 }
                 else
                 {
-                    _appearanceComponent.SetData(PlantHolderVisuals.Plant,
+                    appearanceComponent.SetData(PlantHolderVisuals.Plant,
                         new SpriteSpecifier.Rsi(Seed.PlantRsi, $"stage-{Seed.GrowthStages}"));
                 }
             }
             else
             {
-                _appearanceComponent.SetData(PlantHolderVisuals.Plant, SpriteSpecifier.Invalid);
-                _appearanceComponent.SetData(PlantHolderVisuals.HealthLight, false);
+                appearanceComponent.SetData(PlantHolderVisuals.Plant, SpriteSpecifier.Invalid);
+                appearanceComponent.SetData(PlantHolderVisuals.HealthLight, false);
             }
 
             if (!DrawWarnings) return;
-            _appearanceComponent.SetData(PlantHolderVisuals.WaterLight, WaterLevel <= 10);
-            _appearanceComponent.SetData(PlantHolderVisuals.NutritionLight, NutritionLevel <= 2);
-            _appearanceComponent.SetData(PlantHolderVisuals.AlertLight,
+            appearanceComponent.SetData(PlantHolderVisuals.WaterLight, WaterLevel <= 10);
+            appearanceComponent.SetData(PlantHolderVisuals.NutritionLight, NutritionLevel <= 2);
+            appearanceComponent.SetData(PlantHolderVisuals.AlertLight,
                 WeedLevel >= 5 || PestLevel >= 5 || Toxins >= 40 || ImproperHeat || ImproperLight || ImproperPressure ||
                 _missingGas > 0);
-            _appearanceComponent.SetData(PlantHolderVisuals.HarvestLight, Harvest);
+            appearanceComponent.SetData(PlantHolderVisuals.HarvestLight, Harvest);
         }
 
         public void CheckForDivergence(bool modified)
@@ -735,10 +734,10 @@ namespace Content.Server.Botany.Components
                 var targetEntity = Owner;
                 var solutionEntity = usingItem;
 
-                
+
                 SoundSystem.Play(Filter.Pvs(usingItem), spray.SpraySound.GetSound(), usingItem,
                 AudioHelpers.WithVariation(0.125f));
-                
+
 
                 var split = solutionSystem.Drain(solutionEntity, solution, amount);
 
