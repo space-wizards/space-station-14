@@ -92,9 +92,9 @@
     Botanist: [ 1, 1 ]
 
 - type: gameMap
-  id: nssEternity
+  id: NSSEternity
   mapName: 'NSS Eternity'
-  mapNameTemplate: '{0} nssEternity {1}'
+  mapNameTemplate: '{0} NSSEternity {1}'
   nameGenerator:
     !type:NanotrasenNameGenerator
     prefixCreator: '14'
