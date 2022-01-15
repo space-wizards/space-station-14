@@ -102,8 +102,16 @@ namespace Content.Server.Doors.Systems
             if (args.Cancelled)
                 return;
 
-            if (!Comp<AirlockComponent>(uid).CanChangeState())
+            // only block based on bolts / power status when initially closing the door, not when its already
+            // mid-transition. Particularly relevant for when the door was pried-closed with a crowbar, which bypasses
+            // the initial power-check.
+
+            if (TryComp(uid, out DoorComponent? door)
+                && !door.Partial
+                && !Comp<AirlockComponent>(uid).CanChangeState())
+            {
                 args.Cancel();
+            }
         }
 
         private void OnBeforeDoorDenied(EntityUid uid, AirlockComponent component, BeforeDoorDeniedEvent args)

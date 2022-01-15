@@ -135,7 +135,7 @@ namespace Content.Server.Doors.Components
 
         public bool IsPowered()
         {
-            return _entityManager.TryGetComponent<ApcPowerReceiverComponent>(Owner, out var receiverComponent) && receiverComponent.Powered;
+            return !_entityManager.TryGetComponent<ApcPowerReceiverComponent>(Owner, out var receiverComponent) || receiverComponent.Powered;
         }
 
         public void UpdateBoltLightStatus()

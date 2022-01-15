@@ -28,6 +28,11 @@ namespace Content.Shared.Doors
     /// Raised when the door is determining whether it is able to close.
     /// Cancel to stop the door from being closed.
     /// </summary>
+    /// <remarks>
+    /// This event is raised both when the door is initially closed, and when it is just about to become "partially"
+    /// closed (opaque & collidable). If canceled while partially closing, it will start opening again. Useful for
+    /// things like airlock anti-crush safety features.
+    /// </remarks>
     public class BeforeDoorClosedEvent : CancellableEntityEventArgs
     {
     }
