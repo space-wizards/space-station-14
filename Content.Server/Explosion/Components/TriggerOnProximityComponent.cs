@@ -29,7 +29,7 @@ namespace Content.Server.Explosion.Components
         public CancellationTokenSource? RepeatCancelTokenSource;
 
         [DataField("shape", required: true)]
-        public IPhysShape Shape { get; set; } = default!;
+        public IPhysShape Shape { get; set; } = new PhysShapeCircle(){Radius = 2};
 
         /// <summary>
         /// How long the the proximity trigger animation plays for.
