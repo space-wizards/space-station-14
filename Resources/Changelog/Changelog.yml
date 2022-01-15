@@ -1,10 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: Fix examine not showing the correct construction steps in certain cases.,
-    type: Fix}
-  id: 386
-  time: '2021-10-01T13:28:49.058728+00:00'
 - author: Ygg01
   changes:
   - {message: Fix tanks being empty on roundstart, type: Fix}
@@ -2919,3 +2913,9 @@ Entries:
   - {message: Removed HOS Hardsuit Helmet steal objective., type: Remove}
   id: 887
   time: '2022-01-15T05:02:17.0000000+00:00'
+- author: wrexbe
+  changes:
+  - {message: 'Manual valves change appearance when you open, or close them.', type: Add}
+  - {message: 'Manual valves now correctly block, or allow air.', type: Fix}
+  id: 888
+  time: '2022-01-15T13:18:45.0000000+00:00'
