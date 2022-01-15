@@ -101,7 +101,7 @@ namespace Content.Server.Power.EntitySystems
 
             var extPowerState = CalcExtPowerState(uid, apc, battery);
             if (extPowerState != apc.LastExternalState
-                && apc.LastUiUpdate + ApcComponent.VisualsChangeDelay < _gameTiming.CurTime)
+                || apc.LastUiUpdate + ApcComponent.VisualsChangeDelay < _gameTiming.CurTime)
             {
                 apc.LastExternalState = extPowerState;
                 apc.LastUiUpdate = _gameTiming.CurTime;
