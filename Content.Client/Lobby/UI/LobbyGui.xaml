@@ -19,11 +19,11 @@
             <BoxContainer Orientation="Vertical">
                 <!-- Top row -->
                 <BoxContainer Orientation="Horizontal" MinSize="0 40">
-                    <Label Margin="8 0 0 0" StyleClasses="LabelHeadingBigger" VAlign="Center" Text="{Loc 'Lobby'}" />
+                    <Label Margin="8 0 0 0" StyleClasses="LabelHeadingBigger" VAlign="Center" Text="{Loc 'ui-lobby-title'}" />
                     <Label Name="ServerName" Access="Public" StyleClasses="LabelHeadingBigger" VAlign="Center" />
                     <ui:VoteCallMenuButton Name="CallVoteButton" StyleClasses="ButtonBig" />
-                    <Button Name="OptionsButton" Access="Public" StyleClasses="ButtonBig" Text="{Loc 'Options'}" />
-                    <Button Name="LeaveButton" Access="Public" StyleClasses="ButtonBig" Text="{Loc 'Leave'}" />
+                    <Button Name="OptionsButton" Access="Public" StyleClasses="ButtonBig" Text="{Loc 'ui-lobby-options-button'}" />
+                    <Button Name="LeaveButton" Access="Public" StyleClasses="ButtonBig" Text="{Loc 'ui-lobby-leave-button'}" />
                 </BoxContainer>
                 <!-- Gold line -->
                 <PanelContainer>
@@ -38,13 +38,13 @@
                     <BoxContainer Orientation="Vertical" Name="LeftPanelContainer" HorizontalExpand="True">
                         <hudUi:StripeBack>
                             <BoxContainer Orientation="Horizontal" SeparationOverride="6" Margin="3 3 3 3">
-                                <cc:UICommandButton Command="observe" Name="ObserveButton" Access="Public" Text="{Loc 'Observe'}" StyleClasses="ButtonBig"  WindowType="{x:Type lobbyUi:ObserveWarningWindow}"/>
+                                <cc:UICommandButton Command="observe" Name="ObserveButton" Access="Public" Text="{Loc 'ui-lobby-observe-button'}" StyleClasses="ButtonBig"  WindowType="{x:Type lobbyUi:ObserveWarningWindow}"/>
                                 <Label Name="StartTime"
                                        Access="Public"
                                        Align="Right"
                                        FontColorOverride="{x:Static maths:Color.DarkGray}"
                                        StyleClasses="LabelBig" HorizontalExpand="True" />
-                                <Button Name="ReadyButton" Access="Public" ToggleMode="True" Text="{Loc 'Ready Up'}"
+                                <Button Name="ReadyButton" Access="Public" ToggleMode="True" Text="{Loc 'ui-lobby-ready-up-button'}"
                                         StyleClasses="ButtonBig" />
                             </BoxContainer>
                         </hudUi:StripeBack>
@@ -60,14 +60,14 @@
                     <Control HorizontalExpand="True">
                         <BoxContainer Orientation="Vertical">
                             <!-- Player list -->
-                            <hudUi:NanoHeading Text="{Loc 'Online Players'}" />
+                            <hudUi:NanoHeading Text="{Loc 'ui-lobby-online-players-block'}" />
                             <lobbyUi:LobbyPlayerList Name="OnlinePlayerList"
                                                      Access="Public"
                                                      HorizontalExpand="True"
                                                      VerticalExpand="True"
                                                      Margin="3 3 3 3" />
                             <!-- Server info -->
-                            <hudUi:NanoHeading Text="{Loc 'Server Info'}" />
+                            <hudUi:NanoHeading Text="{Loc 'ui-lobby-server-info-block'}" />
                             <info:ServerInfo Name="ServerInfo"
                                              Access="Public"
                                              VerticalExpand="True"
