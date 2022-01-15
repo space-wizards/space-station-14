@@ -1,12 +1,6 @@
 Entries:
 - author: Zumorica
   changes:
-  - {message: Fix mob inventory strip window showing virtual items it shouldn't.,
-    type: Fix}
-  id: 381
-  time: '2021-10-01T11:36:27.868628+00:00'
-- author: Zumorica
-  changes:
   - {message: Fix hands examine text showing virtual items it shouldn't., type: Fix}
   id: 382
   time: '2021-10-01T11:38:48.671438+00:00'
@@ -2917,3 +2911,10 @@ Entries:
   - {message: HoP locker now has a box of spare IDs., type: Add}
   id: 882
   time: '2022-01-14T18:42:01.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: You now take slightly less pressure damage from space so /might/ survive
+      depressurisation., type: Fix}
+  - {message: Xenos can now survive in space. One less way to kill them., type: Fix}
+  id: 883
+  time: '2022-01-15T00:18:37.0000000+00:00'
