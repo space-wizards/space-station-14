@@ -1,11 +1,6 @@
 Entries:
 - author: Zumorica
   changes:
-  - {message: Fix being able to place cables/wires on non-subfloor tiles., type: Fix}
-  id: 385
-  time: '2021-10-01T13:28:49.057909+00:00'
-- author: Zumorica
-  changes:
   - {message: Fix examine not showing the correct construction steps in certain cases.,
     type: Fix}
   id: 386
@@ -2918,3 +2913,9 @@ Entries:
   - {message: Fixed airlock hacking/wiring not working., type: Fix}
   id: 886
   time: '2022-01-15T04:10:06.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Most traitor steal objectives are now considered more difficult., type: Tweak}
+  - {message: Removed HOS Hardsuit Helmet steal objective., type: Remove}
+  id: 887
+  time: '2022-01-15T05:02:17.0000000+00:00'
