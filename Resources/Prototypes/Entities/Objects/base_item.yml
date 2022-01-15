@@ -36,3 +36,14 @@
     noRot: false
   - type: Pullable
   - type: ExplosionLaunched
+
+- type: entity
+  parent: BaseItem
+  id: BaseItemSmall
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+    - Trash
+  - type: Item
+    size: 1
