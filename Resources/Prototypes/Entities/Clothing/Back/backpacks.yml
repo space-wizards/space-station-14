@@ -136,9 +136,9 @@
   description: A spacious backpack with lots of pockets, worn by the Commander of an Emergency Response Team.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Backpacks/ert_leader.rsi
+    sprite: Clothing/Back/Backpacks/ertleader.rsi
   - type: Clothing
-    sprite: Clothing/Back/Backpacks/ert_leader.rsi
+    sprite: Clothing/Back/Backpacks/ertleader.rsi
 
 - type: entity
   parent: ClothingBackpack
@@ -147,9 +147,9 @@
   description: A spacious backpack with lots of pockets, worn by Security Officers of an Emergency Response Team.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Backpacks/ert_sec.rsi
+    sprite: Clothing/Back/Backpacks/ertsec.rsi
   - type: Clothing
-    sprite: Clothing/Back/Backpacks/ert_sec.rsi
+    sprite: Clothing/Back/Backpacks/ertsec.rsi
 
 - type: entity
   parent: ClothingBackpack
@@ -158,9 +158,9 @@
   description: A spacious backpack with lots of pockets, worn by Medical Officers of an Emergency Response Team.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Backpacks/ert_med.rsi
+    sprite: Clothing/Back/Backpacks/ertmed.rsi
   - type: Clothing
-    sprite: Clothing/Back/Backpacks/ert_med.rsi
+    sprite: Clothing/Back/Backpacks/ertmed.rsi
 
 - type: entity
   parent: ClothingBackpack
@@ -169,9 +169,9 @@
   description: A spacious backpack with lots of pockets, worn by Engineers of an Emergency Response Team.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Backpacks/ert_eng.rsi
+    sprite: Clothing/Back/Backpacks/erteng.rsi
   - type: Clothing
-    sprite: Clothing/Back/Backpacks/ert_eng.rsi
+    sprite: Clothing/Back/Backpacks/erteng.rsi
 
 - type: entity
   parent: ClothingBackpack
@@ -180,9 +180,9 @@
   description: A spacious backpack with lots of pockets, worn by Janitors of an Emergency Response Team.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Backpacks/ert_janitor.rsi
+    sprite: Clothing/Back/Backpacks/ertjanitor.rsi
   - type: Clothing
-    sprite: Clothing/Back/Backpacks/ert_janitor.rsi
+    sprite: Clothing/Back/Backpacks/ertjanitor.rsi
 
 - type: entity
   parent: ClothingBackpack
@@ -191,9 +191,9 @@
   description: A spacious backpack with lots of pockets, worn by Clowns of an Emergency Response Team.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Backpacks/ert_clown.rsi
+    sprite: Clothing/Back/Backpacks/ertclown.rsi
   - type: Clothing
-    sprite: Clothing/Back/Backpacks/ert_clown.rsi
+    sprite: Clothing/Back/Backpacks/ertclown.rsi
 
 #Special
 - type: entity
