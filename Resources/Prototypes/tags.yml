@@ -46,9 +46,6 @@
   id: CaptainSabre
   
 - type: Tag
-  id: Cartridge
-
-- type: Tag
   id: CigFilter
 
 - type: Tag
