@@ -1,22 +1,6 @@
 Entries:
 - author: Zumorica
   changes:
-  - {message: Fixes drinking glasses not breaking when thrown., type: Fix}
-  id: 380
-  time: '2021-10-01T10:29:58.505975+00:00'
-- author: Zumorica
-  changes:
-  - {message: Fix mob inventory strip window showing virtual items it shouldn't.,
-    type: Fix}
-  id: 381
-  time: '2021-10-01T11:36:27.868628+00:00'
-- author: Zumorica
-  changes:
-  - {message: Fix hands examine text showing virtual items it shouldn't., type: Fix}
-  id: 382
-  time: '2021-10-01T11:38:48.671438+00:00'
-- author: Zumorica
-  changes:
   - {message: Fix airlocks being opened by bullets and any thrown items. They can
       still be opened by thrown IDs and PDAs though!, type: Fix}
   id: 383
@@ -2917,3 +2901,21 @@ Entries:
   - {message: Fixed dummy on lobby screen, type: Fix}
   id: 881
   time: '2022-01-14T18:19:07.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: HoP locker now has a box of spare IDs., type: Add}
+  id: 882
+  time: '2022-01-14T18:42:01.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: You now take slightly less pressure damage from space so /might/ survive
+      depressurisation., type: Fix}
+  - {message: Xenos can now survive in space. One less way to kill them., type: Fix}
+  id: 883
+  time: '2022-01-15T00:18:37.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Wires now only shock when cut or attacked. You can now safely place
+      floor tiles over them., type: Tweak}
+  id: 884
+  time: '2022-01-15T02:34:43.0000000+00:00'
