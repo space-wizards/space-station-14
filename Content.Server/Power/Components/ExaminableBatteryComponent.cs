@@ -18,7 +18,7 @@ namespace Content.Server.Power.Components
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
-            if (_entityManager.TryGetComponent<BatteryComponent>(Owner, out var batteryComponent))
+            if (!_entityManager.TryGetComponent<BatteryComponent>(Owner, out var batteryComponent))
                 return;
             if (inDetailsRange)
             {
