@@ -315,6 +315,7 @@ namespace Content.Client.Entry
             "AtmosAlarmable",
             "FireAlarm",
             "AirAlarm",
+            "RadarConsole",
             "Guardian",
             "GuardianCreator",
             "GuardianHost",
