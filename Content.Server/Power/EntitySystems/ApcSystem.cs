@@ -85,18 +85,6 @@ namespace Content.Server.Power.EntitySystems
                 {
                     appearance.SetData(ApcVisuals.ChargeState, newState);
                 }
-
-                if (TryComp(uid, out SharedPointLightComponent? light))
-                {
-                    light.Color = newState switch
-                    {
-                        ApcChargeState.Lack => ApcComponent.LackColor,
-                        ApcChargeState.Charging => ApcComponent.ChargingColor,
-                        ApcChargeState.Full => ApcComponent.FullColor,
-                        _ => ApcComponent.LackColor
-                    };
-                    light.Dirty();
-                }
             }
 
             var extPowerState = CalcExtPowerState(uid, apc, battery);

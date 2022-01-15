@@ -33,10 +33,6 @@ public class ApcComponent : BaseApcNetComponent
     public const float HighPowerThreshold = 0.9f;
     public static TimeSpan VisualsChangeDelay = TimeSpan.FromSeconds(1);
 
-    public static readonly Color LackColor = Color.FromHex("#d1332e");
-    public static readonly Color ChargingColor = Color.FromHex("#2e8ad1");
-    public static readonly Color FullColor = Color.FromHex("#3db83b");
-
     // TODO ECS power a little better!
     protected override void AddSelfToNet(IApcNet apcNet)
     {
