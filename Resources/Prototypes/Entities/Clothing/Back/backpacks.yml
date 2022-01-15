@@ -132,7 +132,7 @@
 - type: entity
   parent: ClothingBackpack
   id: ClothingBackpackERTLeader
-  name: emergency response team commander backpack
+  name: ERT commander backpack
   description: A spacious backpack with lots of pockets, worn by the Commander of an Emergency Response Team.
   components:
   - type: Sprite
@@ -143,7 +143,7 @@
 - type: entity
   parent: ClothingBackpack
   id: ClothingBackpackERTSecurity
-  name: emergency response team security backpack
+  name: ERT security backpack
   description: A spacious backpack with lots of pockets, worn by Security Officers of an Emergency Response Team.
   components:
   - type: Sprite
@@ -154,7 +154,7 @@
 - type: entity
   parent: ClothingBackpack
   id: ClothingBackpackERTMedical
-  name: emergency response team medical backpack
+  name: ERT medical backpack
   description: A spacious backpack with lots of pockets, worn by Medical Officers of an Emergency Response Team.
   components:
   - type: Sprite
@@ -165,7 +165,7 @@
 - type: entity
   parent: ClothingBackpack
   id: ClothingBackpackERTEngineer
-  name: emergency response team engineer backpack
+  name: ERT engineer backpack
   description: A spacious backpack with lots of pockets, worn by Engineers of an Emergency Response Team.
   components:
   - type: Sprite
@@ -176,7 +176,7 @@
 - type: entity
   parent: ClothingBackpack
   id: ClothingBackpackERTJanitor
-  name: emergency response team janitor backpack
+  name: ERT janitor backpack
   description: A spacious backpack with lots of pockets, worn by Janitors of an Emergency Response Team.
   components:
   - type: Sprite
@@ -187,7 +187,7 @@
 - type: entity
   parent: ClothingBackpack
   id: ClothingBackpackERTClown
-  name: emergency response team clown backpack
+  name: ERT clown backpack
   description: A spacious backpack with lots of pockets, worn by Clowns of an Emergency Response Team.
   components:
   - type: Sprite
