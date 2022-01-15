@@ -1,7 +1,7 @@
 - type: entity
   id: CartridgeLRifleBase
   name: cartridge (.30 rifle)
-  parent: BaseItemCartridge
+  parent: BaseItemSmall
   abstract: true
   components:
   - type: Ammo
