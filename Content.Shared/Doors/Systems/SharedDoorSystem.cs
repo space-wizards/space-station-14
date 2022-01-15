@@ -329,7 +329,7 @@ public abstract class SharedDoorSystem : EntitySystem
 
     /// <summary>
     /// Called when the door is partially closed. This is when the door becomes "solid". If this process fails (e.g., a
-    /// mob entered the door as it was closing), then this returns false. Otheriwse, returns true;
+    /// mob entered the door as it was closing), then this returns false. Otherwise, returns true;
     /// </summary>
     public virtual bool OnPartialClose(EntityUid uid, DoorComponent? door = null, PhysicsComponent? physics = null)
     {
