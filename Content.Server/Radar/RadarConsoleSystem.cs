@@ -14,13 +14,20 @@ namespace Content.Server.Radar;
 public class RadarConsoleSystem : EntitySystem
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
-    public override void Initialize()
-    {
-        base.Initialize();
-    }
+
+    private static float Frequency = 1.5f;
+
+    private float _accumulator;
 
     public override void Update(float frameTime)
     {
+        _accumulator += frameTime;
+
+        if (_accumulator < Frequency)
+            return;
+
+        _accumulator -= Frequency;
+
         foreach (var component in EntityManager.EntityQuery<RadarConsoleComponent>())
         {
             var s = component.Owner.GetUIOrNull(RadarConsoleUiKey.Key);
