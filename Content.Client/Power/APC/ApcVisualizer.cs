@@ -66,7 +66,6 @@ namespace Content.Client.Power.APC
                         ApcChargeState.Full => FullColor,
                         _ => LackColor
                     };
-                    light.Dirty();
                 }
             }
             else
