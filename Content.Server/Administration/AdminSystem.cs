@@ -33,7 +33,7 @@ namespace Content.Server.Administration
             SubscribeLocalEvent<RoleRemovedEvent>(OnRoleEvent);
         }
 
-        private void UpdatePlayerList(IPlayerSession player)
+        public void UpdatePlayerList(IPlayerSession player)
         {
             _playerList[player.UserId] = GetPlayerInfo(player);
 
