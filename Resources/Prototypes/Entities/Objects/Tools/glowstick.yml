@@ -1,6 +1,6 @@
 ﻿- type: entity
   name: green glowstick
-  parent: BaseItemSmall
+  parent: BaseItemSmallTrashable
   id: GlowstickBase
   description: Useful for raves and emergencies.
   components:

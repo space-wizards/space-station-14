@@ -1,7 +1,7 @@
 - type: entity
   id: CartridgePistolBase
   name: cartridge (.35 auto)
-  parent: BaseItemSmall
+  parent: BaseItemSmallTrashable
   abstract: true
   components:
   - type: Ammo

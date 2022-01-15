@@ -196,7 +196,7 @@
 
 - type: entity
   abstract: true
-  parent: BaseItemSmall
+  parent: BaseItemSmallTrashable
   id: FoodPacketTrash
   description: This is rubbish.
   components:

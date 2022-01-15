@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseItemSmall
+  parent: BaseItemSmallTrashable
   id: DrinkCanBaseFull
   abstract: true
   components:

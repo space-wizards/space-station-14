@@ -1,7 +1,7 @@
 - type: entity
   id: CartridgeCapBase
   name: cartridge (cap)
-  parent: BaseItemSmall
+  parent: BaseItemSmallTrashable
   abstract: true
   components:
   - type: Ammo

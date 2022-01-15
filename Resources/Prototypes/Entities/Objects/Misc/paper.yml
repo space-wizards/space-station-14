@@ -1,6 +1,6 @@
 - type: entity
   name: paper
-  parent: BaseItemSmall
+  parent: BaseItem
   id: Paper
   description: 'A piece of white paper.'
   components:

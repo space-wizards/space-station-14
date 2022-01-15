@@ -1,7 +1,7 @@
 - type: entity
   id: CartridgeMagnumBase
   name: cartridge (.40 magnum)
-  parent: BaseItemSmall
+  parent: BaseItemSmallTrashable
   abstract: true
   components:
   - type: Ammo

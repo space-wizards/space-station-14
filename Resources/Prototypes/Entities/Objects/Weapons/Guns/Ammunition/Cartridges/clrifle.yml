@@ -1,7 +1,7 @@
 - type: entity
   id: CartridgeClRifleBase
   name: cartridge (.25 rifle)
-  parent: BaseItemSmall
+  parent: BaseItemSmallTrashable
   abstract: true
   components:
   - type: Ammo

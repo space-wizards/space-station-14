@@ -39,7 +39,7 @@
 
 - type: entity
   parent: BaseItem
-  id: BaseItemSmall
+  id: BaseItemSmallTrashable
   abstract: true
   components:
   - type: Tag

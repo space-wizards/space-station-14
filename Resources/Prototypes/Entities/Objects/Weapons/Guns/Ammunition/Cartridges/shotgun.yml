@@ -1,7 +1,7 @@
 ﻿- type: entity
   id: ShellShotgunBase
   name: shell (.50)
-  parent: BaseItemSmall
+  parent: BaseItemSmallTrashable
   abstract: true
   components:
   - type: Tag

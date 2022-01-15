@@ -1,13 +1,13 @@
 ﻿- type: entity
   name: emergency flare # todo: we need some sort of IgnitionSourceComponent we can add to this, so when it's lit it will cause fires when touching fuel
-  parent: BaseItemSmall
+  parent: BaseItem
   id: Flare
   description: A flare that produces a very bright light for a short while. Point the flame away from yourself.
   components:
   - type: Tag
     tags:
     - Flare
-    - Trash
+    - Trash #TODO spent entity
   - type: ExpendableLight
     spentName: spent flare
     spentDesc: It looks like this flare has burnt out. What a bummer.
