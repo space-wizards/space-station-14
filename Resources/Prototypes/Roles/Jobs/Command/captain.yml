@@ -49,7 +49,7 @@
     head: ClothingHeadHatCaptain
     eyes: ClothingEyesGlassesSunglasses
     gloves: ClothingHandsGlovesCaptain
-    outerclothing: ClothingOuterHardsuitCap
+    outerClothing: ClothingOuterHardsuitCap
     id: CaptainPDA
     ears: ClothingHeadsetAltCommand
   innerclothingskirt: ClothingUniformJumpskirtCaptain

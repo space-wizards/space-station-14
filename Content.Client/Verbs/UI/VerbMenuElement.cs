@@ -16,6 +16,7 @@ namespace Content.Client.Verbs.UI
         public const string StyleClassVerbActivationText = "ActivationVerb";
         public const string StyleClassVerbAlternativeText = "AlternativeVerb";
         public const string StyleClassVerbOtherText = "OtherVerb";
+        public const string StyleClassVerbMenuConfirmationTexture = "verbMenuConfirmationTexture";
 
         public const float VerbTooltipDelay = 0.5f;
 
@@ -62,6 +63,12 @@ namespace Content.Client.Verbs.UI
             TooltipDelay = VerbTooltipDelay;
             Disabled = verb.Disabled;
             Verb = verb;
+
+            if (verb.ConfirmationPopup)
+            {
+                ExpansionIndicator.SetOnlyStyleClass(StyleClassVerbMenuConfirmationTexture);
+                ExpansionIndicator.Visible = true;
+            }
         }
 
         public VerbMenuElement(VerbCategory category, VerbType verbType) : this(category.Text, category.Icon, verbType) { }

@@ -53,8 +53,6 @@
   - type: LatheDatabase
     static: true
     recipes:
-      - Brutepack
-      - Ointment
       - Wirecutter
       - Screwdriver
       - Welder
@@ -176,6 +174,8 @@
       - FirelockElectronics
       - DoorElectronics
       - APCElectronics
+      - SMESMachineCircuitboard
+      - SubstationMachineCircuitboard
       - AirAlarmElectronics
       - FireAlarmElectronics
       - CloningPodMachineCircuitboard
@@ -188,6 +188,7 @@
       - ProtolatheMachineCircuitboard
       - KitchenReagentGrinderMachineCircuitboard
       - CrewMonitoringComputerCircuitboard
+      - ShuttleConsoleCircuitboard
       - Bucket
       - MopItem
       - SprayBottle

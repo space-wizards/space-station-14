@@ -170,3 +170,44 @@
   - type: Sprite
     state: shuttle
     netsync: false
+
+- type: entity
+  name: ritual chair
+  id: ChairRitual
+  parent: SeatBase
+  description: Looks uncomfortable.
+  components:
+  - type: Anchorable
+  - type: Rotatable
+  - type: Sprite
+    state: ritual
+  - type: Construction
+    graph: ritualseat
+    node: chairRitual
+
+- type: entity
+  name: cursed chair
+  id: ChairCursed
+  parent: SeatBase
+  description: It's staring back.
+  components:
+  - type: Anchorable
+  - type: Rotatable
+  - type: Sprite
+    state: cursed
+  - type: Strap
+    buckleSound:
+      collection: MaleScreams
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Voice/Human/womanlaugh.ogg
+    graph: ritualseat
+    node: chairCursed

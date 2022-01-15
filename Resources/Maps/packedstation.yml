@@ -18119,13 +18119,12 @@ entities:
   - pos: -4.3740964,-12.360607
     parent: 0
     type: Transform
+  - cellSlot:
+      startingItem: PowerCellSmallStandard
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
-  - cellInsertSound: !type:SoundPathSpecifier
-      path: /Audio/Items/pistol_magout.ogg
-    cellRemoveSound: !type:SoundPathSpecifier
-      path: /Audio/Items/pistol_magin.ogg
-    type: PowerCellSlot
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
@@ -19287,13 +19286,12 @@ entities:
   - pos: 11.509314,4.6065345
     parent: 0
     type: Transform
+  - cellSlot:
+      startingItem: PowerCellSmallStandard
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
-  - cellInsertSound: !type:SoundPathSpecifier
-      path: /Audio/Items/pistol_magout.ogg
-    cellRemoveSound: !type:SoundPathSpecifier
-      path: /Audio/Items/pistol_magin.ogg
-    type: PowerCellSlot
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
@@ -31894,6 +31892,7 @@ entities:
     type: Transform
   - containers:
       PowerCellCharger-powerCellContainer: !type:ContainerSlot {}
+      charger-slot: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 2157
   type: ComputerSupplyOrdering
@@ -36101,13 +36100,12 @@ entities:
   - pos: 20.544691,33.624443
     parent: 0
     type: Transform
+  - cellSlot:
+      startingItem: PowerCellSmallStandard
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
-  - cellInsertSound: !type:SoundPathSpecifier
-      path: /Audio/Items/pistol_magout.ogg
-    cellRemoveSound: !type:SoundPathSpecifier
-      path: /Audio/Items/pistol_magin.ogg
-    type: PowerCellSlot
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
@@ -36117,13 +36115,12 @@ entities:
   - pos: 20.529066,29.655691
     parent: 0
     type: Transform
+  - cellSlot:
+      startingItem: PowerCellSmallStandard
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
-  - cellInsertSound: !type:SoundPathSpecifier
-      path: /Audio/Items/pistol_magout.ogg
-    cellRemoveSound: !type:SoundPathSpecifier
-      path: /Audio/Items/pistol_magin.ogg
-    type: PowerCellSlot
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
@@ -36555,13 +36552,12 @@ entities:
   - pos: 22.507973,40.51647
     parent: 0
     type: Transform
+  - cellSlot:
+      startingItem: PowerCellSmallStandard
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
-  - cellInsertSound: !type:SoundPathSpecifier
-      path: /Audio/Items/pistol_magout.ogg
-    cellRemoveSound: !type:SoundPathSpecifier
-      path: /Audio/Items/pistol_magin.ogg
-    type: PowerCellSlot
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
@@ -56242,6 +56238,7 @@ entities:
     type: Transform
   - containers:
       PowerCellCharger-powerCellContainer: !type:ContainerSlot {}
+      charger-slot: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 5336
   type: PowerCellLargeStandard
@@ -57641,13 +57638,12 @@ entities:
   - pos: 67.5,37.5
     parent: 0
     type: Transform
+  - cellSlot:
+      startingItem: PowerCellSmallStandard
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
-  - cellInsertSound: !type:SoundPathSpecifier
-      path: /Audio/Items/pistol_magout.ogg
-    cellRemoveSound: !type:SoundPathSpecifier
-      path: /Audio/Items/pistol_magin.ogg
-    type: PowerCellSlot
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
@@ -59543,6 +59539,9 @@ entities:
   - pos: 76.49909,-12.519633
     parent: 0
     type: Transform
+  - cellSlot:
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
   - containers:
@@ -59592,6 +59591,9 @@ entities:
   - pos: 73.5,-12.5
     parent: 0
     type: Transform
+  - cellSlot:
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
   - containers:
@@ -59808,6 +59810,9 @@ entities:
   - pos: 12.5,17.5
     parent: 0
     type: Transform
+  - cellSlot:
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
   - containers:
@@ -59961,6 +59966,7 @@ entities:
     type: Transform
   - containers:
       WeaponCapacitorCharger-powerCellContainer: !type:ContainerSlot {}
+      charger-slot: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 5789
   type: Poweredlight
@@ -69348,6 +69354,7 @@ entities:
     type: Transform
   - containers:
       PowerCellCharger-powerCellContainer: !type:ContainerSlot {}
+      charger-slot: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 6820
   type: PowerCellRecharger
@@ -69357,6 +69364,7 @@ entities:
     type: Transform
   - containers:
       PowerCellCharger-powerCellContainer: !type:ContainerSlot {}
+      charger-slot: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 6821
   type: ClothingUnderSocksCoder
@@ -77637,11 +77645,16 @@ entities:
     pos: 41.515198,24.735239
     parent: 0
     type: Transform
+  - cellSlot:
+      startingItem: PowerCellSmallStandard
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
   - containers:
       BatteryBarrel-powercell-container: !type:ContainerSlot {}
       BatteryBarrel-ammo-container: !type:ContainerSlot {}
+      cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 7577
   type: TaserGun
@@ -77649,11 +77662,16 @@ entities:
   - pos: 41.515827,24.580679
     parent: 0
     type: Transform
+  - cellSlot:
+      startingItem: PowerCellSmallStandard
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
   - containers:
       BatteryBarrel-powercell-container: !type:ContainerSlot {}
       BatteryBarrel-ammo-container: !type:ContainerSlot {}
+      cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 7578
   type: TaserGun
@@ -77661,11 +77679,16 @@ entities:
   - pos: 41.515827,24.393179
     parent: 0
     type: Transform
+  - cellSlot:
+      startingItem: PowerCellSmallStandard
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
   - containers:
       BatteryBarrel-powercell-container: !type:ContainerSlot {}
       BatteryBarrel-ammo-container: !type:ContainerSlot {}
+      cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 7579
   type: ClothingOuterCoatPirate
@@ -88848,13 +88871,12 @@ entities:
   - pos: 32.544136,8.944672
     parent: 0
     type: Transform
+  - cellSlot:
+      startingItem: PowerCellSmallStandard
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
-  - cellInsertSound: !type:SoundPathSpecifier
-      path: /Audio/Items/pistol_magout.ogg
-    cellRemoveSound: !type:SoundPathSpecifier
-      path: /Audio/Items/pistol_magin.ogg
-    type: PowerCellSlot
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
@@ -89587,13 +89609,12 @@ entities:
   - pos: 107.54654,-24.346563
     parent: 0
     type: Transform
+  - cellSlot:
+      startingItem: PowerCellSmallStandard
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
-  - cellInsertSound: !type:SoundPathSpecifier
-      path: /Audio/Items/pistol_magout.ogg
-    cellRemoveSound: !type:SoundPathSpecifier
-      path: /Audio/Items/pistol_magin.ogg
-    type: PowerCellSlot
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
@@ -92730,12 +92751,17 @@ entities:
   - pos: 41.526512,27.667274
     parent: 0
     type: Transform
+  - cellSlot:
+      startingItem: PowerCellSmallStandard
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
   - containers:
       BatteryBarrel-powercell-container: !type:ContainerSlot
         ent: 11108
       BatteryBarrel-ammo-container: !type:ContainerSlot {}
+      cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 9230
   type: GasPipeStraight
@@ -111910,6 +111936,9 @@ entities:
   - pos: 80.534454,-16.347055
     parent: 0
     type: Transform
+  - cellSlot:
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
   - containers:
@@ -112041,6 +112070,9 @@ entities:
   - pos: 81.401146,12.491636
     parent: 0
     type: Transform
+  - cellSlot:
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
   - containers:
@@ -112130,6 +112162,9 @@ entities:
   - pos: 81.50129,9.6576
     parent: 0
     type: Transform
+  - cellSlot:
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
   - containers:
@@ -114111,6 +114146,9 @@ entities:
   - pos: 38.46515,28.495308
     parent: 0
     type: Transform
+  - cellSlot:
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
   - containers:
@@ -114122,6 +114160,9 @@ entities:
   - pos: 38.46515,28.495308
     parent: 0
     type: Transform
+  - cellSlot:
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
   - containers:
@@ -114133,6 +114174,9 @@ entities:
   - pos: 38.46515,28.510933
     parent: 0
     type: Transform
+  - cellSlot:
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
   - containers:
@@ -114144,6 +114188,9 @@ entities:
   - pos: 38.46515,28.510933
     parent: 0
     type: Transform
+  - cellSlot:
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
   - containers:
@@ -114155,6 +114202,9 @@ entities:
   - pos: 38.46515,28.510933
     parent: 0
     type: Transform
+  - cellSlot:
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
   - containers:
@@ -114166,6 +114216,9 @@ entities:
   - pos: 41.286083,22.611008
     parent: 0
     type: Transform
+  - cellSlot:
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
   - containers:
@@ -114177,6 +114230,9 @@ entities:
   - pos: 41.442333,22.579758
     parent: 0
     type: Transform
+  - cellSlot:
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
   - containers:
@@ -114188,6 +114244,9 @@ entities:
   - pos: 41.55171,22.454758
     parent: 0
     type: Transform
+  - cellSlot:
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
   - containers:
@@ -114335,6 +114394,7 @@ entities:
     type: Transform
   - containers:
       WeaponCapacitorCharger-powerCellContainer: !type:ContainerSlot {}
+      charger-slot: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 11141
   type: WheatSeeds
@@ -114688,6 +114748,7 @@ entities:
     type: Transform
   - containers:
       WeaponCapacitorCharger-powerCellContainer: !type:ContainerSlot {}
+      charger-slot: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 11184
   type: WeaponCapacitorRecharger
@@ -114697,6 +114758,7 @@ entities:
     type: Transform
   - containers:
       WeaponCapacitorCharger-powerCellContainer: !type:ContainerSlot {}
+      charger-slot: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 11185
   type: CableApcExtension
@@ -114762,12 +114824,17 @@ entities:
   - pos: 41.526512,27.4329
     parent: 0
     type: Transform
+  - cellSlot:
+      startingItem: PowerCellSmallStandard
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
   - containers:
       BatteryBarrel-powercell-container: !type:ContainerSlot
         ent: 11204
       BatteryBarrel-ammo-container: !type:ContainerSlot {}
+      cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 11193
   type: CableApcExtension
@@ -118735,6 +118802,18 @@ entities:
   - pos: 39.5,52.5
     parent: 0
     type: Transform
+- uid: 11738
+  type: SpawnPointLawyer
+  components:
+  - pos: 18.5,32.5
+    parent: 0
+    type: Transform
+- uid: 11739
+  type: SpawnPointLawyer
+  components:
+  - pos: 18.5,30.5
+    parent: 0
+    type: Transform
 - uid: 11740
   type: CableMV
   components:
@@ -118786,6 +118865,18 @@ entities:
   components:
   - rot: -1.5707963267948966 rad
     pos: 3.5,-32.5
+    parent: 0
+    type: Transform
+- uid: 11747
+  type: SpawnPointLibrarian
+  components:
+  - pos: 9.5,3.5
+    parent: 0
+    type: Transform
+- uid: 11748
+  type: SpawnPointChaplain
+  components:
+  - pos: 14.5,14.5
     parent: 0
     type: Transform
 - uid: 11749
@@ -119948,6 +120039,7 @@ entities:
     type: Transform
   - containers:
       PowerCellCharger-powerCellContainer: !type:ContainerSlot {}
+      charger-slot: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 11953
   type: Autolathe

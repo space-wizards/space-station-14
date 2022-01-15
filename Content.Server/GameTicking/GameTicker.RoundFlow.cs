@@ -17,6 +17,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
+using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
@@ -72,23 +73,39 @@ namespace Content.Server.GameTicking
             _startingRound = false;
             var startTime = _gameTiming.RealTime;
             var map = _gameMapManager.GetSelectedMapChecked(true);
-            var grid = _mapLoader.LoadBlueprint(DefaultMap, map.MapPath);
+            _mapLoader.LoadMap(DefaultMap, map.MapPath);
 
+            var grids = _mapManager.GetAllMapGrids(DefaultMap).ToList();
+            StationId stationId = default;
 
-            if (grid == null)
+            if (grids.Count > 0)
             {
-                throw new InvalidOperationException($"No grid found for map {map.MapName}");
+                var grid = grids[0];
+                stationId = _stationSystem.InitialSetupStationGrid(grid.GridEntityId, map);
+                SetupGridStation(grid);
+                _spawnPoint = grid.ToCoordinates();
             }
 
-            _stationSystem.InitialSetupStationGrid(grid.GridEntityId, map);
+            for (var i = 1; i < grids.Count; i++)
+            {
+                var grid = grids[i];
+                SetupGridStation(grid);
+                _stationSystem.AddGridToStation(grid.GridEntityId, stationId);
+            }
 
+            var timeSpan = _gameTiming.RealTime - startTime;
+            Logger.InfoS("ticker", $"Loaded map in {timeSpan.TotalMilliseconds:N2}ms.");
+        }
+
+        private void SetupGridStation(IMapGrid grid)
+        {
             var stationXform = EntityManager.GetComponent<TransformComponent>(grid.GridEntityId);
 
             if (StationOffset)
             {
                 // Apply a random offset to the station grid entity.
-                var x = _robustRandom.NextFloat() * MaxStationOffset * 2 - MaxStationOffset;
-                var y = _robustRandom.NextFloat() * MaxStationOffset * 2 - MaxStationOffset;
+                var x = _robustRandom.NextFloat(-MaxStationOffset, MaxStationOffset);
+                var y = _robustRandom.NextFloat(-MaxStationOffset, MaxStationOffset);
                 stationXform.LocalPosition = new Vector2(x, y);
             }
 
@@ -96,11 +113,6 @@ namespace Content.Server.GameTicking
             {
                 stationXform.LocalRotation = _robustRandom.NextFloat(MathF.Tau);
             }
-
-            _spawnPoint = grid.ToCoordinates();
-
-            var timeSpan = _gameTiming.RealTime - startTime;
-            Logger.InfoS("ticker", $"Loaded map in {timeSpan.TotalMilliseconds:N2}ms.");
         }
 
         public async void StartRound(bool force = false)
