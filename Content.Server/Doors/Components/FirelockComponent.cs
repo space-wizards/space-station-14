@@ -19,9 +19,6 @@ namespace Content.Server.Doors.Components
 
         public override string Name => "Firelock";
 
-        [ComponentDependency]
-        public readonly DoorComponent? DoorComponent = null;
-
         /// <summary>
         /// Pry time modifier to be used when the firelock is currently closed due to fire or pressure.
         /// </summary>
@@ -32,11 +29,11 @@ namespace Content.Server.Doors.Components
         public bool EmergencyPressureStop()
         {
             var doorSys = EntitySystem.Get<DoorSystem>();
-            if (DoorComponent != null &&
-                DoorComponent.State == DoorState.Open &&
-                doorSys.CanClose(Owner, DoorComponent))
+            if (_entMan.TryGetComponent<ServerDoorComponent>(Owner, out var door) &&
+                door.State == DoorState.Open &&
+                doorSys.CanClose(Owner, door))
             {
-                doorSys.StartClosing(Owner, DoorComponent);
+                doorSys.StartClosing(Owner, door);
 
                 // Door system also sets airtight, but only after a delay. We want it to be immediate.
                 if (_entMan.TryGetComponent(Owner, out AirtightComponent? airtight))

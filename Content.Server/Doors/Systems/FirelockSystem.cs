@@ -48,7 +48,7 @@ namespace Content.Server.Doors.Systems
 
         private void OnBeforeDoorPry(EntityUid uid, FirelockComponent component, BeforeDoorPryEvent args)
         {
-            if (component.DoorComponent == null || component.DoorComponent.State != DoorState.Closed)
+            if (!TryComp<ServerDoorComponent>(uid, out var door) || door.State != DoorState.Closed)
             {
                 return;
             }
@@ -79,11 +79,11 @@ namespace Content.Server.Doors.Systems
 
         private void OnAtmosAlarm(EntityUid uid, FirelockComponent component, AtmosMonitorAlarmEvent args)
         {
-            if (component.DoorComponent == null) return;
+            if (!TryComp<ServerDoorComponent>(uid, out var doorComponent)) return;
 
             if (args.HighestNetworkType == AtmosMonitorAlarmType.Normal)
             {
-                if (component.DoorComponent.State == DoorState.Closed)
+                if (doorComponent.State == DoorState.Closed)
                     _doorSystem.TryOpen(uid);
             }
             else if (args.HighestNetworkType == AtmosMonitorAlarmType.Danger)

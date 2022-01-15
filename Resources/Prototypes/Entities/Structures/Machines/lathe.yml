@@ -53,8 +53,6 @@
   - type: LatheDatabase
     static: true
     recipes:
-      - Brutepack
-      - Ointment
       - Wirecutter
       - Screwdriver
       - Welder
@@ -190,6 +188,7 @@
       - ProtolatheMachineCircuitboard
       - KitchenReagentGrinderMachineCircuitboard
       - CrewMonitoringComputerCircuitboard
+      - ShuttleConsoleCircuitboard
       - Bucket
       - MopItem
       - SprayBottle

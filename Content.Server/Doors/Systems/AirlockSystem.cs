@@ -1,5 +1,6 @@
 using Content.Server.Doors.Components;
 using Content.Server.Power.Components;
+using Content.Server.WireHacking;
 using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
@@ -28,9 +29,9 @@ namespace Content.Server.Doors.Systems
 
         private void OnPowerChanged(EntityUid uid, AirlockComponent component, PowerChangedEvent args)
         {
-            if (component.AppearanceComponent != null)
+            if (TryComp<AppearanceComponent>(uid, out var appearanceComponent))
             {
-                component.AppearanceComponent.SetData(DoorVisuals.Powered, args.Powered);
+                appearanceComponent.SetData(DoorVisuals.Powered, args.Powered);
             }
 
             if (!args.Powered)
@@ -54,9 +55,9 @@ namespace Content.Server.Doors.Systems
             // means that sometimes the panels & bolt lights may be visible despite a door being completely open.
 
             // Only show the maintenance panel if the airlock is closed
-            if (component.WiresComponent != null)
+            if (TryComp<WiresComponent>(uid, out var wiresComponent))
             {
-                component.WiresComponent.IsPanelVisible =
+                wiresComponent.IsPanelVisible =
                     component.OpenPanelVisible
                     ||  args.State != DoorState.Open;
             }
@@ -113,10 +114,10 @@ namespace Content.Server.Doors.Systems
 
         private void OnActivate(EntityUid uid, AirlockComponent component, ActivateInWorldEvent args)
         {
-            if (component.WiresComponent != null && component.WiresComponent.IsPanelOpen &&
-                TryComp(args.User, out ActorComponent? actor))
+            if (TryComp<WiresComponent>(uid, out var wiresComponent) && wiresComponent.IsPanelOpen &&
+                EntityManager.TryGetComponent(args.Args.User, out ActorComponent? actor))
             {
-                component.WiresComponent.OpenInterface(actor.PlayerSession);
+                wiresComponent.OpenInterface(actor.PlayerSession);
                 args.Handled = true;
             }
         }
