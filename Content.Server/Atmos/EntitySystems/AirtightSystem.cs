@@ -20,7 +20,6 @@ namespace Content.Server.Atmos.EntitySystems
         {
             SubscribeLocalEvent<AirtightComponent, ComponentInit>(OnAirtightInit);
             SubscribeLocalEvent<AirtightComponent, ComponentShutdown>(OnAirtightShutdown);
-            SubscribeLocalEvent<AirtightComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<AirtightComponent, AnchorStateChangedEvent>(OnAirtightPositionChanged);
             SubscribeLocalEvent<AirtightComponent, RotateEvent>(OnAirtightRotated);
         }
@@ -56,10 +55,6 @@ namespace Content.Server.Atmos.EntitySystems
 
             InvalidatePosition(airtight.LastPosition.Item1, airtight.LastPosition.Item2, airtight.FixVacuum);
             RaiseLocalEvent(new AirtightChanged(airtight));
-        }
-
-        private void OnMapInit(EntityUid uid, AirtightComponent airtight, MapInitEvent args)
-        {
         }
 
         private void OnAirtightPositionChanged(EntityUid uid, AirtightComponent airtight, ref AnchorStateChangedEvent args)

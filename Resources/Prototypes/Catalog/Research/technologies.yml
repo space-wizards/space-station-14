@@ -244,6 +244,21 @@
     - SheetRGlass
     - SheetGlass1
 
+# Avionics Circuitry Technology Tree
+
+- type: technology
+  name: "avionics systems"
+  id: AvionicsSystems
+  description: The latest in fly-by-LV-wire technology
+  icon:
+    sprite: Structures/Machines/computers.rsi
+    state: avionics-systems
+  requiredPoints: 10000
+  requiredTechnologies:
+    - IndustrialEngineering
+  unlockedRecipes:
+    - ShuttleConsoleCircuitboard
+
 # Electromagnetic Theory Technology Tree
 
 - type: technology

@@ -8,6 +8,7 @@ using Content.Server.VendingMachines; // TODO: Move this out of vending machines
 using Content.Server.WireHacking;
 using Content.Shared.Atmos.Monitor.Components;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
 using Robust.Shared.ViewVariables;
@@ -19,10 +20,7 @@ namespace Content.Server.Atmos.Monitor.Components
     [RegisterComponent]
     public class AirAlarmComponent : Component, IWires
     {
-        [ComponentDependency] public readonly ApcPowerReceiverComponent? DeviceRecvComponent = default!;
-        [ComponentDependency] public readonly AtmosMonitorComponent? AtmosMonitorComponent = default!;
-        [ComponentDependency] public readonly DeviceNetworkComponent? DeviceNetComponent = default!;
-        [ComponentDependency] public readonly WiresComponent? WiresComponent = null;
+        [Dependency] private readonly IEntityManager _entMan = default!;
 
         private AirAlarmSystem? _airAlarmSystem;
 
@@ -79,7 +77,7 @@ namespace Content.Server.Atmos.Monitor.Components
             if (_airAlarmSystem == null)
                 _airAlarmSystem = EntitySystem.Get<AirAlarmSystem>();
 
-            if (WiresComponent == null) return;
+            if (!_entMan.TryGetComponent<WiresComponent>(Owner, out var wires)) return;
 
             var pwrLightState = (PowerPulsed, PowerCut) switch {
                 (true, false) => StatusLightState.BlinkingFast,
@@ -91,7 +89,7 @@ namespace Content.Server.Atmos.Monitor.Components
 
             var accessLight = new StatusLightData(
                 Color.Green,
-                WiresComponent.IsWireCut(Wires.Access) ? StatusLightState.Off : StatusLightState.On,
+                wires.IsWireCut(Wires.Access) ? StatusLightState.Off : StatusLightState.On,
                 "ACC"
             );
 
@@ -103,17 +101,17 @@ namespace Content.Server.Atmos.Monitor.Components
 
             var syncLightState = StatusLightState.BlinkingSlow;
 
-            if (AtmosMonitorComponent != null && !AtmosMonitorComponent.NetEnabled)
+            if (_entMan.TryGetComponent<AtmosMonitorComponent>(Owner, out var atmosMonitorComponent) && !atmosMonitorComponent.NetEnabled)
                 syncLightState = StatusLightState.Off;
             else if (DeviceData.Count != 0)
                 syncLightState = StatusLightState.On;
 
             var syncLight = new StatusLightData(Color.Orange, syncLightState, "NET");
 
-            WiresComponent.SetStatus(AirAlarmWireStatus.Power, powerLight);
-            WiresComponent.SetStatus(AirAlarmWireStatus.Access, accessLight);
-            WiresComponent.SetStatus(AirAlarmWireStatus.Panic, panicLight);
-            WiresComponent.SetStatus(AirAlarmWireStatus.DeviceSync, syncLight);
+            wires.SetStatus(AirAlarmWireStatus.Power, powerLight);
+            wires.SetStatus(AirAlarmWireStatus.Access, accessLight);
+            wires.SetStatus(AirAlarmWireStatus.Panic, panicLight);
+            wires.SetStatus(AirAlarmWireStatus.DeviceSync, syncLight);
         }
 
         private bool _powerCut;
@@ -140,14 +138,14 @@ namespace Content.Server.Atmos.Monitor.Components
 
         private void SetPower()
         {
-            if (DeviceRecvComponent != null
-                && WiresComponent != null)
-                DeviceRecvComponent.PowerDisabled = PowerPulsed || PowerCut;
+            if (_entMan.TryGetComponent<ApcPowerReceiverComponent>(Owner, out var receiverComponent)
+                && _entMan.HasComponent<WiresComponent>(Owner))
+                receiverComponent.PowerDisabled = PowerPulsed || PowerCut;
         }
 
         public void WiresUpdate(WiresUpdateEventArgs args)
         {
-            if (DeviceNetComponent == null) return;
+            if (!_entMan.TryGetComponent<DeviceNetworkComponent>(Owner, out var deviceNetworkComponent)) return;
 
             if (_airAlarmSystem == null)
                 _airAlarmSystem = EntitySystem.Get<AirAlarmSystem>();
@@ -167,7 +165,7 @@ namespace Content.Server.Atmos.Monitor.Components
                             break;
                         case Wires.Panic:
                             if (CurrentMode != AirAlarmMode.Panic)
-                                _airAlarmSystem.SetMode(Owner, DeviceNetComponent.Address, AirAlarmMode.Panic, true, false);
+                                _airAlarmSystem.SetMode(Owner, deviceNetworkComponent.Address, AirAlarmMode.Panic, true, false);
                             break;
                         case Wires.DeviceSync:
                             _airAlarmSystem.SyncAllDevices(Owner);
@@ -184,14 +182,14 @@ namespace Content.Server.Atmos.Monitor.Components
                             break;
                         case Wires.Panic:
                             if (CurrentMode == AirAlarmMode.Panic)
-                                _airAlarmSystem.SetMode(Owner, DeviceNetComponent.Address, AirAlarmMode.Filtering, true, false);
+                                _airAlarmSystem.SetMode(Owner, deviceNetworkComponent.Address, AirAlarmMode.Filtering, true, false);
                             break;
                         case Wires.Access:
                             FullAccess = false;
                             break;
                         case Wires.DeviceSync:
-                            if (AtmosMonitorComponent != null)
-                                AtmosMonitorComponent.NetEnabled = true;
+                            if (_entMan.TryGetComponent<AtmosMonitorComponent>(Owner, out var atmosMonitorComponent))
+                                atmosMonitorComponent.NetEnabled = true;
 
                             break;
                     }
@@ -201,10 +199,10 @@ namespace Content.Server.Atmos.Monitor.Components
                     {
                         case Wires.DeviceSync:
                             DeviceData.Clear();
-                            if (AtmosMonitorComponent != null)
+                            if (_entMan.TryGetComponent<AtmosMonitorComponent>(Owner, out var atmosMonitorComponent))
                             {
-                                AtmosMonitorComponent.NetworkAlarmStates.Clear();
-                                AtmosMonitorComponent.NetEnabled = false;
+                                atmosMonitorComponent.NetworkAlarmStates.Clear();
+                                atmosMonitorComponent.NetEnabled = false;
                             }
 
                             break;

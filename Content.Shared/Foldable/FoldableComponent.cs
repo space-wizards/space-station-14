@@ -9,8 +9,11 @@ using System;
 namespace Content.Shared.Foldable;
 
 /// <summary>
-/// Used to create "foldable structures" that you can pickup like an item when folded. Used for rollerbeds and wheelchairs
+/// Used to create "foldable structures" that you can pickup like an item when folded. Used for rollerbeds and wheelchairs.
 /// </summary>
+/// <remarks>
+/// Wiill prevent any insertions into containers while this item is unfolded.
+/// </remarks>
 [RegisterComponent]
 [NetworkedComponent]
 [Friend(typeof(SharedFoldableSystem))]

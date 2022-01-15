@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -124,7 +125,7 @@ namespace Content.Server.Chat.Managers
             _netManager.ServerSendMessage(msg, player.ConnectedClient);
         }
 
-        public void TrySpeak(EntityUid source, string message, bool whisper = false, IConsoleShell? shell = null, IPlayerSession? player = null)
+        public void TrySpeak(EntityUid source, string message, bool isWhisper = false, IConsoleShell? shell = null, IPlayerSession? player = null)
         {
             // Listen it avoids the 30 lines being copy-paste and means only 1 source needs updating if something changes.
             if (_entManager.HasComponent<GhostComponent>(source))
@@ -148,17 +149,14 @@ namespace Content.Server.Chat.Managers
                     return;
                 }
 
-                var emote = _sanitizer.TrySanitizeOutSmilies(message, owned, out var sanitized, out var emoteStr);
+                var isEmote = _sanitizer.TrySanitizeOutSmilies(message, owned, out var sanitized, out var emoteStr);
 
                 if (sanitized.Length != 0)
                 {
-                    if (whisper)
-                        EntityWhisper(owned, sanitized);
-                    else
-                        EntitySay(owned, sanitized);
+                    SendEntityChatType(owned, sanitized, isWhisper);
                 }
 
-                if (emote)
+                if (isEmote)
                     EntityMe(owned, emoteStr!);
             }
         }
@@ -478,6 +476,25 @@ namespace Content.Server.Chat.Managers
             _chatTransformHandlers.Add(handler);
         }
 
+        public void SendEntityChatType(EntityUid source, string message, bool isWhisper)
+        {
+            // I don't know why you're trying to smile over the radio...
+            // This filters out the players who just really want to try.
+            if (message.StartsWith(';') && message.Length <= 1)
+            {
+                return;
+            }
+
+            // We check to see if message is a whisper or a standard say message.
+            if (isWhisper)
+            {
+                EntityWhisper(source, message);
+            }
+            else
+            {
+                EntitySay(source, message);
+            }
+        }
         public string SanitizeMessageCapital(EntityUid source, string message)
         {
             if (message.StartsWith(';'))

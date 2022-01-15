@@ -34,6 +34,9 @@
     - type: DrinkCanVisualizer
       stateClosed: icon
       stateOpen: icon_open
+  - type: Tag
+    tags:
+    - Trash
 
 - type: entity
   parent: DrinkCanBaseFull

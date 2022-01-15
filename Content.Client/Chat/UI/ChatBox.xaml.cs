@@ -496,8 +496,8 @@ namespace Content.Client.Chat.UI
             return channel switch
             {
                 ChatSelectChannel.Radio => Color.LimeGreen,
-                ChatSelectChannel.LOOC => Color.LightSkyBlue,
-                ChatSelectChannel.OOC => Color.RoyalBlue,
+                ChatSelectChannel.LOOC => Color.MediumTurquoise,
+                ChatSelectChannel.OOC => Color.LightSkyBlue,
                 ChatSelectChannel.Dead => Color.MediumPurple,
                 ChatSelectChannel.Admin => Color.Red,
                 _ => Color.DarkGray
