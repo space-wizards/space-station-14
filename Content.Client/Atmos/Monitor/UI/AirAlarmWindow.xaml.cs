@@ -98,7 +98,7 @@ namespace Content.Client.Atmos.Monitor.UI
 
             if (state.Gases != null)
                 foreach (var (gas, amount) in state.Gases)
-                    _gasLabels[gas].Text = Loc.GetString("air-alarm-ui-gases", ("gas", $"{gas}"), ("amount", $"{amount:0.####}"), ("percentage", $"{(amount / state.TotalMoles):0.##}"));
+                    _gasLabels[gas].Text = Loc.GetString("air-alarm-ui-gases", ("gas", $"{gas}"), ("amount", $"{amount:0.####}"), ("percentage", $"{((amount / state.TotalMoles) * 100):0.##}"));
         }
 
         public void UpdateModeSelector(AirAlarmMode mode)
