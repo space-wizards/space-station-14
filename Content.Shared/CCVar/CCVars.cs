@@ -382,12 +382,6 @@ namespace Content.Shared.CCVar
             CVarDef.Create("atmos.space_wind", true, CVar.SERVERONLY);
 
         /// <summary>
-        ///     The sound that plays when space wind occurs.
-        /// </summary>
-        public static readonly CVarDef<string> SpaceWindSound =
-            CVarDef.Create("atmos.space_wind_sound", "/Audio/Effects/space_wind.ogg", CVar.SERVERONLY);
-
-        /// <summary>
         ///     Whether monstermos tile equalization is enabled.
         /// </summary>
         public static readonly CVarDef<bool> MonstermosEqualization =
@@ -486,9 +480,28 @@ namespace Content.Shared.CCVar
             CVarDef.Create("ooc.enabled_admin", true, CVar.NOTIFY);
 
         /*
+         * LOOC
+         */
+
+        public static readonly CVarDef<bool> LoocEnabled = CVarDef.Create("looc.enabled", true, CVar.NOTIFY);
+
+        public static readonly CVarDef<bool> AdminLoocEnabled =
+            CVarDef.Create("looc.enabled_admin", true, CVar.NOTIFY);
+
+        /*
          * Entity Menu Grouping Types
          */
         public static readonly CVarDef<int> EntityMenuGroupingType = CVarDef.Create("entity_menu", 0, CVar.CLIENTONLY);
+
+        /*
+         * Whitelist
+         */
+
+        /// <summary>
+        ///     Controls whether the server will deny any players that are not whitelisted in the DB.
+        /// </summary>
+        public static readonly CVarDef<bool> WhitelistEnabled =
+            CVarDef.Create("whitelist.enabled", false, CVar.SERVERONLY);
 
         /*
          * VOTE

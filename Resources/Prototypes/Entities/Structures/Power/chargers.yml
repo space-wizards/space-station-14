@@ -9,8 +9,13 @@
   - type: Icon
     sprite: Structures/Power/cell_recharger.rsi
     state: empty
-  - type: PowerCellCharger
-    transfer_efficiency: 0.85
+  - type: Charger
+    chargerSlot:
+      ejectOnInteract: true
+      name: Power cell # used for verbs: "Eject > Power cell "
+      whitelist:
+        components:
+        - PowerCell
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: Appearance
@@ -23,6 +28,7 @@
 - type: entity
   name: recharger
   id: WeaponCapacitorRecharger
+  parent: PowerCellRecharger
   components:
   - type: Sprite
     netsync: false
@@ -31,20 +37,18 @@
   - type: Icon
     sprite: Structures/Power/recharger.rsi
     state: empty
-  - type: WeaponCapacitorCharger
-    transfer_efficiency: 0.85
-  - type: ApcPowerReceiver
-  - type: ExtensionCableReceiver
-  - type: Appearance
-    visuals:
-    - type: PowerChargerVisualizer
-  - type: Anchorable
-  - type: Clickable
-  - type: InteractionOutline
+  - type: Charger
+    chargerSlot:
+      ejectOnInteract: true
+      whitelist:
+        components:
+        - PowerCell
+        - PowerCellSlot
 
 - type: entity
   name: wall recharger
   id: WallWeaponCapacitorRecharger
+  parent: PowerCellRecharger
   components:
   - type: Sprite
     netsync: false
@@ -53,12 +57,11 @@
   - type: Icon
     sprite: Structures/Power/wall_recharger.rsi
     state: empty
-  - type: WeaponCapacitorCharger
-    transfer_efficiency: 0.95
-  - type: ApcPowerReceiver
-  - type: ExtensionCableReceiver
-  - type: Appearance
-    visuals:
-    - type: PowerChargerVisualizer
-  - type: Clickable
-  - type: InteractionOutline
+  - type: Charger
+    transferEfficiency: 0.95
+    chargerSlot:
+      ejectOnInteract: true
+      whitelist:
+        components:
+        - PowerCell
+        - PowerCellSlot

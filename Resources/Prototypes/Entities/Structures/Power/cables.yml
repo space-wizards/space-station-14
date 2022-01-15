@@ -33,6 +33,7 @@
   - type: SubFloorHide
   - type: Electrified
     onHandInteract: false
+    onInteractUsing: false # wire-cutting handled separately.
     onBump: false
     requirePower: true
     highVoltageNode: power

@@ -25,10 +25,10 @@
     jumpsuit: ClothingUniformJumpsuitCMO
     back: ClothingBackpackMedicalFilled
     shoes: ClothingShoesColorBrown
-    outerclothing: ClothingOuterCoatLabCmo
+    outerClothing: ClothingOuterCoatLabCmo
     id: CMOPDA
     ears: ClothingHeadsetAltMedical
-    belt: ClothingBeltMedical
+    belt: ClothingBeltMedicalFilled
   innerclothingskirt: ClothingUniformJumpskirtCMO
   satchel: ClothingBackpackSatchelMedicalFilled
   duffelbag: ClothingBackpackDuffelMedicalFilled

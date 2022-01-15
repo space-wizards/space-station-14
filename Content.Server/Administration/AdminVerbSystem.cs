@@ -64,19 +64,43 @@ namespace Content.Server.Administration
 
             var player = actor.PlayerSession;
 
-            // Ahelp
-            if (_adminManager.IsAdmin(player) && TryComp(args.Target, out ActorComponent? targetActor))
+            if (_adminManager.IsAdmin(player))
             {
-                Verb verb = new();
-                verb.Text = Loc.GetString("ahelp-verb-get-data-text");
-                verb.Category = VerbCategory.Admin;
-                verb.IconTexture = "/Textures/Interface/gavel.svg.192dpi.png";
-                verb.Act = () => _console.RemoteExecuteCommand(player, $"openahelp \"{targetActor.PlayerSession.UserId}\"");;
-                verb.Impact = LogImpact.Low;
-                args.Verbs.Add(verb);
+                if (TryComp(args.Target, out ActorComponent? targetActor))
+                {
+                    // AdminHelp
+                    Verb verb = new();
+                    verb.Text = Loc.GetString("ahelp-verb-get-data-text");
+                    verb.Category = VerbCategory.Admin;
+                    verb.IconTexture = "/Textures/Interface/gavel.svg.192dpi.png";
+                    verb.Act = () =>
+                        _console.RemoteExecuteCommand(player, $"openahelp \"{targetActor.PlayerSession.UserId}\"");
+                    verb.Impact = LogImpact.Low;
+                    args.Verbs.Add(verb);
+                }
+
+                // TeleportTo
+                args.Verbs.Add(new Verb
+                {
+                    Text = Loc.GetString("admin-verbs-teleport-to"),
+                    Category = VerbCategory.Admin,
+                    IconTexture = "/Textures/Interface/VerbIcons/open.svg.192dpi.png",
+                    Act = () => _console.ExecuteCommand(player, $"tpto {args.Target}"),
+                    Impact = LogImpact.Low
+                });
+
+                // TeleportHere
+                args.Verbs.Add(new Verb
+                {
+                    Text = Loc.GetString("admin-verbs-teleport-here"),
+                    Category = VerbCategory.Admin,
+                    IconTexture = "/Textures/Interface/VerbIcons/close.svg.192dpi.png",
+                    Act = () => _console.ExecuteCommand(player, $"tpto {args.Target} {args.User}"),
+                    Impact = LogImpact.Low
+                });
             }
 
-            // Atillery
+            // Artillery
             if (_adminManager.HasAdminFlag(player, AdminFlags.Fun))
             {
                 Verb verb = new();
@@ -92,6 +116,7 @@ namespace Content.Server.Administration
                     }
                 };
                 verb.Impact = LogImpact.Extreme; // if you're just outright killing a person, I guess that deserves to be extreme?
+                verb.ConfirmationPopup = true;
                 args.Verbs.Add(verb);
             }
         }
@@ -112,6 +137,7 @@ namespace Content.Server.Administration
                 verb.IconTexture = "/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png";
                 verb.Act = () => EntityManager.DeleteEntity(args.Target);
                 verb.Impact = LogImpact.Medium;
+                verb.ConfirmationPopup = true;
                 args.Verbs.Add(verb);
             }
 
@@ -142,6 +168,7 @@ namespace Content.Server.Administration
                     player.ContentData()?.Mind?.TransferTo(args.Target, ghostCheckOverride: true);
                 };
                 verb.Impact = LogImpact.High;
+                verb.ConfirmationPopup = true;
                 args.Verbs.Add(verb);
             }
 

@@ -116,20 +116,29 @@
         - sprite: Structures/Piping/Atmospherics/pipe.rsi
           state: pipeStraight
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
-        - state: pumpPassiveGate
-          map: [ "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer" ]
+        - state: pumpManualValve
+          map: [ "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer", "enum.GasValveVisualizer+Layers.Enabled" ]
     - type: Appearance
       visuals:
         - type: SubFloorShowLayerVisualizer
         - type: PipeConnectorVisualizer
         - type: PipeColorVisualizer
+        - type: GasValveVisualizer
+          disabledState: pumpManualValve
+          enabledState: pumpManualValveOn
     - type: GasValve
     - type: NodeContainer
       nodes:
-        pipe:
+        inlet:
           !type:PipeNode
           nodeGroupID: Pipe
-          pipeDirection: Longitudinal
+          pipeDirection: North
+          volume: 100
+        outlet:
+          !type:PipeNode
+          nodeGroupID: Pipe
+          pipeDirection: South
+          volume: 100
 
 - type: entity
   parent: GasBinaryBase

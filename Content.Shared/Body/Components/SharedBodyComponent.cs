@@ -22,7 +22,7 @@ namespace Content.Shared.Body.Components
     // TODO BODY Damage methods for collections of IDamageableComponents
 
     [NetworkedComponent()]
-    public abstract class SharedBodyComponent : Component, IBodyPartContainer, ISerializationHooks
+    public abstract class SharedBodyComponent : Component, ISerializationHooks
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
@@ -57,9 +57,6 @@ namespace Content.Shared.Body.Components
 
         [ViewVariables]
         public IEnumerable<KeyValuePair<SharedBodyPartComponent, BodyPartSlot>> Parts => SlotParts;
-
-        [ViewVariables]
-        public IEnumerable<BodyPartSlot> EmptySlots => Slots.Where(slot => slot.Part == null);
 
         public BodyPartSlot? CenterSlot =>
             Template?.CenterSlot is { } centerSlot
@@ -223,14 +220,6 @@ namespace Content.Shared.Body.Components
             slot.SetPart(part);
         }
 
-        public bool HasPart(string slotId)
-        {
-            DebugTools.AssertNotNull(slotId);
-
-            return SlotIds.TryGetValue(slotId, out var slot) &&
-                   slot.Part != null;
-        }
-
         public bool HasPart(SharedBodyPartComponent part)
         {
             DebugTools.AssertNotNull(part);
@@ -244,34 +233,6 @@ namespace Content.Shared.Body.Components
 
             return SlotParts.TryGetValue(part, out var slot) &&
                    slot.RemovePart();
-        }
-
-        public bool RemovePart(string slotId)
-        {
-            DebugTools.AssertNotNull(slotId);
-
-            return SlotIds.TryGetValue(slotId, out var slot) &&
-                   slot.RemovePart();
-        }
-
-        public bool RemovePart(SharedBodyPartComponent part, [NotNullWhen(true)] out BodyPartSlot? slotId)
-        {
-            DebugTools.AssertNotNull(part);
-
-            if (!SlotParts.TryGetValue(part, out var slot))
-            {
-                slotId = null;
-                return false;
-            }
-
-            if (!slot.RemovePart())
-            {
-                slotId = null;
-                return false;
-            }
-
-            slotId = slot;
-            return true;
         }
 
         public bool TryDropPart(BodyPartSlot slot, [NotNullWhen(true)] out Dictionary<BodyPartSlot, SharedBodyPartComponent>? dropped)
@@ -333,84 +294,14 @@ namespace Content.Shared.Body.Components
             return false;
         }
 
-        public bool HasSlot(string slot)
-        {
-            return SlotIds.ContainsKey(slot);
-        }
-
-        public IEnumerable<SharedBodyPartComponent> GetParts()
-        {
-            foreach (var slot in SlotIds.Values)
-            {
-                if (slot.Part != null)
-                {
-                    yield return slot.Part;
-                }
-            }
-        }
-
-        public bool TryGetPart(string slotId, [NotNullWhen(true)] out SharedBodyPartComponent? result)
-        {
-            result = null;
-
-            return SlotIds.TryGetValue(slotId, out var slot) &&
-                   (result = slot.Part) != null;
-        }
-
-        public BodyPartSlot? GetSlot(string id)
-        {
-            return SlotIds.GetValueOrDefault(id);
-        }
-
         public BodyPartSlot? GetSlot(SharedBodyPartComponent part)
         {
             return SlotParts.GetValueOrDefault(part);
         }
 
-        public bool TryGetSlot(string slotId, [NotNullWhen(true)] out BodyPartSlot? slot)
-        {
-            return (slot = GetSlot(slotId)) != null;
-        }
-
         public bool TryGetSlot(SharedBodyPartComponent part, [NotNullWhen(true)] out BodyPartSlot? slot)
         {
             return (slot = GetSlot(part)) != null;
-        }
-
-        public bool TryGetPartConnections(string slotId, [NotNullWhen(true)] out List<SharedBodyPartComponent>? connections)
-        {
-            if (!SlotIds.TryGetValue(slotId, out var slot))
-            {
-                connections = null;
-                return false;
-            }
-
-            connections = new List<SharedBodyPartComponent>();
-            foreach (var connection in slot.Connections)
-            {
-                if (connection.Part != null)
-                {
-                    connections.Add(connection.Part);
-                }
-            }
-
-            if (connections.Count <= 0)
-            {
-                connections = null;
-                return false;
-            }
-
-            return true;
-        }
-
-        public bool HasSlotOfType(BodyPartType type)
-        {
-            foreach (var _ in GetSlotsOfType(type))
-            {
-                return true;
-            }
-
-            return false;
         }
 
         public IEnumerable<BodyPartSlot> GetSlotsOfType(BodyPartType type)
@@ -468,7 +359,7 @@ namespace Content.Shared.Body.Components
             var i = 0;
             foreach (var (part, slot) in SlotParts)
             {
-                parts[i] = (slot.Id, Owner: part.Owner);
+                parts[i] = (slot.Id, part.Owner);
                 i++;
             }
 

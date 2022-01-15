@@ -33,7 +33,7 @@ namespace Content.Server.Construction
 
         private void AddDeconstructVerb(EntityUid uid, ConstructionComponent component, GetOtherVerbsEvent args)
         {
-            if (!args.CanAccess)
+            if (!args.CanAccess || !args.CanInteract)
                 return;
 
             if (component.TargetNode == component.DeconstructionNode ||
@@ -95,7 +95,9 @@ namespace Content.Server.Construction
                     preventStepExamine |= condition.DoExamine(args);
                 }
 
-                if (preventStepExamine) return;
+                if (!preventStepExamine && component.StepIndex < edge.Steps.Count)
+                    edge.Steps[component.StepIndex].DoExamine(args);
+                return;
             }
         }
 

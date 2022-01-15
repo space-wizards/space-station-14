@@ -56,13 +56,11 @@ namespace Content.Server.Morgue.Components
         [DataField("occupantHasSoulAlarmSound")]
         private SoundSpecifier _occupantHasSoulAlarmSound = new SoundPathSpecifier("/Audio/Weapons/Guns/EmptyAlarm/smg_empty_alarm.ogg");
 
-        [ViewVariables]
-        [ComponentDependency] protected readonly AppearanceComponent? Appearance = null;
-
         protected override void Initialize()
         {
             base.Initialize();
-            Appearance?.SetData(MorgueVisuals.Open, false);
+            if(_entMan.TryGetComponent<AppearanceComponent>(Owner, out var appearance))
+                appearance.SetData(MorgueVisuals.Open, false);
             TrayContainer = Owner.EnsureContainer<ContainerSlot>("morgue_tray", out _);
         }
 
@@ -97,10 +95,13 @@ namespace Content.Server.Morgue.Components
 
         protected override void OpenStorage()
         {
-            Appearance?.SetData(MorgueVisuals.Open, true);
-            Appearance?.SetData(MorgueVisuals.HasContents, false);
-            Appearance?.SetData(MorgueVisuals.HasMob, false);
-            Appearance?.SetData(MorgueVisuals.HasSoul, false);
+            if (_entMan.TryGetComponent<AppearanceComponent>(Owner, out var appearance))
+            {
+                appearance.SetData(MorgueVisuals.Open, true);
+                appearance.SetData(MorgueVisuals.HasContents, false);
+                appearance.SetData(MorgueVisuals.HasMob, false);
+                appearance.SetData(MorgueVisuals.HasSoul, false);
+            }
 
             if (_tray == null)
             {
@@ -131,16 +132,21 @@ namespace Content.Server.Morgue.Components
                 if (!hasSoul && _entMan.TryGetComponent<ActorComponent?>(entity, out var actor) && actor.PlayerSession != null)
                     hasSoul = true;
             }
-            Appearance?.SetData(MorgueVisuals.HasContents, count > 0);
-            Appearance?.SetData(MorgueVisuals.HasMob, hasMob);
-            Appearance?.SetData(MorgueVisuals.HasSoul, hasSoul);
+
+            if (_entMan.TryGetComponent<AppearanceComponent>(Owner, out var appearance))
+            {
+                appearance.SetData(MorgueVisuals.HasContents, count > 0);
+                appearance.SetData(MorgueVisuals.HasMob, hasMob);
+                appearance.SetData(MorgueVisuals.HasSoul, hasSoul);
+            }
         }
 
         protected override void CloseStorage()
         {
             base.CloseStorage();
 
-            Appearance?.SetData(MorgueVisuals.Open, false);
+            if (_entMan.TryGetComponent<AppearanceComponent>(Owner, out var appearance))
+                appearance.SetData(MorgueVisuals.Open, false);
             CheckContents();
 
             if (_tray != null)
@@ -168,7 +174,8 @@ namespace Content.Server.Morgue.Components
         {
             CheckContents();
 
-            if (DoSoulBeep && Appearance != null && Appearance.TryGetData(MorgueVisuals.HasSoul, out bool hasSoul) && hasSoul)
+            if (DoSoulBeep && _entMan.TryGetComponent<AppearanceComponent>(Owner, out var appearance) &&
+                appearance.TryGetData(MorgueVisuals.HasSoul, out bool hasSoul) && hasSoul)
             {
                 SoundSystem.Play(Filter.Pvs(Owner), _occupantHasSoulAlarmSound.GetSound(), Owner);
             }
@@ -176,19 +183,19 @@ namespace Content.Server.Morgue.Components
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
-            if (Appearance == null) return;
+            if (!_entMan.TryGetComponent<AppearanceComponent>(Owner, out var appearance)) return;
 
             if (inDetailsRange)
             {
-                if (Appearance.TryGetData(MorgueVisuals.HasSoul, out bool hasSoul) && hasSoul)
+                if (appearance.TryGetData(MorgueVisuals.HasSoul, out bool hasSoul) && hasSoul)
                 {
                     message.AddMarkup(Loc.GetString("morgue-entity-storage-component-on-examine-details-body-has-soul"));
                 }
-                else if (Appearance.TryGetData(MorgueVisuals.HasMob, out bool hasMob) && hasMob)
+                else if (appearance.TryGetData(MorgueVisuals.HasMob, out bool hasMob) && hasMob)
                 {
                     message.AddMarkup(Loc.GetString("morgue-entity-storage-component-on-examine-details-body-has-no-soul"));
                 }
-                else if (Appearance.TryGetData(MorgueVisuals.HasContents, out bool hasContents) && hasContents)
+                else if (appearance.TryGetData(MorgueVisuals.HasContents, out bool hasContents) && hasContents)
                 {
                     message.AddMarkup(Loc.GetString("morgue-entity-storage-component-on-examine-details-has-contents"));
                 }

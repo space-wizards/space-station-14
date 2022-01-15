@@ -31,6 +31,8 @@
     Scientist: [ 2, 3 ]
     HeadOfSecurity: [ 1, 1 ]
     SecurityOfficer: [ 2, 3 ]
+    Chaplain: [ 1, 1 ]
+    Librarian: [ 1, 1 ]
 
 - type: gameMap
   id: packedstation
@@ -69,6 +71,8 @@
     SecurityOfficer: [ 2, 3 ]
     Chaplain: [ 1, 1 ]
     Warden: [ 1, 1 ]
+    Librarian: [ 1, 1 ]
+    Lawyer: [ 1, 2 ]
 
 - type: gameMap
   id: knightship
@@ -90,3 +94,47 @@
     MedicalDoctor: [ 1, 1 ]
     ResearchDirector: [ 1, 1 ]
     Botanist: [ 1, 1 ]
+
+- type: gameMap
+  id: ssreach
+  mapName: 'Reach'
+  mapNameTemplate: '{0} Reach {1}'
+  nameGenerator:
+    !type:NanotrasenNameGenerator
+    prefixCreator: '14'
+  mapPath: Maps/ssreach.yml
+  minPlayers: 0
+  maxPlayers: 17
+  overflowJobs: []
+  availableJobs:
+    CargoTechnician: [ 1, 1 ]
+    Bartender: [ 1, 1 ]
+    Botanist: [ 1, 1 ]
+    Chef: [ 1, 1 ]
+    Captain: [ 1, 1 ]
+    ChiefEngineer: [ 1, 1 ]
+    StationEngineer: [ 1, 2 ]
+    ChiefMedicalOfficer: [ 1, 1 ]
+    MedicalDoctor: [ 1, 1 ]
+    Chemist: [ 1, 1 ]
+    HeadOfSecurity: [ 1, 1 ]
+    SecurityOfficer: [ 2, 4 ]
+    Janitor: [ 1, 1 ]
+
+- type: gameMap
+  id: dart
+  mapName: 'Dart'
+  mapNameTemplate: '{0} Dart {1}'
+  nameGenerator:
+    !type:NanotrasenNameGenerator
+    prefixCreator: '14'
+  mapPath: Maps/dart.yml
+  minPlayers: 0
+  votable: false
+  overflowJobs: []
+  availableJobs:
+    Captain: [ 1, 1 ]
+    ChiefEngineer: [ 1, 1 ]
+    ChiefMedicalOfficer: [ 1, 1 ]
+    HeadOfSecurity: [ 1, 1 ]
+    SecurityOfficer: [ 2, 3 ]

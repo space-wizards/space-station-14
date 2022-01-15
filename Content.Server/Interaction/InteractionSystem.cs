@@ -299,7 +299,7 @@ namespace Content.Server.Interaction
             if (!ValidateInteractAndFace(user, coordinates))
                 return;
 
-            if (!_actionBlockerSystem.CanAttack(user))
+            if (!_actionBlockerSystem.CanAttack(user, target))
                 return;
 
             if (!wideAttack)

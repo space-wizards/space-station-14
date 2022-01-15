@@ -11,6 +11,9 @@
 
 - type: Tag
   id: Brutepack
+  
+- type: Tag
+  id: BodyBag
 
 - type: Tag
   id: BotanyHatchet
@@ -41,6 +44,9 @@
 
 - type: Tag
   id: CaptainSabre
+  
+- type: Tag
+  id: Cartridge
 
 - type: Tag
   id: CigFilter
@@ -239,6 +245,9 @@
 
 - type: Tag
   id: Taser
+  
+- type: Tag
+  id: Trash
 
 - type: Tag
   id: Wall

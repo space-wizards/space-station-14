@@ -1,3 +1,4 @@
+using Content.Server.Chemistry.ReactionEffects;
 using Content.Server.Destructible.Thresholds.Behaviors;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;

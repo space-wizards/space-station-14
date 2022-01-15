@@ -1,8 +1,7 @@
 using System.Linq;
 using Content.Server.Buckle.Components;
 using Content.Server.Storage.Components;
-using Content.Shared.Interaction;
-using Content.Shared.Item;
+using Content.Shared.Foldable;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
@@ -13,19 +12,15 @@ using Robust.Shared.Localization;
 namespace Content.Server.Foldable
 {
     [UsedImplicitly]
-    public sealed class FoldableSystem : EntitySystem
+    public sealed class FoldableSystem : SharedFoldableSystem
     {
         [Dependency] private SharedContainerSystem _container = default!;
-
-        private const string FoldKey = "FoldedState";
 
         public override void Initialize()
         {
             base.Initialize();
 
-            SubscribeLocalEvent<FoldableComponent, ComponentInit>(OnFoldableInit);
             SubscribeLocalEvent<FoldableComponent, StorageOpenAttemptEvent>(OnFoldableOpenAttempt);
-            SubscribeLocalEvent<FoldableComponent, AttemptItemPickupEvent>(OnPickedUpAttempt);
             SubscribeLocalEvent<FoldableComponent, GetAlternativeVerbsEvent>(AddFoldVerb);
         }
 
@@ -35,14 +30,31 @@ namespace Content.Server.Foldable
                 args.Cancel();
         }
 
-        private void OnFoldableInit(EntityUid uid, FoldableComponent component, ComponentInit args)
-        {
-            SetFolded(component, component.IsFolded);
-        }
-
-        private bool TryToggleFold(FoldableComponent comp)
+        public bool TryToggleFold(FoldableComponent comp)
         {
             return TrySetFolded(comp, !comp.IsFolded);
+        }
+
+        public bool CanToggleFold(EntityUid uid, FoldableComponent? fold = null)
+        {
+            if (!Resolve(uid, ref fold))
+                return false;
+
+            // Can't un-fold in any container (locker, hands, inventory, whatever).
+            if (_container.IsEntityInContainer(uid))
+                return false;
+
+            // If an entity is buckled to the object we can't pick it up or fold it
+            if (TryComp(uid, out StrapComponent? strap) && strap.BuckledEntities.Any())
+                return false;
+
+            if (!TryComp(uid, out EntityStorageComponent? storage))
+                return true;
+
+            if (storage.Open)
+                return false;
+
+            return !storage.Contents.ContainedEntities.Any();
         }
 
         /// <summary>
@@ -51,21 +63,13 @@ namespace Content.Server.Foldable
         /// <param name="comp"></param>
         /// <param name="state">Folded state we want</param>
         /// <returns>True if successful</returns>
-        private bool TrySetFolded(FoldableComponent comp, bool state)
+        public bool TrySetFolded(FoldableComponent comp, bool state)
         {
             if (state == comp.IsFolded)
                 return false;
 
-            if (_container.IsEntityInContainer(comp.Owner))
+            if (!CanToggleFold(comp.Owner, comp))
                 return false;
-
-            // First we check if the foldable object has a strap component
-            if (EntityManager.TryGetComponent(comp.Owner, out StrapComponent? strap))
-            {
-                // If an entity is buckled to the object we can't pick it up or fold it
-                if (strap.BuckledEntities.Any())
-                    return false;
-            }
 
             SetFolded(comp, state);
             return true;
@@ -76,41 +80,20 @@ namespace Content.Server.Foldable
         /// </summary>
         /// <param name="component"></param>
         /// <param name="folded">If true, the component will become folded, else unfolded</param>
-        private void SetFolded(FoldableComponent component, bool folded)
+        public override void SetFolded(FoldableComponent component, bool folded)
         {
-            component.IsFolded = folded;
-            component.CanBeFolded = !_container.IsEntityInContainer(component.Owner);
+            base.SetFolded(component, folded);
 
             // You can't buckle an entity to a folded object
-            if (EntityManager.TryGetComponent(component.Owner, out StrapComponent? strap))
+            if (TryComp(component.Owner, out StrapComponent? strap))
                 strap.Enabled = !component.IsFolded;
-
-            // Update visuals only if the value has changed
-            if (EntityManager.TryGetComponent(component.Owner, out AppearanceComponent? appearance))
-                appearance.SetData(FoldKey, folded);
         }
-
-        #region Event handlers
-
-        /// <summary>
-        /// Prevents foldable objects to be picked up when unfolded
-        /// </summary>
-        /// <param name="uid"></param>
-        /// <param name="component"></param>
-        /// <param name="args"></param>
-        private void OnPickedUpAttempt(EntityUid uid, FoldableComponent component, AttemptItemPickupEvent args)
-        {
-            if (!component.IsFolded)
-                args.Cancel();
-        }
-
-        #endregion
 
         #region Verb
 
         private void AddFoldVerb(EntityUid uid, FoldableComponent component, GetAlternativeVerbsEvent args)
         {
-            if (!args.CanAccess || !args.CanInteract)
+            if (!args.CanAccess || !args.CanInteract || !CanToggleFold(uid, component))
                 return;
 
             Verb verb = new()

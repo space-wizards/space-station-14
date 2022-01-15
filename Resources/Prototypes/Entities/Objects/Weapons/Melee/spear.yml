@@ -24,6 +24,7 @@
   - type: Clothing
     size: 24
     sprite: Objects/Weapons/Melee/spear.rsi
+    QuickEquip: false
     Slots:
     - back
   - type: Construction
@@ -39,6 +40,11 @@
     solution: melee
   - type: SolutionTransfer
     maxTransferAmount: 5
+  - type: Wieldable
+  - type: IncreaseDamageOnWield
+    modifiers:
+      flatReductions:
+        Piercing: -7
 
 - type: MeleeWeaponAnimation
   id: spear

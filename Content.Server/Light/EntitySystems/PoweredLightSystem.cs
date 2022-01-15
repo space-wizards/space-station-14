@@ -64,19 +64,11 @@ namespace Content.Server.Light.EntitySystems
 
         private void OnMapInit(EntityUid uid, PoweredLightComponent light, MapInitEvent args)
         {
-            if (light.HasLampOnSpawn)
+            if (light.HasLampOnSpawn != null)
             {
-                var prototype = light.BulbType switch
-                {
-                    LightBulbType.Bulb => "LightBulb",
-                    LightBulbType.Tube => "LightTube",
-                    _ => throw new ArgumentOutOfRangeException()
-                };
-
-                var entity = EntityManager.SpawnEntity(prototype, EntityManager.GetComponent<TransformComponent>(light.Owner).Coordinates);
+                var entity = EntityManager.SpawnEntity(light.HasLampOnSpawn, EntityManager.GetComponent<TransformComponent>(light.Owner).Coordinates);
                 light.LightBulbContainer.Insert(entity);
             }
-
             // need this to update visualizers
             UpdateLight(uid, light);
         }
@@ -158,7 +150,6 @@ namespace Content.Server.Light.EntitySystems
                 return false;
 
             UpdateLight(uid, light);
-
             return true;
         }
 
@@ -183,7 +174,7 @@ namespace Content.Server.Light.EntitySystems
             if (userUid != null)
             {
                 if (EntityManager.TryGetComponent(userUid.Value, out SharedHandsComponent? hands))
-                    hands.TryPutInActiveHandOrAny(bulb);
+                    hands.PutInHand(bulb);
             }
 
             UpdateLight(uid, light);
@@ -260,7 +251,7 @@ namespace Content.Server.Light.EntitySystems
                     case LightBulbState.Normal:
                         if (powerReceiver.Powered && light.On)
                         {
-                            SetLight(uid, true, lightBulb.Color, light);
+                            SetLight(uid, true, lightBulb.Color, light, lightBulb.LightRadius, lightBulb.LightEnergy, lightBulb.LightSoftness);
                             appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.On);
                             var time = _gameTiming.CurTime;
                             if (time > light.LastThunk + ThunkDelay)
@@ -363,7 +354,7 @@ namespace Content.Server.Light.EntitySystems
             SetState(uid, enabled, component);
         }
 
-        private void SetLight(EntityUid uid, bool value, Color? color = null, PoweredLightComponent? light = null)
+        private void SetLight(EntityUid uid, bool value, Color? color = null, PoweredLightComponent? light = null, float? radius = null, float? energy = null, float? softness=null)
         {
             if (!Resolve(uid, ref light))
                 return;
@@ -377,6 +368,12 @@ namespace Content.Server.Light.EntitySystems
 
                 if (color != null)
                     pointLight.Color = color.Value;
+                if (radius != null)
+                    pointLight.Radius = (float) radius;
+                if (energy != null)
+                    pointLight.Energy = (float) energy;
+                if (softness != null)
+                    pointLight.Softness = (float) softness;
             }
         }
 
