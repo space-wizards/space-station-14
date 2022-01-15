@@ -144,7 +144,7 @@ namespace Content.Server.Doors.Components
 
         public void UpdateWiresStatus()
         {
-            if (_entityManager.TryGetComponent<WiresComponent>(Owner, out var wiresComponent)) return;
+            if (!_entityManager.TryGetComponent<WiresComponent>(Owner, out var wiresComponent)) return;
 
             var mainPowerCut = wiresComponent.IsWireCut(Wires.MainPower);
             var backupPowerCut = wiresComponent.IsWireCut(Wires.BackupPower);
