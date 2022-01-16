@@ -173,15 +173,15 @@ namespace Content.Server.Chat.Managers
                 return;
             }
 
+            message = message.Trim();
+
+            message = SanitizeMessageCapital(source, message);
+
             foreach (var handler in _chatTransformHandlers)
             {
                 //TODO: rather return a bool and use a out var?
                 message = handler(source, message);
             }
-
-            message = message.Trim();
-
-            message = SanitizeMessageCapital(source, message);
 
             var listeners = EntitySystem.Get<ListeningSystem>();
             listeners.PingListeners(source, message);
@@ -211,15 +211,15 @@ namespace Content.Server.Chat.Managers
                 return;
             }
 
+            message = message.Trim();
+
+            message = SanitizeMessageCapital(source, message);
+
             foreach (var handler in _chatTransformHandlers)
             {
                 //TODO: rather return a bool and use a out var?
                 message = handler(source, message);
             }
-
-            message = message.Trim();
-
-            message = SanitizeMessageCapital(source, message);
 
             var listeners = EntitySystem.Get<ListeningSystem>();
             listeners.PingListeners(source, message);
