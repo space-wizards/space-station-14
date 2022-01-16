@@ -114,6 +114,12 @@
       "directions": 4
     },
     {
+      "name": "box_lethalshot"
+    },
+    {
+      "name": "box_beanbag"
+    },
+    {
       "name": "ziptie"
     }
   ]
