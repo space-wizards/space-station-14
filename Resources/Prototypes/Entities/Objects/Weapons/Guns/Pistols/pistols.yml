@@ -405,7 +405,7 @@
   - type: Icon
     sprite: Objects/Weapons/Guns/Pistols/paco.rsi
   - type: Item
-    size: 24
+    size: 12
     sprite: Objects/Weapons/Guns/Pistols/paco.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
