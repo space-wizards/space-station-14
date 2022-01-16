@@ -58,8 +58,6 @@ namespace Content.Client.Clickable
                 var modAngle = sprite.NoRotation ? SpriteComponent.CalcRectWorldAngle(worldRotation, 4) : Angle.Zero;
                 var dir = sprite.EnableDirectionOverride ? sprite.DirectionOverride : worldRotation.GetCardinalDir();
 
-                modAngle += dir.ToAngle();
-
                 var layerPos = modAngle.RotateVec(localPos);
 
                 var boundsForDir = dir switch
@@ -86,7 +84,6 @@ namespace Content.Client.Clickable
                     var dirCount = sprite.GetLayerDirectionCount(layer);
                     var dir = layer.EffectiveDirection(worldRotation);
                     var modAngle = sprite.NoRotation ? SpriteComponent.CalcRectWorldAngle(worldRotation, dirCount) : Angle.Zero;
-                    modAngle += dir.Convert().ToAngle();
 
                     var layerPos = modAngle.RotateVec(localPos);
 
