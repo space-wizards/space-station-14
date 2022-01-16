@@ -84,3 +84,6 @@
     - type: Clothing
       sprite: Clothing/Mask/muzzle.rsi
     - type: IngestionBlocker
+    - type: AddAccentClothing
+      accent: ReplacementAccent
+      replacement: mumble
