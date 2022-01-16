@@ -96,27 +96,6 @@
     Botanist: [ 1, 1 ]
 
 - type: gameMap
-<<<<<<< HEAD
-  id: sunrise
-  mapName: 'Sunrise'
-  mapNameTemplate: '{0} Sunrise {1}'
-  nameGenerator:
-    !type:NanotrasenNameGenerator
-    prefixCreator: 'SS'
-  mapPath: Maps/sunrise.yml
-  minPlayers: 0
-  maxPlayers: 8
-  overflowJobs: []
-  availableJobs:
-    Bartender: [ 1, 1 ]
-    Captain: [ 1, 1 ]
-    ChiefEngineer: [ 1, 1 ]
-    StationEngineer: [ 1, 1 ]
-    ChiefMedicalOfficer: [ 1, 1 ]
-    MedicalDoctor: [ 1, 1 ]
-    ResearchDirector: [ 1, 1 ]
-    Botanist: [ 1, 1 ]
-=======
   id: ssreach
   mapName: 'Reach'
   mapNameTemplate: '{0} Reach {1}'
@@ -159,4 +138,4 @@
     ChiefMedicalOfficer: [ 1, 1 ]
     HeadOfSecurity: [ 1, 1 ]
     SecurityOfficer: [ 2, 3 ]
->>>>>>> 67eaa7bfe63ccc4111418aeeec30ac7b81522c7a
+    
