@@ -1,0 +1,133 @@
+- type: constructionGraph
+  id: disposalPipe
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: pipe
+      steps:
+      - material: Steel
+        amount: 1
+        doAfter: 0.5
+    - to: tagger
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: trunk
+      steps:
+      - material: Steel
+        amount: 1
+        doAfter: 1
+    - to: router
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: junction
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: yJunction
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    - to: bend
+      steps:
+      - material: Steel
+        amount: 1
+        doAfter: 0.5
+  - node: pipe
+    entity: DisposalPipe
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 1
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 0.5
+  - node: tagger
+    entity: DisposalTagger
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+  - node: trunk
+    entity: DisposalTrunk
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 1
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+  - node: router
+    entity: DisposalRouter
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+  - node: junction
+    entity: DisposalJunction
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+    - to: yJunction
+      steps:
+      - tool: Screwing
+        doAfter: 0.5
+  - node: yJunction
+    entity: DisposalYJunction
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+    - to: junction
+      steps:
+      - tool: Screwing
+        doAfter: 0.5
+  - node: bend
+    entity: DisposalBend
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 1
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 0.5

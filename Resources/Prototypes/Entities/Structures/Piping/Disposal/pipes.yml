@@ -66,6 +66,9 @@
         !type:PhysShapeAabb
           bounds: "-0.25,-0.5,0.25,0.5"
       layer: [ Underplating ]
+  - type: Construction
+    graph: disposalPipe
+    node: pipe
 
 - type: entity
   id: DisposalTagger
@@ -97,6 +100,9 @@
           !type:PhysShapeAabb
             bounds: "-0.25,-0.5,0.25,0.5"
         layer: [ Underplating ]
+  - type: Construction
+    graph: disposalPipe
+    node: tagger
 
 - type: entity
   id: DisposalTrunk
@@ -124,6 +130,9 @@
           !type:PhysShapeAabb
             bounds: "-0.25,-0.5,0.25,0.4"
         layer: [ Underplating ]
+  - type: Construction
+    graph: disposalPipe
+    node: trunk
 
 - type: entity
   id: DisposalRouter
@@ -161,6 +170,9 @@
           !type:PhysShapeAabb
             bounds: "-0.5,-0.5,0.25,0.5"
         layer: [ Underplating ]
+  - type: Construction
+    graph: disposalPipe
+    node: router
 
 - type: entity
   id: DisposalRouterFlipped
@@ -226,6 +238,9 @@
         !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.25,0.5"
       layer: [ Underplating ]
+  - type: Construction
+    graph: disposalPipe
+    node: junction
 
 - type: entity
   id: DisposalJunctionFlipped
@@ -289,6 +304,9 @@
         !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.5,0.25"
       layer: [ Underplating ]
+  - type: Construction
+    graph: disposalPipe
+    node: yJunction
 
 - type: entity
   id: DisposalBend
@@ -316,3 +334,6 @@
         !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.25,0.25"
       layer: [ Underplating ]
+  - type: Construction
+    graph: disposalPipe
+    node: bend
