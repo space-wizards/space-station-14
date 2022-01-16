@@ -142,10 +142,10 @@
   description: An odd, muzzle-loading revolver, favoured by pirate crews.
   components:
   - type: Sprite
-    sprite: Objects\Weapons\Guns\Revolvers\pirate_revolver.rsi
+    sprite: Objects/Weapons/Guns/Revolvers/pirate_revolver.rsi
   - type: Item
     size: 24
-    sprite: Objects\Weapons\Guns\Revolvers\pirate_revolver.rsi
+    sprite: Objects/Weapons/Guns/Revolvers/pirate_revolver.rsi
   - type: RangedWeapon
   - type: RevolverBarrel
     fireRate: 1
