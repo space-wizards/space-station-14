@@ -14,7 +14,7 @@
 - type: entity
   name: brown briefcase
   parent: BriefcaseBase
-  id: BirefcaseBrown
+  id: BriefcaseBrown
   description: A handy birefcase.
   components:
   - type: Sprite
