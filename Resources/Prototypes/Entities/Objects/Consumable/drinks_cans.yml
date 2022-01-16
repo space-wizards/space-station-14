@@ -54,6 +54,7 @@
   - type: Tag
     tags:
     - Cola
+    - Trash
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cola.rsi
   - type: Item
