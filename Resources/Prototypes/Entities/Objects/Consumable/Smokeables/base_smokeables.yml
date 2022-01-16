@@ -10,6 +10,9 @@
   - type: Appearance
     visuals:
       - type: BurnStateVisualizer
+  - type: Tag
+    tags:
+    - Trash
 
 # Base for all cigars and cigarettes.
 - type: entity
