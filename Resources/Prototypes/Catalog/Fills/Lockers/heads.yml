@@ -80,6 +80,8 @@
         prob: 1
       - id: BoxPDA
         prob: 1
+      - id: BoxID
+        prob: 1
       - id: IDComputerCircuitboard
         prob: 1
       - id: TaserGun
