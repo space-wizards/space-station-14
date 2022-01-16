@@ -23,9 +23,9 @@ namespace Content.Server.Arcade.Components
 
         public override string Name => "BlockGameArcade";
 
-        [ComponentDependency] private readonly ApcPowerReceiverComponent? _powerReceiverComponent = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
-        private bool Powered => _powerReceiverComponent?.Powered ?? false;
+        private bool Powered => _entityManager.TryGetComponent<ApcPowerReceiverComponent>(Owner, out var powerReceiverComponent) && powerReceiverComponent.Powered;
         private BoundUserInterface? UserInterface => Owner.GetUIOrNull(BlockGameUiKey.Key);
 
         private BlockGame? _game;

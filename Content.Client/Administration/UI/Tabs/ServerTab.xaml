@@ -8,5 +8,6 @@
         <cc:CommandButton Command="restart" Text="{Loc server-reboot}" />
         <cc:CommandButton Command="shutdown" Text="{Loc server-shutdown}" />
         <cc:CommandButton Command="setooc" Text="{Loc server-ooc-toggle}" />
+        <cc:CommandButton Command="setlooc" Text="{Loc server-looc-toggle}" />
     </GridContainer>
 </Control>

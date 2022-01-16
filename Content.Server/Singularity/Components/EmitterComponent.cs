@@ -13,10 +13,6 @@ namespace Content.Server.Singularity.Components
     [RegisterComponent]
     public class EmitterComponent : Component
     {
-        [ComponentDependency] public readonly AppearanceComponent? Appearance = default;
-        [ComponentDependency] public readonly AccessReaderComponent? AccessReader = default;
-        [ComponentDependency] public readonly PowerConsumerComponent? PowerConsumer = default;
-
         public override string Name => "Emitter";
 
         public CancellationTokenSource? TimerCancel;
