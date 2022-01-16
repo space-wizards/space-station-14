@@ -87,8 +87,6 @@ entities:
     type: Transform
   - index: 0
     type: MapGrid
-  - type: BecomesStation
-    id: Dart
   - linearDamping: 0.1
     fixedRotation: False
     bodyType: Dynamic
