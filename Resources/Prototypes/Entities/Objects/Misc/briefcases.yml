@@ -15,7 +15,7 @@
   name: brown briefcase
   parent: BriefcaseBase
   id: BriefcaseBrown
-  description: A handy birefcase.
+  description: A handy briefcase.
   components:
   - type: Sprite
     sprite: Objects/Storage/Briefcases/briefcase_brown.rsi
