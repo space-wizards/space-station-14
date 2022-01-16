@@ -17,7 +17,7 @@
   - type: StorageFill
     contents:
       - id: BoxSurvival
-      - id: BriefcaseBrown
+      - id: BriefcaseBrownFilled
 
 - type: entity
   abstract: true
