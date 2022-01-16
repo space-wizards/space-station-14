@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Content.Shared.Item;
 using Content.Shared.Light;
 using Content.Shared.Light.Component;
@@ -20,16 +21,28 @@ namespace Content.Client.Light
             base.Initialize();
 
             SubscribeLocalEvent<RgbLightControllerComponent, ComponentHandleState>(OnHandleState);
-            SubscribeLocalEvent<RgbLightControllerComponent, ComponentRemove>(OnComponentRemoved);
+            SubscribeLocalEvent<RgbLightControllerComponent, ComponentShutdown>(OnComponentShutdown);
+            SubscribeLocalEvent<RgbLightControllerComponent, ComponentStartup>(OnComponentStart);
         }
 
-        private void OnComponentRemoved(EntityUid uid, RgbLightControllerComponent rgb, ComponentRemove args)
+        private void OnComponentStart(EntityUid uid, RgbLightControllerComponent rgb, ComponentStartup args)
         {
             if (TryComp(uid, out PointLightComponent? light))
-                light.Color = Color.White;
+                rgb.OriginalLightColor = light.Color;
 
             if (TryComp(uid, out SharedItemComponent? item))
-                item.Color = Color.White;
+                rgb.OriginalItemColor = item.Color;
+
+            GetOriginalSpriteColors(uid, rgb);
+        }
+
+        private void OnComponentShutdown(EntityUid uid, RgbLightControllerComponent rgb, ComponentShutdown args)
+        {
+            if (TryComp(uid, out PointLightComponent? light))
+                light.Color = rgb.OriginalLightColor;
+
+            if (TryComp(uid, out SharedItemComponent? item))
+                item.Color = rgb.OriginalItemColor;
 
             ResetSpriteColors(uid, rgb);
         }
@@ -39,11 +52,36 @@ namespace Content.Client.Light
             if (args.Current is not RgbLightControllerState state)
                 return;
 
-            // just to be safe, un-color the layers so they don't get stuck with some mid-transition one.
             ResetSpriteColors(uid, rgb);
-
             rgb.CycleRate = state.CycleRate;
             rgb.Layers = state.Layers;
+
+            // get the new original sprite colors (necessary if rgb.Layers was updated).
+            GetOriginalSpriteColors(uid, rgb);
+        }
+
+        private void GetOriginalSpriteColors(EntityUid uid, RgbLightControllerComponent? rgb = null, SpriteComponent? sprite = null)
+        {
+            if (!Resolve(uid, ref rgb, ref sprite))
+                return;
+
+            if (rgb.Layers == null)
+            {
+                rgb.OriginalSpriteColor = sprite.Color;
+                rgb.OriginalLayerColors = null;
+                return;
+            }
+
+            var spriteLayerCount = sprite.AllLayers.Count();
+            rgb.OriginalLayerColors = new(rgb.Layers.Count);
+
+            foreach (var layer in rgb.Layers.ToArray())
+            {
+                if (layer < spriteLayerCount)
+                    rgb.OriginalLayerColors[layer] = sprite[layer].Color;
+                else
+                    rgb.Layers.Remove(layer);
+            }
         }
 
         private void ResetSpriteColors(EntityUid uid, RgbLightControllerComponent? rgb = null, SpriteComponent? sprite = null)
@@ -51,15 +89,15 @@ namespace Content.Client.Light
             if (!Resolve(uid, ref rgb, ref sprite))
                 return;
 
-            if (rgb.Layers == null)
+            if (rgb.Layers == null || rgb.OriginalLayerColors == null)
             {
-                sprite.Color = Color.White;
+                sprite.Color = rgb.OriginalSpriteColor;
                 return;
             }
 
-            foreach (var layer in rgb.Layers)
+            foreach (var (layer, color) in rgb.OriginalLayerColors)
             {
-                sprite.LayerSetColor(layer, Color.White);
+                sprite.LayerSetColor(layer, color);
             }
         }
 

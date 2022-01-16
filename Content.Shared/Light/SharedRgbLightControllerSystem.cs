@@ -1,6 +1,7 @@
 using Content.Shared.Light.Component;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
+using System.Collections.Generic;
 
 namespace Content.Shared.Light;
 
@@ -18,7 +19,7 @@ public abstract class SharedRgbLightControllerSystem : EntitySystem
         args.State = new RgbLightControllerState(component.CycleRate, component.Layers);
     }
 
-    public void SetLayers(EntityUid uid, int[] layers,  RgbLightControllerComponent? rgb = null)
+    public void SetLayers(EntityUid uid, List<int>? layers,  RgbLightControllerComponent? rgb = null)
     {
         if (!Resolve(uid, ref rgb))
             return;
