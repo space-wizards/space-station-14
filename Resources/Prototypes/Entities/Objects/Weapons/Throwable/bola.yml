@@ -4,7 +4,7 @@
   id: Bola
   description: Tied together with some spare cable and metal.
   components:
-  - type: item
+  - type: Item
     size: 3
   - type: Sprite
     sprite: Objects/Weapons/Throwable/bola.rsi
