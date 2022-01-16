@@ -81,10 +81,10 @@
     - type: BarrelBoltVisualizer
 
 - type: entity
-  name: Flintlock pistol
+  name: flintlock pistol
   parent: SniperBase
   id: FlintlockPistol
-  description: A pirate's companion, Yarrr!
+  description: A pirate's companion. Yarrr!
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/flintlock.rsi
@@ -108,7 +108,7 @@
 
 
 - type: entity
-  name: Musket
+  name: musket
   parent: SniperBase
   id: Musket
   description: This should've been in a museum long before you were born.

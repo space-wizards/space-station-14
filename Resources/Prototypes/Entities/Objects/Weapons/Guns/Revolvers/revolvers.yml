@@ -136,7 +136,7 @@
       path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
 
 - type: entity
-  name: Pirate revolver
+  name: pirate revolver
   parent: RevolverBase
   id: RevolverPirate
   description: An odd, muzzle-loading revolver, favoured by pirate crews.
