@@ -213,7 +213,7 @@ namespace Content.Server.Medical.Components
                         // Ideally this ends with GameTicker & CloningSystem handing DNA to a function that sets up a body for that DNA.
                         var mindUser = mind.UserId;
 
-                        if (mindUser.HasValue == false)
+                        if (mindUser.HasValue == false || mind.Session == null)
                         {
                             // For now assume this means soul departed
                             obj.Session.AttachedEntity.Value.PopupMessageCursor(Loc.GetString("medical-scanner-component-msg-soul-broken"));
