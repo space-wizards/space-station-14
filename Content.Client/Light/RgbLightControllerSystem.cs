@@ -39,7 +39,7 @@ namespace Content.Client.Light
             if (args.Current is not RgbLightControllerState state)
                 return;
 
-            // just to be safe, un-colour the layers so they don't get stuck with some mid-transition one.
+            // just to be safe, un-color the layers so they don't get stuck with some mid-transition one.
             ResetSpriteColors(uid, rgb);
 
             rgb.CycleRate = state.CycleRate;
@@ -67,23 +67,23 @@ namespace Content.Client.Light
         {
             foreach (var (rgb, light, sprite) in EntityManager.EntityQuery<RgbLightControllerComponent, PointLightComponent, SpriteComponent>())
             {
-                var colour = GetCurrentRgbColor(_gameTiming.RealTime, rgb.CreationTick.Value * _gameTiming.TickPeriod, rgb);
+                var color = GetCurrentRgbColor(_gameTiming.RealTime, rgb.CreationTick.Value * _gameTiming.TickPeriod, rgb);
 
-                light.Color = colour;
+                light.Color = color;
 
                 if (rgb.Layers == null)
-                    sprite.Color = colour;
+                    sprite.Color = color;
                 else
                 {
                     foreach (var layer in rgb.Layers)
                     {
-                        sprite.LayerSetColor(layer, colour);
+                        sprite.LayerSetColor(layer, color);
                     }
                 }
 
                 // not all rgb is hand-held (Hence, not part of EntityQuery)
                 if (TryComp(rgb.Owner, out SharedItemComponent? item))
-                    item.Color = colour;
+                    item.Color = color;
             }
         }
 
