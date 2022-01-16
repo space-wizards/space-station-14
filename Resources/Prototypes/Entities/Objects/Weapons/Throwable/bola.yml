@@ -2,10 +2,8 @@
   name: bola
   parent: BaseItem
   id: Bola
-  description: Tied together with some spare cable and metal.
+  description: Linked together with some spare cuffs and metal.
   components:
-  - type: Item
-    size: 3
   - type: Sprite
     sprite: Objects/Weapons/Throwable/bola.rsi
     state: icon
