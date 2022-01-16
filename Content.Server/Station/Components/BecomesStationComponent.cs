@@ -2,6 +2,7 @@
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Station;
 
@@ -17,5 +18,6 @@ public class BecomesStationComponent : Component
     ///     scenarios.
     /// </summary>
     [DataField("id", required: true)]
+    [ViewVariables(VVAccess.ReadWrite)]
     public string Id = default!;
 }
