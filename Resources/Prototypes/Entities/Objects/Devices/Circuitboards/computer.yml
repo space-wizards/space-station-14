@@ -1,4 +1,4 @@
-﻿# TODO: Add descriptions (10)
+# TODO: Add descriptions (10)
 
 - type: entity
   parent: BaseItem
@@ -99,3 +99,19 @@
   components:
     - type: ComputerBoard
       prototype: ParticleAcceleratorControlBoxUnfinished
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: ShuttleConsoleCircuitboard
+  name: Shuttle Console Board
+  components:
+    - type: ComputerBoard
+      prototype: ComputerShuttle
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: SyndicateShuttleConsoleCircuitboard
+  name: syndicate shuttle console board
+  components:
+    - type: ComputerBoard
+      prototype: ComputerShuttleSyndie

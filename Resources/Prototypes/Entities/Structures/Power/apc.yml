@@ -13,6 +13,7 @@
     sound:
       path: /Audio/Ambience/Objects/hdd_buzz.ogg
   - type: PointLight
+    netsync: false
     radius: 1.5
     energy: 1.6
     color: "#3db83b"
@@ -62,6 +63,10 @@
     interfaces:
     - key: enum.ApcUiKey.Key
       type: ApcBoundUserInterface
+  - type: ActivatableUI
+    inHandsOnly: false
+    singleUser: true
+    key: enum.ApcUiKey.Key
   - type: Construction
     graph: apc
     node: apc

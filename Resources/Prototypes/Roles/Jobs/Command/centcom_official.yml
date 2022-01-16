@@ -1,5 +1,5 @@
 - type: job
-  id: CentralCommandOffical
+  id: CentralCommandOfficial
   name: "centcom official"
   setPreference: false
   startingGear: CentcomGear
