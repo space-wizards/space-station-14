@@ -150,3 +150,12 @@
   materials:
      Steel: 100
      Plastic: 100
+
+- type: latheRecipe
+  id: ShuttleConsoleCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: ShuttleConsoleCircuitboard
+  completetime: 1000
+  materials:
+     Steel: 100
+     Plastic: 100

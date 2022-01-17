@@ -145,7 +145,7 @@
   category: Furniture
   description: A square piece of metal standing on four metal legs.
   icon:
-    sprite: Structures/Furniture/Tables/carpet.rsi
+    sprite: Structures/Furniture/Tables/generic.rsi
     state: full
   objectType: Structure
   placementMode: SnapgridCenter

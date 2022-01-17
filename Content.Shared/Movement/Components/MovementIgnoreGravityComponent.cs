@@ -1,4 +1,6 @@
+using Content.Shared.Clothing;
 using Content.Shared.Gravity;
+using Content.Shared.Inventory;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -36,6 +38,13 @@ namespace Content.Shared.Movement.Components
 
             mapManager ??= IoCManager.Resolve<IMapManager>();
             var grid = mapManager.GetGrid(gridId);
+            var invSys = EntitySystem.Get<InventorySystem>();
+
+            if (invSys.TryGetSlotEntity(entity, "shoes", out var ent))
+            {
+                if (entityManager.TryGetComponent<SharedMagbootsComponent>(ent, out var boots) && boots.On)
+                    return false;
+            }
 
             if (!entityManager.GetComponent<GravityComponent>(grid.GridEntityId).Enabled)
             {

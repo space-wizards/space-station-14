@@ -13,14 +13,13 @@ namespace Content.Server.Physics.Controllers
 {
     internal sealed class ConveyorController : VirtualController
     {
-        private ConveyorSystem _conveyor = default!;
-
-        public override List<Type> UpdatesAfter => new() {typeof(MoverController)};
+        [Dependency] private readonly ConveyorSystem _conveyor = default!;
 
         public override void Initialize()
         {
+            UpdatesAfter.Add(typeof(MoverController));
+
             base.Initialize();
-            _conveyor = EntitySystem.Get<ConveyorSystem>();
         }
 
         public override void UpdateBeforeSolve(bool prediction, float frameTime)

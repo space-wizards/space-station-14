@@ -188,6 +188,7 @@
       - ProtolatheMachineCircuitboard
       - KitchenReagentGrinderMachineCircuitboard
       - CrewMonitoringComputerCircuitboard
+      - ShuttleConsoleCircuitboard
       - Bucket
       - MopItem
       - SprayBottle
