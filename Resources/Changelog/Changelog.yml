@@ -1,9 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: You can uncuff yourself again., type: Fix}
-  id: 389
-  time: '2021-10-01T22:17:37.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed radiation dealing wrong damage type., type: Fix}
@@ -2916,3 +2911,8 @@ Entries:
   - {message: Your view will now zoom out when piloting a shuttle., type: Tweak}
   id: 890
   time: '2022-01-16T20:07:15.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Nerf holoparasite damage from 40 to 22., type: Tweak}
+  id: 891
+  time: '2022-01-17T18:45:01.0000000+00:00'
