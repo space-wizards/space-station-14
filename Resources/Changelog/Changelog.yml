@@ -1,17 +1,4 @@
 Entries:
-- author: Ygg01
-  changes:
-  - {message: Fix tanks being empty on roundstart, type: Fix}
-  id: 387
-  time: '2021-10-01T13:48:00.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Station lights have been dimmed, in accordance with Nanotrasen regulations.',
-    type: Tweak}
-  - {message: "Nanotrasen brand vendors and computers now emit Real Light\u2122! Also\
-      \ APCs and SMESes.", type: Tweak}
-  id: 388
-  time: '2021-10-01T20:59:06.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: You can uncuff yourself again., type: Fix}
@@ -2919,3 +2906,13 @@ Entries:
   - {message: 'Manual valves now correctly block, or allow air.', type: Fix}
   id: 888
   time: '2022-01-15T13:18:45.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Trashbag can now pick up banana peels, cigarette ends and more!', type: Fix}
+  id: 889
+  time: '2022-01-16T19:37:49.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Your view will now zoom out when piloting a shuttle., type: Tweak}
+  id: 890
+  time: '2022-01-16T20:07:15.0000000+00:00'
