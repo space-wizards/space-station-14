@@ -21,6 +21,15 @@
           0.8
         ]
       ]
+    },
+    {
+      "name": "pai-searching-overlay",
+      "delays": [
+        [
+          0.8,
+          0.8
+        ]
+      ]
     }
   ]
 }

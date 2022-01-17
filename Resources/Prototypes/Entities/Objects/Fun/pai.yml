@@ -44,6 +44,6 @@
         layer: 1
         states:
           enum.PAIStatus.Off: pai-off-overlay
-          enum.PAIStatus.Searching: pai-off-overlay
+          enum.PAIStatus.Searching: pai-searching-overlay
           enum.PAIStatus.On: pai-on-overlay
 
