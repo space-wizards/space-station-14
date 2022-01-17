@@ -23,17 +23,17 @@ public class AsteroidRockSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<AsteroidRockComponent, DestructionEventArgs>(OnAsteroidRockDestruction);
-        SubscribeLocalEvent<AsteroidRockComponent, InteractUsingEvent>(OnAsteroidRockInteractUsing);
-        SubscribeLocalEvent<AsteroidRockComponent, MineDoAfterComplete>(RockMined);
+        SubscribeLocalEvent<MineableComponent, DestructionEventArgs>(OnAsteroidRockDestruction);
+        SubscribeLocalEvent<MineableComponent, InteractUsingEvent>(OnAsteroidRockInteractUsing);
+        SubscribeLocalEvent<MineableComponent, MineDoAfterComplete>(RockMined);
     }
 
-    private void RockMined(EntityUid uid, AsteroidRockComponent component, MineDoAfterComplete args)
+    private void RockMined(EntityUid uid, MineableComponent component, MineDoAfterComplete args)
     {
         _actSystem.HandleDestruction(uid);
     }
 
-    private void OnAsteroidRockDestruction(EntityUid uid, AsteroidRockComponent component, DestructionEventArgs args)
+    private void OnAsteroidRockDestruction(EntityUid uid, MineableComponent component, DestructionEventArgs args)
     {
         if (!_random.Prob(component.OreChance))
             return; // Nothing to do.
@@ -57,7 +57,7 @@ public class AsteroidRockSystem : EntitySystem
         }
     }
 
-    private void OnAsteroidRockInteractUsing(EntityUid uid, AsteroidRockComponent component, InteractUsingEvent args)
+    private void OnAsteroidRockInteractUsing(EntityUid uid, MineableComponent component, InteractUsingEvent args)
     {
         if (!TryComp<PickaxeComponent>(args.Used, out var pickaxeComponent))
         {
