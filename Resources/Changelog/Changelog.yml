@@ -1,25 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed radiation dealing wrong damage type., type: Fix}
-  id: 390
-  time: '2021-10-02T01:47:54.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Dice now have a roll cooldown., type: Tweak}
-  id: 391
-  time: '2021-10-02T09:05:03.404726+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed fuel tanks not exploding when damaged. They now explode when taking
-      heat damage., type: Fix}
-  id: 392
-  time: '2021-10-02T09:42:46.0000000+00:00'
-- author: Macoron
-  changes:
-  - {message: Fix lighting toggle on a security barrier, type: Fix}
-  id: 393
-  time: '2021-10-02T14:53:20.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: Fixed radiation applying half a second's worth of damage each tick.,
@@ -2916,3 +2895,28 @@ Entries:
   - {message: Nerf holoparasite damage from 40 to 22., type: Tweak}
   id: 891
   time: '2022-01-17T18:45:01.0000000+00:00'
+- author: Zyme
+  changes:
+  - {message: Added brown briefcase, type: Add}
+  id: 892
+  time: '2022-01-17T19:21:28.0000000+00:00'
+- author: Lamrr
+  changes:
+  - {message: 'New pAI models have arrived, hopefully they won''t confused with PDAs
+      now.', type: Tweak}
+  id: 893
+  time: '2022-01-17T19:21:40.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: 'Added bolas, which includes the sprite, sound on throw/land, and crafting
+      recipe.', type: Add}
+  - {message: Tweaked Stun system to allow for stun/knockdown on thrown items that
+      have the attribute, type: Tweak}
+  - {message: Also fixes the ability for stun baton to work when thrown., type: Fix}
+  id: 894
+  time: '2022-01-17T19:21:57.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Ghost warp locations are now sorted alphabetically., type: Tweak}
+  id: 895
+  time: '2022-01-17T19:22:17.0000000+00:00'
