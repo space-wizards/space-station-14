@@ -1,8 +1,6 @@
 using System;
 using System.Globalization;
 using System.Linq;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.FixedPoint
@@ -12,7 +10,6 @@ namespace Content.Shared.FixedPoint
     ///     To enforce this level of precision, floats are shifted by 2 decimal points, rounded, and converted to an int.
     /// </summary>
     [Serializable]
-    [JsonConverter(typeof(FixedPointJsonConverter))]
     public struct FixedPoint2 : ISelfSerialize, IComparable<FixedPoint2>, IEquatable<FixedPoint2>, IFormattable
     {
         private int _value;
@@ -292,21 +289,6 @@ namespace Content.Shared.FixedPoint
             }
 
             return acc;
-        }
-    }
-
-    public class FixedPointJsonConverter : JsonConverter<FixedPoint2>
-    {
-        public override void Write(Utf8JsonWriter writer, FixedPoint2 value, JsonSerializerOptions options)
-        {
-            writer.WriteNumberValue(value.Float());
-        }
-
-        public override FixedPoint2 Read(ref Utf8JsonReader reader, Type objectType, JsonSerializerOptions options)
-        {
-            // Throwing a NotSupportedException here allows the error
-            // message to provide path information.
-            throw new NotSupportedException();
         }
     }
 }

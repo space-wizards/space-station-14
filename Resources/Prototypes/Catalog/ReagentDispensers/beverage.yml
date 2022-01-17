@@ -1,6 +1,7 @@
 - type: reagentDispenserInventory
   id: SodaDispenserInventory
   inventory:
+
   - Water
   - Ice
   - Coffee
