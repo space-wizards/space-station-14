@@ -159,6 +159,12 @@ namespace Content.Server.Weapon.Ranged
                 return;
             }
 
+            _entMan.TryGetComponent(user, out TransformComponent transform);
+            if ((transform.WorldPosition - targetPos).Length  < 1.5)
+            {
+                return;
+            }
+
             var curTime = _gameTiming.CurTime;
             var span = curTime - _lastFireTime;
             if (span.TotalSeconds < 1 / _barrel?.FireRate)
