@@ -71,9 +71,7 @@ namespace Content.Client.Ghost.UI
         private void AddButtonLocations()
         {
             // Server COULD send these sorted but how about we just use the client to do it instead.
-            var sortedLocations = new List<string>(Locations.Count);
-
-            sortedLocations.AddRange(Locations);
+            var sortedLocations = new List<string>(Locations);
             sortedLocations.Sort((x, y) => string.Compare(x, y, StringComparison.Ordinal));
 
             foreach (var name in sortedLocations)
