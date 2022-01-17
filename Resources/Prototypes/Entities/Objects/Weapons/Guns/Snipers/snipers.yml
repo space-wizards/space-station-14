@@ -48,6 +48,10 @@
   - type: Appearance
     visuals:
     - type: BarrelBoltVisualizer
+  - type: MeleeWeapon #bayonet thingy
+    damage: 
+      types:
+        Slash: 17.5
 
 - type: entity
   name: Kardashev-Mosin
@@ -62,6 +66,10 @@
   - type: Appearance
     visuals:
     - type: BarrelBoltVisualizer
+  - type: MeleeWeapon #bayonet thingy
+    damage: 
+      types:
+        Slash: 17.5
 
 - type: entity
   name: Hristov
