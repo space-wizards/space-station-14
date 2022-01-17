@@ -151,6 +151,8 @@ namespace Content.Server.GameTicking
                 }
             }
 
+            _world.WorldMap = DefaultMap;
+
             var timeSpan = _gameTiming.RealTime - startTime;
             Logger.InfoS("ticker", $"Loaded maps in {timeSpan.TotalMilliseconds:N2}ms.");
         }

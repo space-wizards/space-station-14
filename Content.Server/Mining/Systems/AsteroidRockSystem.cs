@@ -24,13 +24,6 @@ public class AsteroidRockSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<MineableComponent, DestructionEventArgs>(OnAsteroidRockDestruction);
-        SubscribeLocalEvent<MineableComponent, InteractUsingEvent>(OnAsteroidRockInteractUsing);
-        SubscribeLocalEvent<MineableComponent, MineDoAfterComplete>(RockMined);
-    }
-
-    private void RockMined(EntityUid uid, MineableComponent component, MineDoAfterComplete args)
-    {
-        _actSystem.HandleDestruction(uid);
     }
 
     private void OnAsteroidRockDestruction(EntityUid uid, MineableComponent component, DestructionEventArgs args)
@@ -56,29 +49,4 @@ public class AsteroidRockSystem : EntitySystem
                 spawnedGroups.Add(entry.GroupId);
         }
     }
-
-    private void OnAsteroidRockInteractUsing(EntityUid uid, MineableComponent component, InteractUsingEvent args)
-    {
-        if (!TryComp<PickaxeComponent>(args.Used, out var pickaxeComponent))
-        {
-            return;
-        }
-
-        _doAfter.DoAfter(new DoAfterEventArgs
-        (
-            args.User,
-            0.8f,
-            default,
-            uid
-        )
-        {
-            TargetFinishedEvent = new MineDoAfterComplete()
-        });
-
-        SoundSystem.Play(Filter.Pvs(uid), pickaxeComponent.MiningSound.GetSound(), uid, AudioParams.Default);
-
-        args.Handled = true;
-    }
-
-    private class MineDoAfterComplete : EntityEventArgs { }
 }
