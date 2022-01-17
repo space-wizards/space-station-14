@@ -4,11 +4,13 @@ on:
   push:
     branches: [ master, jsondump ]
     paths:
-      - '**.cs'
-      - '**.csproj'
-      - '**.sln'
-      - '**.git**'
-      - '**.yml'
+      - '.github/workflows/update-wiki.yml'
+      - 'Content.Shared/Chemistry/**.cs'
+      - 'Content.Server/Chemistry/**.cs'
+      - 'Content.Server/GuideGenerator/**.cs'
+      - 'Resources/Prototypes/Reagents/**.yml'
+      - 'Resources/Prototypes/Chemistry/**.yml'
+      - 'Resources/Prototypes/Recipes/Reactions/**.yml'
       - 'RobustToolbox/'
 
 jobs:
