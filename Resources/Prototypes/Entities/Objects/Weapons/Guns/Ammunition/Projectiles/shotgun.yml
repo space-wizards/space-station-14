@@ -145,8 +145,3 @@
     damage: 
       groups:
         Burn: 17
-  - type: Flammable
-    fireSpread: true
-    damage: 
-      groups:
-        Burn: 7
