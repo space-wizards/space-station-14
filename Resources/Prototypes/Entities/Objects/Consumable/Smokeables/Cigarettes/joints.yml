@@ -11,6 +11,7 @@
   - type: Tag
     tags:
       - Cigarette
+      - Trash
   - type: Clothing
     sprite: Objects/Consumable/Smokeables/Cigarettes/blunt.rsi
     Slots: [ mask ]
@@ -40,6 +41,7 @@
   - type: Tag
     tags:
       - Cigarette
+      - Trash
   - type: Clothing
     sprite: Objects/Consumable/Smokeables/Cigarettes/blunt.rsi
     Slots: [ mask ]

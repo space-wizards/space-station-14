@@ -95,7 +95,9 @@ namespace Content.Server.Construction
                     preventStepExamine |= condition.DoExamine(args);
                 }
 
-                if (preventStepExamine) return;
+                if (!preventStepExamine && component.StepIndex < edge.Steps.Count)
+                    edge.Steps[component.StepIndex].DoExamine(args);
+                return;
             }
         }
 

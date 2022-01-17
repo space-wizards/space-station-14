@@ -6,12 +6,17 @@
                   HorizontalExpand="True"
                   SeparationOverride="4">
         <Label Name="UsernameLabel"
-               SizeFlagsStretchRatio="2"
+               SizeFlagsStretchRatio="3"
                HorizontalExpand="True"
                ClipText="True"/>
         <customControls:VSeparator/>
         <Label Name="CharacterLabel"
-               SizeFlagsStretchRatio="2"
+               SizeFlagsStretchRatio="3"
+               HorizontalExpand="True"
+               ClipText="True"/>
+        <customControls:VSeparator/>
+        <Label Name="JobLabel"
+               SizeFlagsStretchRatio="3"
                HorizontalExpand="True"
                ClipText="True"/>
         <customControls:VSeparator/>

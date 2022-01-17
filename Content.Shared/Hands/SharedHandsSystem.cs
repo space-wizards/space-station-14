@@ -26,11 +26,21 @@ namespace Content.Shared.Hands
             SubscribeAllEvent<RequestSetHandEvent>(HandleSetHand);
             SubscribeLocalEvent<SharedHandsComponent, EntRemovedFromContainerMessage>(HandleContainerRemoved);
             SubscribeLocalEvent<SharedHandsComponent, EntInsertedIntoContainerMessage>(HandleContainerModified);
+            SubscribeLocalEvent<SharedHandsComponent, ItemPrefixChangeEvent>(OnPrefixChanged);
 
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.Drop, new PointerInputCmdHandler(DropPressed))
                 .Bind(ContentKeyFunctions.SwapHands, InputCmdHandler.FromDelegate(SwapHandsPressed, handle: false))
                 .Register<SharedHandsSystem>();
+        }
+
+        private void OnPrefixChanged(EntityUid uid, SharedHandsComponent component, ItemPrefixChangeEvent args)
+        {
+            // update hands visuals if this item is in a hand (rather then inventory or other container).
+            if (component.HasHand(args.ContainerId))
+            {
+                UpdateHandVisuals(uid, component);
+            }
         }
 
         public override void Shutdown()

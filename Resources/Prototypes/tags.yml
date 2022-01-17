@@ -44,6 +44,9 @@
 
 - type: Tag
   id: CaptainSabre
+  
+- type: Tag
+  id: Cartridge
 
 - type: Tag
   id: CigFilter
@@ -242,6 +245,9 @@
 
 - type: Tag
   id: Taser
+  
+- type: Tag
+  id: Trash
 
 - type: Tag
   id: Wall

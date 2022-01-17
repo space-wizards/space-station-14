@@ -1,5 +1,6 @@
 using Content.Shared.Item;
 using JetBrains.Annotations;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 
@@ -18,7 +19,7 @@ public abstract class SharedFoldableSystem : EntitySystem
         SubscribeLocalEvent<FoldableComponent, ComponentHandleState>(OnHandleState);
 
         SubscribeLocalEvent<FoldableComponent, ComponentInit>(OnFoldableInit);
-        SubscribeLocalEvent<FoldableComponent, AttemptItemPickupEvent>(OnPickedUpAttempt);
+        SubscribeLocalEvent<FoldableComponent, ContainerGettingInsertedAttemptEvent>(OnInsertEvent);
     }
 
     private void OnGetState(EntityUid uid, FoldableComponent component, ref ComponentGetState args)
@@ -54,7 +55,7 @@ public abstract class SharedFoldableSystem : EntitySystem
             appearance.SetData(FoldKey, folded);
     }
 
-    private void OnPickedUpAttempt(EntityUid uid, FoldableComponent component, AttemptItemPickupEvent args)
+    private void OnInsertEvent(EntityUid uid, FoldableComponent component, ContainerGettingInsertedAttemptEvent args)
     {
         if (!component.IsFolded)
             args.Cancel();

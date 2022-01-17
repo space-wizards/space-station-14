@@ -392,7 +392,7 @@ namespace Content.Server.Atmos.Monitor.Systems
                     // _airAlarmDataSystem.UpdateDeviceData(uid, args.SenderAddress, data);
                     //
                     _uiSystem.TrySendUiMessage(uid, SharedAirAlarmInterfaceKey.Key, new AirAlarmUpdateDeviceDataMessage(args.SenderAddress, data));
-                    if (controller.WiresComponent != null) controller.UpdateWires();
+                    if (HasComp<WiresComponent>(uid)) controller.UpdateWires();
                     if (!controller.DeviceData.TryAdd(args.SenderAddress, data))
                         controller.DeviceData[args.SenderAddress] = data;
 

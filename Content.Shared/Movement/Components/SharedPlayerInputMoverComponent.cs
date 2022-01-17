@@ -38,8 +38,7 @@ namespace Content.Shared.Movement.Components
 
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-
-        [ComponentDependency] private readonly MovementSpeedModifierComponent? _movementSpeed = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         public override string Name => "PlayerInputMover";
 
@@ -53,9 +52,17 @@ namespace Content.Shared.Movement.Components
         [ViewVariables]
         public Angle LastGridAngle { get; set; } = new(0);
 
-        public float CurrentWalkSpeed => _movementSpeed?.CurrentWalkSpeed ?? MovementSpeedModifierComponent.DefaultBaseWalkSpeed;
+        public float CurrentWalkSpeed =>
+            _entityManager.TryGetComponent<MovementSpeedModifierComponent>(Owner,
+                out var movementSpeedModifierComponent)
+                ? movementSpeedModifierComponent.CurrentWalkSpeed
+                : MovementSpeedModifierComponent.DefaultBaseWalkSpeed;
 
-        public float CurrentSprintSpeed => _movementSpeed?.CurrentSprintSpeed ?? MovementSpeedModifierComponent.DefaultBaseSprintSpeed;
+        public float CurrentSprintSpeed =>
+            _entityManager.TryGetComponent<MovementSpeedModifierComponent>(Owner,
+                out var movementSpeedModifierComponent)
+                ? movementSpeedModifierComponent.CurrentSprintSpeed
+                : MovementSpeedModifierComponent.DefaultBaseSprintSpeed;
 
         public bool Sprinting => !HasFlag(_heldMoveButtons, MoveButtons.Walk);
 
