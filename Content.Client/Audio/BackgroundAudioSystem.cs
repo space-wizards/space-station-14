@@ -1,11 +1,13 @@
-using Content.Client.GameTicking.Managers;
 using System.Threading;
 using Content.Client.Gameplay;
+using Content.Client.GameTicking.Managers;
 using Content.Client.Lobby;
 using Content.Shared.CCVar;
 using JetBrains.Annotations;
 using Robust.Client;
+using Robust.Client.GameObjects;
 using Robust.Client.Player;
+using Robust.Client.ResourceManagement;
 using Robust.Client.State;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
@@ -13,8 +15,6 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using Robust.Client.GameObjects;
-using Robust.Client.ResourceManagement;
 using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Client.Audio;
@@ -22,16 +22,16 @@ namespace Content.Client.Audio;
 [UsedImplicitly]
 public sealed class BackgroundAudioSystem : EntitySystem
 {
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly IBaseClient _client = default!;
     [Dependency] private readonly IConfigurationManager _configManager = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly ClientGameTicker _gameTicker = default!;
     [Dependency] private readonly IPlayerManager _playMan = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly IStateManager _stateManager = default!;
-    [Dependency] private readonly ClientGameTicker _gameTicker = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-
+    [Dependency] private readonly IGameTiming _timing = default!;
+    
     private readonly AudioParams _ambientParams = new(-10f, 1, "Master", 0, 0, 0, true, 0f);
     private readonly AudioParams _lobbyParams = new(-5f, 1, "Master", 0, 0, 0, true, 0f);
 
@@ -39,12 +39,12 @@ public sealed class BackgroundAudioSystem : EntitySystem
     private IPlayingAudioStream? _lobbyStream;
 
     /// <summary>
-    /// What is currently playing.
+    ///     What is currently playing.
     /// </summary>
     private SoundCollectionPrototype? _playingCollection;
 
     /// <summary>
-    /// What the ambience has been set to.
+    ///     What the ambience has been set to.
     /// </summary>
     private SoundCollectionPrototype? _currentCollection;
     private CancellationTokenSource _timerCancelTokenSource = new();
@@ -79,7 +79,6 @@ public sealed class BackgroundAudioSystem : EntitySystem
 
         _stateManager.OnStateChanged += StateManagerOnStateChanged;
 
-        _client.PlayerJoinedServer += OnJoin;
         _client.PlayerLeaveServer += OnLeave;
 
         _gameTicker.LobbyStatusUpdated += LobbySongReceived;
@@ -109,7 +108,6 @@ public sealed class BackgroundAudioSystem : EntitySystem
 
         _stateManager.OnStateChanged -= StateManagerOnStateChanged;
 
-        _client.PlayerJoinedServer -= OnJoin;
         _client.PlayerLeaveServer -= OnLeave;
 
         _gameTicker.LobbyStatusUpdated -= LobbySongReceived;
@@ -121,20 +119,14 @@ public sealed class BackgroundAudioSystem : EntitySystem
     private void CheckAmbience(TransformComponent xform)
     {
         if (xform.GridUid != null)
-        {
-            if (_currentCollection == _stationAmbience)
-                return;
             ChangeAmbience(_stationAmbience);
-        }
         else
-        {
             ChangeAmbience(_spaceAmbience);
-        }
     }
 
     private void EntParentChanged(ref EntParentChangedMessage message)
     {
-        if(_playMan.LocalPlayer is null
+        if (_playMan.LocalPlayer is null
             || _playMan.LocalPlayer.ControlledEntity != message.Entity
             || !_timing.IsFirstTimePredicted)
             return;
@@ -147,9 +139,10 @@ public sealed class BackgroundAudioSystem : EntitySystem
     {
         if (_currentCollection == newAmbience)
             return;
+        
         _timerCancelTokenSource.Cancel();
         _currentCollection = newAmbience;
-        _timerCancelTokenSource = new();
+        _timerCancelTokenSource = new CancellationTokenSource();
         Timer.Spawn(1500, () =>
         {
             // If we traverse a few times then don't interrupt an existing song.
@@ -162,32 +155,20 @@ public sealed class BackgroundAudioSystem : EntitySystem
 
     private void StateManagerOnStateChanged(StateChangedEventArgs args)
     {
-        EndAmbience();
-
-        if (args.NewState is LobbyState)
+        switch (args.NewState)
         {
-            StartLobbyMusic();
-            return;
-        }
-        else if (args.NewState is GameplayState)
-        {
-            StartAmbience();
-        }
-
-        EndLobbyMusic();
-    }
-
-    private void OnJoin(object? sender, PlayerEventArgs args)
-    {
-        if (_stateManager.CurrentState is LobbyState)
-        {
-            EndAmbience();
-            StartLobbyMusic();
-        }
-        else
-        {
-            EndLobbyMusic();
-            StartAmbience();
+            case LobbyState:
+                EndAmbience();
+                StartLobbyMusic();
+                break;
+            case GameplayState:
+                EndLobbyMusic();
+                StartAmbience();
+                break;
+            default:
+                EndAmbience();
+                EndLobbyMusic();
+                break;
         }
     }
 
@@ -246,7 +227,7 @@ public sealed class BackgroundAudioSystem : EntitySystem
         {
             StartAmbience();
         }
-        else if(_currentCollection.ID == _stationAmbience.ID)
+        else if (_currentCollection.ID == _stationAmbience.ID)
         {
             EndAmbience();
         }
@@ -261,7 +242,7 @@ public sealed class BackgroundAudioSystem : EntitySystem
         {
             StartAmbience();
         }
-        else if(_currentCollection.ID == _spaceAmbience.ID)
+        else if (_currentCollection.ID == _spaceAmbience.ID)
         {
             EndAmbience();
         }
@@ -289,6 +270,7 @@ public sealed class BackgroundAudioSystem : EntitySystem
         {
             return;
         }
+
         if (_stateManager.CurrentState is LobbyState)
         {
             StartLobbyMusic();
