@@ -66,11 +66,6 @@ namespace Content.Server.Entry
             _euiManager = IoCManager.Resolve<EuiManager>();
             _voteManager = IoCManager.Resolve<IVoteManager>();
 
-            IoCManager.Resolve<IChatSanitizationManager>().Initialize();
-            IoCManager.Resolve<IChatManager>().Initialize();
-
-            var playerManager = IoCManager.Resolve<IPlayerManager>();
-
             var logManager = IoCManager.Resolve<ILogManager>();
             logManager.GetSawmill("Storage").Level = LogLevel.Info;
             logManager.GetSawmill("db.ef").Level = LogLevel.Info;
@@ -87,6 +82,8 @@ namespace Content.Server.Entry
         {
             base.PostInit();
 
+            IoCManager.Resolve<IChatSanitizationManager>().Initialize();
+            IoCManager.Resolve<IChatManager>().Initialize();
             IoCManager.Resolve<ISandboxManager>().Initialize();
             IoCManager.Resolve<RecipeManager>().Initialize();
             IoCManager.Resolve<ActionManager>().Initialize();
