@@ -46,7 +46,7 @@
     sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_slug.rsi
   - type: Ammo
     projectile: PelletShotgunSlug
-    projectilesFired: 4 
+    projectilesFired: 4
     ammoSpread: 10
 
 - type: entity
