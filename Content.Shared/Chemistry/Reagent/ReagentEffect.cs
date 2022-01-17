@@ -4,6 +4,7 @@ using System.Text.Json.Serialization;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Converters;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
@@ -20,9 +21,10 @@ namespace Content.Shared.Chemistry.Reagent
     /// </summary>
     [ImplicitDataDefinitionForInheritors]
     [MeansImplicitUse]
+    [JsonConverter(typeof(UniversalJsonConverter<ReagentEffect>))]
     public abstract class ReagentEffect
     {
-        [JsonPropertyName("id")] public string _id => this.GetType().Name;
+        [JsonPropertyName("id")] private protected string _id => this.GetType().Name;
         /// <summary>
         ///     The list of conditions required for the effect to activate. Not required.
         /// </summary>

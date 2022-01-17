@@ -5,6 +5,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Prototypes;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
+using Content.Shared.Converters;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
@@ -143,6 +144,7 @@ namespace Content.Shared.Chemistry.Reagent
     }
 
     [DataDefinition]
+    [JsonConverter(typeof(UniversalJsonConverter<ReagentEffectsEntry>))]
     public class ReagentEffectsEntry
     {
         /// <summary>

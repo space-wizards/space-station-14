@@ -4,6 +4,7 @@ using System.Text.Json.Serialization;
 using Content.Server.Body.Components;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Converters;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -47,6 +48,7 @@ public class ReagentEntry
     }
 }
 
+[JsonConverter(typeof(UniversalJsonConverter<ReactionEntry>))]
 public class ReactionEntry
 {
     [JsonPropertyName("id")]
