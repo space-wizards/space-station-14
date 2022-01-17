@@ -355,6 +355,21 @@
     #- Kitchen
     - Janitor
     - Theatre
+    
+- type: entity
+  parent: CentcomIDCard
+  id: CentcomIDCard
+  name: ERT ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: gold
+    - state: ert_commander #we have the sprites but don't need individual ID entities for now.
+  - type: Clothing
+    HeldPrefix: gold
+  - type: IdCard
+    jobTitle: ERT Leader
+
 
 - type: entity
   parent: IDCardStandard
