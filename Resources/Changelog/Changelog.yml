@@ -1,17 +1,6 @@
 Entries:
 - author: 20kdc
   changes:
-  - {message: Fixed radiation applying half a second's worth of damage each tick.,
-    type: Fix}
-  id: 394
-  time: '2021-10-02T17:53:10.0000000+00:00'
-- author: Efruit
-  changes:
-  - {message: 'Anchored Atmos devices (Gas miners, etc.) refusing to work', type: Fix}
-  id: 395
-  time: '2021-10-02T21:03:43.0000000+00:00'
-- author: 20kdc
-  changes:
   - {message: Meat actually appears on the meat spike again, type: Fix}
   id: 396
   time: '2021-10-02T23:43:47.0000000+00:00'
@@ -2920,3 +2909,14 @@ Entries:
   - {message: Ghost warp locations are now sorted alphabetically., type: Tweak}
   id: 895
   time: '2022-01-17T19:22:17.0000000+00:00'
+- author: scaly-chimp
+  changes:
+  - {message: the amount of characters you can write into a single piece of paper
+      has been capped at 500., type: Tweak}
+  id: 896
+  time: '2022-01-17T19:24:10.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Prisoner EVA suits are being rolled out to a station near you!, type: Add}
+  id: 897
+  time: '2022-01-17T19:25:04.0000000+00:00'
