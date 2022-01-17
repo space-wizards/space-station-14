@@ -142,7 +142,7 @@ namespace Content.Server.Atmos.Monitor.Systems
                 coords = coords.Offset(rotPos);
                 transform.Coordinates = coords;
 
-                appearance.SetData("offset", -rotPos);
+                appearance.SetData("offset", - new Vector2(0, -1));
 
                 transform.Anchored = true;
             }
