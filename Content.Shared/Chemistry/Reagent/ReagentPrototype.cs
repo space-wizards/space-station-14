@@ -1,9 +1,11 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Prototypes;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
+using Content.Shared.Converters;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
@@ -29,6 +31,9 @@ namespace Content.Shared.Chemistry.Reagent
 
         [DataField("name")]
         public string Name { get; } = string.Empty;
+
+        [DataField("group")]
+        public string Group { get; } = "Unknown";
 
         [DataField("parent", customTypeSerializer:typeof(PrototypeIdSerializer<ReagentPrototype>))]
         public string? Parent { get; private set; }
@@ -139,17 +144,20 @@ namespace Content.Shared.Chemistry.Reagent
     }
 
     [DataDefinition]
+    [JsonConverter(typeof(UniversalJsonConverter<ReagentEffectsEntry>))]
     public class ReagentEffectsEntry
     {
         /// <summary>
         ///     Amount of reagent to metabolize, per metabolism cycle.
         /// </summary>
+        [JsonPropertyName("rate")]
         [DataField("metabolismRate")]
         public FixedPoint2 MetabolismRate = FixedPoint2.New(0.5f);
 
         /// <summary>
         ///     A list of effects to apply when these reagents are metabolized.
         /// </summary>
+        [JsonPropertyName("effects")]
         [DataField("effects", required: true)]
         public ReagentEffect[] Effects = default!;
     }
