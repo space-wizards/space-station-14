@@ -32,7 +32,7 @@
       state_open: qm_open
       state_closed: qm_door
   - type: AccessReader
-    access: [["Cargo"]] # TODO access [["Quartermaster"]]
+    access: [["Quartermaster"]] 
 
 # Command
 - type: entity
