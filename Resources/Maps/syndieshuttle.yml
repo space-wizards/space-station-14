@@ -63,6 +63,8 @@ entities:
     type: Transform
   - index: 0
     type: MapGrid
+  - type: BecomesStation
+    id: Syndieshuttle
   - linearDamping: 0.1
     fixedRotation: False
     bodyType: Dynamic

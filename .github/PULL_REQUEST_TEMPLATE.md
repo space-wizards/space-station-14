@@ -3,8 +3,8 @@
 ## Описание PR <!-- Опишите здесь ваш Pull Request. Что он изменяет? На что еще это может повлиять? -->
 
 **Скриншоты**
-<!-- If applicable, add screenshots to showcase your PR. If your PR is a visual change, add
-screenshots or it's liable to be closed by maintainers. -->
+<!-- Если приемлимо, добавьте скриншоты для демонстрации вашего PR. Если ваш PR представляет собой визуальное изменение, добавьте
+скриншоты, иначе он может быть закрыт. -->
 
 **Изменения**
 <!--

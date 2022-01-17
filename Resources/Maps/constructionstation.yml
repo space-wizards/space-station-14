@@ -211,6 +211,8 @@ entities:
         type: Transform
       - index: 0
         type: MapGrid
+      - type: BecomesStation
+        id: Construction
       - linearDamping: 0.1
         fixedRotation: False
         bodyType: Dynamic
