@@ -54,7 +54,6 @@ namespace Content.Client.Clickable
                 return true;
 
             // Next check each individual sprite layer using automatically computed click maps.
-            Direction? dirOverride = sprite.EnableDirectionOverride ? sprite.DirectionOverride : null;
             foreach (var spriteLayer in sprite.AllLayers)
             {
                 if (!spriteLayer.Visible || spriteLayer is not Layer layer)
@@ -85,41 +84,32 @@ namespace Content.Client.Clickable
                 if (layer.State == null || layer.ActualRsi is not RSI rsi || !rsi.TryGetState(layer.State, out var state))
                     continue;
 
-                // get the effective orientation based on the world direction. Note that this includes the layer's direction offset.
-                var effectiveDir = layer.EffectiveDirection(state, relativeRotation, null);
-                var overriddenDir = layer.EffectiveDirection(state, relativeRotation, dirOverride);
-                // offset is also included in dirOverride TODO: make `OffsetRsiDir()` public & make its application
-                // optional? Requires engine pr but makes this logic nicer.
+                // get the sprite direction, in the absence of any direction offset or override. this is just for
+                // transforming the sprite position.
+                var dir = relativeRotation.ToRsiDirection(state.Directions);
 
-                modAngle += effectiveDir.Convert().ToAngle();
+                // yes angle -> dir -> angle seems a bit silly. But state.Directions could be one of three things and
+                // screw doing it manually.
+                modAngle += dir.Convert().ToAngle();
 
                 // TODO SPRITE LAYER ROTATION
-                // Currently sprite layers don't support scale & rotation. Whenever/if-ever they do, this needs fixing.
-                // See also Layer.CalculateBoundingBox and other engine code with similar warnings.
+                // Currently this doesn't support layers with scale & rotation. Whenever/if-ever that should be added,
+                // this needs fixing. See also Layer.CalculateBoundingBox and other engine code with similar warnings.
                 var layerPos = invSpriteMatrix.Transform(modAngle.RotateVec(localPos));
 
-                // To test the rsi, note that when _clickMapManager first generates the clickmap for the RSI, it does
-                // not have any sort of direction offset for each layer. However, our localPos was modified by our
-                // effectiveDir which can include some dir offset, particularly for smoothed-entities. So we need to
-                // undo that offset here. (or better yet, make it optional, then apply the offset AFTER modifying
-                // layerPos).
-                switch (layer.DirOffset)
-                {
-                    case DirectionOffset.CounterClockwise:
-                        layerPos = layerPos.Rotated90DegreesClockwiseWorld;
-                        break;
-                    case DirectionOffset.Clockwise:
-                        layerPos = layerPos.Rotated90DegreesAnticlockwiseWorld;
-                        break;
-                    case DirectionOffset.Flip:
-                        layerPos = -layerPos;
-                        break;
-                }
-
-                // convert to image coordinates
+                // Convert to image coordinates
                 var layerImagePos = (Vector2i) (layerPos * EyeManager.PixelsPerMeter * (1, -1) + layer.ActualRsi.Size / 2f);
 
-                if (_clickMapManager.IsOccluding(layer.ActualRsi, layer.State, overriddenDir, layer.AnimationFrame, layerImagePos))
+                // Next, to get the right click map we need the actual direction of this layer.
+                if (sprite.EnableDirectionOverride)
+                {
+                    dir = sprite.DirectionOverride.Convert(state.Directions);
+                    dir = OffsetRsiDir(dir, layer.DirOffset);
+                }
+                else
+                    dir = OffsetRsiDir(dir, layer.DirOffset);
+
+                if (_clickMapManager.IsOccluding(layer.ActualRsi, layer.State, dir, layer.AnimationFrame, layerImagePos))
                     return true;
             }
 
