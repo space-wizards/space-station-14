@@ -1,15 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: Pull-to-location works again., type: Fix}
-  id: 404
-  time: '2021-10-04T15:10:55.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Added a new rule against metagaming and metacomms. Be sure to read it!,
-    type: Add}
-  id: 405
-  time: '2021-10-04T15:16:06.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Added several new verbs for inserting objects and (un)buckling entities.,
@@ -2921,3 +2910,14 @@ Entries:
       and automated. You can trust that it's correct now., type: Add}
   id: 905
   time: '2022-01-18T21:44:22.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed bug stopping cable from being cut., type: Fix}
+  id: 906
+  time: '2022-01-18T22:17:46.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Added muzzles to silence annoying criminals., type: Add}
+  - {message: Prisoners wardrobes now have a muzzle inside., type: Add}
+  id: 907
+  time: '2022-01-18T22:18:22.0000000+00:00'
