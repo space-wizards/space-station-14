@@ -1,13 +1,6 @@
 Entries:
 - author: 20kdc
   changes:
-  - {message: Ghosts should no longer go in weird directions and lose the ability
-      to see when the body was inside something or buckled to something when the ghost
-      was made., type: Fix}
-  id: 397
-  time: '2021-10-03T04:51:23.0000000+00:00'
-- author: 20kdc
-  changes:
   - {message: Updates AME core count indicator as the layout changes., type: Fix}
   - {message: AME connection issues shouldn't occur anymore., type: Fix}
   id: 398
@@ -2920,3 +2913,9 @@ Entries:
   - {message: Quartermaster now have their own access level and airlocks., type: Add}
   id: 898
   time: '2022-01-17T19:31:58.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Click dragging onto tables now fully works again. You don't have to
+      aim for the lower right corner anymore., type: Fix}
+  id: 899
+  time: '2022-01-18T02:02:20.0000000+00:00'
