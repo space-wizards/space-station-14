@@ -79,7 +79,7 @@ namespace Content.Server.Weapon.Ranged
         }
         private ServerRangedBarrelComponent? _barrel;
 
-        private FireRateSelector FireRateSelector => _barrel?.FireRateSelector ?? FireRateSelector.Safety;
+        public FireRateSelector FireRateSelector => _barrel?.FireRateSelector ?? FireRateSelector.Safety;
 
         private bool WeaponCanFire()
         {

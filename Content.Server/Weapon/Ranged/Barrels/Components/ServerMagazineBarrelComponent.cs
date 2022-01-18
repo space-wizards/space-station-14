@@ -29,7 +29,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
     [RegisterComponent]
     [NetworkedComponent()]
 #pragma warning disable 618
-    public sealed class ServerMagazineBarrelComponent : ServerRangedBarrelComponent, IUse, IInteractUsing, IExamine
+    public sealed class ServerMagazineBarrelComponent : ServerRangedBarrelComponent, IUse, IInteractUsing
 #pragma warning restore 618
     {
         [Dependency] private readonly IEntityManager _entities = default!;
@@ -136,7 +136,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         [DataField("soundAutoEject")]
         private SoundSpecifier _soundAutoEject = new SoundPathSpecifier("/Audio/Weapons/Guns/EmptyAlarm/smg_empty_alarm.ogg");
 
-        private List<MagazineType> GetMagazineTypes()
+        public List<MagazineType> GetMagazineTypes()
         {
             var types = new List<MagazineType>();
 
@@ -284,7 +284,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 var ammoComponent = _entities.GetComponent<AmmoComponent>(chamberEntity);
                 if (!ammoComponent.Caseless)
                 {
-                    EjectCasing(chamberEntity);
+                    EntitySystem.Get<GunSystem>().EjectCasing(chamberEntity);
                 }
                 return true;
             }
@@ -431,18 +431,6 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             }
 
             return false;
-        }
-
-        public override void Examine(FormattedMessage message, bool inDetailsRange)
-        {
-            base.Examine(message, inDetailsRange);
-
-            message.AddMarkup("\n" + Loc.GetString("server-magazine-barrel-component-on-examine", ("caliber", Caliber)));
-
-            foreach (var magazineType in GetMagazineTypes())
-            {
-                message.AddMarkup("\n" + Loc.GetString("server-magazine-barrel-component-on-examine-magazine-type", ("magazineType", magazineType)));
-            }
         }
     }
 

@@ -39,13 +39,15 @@ namespace Content.Server.Weapon.Ranged.Barrels
             if (component.Capacity <= 1 || component.ShotsLeft == 0)
                 return;
 
-            Verb verb = new();
-            verb.Text = Loc.GetString("spin-revolver-verb-get-data-text");
-            verb.IconTexture = "/Textures/Interface/VerbIcons/refresh.svg.192dpi.png";
-            verb.Act = () =>
+            Verb verb = new()
             {
-                component.Spin();
-                component.Owner.PopupMessage(args.User, Loc.GetString("spin-revolver-verb-on-activate"));
+                Text = Loc.GetString("spin-revolver-verb-get-data-text"),
+                IconTexture = "/Textures/Interface/VerbIcons/refresh.svg.192dpi.png",
+                Act = () =>
+                {
+                    component.Spin();
+                    component.Owner.PopupMessage(args.User, Loc.GetString("spin-revolver-verb-on-activate"));
+                }
             };
             args.Verbs.Add(verb);
         }
@@ -57,11 +59,13 @@ namespace Content.Server.Weapon.Ranged.Barrels
                 !args.CanInteract)
                 return;
 
-            Verb verb = new();
-            verb.Text = component.BoltOpen
-                ? Loc.GetString("close-bolt-verb-get-data-text")
-                : Loc.GetString("open-bolt-verb-get-data-text");
-            verb.Act = () => component.BoltOpen = !component.BoltOpen;
+            Verb verb = new()
+            {
+                Text = component.BoltOpen
+                    ? Loc.GetString("close-bolt-verb-get-data-text")
+                    : Loc.GetString("open-bolt-verb-get-data-text"),
+                Act = () => component.BoltOpen = !component.BoltOpen
+            };
             args.Verbs.Add(verb);
         }
 
@@ -77,10 +81,12 @@ namespace Content.Server.Weapon.Ranged.Barrels
             if (component.MagNeedsOpenBolt && !component.BoltOpen)
                 return;
 
-            Verb verb = new();
-            verb.Text = EntityManager.GetComponent<MetaDataComponent>(component.MagazineContainer.ContainedEntity!.Value).EntityName;
-            verb.Category = VerbCategory.Eject;
-            verb.Act = () => component.RemoveMagazine(args.User);
+            Verb verb = new()
+            {
+                Text = MetaData(component.MagazineContainer.ContainedEntity!.Value).EntityName,
+                Category = VerbCategory.Eject,
+                Act = () => component.RemoveMagazine(args.User)
+            };
             args.Verbs.Add(verb);
         }
 
@@ -92,11 +98,13 @@ namespace Content.Server.Weapon.Ranged.Barrels
                 return;
 
             // Toggle bolt verb
-            Verb toggleBolt = new();
-            toggleBolt.Text = component.BoltOpen
-                ? Loc.GetString("close-bolt-verb-get-data-text")
-                : Loc.GetString("open-bolt-verb-get-data-text");
-            toggleBolt.Act = () => component.BoltOpen = !component.BoltOpen;
+            Verb toggleBolt = new()
+            {
+                Text = component.BoltOpen
+                    ? Loc.GetString("close-bolt-verb-get-data-text")
+                    : Loc.GetString("open-bolt-verb-get-data-text"),
+                Act = () => component.BoltOpen = !component.BoltOpen
+            };
             args.Verbs.Add(toggleBolt);
 
             // Are we holding a mag that we can insert?
@@ -106,10 +114,12 @@ namespace Content.Server.Weapon.Ranged.Barrels
                 return;
 
             // Insert mag verb
-            Verb insert = new();
-            insert.Text = EntityManager.GetComponent<MetaDataComponent>(@using).EntityName;
-            insert.Category = VerbCategory.Insert;
-            insert.Act = () => component.InsertMagazine(args.User, @using);
+            Verb insert = new()
+            {
+                Text = MetaData(@using).EntityName,
+                Category = VerbCategory.Insert,
+                Act = () => component.InsertMagazine(args.User, @using)
+            };
             args.Verbs.Add(insert);
         }
     }

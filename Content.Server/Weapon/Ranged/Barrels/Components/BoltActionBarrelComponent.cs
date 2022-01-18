@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.Weapon.Ranged.Ammunition.Components;
-using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
@@ -10,14 +9,12 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Weapon.Ranged.Barrels.Components
@@ -54,7 +51,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
         [ViewVariables]
         [DataField("caliber")]
-        private BallisticCaliber _caliber = BallisticCaliber.Unspecified;
+        public BallisticCaliber Caliber = BallisticCaliber.Unspecified;
 
         [ViewVariables]
         [DataField("fillPrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
@@ -236,7 +233,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 return false;
             }
 
-            if (ammoComponent.Caliber != _caliber)
+            if (ammoComponent.Caliber != Caliber)
             {
                 Owner.PopupMessage(user, Loc.GetString("bolt-action-barrel-component-try-insert-bullet-wrong-caliber"));
                 return false;
@@ -301,7 +298,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 }
                 if (!Entities.GetComponent<AmmoComponent>(chambered).Caseless)
                 {
-                    EjectCasing(chambered);
+                    EntitySystem.Get<GunSystem>().EjectCasing(chambered);
                 }
                 return true;
             }
@@ -328,13 +325,6 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 return true;
             }
             return false;
-        }
-
-        public override void Examine(FormattedMessage message, bool inDetailsRange)
-        {
-            base.Examine(message, inDetailsRange);
-
-            message.AddMarkup("\n" + Loc.GetString("bolt-action-barrel-component-on-examine", ("caliber", _caliber)));
         }
     }
 }

@@ -135,7 +135,7 @@ public sealed partial class GunSystem
             ejectAmmo.Add(ammo);
         }
 
-        ServerRangedBarrelComponent.EjectCasings(ejectAmmo);
+        EjectCasings(ejectAmmo);
         UpdateAmmoBoxAppearance(ammoBox.Owner, ammoBox);
     }
 

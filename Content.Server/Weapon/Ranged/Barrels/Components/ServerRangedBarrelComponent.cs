@@ -1,21 +1,17 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Server.Projectiles.Components;
 using Content.Server.Weapon.Ranged.Ammunition.Components;
 using Content.Shared.Camera;
 using Content.Shared.Damage;
 using Content.Shared.Database;
-using Content.Shared.Examine;
-using Content.Shared.Interaction;
 using Content.Shared.Sound;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -34,9 +30,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
     /// All of the ranged weapon components inherit from this to share mechanics like shooting etc.
     /// Only difference between them is how they retrieve a projectile to shoot (battery, magazine, etc.)
     /// </summary>
-#pragma warning disable 618
-    public abstract class ServerRangedBarrelComponent : SharedRangedBarrelComponent, IExamine, ISerializationHooks
-#pragma warning restore 618
+    public abstract class ServerRangedBarrelComponent : SharedRangedBarrelComponent, ISerializationHooks
     {
         // There's still some of py01 and PJB's work left over, especially in underlying shooting logic,
         // it's just when I re-organised it changed me as the contributor
@@ -245,62 +239,6 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             _lastFire = _gameTiming.CurTime;
         }
 
-        /// <summary>
-        /// Drops a single cartridge / shell
-        /// Made as a static function just because multiple places need it
-        /// </summary>
-        /// <param name="entity"></param>
-        /// <param name="playSound"></param>
-        /// <param name="robustRandom"></param>
-        /// <param name="prototypeManager"></param>
-        /// <param name="ejectDirections"></param>
-        public static void EjectCasing(
-            EntityUid entity,
-            bool playSound = true,
-            Direction[]? ejectDirections = null,
-            IRobustRandom? robustRandom = null,
-            IPrototypeManager? prototypeManager = null,
-            IEntityManager? entities = null)
-        {
-            IoCManager.Resolve(ref robustRandom, ref prototypeManager, ref entities);
-
-            ejectDirections ??= new[]
-                {Direction.East, Direction.North, Direction.NorthWest, Direction.South, Direction.SouthEast, Direction.West};
-
-            const float ejectOffset = 1.8f;
-            var ammo = entities.GetComponent<AmmoComponent>(entity);
-            var offsetPos = ((robustRandom.NextFloat() - 0.5f) * ejectOffset, (robustRandom.NextFloat() - 0.5f) * ejectOffset);
-            entities.GetComponent<TransformComponent>(entity).Coordinates = entities.GetComponent<TransformComponent>(entity).Coordinates.Offset(offsetPos);
-            entities.GetComponent<TransformComponent>(entity).LocalRotation = robustRandom.Pick(ejectDirections).ToAngle();
-
-            var coordinates = entities.GetComponent<TransformComponent>(entity).Coordinates;
-            SoundSystem.Play(Filter.Broadcast(), ammo.SoundCollectionEject.GetSound(), coordinates, AudioParams.Default.WithVolume(-1));
-        }
-
-        /// <summary>
-        /// Drops multiple cartridges / shells on the floor
-        /// Wraps EjectCasing to make it less toxic for bulk ejections
-        /// </summary>
-        /// <param name="entities"></param>
-        public static void EjectCasings(IEnumerable<EntityUid> entities)
-        {
-            var robustRandom = IoCManager.Resolve<IRobustRandom>();
-            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-            var ejectDirections = new[] {Direction.East, Direction.North, Direction.NorthWest, Direction.South, Direction.SouthEast, Direction.West};
-            var soundPlayCount = 0;
-            var playSound = true;
-
-            foreach (var entity in entities)
-            {
-                EjectCasing(entity, playSound, ejectDirections, robustRandom, prototypeManager);
-                soundPlayCount++;
-                if (soundPlayCount > 3)
-                {
-                    playSound = false;
-                }
-            }
-        }
-
         #region Firing
         /// <summary>
         /// Handles firing one or many projectiles
@@ -407,19 +345,6 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             }
         }
         #endregion
-
-        public virtual void Examine(FormattedMessage message, bool inDetailsRange)
-        {
-            var fireRateMessage = Loc.GetString(FireRateSelector switch
-            {
-                FireRateSelector.Safety => "server-ranged-barrel-component-on-examine-fire-rate-safety-description",
-                FireRateSelector.Single => "server-ranged-barrel-component-on-examine-fire-rate-single-description",
-                FireRateSelector.Automatic => "server-ranged-barrel-component-on-examine-fire-rate-automatic-description",
-                _ => throw new IndexOutOfRangeException()
-            });
-
-            message.AddText(fireRateMessage);
-        }
     }
 
     /// <summary>

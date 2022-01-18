@@ -49,7 +49,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
         [ViewVariables]
         [DataField("caliber")]
-        private BallisticCaliber _caliber = BallisticCaliber.Unspecified;
+        public BallisticCaliber Caliber = BallisticCaliber.Unspecified;
 
         [ViewVariables]
         [DataField("fillPrototype")]
@@ -204,7 +204,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 return false;
             }
 
-            if (ammoComponent.Caliber != _caliber)
+            if (ammoComponent.Caliber != Caliber)
             {
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("pump-barrel-component-try-insert-bullet-wrong-caliber"));
                 return false;
@@ -234,13 +234,6 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
             return TryInsertBullet(eventArgs);
-        }
-
-        public override void Examine(FormattedMessage message, bool inDetailsRange)
-        {
-            base.Examine(message, inDetailsRange);
-
-            message.AddMarkup("\n" + Loc.GetString("pump-barrel-component-on-examine", ("caliber", _caliber)));
         }
     }
 }
