@@ -9,7 +9,7 @@
     sprite: Objects/Fun/Tabletop/chessboard.rsi
     state: chessboard
   - type: TabletopGame
-    boardName: tabletop-checker-board-name
+    boardName: tabletop-checkers-board-name
     size: 338, 274
     setup: !type:TabletopCheckerSetup
 
