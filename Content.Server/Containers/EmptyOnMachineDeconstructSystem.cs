@@ -27,7 +27,7 @@ namespace Content.Server.Containers
             foreach (var slot in component.Slots.Values)
             {
                 if (slot.EjectOnDeconstruct && slot.Item != null)
-                    slot.ContainerSlot.Remove(slot.Item.Value);
+                    slot.ContainerSlot?.Remove(slot.Item.Value);
             }
         }
 
