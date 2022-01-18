@@ -1,11 +1,6 @@
 Entries:
 - author: Swept
   changes:
-  - {message: Singularity should be much easier to see now, type: Tweak}
-  id: 400
-  time: '2021-10-03T22:53:44.0000000+00:00'
-- author: Swept
-  changes:
   - {message: Cuffs can no longer be put in your belt slot, type: Fix}
   id: 401
   time: '2021-10-03T22:53:52.0000000+00:00'
@@ -2918,3 +2913,9 @@ Entries:
     type: Add}
   id: 901
   time: '2022-01-18T06:50:21.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: The Syndicate have discovered the concept of proximity fuzes. On-collide
+      explosives will no longer embed themselves in the wall before exploding., type: Tweak}
+  id: 902
+  time: '2022-01-18T08:26:21.0000000+00:00'
