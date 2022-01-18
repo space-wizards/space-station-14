@@ -58,10 +58,6 @@ namespace Content.Server.Weapon.Ranged
         [DataField("clumsyDamage")]
         public DamageSpecifier? ClumsyDamage;
 
-        public Func<bool>? WeaponCanFireHandler;
-        public Func<EntityUid, bool>? UserCanFireHandler;
-        public Action<EntityUid, Vector2>? FireHandler;
-
         public ServerRangedBarrelComponent? Barrel
         {
             get => _barrel;
@@ -80,16 +76,6 @@ namespace Content.Server.Weapon.Ranged
         private ServerRangedBarrelComponent? _barrel;
 
         public FireRateSelector FireRateSelector => _barrel?.FireRateSelector ?? FireRateSelector.Safety;
-
-        private bool WeaponCanFire()
-        {
-            return WeaponCanFireHandler == null || WeaponCanFireHandler();
-        }
-
-        private bool UserCanFire(EntityUid user)
-        {
-            return (UserCanFireHandler == null || UserCanFireHandler(user)) && EntitySystem.Get<ActionBlockerSystem>().CanInteract(user);
-        }
 
         /// <inheritdoc />
         [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
@@ -154,7 +140,12 @@ namespace Content.Server.Weapon.Ranged
                 return;
             }
 
-            if (!UserCanFire(user) || !WeaponCanFire())
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user)) return;
+
+            var fireAttempt = new GunSystem.GunFireAttemptEvent(user, this);
+            _entMan.EventBus.RaiseLocalEvent(Owner, fireAttempt);
+
+            if (!fireAttempt.Cancelled)
             {
                 return;
             }
@@ -193,7 +184,8 @@ namespace Content.Server.Weapon.Ranged
             {
                 EntitySystem.Get<AtmosphereSystem>().HotspotExpose(_entMan.GetComponent<TransformComponent>(user).Coordinates, 700, 50);
             }
-            FireHandler?.Invoke(user, targetPos);
+
+            _entMan.EventBus.RaiseLocalEvent(Owner, new GunSystem.GunFireEvent());
         }
     }
 }

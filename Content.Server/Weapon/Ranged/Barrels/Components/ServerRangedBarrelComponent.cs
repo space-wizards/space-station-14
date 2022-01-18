@@ -51,9 +51,6 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         // _lastFire is when we actually fired (so if we hold the button then recoil doesn't build up if we're not firing)
         private TimeSpan _lastFire;
 
-        public abstract EntityUid? PeekAmmo();
-        public abstract EntityUid? TakeProjectile(EntityCoordinates spawnAt);
-
         // Recoil / spray control
         [DataField("minAngle")]
         private float _minAngleDegrees;

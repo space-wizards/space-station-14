@@ -1,3 +1,4 @@
+using System;
 using Content.Server.Weapon.Ranged.Ammunition.Components;
 using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.Interaction;
@@ -7,6 +8,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Localization;
+using Robust.Shared.Map;
 using Robust.Shared.Player;
 
 namespace Content.Server.Weapon.Ranged;
@@ -78,7 +80,7 @@ public sealed partial class GunSystem
         component.Dirty(EntityManager);
     }
 
-    public void Cycle(RevolverBarrelComponent component)
+    public void CycleRevolver(RevolverBarrelComponent component)
     {
         // Move up a slot
         component.CurrentSlot = (component.CurrentSlot + 1) % component.AmmoSlots.Length;
@@ -169,5 +171,35 @@ public sealed partial class GunSystem
         appearance.SetData(MagazineBarrelVisuals.MagLoaded, component.ShotsLeft > 0);
         appearance.SetData(AmmoVisuals.AmmoCount, component.ShotsLeft);
         appearance.SetData(AmmoVisuals.AmmoMax, component.Capacity);
+    }
+
+    public EntityUid? PeekRevolverAmmo(RevolverBarrelComponent component)
+    {
+        return component.AmmoSlots[component.CurrentSlot];
+    }
+
+    /// <summary>
+    /// Takes a projectile out if possible
+    /// IEnumerable just to make supporting shotguns saner
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public EntityUid? TakeRevolverProjectile(RevolverBarrelComponent component, EntityCoordinates spawnAt)
+    {
+        var ammo = component.AmmoSlots[component.CurrentSlot];
+        EntityUid? bullet = null;
+        if (ammo != null)
+        {
+            var ammoComponent = EntityManager.GetComponent<AmmoComponent>(ammo.Value);
+            bullet = TakeBullet(ammoComponent, spawnAt);
+            if (ammoComponent.Caseless)
+            {
+                component.AmmoSlots[component.CurrentSlot] = null;
+                component.AmmoContainer.Remove(ammo.Value);
+            }
+        }
+        CycleRevolver(component);
+        UpdateRevolverAppearance(component);
+        return bullet;
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Content.Server.Weapon.Ranged.Ammunition.Components;
 using Content.Server.Weapon.Ranged.Barrels.Components;
@@ -7,9 +8,11 @@ using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
+using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -24,6 +27,7 @@ public sealed partial class GunSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly EffectSystem _effects = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     /// <summary>
@@ -47,6 +51,13 @@ public sealed partial class GunSystem : EntitySystem
         SubscribeLocalEvent<AmmoBoxComponent, GetAlternativeVerbsEvent>(OnAmmoBoxAltVerbs);
 
         // Whenever I get around to refactoring guns this is all going to change.
+        SubscribeLocalEvent<BoltActionBarrelComponent, ComponentInit>(OnBoltInit);
+        SubscribeLocalEvent<BoltActionBarrelComponent, MapInitEvent>(OnBoltMapInit);
+        SubscribeLocalEvent<BoltActionBarrelComponent, GunFireAttemptEvent>(OnBoltFireAttempt);
+        SubscribeLocalEvent<BoltActionBarrelComponent, UseInHandEvent>(OnBoltUse);
+        SubscribeLocalEvent<BoltActionBarrelComponent, InteractUsingEvent>(OnBoltInteractUsing);
+        SubscribeLocalEvent<BoltActionBarrelComponent, ComponentGetState>(OnBoltGetState);
+
         SubscribeLocalEvent<RevolverBarrelComponent, MapInitEvent>(OnRevolverMapInit);
         SubscribeLocalEvent<RevolverBarrelComponent, UseInHandEvent>(OnRevolverUse);
         SubscribeLocalEvent<RevolverBarrelComponent, InteractUsingEvent>(OnRevolverInteractUsing);
@@ -56,6 +67,24 @@ public sealed partial class GunSystem : EntitySystem
         SubscribeLocalEvent<BoltActionBarrelComponent, ExaminedEvent>(OnBoltExamine);
         SubscribeLocalEvent<PumpBarrelComponent, ExaminedEvent>(OnPumpExamine);
         SubscribeLocalEvent<ServerMagazineBarrelComponent, ExaminedEvent>(OnMagazineExamine);
+    }
+
+    public EntityUid? PeekAmmo(ServerRangedBarrelComponent component)
+    {
+        switch (component)
+        {
+            default:
+                throw new NotImplementedException();
+        }
+    }
+
+    public EntityUid? TakeProjectile(ServerRangedBarrelComponent component, EntityCoordinates spawnAt)
+    {
+        switch (component)
+        {
+            default:
+                throw new NotImplementedException();
+        }
     }
 
     private void SetEjectDirections(ref Direction[]? directions)
@@ -123,5 +152,23 @@ public sealed partial class GunSystem : EntitySystem
 
         if (playSound)
             SoundSystem.Play(Filter.Pvs(entity), ammoComponent.SoundCollectionEject.GetSound(), coordinates, AudioParams.Default.WithVolume(-1));
+    }
+
+    // Rename when the other event is changed.
+    public sealed class GunFireEvent : EntityEventArgs
+    {
+
+    }
+
+    public sealed class GunFireAttemptEvent : CancellableEntityEventArgs
+    {
+        public EntityUid? User = null;
+        public ServerRangedWeaponComponent Weapon;
+
+        public GunFireAttemptEvent(EntityUid? user, ServerRangedWeaponComponent weapon)
+        {
+            User = user;
+            Weapon = weapon;
+        }
     }
 }

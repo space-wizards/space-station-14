@@ -63,35 +63,5 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         {
             AmmoSlots = new EntityUid?[_serializedCapacity];
         }
-
-        public override EntityUid? PeekAmmo()
-        {
-            return AmmoSlots[CurrentSlot];
-        }
-
-        /// <summary>
-        /// Takes a projectile out if possible
-        /// IEnumerable just to make supporting shotguns saner
-        /// </summary>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public override EntityUid? TakeProjectile(EntityCoordinates spawnAt)
-        {
-            var ammo = AmmoSlots[CurrentSlot];
-            EntityUid? bullet = null;
-            if (ammo != default)
-            {
-                var ammoComponent = Entities.GetComponent<AmmoComponent>(ammo);
-                bullet = EntitySystem.Get<GunSystem>().TakeBullet(ammoComponent, spawnAt);
-                if (ammoComponent.Caseless)
-                {
-                    AmmoSlots[CurrentSlot] = default;
-                    AmmoContainer.Remove(ammo);
-                }
-            }
-            Cycle();
-            UpdateAppearance();
-            return bullet;
-        }
     }
 }
