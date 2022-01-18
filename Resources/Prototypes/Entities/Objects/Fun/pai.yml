@@ -17,10 +17,10 @@
       type: InstrumentBoundUserInterface
   - type: Sprite
     netsync: false
-    sprite: Objects/Devices/pda.rsi
+    sprite: Objects/Fun/pai.rsi
     layers:
-    - state: pda-lawyer # nobody's using this one
-    - state: pai_off_overlay
+    - state: pai-base
+    - state: pai-off-overlay
       shader: unshaded
   - type: Input
     context: "human"
@@ -43,7 +43,7 @@
         key: enum.PAIVisuals.Status
         layer: 1
         states:
-          enum.PAIStatus.Off: pai_off_overlay
-          enum.PAIStatus.Searching: pda-r
-          enum.PAIStatus.On: pai_overlay
+          enum.PAIStatus.Off: pai-off-overlay
+          enum.PAIStatus.Searching: pai-searching-overlay
+          enum.PAIStatus.On: pai-on-overlay
 
