@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
 using Content.Shared.FixedPoint;
-using Content.Shared.Converters;
 
 namespace Content.Shared.Damage
 {
@@ -23,7 +22,6 @@ namespace Content.Shared.Damage
     ///     functions to apply resistance sets and supports basic math operations to modify this dictionary.
     /// </remarks>
     [DataDefinition]
-    [JsonConverter(typeof(UniversalJsonConverter<DamageSpecifier>))]
     public class DamageSpecifier
     {
         [JsonPropertyName("types")]

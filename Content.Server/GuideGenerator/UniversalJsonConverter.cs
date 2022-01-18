@@ -4,7 +4,7 @@ using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Content.Shared.Converters
+namespace Content.Server.GuideGenerator
 {
     // This class is used as a shim to help do polymorphic serialization of objects into JSON
     // (serializing objects that inherit abstract base classes or interfaces) since
@@ -13,10 +13,10 @@ namespace Content.Shared.Converters
     public class UniversalJsonConverter<T> : JsonConverter<T>
     {
 
-        // We can convert anything! Probably.
+        // This converter can only convert types that are T or descend from T.
         public override bool CanConvert(Type typeToConvert)
         {
-            return true;
+            return typeof(T).IsAssignableFrom(typeToConvert);
         }
 
         // We don't support deserialization right now. In order to do so, we'd need to bundle a

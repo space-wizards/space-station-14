@@ -2,6 +2,7 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using Content.Shared.Chemistry.Reaction;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
@@ -20,7 +21,16 @@ public class ReactionJsonGenerator
                 .Select(x => new ReactionEntry(x))
                 .ToDictionary(x => x.Id, x => x);
 
-        file.Write(JsonSerializer.Serialize(reactions, new JsonSerializerOptions { WriteIndented = true, IncludeFields = true }));
+        var serializeOptions = new JsonSerializerOptions
+        {
+            WriteIndented = true,
+            Converters =
+            {
+                new UniversalJsonConverter<ReagentEffect>(),
+            }
+        };
+
+        file.Write(JsonSerializer.Serialize(reactions, serializeOptions));
     }
 }
 

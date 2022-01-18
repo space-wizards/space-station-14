@@ -5,7 +5,6 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Prototypes;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
-using Content.Shared.Converters;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
@@ -35,7 +34,7 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField("group")]
         public string Group { get; } = "Unknown";
 
-        [DataField("parent", customTypeSerializer:typeof(PrototypeIdSerializer<ReagentPrototype>))]
+        [DataField("parent", customTypeSerializer: typeof(PrototypeIdSerializer<ReagentPrototype>))]
         public string? Parent { get; private set; }
 
         [NeverPushInheritance]
@@ -70,7 +69,7 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField("metabolisms", serverOnly: true, customTypeSerializer: typeof(PrototypeIdDictionarySerializer<ReagentEffectsEntry, MetabolismGroupPrototype>))]
         public Dictionary<string, ReagentEffectsEntry>? Metabolisms = null;
 
-        [DataField("reactiveEffects", serverOnly: true, customTypeSerializer:typeof(PrototypeIdDictionarySerializer<ReactiveReagentEffectEntry, ReactiveGroupPrototype>))]
+        [DataField("reactiveEffects", serverOnly: true, customTypeSerializer: typeof(PrototypeIdDictionarySerializer<ReactiveReagentEffectEntry, ReactiveGroupPrototype>))]
         public Dictionary<string, ReactiveReagentEffectEntry>? ReactiveEffects = null;
 
         [DataField("tileReactions", serverOnly: true)]
@@ -144,7 +143,6 @@ namespace Content.Shared.Chemistry.Reagent
     }
 
     [DataDefinition]
-    [JsonConverter(typeof(UniversalJsonConverter<ReagentEffectsEntry>))]
     public class ReagentEffectsEntry
     {
         /// <summary>
