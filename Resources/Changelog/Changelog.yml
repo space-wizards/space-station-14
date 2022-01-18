@@ -1,20 +1,4 @@
 Entries:
-- author: Swept
-  changes:
-  - {message: Cuffs can no longer be put in your belt slot, type: Fix}
-  id: 401
-  time: '2021-10-03T22:53:52.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: AME is no longer capable of producing negative energy., type: Fix}
-  id: 402
-  time: '2021-10-04T00:58:55.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: 'Radiation storms actually hit the station again as opposed to 0,0',
-    type: Fix}
-  id: 403
-  time: '2021-10-04T01:26:45.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: Pull-to-location works again., type: Fix}
@@ -2919,3 +2903,21 @@ Entries:
       explosives will no longer embed themselves in the wall before exploding., type: Tweak}
   id: 902
   time: '2022-01-18T08:26:21.0000000+00:00'
+- author: sewerpig
+  changes:
+  - {message: Wooden Mosin and Heavy Sniper inhand sprites displays properly now,
+    type: Fix}
+  id: 903
+  time: '2022-01-18T09:43:47.0000000+00:00'
+- author: Lamrr
+  changes:
+  - {message: 'The captain''s carapace has returned! Captains can now opt for this
+      protective, yet stylish vest instead of their bulky hardsuits.', type: Add}
+  id: 904
+  time: '2022-01-18T17:26:09.0000000+00:00'
+- author: Weaver
+  changes:
+  - {message: The game wiki (wiki.ss14.io)'s chemistry guide is now 100% up to date
+      and automated. You can trust that it's correct now., type: Add}
+  id: 905
+  time: '2022-01-18T21:44:22.0000000+00:00'
