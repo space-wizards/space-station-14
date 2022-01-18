@@ -191,6 +191,9 @@
       mass: 5
       mask:
         - SmallImpassable
+  - type: Tag
+    tags:
+    - Trash
 
 - type: entity
   name: carrot

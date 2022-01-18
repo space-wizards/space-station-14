@@ -13,6 +13,7 @@ namespace Content.Client.Verbs
     {
         [Dependency] private readonly IClientConGroupController _clientConGroupController = default!;
         [Dependency] private readonly IViewVariablesManager _viewVariablesManager = default!;
+        [Dependency] private readonly IClientConsoleHost _clientConsoleHost = default!;
 
         public override void Initialize()
         {
@@ -30,7 +31,7 @@ namespace Content.Client.Verbs
                 verb.Category = VerbCategory.Debug;
                 verb.Text = "View Variables";
                 verb.IconTexture = "/Textures/Interface/VerbIcons/vv.svg.192dpi.png";
-                verb.Act = () => _viewVariablesManager.OpenVV(args.Target);
+                verb.Act = () => _clientConsoleHost.ExecuteCommand($"vv {args.Target}");
                 verb.ClientExclusive = true; // opening VV window is client-side. Don't ask server to run this verb.
                 args.Verbs.Add(verb);
             }

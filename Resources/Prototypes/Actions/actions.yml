@@ -68,7 +68,7 @@
 
 - type: action
   actionType: PAIMidi
-  icon: Interface/Actions/midi.png
+  icon: Interface/Actions/pai-midi.png
   name: "Play MIDI"
   description: "Open your portable MIDI interface to soothe your owner."
   filters:
