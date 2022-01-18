@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.EntitySystems;
@@ -21,6 +22,7 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly ReactiveSystem _reactiveSystem = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
+        [Dependency] private readonly AtmosphereSystem _atmos = default!;
 
         private const float UpdateTimer = 3f;
 
@@ -80,7 +82,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             foreach (var uid in _active.ToArray())
             {
-                if (!EntityManager.TryGetComponent(uid, out SmokableComponent? smokable))
+                if (!TryComp(uid, out SmokableComponent? smokable))
                 {
                     _active.Remove(uid);
                     continue;
@@ -90,6 +92,12 @@ namespace Content.Server.Nutrition.EntitySystems
                 {
                     _active.Remove(uid);
                     continue;
+                }
+
+                if (smokable.ExposeTemperature > 0 && smokable.ExposeVolume > 0)
+                {
+                    var transform = Transform(uid);
+                    _atmos.HotspotExpose(transform.Coordinates, smokable.ExposeTemperature, smokable.ExposeVolume, true);
                 }
 
                 var inhaledSolution = _solutionContainerSystem.SplitSolution(uid, solution, smokable.InhaleAmount * _timer);
@@ -105,7 +113,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 // This is awful. I hate this so much.
                 // TODO: Please, someone refactor containers and free me from this bullshit.
                 if (!smokable.Owner.TryGetContainerMan(out var containerManager) ||
-                    !EntityManager.TryGetComponent(containerManager.Owner, out BloodstreamComponent? bloodstream))
+                    !TryComp(containerManager.Owner, out BloodstreamComponent? bloodstream))
                     continue;
 
                 _reactiveSystem.ReactionEntity(containerManager.Owner, ReactionMethod.Ingestion, inhaledSolution);
