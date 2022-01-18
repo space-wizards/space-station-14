@@ -2,6 +2,7 @@
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Station;
 
@@ -14,5 +15,6 @@ namespace Content.Server.Station;
 public class PartOfStationComponent : Component
 {
     [DataField("id", required: true)] // does yamllinter even lint maps for required fields?
+    [ViewVariables(VVAccess.ReadWrite)]
     public string Id = default!;
 }
