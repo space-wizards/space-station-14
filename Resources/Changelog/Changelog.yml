@@ -1,12 +1,6 @@
 Entries:
 - author: 20kdc
   changes:
-  - {message: 'Radiation storms actually hit the station again as opposed to 0,0',
-    type: Fix}
-  id: 403
-  time: '2021-10-04T01:26:45.0000000+00:00'
-- author: 20kdc
-  changes:
   - {message: Pull-to-location works again., type: Fix}
   id: 404
   time: '2021-10-04T15:10:55.0000000+00:00'
@@ -2921,3 +2915,9 @@ Entries:
       protective, yet stylish vest instead of their bulky hardsuits.', type: Add}
   id: 904
   time: '2022-01-18T17:26:09.0000000+00:00'
+- author: Weaver
+  changes:
+  - {message: The game wiki (wiki.ss14.io)'s chemistry guide is now 100% up to date
+      and automated. You can trust that it's correct now., type: Add}
+  id: 905
+  time: '2022-01-18T21:44:22.0000000+00:00'
