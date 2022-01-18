@@ -100,7 +100,6 @@ namespace Content.Server.Nutrition.EntitySystems
                     _atmos.HotspotExpose(transform.Coordinates, smokable.ExposeTemperature, smokable.ExposeVolume, true);
                 }
 
-
                 var inhaledSolution = _solutionContainerSystem.SplitSolution(uid, solution, smokable.InhaleAmount * _timer);
 
                 if (solution.TotalVolume == FixedPoint2.Zero)
