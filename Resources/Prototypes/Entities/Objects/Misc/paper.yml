@@ -68,3 +68,43 @@
     sprite: Objects/Misc/bureaucracy.rsi
     HeldPrefix: pen
     size: 2
+
+- type: entity
+  id: BoxFolder
+  parent: BoxBase
+  name: folder
+  description: A folder filled with top secret paperwork.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: folder-colormap
+    - state: folder-base
+  - type: RandomSpriteColor
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: folder-colormap
+    colors:
+      red: "#cc2323"
+      blue: "#355d99"
+      yellow: "#b38e3c"
+      white: "#e6e6e6"
+      grey: "#999999"
+      black: "#3f3f3f"
+  - type: Item
+    sprite: Objects/Misc/bureaucracy.rsi
+    size: 20
+  - type: Storage
+    capacity: 10
+    size: 10
+    whitelist:
+      tags:
+        - Document
+  - type: ItemMapper
+    mapLayers:
+      folder-overlay-paper:
+        whitelist:
+          tags:
+          - Document
+  - type: Appearance
+    visuals:
+    - type: MappedItemVisualizer
