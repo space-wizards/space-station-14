@@ -449,3 +449,12 @@
   components:
   - type: PDA
     id: CentcomIDCardSyndie
+    
+- type: entity
+  parent: HoSPDA
+  id: ERTLeaderPDA
+  name: ERT PDA
+  description: Red for firepower.
+  components:
+  - type: PDA
+    id: ERTLeaderIDCard

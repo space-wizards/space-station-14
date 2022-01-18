@@ -358,7 +358,7 @@
     
 - type: entity
   parent: CentcomIDCard
-  id: CentcomIDCard
+  id: ERTLeaderIDCard
   name: ERT ID card
   components:
   - type: Sprite
@@ -367,9 +367,6 @@
     - state: ert_commander #we have the sprites but don't need individual ID entities for now.
   - type: Clothing
     HeldPrefix: gold
-  - type: IdCard
-    jobTitle: ERT Leader
-
 
 - type: entity
   parent: IDCardStandard
@@ -386,3 +383,16 @@
   - type: Access
     tags:
     - Maintenance
+
+- type: entity
+  parent: CentcomIDCard
+  id: CentcomIDCardDeathsquad
+  name: Deathsquad ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: centcom
+  - type: Clothing
+    HeldPrefix: blue
+  - type: IdCard
+    jobTitle: Centcom Agent
