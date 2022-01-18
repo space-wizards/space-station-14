@@ -1,9 +1,4 @@
 Entries:
-- author: Swept
-  changes:
-  - {message: Cuffs can no longer be put in your belt slot, type: Fix}
-  id: 401
-  time: '2021-10-03T22:53:52.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: AME is no longer capable of producing negative energy., type: Fix}
@@ -2919,3 +2914,9 @@ Entries:
       explosives will no longer embed themselves in the wall before exploding., type: Tweak}
   id: 902
   time: '2022-01-18T08:26:21.0000000+00:00'
+- author: sewerpig
+  changes:
+  - {message: Wooden Mosin and Heavy Sniper inhand sprites displays properly now,
+    type: Fix}
+  id: 903
+  time: '2022-01-18T09:43:47.0000000+00:00'
