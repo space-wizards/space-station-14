@@ -1,0 +1,17 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "",
+    "size": {
+        "x": 24,
+        "y": 24
+    },
+    "states": [
+        {
+            "name": "w_checker_queen"
+        },
+        {
+            "name": "b_checker_queen"
+        }
+    ]
+}

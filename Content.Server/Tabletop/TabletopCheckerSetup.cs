@@ -37,16 +37,15 @@ namespace Content.Server.Tabletop
             // Queens
             for (int i = 2; i < 5; i++)
             {
-                EntityUid tempQualifier = entityManager.SpawnEntity("BlackQueen", new MapCoordinates(x + 9 * separation + 9f / 32, y - i * separation, mapId));
+                EntityUid tempQualifier = entityManager.SpawnEntity("BlackCheckerQueen", new MapCoordinates(x + 9 * separation + 9f / 32, y - i * separation, mapId));
                 session.Entities.Add(tempQualifier);
 
-                EntityUid tempQualifier1 = entityManager.SpawnEntity("WhiteQueen", new MapCoordinates(x + 8 * separation + 9f / 32, y - i * separation, mapId));
+                EntityUid tempQualifier1 = entityManager.SpawnEntity("WhiteCheckerQueen", new MapCoordinates(x + 8 * separation + 9f / 32, y - i * separation, mapId));
                 session.Entities.Add(tempQualifier1);
             }
 
         }
 
-        // TODO: refactor to load FEN instead
         private void SpawnPieces(TabletopSession session, IEntityManager entityManager, string color, MapCoordinates left, float separation = 1f)
         {
           var (mapId, x, y) = left;
@@ -63,7 +62,7 @@ namespace Content.Server.Tabletop
               // Prevents an extra piece on the middle row
               if (x_offset + j > 8) continue;
 
-              EntityUid tempQualifier4 = entityManager.SpawnEntity(color + "Piece", new MapCoordinates(x + (j + x_offset) * separation, y + i * reversed * separation, mapId));
+              EntityUid tempQualifier4 = entityManager.SpawnEntity(color + "CheckerPiece", new MapCoordinates(x + (j + x_offset) * separation, y + i * reversed * separation, mapId));
               session.Entities.Add(tempQualifier4);
             }
           }

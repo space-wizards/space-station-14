@@ -13,7 +13,7 @@
     size: 338, 274
     setup: !type:TabletopCheckerSetup
 
-# Chessboard tabletop item (item only visible in tabletop game)
+# Checkerboard tabletop item (item only visible in tabletop game)
 - type: entity
   id: CheckerBoardTabletop
   name: checkerboard
@@ -40,7 +40,7 @@
 
 # The pieces
 - type: entity
-  id: WhitePiece
+  id: WhiteCheckerPiece
   name: white piece
   parent: BaseCheckerPiece
   components:
@@ -49,16 +49,16 @@
       state: white
 
 - type: entity
-  id: WhiteQueen
+  id: WhiteCheckerQueen
   name: white queen
   parent: BaseCheckerPiece
   components:
     - type: Sprite
-      sprite: Objects/Fun/Tabletop/generic_pieces.rsi
-      state: yellow
+      sprite: Objects/Fun/Tabletop/checker_pieces.rsi
+      state: w_checker_queen
 
 - type: entity
-  id: BlackPiece
+  id: BlackCheckerPiece
   name: black piece
   parent: BaseCheckerPiece
   components:
@@ -67,10 +67,10 @@
       state: black
 
 - type: entity
-  id: BlackQueen
+  id: BlackCheckerQueen
   name: black queen
   parent: BaseCheckerPiece
   components:
     - type: Sprite
-      sprite: Objects/Fun/Tabletop/generic_pieces.rsi
-      state: blue
+      sprite: Objects/Fun/Tabletop/checker_pieces.rsi
+      state: b_checker_queen
