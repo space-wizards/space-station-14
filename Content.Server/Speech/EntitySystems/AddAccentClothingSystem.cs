@@ -50,7 +50,10 @@ public class AddAccentClothingSystem : EntitySystem
 
         // try to remove accent
         var componentType = _componentFactory.GetRegistration(component.Accent).Type;
-        EntityManager.RemoveComponent(args.Equipee, componentType);
+        if (EntityManager.HasComponent(args.Equipee, componentType))
+        {
+            EntityManager.RemoveComponent(args.Equipee, componentType);
+        }
 
         component.IsActive = false;
     }
