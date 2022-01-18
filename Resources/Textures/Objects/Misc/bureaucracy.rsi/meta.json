@@ -59,19 +59,10 @@
       "name": "folder"
     },
     {
-      "name": "folder_blue"
+      "name": "folder_colormap"
     },
     {
-      "name": "folder_paper"
-    },
-    {
-      "name": "folder_red"
-    },
-    {
-      "name": "folder_white"
-    },
-    {
-      "name": "folder_yellow"
+      "name": "folder_overlay-paper"
     },
     {
       "name": "label_cart"
