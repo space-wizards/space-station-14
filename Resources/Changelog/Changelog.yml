@@ -1,10 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: Updates AME core count indicator as the layout changes., type: Fix}
-  - {message: AME connection issues shouldn't occur anymore., type: Fix}
-  id: 398
-  time: '2021-10-03T11:33:28.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: Added a rules button to the lobby and character creation screen. Be
@@ -2919,3 +2913,8 @@ Entries:
       aim for the lower right corner anymore., type: Fix}
   id: 899
   time: '2022-01-18T02:02:20.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Lit cigars and cigarettes cause fires now., type: Tweak}
+  id: 900
+  time: '2022-01-18T06:35:17.0000000+00:00'
