@@ -1,15 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Added several new verbs for inserting objects and (un)buckling entities.,
-    type: Add}
-  - {message: 'Some verbs can now be triggerd by alt clicking (e.g., spin revolver).
-      Others have had alt-click removed (e.g., open storage UI), because that functionality
-      is already provided by the ''E'' keybind.', type: Tweak}
-  - {message: Moving entities remain in the context menu until out of view (you can
-      now interact with yourself while moving)., type: Fix}
-  id: 406
-  time: '2021-10-05T03:29:03.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: unbreak pulling prediction, type: Fix}
@@ -2921,3 +2910,8 @@ Entries:
   - {message: Prisoners wardrobes now have a muzzle inside., type: Add}
   id: 907
   time: '2022-01-18T22:18:22.0000000+00:00'
+- author: Capnsockless
+  changes:
+  - {message: Added a checkerboard., type: Add}
+  id: 908
+  time: '2022-01-18T23:44:24.0000000+00:00'
