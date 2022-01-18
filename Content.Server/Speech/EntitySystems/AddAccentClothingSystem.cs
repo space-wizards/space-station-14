@@ -37,12 +37,8 @@ public class AddAccentClothingSystem : EntitySystem
         EntityManager.AddComponent(args.Equipee, accentComponent);
 
         // snowflake case for replacement accent
-        switch (accentComponent)
-        {
-            case ReplacementAccentComponent rep:
-                rep.Accent = component.ReplacementPrototype!;
-                break;
-        }
+        if (accentComponent is ReplacementAccentComponent rep)
+            rep.Accent = component.ReplacementPrototype!;
 
         component.IsActive = true;
     }
