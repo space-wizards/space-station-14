@@ -16,7 +16,6 @@ namespace Content.Server.Weapon.Ranged.Barrels
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<RevolverBarrelComponent, GetAlternativeVerbsEvent>(AddSpinVerb);
 
             SubscribeLocalEvent<ServerBatteryBarrelComponent, PowerCellChangedEvent>(OnCellSlotUpdated);
 
@@ -29,27 +28,6 @@ namespace Content.Server.Weapon.Ranged.Barrels
         private void OnCellSlotUpdated(EntityUid uid, ServerBatteryBarrelComponent component, PowerCellChangedEvent args)
         {
             component.UpdateAppearance();
-        }
-
-        private void AddSpinVerb(EntityUid uid, RevolverBarrelComponent component, GetAlternativeVerbsEvent args)
-        {
-            if (args.Hands == null || !args.CanAccess || !args.CanInteract)
-                return;
-
-            if (component.Capacity <= 1 || component.ShotsLeft == 0)
-                return;
-
-            Verb verb = new()
-            {
-                Text = Loc.GetString("spin-revolver-verb-get-data-text"),
-                IconTexture = "/Textures/Interface/VerbIcons/refresh.svg.192dpi.png",
-                Act = () =>
-                {
-                    component.Spin();
-                    component.Owner.PopupMessage(args.User, Loc.GetString("spin-revolver-verb-on-activate"));
-                }
-            };
-            args.Verbs.Add(verb);
         }
 
         private void AddToggleBoltVerb(EntityUid uid, BoltActionBarrelComponent component, GetInteractionVerbsEvent args)

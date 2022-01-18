@@ -2,6 +2,8 @@ using System;
 using Content.Server.Weapon.Ranged.Ammunition.Components;
 using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Popups;
+using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -72,7 +74,7 @@ public sealed partial class GunSystem
     /// <summary>
     /// Russian Roulette
     /// </summary>
-    public void Spin(RevolverBarrelComponent component)
+    public void SpinRevolver(RevolverBarrelComponent component)
     {
         var random = _random.Next(component.AmmoSlots.Length - 1);
         component.CurrentSlot = random;
@@ -171,6 +173,27 @@ public sealed partial class GunSystem
         appearance.SetData(MagazineBarrelVisuals.MagLoaded, component.ShotsLeft > 0);
         appearance.SetData(AmmoVisuals.AmmoCount, component.ShotsLeft);
         appearance.SetData(AmmoVisuals.AmmoMax, component.Capacity);
+    }
+
+    private void AddSpinVerb(EntityUid uid, RevolverBarrelComponent component, GetAlternativeVerbsEvent args)
+    {
+        if (args.Hands == null || !args.CanAccess || !args.CanInteract)
+            return;
+
+        if (component.Capacity <= 1 || component.ShotsLeft == 0)
+            return;
+
+        Verb verb = new()
+        {
+            Text = Loc.GetString("spin-revolver-verb-get-data-text"),
+            IconTexture = "/Textures/Interface/VerbIcons/refresh.svg.192dpi.png",
+            Act = () =>
+            {
+                SpinRevolver(component);
+                component.Owner.PopupMessage(args.User, Loc.GetString("spin-revolver-verb-on-activate"));
+            }
+        };
+        args.Verbs.Add(verb);
     }
 
     public EntityUid? PeekRevolverAmmo(RevolverBarrelComponent component)

@@ -17,7 +17,6 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
     /// Shotguns mostly
     /// </summary>
     [RegisterComponent, NetworkedComponent, ComponentProtoName("BoltActionBarrel")]
-    [NetworkedComponent]
     public sealed class BoltActionBarrelComponent : ServerRangedBarrelComponent
     {
         // Originally I had this logic shared with PumpBarrel and used a couple of variables to control things
@@ -80,17 +79,15 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             }
         }
         private bool _boltOpen;
-        [DataField("autoCycle")]
-        private bool _autoCycle;
+
+        [DataField("autoCycle")] public bool AutoCycle;
 
         // Sounds
-        [DataField("soundCycle")]
-        private SoundSpecifier _soundCycle = new SoundPathSpecifier("/Audio/Weapons/Guns/Cock/sf_rifle_cock.ogg");
+        [DataField("soundCycle")] public SoundSpecifier SoundCycle = new SoundPathSpecifier("/Audio/Weapons/Guns/Cock/sf_rifle_cock.ogg");
         [DataField("soundBoltOpen")]
         private SoundSpecifier _soundBoltOpen = new SoundPathSpecifier("/Audio/Weapons/Guns/Bolt/rifle_bolt_open.ogg");
         [DataField("soundBoltClosed")]
         private SoundSpecifier _soundBoltClosed = new SoundPathSpecifier("/Audio/Weapons/Guns/Bolt/rifle_bolt_closed.ogg");
-        [DataField("soundInsert")]
-        private SoundSpecifier _soundInsert = new SoundPathSpecifier("/Audio/Weapons/Guns/MagIn/bullet_insert.ogg");
+        [DataField("soundInsert")] public SoundSpecifier SoundInsert = new SoundPathSpecifier("/Audio/Weapons/Guns/MagIn/bullet_insert.ogg");
     }
 }

@@ -124,57 +124,6 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             }
         }
 
-        protected override void Initialize()
-        {
-            base.Initialize();
-
-            Owner.EnsureComponentWarn(out ServerRangedWeaponComponent rangedWeaponComponent);
-
-            rangedWeaponComponent.Barrel ??= this;
-            rangedWeaponComponent.FireHandler += Fire;
-            rangedWeaponComponent.WeaponCanFireHandler += WeaponCanFire;
-        }
-
-        protected override void OnRemove()
-        {
-            base.OnRemove();
-            if (Entities.TryGetComponent(Owner, out ServerRangedWeaponComponent? rangedWeaponComponent))
-            {
-                rangedWeaponComponent.Barrel = null;
-                rangedWeaponComponent.FireHandler -= Fire;
-                rangedWeaponComponent.WeaponCanFireHandler -= WeaponCanFire;
-            }
-        }
-
-        private Angle GetRecoilAngle(Angle direction)
-        {
-            var currentTime = _gameTiming.CurTime;
-            var timeSinceLastFire = (currentTime - _lastFire).TotalSeconds;
-            var newTheta = MathHelper.Clamp(_currentAngle.Theta + AngleIncrease - AngleDecay * timeSinceLastFire, MinAngle.Theta, MaxAngle.Theta);
-            _currentAngle = new Angle(newTheta);
-
-            var random = (_robustRandom.NextDouble() - 0.5) * 2;
-            var angle = Angle.FromDegrees(direction.Degrees + _currentAngle.Degrees * random);
-            return angle;
-        }
-
-        public void ChangeFireSelector(FireRateSelector rateSelector)
-        {
-            if ((rateSelector & AllRateSelectors) != 0)
-            {
-                _fireRateSelector = rateSelector;
-                return;
-            }
-
-            throw new InvalidOperationException();
-        }
-
-        protected virtual bool WeaponCanFire()
-        {
-            // If the ServerRangedWeaponComponent gets re-done probably need to add the checks here
-            return true;
-        }
-
         /// <summary>
         /// Fires a round of ammo out of the weapon.
         /// </summary>

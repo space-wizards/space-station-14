@@ -6,6 +6,7 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
+using Content.Shared.Weapons.Ranged.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -57,16 +58,49 @@ public sealed partial class GunSystem : EntitySystem
         SubscribeLocalEvent<BoltActionBarrelComponent, UseInHandEvent>(OnBoltUse);
         SubscribeLocalEvent<BoltActionBarrelComponent, InteractUsingEvent>(OnBoltInteractUsing);
         SubscribeLocalEvent<BoltActionBarrelComponent, ComponentGetState>(OnBoltGetState);
+        SubscribeLocalEvent<BoltActionBarrelComponent, ExaminedEvent>(OnBoltExamine);
 
         SubscribeLocalEvent<RevolverBarrelComponent, MapInitEvent>(OnRevolverMapInit);
         SubscribeLocalEvent<RevolverBarrelComponent, UseInHandEvent>(OnRevolverUse);
         SubscribeLocalEvent<RevolverBarrelComponent, InteractUsingEvent>(OnRevolverInteractUsing);
         SubscribeLocalEvent<RevolverBarrelComponent, ComponentGetState>(OnRevolverGetState);
+        SubscribeLocalEvent<RevolverBarrelComponent, GetAlternativeVerbsEvent>(AddSpinVerb);
 
         SubscribeLocalEvent<ServerRangedWeaponComponent, ExaminedEvent>(OnGunExamine);
-        SubscribeLocalEvent<BoltActionBarrelComponent, ExaminedEvent>(OnBoltExamine);
+        SubscribeNetworkEvent<FirePosEvent>(OnFirePos);
+
         SubscribeLocalEvent<PumpBarrelComponent, ExaminedEvent>(OnPumpExamine);
         SubscribeLocalEvent<ServerMagazineBarrelComponent, ExaminedEvent>(OnMagazineExamine);
+
+
+    }
+
+    private void OnFirePos(FirePosEvent msg, EntitySessionEventArgs args)
+    {
+        if (session.AttachedEntity is not {Valid: true} user)
+        {
+            return;
+        }
+
+        if (msg.TargetGrid != GridId.Invalid)
+        {
+            // grid pos
+            if (!_mapManager.TryGetGrid(msg.TargetGrid, out var grid))
+            {
+                // Client sent us a message with an invalid grid.
+                break;
+            }
+
+            var targetPos = grid.LocalToWorld(msg.TargetPosition);
+            TryFire(user, targetPos);
+        }
+        else
+        {
+            // map pos
+            TryFire(user, msg.TargetPosition);
+        }
+
+        break;
     }
 
     public EntityUid? PeekAmmo(ServerRangedBarrelComponent component)
@@ -152,6 +186,18 @@ public sealed partial class GunSystem : EntitySystem
 
         if (playSound)
             SoundSystem.Play(Filter.Pvs(entity), ammoComponent.SoundCollectionEject.GetSound(), coordinates, AudioParams.Default.WithVolume(-1));
+    }
+
+    private Angle GetRecoilAngle(ServerRangedBarrelComponent component, Angle direction)
+    {
+        var currentTime = _gameTiming.CurTime;
+        var timeSinceLastFire = (currentTime - component._lastFire).TotalSeconds;
+        var newTheta = MathHelper.Clamp(component._currentAngle.Theta + component.AngleIncrease - component.AngleDecay * timeSinceLastFire, component.MinAngle.Theta, component.MaxAngle.Theta);
+        component._currentAngle = new Angle(newTheta);
+
+        var random = (_random.NextDouble(-1, 1);
+        var angle = Angle.FromDegrees(direction.Degrees + component._currentAngle.Degrees * random);
+        return angle;
     }
 
     // Rename when the other event is changed.

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Content.Server.Weapon.Ranged.Ammunition.Components;
 using Content.Server.Weapon.Ranged.Barrels.Components;
+using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Shared.Audio;
@@ -15,6 +16,11 @@ namespace Content.Server.Weapon.Ranged;
 
 public sealed partial class GunSystem
 {
+    private void OnBoltExamine(EntityUid uid, BoltActionBarrelComponent component, ExaminedEvent args)
+    {
+        args.PushMarkup(Loc.GetString("bolt-action-barrel-component-on-examine", ("caliber", component.Caliber)));
+    }
+
     private void OnBoltFireAttempt(EntityUid uid, BoltActionBarrelComponent component, GunFireAttemptEvent args)
     {
         if (args.Cancelled) return;
@@ -100,13 +106,13 @@ public sealed partial class GunSystem
 
             if (Owner.TryGetContainer(out var container))
             {
-                Owner.PopupMessage(container.Owner, Loc.GetString("bolt-action-barrel-component-bolt-opened"));
+                _popup.PopupEntity(Loc.GetString("bolt-action-barrel-component-bolt-opened"), container.Owner, );
             }
             return;
         }
         else
         {
-            SoundSystem.Play(Filter.Pvs(component.Owner), component._soundCycle.GetSound(), component.Owner, AudioParams.Default.WithVolume(-2));
+            SoundSystem.Play(Filter.Pvs(component.Owner), component.SoundCycle.GetSound(), component.Owner, AudioParams.Default.WithVolume(-2));
         }
 
         component.Dirty(EntityManager);
@@ -162,28 +168,26 @@ public sealed partial class GunSystem
     public bool TryInsertBullet(EntityUid user, EntityUid ammo, BoltActionBarrelComponent component)
     {
         if (!EntityManager.TryGetComponent(ammo, out AmmoComponent? ammoComponent))
-        {
             return false;
-        }
 
         if (ammoComponent.Caliber != component.Caliber)
         {
-            Owner.PopupMessage(user, Loc.GetString("bolt-action-barrel-component-try-insert-bullet-wrong-caliber"));
+            _popup.PopupEntity(Loc.GetString("bolt-action-barrel-component-try-insert-bullet-wrong-caliber"), component.Owner, Filter.Entities(user));
             return false;
         }
 
         if (!component.BoltOpen)
         {
-            Owner.PopupMessage(user, Loc.GetString("bolt-action-barrel-component-try-insert-bullet-bolt-closed"));
+            _popup.PopupEntity(Loc.GetString("bolt-action-barrel-component-try-insert-bullet-bolt-closed"), component.Owner, Filter.Entities(user));
             return false;
         }
 
         if (component.ChamberContainer.ContainedEntity == null)
         {
             component.ChamberContainer.Insert(ammo);
-            SoundSystem.Play(Filter.Pvs(component.Owner), component._soundInsert.GetSound(), component.Owner, AudioParams.Default.WithVolume(-2));
+            SoundSystem.Play(Filter.Pvs(component.Owner), component.SoundInsert.GetSound(), component.Owner, AudioParams.Default.WithVolume(-2));
             component.Dirty(EntityManager);
-            UpdateAppearance();
+            UpdateBoltAppearance(component);
             return true;
         }
 
@@ -191,13 +195,13 @@ public sealed partial class GunSystem
         {
             component.AmmoContainer.Insert(ammo);
             component.SpawnedAmmo.Push(ammo);
-            SoundSystem.Play(Filter.Pvs(Owner), component._soundInsert.GetSound(), Owner, AudioParams.Default.WithVolume(-2));
+            SoundSystem.Play(Filter.Pvs(component.Owner), component.SoundInsert.GetSound(), component.Owner, AudioParams.Default.WithVolume(-2));
             component.Dirty(EntityManager);
-            UpdateAppearance();
+            UpdateBoltAppearance(component);
             return true;
         }
 
-        Owner.PopupMessage(user, Loc.GetString("bolt-action-barrel-component-try-insert-bullet-no-room"));
+        _popup.PopupEntity(Loc.GetString("bolt-action-barrel-component-try-insert-bullet-no-room"), component.Owner, Filter.Entities(user));
 
         return false;
     }
@@ -228,7 +232,7 @@ public sealed partial class GunSystem
 
     public EntityUid? TakeProjectile(BoltActionBarrelComponent component, EntityCoordinates spawnAt)
     {
-        if (component._autoCycle)
+        if (component.AutoCycle)
         {
             CycleBolt(component);
         }
