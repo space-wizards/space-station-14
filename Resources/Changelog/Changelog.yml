@@ -1,10 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: Added a rules button to the lobby and character creation screen. Be
-      sure to read them!, type: Add}
-  id: 399
-  time: '2021-10-03T21:48:29.0000000+00:00'
 - author: Swept
   changes:
   - {message: Singularity should be much easier to see now, type: Tweak}
@@ -2918,3 +2912,9 @@ Entries:
   - {message: Lit cigars and cigarettes cause fires now., type: Tweak}
   id: 900
   time: '2022-01-18T06:35:17.0000000+00:00'
+- author: Schiene
+  changes:
+  - {message: 'Fixed Power issues on both Reach and Dart, Reach has more thrusters.',
+    type: Add}
+  id: 901
+  time: '2022-01-18T06:50:21.0000000+00:00'
