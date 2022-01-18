@@ -35,7 +35,7 @@ namespace Content.Server.Tabletop
             SpawnPieces(session, entityManager, "White", new MapCoordinates(x, y - 7 * separation, mapId), separation);
 
             // Queens
-            for (int i = 2; i < 5; i++)
+            for (int i = 1; i < 4; i++)
             {
                 EntityUid tempQualifier = entityManager.SpawnEntity("BlackCheckerQueen", new MapCoordinates(x + 9 * separation + 9f / 32, y - i * separation, mapId));
                 session.Entities.Add(tempQualifier);

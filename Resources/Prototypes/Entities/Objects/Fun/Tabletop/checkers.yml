@@ -45,8 +45,8 @@
   parent: BaseCheckerPiece
   components:
     - type: Sprite
-      sprite: Objects/Fun/Tabletop/generic_pieces.rsi
-      state: white
+      sprite: Objects/Fun/Tabletop/checker_pieces.rsi
+      state: w_checker_piece
 
 - type: entity
   id: WhiteCheckerQueen
@@ -63,8 +63,8 @@
   parent: BaseCheckerPiece
   components:
     - type: Sprite
-      sprite: Objects/Fun/Tabletop/generic_pieces.rsi
-      state: black
+      sprite: Objects/Fun/Tabletop/checker_pieces.rsi
+      state: b_checker_piece
 
 - type: entity
   id: BlackCheckerQueen

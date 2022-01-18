@@ -8,7 +8,13 @@
     },
     "states": [
         {
+            "name": "w_checker_piece"
+        },
+        {
             "name": "w_checker_queen"
+        },
+        {
+            "name": "b_checker_piece"
         },
         {
             "name": "b_checker_queen"
