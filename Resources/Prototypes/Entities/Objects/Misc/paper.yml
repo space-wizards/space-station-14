@@ -76,6 +76,7 @@
   description: A folder filled with top secret paperwork.
   components:
   - type: Sprite
+    netsync: true
     sprite: Objects/Misc/bureaucracy.rsi
     layers:
     - state: folder-colormap
