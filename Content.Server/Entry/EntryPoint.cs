@@ -70,7 +70,7 @@ namespace Content.Server.Entry
             factory.GenerateNetIds();
             var configManager = IoCManager.Resolve<IConfigurationManager>();
             var dest = configManager.GetCVar(CCVars.DestinationFile);
-            if (dest == "") //hacky but it keeps load times for the generator down.
+            if (string.IsNullOrEmpty(dest)) //hacky but it keeps load times for the generator down.
             {
                 _euiManager = IoCManager.Resolve<EuiManager>();
                 _voteManager = IoCManager.Resolve<IVoteManager>();
@@ -100,9 +100,9 @@ namespace Content.Server.Entry
             var configManager = IoCManager.Resolve<IConfigurationManager>();
             var resourceManager = IoCManager.Resolve<IResourceManager>();
             var dest = configManager.GetCVar(CCVars.DestinationFile);
-            var resPath = new ResourcePath(dest).ToRootedPath();
-            if (dest != "")
+            if (!string.IsNullOrEmpty(dest))
             {
+                var resPath = new ResourcePath(dest).ToRootedPath();
                 var file = resourceManager.UserData.OpenWriteText(resPath.WithName("chem_" + dest));
                 ChemistryJsonGenerator.PublishJson(file);
                 file.Flush();
@@ -137,11 +137,11 @@ namespace Content.Server.Entry
             switch (level)
             {
                 case ModUpdateLevel.PostEngine:
-                    {
-                        _euiManager.SendUpdates();
-                        _voteManager.Update();
-                        break;
-                    }
+                {
+                    _euiManager.SendUpdates();
+                    _voteManager.Update();
+                    break;
+                }
             }
         }
     }
