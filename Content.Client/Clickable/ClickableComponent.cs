@@ -47,6 +47,8 @@ namespace Content.Client.Clickable
             var worldRot = transform.WorldRotation;
             var invSpriteMatrix = Matrix3.CreateTransform(Vector2.Zero, -sprite.Rotation, (1,1)/sprite.Scale);
             var relativeRotation = worldRot + _eyeManager.CurrentEye.Rotation;
+
+            // localPos would be the clicked location in the entity's coordinate frame if it weren't for sprite.Offset.
             var localPos = transform.InvWorldMatrix.Transform(worldPos) - sprite.Offset;
 
             // Check explicitly defined click-able bounds
@@ -59,10 +61,10 @@ namespace Content.Client.Clickable
                 if (!spriteLayer.Visible || spriteLayer is not Layer layer)
                     continue;
 
-                // how many orientations does this rsi have?
+                // How many orientations does this rsi have?
                 var dirCount = sprite.GetLayerDirectionCount(layer);
 
-                // If the sprite does not actually rotate we need to fix the rotation
+                // If the sprite does not actually rotate we need to fix the rotation that was added to localPos via InvWorldMatrix
                 var modAngle = Angle.Zero;
                 if (sprite.NoRotation)
                     modAngle += CalcRectWorldAngle(relativeRotation, dirCount);
@@ -70,10 +72,10 @@ namespace Content.Client.Clickable
                 // Check the layer's texture, if it has one
                 if (layer.Texture != null)
                 {
-                    // convert to sprite-coordinates
+                    // Convert to sprite-coordinates. This includes sprite matrix (scale, rotation), and noRot corrections (modAngle)
                     var spritePos = invSpriteMatrix.Transform(modAngle.RotateVec(localPos));
 
-                    // convert to image coordinates
+                    // Convert to image coordinates
                     var imagePos = (Vector2i) (spritePos * EyeManager.PixelsPerMeter * (1, -1) + layer.Texture.Size / 2f);
 
                     if (_clickMapManager.IsOccluding(layer.Texture, imagePos))
@@ -84,23 +86,26 @@ namespace Content.Client.Clickable
                 if (layer.State == null || layer.ActualRsi is not RSI rsi || !rsi.TryGetState(layer.State, out var state))
                     continue;
 
-                // get the sprite direction, in the absence of any direction offset or override. this is just for
+                // Get the sprite direction, in the absence of any direction offset or override. this is just for
                 // transforming the sprite position.
                 var dir = relativeRotation.ToRsiDirection(state.Directions);
 
-                // yes angle -> dir -> angle seems a bit silly. But state.Directions could be one of three things and
-                // screw doing it manually.
+                // Yes, angle -> dir -> angle is a bit silly, and there's probably a more direct calculation, but state.Directions could be one of three things and
+                // I CBF doing it manually in a case switch or something.
                 modAngle += dir.Convert().ToAngle();
 
                 // TODO SPRITE LAYER ROTATION
                 // Currently this doesn't support layers with scale & rotation. Whenever/if-ever that should be added,
                 // this needs fixing. See also Layer.CalculateBoundingBox and other engine code with similar warnings.
+
+                // Convert to sprite-coordinates. This is the same as for the texture check, but now also includes directional angle-snapping corrections in modAngle
                 var layerPos = invSpriteMatrix.Transform(modAngle.RotateVec(localPos));
 
                 // Convert to image coordinates
                 var layerImagePos = (Vector2i) (layerPos * EyeManager.PixelsPerMeter * (1, -1) + layer.ActualRsi.Size / 2f);
 
-                // Next, to get the right click map we need the actual direction of this layer.
+                // Next, to get the right click map we need the "direction" of this layer that is actually being used to draw the sprite on the screen.
+                // This differs from the dir above which is just for coordinate transformations.
                 if (sprite.EnableDirectionOverride)
                 {
                     dir = sprite.DirectionOverride.Convert(state.Directions);
