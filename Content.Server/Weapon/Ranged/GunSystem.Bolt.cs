@@ -104,9 +104,9 @@ public sealed partial class GunSystem
         {
             component.BoltOpen = true;
 
-            if (Owner.TryGetContainer(out var container))
+            if (_container.TryGetContainingContainer(component.Owner, out var container))
             {
-                _popup.PopupEntity(Loc.GetString("bolt-action-barrel-component-bolt-opened"), container.Owner, );
+                _popup.PopupEntity(Loc.GetString("bolt-action-barrel-component-bolt-opened"), container.Owner, Filter.Entities(container.Owner));
             }
             return;
         }

@@ -15,7 +15,7 @@ namespace Content.Server.Weapon.Ranged.Barrels
         {
             base.Initialize();
 
-            SubscribeLocalEvent<ServerBatteryBarrelComponent, PowerCellChangedEvent>(OnCellSlotUpdated);
+            SubscribeLocalEvent<BatteryBarrelComponent, PowerCellChangedEvent>(OnCellSlotUpdated);
 
             SubscribeLocalEvent<BoltActionBarrelComponent, GetInteractionVerbsEvent>(AddToggleBoltVerb);
 
@@ -23,7 +23,7 @@ namespace Content.Server.Weapon.Ranged.Barrels
             SubscribeLocalEvent<ServerMagazineBarrelComponent, GetAlternativeVerbsEvent>(AddEjectMagazineVerb);
         }
 
-        private void OnCellSlotUpdated(EntityUid uid, ServerBatteryBarrelComponent component, PowerCellChangedEvent args)
+        private void OnCellSlotUpdated(EntityUid uid, BatteryBarrelComponent component, PowerCellChangedEvent args)
         {
             component.UpdateAppearance();
         }

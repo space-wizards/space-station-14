@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.PowerCell;
 using Content.Server.Stunnable;
 using Content.Server.Weapon.Ranged.Ammunition.Components;
 using Content.Server.Weapon.Ranged.Barrels.Components;
@@ -35,6 +36,7 @@ public sealed partial class GunSystem : EntitySystem
     [Dependency] private readonly AtmosphereSystem _atmos = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly EffectSystem _effects = default!;
+    [Dependency] private readonly PowerCellSystem _cell = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly StunSystem _stun = default!;
@@ -60,6 +62,15 @@ public sealed partial class GunSystem : EntitySystem
         SubscribeLocalEvent<AmmoBoxComponent, GetAlternativeVerbsEvent>(OnAmmoBoxAltVerbs);
 
         // Whenever I get around to refactoring guns this is all going to change.
+        // Essentially the idea is
+        // You have GunComponent and ChamberedGunComponent (which is just guncomp + containerslot for chamber)
+        // GunComponent has a component for an ammo provider on it (e.g. battery) and asks it for ammo to shoot
+        // ALTERNATIVELY, it has a "MagazineAmmoProvider" that has its own containerslot that it can ask
+        // (All of these would be comp references so max you only ever have 2 components on the gun).
+        SubscribeLocalEvent<BatteryBarrelComponent, ComponentInit>(OnBatteryInit);
+        SubscribeLocalEvent<BatteryBarrelComponent, MapInitEvent>(OnBatteryMapInit);
+        SubscribeLocalEvent<BatteryBarrelComponent, ComponentGetState>(OnBatteryGetState);
+
         SubscribeLocalEvent<BoltActionBarrelComponent, ComponentInit>(OnBoltInit);
         SubscribeLocalEvent<BoltActionBarrelComponent, MapInitEvent>(OnBoltMapInit);
         SubscribeLocalEvent<BoltActionBarrelComponent, GunFireAttemptEvent>(OnBoltFireAttempt);
@@ -83,36 +94,20 @@ public sealed partial class GunSystem : EntitySystem
         SubscribeLocalEvent<RevolverBarrelComponent, ComponentGetState>(OnRevolverGetState);
         SubscribeLocalEvent<RevolverBarrelComponent, GetAlternativeVerbsEvent>(AddSpinVerb);
 
-        SubscribeLocalEvent<ServerRangedWeaponComponent, ExaminedEvent>(OnGunExamine);
+        // SubscribeLocalEvent<ServerRangedWeaponComponent, ExaminedEvent>(OnGunExamine);
         SubscribeNetworkEvent<FirePosEvent>(OnFirePos);
     }
 
     private void OnFirePos(FirePosEvent msg, EntitySessionEventArgs args)
     {
-        if (session.AttachedEntity is not {Valid: true} user)
-        {
+        if (args.SenderSession.AttachedEntity is not {Valid: true} user)
             return;
-        }
 
-        if (msg.TargetGrid != GridId.Invalid)
-        {
-            // grid pos
-            if (!_mapManager.TryGetGrid(msg.TargetGrid, out var grid))
-            {
-                // Client sent us a message with an invalid grid.
-                break;
-            }
+        if (!msg.Coordinates.IsValid(EntityManager))
+            return;
 
-            var targetPos = grid.LocalToWorld(msg.TargetPosition);
-            TryFire(user, targetPos);
-        }
-        else
-        {
-            // map pos
-            TryFire(user, msg.TargetPosition);
-        }
-
-        break;
+        // map pos
+        TryFire(user, msg.Coordinates);
     }
 
     public EntityUid? PeekAmmo(ServerRangedBarrelComponent component)
