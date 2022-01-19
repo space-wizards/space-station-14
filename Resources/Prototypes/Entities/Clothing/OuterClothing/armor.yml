@@ -152,3 +152,21 @@
         Slash: 0.7
         Piercing: 0.4
         Heat: 0.9
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterArmorCaptainCarapace
+  name: "captain's carapace"
+  description: "An armored chestpiece that provides protection whilst still offering maximum mobility and flexibility. Issued only to the station's finest."
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Armor/captain_carapace.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Armor/captain_carapace.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.6
+        Heat: 0.5

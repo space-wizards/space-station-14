@@ -1,4 +1,4 @@
-﻿- type: construction
+- type: construction
   name: crude spear
   id: spear
   graph: spear
@@ -7,4 +7,15 @@
   category: Weapons
   description: A crude spear for when you need to put holes in somebody.
   icon: Objects/Weapons/Melee/spear.rsi/spear.png
+  objectType: Item
+
+- type: construction
+  name: makeshift bola
+  id: bola
+  graph: bola
+  startNode: start
+  targetNode: bola
+  category: Weapons
+  description: A simple weapon for tripping someone at a distance.
+  icon: Objects/Weapons/Throwable/bola.rsi/icon.png
   objectType: Item

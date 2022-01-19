@@ -15,6 +15,12 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
+        damage: 300 #excess damage (nuke?). Avoid computational cost of spawning entities.
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
         damage: 150
       behaviors:
       - !type:PlaySoundBehavior
