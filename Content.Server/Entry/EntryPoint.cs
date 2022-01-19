@@ -75,9 +75,6 @@ namespace Content.Server.Entry
                 _euiManager = IoCManager.Resolve<EuiManager>();
                 _voteManager = IoCManager.Resolve<IVoteManager>();
 
-                IoCManager.Resolve<IChatSanitizationManager>().Initialize();
-                IoCManager.Resolve<IChatManager>().Initialize();
-
                 var playerManager = IoCManager.Resolve<IPlayerManager>();
 
                 var logManager = IoCManager.Resolve<ILogManager>();
@@ -97,6 +94,8 @@ namespace Content.Server.Entry
         {
             base.PostInit();
 
+            IoCManager.Resolve<IChatSanitizationManager>().Initialize();
+            IoCManager.Resolve<IChatManager>().Initialize();
             var configManager = IoCManager.Resolve<IConfigurationManager>();
             var resourceManager = IoCManager.Resolve<IResourceManager>();
             var dest = configManager.GetCVar(CCVars.DestinationFile);
