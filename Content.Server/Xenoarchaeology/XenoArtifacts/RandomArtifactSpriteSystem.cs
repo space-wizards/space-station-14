@@ -11,6 +11,7 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts;
 public class RandomArtifactSpriteSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly IGameTiming _time = default!;
 
     public override void Initialize()
     {
@@ -19,9 +20,27 @@ public class RandomArtifactSpriteSystem : EntitySystem
         SubscribeLocalEvent<RandomArtifactSpriteComponent, ArtifactActivatedEvent>(OnActivated);
     }
 
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+        var query = EntityManager.EntityQuery<RandomArtifactSpriteComponent, AppearanceComponent>();
+        foreach (var (component, appearance) in query)
+        {
+            if (component.ActivationStart == null)
+                return;
+
+            var timeDif = _time.CurTime - component.ActivationStart.Value;
+            if (timeDif.Seconds >= component.ActivationTime)
+            {
+                appearance.SetData(SharedArtifactsVisuals.IsActivated, false);
+                component.ActivationStart = null;
+            }
+        }
+    }
+
     private void OnInit(EntityUid uid, RandomArtifactSpriteComponent component, ComponentInit args)
     {
-        if (!EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
+        if (!TryComp(uid, out AppearanceComponent? appearance))
             return;
 
         var randomSprite = _random.Next(component.MinSprite, component.MaxSprite + 1);
@@ -30,17 +49,10 @@ public class RandomArtifactSpriteSystem : EntitySystem
 
     private void OnActivated(EntityUid uid, RandomArtifactSpriteComponent component, ArtifactActivatedEvent args)
     {
-        if (!EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
+        if (!TryComp(uid, out AppearanceComponent? appearance))
             return;
 
         appearance.SetData(SharedArtifactsVisuals.IsActivated, true);
-
-        var activationTime = TimeSpan.FromSeconds(component.ActivationTime);
-        Timer.Spawn(activationTime, () =>
-        {
-            if (appearance.Deleted) return;
-            appearance.SetData(SharedArtifactsVisuals.IsActivated, false);
-        });
-
+        component.ActivationStart = _time.CurTime;
     }
 }

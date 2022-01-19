@@ -1,4 +1,5 @@
-﻿using Robust.Shared.GameObjects;
+﻿using System;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts;
@@ -16,4 +17,6 @@ public class RandomArtifactSpriteComponent : Component
 
     [DataField("activationTime")]
     public double ActivationTime = 2.0;
+
+    public TimeSpan? ActivationStart;
 }
