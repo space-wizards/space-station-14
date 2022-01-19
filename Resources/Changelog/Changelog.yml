@@ -1,49 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: Pull-to-location works again., type: Fix}
-  id: 404
-  time: '2021-10-04T15:10:55.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Added a new rule against metagaming and metacomms. Be sure to read it!,
-    type: Add}
-  id: 405
-  time: '2021-10-04T15:16:06.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Added several new verbs for inserting objects and (un)buckling entities.,
-    type: Add}
-  - {message: 'Some verbs can now be triggerd by alt clicking (e.g., spin revolver).
-      Others have had alt-click removed (e.g., open storage UI), because that functionality
-      is already provided by the ''E'' keybind.', type: Tweak}
-  - {message: Moving entities remain in the context menu until out of view (you can
-      now interact with yourself while moving)., type: Fix}
-  id: 406
-  time: '2021-10-05T03:29:03.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: unbreak pulling prediction, type: Fix}
-  id: 407
-  time: '2021-10-05T21:51:34.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Fix being able to trap admin ghosts on lockers., type: Fix}
-  id: 408
-  time: '2021-10-06T09:58:02.819938+00:00'
-- author: Zumorica
-  changes:
-  - {message: Fix ghosts having empty names under certain conditions., type: Fix}
-  id: 409
-  time: '2021-10-06T09:58:02.820744+00:00'
-- author: Zumorica
-  changes:
-  - {message: Improved the join greeting text. Now you can easily know who your supervisors
-      are!, type: Tweak}
-  - {message: A station announcement will be sent when there's a captain on deck.,
-    type: Tweak}
-  id: 410
-  time: '2021-10-06T11:51:11.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: Fix bike horn sound not having pitch variation anymore., type: Fix}
@@ -2921,3 +2876,42 @@ Entries:
       and automated. You can trust that it's correct now., type: Add}
   id: 905
   time: '2022-01-18T21:44:22.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed bug stopping cable from being cut., type: Fix}
+  id: 906
+  time: '2022-01-18T22:17:46.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Added muzzles to silence annoying criminals., type: Add}
+  - {message: Prisoners wardrobes now have a muzzle inside., type: Add}
+  id: 907
+  time: '2022-01-18T22:18:22.0000000+00:00'
+- author: Capnsockless
+  changes:
+  - {message: Added a checkerboard., type: Add}
+  id: 908
+  time: '2022-01-18T23:44:24.0000000+00:00'
+- author: Weaver
+  changes:
+  - {message: "Gas analyzers are now obtainable in-game in tool closets and YouTool\u2122\
+      \ vending machines.", type: Add}
+  id: 909
+  time: '2022-01-19T02:31:33.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Admins can now also get chat logs in-game., type: Add}
+  id: 910
+  time: '2022-01-19T02:35:31.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Hardsuit helmets and hardhats now show that they're lit., type: Fix}
+  id: 911
+  time: '2022-01-19T22:06:24.0000000+00:00'
+- author: moony
+  changes:
+  - {message: Players who have joined the game with a character (Not as an observer)
+      are now exempt from the player cap for the duration of the round. This means
+      you can no longer get locked out if you have to relog for some reason., type: Tweak}
+  id: 912
+  time: '2022-01-19T23:01:21.0000000+00:00'
