@@ -1,9 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: unbreak pulling prediction, type: Fix}
-  id: 407
-  time: '2021-10-05T21:51:34.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: Fix being able to trap admin ghosts on lockers., type: Fix}
@@ -2915,3 +2910,9 @@ Entries:
   - {message: Added a checkerboard., type: Add}
   id: 908
   time: '2022-01-18T23:44:24.0000000+00:00'
+- author: Weaver
+  changes:
+  - {message: "Gas analyzers are now obtainable in-game in tool closets and YouTool\u2122\
+      \ vending machines.", type: Add}
+  id: 909
+  time: '2022-01-19T02:31:33.0000000+00:00'
