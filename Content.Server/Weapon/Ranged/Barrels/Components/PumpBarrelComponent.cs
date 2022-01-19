@@ -13,8 +13,10 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -23,12 +25,9 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
     /// <summary>
     /// Bolt-action rifles
     /// </summary>
-    [RegisterComponent]
-    [NetworkedComponent()]
+    [RegisterComponent, NetworkedComponent, ComponentProtoName("PumpBarrel")]
     public sealed class PumpBarrelComponent : ServerRangedBarrelComponent, IUse, IInteractUsing, IMapInit, ISerializationHooks
     {
-        public override string Name => "PumpBarrel";
-
         public override int ShotsLeft
         {
             get
@@ -52,15 +51,14 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         public BallisticCaliber Caliber = BallisticCaliber.Unspecified;
 
         [ViewVariables]
-        [DataField("fillPrototype")]
+        [DataField("fillPrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         private string? _fillPrototype;
+
         [ViewVariables]
         private int _unspawnedCount;
 
         [DataField("manualCycle")]
         private bool _manualCycle = true;
-
-        private AppearanceComponent? _appearanceComponent;
 
         // Sounds
         [DataField("soundCycle")]

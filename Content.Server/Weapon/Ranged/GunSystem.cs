@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Content.Server.Weapon.Ranged.Ammunition.Components;
 using Content.Server.Weapon.Ranged.Barrels.Components;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
@@ -27,6 +28,7 @@ public sealed partial class GunSystem : EntitySystem
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly ActionBlockerSystem  _blocker = default!;
     [Dependency] private readonly EffectSystem _effects = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;

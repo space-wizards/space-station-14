@@ -11,8 +11,6 @@ namespace Content.Server.Weapon.Ranged.Barrels
 {
     public sealed class BarrelSystem : EntitySystem
     {
-        [Dependency] private readonly ActionBlockerSystem  _actionBlockerSystem = default!;
-
         public override void Initialize()
         {
             base.Initialize();

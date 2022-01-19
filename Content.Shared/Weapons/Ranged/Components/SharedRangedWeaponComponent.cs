@@ -34,27 +34,11 @@ namespace Content.Shared.Weapons.Ranged.Components
     [Serializable, NetSerializable]
     public sealed class FirePosEvent : EntityEventArgs
     {
-        /// <summary>
-        /// If this is not invalid, the target position is relative to the grid.
-        /// Otherwise, it is a map position.
-        /// </summary>
-        public GridId TargetGrid { get; }
+        public EntityCoordinates Coordinates;
 
-        /// <summary>
-        /// If Target Grid is not invalid, this is relative to the grid, otherwise
-        /// it is a map position.
-        /// </summary>
-        public Vector2 TargetPosition { get; }
-
-        /// <summary>
-        /// Constructs a new instance of <see cref="FirePosEvent"/>.
-        /// </summary>
-        /// <param name="targetGrid">The grid that the target position is on, if any.</param>
-        /// <param name="targetPosition">Target position relative to the grid, or a map position if the grid is invalid.</param>
-        public FirePosEvent(GridId targetGrid, Vector2 targetPosition)
+        public FirePosEvent(EntityCoordinates coordinates)
         {
-            TargetGrid = targetGrid;
-            TargetPosition = targetPosition;
+            Coordinates = coordinates;
         }
     }
 }

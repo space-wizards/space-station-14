@@ -13,12 +13,9 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
-using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
@@ -35,7 +32,6 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         // There's still some of py01 and PJB's work left over, especially in underlying shooting logic,
         // it's just when I re-organised it changed me as the contributor
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] protected readonly IEntityManager Entities = default!;
 
         public override FireRateSelector FireRateSelector => _fireRateSelector;
