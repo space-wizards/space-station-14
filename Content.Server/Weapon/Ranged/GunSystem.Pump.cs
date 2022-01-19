@@ -52,7 +52,7 @@ public sealed partial class GunSystem
 
     private void UpdatePumpAppearance(PumpBarrelComponent component)
     {
-        if (!EntityManager.TryGetComponent(component.Owner, out AppearanceComponent? appearanceComponent)) return;
+        if (!TryComp(component.Owner, out AppearanceComponent? appearanceComponent)) return;
 
         appearanceComponent.SetData(AmmoVisuals.AmmoCount, component.ShotsLeft);
         appearanceComponent.SetData(AmmoVisuals.AmmoMax, component.Capacity);
@@ -80,7 +80,7 @@ public sealed partial class GunSystem
             component.UnspawnedCount--;
         }
 
-        if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearanceComponent))
+        if (TryComp(uid, out AppearanceComponent? appearanceComponent))
         {
             appearanceComponent.SetData(MagazineBarrelVisuals.MagLoaded, true);
         }
@@ -107,7 +107,7 @@ public sealed partial class GunSystem
 
     public bool TryInsertBullet(PumpBarrelComponent component, InteractUsingEvent args)
     {
-        if (!EntityManager.TryGetComponent(args.Used, out AmmoComponent? ammoComponent))
+        if (!TryComp(args.Used, out AmmoComponent? ammoComponent))
         {
             return false;
         }

@@ -114,7 +114,7 @@ public sealed partial class GunSystem
 
     public void UpdateMagazineAppearance(MagazineBarrelComponent component)
     {
-        if (!EntityManager.TryGetComponent(component.Owner, out AppearanceComponent? appearanceComponent)) return;
+        if (!TryComp(component.Owner, out AppearanceComponent? appearanceComponent)) return;
 
         appearanceComponent.SetData(BarrelBoltVisuals.BoltOpen, component.BoltOpen);
         appearanceComponent.SetData(MagazineBarrelVisuals.MagLoaded, component.MagazineContainer.ContainedEntity != null);
@@ -237,7 +237,7 @@ public sealed partial class GunSystem
 
             component.MagazineContainer.Remove(magazine.Value);
             // TODO: Should be a state or something, waste of bandwidth
-            RaiseNetworkEvent(new MagazineAutoEjectMessage {Uid = component.Owner});
+            RaiseNetworkEvent(new MagazineAutoEjectEvent {Uid = component.Owner});
         }
         return true;
     }

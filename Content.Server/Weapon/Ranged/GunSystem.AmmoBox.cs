@@ -54,7 +54,7 @@ public sealed partial class GunSystem
     {
         if (args.Handled) return;
 
-        if (EntityManager.TryGetComponent(args.Used, out AmmoComponent? ammoComponent))
+        if (TryComp(args.Used, out AmmoComponent? ammoComponent))
         {
             if (TryInsertAmmo(args.User, args.Used, component, ammoComponent))
             {
@@ -64,7 +64,7 @@ public sealed partial class GunSystem
             return;
         }
 
-        if (!EntityManager.TryGetComponent(args.Used, out RangedMagazineComponent? rangedMagazine)) return;
+        if (!TryComp(args.Used, out RangedMagazineComponent? rangedMagazine)) return;
 
         for (var i = 0; i < Math.Max(10, rangedMagazine.ShotsLeft); i++)
         {
@@ -141,7 +141,7 @@ public sealed partial class GunSystem
 
     private bool TryUse(EntityUid user, AmmoBoxComponent ammoBox)
     {
-        if (!EntityManager.TryGetComponent(user, out HandsComponent? handsComponent))
+        if (!TryComp(user, out HandsComponent? handsComponent))
         {
             return false;
         }
@@ -151,7 +151,7 @@ public sealed partial class GunSystem
             return false;
         }
 
-        if (EntityManager.TryGetComponent(ammo, out ItemComponent? item))
+        if (TryComp(ammo, out ItemComponent? item))
         {
             if (!handsComponent.CanPutInHand(item))
             {

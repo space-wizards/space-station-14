@@ -65,7 +65,7 @@ public sealed partial class GunSystem
 
     public void UpdateBoltAppearance(BoltActionBarrelComponent component)
     {
-        if (!EntityManager.TryGetComponent(component.Owner, out AppearanceComponent? appearanceComponent)) return;
+        if (!TryComp(component.Owner, out AppearanceComponent? appearanceComponent)) return;
 
         appearanceComponent.SetData(BarrelBoltVisuals.BoltOpen, component.BoltOpen);
         appearanceComponent.SetData(AmmoVisuals.AmmoCount, component.ShotsLeft);
@@ -88,7 +88,7 @@ public sealed partial class GunSystem
 
         component.ChamberContainer = uid.EnsureContainer<ContainerSlot>($"{nameof(component)}-chamber-container");
 
-        if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearanceComponent))
+        if (TryComp(uid, out AppearanceComponent? appearanceComponent))
         {
             appearanceComponent.SetData(MagazineBarrelVisuals.MagLoaded, true);
         }
@@ -144,7 +144,7 @@ public sealed partial class GunSystem
             if (!component.ChamberContainer.Remove(chambered))
                 return false;
 
-            if (EntityManager.TryGetComponent(chambered, out AmmoComponent? ammoComponent) && !ammoComponent.Caseless)
+            if (TryComp(chambered, out AmmoComponent? ammoComponent) && !ammoComponent.Caseless)
                 EjectCasing(chambered);
 
             return true;
@@ -185,7 +185,7 @@ public sealed partial class GunSystem
 
     public bool TryInsertBullet(EntityUid user, EntityUid ammo, BoltActionBarrelComponent component)
     {
-        if (!EntityManager.TryGetComponent(ammo, out AmmoComponent? ammoComponent))
+        if (!TryComp(ammo, out AmmoComponent? ammoComponent))
             return false;
 
         if (ammoComponent.Caliber != component.Caliber)
@@ -231,7 +231,7 @@ public sealed partial class GunSystem
         // (Is one chambered?, is the bullet spend)
         var chamber = (chamberedExists, false);
 
-        if (chamberedExists && EntityManager.TryGetComponent<AmmoComponent?>(component.ChamberContainer.ContainedEntity!.Value, out var ammo))
+        if (chamberedExists && TryComp<AmmoComponent?>(component.ChamberContainer.ContainedEntity!.Value, out var ammo))
         {
             chamber.Item2 = ammo.Spent;
         }

@@ -15,10 +15,10 @@ public sealed class GunSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeNetworkEvent<MagazineAutoEjectMessage>(OnMagAutoEject);
+        SubscribeNetworkEvent<MagazineAutoEjectEvent>(OnMagAutoEject);
     }
 
-    private void OnMagAutoEject(MagazineAutoEjectMessage ev)
+    private void OnMagAutoEject(MagazineAutoEjectEvent ev)
     {
         var player = _playerManager.LocalPlayer?.ControlledEntity;
 

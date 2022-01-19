@@ -37,7 +37,7 @@ public sealed partial class GunSystem
 
     public bool TryInsertBullet(EntityUid user, EntityUid entity, RevolverBarrelComponent component)
     {
-        if (!EntityManager.TryGetComponent(entity, out AmmoComponent? ammoComponent))
+        if (!TryComp(entity, out AmmoComponent? ammoComponent))
         {
             return false;
         }
@@ -118,7 +118,7 @@ public sealed partial class GunSystem
         {
             slotsSpent[i] = null;
             var ammoEntity = component.AmmoSlots[i];
-            if (ammoEntity != default && EntityManager.TryGetComponent(ammoEntity, out AmmoComponent? ammo))
+            if (ammoEntity != default && TryComp(ammoEntity, out AmmoComponent? ammo))
             {
                 slotsSpent[i] = ammo.Spent;
             }
@@ -164,7 +164,7 @@ public sealed partial class GunSystem
 
     private void UpdateRevolverAppearance(RevolverBarrelComponent component)
     {
-        if (!EntityManager.TryGetComponent(component.Owner, out AppearanceComponent? appearance))
+        if (!TryComp(component.Owner, out AppearanceComponent? appearance))
         {
             return;
         }
