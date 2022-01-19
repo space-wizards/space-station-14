@@ -1,25 +1,25 @@
 ## Entity
 
-microwave-component-interact-using-no-power = It has no power!
-microwave-component-interact-using-broken = It's broken!
-microwave-component-interact-using-no-active-hand = You have no active hand!
-microwave-component-interact-using-container-full = Container is full
-microwave-component-interact-using-transfer-success = Transferred { $amount }u
-microwave-component-interact-using-transfer-fail = That won't work!
-microwave-component-suicide-multi-head-others-message = { $victim } is trying to cook their heads!
-microwave-component-suicide-others-message = { $victim } is trying to cook their head!
-microwave-component-suicide-multi-head-message = You cook your heads!
-microwave-component-suicide-message = You cook your head!
+microwave-component-interact-using-no-power = У неё нет электричества!
+microwave-component-interact-using-broken = Она сломана!
+microwave-component-interact-using-no-active-hand = У вас нет активной руки!
+microwave-component-interact-using-container-full = Контейнер заполнен
+microwave-component-interact-using-transfer-success = Перенесено { $amount } ю
+microwave-component-interact-using-transfer-fail = Это не сработает!
+microwave-component-suicide-multi-head-others-message = { $victim } пытается зажарить свои головы!
+microwave-component-suicide-others-message = { $victim } пытается зажарить свою голову!
+microwave-component-suicide-multi-head-message = Вы зажариваете свои головы!
+microwave-component-suicide-message = Вы зажариваете свою голову!
 
 ## Bound UI
 
-microwave-bound-user-interface-instant-button = INSTANT
-microwave-bound-user-interface-cook-time-label = COOK TIME: { $time }
+microwave-bound-user-interface-instant-button = МГНОВЕННО
+microwave-bound-user-interface-cook-time-label = ВРЕМЯ ПРИГОТОВЛЕНИЯ: { $time }
 
 ## UI
 
-microwave-menu-title = Microwave
-microwave-menu-start-button = Start
-microwave-menu-eject-all-text = Eject All Contents
-microwave-menu-eject-all-tooltip = This vaporizes all reagents, but ejects any solids.
-microwave-menu-instant-button = INSTANT
+microwave-menu-title = Микроволновая печь
+microwave-menu-start-button = Старт
+microwave-menu-eject-all-text = Извлечь все содержимое
+microwave-menu-eject-all-tooltip = При этом испаряются все реагенты, но возвращаются твердые вещества.
+microwave-menu-instant-button = МГНОВЕННО

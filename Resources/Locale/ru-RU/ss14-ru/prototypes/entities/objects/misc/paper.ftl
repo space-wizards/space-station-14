@@ -1,8 +1,8 @@
-ent-Paper = paper
-    .desc = A piece of white paper.
+ent-Paper = бумага
+    .desc = Лист белой бумаги.
 ent-PaperWritten = { ent-Paper }
     .desc = { ent-Paper.desc }
-ent-NukeCodePaper = nuclear authentication codes
+ent-NukeCodePaper = коды ядерной аутентификации
     .desc = { ent-PaperWritten.desc }
-ent-Pen = pen
-    .desc = A dark ink pen.
+ent-Pen = ручка
+    .desc = Ручка с чёрными чернилами.

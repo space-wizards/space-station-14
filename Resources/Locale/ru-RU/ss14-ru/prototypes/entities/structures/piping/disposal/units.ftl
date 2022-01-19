@@ -1,4 +1,4 @@
 ent-DisposalUnitBase = { ent-BaseMachinePowered }
-    .desc = A pneumatic waste disposal unit.
-ent-DisposalUnit = disposal unit
+    .desc = Пневматическая установка для утилизации отходов.
+ent-DisposalUnit = утилизатор
     .desc = { ent-DisposalUnitBase.desc }

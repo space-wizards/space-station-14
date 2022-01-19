@@ -1,19 +1,19 @@
 ## Guardian host specific
 
-guardian-created = You feel... Haunted.
-guardian-missing-invalid-action = There is no guardian under your control!
-guardian-already-present-invalid-creation = You are NOT re-living that haunting experience!
-guardian-no-actions-invalid-creation = You don't have the ability to host a guardian!
-guardian-activator-empty-invalid-creation = The injector is spent.
-guardian-activator-empty-examine = [color=#ba1919]The injector is spent.[/color]
-guardian-activator-invalid-target = Only humans can be injected! # Change this once other species can inject it?
-guardian-no-soul = Your guardian has no soul.
-guardian-available = Your guardian now has a soul.
+guardian-created = Вы чувствуете... Одержимость.
+guardian-missing-invalid-action = Под вашим контролем нет стража!
+guardian-already-present-invalid-creation = Вы НЕ переживёте заново ту одержимость!
+guardian-no-actions-invalid-creation = У вас нет возможности овладеть стражем!
+guardian-activator-empty-invalid-creation = Инжектор израсходован.
+guardian-activator-empty-examine = [color=#ba1919]Инжектор израсходован.[/color].
+guardian-activator-invalid-target = Только люди могут получить инъекцию! # Измените это, если другие расы тоже могут.
+guardian-no-soul = У вашего стража нет души.
+guardian-available = У вашего стража теперь есть душа.
 
 ## Guardian entity specific
 
-guardian-entity-recall = The guardian vanishes into thin air!
-guardian-entity-taking-damage = Your guardian is taking damage!
+guardian-entity-recall = Страж исчезает в воздухе!
+guardian-entity-taking-damage = Ваш страж получает урон!
 
 ## Health warnings
 

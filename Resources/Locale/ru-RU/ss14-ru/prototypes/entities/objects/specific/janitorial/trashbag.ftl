@@ -1,6 +1,6 @@
-ent-TrashBag = trash bag
+ent-TrashBag = мешок для мусора
     .desc = { ent-BaseItem.desc }
-ent-TrashBagBlue = trash bag
+ent-TrashBagBlue = мешок для мусора
     .desc = { ent-TrashBag.desc }
-ent-BagOfSummoningGarbage = spell of all-consuming cleanliness
+ent-BagOfSummoningGarbage = заклинание всепоглощающей чистоты
     .desc = { ent-BaseItem.desc }
