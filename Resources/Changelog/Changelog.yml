@@ -1,14 +1,6 @@
 Entries:
 - author: Zumorica
   changes:
-  - {message: Improved the join greeting text. Now you can easily know who your supervisors
-      are!, type: Tweak}
-  - {message: A station announcement will be sent when there's a captain on deck.,
-    type: Tweak}
-  id: 410
-  time: '2021-10-06T11:51:11.0000000+00:00'
-- author: Zumorica
-  changes:
   - {message: Fix bike horn sound not having pitch variation anymore., type: Fix}
   id: 411
   time: '2021-10-06T13:13:56.224775+00:00'
@@ -2916,3 +2908,10 @@ Entries:
   - {message: Hardsuit helmets and hardhats now show that they're lit., type: Fix}
   id: 911
   time: '2022-01-19T22:06:24.0000000+00:00'
+- author: moony
+  changes:
+  - {message: Players who have joined the game with a character (Not as an observer)
+      are now exempt from the player cap for the duration of the round. This means
+      you can no longer get locked out if you have to relog for some reason., type: Tweak}
+  id: 912
+  time: '2022-01-19T23:01:21.0000000+00:00'
