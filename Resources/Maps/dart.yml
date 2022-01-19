@@ -1340,7 +1340,7 @@ entities:
     parent: 4
     type: Transform
 - uid: 108
-  type: SalternSmes
+  type: SalternSMES
   components:
   - pos: 0.5,-7.5
     parent: 4
@@ -1950,7 +1950,7 @@ entities:
     parent: 4
     type: Transform
 - uid: 190
-  type: SalternSmes
+  type: SalternSMES
   components:
   - pos: 4.5,-7.5
     parent: 4
@@ -2024,7 +2024,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 199
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 2.5,-3.5
     parent: 4
@@ -2036,7 +2036,7 @@ entities:
     currentSupply: 7730
     type: PowerNetworkBattery
 - uid: 200
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 2.5,2.5
     parent: 4
@@ -3819,7 +3819,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 380
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 0.5,4.5
     parent: 4
