@@ -13,6 +13,9 @@ namespace Content.Server.Weapon.Ranged
     [RegisterComponent]
     public sealed class ServerRangedWeaponComponent : SharedRangedWeaponComponent
     {
+        [DataField("fireRate")]
+        public float FireRate;
+
         public TimeSpan LastFireTime;
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -28,10 +31,10 @@ namespace Content.Server.Weapon.Ranged
         public bool CanHotspot = true;
 
         [DataField("clumsyWeaponHandlingSound")]
-        private SoundSpecifier _clumsyWeaponHandlingSound = new SoundPathSpecifier("/Audio/Items/bikehorn.ogg");
+        public SoundSpecifier ClumsyWeaponHandlingSound = new SoundPathSpecifier("/Audio/Items/bikehorn.ogg");
 
         [DataField("clumsyWeaponShotSound")]
-        private SoundSpecifier _clumsyWeaponShotSound = new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/bang.ogg");
+        public SoundSpecifier ClumsyWeaponShotSound = new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/bang.ogg");
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("clumsyDamage")]

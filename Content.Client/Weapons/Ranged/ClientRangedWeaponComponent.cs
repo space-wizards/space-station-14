@@ -30,12 +30,5 @@ namespace Content.Client.Weapons.Ranged
 
             FireRateSelector = rangedState.FireRateSelector;
         }
-
-        public void SyncFirePos(GridId targetGrid, Vector2 targetPosition)
-        {
-#pragma warning disable 618
-            SendNetworkMessage(new FirePosEvent(targetGrid, targetPosition));
-#pragma warning restore 618
-        }
     }
 }

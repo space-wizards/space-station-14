@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Hands.Components;
 using Content.Server.PowerCell;
 using Content.Server.Stunnable;
 using Content.Server.Weapon.Ranged.Ammunition.Components;
@@ -79,7 +80,12 @@ public sealed partial class GunSystem : EntitySystem
         SubscribeLocalEvent<BoltActionBarrelComponent, ComponentGetState>(OnBoltGetState);
         SubscribeLocalEvent<BoltActionBarrelComponent, ExaminedEvent>(OnBoltExamine);
 
+        SubscribeLocalEvent<ServerMagazineBarrelComponent, ComponentInit>(OnMagazineInit);
+        SubscribeLocalEvent<ServerMagazineBarrelComponent, MapInitEvent>(OnMagazineMapInit);
         SubscribeLocalEvent<ServerMagazineBarrelComponent, ExaminedEvent>(OnMagazineExamine);
+        SubscribeLocalEvent<ServerMagazineBarrelComponent, UseInHandEvent>(OnMagazineUse);
+        SubscribeLocalEvent<ServerMagazineBarrelComponent, InteractUsingEvent>(OnMagazineInteractUsing);
+        SubscribeLocalEvent<ServerMagazineBarrelComponent, ComponentGetState>(OnMagazineGetState);
 
         SubscribeLocalEvent<PumpBarrelComponent, ComponentGetState>(OnPumpGetState);
         SubscribeLocalEvent<PumpBarrelComponent, ComponentInit>(OnPumpInit);
@@ -106,8 +112,17 @@ public sealed partial class GunSystem : EntitySystem
         if (!msg.Coordinates.IsValid(EntityManager))
             return;
 
+        if (!EntityManager.TryGetComponent(user, out HandsComponent? handsComponent))
+            return;
+
+        // TODO: Not exactly robust
+        var gun = handsComponent.GetActiveHand;
+
+        if (gun == null || !TryComp(gun.Owner, out ServerRangedWeaponComponent? weapon))
+            return;
+
         // map pos
-        TryFire(user, msg.Coordinates);
+        TryFire(user, msg.Coordinates, weapon);
     }
 
     public EntityUid? PeekAmmo(ServerRangedBarrelComponent component)
@@ -198,12 +213,12 @@ public sealed partial class GunSystem : EntitySystem
     private Angle GetRecoilAngle(ServerRangedBarrelComponent component, Angle direction)
     {
         var currentTime = _gameTiming.CurTime;
-        var timeSinceLastFire = (currentTime - component._lastFire).TotalSeconds;
-        var newTheta = MathHelper.Clamp(component._currentAngle.Theta + component.AngleIncrease - component.AngleDecay * timeSinceLastFire, component.MinAngle.Theta, component.MaxAngle.Theta);
-        component._currentAngle = new Angle(newTheta);
+        var timeSinceLastFire = (currentTime - component.LastFire).TotalSeconds;
+        var newTheta = MathHelper.Clamp(component.CurrentAngle.Theta + component.AngleIncrease - component.AngleDecay * timeSinceLastFire, component.MinAngle.Theta, component.MaxAngle.Theta);
+        component.CurrentAngle = new Angle(newTheta);
 
-        var random = (_random.NextDouble(-1, 1);
-        var angle = Angle.FromDegrees(direction.Degrees + component._currentAngle.Degrees * random);
+        var random = (_random.NextDouble(-1, 1));
+        var angle = Angle.FromDegrees(direction.Degrees + component.CurrentAngle.Degrees * random);
         return angle;
     }
 
