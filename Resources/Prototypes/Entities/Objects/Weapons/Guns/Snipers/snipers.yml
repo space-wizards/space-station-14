@@ -57,6 +57,8 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
+  - type: Item
+    sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
   - type: RangedWeapon
   - type: BoltActionBarrel
   - type: Appearance
@@ -70,6 +72,8 @@
   description: A portable anti-armour rifle. Fires armor piercing 14.5mm shells.
   components:
   - type: Sprite
+    sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
+  - type: Item
     sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
   - type: RangedWeapon
   - type: BoltActionBarrel

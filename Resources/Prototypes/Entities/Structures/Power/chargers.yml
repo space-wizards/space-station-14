@@ -2,6 +2,8 @@
   name: cell recharger
   id: PowerCellRecharger
   components:
+  - type: Transform
+    anchored: true
   - type: Sprite
     netsync: false
     sprite: Structures/Power/cell_recharger.rsi

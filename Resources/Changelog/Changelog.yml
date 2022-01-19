@@ -1,131 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: You can uncuff yourself again., type: Fix}
-  id: 389
-  time: '2021-10-01T22:17:37.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed radiation dealing wrong damage type., type: Fix}
-  id: 390
-  time: '2021-10-02T01:47:54.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Dice now have a roll cooldown., type: Tweak}
-  id: 391
-  time: '2021-10-02T09:05:03.404726+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed fuel tanks not exploding when damaged. They now explode when taking
-      heat damage., type: Fix}
-  id: 392
-  time: '2021-10-02T09:42:46.0000000+00:00'
-- author: Macoron
-  changes:
-  - {message: Fix lighting toggle on a security barrier, type: Fix}
-  id: 393
-  time: '2021-10-02T14:53:20.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Fixed radiation applying half a second's worth of damage each tick.,
-    type: Fix}
-  id: 394
-  time: '2021-10-02T17:53:10.0000000+00:00'
-- author: Efruit
-  changes:
-  - {message: 'Anchored Atmos devices (Gas miners, etc.) refusing to work', type: Fix}
-  id: 395
-  time: '2021-10-02T21:03:43.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Meat actually appears on the meat spike again, type: Fix}
-  id: 396
-  time: '2021-10-02T23:43:47.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Ghosts should no longer go in weird directions and lose the ability
-      to see when the body was inside something or buckled to something when the ghost
-      was made., type: Fix}
-  id: 397
-  time: '2021-10-03T04:51:23.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Updates AME core count indicator as the layout changes., type: Fix}
-  - {message: AME connection issues shouldn't occur anymore., type: Fix}
-  id: 398
-  time: '2021-10-03T11:33:28.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Added a rules button to the lobby and character creation screen. Be
-      sure to read them!, type: Add}
-  id: 399
-  time: '2021-10-03T21:48:29.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: Singularity should be much easier to see now, type: Tweak}
-  id: 400
-  time: '2021-10-03T22:53:44.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: Cuffs can no longer be put in your belt slot, type: Fix}
-  id: 401
-  time: '2021-10-03T22:53:52.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: AME is no longer capable of producing negative energy., type: Fix}
-  id: 402
-  time: '2021-10-04T00:58:55.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: 'Radiation storms actually hit the station again as opposed to 0,0',
-    type: Fix}
-  id: 403
-  time: '2021-10-04T01:26:45.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Pull-to-location works again., type: Fix}
-  id: 404
-  time: '2021-10-04T15:10:55.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Added a new rule against metagaming and metacomms. Be sure to read it!,
-    type: Add}
-  id: 405
-  time: '2021-10-04T15:16:06.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Added several new verbs for inserting objects and (un)buckling entities.,
-    type: Add}
-  - {message: 'Some verbs can now be triggerd by alt clicking (e.g., spin revolver).
-      Others have had alt-click removed (e.g., open storage UI), because that functionality
-      is already provided by the ''E'' keybind.', type: Tweak}
-  - {message: Moving entities remain in the context menu until out of view (you can
-      now interact with yourself while moving)., type: Fix}
-  id: 406
-  time: '2021-10-05T03:29:03.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: unbreak pulling prediction, type: Fix}
-  id: 407
-  time: '2021-10-05T21:51:34.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Fix being able to trap admin ghosts on lockers., type: Fix}
-  id: 408
-  time: '2021-10-06T09:58:02.819938+00:00'
-- author: Zumorica
-  changes:
-  - {message: Fix ghosts having empty names under certain conditions., type: Fix}
-  id: 409
-  time: '2021-10-06T09:58:02.820744+00:00'
-- author: Zumorica
-  changes:
-  - {message: Improved the join greeting text. Now you can easily know who your supervisors
-      are!, type: Tweak}
-  - {message: A station announcement will be sent when there's a captain on deck.,
-    type: Tweak}
-  id: 410
-  time: '2021-10-06T11:51:11.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: Fix bike horn sound not having pitch variation anymore., type: Fix}
@@ -2916,3 +2789,129 @@ Entries:
   - {message: Your view will now zoom out when piloting a shuttle., type: Tweak}
   id: 890
   time: '2022-01-16T20:07:15.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Nerf holoparasite damage from 40 to 22., type: Tweak}
+  id: 891
+  time: '2022-01-17T18:45:01.0000000+00:00'
+- author: Zyme
+  changes:
+  - {message: Added brown briefcase, type: Add}
+  id: 892
+  time: '2022-01-17T19:21:28.0000000+00:00'
+- author: Lamrr
+  changes:
+  - {message: 'New pAI models have arrived, hopefully they won''t confused with PDAs
+      now.', type: Tweak}
+  id: 893
+  time: '2022-01-17T19:21:40.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: 'Added bolas, which includes the sprite, sound on throw/land, and crafting
+      recipe.', type: Add}
+  - {message: Tweaked Stun system to allow for stun/knockdown on thrown items that
+      have the attribute, type: Tweak}
+  - {message: Also fixes the ability for stun baton to work when thrown., type: Fix}
+  id: 894
+  time: '2022-01-17T19:21:57.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Ghost warp locations are now sorted alphabetically., type: Tweak}
+  id: 895
+  time: '2022-01-17T19:22:17.0000000+00:00'
+- author: scaly-chimp
+  changes:
+  - {message: the amount of characters you can write into a single piece of paper
+      has been capped at 500., type: Tweak}
+  id: 896
+  time: '2022-01-17T19:24:10.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Prisoner EVA suits are being rolled out to a station near you!, type: Add}
+  id: 897
+  time: '2022-01-17T19:25:04.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Quartermaster now have their own access level and airlocks., type: Add}
+  id: 898
+  time: '2022-01-17T19:31:58.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Click dragging onto tables now fully works again. You don't have to
+      aim for the lower right corner anymore., type: Fix}
+  id: 899
+  time: '2022-01-18T02:02:20.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Lit cigars and cigarettes cause fires now., type: Tweak}
+  id: 900
+  time: '2022-01-18T06:35:17.0000000+00:00'
+- author: Schiene
+  changes:
+  - {message: 'Fixed Power issues on both Reach and Dart, Reach has more thrusters.',
+    type: Add}
+  id: 901
+  time: '2022-01-18T06:50:21.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: The Syndicate have discovered the concept of proximity fuzes. On-collide
+      explosives will no longer embed themselves in the wall before exploding., type: Tweak}
+  id: 902
+  time: '2022-01-18T08:26:21.0000000+00:00'
+- author: sewerpig
+  changes:
+  - {message: Wooden Mosin and Heavy Sniper inhand sprites displays properly now,
+    type: Fix}
+  id: 903
+  time: '2022-01-18T09:43:47.0000000+00:00'
+- author: Lamrr
+  changes:
+  - {message: 'The captain''s carapace has returned! Captains can now opt for this
+      protective, yet stylish vest instead of their bulky hardsuits.', type: Add}
+  id: 904
+  time: '2022-01-18T17:26:09.0000000+00:00'
+- author: Weaver
+  changes:
+  - {message: The game wiki (wiki.ss14.io)'s chemistry guide is now 100% up to date
+      and automated. You can trust that it's correct now., type: Add}
+  id: 905
+  time: '2022-01-18T21:44:22.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed bug stopping cable from being cut., type: Fix}
+  id: 906
+  time: '2022-01-18T22:17:46.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Added muzzles to silence annoying criminals., type: Add}
+  - {message: Prisoners wardrobes now have a muzzle inside., type: Add}
+  id: 907
+  time: '2022-01-18T22:18:22.0000000+00:00'
+- author: Capnsockless
+  changes:
+  - {message: Added a checkerboard., type: Add}
+  id: 908
+  time: '2022-01-18T23:44:24.0000000+00:00'
+- author: Weaver
+  changes:
+  - {message: "Gas analyzers are now obtainable in-game in tool closets and YouTool\u2122\
+      \ vending machines.", type: Add}
+  id: 909
+  time: '2022-01-19T02:31:33.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Admins can now also get chat logs in-game., type: Add}
+  id: 910
+  time: '2022-01-19T02:35:31.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Hardsuit helmets and hardhats now show that they're lit., type: Fix}
+  id: 911
+  time: '2022-01-19T22:06:24.0000000+00:00'
+- author: moony
+  changes:
+  - {message: Players who have joined the game with a character (Not as an observer)
+      are now exempt from the player cap for the duration of the round. This means
+      you can no longer get locked out if you have to relog for some reason., type: Tweak}
+  id: 912
+  time: '2022-01-19T23:01:21.0000000+00:00'

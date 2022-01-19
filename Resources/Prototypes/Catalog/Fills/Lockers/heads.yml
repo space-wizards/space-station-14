@@ -33,6 +33,7 @@
   components:
   - type: StorageFill
     contents:
+      - id: ClothingOuterArmorCaptainCarapace
       - id: NukeDisk
         prob: 1
       - id: PinpointerNuclear

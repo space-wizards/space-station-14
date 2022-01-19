@@ -72,3 +72,18 @@
     sprite: Clothing/Mask/sterile.rsi
   - type: BreathMask
   - type: IngestionBlocker
+
+- type: entity
+  parent: ClothingMaskBase
+  id: ClothingMaskMuzzle
+  name: muzzle
+  description: To stop that awful noise.
+  components:
+    - type: Sprite
+      sprite: Clothing/Mask/muzzle.rsi
+    - type: Clothing
+      sprite: Clothing/Mask/muzzle.rsi
+    - type: IngestionBlocker
+    - type: AddAccentClothing
+      accent: ReplacementAccent
+      replacement: mumble
