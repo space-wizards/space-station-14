@@ -1,11 +1,6 @@
 Entries:
 - author: Zumorica
   changes:
-  - {message: Fix ghosts having empty names under certain conditions., type: Fix}
-  id: 409
-  time: '2021-10-06T09:58:02.820744+00:00'
-- author: Zumorica
-  changes:
   - {message: Improved the join greeting text. Now you can easily know who your supervisors
       are!, type: Tweak}
   - {message: A station announcement will be sent when there's a captain on deck.,
@@ -2916,3 +2911,8 @@ Entries:
   - {message: Admins can now also get chat logs in-game., type: Add}
   id: 910
   time: '2022-01-19T02:35:31.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Hardsuit helmets and hardhats now show that they're lit., type: Fix}
+  id: 911
+  time: '2022-01-19T22:06:24.0000000+00:00'
