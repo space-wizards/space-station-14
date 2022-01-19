@@ -1,7 +1,7 @@
-#POWER
+# POWER
 - type: construction
   name: APC
-  id: apc
+  id: APC
   graph: apc
   startNode: start
   targetNode: apc
@@ -15,7 +15,7 @@
   canBuildInImpassable: true
 
 - type: construction
-  name: Solar Assembly
+  name: solar assembly
   id: SolarPanel
   graph: solarpanel
   startNode: start
@@ -32,8 +32,8 @@
     - !type:TileNotBlocked {}
 
 - type: construction
-  name: Cable Terminal
-  id: cableTerminal
+  name: cable terminal
+  id: CableTerminal
   graph: cable_terminal
   startNode: start
   targetNode: cable_terminal
@@ -47,7 +47,7 @@
   canBuildInImpassable: false
 
 
-#DISPOSALS
+# DISPOSALS
 - type: construction
   name: disposal unit
   id: DisposalUnit
@@ -62,4 +62,39 @@
     state: "disposal"
 
 
-#ATMOS
+# ATMOS
+- type: construction
+  name: air alarm
+  id: AirAlarmFixture
+  graph: air_alarm
+  startNode: start
+  targetNode: air_alarm
+  category: Structures
+  description: An air alarm. Alarms... air?
+  icon:
+    sprite: Structures/Wallmounts/air_monitors.rsi
+    state: alarm0
+  placementMode: SnapgridCenter
+  objectType: Structure
+  canRotate: true
+  canBuildInImpassable: true
+  conditions:
+  - !type:WallmountCondition {}
+
+- type: construction
+  name: fire alarm
+  id: FireAlarm
+  graph: fire_alarm
+  startNode: start
+  targetNode: fire_alarm
+  category: Structures
+  description: A fire alarm. Spicy!
+  icon:
+    sprite: Structures/Wallmounts/air_monitors.rsi
+    state: fire0
+  placementMode: SnapgridCenter
+  objectType: Structure
+  canRotate: true
+  canBuildInImpassable: true
+  conditions:
+  - !type:WallmountCondition {}
