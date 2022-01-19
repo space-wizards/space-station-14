@@ -1,10 +1,19 @@
 using System;
+using Content.Server.Atmos.EntitySystems;
+using Content.Server.CombatMode;
+using Content.Server.Hands.Components;
+using Content.Server.Interaction.Components;
+using Content.Server.Stunnable;
 using Content.Server.Weapon.Ranged.Barrels.Components;
+using Content.Shared.Damage;
 using Content.Shared.Examine;
+using Content.Shared.Popups;
 using Content.Shared.Weapons.Ranged.Components;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Player;
 
 namespace Content.Server.Weapon.Ranged;
 
@@ -15,69 +24,65 @@ public sealed partial class GunSystem
     /// </summary>
     /// <param name="user">Entity that is operating the weapon, usually the player.</param>
     /// <param name="targetPos">Target position on the map to shoot at.</param>
-    private void TryFire(EntityUid user, Vector2 targetPos)
+    private void TryFire(EntityUid user, Vector2 targetPos, ServerRangedWeaponComponent gun)
     {
-        if (!_entMan.TryGetComponent(user, out HandsComponent? hands) || hands.GetActiveHand?.Owner != Owner)
+        if (!TryComp(user, out HandsComponent? hands) || hands.GetActiveHand?.Owner != gun.Owner)
         {
             return;
         }
 
-        if (!_entMan.TryGetComponent(user, out CombatModeComponent? combat) || !combat.IsInCombatMode)
+        if (!TryComp(user, out CombatModeComponent? combat) || !combat.IsInCombatMode)
         {
             return;
         }
 
-        if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user)) return;
+        if (!_blocker.CanInteract(user)) return;
 
-        var fireAttempt = new GunSystem.GunFireAttemptEvent(user, this);
-        _entMan.EventBus.RaiseLocalEvent(Owner, fireAttempt);
+        var fireAttempt = new GunFireAttemptEvent(user, gun);
+        EntityManager.EventBus.RaiseLocalEvent(gun.Owner, fireAttempt);
 
-        if (!fireAttempt.Cancelled)
-        {
+        if (fireAttempt.Cancelled)
             return;
-        }
 
         var curTime = _gameTiming.CurTime;
-        var span = curTime - _lastFireTime;
+        var span = curTime - gun.LastFireTime;
         if (span.TotalSeconds < 1 / _barrel?.FireRate)
         {
             return;
         }
 
-        _lastFireTime = curTime;
+        // TODO: Clumsy should be eventbus I think?
 
-        if (ClumsyCheck && ClumsyDamage != null && ClumsyComponent.TryRollClumsy(user, ClumsyExplodeChance))
+        gun.LastFireTime = curTime;
+        var coordinates = Transform(gun.Owner).Coordinates;
+
+        if (gun.ClumsyCheck && gun.ClumsyDamage != null && ClumsyComponent.TryRollClumsy(user, gun.ClumsyExplodeChance))
         {
             //Wound them
-            EntitySystem.Get<DamageableSystem>().TryChangeDamage(user, ClumsyDamage);
-            EntitySystem.Get<StunSystem>().TryParalyze(user, TimeSpan.FromSeconds(3f), true);
+            _damageable.TryChangeDamage(user, gun.ClumsyDamage);
+            _stun.TryParalyze(user, TimeSpan.FromSeconds(3f), true);
 
             // Apply salt to the wound ("Honk!")
             SoundSystem.Play(
-                Filter.Pvs(Owner), _clumsyWeaponHandlingSound.GetSound(),
-                _entMan.GetComponent<TransformComponent>(Owner).Coordinates, AudioParams.Default.WithMaxDistance(5));
+                Filter.Pvs(Owner), gun._clumsyWeaponHandlingSound.GetSound(),
+                coordinates, AudioParams.Default.WithMaxDistance(5));
 
             SoundSystem.Play(
-                Filter.Pvs(Owner), _clumsyWeaponShotSound.GetSound(),
-                _entMan.GetComponent<TransformComponent>(Owner).Coordinates, AudioParams.Default.WithMaxDistance(5));
+                Filter.Pvs(Owner), gun._clumsyWeaponShotSound.GetSound(),
+                coordinates, AudioParams.Default.WithMaxDistance(5));
 
             user.PopupMessage(Loc.GetString("server-ranged-weapon-component-try-fire-clumsy"));
 
-            _entMan.DeleteEntity(Owner);
+            EntityManager.DeleteEntity(gun.Owner);
             return;
         }
 
-        if (_canHotspot)
+        if (gun.CanHotspot)
         {
-            EntitySystem.Get<AtmosphereSystem>().HotspotExpose(_entMan.GetComponent<TransformComponent>(user).Coordinates, 700, 50);
+            _atmos.HotspotExpose(coordinates, 700, 50);
         }
 
-        _entMan.EventBus.RaiseLocalEvent(Owner, new GunSystem.GunFireEvent());
-    }
-
-    private void OnPumpExamine(EntityUid uid, PumpBarrelComponent component, ExaminedEvent args)
-    {
-        args.PushMarkup(Loc.GetString("pump-barrel-component-on-examine", ("caliber", component.Caliber)));
+        EntityManager.EventBus.RaiseLocalEvent(gun.Owner, new GunFireEvent());
     }
 
     private void OnMagazineExamine(EntityUid uid, ServerMagazineBarrelComponent component, ExaminedEvent args)

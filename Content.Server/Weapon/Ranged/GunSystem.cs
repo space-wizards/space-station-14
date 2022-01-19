@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
+using Content.Server.Atmos.EntitySystems;
+using Content.Server.Stunnable;
 using Content.Server.Weapon.Ranged.Ammunition.Components;
 using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
@@ -29,9 +32,12 @@ public sealed partial class GunSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ActionBlockerSystem  _blocker = default!;
+    [Dependency] private readonly AtmosphereSystem _atmos = default!;
+    [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly EffectSystem _effects = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly StunSystem _stun = default!;
 
     /// <summary>
     /// How many sounds are allowed to be played on ejecting multiple casings.
@@ -62,6 +68,15 @@ public sealed partial class GunSystem : EntitySystem
         SubscribeLocalEvent<BoltActionBarrelComponent, ComponentGetState>(OnBoltGetState);
         SubscribeLocalEvent<BoltActionBarrelComponent, ExaminedEvent>(OnBoltExamine);
 
+        SubscribeLocalEvent<ServerMagazineBarrelComponent, ExaminedEvent>(OnMagazineExamine);
+
+        SubscribeLocalEvent<PumpBarrelComponent, ComponentGetState>(OnPumpGetState);
+        SubscribeLocalEvent<PumpBarrelComponent, ComponentInit>(OnPumpInit);
+        SubscribeLocalEvent<PumpBarrelComponent, MapInitEvent>(OnPumpMapInit);
+        SubscribeLocalEvent<PumpBarrelComponent, ExaminedEvent>(OnPumpExamine);
+        SubscribeLocalEvent<PumpBarrelComponent, UseInHandEvent>(OnPumpUse);
+        SubscribeLocalEvent<PumpBarrelComponent, InteractUsingEvent>(OnPumpInteractUsing);
+
         SubscribeLocalEvent<RevolverBarrelComponent, MapInitEvent>(OnRevolverMapInit);
         SubscribeLocalEvent<RevolverBarrelComponent, UseInHandEvent>(OnRevolverUse);
         SubscribeLocalEvent<RevolverBarrelComponent, InteractUsingEvent>(OnRevolverInteractUsing);
@@ -70,11 +85,6 @@ public sealed partial class GunSystem : EntitySystem
 
         SubscribeLocalEvent<ServerRangedWeaponComponent, ExaminedEvent>(OnGunExamine);
         SubscribeNetworkEvent<FirePosEvent>(OnFirePos);
-
-        SubscribeLocalEvent<PumpBarrelComponent, ExaminedEvent>(OnPumpExamine);
-        SubscribeLocalEvent<ServerMagazineBarrelComponent, ExaminedEvent>(OnMagazineExamine);
-
-
     }
 
     private void OnFirePos(FirePosEvent msg, EntitySessionEventArgs args)
