@@ -1,11 +1,6 @@
 Entries:
 - author: Zumorica
   changes:
-  - {message: Fix being able to trap admin ghosts on lockers., type: Fix}
-  id: 408
-  time: '2021-10-06T09:58:02.819938+00:00'
-- author: Zumorica
-  changes:
   - {message: Fix ghosts having empty names under certain conditions., type: Fix}
   id: 409
   time: '2021-10-06T09:58:02.820744+00:00'
@@ -2916,3 +2911,8 @@ Entries:
       \ vending machines.", type: Add}
   id: 909
   time: '2022-01-19T02:31:33.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Admins can now also get chat logs in-game., type: Add}
+  id: 910
+  time: '2022-01-19T02:35:31.0000000+00:00'
