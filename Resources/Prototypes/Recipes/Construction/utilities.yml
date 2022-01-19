@@ -84,7 +84,7 @@
 - type: construction
   name: fire alarm
   id: FireAlarm
-  graph: fireAlarm
+  graph: FireAlarm
   startNode: start
   targetNode: fire_alarm
   category: Structures

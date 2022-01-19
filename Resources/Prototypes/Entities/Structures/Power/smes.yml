@@ -50,7 +50,7 @@
       color: "#c9c042"
       castShadows: false
     - type: Construction
-      graph: machine
+      graph: Machine
       node: machine
     - type: Wires
       BoardName: "SMES"

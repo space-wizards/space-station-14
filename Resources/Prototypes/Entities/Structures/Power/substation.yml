@@ -43,7 +43,7 @@
     supplyRampTolerance: 5000
     supplyRampRate: 1000
   - type: Construction
-    graph: machine
+    graph: Machine
     node: machine
   - type: Destructible
     thresholds:

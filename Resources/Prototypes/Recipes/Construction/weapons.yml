@@ -1,7 +1,7 @@
 - type: construction
   name: crude spear
   id: Spear
-  graph: spear
+  graph: Spear
   startNode: start
   targetNode: spear
   category: Weapons
@@ -12,7 +12,7 @@
 - type: construction
   name: makeshift bola
   id: Bola
-  graph: bola
+  graph: Bola
   startNode: start
   targetNode: bola
   category: Weapons
