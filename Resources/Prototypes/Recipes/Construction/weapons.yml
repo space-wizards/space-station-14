@@ -1,6 +1,6 @@
 - type: construction
   name: crude spear
-  id: spear
+  id: Spear
   graph: spear
   startNode: start
   targetNode: spear
@@ -11,7 +11,7 @@
 
 - type: construction
   name: makeshift bola
-  id: bola
+  id: Bola
   graph: bola
   startNode: start
   targetNode: bola

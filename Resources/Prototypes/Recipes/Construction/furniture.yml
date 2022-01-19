@@ -137,7 +137,7 @@
 
 #tables
 - type: construction
-  name: table
+  name: steel table
   id: Table
   graph: table
   startNode: start
@@ -154,7 +154,7 @@
     - !type:TileNotBlocked
 
 - type: construction
-  name: reinforced table
+  name: reinforced steel table
   id: TableReinforced
   graph: table
   startNode: start

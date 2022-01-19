@@ -1,6 +1,6 @@
 - type: construction
   name: girder
-  id: girder
+  id: Girder
   graph: girder
   startNode: start
   targetNode: girder
@@ -18,7 +18,7 @@
 
 - type: construction
   name: wall
-  id: wall
+  id: Wall
   graph: girder
   startNode: start
   targetNode: wall
@@ -36,7 +36,7 @@
 
 - type: construction
   name: reinforced wall
-  id: reinforcedWall
+  id: ReinforcedWall
   graph: girder
   startNode: start
   targetNode: reinforcedWall
@@ -326,7 +326,7 @@
 
 - type: construction
   name: airlock
-  id: airlock
+  id: Airlock
   graph: airlock
   startNode: start
   targetNode: airlock
@@ -343,7 +343,7 @@
 
 - type: construction
   name: windoor
-  id: windoor
+  id: Windoor
   graph: windoor
   startNode: start
   targetNode: windoor
@@ -360,7 +360,7 @@
 
 - type: construction
   name: secure windoor
-  id: secureWindoor
+  id: SecureWindoor
   graph: windoor
   startNode: start
   targetNode: windoorSecure
@@ -438,7 +438,7 @@
 #conveyor
 - type: construction
   name: conveyor belt
-  id: conveyorbelt
+  id: ConveyorBelt
   graph: ConveyorGraph
   startNode: start
   targetNode: entity
@@ -455,7 +455,7 @@
 
 - type: construction
   name: two-way lever
-  id: twowaylever
+  id: TwoWayLever
   graph: leverGraph
   startNode: start
   targetNode: lever

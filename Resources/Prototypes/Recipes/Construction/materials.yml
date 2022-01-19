@@ -1,6 +1,6 @@
 ﻿- type: construction
-  name: Metal Rod
-  id: metalRod
+  name: metal rod
+  id: MetalRod
   graph: metalRod
   startNode: start
   targetNode: MetalRod
@@ -10,8 +10,8 @@
   objectType: Item
 
 - type: construction
-  name: Reinforced Glass
-  id: sheetRGlass
+  name: reinforced glass
+  id: SheetRGlass
   graph: glass
   startNode: start
   targetNode: SheetRGlass
@@ -20,8 +20,8 @@
   objectType: Item
 
 - type: construction
-  name: Plasma Glass
-  id: sheetPGlass
+  name: plasma glass
+  id: SheetPGlass
   graph: glass
   startNode: start
   targetNode: SheetPGlass
@@ -30,8 +30,8 @@
   objectType: Item
 
 - type: construction
-  name: Reinforced Plasma Glass
-  id: sheetRPGlass
+  name: reinforced plasma glass
+  id: SheetRPGlass
   graph: glass
   startNode: start
   targetNode: SheetRPGlass
