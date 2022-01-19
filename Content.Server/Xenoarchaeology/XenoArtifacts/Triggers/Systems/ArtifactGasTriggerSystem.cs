@@ -21,24 +21,22 @@ public class ArtifactGasTriggerSystem : EntitySystem
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
-        var query = EntityManager.EntityQuery<ArtifactGasTriggerComponent>();
-        foreach (var component in query)
+        var query = EntityManager.EntityQuery<ArtifactGasTriggerComponent, TransformComponent>();
+        foreach (var (trigger, transform) in query)
         {
-            if (component.ActivationGas == null)
+            if (trigger.ActivationGas == null)
                 return;
 
-            var transform = Transform(component.Owner);
             var environment = _atmosphereSystem.GetTileMixture(transform.Coordinates, true);
-
             if (environment == null)
                 return;
 
             // check if outside there is enough moles to activate artifact
-            var moles = environment.GetMoles(component.ActivationGas.Value);
-            if (moles < component.ActivationMoles)
+            var moles = environment.GetMoles(trigger.ActivationGas.Value);
+            if (moles < trigger.ActivationMoles)
                 return;
 
-            _artifactSystem.TryActivateArtifact(component.Owner);
+            _artifactSystem.TryActivateArtifact(trigger.Owner);
         }
     }
 
