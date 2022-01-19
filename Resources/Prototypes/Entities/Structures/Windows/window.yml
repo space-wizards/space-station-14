@@ -58,7 +58,7 @@
     base: window
   - type: Window
   - type: Construction
-    graph: window
+    graph: Window
     node: window
   - type: Appearance
     visuals:
@@ -128,7 +128,7 @@
     - South
   - type: Window
   - type: Construction
-    graph: windowDirectional
+    graph: WindowDirectional
     node: windowDirectional
 
 - type: entity

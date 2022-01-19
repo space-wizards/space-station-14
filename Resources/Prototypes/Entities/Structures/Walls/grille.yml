@@ -17,7 +17,7 @@
       sprite: Structures/Walls/grille.rsi
       state: grille
     - type: Construction
-      graph: grille
+      graph: Grille
       node: grille
       deconstructionTarget: start
     - type: Damageable
