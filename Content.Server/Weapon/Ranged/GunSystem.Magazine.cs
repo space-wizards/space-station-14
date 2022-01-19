@@ -273,12 +273,12 @@ public sealed partial class GunSystem
         UpdateMagazineAppearance(component);
     }
 
-    public EntityUid? PeekMagazineAmmo(MagazineBarrelComponent component)
+    public EntityUid? PeekAmmo(MagazineBarrelComponent component)
     {
         return component.BoltOpen ? null : component.ChamberContainer.ContainedEntity;
     }
 
-    public EntityUid? TakeMagazineProjectile(MagazineBarrelComponent component, EntityCoordinates spawnAt)
+    public EntityUid? TakeProjectile(MagazineBarrelComponent component, EntityCoordinates spawnAt)
     {
         if (component.BoltOpen)
             return null;

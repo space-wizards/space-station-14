@@ -243,7 +243,7 @@ public sealed partial class GunSystem
             component.SoundGunshot.GetSound());
     }
 
-    public EntityUid? PeekBoltAmmo(BoltActionBarrelComponent component)
+    public EntityUid? PeekAmmo(BoltActionBarrelComponent component)
     {
         return component.ChamberContainer.ContainedEntity;
     }

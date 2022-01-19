@@ -196,7 +196,7 @@ public sealed partial class GunSystem
         args.Verbs.Add(verb);
     }
 
-    public EntityUid? PeekRevolverAmmo(RevolverBarrelComponent component)
+    public EntityUid? PeekAmmo(RevolverBarrelComponent component)
     {
         return component.AmmoSlots[component.CurrentSlot];
     }

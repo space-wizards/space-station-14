@@ -167,7 +167,7 @@ public sealed partial class GunSystem
         UpdatePumpAppearance(component);
     }
 
-    public EntityUid? PeekPumpAmmo(PumpBarrelComponent component)
+    public EntityUid? PeekAmmo(PumpBarrelComponent component)
     {
         return component.ChamberContainer.ContainedEntity;
     }

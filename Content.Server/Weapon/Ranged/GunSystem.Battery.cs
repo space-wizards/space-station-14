@@ -51,7 +51,7 @@ public sealed partial class GunSystem
         appearanceComponent.SetData(AmmoVisuals.AmmoMax, component.Capacity);
     }
 
-    public EntityUid? PeekBatteryAmmo(BatteryBarrelComponent component)
+    public EntityUid? PeekAmmo(BatteryBarrelComponent component)
     {
         // Spawn a dummy entity because it's easier to work with I guess
         // This will get re-used for the projectile
@@ -65,7 +65,7 @@ public sealed partial class GunSystem
         return ammo.Value;
     }
 
-    public EntityUid? TakeBatteryProjectile(BatteryBarrelComponent component, EntityCoordinates spawnAt)
+    public EntityUid? TakeProjectile(BatteryBarrelComponent component, EntityCoordinates spawnAt)
     {
         if (!_cell.TryGetBatteryFromSlot(component.Owner, out var capacitor))
             return null;

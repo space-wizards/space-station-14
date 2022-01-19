@@ -153,34 +153,42 @@ public sealed partial class GunSystem : EntitySystem
 
     public EntityUid? PeekAmmo(ServerRangedBarrelComponent component)
     {
-        switch (component)
+        return component switch
         {
-            default:
-                throw new NotImplementedException();
-        }
+            BatteryBarrelComponent battery => PeekAmmo(battery),
+            BoltActionBarrelComponent bolt => PeekAmmo(bolt),
+            MagazineBarrelComponent mag => PeekAmmo(mag),
+            PumpBarrelComponent pump => PeekAmmo(pump),
+            RevolverBarrelComponent revolver => PeekAmmo(revolver),
+            _ => throw new NotImplementedException()
+        };
     }
 
     public EntityUid? TakeProjectile(ServerRangedBarrelComponent component, EntityCoordinates spawnAt)
     {
-        switch (component)
+        return component switch
         {
-            default:
-                throw new NotImplementedException();
-        }
+            BatteryBarrelComponent battery => TakeProjectile(battery, spawnAt),
+            BoltActionBarrelComponent bolt => TakeProjectile(bolt, spawnAt),
+            MagazineBarrelComponent mag => TakeProjectile(mag, spawnAt),
+            PumpBarrelComponent pump => TakeProjectile(pump, spawnAt),
+            RevolverBarrelComponent revolver => TakeProjectile(revolver, spawnAt),
+            _ => throw new NotImplementedException()
+        };
     }
 
     private void SetEjectDirections(ref Direction[]? directions)
     {
-        if (directions != null) return;
-
-        directions = new[]
+        directions ??= new[]
         {
             Direction.East,
+            Direction.NorthEast,
             Direction.North,
             Direction.NorthWest,
+            Direction.West,
+            Direction.SouthWest,
             Direction.South,
             Direction.SouthEast,
-            Direction.West
         };
     }
 
@@ -188,7 +196,6 @@ public sealed partial class GunSystem : EntitySystem
     /// Drops multiple cartridges / shells on the floor
     /// Wraps EjectCasing to make it less toxic for bulk ejections
     /// </summary>
-    /// <param name="entities"></param>
     public void EjectCasings(IEnumerable<EntityUid> entities, Direction[]? ejectDirections = null)
     {
         SetEjectDirections(ref ejectDirections);
@@ -224,7 +231,7 @@ public sealed partial class GunSystem : EntitySystem
 
         var offsetPos = (_random.NextFloat(-ejectOffset, ejectOffset), _random.NextFloat(-ejectOffset, ejectOffset));
 
-        var xform = EntityManager.GetComponent<TransformComponent>(entity);
+        var xform = Transform(entity);
 
         var coordinates = xform.Coordinates;
         coordinates = coordinates.Offset(offsetPos);
