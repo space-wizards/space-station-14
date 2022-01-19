@@ -1,7 +1,9 @@
+using System.Collections.Generic;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
@@ -18,8 +20,8 @@ public class SpawnArtifactComponent : Component
     [DataField("random")]
     public bool RandomPrototype = true;
 
-    [DataField("possiblePrototypes")]
-    public string[] PossiblePrototypes = {};
+    [DataField("possiblePrototypes", customTypeSerializer:typeof(PrototypeIdListSerializer<EntityPrototype>))]
+    public List<string> PossiblePrototypes = new();
 
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("prototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]

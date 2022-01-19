@@ -58,7 +58,7 @@ public class SpawnArtifactSystem : EntitySystem
 
         if (!component.RandomPrototype)
             return;
-        if (component.PossiblePrototypes.Length == 0)
+        if (component.PossiblePrototypes.Count == 0)
             return;
 
         var proto = _random.Pick(component.PossiblePrototypes);
