@@ -28,7 +28,7 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Construction
-    graph: table
+    graph: Table
     node: TableFrame
 
 - type: entity
@@ -61,7 +61,7 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Construction
-    graph: table
+    graph: Table
     node: Table
 
 - type: entity
@@ -91,7 +91,7 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Construction
-    graph: table
+    graph: Table
     node: TableReinforced
 
 - type: entity
@@ -121,7 +121,7 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Construction
-    graph: table
+    graph: Table
     node: TableGlass
 
 - type: entity
@@ -154,7 +154,7 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Construction
-    graph: table
+    graph: Table
     node: TableReinforcedGlass
 
 - type: entity
@@ -187,7 +187,7 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Construction
-    graph: table
+    graph: Table
     node: TablePlasmaGlass
 
 - type: entity
@@ -219,7 +219,7 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Construction
-    graph: table
+    graph: Table
     node: TableWood
   - type: Tag
     tags:
@@ -257,7 +257,7 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Construction
-    graph: table
+    graph: Table
     node: TableCarpet
   - type: Tag
     tags:
