@@ -2,7 +2,7 @@
 - type: construction
   name: APC
   id: APC
-  graph: apc
+  graph: APC
   startNode: start
   targetNode: apc
   category: Utilities
@@ -17,7 +17,7 @@
 - type: construction
   name: solar assembly
   id: SolarPanel
-  graph: solarpanel
+  graph: SolarPanel
   startNode: start
   targetNode: solarpanel
   category: Utilities
@@ -34,7 +34,7 @@
 - type: construction
   name: cable terminal
   id: CableTerminal
-  graph: cable_terminal
+  graph: CableTerminal
   startNode: start
   targetNode: cable_terminal
   category: Utilities
@@ -51,7 +51,7 @@
 - type: construction
   name: disposal unit
   id: DisposalUnit
-  graph: disposalMachine
+  graph: DisposalMachine
   startNode: start
   targetNode: disposal_unit
   category: Utilities
@@ -66,7 +66,7 @@
 - type: construction
   name: air alarm
   id: AirAlarmFixture
-  graph: air_alarm
+  graph: AirAlarm
   startNode: start
   targetNode: air_alarm
   category: Structures
@@ -84,7 +84,7 @@
 - type: construction
   name: fire alarm
   id: FireAlarm
-  graph: fire_alarm
+  graph: fireAlarm
   startNode: start
   targetNode: fire_alarm
   category: Structures

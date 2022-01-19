@@ -65,7 +65,7 @@
       - !type:DoActsBehavior
         acts: ["Breakage"]
   - type: Construction
-    graph: solarpanel
+    graph: SolarPanel
     node: solarpanel
 
 - type: entity

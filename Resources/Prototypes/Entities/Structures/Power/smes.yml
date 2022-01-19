@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  id: BaseSmes
+  id: BaseSMES
   parent: BaseMachine
   name: SMES
   description: A high-capacity superconducting magnetic energy storage (SMES) unit.
