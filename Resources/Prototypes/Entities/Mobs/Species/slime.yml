@@ -1,7 +1,7 @@
 - type: entity
-  name: Slime Person
-  parent: MobHuman
-  id: BaseSlimePerson
+  name: Urist McSlime
+  parent: MobHumanBase
+  id: MobSlimePersonBase
   description: A miserable pile of slime.
   abstract: true
   components:
@@ -48,7 +48,7 @@
           sprite: Mobs/Customization/masking_helpers.rsi
           state: female_full
           visible: false
-        - map: [ "enum.Slots.INNERCLOTHING" ]
+        - map: [ "jumpsuit" ]
           shader: StencilDraw
         - map: [ "enum.HumanoidVisualLayers.LHand" ]
           color: "#b8b8b8"
@@ -71,26 +71,125 @@
           sprite: Objects/Misc/handcuffs.rsi
           state: body-overlay-2
           visible: false
-        - map: [ "enum.Slots.IDCARD" ]
-        - map: [ "enum.Slots.GLOVES" ]
-        - map: [ "enum.Slots.SHOES" ]
-        - map: [ "enum.Slots.EARS" ]
-        - map: [ "enum.Slots.OUTERCLOTHING" ]
-        - map: [ "enum.Slots.EYES" ]
-        - map: [ "enum.Slots.BELT" ]
-        - map: [ "enum.Slots.NECK" ]
-        - map: [ "enum.Slots.BACKPACK" ]
+        - map: [ "id" ]
+        - map: [ "gloves" ]
+        - map: [ "shoes" ]
+        - map: [ "ears" ]
+        - map: [ "outerClothing" ]
+        - map: [ "eyes" ]
+        - map: [ "belt" ]
+        - map: [ "neck" ]
+        - map: [ "back" ]
         - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
           state: shaved
           sprite: Mobs/Customization/human_facial_hair.rsi
         - map: [ "enum.HumanoidVisualLayers.Hair" ]
           state: bald
           sprite: Mobs/Customization/human_hair.rsi
-        - map: [ "enum.Slots.MASK" ]
-        - map: [ "enum.Slots.HEAD" ]
-        - map: [ "enum.Slots.POCKET1" ]
-        - map: [ "enum.Slots.POCKET2" ]
+        - map: [ "mask" ]
+        - map: [ "head" ]
+        - map: [ "pocket1" ]
+        - map: [ "pocket2" ]
     - type: Body
       template: HumanoidTemplate
       preset: SlimePreset
     - type: DoorBumpOpener
+    - type: HumanoidAppearance
+      hairMatchesSkin: true
+      hairAlpha: 0.5
+
+- type: entity
+  save: false
+  name: Urist McHands
+  parent: MobHumanDummy
+  id: MobSlimePersonDummy
+  abstract: true
+  description: A dummy slime meant to be used in character setup.
+  components:
+    - type: Sprite
+      netsync: false
+      drawdepth: Mobs
+      layers:
+        - map: [ "enum.HumanoidVisualLayers.Chest" ]
+          color: "#b8b8b8"
+          sprite: Mobs/Species/Slime/parts.rsi
+          state: torso_m
+        - map: [ "enum.HumanoidVisualLayers.Head" ]
+          color: "#b8b8b8"
+          sprite: Mobs/Species/Slime/parts.rsi
+          state: head_m
+        - map: [ "enum.HumanoidVisualLayers.Eyes" ]
+          color: "#008800"
+          sprite: Mobs/Customization/eyes.rsi
+          state: eyes
+        - map: [ "enum.HumanoidVisualLayers.RArm" ]
+          color: "#b8b8b8"
+          sprite: Mobs/Species/Slime/parts.rsi
+          state: r_arm
+        - map: [ "enum.HumanoidVisualLayers.LArm" ]
+          color: "#b8b8b8"
+          sprite: Mobs/Species/Slime/parts.rsi
+          state: l_arm
+        - map: [ "enum.HumanoidVisualLayers.RLeg" ]
+          color: "#b8b8b8"
+          sprite: Mobs/Species/Slime/parts.rsi
+          state: r_leg
+        - map: [ "enum.HumanoidVisualLayers.LLeg" ]
+          color: "#b8b8b8"
+          sprite: Mobs/Species/Slime/parts.rsi
+          state: l_leg
+        - shader: StencilClear
+          sprite: Mobs/Species/Slime/parts.rsi
+          state: l_leg
+        - shader: StencilMask
+          map: [ "enum.HumanoidVisualLayers.StencilMask" ]
+          sprite: Mobs/Customization/masking_helpers.rsi
+          state: female_full
+          visible: false
+        - map: [ "jumpsuit" ]
+          shader: StencilDraw
+        - map: [ "enum.HumanoidVisualLayers.LHand" ]
+          color: "#b8b8b8"
+          sprite: Mobs/Species/Slime/parts.rsi
+          state: l_hand
+        - map: [ "enum.HumanoidVisualLayers.RHand" ]
+          color: "#b8b8b8"
+          sprite: Mobs/Species/Slime/parts.rsi
+          state: r_hand
+        - map: [ "enum.HumanoidVisualLayers.LFoot" ]
+          color: "#b8b8b8"
+          sprite: Mobs/Species/Slime/parts.rsi
+          state: l_foot
+        - map: [ "enum.HumanoidVisualLayers.RFoot" ]
+          color: "#b8b8b8"
+          sprite: Mobs/Species/Slime/parts.rsi
+          state: r_foot
+        - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+          color: "#ffffff"
+          sprite: Objects/Misc/handcuffs.rsi
+          state: body-overlay-2
+          visible: false
+        - map: [ "id" ]
+        - map: [ "gloves" ]
+        - map: [ "shoes" ]
+        - map: [ "ears" ]
+        - map: [ "outerClothing" ]
+        - map: [ "eyes" ]
+        - map: [ "belt" ]
+        - map: [ "neck" ]
+        - map: [ "back" ]
+        - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
+          state: shaved
+          sprite: Mobs/Customization/human_facial_hair.rsi
+          color: '#FFFFFF80'
+        - map: [ "enum.HumanoidVisualLayers.Hair" ]
+          state: bald
+          sprite: Mobs/Customization/human_hair.rsi
+          color: '#FFFFFF80'
+        - map: [ "mask" ]
+        - map: [ "head" ]
+        - map: [ "pocket1" ]
+        - map: [ "pocket2" ]
+    - type: HumanoidAppearance
+      hairMatchesSkin: true
+      hairAlpha: 0.5

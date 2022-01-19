@@ -1,11 +1,19 @@
 using System;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Atmos.Monitor.Components;
+using Content.Server.Atmos.Monitor.Systems;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.Unary.Components;
+using Content.Server.DeviceNetwork;
+using Content.Server.DeviceNetwork.Components;
+using Content.Server.DeviceNetwork.Systems;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
+using Content.Server.Power.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Unary.Visuals;
+using Content.Shared.Atmos.Monitor;
+using Content.Shared.Atmos.Piping.Unary.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -17,6 +25,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
     public class GasVentScrubberSystem : EntitySystem
     {
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+        [Dependency] private readonly DeviceNetworkSystem _deviceNetSystem = default!;
 
         public override void Initialize()
         {
@@ -24,6 +33,10 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
             SubscribeLocalEvent<GasVentScrubberComponent, AtmosDeviceUpdateEvent>(OnVentScrubberUpdated);
             SubscribeLocalEvent<GasVentScrubberComponent, AtmosDeviceDisabledEvent>(OnVentScrubberLeaveAtmosphere);
+            SubscribeLocalEvent<GasVentScrubberComponent, AtmosMonitorAlarmEvent>(OnAtmosAlarm);
+            SubscribeLocalEvent<GasVentScrubberComponent, PowerChangedEvent>(OnPowerChanged);
+            SubscribeLocalEvent<GasVentScrubberComponent, PacketSentEvent>(OnPacketRecv);
+
         }
 
         private void OnVentScrubberUpdated(EntityUid uid, GasVentScrubberComponent scrubber, AtmosDeviceUpdateEvent args)
@@ -100,6 +113,54 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 var removed = tile.Remove(transferMoles);
 
                 outlet.AssumeAir(removed);
+            }
+        }
+
+        private void OnAtmosAlarm(EntityUid uid, GasVentScrubberComponent component, AtmosMonitorAlarmEvent args)
+        {
+            if (args.HighestNetworkType == AtmosMonitorAlarmType.Danger)
+            {
+                component.Enabled = false;
+            }
+            else if (args.HighestNetworkType == AtmosMonitorAlarmType.Normal)
+            {
+                component.Enabled = true;
+            }
+        }
+
+        private void OnPowerChanged(EntityUid uid, GasVentScrubberComponent component, PowerChangedEvent args) =>
+            component.Enabled = args.Powered;
+
+        private void OnPacketRecv(EntityUid uid, GasVentScrubberComponent component, PacketSentEvent args)
+        {
+            if (!EntityManager.TryGetComponent(uid, out DeviceNetworkComponent netConn)
+                || !EntityManager.TryGetComponent(uid, out AtmosAlarmableComponent alarmable)
+                || !args.Data.TryGetValue(DeviceNetworkConstants.Command, out var cmd))
+                return;
+
+            var payload = new NetworkPayload();
+
+            switch (cmd)
+            {
+                case AirAlarmSystem.AirAlarmSyncCmd:
+                    payload.Add(DeviceNetworkConstants.Command, AirAlarmSystem.AirAlarmSyncData);
+                    payload.Add(AirAlarmSystem.AirAlarmSyncData, component.ToAirAlarmData());
+
+                    _deviceNetSystem.QueuePacket(uid, args.SenderAddress, AirAlarmSystem.Freq, payload);
+
+                    return;
+                case AirAlarmSystem.AirAlarmSetData:
+                    if (!args.Data.TryGetValue(AirAlarmSystem.AirAlarmSetData, out GasVentScrubberData? setData))
+                        break;
+
+                    component.FromAirAlarmData(setData);
+                    alarmable.IgnoreAlarms = setData.IgnoreAlarms;
+                    payload.Add(DeviceNetworkConstants.Command, AirAlarmSystem.AirAlarmSetDataStatus);
+                    payload.Add(AirAlarmSystem.AirAlarmSetDataStatus, true);
+
+                    _deviceNetSystem.QueuePacket(uid, string.Empty, AirAlarmSystem.Freq, payload, true);
+
+                    return;
             }
         }
     }

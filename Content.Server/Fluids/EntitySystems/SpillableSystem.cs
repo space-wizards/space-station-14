@@ -2,12 +2,14 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Chemistry.EntitySystems;
+using Content.Server.Clothing.Components;
 using Content.Server.Coordinates.Helpers;
 using Content.Server.Fluids.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
+using Content.Shared.Inventory.Events;
 using Content.Shared.Throwing;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
@@ -28,7 +30,6 @@ public class SpillableSystem : EntitySystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IEntityLookup _entityLookup = default!;
-    [Dependency] private readonly GridTileLookupSystem _gridTileLookupSystem = default!;
     [Dependency] private readonly AdminLogSystem _logSystem = default!;
 
     public override void Initialize()
@@ -36,6 +37,31 @@ public class SpillableSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<SpillableComponent, LandEvent>(SpillOnLand);
         SubscribeLocalEvent<SpillableComponent, GetOtherVerbsEvent>(AddSpillVerb);
+        SubscribeLocalEvent<SpillableComponent, GotEquippedEvent>(OnGotEquipped);
+    }
+
+    private void OnGotEquipped(EntityUid uid, SpillableComponent component, GotEquippedEvent args)
+    {
+        if (!component.SpillWorn)
+            return;
+
+        if (!TryComp(uid, out ClothingComponent? clothing))
+            return;
+
+        // check if entity was actually used as clothing
+        // not just taken in pockets or something
+        var isCorrectSlot = clothing.SlotFlags.HasFlag(args.SlotFlags);
+        if (!isCorrectSlot) return;
+
+        if (!_solutionContainerSystem.TryGetSolution(uid, component.SolutionName, out var solution))
+            return;
+        if (solution.TotalVolume == 0)
+            return;
+
+        // spill all solution on the player
+        var drainedSolution = _solutionContainerSystem.Drain(uid, solution, solution.DrainAvailable);
+        SpillAt(args.Equipee, drainedSolution, "PuddleSmear");
+
     }
 
     /// <summary>
@@ -121,7 +147,7 @@ public class SpillableSystem : EntitySystem
 
     public bool TryGetPuddle(TileRef tileRef, [NotNullWhen(true)] out PuddleComponent? puddle)
     {
-        foreach (var entity in tileRef.GetEntitiesInTileFast(_gridTileLookupSystem))
+        foreach (var entity in _entityLookup.GetEntitiesIntersecting(tileRef))
         {
             if (EntityManager.TryGetComponent(entity, out PuddleComponent? p))
             {

@@ -10,7 +10,6 @@
   components:
   - type: Damageable
     damageContainer: Biological
-  - type: BiologicalSurgeryData
 
 # For primates mainly
 - type: entity

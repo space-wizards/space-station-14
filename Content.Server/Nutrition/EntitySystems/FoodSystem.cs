@@ -1,12 +1,9 @@
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
-using Content.Server.Inventory.Components;
-using Content.Server.Items;
 using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
 using Content.Shared.ActionBlocker;
@@ -17,20 +14,17 @@ using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
-using Content.Shared.Inventory;
 using Content.Shared.MobState.Components;
-using Content.Shared.Tag;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
-using System.Collections.Generic;
 using Robust.Shared.Utility;
-using Content.Server.Inventory.Components;
-using Content.Shared.Inventory;
 using Content.Shared.Hands;
+using Content.Shared.Inventory;
+using Content.Shared.Item;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
@@ -47,6 +41,7 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly SharedAdminLogSystem _logSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
+        [Dependency] private readonly InventorySystem _inventorySystem = default!;
 
         public override void Initialize()
         {
@@ -228,7 +223,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 EntityManager.DeleteEntity((component).Owner);
 
                 // Put the trash in the user's hand
-                if (EntityManager.TryGetComponent(finisher, out ItemComponent? item) &&
+                if (EntityManager.TryGetComponent(finisher, out SharedItemComponent? item) &&
                     handsComponent.CanPutInHand(item))
                 {
                     handsComponent.PutInHand(item);
@@ -485,20 +480,20 @@ namespace Content.Server.Nutrition.EntitySystems
 
             IngestionBlockerComponent blocker;
 
-            if (component.TryGetSlotItem(EquipmentSlotDefines.Slots.MASK, out ItemComponent? mask) &&
-                EntityManager.TryGetComponent(mask.Owner, out blocker) &&
+            if (_inventorySystem.TryGetSlotEntity(uid, "mask", out var maskUid) &&
+                EntityManager.TryGetComponent(maskUid, out blocker) &&
                 blocker.Enabled)
             {
-                args.Blocker = mask.Owner;
+                args.Blocker = maskUid;
                 args.Cancel();
                 return;
             }
 
-            if (component.TryGetSlotItem(EquipmentSlotDefines.Slots.HEAD, out ItemComponent? head) &&
-                EntityManager.TryGetComponent(head.Owner, out blocker) &&
+            if (_inventorySystem.TryGetSlotEntity(uid, "head", out var headUid) &&
+                EntityManager.TryGetComponent(headUid, out blocker) &&
                 blocker.Enabled)
             {
-                args.Blocker = head.Owner;
+                args.Blocker = headUid;
                 args.Cancel();
             }
         }

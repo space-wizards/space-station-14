@@ -41,7 +41,9 @@ namespace Content.Client.Verbs.UI
         /// <summary>
         ///     Open a verb menu and fill it work verbs applicable to the given target entity.
         /// </summary>
-        public void OpenVerbMenu(EntityUid target)
+        /// <param name="target">Entity to get verbs on.</param>
+        /// <param name="force">Used to force showing all verbs (mostly for admins).</param>
+        public void OpenVerbMenu(EntityUid target, bool force = false)
         {
             if (_playerManager.LocalPlayer?.ControlledEntity is not {Valid: true} user)
                 return;
@@ -49,7 +51,7 @@ namespace Content.Client.Verbs.UI
             Close();
 
             CurrentTarget = target;
-            CurrentVerbs = _verbSystem.GetVerbs(target, user, VerbType.All);
+            CurrentVerbs = _verbSystem.GetVerbs(target, user, VerbType.All, force);
 
             if (!target.IsClientSide())
             {
@@ -168,32 +170,62 @@ namespace Content.Client.Verbs.UI
                 return;
 
             if (element is not VerbMenuElement verbElement)
-                return;
+            {
+                if (element is not ConfirmationMenuElement confElement)
+                    return;
 
+                args.Handle();
+                ExecuteVerb(confElement.Verb, confElement.Type);
+                return;
+            }
+
+            args.Handle();
             var verb = verbElement.Verb;
 
             if (verb == null)
             {
                 // The user probably clicked on a verb category.
-                // We will act as if they clicked on the first verb in that category.
+                // If there's only one verb in the category, then it will act as if they clicked on that verb.
+                // Otherwise it opens the category menu.
 
                 if (verbElement.SubMenu == null || verbElement.SubMenu.ChildCount == 0)
                     return;
 
-                if (verbElement.SubMenu.MenuBody.Children.First() is not VerbMenuElement verbCategoryElement)
+                if (verbElement.SubMenu.MenuBody.ChildCount != 1
+                    || verbElement.SubMenu.MenuBody.Children.First() is not VerbMenuElement verbMenuElement)
+                {
+                    OpenSubMenu(verbElement);
                     return;
+                }
 
-                verb = verbCategoryElement.Verb;
+                verb = verbMenuElement.Verb;
 
                 if (verb == null)
                     return;
             }
 
-            _verbSystem.ExecuteVerb(CurrentTarget, verb, verbElement.Type);
+            if (verb.ConfirmationPopup)
+            {
+                if (verbElement.SubMenu == null)
+                {
+                    var popupElement = new ConfirmationMenuElement(verb, "Confirm", verbElement.Type);
+                    verbElement.SubMenu = new ContextMenuPopup(this, verbElement);
+                    AddElement(verbElement.SubMenu, popupElement);
+                }
+
+                OpenSubMenu(verbElement);
+            }
+            else
+            {
+                ExecuteVerb(verb, verbElement.Type);
+            }
+        }
+
+        private void ExecuteVerb(Verb verb, VerbType verbType)
+        {
+            _verbSystem.ExecuteVerb(CurrentTarget, verb, verbType);
             if (verb.CloseMenu)
                 _verbSystem.CloseAllMenus();
-
-            args.Handle();
         }
     }
 }

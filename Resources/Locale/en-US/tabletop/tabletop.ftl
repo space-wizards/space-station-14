@@ -11,3 +11,6 @@ tabletop-parchis-board-name = Parchís
 
 ## Backgammon
 tabletop-backgammon-board-name = Backgammon
+
+## Checkers
+tabletop-checkers-board-name = Checkers

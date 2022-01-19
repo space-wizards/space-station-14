@@ -1,6 +1,9 @@
 # Alphabetical order is now apparently required.
 
 - type: Tag
+  id: AirAlarmElectronics
+
+- type: Tag
   id: Baguette
 
 - type: Tag
@@ -8,6 +11,9 @@
 
 - type: Tag
   id: Brutepack
+  
+- type: Tag
+  id: BodyBag
 
 - type: Tag
   id: BotanyHatchet
@@ -38,6 +44,9 @@
 
 - type: Tag
   id: CaptainSabre
+  
+- type: Tag
+  id: Cartridge
 
 - type: Tag
   id: CigFilter
@@ -107,6 +116,9 @@
 
 - type: Tag
   id: ExplosivePassable
+
+- type: Tag
+  id: FireAlarmElectronics
 
 - type: Tag
   id: FireAxe
@@ -181,6 +193,9 @@
   id: Pill
 
 - type: Tag
+  id: PillCanister
+
+- type: Tag
   id: Pipe
 
 - type: Tag
@@ -230,6 +245,9 @@
 
 - type: Tag
   id: Taser
+  
+- type: Tag
+  id: Trash
 
 - type: Tag
   id: Wall

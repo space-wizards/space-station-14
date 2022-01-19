@@ -14,11 +14,11 @@ namespace Content.Server.Alert.Click
     [DataDefinition]
     public class RemoveCuffs : IAlertClick
     {
-        public void AlertClicked(ClickAlertEventArgs args)
+        public void AlertClicked(EntityUid player)
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(args.Player, out CuffableComponent? cuffableComponent))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(player, out CuffableComponent? cuffableComponent))
             {
-                cuffableComponent.TryUncuff(args.Player);
+                cuffableComponent.TryUncuff(player);
             }
         }
     }

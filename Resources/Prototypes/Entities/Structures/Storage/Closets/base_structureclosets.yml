@@ -4,6 +4,7 @@
   name: closet
   description: A standard-issue Nanotrasen storage unit.
   components:
+  - type: ResistLocker
   - type: Transform
     noRot: true
   - type: Sprite
@@ -65,5 +66,6 @@
   - type: Appearance
     visuals:
     - type: StorageVisualizer
+      state: generic
       state_open: generic_open
       state_closed: generic_door

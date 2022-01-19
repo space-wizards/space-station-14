@@ -215,10 +215,9 @@ namespace Content.Server.Salvage
             {
                 coords = new EntityCoordinates(smc.Owner, smc.Offset).ToMap(EntityManager);
                 var grid = tsc.GridID;
-                if (grid != GridId.Invalid)
+                if (_mapManager.TryGetGrid(grid, out var magnetGrid))
                 {
-                    // Has a valid grid - synchronize angle so that salvage doesn't have to deal with cross-grid manipulation issues
-                    angle = tsc.WorldRotation;
+                    angle = magnetGrid.WorldRotation;
                 }
                 return true;
             }

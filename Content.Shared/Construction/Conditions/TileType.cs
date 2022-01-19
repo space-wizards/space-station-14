@@ -34,7 +34,7 @@ namespace Content.Shared.Construction.Conditions
             var tile = tileFound.Value.Tile.GetContentTileDefinition();
             foreach (var targetTile in TargetTiles)
             {
-                if (tile.Name == targetTile) {
+                if (tile.ID == targetTile) {
                     return true;
                 }
             }

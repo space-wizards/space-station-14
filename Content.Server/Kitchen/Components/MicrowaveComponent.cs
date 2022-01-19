@@ -6,7 +6,6 @@ using Content.Server.Chat.Managers;
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Hands.Components;
-using Content.Server.Items;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
@@ -16,6 +15,7 @@ using Content.Shared.Body.Part;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
+using Content.Shared.Item;
 using Content.Shared.Kitchen;
 using Content.Shared.Kitchen.Components;
 using Content.Shared.Popups;
@@ -284,7 +284,7 @@ namespace Content.Server.Kitchen.Components
                 return true;
             }
 
-            if (!_entities.TryGetComponent(itemEntity, typeof(ItemComponent), out var food))
+            if (!_entities.TryGetComponent(itemEntity, typeof(SharedItemComponent), out var food))
             {
                 Owner.PopupMessage(eventArgs.User, "microwave-component-interact-using-transfer-fail");
                 return false;

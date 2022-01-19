@@ -1,0 +1,75 @@
+<SS14Window xmlns="https://spacestation14.io"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            MinSize="500 500" Title="Air Alarm">
+    <BoxContainer Orientation="Vertical" Margin="5 5 5 5">
+        <!-- Status (pressure, temperature, alarm state, device total, address, etc) -->
+        <BoxContainer Orientation="Horizontal" Margin="0 0 0 2">
+            <!-- Left column (pressure, temperature, alarm state) -->
+            <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                <BoxContainer Orientation="Vertical" Margin="0 0 2 0" HorizontalExpand="True">
+                    <Label Text="{Loc 'air-alarm-ui-window-pressure-label'}" />
+                    <Label Text="{Loc 'air-alarm-ui-window-temperature-label'}" />
+                    <Label Text="{Loc 'air-alarm-ui-window-alarm-state-label'}" />
+                </BoxContainer>
+                <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                    <RichTextLabel Name="CPressureLabel" />
+                    <RichTextLabel Name="CTemperatureLabel" />
+                    <RichTextLabel Name="CStatusLabel" />
+                </BoxContainer>
+            </BoxContainer>
+            <!-- Right column (address, device total) -->
+            <BoxContainer Orientation="Horizontal" Margin="0 0 2 0" HorizontalExpand="True">
+                <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                </BoxContainer>
+                <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                </BoxContainer>
+            </BoxContainer>
+
+        </BoxContainer>
+        <!-- Gas/Device Data -->
+        <TabContainer Name="CTabContainer" VerticalExpand="True" Margin="0 0 0 2">
+            <!-- Gas readout -->
+            <ScrollContainer VerticalExpand="True">
+                <BoxContainer Name="CGasContainer" Orientation="Vertical" VerticalExpand="True" Margin="2 2 2 2" />
+            </ScrollContainer>
+            <!-- Vent devices -->
+            <ScrollContainer VerticalExpand="True">
+                <BoxContainer Name="CVentContainer" Orientation="Vertical"/>
+            </ScrollContainer>
+            <!-- Scrubber devices -->
+            <ScrollContainer VerticalExpand="True">
+                <BoxContainer Name="CScrubberContainer" Orientation="Vertical"/>
+            </ScrollContainer>
+            <!-- Alarm thresholds -->
+            <ScrollContainer VerticalExpand="True">
+                <BoxContainer Orientation="Vertical" VerticalExpand="True">
+                    <BoxContainer Name="CPressureThreshold" Orientation="Vertical" Margin="2 0 2 0" />
+                    <BoxContainer Name="CTemperatureThreshold" Orientation="Vertical" Margin="2 0 2 0" />
+                    <Collapsible Orientation="Vertical">
+                        <CollapsibleHeading Title="Gases" />
+                        <CollapsibleBody Margin="4 2 4 2">
+                            <BoxContainer Name="CGasThresholdContainer" Orientation="Vertical" Margin="2 0 2 0" />
+                        </CollapsibleBody>
+                    </Collapsible>
+                </BoxContainer>
+            </ScrollContainer>
+        </TabContainer>
+
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="0 0 0 2">
+            <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                <Label Text="{Loc 'air-alarm-ui-window-address-label'}" HorizontalExpand="True"/>
+                <Label Name="CDeviceAddress" HorizontalAlignment="Right" HorizontalExpand="True" Margin="0 0 4 0" />
+            </BoxContainer>
+            <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                <Label Text="{Loc 'air-alarm-ui-window-device-count-label'}" HorizontalExpand="True"/>
+                <Label Name="CDeviceTotal" HorizontalAlignment="Right" HorizontalExpand="True" Margin="0 0 4 0" />
+            </BoxContainer>
+            <Button Name="CResyncButton" Text="{Loc 'air-alarm-ui-window-resync-devices-label'}" HorizontalExpand="True" />
+        </BoxContainer>
+        <!-- Mode buttons -->
+        <BoxContainer Orientation="Horizontal">
+            <Label Text="{Loc 'air-alarm-ui-window-mode-label'}" Margin="0 0 2 0" />
+            <OptionButton Name="CModeButton" HorizontalExpand="True" />
+        </BoxContainer>
+    </BoxContainer>
+</SS14Window>

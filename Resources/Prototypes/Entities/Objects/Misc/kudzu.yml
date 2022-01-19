@@ -42,6 +42,8 @@
       heatDamage:
         types:
           Heat: 5
+      coldDamage: {}
+      ColdDamageThreshold: 0
     - type: Flammable
       fireSpread: true #If you walk into incredibly dense, flaming vines, you can expect to burn.
       cold:

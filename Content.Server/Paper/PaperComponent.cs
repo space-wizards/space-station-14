@@ -16,7 +16,9 @@ namespace Content.Server.Paper
 {
     [RegisterComponent]
 #pragma warning disable 618
-    public class PaperComponent : SharedPaperComponent, IExamine, IInteractUsing, IUse
+    [ComponentReference(typeof(SharedPaperComponent))]
+    [ComponentReference(typeof(IActivate))]
+    public sealed class PaperComponent : SharedPaperComponent, IExamine, IInteractUsing, IActivate
 #pragma warning restore 618
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
@@ -24,6 +26,10 @@ namespace Content.Server.Paper
         private PaperAction _mode;
         [DataField("content")]
         public string Content { get; set; } = "";
+
+        [DataField("contentSize")]
+        public int ContentSize { get; set; } = 500;
+
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(PaperUiKey.Key);
 
@@ -42,6 +48,7 @@ namespace Content.Server.Paper
 
         public void SetContent(string content)
         {
+
             Content = content + '\n';
             UpdateUserInterface();
 
@@ -74,15 +81,15 @@ namespace Content.Server.Paper
             );
         }
 
-        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
+        void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             if (!_entMan.TryGetComponent(eventArgs.User, out ActorComponent? actor))
-                return false;
+                return;
 
             _mode = PaperAction.Read;
             UpdateUserInterface();
             UserInterface?.Toggle(actor.PlayerSession);
-            return true;
+            return;
         }
 
         private void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
@@ -91,7 +98,9 @@ namespace Content.Server.Paper
             if (string.IsNullOrEmpty(msg.Text))
                 return;
 
-            Content += msg.Text + '\n';
+
+            if (msg.Text.Length + Content.Length <= ContentSize)
+                Content += msg.Text + '\n';
 
             if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
             {

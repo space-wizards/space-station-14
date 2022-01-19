@@ -1,6 +1,6 @@
 - type: entity
   name: handcuff box
-  parent: BoxBase
+  parent: BoxCardboard
   id: BoxHandcuff
   description: A box full of handcuffs.
   components:
@@ -13,13 +13,9 @@
       - state: box_security
       - state: handcuff
 
-  - type: Item
-  - type: Storage
-    capacity: 20
-
 - type: entity
   name: flashbang box
-  parent: BoxBase
+  parent: BoxCardboard
   id: BoxFlashbang
   description: 'WARNING: These devices are extremely dangerous and can cause blindness or deafness in repeated use.'
   components:
@@ -32,13 +28,9 @@
       - state: box_security
       - state: flashbang
 
-  - type: Item
-  - type: Storage
-    capacity: 20
-
 - type: entity
   name: sechud box
-  parent: BoxBase
+  parent: BoxCardboard
   id: BoxSechud
   description: A box of security glasses.
   components:
@@ -51,13 +43,9 @@
       - state: box_security
       - state: sechud
 
-  - type: Item
-  - type: Storage
-    capacity: 20
-
 - type: entity
   name: ziptie box
-  parent: BoxBase
+  parent: BoxCardboard
   id: BoxZiptie
   description: A box full of zipties.
   components:
@@ -69,7 +57,3 @@
     layers:
       - state: box_security
       - state: ziptie
-
-  - type: Item
-  - type: Storage
-    capacity: 20

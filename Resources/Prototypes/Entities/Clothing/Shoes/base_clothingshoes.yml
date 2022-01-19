@@ -5,7 +5,7 @@
   components:
   - type: Clothing
     Slots:
-    - shoes
+    - FEET
   - type: Sprite
     state: icon
   - type: Extractable

@@ -1,4 +1,5 @@
-﻿using Content.Client.Items.UI;
+﻿using Content.Client.HUD;
+using Content.Client.Items.UI;
 using Content.Shared.Hands.Components;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
@@ -10,7 +11,7 @@ namespace Content.Client.Hands
         private bool _activeHand;
         private bool _highlighted;
 
-        public HandButton(Texture texture, Texture storageTexture, string textureName, Texture blockedTexture, HandLocation location) : base(texture, storageTexture, textureName)
+        public HandButton(int size, string textureName, string storageTextureName, IGameHud gameHud, Texture blockedTexture, HandLocation location) : base(size, textureName, storageTextureName, gameHud)
         {
             Location = location;
 

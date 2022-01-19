@@ -1,6 +1,21 @@
 - type: entity
-  name: lightbulb box
+  name: cardboard box
   parent: BoxBase
+  id: BoxCardboard
+  description: A cardboard box for storing things.
+  components:
+  - type: Sprite
+    layers:
+      - state: box
+  - type: Item
+    size: 20
+  - type: Storage
+    capacity: 20
+    size: 20
+
+- type: entity
+  name: lightbulb box
+  parent: BoxCardboard
   id: BoxLightbulb
   description: This box is shaped on the inside so that only light tubes and bulbs fit.
   components:
@@ -12,11 +27,15 @@
     layers:
       - state: box
       - state: light
-  - type: Item
+  - type: Storage
+    capacity: 60
+    whitelist:
+      components:
+      - LightBulb
 
 - type: entity
   name: lighttube box
-  parent: BoxBase
+  parent: BoxCardboard
   id: BoxLighttube
   description: This box is shaped on the inside so that only light tubes and bulbs fit.
   components:
@@ -28,11 +47,15 @@
     layers:
       - state: box
       - state: lighttube
-  - type: Item
+  - type: Storage
+    capacity: 60
+    whitelist:
+      components:
+      - LightBulb
 
 - type: entity
   name: mixed lights box
-  parent: BoxBase
+  parent: BoxCardboard
   id: BoxLightMixed
   description: This box is shaped on the inside so that only light tubes and bulbs fit.
   components:
@@ -46,29 +69,56 @@
     layers:
       - state: box
       - state: lightmixed
-  - type: Item
+  - type: Storage
+    capacity: 60
+    whitelist:
+      components:
+      - LightBulb
 
 - type: entity
-  name: pda box
-  parent: BoxBase
+  name: PDA box
+  parent: BoxCardboard
   id: BoxPDA
   description: A box of spare PDA microcomputers.
   components:
   - type: StorageFill
     contents:
       - id: AssistantPDA
-        amount: 3
+        amount: 6
   - type: Sprite
     layers:
       - state: box
       - state: pda
-  - type: Item
   - type: Storage
-    capacity: 30
+    capacity: 60
+    whitelist:
+      components:
+      - PDA
+
+- type: entity
+  name: ID card box
+  parent: BoxCardboard
+  id: BoxID
+  description: A box of spare blank ID cards.
+  components:
+  - type: StorageFill
+    contents:
+      - id: AssistantIDCard
+        amount: 6
+  - type: Sprite
+    layers:
+      - state: box
+      - state: pda
+  - type: Storage
+    capacity: 60
+    whitelist:
+      components:
+      - IdCard
+
 
 - type: entity
   name: meson box
-  parent: BoxBase
+  parent: BoxCardboard
   id: BoxMesonScanners
   description: A box of spare meson goggles.
   components:
@@ -80,13 +130,10 @@
     layers:
       - state: box
       - state: meson
-  - type: Item
-  - type: Storage
-    capacity: 20
 
 - type: entity
   name: survival box
-  parent: BoxBase
+  parent: BoxCardboard
   id: BoxSurvival
   description: It's box with basic internals inside.
   components:
@@ -101,15 +148,13 @@
     layers:
       - state: box
       - state: writing
-  - type: Item
-    size: 20
   - type: Storage
     capacity: 30
     size: 30
 
 - type: entity
   name: box of hugs
-  parent: BoxSurvival
+  parent: BoxCardboard
   id: BoxHug
   description: A special box for sensitive people.
   components:
@@ -119,3 +164,10 @@
       - state: heart
   - type: Item
     HeldPrefix: hug
+  - type: StorageFill
+    contents:
+      - id: Brutepack
+        amount: 6
+  - type: Storage
+    capacity: 30
+    size: 30

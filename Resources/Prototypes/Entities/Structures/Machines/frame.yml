@@ -105,3 +105,37 @@
     - type: Appearance
       visuals:
       - type: MachineFrameVisualizer
+
+
+- type: entity
+  id: MachineFrameDestroyed
+  parent: BaseStructureDynamic
+  name: destroyed machine frame
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Transform
+      anchored: true
+    - type: Construction
+      graph: machine
+      node: destroyedMachineFrame
+    - type: Damageable
+      damageContainer: Inorganic
+      damageModifierSet: Metallic
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 100
+        behaviors:
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            SheetSteel1:
+              min: 1
+              max: 3
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+    - type: Sprite
+      netsync: false
+      sprite: Structures/Machines/parts.rsi
+      state: destroyed
