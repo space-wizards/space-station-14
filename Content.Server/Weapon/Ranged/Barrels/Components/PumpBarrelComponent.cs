@@ -22,8 +22,8 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         {
             get
             {
-                var chamberCount = _chamberContainer.ContainedEntity != null ? 1 : 0;
-                return chamberCount + _spawnedAmmo.Count + _unspawnedCount;
+                var chamberCount = ChamberContainer.ContainedEntity != null ? 1 : 0;
+                return chamberCount + SpawnedAmmo.Count + UnspawnedCount;
             }
         }
 
@@ -32,9 +32,9 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         public override int Capacity { get; } = DefaultCapacity;
 
         // Even a point having a chamber? I guess it makes some of the below code cleaner
-        private ContainerSlot _chamberContainer = default!;
-        private Stack<EntityUid> _spawnedAmmo = new(DefaultCapacity - 1);
-        private Container _ammoContainer = default!;
+        public ContainerSlot ChamberContainer = default!;
+        public Stack<EntityUid> SpawnedAmmo = new(DefaultCapacity - 1);
+        public Container AmmoContainer = default!;
 
         [ViewVariables]
         [DataField("caliber")]
@@ -42,24 +42,20 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
         [ViewVariables]
         [DataField("fillPrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-        private string? _fillPrototype;
+        public string? FillPrototype;
 
-        [ViewVariables]
-        private int _unspawnedCount;
+        [ViewVariables] public int UnspawnedCount;
 
-        [DataField("manualCycle")]
-        private bool _manualCycle = true;
+        [DataField("manualCycle")] public bool ManualCycle = true;
 
         // Sounds
-        [DataField("soundCycle")]
-        private SoundSpecifier _soundCycle = new SoundPathSpecifier("/Audio/Weapons/Guns/Cock/sf_rifle_cock.ogg");
+        [DataField("soundCycle")] public SoundSpecifier SoundCycle = new SoundPathSpecifier("/Audio/Weapons/Guns/Cock/sf_rifle_cock.ogg");
 
-        [DataField("soundInsert")]
-        private SoundSpecifier _soundInsert = new SoundPathSpecifier("/Audio/Weapons/Guns/MagIn/bullet_insert.ogg");
+        [DataField("soundInsert")] public SoundSpecifier SoundInsert = new SoundPathSpecifier("/Audio/Weapons/Guns/MagIn/bullet_insert.ogg");
 
         void ISerializationHooks.AfterDeserialization()
         {
-            _spawnedAmmo = new Stack<EntityUid>(Capacity - 1);
+            SpawnedAmmo = new Stack<EntityUid>(Capacity - 1);
         }
     }
 }

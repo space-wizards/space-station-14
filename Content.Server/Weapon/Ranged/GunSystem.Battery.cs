@@ -2,6 +2,7 @@ using System;
 using Content.Server.PowerCell;
 using Content.Server.Projectiles.Components;
 using Content.Server.Weapon.Ranged.Barrels.Components;
+using Content.Shared.PowerCell.Components;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -36,6 +37,11 @@ public sealed partial class GunSystem
             count);
     }
 
+    private void OnCellSlotUpdated(EntityUid uid, BatteryBarrelComponent component, PowerCellChangedEvent args)
+    {
+        UpdateBatteryAppearance(component);
+    }
+
     public void UpdateBatteryAppearance(BatteryBarrelComponent component)
     {
         if (!EntityManager.TryGetComponent(component.Owner, out AppearanceComponent? appearanceComponent)) return;
@@ -64,19 +70,19 @@ public sealed partial class GunSystem
         if (!_cell.TryGetBatteryFromSlot(component.Owner, out var capacitor))
             return null;
 
-        if (capacitor.CurrentCharge < component._lowerChargeLimit)
+        if (capacitor.CurrentCharge < component.LowerChargeLimit)
             return null;
 
         // Can fire confirmed
         // Multiply the entity's damage / whatever by the percentage of charge the shot has.
         EntityUid? entity;
-        var chargeChange = Math.Min(capacitor.CurrentCharge, component._baseFireCost);
-        if (capacitor.UseCharge(chargeChange) < component._lowerChargeLimit)
+        var chargeChange = Math.Min(capacitor.CurrentCharge, component.BaseFireCost);
+        if (capacitor.UseCharge(chargeChange) < component.LowerChargeLimit)
         {
             // Handling of funny exploding cells.
             return null;
         }
-        var energyRatio = chargeChange / component._baseFireCost;
+        var energyRatio = chargeChange / component.BaseFireCost;
 
         if (component.AmmoContainer.ContainedEntity != null)
         {

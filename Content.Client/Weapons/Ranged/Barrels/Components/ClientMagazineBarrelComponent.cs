@@ -104,18 +104,9 @@ namespace Content.Client.Weapons.Ranged.Barrels.Components
             _statusControl?.Update();
         }
 
-        [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
-        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession? session = null)
+        public void PlayAlarmAnimation()
         {
-            base.HandleNetworkMessage(message, channel, session);
-
-            switch (message)
-            {
-
-                case MagazineAutoEjectMessage _:
-                    _statusControl?.PlayAlarmAnimation();
-                    return;
-            }
+            _statusControl?.PlayAlarmAnimation();
         }
 
         public Control MakeControl()

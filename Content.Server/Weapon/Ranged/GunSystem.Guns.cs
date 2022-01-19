@@ -1,11 +1,18 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.CombatMode;
 using Content.Server.Hands.Components;
 using Content.Server.Interaction.Components;
+using Content.Server.Projectiles.Components;
 using Content.Server.Stunnable;
+using Content.Server.Weapon.Ranged.Ammunition.Components;
 using Content.Server.Weapon.Ranged.Barrels.Components;
+using Content.Shared.Camera;
 using Content.Shared.Damage;
+using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Popups;
 using Content.Shared.Weapons.Ranged.Components;
@@ -14,7 +21,9 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Player;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Weapon.Ranged;
 
@@ -81,51 +90,51 @@ public sealed partial class GunSystem
     /// <summary>
     /// Fires a round of ammo out of the weapon.
     /// </summary>
-    /// <param name="shooter">Entity that is operating the weapon, usually the player.</param>
-    /// <param name="targetPos">Target position on the map to shoot at.</param>
-    private void Fire(EntityUid shooter, Vector2 targetPos)
+    private void Fire(EntityUid shooter, ServerRangedBarrelComponent component, EntityCoordinates coordinates)
     {
-        if (ShotsLeft == 0)
+        if (component.ShotsLeft == 0)
         {
-            SoundSystem.Play(Filter.Broadcast(), SoundEmpty.GetSound(), Owner);
+            SoundSystem.Play(Filter.Pvs(component.Owner), component.SoundEmpty.GetSound(), component.Owner);
             return;
         }
 
-        var ammo = PeekAmmo();
-        if (TakeProjectile(Entities.GetComponent<TransformComponent>(shooter).Coordinates) is not {Valid: true} projectile)
+        var ammo = PeekAmmo(component);
+        if (TakeProjectile(component, Transform(shooter).Coordinates) is not {Valid: true} projectile)
         {
-            SoundSystem.Play(Filter.Broadcast(), SoundEmpty.GetSound(), Owner);
+            SoundSystem.Play(Filter.Pvs(component.Owner), component.SoundEmpty.GetSound(), component.Owner);
             return;
         }
+
+        var targetPos = coordinates.ToMapPos(EntityManager);
 
         // At this point firing is confirmed
-        var direction = (targetPos - Entities.GetComponent<TransformComponent>(shooter).WorldPosition).ToAngle();
-        var angle = GetRecoilAngle(direction);
+        var direction = (targetPos - Transform(shooter).WorldPosition).ToAngle();
+        var angle = GetRecoilAngle(component, direction);
         // This should really be client-side but for now we'll just leave it here
-        if (Entities.HasComponent<CameraRecoilComponent>(shooter))
+        if (HasComp<CameraRecoilComponent>(shooter))
         {
             var kick = -angle.ToVec() * 0.15f;
-            EntitySystem.Get<CameraRecoilSystem>().KickCamera(shooter, kick);
+            _recoil.KickCamera(shooter, kick);
         }
 
         // This section probably needs tweaking so there can be caseless hitscan etc.
-        if (Entities.TryGetComponent(projectile, out HitscanComponent? hitscan))
+        if (TryComp(projectile, out HitscanComponent? hitscan))
         {
-            FireHitscan(shooter, hitscan, angle);
+            FireHitscan(shooter, hitscan, component, angle);
         }
-        else if (Entities.HasComponent<ProjectileComponent>(projectile) &&
-                 Entities.TryGetComponent(ammo, out AmmoComponent? ammoComponent))
+        else if (HasComp<ProjectileComponent>(projectile) &&
+                 TryComp(ammo, out AmmoComponent? ammoComponent))
         {
-            FireProjectiles(shooter, projectile, ammoComponent.ProjectilesFired, ammoComponent.EvenSpreadAngle, angle, ammoComponent.Velocity, ammo.Value);
+            FireProjectiles(shooter, projectile, component, ammoComponent.ProjectilesFired, ammoComponent.EvenSpreadAngle, angle, ammoComponent.Velocity, ammo!.Value);
 
-            if (CanMuzzleFlash)
+            if (component.CanMuzzleFlash)
             {
-                EntitySystem.Get<GunSystem>().MuzzleFlash(Owner, ammoComponent, angle);
+                MuzzleFlash(component.Owner, ammoComponent, angle);
             }
 
             if (ammoComponent.Caseless)
             {
-                Entities.DeleteEntity(ammo.Value);
+                EntityManager.DeleteEntity(ammo.Value);
             }
         }
         else
@@ -134,21 +143,21 @@ public sealed partial class GunSystem
             throw new InvalidOperationException();
         }
 
-        SoundSystem.Play(Filter.Broadcast(), SoundGunshot.GetSound(), Owner);
+        SoundSystem.Play(Filter.Broadcast(), component.SoundGunshot.GetSound(), component.Owner);
 
-        LastFire = _gameTiming.CurTime;
+        component.LastFire = _gameTiming.CurTime;
     }
 
     #region Firing
     /// <summary>
     /// Handles firing one or many projectiles
     /// </summary>
-    private void FireProjectiles(EntityUid shooter, EntityUid baseProjectile, int count, float evenSpreadAngle, Angle angle, float velocity, EntityUid ammo)
+    private void FireProjectiles(EntityUid shooter, EntityUid baseProjectile, ServerRangedBarrelComponent component, int count, float evenSpreadAngle, Angle angle, float velocity, EntityUid ammo)
     {
         List<Angle>? sprayAngleChange = null;
         if (count > 1)
         {
-            evenSpreadAngle *= SpreadRatio;
+            evenSpreadAngle *= component.SpreadRatio;
             sprayAngleChange = Linspace(-evenSpreadAngle / 2, evenSpreadAngle / 2, count);
         }
 
@@ -163,9 +172,10 @@ public sealed partial class GunSystem
             }
             else
             {
-                projectile = Entities.SpawnEntity(
-                    Entities.GetComponent<MetaDataComponent>(baseProjectile).EntityPrototype?.ID,
-                    Entities.GetComponent<TransformComponent>(baseProjectile).Coordinates);
+                // TODO: Cursed as bruh
+                projectile = EntityManager.SpawnEntity(
+                    MetaData(baseProjectile).EntityPrototype?.ID,
+                    Transform(baseProjectile).Coordinates);
             }
 
             firedProjectiles[i] = projectile;
@@ -181,10 +191,10 @@ public sealed partial class GunSystem
                 projectileAngle = angle;
             }
 
-            var physics = Entities.GetComponent<IPhysBody>(projectile);
+            var physics = EntityManager.GetComponent<IPhysBody>(projectile);
             physics.BodyStatus = BodyStatus.InAir;
 
-            var projectileComponent = Entities.GetComponent<ProjectileComponent>(projectile);
+            var projectileComponent = EntityManager.GetComponent<ProjectileComponent>(projectile);
             projectileComponent.IgnoreEntity(shooter);
 
             // FIXME: Work around issue where inserting and removing an entity from a container,
@@ -192,16 +202,16 @@ public sealed partial class GunSystem
             // See SharedBroadphaseSystem.HandleContainerInsert()... It sets Awake to false, which causes this.
             projectile.SpawnTimer(TimeSpan.FromMilliseconds(25), () =>
             {
-                Entities.GetComponent<IPhysBody>(projectile)
+                EntityManager.GetComponent<IPhysBody>(projectile)
                     .LinearVelocity = projectileAngle.ToVec() * velocity;
             });
 
 
-            Entities.GetComponent<TransformComponent>(projectile).WorldRotation = projectileAngle + MathHelper.PiOver2;
+            Transform(projectile).WorldRotation = projectileAngle + MathHelper.PiOver2;
         }
 
-        Entities.EventBus.RaiseLocalEvent(Owner, new GunShotEvent(firedProjectiles));
-        Entities.EventBus.RaiseLocalEvent(ammo, new AmmoShotEvent(firedProjectiles));
+        EntityManager.EventBus.RaiseLocalEvent(component.Owner, new GunShotEvent(firedProjectiles));
+        EntityManager.EventBus.RaiseLocalEvent(ammo, new AmmoShotEvent(firedProjectiles));
     }
 
     /// <summary>
@@ -223,21 +233,20 @@ public sealed partial class GunSystem
     /// <summary>
     /// Fires hitscan entities and then displays their effects
     /// </summary>
-    private void FireHitscan(EntityUid shooter, HitscanComponent hitscan, Angle angle)
+    private void FireHitscan(EntityUid shooter, HitscanComponent hitscan, ServerRangedBarrelComponent component, Angle angle)
     {
-        var ray = new CollisionRay(Entities.GetComponent<TransformComponent>(Owner).Coordinates.ToMapPos(Entities), angle.ToVec(), (int) hitscan.CollisionMask);
-        var physicsManager = EntitySystem.Get<SharedPhysicsSystem>();
-        var rayCastResults = physicsManager.IntersectRay(Entities.GetComponent<TransformComponent>(Owner).MapID, ray, hitscan.MaxLength, shooter, false).ToList();
+        var ray = new CollisionRay(Transform(component.Owner).WorldPosition, angle.ToVec(), (int) hitscan.CollisionMask);
+        var rayCastResults = _physics.IntersectRay(Transform(component.Owner).MapID, ray, hitscan.MaxLength, shooter, false).ToList();
 
         if (rayCastResults.Count >= 1)
         {
             var result = rayCastResults[0];
             var distance = result.Distance;
             hitscan.FireEffects(shooter, distance, angle, result.HitEntity);
-            var dmg = EntitySystem.Get<DamageableSystem>().TryChangeDamage(result.HitEntity, hitscan.Damage);
+            var dmg = _damageable.TryChangeDamage(result.HitEntity, hitscan.Damage);
             if (dmg != null)
-                EntitySystem.Get<AdminLogSystem>().Add(LogType.HitScanHit,
-                    $"{Entities.ToPrettyString(shooter):user} hit {Entities.ToPrettyString(result.HitEntity):target} using {Entities.ToPrettyString(hitscan.Owner):used} and dealt {dmg.Total:damage} damage");
+                _logs.Add(LogType.HitScanHit,
+                    $"{EntityManager.ToPrettyString(shooter):user} hit {EntityManager.ToPrettyString(result.HitEntity):target} using {EntityManager.ToPrettyString(hitscan.Owner):used} and dealt {dmg.Total:damage} damage");
         }
         else
         {

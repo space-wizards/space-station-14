@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Hands.Components;
 using Content.Server.PowerCell;
@@ -7,10 +8,12 @@ using Content.Server.Stunnable;
 using Content.Server.Weapon.Ranged.Ammunition.Components;
 using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Camera;
 using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.PowerCell.Components;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Server.GameObjects;
@@ -34,11 +37,14 @@ public sealed partial class GunSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ActionBlockerSystem  _blocker = default!;
+    [Dependency] private readonly AdminLogSystem _logs = default!;
     [Dependency] private readonly AtmosphereSystem _atmos = default!;
+    [Dependency] private readonly CameraRecoilSystem _recoil = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly EffectSystem _effects = default!;
     [Dependency] private readonly PowerCellSystem _cell = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly StunSystem _stun = default!;
 
@@ -51,16 +57,26 @@ public sealed partial class GunSystem : EntitySystem
     {
         base.Initialize();
 
+        // TODO: So at the time I thought there might've been a need to keep magazines
+        // and ammo boxes separate.
+        // There isn't.
+        // They should be combined.
+
         SubscribeLocalEvent<AmmoComponent, ExaminedEvent>(OnAmmoExamine);
 
         SubscribeLocalEvent<AmmoBoxComponent, ComponentInit>(OnAmmoBoxInit);
         SubscribeLocalEvent<AmmoBoxComponent, MapInitEvent>(OnAmmoBoxMapInit);
         SubscribeLocalEvent<AmmoBoxComponent, ExaminedEvent>(OnAmmoBoxExamine);
-
         SubscribeLocalEvent<AmmoBoxComponent, InteractUsingEvent>(OnAmmoBoxInteractUsing);
         SubscribeLocalEvent<AmmoBoxComponent, UseInHandEvent>(OnAmmoBoxUse);
         SubscribeLocalEvent<AmmoBoxComponent, InteractHandEvent>(OnAmmoBoxInteractHand);
         SubscribeLocalEvent<AmmoBoxComponent, GetAlternativeVerbsEvent>(OnAmmoBoxAltVerbs);
+
+        SubscribeLocalEvent<RangedMagazineComponent, ComponentInit>(OnRangedMagInit);
+        SubscribeLocalEvent<RangedMagazineComponent, MapInitEvent>(OnRangedMagMapInit);
+        SubscribeLocalEvent<RangedMagazineComponent, UseInHandEvent>(OnRangedMagUse);
+        SubscribeLocalEvent<RangedMagazineComponent, ExaminedEvent>(OnRangedMagExamine);
+        SubscribeLocalEvent<RangedMagazineComponent, InteractUsingEvent>(OnRangedMagInteractUsing);
 
         // Whenever I get around to refactoring guns this is all going to change.
         // Essentially the idea is
@@ -71,6 +87,7 @@ public sealed partial class GunSystem : EntitySystem
         SubscribeLocalEvent<BatteryBarrelComponent, ComponentInit>(OnBatteryInit);
         SubscribeLocalEvent<BatteryBarrelComponent, MapInitEvent>(OnBatteryMapInit);
         SubscribeLocalEvent<BatteryBarrelComponent, ComponentGetState>(OnBatteryGetState);
+        SubscribeLocalEvent<BatteryBarrelComponent, PowerCellChangedEvent>(OnCellSlotUpdated);
 
         SubscribeLocalEvent<BoltActionBarrelComponent, ComponentInit>(OnBoltInit);
         SubscribeLocalEvent<BoltActionBarrelComponent, MapInitEvent>(OnBoltMapInit);
@@ -79,13 +96,16 @@ public sealed partial class GunSystem : EntitySystem
         SubscribeLocalEvent<BoltActionBarrelComponent, InteractUsingEvent>(OnBoltInteractUsing);
         SubscribeLocalEvent<BoltActionBarrelComponent, ComponentGetState>(OnBoltGetState);
         SubscribeLocalEvent<BoltActionBarrelComponent, ExaminedEvent>(OnBoltExamine);
+        SubscribeLocalEvent<BoltActionBarrelComponent, GetInteractionVerbsEvent>(AddToggleBoltVerb);
 
-        SubscribeLocalEvent<ServerMagazineBarrelComponent, ComponentInit>(OnMagazineInit);
-        SubscribeLocalEvent<ServerMagazineBarrelComponent, MapInitEvent>(OnMagazineMapInit);
-        SubscribeLocalEvent<ServerMagazineBarrelComponent, ExaminedEvent>(OnMagazineExamine);
-        SubscribeLocalEvent<ServerMagazineBarrelComponent, UseInHandEvent>(OnMagazineUse);
-        SubscribeLocalEvent<ServerMagazineBarrelComponent, InteractUsingEvent>(OnMagazineInteractUsing);
-        SubscribeLocalEvent<ServerMagazineBarrelComponent, ComponentGetState>(OnMagazineGetState);
+        SubscribeLocalEvent<MagazineBarrelComponent, ComponentInit>(OnMagazineInit);
+        SubscribeLocalEvent<MagazineBarrelComponent, MapInitEvent>(OnMagazineMapInit);
+        SubscribeLocalEvent<MagazineBarrelComponent, ExaminedEvent>(OnMagazineExamine);
+        SubscribeLocalEvent<MagazineBarrelComponent, UseInHandEvent>(OnMagazineUse);
+        SubscribeLocalEvent<MagazineBarrelComponent, InteractUsingEvent>(OnMagazineInteractUsing);
+        SubscribeLocalEvent<MagazineBarrelComponent, ComponentGetState>(OnMagazineGetState);
+        SubscribeLocalEvent<MagazineBarrelComponent, GetInteractionVerbsEvent>(AddMagazineInteractionVerbs);
+        SubscribeLocalEvent<MagazineBarrelComponent, GetAlternativeVerbsEvent>(AddEjectMagazineVerb);
 
         SubscribeLocalEvent<PumpBarrelComponent, ComponentGetState>(OnPumpGetState);
         SubscribeLocalEvent<PumpBarrelComponent, ComponentInit>(OnPumpInit);
@@ -99,6 +119,12 @@ public sealed partial class GunSystem : EntitySystem
         SubscribeLocalEvent<RevolverBarrelComponent, InteractUsingEvent>(OnRevolverInteractUsing);
         SubscribeLocalEvent<RevolverBarrelComponent, ComponentGetState>(OnRevolverGetState);
         SubscribeLocalEvent<RevolverBarrelComponent, GetAlternativeVerbsEvent>(AddSpinVerb);
+
+        SubscribeLocalEvent<SpeedLoaderComponent, ComponentInit>(OnSpeedLoaderInit);
+        SubscribeLocalEvent<SpeedLoaderComponent, MapInitEvent>(OnSpeedLoaderMapInit);
+        SubscribeLocalEvent<SpeedLoaderComponent, UseInHandEvent>(OnSpeedLoaderUse);
+        SubscribeLocalEvent<SpeedLoaderComponent, AfterInteractEvent>(OnSpeedLoaderAfterInteract);
+        SubscribeLocalEvent<SpeedLoaderComponent, InteractUsingEvent>(OnSpeedLoaderInteractUsing);
 
         // SubscribeLocalEvent<ServerRangedWeaponComponent, ExaminedEvent>(OnGunExamine);
         SubscribeNetworkEvent<FirePosEvent>(OnFirePos);

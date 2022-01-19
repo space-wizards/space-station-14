@@ -6,6 +6,7 @@ using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
+using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Content.Shared.Weapons.Ranged.Components;
@@ -21,7 +22,61 @@ namespace Content.Server.Weapon.Ranged;
 
 public sealed partial class GunSystem
 {
-    private void OnMagazineExamine(EntityUid uid, ServerMagazineBarrelComponent component, ExaminedEvent args)
+    private void AddEjectMagazineVerb(EntityUid uid, MagazineBarrelComponent component, GetAlternativeVerbsEvent args)
+    {
+        if (args.Hands == null ||
+            !args.CanAccess ||
+            !args.CanInteract ||
+            !component.HasMagazine ||
+            !_blocker.CanPickup(args.User))
+            return;
+
+        if (component.MagNeedsOpenBolt && !component.BoltOpen)
+            return;
+
+        Verb verb = new()
+        {
+            Text = MetaData(component.MagazineContainer.ContainedEntity!.Value).EntityName,
+            Category = VerbCategory.Eject,
+            Act = () => RemoveMagazine(args.User, component)
+        };
+        args.Verbs.Add(verb);
+    }
+
+    private void AddMagazineInteractionVerbs(EntityUid uid, MagazineBarrelComponent component, GetInteractionVerbsEvent args)
+    {
+        if (args.Hands == null ||
+            !args.CanAccess ||
+            !args.CanInteract)
+            return;
+
+        // Toggle bolt verb
+        Verb toggleBolt = new()
+        {
+            Text = component.BoltOpen
+                ? Loc.GetString("close-bolt-verb-get-data-text")
+                : Loc.GetString("open-bolt-verb-get-data-text"),
+            Act = () => component.BoltOpen = !component.BoltOpen
+        };
+        args.Verbs.Add(toggleBolt);
+
+        // Are we holding a mag that we can insert?
+        if (args.Using is not {Valid: true} @using ||
+            !CanInsertMagazine(args.User, @using, component) ||
+            !_blocker.CanDrop(args.User))
+            return;
+
+        // Insert mag verb
+        Verb insert = new()
+        {
+            Text = MetaData(@using).EntityName,
+            Category = VerbCategory.Insert,
+            Act = () => InsertMagazine(args.User, @using, component)
+        };
+        args.Verbs.Add(insert);
+    }
+
+    private void OnMagazineExamine(EntityUid uid, MagazineBarrelComponent component, ExaminedEvent args)
     {
         args.PushMarkup(Loc.GetString("server-magazine-barrel-component-on-examine", ("caliber", component.Caliber)));
 
@@ -31,7 +86,7 @@ public sealed partial class GunSystem
         }
     }
 
-    private void OnMagazineUse(EntityUid uid, ServerMagazineBarrelComponent component, UseInHandEvent args)
+    private void OnMagazineUse(EntityUid uid, MagazineBarrelComponent component, UseInHandEvent args)
     {
         if (args.Handled) return;
 
@@ -57,7 +112,7 @@ public sealed partial class GunSystem
         return;
     }
 
-    public void UpdateMagazineAppearance(ServerMagazineBarrelComponent component)
+    public void UpdateMagazineAppearance(MagazineBarrelComponent component)
     {
         if (!EntityManager.TryGetComponent(component.Owner, out AppearanceComponent? appearanceComponent)) return;
 
@@ -67,7 +122,7 @@ public sealed partial class GunSystem
         appearanceComponent.SetData(AmmoVisuals.AmmoMax, component.Capacity);
     }
 
-    private void OnMagazineGetState(EntityUid uid, ServerMagazineBarrelComponent component, ComponentGetState args)
+    private void OnMagazineGetState(EntityUid uid, MagazineBarrelComponent component, ComponentGetState args)
     {
         (int, int)? count = null;
         if (component.MagazineContainer.ContainedEntity is {Valid: true} magazine &&
@@ -83,7 +138,7 @@ public sealed partial class GunSystem
             component.SoundGunshot.GetSound());
     }
 
-    private void OnMagazineInteractUsing(EntityUid uid, ServerMagazineBarrelComponent component, InteractUsingEvent args)
+    private void OnMagazineInteractUsing(EntityUid uid, MagazineBarrelComponent component, InteractUsingEvent args)
     {
         if (args.Handled) return;
 
@@ -123,7 +178,7 @@ public sealed partial class GunSystem
         }
     }
 
-    private void OnMagazineInit(EntityUid uid, ServerMagazineBarrelComponent component, ComponentInit args)
+    private void OnMagazineInit(EntityUid uid, MagazineBarrelComponent component, ComponentInit args)
     {
         component.ChamberContainer = uid.EnsureContainer<ContainerSlot>($"{nameof(component)}-chamber");
         component.MagazineContainer = uid.EnsureContainer<ContainerSlot>($"{nameof(component)}-magazine", out var existing);
@@ -135,12 +190,12 @@ public sealed partial class GunSystem
         }
     }
 
-    private void OnMagazineMapInit(EntityUid uid, ServerMagazineBarrelComponent component, MapInitEvent args)
+    private void OnMagazineMapInit(EntityUid uid, MagazineBarrelComponent component, MapInitEvent args)
     {
         UpdateMagazineAppearance(component);
     }
 
-    public bool TryEjectChamber(ServerMagazineBarrelComponent component)
+    public bool TryEjectChamber(MagazineBarrelComponent component)
     {
         if (component.ChamberContainer.ContainedEntity is {Valid: true} chamberEntity)
         {
@@ -158,7 +213,7 @@ public sealed partial class GunSystem
         return false;
     }
 
-    public bool TryFeedChamber(ServerMagazineBarrelComponent component)
+    public bool TryFeedChamber(MagazineBarrelComponent component)
     {
         if (component.ChamberContainer.ContainedEntity != null)
         {
@@ -167,8 +222,9 @@ public sealed partial class GunSystem
 
         // Try and pull a round from the magazine to replace the chamber if possible
         var magazine = component.MagazineContainer.ContainedEntity;
+        var magComp = EntityManager.GetComponentOrNull<RangedMagazineComponent>(magazine);
 
-        if (EntityManager.GetComponentOrNull<RangedMagazineComponent>(magazine)?.TakeAmmo() is not {Valid: true} nextRound)
+        if (magComp == null || TakeAmmo(magComp) is not {Valid: true} nextRound)
         {
             return false;
         }
@@ -181,12 +237,12 @@ public sealed partial class GunSystem
 
             component.MagazineContainer.Remove(magazine.Value);
             // TODO: Should be a state or something, waste of bandwidth
-            RaiseNetworkEvent(new MagazineAutoEjectMessage());
+            RaiseNetworkEvent(new MagazineAutoEjectMessage {Uid = component.Owner});
         }
         return true;
     }
 
-    private void CycleMagazine(ServerMagazineBarrelComponent component, bool manual = false)
+    private void CycleMagazine(MagazineBarrelComponent component, bool manual = false)
     {
         if (component.BoltOpen)
             return;
@@ -217,12 +273,12 @@ public sealed partial class GunSystem
         UpdateMagazineAppearance(component);
     }
 
-    public EntityUid? PeekMagazineAmmo(ServerMagazineBarrelComponent component)
+    public EntityUid? PeekMagazineAmmo(MagazineBarrelComponent component)
     {
         return component.BoltOpen ? null : component.ChamberContainer.ContainedEntity;
     }
 
-    public EntityUid? TakeMagazineProjectile(ServerMagazineBarrelComponent component, EntityCoordinates spawnAt)
+    public EntityUid? TakeMagazineProjectile(MagazineBarrelComponent component, EntityCoordinates spawnAt)
     {
         if (component.BoltOpen)
             return null;
@@ -234,7 +290,7 @@ public sealed partial class GunSystem
         return entity != null ? TakeBullet(EntityManager.GetComponent<AmmoComponent>(entity.Value), spawnAt) : null;
     }
 
-    public List<MagazineType> GetMagazineTypes(ServerMagazineBarrelComponent component)
+    public List<MagazineType> GetMagazineTypes(MagazineBarrelComponent component)
     {
         var types = new List<MagazineType>();
 
@@ -249,7 +305,7 @@ public sealed partial class GunSystem
         return types;
     }
 
-    public void RemoveMagazine(EntityUid user, ServerMagazineBarrelComponent component)
+    public void RemoveMagazine(EntityUid user, MagazineBarrelComponent component)
     {
         var mag = component.MagazineContainer.ContainedEntity;
 
@@ -274,7 +330,7 @@ public sealed partial class GunSystem
         UpdateMagazineAppearance(component);
     }
 
-    public bool CanInsertMagazine(EntityUid user, EntityUid magazine, ServerMagazineBarrelComponent component, bool quiet = true)
+    public bool CanInsertMagazine(EntityUid user, EntityUid magazine, MagazineBarrelComponent component, bool quiet = true)
     {
         if (!TryComp(magazine, out RangedMagazineComponent? magazineComponent))
         {
@@ -314,7 +370,7 @@ public sealed partial class GunSystem
         return false;
     }
 
-    public void InsertMagazine(EntityUid user, EntityUid magazine, ServerMagazineBarrelComponent component)
+    public void InsertMagazine(EntityUid user, EntityUid magazine, MagazineBarrelComponent component)
     {
         SoundSystem.Play(Filter.Pvs(component.Owner), component.SoundMagInsert.GetSound(), component.Owner, AudioParams.Default.WithVolume(-2));
         _popup.PopupEntity(Loc.GetString("server-magazine-barrel-component-interact-using-success"), component.Owner, Filter.Entities(user));

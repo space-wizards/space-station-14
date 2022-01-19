@@ -24,11 +24,11 @@ public sealed partial class GunSystem
     private void OnPumpGetState(EntityUid uid, PumpBarrelComponent component, ComponentGetState args)
     {
         (int, int)? count = (component.ShotsLeft, component.Capacity);
-        var chamberedExists = component._chamberContainer.ContainedEntity != null;
+        var chamberedExists = component.ChamberContainer.ContainedEntity != null;
         // (Is one chambered?, is the bullet spend)
         var chamber = (chamberedExists, false);
 
-        if (chamberedExists && EntityManager.TryGetComponent<AmmoComponent?>(component._chamberContainer.ContainedEntity!.Value, out var ammo))
+        if (chamberedExists && TryComp<AmmoComponent?>(component.ChamberContainer.ContainedEntity!.Value, out var ammo))
         {
             chamber.Item2 = ammo.Spent;
         }
@@ -42,9 +42,9 @@ public sealed partial class GunSystem
 
     private void OnPumpMapInit(EntityUid uid, PumpBarrelComponent component, MapInitEvent args)
     {
-        if (component._fillPrototype != null)
+        if (component.FillPrototype != null)
         {
-            component._unspawnedCount += component.Capacity - 1;
+            component.UnspawnedCount += component.Capacity - 1;
         }
 
         UpdatePumpAppearance(component);
@@ -60,24 +60,24 @@ public sealed partial class GunSystem
 
     private void OnPumpInit(EntityUid uid, PumpBarrelComponent component, ComponentInit args)
     {
-        component._ammoContainer =
+        component.AmmoContainer =
             uid.EnsureContainer<Container>($"{nameof(component)}-ammo-container", out var existing);
 
         if (existing)
         {
-            foreach (var entity in component._ammoContainer.ContainedEntities)
+            foreach (var entity in component.AmmoContainer.ContainedEntities)
             {
-                component._spawnedAmmo.Push(entity);
-                component._unspawnedCount--;
+                component.SpawnedAmmo.Push(entity);
+                component.UnspawnedCount--;
             }
         }
 
-        component._chamberContainer =
+        component.ChamberContainer =
             uid.EnsureContainer<ContainerSlot>($"{nameof(component)}-chamber-container", out existing);
 
         if (existing)
         {
-            component._unspawnedCount--;
+            component.UnspawnedCount--;
         }
 
         if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearanceComponent))
@@ -105,9 +105,9 @@ public sealed partial class GunSystem
             args.Handled = true;
     }
 
-    public bool TryInsertBullet(PumpBarrelComponent component, InteractUsingEventArgs args)
+    public bool TryInsertBullet(PumpBarrelComponent component, InteractUsingEvent args)
     {
-        if (!EntityManager.TryGetComponent(args.Using, out AmmoComponent? ammoComponent))
+        if (!EntityManager.TryGetComponent(args.Used, out AmmoComponent? ammoComponent))
         {
             return false;
         }
@@ -118,13 +118,13 @@ public sealed partial class GunSystem
             return false;
         }
 
-        if (component._ammoContainer.ContainedEntities.Count < component.Capacity - 1)
+        if (component.AmmoContainer.ContainedEntities.Count < component.Capacity - 1)
         {
-            component._ammoContainer.Insert(args.Using);
-            component._spawnedAmmo.Push(args.Using);
+            component.AmmoContainer.Insert(args.Used);
+            component.SpawnedAmmo.Push(args.Used);
             component.Dirty(EntityManager);
             UpdatePumpAppearance(component);
-            SoundSystem.Play(Filter.Pvs(component.Owner), component._soundInsert.GetSound(), component.Owner, AudioParams.Default.WithVolume(-2));
+            SoundSystem.Play(Filter.Pvs(component.Owner), component.SoundInsert.GetSound(), component.Owner, AudioParams.Default.WithVolume(-2));
             return true;
         }
 
@@ -135,9 +135,9 @@ public sealed partial class GunSystem
 
     private void CyclePump(PumpBarrelComponent component, bool manual = false)
     {
-        if (component._chamberContainer.ContainedEntity is {Valid: true} chamberedEntity)
+        if (component.ChamberContainer.ContainedEntity is {Valid: true} chamberedEntity)
         {
-            component._chamberContainer.Remove(chamberedEntity);
+            component.ChamberContainer.Remove(chamberedEntity);
             var ammoComponent = EntityManager.GetComponent<AmmoComponent>(chamberedEntity);
             if (!ammoComponent.Caseless)
             {
@@ -145,22 +145,22 @@ public sealed partial class GunSystem
             }
         }
 
-        if (component._spawnedAmmo.TryPop(out var next))
+        if (component.SpawnedAmmo.TryPop(out var next))
         {
-            component._ammoContainer.Remove(next);
-            component._chamberContainer.Insert(next);
+            component.AmmoContainer.Remove(next);
+            component.ChamberContainer.Insert(next);
         }
 
-        if (component._unspawnedCount > 0)
+        if (component.UnspawnedCount > 0)
         {
-            component._unspawnedCount--;
-            var ammoEntity = EntityManager.SpawnEntity(component._fillPrototype, Transform(component.Owner).Coordinates);
-            component._chamberContainer.Insert(ammoEntity);
+            component.UnspawnedCount--;
+            var ammoEntity = EntityManager.SpawnEntity(component.FillPrototype, Transform(component.Owner).Coordinates);
+            component.ChamberContainer.Insert(ammoEntity);
         }
 
         if (manual)
         {
-            SoundSystem.Play(Filter.Pvs(component.Owner), component._soundCycle.GetSound(), component.Owner, AudioParams.Default.WithVolume(-2));
+            SoundSystem.Play(Filter.Pvs(component.Owner), component.SoundCycle.GetSound(), component.Owner, AudioParams.Default.WithVolume(-2));
         }
 
         component.Dirty(EntityManager);
@@ -169,12 +169,12 @@ public sealed partial class GunSystem
 
     public EntityUid? PeekPumpAmmo(PumpBarrelComponent component)
     {
-        return component._chamberContainer.ContainedEntity;
+        return component.ChamberContainer.ContainedEntity;
     }
 
     public EntityUid? TakeProjectile(PumpBarrelComponent component, EntityCoordinates spawnAt)
     {
-        if (!component._manualCycle)
+        if (!component.ManualCycle)
         {
             CyclePump(component);
         }
@@ -183,7 +183,7 @@ public sealed partial class GunSystem
             component.Dirty(EntityManager);
         }
 
-        if (component._chamberContainer.ContainedEntity is not {Valid: true} chamberEntity) return null;
+        if (component.ChamberContainer.ContainedEntity is not {Valid: true} chamberEntity) return null;
 
         var ammoComponent = EntityManager.GetComponentOrNull<AmmoComponent>(chamberEntity);
 

@@ -15,9 +15,13 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
     {
         // The minimum change we need before we can fire
         [DataField("lowerChargeLimit")]
-        [ViewVariables] private float _lowerChargeLimit = 10;
+        [ViewVariables]
+        public float LowerChargeLimit = 10;
+
         [DataField("fireCost")]
-        [ViewVariables] private int _baseFireCost = 300;
+        [ViewVariables]
+        public int BaseFireCost = 300;
+
         // What gets fired
         [DataField("ammoPrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         [ViewVariables]
@@ -35,7 +39,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                     return 0;
                 }
 
-                return (int) Math.Ceiling(battery.CurrentCharge / _baseFireCost);
+                return (int) Math.Ceiling(battery.CurrentCharge / BaseFireCost);
             }
         }
 
@@ -48,7 +52,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                     return 0;
                 }
 
-                return (int) Math.Ceiling(battery.MaxCharge / _baseFireCost);
+                return (int) Math.Ceiling(battery.MaxCharge / BaseFireCost);
             }
         }
     }

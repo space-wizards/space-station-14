@@ -3,6 +3,7 @@ using Content.Server.Weapon.Ranged.Ammunition.Components;
 using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -16,6 +17,23 @@ namespace Content.Server.Weapon.Ranged;
 
 public sealed partial class GunSystem
 {
+    private void AddToggleBoltVerb(EntityUid uid, BoltActionBarrelComponent component, GetInteractionVerbsEvent args)
+    {
+        if (args.Hands == null ||
+            !args.CanAccess ||
+            !args.CanInteract)
+            return;
+
+        Verb verb = new()
+        {
+            Text = component.BoltOpen
+                ? Loc.GetString("close-bolt-verb-get-data-text")
+                : Loc.GetString("open-bolt-verb-get-data-text"),
+            Act = () => component.BoltOpen = !component.BoltOpen
+        };
+        args.Verbs.Add(verb);
+    }
+
     private void OnBoltExamine(EntityUid uid, BoltActionBarrelComponent component, ExaminedEvent args)
     {
         args.PushMarkup(Loc.GetString("bolt-action-barrel-component-on-examine", ("caliber", component.Caliber)));
@@ -45,7 +63,7 @@ public sealed partial class GunSystem
         UpdateBoltAppearance(component);
     }
 
-    private void UpdateBoltAppearance(BoltActionBarrelComponent component)
+    public void UpdateBoltAppearance(BoltActionBarrelComponent component)
     {
         if (!EntityManager.TryGetComponent(component.Owner, out AppearanceComponent? appearanceComponent)) return;
 
@@ -119,7 +137,7 @@ public sealed partial class GunSystem
         UpdateBoltAppearance(component);
     }
 
-    private bool TryEjectChamber(BoltActionBarrelComponent component)
+    public bool TryEjectChamber(BoltActionBarrelComponent component)
     {
         if (component.ChamberContainer.ContainedEntity is {Valid: true} chambered)
         {
@@ -135,7 +153,7 @@ public sealed partial class GunSystem
         return false;
     }
 
-    private bool TryFeedChamber(BoltActionBarrelComponent component)
+    public bool TryFeedChamber(BoltActionBarrelComponent component)
     {
         if (component.ChamberContainer.ContainedEntity != null)
         {

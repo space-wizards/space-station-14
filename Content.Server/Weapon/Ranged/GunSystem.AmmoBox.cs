@@ -68,14 +68,14 @@ public sealed partial class GunSystem
 
         for (var i = 0; i < Math.Max(10, rangedMagazine.ShotsLeft); i++)
         {
-            if (rangedMagazine.TakeAmmo() is not {Valid: true} ammo)
+            if (TakeAmmo(rangedMagazine) is not {Valid: true} ammo)
             {
                 continue;
             }
 
             if (!TryInsertAmmo(args.User, ammo, component))
             {
-                rangedMagazine.TryInsertAmmo(args.User, ammo);
+                TryInsertAmmo(args.User, ammo, rangedMagazine);
                 args.Handled = true;
                 return;
             }
