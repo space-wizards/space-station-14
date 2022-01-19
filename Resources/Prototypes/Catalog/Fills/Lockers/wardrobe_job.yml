@@ -12,6 +12,8 @@
          amount: 2
        - id: ClothingShoesColorBlack
          amount: 2
+       - id: ClothingMaskMuzzle
+         amount: 1
 
 #- type: entity
 #  id: WardrobePajamaFilled
@@ -75,8 +77,8 @@
          prob: 0.5
        - id: CrowbarRed #The jojoke - hit video game Half-Life
          prob: 0.1
-   
-   
+
+
  - type: entity
    id: WardrobeBotanistFilled
    suffix: Filled
@@ -139,7 +141,7 @@
          amount: 1
        - id: ClothingUniformJumpskirtChaplain
          amount: 1
-     
+
 
  - type: entity
    id: WardrobeSecurityFilled
@@ -182,7 +184,7 @@
          amount: 1
        - id: ClothingUniformJumpskirtCargo
          amount: 1
-   
+
 
 # - type: entity
 #   id: WardrobeAtmosphericsFilled

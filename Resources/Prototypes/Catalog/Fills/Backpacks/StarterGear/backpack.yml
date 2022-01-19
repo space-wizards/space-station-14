@@ -7,6 +7,18 @@
     contents:
       - id: BoxSurvival
 
+#This should be temporary, at least until briefcases can spawn in hands.
+
+- type: entity
+  abstract: true
+  parent: ClothingBackpack
+  id: ClothingBackpackBriefcaseFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvival
+      - id: BriefcaseBrownFilled
+
 - type: entity
   abstract: true
   parent: ClothingBackpackClown

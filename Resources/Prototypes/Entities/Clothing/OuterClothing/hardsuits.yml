@@ -107,6 +107,7 @@
         Piercing: 0.95
         Heat: 0.8
         Radiation: 0.05 #combines the engi and atmos bonuses
+
 #The voidsuit and eva suit are not techically 'hardsuits' but this seems to be the place for all EVA-capable outer clothing. This may be worth reevaluating when we have a lot more items.
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -132,6 +133,20 @@
     sprite: Clothing/OuterClothing/Hardsuits/eva.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/eva.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 1
+    lowPressureMultiplier: 100
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id:  ClothingOuterHardsuitEVAPrisoner
+  name: prisoner EVA suit
+  description: A lightweight space suit for prisoners to protect them from the vacuum of space during emergencies.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/evaprisoner.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/evaprisoner.rsi
   - type: PressureProtection
     highPressureMultiplier: 1
     lowPressureMultiplier: 100

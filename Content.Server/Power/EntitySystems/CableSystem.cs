@@ -26,8 +26,8 @@ public class CableSystem : EntitySystem
         if (args.Handled)
             return;
 
-        var ev = new CuttingFinishedEvent(uid, args.User);
-        _toolSystem.UseTool(args.Used, args.User, uid, 0, cable.CuttingDelay, new[] { cable.CuttingQuality }, doAfterCompleteEvent: ev);
+        var ev = new CuttingFinishedEvent(args.User);
+        _toolSystem.UseTool(args.Used, args.User, uid, 0, cable.CuttingDelay, new[] { cable.CuttingQuality }, doAfterCompleteEvent: ev, doAfterEventTarget: uid);
         args.Handled = true;
     }
 
@@ -57,15 +57,12 @@ public class CableSystem : EntitySystem
     }
 }
 
-// TODO: if #5887 gets merged, just use a directed event instead of broadcast-with-target
 public class CuttingFinishedEvent : EntityEventArgs
 {
-    public EntityUid Target;
     public EntityUid User;
 
-    public CuttingFinishedEvent(EntityUid target, EntityUid user)
+    public CuttingFinishedEvent(EntityUid user)
     {
-        Target = target;
         User = user;
     }
 }
