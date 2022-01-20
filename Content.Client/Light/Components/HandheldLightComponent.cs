@@ -1,4 +1,5 @@
 using Content.Client.Items.Components;
+using Content.Shared.Hands.Components;
 using Content.Shared.Light.Component;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
@@ -6,9 +7,11 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
-using Robust.Shared.ViewVariables;
+using System.Collections.Generic;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
+using static Robust.Shared.GameObjects.SharedSpriteComponent;
 
 namespace Content.Client.Light.Components
 {
@@ -17,6 +20,37 @@ namespace Content.Client.Light.Components
     public sealed class HandheldLightComponent : SharedHandheldLightComponent, IItemStatus
     {
         public byte? Level;
+        public bool Activated;
+
+        /// <summary>
+        ///     Whether to automatically set item-prefixes when toggling the flashlight.
+        /// </summary>
+        /// <remarks>
+        ///     Flashlights should probably be using explicit unshaded sprite, in-hand and clothing layers, this is
+        ///     mostly here for backwards compatibility.
+        /// </remarks>
+        [DataField("addPrefix")]
+        public bool AddPrefix = false;
+
+        /// <summary>
+        ///     Sprite layer that will have it's visibility toggled when this item is toggled.
+        /// </summary>
+        [DataField("layer")]
+        public string Layer = "light";
+
+        /// <summary>
+        ///     Layers to add to the sprite of the player that is holding this entity.
+        /// </summary>
+        [DataField("inhandVisuals")]
+        public Dictionary<HandLocation, List<PrototypeLayerData>> InhandVisuals = new();
+
+        /// <summary>
+        ///     Layers to add to the sprite of the player that is wearing this entity.
+        /// </summary>
+        [DataField("clothingVisuals")]
+        public readonly Dictionary<string, List<PrototypeLayerData>> ClothingVisuals = new();
+
+        public Color Color { get; internal set; }
 
         public Control MakeControl()
         {

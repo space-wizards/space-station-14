@@ -5,6 +5,7 @@
   description: The holy light guides the way.
   components:
     - type: HandheldLight
+      addPrefix: true
     - type: ItemActions
       actions:
         - actionType: ToggleLight
@@ -15,10 +16,12 @@
         - state: lantern-on
           shader: unshaded
           visible: false
+          map: [ "light" ]
     - type: Item
       sprite: Objects/Tools/lantern.rsi
       HeldPrefix: off
     - type: PointLight
+      netsync: false
       enabled: false
       radius: 3
       energy: 2.5

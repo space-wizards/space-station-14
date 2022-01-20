@@ -5,6 +5,7 @@
   abstract: true
   components:
   - type: HandheldLight
+    addPrefix: true
   - type: PowerCellSlot
   - type: ItemActions
     actions:
@@ -27,6 +28,7 @@
       - state: lamp-on
         shader: unshaded
         visible: false
+        map: [ "light" ]
   - type: Item
     sprite: Objects/Misc/Lights/lamp.rsi
   - type: PointLight
@@ -49,6 +51,7 @@
       - state: bananalamp_on
         shader: unshaded
         visible: false
+        map: [ "light" ]
   - type: PointLight
     enabled: false
     radius: 3
@@ -70,6 +73,7 @@
       - state: lampgreen-on
         shader: unshaded
         visible: false
+        map: [ "light" ]
   - type: Item
     sprite: Objects/Misc/Lights/lampgreen.rsi
   - type: PointLight
@@ -92,6 +96,7 @@
       - state: floodlight_on
         shader: unshaded
         visible: false
+        map: [ "light" ]
   - type: Physics
   - type: Fixtures
     fixtures:

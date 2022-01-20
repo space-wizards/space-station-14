@@ -8,7 +8,6 @@ using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Content.Shared.Item;
 using Content.Shared.Light.Component;
 using Content.Shared.Rounding;
 using Content.Shared.Verbs;
@@ -52,7 +51,7 @@ namespace Content.Server.Light.EntitySystems
 
         private void OnGetState(EntityUid uid, HandheldLightComponent component, ref ComponentGetState args)
         {
-            args.State = new SharedHandheldLightComponent.HandheldLightComponentState(GetLevel(component));
+            args.State = new SharedHandheldLightComponent.HandheldLightComponentState(component.Activated, GetLevel(component));
         }
 
         private byte? GetLevel(HandheldLightComponent component)
@@ -155,7 +154,6 @@ namespace Content.Server.Light.EntitySystems
         {
             if (!component.Activated) return false;
 
-            SetState(component, false);
             component.Activated = false;
             UpdateLightAction(component);
             _activeLights.Remove(component);
@@ -193,32 +191,12 @@ namespace Content.Server.Light.EntitySystems
 
             component.Activated = true;
             UpdateLightAction(component);
-            SetState(component, true);
             _activeLights.Add(component);
             component.LastLevel = GetLevel(component);
             component.Dirty(EntityManager);
 
             SoundSystem.Play(Filter.Pvs(component.Owner), component.TurnOnSound.GetSound(), component.Owner);
             return true;
-        }
-
-        private void SetState(HandheldLightComponent component, bool on)
-        {
-            // TODO: Oh dear
-            if (EntityManager.TryGetComponent(component.Owner, out SpriteComponent? sprite))
-            {
-                sprite.LayerSetVisible(1, on);
-            }
-
-            if (EntityManager.TryGetComponent(component.Owner, out PointLightComponent? light))
-            {
-                light.Enabled = on;
-            }
-
-            if (EntityManager.TryGetComponent(component.Owner, out SharedItemComponent? item))
-            {
-                item.EquippedPrefix = on ? "on" : "off";
-            }
         }
 
         private void UpdateLightAction(HandheldLightComponent component)

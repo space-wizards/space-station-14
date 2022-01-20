@@ -6,12 +6,17 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Shared.Light.Component;
 
 /// <summary>
-/// Networked ~~solely for admemes~~ for completely legitimate reasons, like hacked energy swords.
+///     Makes the color of lights on an entity fluctuate. Will update point-light color and modulate some or all of the
+///     sprite layers. Will also modulate the color of any unshaded layers that this entity contributes to a wearer or holder.
 /// </summary>
+/// <remarks>
+///     Networked ~~solely for admemes~~ for completely legitimate reasons, like hacked energy swords.
+/// </remarks>
 [NetworkedComponent]
 [RegisterComponent]
 [ComponentProtoName("RgbLightController")]
@@ -22,23 +27,37 @@ public sealed class RgbLightControllerComponent : Robust.Shared.GameObjects.Comp
     public float CycleRate { get; set; } = 0.1f;
 
     /// <summary>
-    ///     What layers of the sprite to modulate? If null, will affect the whole sprite.
+    ///     What layers of the sprite to modulate? If null, will affect only unshaded layers.
     /// </summary>
     [DataField("layers")]
     public List<int>? Layers;
 
-    // original colors when rgb was added. Used to revert Colors when removed.
+    /// <summary>
+    ///     Original light color from befor the rgb was aded. Used to revert colors when removed.
+    /// </summary>
     public Color OriginalLightColor;
-    public Color OriginalItemColor;
-    public Color OriginalSpriteColor;
+
+    /// <summary>
+    ///     Original colors of the sprite layersfrom before the rgb was added. Used to revert colors when removed.
+    /// </summary>
     public Dictionary<int, Color>? OriginalLayerColors;
+
+    /// <summary>
+    ///     User that is holding or wearing this entity
+    /// </summary>
+    public EntityUid? Holder;
+
+    /// <summary>
+    ///     List of unshaded layers on the holder/wearer that are being modulated.
+    /// </summary>
+    public List<string>? HolderLayers;
 }
 
 [Serializable, NetSerializable]
 public class RgbLightControllerState : ComponentState
 {
     public readonly float CycleRate;
-    public readonly List<int>? Layers;
+    public List<int>? Layers;
 
     public RgbLightControllerState(float cycleRate, List<int>? layers)
     {

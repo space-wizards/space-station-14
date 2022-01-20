@@ -9,7 +9,6 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -66,22 +65,6 @@ namespace Content.Shared.Item
 
         [DataField("EquipSound")]
         public SoundSpecifier? EquipSound { get; set; } = default!;
-
-        /// <summary>
-        ///     Color of the sprite shown on the player when this item is in their hands.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public Color Color
-        {
-            get => _color;
-            set
-            {
-                _color = value;
-                Dirty();
-            }
-        }
-        [DataField("color")]
-        private Color _color = Color.White;
 
         /// <summary>
         ///     Rsi of the sprite shown on the player when this item is in their hands.

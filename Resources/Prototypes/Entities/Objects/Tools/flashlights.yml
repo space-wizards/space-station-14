@@ -8,6 +8,14 @@
     tags:
     - Flashlight
   - type: HandheldLight
+    addPrefix: false
+    inhandVisuals:
+      left:
+      - state: inhand-left-light
+        shader: unshaded
+      right:
+      - state: inhand-right-light
+        shader: unshaded
   - type: ItemActions
     actions:
       - actionType: ToggleLight
@@ -21,10 +29,11 @@
       - state: flashlight-overlay
         shader: unshaded
         visible: false
+        map: [ "light" ]
   - type: Item
     sprite: Objects/Tools/flashlight.rsi
-    HeldPrefix: off
   - type: PointLight
+    netsync: false
     enabled: false
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
@@ -42,6 +51,15 @@
   - type: PowerCellSlot
     cellSlot:
       startingItem: PowerCellSmallSuper
+  - type: HandheldLight
+    addPrefix: false
+    inhandVisuals:
+      left:
+      - state: inhand-left-light
+        shader: unshaded
+      right:
+      - state: inhand-right-light
+        shader: unshaded
   - type: Sprite
     sprite: Objects/Tools/seclite.rsi
     layers:
@@ -49,6 +67,7 @@
       - state: seclite-overlay
         shader: unshaded
         visible: false
+        map: [ "light" ]
   - type: Item
     sprite: Objects/Tools/seclite.rsi
   - type: PointLight
