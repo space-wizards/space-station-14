@@ -93,16 +93,17 @@
         shader: unshaded
         visible: false
   - type: Physics
+    mass: 20
   - type: Fixtures
     fixtures:
     - shape:
-        !type:PhysShapeAabb {}
+        !type:PhysShapeAabb
+          bounds: "-0.2, -0.5, 0.2, 0.5"
+      mask:
+      - Impassable
       layer:
       - Opaque
       - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
   - type: PointLight
     enabled: false
     radius: 8
