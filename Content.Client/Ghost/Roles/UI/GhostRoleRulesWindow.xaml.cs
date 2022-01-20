@@ -17,7 +17,7 @@ namespace Content.Client.Ghost.Roles.UI
         public GhostRoleRulesWindow(string rules, Action<BaseButton.ButtonEventArgs> requestAction)
         {
             RobustXamlLoader.Load(this);
-            Title.SetMessage(FormattedMessage.FromMarkupPermissive(rules + "\n" + Loc.GetString("ghost-roles-window-rules-footer")));
+            TopBanner.SetMessage(FormattedMessage.FromMarkupPermissive(rules + "\n" + Loc.GetString("ghost-roles-window-rules-footer")));
             RequestButton.OnPressed += requestAction;
         }
 

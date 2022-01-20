@@ -2,7 +2,7 @@
             Title="{Loc 'ghost-roles-window-title'}">
     <BoxContainer Orientation="Vertical"
                   HorizontalExpand="True">
-        <RichTextLabel Name="Title" VerticalExpand="True"/>
+        <RichTextLabel Name="TopBanner" VerticalExpand="True"/>
         <Button Name="RequestButton"
                 Text="{Loc 'ghost-roles-window-request-role-button'}"
                 Disabled="True"

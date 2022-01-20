@@ -53,7 +53,7 @@ namespace Content.Server.DoAfter
             if (eventArgs.NeedHand && entityManager.TryGetComponent(eventArgs.User, out HandsComponent? handsComponent))
             {
                 _activeHand = handsComponent.ActiveHand;
-                _activeItem = handsComponent.GetActiveHand;
+                _activeItem = handsComponent.GetActiveHandItem;
             }
 
             Tcs = new TaskCompletionSource<DoAfterStatus>();
@@ -157,7 +157,7 @@ namespace Content.Server.DoAfter
                         return true;
                     }
 
-                    var currentItem = handsComponent.GetActiveHand;
+                    var currentItem = handsComponent.GetActiveHandItem;
                     if (_activeItem != currentItem)
                     {
                         return true;
