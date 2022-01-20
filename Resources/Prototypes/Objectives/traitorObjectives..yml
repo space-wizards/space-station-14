@@ -2,6 +2,7 @@
   id: CaptainIDStealObjective
   issuer: syndicate
   difficultyOverride: 2.75
+  prob: 0.2
   requirements:
     - !type:TraitorRequirement {}
     - !type:IncompatibleConditionsRequirement
@@ -49,22 +50,24 @@
 #  conditions:
 #    - !type:StayAliveCondition {}
 
-#- type: objective
-#  id: DieObjective
-#  issuer: syndicate
-#  requirements:
-#    - !type:TraitorRequirement {}
-#    - !type:IncompatibleConditionsRequirement
-#      conditions:
-#        - StayAliveCondition
-#        - StealCondition
-#  conditions:
-#    - !type:DieCondition {}
+- type: objective
+  id: DieObjective
+  issuer: syndicate
+  prob: 0.03
+  requirements:
+    - !type:TraitorRequirement {}
+    - !type:IncompatibleConditionsRequirement
+      conditions:
+        - StayAliveCondition
+        - StealCondition
+  conditions:
+    - !type:DieCondition {}
 
 - type: objective
   id: CMOHyposprayStealObjective
   issuer: syndicate
   difficultyOverride: 2.75
+  prob: 0.2
   requirements:
     - !type:TraitorRequirement {}
     - !type:IncompatibleConditionsRequirement
@@ -78,6 +81,7 @@
   id: RDHardsuitStealObjective
   issuer: syndicate
   difficultyOverride: 2.75
+  prob: 0.2
   requirements:
     - !type:TraitorRequirement {}
     - !type:IncompatibleConditionsRequirement
@@ -90,6 +94,7 @@
 - type: objective
   id: NukeDiskStealObjective
   issuer: syndicate
+  prob: 0.2
   requirements:
     - !type:TraitorRequirement {}
     - !type:IncompatibleConditionsRequirement
@@ -102,6 +107,7 @@
 - type: objective
   id: IDComputerBoardStealObjective
   issuer: syndicate
+  prob: 0.2
   requirements:
     - !type:TraitorRequirement {}
     - !type:IncompatibleConditionsRequirement
@@ -115,6 +121,7 @@
   id: MagbootsStealObjective #Replace this with CE magboots when we get those
   issuer: syndicate
   difficultyOverride: 1.75
+  prob: 0.2
   requirements:
     - !type:TraitorRequirement {}
     - !type:IncompatibleConditionsRequirement
@@ -127,6 +134,7 @@
 - type: objective
   id: SupplyConsoleBoardStealObjective
   issuer: syndicate
+  prob: 0.2
   requirements:
     - !type:TraitorRequirement {}
     - !type:IncompatibleConditionsRequirement
