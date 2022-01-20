@@ -16,6 +16,8 @@ namespace Content.Server.GameTicking
         [ViewVariables]
         private readonly Dictionary<IPlayerSession, LobbyPlayerStatus> _playersInLobby = new();
 
+        [ViewVariables] private readonly HashSet<NetUserId> _playersInGame = new();
+
         [ViewVariables]
         private TimeSpan _roundStartTime;
 
@@ -29,6 +31,7 @@ namespace Content.Server.GameTicking
         private bool _roundStartCountdownHasNotStartedYetDueToNoPlayers;
 
         public IReadOnlyDictionary<IPlayerSession, LobbyPlayerStatus> PlayersInLobby => _playersInLobby;
+        public IReadOnlySet<NetUserId> PlayersInGame => _playersInGame;
 
         private void UpdateInfoText()
         {

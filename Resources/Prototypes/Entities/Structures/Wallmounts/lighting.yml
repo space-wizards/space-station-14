@@ -4,6 +4,8 @@
   description: "An unpowered light."
   suffix: Unpowered
   components:
+  - type: Transform
+    anchored: true
   - type: Clickable
   - type: InteractionOutline
   - type: Construction

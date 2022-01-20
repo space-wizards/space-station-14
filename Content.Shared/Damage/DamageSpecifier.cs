@@ -9,6 +9,7 @@ using Robust.Shared.ViewVariables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using Content.Shared.FixedPoint;
 
 namespace Content.Shared.Damage
@@ -23,15 +24,18 @@ namespace Content.Shared.Damage
     [DataDefinition]
     public class DamageSpecifier
     {
+        [JsonPropertyName("types")]
         [DataField("types", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, DamageTypePrototype>))]
         private readonly Dictionary<string,FixedPoint2>? _damageTypeDictionary;
 
+        [JsonPropertyName("groups")]
         [DataField("groups", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, DamageGroupPrototype>))]
         private readonly Dictionary<string, FixedPoint2>? _damageGroupDictionary;
 
         /// <summary>
         ///     Main DamageSpecifier dictionary. Most DamageSpecifier functions exist to somehow modifying this.
         /// </summary>
+        [JsonIgnore]
         [ViewVariables(VVAccess.ReadWrite)]
         public Dictionary<string, FixedPoint2> DamageDict
         {
@@ -43,6 +47,7 @@ namespace Content.Shared.Damage
             }
             set => _damageDict = value;
         }
+        [JsonIgnore]
         private Dictionary<string, FixedPoint2>? _damageDict;
 
         /// <summary>
@@ -53,11 +58,13 @@ namespace Content.Shared.Damage
         ///     in another. For this purpose, you should instead use <see cref="TrimZeros()"/> and then check the <see
         ///     cref="Empty"/> property.
         /// </remarks>
+        [JsonIgnore]
         public FixedPoint2 Total => DamageDict.Values.Sum();
 
         /// <summary>
         ///     Whether this damage specifier has any entries.
         /// </summary>
+        [JsonIgnore]
         public bool Empty => DamageDict.Count == 0;
 
         #region constructors

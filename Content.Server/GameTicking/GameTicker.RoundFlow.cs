@@ -429,7 +429,7 @@ namespace Content.Server.GameTicking
             }
             // This ordering mechanism isn't great (no ordering of minds) but functions
             var listOfPlayerInfoFinal = listOfPlayerInfo.OrderBy(pi => pi.PlayerOOCName).ToArray();
-
+            _playersInGame.Clear();
             RaiseNetworkEvent(new RoundEndMessageEvent(gamemodeTitle, roundEndText, roundDuration, listOfPlayerInfoFinal.Length, listOfPlayerInfoFinal));
         }
 

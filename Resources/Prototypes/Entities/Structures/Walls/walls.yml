@@ -348,6 +348,12 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
+        damage: 1200 #excess damage (nuke?). avoid computational cost of spawning entities.
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
         damage: 600
       behaviors:
       - !type:ChangeConstructionNodeBehavior
@@ -471,6 +477,12 @@
     sprite: Structures/Walls/solid.rsi
   - type: Destructible
     thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 600 # #excess damage (nuke?). avoid computational cost of spawning entities.
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
         damage: 300
