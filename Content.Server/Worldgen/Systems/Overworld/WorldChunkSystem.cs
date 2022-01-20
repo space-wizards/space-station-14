@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
+using Content.Server.EUI;
 using Content.Server.Ghost.Components;
-using Content.Server.Procedural.Components;
-using Content.Server.Procedural.Prototypes;
-using Content.Server.Procedural.Tools;
+using Content.Server.Worldgen.Components;
+using Content.Server.Worldgen.Prototypes;
+using Content.Server.Worldgen.Tools;
 using Content.Shared.CCVar;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
@@ -13,9 +14,9 @@ using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
+using Robust.Shared.Random;
 
-namespace Content.Server.Procedural.Systems;
+namespace Content.Server.Worldgen.Systems.Overworld;
 
 public partial class WorldChunkSystem : EntitySystem
 {
@@ -24,6 +25,8 @@ public partial class WorldChunkSystem : EntitySystem
     [Dependency] private readonly IConfigurationManager _configuration = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly DebrisGenerationSystem _debrisGeneration = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly EuiManager _euiManager = default!;
 
     public const int WorldLoadRadius = 256;
     public const int ChunkSize = 128;
@@ -35,20 +38,21 @@ public partial class WorldChunkSystem : EntitySystem
     private float _frameAccumulator = 0.0f;
 
     // CVar replicas
-    private float _debrisSeparation;
-    private DebrisLayoutPrototype _defaultLayout = default!;
+    private BiomePrototype _defaultBiome = default!;
     private bool _enabled;
     private float _maxDebrisLoadTimeMs;
 
     public override void Initialize()
     {
-        _configuration.OnValueChanged(CCVars.MinDebrisSeparation, f => _debrisSeparation = f, true);
-        _configuration.OnValueChanged(CCVars.SpawnDebrisLayout, l =>
+        _configuration.OnValueChanged(CCVars.SpawnBiome, l =>
         {
-            _defaultLayout = _prototypeManager.Index<DebrisLayoutPrototype>(l);
+            _defaultBiome = _prototypeManager.Index<BiomePrototype>(l);
         }, true);
         _configuration.OnValueChanged(CCVars.WorldGenEnabled, e => _enabled = e, true);
         _configuration.OnValueChanged(CCVars.MaxDebrisLoadTimeMs, t => _maxDebrisLoadTimeMs = t, true);
+
+        ResetNoise();
+        InitBiomeCache();
 
         SubscribeLocalEvent<WorldManagedComponent, MoveEvent>(OnDebrisMoved);
     }
@@ -93,6 +97,7 @@ public partial class WorldChunkSystem : EntitySystem
         _loadQueue.Clear();
         _unloadQueue.Clear();
         _currLoaded.Clear();
+        ResetNoise();
     }
 
     private void UpdateWorldLoadState()
@@ -150,6 +155,7 @@ public partial class WorldChunkSystem : EntitySystem
 public struct WorldChunk
 {
     public HashSet<DebrisData> Debris;
+    public BiomePrototype Biome;
 }
 
 public class DebrisData

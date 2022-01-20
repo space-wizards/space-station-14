@@ -615,11 +615,8 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> WorldGenEnabled =
             CVarDef.Create("worldgen.enabled", true, CVar.SERVERONLY);
 
-        public static readonly CVarDef<float> MinDebrisSeparation =
-            CVarDef.Create("worldgen.min_debris_separation", 64f, CVar.SERVERONLY);
-
-        public static readonly CVarDef<string> SpawnDebrisLayout =
-            CVarDef.Create("worldgen.spawn_debris_layout", "SpawnDebris", CVar.SERVERONLY);
+        public static readonly CVarDef<string> SpawnBiome =
+            CVarDef.Create("worldgen.spawn_biome", "SpawnBiome", CVar.SERVERONLY);
 
         public static readonly CVarDef<float> MaxDebrisLoadTimeMs =
             CVarDef.Create("worldgen.max_debris_load_time_ms", 4f, CVar.SERVERONLY);

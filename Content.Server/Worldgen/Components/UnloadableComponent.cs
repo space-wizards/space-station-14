@@ -1,7 +1,7 @@
-using Content.Server.Procedural.Populators.Debris;
+using Content.Server.Worldgen.Populators.Debris;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.Procedural.Components;
+namespace Content.Server.Worldgen.Components;
 
 /// <summary>
 /// Unloading system designed for grids.

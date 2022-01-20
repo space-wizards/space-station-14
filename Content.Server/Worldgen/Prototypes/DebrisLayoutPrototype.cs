@@ -1,12 +1,11 @@
 using System.Collections.Generic;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Procedural.Prototypes;
+namespace Content.Server.Worldgen.Prototypes;
 
 [Prototype("debrisLayout")]
 public class DebrisLayoutPrototype : IPrototype

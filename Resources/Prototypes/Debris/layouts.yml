@@ -11,3 +11,45 @@
       prob: 0.25
     - proto: WreckDebris2
       prob: 1
+
+- type: debrisLayout
+  id: FrozenStandard
+  layout:
+    - proto: FrozenRoidDebris1
+      prob: 0.55
+    - proto: FrozenRoidDebris2
+      prob: 0.25
+    - proto: FrozenRoidDebris3
+      prob: 0.1
+    - proto: WreckDebris1
+      prob: 0.25
+    - proto: WreckDebris2
+      prob: 1
+
+- type: debrisLayout
+  id: Wreckless
+  layout:
+    - proto: RoidDebris2
+      prob: 0.25
+    - proto: RoidDebris3
+      prob: 0.1
+    - proto: RoidDebris1
+      prob: 1
+
+- type: debrisLayout
+  id: FrozenWreckless
+  layout:
+    - proto: FrozenRoidDebris2
+      prob: 0.25
+    - proto: FrozenRoidDebris3
+      prob: 0.1
+    - proto: FrozenRoidDebris1
+      prob: 1
+
+- type: debrisLayout
+  id: Rockless
+  layout:
+    - proto: WreckDebris1
+      prob: 0.25
+    - proto: WreckDebris2
+      prob: 1

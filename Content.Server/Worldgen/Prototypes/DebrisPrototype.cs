@@ -1,14 +1,13 @@
 using System.Collections.Generic;
-using Content.Server.Procedural.Populators.Debris;
+using Content.Server.Worldgen.Populators.Debris;
 using Content.Shared.Maps;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
-namespace Content.Server.Procedural.Prototypes;
+namespace Content.Server.Worldgen.Prototypes;
 
-[Prototype("debris", 2)]
+[Prototype("debris")]
 public class DebrisPrototype : IPrototype
 {
     [DataField("id")]

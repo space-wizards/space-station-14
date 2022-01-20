@@ -1,17 +1,15 @@
 using System.Collections.Generic;
-using Content.Server.Procedural.Systems;
 using Content.Server.Storage;
+using Content.Server.Worldgen.Systems;
 using Content.Shared.Maps;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
-namespace Content.Server.Procedural.Populators.Debris;
+namespace Content.Server.Worldgen.Populators.Debris;
 
 public class ScrapyardPopulator : DebrisPopulator
 {

@@ -1,13 +1,13 @@
 using System.Linq;
 using Content.Server.Ghost.Components;
-using Content.Server.Procedural.Components;
+using Content.Server.Worldgen.Components;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Timing;
 
-namespace Content.Server.Procedural.Systems;
+namespace Content.Server.Worldgen.Systems;
 
 public class PopulatorSystem : EntitySystem
 {

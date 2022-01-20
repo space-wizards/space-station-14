@@ -7,8 +7,8 @@ using Content.Server.Ghost;
 using Content.Server.Maps;
 using Content.Server.Mind;
 using Content.Server.Players;
-using Content.Server.Procedural.Systems;
 using Content.Server.Station;
+using Content.Server.Worldgen.Systems.Overworld;
 using Content.Shared.CCVar;
 using Content.Shared.Coordinates;
 using Content.Shared.GameTicking;
@@ -512,6 +512,7 @@ namespace Content.Server.GameTicking
             _spawnedPositions.Clear();
             _manifest.Clear();
             DisallowLateJoin = false;
+            _world.Reset();
         }
 
         public bool DelayStart(TimeSpan time)

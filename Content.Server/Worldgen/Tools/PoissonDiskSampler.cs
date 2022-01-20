@@ -4,7 +4,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
 
-namespace Content.Server.Procedural.Tools;
+namespace Content.Server.Worldgen.Tools;
 
 public class PoissonDiskSampler
 {

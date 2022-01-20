@@ -1,5 +1,5 @@
-using Content.Server.Procedural.Prototypes;
-using Content.Server.Procedural.Systems;
+using Content.Server.Worldgen.Prototypes;
+using Content.Server.Worldgen.Systems;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
@@ -7,7 +7,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Procedural.Commands;
+namespace Content.Server.Worldgen.Commands;
 
 [AnyCommand]
 public class SpawnDebrisCommand : IConsoleCommand

@@ -103,6 +103,7 @@ namespace Content.Client.Entry
             prototypes.RegisterIgnore("gameRule");
             prototypes.RegisterIgnore("debris");
             prototypes.RegisterIgnore("debrisLayout");
+            prototypes.RegisterIgnore("biome");
 
             ClientContentIoC.Register();
 

@@ -1,4 +1,4 @@
-using Content.Server.Procedural.Systems;
+using Content.Server.Worldgen.Systems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -7,7 +7,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Procedural.Populators.Debris;
+namespace Content.Server.Worldgen.Populators.Debris;
 
 public class FillDebrisPopulator : DebrisPopulator
 {

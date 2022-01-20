@@ -1,10 +1,9 @@
 using System.Collections.Generic;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
-namespace Content.Server.Procedural.Systems;
+namespace Content.Server.Worldgen.Systems;
 
 public class DeferredSpawnSystem : EntitySystem
 {

@@ -1,9 +1,9 @@
-using Content.Server.Procedural.Populators.Debris;
-using Content.Server.Procedural.Systems;
+using Content.Server.Worldgen.Populators.Debris;
+using Content.Server.Worldgen.Systems;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.Procedural.Components;
+namespace Content.Server.Worldgen.Components;
 
 /// <summary>
 /// SHOULD NOT BE USED DIRECTLY.

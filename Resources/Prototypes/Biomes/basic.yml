@@ -1,0 +1,49 @@
+﻿- type: biome
+  id: SpawnBiome
+  symbol: S
+  priority: 9999
+  debrisLayouts: [ "SpawnDebris" ]
+
+- type: biome
+  id: Empty
+  symbol: ' '
+  priority: -9999
+  densityRange: [ { min: 0.0, max: 0.01 } ]
+  debrisLayouts: [ ]
+
+- type: biome
+  id: Standard
+  symbol: s
+  priority: 1
+  wreckRange: [ { min: 0.33, max: 0.66 } ]
+  debrisLayouts: [ "SpawnDebris" ]
+
+- type: biome
+  id: Rocky
+  symbol: r
+  priority: 0
+  wreckRange: [ { min: 0.0, max: 0.33 } ]
+  debrisLayouts: [ "Wreckless" ]
+
+- type: biome
+  id: Wrecked
+  symbol: w
+  priority: 0
+  wreckRange: [ { min: 0.66, max: 1.0 } ]
+  debrisLayout: [ "Rockless" ]
+
+- type: biome
+  id: FrozenStandard
+  symbol: f
+  priority: -1
+  wreckRange: [ { min: 0.33, max: 0.66 } ]
+  temperatureRange: [ { min: 0.0, max: 0.45 } ]
+  debrisLayout: [ "FrozenStandard" ]
+
+- type: biome
+  id: FrozenRocky
+  symbol: F
+  priority: -2
+  wreckRange: [ { min: 0.0, max: 0.33 } ]
+  temperatureRange: [ { min: 0.0, max: 0.45 } ]
+  debrisLayouts: [ "FrozenWreckless" ]

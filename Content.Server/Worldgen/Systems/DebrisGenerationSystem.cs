@@ -1,14 +1,14 @@
 using System;
 using System.Collections.Generic;
-using Content.Server.Procedural.Components;
-using Content.Server.Procedural.Prototypes;
+using Content.Server.Worldgen.Components;
+using Content.Server.Worldgen.Prototypes;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
 
-namespace Content.Server.Procedural.Systems;
+namespace Content.Server.Worldgen.Systems;
 
 public class DebrisGenerationSystem : EntitySystem
 {

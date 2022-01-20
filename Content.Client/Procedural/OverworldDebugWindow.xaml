@@ -1,0 +1,15 @@
+<DefaultWindow xmlns="https://spacestation14.io"
+               xmlns:radar="clr-namespace:Content.Client.Procedural"
+               Title="Overworld Generation Debug Window"
+               Resizable="False">
+    <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True">
+            <Label Text="Zoom"/>
+            <SliderIntInput HorizontalExpand="True" Name="ZoomSlider" Access="Public" MinValue="8" MaxValue="64"/>
+            <Label Text="Numeric"/>
+            <OptionButton Name="NumericOption"/>
+            <OptionButton Name="VisualOption"/>
+        </BoxContainer>
+        <radar:OverworldDebugControl Name="View"/>
+    </BoxContainer>
+</DefaultWindow>

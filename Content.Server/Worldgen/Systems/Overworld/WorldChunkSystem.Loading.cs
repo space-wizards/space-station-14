@@ -1,11 +1,13 @@
 using System.Collections.Generic;
-using Content.Server.Procedural.Components;
+using Content.Server.Worldgen.Components;
+using Content.Server.Worldgen.Prototypes;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
-namespace Content.Server.Procedural.Systems;
+namespace Content.Server.Worldgen.Systems.Overworld;
 
 public partial class WorldChunkSystem
 {
@@ -15,7 +17,7 @@ public partial class WorldChunkSystem
 
     public void ForceEmptyChunk(Vector2i chunk)
     {
-        if (_currLoaded.Contains(chunk))
+        if (_chunks.ContainsKey(chunk))
         {
             Logger.ErrorS("worldgen", "Tried to empty a chunk that's already loaded!");
             return;
@@ -23,7 +25,23 @@ public partial class WorldChunkSystem
 
         _chunks[chunk] = new WorldChunk()
         {
-            Debris = new HashSet<DebrisData>()
+            Debris = new HashSet<DebrisData>(),
+            Biome = SelectBiome(chunk),
+        };
+    }
+
+    public void ForceSpawnChunk(Vector2i chunk)
+    {
+        if (_chunks.ContainsKey(chunk))
+        {
+            Logger.ErrorS("worldgen", "Tried to empty a chunk that's already loaded!");
+            return;
+        }
+
+        _chunks[chunk] = new WorldChunk()
+        {
+            Debris = new HashSet<DebrisData>(),
+            Biome = _defaultBiome,
         };
     }
 
@@ -74,31 +92,43 @@ public partial class WorldChunkSystem
 
     private void MakeChunk(Vector2i chunk)
     {
-        Logger.DebugS("worldgen", $"Made chunk {chunk}.");
-        var offs = (int)((ChunkSize - (_debrisSeparation / 2)) / 2);
+        if (ShouldClipChunk(chunk))
+        {
+            Logger.DebugS("worldgen", $"Clipped chunk {chunk}");
+            ForceEmptyChunk(chunk);
+            return;
+        }
+
+        var density = GetChunkDensity(chunk);
+        Logger.DebugS("worldgen", $"Made chunk {chunk} w/ density {density}.");
+        var offs = (int)((ChunkSize - (density / 2)) / 2);
         var center = chunk * ChunkSize;
         var topLeft = (-offs, -offs);
         var lowerRight = (offs, offs);
-        var debrisPoints = _sampler.SampleRectangle(topLeft, lowerRight, _debrisSeparation);
+        var debrisPoints = _sampler.SampleRectangle(topLeft, lowerRight, density);
         var debris = new HashSet<DebrisData>(debrisPoints.Count);
-
-        foreach (var p in debrisPoints)
+        var biome = SelectBiome(chunk);
+        if (biome.DebrisLayouts.Length != 0)
         {
-            var kind = _defaultLayout.Pick();
-            if (kind is null)
-                continue;
-
-            debris.Add(new DebrisData()
+            foreach (var p in debrisPoints)
             {
-                CurrGrid = null,
-                Kind = kind,
-                Coords = new MapCoordinates(p + center, WorldMap),
-            });
+                var kind = _prototypeManager.Index<DebrisLayoutPrototype>(_random.Pick(biome.DebrisLayouts)).Pick();
+                if (kind is null)
+                    continue;
+
+                debris.Add(new DebrisData()
+                {
+                    CurrGrid = null,
+                    Kind = kind,
+                    Coords = new MapCoordinates(p + center, WorldMap),
+                });
+            }
         }
 
         _chunks[chunk] = new WorldChunk()
         {
             Debris = debris,
+            Biome = biome
         };
     }
 
