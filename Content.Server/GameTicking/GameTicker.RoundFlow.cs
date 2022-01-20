@@ -152,6 +152,7 @@ namespace Content.Server.GameTicking
             }
 
             _world.WorldMap = DefaultMap;
+            _world.ForceEmptyChunk(Vector2i.Zero); // Spawn area.
 
             var timeSpan = _gameTiming.RealTime - startTime;
             Logger.InfoS("ticker", $"Loaded maps in {timeSpan.TotalMilliseconds:N2}ms.");
