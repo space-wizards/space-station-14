@@ -11,6 +11,11 @@
   access:
   - Command
   - Maintenance
+  - Security
+  - Engineering
+  - Service
+  - Medical
+  - Research
 
 - type: startingGear
   id: ERTLeaderGear
@@ -62,6 +67,7 @@
     eyes: ClothingEyesGlassesMeson
     gloves: ClothingHandsGlovesColorYellow
     outerClothing: ClothingOuterVestKevlar
+    id: ERTLeaderPDA
     belt: ClothingBeltChiefEngineerFilled
     pocket1:
     pocket2:
@@ -77,6 +83,7 @@
     eyes: ClothingEyesGlassesMeson
     gloves: ClothingHandsGlovesColorYellow
     outerClothing: ClothingOuterHardsuitERTEngineer
+    id: ERTLeaderPDA
     belt: ClothingBeltChiefEngineerFilled
     pocket1: DoubleEmergencyOxygenTank # TODO change to exosuit slot when available
     
@@ -97,6 +104,7 @@
     eyes: ClothingEyesGlassesSecurity
     gloves: ClothingHandsGlovesColorBlack
     outerClothing: ClothingOuterVestKevlar
+    id: ERTLeaderPDA
     belt: ClothingBeltSecurityWebbing
     pocket1:
     pocket2:
@@ -112,6 +120,7 @@
     eyes: ClothingEyesGlassesSecurity
     gloves: ClothingHandsGlovesColorBlack
     outerClothing: ClothingOuterHardsuitERTSecurity
+    id: ERTLeaderPDA
     belt: ClothingBeltSecurityWebbing
     pocket1: DoubleEmergencyOxygenTank # TODO change to exosuit slot when available
     
@@ -132,6 +141,7 @@
     eyes: ClothingEyesHudMedical
     gloves: ClothingHandsGlovesColorBlack
     outerClothing: ClothingOuterVestKevlar
+    id: ERTLeaderPDA
     belt: ClothingBeltMedicalFilled
     pocket1:
     pocket2:
@@ -147,6 +157,7 @@
     eyes: ClothingEyesHudMedical
     gloves: ClothingHandsGlovesColorBlack
     outerClothing: ClothingOuterHardsuitERTMedical
+    id: ERTLeaderPDA
     belt: ClothingBeltMedicalFilled
     pocket1: DoubleEmergencyOxygenTank # TODO change to exosuit slot when available
     
@@ -166,6 +177,7 @@
     head: ClothingHeadHelmetHelmet
     gloves: ClothingHandsGlovesColorBlack
     outerClothing: ClothingOuterVestKevlar
+    id: ERTLeaderPDA
     belt: ClothingBeltSecurityWebbing
     pocket1:
     pocket2:
@@ -180,5 +192,6 @@
     mask: ClothingMaskBreath
     gloves: ClothingHandsGlovesColorBlack
     outerClothing: ClothingOuterHardsuitERTJanitor
+    id: ERTLeaderPDA
     belt: ClothingBeltSecurityWebbing
     pocket1: DoubleEmergencyOxygenTank # TODO change to exosuit slot when available

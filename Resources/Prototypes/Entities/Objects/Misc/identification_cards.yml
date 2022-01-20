@@ -351,10 +351,11 @@
     #- HeadOfSecurity
     - HeadOfPersonnel
     - Bar
-    #- Hydroponics
-    #- Kitchen
+    - Hydroponics
+    - Kitchen
     - Janitor
     - Theatre
+    - Armory
     
 - type: entity
   parent: CentcomIDCard
