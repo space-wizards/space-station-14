@@ -3,6 +3,7 @@ using Content.Server.GameTicking.Commands;
 using Content.Server.Storage;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Mining.Components;
 
@@ -10,9 +11,12 @@ namespace Content.Server.Mining.Components;
 [Friend(typeof(MineableSystem))]
 public class MineableComponent : Component
 {
+    [DataField("baseMineTime")]
     public float BaseMineTime = 1.0f;
 
+    [DataField("oreChance")]
     public float OreChance = 1.0f;
 
+    [DataField("oreTable")]
     public List<EntitySpawnEntry> OreTable = new List<EntitySpawnEntry>();
 }
