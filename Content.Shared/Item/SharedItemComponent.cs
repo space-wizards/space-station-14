@@ -75,7 +75,7 @@ namespace Content.Shared.Item
         [DataField("EquipSound")]
         public SoundSpecifier? EquipSound { get; set; } = default!;
 
-        // TODO REMOVE. Currently nonfunctional and only used by RGB system. #62XX Fixes this but requires #62XX
+        // TODO REMOVE. Currently nonfunctional and only used by RGB system. #6253 Fixes this but requires #6252
         /// <summary>
         ///     Color of the sprite shown on the player when this item is in their hands.
         /// </summary>
