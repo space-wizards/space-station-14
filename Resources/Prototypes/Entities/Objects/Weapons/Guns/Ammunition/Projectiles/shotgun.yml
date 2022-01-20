@@ -75,13 +75,9 @@
     color: "#ff4300"
     radius: 2.0
     energy: 7.0
-  - type: Flammable
-    fireSpread: true
-    damage: 
-      groups:
-        Burn: 7
+  - type: IgniteOnCollide
+    fireStacks: 1
     
-
 - type: entity
   id: PelletShotgunPractice
   name: pellet (.50 practice)
@@ -125,7 +121,7 @@
 - type: entity
   id: PelletShotgunFlare
   name: pellet (.50 flare)
-  abstract: true
+  abstract: false
   parent: BulletBase
   components:
   - type: Sprite
@@ -140,8 +136,5 @@
     color: "#FF8080"
     radius: 15.0
     energy: 9.0
-  - type: Flammable
-    fireSpread: true
-    damage: 
-      groups:
-        Burn: 17
+  - type: IgniteOnCollide
+    fireStacks: 4
