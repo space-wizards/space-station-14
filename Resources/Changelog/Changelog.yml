@@ -1,11 +1,6 @@
 Entries:
 - author: 20kdc
   changes:
-  - {message: AME is no longer capable of producing negative energy., type: Fix}
-  id: 402
-  time: '2021-10-04T00:58:55.0000000+00:00'
-- author: 20kdc
-  changes:
   - {message: 'Radiation storms actually hit the station again as opposed to 0,0',
     type: Fix}
   id: 403
@@ -2920,3 +2915,9 @@ Entries:
     type: Fix}
   id: 903
   time: '2022-01-18T09:43:47.0000000+00:00'
+- author: Lamrr
+  changes:
+  - {message: 'The captain''s carapace has returned! Captains can now opt for this
+      protective, yet stylish vest instead of their bulky hardsuits.', type: Add}
+  id: 904
+  time: '2022-01-18T17:26:09.0000000+00:00'
