@@ -453,7 +453,7 @@ namespace Content.Client.Stylesheets
             {
                 // Window title.
                 new StyleRule(
-                    new SelectorElement(typeof(Label), new[] {SS14Window.StyleClassWindowTitle}, null, null),
+                    new SelectorElement(typeof(Label), new[] {DefaultWindow.StyleClassWindowTitle}, null, null),
                     new[]
                     {
                         new StyleProperty(Label.StylePropertyFontColor, NanoGold),
@@ -469,7 +469,7 @@ namespace Content.Client.Stylesheets
                     }),
                 // Window background.
                 new StyleRule(
-                    new SelectorElement(null, new[] {SS14Window.StyleClassWindowPanel}, null, null),
+                    new SelectorElement(null, new[] {DefaultWindow.StyleClassWindowPanel}, null, null),
                     new[]
                     {
                         new StyleProperty(PanelContainer.StylePropertyPanel, windowBackground),
@@ -509,7 +509,7 @@ namespace Content.Client.Stylesheets
                     }),
                 // Window header.
                 new StyleRule(
-                    new SelectorElement(typeof(PanelContainer), new[] {SS14Window.StyleClassWindowHeader}, null, null),
+                    new SelectorElement(typeof(PanelContainer), new[] {DefaultWindow.StyleClassWindowHeader}, null, null),
                     new[]
                     {
                         new StyleProperty(PanelContainer.StylePropertyPanel, windowHeader),
