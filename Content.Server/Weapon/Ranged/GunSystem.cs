@@ -138,7 +138,7 @@ public sealed partial class GunSystem : EntitySystem
         if (!msg.Coordinates.IsValid(EntityManager))
             return;
 
-        if (!EntityManager.TryGetComponent(user, out HandsComponent? handsComponent))
+        if (!TryComp(user, out HandsComponent? handsComponent))
             return;
 
         // TODO: Not exactly robust
@@ -177,7 +177,7 @@ public sealed partial class GunSystem : EntitySystem
         };
     }
 
-    private void SetEjectDirections(ref Direction[]? directions)
+    private static void SetEjectDirections(ref Direction[]? directions)
     {
         directions ??= new[]
         {
