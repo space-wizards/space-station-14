@@ -4,10 +4,11 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Localization;
+using System;
 
 namespace Content.Shared.Item
 {
-    public class ItemSystem : EntitySystem
+    public abstract class SharedItemSystem : EntitySystem
     {
         public override void Initialize()
         {
@@ -28,13 +29,11 @@ namespace Content.Shared.Item
 
             component.Size = state.Size;
             component.EquippedPrefix = state.EquippedPrefix;
-            component.Color = state.Color;
-            component.RsiPath = state.RsiPath;
         }
 
         private void OnGetState(EntityUid uid, SharedItemComponent component, ref ComponentGetState args)
         {
-            args.State = new ItemComponentState(component.Size, component.EquippedPrefix, component.Color, component.RsiPath);
+            args.State = new ItemComponentState(component.Size, component.EquippedPrefix);
         }
 
         private void OnUnequipped(EntityUid uid, SharedSpriteComponent component, GotUnequippedEvent args)
@@ -70,5 +69,11 @@ namespace Content.Shared.Item
 
             args.Verbs.Add(verb);
         }
+
+        /// <summary>
+        ///     Notifies any entity that is holding or wearing this item that they may need to update their sprite.
+        /// </summary>
+        public virtual void VisualsChanged(EntityUid owner, SharedItemComponent? item = null)
+        { }
     }
 }
