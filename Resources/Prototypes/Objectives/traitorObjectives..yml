@@ -36,28 +36,30 @@
     - !type:RandomTraitorAliveCondition {}
   canBeDuplicate: true
 
-- type: objective
-  id: StayAliveObjective
-  issuer: syndicate
-  requirements:
-    - !type:TraitorRequirement {}
-    - !type:IncompatibleConditionsRequirement
-        conditions:
-          - DieCondition
-  conditions:
-    - !type:StayAliveCondition {}
+#  These are disabled until we get an evac shuttle and more involved round ends
+#
+#- type: objective
+#  id: StayAliveObjective
+#  issuer: syndicate
+#  requirements:
+#    - !type:TraitorRequirement {}
+#    - !type:IncompatibleConditionsRequirement
+#        conditions:
+#          - DieCondition
+#  conditions:
+#    - !type:StayAliveCondition {}
 
-- type: objective
-  id: DieObjective
-  issuer: syndicate
-  requirements:
-    - !type:TraitorRequirement {}
-    - !type:IncompatibleConditionsRequirement
-      conditions:
-        - StayAliveCondition
-        - StealCondition
-  conditions:
-    - !type:DieCondition {}
+#- type: objective
+#  id: DieObjective
+#  issuer: syndicate
+#  requirements:
+#    - !type:TraitorRequirement {}
+#    - !type:IncompatibleConditionsRequirement
+#      conditions:
+#        - StayAliveCondition
+#        - StealCondition
+#  conditions:
+#    - !type:DieCondition {}
 
 - type: objective
   id: CMOHyposprayStealObjective
