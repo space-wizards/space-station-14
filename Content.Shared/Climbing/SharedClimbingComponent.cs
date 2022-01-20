@@ -73,7 +73,7 @@ namespace Content.Shared.Climbing
             }
         }
 
-        protected bool _isClimbing;
+        private bool _isClimbing;
 
         // TODO: Layers need a re-work
         private void ToggleSmallPassable(bool value)
