@@ -52,7 +52,7 @@
     sprite: Markers/jobs.rsi
     state: ertleader
   - type: GhostRoleMobSpawner
-    prototype: MobHumanCentcomOfficial
+    prototype: MobHumanERTLeader
     deleteOnSpawn: true
     makeSentient: false
     name: ERT Leader
@@ -69,6 +69,10 @@
   - type: Icon
     sprite: Markers/jobs.rsi
     state: ertleadereva
+  - type: GhostRoleMobSpawner
+    prototype: MobHumanERTLeaderEVA
+    deleteOnSpawn: true
+    makeSentient: false
   - type: UtilityAI
     startingGear: ERTLeaderGearEVA
 
@@ -82,7 +86,7 @@
     sprite: Markers/jobs.rsi
     state: ertengineer
   - type: GhostRoleMobSpawner
-    prototype: MobHumanCentcomOfficial
+    prototype: MobHumanERTEngineer
     deleteOnSpawn: true
     makeSentient: false
     name: ERT Engineer
@@ -99,6 +103,12 @@
   - type: Icon
     sprite: Markers/jobs.rsi
     state: ertengineereva
+  - type: GhostRoleMobSpawner
+    prototype: MobHumanERTEngineerEVA
+    deleteOnSpawn: true
+    makeSentient: false
+    name: ERT Engineer
+    description: Assist with engineering efforts to resolve the stations issues.
   - type: UtilityAI
     startingGear: ERTEngineerGearEVA
     
@@ -112,7 +122,7 @@
     sprite: Markers/jobs.rsi
     state: ertsecurity
   - type: GhostRoleMobSpawner
-    prototype: MobHumanCentcomOfficial
+    prototype: MobHumanERTSecurity
     deleteOnSpawn: true
     makeSentient: false
     name: ERT Security
@@ -129,6 +139,12 @@
   - type: Icon
     sprite: Markers/jobs.rsi
     state: ertsecurityeva
+  - type: GhostRoleMobSpawner
+    prototype: MobHumanERTSecurityEVA
+    deleteOnSpawn: true
+    makeSentient: false
+    name: ERT Security
+    description: Assist with security efforts to resolve the stations issues.
   - type: UtilityAI
     startingGear: ERTSecurityGearEVA
     
@@ -142,7 +158,7 @@
     sprite: Markers/jobs.rsi
     state: ertmedical
   - type: GhostRoleMobSpawner
-    prototype: MobHumanCentcomOfficial
+    prototype: MobHumanERTMedical
     deleteOnSpawn: true
     makeSentient: false
     name: ERT Medic
@@ -159,6 +175,12 @@
   - type: Icon
     sprite: Markers/jobs.rsi
     state: ertmedicaleva
+  - type: GhostRoleMobSpawner
+    prototype: MobHumanERTMedicalEVA
+    deleteOnSpawn: true
+    makeSentient: false
+    name: ERT Medic
+    description: Assist with medical efforts to resolve the stations issues.
   - type: UtilityAI
     startingGear: ERTMedicalGearEVA
     
@@ -172,7 +194,7 @@
     sprite: Markers/jobs.rsi
     state: ertjanitor
   - type: GhostRoleMobSpawner
-    prototype: MobHumanCentcomOfficial
+    prototype: MobHumanERTJanitor
     deleteOnSpawn: true
     makeSentient: false
     name: ERT Janitor
@@ -189,5 +211,11 @@
   - type: Icon
     sprite: Markers/jobs.rsi
     state: ertjanitoreva
+  - type: GhostRoleMobSpawner
+    prototype: MobHumanERTJanitorEVA
+    deleteOnSpawn: true
+    makeSentient: false
+    name: ERT Janitor
+    description: Assist with custodial efforts to resolve the stations issues.
   - type: UtilityAI
     startingGear: ERTJanitorGearEVA
