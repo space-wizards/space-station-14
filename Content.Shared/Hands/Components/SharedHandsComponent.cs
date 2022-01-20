@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Administration.Logs;
-using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Robust.Shared.Containers;
@@ -18,6 +16,7 @@ using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
+using static Robust.Shared.GameObjects.SharedSpriteComponent;
 
 namespace Content.Shared.Hands.Components
 {
@@ -709,42 +708,6 @@ namespace Content.Shared.Hands.Components
             return false;
         }
     }
-
-    #region visualizerData
-    [Serializable, NetSerializable]
-    public enum HandsVisuals : byte
-    {
-        VisualState
-    }
-
-    [Serializable, NetSerializable]
-    public class HandsVisualState
-    {
-        public List<HandVisualState> Hands { get; } = new();
-
-        public HandsVisualState(List<HandVisualState> hands)
-        {
-            Hands = hands;
-        }
-    }
-
-    [Serializable, NetSerializable]
-    public class HandVisualState
-    {
-        public string RsiPath { get; }
-        public string? EquippedPrefix { get; }
-        public HandLocation Location { get; }
-        public Color Color { get; }
-
-        public HandVisualState(string rsiPath, string? equippedPrefix, HandLocation location, Color color)
-        {
-            RsiPath = rsiPath;
-            EquippedPrefix = equippedPrefix;
-            Location = location;
-            Color = color;
-        }
-    }
-    #endregion
 
     [Serializable, NetSerializable]
     public class Hand
