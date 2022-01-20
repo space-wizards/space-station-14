@@ -41,6 +41,9 @@ namespace Content.Client.Light
         private void OnComponentStart(EntityUid uid, RgbLightControllerComponent rgb, ComponentStartup args)
         {
             GetOriginalColors(uid, rgb);
+
+            // trigger visuals updated events
+            _itemSystem.VisualsChanged(uid);
         }
 
         private void OnComponentShutdown(EntityUid uid, RgbLightControllerComponent rgb, ComponentShutdown args)
