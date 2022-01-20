@@ -1,0 +1,184 @@
+# Leader
+- type: job
+  id: ERTLeader
+  name: "ERT leader"
+  setPreference: false
+  startingGear: ERTLeaderGear
+  departments:
+    - Command
+  icon: "Nanotrasen"
+  supervisors: "centcom official"
+  access:
+  - Command
+  - Maintenance
+
+- type: startingGear
+  id: ERTLeaderGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBlue
+    back: ClothingBackpackSecurityFilled
+    shoes: ClothingShoesBootsJack
+    head: ClothingHeadHelmetHelmet
+    eyes: ClothingEyesGlassesSecurity
+    gloves: ClothingHandsGlovesColorBlack
+    outerclothing: ClothingOuterVestKevlar
+    id: ERTLeaderPDA
+    ears: ClothingHeadsetAltCommand
+    belt: ClothingBeltSecurityWebbing
+    pocket1:
+    pocket2:
+
+- type: startingGear
+  id: ERTLeaderGearEVA
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBlue
+    back: ClothingBackpackERTLeader
+    shoes: ClothingShoesBootsMag
+    head: ClothingHeadHelmetHardsuitERTLeader
+    mask: ClothingMaskBreath
+    eyes: ClothingEyesGlassesSecurity
+    gloves: ClothingHandsGlovesColorBlack
+    outerClothing: ClothingOuterHardsuitERTLeader
+    id: ERTLeaderPDA
+    ears: ClothingHeadsetAltCommand
+    belt: ClothingBeltSecurityFilled
+    pocket1: DoubleEmergencyOxygenTank # TODO change to exosuit slot when available
+    pocket2:
+
+# Engineer
+- type: job
+  id: ERTEngineer
+  parent: ERTLeader
+  name: "ERT engineer"
+  startingGear: ERTEngineerGear
+  
+- type: startingGear
+  id: ERTEngineerGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBlue
+    back: ClothingBackpackERTEngineer
+    shoes: ClothingShoesBootsWork
+    head: ClothingHeadHelmetHelmet
+    eyes: ClothingEyesGlassesMeson
+    gloves: ClothingHandsGlovesColorYellow
+    outerClothing: ClothingOuterVestKevlar
+    belt: ClothingBeltChiefEngineerFilled
+    pocket1:
+    pocket2:
+
+- type: startingGear
+  id: ERTEngineerGearEVA
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBlue
+    back: ClothingBackpackERTEngineer
+    shoes: ClothingShoesBootsMag
+    head: ClothingHeadHelmetHardsuitERTEngineer
+    mask: ClothingMaskBreath
+    eyes: ClothingEyesGlassesMeson
+    gloves: ClothingHandsGlovesColorYellow
+    outerClothing: ClothingOuterHardsuitERTEngineer
+    belt: ClothingBeltChiefEngineerFilled
+    pocket1: DoubleEmergencyOxygenTank # TODO change to exosuit slot when available
+    
+# Security
+- type: job
+  id: ERTSecurity
+  parent: ERTLeader
+  name: "ERT security"
+  startingGear: ERTEngineerGear
+  
+- type: startingGear
+  id: ERTSecurityGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBlue
+    back: ClothingBackpackERTSecurity
+    shoes: ClothingShoesBootsJack
+    head: ClothingHeadHelmetHelmet
+    eyes: ClothingEyesGlassesSecurity
+    gloves: ClothingHandsGlovesColorBlack
+    outerClothing: ClothingOuterVestKevlar
+    belt: ClothingBeltSecurityWebbing
+    pocket1:
+    pocket2:
+
+- type: startingGear
+  id: ERTSecurityGearEVA
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBlue
+    back: ClothingBackpackERTSecurity
+    shoes: ClothingShoesBootsMag
+    head: ClothingHeadHelmetHardsuitERTSecurity
+    mask: ClothingMaskBreath
+    eyes: ClothingEyesGlassesSecurity
+    gloves: ClothingHandsGlovesColorBlack
+    outerClothing: ClothingOuterHardsuitERTSecurity
+    belt: ClothingBeltSecurityWebbing
+    pocket1: DoubleEmergencyOxygenTank # TODO change to exosuit slot when available
+    
+# Medical
+- type: job
+  id: ERTMedical
+  parent: ERTLeader
+  name: "ERT medic"
+  startingGear: ERTMedicalGear
+  
+- type: startingGear
+  id: ERTMedicalGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBlue
+    back: ClothingBackpackERTMedical
+    shoes: ClothingShoesBootsJack
+    head: ClothingHeadHelmetHelmet
+    eyes: ClothingEyesHudMedical
+    gloves: ClothingHandsGlovesColorBlack
+    outerClothing: ClothingOuterVestKevlar
+    belt: ClothingBeltMedicalFilled
+    pocket1:
+    pocket2:
+
+- type: startingGear
+  id: ERTMedicalGearEVA
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBlue
+    back: ClothingBackpackERTMedical
+    shoes: ClothingShoesBootsMag
+    head: ClothingHeadHelmetHardsuitERTMedical
+    mask: ClothingMaskBreath
+    eyes: ClothingEyesHudMedical
+    gloves: ClothingHandsGlovesColorBlack
+    outerClothing: ClothingOuterHardsuitERTMedical
+    belt: ClothingBeltMedicalFilled
+    pocket1: DoubleEmergencyOxygenTank # TODO change to exosuit slot when available
+    
+# Janitor
+- type: job
+  id: ERTJanitor
+  parent: ERTLeader
+  name: "ERT janitor"
+  startingGear: ERTJanitorGear
+  
+- type: startingGear
+  id: ERTJanitorGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBlue
+    back: ClothingBackpackERTJanitor
+    shoes: ClothingShoesGaloshes
+    head: ClothingHeadHelmetHelmet
+    gloves: ClothingHandsGlovesColorBlack
+    outerClothing: ClothingOuterVestKevlar
+    belt: ClothingBeltSecurityWebbing
+    pocket1:
+    pocket2:
+
+- type: startingGear
+  id: ERTJanitorGearEVA
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBlue
+    back: ClothingBackpackERTJanitor
+    shoes: ClothingShoesBootsMag
+    head: ClothingHeadHelmetHardsuitERTJanitor
+    mask: ClothingMaskBreath
+    gloves: ClothingHandsGlovesColorBlack
+    outerClothing: ClothingOuterHardsuitERTJanitor
+    belt: ClothingBeltSecurityWebbing
+    pocket1: DoubleEmergencyOxygenTank # TODO change to exosuit slot when available
