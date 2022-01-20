@@ -53,9 +53,20 @@
 # Engineer
 - type: job
   id: ERTEngineer
-  parent: ERTLeader
   name: "ERT engineer"
   startingGear: ERTEngineerGear
+  departments:
+    - Command
+  icon: "Nanotrasen"
+  supervisors: "centcom official"
+  access:
+  - Command
+  - Maintenance
+  - Security
+  - Engineering
+  - Service
+  - Medical
+  - Research
   
 - type: startingGear
   id: ERTEngineerGear
@@ -90,9 +101,20 @@
 # Security
 - type: job
   id: ERTSecurity
-  parent: ERTLeader
   name: "ERT security"
   startingGear: ERTEngineerGear
+  departments:
+    - Command
+  icon: "Nanotrasen"
+  supervisors: "centcom official"
+  access:
+  - Command
+  - Maintenance
+  - Security
+  - Engineering
+  - Service
+  - Medical
+  - Research
   
 - type: startingGear
   id: ERTSecurityGear
@@ -127,9 +149,20 @@
 # Medical
 - type: job
   id: ERTMedical
-  parent: ERTLeader
   name: "ERT medic"
   startingGear: ERTMedicalGear
+  departments:
+    - Command
+  icon: "Nanotrasen"
+  supervisors: "centcom official"
+  access:
+  - Command
+  - Maintenance
+  - Security
+  - Engineering
+  - Service
+  - Medical
+  - Research
   
 - type: startingGear
   id: ERTMedicalGear
@@ -164,9 +197,20 @@
 # Janitor
 - type: job
   id: ERTJanitor
-  parent: ERTLeader
   name: "ERT janitor"
   startingGear: ERTJanitorGear
+  departments:
+    - Command
+  icon: "Nanotrasen"
+  supervisors: "centcom official"
+  access:
+  - Command
+  - Maintenance
+  - Security
+  - Engineering
+  - Service
+  - Medical
+  - Research
   
 - type: startingGear
   id: ERTJanitorGear
