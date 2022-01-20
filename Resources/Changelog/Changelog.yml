@@ -1,9 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: Fix bike horn sound not having pitch variation anymore., type: Fix}
-  id: 411
-  time: '2021-10-06T13:13:56.224775+00:00'
 - author: 20kdc
   changes:
   - {message: '''AHelp'' next to the options menu.', type: Add}
@@ -2915,3 +2910,9 @@ Entries:
       you can no longer get locked out if you have to relog for some reason., type: Tweak}
   id: 912
   time: '2022-01-19T23:01:21.0000000+00:00'
+- author: Pancake
+  changes:
+  - {message: AME prices have gone up to incentivize the use of the singularity engine.,
+    type: Tweak}
+  id: 913
+  time: '2022-01-20T12:33:13.0000000+00:00'
