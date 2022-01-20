@@ -26,8 +26,8 @@ public class CableSystem : EntitySystem
         if (args.Handled)
             return;
 
-        var ev = new CuttingFinishedEvent(uid, args.User);
-        _toolSystem.UseTool(args.Used, args.User, uid, 0, cable.CuttingDelay, new[] { cable.CuttingQuality }, doAfterCompleteEvent: ev);
+        var ev = new CuttingFinishedEvent(args.User);
+        _toolSystem.UseTool(args.Used, args.User, uid, 0, cable.CuttingDelay, new[] { cable.CuttingQuality }, doAfterCompleteEvent: ev, doAfterEventTarget: uid);
         args.Handled = true;
     }
 
@@ -37,7 +37,7 @@ public class CableSystem : EntitySystem
             return;
 
         Spawn(cable.CableDroppedOnCutPrototype, Transform(uid).Coordinates);
-        Del(uid);
+        QueueDel(uid);
     }
 
     private void OnAnchorChanged(EntityUid uid, CableComponent cable, ref AnchorStateChangedEvent args)
@@ -45,22 +45,24 @@ public class CableSystem : EntitySystem
         if (args.Anchored)
             return; // huh? it wasn't anchored?
 
+        // anchor state can change as a result of deletion (detach to null).
+        // We don't want to spawn an entity when deleted.
+        if (!TryLifeStage(uid, out var life) || life >= EntityLifeStage.Terminating)
+            return;
+
         // This entity should not be un-anchorable. But this can happen if the grid-tile is deleted (RCD, explosion,
         // etc). In that case: behave as if the cable had been cut.
         Spawn(cable.CableDroppedOnCutPrototype, Transform(uid).Coordinates);
-        Del(uid);
+        QueueDel(uid);
     }
 }
 
-// TODO: if #5887 gets merged, just use a directed event instead of broadcast-with-target
 public class CuttingFinishedEvent : EntityEventArgs
 {
-    public EntityUid Target;
     public EntityUid User;
 
-    public CuttingFinishedEvent(EntityUid target, EntityUid user)
+    public CuttingFinishedEvent(EntityUid user)
     {
-        Target = target;
         User = user;
     }
 }

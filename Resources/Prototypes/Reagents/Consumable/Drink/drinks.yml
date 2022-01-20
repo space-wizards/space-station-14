@@ -9,6 +9,7 @@
 - type: reagent
   id: Cream
   name: cream
+  group: Drinks
   desc: The fatty, still liquid part of milk. Why don't you mix this with sum scotch, eh?
   physicalDesc: creamy
   color: "#DFD7AF"
@@ -75,6 +76,7 @@
 - type: reagent
   id: Lemonade
   name: lemonade
+  group: Drinks
   desc: Drink using lemon juice, water, and a sweetener such as cane sugar or honey.
   physicalDesc: tart
   color: "#FFFF00"
@@ -88,6 +90,7 @@
 - type: reagent
   id: Milk
   name: milk
+  group: Drinks
   desc: An opaque white liquid produced by the mammary glands of mammals.
   physicalDesc: opaque
   color: "#DFDFDF"
@@ -105,6 +108,7 @@
 - type: reagent
   id: MilkOat
   name: oat milk
+  group: Drinks
   desc: Surprisingly tasty.
   physicalDesc: refreshing
   color: "#302000"
@@ -117,6 +121,7 @@
 - type: reagent
   id: MilkSoy
   name: soy milk
+  group: Drinks
   desc: Surprisingly tasty.
   physicalDesc: refreshing
   color: "#302000"
@@ -129,6 +134,7 @@
 - type: reagent
   id: MilkSpoiled
   name: spoiled milk
+  group: Drinks
   desc: This milk has gone rancid.
   physicalDesc: putrid
   color: "#faffba"
@@ -142,6 +148,7 @@
   id: Nothing
   name: nothing
   desc: Absolutely nothing.
+  group: Drinks
   physicalDesc: nothing
   spritePath: nothing.rsi
   metabolisms:
@@ -154,6 +161,7 @@
 - type: reagent
   id: NukaCola
   name: nuka cola
+  group: Drinks
   desc: Cola, cola never changes.
   physicalDesc: fizzy
   color: "#100800"

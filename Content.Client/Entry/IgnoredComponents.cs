@@ -144,6 +144,7 @@ namespace Content.Client.Entry
             "MovedByPressure",
             "Spray",
             "Vapor",
+            "AddAccentClothing",
             "DamageOnHighSpeedImpact",
             "SolutionContainerManager",
             "RefillableSolution",

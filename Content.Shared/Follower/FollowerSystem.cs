@@ -25,6 +25,9 @@ public class FollowerSystem : EntitySystem
         if (!HasComp<SharedGhostComponent>(ev.User))
             return;
 
+        if (ev.User == ev.Target)
+            return;
+
         var verb = new Verb
         {
             Priority = 10,

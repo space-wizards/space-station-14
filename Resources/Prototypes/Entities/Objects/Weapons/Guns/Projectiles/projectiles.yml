@@ -33,15 +33,33 @@
       path: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
 
 - type: entity
-  id: BulletBaseFlash
-  name: base bullet flash
+  id: TriggerBulletBase # Trigger-on-collide bullets
   parent: BulletBase
   abstract: true
   components:
+  - type: TriggerOnCollide
   - type: Projectile
     damage:
       types:
-        Blunt: 3
+        Blunt: 7 # more damage than a punch.
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.15,-0.45,0.15,0.15"
+      hard: false
+      mask:
+      - Impassable
+      layer:
+      - MobImpassable
+
+- type: entity
+  id: BulletBaseFlash
+  name: base bullet flash
+  parent: TriggerBulletBase
+  abstract: true
+  components:
+  - type: Projectile
     soundHit:
       path: /Audio/Weapons/Guns/Hits/snap.ogg
   - type: FlashOnTrigger
@@ -49,8 +67,6 @@
   - type: SoundOnTrigger
     sound:
       path: "/Audio/Effects/flash_bang.ogg"
-  - type: TriggerOnCollide
-  - type: DeleteOnTrigger
 
 - type: entity
   id: BulletBaseHV
@@ -162,7 +178,7 @@
 - type: entity
   id: BulletRocket
   name: rocket
-  parent: BulletBase
+  parent: TriggerBulletBase
   abstract: true
   components:
   - type: Sprite
@@ -170,13 +186,6 @@
     sprite: Objects/Weapons/Guns/Projectiles/rocket.rsi
     state: frag
   - type: ExplodeOnTrigger
-  - type: DeleteOnTrigger
-  - type: TriggerOnCollide
-  - type: Projectile
-    deleteOnCollide: false
-    damage:
-      types:
-        Blunt: 1
   - type: Explosive
     devastationRange: 1
     heavyImpactRange: 2
@@ -211,7 +220,7 @@
 - type: entity
   id: BulletGrenadeBlast
   name: blast grenade
-  parent: BulletBase
+  parent: TriggerBulletBase
   abstract: true
   components:
   - type: Sprite
@@ -219,13 +228,6 @@
     sprite: Objects/Weapons/Guns/Projectiles/grenade.rsi
     state: grenade
   - type: ExplodeOnTrigger
-  - type: DeleteOnTrigger
-  - type: TriggerOnCollide
-  - type: Projectile
-    deleteOnCollide: false
-    damage:
-      types:
-        Blunt: 1
   - type: Explosive
     devastationRange: 1
     heavyImpactRange: 2
@@ -235,33 +237,21 @@
 - type: entity
   id: BulletGrenadeFlash
   name: flash grenade
-  parent: BulletBase
+  parent: BulletBaseFlash
   abstract: true
   components:
   - type: Sprite
     netsync: false
     sprite: Objects/Weapons/Guns/Projectiles/grenade.rsi
     state: grenade
-  - type: Projectile
-    deleteOnCollide: false
-    damage:
-      types:
-        Blunt: 1
-    soundHit:
-      path: /Audio/Effects/flash_bang.ogg
   - type: FlashOnTrigger
     range: 7
-  - type: SoundOnTrigger
-    sound:
-      path: "/Audio/Effects/flash_bang.ogg"
-  - type: TriggerOnCollide
-  - type: DeleteOnTrigger
 
 # This is supposed to spawn shrapnel and stuff so uhh... TODO?
 - type: entity
   id: BulletGrenadeFrag
   name: frag grenade
-  parent: BulletBase
+  parent: TriggerBulletBase
   abstract: true
   components:
   - type: Sprite
@@ -269,13 +259,6 @@
     sprite: Objects/Weapons/Guns/Projectiles/grenade.rsi
     state: grenade
   - type: ExplodeOnTrigger
-  - type: DeleteOnTrigger
-  - type: TriggerOnCollide
-  - type: Projectile
-    deleteOnCollide: false
-    damage:
-      types:
-        Blunt: 1
   - type: Explosive
     devastationRange: 0
     heavyImpactRange: 1

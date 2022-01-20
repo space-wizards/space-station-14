@@ -626,5 +626,12 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<float> RulesWaitTime =
             CVarDef.Create("rules.time", 45f, CVar.SERVER | CVar.REPLICATED);
+
+        /*
+         * Autogeneration
+         */
+
+        public static readonly CVarDef<string> DestinationFile =
+            CVarDef.Create("autogen.destination_file", "", CVar.SERVER | CVar.SERVERONLY);
     }
 }

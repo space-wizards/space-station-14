@@ -9,6 +9,7 @@ using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Monitor.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using static Content.Shared.Wires.SharedWiresComponent;
@@ -20,9 +21,7 @@ namespace Content.Server.Atmos.Monitor.Components
     [RegisterComponent]
     public class FireAlarmComponent : Component, IWires
     {
-        [ComponentDependency] public readonly ApcPowerReceiverComponent? DeviceRecvComponent = default!;
-        [ComponentDependency] public readonly AtmosMonitorComponent? AtmosMonitorComponent = default!;
-        [ComponentDependency] public readonly WiresComponent? WiresComponent = null;
+        [Dependency] private readonly IEntityManager _entMan = default!;
 
         private AtmosMonitorSystem? _atmosMonitorSystem;
 
@@ -69,9 +68,8 @@ namespace Content.Server.Atmos.Monitor.Components
 
         private void SetPower()
         {
-            if (DeviceRecvComponent != null
-                && WiresComponent != null)
-                DeviceRecvComponent.PowerDisabled = PowerPulsed || PowerCut;
+            if (_entMan.TryGetComponent<ApcPowerReceiverComponent>(Owner, out var receiverComponent) && _entMan.HasComponent<WiresComponent>(Owner))
+                receiverComponent.PowerDisabled = PowerPulsed || PowerCut;
         }
 
 
@@ -87,7 +85,7 @@ namespace Content.Server.Atmos.Monitor.Components
 
         public void UpdateWires()
         {
-            if (WiresComponent == null) return;
+            if (!_entMan.TryGetComponent<WiresComponent>(Owner, out var wiresComponent)) return;
 
             var powerLight = new StatusLightData(Color.Yellow, StatusLightState.On, "POWR");
 
@@ -98,14 +96,14 @@ namespace Content.Server.Atmos.Monitor.Components
 
             var syncLight = new StatusLightData(Color.Orange, StatusLightState.On, "NET");
 
-            if (AtmosMonitorComponent != null)
-                if (!AtmosMonitorComponent.NetEnabled)
+            if (_entMan.TryGetComponent<AtmosMonitorComponent>(Owner, out var atmosMonitorComponent))
+                if (!atmosMonitorComponent.NetEnabled)
                     syncLight = new StatusLightData(Color.Orange, StatusLightState.Off, "NET");
-                else if (AtmosMonitorComponent.HighestAlarmInNetwork == AtmosMonitorAlarmType.Danger)
+                else if (atmosMonitorComponent.HighestAlarmInNetwork == AtmosMonitorAlarmType.Danger)
                     syncLight = new StatusLightData(Color.Orange, StatusLightState.BlinkingFast, "NET");
 
-            WiresComponent.SetStatus(FireAlarmWireStatus.Power, powerLight);
-            WiresComponent.SetStatus(FireAlarmWireStatus.Alarm, syncLight);
+            wiresComponent.SetStatus(FireAlarmWireStatus.Power, powerLight);
+            wiresComponent.SetStatus(FireAlarmWireStatus.Alarm, syncLight);
         }
 
         public void WiresUpdate(WiresUpdateEventArgs args)
@@ -127,8 +125,8 @@ namespace Content.Server.Atmos.Monitor.Components
                                 _powerPulsedCancel.Token);
                             break;
                         case Wires.Alarm:
-                            if (AtmosMonitorComponent != null)
-                                _atmosMonitorSystem.Alert(Owner, AtmosMonitorAlarmType.Danger);
+                            if (_entMan.TryGetComponent<AtmosMonitorComponent>(Owner, out var atmosMonitorComponent))
+                                _atmosMonitorSystem.Alert(Owner, AtmosMonitorAlarmType.Danger, monitor: atmosMonitorComponent);
                             break;
                     }
 
@@ -142,8 +140,8 @@ namespace Content.Server.Atmos.Monitor.Components
                             PowerCut = false;
                             break;
                         case Wires.Alarm:
-                            if (AtmosMonitorComponent != null)
-                                AtmosMonitorComponent.NetEnabled = true;
+                            if (_entMan.TryGetComponent<AtmosMonitorComponent>(Owner, out var atmosMonitorComponent))
+                                atmosMonitorComponent.NetEnabled = true;
                             break;
                     }
 
@@ -155,8 +153,8 @@ namespace Content.Server.Atmos.Monitor.Components
                             PowerCut = true;
                             break;
                         case Wires.Alarm:
-                            if (AtmosMonitorComponent != null)
-                                AtmosMonitorComponent.NetEnabled = false;
+                            if (_entMan.TryGetComponent<AtmosMonitorComponent>(Owner, out var atmosMonitorComponent))
+                                atmosMonitorComponent.NetEnabled = false;
                             break;
 
                     }

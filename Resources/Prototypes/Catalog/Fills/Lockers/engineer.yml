@@ -23,6 +23,8 @@
         prob: 0.2
       - id: trayScanner
         prob: 0.7
+      - id: GasAnalyzer
+        prob: 0.7
       - id: ClothingBeltUtility
         prob: 0.2
       - id: ClothingHandsGlovesColorYellow
