@@ -121,7 +121,7 @@
 - type: entity
   id: PelletShotgunFlare
   name: pellet (.50 flare)
-  abstract: false
+  abstract: true
   parent: BulletBase
   components:
   - type: Sprite
