@@ -44,7 +44,7 @@
 
 # ERT Leader
 - type: entity
-  name: ert leader
+  name: ERT leader
   parent: MobHuman
   id: MobHumanERTLeader
   components:
@@ -61,7 +61,7 @@
     startingGear: ERTLeaderGear
     
 - type: entity
-  name: ert leader
+  name: ERT leader
   suffix: EVA
   parent: MobHumanERTLeader
   id: MobHumanERTLeaderEVA
@@ -74,7 +74,7 @@
 
 # ERT Engineer    
 - type: entity
-  name: ert engineer
+  name: ERT engineer
   parent: MobHumanERTLeader
   id: MobHumanERTEngineer
   components:
@@ -91,7 +91,7 @@
     startingGear: ERTEngineerGear
     
 - type: entity
-  name: ert engineer
+  name: ERT engineer
   suffix: EVA
   parent: MobHumanERTEngineer
   id: MobHumanERTEngineerEVA
@@ -104,7 +104,7 @@
     
 # ERT Security    
 - type: entity
-  name: ert security
+  name: ERT security
   parent: MobHumanERTLeader
   id: MobHumanERTSecurity
   components:
@@ -121,7 +121,7 @@
     startingGear: ERTSecurityGear
     
 - type: entity
-  name: ert security
+  name: ERT security
   suffix: EVA
   parent: MobHumanERTEngineer
   id: MobHumanERTSecurityEVA
@@ -134,7 +134,7 @@
     
 # ERT Medical   
 - type: entity
-  name: ert medic
+  name: ERT medic
   parent: MobHumanERTLeader
   id: MobHumanERTMedical
   components:
@@ -151,7 +151,7 @@
     startingGear: ERTMedicalGear
     
 - type: entity
-  name: ert medic
+  name: ERT medic
   suffix: EVA
   parent: MobHumanERTMedical
   id: MobHumanERTMedicalEVA
@@ -164,7 +164,7 @@
     
 # ERT Janitor  
 - type: entity
-  name: ert janitor
+  name: ERT janitor
   parent: MobHumanERTLeader
   id: MobHumanERTJanitor
   components:
@@ -181,7 +181,7 @@
     startingGear: ERTJanitorGear
     
 - type: entity
-  name: ert janitor
+  name: ERT janitor
   suffix: EVA
   parent: MobHumanERTJanitor
   id: MobHumanERTJanitorEVA
