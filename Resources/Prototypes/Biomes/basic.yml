@@ -30,7 +30,7 @@
   symbol: w
   priority: 0
   wreckRange: [ { min: 0.66, max: 1.0 } ]
-  debrisLayout: [ "Rockless" ]
+  debrisLayouts: [ "Rockless" ]
 
 - type: biome
   id: FrozenStandard
@@ -38,7 +38,7 @@
   priority: -1
   wreckRange: [ { min: 0.33, max: 0.66 } ]
   temperatureRange: [ { min: 0.0, max: 0.45 } ]
-  debrisLayout: [ "FrozenStandard" ]
+  debrisLayouts: [ "FrozenStandard" ]
 
 - type: biome
   id: FrozenRocky
