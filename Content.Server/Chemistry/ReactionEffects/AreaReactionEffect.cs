@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Coordinates.Helpers;
@@ -47,6 +47,7 @@ namespace Content.Server.Chemistry.ReactionEffects
         /// <summary>
         /// Used to calculate concentration. Reagents get linearly more concentrated as the range goes from
         /// _reagentDilutionStart to zero. When the range is zero the reagents volume gets multiplied by this.
+        /// TODO: This appears to be unused, but maybe should be used, need to investigate
         /// </summary>
         [DataField("reagentMaxConcentrationFactor")]
         private float _reagentMaxConcentrationFactor = 2;
