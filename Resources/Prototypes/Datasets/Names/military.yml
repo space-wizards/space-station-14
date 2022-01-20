@@ -1,0 +1,14 @@
+﻿- type: dataset
+  id: NamesFirstMilitaryLeader
+  values:
+  - Colonel
+  - Commander
+  - Lieutenant
+  - Major
+  
+- type: dataset
+  id: NamesFirstMilitary
+  values:
+  - Corporal
+  - Sergeant
+  - Specialist
