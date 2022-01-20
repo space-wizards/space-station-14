@@ -67,7 +67,7 @@ namespace Content.Server.Singularity.Components
             // This still won't stop things being potentially hilarously unbalanced though.
             if (_entMan.TryGetComponent<BatteryComponent>(Owner, out var batteryComponent))
             {
-                batteryComponent.CurrentCharge += frameTime * radiation.RadsPerSecond * 3000f;
+                batteryComponent.CurrentCharge += frameTime * radiation.RadsPerSecond * 30000f;
             }
         }
 
