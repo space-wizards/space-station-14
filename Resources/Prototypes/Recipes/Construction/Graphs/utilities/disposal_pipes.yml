@@ -7,8 +7,8 @@
     - to: pipe
       steps:
       - material: Steel
-        amount: 1
-        doAfter: 0.5
+        amount: 2
+        doAfter: 1
     - to: tagger
       steps:
       - material: Steel
@@ -17,7 +17,7 @@
     - to: trunk
       steps:
       - material: Steel
-        amount: 1
+        amount: 2
         doAfter: 1
     - to: router
       steps:
@@ -37,8 +37,8 @@
     - to: bend
       steps:
       - material: Steel
-        amount: 1
-        doAfter: 0.5
+        amount: 2
+        doAfter: 1
   - node: broken
     entity: DisposalPipeBroken
     edges:
@@ -46,11 +46,10 @@
       completed:
       - !type:SpawnPrototype
         prototype: SheetSteel1
-        amount: 1
       - !type:DeleteEntity
       steps:
       - tool: Welding
-        doAfter: 0.5
+        doAfter: 1
   - node: pipe
     entity: DisposalPipe
     edges:
@@ -58,11 +57,11 @@
       completed:
       - !type:SpawnPrototype
         prototype: SheetSteel1
-        amount: 1
+        amount: 2
       - !type:DeleteEntity
       steps:
       - tool: Welding
-        doAfter: 0.5
+        doAfter: 1
   - node: tagger
     entity: DisposalTagger
     edges:
@@ -82,7 +81,7 @@
       completed:
       - !type:SpawnPrototype
         prototype: SheetSteel1
-        amount: 1
+        amount: 2
       - !type:DeleteEntity
       steps:
       - tool: Welding
@@ -114,7 +113,7 @@
     - to: yJunction
       steps:
       - tool: Screwing
-        doAfter: 0.5
+        doAfter: 1
   - node: yJunction
     entity: DisposalYJunction
     edges:
@@ -130,7 +129,7 @@
     - to: junction
       steps:
       - tool: Screwing
-        doAfter: 0.5
+        doAfter: 1
   - node: bend
     entity: DisposalBend
     edges:
@@ -138,8 +137,8 @@
       completed:
       - !type:SpawnPrototype
         prototype: SheetSteel1
-        amount: 1
+        amount: 2
       - !type:DeleteEntity
       steps:
       - tool: Welding
-        doAfter: 0.5
+        doAfter: 1
