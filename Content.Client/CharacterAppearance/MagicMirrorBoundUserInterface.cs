@@ -329,7 +329,7 @@ namespace Content.Client.CharacterAppearance
         // ColorSlider
     }
 
-    public class MagicMirrorWindow : SS14Window
+    public class MagicMirrorWindow : DefaultWindow
     {
         private readonly HairStylePicker _hairStylePicker;
         private readonly HairStylePicker _facialHairStylePicker;

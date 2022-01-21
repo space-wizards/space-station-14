@@ -208,7 +208,7 @@ namespace Content.Server.Climbing.Components
 
             var result = await EntitySystem.Get<DoAfterSystem>().WaitDoAfter(doAfterEventArgs);
 
-            if (result != DoAfterStatus.Cancelled && _entities.TryGetComponent(user, out PhysicsComponent? body) && body.Fixtures.Count >= 1)
+            if (result != DoAfterStatus.Cancelled && _entities.TryGetComponent(user, out FixturesComponent? fixtureComp) && fixtureComp.Fixtures.Count >= 1)
             {
                 // TODO: Remove the copy-paste code
                 var userPos = _entities.GetComponent<TransformComponent>(user).WorldPosition;
