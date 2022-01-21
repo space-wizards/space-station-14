@@ -47,10 +47,10 @@
   parent: DisposalPipeBase
   name: broken disposal pipe
   description: A BBP (big broken pipe)
-  componenets:
+  components:
   - type: Sprite
     drawdepth: ThickPipe
-    sprite: Structures/Piping/disposals.rsi
+    sprite: Structures/Piping/disposal.rsi
     state: pipe-b
   - type: Appearance
     visuals:
