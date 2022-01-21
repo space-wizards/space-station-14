@@ -1,7 +1,9 @@
 using System.Collections.Generic;
+using Content.Shared.Construction.Prototypes;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Construction.Components
@@ -11,7 +13,7 @@ namespace Content.Server.Construction.Components
     {
         public override string Name => "Construction";
 
-        [DataField("graph", required:true)]
+        [DataField("graph", required:true, customTypeSerializer:typeof(PrototypeIdSerializer<ConstructionGraphPrototype>))]
         public string Graph { get; set; } = string.Empty;
 
         [DataField("node", required:true)]
