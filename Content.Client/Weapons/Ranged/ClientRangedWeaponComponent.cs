@@ -18,7 +18,7 @@ namespace Content.Client.Weapons.Ranged
     [RegisterComponent]
     public sealed class ClientRangedWeaponComponent : SharedRangedWeaponComponent
     {
-        public FireRateSelector FireRateSelector { get; private set; } = FireRateSelector.Safety;
+        public FireRateSelector FireRateSelector { get; private set; } = FireRateSelector.Automatic;
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {

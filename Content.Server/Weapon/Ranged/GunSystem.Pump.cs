@@ -21,7 +21,7 @@ public sealed partial class GunSystem
         args.PushMarkup(Loc.GetString("pump-barrel-component-on-examine", ("caliber", component.Caliber)));
     }
 
-    private void OnPumpGetState(EntityUid uid, PumpBarrelComponent component, ComponentGetState args)
+    private void OnPumpGetState(EntityUid uid, PumpBarrelComponent component, ref ComponentGetState args)
     {
         (int, int)? count = (component.ShotsLeft, component.Capacity);
         var chamberedExists = component.ChamberContainer.ContainedEntity != null;

@@ -122,7 +122,7 @@ public sealed partial class GunSystem
         appearanceComponent.SetData(AmmoVisuals.AmmoMax, component.Capacity);
     }
 
-    private void OnMagazineGetState(EntityUid uid, MagazineBarrelComponent component, ComponentGetState args)
+    private void OnMagazineGetState(EntityUid uid, MagazineBarrelComponent component, ref ComponentGetState args)
     {
         (int, int)? count = null;
         if (component.MagazineContainer.ContainedEntity is {Valid: true} magazine &&
@@ -188,6 +188,9 @@ public sealed partial class GunSystem
             var magEntity = EntityManager.SpawnEntity(component.MagFillPrototype, Transform(uid).Coordinates);
             component.MagazineContainer.Insert(magEntity);
         }
+
+        // Temporary coz client doesn't know about magfill.
+        component.Dirty(EntityManager);
     }
 
     private void OnMagazineMapInit(EntityUid uid, MagazineBarrelComponent component, MapInitEvent args)

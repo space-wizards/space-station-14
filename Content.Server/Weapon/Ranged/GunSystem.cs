@@ -151,7 +151,7 @@ public sealed partial class GunSystem : EntitySystem
         TryFire(user, msg.Coordinates, weapon);
     }
 
-    public EntityUid? PeekAmmo(ServerRangedBarrelComponent component)
+    public EntityUid? PeekAtAmmo(ServerRangedBarrelComponent component)
     {
         return component switch
         {
@@ -164,7 +164,7 @@ public sealed partial class GunSystem : EntitySystem
         };
     }
 
-    public EntityUid? TakeProjectile(ServerRangedBarrelComponent component, EntityCoordinates spawnAt)
+    public EntityUid? TakeOutProjectile(ServerRangedBarrelComponent component, EntityCoordinates spawnAt)
     {
         return component switch
         {
@@ -225,7 +225,7 @@ public sealed partial class GunSystem : EntitySystem
     {
         SetEjectDirections(ref ejectDirections);
 
-        const float ejectOffset = 1.8f;
+        const float ejectOffset = 0.4f;
 
         if (!Resolve(entity, ref ammoComponent)) return;
 

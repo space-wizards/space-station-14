@@ -1,6 +1,7 @@
 using System;
 using Content.Shared.Sound;
 using Content.Shared.Weapons.Ranged.Components;
+using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
@@ -13,6 +14,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
     /// All of the ranged weapon components inherit from this to share mechanics like shooting etc.
     /// Only difference between them is how they retrieve a projectile to shoot (battery, magazine, etc.)
     /// </summary>
+    [Friend(typeof(GunSystem))]
     public abstract class ServerRangedBarrelComponent : SharedRangedBarrelComponent, ISerializationHooks
     {
         public override FireRateSelector FireRateSelector => _fireRateSelector;

@@ -34,26 +34,22 @@ public sealed partial class GunSystem
     /// </summary>
     private void TryFire(EntityUid user, EntityCoordinates targetCoords, ServerRangedWeaponComponent gun)
     {
-        if (!TryComp(user, out HandsComponent? hands) || hands.GetActiveHand?.Owner != gun.Owner)
-            return;
+        if (!TryComp(gun.Owner, out ServerRangedBarrelComponent? barrel)) return;
 
-        if (!TryComp(user, out CombatModeComponent? combat) || !combat.IsInCombatMode)
-            return;
+        if (!TryComp(user, out HandsComponent? hands) || hands.GetActiveHand?.Owner != gun.Owner) return;
+
+        if (!TryComp(user, out CombatModeComponent? combat) || !combat.IsInCombatMode) return;
 
         if (!_blocker.CanInteract(user)) return;
 
         var fireAttempt = new GunFireAttemptEvent(user, gun);
         EntityManager.EventBus.RaiseLocalEvent(gun.Owner, fireAttempt);
 
-        if (fireAttempt.Cancelled)
-            return;
+        if (fireAttempt.Cancelled) return;
 
         var curTime = _gameTiming.CurTime;
         var span = curTime - gun.LastFireTime;
-        if (span.TotalSeconds < 1 / gun.FireRate)
-        {
-            return;
-        }
+        if (span.TotalSeconds < 1 / barrel.FireRate) return;
 
         // TODO: Clumsy should be eventbus I think?
 
@@ -81,10 +77,13 @@ public sealed partial class GunSystem
             return;
         }
 
+        // Firing confirmed
+
         if (gun.CanHotspot)
             _atmos.HotspotExpose(coordinates, 700, 50);
 
         EntityManager.EventBus.RaiseLocalEvent(gun.Owner, new GunFireEvent());
+        Fire(user, barrel, targetCoords);
     }
 
     /// <summary>
@@ -98,8 +97,8 @@ public sealed partial class GunSystem
             return;
         }
 
-        var ammo = PeekAmmo(component);
-        if (TakeProjectile(component, Transform(shooter).Coordinates) is not {Valid: true} projectile)
+        var ammo = PeekAtAmmo(component);
+        if (TakeOutProjectile(component, Transform(shooter).Coordinates) is not {Valid: true} projectile)
         {
             SoundSystem.Play(Filter.Pvs(component.Owner), component.SoundEmpty.GetSound(), component.Owner);
             return;
@@ -145,6 +144,7 @@ public sealed partial class GunSystem
 
         SoundSystem.Play(Filter.Broadcast(), component.SoundGunshot.GetSound(), component.Owner);
 
+        component.Dirty(EntityManager);
         component.LastFire = _gameTiming.CurTime;
     }
 

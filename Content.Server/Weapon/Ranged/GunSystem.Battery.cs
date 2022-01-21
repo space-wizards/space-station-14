@@ -28,7 +28,7 @@ public sealed partial class GunSystem
         UpdateBatteryAppearance(component);
     }
 
-    private void OnBatteryGetState(EntityUid uid, BatteryBarrelComponent component, ComponentGetState args)
+    private void OnBatteryGetState(EntityUid uid, BatteryBarrelComponent component, ref ComponentGetState args)
     {
         (int, int)? count = (component.ShotsLeft, component.Capacity);
 

@@ -207,7 +207,7 @@ public sealed partial class GunSystem
     /// </summary>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public EntityUid? TakeRevolverProjectile(RevolverBarrelComponent component, EntityCoordinates spawnAt)
+    public EntityUid? TakeProjectile(RevolverBarrelComponent component, EntityCoordinates spawnAt)
     {
         var ammo = component.AmmoSlots[component.CurrentSlot];
         EntityUid? bullet = null;
