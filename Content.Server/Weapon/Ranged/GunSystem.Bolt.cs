@@ -75,7 +75,7 @@ public sealed partial class GunSystem
     private void OnBoltInit(EntityUid uid, BoltActionBarrelComponent component, ComponentInit args)
     {
         component.SpawnedAmmo = new Stack<EntityUid>(component.Capacity - 1);
-        component.AmmoContainer = uid.EnsureContainer<Container>($"{nameof(component)}-ammo-container", out var existing);
+        component.AmmoContainer = uid.EnsureContainer<Container>($"{component.GetType()}-ammo-container", out var existing);
 
         if (existing)
         {
@@ -86,7 +86,7 @@ public sealed partial class GunSystem
             }
         }
 
-        component.ChamberContainer = uid.EnsureContainer<ContainerSlot>($"{nameof(component)}-chamber-container");
+        component.ChamberContainer = uid.EnsureContainer<ContainerSlot>($"{component.GetType()}-chamber-container");
 
         if (TryComp(uid, out AppearanceComponent? appearanceComponent))
         {

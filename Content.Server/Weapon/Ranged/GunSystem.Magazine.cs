@@ -180,8 +180,8 @@ public sealed partial class GunSystem
 
     private void OnMagazineInit(EntityUid uid, MagazineBarrelComponent component, ComponentInit args)
     {
-        component.ChamberContainer = uid.EnsureContainer<ContainerSlot>($"{nameof(component)}-chamber");
-        component.MagazineContainer = uid.EnsureContainer<ContainerSlot>($"{nameof(component)}-magazine", out var existing);
+        component.ChamberContainer = uid.EnsureContainer<ContainerSlot>($"{component.GetType()}-chamber");
+        component.MagazineContainer = uid.EnsureContainer<ContainerSlot>($"{component.GetType()}-magazine", out var existing);
 
         if (!existing && component.MagFillPrototype != null)
         {

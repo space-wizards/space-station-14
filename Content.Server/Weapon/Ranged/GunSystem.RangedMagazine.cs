@@ -27,7 +27,7 @@ public sealed partial class GunSystem
 
     private void OnRangedMagInit(EntityUid uid, RangedMagazineComponent component, ComponentInit args)
     {
-        component.AmmoContainer = uid.EnsureContainer<Container>($"{nameof(component)}-magazine", out var existing);
+        component.AmmoContainer = uid.EnsureContainer<Container>($"{component.GetType()}-magazine", out var existing);
 
         if (existing)
         {

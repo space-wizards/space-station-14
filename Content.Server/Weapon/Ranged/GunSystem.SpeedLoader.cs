@@ -15,7 +15,7 @@ public sealed partial class GunSystem
 {
     private void OnSpeedLoaderInit(EntityUid uid, SpeedLoaderComponent component, ComponentInit args)
     {
-        component.AmmoContainer = uid.EnsureContainer<Container>($"{nameof(component)}-container", out var existing);
+        component.AmmoContainer = uid.EnsureContainer<Container>($"{component.GetType()}-container", out var existing);
 
         if (existing)
         {

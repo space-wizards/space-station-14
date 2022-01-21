@@ -17,7 +17,7 @@ public sealed partial class GunSystem
     {
         if (component.AmmoPrototype != null)
         {
-            component.AmmoContainer = uid.EnsureContainer<ContainerSlot>($"{nameof(component)}-ammo-container");
+            component.AmmoContainer = uid.EnsureContainer<ContainerSlot>($"{component.GetType()}-ammo-container");
         }
 
         component.Dirty(EntityManager);

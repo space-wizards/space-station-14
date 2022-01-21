@@ -61,7 +61,7 @@ public sealed partial class GunSystem
     private void OnPumpInit(EntityUid uid, PumpBarrelComponent component, ComponentInit args)
     {
         component.AmmoContainer =
-            uid.EnsureContainer<Container>($"{nameof(component)}-ammo-container", out var existing);
+            uid.EnsureContainer<Container>($"{component.GetType()}-ammo-container", out var existing);
 
         if (existing)
         {
@@ -73,7 +73,7 @@ public sealed partial class GunSystem
         }
 
         component.ChamberContainer =
-            uid.EnsureContainer<ContainerSlot>($"{nameof(component)}-chamber-container", out existing);
+            uid.EnsureContainer<ContainerSlot>($"{component.GetType()}-chamber-container", out existing);
 
         if (existing)
         {

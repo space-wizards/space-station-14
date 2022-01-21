@@ -136,7 +136,7 @@ public sealed partial class GunSystem
     {
         component.UnspawnedCount = component.Capacity;
         var idx = 0;
-        component.AmmoContainer = component.Owner.EnsureContainer<Container>($"{nameof(component)}-ammoContainer", out var existing);
+        component.AmmoContainer = component.Owner.EnsureContainer<Container>($"{component.GetType()}-ammoContainer", out var existing);
         if (existing)
         {
             foreach (var entity in component.AmmoContainer.ContainedEntities)
