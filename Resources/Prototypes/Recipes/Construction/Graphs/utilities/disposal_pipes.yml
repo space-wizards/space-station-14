@@ -39,6 +39,18 @@
       - material: Steel
         amount: 1
         doAfter: 0.5
+  - node: broken
+    entity: DisposalPipeBroken
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 1
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 0.5
   - node: pipe
     entity: DisposalPipe
     edges:

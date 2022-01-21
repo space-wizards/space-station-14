@@ -28,6 +28,8 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Breakage"]
+      - !type:ChangeConstructionNodeBehavior
+        node: broken
   - type: Rotatable
   - type: Pullable
 
@@ -39,6 +41,31 @@
   - type: DisposalHolder
 
 # Pipes
+
+- type: entity
+  id: DisposalPipeBroken
+  parent: DisposalPipeBase
+  name: broken disposal pipe
+  description: A BBP (big broken pipe)
+  componenets:
+  - type: Sprite
+    drawdepth: ThickPipe
+    sprite: Structures/Piping/disposals.rsi
+    state: pipe-b
+  - type: Appearance
+    visuals:
+    - type: TrayScannerSubFloorVisualizer
+    - type: SubFloorShowLayerVisualizer
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.25,-0.5,0.25,0.5" # TODO
+      layer: [ Underplating ]
+  - type: Construction
+    graph: disposalPipe
+    node: broken
 
 - type: entity
   id: DisposalPipe
