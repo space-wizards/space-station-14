@@ -1,5 +1,5 @@
 - type: constructionGraph
-  id: disposalPipe
+  id: DisposalPipe
   start: start
   graph:
   - node: start

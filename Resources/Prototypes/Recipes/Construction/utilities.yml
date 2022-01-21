@@ -1,6 +1,6 @@
 # POWER
 - type: construction
-  name: apc
+  name: APC
   id: apc
   graph: apc
   startNode: start
@@ -64,7 +64,7 @@
 - type: construction
   name: disposal pipe
   id: DisposalPipe
-  graph: disposalPipe
+  graph: DisposalPipe
   startNode: start
   targetNode: pipe
   category: Utilities
@@ -77,7 +77,7 @@
 - type: construction
   name: disposal tagger
   id: DisposalTagger
-  graph: disposalPipe
+  graph: DisposalPipe
   startNode: start
   targetNode: tagger
   category: Utilities
@@ -90,7 +90,7 @@
 - type: construction
   name: disposal trunk
   id: DisposalTrunk
-  graph: disposalPipe
+  graph: DisposalPipe
   startNode: start
   targetNode: trunk
   category: Utilities
@@ -103,7 +103,7 @@
 - type: construction
   name: disposal router
   id: DisposalRouter
-  graph: disposalPipe
+  graph: DisposalPipe
   startNode: start
   targetNode: router
   category: Utilities
@@ -116,7 +116,7 @@
 - type: construction
   name: disposal junction
   id: DisposalJunction
-  graph: disposalPipe
+  graph: DisposalPipe
   startNode: start
   targetNode: junction
   category: Utilities
@@ -129,7 +129,7 @@
 - type: construction
   name: disposal Y junction
   id: DisposalYJunction
-  graph: disposalPipe
+  graph: DisposalPipe
   startNode: start
   targetNode: yJunction
   category: Utilities
@@ -142,7 +142,7 @@
 - type: construction
   name: disposal bend
   id: DisposalBend
-  graph: disposalPipe
+  graph: DisposalPipe
   startNode: start
   targetNode: bend
   category: Utilities

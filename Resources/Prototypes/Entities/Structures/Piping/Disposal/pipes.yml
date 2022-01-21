@@ -70,7 +70,7 @@
           bounds: "-0.25,-0.5,0.25,0.5"
       layer: [ Underplating ]
   - type: Construction
-    graph: disposalPipe
+    graph: DisposalPipe
     node: broken
 
 - type: entity
@@ -99,7 +99,7 @@
           bounds: "-0.25,-0.5,0.25,0.5"
       layer: [ Underplating ]
   - type: Construction
-    graph: disposalPipe
+    graph: DisposalPipe
     node: pipe
 
 - type: entity
@@ -132,7 +132,7 @@
             bounds: "-0.25,-0.5,0.25,0.5"
         layer: [ Underplating ]
   - type: Construction
-    graph: disposalPipe
+    graph: DisposalPipe
     node: tagger
 
 - type: entity
@@ -161,7 +161,7 @@
             bounds: "-0.25,-0.5,0.25,0.4"
         layer: [ Underplating ]
   - type: Construction
-    graph: disposalPipe
+    graph: DisposalPipe
     node: trunk
 
 - type: entity
@@ -200,7 +200,7 @@
             bounds: "-0.5,-0.5,0.25,0.5"
         layer: [ Underplating ]
   - type: Construction
-    graph: disposalPipe
+    graph: DisposalPipe
     node: router
 
 - type: entity
@@ -266,7 +266,7 @@
           bounds: "-0.5,-0.5,0.25,0.5"
       layer: [ Underplating ]
   - type: Construction
-    graph: disposalPipe
+    graph: DisposalPipe
     node: junction
 
 - type: entity
@@ -330,7 +330,7 @@
           bounds: "-0.5,-0.5,0.5,0.25"
       layer: [ Underplating ]
   - type: Construction
-    graph: disposalPipe
+    graph: DisposalPipe
     node: yJunction
 
 - type: entity
@@ -359,5 +359,5 @@
           bounds: "-0.5,-0.5,0.25,0.25"
       layer: [ Underplating ]
   - type: Construction
-    graph: disposalPipe
+    graph: DisposalPipe
     node: bend
