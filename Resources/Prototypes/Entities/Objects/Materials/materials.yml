@@ -243,6 +243,14 @@
   - type: Stack
     count: 1
 
+- type: entity
+  parent: MaterialWoodPlank
+  id: MaterialWoodPlank10
+  suffix: Ten
+  components:
+  - type: Stack
+    count: 10
+
 # Specific Hides
 
 - type: entity

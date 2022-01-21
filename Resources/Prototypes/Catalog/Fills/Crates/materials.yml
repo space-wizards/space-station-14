@@ -5,8 +5,8 @@
   components:
   - type: StorageFill
     contents:
-      - id: SheetGlass
-        amount: 3
+      - id: SheetGlass10
+        amount: 1
 
 - type: entity
   id: CrateMaterialSteel
@@ -15,8 +15,8 @@
   components:
   - type: StorageFill
     contents:
-      - id: SheetSteel
-        amount: 3
+      - id: SheetSteel10
+        amount: 1
 
 - type: entity
   id: CrateMaterialPlastic
@@ -25,8 +25,8 @@
   components:
   - type: StorageFill
     contents:
-      - id: SheetPlastic
-        amount: 3
+      - id: SheetPlastic10
+        amount: 1
 
 - type: entity
   id: CrateMaterialWood
@@ -35,7 +35,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: MaterialWoodPlank
+      - id: MaterialWoodPlank10
         amount: 1
 
 - type: entity
@@ -85,8 +85,8 @@
   components:
   - type: StorageFill
     contents:
-      - id: SheetPlasteel
-        amount: 3
+      - id: SheetPlasteel10
+        amount: 1
 
 - type: entity
   id: CrateMaterialPlasma
@@ -95,5 +95,5 @@
   components:
   - type: StorageFill
     contents:
-      - id: SheetPlasma
-        amount: 3
+      - id: SheetPlasma10
+        amount: 1

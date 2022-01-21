@@ -53,6 +53,18 @@
     count: 1
 
 - type: entity
+  parent: SheetSteel
+  id: SheetSteel10
+  name: steel
+  suffix: Ten
+  components:
+  - type: Sprite
+    state: steel
+  - type: Stack
+    stackType: Steel
+    count: 10
+
+- type: entity
   parent: SheetMetalBase
   id: SheetPlasteel
   name: plasteel
@@ -86,6 +98,18 @@
   - type: Stack
     stackType: Plasteel
     count: 1
+
+- type: entity
+  parent: SheetPlasteel
+  id: SheetPlasteel10
+  name: plasteel
+  suffix: Ten
+  components:
+  - type: Sprite
+    state: plasteel
+  - type: Stack
+    stackType: Plasteel
+    count: 10
 
 - type: entity
   parent: SheetMetalBase

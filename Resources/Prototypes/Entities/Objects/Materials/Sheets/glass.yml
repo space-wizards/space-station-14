@@ -56,6 +56,18 @@
     count: 1
 
 - type: entity
+  parent: SheetGlass
+  id: SheetGlass10
+  name: glass
+  suffix: Ten
+  components:
+  - type: Sprite
+    state: glass
+  - type: Stack
+    stackType: Glass
+    count: 10
+
+- type: entity
   parent: SheetGlassBase
   id: SheetRGlass
   name: reinforced glass

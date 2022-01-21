@@ -116,6 +116,17 @@
     count: 1
 
 - type: entity
+  parent: SheetPlasma
+  id: SheetPlasma10
+  name: plasma
+  suffix: Ten
+  components:
+  - type: Sprite
+    state: plasma
+  - type: Stack
+    count: 10
+
+- type: entity
   parent: SheetOtherBase
   id: SheetPlastic
   name: plastic
@@ -148,6 +159,17 @@
     state: plastic
   - type: Stack
     count: 1
+
+- type: entity
+  parent: SheetPlastic
+  id: SheetPlastic10
+  name: plastic
+  suffix: Ten
+  components:
+  - type: Sprite
+    state: plastic
+  - type: Stack
+    count: 10
 
 - type: entity
   parent: SheetOtherBase
