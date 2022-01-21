@@ -41,6 +41,10 @@ namespace Content.Server.Destructible
 
                     threshold.Execute(uid, this, EntityManager);
                 }
+
+                // if destruction behavior (or some other deletion effect) occurred, don't run other triggers.
+                if (EntityManager.IsQueuedForDeletion(uid) || Deleted(uid))
+                    return;
             }
         }
     }

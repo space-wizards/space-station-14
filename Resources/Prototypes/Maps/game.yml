@@ -103,11 +103,13 @@
     !type:NanotrasenNameGenerator
     prefixCreator: '14'
   mapPath: Maps/ssreach.yml
-  minPlayers: 0
-  maxPlayers: 17
-  overflowJobs: []
+  minPlayers: 8
+  maxPlayers: 25
+  overflowJobs:
+    - Assistant
   availableJobs:
     CargoTechnician: [ 1, 1 ]
+    Assistant: [ 4, 8 ]
     Bartender: [ 1, 1 ]
     Botanist: [ 1, 1 ]
     Chef: [ 1, 1 ]

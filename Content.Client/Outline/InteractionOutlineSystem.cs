@@ -52,7 +52,8 @@ public sealed class InteractionOutlineSystem : EntitySystem
 
         EntityUid? entityToClick = null;
         var renderScale = 1;
-        if (_uiManager.CurrentlyHovered is IViewportControl vp)
+        if (_uiManager.CurrentlyHovered is IViewportControl vp
+            && _inputManager.MouseScreenPosition.IsValid)
         {
             var mousePosWorld = vp.ScreenToMap(_inputManager.MouseScreenPosition.Position);
             entityToClick = screen.GetEntityUnderPosition(mousePosWorld);
