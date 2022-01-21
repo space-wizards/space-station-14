@@ -288,5 +288,8 @@ ehthumbs.db
 # Merge driver stuff
 Content.Tools/test/out.yml
 
-# Windows 
+# Windows
 desktop.ini
+
+# Images generated using the MapRenderer
+Resources/MapImages
