@@ -82,7 +82,7 @@ public sealed partial class GunSystem
         if (gun.CanHotspot)
             _atmos.HotspotExpose(coordinates, 700, 50);
 
-        EntityManager.EventBus.RaiseLocalEvent(gun.Owner, new GunFireEvent());
+        EntityManager.EventBus.RaiseLocalEvent(gun.Owner, new GunShotEvent());
         Fire(user, barrel, targetCoords);
     }
 
@@ -210,7 +210,7 @@ public sealed partial class GunSystem
             Transform(projectile).WorldRotation = projectileAngle + MathHelper.PiOver2;
         }
 
-        EntityManager.EventBus.RaiseLocalEvent(component.Owner, new GunShotEvent(firedProjectiles));
+        EntityManager.EventBus.RaiseLocalEvent(component.Owner, new Barrels.Components.GunShotEvent(firedProjectiles));
         EntityManager.EventBus.RaiseLocalEvent(ammo, new AmmoShotEvent(firedProjectiles));
     }
 

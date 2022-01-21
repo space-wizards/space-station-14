@@ -177,35 +177,18 @@ public sealed partial class GunSystem : EntitySystem
         };
     }
 
-    private static void SetEjectDirections(ref Direction[]? directions)
-    {
-        directions ??= new[]
-        {
-            Direction.East,
-            Direction.NorthEast,
-            Direction.North,
-            Direction.NorthWest,
-            Direction.West,
-            Direction.SouthWest,
-            Direction.South,
-            Direction.SouthEast,
-        };
-    }
-
     /// <summary>
     /// Drops multiple cartridges / shells on the floor
     /// Wraps EjectCasing to make it less toxic for bulk ejections
     /// </summary>
-    public void EjectCasings(IEnumerable<EntityUid> entities, Direction[]? ejectDirections = null)
+    public void EjectCasings(IEnumerable<EntityUid> entities)
     {
-        SetEjectDirections(ref ejectDirections);
-
         var soundPlayCount = 0;
         var playSound = true;
 
         foreach (var entity in entities)
         {
-            EjectCasing(entity, playSound, ejectDirections);
+            EjectCasing(entity, playSound);
             soundPlayCount++;
             if (soundPlayCount > EjectionSoundMax)
             {
@@ -220,11 +203,8 @@ public sealed partial class GunSystem : EntitySystem
     public void EjectCasing(
         EntityUid entity,
         bool playSound = true,
-        Direction[]? ejectDirections = null,
         AmmoComponent? ammoComponent = null)
     {
-        SetEjectDirections(ref ejectDirections);
-
         const float ejectOffset = 0.4f;
 
         if (!Resolve(entity, ref ammoComponent)) return;
@@ -236,7 +216,7 @@ public sealed partial class GunSystem : EntitySystem
         var coordinates = xform.Coordinates;
         coordinates = coordinates.Offset(offsetPos);
 
-        xform.LocalRotation = _random.Pick(ejectDirections!).ToAngle();
+        xform.LocalRotation = _random.NextFloat(MathF.Tau);
         xform.Coordinates = coordinates;
 
         if (playSound)
@@ -255,8 +235,10 @@ public sealed partial class GunSystem : EntitySystem
         return angle;
     }
 
-    // Rename when the other event is changed.
-    public sealed class GunFireEvent : EntityEventArgs
+    /// <summary>
+    /// Raised on a gun when it fires.
+    /// </summary>
+    public sealed class GunShotEvent : EntityEventArgs
     {
 
     }
