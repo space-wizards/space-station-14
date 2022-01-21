@@ -45,14 +45,6 @@ namespace Content.Server.Chemistry.ReactionEffects
         [DataField("reagentDilutionFactor")] private float _reagentDilutionFactor = 1f;
 
         /// <summary>
-        /// Used to calculate concentration. Reagents get linearly more concentrated as the range goes from
-        /// _reagentDilutionStart to zero. When the range is zero the reagents volume gets multiplied by this.
-        /// TODO: This appears to be unused, but maybe should be used, need to investigate
-        /// </summary>
-        [DataField("reagentMaxConcentrationFactor")]
-        private float _reagentMaxConcentrationFactor = 2;
-
-        /// <summary>
         /// How many seconds will the effect stay, counting after fully spreading.
         /// </summary>
         [DataField("duration")] private float _duration = 10;
