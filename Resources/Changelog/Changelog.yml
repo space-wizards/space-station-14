@@ -1,10 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {message: 'Added a warning dialog to the observe button, no more misclicks.',
-    type: Add}
-  id: 417
-  time: '2021-10-08T14:22:58.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Shuttle rotation is now enabled., type: Add}
@@ -2919,3 +2913,8 @@ Entries:
   - {message: Added to codebase new xeno artifacts with random effects., type: Add}
   id: 918
   time: '2022-01-22T12:55:11.0000000+00:00'
+- author: Lamrr
+  changes:
+  - {message: Shotgun shells ('shots') are now available in boxes., type: Add}
+  id: 919
+  time: '2022-01-22T20:47:55.0000000+00:00'
