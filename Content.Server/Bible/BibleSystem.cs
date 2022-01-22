@@ -50,6 +50,11 @@ namespace Content.Server.Bible
             }
             if (!EntityManager.HasComponent<BibleUserComponent>(args.User))
             {
+                args.User.PopupMessage(Loc.GetString("bible-sizzle"));
+
+                SoundSystem.Play(Filter.Pvs(args.User), "/Audio/Effects/lightburn.ogg");
+                EntitySystem.Get<DamageableSystem>().TryChangeDamage(args.User, component.DamageOnUntrainedUse, true);
+
                 return;
             }
             if (args.Target == args.User)

@@ -23,6 +23,10 @@ namespace Content.Server.Bible.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public DamageSpecifier DamageOnFail = default!;
 
+        [DataField("damageOnUntrainedUse", required: true)]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public DamageSpecifier DamageOnUntrainedUse = default!;
+
         public TimeSpan LastAttackTime;
         public TimeSpan CooldownEnd;
         public float CooldownTime { get; } = 1f;

@@ -13,6 +13,9 @@
       groups:
         Brute: 4
         Airloss: 6
+    damageOnUntrainedUse: ## What a non-chaplain takes when attempting to heal someone
+      groups:
+        Burn: 10
   - type: ItemCooldown
   - type: Sprite
     sprite: Objects/Specific/Chapel/bible.rsi
