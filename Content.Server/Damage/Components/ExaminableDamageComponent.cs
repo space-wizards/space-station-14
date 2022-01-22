@@ -14,7 +14,7 @@ public class ExaminableDamageComponent : Component
     public override string Name => "ExaminableDamage";
 
     [DataField("messages", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<ExaminableDamagePrototype>))]
-    public string MessagesProtoId = default!;
+    public string? MessagesProtoId;
 
-    public ExaminableDamagePrototype MessagesProto = default!;
+    public ExaminableDamagePrototype? MessagesProto;
 }

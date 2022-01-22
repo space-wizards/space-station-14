@@ -26,11 +26,16 @@ public class ExaminableDamageSystem : EntitySystem
 
     private void OnInit(EntityUid uid, ExaminableDamageComponent component, ComponentInit args)
     {
+        if (component.MessagesProtoId == null)
+            return;
         component.MessagesProto = _prototype.Index<ExaminableDamagePrototype>(component.MessagesProtoId);
     }
 
     private void OnExamine(EntityUid uid, ExaminableDamageComponent component, ExaminedEvent args)
     {
+        if (component.MessagesProto == null)
+            return;
+
         var messages = component.MessagesProto.Messages;
         if (messages.Length == 0)
             return;
@@ -45,6 +50,9 @@ public class ExaminableDamageSystem : EntitySystem
     {
         if (!Resolve(uid, ref component, ref damageable, ref destructible))
             return 0;
+
+        if (component.MessagesProto == null)
+            return  0;
 
         var maxLevels = component.MessagesProto.Messages.Length - 1;
         if (maxLevels <= 0)
