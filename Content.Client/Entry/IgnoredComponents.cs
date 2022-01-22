@@ -32,6 +32,7 @@ namespace Content.Client.Entry
             "PoweredLight",
             "Smes",
             "LightBulb",
+            "GlassTable",
             "Healing",
             "Material",
             "RandomAppearance",
