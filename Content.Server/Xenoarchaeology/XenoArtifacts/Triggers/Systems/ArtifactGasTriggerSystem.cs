@@ -34,7 +34,7 @@ public class ArtifactGasTriggerSystem : EntitySystem
             // check if outside there is enough moles to activate artifact
             var moles = environment.GetMoles(trigger.ActivationGas.Value);
             if (moles < trigger.ActivationMoles)
-                return;
+                continue;
 
             _artifactSystem.TryActivateArtifact(trigger.Owner);
         }
