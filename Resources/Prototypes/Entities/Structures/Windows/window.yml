@@ -35,6 +35,9 @@
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Glass
+  - type: ExaminableDamage
+    maxDamage: 50
+    messages: WindowMessages
   - type: Repairable
   - type: Destructible
     thresholds:
