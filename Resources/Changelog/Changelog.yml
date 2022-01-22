@@ -1,9 +1,4 @@
 Entries:
-- author: Swept
-  changes:
-  - {message: Fixes a bunch of weirdly rotated stuff on Saltern., type: Fix}
-  id: 413
-  time: '2021-10-07T04:55:39.708225+00:00'
 - author: Ygg01
   changes:
   - {message: Fixed puddles blocking bullets or other puddles., type: Fix}
@@ -2916,3 +2911,8 @@ Entries:
   - {message: Floodlight collision fixed, type: Fix}
   id: 914
   time: '2022-01-21T16:29:16.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: No-slip shoes now appear to be regular shoes when examined., type: Fix}
+  id: 915
+  time: '2022-01-22T01:58:27.0000000+00:00'
