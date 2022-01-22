@@ -7,6 +7,9 @@ using Content.Server.Mind.Components;
 using Content.Server.Bible.Components;
 using Robust.Shared.IoC;
 using Robust.Shared.Random;
+using Robust.Shared.Audio;
+using Robust.Shared.Player;
+
 
 namespace Content.Server.Bible
 {
@@ -38,10 +41,12 @@ namespace Content.Server.Bible
             {
                 if (random.Prob(0.34f))
                 {
+                SoundSystem.Play(Filter.Pvs(args.Target.Value), "/Audio/Effects/hit_kick.ogg");
                 EntitySystem.Get<DamageableSystem>().TryChangeDamage(args.Target.Value, component.DamageOnFail, true);
+                return;
                 }
             }
-
+            SoundSystem.Play(Filter.Pvs(args.Target.Value), "/Audio/Effects/holy.ogg");
             EntitySystem.Get<DamageableSystem>().TryChangeDamage(args.Target.Value, component.Damage, true);
         }
 

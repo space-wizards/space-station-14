@@ -16,3 +16,5 @@ poster_broken.ogg taken from https://github.com/tgstation/tgstation/blob/2834383
 poster_being_set.ogg taken from https://github.com/tgstation/tgstation/blob/2834383245d2129a106acef3afd17b81e1e64777/sound/items/poster_ripped.ogg
 
 fire.ogg taken and edited from https://freesound.org/people/raremess/sounds/222557/
+
+holy.ogg taken from https://freesound.org/people/random_intruder/sounds/392172/ and edited
