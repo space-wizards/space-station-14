@@ -138,3 +138,10 @@
   components:
     - type: TemperatureArtifact
       targetTemp: 150 # around -125 celsius
+
+- type: entity
+  parent: BaseXenoArtifact
+  id: RadiateArtifact
+  suffix: Radiation
+  components:
+    - type: RadiateArtifact
