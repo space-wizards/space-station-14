@@ -6,16 +6,12 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Damage.Components;
 
 /// <summary>
-///     This component shows entity damage severity
-///     when it is examined by user.
+///     This component shows entity damage severity when it is examined by player.
 /// </summary>
 [RegisterComponent]
 public class ExaminableDamageComponent : Component
 {
     public override string Name => "ExaminableDamage";
-
-    [DataField("maxDamage")]
-    public int MaxDamage = 100;
 
     [DataField("messages", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<ExaminableDamagePrototype>))]
     public string MessagesProtoId = default!;

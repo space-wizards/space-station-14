@@ -41,6 +41,8 @@
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Glass
+  - type: ExaminableDamage
+    messages: WindowMessages
   - type: Destructible
     thresholds:
     - trigger:

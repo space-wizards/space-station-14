@@ -36,7 +36,6 @@
     damageContainer: Inorganic
     damageModifierSet: Glass
   - type: ExaminableDamage
-    maxDamage: 50
     messages: WindowMessages
   - type: Repairable
   - type: Destructible
@@ -73,6 +72,7 @@
     visuals:
     - type: DamageVisualizer
       thresholds: [4, 8, 12]
+      damageDivisor: 2
       trackAllDamage: true
       damageOverlay:
         sprite: Structures/Windows/cracks.rsi
@@ -115,6 +115,8 @@
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Glass
+  - type: ExaminableDamage
+    messages: WindowMessages
   - type: Destructible
     thresholds:
     - trigger:

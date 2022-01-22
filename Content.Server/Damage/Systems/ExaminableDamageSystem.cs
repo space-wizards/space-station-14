@@ -40,17 +40,23 @@ public class ExaminableDamageSystem : EntitySystem
         args.PushMarkup(msg);
     }
 
-    private int GetDamageLevel(EntityUid uid, ExaminableDamageComponent? component = null, DamageableComponent? damageable = null)
+    private int GetDamageLevel(EntityUid uid, ExaminableDamageComponent? component = null,
+        DamageableComponent? damageable = null, DestructibleComponent? destructible = null)
     {
-        if (!Resolve(uid, ref component, ref damageable))
+        if (!Resolve(uid, ref component, ref damageable, ref destructible))
             return 0;
 
         var maxLevels = component.MessagesProto.Messages.Length - 1;
-        if (maxLevels == 0)
+        if (maxLevels <= 0)
+            return 0;
+
+        var trigger = (DamageTrigger?) destructible.Thresholds
+            .LastOrDefault(threshold => threshold.Trigger is DamageTrigger)?.Trigger;
+        if (trigger == null)
             return 0;
 
         var damage = damageable.TotalDamage;
-        var damageThreshold = component.MaxDamage;
+        var damageThreshold = trigger.Damage;
         var fraction = damageThreshold == 0 ? 0f : (float) damage / damageThreshold;
 
         var level = ContentHelpers.RoundToNearestLevels(fraction, 1, maxLevels);
