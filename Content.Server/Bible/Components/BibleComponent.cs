@@ -1,3 +1,4 @@
+using System;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Content.Shared.Damage;
@@ -21,6 +22,11 @@ namespace Content.Server.Bible.Components
         [DataField("damageOnFail", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
         public DamageSpecifier DamageOnFail = default!;
+
+        public TimeSpan LastAttackTime;
+        public TimeSpan CooldownEnd;
+        public float CooldownTime { get; } = 1f;
+
 
         [DataField("damageContainer", customTypeSerializer: typeof(PrototypeIdSerializer<DamageContainerPrototype>))]
         //Maybe if we get our favorite GW copyright infringing priestmen they can heal robots, otherwise this just filters for living beings

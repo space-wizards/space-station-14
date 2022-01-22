@@ -13,6 +13,7 @@
       groups:
         Brute: 4
         Airloss: 6
+  - type: ItemCooldown
   - type: Sprite
     sprite: Objects/Specific/Chapel/bible.rsi
     state: icon
