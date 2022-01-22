@@ -22,7 +22,7 @@ namespace Content.Server.Bible.Components
         [DataField("damageOnFail", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
         public DamageSpecifier DamageOnFail = default!;
-
+        // Damage that will be dealt when a non-chaplain attempts to heal
         [DataField("damageOnUntrainedUse", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
         public DamageSpecifier DamageOnUntrainedUse = default!;
@@ -30,10 +30,5 @@ namespace Content.Server.Bible.Components
         public TimeSpan LastAttackTime;
         public TimeSpan CooldownEnd;
         public float CooldownTime { get; } = 1f;
-
-
-        [DataField("damageContainer", customTypeSerializer: typeof(PrototypeIdSerializer<DamageContainerPrototype>))]
-        //Maybe if we get our favorite GW copyright infringing priestmen they can heal robots, otherwise this just filters for living beings
-        public string? DamageContainerID = "Biological";
     }
 }
