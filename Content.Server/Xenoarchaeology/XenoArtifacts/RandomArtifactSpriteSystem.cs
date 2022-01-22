@@ -27,7 +27,7 @@ public class RandomArtifactSpriteSystem : EntitySystem
         foreach (var (component, appearance) in query)
         {
             if (component.ActivationStart == null)
-                return;
+                continue;
 
             var timeDif = _time.CurTime - component.ActivationStart.Value;
             if (timeDif.Seconds >= component.ActivationTime)

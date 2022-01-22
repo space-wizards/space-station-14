@@ -25,11 +25,11 @@ public class ArtifactGasTriggerSystem : EntitySystem
         foreach (var (trigger, transform) in query)
         {
             if (trigger.ActivationGas == null)
-                return;
+                continue;
 
             var environment = _atmosphereSystem.GetTileMixture(transform.Coordinates, true);
             if (environment == null)
-                return;
+                continue;
 
             // check if outside there is enough moles to activate artifact
             var moles = environment.GetMoles(trigger.ActivationGas.Value);
