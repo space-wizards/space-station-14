@@ -38,7 +38,7 @@ namespace Content.Client.Tabletop
         private float _timePassed; // Time passed since last update sent to the server.
         private EntityUid? _draggedEntity; // Entity being dragged
         private ScalingViewport? _viewport; // Viewport currently being used
-        private SS14Window? _window; // Current open tabletop window (only allow one at a time)
+        private DefaultWindow? _window; // Current open tabletop window (only allow one at a time)
         private EntityUid? _table; // The table entity of the currently open game session
 
         public override void Initialize()

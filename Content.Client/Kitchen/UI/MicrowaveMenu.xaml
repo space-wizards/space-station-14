@@ -1,4 +1,4 @@
-﻿<SS14Window xmlns="https://spacestation14.io"
+﻿<DefaultWindow xmlns="https://spacestation14.io"
             xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
             Title="{Loc 'microwave-menu-title'}"
             SetSize="512 256"
@@ -80,4 +80,4 @@
             <gfx:StyleBoxFlat BackgroundColor="#00000099" />
         </PanelContainer.PanelOverride>
     </PanelContainer>
-</SS14Window>
+</DefaultWindow>

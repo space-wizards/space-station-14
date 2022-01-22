@@ -26,7 +26,7 @@ namespace Content.Client.Chemistry.UI
     /// Client-side UI used to control a <see cref="SharedChemMasterComponent"/>
     /// </summary>
     [GenerateTypedNameReferences]
-    public partial class ChemMasterWindow : SS14Window
+    public partial class ChemMasterWindow : DefaultWindow
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         public event Action<string>? OnLabelEntered;
@@ -197,7 +197,7 @@ namespace Content.Client.Chemistry.UI
             if (!state.BufferReagents.Any())
             {
                 BufferInfo.Children.Add(new Label { Text = Loc.GetString("chem-master-window-buffer-empty-text") });
-                
+
                 return;
             }
 

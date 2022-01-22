@@ -36,7 +36,7 @@ namespace Content.Server.Inventory
             if (!TryComp<HandsComponent>(ev.Uid, out var hands) || !TryGetSlotEntity(ev.Uid, ev.Slot, out var itemUid))
                 return;
 
-            var activeHand = hands.GetActiveHand;
+            var activeHand = hands.GetActiveHandItem;
             if (activeHand != null)
             {
                 _interactionSystem.InteractUsing(ev.Uid, activeHand.Owner, itemUid.Value,
