@@ -1,16 +1,6 @@
 Entries:
 - author: moony
   changes:
-  - {message: Fixed doors having murderous intent on unrotated stations., type: Fix}
-  id: 415
-  time: '2021-10-08T07:37:18.0000000+00:00'
-- author: Macoron
-  changes:
-  - {message: Added Telecrystals (TC) in traitors uplinks, type: Add}
-  id: 416
-  time: '2021-10-08T10:26:43.0000000+00:00'
-- author: moony
-  changes:
   - {message: 'Added a warning dialog to the observe button, no more misclicks.',
     type: Add}
   id: 417
@@ -2919,3 +2909,13 @@ Entries:
       of TB-10298.', type: Add}
   id: 916
   time: '2022-01-22T12:52:35.0000000+00:00'
+- author: DubiousDoggo
+  changes:
+  - {message: Added construction for disposal pipes, type: Add}
+  id: 917
+  time: '2022-01-22T12:54:26.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Added to codebase new xeno artifacts with random effects., type: Add}
+  id: 918
+  time: '2022-01-22T12:55:11.0000000+00:00'
