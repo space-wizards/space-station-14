@@ -1,9 +1,4 @@
 Entries:
-- author: Ygg01
-  changes:
-  - {message: Fixed puddles blocking bullets or other puddles., type: Fix}
-  id: 414
-  time: '2021-10-07T06:59:12.0000000+00:00'
 - author: moony
   changes:
   - {message: Fixed doors having murderous intent on unrotated stations., type: Fix}
@@ -2916,3 +2911,11 @@ Entries:
   - {message: No-slip shoes now appear to be regular shoes when examined., type: Fix}
   id: 915
   time: '2022-01-22T01:58:27.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'NanoTrasen manufacturing budget for item number TB-10298 ("glass table")
+      and all derivative products has been cut. We do not recommend you climb on any
+      instances of TB-10298, and definitely do not slam anyone down on an instance
+      of TB-10298.', type: Add}
+  id: 916
+  time: '2022-01-22T12:52:35.0000000+00:00'
