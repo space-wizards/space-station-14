@@ -1,4 +1,4 @@
-<SS14Window xmlns="https://spacestation14.io"
+<DefaultWindow xmlns="https://spacestation14.io"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             MinSize="500 500" Title="Air Alarm">
     <BoxContainer Orientation="Vertical" Margin="5 5 5 5">
@@ -72,4 +72,4 @@
             <OptionButton Name="CModeButton" HorizontalExpand="True" />
         </BoxContainer>
     </BoxContainer>
-</SS14Window>
+</DefaultWindow>

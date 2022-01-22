@@ -8,3 +8,5 @@ command-whitelistremove-help = whitelistremove <username>
 
 command-kicknonwhitelisted-description = Kicks all non-whitelisted players from the server.
 command-kicknonwhitelisted-help = kicknonwhitelisted
+
+soft-player-cap-full = The server is full!

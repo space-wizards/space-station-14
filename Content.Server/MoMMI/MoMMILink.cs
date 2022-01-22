@@ -26,7 +26,7 @@ namespace Content.Server.MoMMI
 
         void IPostInjectInit.PostInject()
         {
-            _statusHost.AddHandler(_handleChatPost);
+            _statusHost.AddHandler(HandleChatPost);
         }
 
         public async void SendOOCMessage(string sender, string message)
@@ -37,10 +37,10 @@ namespace Content.Server.MoMMI
                 Contents = message
             };
 
-            await _sendMessageInternal("ooc", sentMessage);
+            await SendMessageInternal("ooc", sentMessage);
         }
 
-        private async Task _sendMessageInternal(string type, object messageObject)
+        private async Task SendMessageInternal(string type, object messageObject)
         {
             var url = _configurationManager.GetCVar(CCVars.StatusMoMMIUrl);
             var password = _configurationManager.GetCVar(CCVars.StatusMoMMIPassword);
@@ -70,7 +70,7 @@ namespace Content.Server.MoMMI
             }
         }
 
-        private bool _handleChatPost(IStatusHandlerContext context)
+        private bool HandleChatPost(IStatusHandlerContext context)
         {
             if (context.RequestMethod != HttpMethod.Post || context.Url!.AbsolutePath != "/ooc")
             {

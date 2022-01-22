@@ -400,7 +400,7 @@ namespace Content.Server.Construction
             }
 
             if (!Get<ActionBlockerSystem>().CanInteract(user)
-                || !EntityManager.TryGetComponent(user, out HandsComponent? hands) || hands.GetActiveHand == null
+                || !EntityManager.TryGetComponent(user, out HandsComponent? hands) || hands.GetActiveHandItem == null
                 || !user.InRangeUnobstructed(ev.Location, ignoreInsideBlocker:constructionPrototype.CanBuildInImpassable))
             {
                 Cleanup();
@@ -417,7 +417,7 @@ namespace Content.Server.Construction
 
             var valid = false;
 
-            if (hands.GetActiveHand?.Owner is not {Valid: true} holding)
+            if (hands.GetActiveHandItem?.Owner is not {Valid: true} holding)
             {
                 Cleanup();
                 return;
