@@ -79,11 +79,24 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glass_clear.rsi
+    netsync: false
+    layers:
+      - state: icon
+      - state: glass1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: Appearance
+    visuals:
+    - type: SolutionContainerVisualizer
+      maxFillLevels: 6
+      fillBaseName: glass
   - type: SolutionContainerManager
     solutions:
       drink:
         maxVol: 50
   - type: TransformableContainer
+  - type: ExaminableSolution
+    solution: drink
 
 - type: entity
   parent: DrinkGlassBase
