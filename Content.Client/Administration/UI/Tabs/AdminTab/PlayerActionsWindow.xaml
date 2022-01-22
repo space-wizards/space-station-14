@@ -1,4 +1,4 @@
-﻿<SS14Window
+﻿<DefaultWindow
     xmlns="https://spacestation14.io"
     xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
     Title="{Loc admin-player-actions-window-title}" MinSize="425 272">
@@ -15,4 +15,4 @@
             <Button Name="SubmitRespawnButton" Text="{Loc admin-player-actions-respawn}" Disabled="True"/>
         </BoxContainer>
     </BoxContainer>
-</SS14Window>
+</DefaultWindow>

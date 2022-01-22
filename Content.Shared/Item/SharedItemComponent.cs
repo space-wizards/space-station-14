@@ -121,7 +121,7 @@ namespace Content.Shared.Item
         private void OnEquippedPrefixChange()
         {
             if (Owner.TryGetContainer(out var container))
-                EntitySystem.Get<SharedHandsSystem>().UpdateHandVisuals(container.Owner);
+                _entMan.EventBus.RaiseLocalEvent(container.Owner, new ItemPrefixChangeEvent(Owner, container.ID));
         }
 
         public void RemovedFromSlot()
@@ -151,6 +151,23 @@ namespace Content.Shared.Item
             EquippedPrefix = equippedPrefix;
             Color = color;
             RsiPath = rsiPath;
+        }
+    }
+
+    /// <summary>
+    ///     Raised when an item's EquippedPrefix is changed. The event is directed at the entity that contains this item, so
+    ///     that it can properly update its sprite/GUI.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public class ItemPrefixChangeEvent : EntityEventArgs
+    {
+        public readonly EntityUid Item;
+        public readonly string ContainerId;
+
+        public ItemPrefixChangeEvent(EntityUid item, string containerId)
+        {
+            Item = item;
+            ContainerId = containerId;
         }
     }
 

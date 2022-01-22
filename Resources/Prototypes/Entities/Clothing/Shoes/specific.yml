@@ -83,7 +83,8 @@
 - type: entity
   parent: ClothingShoesColorBlack
   id: ClothingShoesChameleonNoSlips
-  name: no-slip shoes
-  description: These protect you from slips while looking like normal sneakers.
+  name: black shoes #actual name and description in uplink_catalog.yml
+  suffix: no-slip
+  description: Stylish black shoes.
   components:
   - type: NoSlip

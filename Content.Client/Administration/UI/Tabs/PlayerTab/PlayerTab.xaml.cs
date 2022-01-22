@@ -51,6 +51,7 @@ namespace Content.Client.Administration.UI.Tabs.PlayerTab
 
             PlayerList.AddChild(new PlayerTabEntry("Username",
                 "Character",
+                "Job",
                 "Antagonist",
                 new StyleBoxFlat(altColor),
                 true));
@@ -61,6 +62,7 @@ namespace Content.Client.Administration.UI.Tabs.PlayerTab
             {
                 var entry = new PlayerTabEntry(player.Username,
                     player.CharacterName,
+                    player.StartingJob,
                     player.Antag ? "YES" : "NO",
                     new StyleBoxFlat(useAltColor ? altColor : defaultColor),
                     player.Connected);

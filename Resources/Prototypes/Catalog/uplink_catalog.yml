@@ -189,6 +189,8 @@
   id: UplinkClothingNoSlipsShoes
   category: Armor
   itemId: ClothingShoesChameleonNoSlips
+  listingName: no-slip shoes
+  description: These protect you from slips while looking like normal sneakers.
   price: 2
 
 - type: uplinkListing
@@ -235,6 +237,12 @@
   id: UplinkPen
   category: Misc
   itemId: Pen
+  price: 2
+
+- type: uplinkListing
+  id: UplinkCigarettes
+  category: Misc
+  itemId: CigPackSyndicate
   price: 2
 
 - type: uplinkListing

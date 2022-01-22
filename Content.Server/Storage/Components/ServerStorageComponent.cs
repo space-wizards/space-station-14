@@ -240,12 +240,12 @@ namespace Content.Server.Storage.Components
             EnsureInitialCalculated();
 
             if (!_entityManager.TryGetComponent(player, out HandsComponent? hands) ||
-                hands.GetActiveHand == null)
+                hands.GetActiveHandItem == null)
             {
                 return false;
             }
 
-            var toInsert = hands.GetActiveHand;
+            var toInsert = hands.GetActiveHandItem;
 
             if (!hands.Drop(toInsert.Owner))
             {

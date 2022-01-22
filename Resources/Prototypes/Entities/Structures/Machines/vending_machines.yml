@@ -579,7 +579,7 @@
   parent: VendingMachine
   id: VendingMachineSmartFridge
   name: SmartFridge
-  description: A refrigerated storage unit for storing medicine and chemicals.
+  description: A refrigerated storage unit for keeping items cold and fresh.
   components:
   - type: VendingMachine
     pack: SmartFridgeInventory

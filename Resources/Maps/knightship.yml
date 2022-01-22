@@ -61,6 +61,8 @@ entities:
     type: Transform
   - index: 0
     type: MapGrid
+  - type: BecomesStation
+    id: Knightship
   - angularDamping: 0.3
     fixedRotation: False
     fixtures:

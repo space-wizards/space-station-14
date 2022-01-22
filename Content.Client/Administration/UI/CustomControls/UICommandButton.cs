@@ -7,13 +7,13 @@ namespace Content.Client.Administration.UI.CustomControls
     public class UICommandButton : CommandButton
     {
         public Type? WindowType { get; set; }
-        private SS14Window? _window;
+        private DefaultWindow? _window;
 
         protected override void Execute(ButtonEventArgs obj)
         {
             if (WindowType == null)
                 return;
-            _window = (SS14Window) IoCManager.Resolve<IDynamicTypeFactory>().CreateInstance(WindowType);
+            _window = (DefaultWindow) IoCManager.Resolve<IDynamicTypeFactory>().CreateInstance(WindowType);
             _window?.OpenCentered();
         }
     }

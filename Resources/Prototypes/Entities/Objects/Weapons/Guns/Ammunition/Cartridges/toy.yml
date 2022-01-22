@@ -13,6 +13,9 @@
     layers:
     - state: base
       map: ["enum.AmmoVisualLayers.Base"]
+  - type: Tag
+    tags:
+    - Cartridge
 
 - type: entity
   id: CartridgeCap

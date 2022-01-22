@@ -17,7 +17,7 @@ namespace Content.Client.Disposal.UI
     /// Client-side UI used to control a <see cref="SharedDisposalUnitComponent"/>
     /// </summary>
     [GenerateTypedNameReferences]
-    public partial class DisposalUnitWindow : SS14Window
+    public partial class DisposalUnitWindow : DefaultWindow
     {
         public DisposalUnitWindow()
         {

@@ -14,7 +14,7 @@ namespace Content.Client.Administration.UI.Tabs.AtmosTab
 {
     [GenerateTypedNameReferences]
     [UsedImplicitly]
-    public partial class SetTemperatureWindow : SS14Window
+    public partial class SetTemperatureWindow : DefaultWindow
     {
         private IEnumerable<IMapGrid>? _data;
 

@@ -33,6 +33,7 @@
   components:
   - type: StorageFill
     contents:
+      - id: ClothingOuterArmorCaptainCarapace
       - id: NukeDisk
         prob: 1
       - id: PinpointerNuclear
@@ -79,6 +80,8 @@
       - id: ClothingHeadsetCommand
         prob: 1
       - id: BoxPDA
+        prob: 1
+      - id: BoxID
         prob: 1
       - id: IDComputerCircuitboard
         prob: 1

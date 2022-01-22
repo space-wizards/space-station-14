@@ -14,3 +14,5 @@ voteding.ogg taken from "Bike, Bell Ding, Single, 01-01.wav" by InspectorJ (www.
 poster_broken.ogg taken from https://github.com/tgstation/tgstation/blob/2834383245d2129a106acef3afd17b81e1e64777/sound/items/poster_ripped.ogg
 
 poster_being_set.ogg taken from https://github.com/tgstation/tgstation/blob/2834383245d2129a106acef3afd17b81e1e64777/sound/items/poster_ripped.ogg
+
+fire.ogg taken and edited from https://freesound.org/people/raremess/sounds/222557/

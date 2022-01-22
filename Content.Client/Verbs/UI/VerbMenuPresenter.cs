@@ -170,7 +170,14 @@ namespace Content.Client.Verbs.UI
                 return;
 
             if (element is not VerbMenuElement verbElement)
+            {
+                if (element is not ConfirmationMenuElement confElement)
+                    return;
+
+                args.Handle();
+                ExecuteVerb(confElement.Verb, confElement.Type);
                 return;
+            }
 
             args.Handle();
             var verb = verbElement.Verb;
@@ -178,25 +185,45 @@ namespace Content.Client.Verbs.UI
             if (verb == null)
             {
                 // The user probably clicked on a verb category.
-                // We will act as if they clicked on the first verb in that category.
+                // If there's only one verb in the category, then it will act as if they clicked on that verb.
+                // Otherwise it opens the category menu.
 
                 if (verbElement.SubMenu == null || verbElement.SubMenu.ChildCount == 0)
                     return;
 
                 if (verbElement.SubMenu.MenuBody.ChildCount != 1
-                    || verbElement.SubMenu.MenuBody.Children.First() is not VerbMenuElement verbCategoryElement)
+                    || verbElement.SubMenu.MenuBody.Children.First() is not VerbMenuElement verbMenuElement)
                 {
                     OpenSubMenu(verbElement);
                     return;
                 }
 
-                verb = verbCategoryElement.Verb;
+                verb = verbMenuElement.Verb;
 
                 if (verb == null)
                     return;
             }
 
-            _verbSystem.ExecuteVerb(CurrentTarget, verb, verbElement.Type);
+            if (verb.ConfirmationPopup)
+            {
+                if (verbElement.SubMenu == null)
+                {
+                    var popupElement = new ConfirmationMenuElement(verb, "Confirm", verbElement.Type);
+                    verbElement.SubMenu = new ContextMenuPopup(this, verbElement);
+                    AddElement(verbElement.SubMenu, popupElement);
+                }
+
+                OpenSubMenu(verbElement);
+            }
+            else
+            {
+                ExecuteVerb(verb, verbElement.Type);
+            }
+        }
+
+        private void ExecuteVerb(Verb verb, VerbType verbType)
+        {
+            _verbSystem.ExecuteVerb(CurrentTarget, verb, verbType);
             if (verb.CloseMenu)
                 _verbSystem.CloseAllMenus();
         }
