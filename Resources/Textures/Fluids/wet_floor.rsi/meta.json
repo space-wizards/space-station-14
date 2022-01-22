@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "https://github.com/tgstation/tgstation/commit/634662d6b4c9a3573a503d6f3f832ff62b59dfd3",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "wet_floor",
+      "delays": [
+        [
+          0.14,
+          0.14,
+          0.14,
+          0.14,
+          0.14,
+          0.14,
+          0.14,
+          3
+        ]
+      ]
+    }
+  ]
+}

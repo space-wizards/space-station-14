@@ -151,3 +151,19 @@
   - type: Appearance
     visuals:
     - type: PuddleVisualizer
+
+- type: entity
+  name: wet floor effect
+  id: WetFloorEffect
+  parent: PuddleBase
+  description: Janitor really should put out a sign or something.
+  components:
+  - type: Sprite
+    sprite: Fluids/wet_floor.rsi
+    state: wet_floor
+    netsync: false
+  - type: Puddle
+  - type: Evaporation
+  - type: Appearance
+    visuals:
+    - type: PuddleVisualizer
