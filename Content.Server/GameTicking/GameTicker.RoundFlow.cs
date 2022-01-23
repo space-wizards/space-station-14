@@ -69,7 +69,7 @@ namespace Content.Server.GameTicking
         [ViewVariables]
         public int RoundId { get; private set; }
 
-        private void PreRoundSetup()
+        private void LoadMaps()
         {
             DefaultMap = _mapManager.CreateMap();
             _pauseManager.AddUninitializedMap(DefaultMap);
@@ -363,7 +363,7 @@ namespace Content.Server.GameTicking
             RunLevel = GameRunLevel.PreRoundLobby;
             LobbySong = _robustRandom.Pick(_lobbyMusicCollection.PickFiles).ToString();
             ResettingCleanup();
-            PreRoundSetup();
+            LoadMaps();
 
             if (!LobbyEnabled)
             {
