@@ -87,6 +87,10 @@
       amount: 15
     - id: Pen
       amount: 2
+    - id: HandLabeler
+    - id: BoxFolderBlue
+    - id: BoxFolderRed
+    - id: BoxFolderYellow
 
 - type: entity
   id: CrateServicePersonnel
