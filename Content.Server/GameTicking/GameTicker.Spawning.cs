@@ -91,9 +91,13 @@ namespace Content.Server.GameTicking
 
             // Pick best job best on prefs.
             jobId ??= PickBestAvailableJob(character, station);
-            // If no job available, just bail out.
+            // If no job available, stay in lobby, or if no lobby spawn as observer
             if (jobId is null)
             {
+                if (!LobbyEnabled)
+                {
+                    MakeObserve(player);
+                }
                 _chatManager.DispatchServerMessage(player, Loc.GetString("game-ticker-player-no-jobs-available-when-joining"));
                 return;
             }
@@ -182,8 +186,6 @@ namespace Content.Server.GameTicking
             // Can't spawn players with a dummy ticker!
             if (DummyTicker)
                 return;
-
-            if (!_playersInLobby.ContainsKey(player)) return;
 
             PlayerJoinGame(player);
 
