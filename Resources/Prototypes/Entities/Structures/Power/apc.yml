@@ -41,7 +41,7 @@
     - type: ApcVisualizer
   - type: Battery
     maxCharge: 10000
-    startingCharge: 10000
+    startingCharge: 0
   - type: ExaminableBattery
   - type: NodeContainer
     examinable: true
