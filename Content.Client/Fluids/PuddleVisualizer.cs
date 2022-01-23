@@ -46,10 +46,10 @@ namespace Content.Client.Fluids
             base.OnChangeData(component); // runs OnChangeData from the base class (AppearanceVisualizer)
 
             var entities = IoCManager.Resolve<IEntityManager>();
-            if (component.TryGetData<float>(PuddleVisuals.VolumeScale, out var volumeScale) &&          //tries to get VolumeScale from PuddleVisuals. Outputs volumeScale if successful
-                entities.TryGetComponent<SpriteComponent>(component.Owner, out var spriteComponent))    //tries to get sprite component from the entity. Outputs spriteComponent if successful
+            if (component.TryGetData<float>(PuddleVisuals.VolumeScale, out var volumeScale) &&
+                entities.TryGetComponent<SpriteComponent>(component.Owner, out var spriteComponent))
             {
-                component.TryGetData<bool>(PuddleVisuals.ForceWetFloorSprite, out var forceWetFloorSprite); //tries to get ForceWetFloorSprite from PuddleVisuals. Outputs forceWetFloorSprite if successful
+                component.TryGetData<bool>(PuddleVisuals.ForceWetFloorSprite, out var forceWetFloorSprite);
                 var cappedScale = Math.Min(1.0f, volumeScale * 0.75f +0.25f);
                 UpdateVisual(component, spriteComponent, cappedScale, forceWetFloorSprite);
             }
