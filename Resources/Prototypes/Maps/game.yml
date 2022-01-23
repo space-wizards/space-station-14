@@ -124,13 +124,27 @@
     Janitor: [ 1, 1 ]
 
 - type: gameMap
-  id: syndieshuttle
-  mapName: 'SyndieShuttle'
-  mapNameTemplate: '{0} SyndieShuttle {1}'
+  id: syndiesbase
+  mapName: 'SyndieBase'
+  mapNameTemplate: '{0} SyndieBase {1}'
   nameGenerator:
     !type:NanotrasenNameGenerator
     prefixCreator: '14'
-  mapPath: Maps/syndieshuttle.yml
+  mapPath: Maps/syndiebase.yml
+  minPlayers: 0
+  votable: false
+  overflowJobs: []
+  availableJobs:
+    Assistant: [ 5, 5 ]
+
+- type: gameMap
+  id: infiltrator
+  mapName: 'Infiltrator'
+  mapNameTemplate: '{0} Infiltrator {1}'
+  nameGenerator:
+    !type:NanotrasenNameGenerator
+    prefixCreator: '14'
+  mapPath: Maps/infiltrator.yml
   minPlayers: 0
   votable: false
   overflowJobs: []
