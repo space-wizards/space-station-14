@@ -225,49 +225,8 @@ namespace Content.Server.GameTicking
 
                 var origReadyPlayers = readyPlayers.ToArray();
 
-                var startAttempt = new RoundStartAttemptEvent(origReadyPlayers, force);
-                RaiseLocalEvent(startAttempt);
-
-                var presetTitle = _preset != null ? Loc.GetString(_preset.ModeTitle) : string.Empty;
-
-                void FailedPresetRestart()
-                {
-                    SendServerMessage(Loc.GetString("game-ticker-start-round-cannot-start-game-mode-restart",
-                        ("failedGameMode", presetTitle)));
-                    RestartRound();
-                    DelayStart(TimeSpan.FromSeconds(PresetFailedCooldownIncrease));
-                }
-
-                if (startAttempt.Cancelled)
-                {
-                    if (_configurationManager.GetCVar(CCVars.GameLobbyFallbackEnabled))
-                    {
-                        var oldPreset = _preset;
-                        ClearGameRules();
-                        SetGamePreset(_configurationManager.GetCVar(CCVars.GameLobbyFallbackPreset));
-                        AddGamePresetRules();
-
-                        startAttempt.Uncancel();
-                        RaiseLocalEvent(startAttempt);
-
-                        _chatManager.DispatchServerAnnouncement(
-                            Loc.GetString("game-ticker-start-round-cannot-start-game-mode-fallback",
-                                ("failedGameMode", presetTitle),
-                                ("fallbackMode", Loc.GetString(_preset!.ModeTitle))));
-
-                        if (startAttempt.Cancelled)
-                        {
-                            FailedPresetRestart();
-                        }
-
-                        RefreshLateJoinAllowed();
-                    }
-                    else
-                    {
-                        FailedPresetRestart();
-                        return;
-                    }
-                }
+                if (!StartPreset(origReadyPlayers, force))
+                    return;
 
                 // MapInitialize *before* spawning players, our codebase is too shit to do it afterwards...
                 _pauseManager.DoMapInitialize(DefaultMap);
