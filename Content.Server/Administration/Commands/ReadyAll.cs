@@ -8,7 +8,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.Administration.Commands
 {
-    [AdminCommand(AdminFlags.Server)]
+    [AdminCommand(AdminFlags.Round)]
     public class ReadyAll : IConsoleCommand
     {
         public string Command => "readyall";

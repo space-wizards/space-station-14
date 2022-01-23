@@ -1,4 +1,5 @@
 using Content.Shared.Movement;
+using Content.Shared.Shuttles.Components;
 using Robust.Shared.GameObjects;
 
 namespace Content.Shared.Shuttles

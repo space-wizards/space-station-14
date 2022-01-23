@@ -1,20 +1,15 @@
 using System;
-using System.Threading.Tasks;
-using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
+using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.Sound;
-using Robust.Shared.Audio;
+using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Player;
-using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Nutrition.Components
 {
-    [RegisterComponent]
-    public class UtensilComponent : Component, IAfterInteract
+    [RegisterComponent, Friend(typeof(UtensilSystem))]
+    public class UtensilComponent : Component
     {
         public override string Name => "Utensil";
 
@@ -40,66 +35,18 @@ namespace Content.Server.Nutrition.Components
         /// </summary>
         [ViewVariables]
         [DataField("breakChance")]
-        private float _breakChance;
+        public float BreakChance;
 
         /// <summary>
         /// The sound to be played if the utensil breaks.
         /// </summary>
         [ViewVariables]
         [DataField("breakSound")]
-        private SoundSpecifier _breakSound = new SoundPathSpecifier("/Audio/Items/snap.ogg");
-
-        public void AddType(UtensilType type)
-        {
-            Types |= type;
-        }
-
-        public bool HasAnyType(UtensilType type)
-        {
-            return (_types & type) != UtensilType.None;
-        }
-
-        public bool HasType(UtensilType type)
-        {
-            return (_types & type) != 0;
-        }
-
-        public void RemoveType(UtensilType type)
-        {
-            Types &= ~type;
-        }
-
-        internal void TryBreak(IEntity user)
-        {
-            if (IoCManager.Resolve<IRobustRandom>().Prob(_breakChance))
-            {
-                SoundSystem.Play(Filter.Pvs(user), _breakSound.GetSound(), user, AudioParams.Default.WithVolume(-2f));
-                Owner.Delete();
-            }
-        }
-
-        async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
-        {
-            return TryUseUtensil(eventArgs.User, eventArgs.Target);
-        }
-
-        private bool TryUseUtensil(IEntity user, IEntity? target)
-        {
-            if (target == null || !target.TryGetComponent(out FoodComponent? food))
-            {
-                return false;
-            }
-
-            if (!user.InRangeUnobstructed(target, popup: true))
-            {
-                return false;
-            }
-
-            food.TryUseFood(user, null, this);
-            return true;
-        }
+        public SoundSpecifier BreakSound = new SoundPathSpecifier("/Audio/Items/snap.ogg");
     }
 
+    // If you want to make a fancy output on "wrong" composite utensil use (like: you need fork and knife)
+    // There should be Dictionary I guess (Dictionary<UtensilType, string>)
     [Flags]
     public enum UtensilType : byte
     {

@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Database;
@@ -27,7 +28,7 @@ namespace Content.IntegrationTests.Tests.Commands
 
             await server.WaitAssertion(async () =>
             {
-                var clientSession = sPlayerManager.GetAllPlayers().Single();
+                var clientSession = sPlayerManager.Sessions.Single();
                 var clientId = clientSession.UserId;
 
                 // No bans on record

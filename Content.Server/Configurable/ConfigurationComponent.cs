@@ -12,6 +12,7 @@ using Content.Shared.Verbs;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -23,6 +24,8 @@ namespace Content.Server.Configurable
     [ComponentReference(typeof(SharedConfigurationComponent))]
     public class ConfigurationComponent : SharedConfigurationComponent, IInteractUsing, ISerializationHooks
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(ConfigurationUiKey.Key);
 
         [DataField("keys")] private List<string> _keys = new();
@@ -80,10 +83,10 @@ namespace Content.Server.Configurable
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (UserInterface == null || !eventArgs.User.TryGetComponent(out ActorComponent? actor))
+            if (UserInterface == null || !_entMan.TryGetComponent(eventArgs.User, out ActorComponent? actor))
                 return false;
 
-            if (!eventArgs.Using.TryGetComponent<ToolComponent>(out var tool) || !tool.Qualities.Contains(_qualityNeeded))
+            if (!_entMan.TryGetComponent<ToolComponent?>(eventArgs.Using, out var tool) || !tool.Qualities.Contains(_qualityNeeded))
                 return false;
 
             OpenUserInterface(actor);

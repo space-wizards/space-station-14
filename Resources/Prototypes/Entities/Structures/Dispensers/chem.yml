@@ -30,7 +30,3 @@
   - type: Wires
     BoardName: "chem_dispenser"
     LayoutId: chem_dispenser
-  - type: EmptyOnMachineDeconstruct
-    containers:
-    - ReagentDispenser-reagentContainerContainer
-

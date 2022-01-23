@@ -1,0 +1,73 @@
+- type: entity
+  id: FireAlarm
+  name: fire alarm
+  description: A fire alarm. Spicy!
+  components:
+  - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
+  - type: DeviceNetworkComponent
+    deviceNetId: Apc
+    frequency: 1621
+  - type: ApcNetworkConnection
+  - type: AtmosMonitor
+    monitorFire: true
+    displayMaxAlarmInNet: true
+  - type: AtmosDevice
+  - type: AtmosAlarmable
+    alarmedBy: ["FireAlarm"] # alarm itself, network effect
+  - type: Clickable
+  - type: InteractionOutline
+  - type: FireAlarm
+  - type: Appearance
+    visuals:
+    - type: AtmosMonitorVisualizer
+      layerMap: "fireAlarmState"
+      alarmStates:
+        Normal: fire_off
+        Warning: fire_off # shouldn't be alarming at a warning
+        Danger: fire_on
+      hideOnDepowered: ["fireAlarmState"]
+    - type: WiresVisualizer
+  - type: UserInterface
+    interfaces:
+    - key: enum.WiresUiKey.Key
+      type: WiresBoundUserInterface
+  - type: Wires
+    BoardName: "Fire Alarm"
+    LayoutId: FireAlarm
+  - type: Sprite
+    sprite: Structures/Wallmounts/air_monitors.rsi
+    layers:
+    - state: fire0
+      map: ["fireAlarmBase"]
+    - state: fire_off
+      map: ["fireAlarmState"]
+    - state: fire_b2
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Transform
+    anchored: true
+  - type: Construction
+    graph: fire_alarm
+    node: fire_alarm
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wallmount
+
+- type: entity
+  id: FireAlarmAssembly
+  name: fire alarm assembly
+  description: A fire alarm assembly. Very mild.
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    sprite: Structures/Wallmounts/air_monitors.rsi
+    state: fire_b1
+  - type: Construction
+    graph: fire_alarm
+    node: assembly
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wallmount

@@ -1,0 +1,46 @@
+<DefaultWindow xmlns="https://spacestation14.io"
+            xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+            Title="{Loc 'nuke-user-interface-title'}"
+            MinSize="256 256"
+            SetSize="256 256">
+    <BoxContainer Orientation="Vertical"
+                  HorizontalExpand="True"
+                  VerticalExpand="True">
+        <!-- First status label -->
+        <PanelContainer Margin="0 0 0 5">
+            <PanelContainer.PanelOverride>
+                <gfx:StyleBoxFlat BackgroundColor="#001c00" />
+            </PanelContainer.PanelOverride>
+            <Label Name="FirstStatusLabel"/>
+        </PanelContainer>
+        <!-- Second status label -->
+        <PanelContainer Margin="0 0 0 5">
+            <PanelContainer.PanelOverride>
+                <gfx:StyleBoxFlat BackgroundColor="#001c00" />
+            </PanelContainer.PanelOverride>
+            <Label Name="SecondStatusLabel"/>
+        </PanelContainer>
+        <BoxContainer Orientation="Horizontal" >
+            <GridContainer Columns="3"
+                           Name="KeypadGrid">
+                <!-- Keypad is filled by code -->
+            </GridContainer>
+            <BoxContainer Orientation="Vertical"
+                          HorizontalExpand="True"
+                          Margin="5 0">
+                <Button Name="EjectButton"
+                        Text="{Loc 'nuke-user-interface-eject-button'}"
+                        Margin="0 0 0 5"
+                        Access="Public"/>
+                <Button Name="AnchorButton"
+                        Text="{Loc 'nuke-user-interface-anchor-button'}"
+                        Margin="0 0 0 5"
+                        Access="Public"/>
+                <Button Name="ArmButton"
+                        Text="{Loc 'nuke-user-interface-arm-button'}"
+                        Access="Public"
+                        StyleClasses="Caution"/>
+            </BoxContainer>
+        </BoxContainer>
+    </BoxContainer>
+</DefaultWindow>

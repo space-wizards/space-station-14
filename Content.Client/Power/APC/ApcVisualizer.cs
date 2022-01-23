@@ -2,17 +2,23 @@ using Content.Shared.APC;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Maths;
 
 namespace Content.Client.Power.APC
 {
     public class ApcVisualizer : AppearanceVisualizer
     {
+        public static readonly Color LackColor = Color.FromHex("#d1332e");
+        public static readonly Color ChargingColor = Color.FromHex("#2e8ad1");
+        public static readonly Color FullColor = Color.FromHex("#3db83b");
+
         [UsedImplicitly]
-        public override void InitializeEntity(IEntity entity)
+        public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
 
-            var sprite = entity.GetComponent<ISpriteComponent>();
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(entity);
 
             sprite.LayerMapSet(Layers.ChargeState, sprite.AddLayerState("apco3-0"));
             sprite.LayerSetShader(Layers.ChargeState, "unshaded");
@@ -34,7 +40,8 @@ namespace Content.Client.Power.APC
         {
             base.OnChangeData(component);
 
-            var sprite = component.Owner.GetComponent<ISpriteComponent>();
+            var ent = IoCManager.Resolve<IEntityManager>();
+            var sprite = ent.GetComponent<ISpriteComponent>(component.Owner);
             if (component.TryGetData<ApcChargeState>(ApcVisuals.ChargeState, out var state))
             {
                 switch (state)
@@ -48,6 +55,17 @@ namespace Content.Client.Power.APC
                     case ApcChargeState.Full:
                         sprite.LayerSetState(Layers.ChargeState, "apco3-2");
                         break;
+                }
+
+                if (ent.TryGetComponent(component.Owner, out SharedPointLightComponent? light))
+                {
+                    light.Color = state switch
+                    {
+                        ApcChargeState.Lack => LackColor,
+                        ApcChargeState.Charging => ChargingColor,
+                        ApcChargeState.Full => FullColor,
+                        _ => LackColor
+                    };
                 }
             }
             else

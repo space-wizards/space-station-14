@@ -5,6 +5,7 @@ using Content.Shared.Interaction.Helpers;
 using NUnit.Framework;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 
@@ -33,11 +34,11 @@ namespace Content.IntegrationTests.Tests.Interaction
 
             await server.WaitIdleAsync();
 
-            var entityManager = server.ResolveDependency<IEntityManager>();
+            var sEntities = server.ResolveDependency<IEntityManager>();
             var mapManager = server.ResolveDependency<IMapManager>();
 
-            IEntity origin = null;
-            IEntity other = null;
+            EntityUid origin = default;
+            EntityUid other = default;
             IContainer container = null;
             IComponent component = null;
             EntityCoordinates entityCoordinates = default;
@@ -48,12 +49,12 @@ namespace Content.IntegrationTests.Tests.Interaction
                 var mapId = mapManager.CreateMap();
                 var coordinates = new MapCoordinates(Vector2.Zero, mapId);
 
-                origin = entityManager.SpawnEntity(HumanId, coordinates);
-                other = entityManager.SpawnEntity(HumanId, coordinates);
-                container = ContainerHelpers.EnsureContainer<Container>(other, "InRangeUnobstructedTestOtherContainer");
-                component = other.Transform;
-                entityCoordinates = other.Transform.Coordinates;
-                mapCoordinates = other.Transform.MapPosition;
+                origin = sEntities.SpawnEntity(HumanId, coordinates);
+                other = sEntities.SpawnEntity(HumanId, coordinates);
+                container = other.EnsureContainer<Container>("InRangeUnobstructedTestOtherContainer");
+                component = sEntities.GetComponent<TransformComponent>(other);
+                entityCoordinates = sEntities.GetComponent<TransformComponent>(other).Coordinates;
+                mapCoordinates = sEntities.GetComponent<TransformComponent>(other).MapPosition;
             });
 
             await server.WaitIdleAsync();
@@ -82,7 +83,7 @@ namespace Content.IntegrationTests.Tests.Interaction
 
 
                 // Move them slightly apart
-                origin.Transform.LocalPosition += _interactionRangeDivided15X;
+                sEntities.GetComponent<TransformComponent>(origin).LocalPosition += _interactionRangeDivided15X;
 
                 // Entity <-> Entity
                 Assert.True(origin.InRangeUnobstructed(other));
@@ -106,7 +107,7 @@ namespace Content.IntegrationTests.Tests.Interaction
 
 
                 // Move them out of range
-                origin.Transform.LocalPosition += _interactionRangeDivided15X;
+                sEntities.GetComponent<TransformComponent>(origin).LocalPosition += _interactionRangeDivided15X;
 
                 // Entity <-> Entity
                 Assert.False(origin.InRangeUnobstructed(other));

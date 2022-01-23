@@ -2,6 +2,7 @@ using System;
 using Content.Server.Movement.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 
 namespace Content.Server.Movement
@@ -15,7 +16,7 @@ namespace Content.Server.Movement
 
             foreach (var stressTest in EntityManager.EntityQuery<StressTestMovementComponent>(true))
             {
-                var transform = stressTest.Owner.Transform;
+                var transform = EntityManager.GetComponent<TransformComponent>(stressTest.Owner);
 
                 stressTest.Progress += frameTime;
 

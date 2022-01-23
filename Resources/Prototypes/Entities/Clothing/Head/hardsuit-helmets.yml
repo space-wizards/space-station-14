@@ -23,7 +23,7 @@
 - type: entity
   parent: HatBase
   id: ClothingHeadHelmetHardsuitDeathsquad
-  name: deathsquad
+  name: deathsquad hardsuit helmet
   description: A robust helmet for special operations.
   components:
   - type: Sprite
@@ -48,7 +48,7 @@
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetHardsuitEngineeringWhite
-  name: CE hardsuit helmet
+  name: chief engineer's hardsuit helmet
   description: Special hardsuit helmet, made for the chief engineer of the station.
   components:
   - type: Sprite
@@ -73,7 +73,7 @@
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetHardsuitMedical
-  name: medical hardsuit helmet
+  name: chief medical officer's hardsuit helmet
   description: Lightweight medical hardsuit helmet that doesn't restrict your head movements.
   components:
   - type: Sprite
@@ -87,7 +87,7 @@
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetHardsuitRd
-  name: research director's hardsuit helmet
+  name: experimental research hardsuit helmet
   description: Lightweight hardsuit helmet that doesn't restrict your head movements.
   components:
   - type: Sprite
@@ -129,8 +129,8 @@
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetHardsuitSecurityRed
-  name: hos hardsuit helmet
-  description: Red armored hardsuit helmet for security needs. Belongs to the HoS.
+  name: head of security's hardsuit helmet
+  description: Security hardsuit helmet with the latest top secret NT-HUD software. Belongs to the HoS.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/security-red.rsi

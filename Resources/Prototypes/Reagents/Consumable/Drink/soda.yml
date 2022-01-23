@@ -1,154 +1,99 @@
 - type: reagent
   id: Cola
   name: cola
+  parent: BaseSoda
   desc: A sweet, carbonated soft drink. Caffeine free.
   physicalDesc: fizzy
   color: "#422912"
-  plantMetabolism:
-    - !type:AdjustNutrition
-      amount: 0.1
-    - !type:AdjustWater
-      amount: 1
-    - !type:AdjustHealth
-      amount: 0.1
 
 - type: reagent
   id: ChangelingSting
   name: changeling sting
+  parent: BaseSoda
   desc: You take a tiny sip and feel a burning sensation...
   physicalDesc: fizzy
   color: "#2E6671"
-  plantMetabolism:
-    - !type:AdjustNutrition
-      amount: 0.1
-    - !type:AdjustWater
-      amount: 1
-    - !type:AdjustHealth
-      amount: 0.1
 
 - type: reagent
   id: DrGibb
   name: Dr. Gibb
+  parent: BaseSoda
   desc: A delicious blend of 42 different flavours.
   physicalDesc: fizzy
   color: "#102000"
-  plantMetabolism:
-    - !type:AdjustNutrition
-      amount: 0.1
-    - !type:AdjustWater
-      amount: 1
-    - !type:AdjustHealth
-      amount: 0.1
 
 - type: reagent
   id: EnergyDrink
   name: Energy Drink
+  parent: BaseSoda
   desc: A dose of energy! Nanotrasen is not responsible if you grow avian appendages.
   physicalDesc: fizzy
   color: "#ffffbf"
-  plantMetabolism:
-    - !type:AdjustNutrition
-      amount: 0.1
-    - !type:AdjustWater
-      amount: 1
-    - !type:AdjustHealth
-      amount: 0.1
 
 - type: reagent
   id: GrapeSoda
   name: grape soda
+  parent: BaseSoda
   desc: It's Graaaaaape!
   physicalDesc: fizzy
   color: "#ae94a6"
-  plantMetabolism:
-    - !type:AdjustNutrition
-      amount: 0.1
-    - !type:AdjustWater
-      amount: 1
-    - !type:AdjustHealth
-      amount: 0.1
 
 - type: reagent
   id: LemonLime
   name: lemon-lime
+  parent: BaseSoda
   desc: tangy lime and lemon soda
   physicalDesc: fizzy
   color: "#878F00"
   spritePath: lemonlime.rsi
-  plantMetabolism:
-    - !type:AdjustNutrition
-      amount: 0.1
-    - !type:AdjustWater
-      amount: 1
-    - !type:AdjustHealth
-      amount: 0.1
 
 - type: reagent
   id: PwrGame
   name: Pwr Game
+  parent: BaseSoda
   desc: The only drink with the PWR that true gamers crave.
   physicalDesc: fizzy
   color: "#9385bf"
-  plantMetabolism:
-    - !type:AdjustNutrition
-      amount: 0.1
-    - !type:AdjustWater
-      amount: 1
-    - !type:AdjustHealth
-      amount: 0.1
 
 - type: reagent
   id: SpaceMountainWind
   name: Space Mountain Wind
+  parent: BaseSoda
   desc: Blows right through you like a space wind.
   physicalDesc: fizzy
   color: "#102000"
-  plantMetabolism:
-    - !type:AdjustNutrition
-      amount: 0.1
-    - !type:AdjustWater
-      amount: 1
-    - !type:AdjustHealth
-      amount: 0.1
 
 - type: reagent
   id: SpaceUp
   name: Space-Up
+  parent: BaseSoda
   desc: Tastes like a hull breach in your mouth.
   physicalDesc: fizzy
   color: "#00FF00"
-  plantMetabolism:
-    - !type:AdjustNutrition
-      amount: 0.1
-    - !type:AdjustWater
-      amount: 1
-    - !type:AdjustHealth
-      amount: 0.1
 
 - type: reagent
   id: Starkist
   name: starkist
+  parent: BaseSoda
   desc: A sweet, orange flavored soft drink.
   physicalDesc: fizzy
   color: "#9F3400"
-  plantMetabolism:
-    - !type:AdjustNutrition
-      amount: 0.1
-    - !type:AdjustWater
-      amount: 1
-    - !type:AdjustHealth
-      amount: 0.1
 
 - type: reagent
   id: FourteenLoko
   name: Fourteen Loko
-  desc: A highly processed liquid substance barely-passing intergalatic health standarts for a soft drink.
+  parent: BaseSoda
+  desc: A highly processed liquid substance barely-passing intergalatic health standards for a soft drink.
   physicalDesc: fizzy
   color: "#deb928"
-  plantMetabolism:
-    - !type:AdjustNutrition
-      amount: 0.1
-    - !type:AdjustWater
-      amount: 1
-    - !type:AdjustHealth
-      amount: 0.1
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 1

@@ -7,7 +7,7 @@ namespace Content.Server.Act
     [RequiresExplicitImplementation]
     public interface ISuicideAct
     {
-        public SuicideKind Suicide(IEntity victim, IChatManager chat);
+        public SuicideKind Suicide(EntityUid victim, IChatManager chat);
     }
 
     public enum SuicideKind

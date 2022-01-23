@@ -12,6 +12,8 @@ namespace Content.Server.WireHacking
         [ViewVariables] private readonly Dictionary<string, WireLayout> _layouts =
             new();
 
+        public const float ScrewTime = 2.5f;
+
         public override void Initialize()
         {
             base.Initialize();

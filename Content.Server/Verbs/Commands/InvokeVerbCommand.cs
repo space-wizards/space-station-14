@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Net.Security;
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Verbs;
@@ -30,12 +29,12 @@ namespace Content.Server.Verbs.Commands
             var verbSystem = EntitySystem.Get<SharedVerbSystem>();
 
             // get the 'player' entity (defaulting to command user, otherwise uses a uid)
-            IEntity? playerEntity = null;
+            EntityUid? playerEntity = null;
             if (!int.TryParse(args[0], out var intPlayerUid))
             {
                 if (args[0] == "self" && shell.Player?.AttachedEntity != null)
                 {
-                    playerEntity = shell.Player.AttachedEntity;
+                    playerEntity = shell.Player.AttachedEntity.Value;
                 }
                 else
                 {
@@ -45,7 +44,7 @@ namespace Content.Server.Verbs.Commands
             }
             else
             {
-                entityManager.TryGetEntity(new EntityUid(intPlayerUid), out playerEntity);
+                entityManager.EntityExists(new EntityUid(intPlayerUid));
             }
 
             // gets the target entity
@@ -61,24 +60,22 @@ namespace Content.Server.Verbs.Commands
                 return;
             }
 
-            var entUid = new EntityUid(intUid);
-            if (!entityManager.TryGetEntity(entUid, out var target))
+            var target = new EntityUid(intUid);
+            if (!entityManager.EntityExists(target))
             {
                 shell.WriteError(Loc.GetString("invoke-verb-command-invalid-target-entity"));
                 return;
             }
 
             var verbName = args[2].ToLowerInvariant();
-            var verbs = verbSystem.GetLocalVerbs(
-                target, playerEntity, VerbType.All, true
-                );
+            var verbs = verbSystem.GetLocalVerbs(target, playerEntity.Value, VerbType.All, true);
 
             if ((Enum.TryParse(typeof(VerbType), verbName, ignoreCase: true, out var vtype) &&
                 vtype is VerbType key) &&
                 verbs.TryGetValue(key, out var vset) &&
                 vset.Any())
             {
-                verbSystem.ExecuteVerb(vset.First());
+                verbSystem.ExecuteVerb(vset.First(), playerEntity.Value, target, forced: true);
                 shell.WriteLine(Loc.GetString("invoke-verb-command-success", ("verb", verbName), ("target", target), ("player", playerEntity)));
                 return;
             }
@@ -89,7 +86,7 @@ namespace Content.Server.Verbs.Commands
                 {
                     if (verb.Text.ToLowerInvariant() == verbName)
                     {
-                        verbSystem.ExecuteVerb(verb);
+                        verbSystem.ExecuteVerb(verb, playerEntity.Value, target, forced: true);
                         shell.WriteLine(Loc.GetString("invoke-verb-command-success", ("verb", verb.Text), ("target", target), ("player", playerEntity)));
                         return;
                     }

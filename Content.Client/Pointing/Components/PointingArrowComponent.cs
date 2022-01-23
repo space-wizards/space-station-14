@@ -1,6 +1,7 @@
 ﻿using Content.Shared.Pointing.Components;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
 namespace Content.Client.Pointing.Components
@@ -12,7 +13,7 @@ namespace Content.Client.Pointing.Components
         {
             base.Startup();
 
-            if (Owner.TryGetComponent(out SpriteComponent? sprite))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out SpriteComponent? sprite))
             {
                 sprite.DrawDepth = (int) DrawDepth.Overlays;
             }

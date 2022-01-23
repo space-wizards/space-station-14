@@ -1,9 +1,7 @@
-using System.Collections.Generic;
 using Content.Server.Construction.Components;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Construction.Steps;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Robust.Server.Containers;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -153,7 +151,7 @@ namespace Content.Server.Construction
         private EntityUid? ChangeEntity(EntityUid uid, EntityUid? userUid, string newEntity,
             ConstructionComponent? construction = null,
             MetaDataComponent? metaData = null,
-            ITransformComponent? transform = null,
+            TransformComponent? transform = null,
             ContainerManagerComponent? containerManager = null)
         {
             if (!Resolve(uid, ref construction, ref metaData, ref transform))
@@ -166,7 +164,7 @@ namespace Content.Server.Construction
             Resolve(uid, ref containerManager, false);
 
             // We create the new entity.
-            var newUid = EntityManager.SpawnEntity(newEntity, transform.Coordinates).Uid;
+            var newUid = EntityManager.SpawnEntity(newEntity, transform.Coordinates);
 
             // Construction transferring.
             var newConstruction = EntityManager.EnsureComponent<ConstructionComponent>(newUid);
@@ -187,7 +185,7 @@ namespace Content.Server.Construction
             }
 
             // Transform transferring.
-            var newTransform = EntityManager.GetComponent<ITransformComponent>(newUid);
+            var newTransform = EntityManager.GetComponent<TransformComponent>(newUid);
             newTransform.LocalRotation = transform.LocalRotation;
             newTransform.Anchored = transform.Anchored;
 

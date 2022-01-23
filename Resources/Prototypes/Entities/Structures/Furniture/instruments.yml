@@ -5,7 +5,10 @@
   abstract: true
   components:
   - type: Instrument
-    handheld: false
+  - type: ActivatableUI
+    inHandsOnly: false
+    singleUser: true
+    key: enum.InstrumentUiKey.Key
   - type: InteractionOutline
   - type: Rotatable
     rotateWhileAnchored: true

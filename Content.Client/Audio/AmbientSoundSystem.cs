@@ -10,6 +10,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Audio
 {
@@ -19,6 +20,7 @@ namespace Content.Client.Audio
     public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
     {
         [Dependency] private IEntityLookup _lookup = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
@@ -40,6 +42,7 @@ namespace Content.Client.Audio
         public override void Initialize()
         {
             base.Initialize();
+            UpdatesOutsidePrediction = true;
             var configManager = IoCManager.Resolve<IConfigurationManager>();
             configManager.OnValueChanged(CCVars.AmbientCooldown, SetCooldown, true);
             configManager.OnValueChanged(CCVars.MaxAmbientSources, SetAmbientCount, true);
@@ -75,6 +78,8 @@ namespace Content.Client.Audio
         {
             base.Update(frameTime);
 
+            if (!_gameTiming.IsFirstTimePredicted) return;
+
             if (_cooldown <= 0f)
             {
                 _accumulator = 0f;
@@ -86,17 +91,17 @@ namespace Content.Client.Audio
             _accumulator -= _cooldown;
 
             var player = _playerManager.LocalPlayer?.ControlledEntity;
-            if (player == null)
+            if (!EntityManager.TryGetComponent(player, out TransformComponent? playerManager))
             {
                 ClearSounds();
                 return;
             }
 
-            var coordinates = player.Transform.Coordinates;
+            var coordinates = playerManager.Coordinates;
 
             foreach (var (comp, (stream, _)) in _playingSounds.ToArray())
             {
-                if (!comp.Deleted && comp.Enabled && comp.Owner.Transform.Coordinates.TryDistance(EntityManager, coordinates, out var range) &&
+                if (!comp.Deleted && comp.Enabled && EntityManager.GetComponent<TransformComponent>(comp.Owner).Coordinates.TryDistance(EntityManager, coordinates, out var range) &&
                     range <= comp.Range)
                 {
                     continue;
@@ -132,11 +137,11 @@ namespace Content.Client.Audio
             foreach (var entity in _lookup.GetEntitiesInRange(coordinates, _maxAmbientRange,
                 LookupFlags.Approximate | LookupFlags.IncludeAnchored))
             {
-                if (!entity.TryGetComponent(out AmbientSoundComponent? ambientComp) ||
+                if (!EntityManager.TryGetComponent(entity, out AmbientSoundComponent? ambientComp) ||
                     _playingSounds.ContainsKey(ambientComp) ||
                     !ambientComp.Enabled ||
                     // We'll also do this crude distance check because it's what we're doing in the active loop above.
-                    !entity.Transform.Coordinates.TryDistance(EntityManager, coordinates, out var range) ||
+                    !EntityManager.GetComponent<TransformComponent>(entity).Coordinates.TryDistance(EntityManager, coordinates, out var range) ||
                     range > ambientComp.Range - RangeBuffer)
                 {
                     continue;

@@ -19,9 +19,19 @@ namespace Content.Shared.Chat
         Local = ChatChannel.Local,
 
         /// <summary>
+        ///     Chat heard by players right next to each other
+        /// </summary>
+        Whisper = ChatChannel.Whisper,
+
+        /// <summary>
         ///     Radio messages
         /// </summary>
         Radio = ChatChannel.Radio,
+
+        /// <summary>
+        ///     Local out-of-character channel
+        /// </summary>
+        LOOC = ChatChannel.LOOC,
 
         /// <summary>
         ///     Out-of-character channel

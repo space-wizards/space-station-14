@@ -30,7 +30,7 @@ namespace Content.Server.EntityList
                 return;
             }
 
-            if (player.AttachedEntity == null)
+            if (player.AttachedEntity is not {} attached)
             {
                 shell.WriteError("You must have an entity to run this command.");
                 return;
@@ -49,7 +49,7 @@ namespace Content.Server.EntityList
 
             foreach (var entity in prototype.Entities(prototypeManager))
             {
-                entityManager.SpawnEntity(entity.ID, player.AttachedEntity.Transform.Coordinates);
+                entityManager.SpawnEntity(entity.ID, entityManager.GetComponent<TransformComponent>(attached).Coordinates);
                 i++;
             }
 

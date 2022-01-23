@@ -18,13 +18,11 @@ namespace Content.Server.DeviceNetwork.Systems
         /// </summary>
         private void OnBeforePacketSent(EntityUid uid, WirelessNetworkComponent component, BeforePacketSentEvent args)
         {
-            var sender = EntityManager.GetEntity(args.Sender);
-
-            var ownPosition = component.Owner.Transform.WorldPosition;
-            var position = sender.Transform.WorldPosition;
+            var ownPosition = EntityManager.GetComponent<TransformComponent>(component.Owner).WorldPosition;
+            var position = EntityManager.GetComponent<TransformComponent>(args.Sender).WorldPosition;
             var distance = (ownPosition - position).Length;
 
-            if(sender.TryGetComponent<WirelessNetworkComponent>(out var sendingComponent) && distance > sendingComponent.Range)
+            if (EntityManager.TryGetComponent<WirelessNetworkComponent?>(args.Sender, out var sendingComponent) && distance > sendingComponent.Range)
             {
                 args.Cancel();
             }

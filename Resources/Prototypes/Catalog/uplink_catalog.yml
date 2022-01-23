@@ -9,11 +9,11 @@
   price: 6
 
 - type: uplinkListing
-  id: UplinkRevolverInspector
+  id: UplinkRevolverPredator
   category: Weapons
-  itemId: RevolverInspector
-  listingName: Inspector
-  description: A .40 magnum caliber revolver. Still quite deadly, despite its ancient design.
+  itemId: RevolverPredator
+  listingName: Predator
+  description: A loud and deadly revolver. Uses .40 Magnum.
   price: 8
 
 # Inbuilt suppressor so it's sneaky + more expensive.
@@ -107,6 +107,18 @@
   price: 2
   icon: /Textures/Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_sl.rsi/icon.png
 
+#Utility
+
+- type: uplinkListing
+  id: UplinkHoloparaKit
+  category: Utility
+  itemId: BoxHoloparasite
+  listingName: Holoparasite Kit
+  description: The pride and joy of Cybersun. Contains an injector that hosts a sentient metaphysical guardian made of hard light which resides in the user's body when not active. The guardian can punch rapidly and is immune to hazardous environments and bullets, but shares any damage it takes with the user.
+  icon: /Textures/Objects/Misc/guardian_info.rsi/icon.png
+  price: 16
+
+
 # Bundles
 
 - type: uplinkListing
@@ -136,6 +148,13 @@
   itemId: ClothingBackpackDuffelSyndicateFilledGrenadeLauncher
   price: 25
   icon: /Textures/Objects/Weapons/Guns/Launchers/china_lake.rsi/icon.png
+
+#- type: uplinkListing
+#  id: UplinkCarbineBundle
+#  category: Bundles
+#  itemId: ClothingBackpackDuffelSyndicateFilledCarbine
+#  price: 35
+#  icon: /Textures/Objects/Weapons/Guns/Rifles/carbine.rsi/icon.png
 
 # Tools
 
@@ -170,6 +189,8 @@
   id: UplinkClothingNoSlipsShoes
   category: Armor
   itemId: ClothingShoesChameleonNoSlips
+  listingName: no-slip shoes
+  description: These protect you from slips while looking like normal sneakers.
   price: 2
 
 - type: uplinkListing
@@ -202,6 +223,8 @@
   id: UplinkDecoyDisk
   category: Misc
   itemId: NukeDiskFake
+  listingName: Decoy nuclear disk
+  description: A piece of plastic with a lenticular printing, made to look like a nuclear auth disk.
   price: 1
 
 - type: uplinkListing
@@ -217,6 +240,12 @@
   price: 2
 
 - type: uplinkListing
+  id: UplinkCigarettes
+  category: Misc
+  itemId: CigPackSyndicate
+  price: 2
+
+- type: uplinkListing
   id: UplinkSoapSyndie
   category: Misc
   itemId: SoapSyndie
@@ -228,16 +257,14 @@
   itemId: lanternextrabright
   price: 2
 
-# Pointless
-
 - type: uplinkListing
   id: UplinkCostumeCentcom
-  category: Pointless
+  category: Misc
   itemId: ClothingBackpackDuffelSyndicateCostumeCentcom
   price: 4
 
 - type: uplinkListing
   id: UplinkCostumeClown
-  category: Pointless
+  category: Misc
   itemId: ClothingBackpackDuffelSyndicateCostumeClown
   price: 4

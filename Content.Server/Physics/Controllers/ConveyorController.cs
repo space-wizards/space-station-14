@@ -13,15 +13,21 @@ namespace Content.Server.Physics.Controllers
 {
     internal sealed class ConveyorController : VirtualController
     {
-        public override List<Type> UpdatesAfter => new() {typeof(MoverController)};
+        [Dependency] private readonly ConveyorSystem _conveyor = default!;
+
+        public override void Initialize()
+        {
+            UpdatesAfter.Add(typeof(MoverController));
+
+            base.Initialize();
+        }
 
         public override void UpdateBeforeSolve(bool prediction, float frameTime)
         {
             base.UpdateBeforeSolve(prediction, frameTime);
-            var system = EntitySystem.Get<ConveyorSystem>();
             foreach (var comp in EntityManager.EntityQuery<ConveyorComponent>())
             {
-                Convey(system, comp, frameTime);
+                Convey(_conveyor, comp, frameTime);
             }
         }
 
@@ -34,11 +40,12 @@ namespace Content.Server.Physics.Controllers
             }
 
             var direction = system.GetAngle(comp).ToVec();
-            var ownerPos = comp.Owner.Transform.WorldPosition;
+            var entMan = IoCManager.Resolve<IEntityManager>();
+                         var ownerPos = entMan.GetComponent<TransformComponent>(comp.Owner).WorldPosition;
 
             foreach (var (entity, physics) in EntitySystem.Get<ConveyorSystem>().GetEntitiesToMove(comp))
             {
-                var itemRelativeToConveyor = entity.Transform.WorldPosition - ownerPos;
+                var itemRelativeToConveyor = entMan.GetComponent<TransformComponent>(entity).WorldPosition - ownerPos;
                 physics.LinearVelocity += Convey(direction, comp.Speed, frameTime, itemRelativeToConveyor);
             }
         }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -8,7 +8,9 @@ using Content.Server.Administration;
 using Content.Server.Administration.Managers;
 using Content.Server.Afk;
 using Content.Server.Chat.Managers;
+using Content.Server.Maps;
 using Content.Shared.Administration;
+using Content.Shared.CCVar;
 using Content.Shared.Voting;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
@@ -16,6 +18,7 @@ using Robust.Shared.Enums;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -33,6 +36,8 @@ namespace Content.Server.Voting.Managers
         [Dependency] private readonly IAdminManager _adminMgr = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IAfkManager _afkManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IGameMapManager _gameMapManager = default!;
 
         private int _nextVoteId = 1;
 
@@ -42,6 +47,7 @@ namespace Content.Server.Voting.Managers
         private readonly Dictionary<StandardVoteType, TimeSpan> _standardVoteTimeout = new();
         private readonly Dictionary<NetUserId, TimeSpan> _voteTimeout = new();
         private readonly HashSet<IPlayerSession> _playerCanCallVoteDirty = new();
+        private readonly StandardVoteType[] _standardVoteTypeValues = Enum.GetValues<StandardVoteType>();
 
         public void Initialize()
         {
@@ -50,6 +56,17 @@ namespace Content.Server.Voting.Managers
 
             _playerManager.PlayerStatusChanged += PlayerManagerOnPlayerStatusChanged;
             _adminMgr.OnPermsChanged += AdminPermsChanged;
+
+            _cfg.OnValueChanged(CCVars.VoteEnabled, value => {
+                DirtyCanCallVoteAll();
+            });
+
+            foreach (var kvp in _voteTypesToEnableCVars)
+            {
+                _cfg.OnValueChanged(kvp.Value, value => {
+                    DirtyCanCallVoteAll();
+                });
+            }
         }
 
         private void AdminPermsChanged(AdminPermsChangedEventArgs obj)
@@ -201,7 +218,7 @@ namespace Content.Server.Voting.Managers
 
         private void SendUpdates(VoteReg v)
         {
-            foreach (var player in _playerManager.GetAllPlayers())
+            foreach (var player in _playerManager.ServerSessions)
             {
                 SendSingleUpdate(v, player);
             }
@@ -250,7 +267,7 @@ namespace Content.Server.Voting.Managers
 
         private void DirtyCanCallVoteAll()
         {
-            _playerCanCallVoteDirty.UnionWith(_playerManager.GetAllPlayers());
+            _playerCanCallVoteDirty.UnionWith(_playerManager.ServerSessions);
         }
 
         private void SendUpdateCanCallVote(IPlayerSession player)
@@ -259,9 +276,21 @@ namespace Content.Server.Voting.Managers
             msg.CanCall = CanCallVote(player, null, out var isAdmin, out var timeSpan);
             msg.WhenCanCallVote = timeSpan;
 
-            msg.VotesUnavailable = isAdmin
-                ? Array.Empty<(StandardVoteType, TimeSpan)>()
-                : _standardVoteTimeout.Select(kv => (kv.Key, kv.Value)).ToArray();
+            if (isAdmin)
+            {
+                msg.VotesUnavailable = Array.Empty<(StandardVoteType, TimeSpan)>();
+            }
+            else
+            {
+                var votesUnavailable = new List<(StandardVoteType, TimeSpan)>();
+                foreach (var v in _standardVoteTypeValues)
+                {
+                    if (CanCallVote(player, v, out var _isAdmin, out var typeTimeSpan))
+                        continue;
+                    votesUnavailable.Add((v, typeTimeSpan));
+                }
+                msg.VotesUnavailable = votesUnavailable.ToArray();
+            }
 
             _netManager.ServerSendMessage(msg, player.ConnectedClient);
         }
@@ -282,13 +311,20 @@ namespace Content.Server.Voting.Managers
                 return true;
             }
 
+            // If voting is disabled, block votes.
+            if (!_cfg.GetCVar(CCVars.VoteEnabled))
+                return false;
+            // Specific standard vote types can be disabled with cvars.
+            if ((voteType != null) && _voteTypesToEnableCVars.TryGetValue(voteType.Value, out var cvar) && !_cfg.GetCVar(cvar))
+                return false;
+
             // Cannot start vote if vote is already active (as non-admin).
             if (_votes.Count != 0)
                 return false;
 
             // Standard vote on timeout, no calling.
             // Ghosts I understand you're dead but stop spamming the restart vote bloody hell.
-            if (voteType != null && _standardVoteTimeout.ContainsKey(voteType.Value))
+            if (voteType != null && _standardVoteTimeout.TryGetValue(voteType.Value, out timeSpan))
                 return false;
 
             return !_voteTimeout.TryGetValue(initiator.UserId, out timeSpan);

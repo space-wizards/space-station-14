@@ -108,24 +108,19 @@ namespace Content.Client.Kitchen.UI
 
             _solids.Clear();
             _menu.IngredientsList.Clear();
-            foreach (var t in containedSolids)
+            foreach (var entity in containedSolids)
             {
-                if (!_entityManager.TryGetEntity(t, out var entity))
+                if (_entityManager.Deleted(entity))
                 {
                     return;
                 }
 
-                if (entity.Deleted)
-                {
-                    continue;
-                }
-
                 Texture? texture;
-                if (entity.TryGetComponent(out IconComponent? iconComponent))
+                if (_entityManager.TryGetComponent(entity, out IconComponent? iconComponent))
                 {
                     texture = iconComponent.Icon?.Default;
                 }
-                else if (entity.TryGetComponent(out SpriteComponent? spriteComponent))
+                else if (_entityManager.TryGetComponent(entity, out SpriteComponent? spriteComponent))
                 {
                     texture = spriteComponent.Icon?.Default;
                 }
@@ -134,9 +129,9 @@ namespace Content.Client.Kitchen.UI
                     continue;
                 }
 
-                var solidItem = _menu.IngredientsList.AddItem(entity.Name, texture);
+                var solidItem = _menu.IngredientsList.AddItem(_entityManager.GetComponent<MetaDataComponent>(entity).EntityName, texture);
                 var solidIndex = _menu.IngredientsList.IndexOf(solidItem);
-                _solids.Add(solidIndex, t);
+                _solids.Add(solidIndex, entity);
             }
         }
     }

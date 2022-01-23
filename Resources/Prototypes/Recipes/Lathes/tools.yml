@@ -5,6 +5,7 @@
   completetime: 500
   materials:
     Steel: 200
+    Plastic: 50
 
 - type: latheRecipe
   id: Screwdriver
@@ -15,6 +16,7 @@
   completetime: 500
   materials:
     Steel: 200
+    Plastic: 50
 
 - type: latheRecipe
   id: Welder
@@ -36,7 +38,7 @@
 
 - type: latheRecipe
   id: CableStack
-  name: cable coil
+  name: LV cable
   icon: /Textures/Objects/Tools/cable-coils.rsi/coillv-30.png
   result: CableApcStack1
   completetime: 500

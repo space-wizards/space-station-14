@@ -7,7 +7,7 @@ namespace Content.Server.AI.Operators.Sequences
 {
     public class GoPickupEntitySequence : SequenceOperator
     {
-        public GoPickupEntitySequence(IEntity owner, IEntity target)
+        public GoPickupEntitySequence(EntityUid owner, EntityUid target)
         {
             Sequence = new Queue<AiOperator>(new AiOperator[]
             {

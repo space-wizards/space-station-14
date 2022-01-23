@@ -17,6 +17,21 @@
     Piercing: 0.7
     Shock: 1.2
 
+# Like metallic but very strong to resist most all basic tools and weapons.
+- type: damageModifierSet
+  id: StrongMetallic
+  coefficients:
+    Blunt: 0.7
+    Slash: 0.5
+    Piercing: 0.7
+    Shock: 1.2
+  flatReductions:
+    Blunt: 14
+    Slash: 14
+    Piercing: 14
+    Shock: 10
+    Heat: 10
+
 - type: damageModifierSet
   id: Inflatable
   coefficients:

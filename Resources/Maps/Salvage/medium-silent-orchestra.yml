@@ -1,0 +1,1722 @@
+meta:
+  format: 2
+  name: DemoStation
+  author: Space-Wizards
+  postmapinit: false
+tilemap:
+  0: space
+  1: floor_asteroid_coarse_sand0
+  2: floor_asteroid_coarse_sand1
+  3: floor_asteroid_coarse_sand2
+  4: floor_asteroid_coarse_sand_dug
+  5: floor_asteroid_sand
+  6: floor_asteroid_tile
+  7: floor_bar
+  8: floor_blue
+  9: floor_blue_circuit
+  10: floor_clown
+  11: floor_dark
+  12: floor_elevator_shaft
+  13: floor_freezer
+  14: floor_glass
+  15: floor_gold
+  16: floor_grass
+  17: floor_green_circuit
+  18: floor_hydro
+  19: floor_kitchen
+  20: floor_laundry
+  21: floor_lino
+  22: floor_mime
+  23: floor_mono
+  24: floor_reinforced
+  25: floor_rglass
+  26: floor_rock_vault
+  27: floor_showroom
+  28: floor_silver
+  29: floor_snow
+  30: floor_steel
+  31: floor_steel_dirty
+  32: floor_techmaint
+  33: floor_white
+  34: floor_wood
+  35: lattice
+  36: plating
+  37: underplating
+grids:
+- settings:
+    chunksize: 16
+    tilesize: 1
+  chunks:
+  - ind: "-1,-1"
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAjAAAAIwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAkAAAAIwAAACQAAAAkAAAAIwAAACQAAAAkAAAAJAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJAAAACQAAAAkAAAAJAAAACQAAAAkAAAAJAAAACQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACQAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAkAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJAAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACQAAAAiAAAAIgAAACIAAAAiAAAAIgAAACIAAAAiAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAkAAAAIgAAACIAAAAiAAAAIgAAACIAAAAiAAAAIgAAAA==
+  - ind: "0,-1"
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAjAAAAAAAAACMAAAAAAAAAIwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIwAAACMAAAAkAAAAIwAAACMAAAAjAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACQAAAAkAAAAJAAAACQAAAAjAAAAIwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAIQAAACEAAAAkAAAAJAAAACMAAAAjAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAACEAAAAhAAAAIQAAACQAAAAkAAAAIwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACEAAAAhAAAAIQAAACEAAAAkAAAAJAAAACMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAiAAAAIgAAACIAAAAkAAAAJAAAACQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIgAAACIAAAAiAAAAIgAAACIAAAAjAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+  - ind: "-1,0"
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAkAAAAIgAAACIAAAAiAAAAIgAAACIAAAAiAAAAIgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJAAAACIAAAAiAAAAIgAAACIAAAAiAAAAIgAAACIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACQAAAAkAAAAJAAAACQAAAAkAAAAJAAAACQAAAAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAkAAAAHAAAABwAAAAkAAAAJAAAABwAAAAcAAAAJAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJAAAABwAAAAkAAAAJAAAABwAAAAkAAAAHAAAABwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACQAAAAcAAAAHAAAACQAAAAcAAAAHAAAACQAAAAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAkAAAAJAAAACQAAAAkAAAAJAAAACQAAAAkAAAAJAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+  - ind: "0,0"
+    tiles: IgAAACIAAAAiAAAAIgAAACIAAAAiAAAAIwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACIAAAAiAAAAIgAAACIAAAAiAAAAIgAAACMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAkAAAAJAAAACQAAAAkAAAAJAAAACQAAAAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHAAAABwAAAAcAAAAHAAAACQAAAAkAAAAJAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACQAAAAcAAAAHAAAABwAAAAkAAAAJAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAcAAAAHAAAABwAAAAkAAAAJAAAACMAAAAjAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJAAAACQAAAAkAAAAIwAAACMAAAAjAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+entities:
+- uid: 0
+  components:
+  - pos: 0.5,0.5
+    parent: null
+    type: Transform
+  - index: 0
+    type: MapGrid
+  - linearDamping: 0.1
+    fixedRotation: False
+    bodyType: Dynamic
+    type: Physics
+  - fixtures:
+    - shape: !type:PolygonShape
+        vertices:
+        - -2.01,-7.99
+        - -2.01,-7.01
+        - -3.99,-7.01
+        - -3.99,-7.99
+      id: grid_chunk--3.99--7.99
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 7.7615967
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -0.01,-6.99
+        - -0.01,-0.01
+        - -7.99,-0.01
+        - -7.99,-6.99
+      id: grid_chunk--7.99--6.99
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 222.80159
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 0.99,-7.99
+        - 0.99,-7.01
+        - 0.01,-7.01
+        - 0.01,-7.99
+      id: grid_chunk-0.01--7.99
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 3.8415983
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 2.99,-7.99
+        - 2.99,-7.01
+        - 2.01,-7.01
+        - 2.01,-7.99
+      id: grid_chunk-2.01--7.99
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 3.8415983
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 4.99,-7.99
+        - 4.99,-7.01
+        - 4.01,-7.01
+        - 4.01,-7.99
+      id: grid_chunk-4.01--7.99
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 3.8415964
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 5.99,-6.99
+        - 5.99,-5.01
+        - 0.01,-5.01
+        - 0.01,-6.99
+      id: grid_chunk-0.01--6.99
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 47.361588
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 6.99,-4.99
+        - 6.99,-2.01
+        - 0.01,-2.01
+        - 0.01,-4.99
+      id: grid_chunk-0.01--4.99
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 83.201584
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 5.99,-1.99
+        - 5.99,-0.01
+        - 0.01,-0.01
+        - 0.01,-1.99
+      id: grid_chunk-0.01--1.99
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 47.361595
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -0.01,0.01
+        - -0.01,6.99
+        - -7.99,6.99
+        - -7.99,0.01
+      id: grid_chunk--7.99-0.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 222.8016
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 6.99,0.01
+        - 6.99,3.99
+        - 0.01,3.99
+        - 0.01,0.01
+      id: grid_chunk-0.01-0.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 111.1216
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 5.99,4.01
+        - 5.99,4.99
+        - 0.01,4.99
+        - 0.01,4.01
+      id: grid_chunk-0.01-4.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 23.44159
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 6.99,5.01
+        - 6.99,5.99
+        - 0.01,5.99
+        - 0.01,5.01
+      id: grid_chunk-0.01-5.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 27.361588
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 5.99,6.01
+        - 5.99,6.99
+        - 0.01,6.99
+        - 0.01,6.01
+      id: grid_chunk-0.01-6.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 23.44159
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 0,-2
+        - 0,-1
+        - -2,-1
+        - -2,-2
+      id: grid_chunk--2--2
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 8
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -3,-3
+        - -3,-1
+        - -4,-1
+        - -4,-3
+      id: grid_chunk--4--3
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 8
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -7,-7
+        - -7,-1
+        - -8,-1
+        - -8,-7
+      id: grid_chunk--8--7
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 24
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 0,-3
+        - 0,-2
+        - -1,-2
+        - -1,-3
+      id: grid_chunk--1--3
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 4
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 0,-4
+        - 0,-3
+        - -4,-3
+        - -4,-4
+      id: grid_chunk--4--4
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 16
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 7,-7
+        - 7,-1
+        - 6,-1
+        - 6,-7
+      id: grid_chunk-6--7
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 24
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 3,-3
+        - 3,-1
+        - 2,-1
+        - 2,-3
+      id: grid_chunk-2--3
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 8
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 1,-2
+        - 1,-1
+        - 0,-1
+        - 0,-2
+      id: grid_chunk-0--2
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 4
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 3,-4
+        - 3,-3
+        - 0,-3
+        - 0,-4
+      id: grid_chunk-0--4
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 12
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 0,3
+        - 0,6
+        - -1,6
+        - -1,3
+      id: grid_chunk--1-3
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 12
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -7,0
+        - -7,6
+        - -8,6
+        - -8,0
+      id: grid_chunk--8-0
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 24
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 0,2
+        - 0,3
+        - -4,3
+        - -4,2
+      id: grid_chunk--4-2
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 16
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 0,1
+        - 0,2
+        - -1,2
+        - -1,1
+      id: grid_chunk--1-1
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 4
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 7,0
+        - 7,6
+        - 6,6
+        - 6,0
+      id: grid_chunk-6-0
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 24
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 3,2
+        - 3,3
+        - 0,3
+        - 0,2
+      id: grid_chunk-0-2
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 12
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 3,0
+        - 3,2
+        - 2,2
+        - 2,0
+      id: grid_chunk-2-0
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 8
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 0,6
+        - 0,7
+        - -8,7
+        - -8,6
+      id: grid_chunk--8-6
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 32
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 0,-1
+        - 0,0
+        - -8,0
+        - -8,-1
+      id: grid_chunk--8--1
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 32
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 0,-7
+        - 0,-4
+        - -1,-4
+        - -1,-7
+      id: grid_chunk--1--7
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 12
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 0,-8
+        - 0,-7
+        - -8,-7
+        - -8,-8
+      id: grid_chunk--8--8
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 32
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 7,-1
+        - 7,0
+        - 0,0
+        - 0,-1
+      id: grid_chunk-0--1
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 28
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 7,-8
+        - 7,-7
+        - 0,-7
+        - 0,-8
+      id: grid_chunk-0--8
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 28
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 7,6
+        - 7,7
+        - 0,7
+        - 0,6
+      id: grid_chunk-0-6
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 28
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -3,0
+        - -3,2
+        - -4,2
+        - -4,0
+      id: grid_chunk--4-0
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 8
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 0,0
+        - 0,1
+        - -2,1
+        - -2,0
+      id: grid_chunk--2-0
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 8
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 1,0
+        - 1,1
+        - 0,1
+        - 0,0
+      id: grid_chunk-0-0
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 4
+      restitution: 0.1
+    type: Fixtures
+  - gravityShakeSound: !type:SoundPathSpecifier
+      path: /Audio/Effects/alert.ogg
+    type: Gravity
+  - chunkCollection: {}
+    type: DecalGrid
+- uid: 1
+  type: WallWood
+  components:
+  - pos: 1.5,2.5
+    parent: 0
+    type: Transform
+- uid: 2
+  type: WallWood
+  components:
+  - pos: 2.5,2.5
+    parent: 0
+    type: Transform
+- uid: 3
+  type: WallWood
+  components:
+  - pos: 3.5,2.5
+    parent: 0
+    type: Transform
+- uid: 4
+  type: WallWood
+  components:
+  - pos: 4.5,2.5
+    parent: 0
+    type: Transform
+- uid: 5
+  type: WallWood
+  components:
+  - pos: 0.5,2.5
+    parent: 0
+    type: Transform
+- uid: 6
+  type: WallWood
+  components:
+  - pos: -0.5,2.5
+    parent: 0
+    type: Transform
+- uid: 7
+  type: WallWood
+  components:
+  - pos: -1.5,2.5
+    parent: 0
+    type: Transform
+- uid: 8
+  type: WallWood
+  components:
+  - pos: -2.5,2.5
+    parent: 0
+    type: Transform
+- uid: 9
+  type: WallWood
+  components:
+  - pos: -3.5,2.5
+    parent: 0
+    type: Transform
+- uid: 10
+  type: WallWood
+  components:
+  - pos: -4.5,2.5
+    parent: 0
+    type: Transform
+- uid: 11
+  type: WallWood
+  components:
+  - pos: -5.5,2.5
+    parent: 0
+    type: Transform
+- uid: 12
+  type: AirlockTheatreLocked
+  components:
+  - pos: -6.5,2.5
+    parent: 0
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 13
+  type: AirlockTheatreLocked
+  components:
+  - pos: 5.5,2.5
+    parent: 0
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 14
+  type: FloodlightBroken
+  components:
+  - pos: -5.5590706,1.4950001
+    parent: 0
+    type: Transform
+  - sleepTime: 0.083333
+    type: Physics
+- uid: 15
+  type: FloodlightBroken
+  components:
+  - pos: 4.6284294,1.4950001
+    parent: 0
+    type: Transform
+  - sleepTime: 0.0666664
+    type: Physics
+- uid: 16
+  type: WallSolid
+  components:
+  - pos: -7.5,2.5
+    parent: 0
+    type: Transform
+- uid: 17
+  type: WallSolid
+  components:
+  - pos: -7.5,1.5
+    parent: 0
+    type: Transform
+- uid: 18
+  type: WallSolid
+  components:
+  - pos: -7.5,0.5
+    parent: 0
+    type: Transform
+- uid: 19
+  type: WallSolid
+  components:
+  - pos: -7.5,-0.5
+    parent: 0
+    type: Transform
+- uid: 20
+  type: WallSolid
+  components:
+  - pos: -7.5,-1.5
+    parent: 0
+    type: Transform
+- uid: 21
+  type: WallSolid
+  components:
+  - pos: -7.5,-2.5
+    parent: 0
+    type: Transform
+- uid: 22
+  type: WallSolid
+  components:
+  - pos: -7.5,-3.5
+    parent: 0
+    type: Transform
+- uid: 23
+  type: WallSolid
+  components:
+  - pos: -7.5,-4.5
+    parent: 0
+    type: Transform
+- uid: 24
+  type: WallSolid
+  components:
+  - pos: -7.5,-5.5
+    parent: 0
+    type: Transform
+- uid: 25
+  type: WallSolid
+  components:
+  - pos: -7.5,-6.5
+    parent: 0
+    type: Transform
+- uid: 26
+  type: WallSolid
+  components:
+  - pos: -7.5,3.5
+    parent: 0
+    type: Transform
+- uid: 27
+  type: WallSolid
+  components:
+  - pos: -7.5,4.5
+    parent: 0
+    type: Transform
+- uid: 28
+  type: WallSolid
+  components:
+  - pos: -7.5,5.5
+    parent: 0
+    type: Transform
+- uid: 29
+  type: WallSolid
+  components:
+  - pos: -7.5,6.5
+    parent: 0
+    type: Transform
+- uid: 30
+  type: WallSolid
+  components:
+  - pos: -6.5,6.5
+    parent: 0
+    type: Transform
+- uid: 31
+  type: WallSolid
+  components:
+  - pos: -5.5,6.5
+    parent: 0
+    type: Transform
+- uid: 32
+  type: WallSolid
+  components:
+  - pos: -4.5,6.5
+    parent: 0
+    type: Transform
+- uid: 33
+  type: WallSolid
+  components:
+  - pos: -3.5,6.5
+    parent: 0
+    type: Transform
+- uid: 34
+  type: WallSolid
+  components:
+  - pos: -2.5,6.5
+    parent: 0
+    type: Transform
+- uid: 35
+  type: WallSolid
+  components:
+  - pos: -1.5,6.5
+    parent: 0
+    type: Transform
+- uid: 36
+  type: WallSolid
+  components:
+  - pos: -0.5,6.5
+    parent: 0
+    type: Transform
+- uid: 37
+  type: WallSolid
+  components:
+  - pos: 0.5,6.5
+    parent: 0
+    type: Transform
+- uid: 38
+  type: WallSolid
+  components:
+  - pos: 1.5,6.5
+    parent: 0
+    type: Transform
+- uid: 39
+  type: WallSolid
+  components:
+  - pos: 2.5,6.5
+    parent: 0
+    type: Transform
+- uid: 40
+  type: FloorTileItemSilver
+  components:
+  - pos: -5.551844,4.574896
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 41
+  type: FloorTileItemSilver
+  components:
+  - pos: -4.723719,5.356146
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 42
+  type: FloorTileItemSilver
+  components:
+  - pos: -4.911219,4.918646
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 43
+  type: FloorTileItemSilver
+  components:
+  - pos: -4.645594,3.5436459
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 44
+  type: FloorTileItemSilver
+  components:
+  - pos: -1.1198876,5.262396
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 45
+  type: FloorTileItemSilver
+  components:
+  - pos: -2.4167626,4.668646
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 46
+  type: FloorTileItemSilver
+  components:
+  - pos: 1.6926124,4.418646
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 47
+  type: FloorTileItemSilver
+  components:
+  - pos: 0.7551124,3.7623959
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 48
+  type: FloorTileItemSilver
+  components:
+  - pos: 6.4663706,3.4967709
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 49
+  type: FloorTileItemSilver
+  components:
+  - pos: 5.9507456,4.246771
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 50
+  type: FloorTileItemSilver
+  components:
+  - pos: 5.1851206,4.465521
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 51
+  type: FloorTileItemSilver
+  components:
+  - pos: 5.2163706,4.653021
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 52
+  type: FloorTileItemSilver
+  components:
+  - pos: 5.8101206,3.7155209
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 53
+  type: FloorTileItemSilver
+  components:
+  - pos: 4.9507456,3.6373959
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 54
+  type: FloorTileItemSilver
+  components:
+  - pos: 4.4351206,5.512396
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 55
+  type: ClosetBase
+  components:
+  - pos: -6.5,5.5
+    parent: 0
+    type: Transform
+  - isPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 56
+  type: LockerBoozeFilled
+  components:
+  - pos: 0.5,5.5
+    parent: 0
+    type: Transform
+  - isPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 57
+  type: LockerMedicineFilled
+  components:
+  - pos: 1.5,5.5
+    parent: 0
+    type: Transform
+  - isPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 58
+  type: MonkeyCubeWrapped
+  components:
+  - pos: -0.11651945,5.1636443
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 59
+  type: MonkeyCubeWrapped
+  components:
+  - pos: -0.17901945,5.5073943
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 60
+  type: MonkeyCubeWrapped
+  components:
+  - pos: -0.36651945,5.2730193
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 61
+  type: TromboneInstrument
+  components:
+  - pos: -4.3196445,5.3080997
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 62
+  type: PartRodMetal1
+  components:
+  - pos: 0.22723055,-0.8676058
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 63
+  type: ViolinInstrument
+  components:
+  - pos: 0.27410555,3.5268497
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 64
+  type: Chair
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -5.5,-3.5
+    parent: 0
+    type: Transform
+- uid: 65
+  type: Chair
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -0.5,-4.5
+    parent: 0
+    type: Transform
+- uid: 66
+  type: Chair
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -3.5,-5.5
+    parent: 0
+    type: Transform
+- uid: 67
+  type: Chair
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 0.5,-4.5
+    parent: 0
+    type: Transform
+- uid: 68
+  type: Chair
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 3.5,-3.5
+    parent: 0
+    type: Transform
+- uid: 69
+  type: Chair
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -1.5,-4.5
+    parent: 0
+    type: Transform
+- uid: 70
+  type: Chair
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -2.5,-4.5
+    parent: 0
+    type: Transform
+- uid: 71
+  type: Chair
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -4.5,-4.5
+    parent: 0
+    type: Transform
+- uid: 72
+  type: Chair
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -5.5,-4.5
+    parent: 0
+    type: Transform
+- uid: 73
+  type: Chair
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 2.5,-3.5
+    parent: 0
+    type: Transform
+- uid: 74
+  type: Chair
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 1.5,-3.5
+    parent: 0
+    type: Transform
+- uid: 75
+  type: Chair
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 0.5,-3.5
+    parent: 0
+    type: Transform
+- uid: 76
+  type: Chair
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -0.5,-3.5
+    parent: 0
+    type: Transform
+- uid: 77
+  type: Chair
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -1.5,-3.5
+    parent: 0
+    type: Transform
+- uid: 78
+  type: Chair
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -2.5,-3.5
+    parent: 0
+    type: Transform
+- uid: 79
+  type: Chair
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -3.5,-3.5
+    parent: 0
+    type: Transform
+- uid: 80
+  type: Chair
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -4.5,-3.5
+    parent: 0
+    type: Transform
+- uid: 81
+  type: Chair
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -1.5,-6.5
+    parent: 0
+    type: Transform
+- uid: 82
+  type: Chair
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 2.5,-7.5
+    parent: 0
+    type: Transform
+- uid: 83
+  type: Chair
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 1.5,-6.5
+    parent: 0
+    type: Transform
+- uid: 84
+  type: Chair
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 2.5,-5.5
+    parent: 0
+    type: Transform
+- uid: 85
+  type: Chair
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 4.5,-7.5
+    parent: 0
+    type: Transform
+- uid: 86
+  type: Chair
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -4.5,-6.5
+    parent: 0
+    type: Transform
+- uid: 87
+  type: Chair
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -5.5,-6.5
+    parent: 0
+    type: Transform
+- uid: 88
+  type: Chair
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 5.5,-6.5
+    parent: 0
+    type: Transform
+- uid: 89
+  type: DrinkWaterBottleFull
+  components:
+  - pos: 1.1178555,5.2455997
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 90
+  type: ChairWood
+  components:
+  - pos: -0.5,1.5
+    parent: 0
+    type: Transform
+- uid: 91
+  type: XylophoneInstrument
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -0.60089445,5.4955997
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 92
+  type: PianoInstrument
+  components:
+  - pos: -0.5,0.5
+    parent: 0
+    type: Transform
+- uid: 93
+  type: AcousticGuitarInstrument
+  components:
+  - pos: -3.5540195,3.533874
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 94
+  type: AccordionInstrument
+  components:
+  - pos: -3.5540195,5.580749
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 95
+  type: BanjoInstrument
+  components:
+  - pos: -2.4758945,0.48699903
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 96
+  type: ChessBoard
+  components:
+  - pos: 2.5241055,3.471374
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 97
+  type: ChurchOrganInstrument
+  components:
+  - pos: -4.5,3.5
+    parent: 0
+    type: Transform
+- uid: 98
+  type: DrinkSodaWaterCan
+  components:
+  - pos: -2.1165195,-3.645025
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - solution: drink
+    type: DrainableSolution
+- uid: 99
+  type: ClosetBase
+  components:
+  - pos: 2.5,5.5
+    parent: 0
+    type: Transform
+  - isPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 100
+  type: ClosetBase
+  components:
+  - pos: 3.5,5.5
+    parent: 0
+    type: Transform
+  - isPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 101
+  type: ClosetBase
+  components:
+  - pos: -5.5,5.5
+    parent: 0
+    type: Transform
+  - isPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 102
+  type: FoodBurgerClown
+  components:
+  - pos: -3.1165195,-4.466126
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 103
+  type: FoodFrozenSnowconeClown
+  components:
+  - pos: 4.0397305,-2.716126
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 104
+  type: ComfyChair
+  components:
+  - pos: -2.5,5.5
+    parent: 0
+    type: Transform
+- uid: 105
+  type: d20Dice
+  components:
+  - rot: 0.00015378765237983316 rad
+    pos: -1.944643,5.7349615
+    parent: 0
+    type: Transform
+  - sleepTime: 0.1166662
+    type: Physics
+- uid: 106
+  type: d6Dice
+  components:
+  - pos: -1.6946445,5.299499
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 107
+  type: ChairOfficeDark
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 1.5,3.5
+    parent: 0
+    type: Transform
+- uid: 108
+  type: ChairOfficeDark
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 3.5,3.5
+    parent: 0
+    type: Transform
+- uid: 109
+  type: ElectricGuitarInstrument
+  components:
+  - pos: -4.6008945,5.5268497
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 110
+  type: MedkitFilled
+  components:
+  - pos: 2.0084805,5.6518497
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      storagebase: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 111
+  type: BikeHornInstrument
+  components:
+  - pos: -1.2571445,5.7299747
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 112
+  type: DrinkBottleGin
+  components:
+  - pos: 2.2428555,-6.4262753
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - solution: drink
+    type: RefillableSolution
+  - solution: drink
+    type: DrainableSolution
+- uid: 113
+  type: HarmonicaInstrument
+  components:
+  - pos: 1.5866055,0.52685
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 114
+  type: ToyIan
+  components:
+  - pos: -1.4758945,-5.6450253
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 115
+  type: MinimoogInstrument
+  components:
+  - pos: -5.5,3.5
+    parent: 0
+    type: Transform
+- uid: 116
+  type: Mirror
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 6.5,5.5
+    parent: 0
+    type: Transform
+- uid: 117
+  type: FoodFrozenPopsicleOrange
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -5.2102695,-2.5044
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 118
+  type: ParchisBoard
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 5.4147305,3.40185
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 119
+  type: FoodBakedPretzel
+  components:
+  - pos: -0.11651945,-3.520025
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 120
+  type: FoodFrozenPopsicleTrash
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -1.4133945,-6.4106503
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 121
+  type: FoodSnackPopcorn
+  components:
+  - pos: -1.2727695,-2.520025
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 122
+  type: Railing
+  components:
+  - pos: -5.5,-1.5
+    parent: 0
+    type: Transform
+- uid: 123
+  type: Railing
+  components:
+  - pos: -4.5,-1.5
+    parent: 0
+    type: Transform
+- uid: 124
+  type: Railing
+  components:
+  - pos: -3.5,-1.5
+    parent: 0
+    type: Transform
+- uid: 125
+  type: Railing
+  components:
+  - pos: -2.5,-1.5
+    parent: 0
+    type: Transform
+- uid: 126
+  type: Railing
+  components:
+  - pos: -1.5,-1.5
+    parent: 0
+    type: Transform
+- uid: 127
+  type: Railing
+  components:
+  - pos: -0.5,-1.5
+    parent: 0
+    type: Transform
+- uid: 128
+  type: Railing
+  components:
+  - pos: 0.5,-1.5
+    parent: 0
+    type: Transform
+- uid: 129
+  type: Railing
+  components:
+  - pos: 1.5,-1.5
+    parent: 0
+    type: Transform
+- uid: 130
+  type: Railing
+  components:
+  - pos: 2.5,-1.5
+    parent: 0
+    type: Transform
+- uid: 131
+  type: Railing
+  components:
+  - pos: 3.5,-1.5
+    parent: 0
+    type: Transform
+- uid: 132
+  type: Railing
+  components:
+  - pos: 4.5,-1.5
+    parent: 0
+    type: Transform
+- uid: 133
+  type: GlockenspielInstrument
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 4.2268586,3.4079723
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 134
+  type: RecorderInstrument
+  components:
+  - pos: -1.5071445,0.5581
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 135
+  type: RandomInstruments
+  components:
+  - pos: 5.5,5.5
+    parent: 0
+    type: Transform
+- uid: 136
+  type: DrinkBottleRum
+  components:
+  - pos: -4.0383945,-2.613775
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - solution: drink
+    type: RefillableSolution
+  - solution: drink
+    type: DrainableSolution
+- uid: 137
+  type: SaxophoneInstrument
+  components:
+  - pos: -2.5696445,3.4956
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 138
+  type: Stool
+  components:
+  - pos: -2.5,1.5
+    parent: 0
+    type: Transform
+- uid: 139
+  type: Stool
+  components:
+  - pos: -1.5,1.5
+    parent: 0
+    type: Transform
+- uid: 140
+  type: Stool
+  components:
+  - pos: 1.5,1.5
+    parent: 0
+    type: Transform
+- uid: 141
+  type: Stool
+  components:
+  - pos: 0.5,1.5
+    parent: 0
+    type: Transform
+- uid: 142
+  type: SynthesizerInstrument
+  components:
+  - pos: -0.50714445,3.5424747
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 143
+  type: Table
+  components:
+  - pos: -1.5,5.5
+    parent: 0
+    type: Transform
+- uid: 144
+  type: Table
+  components:
+  - pos: -3.5,5.5
+    parent: 0
+    type: Transform
+- uid: 145
+  type: Table
+  components:
+  - pos: 2.5,3.5
+    parent: 0
+    type: Transform
+- uid: 146
+  type: TrumpetInstrument
+  components:
+  - pos: -1.5383945,3.479975
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 147
+  type: SalvageMobSpawner
+  components:
+  - pos: 1.5,1.5
+    parent: 0
+    type: Transform
+- uid: 148
+  type: SalvageMobSpawner
+  components:
+  - pos: -0.5,-0.5
+    parent: 0
+    type: Transform
+- uid: 149
+  type: SalvageMobSpawner
+  components:
+  - pos: 1.5,3.5
+    parent: 0
+    type: Transform
+- uid: 150
+  type: SalvageMobSpawner
+  components:
+  - pos: 3.5,3.5
+    parent: 0
+    type: Transform
+- uid: 151
+  type: SalvageMobSpawner
+  components:
+  - pos: -2.5,5.5
+    parent: 0
+    type: Transform
+- uid: 152
+  type: SalvageMobSpawner
+  components:
+  - pos: -0.5,1.5
+    parent: 0
+    type: Transform
+- uid: 153
+  type: SalvageMobSpawner
+  components:
+  - pos: 0.5,1.5
+    parent: 0
+    type: Transform
+- uid: 154
+  type: SalvageMobSpawner
+  components:
+  - pos: -1.5,1.5
+    parent: 0
+    type: Transform
+- uid: 155
+  type: SalvageMobSpawner
+  components:
+  - pos: -2.5,1.5
+    parent: 0
+    type: Transform
+- uid: 156
+  type: RandomInstruments
+  components:
+  - pos: 3.5,6.5
+    parent: 0
+    type: Transform
+- uid: 157
+  type: GunpetInstrument
+  components:
+  - pos: 0.9612335,3.3142223
+    parent: 0
+    type: Transform
+  - canCollide: False
+    type: Physics
+...

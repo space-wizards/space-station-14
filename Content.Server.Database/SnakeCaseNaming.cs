@@ -21,7 +21,9 @@ namespace Content.Server.Database
         }
 
         public void ApplyServices(IServiceCollection services)
-            => services.AddSnakeCase();
+        {
+            services.AddSnakeCase();
+        }
 
         public void Validate(IDbContextOptions options) {}
 
@@ -33,7 +35,15 @@ namespace Content.Server.Database
 
             public override string LogFragment => "Snake Case Extension";
 
-            public override long GetServiceProviderHashCode() => 0;
+            public override int GetServiceProviderHashCode()
+            {
+                return 0;
+            }
+
+            public override bool ShouldUseSameServiceProvider(DbContextOptionsExtensionInfo other)
+            {
+                return other is ExtensionInfo;
+            }
 
             public override void PopulateDebugInfo(IDictionary<string, string> debugInfo)
             {
@@ -118,26 +128,26 @@ namespace Content.Server.Database
 
             if (entityType.BaseType is null)
             {
-                entityTypeBuilder.ToTable(RewriteName(entityType.GetTableName()), entityType.GetSchema());
+                entityTypeBuilder.ToTable(RewriteName(entityType.GetTableName()!), entityType.GetSchema());
 
                 if (entityType.GetViewNameConfigurationSource() == ConfigurationSource.Convention)
                 {
-                    entityTypeBuilder.ToView(RewriteName(entityType.GetViewName()), entityType.GetViewSchema());
+                    entityTypeBuilder.ToView(RewriteName(entityType.GetViewName()!), entityType.GetViewSchema());
                 }
             }
         }
 
         public void ProcessEntityTypeBaseTypeChanged(
             IConventionEntityTypeBuilder entityTypeBuilder,
-            IConventionEntityType newBaseType,
-            IConventionEntityType oldBaseType,
+            IConventionEntityType? newBaseType,
+            IConventionEntityType? oldBaseType,
             IConventionContext<IConventionEntityType> context)
         {
             var entityType = entityTypeBuilder.Metadata;
 
             if (newBaseType is null)
             {
-                entityTypeBuilder.ToTable(RewriteName(entityType.GetTableName()), entityType.GetSchema());
+                entityTypeBuilder.ToTable(RewriteName(entityType.GetTableName()!), entityType.GetSchema());
             }
             else
             {
@@ -149,7 +159,9 @@ namespace Content.Server.Database
         public virtual void ProcessPropertyAdded(
             IConventionPropertyBuilder propertyBuilder,
             IConventionContext<IConventionPropertyBuilder> context)
-            => RewriteColumnName(propertyBuilder);
+        {
+            RewriteColumnName(propertyBuilder);
+        }
 
         public void ProcessForeignKeyOwnershipChanged(IConventionForeignKeyBuilder relationshipBuilder, IConventionContext<bool?> context)
         {
@@ -173,8 +185,8 @@ namespace Content.Server.Database
         public void ProcessEntityTypeAnnotationChanged(
             IConventionEntityTypeBuilder entityTypeBuilder,
             string name,
-            IConventionAnnotation annotation,
-            IConventionAnnotation oldAnnotation,
+            IConventionAnnotation? annotation,
+            IConventionAnnotation? oldAnnotation,
             IConventionContext<IConventionAnnotation> context)
         {
             var entityType = entityTypeBuilder.Metadata;
@@ -216,7 +228,7 @@ namespace Content.Server.Database
                 && (string)annotation.Value != ownership.PrincipalEntityType.GetTableName())
             {
                 foreach (var property in entityType.GetProperties()
-                    .Except(entityType.FindPrimaryKey().Properties)
+                    .Except(entityType.FindPrimaryKey()!.Properties)
                     .Where(p => p.Builder.CanSetColumnName(null)))
                 {
                     RewriteColumnName(property.Builder);
@@ -232,7 +244,9 @@ namespace Content.Server.Database
         public void ProcessForeignKeyAdded(
             IConventionForeignKeyBuilder relationshipBuilder,
             IConventionContext<IConventionForeignKeyBuilder> context)
-            => relationshipBuilder.HasConstraintName(RewriteName(relationshipBuilder.Metadata.GetDefaultName()));
+        {
+            relationshipBuilder.HasConstraintName(RewriteName(relationshipBuilder.Metadata.GetDefaultName()));
+        }
 
         public void ProcessKeyAdded(IConventionKeyBuilder keyBuilder, IConventionContext<IConventionKeyBuilder> context)
         {
@@ -271,7 +285,7 @@ namespace Content.Server.Database
 
                         if (property.GetColumnNameConfigurationSource(identifier.Value) == ConfigurationSource.Convention)
                         {
-                            columnName = property.GetColumnName(identifier.Value);
+                            columnName = property.GetColumnName(identifier.Value)!;
                             if (columnName.StartsWith(entityType.ShortName() + '_', StringComparison.Ordinal))
                             {
                                 property.Builder.HasColumnName(
@@ -284,7 +298,7 @@ namespace Content.Server.Database
             }
         }
 
-        private void RewriteColumnName(IConventionPropertyBuilder propertyBuilder)
+        private static void RewriteColumnName(IConventionPropertyBuilder propertyBuilder)
         {
             var property = propertyBuilder.Metadata;
             var entityType = property.DeclaringEntityType;
@@ -314,7 +328,7 @@ namespace Content.Server.Database
                     if (name == "Id")
                         name = entityType.GetTableName() + name;
                     propertyBuilder.HasColumnName(
-                        RewriteName(name), identifier.Value);
+                        RewriteName(name!), identifier.Value);
                 }
             }
         }

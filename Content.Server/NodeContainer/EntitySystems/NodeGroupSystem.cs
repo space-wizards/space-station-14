@@ -364,7 +364,7 @@ namespace Content.Server.NodeContainer.EntitySystems
                     Name = n.Name,
                     NetId = n.NetId,
                     Reachable = n.ReachableNodes.Select(r => r.NetId).ToArray(),
-                    Entity = n.Owner.Uid,
+                    Entity = n.Owner,
                     Type = n.GetType().Name
                 }).ToArray()
             };

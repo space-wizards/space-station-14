@@ -127,7 +127,7 @@
   name: Z8 Bulldog
   parent: RifleBase
   id: RifleCarbine
-  description: An older bullpup carbine model, made by Frozen Star.
+  description: An older bullpup carbine model, with an attached underbarrel grenade launcher.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/carbine.rsi

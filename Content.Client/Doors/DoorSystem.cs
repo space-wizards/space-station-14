@@ -21,6 +21,8 @@ namespace Content.Client.Doors
         {
             base.Initialize();
 
+            UpdatesOutsidePrediction = true;
+
             SubscribeLocalEvent<ClientDoorComponent, DoorStateChangedEvent>(OnDoorStateChanged);
         }
 
@@ -58,6 +60,7 @@ namespace Content.Client.Doors
                 if (comp.Deleted)
                 {
                     _activeDoors.RemoveAt(i);
+                    continue;
                 }
                 comp.OnUpdate();
             }

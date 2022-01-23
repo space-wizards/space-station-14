@@ -12,7 +12,7 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Lathe.UI
 {
-    public class LatheMenu : SS14Window
+    public class LatheMenu : DefaultWindow
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 

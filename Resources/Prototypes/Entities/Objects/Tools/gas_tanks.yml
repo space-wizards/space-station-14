@@ -24,7 +24,6 @@
   id: OxygenTank
   name: oxygen tank
   description: A tank of oxygen.
-#  suffix: ent-gas-tank-suffix-empty
   components:
   - type: Sprite
     sprite: Objects/Tanks/oxygen.rsi
@@ -43,7 +42,6 @@
   id: YellowOxygenTank
   name: oxygen tank
   description: A tank of oxygen. This one is in yellow.
-#  suffix: ent-gas-tank-suffix-empty
   components:
   - type: Sprite
     sprite: Objects/Tanks/yellow.rsi
@@ -57,7 +55,6 @@
   id: RedOxygenTank
   name: oxygen tank
   description: A tank of oxygen. This one is in red.
-#  suffix: ent-gas-tank-suffix-empty
   components:
   - type: Sprite
     sprite: Objects/Tanks/red.rsi
@@ -71,7 +68,6 @@
   id: EmergencyOxygenTank
   name: extended-capacity emergency oxygen tank
   description: Used for emergencies. Contains very little oxygen, so try to conserve it until you actually need it.
-#  suffix: ent-gas-tank-suffix-empty
   components:
   - type: Sprite
     sprite: Objects/Tanks/emergency.rsi
@@ -92,7 +88,6 @@
   id: ExtendedEmergencyOxygenTank
   name: double emergency oxygen tank
   description: Used for emergencies. Contains little oxygen, so try to conserve it until you actually need it.
-#  suffix: ent-gas-tank-suffix-empty
   components:
   - type: Sprite
     sprite: Objects/Tanks/emergency_yellow.rsi
@@ -111,7 +106,6 @@
 - type: entity
   parent: ExtendedEmergencyOxygenTank
   id: DoubleEmergencyOxygenTank
-#  suffix: ent-gas-tank-suffix-empty
   components:
   - type: Sprite
     sprite: Objects/Tanks/emergency_double.rsi
@@ -132,7 +126,6 @@
   id: AirTank
   name: air tank
   description: Mixed anyone?
-#  suffix: ent-gas-tank-suffix-empty
   components:
     - type: Sprite
       sprite: Objects/Tanks/generic.rsi
@@ -151,7 +144,6 @@
   id: PlasmaTank
   name: plasma tank
   description: Contains dangerous plasma. Do not inhale. Extremely flammable.
-#  suffix: ent-gas-tank-suffix-empty
   components:
     - type: Sprite
       sprite: Objects/Tanks/plasma.rsi

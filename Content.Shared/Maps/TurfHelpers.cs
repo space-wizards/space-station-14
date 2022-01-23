@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -10,6 +11,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Broadphase;
+using Robust.Shared.Random;
 
 namespace Content.Shared.Maps
 {
@@ -114,7 +116,10 @@ namespace Content.Shared.Maps
         }
 
         public static bool PryTile(this TileRef tileRef,
-            IMapManager? mapManager = null, ITileDefinitionManager? tileDefinitionManager = null, IEntityManager? entityManager = null)
+            IMapManager? mapManager = null,
+            ITileDefinitionManager? tileDefinitionManager = null,
+            IEntityManager? entityManager = null,
+            IRobustRandom? robustRandom = null)
         {
             var tile = tileRef.Tile;
             var indices = tileRef.GridIndices;
@@ -123,6 +128,7 @@ namespace Content.Shared.Maps
             mapManager ??= IoCManager.Resolve<IMapManager>();
             tileDefinitionManager ??= IoCManager.Resolve<ITileDefinitionManager>();
             entityManager ??= IoCManager.Resolve<IEntityManager>();
+            robustRandom ??= IoCManager.Resolve<IRobustRandom>();
 
             if (tile.IsEmpty) return false;
 
@@ -136,11 +142,14 @@ namespace Content.Shared.Maps
 
              mapGrid.SetTile(tileRef.GridIndices, new Tile(plating.TileId));
 
-             var half = mapGrid.TileSize / 2f;
+             const float margin = 0.1f;
+
+             var (x, y) = ((mapGrid.TileSize - 2 * margin) * robustRandom.NextFloat() + margin, (mapGrid.TileSize - 2 * margin) * robustRandom.NextFloat() + margin);
 
             //Actually spawn the relevant tile item at the right position and give it some random offset.
-            var tileItem = entityManager.SpawnEntity(tileDef.ItemDropPrototypeName, indices.ToEntityCoordinates(tileRef.GridIndex, mapManager).Offset(new Vector2(half, half)));
-            tileItem.RandomOffset(0.25f);
+            var tileItem = entityManager.SpawnEntity(tileDef.ItemDropPrototypeName, indices.ToEntityCoordinates(tileRef.GridIndex, mapManager).Offset(new Vector2(x, y)));
+            entityManager.GetComponent<TransformComponent>(tileItem).LocalRotation = robustRandom.NextDouble() * Math.Tau;
+
             return true;
         }
 
@@ -148,12 +157,12 @@ namespace Content.Shared.Maps
         ///     Helper that returns all entities in a turf.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerable<IEntity> GetEntitiesInTile(this TileRef turf, LookupFlags flags = LookupFlags.IncludeAnchored, IEntityLookup? lookupSystem = null)
+        public static IEnumerable<EntityUid> GetEntitiesInTile(this TileRef turf, LookupFlags flags = LookupFlags.IncludeAnchored, IEntityLookup? lookupSystem = null)
         {
             lookupSystem ??= IoCManager.Resolve<IEntityLookup>();
 
             if (!GetWorldTileBox(turf, out var worldBox))
-                return Enumerable.Empty<IEntity>();
+                return Enumerable.Empty<EntityUid>();
 
             return lookupSystem.GetEntitiesIntersecting(turf.MapIndex, worldBox, flags);
         }
@@ -161,12 +170,12 @@ namespace Content.Shared.Maps
         /// <summary>
         ///     Helper that returns all entities in a turf.
         /// </summary>
-        public static IEnumerable<IEntity> GetEntitiesInTile(this EntityCoordinates coordinates, LookupFlags flags = LookupFlags.IncludeAnchored, IEntityLookup? lookupSystem = null)
+        public static IEnumerable<EntityUid> GetEntitiesInTile(this EntityCoordinates coordinates, LookupFlags flags = LookupFlags.IncludeAnchored, IEntityLookup? lookupSystem = null)
         {
             var turf = coordinates.GetTileRef();
 
             if (turf == null)
-                return Enumerable.Empty<IEntity>();
+                return Enumerable.Empty<EntityUid>();
 
             return GetEntitiesInTile(turf.Value, flags, lookupSystem);
         }
@@ -174,7 +183,7 @@ namespace Content.Shared.Maps
         /// <summary>
         ///     Helper that returns all entities in a turf.
         /// </summary>
-        public static IEnumerable<IEntity> GetEntitiesInTile(this Vector2i indices, GridId gridId, LookupFlags flags = LookupFlags.IncludeAnchored, IEntityLookup? lookupSystem = null)
+        public static IEnumerable<EntityUid> GetEntitiesInTile(this Vector2i indices, GridId gridId, LookupFlags flags = LookupFlags.IncludeAnchored, IEntityLookup? lookupSystem = null)
         {
             return GetEntitiesInTile(indices.GetTileRef(gridId), flags, lookupSystem);
         }

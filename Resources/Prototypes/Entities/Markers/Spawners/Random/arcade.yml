@@ -3,8 +3,12 @@
   name: random arcade spawner
   parent: MarkerBase
   components:
-  - type: RandomArcade
   - type: Sprite
     layers:
       - state: red
       - texture: Structures/Machines/arcade.rsi/arcade.png
+  - type: RandomSpawner
+    prototypes:
+      - BlockGameArcade
+      - SpaceVillainArcade
+    chance: 1

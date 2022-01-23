@@ -37,8 +37,8 @@ namespace Content.Client.Damage
     /// </summary>
     public class DamageVisualizer : AppearanceVisualizer
     {
-        [Dependency] IPrototypeManager _prototypeManager = default!;
-        [Dependency] IEntityManager _entityManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private const string _name = "DamageVisualizer";
         /// <summary>
@@ -195,7 +195,7 @@ namespace Content.Client.Damage
             public readonly string? Color;
         }
 
-        public override void InitializeEntity(IEntity entity)
+        public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
 
@@ -207,7 +207,7 @@ namespace Content.Client.Damage
                 InitializeVisualizer(entity, damageData);
         }
 
-        private void VerifyVisualizerSetup(IEntity entity, DamageVisualizerDataComponent damageData)
+        private void VerifyVisualizerSetup(EntityUid entity, DamageVisualizerDataComponent damageData)
         {
             if (_thresholds.Count < 1)
             {
@@ -289,11 +289,11 @@ namespace Content.Client.Damage
             }
         }
 
-        private void InitializeVisualizer(IEntity entity, DamageVisualizerDataComponent damageData)
+        private void InitializeVisualizer(EntityUid entity, DamageVisualizerDataComponent damageData)
         {
-            if (!entity.TryGetComponent<SpriteComponent>(out SpriteComponent? spriteComponent)
-                || !entity.TryGetComponent<DamageableComponent>(out var damageComponent)
-                || !entity.TryGetComponent<AppearanceComponent>(out var appearanceComponent))
+            if (!_entityManager.TryGetComponent(entity, out SpriteComponent? spriteComponent)
+                || !_entityManager.TryGetComponent<DamageableComponent?>(entity, out var damageComponent)
+                || !_entityManager.HasComponent<AppearanceComponent>(entity))
                 return;
 
             _thresholds.Add(FixedPoint2.Zero);
@@ -504,7 +504,8 @@ namespace Content.Client.Damage
 
         public override void OnChangeData(AppearanceComponent component)
         {
-            if (!component.Owner.TryGetComponent<DamageVisualizerDataComponent>(out var damageData))
+            var entities = _entityManager;
+            if (!entities.TryGetComponent(component.Owner, out DamageVisualizerDataComponent damageData))
                 return;
 
             if (!damageData.Valid)
@@ -525,8 +526,9 @@ namespace Content.Client.Damage
 
         private void HandleDamage(AppearanceComponent component, DamageVisualizerDataComponent damageData)
         {
-            if (!component.Owner.TryGetComponent<SpriteComponent>(out var spriteComponent)
-                || !component.Owner.TryGetComponent<DamageableComponent>(out var damageComponent))
+            var entities = _entityManager;
+            if (!entities.TryGetComponent(component.Owner, out SpriteComponent spriteComponent)
+                || !entities.TryGetComponent(component.Owner, out DamageableComponent damageComponent))
                 return;
 
             if (_targetLayers != null && _damageOverlayGroups != null)

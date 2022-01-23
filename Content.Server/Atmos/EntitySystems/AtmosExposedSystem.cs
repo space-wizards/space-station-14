@@ -12,6 +12,7 @@ namespace Content.Server.Atmos.EntitySystems
     {}
     */
 
+    [ByRefEvent]
     public readonly struct AtmosExposedUpdateEvent
     {
         public readonly EntityCoordinates Coordinates;

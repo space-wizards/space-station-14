@@ -1,7 +1,6 @@
-using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.GameTicking;
 using Content.Shared.Atmos;
+using Content.Shared.Station;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -15,15 +14,18 @@ namespace Content.Server.StationEvents.Events
 {
     internal sealed class GasLeak : StationEvent
     {
+        [Dependency] private readonly IRobustRandom _robustRandom = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+
         public override string Name => "GasLeak";
 
-        public override string? StartAnnouncement =>
+        public override string StartAnnouncement =>
             "Attention crew, there is a gas leak on the station. We advise you to avoid the area and wear suit internals in the meantime.";
 
         // Sourced from https://github.com/vgstation-coders/vgstation13/blob/2c5a491446ab824a8fbbf39bcf656b590e0228df/sound/misc/bloblarm.ogg
-        public override string? StartAudio => "/Audio/Announcements/bloblarm.ogg";
+        public override string StartAudio => "/Audio/Announcements/bloblarm.ogg";
 
-        protected override string? EndAnnouncement => "The source of the gas leak has been fixed. Please be cautious around areas with gas remaining.";
+        protected override string EndAnnouncement => "The source of the gas leak has been fixed. Please be cautious around areas with gas remaining.";
 
         private static readonly Gas[] LeakableGases = {
             Gas.Plasma,
@@ -56,7 +58,9 @@ namespace Content.Server.StationEvents.Events
 
         // Event variables
 
-        private IEntity? _targetGrid;
+        private StationId _targetStation;
+
+        private EntityUid _targetGrid;
 
         private Vector2i _targetTile;
 
@@ -84,17 +88,16 @@ namespace Content.Server.StationEvents.Events
         public override void Startup()
         {
             base.Startup();
-            var robustRandom = IoCManager.Resolve<IRobustRandom>();
 
             // Essentially we'll pick out a target amount of gas to leak, then a rate to leak it at, then work out the duration from there.
-            if (TryFindRandomTile(out _targetTile, robustRandom))
+            if (TryFindRandomTile(out _targetTile, out _targetStation, out _targetGrid, out _targetCoords))
             {
                 _foundTile = true;
 
-                _leakGas = robustRandom.Pick(LeakableGases);
+                _leakGas = _robustRandom.Pick(LeakableGases);
                 // Was 50-50 on using normal distribution.
-                var totalGas = (float) robustRandom.Next(MinimumGas, MaximumGas);
-                _molesPerSecond = robustRandom.Next(MinimumMolesPerSecond, MaximumMolesPerSecond);
+                var totalGas = (float) _robustRandom.Next(MinimumGas, MaximumGas);
+                _molesPerSecond = _robustRandom.Next(MinimumMolesPerSecond, MaximumMolesPerSecond);
                  EndAfter = totalGas / _molesPerSecond + StartAfter;
                  Logger.InfoS("stationevents", $"Leaking {totalGas} of {_leakGas} over {EndAfter - StartAfter} seconds at {_targetTile}");
             }
@@ -117,15 +120,15 @@ namespace Content.Server.StationEvents.Events
             var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
 
             if (!_foundTile ||
-                _targetGrid == null ||
-                _targetGrid.Deleted ||
-                !atmosphereSystem.IsSimulatedGrid(_targetGrid.Transform.GridID))
+                _targetGrid == default ||
+                _entityManager.Deleted(_targetGrid) ||
+                !atmosphereSystem.IsSimulatedGrid(_entityManager.GetComponent<TransformComponent>(_targetGrid).GridID))
             {
                 Running = false;
                 return;
             }
 
-            var environment = atmosphereSystem.GetTileMixture(_targetGrid.Transform.GridID, _targetTile, true);
+            var environment = atmosphereSystem.GetTileMixture(_entityManager.GetComponent<TransformComponent>(_targetGrid).GridID, _targetTile, true);
 
             environment?.AdjustMoles(_leakGas, LeakCooldown * _molesPerSecond);
         }
@@ -137,7 +140,7 @@ namespace Content.Server.StationEvents.Events
             Spark();
 
             _foundTile = false;
-            _targetGrid = null;
+            _targetGrid = default;
             _targetTile = default;
             _targetCoords = default;
             _leakGas = Gas.Oxygen;
@@ -147,53 +150,21 @@ namespace Content.Server.StationEvents.Events
         private void Spark()
         {
             var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
-            var robustRandom = IoCManager.Resolve<IRobustRandom>();
-            if (robustRandom.NextFloat() <= SparkChance)
+            if (_robustRandom.NextFloat() <= SparkChance)
             {
                 if (!_foundTile ||
-                    _targetGrid == null ||
-                    _targetGrid.Deleted ||
-                    !atmosphereSystem.IsSimulatedGrid(_targetGrid.Transform.GridID))
+                    _targetGrid == default ||
+                    (!_entityManager.EntityExists(_targetGrid) ? EntityLifeStage.Deleted : _entityManager.GetComponent<MetaDataComponent>(_targetGrid).EntityLifeStage) >= EntityLifeStage.Deleted ||
+                    !atmosphereSystem.IsSimulatedGrid(_entityManager.GetComponent<TransformComponent>(_targetGrid).GridID))
                 {
                     return;
                 }
 
                 // Don't want it to be so obnoxious as to instantly murder anyone in the area but enough that
                 // it COULD start potentially start a bigger fire.
-                atmosphereSystem.HotspotExpose(_targetGrid.Transform.GridID, _targetTile, 700f, 50f, true);
+                atmosphereSystem.HotspotExpose(_entityManager.GetComponent<TransformComponent>(_targetGrid).GridID, _targetTile, 700f, 50f, true);
                 SoundSystem.Play(Filter.Pvs(_targetCoords), "/Audio/Effects/sparks4.ogg", _targetCoords);
             }
-        }
-
-        private bool TryFindRandomTile(out Vector2i tile, IRobustRandom? robustRandom = null)
-        {
-            tile = default;
-            var defaultGridId = EntitySystem.Get<GameTicker>().DefaultGridId;
-
-            if (!IoCManager.Resolve<IMapManager>().TryGetGrid(defaultGridId, out var grid) ||
-                !IoCManager.Resolve<IEntityManager>().TryGetEntity(grid.GridEntityId, out _targetGrid)) return false;
-
-            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
-            robustRandom ??= IoCManager.Resolve<IRobustRandom>();
-            var found = false;
-            var gridBounds = grid.WorldBounds;
-            var gridPos = grid.WorldPosition;
-
-            for (var i = 0; i < 10; i++)
-            {
-                var randomX = robustRandom.Next((int) gridBounds.Left, (int) gridBounds.Right);
-                var randomY = robustRandom.Next((int) gridBounds.Bottom, (int) gridBounds.Top);
-
-                tile = new Vector2i(randomX - (int) gridPos.X, randomY - (int) gridPos.Y);
-                if (atmosphereSystem.IsTileSpace(defaultGridId, tile) || atmosphereSystem.IsTileAirBlocked(defaultGridId, tile)) continue;
-                found = true;
-                _targetCoords = grid.GridTileToLocal(tile);
-                break;
-            }
-
-            if (!found) return false;
-
-            return true;
         }
     }
 }

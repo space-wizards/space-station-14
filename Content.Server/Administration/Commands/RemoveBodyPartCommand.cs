@@ -1,5 +1,4 @@
-using Content.Server.Body;
-using Content.Server.Body.Part;
+using Content.Server.Body.Components;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
@@ -31,7 +30,7 @@ namespace Content.Server.Administration.Commands
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
 
-            if (!entityManager.TryGetComponent<ITransformComponent>(entityUid, out var transform)) return;
+            if (!entityManager.TryGetComponent<TransformComponent>(entityUid, out var transform)) return;
 
             var parent = transform.ParentUid;
 

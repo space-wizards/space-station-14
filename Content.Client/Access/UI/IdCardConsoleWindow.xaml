@@ -1,4 +1,4 @@
-﻿<SS14Window xmlns="https://spacestation14.io"
+﻿<DefaultWindow xmlns="https://spacestation14.io"
             MinSize="650 290">
     <BoxContainer Orientation="Vertical">
         <GridContainer Columns="3">
@@ -27,4 +27,4 @@
 
         </GridContainer>
     </BoxContainer>
-</SS14Window>
+</DefaultWindow>

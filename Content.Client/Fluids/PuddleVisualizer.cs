@@ -10,7 +10,6 @@ using Robust.Shared.Maths;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-
 namespace Content.Client.Fluids
 {
     [UsedImplicitly]
@@ -21,13 +20,13 @@ namespace Content.Client.Fluids
         // Whether the underlying solution color should be used
         [DataField("recolor")] public bool Recolor;
 
-        public override void InitializeEntity(IEntity entity)
+        public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
 
-            if (!entity.TryGetComponent(out SpriteComponent? spriteComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out SpriteComponent? spriteComponent))
             {
-                Logger.Warning($"Missing SpriteComponent for PuddleVisualizer on entityUid = {entity.Uid}");
+                Logger.Warning($"Missing SpriteComponent for PuddleVisualizer on entityUid = {entity}");
                 return;
             }
 
@@ -46,8 +45,9 @@ namespace Content.Client.Fluids
         {
             base.OnChangeData(component);
 
+            var entities = IoCManager.Resolve<IEntityManager>();
             if (component.TryGetData<float>(PuddleVisuals.VolumeScale, out var volumeScale) &&
-                component.Owner.TryGetComponent<SpriteComponent>(out var spriteComponent))
+                entities.TryGetComponent<SpriteComponent>(component.Owner, out var spriteComponent))
             {
                 var cappedScale = Math.Min(1.0f, volumeScale * 0.75f +0.25f);
                 UpdateVisual(component, spriteComponent, cappedScale);
@@ -69,5 +69,5 @@ namespace Content.Client.Fluids
             spriteComponent.Color = newColor;
         }
     }
-    
+
 }

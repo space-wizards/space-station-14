@@ -1,5 +1,7 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
+using System.Text;
 using Content.Server.Chemistry.Components.SolutionManager;
+using Content.Server.Database;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
@@ -127,6 +129,28 @@ namespace Content.Server.Chemistry.EntitySystems
             }
 
             return true;
+        }
+
+        public static string ToPrettyString(Solution solution)
+        {
+            var sb = new StringBuilder();
+            sb.Append("[");
+            var first = true;
+            foreach (var (id, quantity) in solution.Contents)
+            {
+                if (first)
+                {
+                    first = false;
+                }
+                else
+                {
+                    sb.Append(", ");
+                }
+                sb.AppendFormat("{0}: {1}u", id, quantity);
+
+            }
+            sb.Append(']');
+            return sb.ToString();
         }
     }
 }

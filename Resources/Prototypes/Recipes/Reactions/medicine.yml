@@ -67,6 +67,24 @@
     Cryoxadone: 3
 
 - type: reaction
+  id: Epinephrine
+  reactants:
+    Phenol:
+      amount: 1
+    Acetone:
+      amount: 1
+    Diethylamine:
+      amount: 1
+    Oxygen:
+      amount: 1
+    Chlorine:
+      amount: 1
+    Hydrogen:
+      amount: 1
+  products:
+    Epinephrine: 6
+
+- type: reaction
   id: Clonexadone
   reactants:
     Cryoxadone:
@@ -323,28 +341,6 @@
     Tricordrazine: 2
 
 - type: reaction
-  id: Vaccine
-  reactants:
-    Aluminium:
-      amount: 1
-    Glucose:
-      amount: 1
-    Water:
-      amount: 1
-  products:
-    Vaccine: 3
-
-- type: reaction
-  id: Albuterol
-  reactants:
-    Hyperzine:
-      amount: 1
-    Tramadol:
-      amount: 1
-  products:
-    Albuterol: 2
-
-- type: reaction
   id: ChloralHydrate
   reactants:
     Ethanol:
@@ -355,20 +351,6 @@
       amount: 1
   products:
     ChloralHydrate: 1
-
-- type: reaction
-  id: Creatine
-  reactants:
-    Bicaridine:
-      amount: 1
-    Hyperzine:
-      amount: 1
-    Nutriment:
-      amount: 1
-    UnstableMutagen:
-      amount: 1
-  products:
-    Creatine: 3
 
 - type: reaction
   id: Cryptobiolin
@@ -406,6 +388,7 @@
 
 - type: reaction
   id: Lexorin
+  impact: High
   reactants:
     Ammonia:
       amount: 1
@@ -471,3 +454,14 @@
       amount: 1
   products:
     SpaceDrugs: 3
+    
+- type: reaction
+  id: Ultravasculine
+  reactants:
+    Histamine:
+      amount: 2
+    Plasma:
+      amount: 5
+      catalyst: true
+  products:
+    Ultravasculine: 2

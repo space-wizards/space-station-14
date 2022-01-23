@@ -23,3 +23,15 @@
   icon:
     sprite: Structures/Machines/parts.rsi
     state: "box_0"
+
+- type: construction
+  name: destroyed machine frame
+  id: MachineFrameDestroyed
+  graph: machine
+  startNode: start
+  targetNode: destroyedMachineFrame
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Machines/parts.rsi
+    state: "destroyed"

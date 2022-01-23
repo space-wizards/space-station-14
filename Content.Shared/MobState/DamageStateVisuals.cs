@@ -11,7 +11,7 @@ namespace Content.Shared.MobState
     }
 
     /// <summary>
-    ///     Defines what state an <see cref="IEntity"/> is in.
+    ///     Defines what state an <see cref="Robust.Shared.GameObjects.EntityUid"/> is in.
     ///
     ///     Ordered from most alive to least alive.
     ///     To enumerate them in this way see

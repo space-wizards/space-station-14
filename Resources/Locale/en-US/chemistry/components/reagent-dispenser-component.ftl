@@ -1,12 +1,7 @@
 ## Entity
 
 reagent-dispenser-component-activate-no-hands = You have no hands.
-reagent-dispenser-component-interact-using-no-hands = You have no hands.
-reagent-dispenser-component-interact-using-nothing-in-hands = You have nothing in your hand!
-
-reagent-dispenser-component-has-container-already-message = This dispenser already has a container in it.
-reagent-dispenser-component-container-too-large-message = The {$container} is too large for the ChemMaster!
-reagent-dispenser-component-cannot-put-entity-message = You can't put { THE($entity) } in the dispenser!
+reagent-dispenser-component-cannot-put-entity-message = You can't put this in the dispenser!
 
 ## Bound UI
 

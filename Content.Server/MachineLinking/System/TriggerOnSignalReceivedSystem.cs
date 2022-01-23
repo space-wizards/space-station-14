@@ -1,4 +1,4 @@
-﻿using Content.Server.Explosion;
+﻿using Content.Server.Explosion.EntitySystems;
 using Content.Server.MachineLinking.Components;
 using Content.Server.MachineLinking.Events;
 using Robust.Shared.GameObjects;
@@ -19,7 +19,7 @@ namespace Content.Server.MachineLinking.System
 
         private void OnSignalReceived(EntityUid uid, TriggerOnSignalReceivedComponent component, SignalReceivedEvent args)
         {
-            _trigger.Trigger(EntityManager.GetEntity(uid));
+            _trigger.Trigger(uid);
         }
     }
 }

@@ -34,7 +34,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatBeretHoS
-  name: HoS beret
+  name: head of security's beret
   description: A black beret with a commander's rank emblem. For officers that are more inclined towards style than safety.
   components:
   - type: Sprite
@@ -45,7 +45,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatBeretWarden
-  name: warden's hat
+  name: warden's beret
   description: A corporate blue beret with a warden's rank emblem. For officers that are more inclined towards style than safety.
   components:
   - type: Sprite
@@ -100,7 +100,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatChef
-  name: chef hat
+  name: chefs hat
   description: "It's a hat used by chefs to keep hair out of your food. Judging by the food in the mess, they don't work."
   components:
   - type: Sprite
@@ -111,7 +111,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatFedoraBrown
-  name:  brown fedora
+  name: brown fedora
   description: It's a brown fedora.
   components:
   - type: Sprite
@@ -144,7 +144,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatHopcap
-  name: hop cap
+  name: head of personnel's cap
   description: A grand, stylish captain cap.
   components:
   - type: Sprite
@@ -155,7 +155,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatHoshat
-  name: HoS hat
+  name: head of security's hat
   description: "There's a new sheriff in station."
   components:
   - type: Sprite
@@ -177,7 +177,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatPaper
-  name: paper
+  name: paper hat
   description: A hat made of paper.
   components:
   - type: Sprite

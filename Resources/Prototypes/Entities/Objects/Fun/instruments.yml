@@ -5,7 +5,10 @@
   description: That's an instrument.
   components:
   - type: Instrument
-    handheld: true
+  - type: ActivatableUI
+    inHandsOnly: true
+    singleUser: true
+    key: enum.InstrumentUiKey.Key
   - type: UserInterface
     interfaces:
     - key: enum.InstrumentUiKey.Key
@@ -158,6 +161,7 @@
   parent: BaseHandheldInstrument
   id: SaxophoneInstrument
   name: saxophone
+  description: An instrument. You could probably grind this into raw jazz.
   components:
   - type: Instrument
     program: 67
@@ -167,6 +171,15 @@
   - type: Item
     size: 24
     sprite: Objects/Fun/Instruments/saxophone.rsi
+  - type: Extractable
+    grindableSolutionName: sax
+  - type: SolutionContainerManager
+    solutions:
+      sax:
+        reagents:
+          - ReagentId: Saxoite
+            Quantity: 10
+
 
 - type: entity
   parent: BaseHandheldInstrument

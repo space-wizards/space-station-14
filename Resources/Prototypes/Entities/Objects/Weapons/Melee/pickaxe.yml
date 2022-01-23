@@ -8,12 +8,17 @@
     sprite: Objects/Weapons/Melee/pickaxe.rsi
     state: pickaxe
   - type: Pickaxe
+    damage:
+      types:
+        Piercing: 25
   - type: ItemCooldown
   - type: MeleeWeapon
     damage:
       types:
-        Piercing: 15
-        Blunt: 5
+        Piercing: 10
+        Blunt: 4
+    arcCooldownTime: 3
+
   - type: Item
     size: 24
     sprite: Objects/Weapons/Melee/pickaxe.rsi

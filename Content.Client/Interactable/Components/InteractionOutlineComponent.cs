@@ -10,6 +10,7 @@ namespace Content.Client.Interactable.Components
     public class InteractionOutlineComponent : Component
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IEntityManager _entMan = default!;
 
         private const float DefaultWidth = 1;
         private const string ShaderInRange = "SelectionOutlineInrange";
@@ -25,16 +26,16 @@ namespace Content.Client.Interactable.Components
         {
             _lastRenderScale = renderScale;
             _inRange = inInteractionRange;
-            if (Owner.TryGetComponent(out ISpriteComponent? sprite))
+            if (_entMan.TryGetComponent(Owner, out ISpriteComponent? sprite))
             {
                 sprite.PostShader = MakeNewShader(inInteractionRange, renderScale);
-                sprite.RenderOrder = Owner.EntityManager.CurrentTick.Value;
+                sprite.RenderOrder = _entMan.CurrentTick.Value;
             }
         }
 
         public void OnMouseLeave()
         {
-            if (Owner.TryGetComponent(out ISpriteComponent? sprite))
+            if (_entMan.TryGetComponent(Owner, out ISpriteComponent? sprite))
             {
                 sprite.PostShader = null;
                 sprite.RenderOrder = 0;
@@ -46,7 +47,7 @@ namespace Content.Client.Interactable.Components
 
         public void UpdateInRange(bool inInteractionRange, int renderScale)
         {
-            if (Owner.TryGetComponent(out ISpriteComponent? sprite)
+            if (_entMan.TryGetComponent(Owner, out ISpriteComponent? sprite)
                 && (inInteractionRange != _inRange || _lastRenderScale != renderScale))
             {
                 _inRange = inInteractionRange;

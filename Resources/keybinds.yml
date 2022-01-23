@@ -54,6 +54,7 @@ binds:
 - function: CycleChatChannelForward
   type: State
   key: Tab
+  priority: 1 # Before tab complete
 - function: CycleChatChannelBackward
   type: State
   key: Tab
@@ -64,6 +65,9 @@ binds:
 - function: FocusLocalChatWindow
   type: State
   key: Period
+- function: FocusWhisperChatWindow
+  type: State
+  key: Comma
 - function: FocusRadioWindow
   type: State
   key: SemiColon
@@ -298,6 +302,9 @@ binds:
   type: State
   key: Delete
   canRepeat: true
+- function: TextTabComplete
+  type: State
+  key: Tab
 - function: OpenEntitySpawnWindow
   type: State
   key: F5

@@ -484,7 +484,7 @@ namespace Content.Client.ParticleAccelerator.UI
             public void SetPowerState(ParticleAcceleratorUIState state, bool exists)
             {
                 _base.ShaderOverride = exists ? null : _menu._greyScaleShader;
-                _base.ModulateSelfOverride = exists ? (Color?) null : new Color(127, 127, 127);
+                _base.ModulateSelfOverride = exists ? null : new Color(127, 127, 127);
 
                 if (!state.Enabled || !exists)
                 {

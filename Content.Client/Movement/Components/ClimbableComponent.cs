@@ -17,7 +17,7 @@ namespace Content.Client.Movement.Components
             var user = eventArgs.User;
             var target = eventArgs.Target;
             var dragged = eventArgs.Dragged;
-            bool Ignored(IEntity entity) => entity == target || entity == user || entity == dragged;
+            bool Ignored(EntityUid entity) => entity == target || entity == user || entity == dragged;
 
             return user.InRangeUnobstructed(target, Range, predicate: Ignored) && user.InRangeUnobstructed(dragged, Range, predicate: Ignored);
         }

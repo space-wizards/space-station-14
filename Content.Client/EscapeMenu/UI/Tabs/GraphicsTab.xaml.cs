@@ -76,6 +76,7 @@ namespace Content.Client.EscapeMenu.UI.Tabs
             ShowHeldItemCheckBox.OnToggled += OnCheckBoxToggled;
             IntegerScalingCheckBox.OnToggled += OnCheckBoxToggled;
             ViewportLowResCheckBox.OnToggled += OnCheckBoxToggled;
+            FpsCounterCheckBox.OnToggled += OnCheckBoxToggled;
             ApplyButton.OnPressed += OnApplyButtonPressed;
             VSyncCheckBox.Pressed = _cfg.GetCVar(CVars.DisplayVSync);
             FullscreenCheckBox.Pressed = ConfigIsFullscreen;
@@ -86,6 +87,7 @@ namespace Content.Client.EscapeMenu.UI.Tabs
             ViewportStretchCheckBox.Pressed = _cfg.GetCVar(CCVars.ViewportStretch);
             IntegerScalingCheckBox.Pressed = _cfg.GetCVar(CCVars.ViewportSnapToleranceMargin) != 0;
             ViewportLowResCheckBox.Pressed = !_cfg.GetCVar(CCVars.ViewportScaleRender);
+            FpsCounterCheckBox.Pressed = _cfg.GetCVar(CCVars.HudFpsCounterVisible);
             ShowHeldItemCheckBox.Pressed = _cfg.GetCVar(CCVars.HudHeldItemShow);
 
             UpdateViewportScale();
@@ -122,6 +124,7 @@ namespace Content.Client.EscapeMenu.UI.Tabs
                          IntegerScalingCheckBox.Pressed ? CCVars.ViewportSnapToleranceMargin.DefaultValue : 0);
             _cfg.SetCVar(CCVars.ViewportScaleRender, !ViewportLowResCheckBox.Pressed);
             _cfg.SetCVar(CCVars.HudHeldItemShow, ShowHeldItemCheckBox.Pressed);
+            _cfg.SetCVar(CCVars.HudFpsCounterVisible, FpsCounterCheckBox.Pressed);
             _cfg.SaveToFile();
             UpdateApplyButton();
         }
@@ -149,6 +152,7 @@ namespace Content.Client.EscapeMenu.UI.Tabs
             var isIntegerScalingSame = IntegerScalingCheckBox.Pressed == (_cfg.GetCVar(CCVars.ViewportSnapToleranceMargin) != 0);
             var isVPResSame = ViewportLowResCheckBox.Pressed == !_cfg.GetCVar(CCVars.ViewportScaleRender);
             var isShowHeldItemSame = ShowHeldItemCheckBox.Pressed == _cfg.GetCVar(CCVars.HudHeldItemShow);
+            var isFpsCounterVisibleSame = FpsCounterCheckBox.Pressed == _cfg.GetCVar(CCVars.HudFpsCounterVisible);
 
             ApplyButton.Disabled = isVSyncSame &&
                                    isFullscreenSame &&
@@ -159,7 +163,8 @@ namespace Content.Client.EscapeMenu.UI.Tabs
                                    isIntegerScalingSame &&
                                    isVPResSame &&
                                    isHudThemeSame &&
-                                   isShowHeldItemSame;
+                                   isShowHeldItemSame &&
+                                   isFpsCounterVisibleSame;
         }
 
         private bool ConfigIsFullscreen =>

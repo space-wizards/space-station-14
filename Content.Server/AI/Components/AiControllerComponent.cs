@@ -1,4 +1,5 @@
-﻿using Content.Server.GameTicking;
+﻿using Content.Server.AI.EntitySystems;
+using Content.Server.GameTicking;
 using Content.Shared.Movement.Components;
 using Content.Shared.Roles;
 using Robust.Shared.GameObjects;
@@ -18,6 +19,29 @@ namespace Content.Server.AI.Components
         [DataField("logic")] private float _visionRadius = 8.0f;
 
         public override string Name => "AiController";
+
+        // TODO: Need to ECS a lot more of the AI first before we can ECS this
+        /// <summary>
+        /// Whether the AI is actively iterated.
+        /// </summary>
+        public bool Awake
+        {
+            get => _awake;
+            set
+            {
+                if (_awake == value) return;
+
+                _awake = value;
+
+               if (_awake)
+                   EntitySystem.Get<NPCSystem>().WakeNPC(this);
+               else
+                   EntitySystem.Get<NPCSystem>().SleepNPC(this);
+            }
+        }
+
+        [DataField("awake")]
+        private bool _awake = true;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("startingGear")]
@@ -61,7 +85,7 @@ namespace Content.Server.AI.Components
         {
             get
             {
-                if (Owner.TryGetComponent(out MovementSpeedModifierComponent? component))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out MovementSpeedModifierComponent? component))
                 {
                     return component.CurrentWalkSpeed;
                 }
@@ -78,7 +102,7 @@ namespace Content.Server.AI.Components
         {
             get
             {
-                if (Owner.TryGetComponent(out MovementSpeedModifierComponent? component))
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out MovementSpeedModifierComponent? component))
                 {
                     return component.CurrentSprintSpeed;
                 }

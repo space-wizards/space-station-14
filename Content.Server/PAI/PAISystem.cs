@@ -2,7 +2,9 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.PAI;
 using Content.Shared.Verbs;
+using Content.Shared.Instruments;
 using Content.Server.Popups;
+using Content.Server.Instruments;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Mind.Components;
 using Robust.Server.GameObjects;
@@ -17,6 +19,7 @@ namespace Content.Server.PAI
     public class PAISystem : SharedPAISystem
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly InstrumentSystem _instrumentSystem = default!;
 
         public override void Initialize()
         {
@@ -60,24 +63,25 @@ namespace Content.Server.PAI
             // Check for pAI activation
             if (EntityManager.TryGetComponent<MindComponent>(uid, out var mind) && mind.HasMind)
             {
-                _popupSystem.PopupEntity(Loc.GetString("pai-system-pai-installed"), uid, Filter.Entities(args.User.Uid));
+                _popupSystem.PopupEntity(Loc.GetString("pai-system-pai-installed"), uid, Filter.Entities(args.User));
                 return;
             }
             else if (EntityManager.HasComponent<GhostTakeoverAvailableComponent>(uid))
             {
-                _popupSystem.PopupEntity(Loc.GetString("pai-system-still-searching"), uid, Filter.Entities(args.User.Uid));
+                _popupSystem.PopupEntity(Loc.GetString("pai-system-still-searching"), uid, Filter.Entities(args.User));
                 return;
             }
 
             // Ownership tag
-            component.Owner.Name = Loc.GetString("pai-system-pai-name", ("owner", args.User));
+            string val = Loc.GetString("pai-system-pai-name", ("owner", args.User));
+            EntityManager.GetComponent<MetaDataComponent>(component.Owner).EntityName = val;
 
             var ghostFinder = EntityManager.EnsureComponent<GhostTakeoverAvailableComponent>(uid);
 
             ghostFinder.RoleName = Loc.GetString("pai-system-role-name");
             ghostFinder.RoleDescription = Loc.GetString("pai-system-role-description");
 
-            _popupSystem.PopupEntity(Loc.GetString("pai-system-searching"), uid, Filter.Entities(args.User.Uid));
+            _popupSystem.PopupEntity(Loc.GetString("pai-system-searching"), uid, Filter.Entities(args.User));
             UpdatePAIAppearance(uid, PAIStatus.Searching);
         }
 
@@ -98,6 +102,15 @@ namespace Content.Server.PAI
         private void PAITurningOff(EntityUid uid)
         {
             UpdatePAIAppearance(uid, PAIStatus.Off);
+            //  Close the instrument interface if it was open
+            //  before closing
+            if (EntityManager.TryGetComponent<ServerUserInterfaceComponent>(uid, out var serverUi))
+                if (EntityManager.TryGetComponent<ActorComponent>(uid, out var actor))
+                    if (serverUi.TryGetBoundUserInterface(InstrumentUiKey.Key,out var bui))
+                        bui.Close(actor.PlayerSession);
+
+            //  Stop instrument
+            if (EntityManager.TryGetComponent<InstrumentComponent>(uid, out var instrument)) _instrumentSystem.Clean(uid, instrument);
             if (EntityManager.TryGetComponent<MetaDataComponent>(uid, out var metadata))
             {
                 var proto = metadata.EntityPrototype;
@@ -116,7 +129,7 @@ namespace Content.Server.PAI
 
         private void AddWipeVerb(EntityUid uid, PAIComponent pai, GetActivationVerbsEvent args)
         {
-            if (args.User == null || !args.CanAccess || !args.CanInteract)
+            if (!args.CanAccess || !args.CanInteract)
                 return;
 
             if (EntityManager.TryGetComponent<MindComponent>(uid, out var mind) && mind.HasMind)
@@ -132,7 +145,7 @@ namespace Content.Server.PAI
                     if (EntityManager.HasComponent<MindComponent>(uid))
                     {
                         EntityManager.RemoveComponent<MindComponent>(uid);
-                        _popupSystem.PopupEntity(Loc.GetString("pai-system-wiped-device"), uid, Filter.Entities(args.User.Uid));
+                        _popupSystem.PopupEntity(Loc.GetString("pai-system-wiped-device"), uid, Filter.Entities(args.User));
                         PAITurningOff(uid);
                     }
                 };
@@ -148,7 +161,7 @@ namespace Content.Server.PAI
                     if (EntityManager.HasComponent<GhostTakeoverAvailableComponent>(uid))
                     {
                         EntityManager.RemoveComponent<GhostTakeoverAvailableComponent>(uid);
-                        _popupSystem.PopupEntity(Loc.GetString("pai-system-stopped-searching"), uid, Filter.Entities(args.User.Uid));
+                        _popupSystem.PopupEntity(Loc.GetString("pai-system-stopped-searching"), uid, Filter.Entities(args.User));
                         PAITurningOff(uid);
                     }
                 };

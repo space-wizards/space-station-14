@@ -3,11 +3,13 @@ using Content.Server.Construction;
 using Content.Server.Construction.Components;
 using Content.Server.Power.Components;
 using Content.Shared.Computer;
-using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Computer
@@ -15,8 +17,10 @@ namespace Content.Server.Computer
     [RegisterComponent]
     public sealed class ComputerComponent : SharedComputerComponent, IMapInit
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         [ViewVariables]
-        [DataField("board")]
+        [DataField("board", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         private string? _boardPrototype;
 
         protected override void Initialize()
@@ -26,8 +30,8 @@ namespace Content.Server.Computer
             // Let's ensure the container manager and container are here.
             Owner.EnsureContainer<Container>("board", out var _);
 
-            if (Owner.TryGetComponent(out ApcPowerReceiverComponent? powerReceiver) &&
-                Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (_entMan.TryGetComponent(Owner, out ApcPowerReceiverComponent? powerReceiver) &&
+                _entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
             {
                 appearance.SetData(ComputerVisuals.Powered, powerReceiver.Powered);
             }
@@ -49,7 +53,7 @@ namespace Content.Server.Computer
 
         private void PowerReceiverOnOnPowerStateChanged(PowerChangedMessage e)
         {
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
             {
                 appearance.SetData(ComputerVisuals.Powered, e.Powered);
             }
@@ -63,8 +67,8 @@ namespace Content.Server.Computer
         private void CreateComputerBoard()
         {
             // Ensure that the construction component is aware of the board container.
-            if (Owner.TryGetComponent(out ConstructionComponent? construction))
-                EntitySystem.Get<ConstructionSystem>().AddContainer(Owner.Uid, "board", construction);
+            if (_entMan.TryGetComponent(Owner, out ConstructionComponent? construction))
+                EntitySystem.Get<ConstructionSystem>().AddContainer(Owner, "board", construction);
 
             // We don't do anything if this is null or empty.
             if (string.IsNullOrEmpty(_boardPrototype))
@@ -79,7 +83,7 @@ namespace Content.Server.Computer
                     return;
             }
 
-            var board = Owner.EntityManager.SpawnEntity(_boardPrototype, Owner.Transform.Coordinates);
+            var board = _entMan.SpawnEntity(_boardPrototype, _entMan.GetComponent<TransformComponent>(Owner).Coordinates);
 
             if(!container.Insert(board))
                 Logger.Warning($"Couldn't insert board {board} to computer {Owner}!");

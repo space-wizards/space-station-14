@@ -9,7 +9,6 @@ namespace Content.Client.CombatMode
     public class ColoredScreenBorderOverlay : Overlay
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IEyeManager _eyeManager = default!;
 
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
         private readonly ShaderInstance _shader;
@@ -24,7 +23,7 @@ namespace Content.Client.CombatMode
         {
             var worldHandle = args.WorldHandle;
             worldHandle.UseShader(_shader);
-            var viewport = _eyeManager.GetWorldViewport();
+            var viewport = args.WorldAABB;
             worldHandle.DrawRect(viewport, Color.White);
         }
     }

@@ -26,8 +26,8 @@ namespace Content.Client.Parallax.Managers
         private static readonly ResourcePath ParallaxConfigPath = new("/parallax_config.toml");
 
         // Both of these below are in the user directory.
-        private static readonly ResourcePath ParallaxPath = new("/parallax_cache.png");
-        private static readonly ResourcePath ParallaxConfigOld = new("/parallax_config_old");
+        private static readonly ResourcePath ParallaxCachedImagePath = new("/parallax_cache.png");
+        private static readonly ResourcePath PreviousParallaxConfigPath = new("/parallax_config_old");
 
         public event Action<Texture>? OnTextureLoaded;
         public Texture? ParallaxTexture { get; private set; }
@@ -35,88 +35,71 @@ namespace Content.Client.Parallax.Managers
         public async void LoadParallax()
         {
             if (!_configurationManager.GetCVar(CCVars.ParallaxEnabled))
-            {
                 return;
-            }
+
+            var parallaxConfig = GetParallaxConfig();
+            if (parallaxConfig == null)
+                return;
 
             var debugParallax = _configurationManager.GetCVar(CCVars.ParallaxDebug);
-            string contents;
-            TomlTable table;
-            // Load normal config into memory
-            if (!_resourceCache.TryContentFileRead(ParallaxConfigPath, out var configStream))
+
+            if (debugParallax
+                || !_resourceCache.UserData.TryReadAllText(PreviousParallaxConfigPath, out var previousParallaxConfig)
+                || previousParallaxConfig != parallaxConfig)
             {
-                Logger.ErrorS("parallax", "Parallax config not found.");
-                return;
+                var table = Toml.ReadString(parallaxConfig);
+                await UpdateCachedTexture(table, debugParallax);
+
+                //Update the previous config
+                using var writer = _resourceCache.UserData.OpenWriteText(PreviousParallaxConfigPath);
+                writer.Write(parallaxConfig);
             }
 
-            using (configStream)
-            {
-                using (var reader = new StreamReader(configStream, EncodingHelpers.UTF8))
-                {
-                    contents = reader.ReadToEnd().Replace(Environment.NewLine, "\n");
-                }
+            ParallaxTexture = GetCachedTexture();
+            OnTextureLoaded?.Invoke(ParallaxTexture);
+        }
 
-                if (!debugParallax && _resourceCache.UserData.Exists(ParallaxConfigOld))
-                {
-                    var match = _resourceCache.UserData.ReadAllText(ParallaxConfigOld) == contents;
-
-                    if (match)
-                    {
-                        using (var stream = _resourceCache.UserData.OpenRead(ParallaxPath))
-                        {
-                            ParallaxTexture = Texture.LoadFromPNGStream(stream, "Parallax");
-                        }
-
-                        OnTextureLoaded?.Invoke(ParallaxTexture);
-                        return;
-                    }
-                }
-
-                table = Toml.ReadString(contents);
-            }
-
-            List<Image<Rgba32>>? debugImages = null;
-            if (debugParallax)
-            {
-                debugImages = new List<Image<Rgba32>>();
-            }
+        private async Task UpdateCachedTexture(TomlTable config, bool saveDebugLayers)
+        {
+            var debugImages = saveDebugLayers ? new List<Image<Rgba32>>() : null;
 
             var sawmill = _logManager.GetSawmill("parallax");
             // Generate the parallax in the thread pool.
-            var image = await Task.Run(() =>
-                ParallaxGenerator.GenerateParallax(table, new Size(1920, 1080), sawmill, debugImages));
+            using var newParallexImage = await Task.Run(() =>
+                ParallaxGenerator.GenerateParallax(config, new Size(1920, 1080), sawmill, debugImages));
             // And load it in the main thread for safety reasons.
-            ParallaxTexture = Texture.LoadFromImage(image, "Parallax");
 
             // Store it and CRC so further game starts don't need to regenerate it.
-            using (var stream = _resourceCache.UserData.Create(ParallaxPath))
-            {
-                image.SaveAsPng(stream);
-            }
+            using var imageStream = _resourceCache.UserData.OpenWrite(ParallaxCachedImagePath);
+            newParallexImage.SaveAsPng(imageStream);
 
-            if (debugParallax && debugImages != null)
+            if (saveDebugLayers)
             {
-                var i = 0;
-                foreach (var debugImage in debugImages)
+                for (var i = 0; i < debugImages!.Count; i++)
                 {
-                    using (var stream = _resourceCache.UserData.Create(new ResourcePath($"/parallax_debug_{i}.png")))
-                    {
-                        debugImage.SaveAsPng(stream);
-                    }
-
-                    i += 1;
+                    var debugImage = debugImages[i];
+                    using var debugImageStream = _resourceCache.UserData.OpenWrite(new ResourcePath($"/parallax_debug_{i}.png"));
+                    debugImage.SaveAsPng(debugImageStream);
                 }
             }
+        }
 
-            image.Dispose();
+        private Texture GetCachedTexture()
+        {
+            using var imageStream = _resourceCache.UserData.OpenRead(ParallaxCachedImagePath);
+            return Texture.LoadFromPNGStream(imageStream, "Parallax");
+        }
 
-            using (var stream = _resourceCache.UserData.Create(ParallaxConfigOld))
-            using (var writer = new StreamWriter(stream, EncodingHelpers.UTF8))
+        private string? GetParallaxConfig()
+        {
+            if (!_resourceCache.TryContentFileRead(ParallaxConfigPath, out var configStream))
             {
-                writer.Write(contents);
+                Logger.ErrorS("parallax", "Parallax config not found.");
+                return null;
             }
 
-            OnTextureLoaded?.Invoke(ParallaxTexture);
+            using var configReader = new StreamReader(configStream, EncodingHelpers.UTF8);
+            return configReader.ReadToEnd().Replace(Environment.NewLine, "\n");
         }
     }
 }

@@ -28,7 +28,7 @@ namespace Content.Server.StationEvents.Events
 
         private CancellationTokenSource? _announceCancelToken;
 
-        private readonly List<IEntity> _powered = new();
+        private readonly List<EntityUid> _powered = new();
 
         public override void Announce()
         {
@@ -51,11 +51,13 @@ namespace Content.Server.StationEvents.Events
 
         public override void Shutdown()
         {
+            var entMan = IoCManager.Resolve<IEntityManager>();
+
             foreach (var entity in _powered)
             {
-                if (entity.Deleted) continue;
+                if (entMan.Deleted(entity)) continue;
 
-                if (entity.TryGetComponent(out ApcPowerReceiverComponent? powerReceiverComponent))
+                if (entMan.TryGetComponent(entity, out ApcPowerReceiverComponent? powerReceiverComponent))
                 {
                     powerReceiverComponent.PowerDisabled = false;
                 }

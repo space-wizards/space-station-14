@@ -50,13 +50,13 @@ namespace Content.Server.Construction.Conditions
 
             var type = IoCManager.Resolve<IComponentFactory>().GetRegistration(Component).Type;
 
-            var transform = entityManager.GetComponent<ITransformComponent>(uid);
+            var transform = entityManager.GetComponent<TransformComponent>(uid);
             var indices = transform.Coordinates.ToVector2i(entityManager, IoCManager.Resolve<IMapManager>());
             var entities = indices.GetEntitiesInTile(transform.GridID, LookupFlags.Approximate | LookupFlags.IncludeAnchored, IoCManager.Resolve<IEntityLookup>());
 
             foreach (var ent in entities)
             {
-                if (ent.HasComponent(type))
+                if (entityManager.HasComponent(ent, type))
                     return HasEntity;
             }
 

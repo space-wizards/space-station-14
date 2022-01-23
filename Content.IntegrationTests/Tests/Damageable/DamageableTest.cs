@@ -5,6 +5,7 @@ using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
@@ -94,7 +95,7 @@ namespace Content.IntegrationTests.Tests.Damageable
 
             sEntityManager.EventBus.SubscribeLocalEvent<DamageableComponent, DamageChangedEvent>(DamageChangedListener);
 
-            IEntity sDamageableEntity = null;
+            EntityUid sDamageableEntity = default;
             DamageableComponent sDamageableComponent = null;
             DamageableSystem sDamageableSystem = null;
 
@@ -118,7 +119,7 @@ namespace Content.IntegrationTests.Tests.Damageable
                 sMapManager.CreateMap(mapId);
 
                 sDamageableEntity = sEntityManager.SpawnEntity("TestDamageableEntityId", coordinates);
-                sDamageableComponent = sDamageableEntity.GetComponent<DamageableComponent>();
+                sDamageableComponent = IoCManager.Resolve<IEntityManager>().GetComponent<DamageableComponent>(sDamageableEntity);
                 sDamageableSystem = sEntitySystemManager.GetEntitySystem<DamageableSystem>();
 
                 group1 = sPrototypeManager.Index<DamageGroupPrototype>("TestGroup1");
@@ -137,7 +138,7 @@ namespace Content.IntegrationTests.Tests.Damageable
 
             await server.WaitAssertion(() =>
             {
-                var uid = sDamageableEntity.Uid;
+                var uid = (EntityUid) sDamageableEntity;
 
                 // Check that the correct types are supported.
                 Assert.That(sDamageableComponent.Damage.DamageDict.ContainsKey(type1.ID), Is.False);

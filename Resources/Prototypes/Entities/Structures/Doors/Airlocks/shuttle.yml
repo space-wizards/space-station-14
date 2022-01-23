@@ -1,0 +1,42 @@
+- type: entity
+  id: AirlockShuttle
+  parent: Airlock
+  name: external airlock
+  suffix: Docking
+  description: Necessary for connecting two space craft together.
+  components:
+  - type: Docking
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Doors/Airlocks/Standard/shuttle.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+    - state: closed_unlit
+      shader: unshaded
+      map: ["enum.DoorVisualLayers.BaseUnlit"]
+    - state: welded
+      map: ["enum.DoorVisualLayers.BaseWelded"]
+    - state: bolted_unlit
+      shader: unshaded
+      map: ["enum.DoorVisualLayers.BaseBolted"]
+    - state: panel_open
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Door
+    bumpOpen: false
+    closeTimeTwo: 0.4
+    openTimeTwo: 0.4
+    board: DoorElectronics
+    crushDamage:
+      types:
+        Blunt: 15
+    openSound:
+      path: /Audio/Effects/docking.ogg
+    closeSound:
+      path: /Audio/Effects/docking.ogg
+    denySound:
+      path: /Audio/Machines/airlock_deny.ogg
+  - type: Airtight
+    fixVacuum: true
+    airBlockedDirection:
+      - South

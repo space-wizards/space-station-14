@@ -4,6 +4,7 @@ using Content.Server.Doors.Components;
 using Content.Shared.Doors;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 
@@ -20,6 +21,7 @@ namespace Content.IntegrationTests.Tests.Doors
   components:
   - type: Physics
     bodyType: Dynamic
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle
@@ -35,6 +37,7 @@ namespace Content.IntegrationTests.Tests.Doors
   - type: Airlock
   - type: Physics
     bodyType: Static
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -53,7 +56,7 @@ namespace Content.IntegrationTests.Tests.Doors
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
 
-            IEntity airlock = null;
+            EntityUid airlock = default;
             ServerDoorComponent doorComponent = null;
 
             server.Assert(() =>
@@ -62,7 +65,7 @@ namespace Content.IntegrationTests.Tests.Doors
 
                 airlock = entityManager.SpawnEntity("AirlockDummy", MapCoordinates.Nullspace);
 
-                Assert.True(airlock.TryGetComponent(out doorComponent));
+                Assert.True(entityManager.TryGetComponent(airlock, out doorComponent));
                 Assert.That(doorComponent.State, Is.EqualTo(SharedDoorComponent.DoorState.Closed));
             });
 
@@ -94,7 +97,7 @@ namespace Content.IntegrationTests.Tests.Doors
             {
                 Assert.DoesNotThrow(() =>
                 {
-                    airlock.Delete();
+                    entityManager.DeleteEntity(airlock);
                 });
             });
 
@@ -118,8 +121,8 @@ namespace Content.IntegrationTests.Tests.Doors
             var entityManager = server.ResolveDependency<IEntityManager>();
 
             IPhysBody physBody = null;
-            IEntity physicsDummy = null;
-            IEntity airlock = null;
+            EntityUid physicsDummy = default;
+            EntityUid airlock = default;
             ServerDoorComponent doorComponent = null;
 
             var physicsDummyStartingX = -1;
@@ -133,23 +136,22 @@ namespace Content.IntegrationTests.Tests.Doors
 
                 airlock = entityManager.SpawnEntity("AirlockDummy", new MapCoordinates((0, 0), mapId));
 
-                Assert.True(physicsDummy.TryGetComponent(out physBody));
+                Assert.True(entityManager.TryGetComponent(physicsDummy, out physBody));
 
-                Assert.True(airlock.TryGetComponent(out doorComponent));
+                Assert.True(entityManager.TryGetComponent(airlock, out doorComponent));
                 Assert.That(doorComponent.State, Is.EqualTo(SharedDoorComponent.DoorState.Closed));
             });
 
             await server.WaitIdleAsync();
 
             // Push the human towards the airlock
-            Assert.That(physBody != null);
-            physBody.LinearVelocity = (0.5f, 0);
+            await server.WaitAssertion(() => Assert.That(physBody != null));
+            await server.WaitPost(() => physBody.LinearVelocity = (0.5f, 0));
 
             for (var i = 0; i < 240; i += 10)
             {
                 // Keep the airlock awake so they collide
-                airlock.GetComponent<IPhysBody>().WakeBody();
-
+                server.Post(() => entityManager.GetComponent<IPhysBody>(airlock).WakeBody());
 
                 await server.WaitRunTicks(10);
                 await server.WaitIdleAsync();
@@ -162,7 +164,7 @@ namespace Content.IntegrationTests.Tests.Doors
             // Assert.That(physicsDummy.Transform.MapPosition.X, Is.GreaterThan(physicsDummyStartingX));
 
             // Blocked by the airlock
-            Assert.That(Math.Abs(physicsDummy.Transform.MapPosition.X - 1) > 0.01f);
+            await server.WaitAssertion(() => Assert.That(Math.Abs(entityManager.GetComponent<TransformComponent>(physicsDummy).MapPosition.X - 1) > 0.01f));
         }
     }
 }

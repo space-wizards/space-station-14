@@ -18,7 +18,7 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Arcade
 {
-    public class BlockGameMenu : SS14Window
+    public class BlockGameMenu : DefaultWindow
     {
         private static readonly Color OverlayBackgroundColor = new(74,74,81,180);
         private static readonly Color OverlayShadowColor = new(0,0,0,83);
@@ -682,17 +682,7 @@ namespace Content.Client.Arcade
             var matchingBlock = blocks.FirstOrNull(b => b.Position.X == x && b.Position.Y == y);
             if (matchingBlock.HasValue)
             {
-                c = matchingBlock.Value.GameBlockColor switch
-                {
-                    BlockGameBlock.BlockGameBlockColor.Red => Color.Red,
-                    BlockGameBlock.BlockGameBlockColor.Orange => Color.Orange,
-                    BlockGameBlock.BlockGameBlockColor.Yellow => Color.Yellow,
-                    BlockGameBlock.BlockGameBlockColor.Green => Color.LimeGreen,
-                    BlockGameBlock.BlockGameBlockColor.Blue => Color.Blue,
-                    BlockGameBlock.BlockGameBlockColor.Purple => Color.Purple,
-                    BlockGameBlock.BlockGameBlockColor.LightBlue => Color.LightBlue,
-                    _ => Color.Olive //olive is error
-                };
+                c = BlockGameBlock.ToColor(matchingBlock.Value.GameBlockColor);
             }
 
             return c;

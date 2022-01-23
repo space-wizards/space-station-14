@@ -15,11 +15,11 @@ namespace Content.Tools
             {
                 case YamlSequenceNode subSequence:
                     YamlSequenceNode tmp1 = new YamlSequenceNode();
-                    MergeYamlSequences((YamlSequenceNode) tmp1, new YamlSequenceNode(), (YamlSequenceNode) other, "");
+                    MergeYamlSequences(tmp1, new YamlSequenceNode(), subSequence, "");
                     return tmp1;
                 case YamlMappingNode subMapping:
                     YamlMappingNode tmp2 = new YamlMappingNode();
-                    MergeYamlMappings((YamlMappingNode) tmp2, new YamlMappingNode(), (YamlMappingNode) other, "", new string[] {});
+                    MergeYamlMappings(tmp2, new YamlMappingNode(), subMapping, "", new string[] {});
                     return tmp2;
                 case YamlScalarNode subScalar:
                     YamlScalarNode tmp3 = new YamlScalarNode();
@@ -47,16 +47,16 @@ namespace Content.Tools
             switch (other)
             {
                 case YamlSequenceNode subSequence:
-                    MergeYamlSequences((YamlSequenceNode) ours, (YamlSequenceNode) based, (YamlSequenceNode) other, path);
+                    MergeYamlSequences((YamlSequenceNode) ours, (YamlSequenceNode) based, subSequence, path);
                     break;
                 case YamlMappingNode subMapping:
-                    MergeYamlMappings((YamlMappingNode) ours, (YamlMappingNode) based, (YamlMappingNode) other, path, new string[] {});
+                    MergeYamlMappings((YamlMappingNode) ours, (YamlMappingNode) based, subMapping, path, new string[] {});
                     break;
                 case YamlScalarNode subScalar:
                     // Console.WriteLine(path + " - " + ours + " || " + based + " || " + other);
                     var scalarA = (YamlScalarNode) ours;
                     var scalarB = (YamlScalarNode) based;
-                    var scalarC = (YamlScalarNode) other;
+                    var scalarC = subScalar;
                     var aeb = (scalarA.Value == scalarB.Value);
                     var cneb = (scalarC.Value != scalarB.Value);
                     if (aeb || cneb)
@@ -163,11 +163,11 @@ namespace Content.Tools
             switch (a)
             {
                 case YamlSequenceNode x:
-                    return YamlSequencesHeuristic((YamlSequenceNode) a, (YamlSequenceNode) b);
+                    return YamlSequencesHeuristic(x, (YamlSequenceNode) b);
                 case YamlMappingNode y:
-                    return YamlMappingsHeuristic((YamlMappingNode) a, (YamlMappingNode) b);
+                    return YamlMappingsHeuristic(y, (YamlMappingNode) b);
                 case YamlScalarNode z:
-                    return (((YamlScalarNode) a).Value == ((YamlScalarNode) b).Value) ? 1.0f : 0.0f;
+                    return (z.Value == ((YamlScalarNode) b).Value) ? 1.0f : 0.0f;
                 default:
                     throw new ArgumentException($"Unrecognized YAML node type: {a.GetType()}", nameof(a));
             }
@@ -187,7 +187,7 @@ namespace Content.Tools
 
         public static float YamlMappingsHeuristic(YamlMappingNode a, YamlMappingNode b)
         {
-            return (a == b) ? 1.0f : 0.0f;
+            return Equals(a, b) ? 1.0f : 0.0f;
         }
 
         public static void CopyYamlScalar(YamlScalarNode dst, YamlScalarNode src)

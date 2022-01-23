@@ -2,6 +2,7 @@ using Content.Shared.Atmos.Piping;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 
 namespace Content.Client.Atmos.Visualizers
@@ -13,7 +14,7 @@ namespace Content.Client.Atmos.Visualizers
         {
             base.OnChangeData(component);
 
-            if (!component.Owner.TryGetComponent(out SpriteComponent? sprite))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(component.Owner, out SpriteComponent? sprite))
                 return;
 
             if (component.TryGetData(PipeColorVisuals.Color, out Color color))

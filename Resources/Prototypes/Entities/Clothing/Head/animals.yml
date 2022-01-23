@@ -1,7 +1,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatAnimalCat
-  name: grey cat
+  name: grey cat hat
   description: A cute and fluffy head of a grey cat.
   components:
   - type: Sprite
@@ -12,7 +12,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatAnimalCatBrown
-  name: brown cat
+  name: brown cat hat
   description: A cute and fluffy head of a brown cat.
   components:
   - type: Sprite
@@ -23,7 +23,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatAnimalCatBlack
-  name: black cat
+  name: black cat hat
   description: A cute and fluffy head of a black cat.
   components:
   - type: Sprite
@@ -34,7 +34,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatAnimalHeadslime
-  name: headslime
+  name: headslime hat
   description: A green, sticky headslime, you put it on your head.
   components:
   - type: Sprite
@@ -45,7 +45,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatAnimalMonkey
-  name: monkey
+  name: monkey hat
   description: That's a monkey head. It has a hole on a mouth to eat bananas.
   components:
   - type: Sprite

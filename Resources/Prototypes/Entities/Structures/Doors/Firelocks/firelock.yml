@@ -4,6 +4,16 @@
   name: firelock
   description: Apply crowbar.
   components:
+    - type: AtmosAlarmable
+      alarmedBy:
+      - FireAlarm
+      - AirAlarm
+    - type: ApcPowerReceiver
+    - type: ExtensionCableReceiver
+    - type: DeviceNetworkComponent
+      deviceNetId: Apc
+      frequency: 1621
+    - type: ApcNetworkConnection
     - type: InteractionOutline
     - type: Damageable
       damageContainer: Inorganic
@@ -34,6 +44,7 @@
           map: ["enum.WiresVisualLayers.MaintenancePanel"]
     - type: Physics
       canCollide: false
+    - type: Fixtures
       fixtures:
       - shape:
           !type:PhysShapeAabb
@@ -120,6 +131,7 @@
       airBlockedDirection:
         - South
     - type: Physics
+    - type: Fixtures
       fixtures:
       - shape:
           !type:PhysShapeAabb

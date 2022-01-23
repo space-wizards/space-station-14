@@ -1,15 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.Access.Components;
-using Content.Server.Access.Systems;
-using Content.Server.Advertise;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Server.WireHacking;
+using Content.Shared.Access.Components;
+using Content.Shared.Access.Systems;
 using Content.Shared.Acts;
-using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Sound;
 using Content.Shared.VendingMachines;
@@ -22,7 +20,6 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.Wires.SharedWiresComponent;
 
@@ -32,6 +29,7 @@ namespace Content.Server.VendingMachines
     [ComponentReference(typeof(IActivate))]
     public class VendingMachineComponent : SharedVendingMachineComponent, IActivate, IBreakAct, IWires
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
@@ -41,7 +39,7 @@ namespace Content.Server.VendingMachines
         private string _packPrototypeId = string.Empty;
         private string _spriteName = "";
 
-        private bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
+        private bool Powered => !_entMan.TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
         private bool _broken;
 
         [DataField("soundVend")]
@@ -57,14 +55,14 @@ namespace Content.Server.VendingMachines
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if(!eventArgs.User.TryGetComponent(out ActorComponent? actor))
+            if(!_entMan.TryGetComponent(eventArgs.User, out ActorComponent? actor))
             {
                 return;
             }
             if (!Powered)
                 return;
 
-            var wires = Owner.GetComponent<WiresComponent>();
+            var wires = _entMan.GetComponent<WiresComponent>(Owner);
             if (wires.IsPanelOpen)
             {
                 wires.OpenInterface(actor.PlayerSession);
@@ -82,12 +80,12 @@ namespace Content.Server.VendingMachines
                 return;
             }
 
-            Owner.Name = packPrototype.Name;
+            _entMan.GetComponent<MetaDataComponent>(Owner).EntityName = packPrototype.Name;
             _animationDuration = TimeSpan.FromSeconds(packPrototype.AnimationDuration);
             _spriteName = packPrototype.SpriteName;
             if (!string.IsNullOrEmpty(_spriteName))
             {
-                var spriteComponent = Owner.GetComponent<SpriteComponent>();
+                var spriteComponent = _entMan.GetComponent<SpriteComponent>(Owner);
                 const string vendingMachineRSIPath = "Structures/Machines/VendingMachines/{0}.rsi";
                 spriteComponent.BaseRSIPath = string.Format(vendingMachineRSIPath, _spriteName);
             }
@@ -109,7 +107,7 @@ namespace Content.Server.VendingMachines
                 UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
             }
 
-            if (Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver))
+            if (_entMan.TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver))
             {
                 TrySetVisualState(receiver.Powered ? VendingMachineVisualState.Normal : VendingMachineVisualState.Off);
             }
@@ -185,18 +183,18 @@ namespace Content.Server.VendingMachines
             {
                 _ejecting = false;
                 TrySetVisualState(VendingMachineVisualState.Normal);
-                Owner.EntityManager.SpawnEntity(id, Owner.Transform.Coordinates);
+                _entMan.SpawnEntity(id, _entMan.GetComponent<TransformComponent>(Owner).Coordinates);
             });
 
             SoundSystem.Play(Filter.Pvs(Owner), _soundVend.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
         }
 
-        private void TryEject(string id, IEntity? sender)
+        private void TryEject(string id, EntityUid? sender)
         {
-            if (Owner.TryGetComponent<AccessReader>(out var accessReader))
+            if (_entMan.TryGetComponent<AccessReaderComponent?>(Owner, out var accessReader))
             {
                 var accessSystem = EntitySystem.Get<AccessReaderSystem>();
-                if (sender == null || !accessSystem.IsAllowed(accessReader, sender.Uid))
+                if (sender == null || !accessSystem.IsAllowed(accessReader, sender.Value))
                 {
                     Owner.PopupMessageEveryone(Loc.GetString("vending-machine-component-try-eject-access-denied"));
                     Deny();
@@ -235,7 +233,7 @@ namespace Content.Server.VendingMachines
                 finalState = VendingMachineVisualState.Off;
             }
 
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
             {
                 appearance.SetData(VendingMachineVisuals.VisualState, finalState);
             }

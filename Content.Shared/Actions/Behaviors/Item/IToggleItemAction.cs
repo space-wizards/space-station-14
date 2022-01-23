@@ -33,7 +33,7 @@ namespace Content.Shared.Actions.Behaviors.Item
         /// </summary>
         public bool ToggledOff => !ToggledOn;
 
-        public ToggleItemActionEventArgs(IEntity performer, bool toggledOn, IEntity item,
+        public ToggleItemActionEventArgs(EntityUid performer, bool toggledOn, EntityUid item,
             ItemActionType actionType) : base(performer, item, actionType)
         {
             ToggledOn = toggledOn;

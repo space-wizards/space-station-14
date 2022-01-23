@@ -1,6 +1,7 @@
 using System;
 using Content.Client.Items.Components;
 using Content.Client.Stylesheets;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
@@ -8,6 +9,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Maths;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 

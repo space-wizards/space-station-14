@@ -1,7 +1,7 @@
 - type: entity
   id: OxygenTankFilled
   parent: OxygenTank
-  suffix: ent-gas-tank-suffix-filled
+  suffix: Filled
   components: &oxyTankFill
   - type: GasTank
     outputPressure: 21.27825
@@ -14,19 +14,19 @@
 - type: entity
   id: YellowOxygenTankFilled
   parent: YellowOxygenTank
-  suffix: ent-gas-tank-suffix-filled
+  suffix: Filled
   components: *oxyTankFill
 
 - type: entity
   id: RedOxygenTankFilled
   parent: RedOxygenTank
-  suffix: ent-gas-tank-suffix-filled
+  suffix: Filled
   components: *oxyTankFill
 
 - type: entity
   id: EmergencyOxygenTankFilled
   parent: EmergencyOxygenTank
-  suffix: ent-gas-tank-suffix-filled
+  suffix: Filled
   components:
     - type: GasTank
       outputPressure: 21.27825
@@ -39,7 +39,7 @@
 - type: entity
   id: ExtendedEmergencyOxygenTankFilled
   parent: ExtendedEmergencyOxygenTank
-  suffix: ent-gas-tank-suffix-filled
+  suffix: Filled
   components:
     - type: GasTank
       outputPressure: 21.27825
@@ -52,7 +52,7 @@
 - type: entity
   id: DoubleEmergencyOxygenTankFilled
   parent: DoubleEmergencyOxygenTank
-  suffix: ent-gas-tank-suffix-filled
+  suffix: Filled
   components:
     - type: GasTank
       outputPressure: 21.27825
@@ -65,7 +65,7 @@
 - type: entity
   id: AirTankFilled
   parent: AirTank
-  suffix: ent-gas-tank-suffix-filled
+  suffix: Filled
   components:
     - type: GasTank
       outputPressure: 101.325
@@ -80,7 +80,7 @@
   id: PlasmaTankFilled
   parent: PlasmaTank
   name: plasma tank
-  suffix: ent-gas-tank-suffix-filled
+  suffix: Filled
   description: "Contains dangerous plasma. Do not inhale. Warning: extremely flammable."
   components:
     - type: GasTank

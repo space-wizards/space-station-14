@@ -2,11 +2,14 @@
 using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Content.Server.Database;
+using Content.Server.GameTicking;
 using Content.Server.Preferences.Managers;
-using Content.Shared;
 using Content.Shared.CCVar;
+using Robust.Server.Player;
 using Robust.Shared.Configuration;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Network;
 
 
@@ -22,6 +25,8 @@ namespace Content.Server.Connection
     /// </summary>
     public sealed class ConnectionManager : IConnectionManager
     {
+        [Dependency] private readonly IServerDbManager _dbManager = default!;
+        [Dependency] private readonly IPlayerManager _plyMgr = default!;
         [Dependency] private readonly IServerNetManager _netMgr = default!;
         [Dependency] private readonly IServerDbManager _db = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
@@ -70,10 +75,26 @@ The ban reason is: ""{ban.Reason}""
                 hwId = null;
             }
 
+            var adminData = await _dbManager.GetAdminDataForAsync(e.UserId);
+            var wasInGame = EntitySystem.TryGet<GameTicker>(out var ticker) && ticker.PlayersInGame.Contains(userId);
+            if ((_plyMgr.PlayerCount >= _cfg.GetCVar(CCVars.SoftMaxPlayers) && adminData is null) && !wasInGame )
+            {
+                e.Deny(Loc.GetString("soft-player-cap-full"));
+                return;
+            }
+
             var ban = await _db.GetServerBanAsync(addr, userId, hwId);
             if (ban != null)
             {
                 e.Deny(ban.DisconnectMessage);
+                return;
+            }
+
+            if (_cfg.GetCVar(CCVars.WhitelistEnabled)
+                && await _db.GetWhitelistStatusAsync(userId) == false
+                && adminData is null)
+            {
+                e.Deny(Loc.GetString("whitelist-not-whitelisted"));
                 return;
             }
 

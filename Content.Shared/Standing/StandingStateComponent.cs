@@ -24,7 +24,7 @@ namespace Content.Shared.Standing
         [DataField("standing")]
         public bool Standing { get; set; } = true;
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new StandingComponentState(Standing);
         }

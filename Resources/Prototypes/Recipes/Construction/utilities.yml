@@ -1,0 +1,155 @@
+# POWER
+- type: construction
+  name: APC
+  id: apc
+  graph: apc
+  startNode: start
+  targetNode: apc
+  category: Utilities
+  description: "Area Power Controller (APC). Controls power. In an area."
+  icon:
+    sprite: Structures/Power/apc.rsi
+    state: apc0
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+
+- type: construction
+  name: solar assembly
+  id: SolarPanel
+  graph: solarpanel
+  startNode: start
+  targetNode: solarpanel
+  category: Utilities
+  description: "Can be turned into a solar panel or solar tracker."
+  icon:
+    sprite: Structures/Power/Generation/solar_panel.rsi
+    state: solar_assembly
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked {}
+
+- type: construction
+  name: cable terminal
+  id: cableTerminal
+  graph: cable_terminal
+  startNode: start
+  targetNode: cable_terminal
+  category: Utilities
+  description: "Input of devices such as the SMES. The red cables needs to face the device."
+  icon:
+    sprite: Structures/Power/cable_terminal.rsi
+    state: term
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+
+
+# DISPOSALS
+- type: construction
+  name: disposal unit
+  id: DisposalUnit
+  graph: disposalMachine
+  startNode: start
+  targetNode: disposal_unit
+  category: Utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/disposal.rsi
+    state: "disposal"
+
+- type: construction
+  name: disposal pipe
+  id: DisposalPipe
+  graph: DisposalPipe
+  startNode: start
+  targetNode: pipe
+  category: Utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+  icon:
+    sprite: Structures/Piping/disposal.rsi
+    state: conpipe-s
+
+- type: construction
+  name: disposal tagger
+  id: DisposalTagger
+  graph: DisposalPipe
+  startNode: start
+  targetNode: tagger
+  category: Utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/disposal.rsi
+    state: conpipe-tagger
+
+- type: construction
+  name: disposal trunk
+  id: DisposalTrunk
+  graph: DisposalPipe
+  startNode: start
+  targetNode: trunk
+  category: Utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/disposal.rsi
+    state: conpipe-t
+
+- type: construction
+  name: disposal router
+  id: DisposalRouter
+  graph: DisposalPipe
+  startNode: start
+  targetNode: router
+  category: Utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/disposal.rsi
+    state: conpipe-j1s
+
+- type: construction
+  name: disposal junction
+  id: DisposalJunction
+  graph: DisposalPipe
+  startNode: start
+  targetNode: junction
+  category: Utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/disposal.rsi
+    state: conpipe-j1
+
+- type: construction
+  name: disposal Y junction
+  id: DisposalYJunction
+  graph: DisposalPipe
+  startNode: start
+  targetNode: yJunction
+  category: Utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/disposal.rsi
+    state: conpipe-y
+
+- type: construction
+  name: disposal bend
+  id: DisposalBend
+  graph: DisposalPipe
+  startNode: start
+  targetNode: bend
+  category: Utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/disposal.rsi
+    state: conpipe-c
+
+# ATMOS

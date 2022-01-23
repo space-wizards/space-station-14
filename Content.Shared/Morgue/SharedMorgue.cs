@@ -17,10 +17,4 @@ namespace Content.Shared.Morgue
     {
         Burning,
     }
-
-    [Serializable, NetSerializable]
-    public enum BodyBagVisuals
-    {
-        Label,
-    }
 }

@@ -10,7 +10,7 @@ namespace Content.Shared.Stunnable
     [RegisterComponent]
     [NetworkedComponent]
     [Friend(typeof(SharedStunSystem))]
-    public class SlowedDownComponent : Component, IMoveSpeedModifier
+    public class SlowedDownComponent : Component
     {
         public override string Name => "SlowedDown";
 

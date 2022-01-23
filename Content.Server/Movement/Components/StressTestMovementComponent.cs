@@ -1,4 +1,5 @@
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 
 namespace Content.Server.Movement.Components
@@ -15,7 +16,7 @@ namespace Content.Server.Movement.Components
         {
             base.Startup();
 
-            Origin = Owner.Transform.WorldPosition;
+            Origin = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).WorldPosition;
         }
     }
 }

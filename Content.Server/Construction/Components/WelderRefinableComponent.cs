@@ -4,13 +4,11 @@ using Content.Server.Stack;
 using Content.Server.Tools;
 using Content.Server.Tools.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Stacks;
 using Content.Shared.Tools;
-using Content.Shared.Tools.Components;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Construction.Components
 {
@@ -21,6 +19,8 @@ namespace Content.Server.Construction.Components
     [RegisterComponent]
     public class WelderRefinableComponent : Component, IInteractUsing
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         [DataField("refineResult")]
         private HashSet<string>? _refineResult = new() { };
 
@@ -40,7 +40,7 @@ namespace Content.Server.Construction.Components
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             // check if object is welder
-            if (!eventArgs.Using.TryGetComponent(out ToolComponent? tool))
+            if (!_entMan.TryGetComponent(eventArgs.Using, out ToolComponent? tool))
                 return false;
 
             // check if someone is already welding object
@@ -51,7 +51,7 @@ namespace Content.Server.Construction.Components
 
             var toolSystem = EntitySystem.Get<ToolSystem>();
 
-            if (!await toolSystem.UseTool(eventArgs.Using.Uid, eventArgs.User.Uid, Owner.Uid, _refineFuel, _refineTime, _qualityNeeded))
+            if (!await toolSystem.UseTool(eventArgs.Using, eventArgs.User, Owner, _refineFuel, _refineTime, _qualityNeeded))
             {
                 // failed to veld - abort refine
                 _beingWelded = false;
@@ -59,18 +59,18 @@ namespace Content.Server.Construction.Components
             }
 
             // get last owner coordinates and delete it
-            var resultPosition = Owner.Transform.Coordinates;
-            Owner.Delete();
+            var resultPosition = _entMan.GetComponent<TransformComponent>(Owner).Coordinates;
+            _entMan.DeleteEntity(Owner);
 
             // spawn each result after refine
             foreach (var result in _refineResult!)
             {
-                var droppedEnt = Owner.EntityManager.SpawnEntity(result, resultPosition);
+                var droppedEnt = _entMan.SpawnEntity(result, resultPosition);
 
                 // TODO: If something has a stack... Just use a prototype with a single thing in the stack.
                 // This is not a good way to do it.
-                if (droppedEnt.TryGetComponent<StackComponent>(out var stack))
-                    EntitySystem.Get<StackSystem>().SetCount(droppedEnt.Uid,1, stack);
+                if (_entMan.TryGetComponent<StackComponent?>(droppedEnt, out var stack))
+                    EntitySystem.Get<StackSystem>().SetCount(droppedEnt,1, stack);
             }
 
             return true;

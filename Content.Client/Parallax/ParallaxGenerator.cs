@@ -182,7 +182,7 @@ namespace Content.Client.Parallax
                         // Threshold
                         noiseVal = MathF.Max(0, noiseVal - Threshold);
                         noiseVal *= threshVal;
-                        noiseVal = (float) MathF.Pow(noiseVal, powFactor);
+                        noiseVal = MathF.Pow(noiseVal, powFactor);
 
                         // Get colors based on noise values.
                         var srcColor = Color.InterpolateBetween(OuterColor, InnerColor, noiseVal)
@@ -408,7 +408,7 @@ namespace Content.Client.Parallax
                     // Threshold
                     noiseVal = MathF.Max(0, noiseVal - MaskThreshold);
                     noiseVal *= threshVal;
-                    noiseVal = (float) MathF.Pow(noiseVal, powFactor);
+                    noiseVal = MathF.Pow(noiseVal, powFactor);
 
                     var randomThresh = random.NextFloat();
                     if (randomThresh > noiseVal)

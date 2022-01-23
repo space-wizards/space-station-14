@@ -4,6 +4,7 @@ using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using static Content.Shared.Disposal.Components.SharedDisposalUnitComponent;
@@ -69,7 +70,8 @@ namespace Content.Client.Disposal.Visualizers
                 return;
             }
 
-            if (!appearance.Owner.TryGetComponent(out ISpriteComponent? sprite))
+            var entities = IoCManager.Resolve<IEntityManager>();
+            if (!entities.TryGetComponent(appearance.Owner, out ISpriteComponent? sprite))
             {
                 return;
             }
@@ -88,7 +90,7 @@ namespace Content.Client.Disposal.Visualizers
                 case VisualState.Flushing:
                     sprite.LayerSetState(DisposalUnitVisualLayers.Base, _stateAnchored);
 
-                    var animPlayer = appearance.Owner.GetComponent<AnimationPlayerComponent>();
+                    var animPlayer = entities.GetComponent<AnimationPlayerComponent>(appearance.Owner);
 
                     if (!animPlayer.HasRunningAnimation(AnimationKey))
                     {
@@ -143,12 +145,12 @@ namespace Content.Client.Disposal.Visualizers
             }
         }
 
-        public override void InitializeEntity(IEntity entity)
+        public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
-
-            entity.EnsureComponent<AnimationPlayerComponent>();
-            var appearance = entity.EnsureComponent<AppearanceComponent>();
+            var entities = IoCManager.Resolve<IEntityManager>();
+            entities.EnsureComponent<AnimationPlayerComponent>(entity);
+            var appearance = entities.EnsureComponent<ClientAppearanceComponent>(entity);
 
             ChangeState(appearance);
         }

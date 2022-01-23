@@ -16,10 +16,10 @@ namespace Content.Server.Pinpointer
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<PinpointerComponent, UseInHandEvent>(OnUseInHand);
+            SubscribeLocalEvent<PinpointerComponent, ActivateInWorldEvent>(OnActivate);
         }
 
-        private void OnUseInHand(EntityUid uid, PinpointerComponent component, UseInHandEvent args)
+        private void OnActivate(EntityUid uid, PinpointerComponent component, ActivateInWorldEvent args)
         {
             TogglePinpointer(uid, component);
 
@@ -40,7 +40,7 @@ namespace Content.Server.Pinpointer
             foreach (var uid in ActivePinpointers)
             {
                 UpdateDirectionToTarget(uid);
-            }    
+            }
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Content.Server.Pinpointer
         ///     Will return null if can't find anything
         /// </summary>
         private EntityUid? FindTargetFromWhitelist(EntityUid uid, EntityWhitelist whitelist,
-            ITransformComponent? transform = null)
+            TransformComponent? transform = null)
         {
             if (!Resolve(uid, ref transform))
                 return null;
@@ -62,8 +62,8 @@ namespace Content.Server.Pinpointer
             {
                 if (whitelist.IsValid(e))
                 {
-                    var dist = (e.Transform.WorldPosition - transform.WorldPosition).LengthSquared;
-                    l.TryAdd(dist, e.Uid);
+                    var dist = (EntityManager.GetComponent<TransformComponent>(e).WorldPosition - transform.WorldPosition).LengthSquared;
+                    l.TryAdd(dist, e);
                 }
             }
 
@@ -125,9 +125,9 @@ namespace Content.Server.Pinpointer
         private Vector2? CalculateDirection(EntityUid pinUid, EntityUid trgUid)
         {
             // check if entities have transform component
-            if (!EntityManager.TryGetComponent(pinUid, out ITransformComponent? pin))
+            if (!EntityManager.TryGetComponent(pinUid, out TransformComponent? pin))
                 return null;
-            if (!EntityManager.TryGetComponent(trgUid, out ITransformComponent? trg))
+            if (!EntityManager.TryGetComponent(trgUid, out TransformComponent? trg))
                 return null;
 
             // check if they are on same map

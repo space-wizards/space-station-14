@@ -1,7 +1,6 @@
 - type: job
   id: HeadOfPersonnel
   name: "head of personnel"
-  positions: 1
   startingGear: HoPGear
   departments:
   - Command
@@ -9,6 +8,7 @@
   icon: "HeadOfPersonnel"
   requireAdminNotify: true
   supervisors: "the captain"
+  canBeAntag: false
   access:
   - Command
   - HeadOfPersonnel
@@ -18,16 +18,19 @@
   - Maintenance
   - Janitor
   - Theatre
+  - Kitchen
+  - Chapel
+  - Hydroponics
   # I mean they'll give themselves the rest of the access levels *anyways*.
 
 - type: startingGear
   id: HoPGear
   equipment:
-    innerclothing: ClothingUniformJumpsuitHoP
-    backpack: ClothingBackpackFilled
+    jumpsuit: ClothingUniformJumpsuitHoP
+    back: ClothingBackpackFilled
     shoes: ClothingShoesColorBrown
     head: ClothingHeadHatHopcap
-    idcard: HoPPDA
+    id: HoPPDA
     ears: ClothingHeadsetAltCommand
   innerclothingskirt: ClothingUniformJumpskirtHoP
   satchel: ClothingBackpackSatchelFilled

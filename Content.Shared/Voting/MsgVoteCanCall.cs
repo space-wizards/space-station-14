@@ -18,6 +18,7 @@ namespace Content.Shared.Voting
         public TimeSpan WhenCanCallVote;
 
         // Which standard votes are currently unavailable, and when will they become available.
+        // The whenAvailable can be null if the reason is something not timeout related.
         public (StandardVoteType type, TimeSpan whenAvailable)[] VotesUnavailable = default!;
 
         // It's possible to be able to call votes but all standard votes to be timed out.

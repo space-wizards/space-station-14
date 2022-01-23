@@ -3,6 +3,7 @@ using Content.Server.Singularity.Components;
 using Content.Shared.Singularity.Components;
 using Content.Shared.Tag;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Physics.Dynamics;
 
 namespace Content.Server.Singularity.EntitySystems
@@ -21,7 +22,7 @@ namespace Content.Server.Singularity.EntitySystems
 
         private void HandleParticleCollide(EntityUid uid, ParticleProjectileComponent component, StartCollideEvent args)
         {
-            if (args.OtherFixture.Body.Owner.TryGetComponent<SingularityGeneratorComponent>(out var singularityGeneratorComponent))
+            if (EntityManager.TryGetComponent<SingularityGeneratorComponent?>(args.OtherFixture.Body.Owner, out var singularityGeneratorComponent))
             {
                 singularityGeneratorComponent.Power += component.State switch
                 {

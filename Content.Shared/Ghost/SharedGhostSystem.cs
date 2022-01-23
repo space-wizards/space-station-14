@@ -9,70 +9,48 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Ghost
 {
+    /// <summary>
+    /// System for the <see cref="SharedGhostComponent"/>.
+    /// Prevents ghosts from interacting when <see cref="SharedGhostComponent.CanGhostInteract"/> is false.
+    /// </summary>
     public abstract class SharedGhostSystem : EntitySystem
     {
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<SharedGhostComponent, UseAttemptEvent>(OnUseAttempt);
-            SubscribeLocalEvent<SharedGhostComponent, InteractionAttemptEvent>(OnInteractAttempt);
-            SubscribeLocalEvent<SharedGhostComponent, EmoteAttemptEvent>(OnEmoteAttempt);
-            SubscribeLocalEvent<SharedGhostComponent, AttackAttemptEvent>(OnAttackAttempt);
-            SubscribeLocalEvent<SharedGhostComponent, DropAttemptEvent>(OnDropAttempt);
-            SubscribeLocalEvent<SharedGhostComponent, PickupAttemptEvent>(OnPickupAttempt);
+            SubscribeLocalEvent<SharedGhostComponent, UseAttemptEvent>(OnAttempt);
+            SubscribeLocalEvent<SharedGhostComponent, InteractionAttemptEvent>(OnAttempt);
+            SubscribeLocalEvent<SharedGhostComponent, EmoteAttemptEvent>(OnAttempt);
+            SubscribeLocalEvent<SharedGhostComponent, AttackAttemptEvent>(OnAttempt);
+            SubscribeLocalEvent<SharedGhostComponent, DropAttemptEvent>(OnAttempt);
+            SubscribeLocalEvent<SharedGhostComponent, PickupAttemptEvent>(OnAttempt);
         }
 
-        private void OnUseAttempt(EntityUid uid, SharedGhostComponent component, UseAttemptEvent args)
+        private void OnAttempt(EntityUid uid, SharedGhostComponent component, CancellableEntityEventArgs args)
         {
             if (!component.CanGhostInteract)
                 args.Cancel();
         }
 
-        private void OnInteractAttempt(EntityUid uid, SharedGhostComponent component, InteractionAttemptEvent args)
+        public void SetCanReturnToBody(SharedGhostComponent component, bool value)
         {
-            if (!component.CanGhostInteract)
-                args.Cancel();
-        }
-
-        private void OnEmoteAttempt(EntityUid uid, SharedGhostComponent component, EmoteAttemptEvent args)
-        {
-            args.Cancel();
-        }
-
-        private void OnAttackAttempt(EntityUid uid, SharedGhostComponent component, AttackAttemptEvent args)
-        {
-            args.Cancel();
-        }
-
-        private void OnDropAttempt(EntityUid uid, SharedGhostComponent component, DropAttemptEvent args)
-        {
-            if (!component.CanGhostInteract)
-                args.Cancel();
-        }
-
-        private void OnPickupAttempt(EntityUid uid, SharedGhostComponent component, PickupAttemptEvent args)
-        {
-            if (!component.CanGhostInteract)
-                args.Cancel();
-        }
-
-        public void SetCanReturnToBody(SharedGhostComponent component, bool canReturn)
-        {
-            if (component.CanReturnToBody == canReturn)
-            {
-                return;
-            }
-
-            component.CanReturnToBody = canReturn;
-            component.Dirty();
+            component.CanReturnToBody = value;
         }
     }
 
+    /// <summary>
+    /// A client to server request to get places a ghost can warp to.
+    /// Response is sent via <see cref="GhostWarpsResponseEvent"/>
+    /// </summary>
     [Serializable, NetSerializable]
     public class GhostWarpsRequestEvent : EntityEventArgs
     {
     }
 
+    /// <summary>
+    /// A server to client response for a <see cref="GhostWarpsRequestEvent"/>.
+    /// Contains players, and locations a ghost can warp to
+    /// </summary>
     [Serializable, NetSerializable]
     public class GhostWarpsResponseEvent : EntityEventArgs
     {
@@ -82,22 +60,37 @@ namespace Content.Shared.Ghost
             Players = players;
         }
 
+        /// <summary>
+        /// A list of location names that can be warped to.
+        /// </summary>
         public List<string> Locations { get; }
 
+        /// <summary>
+        /// A dictionary containing the entity id, and name of players that can be warped to.
+        /// </summary>
         public Dictionary<EntityUid, string> Players { get; }
     }
 
+    /// <summary>
+    /// A client to server request for their ghost to be warped to a location
+    /// </summary>
     [Serializable, NetSerializable]
     public class GhostWarpToLocationRequestEvent : EntityEventArgs
     {
+        /// <summary>
+        /// The location name to warp to.
+        /// </summary>
         public string Name { get; }
 
-        public GhostWarpToLocationRequestEvent(string name)
+        public GhostWarpToLocationRequestEvent(string locationName)
         {
-            Name = name;
+            Name = locationName;
         }
     }
 
+    /// <summary>
+    ///  A client to server request for their ghost to be warped to an entity
+    /// </summary>
     [Serializable, NetSerializable]
     public class GhostWarpToTargetRequestEvent : EntityEventArgs
     {
@@ -109,19 +102,25 @@ namespace Content.Shared.Ghost
         }
     }
 
+    /// <summary>
+    /// A client to server request for their ghost to return to body
+    /// </summary>
     [Serializable, NetSerializable]
     public class GhostReturnToBodyRequest : EntityEventArgs
     {
     }
 
+    /// <summary>
+    /// A server to client update with the available ghost role count
+    /// </summary>
     [Serializable, NetSerializable]
     public class GhostUpdateGhostRoleCountEvent : EntityEventArgs
     {
         public int AvailableGhostRoles { get; }
 
-        public GhostUpdateGhostRoleCountEvent(int v)
+        public GhostUpdateGhostRoleCountEvent(int availableGhostRoleCount)
         {
-            AvailableGhostRoles = v;
+            AvailableGhostRoles = availableGhostRoleCount;
         }
     }
 }

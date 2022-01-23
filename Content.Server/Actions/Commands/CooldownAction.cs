@@ -5,6 +5,7 @@ using Content.Shared.Actions;
 using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Console;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Timing;
 
@@ -20,18 +21,16 @@ namespace Content.Server.Actions.Commands
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
-            if (player == null) return;
-            var attachedEntity = player.AttachedEntity;
+            if (player?.AttachedEntity is not {} attachedEntity) return;
             if (args.Length > 2)
             {
                 var target = args[2];
                 if (!CommandUtils.TryGetAttachedEntityByUsernameOrId(shell, target, player, out attachedEntity)) return;
             }
 
-            if (attachedEntity == null) return;
-            if (!attachedEntity.TryGetComponent(out ServerActionsComponent? actionsComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(attachedEntity, out ServerActionsComponent? actionsComponent))
             {
-                shell.WriteLine("user has no actions component");
+                shell.WriteError("user has no actions component");
                 return;
             }
 

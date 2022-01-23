@@ -1,6 +1,8 @@
-using Content.Server.GameTicking;
+using System.Linq;
 using Content.Server.Radiation;
+using Content.Server.Station;
 using Content.Shared.Coordinates;
+using Content.Shared.Station;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -29,6 +31,7 @@ namespace Content.Server.StationEvents.Events
         private float _timeUntilPulse;
         private const float MinPulseDelay = 0.2f;
         private const float MaxPulseDelay = 0.8f;
+        private StationId _target = StationId.Invalid;
 
         private void ResetTimeUntilPulse()
         {
@@ -44,6 +47,7 @@ namespace Content.Server.StationEvents.Events
         public override void Startup()
         {
             ResetTimeUntilPulse();
+            _target = _robustRandom.Pick(_entityManager.EntityQuery<StationComponent>().ToArray()).Station;
             base.Startup();
         }
 
@@ -63,12 +67,19 @@ namespace Content.Server.StationEvents.Events
             if (_timeUntilPulse <= 0.0f)
             {
                 var pauseManager = IoCManager.Resolve<IPauseManager>();
-                var defaultGrid = IoCManager.Resolve<IMapManager>().GetGrid(EntitySystem.Get<GameTicker>().DefaultGridId);
+                // Account for split stations by just randomly picking a piece of it.
+                var possibleTargets = _entityManager.EntityQuery<StationComponent>()
+                    .Where(x => x.Station == _target).ToArray();
+                StationComponent tempQualifier = _robustRandom.Pick(possibleTargets);
+                var stationEnt = (tempQualifier).Owner;
 
-                if (pauseManager.IsGridPaused(defaultGrid))
+                if (!_entityManager.TryGetComponent<IMapGridComponent>(stationEnt, out var grid))
                     return;
 
-                SpawnPulse(defaultGrid);
+                if (pauseManager.IsGridPaused(grid.GridIndex))
+                    return;
+
+                SpawnPulse(grid.Grid);
             }
         }
 
@@ -78,8 +89,15 @@ namespace Content.Server.StationEvents.Events
                 return;
 
             var pulse = _entityManager.SpawnEntity("RadiationPulse", coordinates);
-            pulse.GetComponent<RadiationPulseComponent>().DoPulse();
+            _entityManager.GetComponent<RadiationPulseComponent>(pulse).DoPulse();
             ResetTimeUntilPulse();
+        }
+
+        public void SpawnPulseAt(EntityCoordinates at)
+        {
+            var pulse = IoCManager.Resolve<IEntityManager>()
+                .SpawnEntity("RadiationPulse", at);
+            _entityManager.GetComponent<RadiationPulseComponent>(pulse).DoPulse();
         }
 
         private bool TryFindRandomGrid(IMapGrid mapGrid, out EntityCoordinates coordinates)

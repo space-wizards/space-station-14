@@ -97,7 +97,7 @@ namespace Content.Shared.Actions.Prototypes
         /// True if this is an action that requires selecting a target
         /// </summary>
         public bool IsTargetAction =>
-            BehaviorType == BehaviorType.TargetEntity || BehaviorType == BehaviorType.TargetPoint;
+            BehaviorType is BehaviorType.TargetEntity or BehaviorType.TargetPoint;
 
         public virtual void AfterDeserialization()
         {
@@ -106,20 +106,19 @@ namespace Content.Shared.Actions.Prototypes
 
             if (BehaviorType == BehaviorType.None)
             {
-                Logger.ErrorS("action", "Missing behaviorType for action with name {0}", Name);
+                Logger.ErrorS("action", $"Missing behaviorType for action with name {Name}");
             }
 
-            if (BehaviorType != BehaviorType.Toggle && IconOn != SpriteSpecifier.Invalid)
+            if (BehaviorType is not (BehaviorType.Toggle or BehaviorType.TargetEntity or BehaviorType.TargetPoint) && IconOn != SpriteSpecifier.Invalid)
             {
-                Logger.ErrorS("action", "for action {0}, iconOn was specified but behavior" +
-                                        " type was {1}. iconOn is only supported for Toggle behavior type.", Name);
+                Logger.ErrorS("action", $"for action {Name}, iconOn was specified but behavior" +
+                                        " $type was {BehaviorType}. iconOn is only supported for Toggle behavior type.");
             }
 
             if (Repeat && BehaviorType != BehaviorType.TargetEntity && BehaviorType != BehaviorType.TargetPoint)
             {
-                Logger.ErrorS("action", " action named {0} used repeat: true, but this is only supported for" +
-                                        " TargetEntity and TargetPoint behaviorType and its behaviorType is {1}",
-                    Name, BehaviorType);
+                Logger.ErrorS("action", $" action named {Name} used repeat: true, but this is only supported for" +
+                                        " $TargetEntity and TargetPoint behaviorType and its behaviorType is {BehaviorType}");
             }
         }
 
@@ -127,8 +126,8 @@ namespace Content.Shared.Actions.Prototypes
         {
             if (BehaviorType != expected)
             {
-                Logger.ErrorS("action", "for action named {0}, behavior implements " +
-                                        "{1}, so behaviorType should be {2} but was {3}", Name, actualInterface.Name, expected, BehaviorType);
+                Logger.ErrorS("action", $"for action named {Name}, behavior implements " +
+                                        $"{actualInterface.Name}, so behaviorType should be {expected} but was {BehaviorType}");
             }
         }
     }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Content.Client.Cuffs.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.CharacterAppearance;
@@ -25,16 +26,32 @@ namespace Content.Client.CharacterAppearance.Systems
             SubscribeLocalEvent<HumanoidAppearanceBodyPartRemovedEvent>(BodyPartRemoved);
         }
 
-        private void UpdateLooks(EntityUid uid, HumanoidAppearanceComponent component, ChangedHumanoidAppearanceEvent args)
+        private List<HumanoidVisualLayers> _bodyPartLayers = new List<HumanoidVisualLayers>
         {
-            if(!EntityManager.TryGetComponent(uid, out SpriteComponent? sprite))
+            HumanoidVisualLayers.Chest,
+            HumanoidVisualLayers.Head,
+            HumanoidVisualLayers.Eyes,
+            HumanoidVisualLayers.RArm,
+            HumanoidVisualLayers.LArm,
+            HumanoidVisualLayers.RHand,
+            HumanoidVisualLayers.LHand,
+            HumanoidVisualLayers.RLeg,
+            HumanoidVisualLayers.LLeg,
+            HumanoidVisualLayers.RFoot,
+            HumanoidVisualLayers.LFoot
+        };
+
+        private void UpdateLooks(EntityUid uid, HumanoidAppearanceComponent component,
+            ChangedHumanoidAppearanceEvent args)
+        {
+            if (!EntityManager.TryGetComponent(uid, out SpriteComponent? sprite))
                 return;
 
             if (EntityManager.TryGetComponent(uid, out SharedBodyComponent? body))
             {
                 foreach (var (part, _) in body.Parts)
                 {
-                    if (part.Owner.TryGetComponent(out SpriteComponent? partSprite))
+                    if (EntityManager.TryGetComponent(part.Owner, out SpriteComponent? partSprite))
                     {
                         partSprite!.Color = component.Appearance.SkinColor;
                     }
@@ -42,10 +59,18 @@ namespace Content.Client.CharacterAppearance.Systems
                 }
             }
 
-            sprite.LayerSetColor(HumanoidVisualLayers.Hair,
-                component.CanColorHair ? component.Appearance.HairColor : Color.White);
-            sprite.LayerSetColor(HumanoidVisualLayers.FacialHair,
-                component.CanColorFacialHair ? component.Appearance.FacialHairColor : Color.White);
+            var hairColor = component.CanColorHair ? component.Appearance.HairColor : Color.White;
+            hairColor = component.HairMatchesSkin ? component.Appearance.SkinColor : hairColor;
+            sprite.LayerSetColor(HumanoidVisualLayers.Hair, hairColor.WithAlpha(component.HairAlpha));
+
+            var facialHairColor = component.CanColorHair ? component.Appearance.FacialHairColor : Color.White;
+            facialHairColor = component.HairMatchesSkin ? component.Appearance.SkinColor : facialHairColor;
+            sprite.LayerSetColor(HumanoidVisualLayers.FacialHair, facialHairColor.WithAlpha(component.HairAlpha));
+
+            foreach (var layer in _bodyPartLayers)
+            {
+                sprite.LayerSetColor(layer, component.Appearance.SkinColor);
+            }
 
             sprite.LayerSetColor(HumanoidVisualLayers.Eyes, component.Appearance.EyeColor);
 
@@ -88,13 +113,12 @@ namespace Content.Client.CharacterAppearance.Systems
         // Scaffolding until Body is moved to ECS.
         private void BodyPartAdded(HumanoidAppearanceBodyPartAddedEvent args)
         {
-            if(!EntityManager.TryGetEntity(args.Uid, out var owner)) return;
-            if (!owner.TryGetComponent(out SpriteComponent? sprite))
+            if (!EntityManager.TryGetComponent(args.Uid, out SpriteComponent? sprite))
             {
                 return;
             }
 
-            if (!args.Args.Part.Owner.HasComponent<SpriteComponent>())
+            if (!EntityManager.HasComponent<SpriteComponent>(args.Args.Part.Owner))
             {
                 return;
             }
@@ -112,13 +136,12 @@ namespace Content.Client.CharacterAppearance.Systems
 
         private void BodyPartRemoved(HumanoidAppearanceBodyPartRemovedEvent args)
         {
-            if(!EntityManager.TryGetEntity(args.Uid, out var owner)) return;
-            if (!owner.TryGetComponent(out SpriteComponent? sprite))
+            if (!EntityManager.TryGetComponent(args.Uid, out SpriteComponent? sprite))
             {
                 return;
             }
 
-            if (!args.Args.Part.Owner.HasComponent<SpriteComponent>())
+            if (!EntityManager.HasComponent<SpriteComponent>(args.Args.Part.Owner))
             {
                 return;
             }

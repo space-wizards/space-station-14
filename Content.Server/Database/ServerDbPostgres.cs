@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Robust.Shared.Network;
 
-
 namespace Content.Server.Database
 {
     public sealed class ServerDbPostgres : ServerDbBase
@@ -222,63 +221,8 @@ namespace Content.Server.Database
             await db.PgDbContext.SaveChangesAsync();
         }
 
-        public override async Task UpdatePlayerRecord(
-            NetUserId userId,
-            string userName,
-            IPAddress address,
-            ImmutableArray<byte> hwId)
+        protected override PlayerRecord MakePlayerRecord(Player record)
         {
-            await using var db = await GetDbImpl();
-
-            var record = await db.PgDbContext.Player.SingleOrDefaultAsync(p => p.UserId == userId.UserId);
-            if (record == null)
-            {
-                db.PgDbContext.Player.Add(record = new PostgresPlayer
-                {
-                    FirstSeenTime = DateTime.UtcNow,
-                    UserId = userId.UserId,
-                });
-            }
-
-            record.LastSeenTime = DateTime.UtcNow;
-            record.LastSeenAddress = address;
-            record.LastSeenUserName = userName;
-            record.LastSeenHWId = hwId.ToArray();
-
-            await db.PgDbContext.SaveChangesAsync();
-        }
-
-        public override async Task<PlayerRecord?> GetPlayerRecordByUserName(string userName, CancellationToken cancel)
-        {
-            await using var db = await GetDbImpl();
-
-            // Sort by descending last seen time.
-            // So if, due to account renames, we have two people with the same username in the DB,
-            // the most recent one is picked.
-            var record = await db.PgDbContext.Player
-                .OrderByDescending(p => p.LastSeenTime)
-                .FirstOrDefaultAsync(p => p.LastSeenUserName == userName, cancel);
-
-            return MakePlayerRecord(record);
-        }
-
-        public override async Task<PlayerRecord?> GetPlayerRecordByUserId(NetUserId userId, CancellationToken cancel)
-        {
-            await using var db = await GetDbImpl();
-
-            var record = await db.PgDbContext.Player
-                .SingleOrDefaultAsync(p => p.UserId == userId.UserId, cancel);
-
-            return MakePlayerRecord(record);
-        }
-
-        private static PlayerRecord? MakePlayerRecord(PostgresPlayer? record)
-        {
-            if (record == null)
-            {
-                return null;
-            }
-
             return new PlayerRecord(
                 new NetUserId(record.UserId),
                 new DateTimeOffset(record.FirstSeenTime),

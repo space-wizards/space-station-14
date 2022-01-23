@@ -8,11 +8,12 @@ using Content.Shared.Climbing;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Popups;
-using Content.Shared.Verbs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -22,6 +23,8 @@ namespace Content.Server.Climbing.Components
     [ComponentReference(typeof(IClimbable))]
     public class ClimbableComponent : SharedClimbableComponent
     {
+        [Dependency] private readonly IEntityManager _entities = default!;
+
         /// <summary>
         ///     The time it takes to climb onto the entity.
         /// </summary>
@@ -35,7 +38,7 @@ namespace Content.Server.Climbing.Components
 
             if (!Owner.EnsureComponent(out PhysicsComponent _))
             {
-                Logger.Warning($"Entity {Owner.Name} at {Owner.Transform.MapPosition} didn't have a {nameof(PhysicsComponent)}");
+                Logger.Warning($"Entity {_entities.GetComponent<MetaDataComponent>(Owner).EntityName} at {_entities.GetComponent<TransformComponent>(Owner).MapPosition} didn't have a {nameof(PhysicsComponent)}");
             }
         }
 
@@ -65,7 +68,7 @@ namespace Content.Server.Climbing.Components
         /// <param name="target">The object that is being vaulted</param>
         /// <param name="reason">The reason why it cant be dropped</param>
         /// <returns></returns>
-        private bool CanVault(IEntity user, IEntity target, out string reason)
+        private bool CanVault(EntityUid user, EntityUid target, out string reason)
         {
             if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
             {
@@ -73,8 +76,8 @@ namespace Content.Server.Climbing.Components
                 return false;
             }
 
-            if (!user.HasComponent<ClimbingComponent>() ||
-                !user.TryGetComponent(out SharedBodyComponent? body))
+            if (!_entities.HasComponent<ClimbingComponent>(user) ||
+                !_entities.TryGetComponent(user, out SharedBodyComponent? body))
             {
                 reason = Loc.GetString("comp-climbable-cant-climb");
                 return false;
@@ -105,7 +108,7 @@ namespace Content.Server.Climbing.Components
         /// <param name="target">The object that is being vaulted onto</param>
         /// <param name="reason">The reason why it cant be dropped</param>
         /// <returns></returns>
-        private bool CanVault(IEntity user, IEntity dragged, IEntity target, out string reason)
+        private bool CanVault(EntityUid user, EntityUid dragged, EntityUid target, out string reason)
         {
             if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
             {
@@ -113,13 +116,13 @@ namespace Content.Server.Climbing.Components
                 return false;
             }
 
-            if (target == null || !dragged.HasComponent<ClimbingComponent>())
+            if (!_entities.HasComponent<ClimbingComponent>(dragged))
             {
                 reason = Loc.GetString("comp-climbable-cant-climb");
                 return false;
             }
 
-            bool Ignored(IEntity entity) => entity == target || entity == user || entity == dragged;
+            bool Ignored(EntityUid entity) => entity == target || entity == user || entity == dragged;
 
             if (!user.InRangeUnobstructed(target, Range, predicate: Ignored) ||
                 !user.InRangeUnobstructed(dragged, Range, predicate: Ignored))
@@ -136,17 +139,17 @@ namespace Content.Server.Climbing.Components
         {
             if (eventArgs.User == eventArgs.Dragged)
             {
-                TryClimb(eventArgs.User);
+                TryClimb(eventArgs.User, eventArgs.Target);
             }
             else
             {
-                TryMoveEntity(eventArgs.User, eventArgs.Dragged);
+                TryMoveEntity(eventArgs.User, eventArgs.Dragged, eventArgs.Target);
             }
 
             return true;
         }
 
-        private async void TryMoveEntity(IEntity user, IEntity entityToMove)
+        private async void TryMoveEntity(EntityUid user, EntityUid entityToMove, EntityUid climbable)
         {
             var doAfterEventArgs = new DoAfterEventArgs(user, _climbDelay, default, entityToMove)
             {
@@ -158,14 +161,14 @@ namespace Content.Server.Climbing.Components
 
             var result = await EntitySystem.Get<DoAfterSystem>().WaitDoAfter(doAfterEventArgs);
 
-            if (result != DoAfterStatus.Cancelled && entityToMove.TryGetComponent(out PhysicsComponent? body) && body.Fixtures.Count >= 1)
+            if (result != DoAfterStatus.Cancelled && _entities.TryGetComponent(entityToMove, out FixturesComponent? body) && body.FixtureCount >= 1)
             {
-                var entityPos = entityToMove.Transform.WorldPosition;
+                var entityPos = _entities.GetComponent<TransformComponent>(entityToMove).WorldPosition;
 
-                var direction = (Owner.Transform.WorldPosition - entityPos).Normalized;
-                var endPoint = Owner.Transform.WorldPosition;
+                var direction = (_entities.GetComponent<TransformComponent>(Owner).WorldPosition - entityPos).Normalized;
+                var endPoint = _entities.GetComponent<TransformComponent>(Owner).WorldPosition;
 
-                var climbMode = entityToMove.GetComponent<ClimbingComponent>();
+                var climbMode = _entities.GetComponent<ClimbingComponent>(entityToMove);
                 climbMode.IsClimbing = true;
 
                 if (MathF.Abs(direction.X) < 0.6f) // user climbed mostly vertically so lets make it a clean straight line
@@ -181,6 +184,9 @@ namespace Content.Server.Climbing.Components
                 // we may potentially need additional logic since we're forcing a player onto a climbable
                 // there's also the cases where the user might collide with the person they are forcing onto the climbable that i haven't accounted for
 
+                _entities.EventBus.RaiseLocalEvent(entityToMove, new StartClimbEvent(climbable), false);
+                _entities.EventBus.RaiseLocalEvent(climbable, new ClimbedOnEvent(entityToMove), false);
+
                 var othersMessage = Loc.GetString("comp-climbable-user-climbs-force-other",
                     ("user", user), ("moved-user", entityToMove), ("climbable", Owner));
                 user.PopupMessageOtherClients(othersMessage);
@@ -190,9 +196,9 @@ namespace Content.Server.Climbing.Components
             }
         }
 
-        public async void TryClimb(IEntity user)
+        public async void TryClimb(EntityUid user, EntityUid climbable)
         {
-            if (!user.TryGetComponent(out ClimbingComponent? climbingComponent) || climbingComponent.IsClimbing)
+            if (!_entities.TryGetComponent(user, out ClimbingComponent? climbingComponent) || climbingComponent.IsClimbing)
                 return;
 
             var doAfterEventArgs = new DoAfterEventArgs(user, _climbDelay, default, Owner)
@@ -205,24 +211,27 @@ namespace Content.Server.Climbing.Components
 
             var result = await EntitySystem.Get<DoAfterSystem>().WaitDoAfter(doAfterEventArgs);
 
-            if (result != DoAfterStatus.Cancelled && user.TryGetComponent(out PhysicsComponent? body) && body.Fixtures.Count >= 1)
+            if (result != DoAfterStatus.Cancelled && _entities.TryGetComponent(user, out FixturesComponent? fixtureComp) && fixtureComp.Fixtures.Count >= 1)
             {
                 // TODO: Remove the copy-paste code
-                var userPos = user.Transform.WorldPosition;
+                var userPos = _entities.GetComponent<TransformComponent>(user).WorldPosition;
 
-                var direction = (Owner.Transform.WorldPosition - userPos).Normalized;
-                var endPoint = Owner.Transform.WorldPosition;
+                var direction = (_entities.GetComponent<TransformComponent>(Owner).WorldPosition - userPos).Normalized;
+                var endPoint = _entities.GetComponent<TransformComponent>(Owner).WorldPosition;
 
-                var climbMode = user.GetComponent<ClimbingComponent>();
+                _entities.EventBus.RaiseLocalEvent(user, new StartClimbEvent(climbable), false);
+                _entities.EventBus.RaiseLocalEvent(climbable, new ClimbedOnEvent(user), false);
+
+                var climbMode = _entities.GetComponent<ClimbingComponent>(user);
                 climbMode.IsClimbing = true;
 
                 if (MathF.Abs(direction.X) < 0.6f) // user climbed mostly vertically so lets make it a clean straight line
                 {
-                    endPoint = new Vector2(user.Transform.WorldPosition.X, endPoint.Y);
+                    endPoint = new Vector2(_entities.GetComponent<TransformComponent>(user).WorldPosition.X, endPoint.Y);
                 }
                 else if (MathF.Abs(direction.Y) < 0.6f) // user climbed mostly horizontally so lets make it a clean straight line
                 {
-                    endPoint = new Vector2(endPoint.X, user.Transform.WorldPosition.Y);
+                    endPoint = new Vector2(endPoint.X, _entities.GetComponent<TransformComponent>(user).WorldPosition.Y);
                 }
 
                 climbMode.TryMoveTo(userPos, endPoint);
@@ -234,5 +243,31 @@ namespace Content.Server.Climbing.Components
                 user.PopupMessage(selfMessage);
             }
         }
+    }
+}
+
+/// <summary>
+///     Raised on an entity when it is climbed on.
+/// </summary>
+public class ClimbedOnEvent : EntityEventArgs
+{
+    public EntityUid Climber;
+
+    public ClimbedOnEvent(EntityUid climber)
+    {
+        Climber = climber;
+    }
+}
+
+/// <summary>
+///     Raised on an entity when it successfully climbs on something.
+/// </summary>
+public class StartClimbEvent : EntityEventArgs
+{
+    public EntityUid Climbable;
+
+    public StartClimbEvent(EntityUid climbable)
+    {
+        Climbable = climbable;
     }
 }

@@ -22,6 +22,20 @@
                     <Control MinSize="4 0"/>
                 </BoxContainer>
                 <Control MinSize="0 8" />
+                <BoxContainer Orientation="Horizontal" Margin="5 0 0 0">
+                    <Label Text="{Loc 'ui-options-midi-volume'}" />
+                    <Control MinSize="8 0" />
+                    <Slider Name="MidiVolumeSlider"
+                            MinValue="0"
+                            MaxValue="200"
+                            HorizontalExpand="True"
+                            MinSize="80 0"
+                            Rounded="True" />
+                    <Control MinSize="8 0" />
+                    <Label Name="MidiVolumeLabel" MinSize="48 0" Align="Right" />
+                    <Control MinSize="4 0"/>
+                </BoxContainer>
+                <Control MinSize="0 8" />
                 <CheckBox Name="AmbienceCheckBox" Text="{Loc 'ui-options-ambient-hum'}" />
                 <CheckBox Name="LobbyMusicCheckBox" Text="{Loc 'ui-options-lobby-music'}" />
             </BoxContainer>

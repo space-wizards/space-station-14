@@ -10,6 +10,7 @@ comp-kitchen-spike-kill = { CAPITALIZE(THE($user)) } has forced { THE($victim) }
 comp-kitchen-spike-suicide-other = { CAPITALIZE(THE($victim)) } has thrown themselves on a meat spike!
 comp-kitchen-spike-suicide-self = You throw yourself on a meat spike!
 
+comp-kitchen-spike-knife-needed = You need a knife to do this.
 comp-kitchen-spike-remove-meat = You remove some meat from { THE($victim) }.
 comp-kitchen-spike-remove-meat-last = You remove the last piece of meat from { THE($victim) }!
 

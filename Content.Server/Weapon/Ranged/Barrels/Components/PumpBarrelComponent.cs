@@ -5,15 +5,14 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
-using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
@@ -26,7 +25,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
     /// </summary>
     [RegisterComponent]
     [NetworkedComponent()]
-    public sealed class PumpBarrelComponent : ServerRangedBarrelComponent, IMapInit, ISerializationHooks
+    public sealed class PumpBarrelComponent : ServerRangedBarrelComponent, IUse, IInteractUsing, IMapInit, ISerializationHooks
     {
         public override string Name => "PumpBarrel";
 
@@ -45,7 +44,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
         // Even a point having a chamber? I guess it makes some of the below code cleaner
         private ContainerSlot _chamberContainer = default!;
-        private Stack<IEntity> _spawnedAmmo = new(DefaultCapacity - 1);
+        private Stack<EntityUid> _spawnedAmmo = new(DefaultCapacity - 1);
         private Container _ammoContainer = default!;
 
         [ViewVariables]
@@ -79,14 +78,14 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             UpdateAppearance();
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             (int, int)? count = (ShotsLeft, Capacity);
             var chamberedExists = _chamberContainer.ContainedEntity != null;
             // (Is one chambered?, is the bullet spend)
             var chamber = (chamberedExists, false);
 
-            if (chamberedExists && _chamberContainer.ContainedEntity!.TryGetComponent<AmmoComponent>(out var ammo))
+            if (chamberedExists && Entities.TryGetComponent<AmmoComponent?>(_chamberContainer.ContainedEntity!.Value, out var ammo))
             {
                 chamber.Item2 = ammo.Spent;
             }
@@ -99,7 +98,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
         void ISerializationHooks.AfterDeserialization()
         {
-            _spawnedAmmo = new Stack<IEntity>(Capacity - 1);
+            _spawnedAmmo = new Stack<EntityUid>(Capacity - 1);
         }
 
         protected override void Initialize()
@@ -125,7 +124,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 _unspawnedCount--;
             }
 
-            if (Owner.TryGetComponent(out AppearanceComponent? appearanceComponent))
+            if (Entities.TryGetComponent(Owner, out AppearanceComponent? appearanceComponent))
             {
                 _appearanceComponent = appearanceComponent;
             }
@@ -141,14 +140,13 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             _appearanceComponent?.SetData(AmmoVisuals.AmmoMax, Capacity);
         }
 
-        public override IEntity? PeekAmmo()
+        public override EntityUid? PeekAmmo()
         {
             return _chamberContainer.ContainedEntity;
         }
 
-        public override IEntity? TakeProjectile(EntityCoordinates spawnAt)
+        public override EntityUid? TakeProjectile(EntityCoordinates spawnAt)
         {
-            var chamberEntity = _chamberContainer.ContainedEntity;
             if (!_manualCycle)
             {
                 Cycle();
@@ -158,16 +156,19 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 Dirty();
             }
 
-            return chamberEntity?.GetComponentOrNull<AmmoComponent>()?.TakeBullet(spawnAt);
+            if (_chamberContainer.ContainedEntity is not {Valid: true} chamberEntity) return null;
+
+            var ammoComponent = Entities.GetComponentOrNull<AmmoComponent>(chamberEntity);
+
+            return ammoComponent == null ? null : EntitySystem.Get<GunSystem>().TakeBullet(ammoComponent, spawnAt);
         }
 
         private void Cycle(bool manual = false)
         {
-            var chamberedEntity = _chamberContainer.ContainedEntity;
-            if (chamberedEntity != null)
+            if (_chamberContainer.ContainedEntity is {Valid: true} chamberedEntity)
             {
                 _chamberContainer.Remove(chamberedEntity);
-                var ammoComponent = chamberedEntity.GetComponent<AmmoComponent>();
+                var ammoComponent = Entities.GetComponent<AmmoComponent>(chamberedEntity);
                 if (!ammoComponent.Caseless)
                 {
                     EjectCasing(chamberedEntity);
@@ -183,7 +184,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             if (_unspawnedCount > 0)
             {
                 _unspawnedCount--;
-                var ammoEntity = Owner.EntityManager.SpawnEntity(_fillPrototype, Owner.Transform.Coordinates);
+                var ammoEntity = Entities.SpawnEntity(_fillPrototype, Entities.GetComponent<TransformComponent>(Owner).Coordinates);
                 _chamberContainer.Insert(ammoEntity);
             }
 
@@ -198,7 +199,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
         public bool TryInsertBullet(InteractUsingEventArgs eventArgs)
         {
-            if (!eventArgs.Using.TryGetComponent(out AmmoComponent? ammoComponent))
+            if (!Entities.TryGetComponent(eventArgs.Using, out AmmoComponent? ammoComponent))
             {
                 return false;
             }
@@ -224,13 +225,13 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             return false;
         }
 
-        public override bool UseEntity(UseEntityEventArgs eventArgs)
+        public bool UseEntity(UseEntityEventArgs eventArgs)
         {
             Cycle(true);
             return true;
         }
 
-        public override async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
             return TryInsertBullet(eventArgs);
         }

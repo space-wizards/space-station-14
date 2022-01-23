@@ -38,6 +38,10 @@
       collection: Welder
     qualities: Welding
   - type: Welder
+    litMeleeDamageBonus:
+      types: # When lit, negate standard melee damage and replace with heat
+        Heat: 10
+        Blunt: -10
   - type: PointLight
     enabled: false
     radius: 1.5

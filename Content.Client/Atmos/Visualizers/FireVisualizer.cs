@@ -1,8 +1,8 @@
 ﻿using Content.Shared.Atmos;
-using Content.Shared.Atmos.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.Atmos.Visualizers
@@ -22,11 +22,11 @@ namespace Content.Client.Atmos.Visualizers
         [DataField("sprite")]
         private string? _sprite;
 
-        public override void InitializeEntity(IEntity entity)
+        public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
 
-            var sprite = entity.GetComponent<ISpriteComponent>();
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(entity);
 
             sprite.LayerMapReserveBlank(FireVisualLayers.Fire);
             sprite.LayerSetVisible(FireVisualLayers.Fire, false);
@@ -49,7 +49,7 @@ namespace Content.Client.Atmos.Visualizers
 
         private void SetOnFire(AppearanceComponent component, bool onFire, float fireStacks)
         {
-            var sprite = component.Owner.GetComponent<ISpriteComponent>();
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner);
 
             if (_sprite != null)
             {

@@ -1,3 +1,4 @@
+using Content.Server.Explosion.EntitySystems;
 using Robust.Shared.GameObjects;
 
 namespace Content.Server.Explosion.Components

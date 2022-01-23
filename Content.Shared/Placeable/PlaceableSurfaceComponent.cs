@@ -28,7 +28,7 @@ namespace Content.Shared.Placeable
         [DataField("positionOffset")]
         public Vector2 PositionOffset { get; set; }
 
-        public override ComponentState GetComponentState(ICommonSession session)
+        public override ComponentState GetComponentState()
         {
             return new PlaceableSurfaceComponentState(IsPlaceable,PlaceCentered, PositionOffset);
         }

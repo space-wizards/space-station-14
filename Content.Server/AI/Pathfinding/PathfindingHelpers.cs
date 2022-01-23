@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using Content.Server.Access.Systems;
 using Content.Server.AI.Pathfinding.Accessible;
 using Content.Server.AI.Pathfinding.Pathfinders;
+using Content.Shared.Access.Systems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;

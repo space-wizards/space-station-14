@@ -38,7 +38,7 @@
   - type: FireExtinguisher
     hasSafety: true
   - type: MeleeWeapon
-    damage: 
+    damage:
       types:
         Blunt: 10
     hitSound:
@@ -62,6 +62,7 @@
         map: [ "enum.VaporVisualLayers.Base" ]
   - type: Physics
     bodyType: Dynamic
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb

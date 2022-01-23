@@ -4,9 +4,11 @@ using System.Collections.Generic;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Cargo.Components
 {
@@ -15,7 +17,7 @@ namespace Content.Shared.Cargo.Components
     {
         public sealed override string Name => "GalacticMarket";
 
-        [DataField("products")]
+        [DataField("products", customTypeSerializer: typeof(PrototypeIdListSerializer<CargoProductPrototype>))]
         protected List<string> _productIds = new();
 
         protected readonly List<CargoProductPrototype> _products = new();
@@ -35,6 +37,7 @@ namespace Content.Shared.Cargo.Components
             {
                 if (!prototypeManager.TryIndex(id, out CargoProductPrototype? product))
                 {
+                    Logger.ErrorS("cargo", $"Unable to find {nameof(CargoProductPrototype)} for {id}");
                     continue;
                 }
 

@@ -1,6 +1,8 @@
 using System;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using static Content.Shared.MedicalScanner.SharedMedicalScannerComponent;
 using static Content.Shared.MedicalScanner.SharedMedicalScannerComponent.MedicalScannerStatus;
 
@@ -13,7 +15,7 @@ namespace Content.Client.MedicalScanner
         {
             base.OnChangeData(component);
 
-            var sprite = component.Owner.GetComponent<ISpriteComponent>();
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner);
             if (!component.TryGetData(MedicalScannerVisuals.Status, out MedicalScannerStatus status)) return;
             sprite.LayerSetState(MedicalScannerVisualLayers.Machine, StatusToMachineStateId(status));
             sprite.LayerSetState(MedicalScannerVisualLayers.Terminal, StatusToTerminalStateId(status));

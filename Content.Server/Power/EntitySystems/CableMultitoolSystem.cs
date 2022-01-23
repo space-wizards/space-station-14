@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.NodeContainer;
@@ -43,12 +43,12 @@ namespace Content.Server.Power.EntitySystems
             if (args.IsInDetailsRange)
             {
                 // Determine if they are holding a multitool.
-                if (args.Examiner.TryGetComponent<HandsComponent>(out var hands) && hands.TryGetActiveHand(out var hand))
+                if (EntityManager.TryGetComponent<HandsComponent?>(args.Examiner, out var hands) && hands.TryGetActiveHand(out var hand))
                 {
                     var held = hand.HeldEntity;
                     // Pulsing is hardcoded here because I don't think it needs to be more complex than that right now.
                     // Update if I'm wrong.
-                    if ((held != null) && _toolSystem.HasQuality(held.Uid, "Pulsing"))
+                    if (held != null && _toolSystem.HasQuality(held.Value, "Pulsing"))
                     {
                         args.PushMarkup(GenerateCableMarkup(uid));
                         // args.PushFancyUpdatingPowerGraphs(uid);

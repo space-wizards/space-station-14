@@ -23,6 +23,7 @@
   - type: Physics
     bodyType: Dynamic
     fixedRotation: false
+  - type: Fixtures
     fixtures:
       - shape:
           !type:PhysShapeAabb
@@ -38,6 +39,7 @@
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
+  - type: SubFloorHide
   - type: Anchorable
   - type: Rotatable
   - type: Pullable
@@ -51,16 +53,16 @@
         acts: ["Destruction"]
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/pipe.rsi
-    drawdepth: BelowFloor
+    drawdepth: ThinPipe
     netsync: false
   - type: Appearance
     visuals:
     - type: PipeConnectorVisualizer
     - type: PipeColorVisualizer
+    - type: TrayScannerSubFloorVisualizer
   - type: NodeContainer
   - type: AtmosUnsafeUnanchor
   - type: AtmosPipeColor
-  - type: SubFloorHide
   - type: Tag
     tags:
     - Pipe

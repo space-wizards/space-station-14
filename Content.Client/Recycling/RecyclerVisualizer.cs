@@ -1,8 +1,9 @@
-﻿using Content.Shared.Conveyor;
+using Content.Shared.Conveyor;
 using Content.Shared.Recycling;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.Recycling
@@ -16,12 +17,13 @@ namespace Content.Client.Recycling
         [DataField("state_off")]
         private string _stateOff = "grinder-o0";
 
-        public override void InitializeEntity(IEntity entity)
+        public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
 
-            if (!entity.TryGetComponent(out ISpriteComponent? sprite) ||
-                !entity.TryGetComponent(out AppearanceComponent? appearance))
+            var entMan = IoCManager.Resolve<IEntityManager>();
+            if (!entMan.TryGetComponent(entity, out ISpriteComponent? sprite) ||
+                !entMan.TryGetComponent(entity, out AppearanceComponent? appearance))
             {
                 return;
             }
@@ -33,7 +35,8 @@ namespace Content.Client.Recycling
         {
             base.OnChangeData(component);
 
-            if (!component.Owner.TryGetComponent(out ISpriteComponent? sprite))
+            var entities = IoCManager.Resolve<IEntityManager>();
+            if (!entities.TryGetComponent(component.Owner, out ISpriteComponent? sprite))
             {
                 return;
             }

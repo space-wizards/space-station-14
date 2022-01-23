@@ -7,7 +7,7 @@
   placement:
     mode: SnapgridCenter
   components:
-  - type: Sprite
+  - type: Sprite # TODO: add sprite for maintenance panel open
     sprite: Structures/Power/substation.rsi
     layers:
     - state: substation
@@ -42,3 +42,33 @@
     maxChargeRate: 5000
     supplyRampTolerance: 5000
     supplyRampRate: 1000
+  - type: Construction
+    graph: machine
+    node: machine
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+      - !type:ExplodeBehavior
+      - !type:SpawnEntitiesBehavior #in future should also emit a cloud of hot gas
+        spawn:
+          MachineFrameDestroyed:
+            min: 1
+            max: 1
+  - type: Explosive
+    devastationRange: 1
+    heavyImpactRange: 3
+    lightImpactRange: 5
+    flashRange: 6
+  - type: Wires
+    BoardName: "Substation"
+    LayoutId: Substation
+  - type: Machine
+    board: SubstationMachineCircuitboard

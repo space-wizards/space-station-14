@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
+using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -22,7 +24,7 @@ namespace Content.Shared.Actions.Components
     /// Currently only maintained server side and not synced to client, as are all the equip/unequip events.
     /// </summary>
     [RegisterComponent]
-    public class ItemActionsComponent : Component, IEquippedHand, IEquipped, IUnequipped, IUnequippedHand
+    public class ItemActionsComponent : Component
     {
         public override string Name => "ItemActions";
 
@@ -33,22 +35,19 @@ namespace Content.Shared.Actions.Components
         /// </summary>
         public IEnumerable<ItemActionConfig> ActionConfigs => _actionConfigs;
 
-        public bool IsEquipped => InSlot != EquipmentSlotDefines.Slots.NONE || InHand != null;
-        /// <summary>
-        /// Slot currently equipped to, NONE if not equipped to an equip slot.
-        /// </summary>
-        public EquipmentSlotDefines.Slots InSlot { get; private set; }
+        public bool IsEquipped;
+
         /// <summary>
         /// hand it's currently in, null if not in a hand.
         /// </summary>
-        public HandState? InHand { get; private set; }
+        public Hand? InHand;
 
         /// <summary>
         /// Entity currently holding this in hand or equip slot. Null if not held.
         /// </summary>
-        public IEntity? Holder { get; private set; }
+        public EntityUid? Holder;
         // cached actions component of the holder, since we'll need to access it frequently
-        private SharedActionsComponent? _holderActionsComponent;
+        public SharedActionsComponent? HolderActionsComponent;
 
         [DataField("actions")]
         private List<ItemActionConfig> _actionConfigs
@@ -80,21 +79,21 @@ namespace Content.Shared.Actions.Components
             RevokeAllFromHolder();
         }
 
-        private void GrantOrUpdateAllToHolder()
+        public void GrantOrUpdateAllToHolder()
         {
-            if (_holderActionsComponent == null) return;
+            if (HolderActionsComponent == null) return;
             foreach (var (actionType, state) in _actions)
             {
-                _holderActionsComponent.GrantOrUpdateItemAction(actionType, Owner.Uid, state);
+                HolderActionsComponent.GrantOrUpdateItemAction(actionType, Owner, state);
             }
         }
 
-        private void RevokeAllFromHolder()
+        public void RevokeAllFromHolder()
         {
-            if (_holderActionsComponent == null) return;
+            if (HolderActionsComponent == null) return;
             foreach (var (actionType, state) in _actions)
             {
-                _holderActionsComponent.RevokeItemAction(actionType, Owner.Uid);
+                HolderActionsComponent.RevokeItemAction(actionType, Owner);
             }
         }
 
@@ -151,7 +150,7 @@ namespace Content.Shared.Actions.Components
             if (!dirty) return;
 
             _actions[actionType] = actionState;
-            _holderActionsComponent?.GrantOrUpdateItemAction(actionType, Owner.Uid, actionState);
+            HolderActionsComponent?.GrantOrUpdateItemAction(actionType, Owner, actionState);
         }
 
         /// <summary>
@@ -180,46 +179,24 @@ namespace Content.Shared.Actions.Components
             GrantOrUpdate(actionType, toggleOn: toggleOn);
         }
 
-        void IEquippedHand.EquippedHand(EquippedHandEventArgs eventArgs)
+        public void EquippedHand(EntityUid user, Hand hand)
         {
             // this entity cannot be granted actions if no actions component
-            if (!eventArgs.User.TryGetComponent<SharedActionsComponent>(out var actionsComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedActionsComponent?>(user, out var actionsComponent))
                 return;
-            Holder = eventArgs.User;
-            _holderActionsComponent = actionsComponent;
-            InSlot = EquipmentSlotDefines.Slots.NONE;
-            InHand = eventArgs.Hand;
+            Holder = user;
+            HolderActionsComponent = actionsComponent;
+            IsEquipped = true;
+            InHand = hand;
             GrantOrUpdateAllToHolder();
         }
 
-        void IEquipped.Equipped(EquippedEventArgs eventArgs)
-        {
-            // this entity cannot be granted actions if no actions component
-            if (!eventArgs.User.TryGetComponent<SharedActionsComponent>(out var actionsComponent))
-                return;
-            Holder = eventArgs.User;
-            _holderActionsComponent = actionsComponent;
-            InSlot = eventArgs.Slot;
-            InHand = null;
-            GrantOrUpdateAllToHolder();
-        }
-
-        void IUnequipped.Unequipped(UnequippedEventArgs eventArgs)
+        public void UnequippedHand()
         {
             RevokeAllFromHolder();
             Holder = null;
-            _holderActionsComponent = null;
-            InSlot = EquipmentSlotDefines.Slots.NONE;
-            InHand = null;
-
-        }
-
-        void IUnequippedHand.UnequippedHand(UnequippedHandEventArgs eventArgs)
-        {
-            RevokeAllFromHolder();
-            Holder = null;
-            _holderActionsComponent = null;
-            InSlot = EquipmentSlotDefines.Slots.NONE;
+            HolderActionsComponent = null;
+            IsEquipped = false;
             InHand = null;
         }
     }

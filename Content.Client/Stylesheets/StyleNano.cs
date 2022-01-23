@@ -20,7 +20,7 @@ namespace Content.Client.Stylesheets
 {
     public static class ResCacheExtension
     {
-        public static Font notoStack(this IResourceCache resCache, string variation = "Regular", int size = 10, bool display = false)
+        public static Font NotoStack(this IResourceCache resCache, string variation = "Regular", int size = 10, bool display = false)
         {
             var ds = display ? "Display" : "";
             var sv = variation.StartsWith("Bold") ? "Bold" : "Regular";
@@ -109,23 +109,31 @@ namespace Content.Client.Stylesheets
 
         public StyleNano(IResourceCache resCache) : base(resCache)
         {
-            var notoSans10 = resCache.notoStack(size: 10);
-            var notoSansItalic10 = resCache.notoStack(variation: "Italic", size: 10);
-            var notoSans12 = resCache.notoStack(size: 12);
-            var notoSansItalic12 = resCache.notoStack(variation: "Italic", size: 12);
-            var notoSansBold12 = resCache.notoStack(variation: "Bold", size: 12);
-            var notoSansBoldItalic12 = resCache.notoStack(variation: "BoldItalic", size: 12);
-            var notoSansDisplayBold14 = resCache.notoStack(variation: "Bold", display: true, size: 14); 
-            var notoSansDisplayBold16 = resCache.notoStack(variation: "Bold", display: true, size: 16);
-            var notoSans15 = resCache.notoStack(variation: "Regular", size: 15);
-            var notoSans16 = resCache.notoStack(variation: "Regular", size: 16);
-            var notoSansBold16 = resCache.notoStack(variation: "Bold", size: 16);
-            var notoSansBold18 = resCache.notoStack(variation: "Bold", size: 18);
-            var notoSansBold20 = resCache.notoStack(variation: "Bold", size: 20);
+            var notoSans10 = resCache.NotoStack(size: 10);
+            var notoSansItalic10 = resCache.NotoStack(variation: "Italic", size: 10);
+            var notoSans12 = resCache.NotoStack(size: 12);
+            var notoSansItalic12 = resCache.NotoStack(variation: "Italic", size: 12);
+            var notoSansBold12 = resCache.NotoStack(variation: "Bold", size: 12);
+            var notoSansBoldItalic12 = resCache.NotoStack(variation: "BoldItalic", size: 12);
+            var notoSansDisplayBold14 = resCache.NotoStack(variation: "Bold", display: true, size: 14);
+            var notoSansDisplayBold16 = resCache.NotoStack(variation: "Bold", display: true, size: 16);
+            var notoSans15 = resCache.NotoStack(variation: "Regular", size: 15);
+            var notoSans16 = resCache.NotoStack(variation: "Regular", size: 16);
+            var notoSansBold16 = resCache.NotoStack(variation: "Bold", size: 16);
+            var notoSansBold18 = resCache.NotoStack(variation: "Bold", size: 18);
+            var notoSansBold20 = resCache.NotoStack(variation: "Bold", size: 20);
             var windowHeaderTex = resCache.GetTexture("/Textures/Interface/Nano/window_header.png");
             var windowHeader = new StyleBoxTexture
             {
                 Texture = windowHeaderTex,
+                PatchMarginBottom = 3,
+                ExpandMarginBottom = 3,
+                ContentMarginBottomOverride = 0
+            };
+            var windowHeaderAlertTex = resCache.GetTexture("/Textures/Interface/Nano/window_header_alert.png");
+            var windowHeaderAlert = new StyleBoxTexture
+            {
+                Texture = windowHeaderAlertTex,
                 PatchMarginBottom = 3,
                 ExpandMarginBottom = 3,
                 ContentMarginBottomOverride = 0
@@ -341,6 +349,15 @@ namespace Content.Client.Stylesheets
             tooltipBox.SetPatchMargin(StyleBox.Margin.All, 2);
             tooltipBox.SetContentMarginOverride(StyleBox.Margin.Horizontal, 7);
 
+            // Whisper box
+            var whisperTexture = resCache.GetTexture("/Textures/Interface/Nano/whisper.png");
+            var whisperBox = new StyleBoxTexture
+            {
+                Texture = whisperTexture,
+            };
+            whisperBox.SetPatchMargin(StyleBox.Margin.All, 2);
+            whisperBox.SetContentMarginOverride(StyleBox.Margin.Horizontal, 7);
+
             // Placeholder
             var placeholderTexture = resCache.GetTexture("/Textures/Interface/Nano/placeholder.png");
             var placeholder = new StyleBoxTexture {Texture = placeholderTexture};
@@ -429,19 +446,30 @@ namespace Content.Client.Stylesheets
             };
             insetBack.SetPatchMargin(StyleBox.Margin.All, 10);
 
+            var contextMenuExpansionTexture = resCache.GetTexture("/Textures/Interface/VerbIcons/group.svg.192dpi.png");
+            var verbMenuConfirmationTexture = resCache.GetTexture("/Textures/Interface/VerbIcons/group.svg.192dpi.png");
+
             Stylesheet = new Stylesheet(BaseRules.Concat(new[]
             {
                 // Window title.
                 new StyleRule(
-                    new SelectorElement(typeof(Label), new[] {SS14Window.StyleClassWindowTitle}, null, null),
+                    new SelectorElement(typeof(Label), new[] {DefaultWindow.StyleClassWindowTitle}, null, null),
                     new[]
                     {
                         new StyleProperty(Label.StylePropertyFontColor, NanoGold),
                         new StyleProperty(Label.StylePropertyFont, notoSansDisplayBold14),
                     }),
+                // Alert (white) window title.
+                new StyleRule(
+                    new SelectorElement(typeof(Label), new[] {"windowTitleAlert"}, null, null),
+                    new[]
+                    {
+                        new StyleProperty(Label.StylePropertyFontColor, Color.White),
+                        new StyleProperty(Label.StylePropertyFont, notoSansDisplayBold14),
+                    }),
                 // Window background.
                 new StyleRule(
-                    new SelectorElement(null, new[] {SS14Window.StyleClassWindowPanel}, null, null),
+                    new SelectorElement(null, new[] {DefaultWindow.StyleClassWindowPanel}, null, null),
                     new[]
                     {
                         new StyleProperty(PanelContainer.StylePropertyPanel, windowBackground),
@@ -481,10 +509,17 @@ namespace Content.Client.Stylesheets
                     }),
                 // Window header.
                 new StyleRule(
-                    new SelectorElement(typeof(PanelContainer), new[] {SS14Window.StyleClassWindowHeader}, null, null),
+                    new SelectorElement(typeof(PanelContainer), new[] {DefaultWindow.StyleClassWindowHeader}, null, null),
                     new[]
                     {
                         new StyleProperty(PanelContainer.StylePropertyPanel, windowHeader),
+                    }),
+                // Alert (red) window header.
+                new StyleRule(
+                    new SelectorElement(typeof(PanelContainer), new[] {"windowHeaderAlert"}, null, null),
+                    new[]
+                    {
+                        new StyleProperty(PanelContainer.StylePropertyPanel, windowHeaderAlert),
                     }),
 
                 // Shapes for the buttons.
@@ -590,6 +625,32 @@ namespace Content.Client.Stylesheets
 
                 Element<RichTextLabel>().Class(VerbMenuElement.StyleClassVerbOtherText)
                     .Prop(Label.StylePropertyFont, notoSans12),
+
+                Element<TextureRect>().Class(ContextMenuElement.StyleClassContextMenuExpansionTexture)
+                    .Prop(TextureRect.StylePropertyTexture, contextMenuExpansionTexture),
+
+                Element<TextureRect>().Class(VerbMenuElement.StyleClassVerbMenuConfirmationTexture)
+                    .Prop(TextureRect.StylePropertyTexture, verbMenuConfirmationTexture),
+
+                // Context menu confirm buttons
+                Element<ContextMenuElement>().Class(ConfirmationMenuElement.StyleClassConfirmationContextMenuButton)
+                    .Prop(ContainerButton.StylePropertyStyleBox, buttonContext),
+
+                Element<ContextMenuElement>().Class(ConfirmationMenuElement.StyleClassConfirmationContextMenuButton)
+                    .Pseudo(ContainerButton.StylePseudoClassNormal)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionDefault),
+
+                Element<ContextMenuElement>().Class(ConfirmationMenuElement.StyleClassConfirmationContextMenuButton)
+                    .Pseudo(ContainerButton.StylePseudoClassHover)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionHovered),
+
+                Element<ContextMenuElement>().Class(ConfirmationMenuElement.StyleClassConfirmationContextMenuButton)
+                    .Pseudo(ContainerButton.StylePseudoClassPressed)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionPressed),
+
+                Element<ContextMenuElement>().Class(ConfirmationMenuElement.StyleClassConfirmationContextMenuButton)
+                    .Pseudo(ContainerButton.StylePseudoClassDisabled)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionDisabled),
 
                 // Thin buttons (No padding nor vertical margin)
                 Element<EntityContainerButton>().Class(StyleClassStorageButton)
@@ -753,6 +814,11 @@ namespace Content.Client.Stylesheets
                 new StyleRule(new SelectorElement(typeof(PanelContainer), new[] {"speechBox", "sayBox"}, null, null), new[]
                 {
                     new StyleProperty(PanelContainer.StylePropertyPanel, tooltipBox)
+                }),
+
+                new StyleRule(new SelectorElement(typeof(PanelContainer), new[] {"speechBox", "whisperBox"}, null, null), new[]
+                {
+                    new StyleProperty(PanelContainer.StylePropertyPanel, whisperBox)
                 }),
 
                 new StyleRule(new SelectorChild(

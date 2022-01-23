@@ -1,0 +1,44 @@
+- type: gameMap
+  id: empty
+  mapName: Empty
+  mapPath: Maps/Test/empty.yml
+  minPlayers: 0
+  votable: false
+  overflowJobs:
+    - Assistant
+  availableJobs:
+    Assistant: [ -1, -1 ]
+
+- type: gameMap
+  id: debugstation
+  mapName: 'funny knightship'
+  mapNameTemplate: '{0} funny knight {1}'
+  nameGenerator:
+    !type:NanotrasenNameGenerator
+    prefixCreator: '14'
+  mapPath: Maps/knightship.yml
+  minPlayers: 0
+  votable: false
+  overflowJobs:
+    - Assistant
+  availableJobs:
+    CargoTechnician: [ -1, -1 ]
+    Assistant: [ -1, -1 ]
+    Bartender: [ -1, -1 ]
+    Botanist: [ -1, -1 ]
+    Chef: [ -1, -1 ]
+    Clown: [ -1, -1 ]
+    Janitor: [ -1, -1 ]
+    Mime: [ -1, -1 ]
+    Captain: [ -1, -1 ]
+    HeadOfPersonnel: [ -1, -1 ]
+    ChiefEngineer: [ -1, -1 ]
+    StationEngineer: [ -1, -1 ]
+    ChiefMedicalOfficer: [ -1, -1 ]
+    MedicalDoctor: [ -1, -1 ]
+    Chemist: [ -1, -1 ]
+    ResearchDirector: [ -1, -1 ]
+    Scientist: [ -1, -1 ]
+    HeadOfSecurity: [ -1, -1 ]
+    SecurityOfficer: [ -1, -1 ]
+    Chaplain: [ -1, -1 ]

@@ -3,6 +3,8 @@ using Content.Shared.Foam;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -35,11 +37,12 @@ namespace Content.Client.Chemistry.Visualizers
         {
             base.OnChangeData(component);
 
+            var entities = IoCManager.Resolve<IEntityManager>();
             if (component.TryGetData<bool>(FoamVisuals.State, out var state))
             {
                 if (state)
                 {
-                    if (component.Owner.TryGetComponent(out AnimationPlayerComponent? animPlayer))
+                    if (entities.TryGetComponent(component.Owner, out AnimationPlayerComponent? animPlayer))
                     {
                         if (!animPlayer.HasRunningAnimation(AnimationKey))
                             animPlayer.Play(_foamDissolve, AnimationKey);
@@ -49,7 +52,7 @@ namespace Content.Client.Chemistry.Visualizers
 
             if (component.TryGetData<Color>(FoamVisuals.Color, out var color))
             {
-                if (component.Owner.TryGetComponent(out ISpriteComponent? sprite))
+                if (entities.TryGetComponent(component.Owner, out ISpriteComponent? sprite))
                 {
                     sprite.Color = color;
                 }

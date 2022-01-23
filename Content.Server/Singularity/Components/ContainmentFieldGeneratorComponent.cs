@@ -5,10 +5,10 @@ using Content.Shared.Physics;
 using Content.Shared.Singularity.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using Robust.Shared.Physics.Broadphase;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Singularity.Components
@@ -17,6 +17,8 @@ namespace Content.Server.Singularity.Components
     [ComponentReference(typeof(SharedContainmentFieldGeneratorComponent))]
     public class ContainmentFieldGeneratorComponent : SharedContainmentFieldGeneratorComponent
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         private int _powerBuffer;
 
         [ViewVariables]
@@ -56,18 +58,15 @@ namespace Content.Server.Singularity.Components
             }
         }
 
-        [ComponentDependency] private readonly PhysicsComponent? _collidableComponent = default;
-        [ComponentDependency] private readonly PointLightComponent? _pointLightComponent = default;
-
         private Tuple<Direction, ContainmentFieldConnection>? _connection1;
         private Tuple<Direction, ContainmentFieldConnection>? _connection2;
 
-        public bool CanRepell(IEntity toRepell) => _connection1?.Item2?.CanRepell(toRepell) == true ||
+        public bool CanRepell(EntityUid toRepell) => _connection1?.Item2?.CanRepell(toRepell) == true ||
                                                    _connection2?.Item2?.CanRepell(toRepell) == true;
 
         public void OnAnchoredChanged()
         {
-            if(_collidableComponent?.BodyType != BodyType.Static)
+            if(_entMan.TryGetComponent<PhysicsComponent>(Owner, out var physicsComponent) && physicsComponent.BodyType != BodyType.Static)
             {
                 _connection1?.Item2.Dispose();
                 _connection2?.Item2.Dispose();
@@ -89,15 +88,15 @@ namespace Content.Server.Singularity.Components
         private bool TryGenerateFieldConnection([NotNullWhen(true)] ref Tuple<Direction, ContainmentFieldConnection>? propertyFieldTuple)
         {
             if (propertyFieldTuple != null) return false;
-            if(_collidableComponent?.BodyType != BodyType.Static) return false;
+            if(_entMan.TryGetComponent<PhysicsComponent>(Owner, out var physicsComponent) && physicsComponent.BodyType != BodyType.Static) return false;
 
             foreach (var direction in new[] {Direction.North, Direction.East, Direction.South, Direction.West})
             {
                 if (_connection1?.Item1 == direction || _connection2?.Item1 == direction) continue;
 
-                var dirVec = Owner.Transform.WorldRotation.RotateVec(direction.ToVec());
-                var ray = new CollisionRay(Owner.Transform.WorldPosition, dirVec, (int) CollisionGroup.MobMask);
-                var rawRayCastResults = EntitySystem.Get<SharedPhysicsSystem>().IntersectRay(Owner.Transform.MapID, ray, 4.5f, Owner, false);
+                var dirVec = _entMan.GetComponent<TransformComponent>(Owner).WorldRotation.RotateVec(direction.ToVec());
+                var ray = new CollisionRay(_entMan.GetComponent<TransformComponent>(Owner).WorldPosition, dirVec, (int) CollisionGroup.MobMask);
+                var rawRayCastResults = EntitySystem.Get<SharedPhysicsSystem>().IntersectRay(_entMan.GetComponent<TransformComponent>(Owner).MapID, ray, 4.5f, Owner, false);
 
                 var rayCastResults = rawRayCastResults as RayCastResults[] ?? rawRayCastResults.ToArray();
                 if(!rayCastResults.Any()) continue;
@@ -113,11 +112,11 @@ namespace Content.Server.Singularity.Components
                 }
                 if(closestResult == null) continue;
                 var ent = closestResult.Value.HitEntity;
-                if (!ent.TryGetComponent<ContainmentFieldGeneratorComponent>(out var fieldGeneratorComponent) ||
+                if (!_entMan.TryGetComponent<ContainmentFieldGeneratorComponent?>(ent, out var fieldGeneratorComponent) ||
                     fieldGeneratorComponent.Owner == Owner ||
                     !fieldGeneratorComponent.HasFreeConnections() ||
                     IsConnectedWith(fieldGeneratorComponent) ||
-                    !ent.TryGetComponent<PhysicsComponent>(out var collidableComponent) ||
+                    !_entMan.TryGetComponent<PhysicsComponent?>(ent, out var collidableComponent) ||
                     collidableComponent.BodyType != BodyType.Static)
                 {
                     continue;
@@ -164,10 +163,10 @@ namespace Content.Server.Singularity.Components
 
         public void UpdateConnectionLights()
         {
-            if (_pointLightComponent != null)
+            if (_entMan.TryGetComponent<PointLightComponent>(Owner, out var pointLightComponent))
             {
                 bool hasAnyConnection = (_connection1 != null) || (_connection2 != null);
-                _pointLightComponent.Enabled = hasAnyConnection;
+                pointLightComponent.Enabled = hasAnyConnection;
             }
         }
 
