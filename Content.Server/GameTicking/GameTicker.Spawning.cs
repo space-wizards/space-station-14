@@ -94,7 +94,7 @@ namespace Content.Server.GameTicking
             // If no job available, stay in lobby, or if no lobby spawn as observer
             if (jobId is null)
             {
-                if(LobbyEnabled == false)
+                if (!LobbyEnabled)
                 {
                     MakeObserve(player);
                 }
