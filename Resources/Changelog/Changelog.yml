@@ -1,24 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: Added grilles., type: Add}
-  id: 419
-  time: '2021-10-09T08:54:56.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Expand out saltern's north-eastern maintenance just a bit, type: Tweak}
-  id: 420
-  time: '2021-10-09T11:06:34.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Pulling an abnormally close object shouldn't cause errors, type: Fix}
-  id: 422
-  time: '2021-10-09T13:49:08.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Added a verb to rotatable entities to reset rotation back to 0., type: Add}
-  id: 423
-  time: '2021-10-09T16:23:34.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: small light sources like computers no longer cast shadows to improve
@@ -2924,3 +2904,27 @@ Entries:
       a dry mop', type: Tweak}
   id: 920
   time: '2022-01-23T05:27:22.0000000+00:00'
+- author: Lamrr
+  changes:
+  - {message: You can now find full-tile tinted windows at a crafting menu near you.
+      Useful for keeping the greytide out of your private affairs., type: Add}
+  id: 921
+  time: '2022-01-23T17:44:12.0000000+00:00'
+- author: Lamrr
+  changes:
+  - {message: Organise your paperwork with the addition of folders. Now available
+      from the bureaucracy crate., type: Add}
+  id: 922
+  time: '2022-01-23T17:46:55.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Constructed SMES, APC and substations now start with zero charge.',
+    type: Fix}
+  id: 923
+  time: '2022-01-23T17:47:22.0000000+00:00'
+- author: moony
+  changes:
+  - {message: 'Kudzu and Gas Leak are now less likely to occur, and cannot happen
+      four times in a row.', type: Tweak}
+  id: 924
+  time: '2022-01-23T21:17:05.0000000+00:00'
