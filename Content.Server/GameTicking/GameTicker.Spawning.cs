@@ -109,6 +109,7 @@ namespace Content.Server.GameTicking
 
                     // If the overflow exists, put them in as it.
                     assignedJobs.Add(player, (overflows[0], stations[0]));
+                    break;
                 }
             }
         }
