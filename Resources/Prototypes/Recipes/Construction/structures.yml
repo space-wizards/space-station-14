@@ -110,7 +110,7 @@
 - type: construction
   name: tinted window
   id: TintedWindow
-  graph: window
+  graph: Window
   startNode: start
   targetNode: tintedWindow
   category: Structures
@@ -328,7 +328,7 @@
 
 - type: construction
   name: railing corner small
-  id: RailingCornerSmall	
+  id: RailingCornerSmall
   graph: Railing
   startNode: start
   targetNode: railingCornerSmall
