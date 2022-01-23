@@ -78,7 +78,6 @@
   components:
   - type: Sprite
     netsync: false
-    drawdepth: WallTops
     sprite: Structures/Windows/directional.rsi
     state: reinforced_window
   - type: Icon
