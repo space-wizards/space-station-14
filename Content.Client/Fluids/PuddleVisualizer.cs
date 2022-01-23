@@ -43,30 +43,43 @@ namespace Content.Client.Fluids
 
         public override void OnChangeData(AppearanceComponent component)
         {
-            base.OnChangeData(component);
+            base.OnChangeData(component); // runs OnChangeData from the base class (AppearanceVisualizer)
 
             var entities = IoCManager.Resolve<IEntityManager>();
-            if (component.TryGetData<float>(PuddleVisuals.VolumeScale, out var volumeScale) &&
-                entities.TryGetComponent<SpriteComponent>(component.Owner, out var spriteComponent))
+            if (component.TryGetData<float>(PuddleVisuals.VolumeScale, out var volumeScale) &&          //tries to get VolumeScale from PuddleVisuals. Outputs volumeScale if successful
+                entities.TryGetComponent<SpriteComponent>(component.Owner, out var spriteComponent))    //tries to get sprite component from the entity. Outputs spriteComponent if successful
             {
+                component.TryGetData<bool>(PuddleVisuals.ForceWetFloorSprite, out var forceWetFloorSprite); //tries to get ForceWetFloorSprite from PuddleVisuals. Outputs forceWetFloorSprite if successful
                 var cappedScale = Math.Min(1.0f, volumeScale * 0.75f +0.25f);
-                UpdateVisual(component, spriteComponent, cappedScale);
+                UpdateVisual(component, spriteComponent, cappedScale, forceWetFloorSprite);
             }
         }
 
-        private void UpdateVisual(AppearanceComponent component, SpriteComponent spriteComponent, float cappedScale)
+        private void UpdateVisual(AppearanceComponent component, SpriteComponent spriteComponent, float cappedScale, bool forceWetFloorSprite)
         {
-            Color newColor;
-            if (Recolor && component.TryGetData<Color>(PuddleVisuals.SolutionColor, out var solutionColor))
+            if (forceWetFloorSprite)
             {
-                newColor = solutionColor.WithAlpha(cappedScale);
+                //Change the puddle's sprite to the wet floor sprite
+                spriteComponent.LayerSetRSI(0, "Fluids/wet_floor_sparkles.rsi");
+                //spriteComponent.LayerSetState(0, "wet-floor");
+                spriteComponent.LayerSetState(0, "sparkles");
             }
-            else
+            else //Determining the new color is not needed if we are forcing the wet floor sprite.
             {
-                newColor = spriteComponent.Color.WithAlpha(cappedScale);
-            }
+                spriteComponent.LayerSetRSI(0, "Fluids/smear.rsi");
+                spriteComponent.LayerSetState(0, "smear-0"); // need a way to implement the random smears again
+                Color newColor;
+                if (Recolor && component.TryGetData<Color>(PuddleVisuals.SolutionColor, out var solutionColor))
+                {
+                    newColor = solutionColor.WithAlpha(cappedScale);
+                }
+                else
+                {
+                    newColor = spriteComponent.Color.WithAlpha(cappedScale);
+                }
 
-            spriteComponent.Color = newColor;
+                spriteComponent.Color = newColor;
+            }
         }
     }
 
