@@ -4,6 +4,7 @@ using Content.Server.StationEvents;
 using Robust.Shared.Configuration;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Server.Dynamic.Systems;
 
@@ -69,5 +70,6 @@ public partial class DynamicModeSystem : GameRuleSystem
 
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly StationEventSystem _stationEvents = default!;
 }
