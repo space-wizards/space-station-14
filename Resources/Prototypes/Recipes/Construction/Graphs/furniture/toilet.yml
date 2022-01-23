@@ -1,5 +1,5 @@
 - type: constructionGraph
-  id: toilet
+  id: Toilet
   start: start
   graph:
     - node: start

@@ -1,8 +1,8 @@
 # POWER
 - type: construction
   name: APC
-  id: apc
-  graph: apc
+  id: APC
+  graph: APC
   startNode: start
   targetNode: apc
   category: Utilities
@@ -17,7 +17,7 @@
 - type: construction
   name: solar assembly
   id: SolarPanel
-  graph: solarpanel
+  graph: SolarPanel
   startNode: start
   targetNode: solarpanel
   category: Utilities
@@ -33,8 +33,8 @@
 
 - type: construction
   name: cable terminal
-  id: cableTerminal
-  graph: cable_terminal
+  id: CableTerminal
+  graph: CableTerminal
   startNode: start
   targetNode: cable_terminal
   category: Utilities
@@ -51,7 +51,7 @@
 - type: construction
   name: disposal unit
   id: DisposalUnit
-  graph: disposalMachine
+  graph: DisposalMachine
   startNode: start
   targetNode: disposal_unit
   category: Utilities
@@ -153,3 +153,38 @@
     state: conpipe-c
 
 # ATMOS
+- type: construction
+  name: air alarm
+  id: AirAlarmFixture
+  graph: AirAlarm
+  startNode: start
+  targetNode: air_alarm
+  category: Structures
+  description: An air alarm. Alarms... air?
+  icon:
+    sprite: Structures/Wallmounts/air_monitors.rsi
+    state: alarm0
+  placementMode: SnapgridCenter
+  objectType: Structure
+  canRotate: true
+  canBuildInImpassable: true
+  conditions:
+  - !type:WallmountCondition {}
+
+- type: construction
+  name: fire alarm
+  id: FireAlarm
+  graph: FireAlarm
+  startNode: start
+  targetNode: fire_alarm
+  category: Structures
+  description: A fire alarm. Spicy!
+  icon:
+    sprite: Structures/Wallmounts/air_monitors.rsi
+    state: fire0
+  placementMode: SnapgridCenter
+  objectType: Structure
+  canRotate: true
+  canBuildInImpassable: true
+  conditions:
+  - !type:WallmountCondition {}

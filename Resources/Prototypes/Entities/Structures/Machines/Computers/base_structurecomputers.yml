@@ -7,7 +7,7 @@
     mode: SnapgridCenter
   components:
   - type: Construction
-    graph: computer
+    graph: Computer
     node: computer
   - type: Computer
   - type: ApcPowerReceiver
