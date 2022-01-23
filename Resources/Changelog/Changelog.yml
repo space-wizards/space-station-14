@@ -1,9 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: Added grilles., type: Add}
-  id: 419
-  time: '2021-10-09T08:54:56.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: Expand out saltern's north-eastern maintenance just a bit, type: Tweak}
@@ -2924,3 +2919,9 @@ Entries:
       a dry mop', type: Tweak}
   id: 920
   time: '2022-01-23T05:27:22.0000000+00:00'
+- author: Lamrr
+  changes:
+  - {message: You can now find full-tile tinted windows at a crafting menu near you.
+      Useful for keeping the greytide out of your private affairs., type: Add}
+  id: 921
+  time: '2022-01-23T17:44:12.0000000+00:00'
