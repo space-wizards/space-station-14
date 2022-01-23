@@ -17,7 +17,10 @@ public class RadiateArtifactSystem : EntitySystem
     {
         var transform = Transform(uid);
 
-        var pulse = EntityManager.SpawnEntity("RadiationPulse", transform.Coordinates);
-        EntityManager.GetComponent<RadiationPulseComponent>(pulse).DoPulse();
+        var pulseUid = EntityManager.SpawnEntity(component.PulsePrototype, transform.Coordinates);
+        if (!TryComp(pulseUid, out RadiationPulseComponent? pulse))
+            return;
+
+        pulse.DoPulse();
     }
 }

@@ -61,5 +61,5 @@ public class GasArtifactComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("spawnAmount")]
-    public float SpawnAmount = Atmospherics.MolesCellStandard;
+    public float SpawnAmount = Atmospherics.MolesCellStandard * 3;
 }

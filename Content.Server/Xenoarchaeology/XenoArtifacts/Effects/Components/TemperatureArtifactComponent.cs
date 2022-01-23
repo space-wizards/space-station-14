@@ -4,6 +4,9 @@ using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 
+/// <summary>
+///     Change atmospherics temperature until it reach target.
+/// </summary>
 [RegisterComponent]
 public class TemperatureArtifactComponent : Component
 {
