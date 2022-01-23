@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Shuttle rotation is now enabled., type: Add}
-  id: 418
-  time: '2021-10-08T23:55:11.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: Added grilles., type: Add}
@@ -2918,3 +2913,14 @@ Entries:
   - {message: Shotgun shells ('shots') are now available in boxes., type: Add}
   id: 919
   time: '2022-01-22T20:47:55.0000000+00:00'
+- author: Willhelm53
+  changes:
+  - {message: Added ability for mop buckets to receive fluid from mops, type: Add}
+  - {message: Popup messages informing when the mop becomes full (from puddles or
+      mop bucket) or empty (from mop bucket), type: Add}
+  - {message: The mop now transfers solution from the puddle to the mop instead of
+      consuming water to destroy puddles, type: Fix}
+  - {message: 'The mop bucket now receives fluid from a wet mop, or gives fluid to
+      a dry mop', type: Tweak}
+  id: 920
+  time: '2022-01-23T05:27:22.0000000+00:00'
