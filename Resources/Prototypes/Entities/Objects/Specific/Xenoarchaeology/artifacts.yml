@@ -145,3 +145,10 @@
   suffix: Radiation
   components:
     - type: RadiateArtifact
+
+- type: entity
+  parent: BaseXenoArtifact
+  id: GasArtifact
+  suffix: Gas
+  components:
+    - type: GasArtifact
