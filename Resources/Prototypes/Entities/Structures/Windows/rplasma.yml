@@ -33,7 +33,7 @@
   - type: IconSmooth
     base: rpwindow
   - type: Construction
-    graph: window
+    graph: Window
     node: reinforcedPlasmaWindow
   - type: Appearance
     visuals:
@@ -63,7 +63,7 @@
     sprite: Structures/Windows/directional.rsi
     state: plasma_reinforced_window
   - type: Construction
-    graph: windowDirectional
+    graph: WindowDirectional
     node: plasmaReinforcedWindowDirectional
   - type: Destructible
     thresholds:

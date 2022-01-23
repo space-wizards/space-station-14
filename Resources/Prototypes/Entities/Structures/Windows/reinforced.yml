@@ -36,7 +36,7 @@
   - type: IconSmooth
     base: rwindow
   - type: Construction
-    graph: window
+    graph: Window
     node: reinforcedWindow
   - type: Appearance
     visuals:
@@ -66,7 +66,7 @@
     sprite: Structures/Windows/directional.rsi
     state: reinforced_window
   - type: Construction
-    graph: windowDirectional
+    graph: WindowDirectional
     node: windowReinforcedDirectional
   - type: Destructible
     thresholds:
