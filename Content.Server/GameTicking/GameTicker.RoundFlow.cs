@@ -231,58 +231,7 @@ namespace Content.Server.GameTicking
                 // MapInitialize *before* spawning players, our codebase is too shit to do it afterwards...
                 _pauseManager.DoMapInitialize(DefaultMap);
 
-                // Allow game rules to spawn players by themselves if needed. (For example, nuke ops or wizard)
-                RaiseLocalEvent(new RulePlayerSpawningEvent(readyPlayers, profiles, force));
-
-                var assignedJobs = AssignJobs(readyPlayers, profiles);
-
-                // For players without jobs, give them the overflow job if they have that set...
-                foreach (var player in origReadyPlayers)
-                {
-                    if (assignedJobs.ContainsKey(player))
-                    {
-                        continue;
-                    }
-
-                    var profile = profiles[player.UserId];
-                    if (profile.PreferenceUnavailable == PreferenceUnavailableMode.SpawnAsOverflow)
-                    {
-                        // Pick a random station
-                        var stations = _stationSystem.StationInfo.Keys.ToList();
-                        _robustRandom.Shuffle(stations);
-
-                        if (stations.Count == 0)
-                        {
-                            assignedJobs.Add(player, (FallbackOverflowJob, StationId.Invalid));
-                            continue;
-                        }
-
-                        foreach (var station in stations)
-                        {
-                            // Pick a random overflow job from that station
-                            var overflows = _stationSystem.StationInfo[station].MapPrototype.OverflowJobs.Clone();
-                            _robustRandom.Shuffle(overflows);
-
-                            // Stations with no overflow slots should simply get skipped over.
-                            if (overflows.Count == 0)
-                                continue;
-
-                            // If the overflow exists, put them in as it.
-                            assignedJobs.Add(player, (overflows[0], stations[0]));
-                        }
-                    }
-                }
-
-                // Spawn everybody in!
-                foreach (var (player, (job, station)) in assignedJobs)
-                {
-                    SpawnPlayer(player, profiles[player.UserId], station, job, false);
-                }
-
-                RefreshLateJoinAllowed();
-
-                // Allow rules to add roles to players who have been spawned in. (For example, on-station traitors)
-                RaiseLocalEvent(new RulePlayerJobsAssignedEvent(assignedJobs.Keys.ToArray(), profiles, force));
+                SpawnPlayers(readyPlayers, origReadyPlayers, profiles, force);
 
                 _roundStartDateTime = DateTime.UtcNow;
                 RunLevel = GameRunLevel.InRound;
