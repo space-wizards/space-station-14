@@ -49,7 +49,6 @@ namespace Content.Server.GameTicking
         // Mainly to avoid allocations.
         private readonly List<EntityCoordinates> _possiblePositions = new();
 
-
         private void SpawnPlayers(List<IPlayerSession> readyPlayers, IPlayerSession[] origReadyPlayers,
             Dictionary<NetUserId, HumanoidCharacterProfile> profiles, bool force)
         {
@@ -58,6 +57,23 @@ namespace Content.Server.GameTicking
 
             var assignedJobs = AssignJobs(readyPlayers, profiles);
 
+            AssignOverflowJobs(assignedJobs, origReadyPlayers, profiles);
+
+            // Spawn everybody in!
+            foreach (var (player, (job, station)) in assignedJobs)
+            {
+                SpawnPlayer(player, profiles[player.UserId], station, job, false);
+            }
+
+            RefreshLateJoinAllowed();
+
+            // Allow rules to add roles to players who have been spawned in. (For example, on-station traitors)
+            RaiseLocalEvent(new RulePlayerJobsAssignedEvent(assignedJobs.Keys.ToArray(), profiles, force));
+        }
+
+        private void AssignOverflowJobs(IDictionary<IPlayerSession, (string, StationId)> assignedJobs,
+            IPlayerSession[] origReadyPlayers, IReadOnlyDictionary<NetUserId, HumanoidCharacterProfile> profiles)
+        {
             // For players without jobs, give them the overflow job if they have that set...
             foreach (var player in origReadyPlayers)
             {
@@ -95,17 +111,6 @@ namespace Content.Server.GameTicking
                     assignedJobs.Add(player, (overflows[0], stations[0]));
                 }
             }
-
-            // Spawn everybody in!
-            foreach (var (player, (job, station)) in assignedJobs)
-            {
-                SpawnPlayer(player, profiles[player.UserId], station, job, false);
-            }
-
-            RefreshLateJoinAllowed();
-
-            // Allow rules to add roles to players who have been spawned in. (For example, on-station traitors)
-            RaiseLocalEvent(new RulePlayerJobsAssignedEvent(assignedJobs.Keys.ToArray(), profiles, force));
         }
 
         private void SpawnPlayer(IPlayerSession player, StationId station, string? jobId = null, bool lateJoin = true)
