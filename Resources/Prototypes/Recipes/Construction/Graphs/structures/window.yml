@@ -16,6 +16,12 @@
               amount: 2
               doAfter: 2
 
+        - to: tintedWindow
+          steps:
+            - material: ReinforcedGlass
+              amount: 2
+              doAfter: 2
+
         - to: reinforcedPlasmaWindow
           steps:
             - material: ReinforcedPlasmaGlass
@@ -45,6 +51,25 @@
 
     - node: reinforcedWindow
       entity: ReinforcedWindow
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetRGlass1
+              amount: 2
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Screwing
+              doAfter: 1
+            - tool: Prying
+              doAfter: 2
+            - tool: Screwing
+              doAfter: 1
+            - tool: Anchoring
+              doAfter: 2
+
+    - node: tintedWindow
+      entity: TintedWindow
       edges:
         - to: start
           completed:
