@@ -425,7 +425,7 @@ namespace Content.Server.WireHacking
                     }
 
                     ToolComponent? tool = null;
-                    if (handsComponent.GetActiveHand?.Owner is EntityUid activeHandEntity)
+                    if (handsComponent.GetActiveHandItem?.Owner is EntityUid activeHandEntity)
                         _entities.TryGetComponent(activeHandEntity, out tool);
                     var toolSystem = EntitySystem.Get<ToolSystem>();
 

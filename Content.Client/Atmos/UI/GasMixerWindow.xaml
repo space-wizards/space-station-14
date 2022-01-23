@@ -1,4 +1,4 @@
-<SS14Window xmlns="https://spacestation14.io"
+<DefaultWindow xmlns="https://spacestation14.io"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             xmlns:s="clr-namespace:Content.Client.Stylesheets"
             MinSize="200 200" Title="Gas Mixer">
@@ -35,4 +35,4 @@
             <Button Name="SetMixerPercentageButton" Text="{Loc comp-gas-mixer-ui-mixer-set}" HorizontalAlignment="Right" Disabled="True"/>
         </BoxContainer>
     </BoxContainer>
-</SS14Window>
+</DefaultWindow>

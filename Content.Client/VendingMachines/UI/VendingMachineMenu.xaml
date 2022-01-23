@@ -1,6 +1,6 @@
-﻿<SS14Window xmlns="https://spacestation14.io">
+﻿<DefaultWindow xmlns="https://spacestation14.io">
     <ItemList Name="VendingContents"
               SizeFlagsStretchRatio="8"
               VerticalExpand="True">
     </ItemList>
-</SS14Window>
+</DefaultWindow>

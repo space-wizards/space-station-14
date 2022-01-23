@@ -1,47 +1,6 @@
 Entries:
 - author: Zumorica
   changes:
-  - {message: Fix bike horn sound not having pitch variation anymore., type: Fix}
-  id: 411
-  time: '2021-10-06T13:13:56.224775+00:00'
-- author: 20kdc
-  changes:
-  - {message: '''AHelp'' next to the options menu.', type: Add}
-  id: 412
-  time: '2021-10-06T15:25:28.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: Fixes a bunch of weirdly rotated stuff on Saltern., type: Fix}
-  id: 413
-  time: '2021-10-07T04:55:39.708225+00:00'
-- author: Ygg01
-  changes:
-  - {message: Fixed puddles blocking bullets or other puddles., type: Fix}
-  id: 414
-  time: '2021-10-07T06:59:12.0000000+00:00'
-- author: moony
-  changes:
-  - {message: Fixed doors having murderous intent on unrotated stations., type: Fix}
-  id: 415
-  time: '2021-10-08T07:37:18.0000000+00:00'
-- author: Macoron
-  changes:
-  - {message: Added Telecrystals (TC) in traitors uplinks, type: Add}
-  id: 416
-  time: '2021-10-08T10:26:43.0000000+00:00'
-- author: moony
-  changes:
-  - {message: 'Added a warning dialog to the observe button, no more misclicks.',
-    type: Add}
-  id: 417
-  time: '2021-10-08T14:22:58.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Shuttle rotation is now enabled., type: Add}
-  id: 418
-  time: '2021-10-08T23:55:11.0000000+00:00'
-- author: Zumorica
-  changes:
   - {message: Added grilles., type: Add}
   id: 419
   time: '2021-10-09T08:54:56.0000000+00:00'
@@ -2915,3 +2874,53 @@ Entries:
       you can no longer get locked out if you have to relog for some reason., type: Tweak}
   id: 912
   time: '2022-01-19T23:01:21.0000000+00:00'
+- author: Pancake
+  changes:
+  - {message: AME prices have gone up to incentivize the use of the singularity engine.,
+    type: Tweak}
+  id: 913
+  time: '2022-01-20T12:33:13.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Floodlight collision fixed, type: Fix}
+  id: 914
+  time: '2022-01-21T16:29:16.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: No-slip shoes now appear to be regular shoes when examined., type: Fix}
+  id: 915
+  time: '2022-01-22T01:58:27.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'NanoTrasen manufacturing budget for item number TB-10298 ("glass table")
+      and all derivative products has been cut. We do not recommend you climb on any
+      instances of TB-10298, and definitely do not slam anyone down on an instance
+      of TB-10298.', type: Add}
+  id: 916
+  time: '2022-01-22T12:52:35.0000000+00:00'
+- author: DubiousDoggo
+  changes:
+  - {message: Added construction for disposal pipes, type: Add}
+  id: 917
+  time: '2022-01-22T12:54:26.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Added to codebase new xeno artifacts with random effects., type: Add}
+  id: 918
+  time: '2022-01-22T12:55:11.0000000+00:00'
+- author: Lamrr
+  changes:
+  - {message: Shotgun shells ('shots') are now available in boxes., type: Add}
+  id: 919
+  time: '2022-01-22T20:47:55.0000000+00:00'
+- author: Willhelm53
+  changes:
+  - {message: Added ability for mop buckets to receive fluid from mops, type: Add}
+  - {message: Popup messages informing when the mop becomes full (from puddles or
+      mop bucket) or empty (from mop bucket), type: Add}
+  - {message: The mop now transfers solution from the puddle to the mop instead of
+      consuming water to destroy puddles, type: Fix}
+  - {message: 'The mop bucket now receives fluid from a wet mop, or gives fluid to
+      a dry mop', type: Tweak}
+  id: 920
+  time: '2022-01-23T05:27:22.0000000+00:00'

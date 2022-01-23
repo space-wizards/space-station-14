@@ -34,6 +34,7 @@ namespace Content.Server.Fluids.Components
         /// </summary>
         public bool Mopping { get; private set; }
 
+        // MopSolution Object stores whatever solution the mop has absorbed.
         public Solution? MopSolution
         {
             get
@@ -43,6 +44,7 @@ namespace Content.Server.Fluids.Components
             }
         }
 
+        // MaxVolume is the Maximum volume the mop can absorb (however, this is defined in janitor.yml)
         public FixedPoint2 MaxVolume
         {
             get => MopSolution?.MaxVolume ?? FixedPoint2.Zero;
@@ -56,7 +58,11 @@ namespace Content.Server.Fluids.Components
             }
         }
 
+        // CurrentVolume is the volume the mop has absorbed.
         public FixedPoint2 CurrentVolume => MopSolution?.CurrentVolume ?? FixedPoint2.Zero;
+
+        // AvailableVolume is the remaining volume capacity of the mop.
+        public FixedPoint2 AvailableVolume => MopSolution?.AvailableVolume ?? FixedPoint2.Zero;
 
         // Currently there's a separate amount for pickup and dropoff so
         // Picking up a puddle requires multiple clicks
@@ -99,11 +105,6 @@ namespace Content.Server.Fluids.Components
                 return false;
             }
 
-            if (CurrentVolume <= 0)
-            {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("mop-component-mop-is-dry-message"));
-                return false;
-            }
 
             if (eventArgs.Target is not {Valid: true} target)
             {
@@ -117,8 +118,15 @@ namespace Content.Server.Fluids.Components
                 !solutionSystem.TryGetSolution((puddleComponent).Owner, puddleComponent.SolutionName, out var puddleSolution))
                 return false;
 
-            // So if the puddle has 20 units we mop in 2 seconds. Don't just store CurrentVolume given it can change so need to re-calc it anyway.
-            var doAfterArgs = new DoAfterEventArgs(eventArgs.User, _mopSpeed * puddleSolution.CurrentVolume.Float() / 10.0f,
+            // if the mop is full
+            if(AvailableVolume <= 0)
+            {
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("mop-component-mop-is-full-message"));
+                return false;
+            }
+
+            // Mopping duration (aka delay) should scale with PickupAmount and not puddle volume, because we are picking up a constant volume of solution with each click.
+            var doAfterArgs = new DoAfterEventArgs(eventArgs.User, _mopSpeed * PickupAmount.Float() / 10.0f,
                 target: target)
             {
                 BreakOnUserMove = true,
@@ -138,30 +146,22 @@ namespace Content.Server.Fluids.Components
             FixedPoint2 transferAmount;
             // does the puddle actually have reagents? it might not if its a weird cosmetic entity.
             if (puddleSolution.TotalVolume == 0)
-                transferAmount = FixedPoint2.Min(PickupAmount, CurrentVolume);
+                transferAmount = FixedPoint2.Min(PickupAmount, AvailableVolume);
             else
-                transferAmount = FixedPoint2.Min(PickupAmount, puddleSolution.TotalVolume, CurrentVolume);
+                transferAmount = FixedPoint2.Min(PickupAmount, puddleSolution.TotalVolume, AvailableVolume);
+
 
             // is the puddle cleaned?
-            if (puddleSolution.TotalVolume - transferAmount <= 0)
+            bool isCleaned = (puddleSolution.TotalVolume - transferAmount <= 0);
+
+            // Transfers solution from the puddle to the mop
+            solutionSystem.TryAddSolution(Owner, contents, solutionSystem.SplitSolution(target, puddleSolution, transferAmount));
+
+            if (isCleaned)
             {
+                // deletes the puddle
                 _entities.DeleteEntity(puddleComponent.Owner);
-
-                // After cleaning the puddle, make a new puddle with solution from the mop as a "wet floor". Then evaporate it slowly.
-                // we do this WITHOUT adding to the existing puddle. Otherwise we have might have water puddles with the vomit sprite.
-                var splitSolution = solutionSystem.SplitSolution(Owner, contents, transferAmount)
-                    .SplitSolution(ResidueAmount);
-                spillableSystem.SpillAt(splitSolution, eventArgs.ClickLocation, "PuddleSmear", combine: false);
             }
-            else
-            {
-                // remove solution from the puddle
-                solutionSystem.SplitSolution(target, puddleSolution, transferAmount);
-
-                // and from the mop
-                solutionSystem.SplitSolution(Owner, contents, transferAmount);
-            }
-
             SoundSystem.Play(Filter.Pvs(Owner), _pickupSound.GetSound(), Owner);
 
             return true;
