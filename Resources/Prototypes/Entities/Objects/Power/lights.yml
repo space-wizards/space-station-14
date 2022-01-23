@@ -108,3 +108,21 @@
   - type: Sprite
     sprite:  Objects/Power/light_tube.rsi
     state: normal
+
+- type: entity
+  parent: BaseLightbulb
+  name: exterior light tube
+  description: A high power high energy bulb for the depths of space.
+  id: ExteriorLightTube
+  components:
+  - type: LightBulb
+    bulb: Tube
+    color: "#7da7ff"
+    lightEnergy: 4.5
+    lightRadius: 12
+    lightSoftness: 0.9
+    BurningTemperature: 350
+    PowerUse: 100
+  - type: Sprite
+    sprite:  Objects/Power/light_tube.rsi
+    state: normal
