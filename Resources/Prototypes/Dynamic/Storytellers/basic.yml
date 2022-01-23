@@ -1,0 +1,9 @@
+﻿- type: storyteller
+  id: MiddlingMandy
+  weight: 9
+  threatCurveCenterModifier:
+    min: -0.5
+    max: 0.5
+  splitCurveCenterModifier:
+    min: -0.5
+    max: 0.5

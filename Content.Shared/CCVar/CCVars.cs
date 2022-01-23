@@ -97,7 +97,7 @@ namespace Content.Shared.CCVar
         ///     The preset for the game to fall back to if the selected preset could not be used, and fallback is enabled.
         /// </summary>
         public static readonly CVarDef<string>
-            GameLobbyFallbackPreset = CVarDef.Create("game.fallbackpreset", "sandbox", CVar.ARCHIVE);
+            GameLobbyFallbackPreset = CVarDef.Create("game.fallbackpreset", "dynamic", CVar.ARCHIVE);
 
         /// <summary>
         ///     Controls if people can win the game in Suspicion or Deathmatch.
@@ -160,6 +160,22 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<string> DiscordAHelpWebhook =
             CVarDef.Create("discord.ahelp_webhook", string.Empty, CVar.SERVERONLY);
+
+        /*
+         * Dynamic
+         */
+
+        public static readonly CVarDef<float> DynamicLatejoinInjectStart =
+            CVarDef.Create("dynamic.latejoin_start", 5.0f);
+
+        public static readonly CVarDef<float> DynamicLatejoinInjectEnd =
+            CVarDef.Create("dynamic.latejoin_end", 25.0f);
+
+        public static readonly CVarDef<float> DynamicMidroundStart =
+            CVarDef.Create("dynamic.midround_start", 15.0f);
+
+        public static readonly CVarDef<float> DynamicMidroundEnd =
+            CVarDef.Create("dynamic.midround_end", 35.0f);
 
         /*
          * Suspicion

@@ -101,6 +101,9 @@ namespace Content.Client.Entry
             prototypes.RegisterIgnore("salvageMap");
             prototypes.RegisterIgnore("gamePreset");
             prototypes.RegisterIgnore("gameRule");
+            prototypes.RegisterIgnore("gameEvent");
+            prototypes.RegisterIgnore("gameEventTag");
+            prototypes.RegisterIgnore("storyteller");
 
             ClientContentIoC.Register();
 

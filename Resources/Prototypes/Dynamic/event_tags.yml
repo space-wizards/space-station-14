@@ -1,0 +1,11 @@
+﻿- type: gameEventTag
+  id: HighImpact
+
+- type: gameEventTag
+  id: Antagonist
+
+- type: gameEventTag
+  id: StationEvent
+
+- type: gameEventTag
+  id: TeamAntagonist

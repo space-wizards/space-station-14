@@ -28,6 +28,16 @@
     - Traitor
 
 - type: gamePreset
+  id: Dynamic
+  alias:
+    - dynamic
+  name: dynamic-title
+  description: dynamic-description
+  showInVote: true
+  rules:
+    - Dynamic
+
+- type: gamePreset
   id: Suspicion
   alias:
     - suspicion

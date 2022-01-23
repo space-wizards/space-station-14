@@ -69,14 +69,16 @@ public class GameEventPrototype : IPrototype
     ///     A list of event conditions, checked before it is purchased to determine if it can be run.
     /// </summary>
     [DataField("eventConditions")]
-    public List<EventCondition> EventConditions = default!;
+    public List<GameEventCondition> EventConditions = default!;
 
     /// <summary>
     ///     A list of event conditions, checked every refund internal in Dynamic before <see cref="MaxRefundTime"/> to
     ///     determine if it should be refunded.
+    ///
+    ///     No refund conditions means this event will never be refunded.
     /// </summary>
     [DataField("refundConditions")]
-    public List<EventCondition> RefundConditions = default!;
+    public List<GameEventCondition> RefundConditions = default!;
 
     /// <summary>
     ///     A list of effects to be run when this event is purchased.

@@ -1,0 +1,10 @@
+﻿- type: gameEvent
+  id: Kudzu
+  name: Kudzu!
+  description: idk lol
+  eventTags: [ "StationEvent" ]
+  eventTypes: [ Midround ]
+  threat: 100
+  effects:
+  - !type:RunStationEventEffect
+    name: Kudzu

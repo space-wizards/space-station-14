@@ -22,28 +22,28 @@ public class StorytellerPrototype : IPrototype
     public int Weight = 5;
 
     /// <summary>
-    ///     Modifies the Lorentz curve center at roundstart.
+    ///     Modifies the base threat pool Lorentz curve center.
     /// </summary>
-    [DataField("roundstartCurveCenterModifier")]
+    [DataField("threatCurveCenterModifier")]
     public StorytellerMinMax RoundstartCurveCenterModifier = new();
 
     /// <summary>
-    ///     Modifies the Lorentz curve width at roundstart.
+    ///     Modifies the base threat pool Lorentz curve width at roundstart.
     /// </summary>
-    [DataField("roundstartCurveWidthModifier")]
+    [DataField("threatCurveWidthModifier")]
     public StorytellerMinMax RoundstartCurveWidthModifier = new();
 
     /// <summary>
-    ///     Modifies the Lorentz curve center at midround.
+    ///     Modifies the lorentz curve center for divvying up between roundstart and midround budgets.
     /// </summary>
-    [DataField("midroundCurveCenterModifier")]
-    public StorytellerMinMax MidroundCurveCenterModifier = new();
+    [DataField("splitCurveCenterModifier")]
+    public StorytellerMinMax SplitCurveCenterModifier = new();
 
     /// <summary>
-    ///     Modifies the Lorentz curve width at midround.
+    ///     Modifies the lorentz curve width for divvying up between roundstart and midround budgets.
     /// </summary>
-    [DataField("midroundCurveWidthModifier")]
-    public StorytellerMinMax MidroundCurveWidthModifier = new();
+    [DataField("splitCurveWidthModifier")]
+    public StorytellerMinMax SplitCurveWidthModifier = new();
 
     /// <summary>
     ///     Modifies the threat cap for Dynamic.

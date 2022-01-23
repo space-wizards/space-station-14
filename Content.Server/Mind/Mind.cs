@@ -35,7 +35,7 @@ namespace Content.Server.Mind
         private readonly ISet<Role> _roles = new HashSet<Role>();
 
         private readonly List<Objective> _objectives = new();
-        
+
         public string Briefing = String.Empty;
 
         /// <summary>
@@ -221,6 +221,11 @@ namespace Content.Server.Mind
             var t = typeof(T);
 
             return _roles.Any(role => role.GetType() == t);
+        }
+
+        public bool HasRole(string name)
+        {
+            return _roles.Any(role => role.Name == name);
         }
 
         /// <summary>
