@@ -67,31 +67,32 @@ namespace Content.Server.GameTicking
                 }
 
                 var profile = profiles[player.UserId];
-                if (profile.PreferenceUnavailable == PreferenceUnavailableMode.SpawnAsOverflow)
+                if (profile.PreferenceUnavailable != PreferenceUnavailableMode.SpawnAsOverflow)
+                    continue;
+
+                // Pick a random station
+                var stations = _stationSystem.StationInfo.Keys.ToList();
+
+                if (stations.Count == 0)
                 {
-                    // Pick a random station
-                    var stations = _stationSystem.StationInfo.Keys.ToList();
-                    _robustRandom.Shuffle(stations);
+                    assignedJobs.Add(player, (FallbackOverflowJob, StationId.Invalid));
+                    continue;
+                }
 
-                    if (stations.Count == 0)
-                    {
-                        assignedJobs.Add(player, (FallbackOverflowJob, StationId.Invalid));
+                _robustRandom.Shuffle(stations);
+
+                foreach (var station in stations)
+                {
+                    // Pick a random overflow job from that station
+                    var overflows = _stationSystem.StationInfo[station].MapPrototype.OverflowJobs.Clone();
+                    _robustRandom.Shuffle(overflows);
+
+                    // Stations with no overflow slots should simply get skipped over.
+                    if (overflows.Count == 0)
                         continue;
-                    }
 
-                    foreach (var station in stations)
-                    {
-                        // Pick a random overflow job from that station
-                        var overflows = _stationSystem.StationInfo[station].MapPrototype.OverflowJobs.Clone();
-                        _robustRandom.Shuffle(overflows);
-
-                        // Stations with no overflow slots should simply get skipped over.
-                        if (overflows.Count == 0)
-                            continue;
-
-                        // If the overflow exists, put them in as it.
-                        assignedJobs.Add(player, (overflows[0], stations[0]));
-                    }
+                    // If the overflow exists, put them in as it.
+                    assignedJobs.Add(player, (overflows[0], stations[0]));
                 }
             }
 
