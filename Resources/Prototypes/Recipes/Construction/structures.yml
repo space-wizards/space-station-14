@@ -108,6 +108,25 @@
   canRotate: false
 
 - type: construction
+  name: tinted window
+  id: TintedWindow
+  graph: window
+  startNode: start
+  targetNode: tintedWindow
+  category: Structures
+  description: Not clear but tough.
+  canBuildInImpassable: true
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  icon:
+    sprite: Structures/Windows/tinted_window.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+
+- type: construction
   name: plasma window
   id: PlasmaWindow
   graph: Window

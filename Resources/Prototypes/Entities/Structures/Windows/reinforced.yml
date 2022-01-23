@@ -48,6 +48,25 @@
         sprite: Structures/Windows/cracks.rsi
 
 - type: entity
+  parent: ReinforcedWindow
+  id: TintedWindow
+  name: tinted window
+  components:
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Structures/Windows/tinted_window.rsi
+  - type: Icon
+    sprite: Structures/Windows/tinted_window.rsi
+  - type: IconSmooth
+    base: twindow
+  - type: Construction
+    graph: window
+    node: tintedWindow
+  - type: Occluder
+    sizeX: 32
+    sizeY: 32
+
+- type: entity
   id: WindowReinforcedDirectional
   parent: WindowDirectional
   name: directional reinforced window
