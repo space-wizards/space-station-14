@@ -10,17 +10,16 @@
     {
       "name": "sparkles",
       "directions": 1,
-      "delays":
+      "delays": [
         [
           0.14,
           0.14,
           0.14,
           0.14,
           0.14,
-          3
+          5
         ]
-
-
+      ]
     }
   ]
 }

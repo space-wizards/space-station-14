@@ -57,29 +57,31 @@ namespace Content.Client.Fluids
 
         private void UpdateVisual(AppearanceComponent component, SpriteComponent spriteComponent, float cappedScale, bool forceWetFloorSprite)
         {
+            Color newColor;
+            if (Recolor && component.TryGetData<Color>(PuddleVisuals.SolutionColor, out var solutionColor))
+            {
+                newColor = solutionColor.WithAlpha(cappedScale);
+            }
+            else
+            {
+                newColor = spriteComponent.Color.WithAlpha(cappedScale);
+            }
+
+            spriteComponent.Color = newColor;
+
             if (forceWetFloorSprite)
             {
                 //Change the puddle's sprite to the wet floor sprite
                 spriteComponent.LayerSetRSI(0, "Fluids/wet_floor_sparkles.rsi");
-                //spriteComponent.LayerSetState(0, "wet-floor");
                 spriteComponent.LayerSetState(0, "sparkles");
+                spriteComponent.Color = spriteComponent.Color.WithAlpha(0.25f); //should be mostly transparent.
             }
-            else //Determining the new color is not needed if we are forcing the wet floor sprite.
+            else
             {
                 spriteComponent.LayerSetRSI(0, "Fluids/smear.rsi");
-                spriteComponent.LayerSetState(0, "smear-0"); // need a way to implement the random smears again
-                Color newColor;
-                if (Recolor && component.TryGetData<Color>(PuddleVisuals.SolutionColor, out var solutionColor))
-                {
-                    newColor = solutionColor.WithAlpha(cappedScale);
-                }
-                else
-                {
-                    newColor = spriteComponent.Color.WithAlpha(cappedScale);
-                }
-
-                spriteComponent.Color = newColor;
+                spriteComponent.LayerSetState(0, "smear-0"); // TODO: need a way to implement the random smears again when the mop creates new puddles.
             }
+
         }
     }
 

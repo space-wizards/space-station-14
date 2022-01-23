@@ -177,6 +177,10 @@ namespace Content.Server.Fluids.Components
 
             SoundSystem.Play(Filter.Pvs(Owner), _pickupSound.GetSound(), Owner);
 
+            // if the mop became full after that puddle, let the player know.
+            if(AvailableVolume <= 0)
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("mop-component-mop-is-now-full-message"));
+
             return true;
         }
     }
