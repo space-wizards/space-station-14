@@ -1,14 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: Expand out saltern's north-eastern maintenance just a bit, type: Tweak}
-  id: 420
-  time: '2021-10-09T11:06:34.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Pulling an abnormally close object shouldn't cause errors, type: Fix}
-  id: 422
-  time: '2021-10-09T13:49:08.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Added a verb to rotatable entities to reset rotation back to 0., type: Add}
@@ -2925,3 +2915,15 @@ Entries:
       Useful for keeping the greytide out of your private affairs., type: Add}
   id: 921
   time: '2022-01-23T17:44:12.0000000+00:00'
+- author: Lamrr
+  changes:
+  - {message: Organise your paperwork with the addition of folders. Now available
+      from the bureaucracy crate., type: Add}
+  id: 922
+  time: '2022-01-23T17:46:55.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Constructed SMES, APC and substations now start with zero charge.',
+    type: Fix}
+  id: 923
+  time: '2022-01-23T17:47:22.0000000+00:00'
