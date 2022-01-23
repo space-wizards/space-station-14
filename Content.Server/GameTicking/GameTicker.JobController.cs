@@ -25,14 +25,14 @@ namespace Content.Server.GameTicking
         [ViewVariables]
         private readonly Dictionary<string, int> _spawnedPositions = new();
 
-        private Dictionary<IPlayerSession, (string, StationId)> AssignJobs(List<IPlayerSession> available,
+        private Dictionary<IPlayerSession, (string, StationId)> AssignJobs(List<IPlayerSession> availablePlayers,
             Dictionary<NetUserId, HumanoidCharacterProfile> profiles)
         {
             var assigned = new Dictionary<IPlayerSession, (string, StationId)>();
 
             List<(IPlayerSession, List<string>)> GetPlayersJobCandidates(bool heads, JobPriority i)
             {
-                return available.Select(player =>
+                return availablePlayers.Select(player =>
                     {
                         var profile = profiles[player.UserId];
 
@@ -85,7 +85,7 @@ namespace Content.Server.GameTicking
                     }
                 }
 
-                available.RemoveAll(a => assigned.ContainsKey(a));
+                availablePlayers.RemoveAll(a => assigned.ContainsKey(a));
             }
 
             // Current strategy is to fill each station one by one.
