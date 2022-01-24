@@ -1,20 +1,19 @@
-# TODO: Add descriptions (10)
-
 - type: entity
   parent: BaseItem
   id: BaseComputerCircuitboard
-  name: circuit board
+  name: circuit PCB
   abstract: true
   components:
     - type: ComputerBoard
     - type: Sprite
       sprite: Objects/Misc/module.rsi
-      state: id_mod
+      state: cpuboard
 
 - type: entity
   parent: BaseComputerCircuitboard
   id: SupplyComputerCircuitboard
-  name: supply board
+  name: supply ordering PCB
+  description: A computer printed circuit board for a supply ordering console
   components:
     - type: ComputerBoard
       prototype: ComputerSupplyOrdering
@@ -22,7 +21,8 @@
 - type: entity
   parent: BaseComputerCircuitboard
   id: SupplyRequestComputerCircuitboard
-  name: supply request board
+  name: supply request PCB
+  description: A computer printed circuit board for a supply request console
   components:
     - type: ComputerBoard
       prototype: ComputerSupplyRequest
@@ -30,7 +30,8 @@
 - type: entity
   parent: BaseComputerCircuitboard
   id: ResearchComputerCircuitboard
-  name: R&D computer board
+  name: R&D computer PCB
+  description: A computer printed circuit board for a R&D console
   components:
     - type: ComputerBoard
       prototype: ComputerResearchAndDevelopment
@@ -38,7 +39,8 @@
 - type: entity
   parent: BaseComputerCircuitboard
   id: CrewMonitoringComputerCircuitboard
-  name: crew monitoring console board
+  name: crew monitoring console PCB
+  description: A computer printed circuit board for a crew monitoring console
   components:
     - type: ComputerBoard
       prototype: ComputerCrewMonitoring
@@ -46,7 +48,8 @@
 - type: entity
   parent: BaseComputerCircuitboard
   id: IDComputerCircuitboard
-  name: ID card terminal board
+  name: ID card terminal PCB
+  description: A computer printed circuit board for an ID card console
   components:
     - type: ComputerBoard
       prototype: ComputerId
@@ -54,7 +57,8 @@
 - type: entity
   parent: BaseComputerCircuitboard
   id: BodyScannerComputerCircuitboard
-  name: body scanner computer board
+  name: body scanner computer PCB
+  description: A computer printed circuit board for a body scanner console
   components:
     - type: ComputerBoard
       prototype: computerBodyScanner
@@ -62,7 +66,8 @@
 - type: entity
   parent: BaseComputerCircuitboard
   id: CommsComputerCircuitboard
-  name: communications computer board
+  name: communications computer PCB
+  description: A computer printed circuit board for a communications console
   components:
     - type: ComputerBoard
       prototype: ComputerComms
@@ -70,7 +75,8 @@
 - type: entity
   parent: BaseComputerCircuitboard
   id: SolarControlComputerCircuitboard
-  name: solar control computer board
+  name: solar control computer PCB
+  description: A computer printed circuit board for a solar control console
   components:
     - type: ComputerBoard
       prototype: ComputerSolarControl
@@ -78,7 +84,8 @@
 - type: entity
   parent: BaseComputerCircuitboard
   id: SpaceVillainArcadeComputerCircuitboard
-  name: space villain arcade board
+  name: space villain arcade PCB
+  description: A computer printed circuit board for a space villain arcade cabinet
   components:
     - type: ComputerBoard
       prototype: SpaceVillainArcade
@@ -86,7 +93,8 @@
 - type: entity
   parent: BaseComputerCircuitboard
   id: BlockGameArcadeComputerCircuitboard
-  name: block game arcade board
+  name: block game arcade PCB
+  description: A computer printed circuit board for a block game arcade cabinet
   components:
     - type: ComputerBoard
       prototype: BlockGameArcade
@@ -96,6 +104,7 @@
   id: ParticleAcceleratorComputerCircuitboard
   name: PA control box
   suffix: Circuit Board
+  description: A computer printed circuit PCB for a particle accelerator control box
   components:
     - type: ComputerBoard
       prototype: ParticleAcceleratorControlBoxUnfinished
@@ -103,7 +112,8 @@
 - type: entity
   parent: BaseComputerCircuitboard
   id: ShuttleConsoleCircuitboard
-  name: Shuttle Console Board
+  name: shuttle console PCB
+  description: A computer printed circuit board for a shuttle console
   components:
     - type: ComputerBoard
       prototype: ComputerShuttle
@@ -111,7 +121,8 @@
 - type: entity
   parent: BaseComputerCircuitboard
   id: SyndicateShuttleConsoleCircuitboard
-  name: syndicate shuttle console board
+  name: syndicate shuttle console PCB
+  description: A computer printed circuit board for a syndicate shuttle console
   components:
     - type: ComputerBoard
       prototype: ComputerShuttleSyndie
