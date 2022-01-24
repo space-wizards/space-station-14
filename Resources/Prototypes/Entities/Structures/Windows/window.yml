@@ -88,7 +88,6 @@
     # Keep WindowTintedDirectional in mind
   - type: Sprite
     netsync: false
-    drawdepth: WallTops
     sprite: Structures/Windows/directional.rsi
     state: window
   - type: Icon
@@ -149,7 +148,6 @@
   components:
   - type: Sprite
     netsync: false
-    drawdepth: WallTops
     sprite: Structures/Windows/directional.rsi
     state: tinted_window
   - type: Tag
@@ -173,7 +171,6 @@
   components:
   - type: Sprite
     netsync: false
-    drawdepth: WallTops
     sprite: Structures/Windows/directional.rsi
     state: frosted_window
   - type: Icon
