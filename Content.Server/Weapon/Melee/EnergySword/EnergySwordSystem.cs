@@ -2,6 +2,7 @@ using Content.Shared.Item;
 using Content.Server.Tools.Components;
 using Content.Shared.Interaction;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Weapons.Melee;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Audio;
@@ -21,13 +22,13 @@ namespace Content.Server.Weapon.Melee.Esword
         {
             base.Initialize();
 
-            SubscribeLocalEvent<EnergySwordComponent, ComponentInit>(OnComponentInit);
+            SubscribeLocalEvent<EnergySwordComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<EnergySwordComponent, MeleeHitEvent>(OnMeleeHit);
             SubscribeLocalEvent<EnergySwordComponent, UseInHandEvent>(OnUseInHand);
             SubscribeLocalEvent<EnergySwordComponent, InteractUsingEvent>(OnInteractUsing);
         }
 
-        private void OnComponentInit(EntityUid uid, EnergySwordComponent comp, ComponentInit args)
+        private void OnMapInit(EntityUid uid, EnergySwordComponent comp, MapInitEvent args)
         {
             if (comp.ColorOptions.Count != 0)
                 comp.BladeColor = _random.Pick(comp.ColorOptions);
@@ -35,13 +36,11 @@ namespace Content.Server.Weapon.Melee.Esword
 
         private void OnMeleeHit(EntityUid uid, EnergySwordComponent comp, MeleeHitEvent args)
         {
-            
-            if (comp.Activated)
-            {
-                // Overrides basic blunt damage with burn+slash as set in yaml
-                args.BonusDamage = comp.LitDamageBonus;
-                args.HitSoundOverride = comp.HitSound;
-            }
+            if (!comp.Activated) return;
+
+            // Overrides basic blunt damage with burn+slash as set in yaml
+            args.BonusDamage = comp.LitDamageBonus;
+            args.HitSoundOverride = comp.HitSound;
         }
 
         private void OnUseInHand(EntityUid uid, EnergySwordComponent comp, UseInHandEvent args)
@@ -55,7 +54,7 @@ namespace Content.Server.Weapon.Melee.Esword
             }
             else
             {
-                TurnOn(comp, args.User);
+                TurnOn(comp);
             }
         }
 
@@ -64,62 +63,41 @@ namespace Content.Server.Weapon.Melee.Esword
             if (!comp.Activated)
                 return;
 
-            if (!TryComp(comp.Owner, out SpriteComponent? sprite)
-                || !TryComp(comp.Owner, out SharedItemComponent? item)
-                || !TryComp(comp.Owner, out SharedPointLightComponent? light))
-                return;
-
-            item.Size = 5;
+            if (TryComp(comp.Owner, out SharedItemComponent? item))
+            {
+                item.Size = 5;
+            }
 
             SoundSystem.Play(Filter.Pvs(comp.Owner), comp.DeActivateSound.GetSound(), comp.Owner);
 
-            item.EquippedPrefix = "off";
-
-            if (comp.Hacked)
-            {
-                sprite.LayerSetState(0, "e_sword");
-            }
-            else
-            {
-                sprite.LayerSetVisible(1, false);
-            }
-
-            light.Enabled = false;
+            UpdateAppearance(comp);
             comp.Activated = false;
         }
 
-        private void TurnOn(EnergySwordComponent comp, EntityUid user)
+        private void TurnOn(EnergySwordComponent comp)
         {
             if (comp.Activated)
                 return;
 
-            if (!TryComp(comp.Owner, out SpriteComponent? sprite)
-                || !TryComp(comp.Owner, out SharedItemComponent? item)
-                || !TryComp(comp.Owner, out SharedPointLightComponent? light))
-                return;
-
-            item.Size = 9999;
+            if (TryComp(comp.Owner, out SharedItemComponent? item))
+            {
+                item.Size = 9999;
+            }
 
             SoundSystem.Play(Filter.Pvs(comp.Owner), comp.ActivateSound.GetSound(), comp.Owner);
 
-            if (comp.Hacked)
-            {
-                item.EquippedPrefix = "on-rainbow";
-                sprite.LayerSetState(0, "e_sword_rainbow_on");
-            }
-            else
-            {
-                item.EquippedPrefix = "on";
-                item.Color = comp.BladeColor;
+            UpdateAppearance(comp);
 
-                sprite.LayerSetColor(1, comp.BladeColor);
-                sprite.LayerSetVisible(1, true);
-
-                light.Color = comp.BladeColor;
-                light.Enabled = true;
-            }
-            
             comp.Activated = true;
+        }
+
+        private void UpdateAppearance(EnergySwordComponent component)
+        {
+            if (!EntityManager.TryGetComponent(component.Owner, out AppearanceComponent? appearanceComponent)) return;
+
+            appearanceComponent.SetData(EnergySwordVisuals.Color, component.BladeColor);
+            appearanceComponent.SetData(EnergySwordVisuals.Hacked, component.Hacked);
+            appearanceComponent.SetData(EnergySwordVisuals.State, component.Activated);
         }
 
         private void OnInteractUsing(EntityUid uid, EnergySwordComponent comp, InteractUsingEvent args)
@@ -127,22 +105,13 @@ namespace Content.Server.Weapon.Melee.Esword
             if (comp.Hacked || !_blockerSystem.CanInteract(args.User))
                 return;
 
-            if (TryComp(args.Used, out ToolComponent? tool) && tool.Qualities.ContainsAny("Pulsing"))
-            {
-                comp.Hacked = true;
+            if (!TryComp(args.Used, out ToolComponent? tool) || !tool.Qualities.ContainsAny("Pulsing")) return;
 
-                if (comp.Activated && TryComp(comp.Owner, out SpriteComponent? sprite)
-                    && TryComp(comp.Owner, out SharedItemComponent? item))
-                {
-                    sprite.LayerSetVisible(1, false);
-                    sprite.LayerSetColor(1, Color.White);
-                    //todo: figure out how to use the RGBLightControllerSystem to phase out the rainbow sprite AND add lights.
-                    sprite.LayerSetState(0, "e_sword_rainbow_on");
+            comp.Hacked = true;
 
-                    item.Color = Color.White;
-                    item.EquippedPrefix = "on-rainbow";
-                }
-            }
+            if (!comp.Activated) return;
+
+            UpdateAppearance(comp);
         }
     }
 }

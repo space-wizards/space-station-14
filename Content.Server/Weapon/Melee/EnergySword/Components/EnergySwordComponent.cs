@@ -7,12 +7,10 @@ using System.Collections.Generic;
 
 namespace Content.Server.Weapon.Melee.Esword
 {
-    [RegisterComponent]
+    [RegisterComponent, ComponentProtoName("EnergySword")]
     internal class EnergySwordComponent : Component
     {
-        public override string Name => "EnergySword";
-
-        public Color BladeColor = Color.Blue;
+        public Color BladeColor = Color.DodgerBlue;
 
         public bool Hacked = false;
 
