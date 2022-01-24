@@ -112,7 +112,7 @@
 - type: entity
   parent: BaseLightbulb
   name: exterior light tube
-  description: A high power high energy bulb for the depths of space.
+  description: A high power high energy bulb for the depths of space. May contain mercury.
   id: ExteriorLightTube
   components:
   - type: LightBulb
@@ -120,7 +120,25 @@
     color: "#9cbcff"
     lightEnergy: 4.5
     lightRadius: 12
-    lightSoftness: 0.9
+    lightSoftness: 0.5
+    BurningTemperature: 350
+    PowerUse: 100
+  - type: Sprite
+    sprite:  Objects/Power/light_tube.rsi
+    state: normal
+    
+- type: entity
+  parent: BaseLightbulb
+  name: sodium light tube
+  description: A high power high energy bulb for the depths of space. Salty.
+  id: SodiumLightTube
+  components:
+  - type: LightBulb
+    bulb: Tube
+    color: "#FF7E00"
+    lightEnergy: 4
+    lightRadius: 10
+    lightSoftness: 0.5
     BurningTemperature: 350
     PowerUse: 100
   - type: Sprite
