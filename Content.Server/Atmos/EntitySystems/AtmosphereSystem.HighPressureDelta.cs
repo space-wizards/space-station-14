@@ -36,6 +36,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             foreach (var entity in _lookup.GetEntitiesIntersecting(tile.GridIndex, tile.GridIndices))
             {
+                // Ideally containers would have their own EntityQuery internally or something given recursively it may need to slam GetComp<T> anyway.
                 if (!bodies.HasComponent(entity)
                     || !pressureQuery.TryGetComponent(entity, out var pressure) || !pressure.Enabled
                     || _containers.IsEntityInContainer(entity, xforms.GetComponent(entity)))
