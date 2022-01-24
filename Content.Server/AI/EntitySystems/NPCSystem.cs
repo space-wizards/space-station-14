@@ -105,13 +105,15 @@ namespace Content.Server.AI.EntitySystems
 
             for (var i = 0; i < npcs.Length; i++)
             {
+                MetaDataComponent? metadata = null;
                 var index = (i + startIndex) % npcs.Length;
                 var npc = npcs[index];
 
-                if (Deleted(npc.Owner))
+                if (Deleted(npc.Owner, metadata))
                     continue;
 
-                if (Paused(npc.Owner))
+                // Probably gets resolved in deleted for us already
+                if (Paused(npc.Owner, metadata))
                     continue;
 
                 npc.Update(frameTime);
