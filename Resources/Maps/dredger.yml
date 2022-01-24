@@ -2120,7 +2120,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 137
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: -10.5,-6.5
     parent: 0
@@ -2438,7 +2438,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 172
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: -13.5,-0.5
     parent: 0
@@ -2620,7 +2620,7 @@ entities:
     supplyRampPosition: 4.9804688
     type: PowerNetworkBattery
 - uid: 193
-  type: SalternSmes
+  type: SalternSMES
   components:
   - pos: -0.5,-1.5
     parent: 0
@@ -3878,7 +3878,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 363
-  type: SalternSmes
+  type: SalternSMES
   components:
   - pos: 0.5,-13.5
     parent: 0
@@ -4313,7 +4313,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 415
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 3.5,-7.5
     parent: 0
@@ -4452,7 +4452,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 430
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: -0.5,-10.5
     parent: 0
@@ -4876,7 +4876,7 @@ entities:
   - enabled: False
     type: AmbientSound
 - uid: 477
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: -6.5,-0.5
     parent: 0
@@ -5278,7 +5278,7 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 527
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 8.5,-1.5
     parent: 0
@@ -5290,7 +5290,7 @@ entities:
     currentSupply: 1510
     type: PowerNetworkBattery
 - uid: 528
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 3.5,2.5
     parent: 0

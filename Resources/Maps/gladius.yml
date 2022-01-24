@@ -2234,7 +2234,7 @@ entities:
     currentSupply: 9795.039
     type: PowerNetworkBattery
 - uid: 240
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 1.5,-17.5
     parent: 50
@@ -2246,7 +2246,7 @@ entities:
     currentSupply: 3525
     type: PowerNetworkBattery
 - uid: 241
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: -0.5,-7.5
     parent: 50
