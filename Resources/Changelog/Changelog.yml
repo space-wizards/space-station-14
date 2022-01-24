@@ -1,9 +1,4 @@
 Entries:
-- author: Ygg01
-  changes:
-  - {message: Fixed puddles not spilling into neighboring tiles., type: Fix}
-  id: 425
-  time: '2021-10-09T16:33:24.0000000+00:00'
 - author: PJB
   changes:
   - {message: Fixed certain vending machines having very large ambient light radius
@@ -2927,3 +2922,8 @@ Entries:
   - {message: Slimes no longer butcher into human meat., type: Fix}
   id: 925
   time: '2022-01-24T12:46:43.0000000+00:00'
+- author: Delete69
+  changes:
+  - {message: Thindows and windoors now have the same draw depth., type: Add}
+  id: 926
+  time: '2022-01-24T13:08:18.0000000+00:00'
