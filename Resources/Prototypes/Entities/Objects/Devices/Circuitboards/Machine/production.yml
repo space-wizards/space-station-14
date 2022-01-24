@@ -125,7 +125,7 @@
       sprite: Objects/Misc/module.rsi
       state: power_mod
     - type: MachineBoard
-      prototype: BaseSmes
+      prototype: BaseSMES
       requirements:
         Capacitor: 10
 
