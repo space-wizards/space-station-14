@@ -55,10 +55,12 @@ namespace Content.Server.Temperature.Systems
 
             foreach (var comp in ShouldUpdateDamage)
             {
-                if (Deleted(comp.Owner) || Paused(comp.Owner))
+                MetaDataComponent? metaData = null;
+
+                if (Deleted(comp.Owner, metaData) || Paused(comp.Owner, metaData))
                     continue;
 
-                ChangeDamage((comp).Owner, comp);
+                ChangeDamage(comp.Owner, comp);
             }
 
             ShouldUpdateDamage.Clear();
