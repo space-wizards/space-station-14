@@ -35,6 +35,9 @@ namespace Content.Server.Weapon.Melee.EnergySword
         {
             if (!comp.Activated) return;
 
+            if (args.Handled) return;
+
+            args.Handled = true;
             // Overrides basic blunt damage with burn+slash as set in yaml
             args.BonusDamage = comp.LitDamageBonus;
             args.HitSoundOverride = comp.HitSound;
@@ -42,8 +45,12 @@ namespace Content.Server.Weapon.Melee.EnergySword
 
         private void OnUseInHand(EntityUid uid, EnergySwordComponent comp, UseInHandEvent args)
         {
+            if (args.Handled) return;
+
             if (!_blockerSystem.CanUse(args.User))
                 return;
+
+            args.Handled = true;
 
             if (comp.Activated)
             {
@@ -108,15 +115,15 @@ namespace Content.Server.Weapon.Melee.EnergySword
 
         private void OnInteractUsing(EntityUid uid, EnergySwordComponent comp, InteractUsingEvent args)
         {
+            if (args.Handled) return;
+
             if (comp.Hacked || !_blockerSystem.CanInteract(args.User))
                 return;
 
             if (!TryComp(args.Used, out ToolComponent? tool) || !tool.Qualities.ContainsAny("Pulsing")) return;
 
+            args.Handled = true;
             comp.Hacked = true;
-
-            if (!comp.Activated) return;
-
             UpdateAppearance(comp);
         }
     }
