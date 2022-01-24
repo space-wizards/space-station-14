@@ -1,10 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {and allows you to see the round end screen.: null, message: The Restart Round
-      vote no longer instantly ends the round, type: tweak}
-  id: 427
-  time: '2021-10-09T18:18:20.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: 'Blast doors and shutters have been added, though they aren''t mapped
@@ -2927,3 +2921,8 @@ Entries:
       uplink!, type: Add}
   id: 927
   time: '2022-01-24T16:35:20.844542+00:00'
+- author: Mirino97
+  changes:
+  - {message: Fixed the Stay Alive objective icon, type: Fix}
+  id: 928
+  time: '2022-01-24T19:32:42.0000000+00:00'
