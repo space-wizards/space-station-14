@@ -1,10 +1,4 @@
 Entries:
-- author: PJB
-  changes:
-  - {message: Fixed certain vending machines having very large ambient light radius
-      and shining through walls., type: Fix}
-  id: 426
-  time: '2021-10-09T18:15:06.131590+00:00'
 - author: moony
   changes:
   - {and allows you to see the round end screen.: null, message: The Restart Round
@@ -2927,3 +2921,9 @@ Entries:
   - {message: Thindows and windoors now have the same draw depth., type: Add}
   id: 926
   time: '2022-01-24T13:08:18.0000000+00:00'
+- author: Mirino97
+  changes:
+  - {message: The tried and true Syndicate Energy Sword is back in stock at your local
+      uplink!, type: Add}
+  id: 927
+  time: '2022-01-24T16:35:20.844542+00:00'
