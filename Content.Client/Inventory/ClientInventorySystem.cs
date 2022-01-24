@@ -45,7 +45,7 @@ namespace Content.Client.Inventory
         /// Stores delegates used to create controls for a given <see cref="InventoryTemplatePrototype"/>.
         /// </summary>
         private readonly
-            Dictionary<string, Func<EntityUid, Dictionary<string, List<ItemSlotButton>>, (SS14Window window, Control bottomLeft, Control bottomRight, Control
+            Dictionary<string, Func<EntityUid, Dictionary<string, List<ItemSlotButton>>, (DefaultWindow window, Control bottomLeft, Control bottomRight, Control
                 topQuick)>>
             _uiGenerateDelegates = new();
 
@@ -226,7 +226,7 @@ namespace Content.Client.Inventory
             TryEquipActiveHandTo(uid, slot);
         }
 
-        private bool TryGetUIElements(EntityUid uid, [NotNullWhen(true)] out SS14Window? invWindow,
+        private bool TryGetUIElements(EntityUid uid, [NotNullWhen(true)] out DefaultWindow? invWindow,
             [NotNullWhen(true)] out Control? invBottomLeft, [NotNullWhen(true)] out Control? invBottomRight,
             [NotNullWhen(true)] out Control? invTopQuick, ClientInventoryComponent? component = null)
         {
@@ -245,7 +245,7 @@ namespace Content.Client.Inventory
             {
                 _uiGenerateDelegates[component.TemplateId] = genfunc = (entityUid, list) =>
                 {
-                    var window = new SS14Window()
+                    var window = new DefaultWindow()
                     {
                         Title = Loc.GetString("human-inventory-window-title"),
                         Resizable = false

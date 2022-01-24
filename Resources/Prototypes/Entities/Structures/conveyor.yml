@@ -85,5 +85,5 @@
           state_off: switch-off
           state_reversed: switch-rev
     - type: Construction
-      graph: leverGraph
+      graph: LeverGraph
       node: lever

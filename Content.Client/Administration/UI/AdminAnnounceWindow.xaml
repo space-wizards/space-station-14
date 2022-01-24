@@ -1,4 +1,4 @@
-<SS14Window
+<DefaultWindow
     xmlns="https://spacestation14.io"
     Title="{Loc 'admin-announce-title'}"
     MinWidth="500">
@@ -12,4 +12,4 @@
 
         <Button Name="AnnounceButton" Access="Public" Disabled="True" Text="{Loc 'Announce'}" HorizontalAlignment="Center"/>
     </GridContainer>
-</SS14Window>
+</DefaultWindow>

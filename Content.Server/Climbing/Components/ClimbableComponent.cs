@@ -139,17 +139,17 @@ namespace Content.Server.Climbing.Components
         {
             if (eventArgs.User == eventArgs.Dragged)
             {
-                TryClimb(eventArgs.User);
+                TryClimb(eventArgs.User, eventArgs.Target);
             }
             else
             {
-                TryMoveEntity(eventArgs.User, eventArgs.Dragged);
+                TryMoveEntity(eventArgs.User, eventArgs.Dragged, eventArgs.Target);
             }
 
             return true;
         }
 
-        private async void TryMoveEntity(EntityUid user, EntityUid entityToMove)
+        private async void TryMoveEntity(EntityUid user, EntityUid entityToMove, EntityUid climbable)
         {
             var doAfterEventArgs = new DoAfterEventArgs(user, _climbDelay, default, entityToMove)
             {
@@ -184,6 +184,9 @@ namespace Content.Server.Climbing.Components
                 // we may potentially need additional logic since we're forcing a player onto a climbable
                 // there's also the cases where the user might collide with the person they are forcing onto the climbable that i haven't accounted for
 
+                _entities.EventBus.RaiseLocalEvent(entityToMove, new StartClimbEvent(climbable), false);
+                _entities.EventBus.RaiseLocalEvent(climbable, new ClimbedOnEvent(entityToMove), false);
+
                 var othersMessage = Loc.GetString("comp-climbable-user-climbs-force-other",
                     ("user", user), ("moved-user", entityToMove), ("climbable", Owner));
                 user.PopupMessageOtherClients(othersMessage);
@@ -193,7 +196,7 @@ namespace Content.Server.Climbing.Components
             }
         }
 
-        public async void TryClimb(EntityUid user)
+        public async void TryClimb(EntityUid user, EntityUid climbable)
         {
             if (!_entities.TryGetComponent(user, out ClimbingComponent? climbingComponent) || climbingComponent.IsClimbing)
                 return;
@@ -208,13 +211,16 @@ namespace Content.Server.Climbing.Components
 
             var result = await EntitySystem.Get<DoAfterSystem>().WaitDoAfter(doAfterEventArgs);
 
-            if (result != DoAfterStatus.Cancelled && _entities.TryGetComponent(user, out PhysicsComponent? body) && body.Fixtures.Count >= 1)
+            if (result != DoAfterStatus.Cancelled && _entities.TryGetComponent(user, out FixturesComponent? fixtureComp) && fixtureComp.Fixtures.Count >= 1)
             {
                 // TODO: Remove the copy-paste code
                 var userPos = _entities.GetComponent<TransformComponent>(user).WorldPosition;
 
                 var direction = (_entities.GetComponent<TransformComponent>(Owner).WorldPosition - userPos).Normalized;
                 var endPoint = _entities.GetComponent<TransformComponent>(Owner).WorldPosition;
+
+                _entities.EventBus.RaiseLocalEvent(user, new StartClimbEvent(climbable), false);
+                _entities.EventBus.RaiseLocalEvent(climbable, new ClimbedOnEvent(user), false);
 
                 var climbMode = _entities.GetComponent<ClimbingComponent>(user);
                 climbMode.IsClimbing = true;
@@ -237,5 +243,31 @@ namespace Content.Server.Climbing.Components
                 user.PopupMessage(selfMessage);
             }
         }
+    }
+}
+
+/// <summary>
+///     Raised on an entity when it is climbed on.
+/// </summary>
+public class ClimbedOnEvent : EntityEventArgs
+{
+    public EntityUid Climber;
+
+    public ClimbedOnEvent(EntityUid climber)
+    {
+        Climber = climber;
+    }
+}
+
+/// <summary>
+///     Raised on an entity when it successfully climbs on something.
+/// </summary>
+public class StartClimbEvent : EntityEventArgs
+{
+    public EntityUid Climbable;
+
+    public StartClimbEvent(EntityUid climbable)
+    {
+        Climbable = climbable;
     }
 }

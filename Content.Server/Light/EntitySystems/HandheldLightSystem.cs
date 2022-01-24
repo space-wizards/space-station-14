@@ -8,6 +8,7 @@ using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Item;
 using Content.Shared.Light.Component;
 using Content.Shared.Rounding;
 using Content.Shared.Verbs;
@@ -214,9 +215,9 @@ namespace Content.Server.Light.EntitySystems
                 light.Enabled = on;
             }
 
-            if (EntityManager.TryGetComponent(component.Owner, out ItemComponent? item))
+            if (EntityManager.TryGetComponent(component.Owner, out SharedItemComponent? item))
             {
-                item.EquippedPrefix = Loc.GetString(on ? "on" : "off");
+                item.EquippedPrefix = on ? "on" : "off";
             }
         }
 

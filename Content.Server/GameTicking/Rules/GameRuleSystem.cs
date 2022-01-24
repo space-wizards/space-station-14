@@ -20,7 +20,7 @@ public abstract class GameRuleSystem : EntitySystem
     ///     When the GameRule prototype with this ID is added, this system will be enabled.
     ///     When it gets removed, this system will be disabled.
     /// </summary>
-    public abstract string Prototype { get; }
+    public new abstract string Prototype { get; }
 
     public override void Initialize()
     {
