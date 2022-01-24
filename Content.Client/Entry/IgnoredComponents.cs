@@ -326,7 +326,6 @@ namespace Content.Client.Entry
             "GrowingKudzu",
             "MonkeyAccent",
             "ReplacementAccent",
-            "ResistLocker",
             "SpawnArtifact",
             "TelepathicArtifact",
             "ArtifactGasTrigger",
