@@ -59,7 +59,6 @@ public class SpillableSystem : EntitySystem
         // spill all solution on the player
         var drainedSolution = _solutionContainerSystem.Drain(uid, solution, solution.DrainAvailable);
         SpillAt(args.Equipee, drainedSolution, "PuddleSmear");
-
     }
 
     /// <summary>
@@ -172,10 +171,13 @@ public class SpillableSystem : EntitySystem
         if (!noTileReact)
         {
             // First, do all tile reactions
-            foreach (var (reagentId, quantity) in solution.Contents)
+            for (var i = 0; i < solution.Contents.Count; i++)
             {
+                var (reagentId, quantity) = solution.Contents[i];
                 var proto = _prototypeManager.Index<ReagentPrototype>(reagentId);
-                proto.ReactionTile(tileRef, quantity);
+                var removed = proto.ReactionTile(tileRef, quantity);
+                if (removed <= FixedPoint2.Zero) continue;
+                solution.RemoveReagent(reagentId, removed);
             }
         }
 

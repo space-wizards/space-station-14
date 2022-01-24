@@ -71,27 +71,27 @@ public partial class PuddleSystem
         while (_puddleExpansionQueue.Count > 0)
         {
             var puddleExpansion = _puddleExpansionQueue.Pop();
-            while (puddleExpansion.RemainingSolution.CurrentVolume > FixedPoint2.Zero)
+            while (puddleExpansion.RemainingSolution.CurrentVolume > FixedPoint2.Zero
+                   && puddleExpansion.PuddlesToExpand.Count > 0)
             {
                 var nextToExpand = new List<Func<PuddleComponent>>();
                 foreach (var expand in puddleExpansion.PuddlesToExpand)
                 {
                     nextToExpand.AddRange(ExpandPuddles(expand, ref puddleExpansion));
                 }
+                puddleExpansion.PuddlesToExpand.Clear();
 
                 var max = nextToExpand.Count;
 
-                if (max == 0 || puddleExpansion.RemainingSolution.CurrentVolume / max <= FixedPoint2.Epsilon)
+                if (max == 0)
                 {
-                    // if nowhere to expand we destroy some of solution
-                    // less painfull than redistributing it in already filled
-                    puddleExpansion.RemainingSolution = new Solution();
+
+                    continue;
                 }
 
                 var transferMax = FixedPoint2.Min(PuddleComponent.DefaultOverflowVolume,
                     puddleExpansion.RemainingSolution.CurrentVolume / max);
 
-                puddleExpansion.PuddlesToExpand.Clear();
                 foreach (var puddlePlacer in nextToExpand)
                 {
                     if (puddleExpansion.RemainingSolution.CurrentVolume <= FixedPoint2.Zero)
