@@ -198,6 +198,7 @@
   - type: Tool
     qualities:
       - Screwing
+    speed: 2.5
   - type: MultipleTool
     statusShowBehavior: true
     entries:
