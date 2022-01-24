@@ -14,7 +14,7 @@ namespace Content.Client.Administration.UI.Tabs.AdminbusTab
 {
     [GenerateTypedNameReferences]
     [UsedImplicitly]
-    public partial class StationEventsWindow : SS14Window
+    public partial class StationEventsWindow : DefaultWindow
     {
         private List<string>? _data;
 

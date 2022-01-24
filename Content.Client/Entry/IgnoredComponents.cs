@@ -32,6 +32,7 @@ namespace Content.Client.Entry
             "PoweredLight",
             "Smes",
             "LightBulb",
+            "GlassTable",
             "Healing",
             "Material",
             "RandomAppearance",
@@ -325,7 +326,13 @@ namespace Content.Client.Entry
             "GrowingKudzu",
             "MonkeyAccent",
             "ReplacementAccent",
-            "ResistLocker"
+            "ResistLocker",
+            "SpawnArtifact",
+            "TelepathicArtifact",
+            "ArtifactGasTrigger",
+            "ArtifactInteractionTrigger",
+            "Artifact",
+            "RandomArtifactSprite"
         };
     }
 }

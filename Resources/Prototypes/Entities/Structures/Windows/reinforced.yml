@@ -36,7 +36,7 @@
   - type: IconSmooth
     base: rwindow
   - type: Construction
-    graph: window
+    graph: Window
     node: reinforcedWindow
   - type: Appearance
     visuals:
@@ -46,6 +46,25 @@
       trackAllDamage: true
       damageOverlay:
         sprite: Structures/Windows/cracks.rsi
+
+- type: entity
+  parent: ReinforcedWindow
+  id: TintedWindow
+  name: tinted window
+  components:
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Structures/Windows/tinted_window.rsi
+  - type: Icon
+    sprite: Structures/Windows/tinted_window.rsi
+  - type: IconSmooth
+    base: twindow
+  - type: Construction
+    graph: Window
+    node: tintedWindow
+  - type: Occluder
+    sizeX: 32
+    sizeY: 32
 
 - type: entity
   id: WindowReinforcedDirectional
@@ -66,7 +85,7 @@
     sprite: Structures/Windows/directional.rsi
     state: reinforced_window
   - type: Construction
-    graph: windowDirectional
+    graph: WindowDirectional
     node: windowReinforcedDirectional
   - type: Destructible
     thresholds:

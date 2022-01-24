@@ -106,7 +106,7 @@ namespace Content.Client.UserInterface.Atmos.GasTank
                     }),
                     (btnClose = new TextureButton
                     {
-                        StyleClasses = {SS14Window.StyleClassWindowCloseButton},
+                        StyleClasses = {DefaultWindow.StyleClassWindowCloseButton},
                         VerticalAlignment = VAlignment.Center
                     })
                 }

@@ -25,7 +25,7 @@ namespace Content.Server.GameTicking
         private TimeSpan _pauseTime;
 
         [ViewVariables]
-        public bool Paused { get; set; }
+        public new bool Paused { get; set; }
 
         [ViewVariables]
         private bool _roundStartCountdownHasNotStartedYetDueToNoPlayers;

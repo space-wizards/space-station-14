@@ -100,7 +100,7 @@
     airBlockedDirection:
       - South
   - type: Construction
-    graph: windoor
+    graph: Windoor
     node: windoor
 
 - type: entity
@@ -149,5 +149,5 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Construction
-    graph: windoor
+    graph: Windoor
     node: windoorSecure

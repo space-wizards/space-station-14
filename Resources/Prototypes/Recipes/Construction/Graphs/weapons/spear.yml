@@ -1,5 +1,5 @@
 ﻿- type: constructionGraph
-  id: spear
+  id: Spear
   start: start
   graph:
     - node: start

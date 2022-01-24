@@ -1,4 +1,4 @@
-﻿<SS14Window xmlns="https://spacestation14.io"
+﻿<DefaultWindow xmlns="https://spacestation14.io"
             Title="{Loc 'crew-monitoring-user-interface-title'}"
             MinSize="450 400">
     <ScrollContainer HorizontalExpand="True"
@@ -20,4 +20,4 @@
             <!-- Table rows are filled by code -->
         </GridContainer>
     </ScrollContainer>
-</SS14Window>
+</DefaultWindow>

@@ -146,19 +146,19 @@ namespace Content.Server.AI.Pathfinding
         {
             var chunkX = (int) (Math.Floor((float) tile.X / PathfindingChunk.ChunkSize) * PathfindingChunk.ChunkSize);
             var chunkY = (int) (Math.Floor((float) tile.Y / PathfindingChunk.ChunkSize) * PathfindingChunk.ChunkSize);
-            var Vector2i = new Vector2i(chunkX, chunkY);
+            var vector2i = new Vector2i(chunkX, chunkY);
 
             if (_graph.TryGetValue(tile.GridIndex, out var chunks))
             {
-                if (!chunks.ContainsKey(Vector2i))
+                if (!chunks.ContainsKey(vector2i))
                 {
-                    CreateChunk(tile.GridIndex, Vector2i);
+                    CreateChunk(tile.GridIndex, vector2i);
                 }
 
-                return chunks[Vector2i];
+                return chunks[vector2i];
             }
 
-            var newChunk = CreateChunk(tile.GridIndex, Vector2i);
+            var newChunk = CreateChunk(tile.GridIndex, vector2i);
             return newChunk;
         }
 
