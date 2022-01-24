@@ -1,11 +1,6 @@
 Entries:
 - author: mirrorcult
   changes:
-  - {message: Added a verb to rotatable entities to reset rotation back to 0., type: Add}
-  id: 423
-  time: '2021-10-09T16:23:34.0000000+00:00'
-- author: mirrorcult
-  changes:
   - {message: small light sources like computers no longer cast shadows to improve
       performance., type: Tweak}
   id: 424
@@ -2927,3 +2922,9 @@ Entries:
     type: Fix}
   id: 923
   time: '2022-01-23T17:47:22.0000000+00:00'
+- author: moony
+  changes:
+  - {message: 'Kudzu and Gas Leak are now less likely to occur, and cannot happen
+      four times in a row.', type: Tweak}
+  id: 924
+  time: '2022-01-23T21:17:05.0000000+00:00'
