@@ -1,5 +1,4 @@
 using Content.Server.Tools.Components;
-using Content.Server.Weapon.Melee.EnergySword.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
