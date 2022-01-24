@@ -172,9 +172,9 @@
   description: A special hardsuit helmet worn by members of an emergency response team.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hardsuits/ERTHelmets/ertleader.rsi
+    sprite: Clothing/Head/Hardsuits/ERThelmets/ertleader.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hardsuits/ERTHelmets/ertleader.rsi
+    sprite: Clothing/Head/Hardsuits/ERThelmets/ertleader.rsi
     
 - type: entity
   parent: ClothingHeadHelmetHardsuitERTLeader
@@ -192,9 +192,9 @@
   name: ERT medic hardsuit helmet
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hardsuits/ERTHelmets/ertmedical.rsi
+    sprite: Clothing/Head/Hardsuits/ERThelmets/ertmedical.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hardsuits/ERTHelmets/ertmedical.rsi
+    sprite: Clothing/Head/Hardsuits/ERThelmets/ertmedical.rsi
     
 - type: entity
   parent: ClothingHeadHelmetHardsuitERTLeader
@@ -202,9 +202,9 @@
   name: ERT security hardsuit helmet
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hardsuits/ERTHelmets/ertsecurity.rsi
+    sprite: Clothing/Head/Hardsuits/ERThelmets/ertsecurity.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hardsuits/ERTHelmets/ertsecurity.rsi
+    sprite: Clothing/Head/Hardsuits/ERThelmets/ertsecurity.rsi
     
 - type: entity
   parent: ClothingHeadHelmetHardsuitERTLeader
@@ -212,6 +212,6 @@
   name: ERT janitor hardsuit helmet
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hardsuits/ERTHelmets/ertjanitor.rsi
+    sprite: Clothing/Head/Hardsuits/ERThelmets/ertjanitor.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hardsuits/ERTHelmets/ertjanitor.rsi
+    sprite: Clothing/Head/Hardsuits/ERThelmets/ertjanitor.rsi
