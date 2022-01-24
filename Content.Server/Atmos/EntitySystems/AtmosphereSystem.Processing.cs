@@ -220,9 +220,13 @@ namespace Content.Server.Atmos.EntitySystems
                 atmosphere.CurrentRunTiles = new Queue<TileAtmosphere>(atmosphere.HighPressureDelta);
 
             var number = 0;
+            var bodies = EntityManager.GetEntityQuery<PhysicsComponent>();
+            var xforms = EntityManager.GetEntityQuery<TransformComponent>();
+            var pressureQuery = EntityManager.GetEntityQuery<MovedByPressureComponent>();
+
             while (atmosphere.CurrentRunTiles.TryDequeue(out var tile))
             {
-                HighPressureMovements(atmosphere, tile);
+                HighPressureMovements(atmosphere, tile, bodies, xforms, pressureQuery);
                 tile.PressureDifference = 0f;
                 tile.PressureSpecificTarget = null;
                 atmosphere.HighPressureDelta.Remove(tile);
