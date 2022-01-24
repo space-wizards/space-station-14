@@ -37,7 +37,7 @@ namespace Content.Server.Atmos.EntitySystems
             foreach (var entity in _lookup.GetEntitiesIntersecting(tile.GridIndex, tile.GridIndices))
             {
                 if (!bodies.HasComponent(entity)
-                    || !pressureQuery.TryGetComponent(entity, out var pressure) || pressure.Enabled
+                    || !pressureQuery.TryGetComponent(entity, out var pressure) || !pressure.Enabled
                     || _containers.IsEntityInContainer(entity, xforms.GetComponent(entity)))
                     continue;
 
