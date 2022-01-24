@@ -125,7 +125,7 @@ namespace Content.Server.Light.EntitySystems
                     continue;
                 }
 
-                if (handheld.Paused) continue;
+                if (Paused(handheld.Owner)) continue;
                 TryUpdate(handheld, frameTime);
             }
 

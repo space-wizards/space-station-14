@@ -55,7 +55,7 @@ namespace Content.Server.Temperature.Systems
 
             foreach (var comp in ShouldUpdateDamage)
             {
-                if (comp.Deleted || comp.Paused)
+                if (Deleted(comp.Owner) || Paused(comp.Owner))
                     continue;
 
                 ChangeDamage((comp).Owner, comp);

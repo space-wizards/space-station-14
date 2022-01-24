@@ -108,10 +108,10 @@ namespace Content.Server.AI.EntitySystems
                 var index = (i + startIndex) % npcs.Length;
                 var npc = npcs[index];
 
-                if (npc.Deleted)
+                if (Deleted(npc.Owner))
                     continue;
 
-                if (npc.Paused)
+                if (Paused(npc.Owner))
                     continue;
 
                 npc.Update(frameTime);
