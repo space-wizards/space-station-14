@@ -74,7 +74,7 @@
   name: disposal unit
   components:
   - type: Construction
-    graph: disposalMachine
+    graph: DisposalMachine
     node: disposal_unit
   - type: DisposalUnit
     flushTime: 2

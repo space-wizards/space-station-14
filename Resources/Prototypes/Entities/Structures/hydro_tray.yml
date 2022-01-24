@@ -21,7 +21,7 @@
   - type: PlantHolder
     drawWarnings: true
   - type: Construction
-    graph: machine
+    graph: Machine
     node: machine
   - type: Destructible
     thresholds:

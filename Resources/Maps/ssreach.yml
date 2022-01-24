@@ -3182,7 +3182,7 @@ entities:
   - radius: 2.2553093
     type: PointLight
 - uid: 16
-  type: SalternSmes
+  type: SalternSMES
   components:
   - pos: -14.5,-3.5
     parent: 4
@@ -6332,7 +6332,7 @@ entities:
     parent: 4
     type: Transform
 - uid: 456
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: -4.5,2.5
     parent: 4
@@ -6345,7 +6345,7 @@ entities:
     supplyRampPosition: 3464.4934
     type: PowerNetworkBattery
 - uid: 457
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 4.5,-3.5
     parent: 4
@@ -6358,7 +6358,7 @@ entities:
     supplyRampPosition: 3464.4934
     type: PowerNetworkBattery
 - uid: 458
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 13.5,-2.5
     parent: 4
@@ -6371,7 +6371,7 @@ entities:
     supplyRampPosition: 3464.4934
     type: PowerNetworkBattery
 - uid: 459
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 25.5,-2.5
     parent: 4
@@ -6384,7 +6384,7 @@ entities:
     supplyRampPosition: 3464.4934
     type: PowerNetworkBattery
 - uid: 460
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 27.5,2.5
     parent: 4
@@ -12156,7 +12156,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1135
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 4.5,-8.5
     parent: 4
@@ -13545,7 +13545,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1293
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 13.5,15.5
     parent: 4
@@ -14417,7 +14417,7 @@ entities:
     parent: 4
     type: Transform
 - uid: 1391
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 14.5,-17.5
     parent: 4
@@ -20274,7 +20274,7 @@ entities:
     parent: 4
     type: Transform
 - uid: 1964
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 4.5,11.5
     parent: 4
@@ -21096,7 +21096,7 @@ entities:
   - enabled: False
     type: AmbientSound
 - uid: 2061
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 11.5,9.5
     parent: 4
@@ -21560,7 +21560,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 2114
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: -8.5,-2.5
     parent: 4
