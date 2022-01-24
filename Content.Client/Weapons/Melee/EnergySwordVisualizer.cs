@@ -15,28 +15,29 @@ public class EnergySwordVisualizer : AppearanceVisualizer
         var entManager = IoCManager.Resolve<IEntityManager>();
 
         component.TryGetData(EnergySwordVisuals.State, out EnergySwordStatus? status);
+        status ??= EnergySwordStatus.Off;
         component.TryGetData(EnergySwordVisuals.Color, out Color? color);
         color ??= Color.DodgerBlue;
         entManager.TryGetComponent(component.Owner, out SpriteComponent? spriteComponent);
 
-        switch (status)
+        if ((status & EnergySwordStatus.On) != 0x0)
         {
-            case EnergySwordStatus.On:
-                TurnOn(component, color.Value, entManager, spriteComponent);
-                break;
-            default:
-                TurnOff(component, entManager, spriteComponent);
-                break;
+            TurnOn(component, status.Value, color.Value, entManager, spriteComponent);
+        }
+        else
+        {
+            TurnOff(component, status.Value, entManager, spriteComponent);
         }
     }
 
     private void TurnOn(
         AppearanceComponent component,
+        EnergySwordStatus status,
         Color color,
         IEntityManager entManager,
         SpriteComponent? spriteComponent = null)
     {
-        if (component.TryGetData(EnergySwordVisuals.Hacked, out bool hacked) && hacked)
+        if ((status & EnergySwordStatus.Hacked) != 0x0)
         {
             if (entManager.TryGetComponent(component.Owner, out SharedItemComponent? itemComponent))
             {
@@ -69,6 +70,7 @@ public class EnergySwordVisualizer : AppearanceVisualizer
 
     private void TurnOff(
         AppearanceComponent component,
+        EnergySwordStatus status,
         IEntityManager entManager,
         SpriteComponent? spriteComponent = null)
     {
@@ -77,7 +79,7 @@ public class EnergySwordVisualizer : AppearanceVisualizer
             itemComponent.EquippedPrefix = "off";
         }
 
-        if (component.TryGetData(EnergySwordVisuals.Hacked, out bool hacked) && hacked)
+        if ((status & EnergySwordStatus.Hacked) != 0x0)
         {
             spriteComponent?.LayerSetState(0, "e_sword");
         }

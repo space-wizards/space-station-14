@@ -1,18 +1,16 @@
-using Content.Shared.Item;
 using Content.Server.Tools.Components;
-using Content.Shared.Interaction;
+using Content.Server.Weapon.Melee.Esword;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Interaction;
+using Content.Shared.Item;
 using Content.Shared.Weapons.Melee;
-using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.Player;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Maths;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
-using Robust.Shared.Log;
 
-namespace Content.Server.Weapon.Melee.Esword
+namespace Content.Server.Weapon.Melee.EnergySword
 {
     internal class EnergySwordSystem : EntitySystem
     {
@@ -70,8 +68,8 @@ namespace Content.Server.Weapon.Melee.Esword
 
             SoundSystem.Play(Filter.Pvs(comp.Owner), comp.DeActivateSound.GetSound(), comp.Owner);
 
-            UpdateAppearance(comp);
             comp.Activated = false;
+            UpdateAppearance(comp, item);
         }
 
         private void TurnOn(EnergySwordComponent comp)
@@ -86,18 +84,27 @@ namespace Content.Server.Weapon.Melee.Esword
 
             SoundSystem.Play(Filter.Pvs(comp.Owner), comp.ActivateSound.GetSound(), comp.Owner);
 
-            UpdateAppearance(comp);
-
             comp.Activated = true;
+            UpdateAppearance(comp, item);
         }
 
-        private void UpdateAppearance(EnergySwordComponent component)
+        private void UpdateAppearance(EnergySwordComponent component, SharedItemComponent? itemComponent = null)
         {
             if (!EntityManager.TryGetComponent(component.Owner, out AppearanceComponent? appearanceComponent)) return;
 
             appearanceComponent.SetData(EnergySwordVisuals.Color, component.BladeColor);
-            appearanceComponent.SetData(EnergySwordVisuals.Hacked, component.Hacked);
-            appearanceComponent.SetData(EnergySwordVisuals.State, component.Activated);
+
+            var status = component.Activated ? EnergySwordStatus.On : EnergySwordStatus.Off;
+            if (component.Hacked)
+                status |= EnergySwordStatus.Hacked;
+
+            appearanceComponent.SetData(EnergySwordVisuals.State, status);
+            // wew itemcomp
+            if (Resolve(component.Owner, ref itemComponent, false))
+            {
+                itemComponent.EquippedPrefix = component.Activated ? "on" : "off";
+                itemComponent.Color = component.BladeColor;
+            }
         }
 
         private void OnInteractUsing(EntityUid uid, EnergySwordComponent comp, InteractUsingEvent args)
