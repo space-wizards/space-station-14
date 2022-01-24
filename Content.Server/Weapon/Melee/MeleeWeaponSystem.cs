@@ -169,11 +169,18 @@ namespace Content.Server.Weapon.Melee
             {
                 if (entities.Count != 0)
                 {
-                    SoundSystem.Play(Filter.Pvs(owner), comp.HitSound.GetSound(), EntityManager.GetComponent<TransformComponent>(entities.First()).Coordinates);
+                    if (hitEvent.HitSoundOverride != null)
+                    {
+                        SoundSystem.Play(Filter.Pvs(owner), hitEvent.HitSoundOverride.GetSound(), Transform(entities.First()).Coordinates);
+                    }
+                    else
+                    {
+                        SoundSystem.Play(Filter.Pvs(owner), comp.HitSound.GetSound(), Transform(entities.First()).Coordinates);
+                    }
                 }
                 else
                 {
-                    SoundSystem.Play(Filter.Pvs(owner), comp.MissSound.GetSound(), EntityManager.GetComponent<TransformComponent>(args.User).Coordinates);
+                    SoundSystem.Play(Filter.Pvs(owner), comp.MissSound.GetSound(), Transform(args.User).Coordinates);
                 }
 
                 var modifiedDamage = DamageSpecifier.ApplyModifierSets(comp.Damage + hitEvent.BonusDamage, hitEvent.ModifiersList);
