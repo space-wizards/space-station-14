@@ -126,6 +126,47 @@
     fireCost: 12
 
 - type: entity
+  name: cassad pulse carbine
+  parent: BatteryGunBase
+  id: PulseCarbineCassad
+  description: A deadly energy weapon employed by NT-ERT teams.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Weapons/Guns/Battery/cassad.rsi
+    layers:
+      - state: base
+        map: ["enum.RangedBarrelVisualLayers.Base"]
+      - state: mag-unshaded-0
+        map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
+        shader: unshaded
+  - type: Item
+    size: 24
+    sprite: Objects/Weapons/Guns/Battery/cassad.rsi
+  - type: BatteryBarrel
+    fireRate: 7
+    fireCost: 7
+    ammoPrototype: RedLaser
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
+    cellSlot:
+      ejectOnUse: true
+      insertSound: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+      ejectSound: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
+      soundOptions: 
+        volume: -2
+      startingItem: PowerCellSmallStandard
+      whitelist:
+        components:
+        - Battery
+  - type: Appearance
+    visuals:
+    - type: MagVisualizer
+      magState: mag
+      steps: 5
+      zeroVisible: true
+
+- type: entity
   name: laser cannon
   parent: BatteryGunBase
   id: LaserCannon
@@ -144,7 +185,7 @@
     size: 24
     sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
   - type: BatteryBarrel
-    fireCost: 600
+    fireCost: 200
     ammoPrototype: RedHeavyLaser
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg

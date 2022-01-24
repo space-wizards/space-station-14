@@ -14,6 +14,12 @@
       "name": "base"
     },
     {
+      "name": "bolt-closed"
+    },
+    {
+      "name": "bolt-open"
+    },
+    {
       "name": "mag-0"
     },
     {
