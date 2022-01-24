@@ -70,7 +70,7 @@
     useSound:
       collection: Welder
     qualities: Welding
-    speed: 2
+    speed: 1.5
   - type: PointLight
     enabled: false
     radius: 1.5
