@@ -1,11 +1,11 @@
-using Content.Shared.Sound;
-using Content.Shared.Damage;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Maths;
 using System.Collections.Generic;
+using Content.Shared.Damage;
+using Content.Shared.Sound;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Maths;
+using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.Weapon.Melee.Esword
+namespace Content.Server.Weapon.Melee.EnergySword
 {
     [RegisterComponent, ComponentProtoName("EnergySword")]
     internal class EnergySwordComponent : Component
