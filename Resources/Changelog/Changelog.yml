@@ -1,10 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: small light sources like computers no longer cast shadows to improve
-      performance., type: Tweak}
-  id: 424
-  time: '2021-10-09T16:26:45.0000000+00:00'
 - author: Ygg01
   changes:
   - {message: Fixed puddles not spilling into neighboring tiles., type: Fix}
@@ -2928,3 +2922,8 @@ Entries:
       four times in a row.', type: Tweak}
   id: 924
   time: '2022-01-23T21:17:05.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Slimes no longer butcher into human meat., type: Fix}
+  id: 925
+  time: '2022-01-24T12:46:43.0000000+00:00'
