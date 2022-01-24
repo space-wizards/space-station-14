@@ -182,9 +182,9 @@
   name: ERT engineer hardsuit helmet
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hardsuits/ERTHelmets/ertengineer.rsi
+    sprite: Clothing/Head/Hardsuits/ERThelmets/ertengineer.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hardsuits/ERTHelmets/ertengineer.rsi
+    sprite: Clothing/Head/Hardsuits/ERThelmets/ertengineer.rsi
     
 - type: entity
   parent: ClothingHeadHelmetHardsuitERTLeader
