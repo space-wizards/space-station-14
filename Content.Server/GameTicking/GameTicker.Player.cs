@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Threading;
 using Content.Server.Players;
 using Content.Server.Roles;
 using Content.Server.Station;
@@ -11,8 +13,9 @@ using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Timing;
+using Robust.Shared.Network;
 using Robust.Shared.Utility;
+using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.GameTicking
 {
@@ -20,6 +23,7 @@ namespace Content.Server.GameTicking
     public partial class GameTicker
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
+        private readonly Dictionary<NetUserId, CancellationTokenSource> _decayCancellationTokens = new();
 
         private void InitializePlayer()
         {
@@ -35,6 +39,9 @@ namespace Content.Server.GameTicking
                 case SessionStatus.Connecting:
                     // Cancel shutdown update timer in progress.
                     _updateShutdownCts?.Cancel();
+
+                    if(_decayCancellationTokens.TryGetValue(session.UserId, out var cancelToken))
+                        cancelToken.Cancel();
                     break;
 
                 case SessionStatus.Connected:
@@ -100,6 +107,11 @@ namespace Content.Server.GameTicking
                     if (_playersInLobby.ContainsKey(session)) _playersInLobby.Remove(session);
 
                     _chatManager.SendAdminAnnouncement(Loc.GetString("player-leave-message", ("name", args.Session.Name)));
+
+                    if(_decayCancellationTokens.TryGetValue(session.UserId, out var token))
+                        token.Cancel();
+                    token = _decayCancellationTokens[session.UserId] = new CancellationTokenSource();
+                    Timer.Spawn(TimeSpan.FromMinutes(5), () => _playersInGame.Remove(session.UserId), token.Token);
 
                     ServerEmptyUpdateRestartCheck();
                     _prefsManager.OnClientDisconnected(session);
