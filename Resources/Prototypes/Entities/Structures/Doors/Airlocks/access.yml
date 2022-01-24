@@ -95,6 +95,14 @@
   components:
   - type: AccessReader
     access: [["Cargo"]]
+    
+- type: entity
+  parent: AirlockCargo
+  id: AirlockQuartermasterLocked
+  suffix: Quartermaster, Locked
+  components:
+  - type: AccessReader
+    access: [["Quartermaster"]]
 
 - type: entity
   parent: AirlockMedical
@@ -272,6 +280,14 @@
   components:
   - type: AccessReader
     access: [["Cargo"]]
+    
+- type: entity
+  parent: AirlockCargoGlass
+  id: AirlockQuartermasterGlassLocked
+  suffix: Quartermaster, Locked
+  components:
+  - type: AccessReader
+    access: [["Quartermaster"]]
 
 - type: entity
   parent: AirlockMedicalGlass

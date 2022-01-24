@@ -4,10 +4,12 @@
   description: "An unpowered light."
   suffix: Unpowered
   components:
+  - type: Transform
+    anchored: true
   - type: Clickable
   - type: InteractionOutline
   - type: Construction
-    graph: lightFixture
+    graph: LightFixture
     node: tubeLight
   - type: Physics
     canCollide: false
@@ -150,7 +152,7 @@
         - !type:DoActsBehavior
           acts: ["Destruction"]
     - type: Construction
-      graph: lightFixture
+      graph: LightFixture
       node: bulbLight
 
 - type: entity

@@ -15,6 +15,10 @@
     areaInsert: true
     storageSoundCollection:
       collection: trashBagRustle
+    whitelist:
+      tags:
+        - Cartridge
+        - Trash
 
 - type: entity
   name: trash bag

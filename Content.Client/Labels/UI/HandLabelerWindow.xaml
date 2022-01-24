@@ -1,8 +1,8 @@
-<SS14Window xmlns="https://spacestation14.io"
+<DefaultWindow xmlns="https://spacestation14.io"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             Title="Hand Labeler">
     <BoxContainer Orientation="Vertical" SeparationOverride="4" MinWidth="150">
         <Label Name="CurrentTextLabel" Text="{Loc 'hand-labeler-current-text-label'}" />
         <LineEdit Name="LabelLineEdit" />
     </BoxContainer>
-</SS14Window>
+</DefaultWindow>

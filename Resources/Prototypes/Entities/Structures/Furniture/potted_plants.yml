@@ -11,8 +11,8 @@
   - type: Fixtures
     fixtures:
     - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.2,-0.2,0.2,0.2"
+        !type:PhysShapeCircle
+        radius: 0.2
       mass: 25
       mask:
         - MobImpassable
@@ -22,6 +22,8 @@
         - SmallImpassable
         - VaultImpassable
   - type: Sprite
+    drawdepth: Overdoors
+    offset: "0.0,0.3"
     noRot: true
     sprite: Structures/Furniture/potted_plants.rsi
   - type: PottedPlantHide
@@ -76,8 +78,9 @@
   - type: Fixtures
     fixtures:
     - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.25,-0.47,0.25,0.05"
+        !type:PhysShapeCircle
+        radius: 0.2
+        position: "0.0,-0.3"
       mass: 25
       layer:
       - SmallImpassable

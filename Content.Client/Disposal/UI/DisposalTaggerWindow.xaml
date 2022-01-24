@@ -1,4 +1,4 @@
-﻿<SS14Window xmlns="https://spacestation14.io"
+﻿<DefaultWindow xmlns="https://spacestation14.io"
             Title="{Loc 'disposal-tagger-window-title'}"
             MinSize="500 110"
             SetSize="500 110">
@@ -16,4 +16,4 @@
                     Text="{Loc 'disposal-tagger-window-tag-confirm-button'}" />
         </BoxContainer>
     </BoxContainer>
-</SS14Window>
+</DefaultWindow>

@@ -29,7 +29,7 @@ namespace Content.Client.CharacterInterface
         /// <summary>
         /// A window that collects and shows all the individual character user interfaces
         /// </summary>
-        public class CharacterWindow : SS14Window
+        public class CharacterWindow : DefaultWindow
         {
             private readonly List<ICharacterUI> _windowComponents;
 

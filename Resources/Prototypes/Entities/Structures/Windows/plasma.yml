@@ -30,7 +30,7 @@
   - type: IconSmooth
     base: pwindow
   - type: Construction
-    graph: window
+    graph: Window
     node: plasmaWindow
   - type: Appearance
     visuals:
@@ -60,7 +60,7 @@
     sprite: Structures/Windows/directional.rsi
     state: plasma_window
   - type: Construction
-    graph: windowDirectional
+    graph: WindowDirectional
     node: plasmaWindowDirectional
   - type: Destructible
     thresholds:

@@ -11,7 +11,7 @@ using static Robust.Client.UserInterface.Controls.ItemList;
 
 namespace Content.Client.Body.UI
 {
-    public sealed class BodyScannerDisplay : SS14Window
+    public sealed class BodyScannerDisplay : DefaultWindow
     {
         private EntityUid? _currentEntity;
         private SharedBodyPartComponent? _currentBodyPart;

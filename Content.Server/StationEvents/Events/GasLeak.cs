@@ -36,6 +36,10 @@ namespace Content.Server.StationEvents.Events
 
         public override int MinimumPlayers => 5;
 
+        public override float Weight => WeightLow;
+
+        public override int? MaxOccurrences => 1;
+
         /// <summary>
         ///     Give people time to get their internals on.
         /// </summary>

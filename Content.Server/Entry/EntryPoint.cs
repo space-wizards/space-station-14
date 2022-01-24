@@ -1,3 +1,4 @@
+using System.IO;
 using Content.Server.Administration.Managers;
 using Content.Server.Afk;
 using Content.Server.AI.Utility;
@@ -8,6 +9,7 @@ using Content.Server.Connection;
 using Content.Server.Database;
 using Content.Server.EUI;
 using Content.Server.GameTicking;
+using Content.Server.GuideGenerator;
 using Content.Server.Info;
 using Content.Server.IoC;
 using Content.Server.Maps;
@@ -18,15 +20,19 @@ using Content.Server.Voting.Managers;
 using Content.Shared.Actions;
 using Content.Shared.Administration;
 using Content.Shared.Alert;
+using Content.Shared.CCVar;
 using Content.Shared.Kitchen;
+using Robust.Server;
 using Robust.Server.Bql;
 using Robust.Server.Player;
+using Robust.Shared.Configuration;
 using Robust.Server.ServerStatus;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Entry
 {
@@ -62,45 +68,65 @@ namespace Content.Server.Entry
 
             IoCManager.BuildGraph();
             factory.GenerateNetIds();
+            var configManager = IoCManager.Resolve<IConfigurationManager>();
+            var dest = configManager.GetCVar(CCVars.DestinationFile);
+            if (string.IsNullOrEmpty(dest)) //hacky but it keeps load times for the generator down.
+            {
+                _euiManager = IoCManager.Resolve<EuiManager>();
+                _voteManager = IoCManager.Resolve<IVoteManager>();
 
-            _euiManager = IoCManager.Resolve<EuiManager>();
-            _voteManager = IoCManager.Resolve<IVoteManager>();
+                var playerManager = IoCManager.Resolve<IPlayerManager>();
 
-            IoCManager.Resolve<IChatSanitizationManager>().Initialize();
-            IoCManager.Resolve<IChatManager>().Initialize();
+                var logManager = IoCManager.Resolve<ILogManager>();
+                logManager.GetSawmill("Storage").Level = LogLevel.Info;
+                logManager.GetSawmill("db.ef").Level = LogLevel.Info;
 
-            var playerManager = IoCManager.Resolve<IPlayerManager>();
-
-            var logManager = IoCManager.Resolve<ILogManager>();
-            logManager.GetSawmill("Storage").Level = LogLevel.Info;
-            logManager.GetSawmill("db.ef").Level = LogLevel.Info;
-
-            IoCManager.Resolve<IConnectionManager>().Initialize();
-            IoCManager.Resolve<IServerDbManager>().Init();
-            IoCManager.Resolve<IServerPreferencesManager>().Init();
-            IoCManager.Resolve<INodeGroupFactory>().Initialize();
-            IoCManager.Resolve<IGamePrototypeLoadManager>().Initialize();
-            _voteManager.Initialize();
+                IoCManager.Resolve<IConnectionManager>().Initialize();
+                IoCManager.Resolve<IServerDbManager>().Init();
+                IoCManager.Resolve<IServerPreferencesManager>().Init();
+                IoCManager.Resolve<INodeGroupFactory>().Initialize();
+                IoCManager.Resolve<IGamePrototypeLoadManager>().Initialize();
+                _voteManager.Initialize();
+            }
         }
 
         public override void PostInit()
         {
             base.PostInit();
 
-            IoCManager.Resolve<ISandboxManager>().Initialize();
-            IoCManager.Resolve<RecipeManager>().Initialize();
-            IoCManager.Resolve<ActionManager>().Initialize();
-            IoCManager.Resolve<BlackboardManager>().Initialize();
-            IoCManager.Resolve<ConsiderationsManager>().Initialize();
-            IoCManager.Resolve<IAdminManager>().Initialize();
-            IoCManager.Resolve<INpcBehaviorManager>().Initialize();
-            IoCManager.Resolve<IAfkManager>().Initialize();
-            IoCManager.Resolve<RulesManager>().Initialize();
-            _euiManager.Initialize();
+            IoCManager.Resolve<IChatSanitizationManager>().Initialize();
+            IoCManager.Resolve<IChatManager>().Initialize();
+            var configManager = IoCManager.Resolve<IConfigurationManager>();
+            var resourceManager = IoCManager.Resolve<IResourceManager>();
+            var dest = configManager.GetCVar(CCVars.DestinationFile);
+            if (!string.IsNullOrEmpty(dest))
+            {
+                var resPath = new ResourcePath(dest).ToRootedPath();
+                var file = resourceManager.UserData.OpenWriteText(resPath.WithName("chem_" + dest));
+                ChemistryJsonGenerator.PublishJson(file);
+                file.Flush();
+                file = resourceManager.UserData.OpenWriteText(resPath.WithName("react_" + dest));
+                ReactionJsonGenerator.PublishJson(file);
+                file.Flush();
+                IoCManager.Resolve<IBaseServer>().Shutdown("Data generation done");
+            }
+            else
+            {
+                IoCManager.Resolve<ISandboxManager>().Initialize();
+                IoCManager.Resolve<RecipeManager>().Initialize();
+                IoCManager.Resolve<ActionManager>().Initialize();
+                IoCManager.Resolve<BlackboardManager>().Initialize();
+                IoCManager.Resolve<ConsiderationsManager>().Initialize();
+                IoCManager.Resolve<IAdminManager>().Initialize();
+                IoCManager.Resolve<INpcBehaviorManager>().Initialize();
+                IoCManager.Resolve<IAfkManager>().Initialize();
+                IoCManager.Resolve<RulesManager>().Initialize();
+                _euiManager.Initialize();
 
-            IoCManager.Resolve<IGameMapManager>().Initialize();
-            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<GameTicker>().PostInitialize();
-            IoCManager.Resolve<IBqlQueryManager>().DoAutoRegistrations();
+                IoCManager.Resolve<IGameMapManager>().Initialize();
+                IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<GameTicker>().PostInitialize();
+                IoCManager.Resolve<IBqlQueryManager>().DoAutoRegistrations();
+            }
         }
 
         public override void Update(ModUpdateLevel level, FrameEventArgs frameEventArgs)

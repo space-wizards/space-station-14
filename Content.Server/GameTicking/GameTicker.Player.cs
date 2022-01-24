@@ -134,12 +134,15 @@ namespace Content.Server.GameTicking
             if (_playersInLobby.ContainsKey(session))
                 _playersInLobby.Remove(session);
 
+            _playersInGame.Add(session.UserId);
+
             RaiseNetworkEvent(new TickerJoinGameEvent(), session.ConnectedClient);
         }
 
         private void PlayerJoinLobby(IPlayerSession session)
         {
             _playersInLobby[session] = LobbyPlayerStatus.NotReady;
+            _playersInGame.Remove(session.UserId);
 
             var client = session.ConnectedClient;
             RaiseNetworkEvent(new TickerJoinLobbyEvent(), client);

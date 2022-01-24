@@ -1,43 +1,19 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/c838ba21dae97db345e0113f99596decd1d66039",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/555fa0ed9f380509156d94131bd8a3f1c1fee1cf",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
     {
-        "name": "sheath-equipped-BELT",
+        "name": "equipped-BELT",
         "directions": 4
     },
     {
         "name": "sheath-sabre-equipped-BELT",
         "directions": 4
-    },
-    {
-        "name": "sheath-bag"
-    },
-    {
-        "name": "sheath-carrot"
-    },
-    {
-        "name": "sheath-crowbar"
-    },
-    {
-        "name": "sheath-crowbarr"
-    },
-    {
-        "name": "sheath-katana"
-    },
-    {
-        "name": "sheath-knife"
-    },
-    {
-        "name": "sheath-mop"
-    },
-    {
-        "name": "sheath-rod"
     },
     {
         "name": "sheath-sabre"

@@ -16,14 +16,10 @@ namespace Content.Shared.Doors
     {
         public override string Name => "Door";
 
-        [ComponentDependency]
-        protected readonly AppearanceComponent? AppearanceComponent = null;
-
-        [ComponentDependency]
-        protected readonly IPhysBody? PhysicsComponent = null;
-
         [Dependency]
         protected readonly IGameTiming _gameTiming = default!;
+
+        [Dependency] private readonly IEntityManager _entMan = default!;
 
         [ViewVariables]
         private DoorState _state = DoorState.Closed;
@@ -104,7 +100,10 @@ namespace Content.Shared.Doors
 
         protected void SetAppearance(DoorVisualState state)
         {
-            AppearanceComponent?.SetData(DoorVisuals.VisualState, state);
+            if (_entMan.TryGetComponent<AppearanceComponent>(Owner, out var appearanceComponent))
+            {
+                appearanceComponent.SetData(DoorVisuals.VisualState, state);
+            }
         }
 
         /// <summary>
@@ -112,9 +111,9 @@ namespace Content.Shared.Doors
         /// </summary>
         protected virtual void OnPartialOpen()
         {
-            if (PhysicsComponent != null)
+            if (_entMan.TryGetComponent<PhysicsComponent>(Owner, out var physicsComponent))
             {
-                PhysicsComponent.CanCollide = false;
+                physicsComponent.CanCollide = false;
             }
             // we can't be crushing anyone anymore, since we're opening
             CurrentlyCrushing.Clear();
@@ -125,9 +124,9 @@ namespace Content.Shared.Doors
         /// </summary>
         protected virtual void OnPartialClose()
         {
-            if (PhysicsComponent != null)
+            if (_entMan.TryGetComponent<PhysicsComponent>(Owner, out var physicsComponent))
             {
-                PhysicsComponent.CanCollide = true;
+                physicsComponent.CanCollide = true;
             }
         }
 

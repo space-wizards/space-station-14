@@ -24,7 +24,7 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 namespace Content.Client.Sandbox
 {
     // Layout for the SandboxWindow
-    public class SandboxWindow : SS14Window
+    public class SandboxWindow : DefaultWindow
     {
         public readonly Button RespawnButton;
         public readonly Button SpawnEntitiesButton;

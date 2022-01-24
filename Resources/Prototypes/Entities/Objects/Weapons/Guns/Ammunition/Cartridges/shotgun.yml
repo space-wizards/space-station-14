@@ -7,6 +7,7 @@
   - type: Tag
     tags:
     - ShotgunShell
+    - Cartridge
   - type: Ammo
     caliber: Shotgun
     ammoSpread: 40

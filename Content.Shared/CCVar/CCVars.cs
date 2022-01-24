@@ -382,12 +382,6 @@ namespace Content.Shared.CCVar
             CVarDef.Create("atmos.space_wind", true, CVar.SERVERONLY);
 
         /// <summary>
-        ///     The sound that plays when space wind occurs.
-        /// </summary>
-        public static readonly CVarDef<string> SpaceWindSound =
-            CVarDef.Create("atmos.space_wind_sound", "/Audio/Effects/space_wind.ogg", CVar.SERVERONLY);
-
-        /// <summary>
         ///     Whether monstermos tile equalization is enabled.
         /// </summary>
         public static readonly CVarDef<bool> MonstermosEqualization =
@@ -484,6 +478,15 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<bool> AdminOocEnabled =
             CVarDef.Create("ooc.enabled_admin", true, CVar.NOTIFY);
+
+        /*
+         * LOOC
+         */
+
+        public static readonly CVarDef<bool> LoocEnabled = CVarDef.Create("looc.enabled", true, CVar.NOTIFY);
+
+        public static readonly CVarDef<bool> AdminLoocEnabled =
+            CVarDef.Create("looc.enabled_admin", true, CVar.NOTIFY);
 
         /*
          * Entity Menu Grouping Types
@@ -623,5 +626,12 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<float> RulesWaitTime =
             CVarDef.Create("rules.time", 45f, CVar.SERVER | CVar.REPLICATED);
+
+        /*
+         * Autogeneration
+         */
+
+        public static readonly CVarDef<string> DestinationFile =
+            CVarDef.Create("autogen.destination_file", "", CVar.SERVER | CVar.SERVERONLY);
     }
 }

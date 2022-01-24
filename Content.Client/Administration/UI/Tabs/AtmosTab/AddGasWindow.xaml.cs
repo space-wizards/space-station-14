@@ -16,7 +16,7 @@ namespace Content.Client.Administration.UI.Tabs.AtmosTab
 {
     [GenerateTypedNameReferences]
     [UsedImplicitly]
-    public partial class AddGasWindow : SS14Window
+    public partial class AddGasWindow : DefaultWindow
     {
         private IEnumerable<IMapGrid>? _gridData;
         private IEnumerable<GasPrototype>? _gasData;

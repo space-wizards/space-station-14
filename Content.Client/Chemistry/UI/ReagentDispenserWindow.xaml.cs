@@ -20,7 +20,7 @@ namespace Content.Client.Chemistry.UI
     /// Client-side UI used to control a <see cref="SharedReagentDispenserComponent"/>
     /// </summary>
     [GenerateTypedNameReferences]
-    public partial class ReagentDispenserWindow : SS14Window
+    public partial class ReagentDispenserWindow : DefaultWindow
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 

@@ -21,6 +21,9 @@
     visuals:
       - type: BagOpenCloseVisualizer
         openIcon: open
+  - type: Tag
+    tags:
+    - Trash
 
 - type: entity
   id: CigCartonRed
