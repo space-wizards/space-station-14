@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using System.Net;
 using System.Runtime.CompilerServices;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +8,7 @@ using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
+using NpgsqlTypes;
 
 namespace Content.Server.Database
 {
@@ -19,6 +21,7 @@ namespace Content.Server.Database
 
         public PostgresServerDbContext(DbContextOptions<PostgresServerDbContext> options) : base(options)
         {
+            Database.SetCommandTimeout(7200);
         }
 
         public PostgresServerDbContext CreateDbContext(string[] args)
@@ -105,6 +108,14 @@ namespace Content.Server.Database
                 .HasCheckConstraint("AddressNotIPv6MappedIPv4",
                     "NOT inet '::ffff:0.0.0.0/96' >>= address");
 
+            modelBuilder.Entity<AdminLog>()
+                .Property<NpgsqlTsVector>("search_vector");
+                //.IsGeneratedTsVectorColumn("english", "message", "json");
+
+            modelBuilder.Entity<AdminLog>()
+                .HasIndex("search_vector")
+                .HasMethod("GIN");
+
             foreach(var entity in modelBuilder.Model.GetEntityTypes())
             {
                 foreach(var property in entity.GetProperties())
@@ -113,6 +124,11 @@ namespace Content.Server.Database
                         property.SetColumnType("timestamp with time zone");
                 }
             }
+        }
+
+        public override IQueryable<AdminLog> SearchLogs(IQueryable<AdminLog> query, string searchText)
+        {
+            return query.Where(log => EF.Property<NpgsqlTsVector>(log, "search_vector").Matches(searchText));
         }
     }
 
