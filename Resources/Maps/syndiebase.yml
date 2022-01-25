@@ -1541,7 +1541,7 @@ entities:
       - canCollide: False
         type: Physics
   - uid: 56
-    type: SalternApc
+    type: SalternAPC
     components:
       - pos: -2.5,-3.5
         parent: 25
@@ -3116,7 +3116,7 @@ entities:
           light_bulb: !type:ContainerSlot {}
         type: ContainerContainer
   - uid: 272
-    type: SalternSmes
+    type: SalternSMES
     components:
       - pos: -6.5,-4.5
         parent: 25
@@ -5397,7 +5397,7 @@ entities:
         parent: 393
         type: Transform
   - uid: 484
-    type: SalternApc
+    type: SalternAPC
     components:
       - pos: 10.5,-0.5
         parent: 393
@@ -5742,7 +5742,7 @@ entities:
       - canCollide: False
         type: Physics
   - uid: 519
-    type: SalternSmes
+    type: SalternSMES
     components:
       - pos: 12.5,-5.5
         parent: 393
