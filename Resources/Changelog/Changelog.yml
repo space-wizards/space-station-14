@@ -1,10 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {message: Central Command has installed a bluespace railgun. Pray they do not
-      use it., type: Add}
-  id: 431
-  time: '2021-10-12T05:11:09.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: Grown food isn't empty anymore - "Long monkey" no longer the only long-term
@@ -2925,3 +2919,9 @@ Entries:
   - {message: Fixes Random Traitor Alive Objective's icon!, type: Fix}
   id: 931
   time: '2022-01-25T09:29:31.0000000+00:00'
+- author: Pancake
+  changes:
+  - {message: Radiation range of the singularity has been reduced from 15 to 10.,
+    type: Tweak}
+  id: 932
+  time: '2022-01-25T23:33:45.0000000+00:00'
