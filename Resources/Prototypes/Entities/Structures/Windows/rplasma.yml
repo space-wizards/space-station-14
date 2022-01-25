@@ -56,7 +56,6 @@
   components:
   - type: Sprite
     netsync: false
-    drawdepth: WallTops
     sprite: Structures/Windows/directional.rsi
     state: plasma_reinforced_window
   - type: Icon
