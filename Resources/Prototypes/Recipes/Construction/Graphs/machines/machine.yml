@@ -1,5 +1,5 @@
 ﻿- type: constructionGraph
-  id: machine
+  id: Machine
   start: start
   graph:
     - node: start

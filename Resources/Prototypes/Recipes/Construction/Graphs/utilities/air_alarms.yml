@@ -1,5 +1,5 @@
 - type: constructionGraph
-  id: air_alarm
+  id: AirAlarm
   start: start
   graph:
   - node: start
@@ -78,7 +78,7 @@
         doAfter: 1
 
 - type: constructionGraph
-  id: fire_alarm
+  id: FireAlarm
   start: start
   graph:
   - node: start

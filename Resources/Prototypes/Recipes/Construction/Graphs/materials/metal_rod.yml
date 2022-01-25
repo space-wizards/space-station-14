@@ -1,5 +1,5 @@
 ﻿- type: constructionGraph
-  id: metalRod
+  id: MetalRod
   start: start
   graph:
     - node: start

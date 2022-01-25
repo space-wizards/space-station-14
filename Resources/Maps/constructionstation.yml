@@ -6773,7 +6773,7 @@ entities:
       - canCollide: False
         type: Physics
   - uid: 451
-    type: SalternApc
+    type: SalternAPC
     components:
       - pos: 0.5,4.5
         parent: 21
@@ -6785,7 +6785,7 @@ entities:
         currentSupply: 70
         type: PowerNetworkBattery
   - uid: 452
-    type: SalternApc
+    type: SalternAPC
     components:
       - pos: 4.5,5.5
         parent: 21
@@ -6798,7 +6798,7 @@ entities:
         supplyRampPosition: -0.00048065186
         type: PowerNetworkBattery
   - uid: 453
-    type: SalternApc
+    type: SalternAPC
     components:
       - pos: -3.5,-5.5
         parent: 21
@@ -6810,7 +6810,7 @@ entities:
         currentSupply: 510
         type: PowerNetworkBattery
   - uid: 454
-    type: SalternSmes
+    type: SalternSMES
     components:
       - pos: 6.5,2.5
         parent: 21
@@ -6858,7 +6858,7 @@ entities:
       - canCollide: False
         type: Physics
   - uid: 458
-    type: SalternSmes
+    type: SalternSMES
     components:
       - pos: -4.5,4.5
         parent: 21
@@ -6888,7 +6888,7 @@ entities:
             ents: []
         type: ContainerContainer
   - uid: 460
-    type: SalternApc
+    type: SalternAPC
     components:
       - pos: -6.5,7.5
         parent: 21
@@ -6996,7 +6996,7 @@ entities:
       - canCollide: False
         type: Physics
   - uid: 473
-    type: SalternApc
+    type: SalternAPC
     components:
       - pos: -4.5,2.5
         parent: 21

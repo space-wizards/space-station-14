@@ -76,7 +76,7 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Construction
-    graph: airlock
+    graph: Airlock
     node: airlock
   - type: IconSmooth
     key: walls
