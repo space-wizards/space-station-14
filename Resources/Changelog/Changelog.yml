@@ -1,11 +1,6 @@
 Entries:
 - author: Zumorica
   changes:
-  - {message: Fix airlocks not auto-closing anymore., type: Fix}
-  id: 429
-  time: '2021-10-10T13:59:27.943854+00:00'
-- author: Zumorica
-  changes:
   - {message: Fixed mobs that die or go into crit not being downed., type: Fix}
   id: 430
   time: '2021-10-11T23:44:30.123871+00:00'
@@ -2925,3 +2920,8 @@ Entries:
   - {message: Wide melee attacks now use sound overrides., type: Tweak}
   id: 929
   time: '2022-01-25T00:22:25.0000000+00:00'
+- author: Pancake
+  changes:
+  - {message: Blue tiles now obey the laws of physics., type: Fix}
+  id: 930
+  time: '2022-01-25T07:03:48.0000000+00:00'
