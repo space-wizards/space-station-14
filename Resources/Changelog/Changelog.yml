@@ -1,10 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: 'Blast doors and shutters have been added, though they aren''t mapped
-      in yet.', type: Add}
-  id: 428
-  time: '2021-10-10T10:43:50.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: Fix airlocks not auto-closing anymore., type: Fix}
@@ -2926,3 +2920,8 @@ Entries:
   - {message: Fixed the Stay Alive objective icon, type: Fix}
   id: 928
   time: '2022-01-24T19:32:42.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Wide melee attacks now use sound overrides., type: Tweak}
+  id: 929
+  time: '2022-01-25T00:22:25.0000000+00:00'
