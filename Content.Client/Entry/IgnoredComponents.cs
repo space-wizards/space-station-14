@@ -332,7 +332,8 @@ namespace Content.Client.Entry
             "ArtifactGasTrigger",
             "ArtifactInteractionTrigger",
             "Artifact",
-            "RandomArtifactSprite"
+            "RandomArtifactSprite",
+            "EnergySword",
         };
     }
 }
