@@ -16,7 +16,7 @@ public class RandomArtifactSpriteSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<RandomArtifactSpriteComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<RandomArtifactSpriteComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<RandomArtifactSpriteComponent, ArtifactActivatedEvent>(OnActivated);
     }
 
@@ -38,7 +38,7 @@ public class RandomArtifactSpriteSystem : EntitySystem
         }
     }
 
-    private void OnInit(EntityUid uid, RandomArtifactSpriteComponent component, ComponentInit args)
+    private void OnMapInit(EntityUid uid, RandomArtifactSpriteComponent component, MapInitEvent args)
     {
         if (!TryComp(uid, out AppearanceComponent? appearance))
             return;

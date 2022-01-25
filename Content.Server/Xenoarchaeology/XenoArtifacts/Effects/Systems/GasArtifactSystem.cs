@@ -16,11 +16,11 @@ public class GasArtifactSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<GasArtifactComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<GasArtifactComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<GasArtifactComponent, ArtifactActivatedEvent>(OnActivate);
     }
 
-    private void OnInit(EntityUid uid, GasArtifactComponent component, ComponentInit args)
+    private void OnMapInit(EntityUid uid, GasArtifactComponent component, MapInitEvent args)
     {
         if (component.SpawnGas == null && component.PossibleGases.Length != 0)
         {

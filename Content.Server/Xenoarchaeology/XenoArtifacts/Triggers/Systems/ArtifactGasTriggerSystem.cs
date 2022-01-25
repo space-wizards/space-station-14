@@ -15,7 +15,7 @@ public class ArtifactGasTriggerSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<ArtifactGasTriggerComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<ArtifactGasTriggerComponent, MapInitEvent>(OnMapInit);
     }
 
     public override void Update(float frameTime)
@@ -40,7 +40,7 @@ public class ArtifactGasTriggerSystem : EntitySystem
         }
     }
 
-    private void OnInit(EntityUid uid, ArtifactGasTriggerComponent component, ComponentInit args)
+    private void OnMapInit(EntityUid uid, ArtifactGasTriggerComponent component, MapInitEvent args)
     {
         if (component.ActivationGas == null)
         {
