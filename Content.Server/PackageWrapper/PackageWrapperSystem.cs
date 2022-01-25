@@ -1,7 +1,5 @@
 using System;
-using Content.Server.HandLabeler.Components;
 using Content.Server.PackageWrapper.Components;
-using Content.Shared.HandLabeler;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
@@ -22,9 +20,9 @@ namespace Content.Server.PackageWrapper
         private void AfterInteractOn(EntityUid uid, PackageWrapperComponent component, AfterInteractEvent args)
         {
 
-            if (args.Target != null && args.Target.TryGetComponent<WrapperTypeComponent>(out var wrapType))
+            if (args.Target is not {Valid: true} target && TryComp<WrappableComponent>(args.Target,out var wrappable))
             {
-                component.Owner.PopupMessage(args.User, wrapType.Wrap);
+                component.Owner.PopupMessage(args.User, wrappable.WrapType);
             }
         }
     }

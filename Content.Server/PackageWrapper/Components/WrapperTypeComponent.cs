@@ -4,11 +4,11 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Server.PackageWrapper.Components
 {
     [RegisterComponent]
-    public class WrapperTypeComponent : Component
+    public class WrappableComponent : Component
     {
-        public override string Name => "WrapType";
+        public override string Name => "Wrappable";
 
-        [DataField("Wrap")]
-        public string Wrap = string.Empty;
+        [DataField("WrapType")]
+        public string WrapType = string.Empty;
     }
 }
