@@ -525,10 +525,6 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("BLOB")
                         .HasColumnName("hwid");
 
-                    b.Property<int>("ServerId")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("server_id");
-
                     b.Property<DateTime>("Time")
                         .HasColumnType("TEXT")
                         .HasColumnName("time");
@@ -544,9 +540,6 @@ namespace Content.Server.Database.Migrations.Sqlite
 
                     b.HasKey("Id")
                         .HasName("PK_connection_log");
-
-                    b.HasIndex("ServerId")
-                        .HasDatabaseName("IX_connection_log__server_id");
 
                     b.ToTable("connection_log", (string)null);
                 });
@@ -774,18 +767,6 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_round_server__server_id");
-
-                    b.Navigation("Server");
-                });
-
-            modelBuilder.Entity("Content.Server.Database.SqliteConnectionLog", b =>
-                {
-                    b.HasOne("Content.Server.Database.Server", "Server")
-                        .WithMany()
-                        .HasForeignKey("ServerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_connection_log_server__server_id");
 
                     b.Navigation("Server");
                 });

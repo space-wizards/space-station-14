@@ -404,10 +404,6 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("bytea")
                         .HasColumnName("hwid");
 
-                    b.Property<int?>("ServerId")
-                        .HasColumnType("integer")
-                        .HasColumnName("server_id");
-
                     b.Property<DateTime>("Time")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("time");
@@ -423,9 +419,6 @@ namespace Content.Server.Database.Migrations.Postgres
 
                     b.HasKey("Id")
                         .HasName("PK_connection_log");
-
-                    b.HasIndex("ServerId")
-                        .HasDatabaseName("IX_connection_log__server_id");
 
                     b.HasIndex("UserId");
 
@@ -685,7 +678,7 @@ namespace Content.Server.Database.Migrations.Postgres
 
                     b.ToTable("server", (string)null);
                 });
-                
+
             modelBuilder.Entity("Content.Server.Database.Whitelist", b =>
                 {
                     b.Property<Guid>("UserId")
@@ -817,16 +810,6 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasConstraintName("FK_job_profile_profile_id");
 
                     b.Navigation("Profile");
-                });
-
-            modelBuilder.Entity("Content.Server.Database.PostgresConnectionLog", b =>
-                {
-                    b.HasOne("Content.Server.Database.Server", "Server")
-                        .WithMany()
-                        .HasForeignKey("ServerId")
-                        .HasConstraintName("FK_connection_log_server__server_id");
-
-                    b.Navigation("Server");
                 });
 
             modelBuilder.Entity("Content.Server.Database.PostgresServerUnban", b =>

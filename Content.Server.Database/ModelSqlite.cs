@@ -157,7 +157,5 @@ namespace Content.Server.Database
         public DateTime Time { get; set; }
         public string Address { get; set; } = null!;
         public byte[]? HWId { get; set; }
-
-        public Server? Server { get; set; }
     }
 }

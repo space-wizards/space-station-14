@@ -179,7 +179,5 @@ namespace Content.Server.Database
 
         public IPAddress Address { get; set; } = null!;
         public byte[]? HWId { get; set; }
-
-        public Server? Server { get; set; }
     }
 }

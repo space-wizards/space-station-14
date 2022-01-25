@@ -10,10 +10,6 @@ namespace Content.Server.Database.Migrations.Postgres
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_connection_log_server__server_id",
-                table: "connection_log");
-
-            migrationBuilder.DropForeignKey(
                 name: "FK_round_server__server_id",
                 table: "round");
 
@@ -30,14 +26,6 @@ namespace Content.Server.Database.Migrations.Postgres
                 oldClrType: typeof(int),
                 oldType: "integer");
 
-            migrationBuilder.AlterColumn<int>(
-                name: "server_id",
-                table: "connection_log",
-                type: "integer",
-                nullable: true,
-                oldClrType: typeof(int),
-                oldType: "integer");
-
             migrationBuilder.AddColumn<NpgsqlTsVector>(
                 name: "search_vector",
                 table: "admin_log",
@@ -49,13 +37,6 @@ namespace Content.Server.Database.Migrations.Postgres
                 table: "admin_log",
                 column: "search_vector")
                 .Annotation("Npgsql:IndexMethod", "GIN");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_connection_log_server__server_id",
-                table: "connection_log",
-                column: "server_id",
-                principalTable: "server",
-                principalColumn: "server_id");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_round_server_server_id",
@@ -75,10 +56,6 @@ namespace Content.Server.Database.Migrations.Postgres
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_connection_log_server__server_id",
-                table: "connection_log");
-
             migrationBuilder.DropForeignKey(
                 name: "FK_round_server_server_id",
                 table: "round");
@@ -105,24 +82,6 @@ namespace Content.Server.Database.Migrations.Postgres
                 oldClrType: typeof(int),
                 oldType: "integer",
                 oldNullable: true);
-
-            migrationBuilder.AlterColumn<int>(
-                name: "server_id",
-                table: "connection_log",
-                type: "integer",
-                nullable: false,
-                defaultValue: 0,
-                oldClrType: typeof(int),
-                oldType: "integer",
-                oldNullable: true);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_connection_log_server__server_id",
-                table: "connection_log",
-                column: "server_id",
-                principalTable: "server",
-                principalColumn: "server_id",
-                onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_round_server__server_id",
