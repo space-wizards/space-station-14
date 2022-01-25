@@ -1,8 +1,8 @@
-#POWER
+# POWER
 - type: construction
   name: APC
-  id: apc
-  graph: apc
+  id: APC
+  graph: APC
   startNode: start
   targetNode: apc
   category: Utilities
@@ -15,9 +15,9 @@
   canBuildInImpassable: true
 
 - type: construction
-  name: Solar Assembly
+  name: solar assembly
   id: SolarPanel
-  graph: solarpanel
+  graph: SolarPanel
   startNode: start
   targetNode: solarpanel
   category: Utilities
@@ -32,9 +32,9 @@
     - !type:TileNotBlocked {}
 
 - type: construction
-  name: Cable Terminal
-  id: cableTerminal
-  graph: cable_terminal
+  name: cable terminal
+  id: CableTerminal
+  graph: CableTerminal
   startNode: start
   targetNode: cable_terminal
   category: Utilities
@@ -47,11 +47,11 @@
   canBuildInImpassable: false
 
 
-#DISPOSALS
+# DISPOSALS
 - type: construction
   name: disposal unit
   id: DisposalUnit
-  graph: disposalMachine
+  graph: DisposalMachine
   startNode: start
   targetNode: disposal_unit
   category: Utilities
@@ -61,5 +61,130 @@
     sprite: Structures/Piping/disposal.rsi
     state: "disposal"
 
+- type: construction
+  name: disposal pipe
+  id: DisposalPipe
+  graph: DisposalPipe
+  startNode: start
+  targetNode: pipe
+  category: Utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+  icon:
+    sprite: Structures/Piping/disposal.rsi
+    state: conpipe-s
 
-#ATMOS
+- type: construction
+  name: disposal tagger
+  id: DisposalTagger
+  graph: DisposalPipe
+  startNode: start
+  targetNode: tagger
+  category: Utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/disposal.rsi
+    state: conpipe-tagger
+
+- type: construction
+  name: disposal trunk
+  id: DisposalTrunk
+  graph: DisposalPipe
+  startNode: start
+  targetNode: trunk
+  category: Utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/disposal.rsi
+    state: conpipe-t
+
+- type: construction
+  name: disposal router
+  id: DisposalRouter
+  graph: DisposalPipe
+  startNode: start
+  targetNode: router
+  category: Utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/disposal.rsi
+    state: conpipe-j1s
+
+- type: construction
+  name: disposal junction
+  id: DisposalJunction
+  graph: DisposalPipe
+  startNode: start
+  targetNode: junction
+  category: Utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/disposal.rsi
+    state: conpipe-j1
+
+- type: construction
+  name: disposal Y junction
+  id: DisposalYJunction
+  graph: DisposalPipe
+  startNode: start
+  targetNode: yJunction
+  category: Utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/disposal.rsi
+    state: conpipe-y
+
+- type: construction
+  name: disposal bend
+  id: DisposalBend
+  graph: DisposalPipe
+  startNode: start
+  targetNode: bend
+  category: Utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/disposal.rsi
+    state: conpipe-c
+
+# ATMOS
+- type: construction
+  name: air alarm
+  id: AirAlarmFixture
+  graph: AirAlarm
+  startNode: start
+  targetNode: air_alarm
+  category: Structures
+  description: An air alarm. Alarms... air?
+  icon:
+    sprite: Structures/Wallmounts/air_monitors.rsi
+    state: alarm0
+  placementMode: SnapgridCenter
+  objectType: Structure
+  canRotate: true
+  canBuildInImpassable: true
+  conditions:
+  - !type:WallmountCondition {}
+
+- type: construction
+  name: fire alarm
+  id: FireAlarm
+  graph: FireAlarm
+  startNode: start
+  targetNode: fire_alarm
+  category: Structures
+  description: A fire alarm. Spicy!
+  icon:
+    sprite: Structures/Wallmounts/air_monitors.rsi
+    state: fire0
+  placementMode: SnapgridCenter
+  objectType: Structure
+  canRotate: true
+  canBuildInImpassable: true
+  conditions:
+  - !type:WallmountCondition {}

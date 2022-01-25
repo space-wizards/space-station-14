@@ -82,7 +82,7 @@ namespace Content.Server.Cloning
                 }
 
                 if (!power.Powered)
-                    return;
+                    continue;
 
                 if (cloning.BodyContainer.ContainedEntity != null)
                 {
@@ -158,6 +158,7 @@ namespace Content.Server.Cloning
     struct ClonerDNAEntry {
         public Mind.Mind Mind;
         public HumanoidCharacterProfile Profile;
+
         public ClonerDNAEntry(Mind.Mind m, HumanoidCharacterProfile hcp)
         {
             Mind = m;

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Content.Shared.Ghost;
 using Content.Shared.Radiation;
 using Content.Shared.Singularity.Components;
@@ -111,7 +111,7 @@ namespace Content.Shared.Singularity
 
             if (EntityManager.TryGetComponent(singularity.Owner, out SharedRadiationPulseComponent? pulse))
             {
-                pulse.RadsPerSecond = 10 * value;
+                pulse.RadsPerSecond = singularity.RadsPerLevel * value;
             }
 
             if (EntityManager.TryGetComponent(singularity.Owner, out AppearanceComponent? appearance))

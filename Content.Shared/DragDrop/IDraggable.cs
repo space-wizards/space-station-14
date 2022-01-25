@@ -56,7 +56,7 @@ namespace Content.Shared.DragDrop
         }
     }
 
-    public class StartDragDropEvent : EntityEventArgs
+    public class StartDragDropEvent : HandledEntityEventArgs
     {
         /// <summary>
         ///     Entity doing the drag and drop.

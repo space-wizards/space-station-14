@@ -1,21 +1,24 @@
 - type: entity
   save: false
-  parent: BaseSlimePerson
-  id: SlimePerson
+  parent: MobSlimePersonBase
+  id: MobSlimePerson
   components:
     - type: Mind
       showExamineInfo: true
     - type: Input
       context: "human"
+    - type: PlayerMobMover
+    - type: PlayerInputMover
     - type: Alerts
     - type: Actions
       innateActions:
-        - HumanScream
+        - CombatMode
         - Disarm
+        - HumanScream
     - type: Eye
     - type: CameraRecoil
     - type: Examiner
-    - type: HumanInventoryController
+    - type: CanHostGuardian
     - type: AiFactionTag
       factions:
         - NanoTrasen

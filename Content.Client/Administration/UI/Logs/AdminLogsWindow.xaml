@@ -1,7 +1,7 @@
-﻿<SS14Window xmlns="https://spacestation14.io"
+﻿<DefaultWindow xmlns="https://spacestation14.io"
             xmlns:logs="clr-namespace:Content.Client.Administration.UI.Logs"
             Title="{Loc admin-logs-title}"
             MinWidth="1000"
             MinHeight="400">
     <logs:AdminLogsControl Name="Logs" Access="Public"/>
-</SS14Window>
+</DefaultWindow>

@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Administration.Logs;
-using Content.Server.Camera;
 using Content.Server.Explosion.Components;
 using Content.Shared.Acts;
+using Content.Shared.Camera;
 using Content.Shared.Database;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Maps;
@@ -18,6 +18,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -51,6 +52,7 @@ namespace Content.Server.Explosion.EntitySystems
         [Dependency] private readonly EffectSystem _effects = default!;
         [Dependency] private readonly TriggerSystem _triggers = default!;
         [Dependency] private readonly AdminLogSystem _logSystem = default!;
+        [Dependency] private readonly CameraRecoilSystem _cameraRecoil = default!;
 
         private bool IgnoreExplosivePassable(EntityUid e)
         {
@@ -82,7 +84,7 @@ namespace Content.Server.Explosion.EntitySystems
             foreach (var player in players)
             {
                 if (player.AttachedEntity is not {Valid: true} playerEntity ||
-                    !EntityManager.TryGetComponent(playerEntity, out CameraRecoilComponent? recoil))
+                    !EntityManager.HasComponent<CameraRecoilComponent>(playerEntity))
                 {
                     continue;
                 }
@@ -99,7 +101,7 @@ namespace Content.Server.Explosion.EntitySystems
                 if (effect > 0.01f)
                 {
                     var kick = -delta.Normalized * effect;
-                    recoil.Kick(kick);
+                    _cameraRecoil.KickCamera(player.AttachedEntity.Value, kick);
                 }
             }
         }
@@ -141,7 +143,12 @@ namespace Content.Server.Explosion.EntitySystems
                     continue;
                 }
 
-                if (!EntityManager.TryGetComponent(entity, out PhysicsComponent? body) || body.Fixtures.Count < 1)
+                if (!EntityManager.TryGetComponent(entity, out FixturesComponent? fixturesComp) || fixturesComp.Fixtures.Count < 1)
+                {
+                    continue;
+                }
+
+                if (!EntityManager.TryGetComponent(entity, out PhysicsComponent? body))
                 {
                     continue;
                 }

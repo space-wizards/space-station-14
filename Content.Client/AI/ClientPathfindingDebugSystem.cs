@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.AI;
@@ -18,7 +18,6 @@ namespace Content.Client.AI
 #if DEBUG
     public class ClientPathfindingDebugSystem : EntitySystem
     {
-        [Dependency] private readonly IOverlayManager _overlayManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;

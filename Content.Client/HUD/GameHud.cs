@@ -6,7 +6,6 @@ using Content.Client.Info;
 using Content.Client.Resources;
 using Content.Client.Stylesheets;
 using Content.Client.Targeting;
-using Content.Shared;
 using Content.Shared.CCVar;
 using Content.Shared.HUD;
 using Content.Shared.Input;
@@ -304,8 +303,6 @@ namespace Content.Client.HUD
 
             _rulesAndInfoWindow = new RulesAndInfoWindow();
 
-            IoCManager.Resolve<RulesManager>().OpenRulesAndInfoWindow += OpenRulesAndInfoWindow;
-
             _rulesAndInfoWindow.OnClose += () => _buttonInfo.Pressed = false;
 
             _inputManager.SetInputCommand(ContentKeyFunctions.OpenInfo,
@@ -429,12 +426,6 @@ namespace Content.Client.HUD
             LC.SetMarginTop(VoteContainer, 100);
             LC.SetGrowHorizontal(VoteContainer, LC.GrowDirection.End);
             LC.SetGrowVertical(VoteContainer, LC.GrowDirection.End);
-        }
-
-        private void OpenRulesAndInfoWindow()
-        {
-            _rulesAndInfoWindow.OpenCentered();
-            _buttonInfo.Pressed = true;
         }
 
         private void ButtonInfoOnOnToggled()

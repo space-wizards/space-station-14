@@ -8,13 +8,13 @@ using Content.Server.Disposal.Tube.Components;
 using Content.Server.Disposal.Unit.Components;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
-using Content.Server.Items;
 using Content.Server.Power.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Atmos;
 using Content.Shared.Disposal;
 using Content.Shared.Disposal.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Item;
 using Content.Shared.Movement;
 using Content.Shared.Popups;
 using Content.Shared.Throwing;
@@ -45,15 +45,14 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<DisposalUnitComponent, AnchoredEvent>(OnAnchored);
-            SubscribeLocalEvent<DisposalUnitComponent, UnanchoredEvent>(OnUnanchored);
+            SubscribeLocalEvent<DisposalUnitComponent, AnchorStateChangedEvent>(OnAnchorChanged);
             // TODO: Predict me when hands predicted
             SubscribeLocalEvent<DisposalUnitComponent, RelayMovementEntityEvent>(HandleMovement);
             SubscribeLocalEvent<DisposalUnitComponent, PowerChangedEvent>(HandlePowerChange);
 
             // Component lifetime
             SubscribeLocalEvent<DisposalUnitComponent, ComponentInit>(HandleDisposalInit);
-            SubscribeLocalEvent<DisposalUnitComponent, ComponentShutdown>(HandleDisposalShutdown);
+            SubscribeLocalEvent<DisposalUnitComponent, ComponentRemove>(HandleDisposalRemove);
 
             SubscribeLocalEvent<DisposalUnitComponent, ThrowHitByEvent>(HandleThrowCollide);
 
@@ -244,7 +243,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             }
         }
 
-        private void HandleDisposalShutdown(EntityUid uid, DisposalUnitComponent component, ComponentShutdown args)
+        private void HandleDisposalRemove(EntityUid uid, DisposalUnitComponent component, ComponentRemove args)
         {
             foreach (var entity in component.Container.ContainedEntities.ToArray())
             {
@@ -313,15 +312,11 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             Remove(component, args.Entity);
         }
 
-        private void OnAnchored(EntityUid uid, DisposalUnitComponent component, AnchoredEvent args)
+        private void OnAnchorChanged(EntityUid uid, DisposalUnitComponent component, ref AnchorStateChangedEvent args)
         {
             UpdateVisualState(component);
-        }
-
-        private void OnUnanchored(EntityUid uid, DisposalUnitComponent component, UnanchoredEvent args)
-        {
-            UpdateVisualState(component);
-            TryEjectContents(component);
+            if (!args.Anchored)
+                TryEjectContents(component);
         }
         #endregion
 
@@ -369,7 +364,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 {
                     // TODO: We need to use a specific collision method (which sloth hasn't coded yet) for actual bounds overlaps.
                     // Check for itemcomp as we won't just block the disposal unit "sleeping" for something it can't collide with anyway.
-                    if (!EntityManager.HasComponent<ItemComponent>(uid) && body.GetWorldAABB().Intersects(disposalsBounds!.Value)) continue;
+                    if (!EntityManager.HasComponent<SharedItemComponent>(uid) && body.GetWorldAABB().Intersects(disposalsBounds!.Value)) continue;
                     component.RecentlyEjected.RemoveAt(i);
                 }
             }

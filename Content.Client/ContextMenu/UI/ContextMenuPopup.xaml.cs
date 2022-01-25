@@ -58,6 +58,14 @@ namespace Content.Client.ContextMenu.UI
                 DebugTools.Assert(ParentElement.SubMenu == null);
                 ParentElement.SubMenu = this;
             }
+
+            // ensure the menu-stack is properly updated when a pop-up looses focus or otherwise closes without going
+            // through the menu presenter.
+            OnPopupHide += () =>
+            {
+                if (ParentElement != null)
+                    _presenter.CloseSubMenus(ParentElement.ParentMenu);
+            };
         }
 
         protected override void Dispose(bool disposing)

@@ -76,7 +76,7 @@ namespace Content.Shared.Entry
             var prototypeList = new List<ContentTileDefinition>();
             foreach (var tileDef in _prototypeManager.EnumeratePrototypes<ContentTileDefinition>())
             {
-                if (tileDef.Name == "space")
+                if (tileDef.ID == "space")
                 {
                     continue;
                 }
@@ -86,7 +86,7 @@ namespace Content.Shared.Entry
 
             // Sort ordinal to ensure it's consistent client and server.
             // So that tile IDs match up.
-            prototypeList.Sort((a, b) => string.Compare(a.Name, b.Name, StringComparison.Ordinal));
+            prototypeList.Sort((a, b) => string.Compare(a.ID, b.ID, StringComparison.Ordinal));
 
             foreach (var tileDef in prototypeList)
             {

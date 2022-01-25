@@ -20,19 +20,19 @@ public class SharedInstrumentComponent : Component
     [ViewVariables]
     public uint LastSequencerTick { get; set; }
 
-    [DataField("program")]
+    [DataField("program"), ViewVariables(VVAccess.ReadWrite)]
     public byte InstrumentProgram { get; set; }
 
-    [DataField("bank")]
+    [DataField("bank"), ViewVariables(VVAccess.ReadWrite)]
     public byte InstrumentBank { get; set; }
 
-    [DataField("allowPercussion")]
+    [DataField("allowPercussion"), ViewVariables(VVAccess.ReadWrite)]
     public bool AllowPercussion { get; set; }
 
-    [DataField("allowProgramChange")]
+    [DataField("allowProgramChange"), ViewVariables(VVAccess.ReadWrite)]
     public bool AllowProgramChange { get ; set; }
 
-    [DataField("respectMidiLimits")]
+    [DataField("respectMidiLimits"), ViewVariables(VVAccess.ReadWrite)]
     public bool RespectMidiLimits { get; set; }
 
     [ViewVariables(VVAccess.ReadWrite)]

@@ -1,9 +1,9 @@
 using Content.Server.Hands.Components;
-using Content.Server.Items;
 using Content.Server.Popups;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions.Behaviors;
 using Content.Shared.Cooldown;
+using Content.Shared.Item;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
 using JetBrains.Annotations;
@@ -15,6 +15,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Actions.Spells
@@ -25,7 +26,7 @@ namespace Content.Server.Actions.Spells
     {   //TODO: Needs to be an EntityPrototype for proper validation
         [ViewVariables] [DataField("castMessage")] public string? CastMessage { get; set; } = default!;
         [ViewVariables] [DataField("cooldown")] public float CoolDown { get; set; } = 1f;
-        [ViewVariables] [DataField("spellItem")] public string ItemProto { get; set; } = default!;
+        [ViewVariables] [DataField("spellItem", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))] public string ItemProto { get; set; } = default!;
 
         [ViewVariables] [DataField("castSound", required: true)] public SoundSpecifier CastSound { get; set; } = default!;
 
@@ -56,9 +57,9 @@ namespace Content.Server.Actions.Spells
             // TODO: Look this is shitty and ideally a test would do it
             var spawnedProto = entMan.SpawnEntity(ItemProto, entMan.GetComponent<TransformComponent>(caster).MapPosition);
 
-            if (!entMan.TryGetComponent(spawnedProto, out ItemComponent? itemComponent))
+            if (!entMan.TryGetComponent(spawnedProto, out SharedItemComponent? itemComponent))
             {
-                Logger.Error($"Tried to use {nameof(GiveItemSpell)} but prototype has no {nameof(ItemComponent)}?");
+                Logger.Error($"Tried to use {nameof(GiveItemSpell)} but prototype has no {nameof(SharedItemComponent)}?");
                 entMan.DeleteEntity(spawnedProto);
                 return;
             }

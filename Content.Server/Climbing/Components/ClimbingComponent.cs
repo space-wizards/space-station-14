@@ -14,13 +14,14 @@ namespace Content.Server.Climbing.Components
     public class ClimbingComponent : SharedClimbingComponent
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         public override bool IsClimbing
         {
             get => base.IsClimbing;
             set
             {
-                if (_isClimbing == value)
+                if (base.IsClimbing == value)
                     return;
 
                 base.IsClimbing = value;
@@ -73,7 +74,7 @@ namespace Content.Server.Climbing.Components
         /// </summary>
         public void TryMoveTo(Vector2 from, Vector2 to)
         {
-            if (Body == null) return;
+            if (!_entityManager.TryGetComponent<PhysicsComponent>(Owner, out var physicsComponent)) return;
 
             var velocity = (to - from).Length;
 
@@ -82,7 +83,7 @@ namespace Content.Server.Climbing.Components
             // Since there are bodies with different masses:
             // mass * 5 seems enough to move entity
             // instead of launching cats like rockets against the walls with constant impulse value.
-            Body.ApplyLinearImpulse((to - from).Normalized * velocity * Body.Mass * 5);
+            physicsComponent.ApplyLinearImpulse((to - from).Normalized * velocity * physicsComponent.Mass * 5);
             OwnerIsTransitioning = true;
 
             EntitySystem.Get<ClimbSystem>().UnsetTransitionBoolAfterBufferTime(Owner, this);
@@ -101,7 +102,7 @@ namespace Content.Server.Climbing.Components
 
         public override ComponentState GetComponentState()
         {
-            return new ClimbModeComponentState(_isClimbing, OwnerIsTransitioning);
+            return new ClimbModeComponentState(base.IsClimbing, OwnerIsTransitioning);
         }
     }
 }

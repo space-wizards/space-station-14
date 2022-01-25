@@ -23,19 +23,9 @@ namespace Content.Server.Doors.Components
     [RegisterComponent]
     public class AirlockComponent : Component, IWires
     {
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+
         public override string Name => "Airlock";
-
-        [ComponentDependency]
-        public readonly ServerDoorComponent? DoorComponent = null;
-
-        [ComponentDependency]
-        public readonly AppearanceComponent? AppearanceComponent = null;
-
-        [ComponentDependency]
-        public readonly ApcPowerReceiverComponent? ReceiverComponent = null;
-
-        [ComponentDependency]
-        public readonly WiresComponent? WiresComponent = null;
 
         /// <summary>
         /// Sound to play when the bolts on the airlock go up.
@@ -98,7 +88,7 @@ namespace Content.Server.Doors.Components
         private bool BoltLightsVisible
         {
             get => _boltLightsWirePulsed && BoltsDown && IsPowered()
-                && DoorComponent != null && DoorComponent.State == SharedDoorComponent.DoorState.Closed;
+                && _entityManager.TryGetComponent<ServerDoorComponent>(Owner, out var doorComponent) && doorComponent.State == SharedDoorComponent.DoorState.Closed;
             set
             {
                 _boltLightsWirePulsed = value;
@@ -122,9 +112,10 @@ namespace Content.Server.Doors.Components
         {
             base.Initialize();
 
-            if (ReceiverComponent != null && AppearanceComponent != null)
+            if (_entityManager.TryGetComponent<ApcPowerReceiverComponent>(Owner, out var receiverComponent) &&
+                _entityManager.TryGetComponent<AppearanceComponent>(Owner, out var appearanceComponent))
             {
-                AppearanceComponent.SetData(DoorVisuals.Powered, ReceiverComponent.Powered);
+                appearanceComponent.SetData(DoorVisuals.Powered, receiverComponent.Powered);
             }
         }
 
@@ -140,40 +131,42 @@ namespace Content.Server.Doors.Components
 
         public bool IsPowered()
         {
-            return ReceiverComponent == null || ReceiverComponent.Powered;
+            return !_entityManager.TryGetComponent<ApcPowerReceiverComponent>(Owner, out var receiverComponent) || receiverComponent.Powered;
         }
 
         public void UpdateBoltLightStatus()
         {
-            if (AppearanceComponent != null)
+            if (_entityManager.TryGetComponent<AppearanceComponent>(Owner, out var appearanceComponent))
             {
-                AppearanceComponent.SetData(DoorVisuals.BoltLights, BoltLightsVisible);
+                appearanceComponent.SetData(DoorVisuals.BoltLights, BoltLightsVisible);
             }
         }
 
         public void UpdateWiresStatus()
         {
-            if (DoorComponent == null)
-            {
-                return;
-            }
+            if (!_entityManager.TryGetComponent<WiresComponent>(Owner, out var wiresComponent)) return;
 
-            var powerLight = new StatusLightData(Color.Yellow, StatusLightState.On, "POWR");
-            if (PowerWiresPulsed)
+            var mainPowerCut = wiresComponent.IsWireCut(Wires.MainPower);
+            var backupPowerCut = wiresComponent.IsWireCut(Wires.BackupPower);
+            var statusLightState = PowerWiresPulsed ? StatusLightState.BlinkingFast : StatusLightState.On;
+            StatusLightData powerLight;
+            if (mainPowerCut && backupPowerCut)
             {
-                powerLight = new StatusLightData(Color.Yellow, StatusLightState.BlinkingFast, "POWR");
+                powerLight = new StatusLightData(Color.DarkGoldenrod, StatusLightState.Off, "POWER");
             }
-            else if (WiresComponent != null &&
-                     WiresComponent.IsWireCut(Wires.MainPower) &&
-                     WiresComponent.IsWireCut(Wires.BackupPower))
+            else if (mainPowerCut != backupPowerCut)
             {
-                powerLight = new StatusLightData(Color.Red, StatusLightState.On, "POWR");
+                powerLight = new StatusLightData(Color.Gold, statusLightState, "POWER");
+            }
+            else
+            {
+                powerLight = new StatusLightData(Color.Yellow, statusLightState, "POWER");
             }
 
             var boltStatus =
                 new StatusLightData(Color.Red, BoltsDown ? StatusLightState.On : StatusLightState.Off, "BOLT");
             var boltLightsStatus = new StatusLightData(Color.Lime,
-                _boltLightsWirePulsed ? StatusLightState.On : StatusLightState.Off, "BLTL");
+                _boltLightsWirePulsed ? StatusLightState.On : StatusLightState.Off, "BOLT LED");
 
             var ev = new DoorGetCloseTimeModifierEvent();
             IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, ev, false);
@@ -185,49 +178,45 @@ namespace Content.Server.Doors.Components
                                                     "TIME");
 
             var safetyStatus =
-                new StatusLightData(Color.Red, Safety ? StatusLightState.On : StatusLightState.Off, "SAFE");
+                new StatusLightData(Color.Red, Safety ? StatusLightState.On : StatusLightState.Off, "SAFETY");
 
-            if (WiresComponent == null)
-            {
-                return;
-            }
 
-            WiresComponent.SetStatus(AirlockWireStatus.PowerIndicator, powerLight);
-            WiresComponent.SetStatus(AirlockWireStatus.BoltIndicator, boltStatus);
-            WiresComponent.SetStatus(AirlockWireStatus.BoltLightIndicator, boltLightsStatus);
-            WiresComponent.SetStatus(AirlockWireStatus.AIControlIndicator, new StatusLightData(Color.Purple, StatusLightState.BlinkingSlow, "AICT"));
-            WiresComponent.SetStatus(AirlockWireStatus.TimingIndicator, timingStatus);
-            WiresComponent.SetStatus(AirlockWireStatus.SafetyIndicator, safetyStatus);
+            wiresComponent.SetStatus(AirlockWireStatus.PowerIndicator, powerLight);
+            wiresComponent.SetStatus(AirlockWireStatus.BoltIndicator, boltStatus);
+            wiresComponent.SetStatus(AirlockWireStatus.BoltLightIndicator, boltLightsStatus);
+            wiresComponent.SetStatus(AirlockWireStatus.AIControlIndicator, new StatusLightData(Color.Purple, StatusLightState.BlinkingSlow, "AI CTRL"));
+            wiresComponent.SetStatus(AirlockWireStatus.TimingIndicator, timingStatus);
+            wiresComponent.SetStatus(AirlockWireStatus.SafetyIndicator, safetyStatus);
         }
 
         private void UpdatePowerCutStatus()
         {
-            if (ReceiverComponent == null)
+            if (!_entityManager.TryGetComponent<ApcPowerReceiverComponent>(Owner, out var receiverComponent))
             {
                 return;
             }
 
             if (PowerWiresPulsed)
             {
-                ReceiverComponent.PowerDisabled = true;
+                receiverComponent.PowerDisabled = true;
                 return;
             }
 
-            if (WiresComponent == null)
+            if (!_entityManager.TryGetComponent<WiresComponent>(Owner, out var wiresComponent))
             {
                 return;
             }
 
-            ReceiverComponent.PowerDisabled =
-                WiresComponent.IsWireCut(Wires.MainPower) ||
-                WiresComponent.IsWireCut(Wires.BackupPower);
+            receiverComponent.PowerDisabled =
+                wiresComponent.IsWireCut(Wires.MainPower) &&
+                wiresComponent.IsWireCut(Wires.BackupPower);
         }
 
         private void PowerDeviceOnOnPowerStateChanged(PowerChangedMessage e)
         {
-            if (AppearanceComponent != null)
+            if (_entityManager.TryGetComponent<AppearanceComponent>(Owner, out var appearanceComponent))
             {
-                AppearanceComponent.SetData(DoorVisuals.Powered, e.Powered);
+                appearanceComponent.SetData(DoorVisuals.Powered, e.Powered);
             }
 
             // BoltLights also got out
@@ -292,7 +281,7 @@ namespace Content.Server.Doors.Components
 
         public void WiresUpdate(WiresUpdateEventArgs args)
         {
-            if (DoorComponent == null)
+            if (!_entityManager.TryGetComponent<ServerDoorComponent>(Owner, out var doorComponent))
             {
                 return;
             }
@@ -330,7 +319,7 @@ namespace Content.Server.Doors.Components
                         break;
                     case Wires.Timing:
                         AutoCloseDelayModifier = 0.5f;
-                        DoorComponent.RefreshAutoClose();
+                        doorComponent.RefreshAutoClose();
                         break;
                     case Wires.Safety:
                         Safety = !Safety;
@@ -353,7 +342,7 @@ namespace Content.Server.Doors.Components
                         break;
                     case Wires.Timing:
                         AutoClose = true;
-                        DoorComponent.RefreshAutoClose();
+                        doorComponent.RefreshAutoClose();
                         break;
                     case Wires.Safety:
                         Safety = true;
@@ -373,7 +362,7 @@ namespace Content.Server.Doors.Components
                         break;
                     case Wires.Timing:
                         AutoClose = false;
-                        DoorComponent.RefreshAutoClose();
+                        doorComponent.RefreshAutoClose();
                         break;
                     case Wires.Safety:
                         Safety = false;

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.Alert;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
 using Content.Shared.Alert;
@@ -158,16 +157,13 @@ namespace Content.Server.Cuffs.Components
         /// </summary>
         private void UpdateAlert()
         {
-            if (_entMan.TryGetComponent(Owner, out ServerAlertsComponent? status))
+            if (CanStillInteract)
             {
-                if (CanStillInteract)
-                {
-                    status.ClearAlert(AlertType.Handcuffed);
-                }
-                else
-                {
-                    status.ShowAlert(AlertType.Handcuffed);
-                }
+                EntitySystem.Get<AlertsSystem>().ClearAlert(Owner, AlertType.Handcuffed);
+            }
+            else
+            {
+                EntitySystem.Get<AlertsSystem>().ShowAlert(Owner, AlertType.Handcuffed);
             }
         }
 

@@ -9,7 +9,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Client.EscapeMenu.UI
 {
     [GenerateTypedNameReferences]
-    internal partial class EscapeMenu : SS14Window
+    internal partial class EscapeMenu : DefaultWindow
     {
         private readonly IClientConsoleHost _consoleHost;
 

@@ -1,4 +1,4 @@
-﻿<SS14Window
+﻿<DefaultWindow
     xmlns="https://spacestation14.io"
     xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
     Title="{Loc Teleport}" MinSize="425 230">
@@ -6,4 +6,4 @@
         <cc:PlayerListControl Name="PlayerList" />
         <Button Name="SubmitButton" Text="{Loc Teleport}" />
     </BoxContainer>
-</SS14Window>
+</DefaultWindow>
