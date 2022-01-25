@@ -25,6 +25,9 @@
           enum.PaperStatus.Written: paper_words
   - type: Item
     size: 1
+  - type: Tag
+    tags:
+    - Document
 
 - type: entity
   parent: Paper
@@ -65,3 +68,117 @@
     sprite: Objects/Misc/bureaucracy.rsi
     HeldPrefix: pen
     size: 2
+
+- type: entity
+  id: BoxFolderBase
+  parent: BoxBase
+  name: folder
+  description: A folder filled with top secret paperwork.
+  components:
+  - type: Sprite
+#    netsync: true
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: folder-colormap
+    - state: folder-base
+# RandomSpriteColor requires netsync which is currently incompatible with ItemMapper
+#  - type: RandomSpriteColor
+#    sprite: Objects/Misc/bureaucracy.rsi
+#    state: folder-colormap
+#    colors:
+#      red: "#cc2323"
+#      blue: "#355d99"
+#      yellow: "#b38e3c"
+#      white: "#e6e6e6"
+#      grey: "#999999"
+#      black: "#3f3f3f"
+  - type: Item
+    sprite: Objects/Misc/bureaucracy.rsi
+    size: 20
+  - type: Storage
+    capacity: 10
+    size: 10
+    whitelist:
+      tags:
+        - Document
+  - type: ItemMapper
+    mapLayers:
+      folder-overlay-paper:
+        whitelist:
+          tags:
+          - Document
+  - type: Appearance
+    visuals:
+    - type: MappedItemVisualizer
+
+- type: entity
+  id: BoxFolderRed
+  parent: BoxFolderBase
+  suffix: Red
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: folder-colormap
+      color: "#cc2323"
+    - state: folder-base
+
+- type: entity
+  id: BoxFolderBlue
+  parent: BoxFolderBase
+  suffix: Blue
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: folder-colormap
+      color: "#355d99"
+    - state: folder-base
+
+- type: entity
+  id: BoxFolderYellow
+  parent: BoxFolderBase
+  suffix: Yellow
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: folder-colormap
+      color: "#b38e3c"
+    - state: folder-base
+
+- type: entity
+  id: BoxFolderWhite
+  parent: BoxFolderBase
+  suffix: White
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: folder-white
+    - state: folder-base
+
+- type: entity
+  id: BoxFolderGrey
+  parent: BoxFolderBase
+  suffix: Grey
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: folder-colormap
+      color: "#999999"
+    - state: folder-base
+
+- type: entity
+  id: BoxFolderBlack
+  parent: BoxFolderBase
+  suffix: Black
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: folder-colormap
+      color: "#3f3f3f"
+    - state: folder-base
+

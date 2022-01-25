@@ -1,5 +1,5 @@
 - type: constructionGraph
-  id: ritualseat
+  id: RitualSeat
   start: start
   graph:
     - node: start

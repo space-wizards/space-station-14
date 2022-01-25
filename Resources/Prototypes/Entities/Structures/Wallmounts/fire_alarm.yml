@@ -47,7 +47,7 @@
   - type: Transform
     anchored: true
   - type: Construction
-    graph: fire_alarm
+    graph: FireAlarm
     node: fire_alarm
   placement:
     mode: SnapgridCenter
@@ -65,7 +65,7 @@
     sprite: Structures/Wallmounts/air_monitors.rsi
     state: fire_b1
   - type: Construction
-    graph: fire_alarm
+    graph: FireAlarm
     node: assembly
   placement:
     mode: SnapgridCenter

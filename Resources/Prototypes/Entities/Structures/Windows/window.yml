@@ -64,7 +64,7 @@
     base: window
   - type: Window
   - type: Construction
-    graph: window
+    graph: Window
     node: window
   - type: Appearance
     visuals:
@@ -88,7 +88,6 @@
     # Keep WindowTintedDirectional in mind
   - type: Sprite
     netsync: false
-    drawdepth: WallTops
     sprite: Structures/Windows/directional.rsi
     state: window
   - type: Icon
@@ -134,7 +133,7 @@
     - South
   - type: Window
   - type: Construction
-    graph: windowDirectional
+    graph: WindowDirectional
     node: windowDirectional
 
 - type: entity
@@ -149,7 +148,6 @@
   components:
   - type: Sprite
     netsync: false
-    drawdepth: WallTops
     sprite: Structures/Windows/directional.rsi
     state: tinted_window
   - type: Tag
@@ -173,7 +171,6 @@
   components:
   - type: Sprite
     netsync: false
-    drawdepth: WallTops
     sprite: Structures/Windows/directional.rsi
     state: frosted_window
   - type: Icon

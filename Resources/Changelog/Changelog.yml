@@ -1,60 +1,6 @@
 Entries:
 - author: Zumorica
   changes:
-  - {message: Added grilles., type: Add}
-  id: 419
-  time: '2021-10-09T08:54:56.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Expand out saltern's north-eastern maintenance just a bit, type: Tweak}
-  id: 420
-  time: '2021-10-09T11:06:34.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Pulling an abnormally close object shouldn't cause errors, type: Fix}
-  id: 422
-  time: '2021-10-09T13:49:08.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Added a verb to rotatable entities to reset rotation back to 0., type: Add}
-  id: 423
-  time: '2021-10-09T16:23:34.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: small light sources like computers no longer cast shadows to improve
-      performance., type: Tweak}
-  id: 424
-  time: '2021-10-09T16:26:45.0000000+00:00'
-- author: Ygg01
-  changes:
-  - {message: Fixed puddles not spilling into neighboring tiles., type: Fix}
-  id: 425
-  time: '2021-10-09T16:33:24.0000000+00:00'
-- author: PJB
-  changes:
-  - {message: Fixed certain vending machines having very large ambient light radius
-      and shining through walls., type: Fix}
-  id: 426
-  time: '2021-10-09T18:15:06.131590+00:00'
-- author: moony
-  changes:
-  - {and allows you to see the round end screen.: null, message: The Restart Round
-      vote no longer instantly ends the round, type: tweak}
-  id: 427
-  time: '2021-10-09T18:18:20.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Blast doors and shutters have been added, though they aren''t mapped
-      in yet.', type: Add}
-  id: 428
-  time: '2021-10-10T10:43:50.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Fix airlocks not auto-closing anymore., type: Fix}
-  id: 429
-  time: '2021-10-10T13:59:27.943854+00:00'
-- author: Zumorica
-  changes:
   - {message: Fixed mobs that die or go into crit not being downed., type: Fix}
   id: 430
   time: '2021-10-11T23:44:30.123871+00:00'
@@ -2924,3 +2870,58 @@ Entries:
       a dry mop', type: Tweak}
   id: 920
   time: '2022-01-23T05:27:22.0000000+00:00'
+- author: Lamrr
+  changes:
+  - {message: You can now find full-tile tinted windows at a crafting menu near you.
+      Useful for keeping the greytide out of your private affairs., type: Add}
+  id: 921
+  time: '2022-01-23T17:44:12.0000000+00:00'
+- author: Lamrr
+  changes:
+  - {message: Organise your paperwork with the addition of folders. Now available
+      from the bureaucracy crate., type: Add}
+  id: 922
+  time: '2022-01-23T17:46:55.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Constructed SMES, APC and substations now start with zero charge.',
+    type: Fix}
+  id: 923
+  time: '2022-01-23T17:47:22.0000000+00:00'
+- author: moony
+  changes:
+  - {message: 'Kudzu and Gas Leak are now less likely to occur, and cannot happen
+      four times in a row.', type: Tweak}
+  id: 924
+  time: '2022-01-23T21:17:05.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Slimes no longer butcher into human meat., type: Fix}
+  id: 925
+  time: '2022-01-24T12:46:43.0000000+00:00'
+- author: Delete69
+  changes:
+  - {message: Thindows and windoors now have the same draw depth., type: Add}
+  id: 926
+  time: '2022-01-24T13:08:18.0000000+00:00'
+- author: Mirino97
+  changes:
+  - {message: The tried and true Syndicate Energy Sword is back in stock at your local
+      uplink!, type: Add}
+  id: 927
+  time: '2022-01-24T16:35:20.844542+00:00'
+- author: Mirino97
+  changes:
+  - {message: Fixed the Stay Alive objective icon, type: Fix}
+  id: 928
+  time: '2022-01-24T19:32:42.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Wide melee attacks now use sound overrides., type: Tweak}
+  id: 929
+  time: '2022-01-25T00:22:25.0000000+00:00'
+- author: Pancake
+  changes:
+  - {message: Blue tiles now obey the laws of physics., type: Fix}
+  id: 930
+  time: '2022-01-25T07:03:48.0000000+00:00'
