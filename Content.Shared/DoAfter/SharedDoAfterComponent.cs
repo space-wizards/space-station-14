@@ -52,7 +52,7 @@ namespace Content.Shared.DoAfter
 
         public EntityCoordinates TargetGrid { get; }
 
-        public EntityUid TargetUid { get; }
+        public EntityUid? Target { get; }
 
         public float Delay { get; }
 
@@ -63,7 +63,8 @@ namespace Content.Shared.DoAfter
 
         public float MovementThreshold { get; }
 
-        public ClientDoAfter(byte id, EntityCoordinates userGrid, EntityCoordinates targetGrid, TimeSpan startTime, float delay, bool breakOnUserMove, bool breakOnTargetMove, float movementThreshold, EntityUid targetUid = default)
+        public ClientDoAfter(byte id, EntityCoordinates userGrid, EntityCoordinates targetGrid, TimeSpan startTime,
+            float delay, bool breakOnUserMove, bool breakOnTargetMove, float movementThreshold, EntityUid? target = null)
         {
             ID = id;
             UserGrid = userGrid;
@@ -73,7 +74,7 @@ namespace Content.Shared.DoAfter
             BreakOnUserMove = breakOnUserMove;
             BreakOnTargetMove = breakOnTargetMove;
             MovementThreshold = movementThreshold;
-            TargetUid = targetUid;
+            Target = target;
         }
     }
 }

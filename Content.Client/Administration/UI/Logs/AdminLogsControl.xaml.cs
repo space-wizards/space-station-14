@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using Content.Client.Administration.UI.CustomControls;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
@@ -390,11 +391,12 @@ public partial class AdminLogsControl : Control
         UpdateLogs();
     }
 
-    public void AddLogs(SharedAdminLog[] logs)
+    public void AddLogs(List<SharedAdminLog> logs)
     {
-        for (var i = 0; i < logs.Length; i++)
+        var span = CollectionsMarshal.AsSpan(logs);
+        for (var i = 0; i < span.Length; i++)
         {
-            ref var log = ref logs[i];
+            ref var log = ref span[i];
             var separator = new HSeparator();
             var label = new AdminLogLabel(ref log, separator);
             label.Visible = ShouldShowLog(label);
@@ -404,7 +406,7 @@ public partial class AdminLogsControl : Control
         }
     }
 
-    public void SetLogs(SharedAdminLog[] logs)
+    public void SetLogs(List<SharedAdminLog> logs)
     {
         LogsContainer.RemoveAllChildren();
         AddLogs(logs);

@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.Access.Components;
-using Content.Server.Access.Systems;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Server.WireHacking;
+using Content.Shared.Access.Components;
+using Content.Shared.Access.Systems;
 using Content.Shared.Acts;
 using Content.Shared.Interaction;
 using Content.Shared.Sound;
@@ -191,7 +191,7 @@ namespace Content.Server.VendingMachines
 
         private void TryEject(string id, EntityUid? sender)
         {
-            if (_entMan.TryGetComponent<AccessReader?>(Owner, out var accessReader))
+            if (_entMan.TryGetComponent<AccessReaderComponent?>(Owner, out var accessReader))
             {
                 var accessSystem = EntitySystem.Get<AccessReaderSystem>();
                 if (sender == null || !accessSystem.IsAllowed(accessReader, sender.Value))

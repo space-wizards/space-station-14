@@ -8,6 +8,7 @@
   - type: Tag
     tags:
     - Bottle
+    - Trash
   - type: Sprite
     sprite: Objects/Specific/Chemistry/bottle.rsi
     netsync: false
@@ -121,5 +122,19 @@
         maxVol: 30
         reagents:
         - ReagentId: Epinephrine
+          Quantity: 30
+          
+- type: entity
+  id: RobustHarvestChemistryBottle
+  name: robust harvest bottle
+  description: This will increase the potency of your plants.
+  parent: BaseChemistryEmptyBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: RobustHarvest
           Quantity: 30
 

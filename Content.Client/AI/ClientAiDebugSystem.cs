@@ -68,6 +68,7 @@ namespace Content.Client.AI
         public override void Initialize()
         {
             base.Initialize();
+            UpdatesOutsidePrediction = true;
             SubscribeNetworkEvent<SharedAiDebug.UtilityAiDebugMessage>(HandleUtilityAiDebugMessage);
             SubscribeNetworkEvent<SharedAiDebug.AStarRouteMessage>(HandleAStarRouteMessage);
             SubscribeNetworkEvent<SharedAiDebug.JpsRouteMessage>(HandleJpsRouteMessage);

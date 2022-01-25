@@ -27,8 +27,6 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
     [NetworkedComponent()]
     public sealed class PumpBarrelComponent : ServerRangedBarrelComponent, IUse, IInteractUsing, IMapInit, ISerializationHooks
     {
-        [Dependency] private readonly IEntityManager _entMan = default!;
-
         public override string Name => "PumpBarrel";
 
         public override int ShotsLeft
@@ -87,7 +85,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             // (Is one chambered?, is the bullet spend)
             var chamber = (chamberedExists, false);
 
-            if (chamberedExists && _entMan.TryGetComponent<AmmoComponent?>(_chamberContainer.ContainedEntity!.Value, out var ammo))
+            if (chamberedExists && Entities.TryGetComponent<AmmoComponent?>(_chamberContainer.ContainedEntity!.Value, out var ammo))
             {
                 chamber.Item2 = ammo.Spent;
             }
@@ -126,7 +124,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 _unspawnedCount--;
             }
 
-            if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearanceComponent))
+            if (Entities.TryGetComponent(Owner, out AppearanceComponent? appearanceComponent))
             {
                 _appearanceComponent = appearanceComponent;
             }
@@ -158,10 +156,11 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 Dirty();
             }
 
-            if (_chamberContainer.ContainedEntity is not {Valid: true} chamberEntity)
-                return null;
+            if (_chamberContainer.ContainedEntity is not {Valid: true} chamberEntity) return null;
 
-            return _entMan.GetComponentOrNull<AmmoComponent>(chamberEntity)?.TakeBullet(spawnAt);
+            var ammoComponent = Entities.GetComponentOrNull<AmmoComponent>(chamberEntity);
+
+            return ammoComponent == null ? null : EntitySystem.Get<GunSystem>().TakeBullet(ammoComponent, spawnAt);
         }
 
         private void Cycle(bool manual = false)
@@ -169,7 +168,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             if (_chamberContainer.ContainedEntity is {Valid: true} chamberedEntity)
             {
                 _chamberContainer.Remove(chamberedEntity);
-                var ammoComponent = _entMan.GetComponent<AmmoComponent>(chamberedEntity);
+                var ammoComponent = Entities.GetComponent<AmmoComponent>(chamberedEntity);
                 if (!ammoComponent.Caseless)
                 {
                     EjectCasing(chamberedEntity);
@@ -185,7 +184,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             if (_unspawnedCount > 0)
             {
                 _unspawnedCount--;
-                var ammoEntity = _entMan.SpawnEntity(_fillPrototype, _entMan.GetComponent<TransformComponent>(Owner).Coordinates);
+                var ammoEntity = Entities.SpawnEntity(_fillPrototype, Entities.GetComponent<TransformComponent>(Owner).Coordinates);
                 _chamberContainer.Insert(ammoEntity);
             }
 
@@ -200,7 +199,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
         public bool TryInsertBullet(InteractUsingEventArgs eventArgs)
         {
-            if (!_entMan.TryGetComponent(eventArgs.Using, out AmmoComponent? ammoComponent))
+            if (!Entities.TryGetComponent(eventArgs.Using, out AmmoComponent? ammoComponent))
             {
                 return false;
             }

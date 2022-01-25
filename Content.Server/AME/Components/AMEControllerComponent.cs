@@ -2,13 +2,13 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Hands.Components;
-using Content.Server.Items;
 using Content.Server.NodeContainer;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.AME;
 using Content.Shared.Interaction;
+using Content.Shared.Item;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Robust.Server.GameObjects;
@@ -132,7 +132,7 @@ namespace Content.Server.AME.Components
                 return;
             }
 
-            var activeHandEntity = hands.GetActiveHand?.Owner;
+            var activeHandEntity = hands.GetActiveHandItem?.Owner;
             if (activeHandEntity == null)
             {
                 UserInterface?.Open(actor.PlayerSession);
@@ -245,7 +245,7 @@ namespace Content.Server.AME.Components
             _jarSlot.Remove(jar);
             UpdateUserInterface();
 
-            if (!_entities.TryGetComponent<HandsComponent?>(user, out var hands) || !_entities.TryGetComponent<ItemComponent?>(jar, out var item))
+            if (!_entities.TryGetComponent<HandsComponent?>(user, out var hands) || !_entities.TryGetComponent<SharedItemComponent?>(jar, out var item))
                 return;
             if (hands.CanPutInHand(item))
                 hands.PutInHand(item);
@@ -341,13 +341,13 @@ namespace Content.Server.AME.Components
                 return true;
             }
 
-            if (hands.GetActiveHand == null)
+            if (hands.GetActiveHandItem == null)
             {
                 Owner.PopupMessage(args.User, Loc.GetString("ame-controller-component-interact-using-nothing-in-hands-text"));
                 return false;
             }
 
-            var activeHandEntity = hands.GetActiveHand.Owner;
+            var activeHandEntity = hands.GetActiveHandItem.Owner;
             if (_entities.HasComponent<AMEFuelContainerComponent?>(activeHandEntity))
             {
                 if (HasJar)

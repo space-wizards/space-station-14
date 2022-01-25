@@ -16,7 +16,6 @@
     - type: Eye
     - type: CameraRecoil
     - type: Examiner
-    - type: HumanInventoryController
     - type: AiFactionTag
       factions:
         - NanoTrasen

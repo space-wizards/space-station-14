@@ -7,7 +7,7 @@ using Robust.Shared.Localization;
 
 namespace Content.Client.Info
 {
-    public sealed class RulesAndInfoWindow : SS14Window
+    public sealed class RulesAndInfoWindow : DefaultWindow
     {
         [Dependency] private readonly RulesManager _rulesManager = default!;
         [Dependency] private readonly IResourceCache _resourceManager = default!;
@@ -43,7 +43,7 @@ namespace Content.Client.Info
 
         private void PopulateRules(Info rulesList)
         {
-            AddSection(rulesList, Loc.GetString("ui-info-header-rules"), "Rules.txt", true);
+            AddSection(rulesList, Loc.GetString("ui-rules-header"), "Rules.txt", true);
         }
 
         private void PopulateTutorial(Info tutorialList)

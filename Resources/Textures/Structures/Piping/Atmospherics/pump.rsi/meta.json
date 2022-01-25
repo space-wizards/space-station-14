@@ -16,6 +16,10 @@
          "directions":4
       },
       {
+         "name":"pumpManualValveOn",
+         "directions":4
+      },
+      {
          "name":"pumpPassiveGate",
          "directions":4
       },

@@ -10,10 +10,13 @@ using Content.Server.Administration.Logs;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CharacterAppearance;
 using Content.Shared.Preferences;
+using Content.Shared.Species;
 using Microsoft.EntityFrameworkCore;
 using Robust.Shared.Enums;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Database
@@ -177,6 +180,7 @@ namespace Content.Server.Database
 
             return new HumanoidCharacterProfile(
                 profile.CharacterName,
+                profile.Species,
                 profile.Age,
                 sex,
                 gender,
@@ -204,6 +208,7 @@ namespace Content.Server.Database
             var entity = new Profile
             {
                 CharacterName = humanoid.Name,
+                Species = humanoid.Species,
                 Age = humanoid.Age,
                 Sex = humanoid.Sex.ToString(),
                 Gender = humanoid.Gender.ToString(),
@@ -379,6 +384,7 @@ namespace Content.Server.Database
                 .Include(p => p.Flags)
                 .Include(p => p.AdminRank)
                 .ThenInclude(p => p!.Flags)
+                .AsSplitQuery() // tests fail because of a random warning if you dont have this!
                 .SingleOrDefaultAsync(p => p.UserId == userId.UserId, cancel);
         }
 
@@ -488,7 +494,16 @@ namespace Content.Server.Database
                 .Where(player => playerIds.Contains(player.UserId))
                 .ToListAsync();
 
-            round.Players.AddRange(players);
+            var playerSet = new HashSet<Guid>(round.Players.Select(player => player.UserId));
+            foreach (var player in players)
+            {
+                if (playerSet.Contains(player.UserId))
+                {
+                    continue;
+                }
+
+                round.Players.Add(player);
+            }
 
             await db.DbContext.SaveChangesAsync();
         }
@@ -653,7 +668,7 @@ namespace Content.Server.Database
             }
         }
 
-        public async IAsyncEnumerable<LogRecord> GetAdminLogs(LogFilter? filter = null)
+        public async IAsyncEnumerable<SharedAdminLog> GetAdminLogs(LogFilter? filter = null)
         {
             await using var db = await GetDb();
             var query = await GetAdminLogsQuery(db.DbContext, filter);
@@ -667,7 +682,7 @@ namespace Content.Server.Database
                     players[i] = log.Players[i].PlayerUserId;
                 }
 
-                yield return new LogRecord(log.Id, log.RoundId, log.Type, log.Impact, log.Date, log.Message, players);
+                yield return new SharedAdminLog(log.Id, log.Type, log.Impact, log.Date, log.Message, players);
             }
         }
 
@@ -680,6 +695,33 @@ namespace Content.Server.Database
             {
                 yield return json;
             }
+        }
+
+        #endregion
+
+        #region Whitelist
+
+        public async Task<bool> GetWhitelistStatusAsync(NetUserId player)
+        {
+            await using var db = await GetDb();
+
+            return await db.DbContext.Whitelist.AnyAsync(w => w.UserId == player);
+        }
+
+        public async Task AddToWhitelistAsync(NetUserId player)
+        {
+            await using var db = await GetDb();
+
+            db.DbContext.Whitelist.Add(new Whitelist { UserId = player });
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        public async Task RemoveFromWhitelistAsync(NetUserId player)
+        {
+            await using var db = await GetDb();
+            var entry = await db.DbContext.Whitelist.SingleAsync(w => w.UserId == player);
+            db.DbContext.Whitelist.Remove(entry);
+            await db.DbContext.SaveChangesAsync();
         }
 
         #endregion

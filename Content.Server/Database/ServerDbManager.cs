@@ -7,6 +7,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
+using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using Content.Shared.Preferences;
 using Microsoft.Data.Sqlite;
@@ -19,7 +20,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
-using Logger = Robust.Shared.Log.Logger;
 using LogLevel = Robust.Shared.Log.LogLevel;
 using MSLogLevel = Microsoft.Extensions.Logging.LogLevel;
 
@@ -136,8 +136,18 @@ namespace Content.Server.Database
         Task<Server> AddOrGetServer(string serverName);
         Task AddAdminLogs(List<QueuedLog> logs);
         IAsyncEnumerable<string> GetAdminLogMessages(LogFilter? filter = null);
-        IAsyncEnumerable<LogRecord> GetAdminLogs(LogFilter? filter = null);
+        IAsyncEnumerable<SharedAdminLog> GetAdminLogs(LogFilter? filter = null);
         IAsyncEnumerable<JsonDocument> GetAdminLogsJson(LogFilter? filter = null);
+
+        #endregion
+
+        #region Whitelist
+
+        Task<bool> GetWhitelistStatusAsync(NetUserId player);
+
+        Task AddToWhitelistAsync(NetUserId player);
+
+        Task RemoveFromWhitelistAsync(NetUserId player);
 
         #endregion
     }
@@ -352,7 +362,7 @@ namespace Content.Server.Database
             return _db.GetAdminLogMessages(filter);
         }
 
-        public IAsyncEnumerable<LogRecord> GetAdminLogs(LogFilter? filter = null)
+        public IAsyncEnumerable<SharedAdminLog> GetAdminLogs(LogFilter? filter = null)
         {
             return _db.GetAdminLogs(filter);
         }
@@ -360,6 +370,21 @@ namespace Content.Server.Database
         public IAsyncEnumerable<JsonDocument> GetAdminLogsJson(LogFilter? filter = null)
         {
             return _db.GetAdminLogsJson(filter);
+        }
+
+        public Task<bool> GetWhitelistStatusAsync(NetUserId player)
+        {
+            return _db.GetWhitelistStatusAsync(player);
+        }
+
+        public Task AddToWhitelistAsync(NetUserId player)
+        {
+            return _db.AddToWhitelistAsync(player);
+        }
+
+        public Task RemoveFromWhitelistAsync(NetUserId player)
+        {
+            return _db.RemoveFromWhitelistAsync(player);
         }
 
         private DbContextOptions<ServerDbContext> CreatePostgresOptions()

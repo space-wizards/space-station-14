@@ -64,7 +64,7 @@ namespace Content.Server.Spawners.Components
         public override void MapInit()
         {
             Spawn();
-            _entMan.DeleteEntity(Owner);
+            _entMan.QueueDeleteEntity(Owner);
         }
     }
 }

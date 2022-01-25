@@ -1,4 +1,4 @@
-<customControls:SS14Window xmlns:customControls="https://spacestation14.io"
+<customControls:DefaultWindow xmlns:customControls="https://spacestation14.io"
     Title="Port Selector" MinSize="200 200">
     <customControls:ItemList Name="ButtonContainer" VerticalExpand="True" HorizontalExpand="True" SelectMode="Button"/>
-</customControls:SS14Window>
+</customControls:DefaultWindow>

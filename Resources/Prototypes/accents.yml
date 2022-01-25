@@ -15,3 +15,18 @@
   - Woof!
   - Arf.
   - Grrr.
+
+- type: accent
+  id: mouse
+  words:
+  - Squeak!
+  - Piep!
+  - Chuu!
+  - Eeee!
+
+- type: accent
+  id: mumble
+  words:
+    - Mmfph!
+    - Mmmf mrrfff!
+    - Mmmf mnnf!

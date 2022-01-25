@@ -109,6 +109,15 @@ namespace Content.Shared.Chemistry.Reaction
         private static bool CanReact(Solution solution, ReactionPrototype reaction, out FixedPoint2 lowestUnitReactions)
         {
             lowestUnitReactions = FixedPoint2.MaxValue;
+            if (solution.Temperature < reaction.MinimumTemperature)
+            {
+                lowestUnitReactions = FixedPoint2.Zero;
+                return false;
+            } else if(solution.Temperature > reaction.MaximumTemperature)
+            {
+                lowestUnitReactions = FixedPoint2.Zero;
+                return false;
+            }
 
             foreach (var reactantData in reaction.Reactants)
             {
@@ -147,7 +156,7 @@ namespace Content.Shared.Chemistry.Reaction
         ///     Perform a reaction on a solution. This assumes all reaction criteria are met.
         ///     Removes the reactants from the solution, then returns a solution with all products.
         /// </summary>
-        private Solution PerformReaction(Solution solution, EntityUid Owner, ReactionPrototype reaction, FixedPoint2 unitReactions)
+        private Solution PerformReaction(Solution solution, EntityUid owner, ReactionPrototype reaction, FixedPoint2 unitReactions)
         {
             // We do this so that ReagentEffect can have something to work with, even if it's
             // a little meaningless.
@@ -170,14 +179,14 @@ namespace Content.Shared.Chemistry.Reaction
             }
 
             // Trigger reaction effects
-            OnReaction(solution, reaction, randomReagent, Owner, unitReactions);
+            OnReaction(solution, reaction, randomReagent, owner, unitReactions);
 
             return products;
         }
 
-        protected virtual void OnReaction(Solution solution, ReactionPrototype reaction, ReagentPrototype randomReagent, EntityUid Owner, FixedPoint2 unitReactions)
+        protected virtual void OnReaction(Solution solution, ReactionPrototype reaction, ReagentPrototype randomReagent, EntityUid owner, FixedPoint2 unitReactions)
         {
-            var args = new ReagentEffectArgs(Owner, null, solution,
+            var args = new ReagentEffectArgs(owner, null, solution,
                 randomReagent,
                 unitReactions, EntityManager, null);
 
@@ -202,7 +211,7 @@ namespace Content.Shared.Chemistry.Reaction
         ///     Removes the reactants from the solution, then returns a solution with all products.
         ///     WARNING: Does not trigger reactions between solution and new products.
         /// </summary>
-        private bool ProcessReactions(Solution solution, EntityUid Owner, [MaybeNullWhen(false)] out Solution productSolution)
+        private bool ProcessReactions(Solution solution, EntityUid owner, [MaybeNullWhen(false)] out Solution productSolution)
         {
             foreach(var reactant in solution.Contents)
             {
@@ -214,7 +223,7 @@ namespace Content.Shared.Chemistry.Reaction
                     if (!CanReact(solution, reaction, out var unitReactions))
                         continue;
 
-                    productSolution = PerformReaction(solution, Owner, reaction, unitReactions);
+                    productSolution = PerformReaction(solution, owner, reaction, unitReactions);
                     return true;
                 }
             }
@@ -226,11 +235,11 @@ namespace Content.Shared.Chemistry.Reaction
         /// <summary>
         ///     Continually react a solution until no more reactions occur.
         /// </summary>
-        public void FullyReactSolution(Solution solution, EntityUid Owner)
+        public void FullyReactSolution(Solution solution, EntityUid owner)
         {
             for (var i = 0; i < MaxReactionIterations; i++)
             {
-                if (!ProcessReactions(solution, Owner, out var products))
+                if (!ProcessReactions(solution, owner, out var products))
                     return;
 
                 if (products.TotalVolume <= 0)
@@ -238,18 +247,18 @@ namespace Content.Shared.Chemistry.Reaction
 
                 solution.AddSolution(products);
             }
-            Logger.Error($"{nameof(Solution)} {Owner} could not finish reacting in under {MaxReactionIterations} loops.");
+            Logger.Error($"{nameof(Solution)} {owner} could not finish reacting in under {MaxReactionIterations} loops.");
         }
 
         /// <summary>
         ///     Continually react a solution until no more reactions occur, with a volume constraint.
         ///     If a reaction's products would exceed the max volume, some product is deleted.
         /// </summary>
-        public void FullyReactSolution(Solution solution, EntityUid Owner, FixedPoint2 maxVolume)
+        public void FullyReactSolution(Solution solution, EntityUid owner, FixedPoint2 maxVolume)
         {
             for (var i = 0; i < MaxReactionIterations; i++)
             {
-                if (!ProcessReactions(solution, Owner, out var products))
+                if (!ProcessReactions(solution, owner, out var products))
                     return;
 
                 if (products.TotalVolume <= 0)
@@ -265,7 +274,7 @@ namespace Content.Shared.Chemistry.Reaction
 
                 solution.AddSolution(products);
             }
-            Logger.Error($"{nameof(Solution)} {Owner} could not finish reacting in under {MaxReactionIterations} loops.");
+            Logger.Error($"{nameof(Solution)} {owner} could not finish reacting in under {MaxReactionIterations} loops.");
         }
     }
 }

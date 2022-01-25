@@ -16,7 +16,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Traitor.Uplink
 {
     [GenerateTypedNameReferences]
-    public partial class UplinkMenu : SS14Window
+    public partial class UplinkMenu : DefaultWindow
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
@@ -81,7 +81,7 @@ namespace Content.Client.Traitor.Uplink
             // should probably chunk these out instead. to-do if this clogs the internet tubes.
             // maybe read clients prototypes instead?
             ClearListings();
-            foreach (var item in listings) 
+            foreach (var item in listings)
             {
                 AddListingGui(item);
             }

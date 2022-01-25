@@ -13,7 +13,7 @@ namespace Content.Server.AI.Utility.Considerations.Nutrition.Drink
         {
             var owner = context.GetState<SelfState>().GetValue();
 
-            if (owner == null || !IoCManager.Resolve<IEntityManager>().TryGetComponent(owner, out ThirstComponent? thirst))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(owner, out ThirstComponent? thirst))
             {
                 return 0.0f;
             }

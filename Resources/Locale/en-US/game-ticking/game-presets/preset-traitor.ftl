@@ -39,6 +39,5 @@ traitor-death-match-end-round-description-entry = {$originalName}'s PDA, with {$
 ## TraitorRole
 
 # TraitorRole
-traitor-role-name = Syndicate Agent
 traitor-role-greeting = Hello Agent
 traitor-role-codewords = Your codewords are: {$codewords}

@@ -5,6 +5,7 @@
   abstract: true
   components:
   - type: HandheldLight
+  - type: PowerCellSlot
   - type: ItemActions
     actions:
         - actionType: ToggleLight
@@ -95,13 +96,14 @@
   - type: Fixtures
     fixtures:
     - shape:
-        !type:PhysShapeAabb {}
+        !type:PhysShapeAabb
+          bounds: "-0.2, -0.5, 0.2, 0.5"
+      mass: 20
+      mask:
+      - Impassable
       layer:
       - Opaque
       - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
   - type: PointLight
     enabled: false
     radius: 8

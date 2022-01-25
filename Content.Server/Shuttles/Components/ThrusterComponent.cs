@@ -17,7 +17,7 @@ namespace Content.Server.Shuttles.Components
         public override string Name => "Thruster";
 
         /// <summary>
-        /// Whether the thruster has been force to be enabled / disable (e.g. VV, interaction, etc.)
+        /// Whether the thruster has been force to be enabled / disabled (e.g. VV, interaction, etc.)
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("enabled")]

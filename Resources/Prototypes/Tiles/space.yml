@@ -1,6 +1,6 @@
 - type: tile
+  id: space
   name: space
-  display_name: space
   texture: ""
   friction: 0
   is_subfloor: true

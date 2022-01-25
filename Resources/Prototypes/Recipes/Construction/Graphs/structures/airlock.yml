@@ -1,5 +1,5 @@
 - type: constructionGraph
-  id: airlock
+  id: Airlock
   start: start
   graph:
     - node: start

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Content.Server.Coordinates.Helpers;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
@@ -155,6 +156,7 @@ namespace Content.Server.Cargo.Components
                 }
                 case CargoConsoleShuttleMessage _:
                 {
+                    // Jesus fucking christ Glass
                     //var approvedOrders = _cargoOrderDataManager.RemoveAndGetApprovedFrom(orders.Database);
                     //orders.Database.ClearOrderCapacity();
 
@@ -164,23 +166,20 @@ namespace Content.Server.Cargo.Components
                     var indices = _entMan.GetComponent<TransformComponent>(Owner).Coordinates.ToVector2i(_entMan, _mapManager);
                     var offsets = new Vector2i[] { new Vector2i(0, 1), new Vector2i(1, 1), new Vector2i(1, 0), new Vector2i(1, -1),
                                                    new Vector2i(0, -1), new Vector2i(-1, -1), new Vector2i(-1, 0), new Vector2i(-1, 1), };
-                    var adjacentEntities = new List<IEnumerable<EntityUid>>(); //Probably better than IEnumerable.concat
-                    foreach (var offset in offsets)
-                    {
-                        adjacentEntities.Add((indices+offset).GetEntitiesInTileFast(_entMan.GetComponent<TransformComponent>(Owner).GridID));
-                    }
 
-                    foreach (var enumerator in adjacentEntities)
+                    var lookup = IoCManager.Resolve<IEntityLookup>();
+                    var gridId = _entMan.GetComponent<TransformComponent>(Owner).GridID;
+
+                    // TODO: Should use anchoring.
+                    foreach (var entity in lookup.GetEntitiesIntersecting(gridId, offsets.Select(o => o + indices)))
                     {
-                        foreach (EntityUid entity in enumerator)
+                        if (_entMan.HasComponent<CargoTelepadComponent>(entity) && _entMan.TryGetComponent<ApcPowerReceiverComponent?>(entity, out var powerReceiver) && powerReceiver.Powered)
                         {
-                            if (_entMan.HasComponent<CargoTelepadComponent>(entity) && _entMan.TryGetComponent<ApcPowerReceiverComponent?>(entity, out var powerReceiver) && powerReceiver.Powered)
-                            {
-                                cargoTelepad = entity;
-                                break;
-                            }
+                            cargoTelepad = entity;
+                            break;
                         }
                     }
+
                     if (cargoTelepad != null)
                     {
                         if (_entMan.TryGetComponent<CargoTelepadComponent?>(cargoTelepad.Value, out var telepadComponent))

@@ -3,6 +3,7 @@ using Content.Shared.Cuffs.Components;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -15,7 +16,7 @@ namespace Content.Client.Cuffs.Components
         [ViewVariables]
         private string? _currentRSI;
 
-        [ViewVariables] [ComponentDependency] private readonly SpriteComponent? _spriteComponent = null;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
@@ -26,10 +27,10 @@ namespace Content.Client.Cuffs.Components
 
             CanStillInteract = cuffState.CanStillInteract;
 
-            if (_spriteComponent != null)
+            if (_entityManager.TryGetComponent<SpriteComponent>(Owner, out var spriteComponent))
             {
-                _spriteComponent.LayerSetVisible(HumanoidVisualLayers.Handcuffs, cuffState.NumHandsCuffed > 0);
-                _spriteComponent.LayerSetColor(HumanoidVisualLayers.Handcuffs, cuffState.Color);
+                spriteComponent.LayerSetVisible(HumanoidVisualLayers.Handcuffs, cuffState.NumHandsCuffed > 0);
+                spriteComponent.LayerSetColor(HumanoidVisualLayers.Handcuffs, cuffState.Color);
 
                 if (cuffState.NumHandsCuffed > 0)
                 {
@@ -39,12 +40,12 @@ namespace Content.Client.Cuffs.Components
 
                         if (_currentRSI != null)
                         {
-                            _spriteComponent.LayerSetState(HumanoidVisualLayers.Handcuffs, new RSI.StateId(cuffState.IconState), new ResourcePath(_currentRSI));
+                            spriteComponent.LayerSetState(HumanoidVisualLayers.Handcuffs, new RSI.StateId(cuffState.IconState), new ResourcePath(_currentRSI));
                         }
                     }
                     else
                     {
-                        _spriteComponent.LayerSetState(HumanoidVisualLayers.Handcuffs, new RSI.StateId(cuffState.IconState)); // TODO: safety check to see if RSI contains the state?
+                        spriteComponent.LayerSetState(HumanoidVisualLayers.Handcuffs, new RSI.StateId(cuffState.IconState)); // TODO: safety check to see if RSI contains the state?
                     }
                 }
             }
@@ -53,8 +54,8 @@ namespace Content.Client.Cuffs.Components
         protected override void OnRemove()
         {
             base.OnRemove();
-
-            _spriteComponent?.LayerSetVisible(HumanoidVisualLayers.Handcuffs, false);
+            if (_entityManager.TryGetComponent<SpriteComponent>(Owner, out var spriteComponent))
+                spriteComponent.LayerSetVisible(HumanoidVisualLayers.Handcuffs, false);
         }
     }
 }

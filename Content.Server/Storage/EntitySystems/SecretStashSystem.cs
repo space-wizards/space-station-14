@@ -1,4 +1,4 @@
-﻿using Content.Server.Items;
+﻿using Content.Server.Clothing.Components;
 using Content.Server.Popups;
 using Content.Server.Storage.Components;
 using Content.Shared.Acts;

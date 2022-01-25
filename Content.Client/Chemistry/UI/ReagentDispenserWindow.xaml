@@ -1,4 +1,4 @@
-﻿<SS14Window xmlns="https://spacestation14.io"
+﻿<DefaultWindow xmlns="https://spacestation14.io"
             xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
             Title="{Loc 'reagent-dispenser-bound-user-interface-title'}"
             SetSize="590 450"
@@ -46,4 +46,4 @@
             </BoxContainer>
         </PanelContainer>
     </BoxContainer>
-</SS14Window>
+</DefaultWindow>

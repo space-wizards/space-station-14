@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Immutable;
 using System.Threading.Tasks;
-using Content.Server.Administration.Managers;
 using Content.Server.Database;
+using Content.Server.GameTicking;
 using Content.Server.Preferences.Managers;
-using Content.Shared;
 using Content.Shared.CCVar;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Network;
 
 
@@ -74,9 +75,11 @@ The ban reason is: ""{ban.Reason}""
                 hwId = null;
             }
 
-            if (_plyMgr.PlayerCount >= _cfg.GetCVar(CCVars.SoftMaxPlayers) && await _dbManager.GetAdminDataForAsync(e.UserId) is null)
+            var adminData = await _dbManager.GetAdminDataForAsync(e.UserId);
+            var wasInGame = EntitySystem.TryGet<GameTicker>(out var ticker) && ticker.PlayersInGame.Contains(userId);
+            if ((_plyMgr.PlayerCount >= _cfg.GetCVar(CCVars.SoftMaxPlayers) && adminData is null) && !wasInGame )
             {
-                e.Deny("The server is full!");
+                e.Deny(Loc.GetString("soft-player-cap-full"));
                 return;
             }
 
@@ -84,6 +87,14 @@ The ban reason is: ""{ban.Reason}""
             if (ban != null)
             {
                 e.Deny(ban.DisconnectMessage);
+                return;
+            }
+
+            if (_cfg.GetCVar(CCVars.WhitelistEnabled)
+                && await _db.GetWhitelistStatusAsync(userId) == false
+                && adminData is null)
+            {
+                e.Deny(Loc.GetString("whitelist-not-whitelisted"));
                 return;
             }
 

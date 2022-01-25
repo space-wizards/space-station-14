@@ -13,7 +13,7 @@ namespace Content.Client.Administration.UI.Tabs.AdminTab
 {
     [GenerateTypedNameReferences]
     [UsedImplicitly]
-    public partial class BanWindow : SS14Window
+    public partial class BanWindow : DefaultWindow
     {
         public BanWindow()
         {
@@ -68,7 +68,7 @@ namespace Content.Client.Administration.UI.Tabs.AdminTab
             SubmitButton.Disabled = string.IsNullOrEmpty(PlayerNameLine.Text);
         }
 
-        private void OnPlayerSelectionChanged(PlayerInfo? player)
+        public void OnPlayerSelectionChanged(PlayerInfo? player)
         {
             PlayerNameLine.Text = player?.Username ?? string.Empty;
             OnPlayerNameChanged();

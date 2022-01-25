@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Content.Server.Hands.Components;
-using Content.Server.Interaction;
 using Content.Server.Storage.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Movement;

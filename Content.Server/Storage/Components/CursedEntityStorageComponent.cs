@@ -37,9 +37,9 @@ namespace Content.Server.Storage.Components
             if (lockers.Contains(Owner))
                 lockers.Remove(Owner);
 
-            var lockerEnt = _robustRandom.Pick(lockers);
+            if (lockers.Count == 0) return;
 
-            if (lockerEnt == null) return; // No valid lockers anywhere.
+            var lockerEnt = _robustRandom.Pick(lockers);
 
             var locker = _entMan.GetComponent<EntityStorageComponent>(lockerEnt);
 

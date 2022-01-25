@@ -1,5 +1,5 @@
 - type: constructionGraph
-  id: windowDirectional
+  id: WindowDirectional
   start: start
   graph:
     - node: start

@@ -257,6 +257,9 @@
     state: pill_canister
   - type: Item
     sprite: Objects/Specific/Chemistry/pills_canister.rsi
+  - type: Tag
+    tags:
+      - PillCanister
   - type: Storage
     capacity: 12
     quickInsert: true
