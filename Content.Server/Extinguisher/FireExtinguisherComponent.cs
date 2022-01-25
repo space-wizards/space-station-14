@@ -18,7 +18,9 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Server.Extinguisher
 {
     [RegisterComponent]
-    public class FireExtinguisherComponent : SharedFireExtinguisherComponent, IAfterInteract, IUse, IActivate, IDropped
+    [ComponentReference(typeof(IActivate))]
+    [ComponentReference(typeof(SharedFireExtinguisherComponent))]
+    public class FireExtinguisherComponent : SharedFireExtinguisherComponent, IAfterInteract, IActivate, IDropped
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
@@ -80,11 +82,6 @@ namespace Content.Server.Extinguisher
 
             return true;
 
-        }
-        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
-        {
-            ToggleSafety(eventArgs.User);
-            return true;
         }
 
         void IActivate.Activate(ActivateEventArgs eventArgs)

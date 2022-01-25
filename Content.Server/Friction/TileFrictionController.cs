@@ -9,7 +9,7 @@ namespace Content.Server.Friction
         public override void Initialize()
         {
             base.Initialize();
-            Mover = EntitySystem.Get<SharedPhysicsSystem>().GetController<MoverController>();
+            Mover = Get<MoverController>();
         }
     }
 }

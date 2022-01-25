@@ -1,7 +1,5 @@
 using Content.Shared.Smoking;
 using Content.Shared.Sound;
-using Content.Shared.Temperature;
-using Content.Server.Items;
 using Content.Server.Light.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Analyzers;
@@ -34,11 +32,5 @@ namespace Content.Server.Light.Components
         /// Sound played when you ignite the matchstick.
         /// </summary>
         [DataField("igniteSound", required: true)] public SoundSpecifier IgniteSound = default!;
-
-        /// <summary>
-        /// Point light component. Gives matches a glow in dark effect.
-        /// </summary>
-        [ComponentDependency]
-        public readonly PointLightComponent? PointLightComponent = default!;
     }
 }

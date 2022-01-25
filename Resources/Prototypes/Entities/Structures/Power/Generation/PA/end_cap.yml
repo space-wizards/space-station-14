@@ -9,7 +9,7 @@
       state: capc
     - type: ParticleAcceleratorEndCap
     - type: Construction
-      graph: particleAcceleratorEndCap
+      graph: ParticleAcceleratorEndCap
       node: completed
 
 # Unfinished
@@ -27,6 +27,6 @@
       sprite: Structures/Power/Generation/PA/end_cap.rsi
       state: cap
     - type: Construction
-      graph: particleAcceleratorEndCap
+      graph: ParticleAcceleratorEndCap
       node: start
       defaultTarget: completed

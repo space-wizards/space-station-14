@@ -52,6 +52,7 @@ namespace Content.Shared.Chat
             switch (Channel)
             {
                 case ChatChannel.Local:
+                case ChatChannel.Whisper:
                 case ChatChannel.Dead:
                 case ChatChannel.Admin:
                 case ChatChannel.Emotes:
@@ -71,6 +72,7 @@ namespace Content.Shared.Chat
             switch (Channel)
             {
                 case ChatChannel.Local:
+                case ChatChannel.Whisper:
                 case ChatChannel.Dead:
                 case ChatChannel.Admin:
                 case ChatChannel.Emotes:

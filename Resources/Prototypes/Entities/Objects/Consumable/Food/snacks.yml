@@ -19,7 +19,7 @@
   - type: Item
     sprite: Objects/Consumable/Food/snacks.rsi
     HeldPrefix: packet
-
+    size: 3
 # Snacks
 
 # "Snacks" means food in a packet. Down the line this stuff can have multiple
@@ -206,6 +206,9 @@
   - type: Item
     sprite: Objects/Consumable/Food/snacks.rsi
     HeldPrefix: packet
+  - type: Tag
+    tags:
+    - Trash
 
 - type: entity
   abstract: true

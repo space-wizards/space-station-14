@@ -110,3 +110,45 @@
           DefaultPrototype: Beaker
           ExamineName: Glass Beaker
 
+- type: entity
+  id: SMESMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: SMES (Machine Board)
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/module.rsi
+      state: power_mod
+    - type: MachineBoard
+      prototype: BaseSmes
+      requirements:
+        Capacitor: 10
+
+- type: entity
+  id: SubstationMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: Substation (Machine Board)
+  components:
+    - type: MachineBoard
+      prototype: BaseSubstation
+      requirements:
+        Capacitor: 3
+      materialRequirements:
+        CableMV: 5
+        CableHV: 5
+
+- type: entity
+  id: KitchenReagentGrinderMachineCircuitboard #unsure why the reagent grinder has 'kitchen' in the id name when multiple departments use it but that's for another time
+  parent: BaseMachineCircuitboard
+  name: Reagent Grinder (Machine Board)
+  components:
+    - type: MachineBoard
+      prototype: KitchenReagentGrinder
+      requirements:
+        Laser: 1
+        ScanningModule: 1
+        MatterBin: 2
+      tagRequirements:
+        GlassBeaker:
+          Amount: 1
+          DefaultPrototype: Beaker
+          ExamineName: Glass Beaker

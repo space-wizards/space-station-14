@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Content.Server.Flash.Components;
-using Content.Server.Inventory.Components;
-using Content.Server.Items;
 using Content.Server.Stunnable;
 using Content.Server.Weapon.Melee;
 using Content.Shared.Examine;
@@ -20,6 +18,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
+using InventoryComponent = Content.Shared.Inventory.InventoryComponent;
 
 namespace Content.Server.Flash
 {
@@ -28,6 +27,7 @@ namespace Content.Server.Flash
         [Dependency] private readonly IEntityLookup _entityLookup = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly StunSystem _stunSystem = default!;
+        [Dependency] private readonly InventorySystem _inventorySystem = default!;
 
         public override void Initialize()
         {
@@ -187,8 +187,8 @@ namespace Content.Server.Flash
         private void OnInventoryFlashAttempt(EntityUid uid, InventoryComponent component, FlashAttemptEvent args)
         {
             // Forward the event to the glasses, if any.
-            if(component.TryGetSlotItem(EquipmentSlotDefines.Slots.EYES, out ItemComponent? glasses))
-                RaiseLocalEvent(glasses.Owner, args);
+            if(_inventorySystem.TryGetSlotEntity(uid, "eyes", out var slotEntity, component))
+                RaiseLocalEvent(slotEntity.Value, args);
         }
 
         private void OnFlashImmunityFlashAttempt(EntityUid uid, FlashImmunityComponent component, FlashAttemptEvent args)

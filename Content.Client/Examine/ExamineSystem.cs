@@ -41,10 +41,12 @@ namespace Content.Client.Examine
         {
             IoCManager.InjectDependencies(this);
 
+            UpdatesOutsidePrediction = true;
+
             SubscribeLocalEvent<GetOtherVerbsEvent>(AddExamineVerb);
 
             CommandBinds.Builder
-                .Bind(ContentKeyFunctions.ExamineEntity, new PointerInputCmdHandler(HandleExamine))
+                .Bind(ContentKeyFunctions.ExamineEntity, new PointerInputCmdHandler(HandleExamine, outsidePrediction: true))
                 .Register<ExamineSystem>();
         }
 
@@ -72,21 +74,21 @@ namespace Content.Client.Examine
             return base.CanExamine(examiner, target, predicate);
         }
 
-        private bool HandleExamine(ICommonSession? session, EntityCoordinates coords, EntityUid entity)
+        private bool HandleExamine(in PointerInputCmdHandler.PointerInputCmdArgs args)
         {
-            if (!entity.IsValid() || !EntityManager.EntityExists(entity))
+            if (!args.EntityUid.IsValid() || !EntityManager.EntityExists(args.EntityUid))
             {
                 return false;
             }
 
             _playerEntity = _playerManager.LocalPlayer?.ControlledEntity ?? default;
 
-            if (_playerEntity == default || !CanExamine(_playerEntity, entity))
+            if (_playerEntity == default || !CanExamine(_playerEntity, args.EntityUid))
             {
                 return false;
             }
 
-            DoExamine(entity);
+            DoExamine(args.EntityUid);
             return true;
         }
 

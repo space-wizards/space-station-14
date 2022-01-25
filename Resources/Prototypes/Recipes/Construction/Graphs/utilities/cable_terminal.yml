@@ -1,5 +1,5 @@
 ﻿- type: constructionGraph
-  id: cable_terminal
+  id: CableTerminal
   start: start
   graph:
     - node: start

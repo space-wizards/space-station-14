@@ -1,11 +1,8 @@
-using System;
 using Content.Server.Mind.Commands;
 using Content.Server.Mind.Components;
-using Content.Server.Players;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Ghost.Roles.Components
 {

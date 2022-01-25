@@ -17,6 +17,7 @@
   - type: Tag
     tags:
     - Matchstick
+    - Trash
   - type: Sprite
     netsync: false
     sprite: Objects/Tools/matches.rsi
@@ -76,3 +77,6 @@
           - matchbox1
           - matchbox2
           - matchbox3
+  - type: Tag
+    tags:
+    - Trash

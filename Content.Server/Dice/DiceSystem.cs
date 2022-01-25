@@ -26,7 +26,6 @@ namespace Content.Server.Dice
 
             SubscribeLocalEvent<DiceComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<DiceComponent, ActivateInWorldEvent>(OnActivate);
-            SubscribeLocalEvent<DiceComponent, UseInHandEvent>(OnUse);
             SubscribeLocalEvent<DiceComponent, LandEvent>(OnLand);
             SubscribeLocalEvent<DiceComponent, ExaminedEvent>(OnExamined);
         }
@@ -38,11 +37,6 @@ namespace Content.Server.Dice
         }
 
         private void OnActivate(EntityUid uid, DiceComponent component, ActivateInWorldEvent args)
-        {
-            Roll(uid, component);
-        }
-
-        private void OnUse(EntityUid uid, DiceComponent component, UseInHandEvent args)
         {
             Roll(uid, component);
         }

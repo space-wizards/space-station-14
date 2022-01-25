@@ -1,14 +1,19 @@
 using System.Collections.Generic;
 using Content.Server.Administration;
+using Content.Server.Administration.Logs;
 using Content.Server.EUI;
 using Content.Server.Ghost.Components;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Ghost.Roles.UI;
+using Content.Server.Mind.Components;
+using Content.Server.MobState.States;
 using Content.Server.Players;
 using Content.Shared.Administration;
+using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Content.Shared.Ghost;
 using Content.Shared.Ghost.Roles;
+using Content.Shared.MobState;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -26,6 +31,7 @@ namespace Content.Server.Ghost.Roles
     {
         [Dependency] private readonly EuiManager _euiManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly AdminLogSystem _adminLogSystem = default!;
 
         private uint _nextRoleIdentifier;
         private bool _needsUpdateGhostRoleCount = true;
@@ -42,8 +48,27 @@ namespace Content.Server.Ghost.Roles
 
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttached);
-
+            SubscribeLocalEvent<GhostTakeoverAvailableComponent, MindAddedMessage>(OnMindAdded);
+            SubscribeLocalEvent<GhostTakeoverAvailableComponent, MindRemovedMessage>(OnMindRemoved);
+            SubscribeLocalEvent<GhostTakeoverAvailableComponent, MobStateChangedEvent>(OnMobStateChanged);
             _playerManager.PlayerStatusChanged += PlayerStatusChanged;
+        }
+
+        private void OnMobStateChanged(EntityUid uid, GhostRoleComponent component, MobStateChangedEvent args)
+        {
+            switch (args.CurrentMobState)
+            {
+                case NormalMobState:
+                {
+                    if (!component.Taken)
+                        RegisterGhostRole(component);
+                    break;
+                }
+                case CriticalMobState:
+                case DeadMobState:
+                    UnregisterGhostRole(component);
+                    break;
+            }
         }
 
         public override void Shutdown()
@@ -156,6 +181,10 @@ namespace Content.Server.Ghost.Roles
         {
             if (!_ghostRoles.TryGetValue(identifier, out var role)) return;
             if (!role.Take(player)) return;
+
+            if (player.AttachedEntity != null)
+                _adminLogSystem.Add(LogType.GhostRoleTaken, LogImpact.Low, $"{player:player} took the {role.RoleName:roleName} ghost role {ToPrettyString(player.AttachedEntity.Value):entity}");
+
             CloseEui(player);
         }
 
@@ -198,6 +227,22 @@ namespace Content.Server.Ghost.Roles
             if (!_openUis.ContainsKey(message.Player)) return;
             if (EntityManager.HasComponent<GhostComponent>(message.Entity)) return;
             CloseEui(message.Player);
+        }
+
+        private void OnMindAdded(EntityUid uid, GhostTakeoverAvailableComponent component, MindAddedMessage args)
+        {
+            component.Taken = true;
+            UnregisterGhostRole(component);
+        }
+
+        private void OnMindRemoved(EntityUid uid, GhostRoleComponent component, MindRemovedMessage args)
+        {
+            // Avoid re-registering it for duplicate entries and potential exceptions.
+            if (!component.ReregisterOnGhost || component.LifeStage > ComponentLifeStage.Running)
+                return;
+
+            component.Taken = false;
+            RegisterGhostRole(component);
         }
 
         public void Reset(RoundRestartCleanupEvent ev)

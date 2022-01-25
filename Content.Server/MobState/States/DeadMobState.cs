@@ -1,4 +1,4 @@
-﻿using Content.Server.Alert;
+using System;
 using Content.Server.Stunnable;
 using Content.Server.Stunnable.Components;
 using Content.Shared.Alert;
@@ -17,10 +17,7 @@ namespace Content.Server.MobState.States
         {
             base.EnterState(uid, entityManager);
 
-            if (entityManager.TryGetComponent(uid, out ServerAlertsComponent? status))
-            {
-                status.ShowAlert(AlertType.HumanDead);
-            }
+            EntitySystem.Get<AlertsSystem>().ShowAlert(uid, AlertType.HumanDead);
 
             if (entityManager.TryGetComponent(uid, out StatusEffectsComponent? stun))
             {

@@ -27,7 +27,7 @@ namespace Content.Server.AI.Utility.ExpandableActions.Clothing.Gloves
 
             return new []
             {
-                considerationsManager.Get<ClothingInSlotCon>().Slot(EquipmentSlotDefines.Slots.GLOVES, context)
+                considerationsManager.Get<ClothingInSlotCon>().Slot("gloves", context)
                     .InverseBoolCurve(context),
             };
         }
@@ -39,7 +39,7 @@ namespace Content.Server.AI.Utility.ExpandableActions.Clothing.Gloves
             foreach (var entity in context.GetState<EnumerableInventoryState>().GetValue())
             {
                 if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out ClothingComponent? clothing) &&
-                    (clothing.SlotFlags & EquipmentSlotDefines.SlotFlags.GLOVES) != 0)
+                    (clothing.SlotFlags & SlotFlags.GLOVES) != 0)
                 {
                     yield return new EquipGloves {Owner = owner, Target = entity, Bonus = Bonus};
                 }

@@ -868,7 +868,7 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 53
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: -0.5,-3.5
     parent: 0

@@ -33,6 +33,12 @@
   mapPath: Maps/Salvage/small-ai-survey-drone.yml
   size: 3.5
 
+- type: salvageMap
+  id: small4
+  name: "Small / Bar Salvage"
+  mapPath: Maps/Salvage/small-4.yml
+  size: 3.5
+
 # Small - Asteroids
 
 - type: salvageMap
@@ -60,4 +66,11 @@
   name: "Medium / Silent Orchestra"
   mapPath: Maps/Salvage/medium-silent-orchestra.yml
   size: 7.5
+
+- type: salvageMap
+  id: mediumShuttleWreck
+  name: "Medium / Ruined Emergency Shuttle"
+  mapPath: Maps/Salvage/medium-ruined-emergency-shuttle.yml
+  size: 8.5 # Over standard medium wreck size, may need future adjustment.
+  
 

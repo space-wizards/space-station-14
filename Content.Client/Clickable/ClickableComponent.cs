@@ -18,7 +18,7 @@ namespace Content.Client.Clickable
 
         [Dependency] private readonly IClickMapManager _clickMapManager = default!;
 
-        [ViewVariables] [DataField("bounds")] private DirBoundData _data = DirBoundData.Default;
+        [ViewVariables] [DataField("bounds")] private DirBoundData? _data;
 
         /// <summary>
         /// Used to check whether a click worked.
@@ -47,33 +47,40 @@ namespace Content.Client.Clickable
             var found = false;
             var worldRotation = transform.WorldRotation;
 
-            if (_data.All.Contains(localPos))
+            if (_data != null)
             {
-                found = true;
-            }
-            else
-            {
-                // TODO: diagonal support?
-
-                var modAngle = sprite.NoRotation ? SpriteComponent.CalcRectWorldAngle(worldRotation, 4) : Angle.Zero;
-                var dir = sprite.EnableDirectionOverride ? sprite.DirectionOverride : worldRotation.GetCardinalDir();
-
-                modAngle += dir.ToAngle();
-
-                var layerPos = modAngle.RotateVec(localPos);
-
-                var boundsForDir = dir switch
-                {
-                    Direction.East => _data.East,
-                    Direction.North => _data.North,
-                    Direction.South => _data.South,
-                    Direction.West => _data.West,
-                    _ => throw new InvalidOperationException()
-                };
-
-                if (boundsForDir.Contains(layerPos))
+                if (_data.All.Contains(localPos))
                 {
                     found = true;
+                }
+                else
+                {
+                    // TODO: diagonal support?
+
+                    var modAngle = sprite.NoRotation
+                        ? SpriteComponent.CalcRectWorldAngle(worldRotation, 4)
+                        : Angle.Zero;
+                    var dir = sprite.EnableDirectionOverride
+                        ? sprite.DirectionOverride
+                        : worldRotation.GetCardinalDir();
+
+                    modAngle += dir.ToAngle();
+
+                    var layerPos = modAngle.RotateVec(localPos);
+
+                    var boundsForDir = dir switch
+                    {
+                        Direction.East => _data.East,
+                        Direction.North => _data.North,
+                        Direction.South => _data.South,
+                        Direction.West => _data.West,
+                        _ => throw new InvalidOperationException()
+                    };
+
+                    if (boundsForDir.Contains(layerPos))
+                    {
+                        found = true;
+                    }
                 }
             }
 

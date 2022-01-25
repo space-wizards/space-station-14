@@ -32,6 +32,7 @@ namespace Content.Shared.Administration
         [Serializable, NetSerializable]
         public sealed class BwoinkTextMessage : EntityEventArgs
         {
+            public DateTime SentAt { get; }
             public NetUserId ChannelId { get; }
             // This is ignored from the client.
             // It's checked by the client when receiving a message from the server for bwoink noises.
@@ -39,8 +40,9 @@ namespace Content.Shared.Administration
             public NetUserId TrueSender { get; }
             public string Text { get; }
 
-            public BwoinkTextMessage(NetUserId channelId, NetUserId trueSender, string text)
+            public BwoinkTextMessage(NetUserId channelId, NetUserId trueSender, string text, DateTime? sentAt = default)
             {
+                SentAt = sentAt ?? DateTime.Now;
                 ChannelId = channelId;
                 TrueSender = trueSender;
                 Text = text;

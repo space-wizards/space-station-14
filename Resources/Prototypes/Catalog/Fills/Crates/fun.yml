@@ -82,5 +82,7 @@
         amount: 1
       - id: ParchisBoard
         amount: 1
+      - id: CheckerBoard
+        amount: 1
       - id: d6Dice
         amount: 4

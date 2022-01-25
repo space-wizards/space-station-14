@@ -1,5 +1,6 @@
 using Content.Shared.Examine;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -13,19 +14,18 @@ namespace Content.Server.Power.Components
     {
         public override string Name => "ExaminableBattery";
 
-        [ViewVariables]
-        [ComponentDependency] private BatteryComponent? _battery = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
-            if (_battery == null)
+            if (!_entityManager.TryGetComponent<BatteryComponent>(Owner, out var batteryComponent))
                 return;
             if (inDetailsRange)
             {
-                var effectiveMax = _battery.MaxCharge;
+                var effectiveMax = batteryComponent.MaxCharge;
                 if (effectiveMax == 0)
                     effectiveMax = 1;
-                var chargeFraction = _battery.CurrentCharge / effectiveMax;
+                var chargeFraction = batteryComponent.CurrentCharge / effectiveMax;
                 var chargePercentRounded = (int) (chargeFraction * 100);
                 message.AddMarkup(
                     Loc.GetString(

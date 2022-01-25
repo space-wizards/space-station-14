@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Items;
 using Content.Server.Light.Components;
 using Content.Shared.Audio;
 using Content.Shared.Interaction;
+using Content.Shared.Item;
 using Content.Shared.Smoking;
 using Content.Shared.Temperature;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -85,12 +86,12 @@ namespace Content.Server.Light.EntitySystems
         {
             component.CurrentState = value;
 
-            if (component.PointLightComponent != null)
+            if (TryComp<PointLightComponent>(component.Owner, out var pointLightComponent))
             {
-                component.PointLightComponent.Enabled = component.CurrentState == SmokableState.Lit;
+                pointLightComponent.Enabled = component.CurrentState == SmokableState.Lit;
             }
 
-            if (EntityManager.TryGetComponent(component.Owner, out ItemComponent? item))
+            if (EntityManager.TryGetComponent(component.Owner, out SharedItemComponent? item))
             {
                 switch (component.CurrentState)
                 {

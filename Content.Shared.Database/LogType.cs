@@ -61,4 +61,6 @@ public enum LogType
     AtmosFilterChanged = 57,
     AtmosRatioChanged = 58,
     Emitter = 59,
+    GhostRoleTaken = 60,
+    Chat = 61,
 }

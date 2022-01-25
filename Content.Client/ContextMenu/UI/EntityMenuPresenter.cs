@@ -63,7 +63,7 @@ namespace Content.Client.ContextMenu.UI
             _cfg.OnValueChanged(CCVars.EntityMenuGroupingType, OnGroupingChanged, true);
 
             CommandBinds.Builder
-                .Bind(ContentKeyFunctions.OpenContextMenu,  new PointerInputCmdHandler(HandleOpenEntityMenu))
+                .Bind(ContentKeyFunctions.OpenContextMenu,  new PointerInputCmdHandler(HandleOpenEntityMenu, outsidePrediction: true))
                 .Register<EntityMenuPresenter>();
         }
 

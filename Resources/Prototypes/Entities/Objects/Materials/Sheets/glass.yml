@@ -40,7 +40,7 @@
     outputs:
     - floor_glass
   - type: Construction
-    graph: glass
+    graph: Glass
     node: SheetGlass
 
 - type: entity
@@ -81,7 +81,7 @@
     outputs:
     - floor_rglass
   - type: Construction
-    graph: glass
+    graph: Glass
     node: SheetRGlass
 
 - type: entity
@@ -119,7 +119,7 @@
       - pglass_2
       - pglass_3
   - type: Construction
-    graph: glass
+    graph: Glass
     node: SheetPGlass
 
 - type: entity
@@ -157,7 +157,7 @@
       - rpglass_2
       - rpglass_3
   - type: Construction
-    graph: glass
+    graph: Glass
     node: SheetRPGlass
 
 - type: entity
