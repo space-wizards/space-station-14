@@ -25,13 +25,14 @@ namespace Content.Server.Physics.Controllers
         public override void UpdateBeforeSolve(bool prediction, float frameTime)
         {
             base.UpdateBeforeSolve(prediction, frameTime);
-            foreach (var comp in EntityManager.EntityQuery<ConveyorComponent>())
+            // TODO: This won't work if someone wants a massive fuckoff conveyor so look at using StartCollide or something.
+            foreach (var (comp, xform) in EntityManager.EntityQuery<ConveyorComponent, TransformComponent>())
             {
-                Convey(_conveyor, comp, frameTime);
+                Convey(_conveyor, comp, xform, frameTime);
             }
         }
 
-        private void Convey(ConveyorSystem system, ConveyorComponent comp, float frameTime)
+        private void Convey(ConveyorSystem system, ConveyorComponent comp, TransformComponent xform, float frameTime)
         {
             // Use an event for conveyors to know what needs to run
             if (!system.CanRun(comp))
@@ -39,29 +40,17 @@ namespace Content.Server.Physics.Controllers
                 return;
             }
 
-            var direction = system.GetAngle(comp).ToVec();
-            var entMan = IoCManager.Resolve<IEntityManager>();
-                         var ownerPos = entMan.GetComponent<TransformComponent>(comp.Owner).WorldPosition;
+            var speed = comp.Speed;
 
-            foreach (var (entity, physics) in EntitySystem.Get<ConveyorSystem>().GetEntitiesToMove(comp))
+            if (speed <= 0f) return;
+
+            var direction = xform.WorldRotation.ToWorldVec();
+
+            foreach (var (entity, physics) in _conveyor.GetEntitiesToMove(comp))
             {
-                var itemRelativeToConveyor = entMan.GetComponent<TransformComponent>(entity).WorldPosition - ownerPos;
-                physics.LinearVelocity += Convey(direction, comp.Speed, frameTime, itemRelativeToConveyor);
+                var conveyance = direction * comp.Speed;
+                physics.LinearVelocity += conveyance;
             }
-        }
-
-        private Vector2 Convey(Vector2 direction, float speed, float frameTime, Vector2 itemRelativeToConveyor)
-        {
-            if(speed == 0 || direction.Length == 0) return Vector2.Zero;
-            direction = direction.Normalized;
-
-            var dirNormal = new Vector2(direction.Y, direction.X);
-            var dot = Vector2.Dot(itemRelativeToConveyor, dirNormal);
-
-            var velocity = direction * speed * 5;
-            velocity += dirNormal * speed * -dot;
-
-            return velocity * frameTime;
         }
     }
 }
