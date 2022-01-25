@@ -126,40 +126,5 @@ namespace Content.Server.Conveyor
 
             return new Angle(EntityManager.GetComponent<TransformComponent>(component.Owner).LocalRotation.Theta + radians + adjustment);
         }
-
-        public IEnumerable<(EntityUid, IPhysBody)> GetEntitiesToMove(ConveyorComponent comp)
-        {
-            //todo uuuhhh cache this
-            foreach (var entity in _entityLookup.GetEntitiesIntersecting(comp.Owner, flags: LookupFlags.Approximate))
-            {
-                if (Deleted(entity))
-                {
-                    continue;
-                }
-
-                if (entity == comp.Owner)
-                {
-                    continue;
-                }
-
-                if (!EntityManager.TryGetComponent(entity, out IPhysBody? physics) ||
-                    physics.BodyType == BodyType.Static || physics.BodyStatus == BodyStatus.InAir || entity.IsWeightless())
-                {
-                    continue;
-                }
-
-                if (EntityManager.HasComponent<IMapGridComponent>(entity))
-                {
-                    continue;
-                }
-
-                if (entity.IsInContainer())
-                {
-                    continue;
-                }
-
-                yield return (entity, physics);
-            }
-        }
     }
 }
