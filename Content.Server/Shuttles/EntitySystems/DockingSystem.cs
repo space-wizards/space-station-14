@@ -320,7 +320,7 @@ namespace Content.Server.Shuttles.EntitySystems
         /// <summary>
         /// Docks 2 ports together and assumes it is valid.
         /// </summary>
-        private void Dock(DockingComponent dockA, DockingComponent dockB)
+        public void Dock(DockingComponent dockA, DockingComponent dockB)
         {
             Logger.DebugS("docking", $"Docking between {dockA.Owner} and {dockB.Owner}");
 
