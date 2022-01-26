@@ -142,9 +142,9 @@ public sealed partial class GunSystem : EntitySystem
             return;
 
         // TODO: Not exactly robust
-        var gun = handsComponent.GetActiveHand;
+        var gun = handsComponent.GetActiveHand()?.HeldEntity;
 
-        if (gun == null || !TryComp(gun.Owner, out ServerRangedWeaponComponent? weapon))
+        if (gun == null || !TryComp(gun, out ServerRangedWeaponComponent? weapon))
             return;
 
         // map pos
