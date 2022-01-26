@@ -10,6 +10,7 @@ using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
 using Robust.Shared.Console;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -24,6 +25,7 @@ namespace Content.Server.Atmos.EntitySystems
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly AdminLogSystem _adminLog = default!;
+        [Dependency] private readonly SharedContainerSystem _containers = default!;
 
         private const float ExposedUpdateDelay = 1f;
         private float _exposedTimer = 0f;
