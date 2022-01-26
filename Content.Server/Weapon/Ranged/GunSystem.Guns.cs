@@ -38,9 +38,9 @@ public sealed partial class GunSystem
 
         if (!TryComp(user, out HandsComponent? hands) || hands.GetActiveHand()?.HeldEntity != gun.Owner) return;
 
-        if (!TryComp(user, out CombatModeComponent? combat) || !combat.IsInCombatMode) return;
-
-        if (!_blocker.CanInteract(user)) return;
+        if (!TryComp(user, out CombatModeComponent? combat) ||
+            !combat.IsInCombatMode ||
+            !_blocker.CanInteract(user)) return;
 
         var fireAttempt = new GunFireAttemptEvent(user, gun);
         EntityManager.EventBus.RaiseLocalEvent(gun.Owner, fireAttempt);
