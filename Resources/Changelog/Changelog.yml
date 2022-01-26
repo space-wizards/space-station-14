@@ -1,9 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: Monkey cubes are available to Cargo, type: Add}
-  id: 436
-  time: '2021-10-13T17:14:34.0000000+00:00'
 - author: PJB3005
   changes:
   - {message: Examine details like welder fuel level now show up for items in your
@@ -2927,3 +2922,9 @@ Entries:
       Official and the second favourite instrument of the Clown.', type: Add}
   id: 936
   time: '2022-01-26T17:27:04.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Captain and HoP now have Quartermaster access. Find somewhere else to
+      hide your contraband QM., type: Fix}
+  id: 937
+  time: '2022-01-26T18:29:44.0000000+00:00'
