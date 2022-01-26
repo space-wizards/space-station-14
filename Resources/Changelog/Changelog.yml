@@ -1,9 +1,4 @@
 Entries:
-- author: Jazpixel
-  changes:
-  - {message: Removed single line that broke crayons., type: Remove}
-  id: 434
-  time: '2021-10-13T06:56:35.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: 'Condiments, baked goods, bowls, some produce have solution properties
@@ -2928,3 +2923,8 @@ Entries:
       takes time, type: Tweak}
   id: 934
   time: '2022-01-26T04:26:54.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Range limit removed from LOOC for ghosts, type: Tweak}
+  id: 935
+  time: '2022-01-26T13:18:56.0000000+00:00'
