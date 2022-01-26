@@ -1,10 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: Grown food isn't empty anymore - "Long monkey" no longer the only long-term
-      option, type: Fix}
-  id: 432
-  time: '2021-10-12T08:01:23.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: Fixes thrown slippery items causing the thrower to become horizontal
@@ -2925,3 +2919,12 @@ Entries:
     type: Tweak}
   id: 932
   time: '2022-01-25T23:33:45.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Power tools now do their job faster! Power drills and jaws of life never
+      looked so good to borrow..., type: Add}
+  - {message: Emergency welders are now slower than their bigger counterpart., type: Fix}
+  - {message: Metal crate deconstruction now requires a welder as it used to. Plastic
+      crates are still screwed., type: Fix}
+  id: 933
+  time: '2022-01-26T04:12:20.0000000+00:00'
