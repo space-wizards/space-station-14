@@ -1,10 +1,4 @@
 Entries:
-- author: PJB3005
-  changes:
-  - {message: Examine details like welder fuel level now show up for items in your
-      inventory., type: Fix}
-  id: 437
-  time: '2021-10-13T21:04:16.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: Reduced radiation pulse damage to be around 20 for a direct sustained
@@ -2928,3 +2922,9 @@ Entries:
       hide your contraband QM., type: Fix}
   id: 937
   time: '2022-01-26T18:29:44.0000000+00:00'
+- author: moony
+  changes:
+  - {message: 'The game rules have been updated. In short, no more revolutions unless
+      you''re an antagonist with administrator permission.', type: Tweak}
+  id: 938
+  time: '2022-01-26T22:50:44.0000000+00:00'
