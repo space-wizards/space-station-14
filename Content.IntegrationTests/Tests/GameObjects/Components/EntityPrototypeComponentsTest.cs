@@ -1,10 +1,8 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Content.Client;
-using Content.Client.Entry;
 using NUnit.Framework;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameObjects;
@@ -14,12 +12,12 @@ using YamlDotNet.RepresentationModel;
 namespace Content.IntegrationTests.Tests.GameObjects.Components
 {
     [TestFixture]
-    [TestOf(typeof(IgnoredComponents))]
+    [TestOf(typeof(Client.Entry.IgnoredComponents))]
     [TestOf(typeof(Server.Entry.IgnoredComponents))]
     public class EntityPrototypeComponentsTest : ContentIntegrationTest
     {
         [Test]
-        public async Task Test()
+        public async Task PrototypesHaveKnownComponents()
         {
             var (client, server) = await StartConnectedServerDummyTickerClientPair();
 
@@ -117,6 +115,41 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components
             }
 
             Assert.Fail(message.ToString());
+        }
+
+        [Test]
+        public async Task IgnoredComponentsExistInTheCorrectPlaces()
+        {
+            var (client, server) = await StartConnectedServerClientPair();
+            var serverComponents = server.ResolveDependency<IComponentFactory>();
+            var ignoredServerNames = Server.Entry.IgnoredComponents.List;
+            var clientComponents = client.ResolveDependency<IComponentFactory>();
+            var ignoredClientNames = Client.Entry.IgnoredComponents.List;
+
+            var failureMessages = "";
+            foreach (var clientIgnored in ignoredClientNames)
+            {
+                if (clientComponents.TryGetRegistration(clientIgnored, out _))
+                {
+                    failureMessages = $"{failureMessages}\nComponent {clientIgnored} was ignored on client, but exists on client";
+                }
+                if (!serverComponents.TryGetRegistration(clientIgnored, out _))
+                {
+                    failureMessages = $"{failureMessages}\nComponent {clientIgnored} was ignored on client, but does not exist on server";
+                }
+            }
+            foreach (var serverIgnored in ignoredServerNames)
+            {
+                if (serverComponents.TryGetRegistration(serverIgnored, out _))
+                {
+                    failureMessages = $"{failureMessages}\nComponent {serverIgnored} was ignored on server, but exists on server";
+                }
+                if (!clientComponents.TryGetRegistration(serverIgnored, out _))
+                {
+                    failureMessages = $"{failureMessages}\nComponent {serverIgnored} was ignored on server, but does not exist on client";
+                }
+            }
+            Assert.IsEmpty(failureMessages);
         }
     }
 }
