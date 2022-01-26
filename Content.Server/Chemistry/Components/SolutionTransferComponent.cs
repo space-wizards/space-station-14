@@ -135,10 +135,8 @@ namespace Content.Server.Chemistry.Components
                             && solutionsSys.TryGetRefillableSolution(Owner, out var ownerRefill)
                             && solutionsSys.TryGetDrainableSolution(target, out var targetDrain))
             {
-                // _entities.TryGetComponent(Owner, out SolutionTransferComponent ownSolution); // is there a cleaner way to do this?
-                // var transferAmount = ownSolution.TransferAmount; // use the TransferAmount of the receiver container by default.
 
-                var transferAmount = TransferAmount;
+                var transferAmount = TransferAmount; // This is the player-configurable transfer amount of "Owner," not the target reagent tank.
 
                 if (_entities.TryGetComponent(Owner, out RefillableSolutionComponent? refill) && refill.MaxRefill != null) // Owner is the entity receiving solution from target.
                 {
