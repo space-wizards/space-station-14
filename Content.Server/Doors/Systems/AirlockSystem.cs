@@ -3,6 +3,8 @@ using Content.Server.Power.Components;
 using Content.Server.WireHacking;
 using Content.Shared.Doors;
 using Content.Shared.Popups;
+using Content.Shared.Interaction;
+using Content.Shared.Remotes;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -26,6 +28,7 @@ namespace Content.Server.Doors.Systems
             SubscribeLocalEvent<AirlockComponent, DoorGetCloseTimeModifierEvent>(OnDoorCloseTimeModifier);
             SubscribeLocalEvent<AirlockComponent, DoorClickShouldActivateEvent>(OnDoorClickShouldActivate);
             SubscribeLocalEvent<AirlockComponent, BeforeDoorPryEvent>(OnDoorPry);
+            SubscribeLocalEvent<AirlockComponent, RangedInteractEvent>(OnRangedInteract);
         }
 
         private void OnPowerChanged(EntityUid uid, AirlockComponent component, PowerChangedEvent args)
@@ -107,6 +110,20 @@ namespace Content.Server.Doors.Systems
             {
                 component.Owner.PopupMessage(args.Args.User, Loc.GetString("airlock-component-cannot-pry-is-powered-message"));
                 args.Cancel();
+            }
+        }
+
+        private void OnRangedInteract(EntityUid uid, AirlockComponent component, RangedInteractEvent args)
+        {
+            var doorComponent = EntityManager.GetComponent<ServerDoorComponent>(component.Owner);
+
+            if (doorComponent.State == SharedDoorComponent.DoorState.Open)
+            {
+                doorComponent.TryClose(args.UsedUid);
+            }
+            else if (doorComponent.State == SharedDoorComponent.DoorState.Closed)
+            {
+                doorComponent.TryOpen(args.UsedUid);
             }
         }
     }
