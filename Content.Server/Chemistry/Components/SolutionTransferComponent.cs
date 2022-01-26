@@ -129,19 +129,23 @@ namespace Content.Server.Chemistry.Components
                 return false;
             }
 
-
-            if (CanReceive && _entities.TryGetComponent(target, out ReagentTankComponent? tank)
-                           && solutionsSys.TryGetRefillableSolution(Owner, out var ownerRefill)
-                           && solutionsSys.TryGetDrainableSolution(target, out var targetDrain))
+            //Special case for reagent tanks, because normally clicking another container will give solution, not take it.
+            if (CanReceive  && _entities.TryGetComponent(target, out DrainableSolutionComponent? drainable) // target must be drainable
+                            && !_entities.TryGetComponent(target, out RefillableSolutionComponent? refillable) // target must not be refillable (e.g. Reagent Tanks)
+                            && solutionsSys.TryGetRefillableSolution(Owner, out var ownerRefill)
+                            && solutionsSys.TryGetDrainableSolution(target, out var targetDrain))
             {
-                var tankTransferAmount = tank.TransferAmount;
+                // _entities.TryGetComponent(Owner, out SolutionTransferComponent ownSolution); // is there a cleaner way to do this?
+                // var transferAmount = ownSolution.TransferAmount; // use the TransferAmount of the receiver container by default.
 
-                if (_entities.TryGetComponent(Owner, out RefillableSolutionComponent? refill) && refill.MaxRefill != null)
+                var transferAmount = TransferAmount;
+
+                if (_entities.TryGetComponent(Owner, out RefillableSolutionComponent? refill) && refill.MaxRefill != null) // Owner is the entity receiving solution from target.
                 {
-                    tankTransferAmount = FixedPoint2.Min(tankTransferAmount, (FixedPoint2) refill.MaxRefill);
+                    transferAmount = FixedPoint2.Min(transferAmount, (FixedPoint2) refill.MaxRefill); // if the receiver has a smaller transfer limit, use that instead
                 }
 
-                var transferred = DoTransfer(eventArgs.User, target, targetDrain, Owner, ownerRefill, tankTransferAmount);
+                var transferred = DoTransfer(eventArgs.User, target, targetDrain, Owner, ownerRefill, transferAmount);
                 if (transferred > 0)
                 {
                     var toTheBrim = ownerRefill.AvailableVolume == 0;
@@ -155,6 +159,7 @@ namespace Content.Server.Chemistry.Components
                 }
             }
 
+            // if target is refillable, and owner is drainable
             if (CanSend && solutionsSys.TryGetRefillableSolution(target, out var targetRefill)
                         && solutionsSys.TryGetDrainableSolution(Owner, out var ownerDrain))
             {
