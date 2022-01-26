@@ -11,6 +11,42 @@
 
 - type: entity
   parent: BaseComputerCircuitboard
+  id: AlertsComputerCircuitboard
+  name: alerts computer PCB
+  description: A computer printed circuit board for an alerts computer
+  components:
+    - type: ComputerBoard
+      prototype: ComputerAlert
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: PowerComputerCircuitboard
+  name: power monitoring PCB
+  description: A computer printed circuit board for a power monitoring computer
+  components:
+    - type: ComputerBoard
+      prototype: ComputerPowerMonitoring
+      
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: MedicalRecordsComputerCircuitboard
+  name: medical records PCB
+  description: A computer printed circuit board for a medical records computer
+  components:
+    - type: ComputerBoard
+      prototype: ComputerMedicalRecords
+      
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: CriminalRecordsComputerCircuitboard
+  name: criminal records PCB
+  description: A computer printed circuit board for a criminal records computer
+  components:
+    - type: ComputerBoard
+      prototype: ComputerCriminalRecords
+
+- type: entity
+  parent: BaseComputerCircuitboard
   id: SupplyComputerCircuitboard
   name: supply ordering PCB
   description: A computer printed circuit board for a supply ordering console
