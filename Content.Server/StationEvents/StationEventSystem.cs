@@ -109,6 +109,7 @@ namespace Content.Server.StationEvents
                     continue;
                 }
 
+                // TODO support for multiple events running at once?
                 CurrentEvent?.Shutdown();
                 CurrentEvent = stationEvent;
                 stationEvent.Announce();

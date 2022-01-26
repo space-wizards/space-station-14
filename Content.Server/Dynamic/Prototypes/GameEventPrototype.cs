@@ -36,10 +36,10 @@ public class GameEventPrototype : IPrototype
     public HashSet<string> EventTags = default!;
 
     /// <summary>
-    ///     A bitfield of event types.
+    ///    Which type of event is this?
     /// </summary>
-    [DataField("eventTypes", customTypeSerializer:typeof(FlagSerializer<DynamicEventType>))]
-    public int EventTypes = (int) DynamicEventTypeEnum.Roundstart;
+    [DataField("eventType")]
+    public DynamicEventType EventType = DynamicEventType.Roundstart;
 
     /// <summary>
     ///     The threat cost of this event. Higher is more dangerous.
@@ -63,13 +63,13 @@ public class GameEventPrototype : IPrototype
     ///     A list of candidate conditions for this event.
     /// </summary>
     [DataField("candidateConditions")]
-    public List<CandidateCondition> CandidateConditions = default!;
+    public List<CandidateCondition> CandidateConditions = new();
 
     /// <summary>
     ///     A list of event conditions, checked before it is purchased to determine if it can be run.
     /// </summary>
     [DataField("eventConditions")]
-    public List<GameEventCondition> EventConditions = default!;
+    public List<GameEventCondition> EventConditions = new();
 
     /// <summary>
     ///     A list of event conditions, checked every refund internal in Dynamic before <see cref="MaxRefundTime"/> to
@@ -78,11 +78,11 @@ public class GameEventPrototype : IPrototype
     ///     No refund conditions means this event will never be refunded.
     /// </summary>
     [DataField("refundConditions")]
-    public List<GameEventCondition> RefundConditions = default!;
+    public List<GameEventCondition>? RefundConditions;
 
     /// <summary>
     ///     A list of effects to be run when this event is purchased.
     /// </summary>
     [DataField("effects")]
-    public List<GameEventEffect> EventEffects = default!;
+    public List<GameEventEffect> EventEffects = new();
 }

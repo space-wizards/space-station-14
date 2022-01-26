@@ -28,12 +28,9 @@ public record GameEventData(
 /// <summary>
 ///     The various ways that a dynamic event can occur.
 /// </summary>
-[Flags, FlagsFor(typeof(DynamicEventType))]
-public enum DynamicEventTypeEnum
+public enum DynamicEventType
 {
-    Roundstart = 0,     // 0
-    Midround = 1 << 0,  // 1
-    Latejoin = 1 << 1   // 2
+    Roundstart,
+    Midround,
+    Latejoin
 }
-
-public sealed class DynamicEventType {}

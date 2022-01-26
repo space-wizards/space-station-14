@@ -1,10 +1,12 @@
-﻿using Content.Server.GameTicking.Events;
+﻿using Content.Server.GameTicking;
+using Content.Server.GameTicking.Events;
 using Content.Server.GameTicking.Rules;
 using Content.Server.StationEvents;
 using Robust.Shared.Configuration;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Dynamic.Systems;
 
@@ -22,7 +24,7 @@ public partial class DynamicModeSystem : GameRuleSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<RoundStartingEvent>(OnRoundStarting);
+        SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnRoundStarted);
     }
 
     public override void Update(float frameTime)
@@ -57,9 +59,12 @@ public partial class DynamicModeSystem : GameRuleSystem
         GenerateBudgets();
     }
 
-    private void OnRoundStarting(RoundStartingEvent ev)
+    private void OnRoundStarted(RulePlayerJobsAssignedEvent ev)
     {
-        // Run roundstart events
+        if (!Enabled)
+            return;
+
+        RunRoundstartEvents(ev.Players);
     }
 
     public override void Removed()
@@ -73,5 +78,6 @@ public partial class DynamicModeSystem : GameRuleSystem
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly StationEventSystem _stationEvents = default!;
 }

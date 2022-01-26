@@ -1,0 +1,24 @@
+﻿- type: gameEvent
+  id: Test1
+  name: test1
+  description: idk lol
+  eventTags: [ "Antagonist" ]
+  eventType: Midround
+  threat: 10
+
+- type: gameEvent
+  id: Test2
+  name: test2
+  description: idk lol
+  eventTags: [ "Antagonist" ]
+  eventType: Midround
+  threat: 5
+
+- type: gameEvent
+  id: Test3
+  name: test3
+  description: idk lol
+  eventTags: [ "Antagonist" ]
+  eventType: Midround
+  threat: 2.5
+

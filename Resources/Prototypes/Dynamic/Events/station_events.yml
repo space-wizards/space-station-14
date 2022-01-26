@@ -3,8 +3,8 @@
   name: Kudzu!
   description: idk lol
   eventTags: [ "StationEvent" ]
-  eventTypes: [ Midround ]
-  threat: 100
+  eventType: Roundstart
+  threat: 1
   effects:
   - !type:RunStationEventEffect
-    name: Kudzu
+    name: KudzuGrowth

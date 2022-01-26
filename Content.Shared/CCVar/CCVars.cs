@@ -84,6 +84,7 @@ namespace Content.Shared.CCVar
         /// <summary>
         ///     Controls the default game preset.
         /// </summary>
+
         public static readonly CVarDef<string>
             GameLobbyDefaultPreset = CVarDef.Create("game.defaultpreset", "dynamic", CVar.ARCHIVE);
 
