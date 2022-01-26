@@ -12,7 +12,7 @@ namespace Content.Server.Database.Migrations.Sqlite
                 name: "server_id",
                 table: "round",
                 type: "INTEGER",
-                nullable: true);
+                defaultValue: 0);
 
             migrationBuilder.CreateTable(
                 name: "server",
@@ -26,6 +26,12 @@ namespace Content.Server.Database.Migrations.Sqlite
                 {
                     table.PrimaryKey("PK_server", x => x.server_id);
                 });
+
+            migrationBuilder.InsertData(
+                "server",
+                new[] {"server_id", "name"},
+                new object[] { 0, "unknown" }
+                );
 
             migrationBuilder.CreateIndex(
                 name: "IX_round__server_id",

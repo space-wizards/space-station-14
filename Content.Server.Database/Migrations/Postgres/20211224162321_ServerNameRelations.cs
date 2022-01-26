@@ -13,7 +13,7 @@ namespace Content.Server.Database.Migrations.Postgres
                 name: "server_id",
                 table: "round",
                 type: "integer",
-                nullable: true);
+                defaultValue: 0);
 
             migrationBuilder.CreateIndex(
                 name: "IX_round__server_id",

@@ -125,7 +125,7 @@ namespace Content.Server.Database
 
         #region Rounds
 
-        Task<int> AddNewRound(Server? server, params Guid[] playerIds);
+        Task<int> AddNewRound(Server server, params Guid[] playerIds);
         Task<Round> GetRound(int id);
         Task AddRoundPlayers(int id, params Guid[] playerIds);
 
@@ -327,7 +327,7 @@ namespace Content.Server.Database
             return _db.AddAdminRankAsync(rank, cancel);
         }
 
-        public Task<int> AddNewRound(Server? server, params Guid[] playerIds)
+        public Task<int> AddNewRound(Server server, params Guid[] playerIds)
         {
             return _db.AddNewRound(server, playerIds);
         }

@@ -450,7 +450,7 @@ namespace Content.Server.Database
             await db.DbContext.SaveChangesAsync(cancel);
         }
 
-        public virtual async Task<int> AddNewRound(Server? server, params Guid[] playerIds)
+        public virtual async Task<int> AddNewRound(Server server, params Guid[] playerIds)
         {
             await using var db = await GetDb();
 
@@ -461,7 +461,7 @@ namespace Content.Server.Database
             var round = new Round
             {
                 Players = players,
-                ServerId = server?.Id
+                ServerId = server.Id
             };
 
             db.DbContext.Round.Add(round);

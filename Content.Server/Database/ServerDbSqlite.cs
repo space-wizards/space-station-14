@@ -248,7 +248,7 @@ namespace Content.Server.Database
             return (admins.Select(p => (p.a, p.LastSeenUserName)).ToArray(), adminRanks)!;
         }
 
-        public override async Task<int> AddNewRound(Server? server, params Guid[] playerIds)
+        public override async Task<int> AddNewRound(Server server, params Guid[] playerIds)
         {
             await using var db = await GetDb();
 
@@ -266,7 +266,7 @@ namespace Content.Server.Database
             {
                 Id = nextId,
                 Players = players,
-                ServerId = server?.Id
+                ServerId = server.Id
             };
 
             db.DbContext.Round.Add(round);
@@ -299,7 +299,7 @@ namespace Content.Server.Database
                     entity.Name = name;
                     logEntities.Add(entity);
                 }
-                
+
                 foreach (var player in log.Players)
                 {
                     player.LogId = log.Id;

@@ -21,6 +21,11 @@ namespace Content.Server.Database.Migrations.Postgres
                 {
                     table.PrimaryKey("PK_server", x => x.server_id);
                 });
+            migrationBuilder.InsertData(
+                "server",
+                new[] {"server_id", "name"},
+                new object[] { 0, "unknown" }
+            );
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
