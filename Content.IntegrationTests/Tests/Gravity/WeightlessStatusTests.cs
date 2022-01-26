@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Content.Server.Gravity;
 using Content.Server.Gravity.EntitySystems;
 using Content.Shared.Alert;
@@ -42,9 +42,9 @@ namespace Content.IntegrationTests.Tests.Gravity
 
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
+            var alertsSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<AlertsSystem>();
 
             EntityUid human = default;
-            SharedAlertsComponent alerts = null;
 
             await server.WaitAssertion(() =>
             {
@@ -52,7 +52,7 @@ namespace Content.IntegrationTests.Tests.Gravity
                 var coordinates = grid.ToCoordinates();
                 human = entityManager.SpawnEntity("HumanDummy", coordinates);
 
-                Assert.True(entityManager.TryGetComponent(human, out alerts));
+                Assert.True(entityManager.TryGetComponent(human, out AlertsComponent alerts));
             });
 
             // Let WeightlessSystem and GravitySystem tick
@@ -61,7 +61,7 @@ namespace Content.IntegrationTests.Tests.Gravity
             await server.WaitAssertion(() =>
             {
                 // No gravity without a gravity generator
-                Assert.True(alerts.IsShowingAlert(AlertType.Weightless));
+                Assert.True(alertsSystem.IsShowingAlert(human, AlertType.Weightless));
 
                 entityManager.SpawnEntity("GravityGeneratorDummy", entityManager.GetComponent<TransformComponent>(human).Coordinates);
             });
@@ -71,7 +71,7 @@ namespace Content.IntegrationTests.Tests.Gravity
 
             await server.WaitAssertion(() =>
             {
-                Assert.False(alerts.IsShowingAlert(AlertType.Weightless));
+                Assert.False(alertsSystem.IsShowingAlert(human, AlertType.Weightless));
 
                 // TODO: Re-add gravity generator breaking when Vera is done with construction stuff.
                 /*

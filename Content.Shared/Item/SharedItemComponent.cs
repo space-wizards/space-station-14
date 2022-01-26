@@ -1,14 +1,15 @@
 using System;
-using Content.Shared.ActionBlocker;
+using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Inventory;
+using Content.Shared.Sound;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
-using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -19,7 +20,7 @@ namespace Content.Shared.Item
     ///    Players can pick up, drop, and put items in bags, and they can be seen in player's hands.
     /// </summary>
     [NetworkedComponent()]
-    public abstract class SharedItemComponent : Component, IEquipped, IUnequipped, IInteractHand
+    public class SharedItemComponent : Component, IInteractHand
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
@@ -44,6 +45,7 @@ namespace Content.Shared.Item
         /// <summary>
         ///     Part of the state of the sprite shown on the player when this item is in their hands.
         /// </summary>
+        // todo paul make this update slotvisuals on client on change
         [ViewVariables(VVAccess.ReadWrite)]
         public string? EquippedPrefix
         {
@@ -58,6 +60,13 @@ namespace Content.Shared.Item
         [DataField("HeldPrefix")]
         private string? _equippedPrefix;
 
+        [ViewVariables]
+        [DataField("Slots")]
+        public SlotFlags SlotFlags = SlotFlags.PREVENTEQUIP; //Different from None, NONE allows equips if no slot flags are required
+
+        [DataField("EquipSound")]
+        public SoundSpecifier? EquipSound { get; set; } = default!;
+
         /// <summary>
         ///     Color of the sprite shown on the player when this item is in their hands.
         /// </summary>
@@ -65,7 +74,7 @@ namespace Content.Shared.Item
         public Color Color
         {
             get => _color;
-            protected set
+            set
             {
                 _color = value;
                 Dirty();
@@ -90,59 +99,14 @@ namespace Content.Shared.Item
         [DataField("sprite")]
         private string? _rsiPath;
 
-        public override ComponentState GetComponentState()
-        {
-            return new ItemComponentState(Size, EquippedPrefix, Color, RsiPath);
-        }
-
-        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
-        {
-            base.HandleComponentState(curState, nextState);
-
-            if (curState is not ItemComponentState state)
-                return;
-
-            Size = state.Size;
-            EquippedPrefix = state.EquippedPrefix;
-            Color = state.Color;
-            RsiPath = state.RsiPath;
-        }
-
-        /// <summary>
-        ///     If a player can pick up this item.
-        /// </summary>
-        public bool CanPickup(EntityUid user, bool popup = true)
-        {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanPickup(user))
-                return false;
-
-            if (_entMan.GetComponent<TransformComponent>(user).MapID != _entMan.GetComponent<TransformComponent>(Owner).MapID)
-                return false;
-
-            if (!_entMan.TryGetComponent(Owner, out IPhysBody? physics) || physics.BodyType == BodyType.Static)
-                return false;
-
-            return user.InRangeUnobstructed(Owner, ignoreInsideBlocker: true, popup: popup);
-        }
-
-        void IEquipped.Equipped(EquippedEventArgs eventArgs)
-        {
-            EquippedToSlot();
-        }
-
-        void IUnequipped.Unequipped(UnequippedEventArgs eventArgs)
-        {
-            RemovedFromSlot();
-        }
-
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
             var user = eventArgs.User;
 
-            if (!CanPickup(user))
+            if (!user.InRangeUnobstructed(Owner, ignoreInsideBlocker: true))
                 return false;
 
-            if (!_entMan.TryGetComponent(user, out SharedHandsComponent? hands))
+            if (!_entMan.TryGetComponent(user, out SharedHandsComponent hands))
                 return false;
 
             var activeHand = hands.ActiveHand;
@@ -150,15 +114,27 @@ namespace Content.Shared.Item
             if (activeHand == null)
                 return false;
 
-            hands.TryPickupEntityToActiveHand(Owner);
-            return true;
+            // hands checks action blockers
+            return hands.TryPickupEntityToActiveHand(Owner, animateUser: true);
         }
 
-        protected virtual void OnEquippedPrefixChange() { }
+        private void OnEquippedPrefixChange()
+        {
+            if (Owner.TryGetContainer(out var container))
+                _entMan.EventBus.RaiseLocalEvent(container.Owner, new ItemPrefixChangeEvent(Owner, container.ID));
+        }
 
-        public virtual void RemovedFromSlot() { }
+        public void RemovedFromSlot()
+        {
+            if (_entMan.TryGetComponent(Owner, out SharedSpriteComponent component))
+                component.Visible = true;
+        }
 
-        public virtual void EquippedToSlot() { }
+        public virtual void EquippedToSlot()
+        {
+            if (_entMan.TryGetComponent(Owner, out SharedSpriteComponent component))
+                component.Visible = false;
+        }
     }
 
     [Serializable, NetSerializable]
@@ -175,6 +151,23 @@ namespace Content.Shared.Item
             EquippedPrefix = equippedPrefix;
             Color = color;
             RsiPath = rsiPath;
+        }
+    }
+
+    /// <summary>
+    ///     Raised when an item's EquippedPrefix is changed. The event is directed at the entity that contains this item, so
+    ///     that it can properly update its sprite/GUI.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public class ItemPrefixChangeEvent : EntityEventArgs
+    {
+        public readonly EntityUid Item;
+        public readonly string ContainerId;
+
+        public ItemPrefixChangeEvent(EntityUid item, string containerId)
+        {
+            Item = item;
+            ContainerId = containerId;
         }
     }
 

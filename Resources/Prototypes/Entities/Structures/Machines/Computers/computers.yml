@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: ComputerBase
   id: ComputerAlert
   name: alerts computer
@@ -39,6 +39,8 @@
     - type: ComputerVisualizer
       key: generic_key
       screen: shuttle
+  - type: Computer
+    board: ShuttleConsoleCircuitboard
 
 - type: entity
   parent: ComputerShuttleBase
@@ -306,12 +308,15 @@
       - HydroponicsSeedsExotic
       - LivestockMonkeyCube
       - LivestockCow
+      - LivestockChicken
+      - LivestockDuck
       - FoodPizza
       - ServiceJanitorial
       - ServiceLightsReplacement
       - ServiceSmokeables
       - ServiceCustomSmokable
-      - SalvageEquipment
+      - ServiceBureaucracy
+      - ServicePersonnel
       - EngineeringCableLv
       - EngineeringCableMv
       - EngineeringCableHv

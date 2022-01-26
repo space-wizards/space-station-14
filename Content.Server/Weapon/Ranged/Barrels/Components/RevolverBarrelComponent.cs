@@ -13,9 +13,11 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Weapon.Ranged.Barrels.Components
@@ -48,7 +50,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         public override int ShotsLeft => _ammoContainer.ContainedEntities.Count;
 
         [ViewVariables]
-        [DataField("fillPrototype")]
+        [DataField("fillPrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         private string? _fillPrototype;
 
         [ViewVariables]

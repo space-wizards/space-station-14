@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseItem
+  parent: BoxCardboard
   name: monkey cube box
   id: MonkeyCubeBox
   description: Drymate brand monkey cubes. Just add water!

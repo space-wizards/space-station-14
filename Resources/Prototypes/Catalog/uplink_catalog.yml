@@ -31,12 +31,14 @@
 #  itemId: CrossbowEnergyMini
 #  price: 8
 
-# bug swept to make
-#- type: uplinkListing
-#  id: UplinkESword
-#  category: Weapons
-#  itemId: ESword
-#  price: 8
+
+- type: uplinkListing
+  id: UplinkEsword
+  category: Weapons
+  itemId: EnergySword
+  listingName: Energy Sword
+  description: A very dangerous energy sword. Can be stored in pockets when turned off. Makes a lot of noise when used or turned on.
+  price: 8
 
 # bug swept to make
 #- type: uplinkListing
@@ -149,12 +151,12 @@
   price: 25
   icon: /Textures/Objects/Weapons/Guns/Launchers/china_lake.rsi/icon.png
 
-- type: uplinkListing
-  id: UplinkCarbineBundle
-  category: Bundles
-  itemId: ClothingBackpackDuffelSyndicateFilledCarbine
-  price: 35
-  icon: /Textures/Objects/Weapons/Guns/Rifles/carbine.rsi/icon.png
+#- type: uplinkListing
+#  id: UplinkCarbineBundle
+#  category: Bundles
+#  itemId: ClothingBackpackDuffelSyndicateFilledCarbine
+#  price: 35
+#  icon: /Textures/Objects/Weapons/Guns/Rifles/carbine.rsi/icon.png
 
 # Tools
 
@@ -189,6 +191,8 @@
   id: UplinkClothingNoSlipsShoes
   category: Armor
   itemId: ClothingShoesChameleonNoSlips
+  listingName: no-slip shoes
+  description: These protect you from slips while looking like normal sneakers.
   price: 2
 
 - type: uplinkListing
@@ -235,6 +239,12 @@
   id: UplinkPen
   category: Misc
   itemId: Pen
+  price: 2
+
+- type: uplinkListing
+  id: UplinkCigarettes
+  category: Misc
+  itemId: CigPackSyndicate
   price: 2
 
 - type: uplinkListing

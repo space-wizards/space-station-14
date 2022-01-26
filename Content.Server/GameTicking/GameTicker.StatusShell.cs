@@ -1,5 +1,5 @@
 using System;
-using Newtonsoft.Json.Linq;
+using System.Text.Json.Nodes;
 using Robust.Server.ServerStatus;
 using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
@@ -24,7 +24,7 @@ namespace Content.Server.GameTicking
             IoCManager.Resolve<IStatusHost>().OnStatusRequest += GetStatusResponse;
         }
 
-        private void GetStatusResponse(JObject jObject)
+        private void GetStatusResponse(JsonNode jObject)
         {
             // This method is raised from another thread, so this better be thread safe!
             lock (_statusShellLock)

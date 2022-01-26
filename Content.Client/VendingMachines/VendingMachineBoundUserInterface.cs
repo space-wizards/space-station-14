@@ -1,4 +1,4 @@
-﻿using Content.Client.VendingMachines.UI;
+using Content.Client.VendingMachines.UI;
 using Content.Shared.VendingMachines;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
@@ -38,9 +38,9 @@ namespace Content.Client.VendingMachines
             _menu.OpenCentered();
         }
 
-        public void Eject(string ID)
+        public void Eject(string id)
         {
-            SendMessage(new VendingMachineEjectMessage(ID));
+            SendMessage(new VendingMachineEjectMessage(id));
         }
 
         protected override void ReceiveMessage(BoundUserInterfaceMessage message)

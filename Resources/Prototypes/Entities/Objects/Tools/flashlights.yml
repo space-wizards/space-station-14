@@ -12,7 +12,8 @@
     actions:
       - actionType: ToggleLight
   - type: PowerCellSlot
-    startingCellType: PowerCellSmallHigh
+    cellSlot:
+      startingItem: PowerCellSmallHigh
   - type: Sprite
     sprite: Objects/Tools/flashlight.rsi
     layers:
@@ -39,7 +40,8 @@
   description: A robust flashlight used by security.
   components:
   - type: PowerCellSlot
-    startingCellType: PowerCellSmallSuper
+    cellSlot:
+      startingItem: PowerCellSmallSuper
   - type: Sprite
     sprite: Objects/Tools/seclite.rsi
     layers:

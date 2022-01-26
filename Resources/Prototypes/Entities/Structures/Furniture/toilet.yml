@@ -18,7 +18,7 @@
       toilet:
         maxVol: 250
   - type: Construction
-    graph: toilet
+    graph: Toilet
     node: toilet
   - type: Appearance
     visuals:

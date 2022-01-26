@@ -19,6 +19,9 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
         [DataField("spawn")]
         public Dictionary<string, MinMax> Spawn { get; set; } = new();
 
+        [DataField("offset")]
+        public float Offset { get; set; } = 0.5f;
+
         public void Execute(EntityUid owner, DestructibleSystem system)
         {
             var position = system.EntityManager.GetComponent<TransformComponent>(owner).MapPosition;
@@ -36,14 +39,14 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                     var spawned = system.EntityManager.SpawnEntity(entityId, position);
                     var stack = IoCManager.Resolve<IEntityManager>().GetComponent<StackComponent>(spawned);
                     EntitySystem.Get<StackSystem>().SetCount(spawned, count, stack);
-                    spawned.RandomOffset(0.5f);
+                    spawned.RandomOffset(Offset);
                 }
                 else
                 {
                     for (var i = 0; i < count; i++)
                     {
                         var spawned = system.EntityManager.SpawnEntity(entityId, position);
-                        spawned.RandomOffset(0.5f);
+                        spawned.RandomOffset(Offset);
                     }
                 }
             }

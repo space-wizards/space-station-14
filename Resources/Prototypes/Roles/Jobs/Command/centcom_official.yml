@@ -1,5 +1,5 @@
 - type: job
-  id: CentralCommandOffical
+  id: CentralCommandOfficial
   name: "centcom official"
   setPreference: false
   startingGear: CentcomGear
@@ -14,13 +14,13 @@
 - type: startingGear
   id: CentcomGear
   equipment:
-    innerclothing: ClothingUniformJumpsuitCentcomOfficial
+    jumpsuit: ClothingUniformJumpsuitCentcomOfficial
     shoes: ClothingShoesBootsJack
     head: ClothingHeadHatCentcom
     eyes: ClothingEyesGlassesSunglasses
     gloves: ClothingHandsGlovesColorBlack
-    outerclothing: ClothingOuterVestKevlar
-    idcard: CentcomPDA
+    outerClothing: ClothingOuterVestKevlar
+    id: CentcomPDA
     ears: ClothingHeadsetAltCommand
     pocket1: Paper
     pocket2: Pen

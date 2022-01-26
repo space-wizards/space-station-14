@@ -10,15 +10,15 @@
   - Medical
   - Chemistry
   - Maintenance
-  
+
 - type: startingGear
   id: ChemistGear
   equipment:
-    innerclothing: ClothingUniformJumpsuitChemistry
-    backpack: ClothingBackpackChemistryFilled
+    jumpsuit: ClothingUniformJumpsuitChemistry
+    back: ClothingBackpackChemistryFilled
     shoes: ClothingShoesColorWhite
-    outerclothing: ClothingOuterCoatLabChem
-    idcard: ChemistryPDA
+    outerClothing: ClothingOuterCoatLabChem
+    id: ChemistryPDA
     ears: ClothingHeadsetMedical
     belt: ClothingBeltMedical
     pocket1: HandLabeler

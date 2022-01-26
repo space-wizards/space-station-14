@@ -58,6 +58,7 @@
   - type: Tag
     tags:
     - RollingPaper
+    - Trash
 
 - type: entity
   id: CigaretteFilter
@@ -78,3 +79,4 @@
   - type: Tag
     tags:
     - CigFilter
+    - Trash

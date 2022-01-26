@@ -19,7 +19,9 @@ using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
@@ -44,7 +46,7 @@ namespace Content.Server.Fluids.Components
         private TimeSpan _cooldownEnd;
         [DataField("cooldownTime")]
         private float _cooldownTime = 0.5f;
-        [DataField("sprayedPrototype")]
+        [DataField("sprayedPrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         private string _vaporPrototype = "Vapor";
         [DataField("vaporAmount")]
         private int _vaporAmount = 1;

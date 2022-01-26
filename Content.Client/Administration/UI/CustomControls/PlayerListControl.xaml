@@ -6,6 +6,7 @@
               HorizontalExpand="True"
               PlaceHolder="{Loc Filter}"/>
     <ItemList Name="PlayerItemList"
+              Access="Public"
               SelectMode="Single"
               VerticalExpand="True"
               HorizontalExpand="True"

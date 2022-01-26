@@ -1,0 +1,192 @@
+- type: entity
+  save: false
+  name: Urist McHands The Dwarf
+  parent: MobHumanBase
+  id: MobDwarfBase
+  abstract: true
+  description: A miserable pile of secrets.
+  components:
+  - type: Icon
+    sprite: Mobs/Species/Slime/parts.rsi
+    state: full
+  - type: Sprite
+    netsync: false
+    noRot: true
+    drawdepth: Mobs
+    scale: 1, 0.8
+    layers:
+      - map: [ "enum.HumanoidVisualLayers.Chest" ]
+        color: "#e8b59b"
+        sprite: Mobs/Species/Human/parts.rsi
+        state: torso_m
+      - map: [ "enum.HumanoidVisualLayers.Head" ]
+        color: "#e8b59b"
+        sprite: Mobs/Species/Human/parts.rsi
+        state: head_m
+      - map: [ "enum.HumanoidVisualLayers.Eyes" ]
+        color: "#008800"
+        sprite: Mobs/Customization/eyes.rsi
+        state: eyes
+      - map: [ "enum.HumanoidVisualLayers.RArm" ]
+        color: "#e8b59b"
+        sprite: Mobs/Species/Human/parts.rsi
+        state: r_arm
+      - map: [ "enum.HumanoidVisualLayers.LArm" ]
+        color: "#e8b59b"
+        sprite: Mobs/Species/Human/parts.rsi
+        state: l_arm
+      - map: [ "enum.HumanoidVisualLayers.RLeg" ]
+        color: "#e8b59b"
+        sprite: Mobs/Species/Human/parts.rsi
+        state: r_leg
+      - map: [ "enum.HumanoidVisualLayers.LLeg" ]
+        color: "#e8b59b"
+        sprite: Mobs/Species/Human/parts.rsi
+        state: l_leg
+      - shader: StencilClear
+        sprite: Mobs/Species/Human/parts.rsi
+        state: l_leg
+      - shader: StencilMask
+        map: [ "enum.HumanoidVisualLayers.StencilMask" ]
+        sprite: Mobs/Customization/masking_helpers.rsi
+        state: female_full
+        visible: false
+      - map: [ "jumpsuit" ]
+        shader: StencilDraw
+      - map: [ "enum.HumanoidVisualLayers.LHand" ]
+        color: "#e8b59b"
+        sprite: Mobs/Species/Human/parts.rsi
+        state: l_hand
+      - map: [ "enum.HumanoidVisualLayers.RHand" ]
+        color: "#e8b59b"
+        sprite: Mobs/Species/Human/parts.rsi
+        state: r_hand
+      - map: [ "enum.HumanoidVisualLayers.LFoot" ]
+        color: "#e8b59b"
+        sprite: Mobs/Species/Human/parts.rsi
+        state: l_foot
+      - map: [ "enum.HumanoidVisualLayers.RFoot" ]
+        color: "#e8b59b"
+        sprite: Mobs/Species/Human/parts.rsi
+        state: r_foot
+      - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+        color: "#ffffff"
+        sprite: Objects/Misc/handcuffs.rsi
+        state: body-overlay-2
+        visible: false
+      - map: [ "id" ]
+      - map: [ "gloves" ]
+      - map: [ "shoes" ]
+      - map: [ "ears" ]
+      - map: [ "outerClothing" ]
+      - map: [ "eyes" ]
+      - map: [ "belt" ]
+      - map: [ "neck" ]
+      - map: [ "back" ]
+      - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
+        state: shaved
+        sprite: Mobs/Customization/human_facial_hair.rsi
+      - map: [ "enum.HumanoidVisualLayers.Hair" ]
+        state: bald
+        sprite: Mobs/Customization/human_hair.rsi
+      - map: [ "mask" ]
+      - map: [ "head" ]
+      - map: [ "pocket1" ]
+      - map: [ "pocket2" ]
+  - type: Body
+    template: HumanoidTemplate
+    preset: HumanPreset
+  - type: DoorBumpOpener
+
+- type: entity
+  save: false
+  name: Urist McHands
+  parent: MobHumanDummy
+  id: MobDwarfDummy
+  abstract: true
+  description: A dummy human meant to be used in character setup.
+  components:
+  - type: Sprite
+    netsync: false
+    noRot: true
+    drawdepth: Mobs
+    scale: 1, 0.8
+    layers:
+      - map: [ "enum.HumanoidVisualLayers.Chest" ]
+        color: "#e8b59b"
+        sprite: Mobs/Species/Human/parts.rsi
+        state: torso_m
+      - map: [ "enum.HumanoidVisualLayers.Head" ]
+        color: "#e8b59b"
+        sprite: Mobs/Species/Human/parts.rsi
+        state: head_m
+      - map: [ "enum.HumanoidVisualLayers.Eyes" ]
+        color: "#008800"
+        sprite: Mobs/Customization/eyes.rsi
+        state: eyes
+      - map: [ "enum.HumanoidVisualLayers.RArm" ]
+        color: "#e8b59b"
+        sprite: Mobs/Species/Human/parts.rsi
+        state: r_arm
+      - map: [ "enum.HumanoidVisualLayers.LArm" ]
+        color: "#e8b59b"
+        sprite: Mobs/Species/Human/parts.rsi
+        state: l_arm
+      - map: [ "enum.HumanoidVisualLayers.RLeg" ]
+        color: "#e8b59b"
+        sprite: Mobs/Species/Human/parts.rsi
+        state: r_leg
+      - map: [ "enum.HumanoidVisualLayers.LLeg" ]
+        color: "#e8b59b"
+        sprite: Mobs/Species/Human/parts.rsi
+        state: l_leg
+      - shader: StencilClear
+        sprite: Mobs/Species/Human/parts.rsi
+        state: l_leg
+      - shader: StencilMask
+        map: [ "enum.HumanoidVisualLayers.StencilMask" ]
+        sprite: Mobs/Customization/masking_helpers.rsi
+        state: female_full
+        visible: false
+      - map: [ "jumpsuit" ]
+        shader: StencilDraw
+      - map: [ "enum.HumanoidVisualLayers.LHand" ]
+        color: "#e8b59b"
+        sprite: Mobs/Species/Human/parts.rsi
+        state: l_hand
+      - map: [ "enum.HumanoidVisualLayers.RHand" ]
+        color: "#e8b59b"
+        sprite: Mobs/Species/Human/parts.rsi
+        state: r_hand
+      - map: [ "enum.HumanoidVisualLayers.LFoot" ]
+        color: "#e8b59b"
+        sprite: Mobs/Species/Human/parts.rsi
+        state: l_foot
+      - map: [ "enum.HumanoidVisualLayers.RFoot" ]
+        color: "#e8b59b"
+        sprite: Mobs/Species/Human/parts.rsi
+        state: r_foot
+      - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+        color: "#ffffff"
+        sprite: Objects/Misc/handcuffs.rsi
+        state: body-overlay-2
+        visible: false
+      - map: [ "id" ]
+      - map: [ "gloves" ]
+      - map: [ "shoes" ]
+      - map: [ "ears" ]
+      - map: [ "outerClothing" ]
+      - map: [ "eyes" ]
+      - map: [ "belt" ]
+      - map: [ "neck" ]
+      - map: [ "back" ]
+      - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
+        state: shaved
+        sprite: Mobs/Customization/human_facial_hair.rsi
+      - map: [ "enum.HumanoidVisualLayers.Hair" ]
+        state: bald
+        sprite: Mobs/Customization/human_hair.rsi
+      - map: [ "mask" ]
+      - map: [ "head" ]
+      - map: [ "pocket1" ]
+      - map: [ "pocket2" ]

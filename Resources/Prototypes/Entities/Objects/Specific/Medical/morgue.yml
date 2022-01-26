@@ -3,6 +3,8 @@
   name: body bag
   description: A plastic bag designed for the storage and transportation of cadavers.
   components:
+  - type: Item
+    size: 6
   - type: Sprite
     netsync: false
     drawdepth: SmallObjects # I guess body bags need appear above a coroner's table?
@@ -17,6 +19,9 @@
   - type: Icon
     sprite: Objects/Specific/Medical/Morgue/bodybags.rsi
     state: bag
+  - type: Tag
+    tags:
+    - BodyBag
   - type: Clickable
   - type: InteractionOutline
   - type: MovedByPressure
@@ -26,11 +31,10 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.5,-0.45,0.5,0.1"
+          bounds: "-0.25,-0.4,0.25,0.1"
       mass: 5
       mask:
       - Impassable
-      - SmallImpassable
   - type: BodyBagEntityStorage
     CanWeldShut: false
     Capacity: 1

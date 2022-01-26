@@ -29,6 +29,13 @@ namespace Content.Client.Weapons.Ranged
         private bool _blocked;
         private int _shotCounter;
 
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            UpdatesOutsidePrediction = true;
+        }
+
         public override void Update(float frameTime)
         {
             base.Update(frameTime);

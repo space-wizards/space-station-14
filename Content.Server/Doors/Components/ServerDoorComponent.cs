@@ -24,6 +24,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -557,19 +558,19 @@ namespace Content.Server.Doors.Components
         /// <returns>True if we crushed somebody, false if we did not.</returns>
         private bool TryCrush()
         {
-            if (PhysicsComponent == null)
+            if (!_entMan.TryGetComponent(Owner, out PhysicsComponent physicsComponent) || physicsComponent is not IPhysBody body)
             {
                 return false;
             }
 
-            var collidingentities = PhysicsComponent.GetCollidingEntities(Vector2.Zero, false);
+            var collidingentities = body.GetCollidingEntities(Vector2.Zero, false);
 
             if (!collidingentities.Any())
             {
                 return false;
             }
 
-            var doorAABB = PhysicsComponent.GetWorldAABB();
+            var doorAABB = body.GetWorldAABB();
             var hitsomebody = false;
 
             // Crush
@@ -718,7 +719,7 @@ namespace Content.Server.Doors.Components
                 // no interaction occurred
                 return false;
             }
-            
+
             _beingWelded = true;
 
             // perform a do-after delay
