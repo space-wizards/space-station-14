@@ -169,13 +169,36 @@ namespace Content.Server.Chat.Managers
                 var isEmote = _sanitizer.TrySanitizeOutSmilies(message, owned, out var sanitized, out var emoteStr);
 
                 if (sanitized.Length != 0)
-                {
                     SendEntityChatType(owned, sanitized, isWhisper);
-                }
 
                 if (isEmote)
                     EntityMe(owned, emoteStr!);
             }
+        }
+
+        public void TryEmote(EntityUid source, string message, IConsoleShell? shell = null, IPlayerSession? player = null)
+        {
+            var mindComponent = player?.ContentData()?.Mind;
+
+            if (mindComponent == null)
+            {
+                shell?.WriteError("You don't have a mind!");
+                return;
+            }
+
+            if (mindComponent.OwnedEntity is not {Valid: true} owned)
+            {
+                shell?.WriteError("You don't have an entity!");
+                return;
+            }
+
+            var isEmote = _sanitizer.TrySanitizeOutSmilies(message, mindComponent.OwnedEntity.Value, out var sanitized, out var emoteStr);
+
+            if (sanitized.Length != 0)
+                EntityMe(mindComponent.OwnedEntity.Value, sanitized);
+
+            if (isEmote)
+                EntityMe(mindComponent.OwnedEntity.Value, emoteStr!);
         }
 
         public void EntitySay(EntityUid source, string message, bool hideChat=false)

@@ -53,7 +53,7 @@
   - type: Sprite
     state: chair
   - type: Construction
-    graph: seat
+    graph: Seat
     node: chair
 
 - type: entity
@@ -66,7 +66,7 @@
   - type: Sprite
     state: stool
   - type: Construction
-    graph: seat
+    graph: Seat
     node: stool
 
 - type: entity
@@ -82,7 +82,7 @@
   - type: Sprite
     state: bar
   - type: Construction
-    graph: seat
+    graph: Seat
     node: stoolBar
 
 - type: entity
@@ -95,7 +95,7 @@
   - type: Sprite
     state: office-white
   - type: Construction
-    graph: seat
+    graph: Seat
     node: chairOffice
 
 - type: entity
@@ -106,7 +106,7 @@
   - type: Sprite
     state: office-dark
   - type: Construction
-    graph: seat
+    graph: Seat
     node: chairOfficeDark
 
 - type: entity
@@ -121,7 +121,7 @@
   - type: Sprite
     state: comfy
   - type: Construction
-    graph: seat
+    graph: Seat
     node: chairComfy
 
 - type: entity
@@ -133,7 +133,7 @@
     state: wooden
   - type: Rotatable
   - type: Construction
-    graph: seat
+    graph: Seat
     node: chairWood
   - type: Damageable
     damageModifierSet: Wood
@@ -182,7 +182,7 @@
   - type: Sprite
     state: ritual
   - type: Construction
-    graph: ritualseat
+    graph: RitualSeat
     node: chairRitual
 
 - type: entity
@@ -209,5 +209,5 @@
       - !type:PlaySoundBehavior
         sound:
           path: /Audio/Voice/Human/womanlaugh.ogg
-    graph: ritualseat
+    graph: RitualSeat
     node: chairCursed

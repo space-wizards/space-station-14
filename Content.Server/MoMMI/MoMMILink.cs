@@ -70,7 +70,7 @@ namespace Content.Server.MoMMI
             }
         }
 
-        private bool HandleChatPost(IStatusHandlerContext context)
+        private async Task<bool> HandleChatPost(IStatusHandlerContext context)
         {
             if (context.RequestMethod != HttpMethod.Post || context.Url!.AbsolutePath != "/ooc")
             {
@@ -81,14 +81,14 @@ namespace Content.Server.MoMMI
 
             if (string.IsNullOrEmpty(password))
             {
-                context.RespondError(HttpStatusCode.Forbidden);
+                await context.RespondErrorAsync(HttpStatusCode.Forbidden);
                 return true;
             }
 
             OOCPostMessage? message = null;
             try
             {
-                message = context.RequestBodyJson<OOCPostMessage>();
+                message = await context.RequestBodyJsonAsync<OOCPostMessage>();
             }
             catch (JsonException)
             {
@@ -97,20 +97,22 @@ namespace Content.Server.MoMMI
 
             if (message == null)
             {
-                context.RespondError(HttpStatusCode.BadRequest);
+                await context.RespondErrorAsync(HttpStatusCode.BadRequest);
                 return true;
             }
 
             if (message.Password != password)
             {
-                context.RespondError(HttpStatusCode.Forbidden);
+                await context.RespondErrorAsync(HttpStatusCode.Forbidden);
                 return true;
             }
 
-            _taskManager.RunOnMainThread(() => _chatManager.SendHookOOC(message.Sender, message.Contents));
+            var sender = message.Sender;
+            var contents = message.Contents.ReplaceLineEndings(" ");
 
-            context.Respond("Success", HttpStatusCode.OK);
+            _taskManager.RunOnMainThread(() => _chatManager.SendHookOOC(sender, contents));
 
+            await context.RespondAsync("Success", HttpStatusCode.OK);
             return true;
         }
 

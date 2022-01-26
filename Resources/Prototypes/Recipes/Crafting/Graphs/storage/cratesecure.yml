@@ -16,7 +16,7 @@
       edges:
         - to: start
           steps:
-            - tool: Screwing
+            - tool: Welding
               doAfter: 5
           conditions:
             - !type:StorageWelded
