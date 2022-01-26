@@ -318,7 +318,7 @@ namespace Content.Shared.Interaction
 
                 var bBox = p.GetWorldAABB();
 
-                if (bBox.Contains(origin.Position) || bBox.Contains(other.Position))
+                if (bBox.Contains(other.Position))
                 {
                     continue;
                 }
