@@ -46,17 +46,17 @@ namespace Content.Server.WireHacking
 
         private void OnWiresCancelled(EntityUid uid, WiresComponent component, WiresComponent.WiresCancelledEvent args)
         {
-            component.PendingDoAfter = false;
+            component.PendingDoAfters.Remove(args.Wire.Id);
         }
 
-        private void HackingInteract(WiresComponent component)
+        private void HackingInteract(WiresComponent component, WiresComponent.Wire wire)
         {
-            component.PendingDoAfter = false;
+            component.PendingDoAfters.Remove(wire.Id);
         }
 
         private void OnWiresCut(EntityUid uid, WiresComponent component, WiresComponent.WiresCutEvent args)
         {
-            HackingInteract(component);
+            HackingInteract(component, args.Wire);
 
             // Re-validate
             // Deletion for user + wires should already be handled by do-after and tool is checked once at end in active-hand anyway.
@@ -75,7 +75,7 @@ namespace Content.Server.WireHacking
 
         private void OnWiresMended(EntityUid uid, WiresComponent component, WiresComponent.WiresMendedEvent args)
         {
-            HackingInteract(component);
+            HackingInteract(component, args.Wire);
 
             if (!component.CanWiresInteract(args.User, out var tool)) return;
 
@@ -92,7 +92,7 @@ namespace Content.Server.WireHacking
 
         private void OnWiresPulsed(EntityUid uid, WiresComponent component, WiresComponent.WiresPulsedEvent args)
         {
-            HackingInteract(component);
+            HackingInteract(component, args.Wire);
 
             if (args.Wire.IsCut || !component.CanWiresInteract(args.User, out var tool)) return;
 

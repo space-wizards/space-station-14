@@ -53,9 +53,9 @@ namespace Content.Server.WireHacking
         public string PulsingQuality = "Pulsing";
 
         /// <summary>
-        /// Make do_afters for hacking unique so we can't spam a single wire.
+        /// Make do_afters for hacking unique per wire so we can't spam a single wire.
         /// </summary>
-        public bool PendingDoAfter;
+        public HashSet<int> PendingDoAfters = new();
 
         /// <summary>
         /// Opening the maintenance panel (typically with a screwdriver) changes this.
@@ -338,7 +338,7 @@ namespace Content.Server.WireHacking
                 return false;
             }
 
-            if (handsComponent.GetActiveHand?.Owner is not { Valid: true } activeHandEntity ||
+            if (handsComponent.GetActiveHand()?.HeldEntity is not { Valid: true } activeHandEntity ||
                 !_entities.TryGetComponent(activeHandEntity, out tool))
             {
                 return false;
@@ -356,7 +356,7 @@ namespace Content.Server.WireHacking
                     var wire = WiresList.Find(x => x.Id == msg.Id);
                     if (wire == null ||
                         serverMsg.Session.AttachedEntity is not {} player ||
-                        PendingDoAfter)
+                        PendingDoAfters.Contains(wire.Id))
                     {
                         return;
                     }
@@ -384,11 +384,14 @@ namespace Content.Server.WireHacking
                                         Tool = tool,
                                         User = player,
                                     },
-                                    TargetCancelledEvent = new WiresCancelledEvent(),
+                                    TargetCancelledEvent = new WiresCancelledEvent()
+                                    {
+                                        Wire = wire,
+                                    },
                                     NeedHand = true,
                                 });
 
-                            PendingDoAfter = true;
+                            PendingDoAfters.Add(wire.Id);
 
                             break;
                         case WiresAction.Mend:
@@ -407,11 +410,14 @@ namespace Content.Server.WireHacking
                                         Tool = tool,
                                         User = player,
                                     },
-                                    TargetCancelledEvent = new WiresCancelledEvent(),
+                                    TargetCancelledEvent = new WiresCancelledEvent()
+                                    {
+                                        Wire = wire,
+                                    },
                                     NeedHand = true,
                                 });
 
-                            PendingDoAfter = true;
+                            PendingDoAfters.Add(wire.Id);
 
                             break;
                         case WiresAction.Pulse:
@@ -436,11 +442,14 @@ namespace Content.Server.WireHacking
                                         Tool = tool,
                                         User = player,
                                     },
-                                    TargetCancelledEvent = new WiresCancelledEvent(),
+                                    TargetCancelledEvent = new WiresCancelledEvent()
+                                    {
+                                        Wire = wire,
+                                    },
                                     NeedHand = true,
                                 });
 
-                            PendingDoAfter = true;
+                            PendingDoAfters.Add(wire.Id);
 
                             break;
                     }
@@ -449,7 +458,10 @@ namespace Content.Server.WireHacking
             }
         }
 
-        public sealed class WiresCancelledEvent : EntityEventArgs {}
+        public sealed class WiresCancelledEvent : EntityEventArgs
+        {
+            public Wire Wire { get; init; } = default!;
+        }
 
         public abstract class WiresEvent : EntityEventArgs
         {
