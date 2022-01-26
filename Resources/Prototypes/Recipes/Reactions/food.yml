@@ -87,7 +87,7 @@
   reactants:
     JuiceTomato:
       amount: 5
-    Salt:
+    TableSalt:
       amount: 5
     CapsaicinOil:
       amount: 5
