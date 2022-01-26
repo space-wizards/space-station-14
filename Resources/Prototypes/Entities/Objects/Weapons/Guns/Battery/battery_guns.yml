@@ -118,7 +118,7 @@
     size: 24
     sprite: Objects/Weapons/Guns/Battery/pulse_pistol.rsi
   - type: BatteryBarrel
-    fireCost: 12
+    fireCost: 25
     ammoPrototype: RedHeavyLaser
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
