@@ -45,13 +45,13 @@ public partial class DynamicModeSystem
     public float ThreatCurveCenter = 0f;
 
     [ViewVariables]
-    public float ThreatCurveWidth = 0f;
+    public float ThreatCurveWidth = 1.8f;
 
     [ViewVariables]
-    public float SplitCurveCenter = 0f;
+    public float SplitCurveCenter = 1f;
 
     [ViewVariables]
-    public float SplitCurveWidth = 0f;
+    public float SplitCurveWidth = 1.8f;
 
     #endregion
 
