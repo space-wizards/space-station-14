@@ -428,7 +428,7 @@ namespace Content.Server.Botany.Components
             {
                 if (_entMan.TryGetComponent(user, out HandsComponent? hands))
                 {
-                    if (!Seed.CheckHarvest(user, hands.GetActiveHand?.Owner))
+                    if (!Seed.CheckHarvest(user, hands.GetActiveHandItem?.Owner))
                         return false;
                 }
                 else if (!Seed.CheckHarvest(user))

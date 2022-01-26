@@ -7,7 +7,7 @@ using Vector2 = Robust.Shared.Maths.Vector2;
 
 namespace Content.Client.Arcade
 {
-    public class SpaceVillainArcadeMenu : SS14Window
+    public class SpaceVillainArcadeMenu : DefaultWindow
     {
         public SpaceVillainArcadeBoundUserInterface Owner { get; set; }
 

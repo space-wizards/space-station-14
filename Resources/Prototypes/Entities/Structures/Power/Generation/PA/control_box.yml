@@ -21,7 +21,7 @@
     - type: ExtensionCableReceiver
     - type: ParticleAcceleratorControlBox
     - type: Construction
-      graph: particleAcceleratorControlBox
+      graph: ParticleAcceleratorControlBox
       node: completed
     - type: UserInterface
       interfaces:
@@ -48,6 +48,6 @@
       sprite: Structures/Power/Generation/PA/control_box.rsi
       state: box
     - type: Construction
-      graph: particleAcceleratorControlBox
+      graph: ParticleAcceleratorControlBox
       node: start
       defaultTarget: completed

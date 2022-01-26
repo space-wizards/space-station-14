@@ -27,7 +27,7 @@
           !type:CableDeviceNode
           nodeGroupID: HVPower
     - type: Construction
-      graph: particleAcceleratorPowerBox
+      graph: ParticleAcceleratorPowerBox
       node: completed
 
 - type: entity
@@ -43,6 +43,6 @@
       sprite: Structures/Power/Generation/PA/power_box.rsi
       state: box
     - type: Construction
-      graph: particleAcceleratorPowerBox
+      graph: ParticleAcceleratorPowerBox
       node: start
       defaultTarget: completed

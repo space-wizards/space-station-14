@@ -18,6 +18,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -142,7 +143,12 @@ namespace Content.Server.Explosion.EntitySystems
                     continue;
                 }
 
-                if (!EntityManager.TryGetComponent(entity, out PhysicsComponent? body) || body.Fixtures.Count < 1)
+                if (!EntityManager.TryGetComponent(entity, out FixturesComponent? fixturesComp) || fixturesComp.Fixtures.Count < 1)
+                {
+                    continue;
+                }
+
+                if (!EntityManager.TryGetComponent(entity, out PhysicsComponent? body))
                 {
                     continue;
                 }

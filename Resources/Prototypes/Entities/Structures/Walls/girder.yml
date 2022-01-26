@@ -20,7 +20,7 @@
       - VaultImpassable
   - type: InteractionOutline
   - type: Construction
-    graph: girder
+    graph: Girder
     node: girder
   - type: Sprite
     sprite: Structures/Walls/solid.rsi

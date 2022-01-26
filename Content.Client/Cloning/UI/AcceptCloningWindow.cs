@@ -6,7 +6,7 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Cloning.UI
 {
-    public sealed class AcceptCloningWindow : SS14Window
+    public sealed class AcceptCloningWindow : DefaultWindow
     {
         public readonly Button DenyButton;
         public readonly Button AcceptButton;
