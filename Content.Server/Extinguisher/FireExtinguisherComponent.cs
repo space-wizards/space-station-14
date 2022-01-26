@@ -3,23 +3,20 @@ using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.Extinguisher
+namespace Content.Server.Extinguisher;
+
+[RegisterComponent]
+[Friend(typeof(FireExtinguisherSystem))]
+public class FireExtinguisherComponent : Component
 {
-    [RegisterComponent, Friend(typeof(FireExtinguisherSystem))]
-    public class FireExtinguisherComponent : Component
-    {
-        public override string Name => "FireExtinguisher";
+    public override string Name => "FireExtinguisher";
 
-        [DataField("refillSound")]
-        public SoundSpecifier RefillSound = new SoundPathSpecifier("/Audio/Effects/refill.ogg");
+    [DataField("refillSound")] public SoundSpecifier RefillSound = new SoundPathSpecifier("/Audio/Effects/refill.ogg");
 
-        [DataField("hasSafety")]
-        public bool HasSafety = true;
+    [DataField("hasSafety")] public bool HasSafety = true;
 
-        [DataField("safety")]
-        public bool Safety = true;
+    [DataField("safety")] public bool Safety = true;
 
-        [DataField("safetySound")]
-        public SoundSpecifier SafetySound { get; } = new SoundPathSpecifier("/Audio/Machines/button.ogg");
-    }
+    [DataField("safetySound")]
+    public SoundSpecifier SafetySound { get; } = new SoundPathSpecifier("/Audio/Machines/button.ogg");
 }

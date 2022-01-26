@@ -1,5 +1,6 @@
 ﻿using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.EntitySystems;
+using Content.Server.Fluids.EntitySystems;
 using Content.Server.Popups;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
@@ -31,6 +32,7 @@ public class FireExtinguisherSystem : EntitySystem
         SubscribeLocalEvent<FireExtinguisherComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<FireExtinguisherComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<FireExtinguisherComponent, GetInteractionVerbsEvent>(OnGetInteractionVerbs);
+        SubscribeLocalEvent<FireExtinguisherComponent, SprayAttemptEvent>(OnSprayAttempt);
     }
 
     private void OnFireExtinguisherInit(EntityUid uid, FireExtinguisherComponent component, ComponentInit args)
@@ -63,6 +65,11 @@ public class FireExtinguisherSystem : EntitySystem
         {
             return;
         }
+
+        if (args.Handled)
+            return;
+
+        args.Handled = true;
 
         if (component.HasSafety && component.Safety)
         {
@@ -108,6 +115,16 @@ public class FireExtinguisherSystem : EntitySystem
         };
 
         args.Verbs.Add(verb);
+    }
+
+    private void OnSprayAttempt(EntityUid uid, FireExtinguisherComponent component, SprayAttemptEvent args)
+    {
+        if (component.HasSafety && component.Safety)
+        {
+            _popupSystem.PopupEntity(Loc.GetString("fire-extinguisher-component-safety-on-message"), uid,
+                Filter.Entities(args.User));
+            args.Cancel();
+        }
     }
 
     private void UpdateAppearance(EntityUid uid, FireExtinguisherComponent comp,
