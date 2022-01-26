@@ -1,10 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: Fixes thrown slippery items causing the thrower to become horizontal
-      when they shouldn't., type: Fix}
-  id: 433
-  time: '2021-10-12T19:59:18.230928+00:00'
 - author: Jazpixel
   changes:
   - {message: Removed single line that broke crayons., type: Remove}
@@ -2928,3 +2922,9 @@ Entries:
       crates are still screwed., type: Fix}
   id: 933
   time: '2022-01-26T04:12:20.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Hacking doors now actually use their randomised layouts and hacking
+      takes time, type: Tweak}
+  id: 934
+  time: '2022-01-26T04:26:54.0000000+00:00'
