@@ -1,13 +1,6 @@
 Entries:
 - author: 20kdc
   changes:
-  - {message: 'Condiments, baked goods, bowls, some produce have solution properties
-      somewhat fixed', type: Fix}
-  - {message: remaining references to Salt have been migrated to TableSalt, type: Fix}
-  id: 435
-  time: '2021-10-13T08:03:12.0000000+00:00'
-- author: 20kdc
-  changes:
   - {message: Monkey cubes are available to Cargo, type: Add}
   id: 436
   time: '2021-10-13T17:14:34.0000000+00:00'
@@ -2928,3 +2921,9 @@ Entries:
   - {message: Range limit removed from LOOC for ghosts, type: Tweak}
   id: 935
   time: '2022-01-26T13:18:56.0000000+00:00'
+- author: Lamrr
+  changes:
+  - {message: 'The mysterious red phone has returned, the favoured weapon of the Centcom
+      Official and the second favourite instrument of the Clown.', type: Add}
+  id: 936
+  time: '2022-01-26T17:27:04.0000000+00:00'
