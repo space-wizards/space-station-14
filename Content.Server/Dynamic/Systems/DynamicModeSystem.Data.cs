@@ -13,6 +13,18 @@ public partial class DynamicModeSystem
     public int ThreatCap;
 
     /// <summary>
+    ///     The total threat level.
+    /// </summary>
+    [ViewVariables]
+    public float ThreatLevel;
+
+    /// <summary>
+    ///     Max threat level allowed to generate.
+    /// </summary>
+    [ViewVariables]
+    public float MaxThreatLevel => _cfg.GetCVar(CCVars.DynamicMaxThreat);
+
+    /// <summary>
     ///     "Spent" by dynamic at roundstart to select events.
     /// </summary>
     [ViewVariables]

@@ -177,6 +177,9 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<float> DynamicMidroundEnd =
             CVarDef.Create("dynamic.midround_end", 35.0f);
 
+        public static readonly CVarDef<float> DynamicMaxThreat =
+            CVarDef.Create("dynamic.max_threat", 100.0f);
+
         /*
          * Suspicion
          */

@@ -1,4 +1,6 @@
-﻿namespace Content.Server.Dynamic.Systems;
+﻿using System;
+
+namespace Content.Server.Dynamic.Systems;
 
 public partial class DynamicModeSystem
 {
@@ -7,7 +9,8 @@ public partial class DynamicModeSystem
     /// </summary>
     public void GenerateThreat()
     {
-
+        var relativeThreat = Lorentz.ProbabilityDensity(ThreatCurveCenter, ThreatCurveWidth);
+        ThreatLevel = Math.Clamp(Lorentz.LorentzToAmount(relativeThreat), 0, MaxThreatLevel);
     }
 
     /// <summary>
@@ -15,6 +18,8 @@ public partial class DynamicModeSystem
     /// </summary>
     public void GenerateBudgets()
     {
-
+        var relativeRoundstartThreatScale = Lorentz.ProbabilityDensity(SplitCurveCenter, SplitCurveWidth);
+        RoundstartBudget = (Lorentz.LorentzToAmount(relativeRoundstartThreatScale) / 100.0f) * ThreatLevel;
+        MidroundBudget = ThreatLevel - RoundstartBudget;
     }
 }

@@ -53,6 +53,8 @@ public partial class DynamicModeSystem : GameRuleSystem
         }
 
         // Calculate budget
+        GenerateBudgets();
+        GenerateThreat();
     }
 
     private void OnRoundStarting(RoundStartingEvent ev)
