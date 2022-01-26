@@ -62,16 +62,6 @@
         map: [ "enum.VaporVisualLayers.Base" ]
   - type: Physics
     bodyType: Dynamic
-  - type: Fixtures
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.25,-0.25,0.25,0.25"
-      hard: false
-      mask:
-        - Impassable
-        - MobImpassable
-        - SmallImpassable
   - type: Appearance
     visuals:
       - type: VaporVisualizer
