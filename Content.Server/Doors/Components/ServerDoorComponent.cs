@@ -304,19 +304,14 @@ namespace Content.Server.Doors.Components
             }
         }
 
-        public bool CanOpenByEntity(EntityUid user)
-        {
-            if (!CanOpenGeneric())
-            {
-                return false;
-            }
-
+        public bool EntityCanAccess(EntityUid user)
+        {          
+            var doorSystem = EntitySystem.Get<DoorSystem>();
             if (!_entMan.TryGetComponent(Owner, out AccessReaderComponent? access))
             {
                 return true;
             }
-
-            var doorSystem = EntitySystem.Get<DoorSystem>();
+            
             var isAirlockExternal = HasAccessType("External");
 
             var accessSystem = EntitySystem.Get<AccessReaderSystem>();
@@ -327,6 +322,16 @@ namespace Content.Server.Doors.Components
                 DoorSystem.AccessTypes.AllowAllNoExternal => !isAirlockExternal,
                 _ => accessSystem.IsAllowed(access, user)
             };
+        }
+
+        public bool CanOpenByEntity(EntityUid user)
+        {
+            if (!CanOpenGeneric() || !EntityCanAccess(user))
+            {
+                return false;
+            }
+
+            return true;
         }
 
         /// <summary>
@@ -441,18 +446,12 @@ namespace Content.Server.Doors.Components
 
         public bool CanCloseByEntity(EntityUid user)
         {
-            if (!CanCloseGeneric())
+            if (!CanCloseGeneric()
+                    || !EntityCanAccess(user))
             {
                 return false;
             }
-
-            if (!_entMan.TryGetComponent(Owner, out AccessReaderComponent? access))
-            {
-                return true;
-            }
-
-            var accessSystem = EntitySystem.Get<AccessReaderSystem>();
-            return accessSystem.IsAllowed(access, user);
+            return true;
         }
 
         /// <summary>
