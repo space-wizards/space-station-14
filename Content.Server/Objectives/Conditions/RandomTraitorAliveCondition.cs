@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Server.Mind.Components;
 using Content.Server.Objectives.Interfaces;
 using JetBrains.Annotations;
@@ -53,7 +53,7 @@ namespace Content.Server.Objectives.Conditions
 
         public string Description => Loc.GetString("objective-condition-other-traitor-alive-description");
 
-        public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResourcePath("Objects/Misc/bureaucracy.rsi"), "folder_red");
+        public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResourcePath("Objects/Misc/bureaucracy.rsi"), "folder-white");
 
         public float Progress => (!Target?.CharacterDeadIC ?? true) ? 1f : 0f;
 
