@@ -974,6 +974,24 @@
 
 - type: entity
   parent: DrinkGlassBase
+  id: DrinkIceCreamGlass
+  name: ice cream glass
+  description: A glass full of good old ice cream. Might want a spoon.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: IceCream
+          Quantity: 50
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/icecreamglass.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlassBase
   id: DrinkIrishCarBomb
   name: irish car bomb
   description: An irish car bomb.

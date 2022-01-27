@@ -245,6 +245,16 @@
     Grog: 2
 
 - type: reaction
+  id: IceCream
+  reactants:
+    Cream:
+      amount: 1
+    Ice:
+      amount: 1
+  products:
+    IceCream: 2
+
+- type: reaction
   id: IcedCoffee
   reactants:
     Coffee:
