@@ -26,7 +26,6 @@
       - id: CigPackGreen
         prob: 0.50
       - id: DoorRemoteCargo
-        prob: 1
 
 - type: entity
   id: LockerCaptainFilled
@@ -66,7 +65,6 @@
         prob: 0.25
       - id: ClothingBeltSheathFilled
       - id: DoorRemoteCommand
-        prob: 1
 
 - type: entity
   id: LockerHeadOfPersonnelFilled
@@ -99,7 +97,6 @@
         prob: 0.10
         # Fuck the HoP they don't deserve fucking cigars.
       - id: DoorRemoteService
-        prob: 1
 
 - type: entity
   id: LockerChiefEngineerFilled
@@ -121,7 +118,6 @@
       - id: CigarCase
         prob: 0.15
       - id: DoorRemoteEngineering
-        prob: 1
 
 - type: entity
   id: LockerChiefMedicalOfficerFilled
@@ -177,7 +173,6 @@
       - id: PlushieSlime
         prob: 0.1
       - id: DoorRemoteResearch
-        prob: 1
 
 - type: entity
   id: LockerHeadOfSecurityFilled
@@ -227,4 +222,3 @@
       - id: CigarGoldCase
         prob: 0.50
       - id: DoorRemoteSecurity
-        prob: 1
