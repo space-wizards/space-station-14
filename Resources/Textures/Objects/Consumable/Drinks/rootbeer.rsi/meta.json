@@ -15,11 +15,11 @@
   	},
     {
       "name": "inhand-right",
-      "directions": 4,
+      "directions": 4
     },
     {
       "name": "inhand-left",
-      "directions": 4,
+      "directions": 4
     }
   ]
 }
