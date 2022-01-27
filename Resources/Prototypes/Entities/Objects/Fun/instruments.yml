@@ -236,6 +236,7 @@
   - type: Instrument
     allowPercussion: true
     allowProgramChange: true
+    respectMidiLimits: false
   - type: Sprite
     sprite: Objects/Fun/Instruments/h_synthesizer.rsi
     state: icon
@@ -254,3 +255,19 @@
   - type: Sprite
     sprite: Structures/Furniture/instruments.rsi
     state: xylophone
+
+- type: entity
+  parent: BaseHandheldInstrument
+  id: PhoneInstrument
+  name: red phone
+  description: Should anything ever go wrong...
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Instruments/otherinstruments.rsi
+    state: red_phone
+  - type: EmitSoundOnLand
+    sound:
+       path: /Audio/Items/ring.ogg
+  - type: Instrument
+    program: 124
+

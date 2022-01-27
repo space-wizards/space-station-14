@@ -134,3 +134,32 @@
       path: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+
+- type: entity
+  name: pirate revolver
+  parent: RevolverBase
+  id: RevolverPirate
+  description: An odd, muzzle-loading revolver, favoured by pirate crews.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Revolvers/pirate_revolver.rsi
+  - type: Item
+    size: 24
+    sprite: Objects/Weapons/Guns/Revolvers/pirate_revolver.rsi
+  - type: RangedWeapon
+  - type: RevolverBarrel
+    fireRate: 1
+    currentSelector: Single
+    allSelectors:
+    - Single
+    fillPrototype: CartridgePistol  
+    caliber: Pistol
+    capacity: 5
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
+    soundEject:
+      path: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
