@@ -1,8 +1,10 @@
-﻿- type: tile
+
+- type: tile
   id: floor_steel
   name: steel floor
   texture: "steel"
   base_turfs:
+  - space
   - plating
   is_subfloor: false
   can_crowbar: true
@@ -34,6 +36,7 @@
   name: white floor
   texture: "white"
   base_turfs:
+  - space
   - plating
   is_subfloor: false
   can_crowbar: true
@@ -49,6 +52,7 @@
   name: dark floor
   texture: "dark"
   base_turfs:
+  - space
   - plating
   is_subfloor: false
   can_crowbar: true
@@ -64,6 +68,7 @@
   name: techmaint floor
   texture: "tech_maint"
   base_turfs:
+  - space
   - plating
   is_subfloor: false
   can_crowbar: true
@@ -79,6 +84,7 @@
   name: reinforced floor
   texture: "reinforced"
   base_turfs:
+  - space
   - plating
   is_subfloor: false
   can_crowbar: true
@@ -94,6 +100,7 @@
   name: mono floor
   texture: "mono"
   base_turfs:
+  - space
   - plating
   is_subfloor: false
   can_crowbar: true
@@ -109,6 +116,7 @@
   name: linoleum floor
   texture: "lino"
   base_turfs:
+  - space
   - plating
   is_subfloor: false
   can_crowbar: true
@@ -124,6 +132,7 @@
   name: dirty steel floor
   texture: "steel_dirty"
   base_turfs:
+  - space
   - plating
   is_subfloor: false
   can_crowbar: true
@@ -139,6 +148,7 @@
   name: elevator shaft
   texture: "elevator_shaft"
   base_turfs:
+  - space
   - plating
   is_subfloor: false
   can_crowbar: true
@@ -154,6 +164,7 @@
   name: rock floor
   texture: "rock_vault"
   base_turfs:
+  - space
   - plating
   is_subfloor: false
   can_crowbar: true
@@ -169,6 +180,7 @@
   name: blue tile
   texture: blue
   base_turfs:
+  - space
   - plating
   is_subfloor: false
   can_crowbar: true
@@ -185,6 +197,7 @@
   name: freezer
   texture: "freezer"
   base_turfs:
+  - space
   - plating
   is_subfloor: false
   can_crowbar: true
@@ -200,6 +213,7 @@
   name: showroom floor
   texture: "showroom"
   base_turfs:
+  - space
   - plating
   is_subfloor: false
   can_crowbar: true
@@ -215,6 +229,7 @@
   name: hydro floor
   texture: "hydro"
   base_turfs:
+  - space
   - plating
   is_subfloor: false
   can_crowbar: true
@@ -230,6 +245,7 @@
   name: bar floor
   texture: "bar"
   base_turfs:
+  - space
   - plating
   is_subfloor: false
   can_crowbar: true
@@ -245,6 +261,7 @@
   name: clown floor
   texture: "clown"
   base_turfs:
+  - space
   - plating
   is_subfloor: false
   can_crowbar: true
@@ -260,6 +277,7 @@
   name: mime floor
   texture: "mime"
   base_turfs:
+  - space
   - plating
   is_subfloor: false
   can_crowbar: true
@@ -275,6 +293,7 @@
   name: kitchen floor
   texture: "kitchen"
   base_turfs:
+  - space
   - plating
   is_subfloor: false
   can_crowbar: true
@@ -290,6 +309,7 @@
   name: laundry floor
   texture: "laundry"
   base_turfs:
+  - space
   - plating
   is_subfloor: false
   can_crowbar: true
@@ -306,6 +326,7 @@
   name: gold tile
   texture: gold
   base_turfs:
+  - space
   - plating
   is_subfloor: false
   can_crowbar: true
@@ -321,6 +342,7 @@
   name: silver tile
   texture: silver
   base_turfs:
+  - space
   - plating
   is_subfloor: false
   can_crowbar: true
@@ -336,6 +358,7 @@
   name: glass floor
   texture: glass
   base_turfs:
+  - space
   - plating
   is_subfloor: false
   can_crowbar: true
@@ -351,6 +374,7 @@
   name: reinforced glass floor
   texture: rglass
   base_turfs:
+  - space
   - plating
   is_subfloor: false
   can_crowbar: true
@@ -367,6 +391,7 @@
   name: green circuit floor
   texture: "green_circuit"
   base_turfs:
+  - space
   - plating
   is_subfloor: false
   can_crowbar: true
@@ -382,6 +407,7 @@
   name: blue circuit floor
   texture: "blue_circuit"
   base_turfs:
+  - space
   - plating
   is_subfloor: false
   can_crowbar: true
@@ -398,6 +424,7 @@
   name: snow
   texture: snow
   base_turfs:
+  - space
   - plating
   is_subfloor: false
   can_crowbar: true
@@ -413,6 +440,7 @@
   name: grass floor
   texture: "grass"
   base_turfs:
+  - space
   - plating
   is_subfloor: false
   can_crowbar: true
@@ -443,6 +471,7 @@
   name: asteroid tile
   texture: Asteroid/asteroid_tile
   base_turfs:
+  - space
   - plating
   is_subfloor: false
   can_crowbar: true
