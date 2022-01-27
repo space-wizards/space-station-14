@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Conveyor;
 using Content.Server.Recycling.Components;
+using Content.Shared.Conveyor;
 using Content.Shared.Movement.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -54,6 +55,14 @@ namespace Content.Server.Physics.Controllers
             if (speed <= 0f) return;
 
             var (conveyorPos, conveyorRot) = xform.GetWorldPositionRotation();
+
+            conveyorRot += comp.Angle;
+
+            if (comp.State == ConveyorState.Reversed)
+            {
+                conveyorRot += MathF.PI;
+            }
+
             var direction = conveyorRot.ToWorldVec();
 
             foreach (var (entity, transform) in GetEntitiesToMove(comp, xform))
@@ -97,6 +106,8 @@ namespace Content.Server.Physics.Controllers
                     continue;
                 }
 
+                // Yes there's still going to be the occasional rounding issue where it stops getting conveyed
+                // When you fix the corner issue that will fix this anyway.
                 var transform = Transform(entity);
                 var gridPos = gridMatrix.Transform(transform.WorldPosition);
                 var gridAABB = new Box2(gridPos - 0.1f, gridPos + 0.1f);

@@ -111,20 +111,5 @@ namespace Content.Server.Conveyor
 
             return true;
         }
-
-        /// <summary>
-        ///     Calculates the angle in which entities on top of this conveyor
-        ///     belt are pushed in
-        /// </summary>
-        /// <returns>
-        ///     The angle when taking into account if the conveyor is reversed
-        /// </returns>
-        public Angle GetAngle(ConveyorComponent component)
-        {
-            var adjustment = component.State == ConveyorState.Reversed ? MathHelper.Pi/2 : -MathHelper.Pi/2;
-            var radians = MathHelper.DegreesToRadians(component.Angle);
-
-            return new Angle(EntityManager.GetComponent<TransformComponent>(component.Owner).LocalRotation.Theta + radians + adjustment);
-        }
     }
 }
