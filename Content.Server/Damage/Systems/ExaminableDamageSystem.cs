@@ -52,7 +52,7 @@ public class ExaminableDamageSystem : EntitySystem
             return 0;
 
         if (component.MessagesProto == null)
-            return  0;
+            return 0;
 
         var maxLevels = component.MessagesProto.Messages.Length - 1;
         if (maxLevels <= 0)
