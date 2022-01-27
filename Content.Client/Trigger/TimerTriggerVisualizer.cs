@@ -30,12 +30,12 @@ namespace Content.Client.Trigger
                 flick.LayerKey = TriggerVisualLayers.Base;
                 flick.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("primed", 0f));
 
-		    if (_countdownSound != null)
+		        if (_countdownSound != null)
 		        {
-                	var sound = new AnimationTrackPlaySound();
-                	PrimingAnimation.AnimationTracks.Add(sound);
-                	sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(_countdownSound.GetSound(), 0));
-               	}
+                    var sound = new AnimationTrackPlaySound();
+                    PrimingAnimation.AnimationTracks.Add(sound);
+                   	sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(_countdownSound.GetSound(), 0));
+                }
             }
         }
 
