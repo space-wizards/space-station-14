@@ -45,6 +45,7 @@
   desc: It was either this or the microwave, and nobody wants ice cream soup!
   physicalDesc: creamy
   color: "#fffbd6"
+  spritePath: icecreamglass.rsi
 
 - type: reagent
   id: LemonLime
