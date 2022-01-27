@@ -251,8 +251,10 @@
       amount: 1
     Ice:
       amount: 1
+    Sugar:
+      amount: 1
   products:
-    IceCream: 2
+    IceCream: 3
 
 - type: reaction
   id: IcedCoffee
