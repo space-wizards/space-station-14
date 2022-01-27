@@ -21,7 +21,6 @@ namespace Content.Server.Conveyor
     public class ConveyorSystem : EntitySystem
     {
         [Dependency] private StunSystem _stunSystem = default!;
-        [Dependency] private IEntityLookup _entityLookup = default!;
 
         public override void Initialize()
         {
