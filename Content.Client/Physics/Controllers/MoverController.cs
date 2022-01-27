@@ -76,5 +76,11 @@ namespace Content.Client.Physics.Controllers
 
             HandleKinematicMovement(mover, body);
         }
+
+        protected override void HandleWeightlessMob(IMoverComponent mover, PhysicsComponent physicsComponent, IMobMoverComponent mobMover)
+        {
+            physicsComponent.Predict = false;
+            return;
+        }
     }
 }

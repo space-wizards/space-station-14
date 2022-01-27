@@ -5,7 +5,6 @@ using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.EntitySystems;
 using Content.Shared.CCVar;
 using Content.Shared.Inventory;
-using Content.Shared.Item;
 using Content.Shared.Maps;
 using Content.Shared.Movement;
 using Content.Shared.Movement.Components;
@@ -27,6 +26,7 @@ namespace Content.Server.Physics.Controllers
     {
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
         private const float StepSoundMoveDistanceRunning = 2;
         private const float StepSoundMoveDistanceWalking = 1.5f;
@@ -268,6 +268,63 @@ namespace Content.Server.Physics.Controllers
                     thrusterSystem.SetAngularThrust(shuttle, true);
                 }
             }
+        }
+
+        protected override void HandleWeightlessMob(IMoverComponent mover, PhysicsComponent physicsComponent, IMobMoverComponent mobMover)
+        {
+            var xform = Transform(physicsComponent.Owner);
+
+            // No gravity: is our entity touching anything?
+            var touching = IsAroundCollider(_physics, xform, mobMover, physicsComponent);
+
+            if (!touching)
+            {
+                if (xform.GridID != GridId.Invalid)
+                    mover.LastGridAngle = GetParentGridAngle(xform, mover);
+
+                xform.WorldRotation = physicsComponent.LinearVelocity.GetDir().ToAngle();
+
+                return;
+            }
+
+
+            // If we're near something then player allowed inputs.
+            var (walkDir, sprintDir) = mover.VelocityDir;
+
+            // Target velocity.
+            var total = walkDir * mover.CurrentWalkSpeed + sprintDir * mover.CurrentSprintSpeed;
+
+            // No input so keep bouncing son.
+            if (total.LengthSquared <= 0f) return;
+
+            var parentRotation = GetParentGridAngle(xform, mover);
+            var worldTotal = RelativeMovement ? parentRotation.RotateVec(total) : total;
+
+            // Entity always faces its movement direction when weightless and it has input
+            xform.WorldRotation = worldTotal.ToWorldAngle();
+
+            DebugTools.Assert(MathHelper.CloseToPercent(total.Length, worldTotal.Length));
+
+            worldTotal *= mobMover.WeightlessStrength;
+
+            if (xform.GridID != GridId.Invalid)
+                mover.LastGridAngle = parentRotation;
+
+            var weightlessSpeedCap = 5f;
+
+            var currentSpeed = Vector2.Dot(physicsComponent.LinearVelocity, worldTotal.Normalized);
+            var addSpeed = worldTotal.Length - currentSpeed;
+
+            // Speed already over cap do nothing
+            if (addSpeed <= 0f) return;
+
+            // If we stepped players manually we'd do that here
+            var accelSpeed = 8f * worldTotal.Length;
+
+            if (accelSpeed > addSpeed)
+                accelSpeed = addSpeed;
+
+            physicsComponent.ApplyLinearImpulse(worldTotal.Normalized * accelSpeed);
         }
 
         protected override void HandleFootsteps(IMoverComponent mover, IMobMoverComponent mobMover)

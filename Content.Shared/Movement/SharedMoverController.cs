@@ -26,10 +26,9 @@ namespace Content.Shared.Movement
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
 
-        private ActionBlockerSystem _blocker = default!;
-        private SharedPhysicsSystem _broadPhaseSystem = default!;
+        [Dependency] private ActionBlockerSystem _blocker = default!;
 
-        private bool _relativeMovement;
+        protected bool RelativeMovement;
 
         /// <summary>
         /// Cache the mob movement calculation to re-use elsewhere.
@@ -39,14 +38,12 @@ namespace Content.Shared.Movement
         public override void Initialize()
         {
             base.Initialize();
-            _broadPhaseSystem = EntitySystem.Get<SharedPhysicsSystem>();
-            _blocker = EntitySystem.Get<ActionBlockerSystem>();
             var configManager = IoCManager.Resolve<IConfigurationManager>();
             configManager.OnValueChanged(CCVars.RelativeMovement, SetRelativeMovement, true);
             UpdatesBefore.Add(typeof(SharedTileFrictionController));
         }
 
-        private void SetRelativeMovement(bool value) => _relativeMovement = value;
+        private void SetRelativeMovement(bool value) => RelativeMovement = value;
 
         public override void Shutdown()
         {
@@ -83,7 +80,7 @@ namespace Content.Shared.Movement
             // Target velocity.
             var total = walkDir * mover.CurrentWalkSpeed + sprintDir * mover.CurrentSprintSpeed;
 
-            var worldTotal = _relativeMovement ? parentRotation.RotateVec(total) : total;
+            var worldTotal = RelativeMovement ? parentRotation.RotateVec(total) : total;
 
             if (transform.GridID != GridId.Invalid)
                 mover.LastGridAngle = parentRotation;
@@ -93,6 +90,9 @@ namespace Content.Shared.Movement
 
             physicsComponent.LinearVelocity = worldTotal;
         }
+
+        protected abstract void HandleWeightlessMob(IMoverComponent mover, PhysicsComponent physicsComponent,
+            IMobMoverComponent mobMover);
 
         /// <summary>
         ///     Movement while considering actionblockers, weightlessness, etc.
@@ -119,17 +119,8 @@ namespace Content.Shared.Movement
             // Handle wall-pushes.
             if (weightless)
             {
-                // No gravity: is our entity touching anything?
-                var touching = IsAroundCollider(_broadPhaseSystem, transform, mobMover, physicsComponent);
-
-                if (!touching)
-                {
-                    if (transform.GridID != GridId.Invalid)
-                        mover.LastGridAngle = GetParentGridAngle(transform, mover);
-
-                    transform.WorldRotation = physicsComponent.LinearVelocity.GetDir().ToAngle();
-                    return;
-                }
+                HandleWeightlessMob(mover, physicsComponent, mobMover);
+                return;
             }
 
             // Regular movement.
@@ -139,12 +130,9 @@ namespace Content.Shared.Movement
 
             var parentRotation = GetParentGridAngle(transform, mover);
 
-            var worldTotal = _relativeMovement ? parentRotation.RotateVec(total) : total;
+            var worldTotal = RelativeMovement ? parentRotation.RotateVec(total) : total;
 
             DebugTools.Assert(MathHelper.CloseToPercent(total.Length, worldTotal.Length));
-
-            if (weightless)
-                worldTotal *= mobMover.WeightlessStrength;
 
             if (transform.GridID != GridId.Invalid)
                 mover.LastGridAngle = parentRotation;
