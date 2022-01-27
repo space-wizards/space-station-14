@@ -1,12 +1,6 @@
 Entries:
 - author: 20kdc
   changes:
-  - {message: Reduced radiation pulse damage to be around 20 for a direct sustained
-      hit., type: Tweak}
-  id: 438
-  time: '2021-10-14T18:02:08.0000000+00:00'
-- author: 20kdc
-  changes:
   - {message: 'Add solar control computer board to the lathe, so solar panels can
       actually be controlled in theory', type: Add}
   id: 439
@@ -2928,3 +2922,13 @@ Entries:
       you''re an antagonist with administrator permission.', type: Tweak}
   id: 938
   time: '2022-01-26T22:50:44.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Lights now consume slighly more power than before. Can you cope?',
+    type: Fix}
+  - {message: 'LED lights are now less bright so won''t burn your eyes out, just your
+      hands.', type: Fix}
+  - {message: There's two high energy lightbulb specifically for shuttles and station
+      exteriors. Spot the blue and orange glow!, type: Add}
+  id: 939
+  time: '2022-01-27T00:01:32.0000000+00:00'
