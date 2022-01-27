@@ -27,6 +27,11 @@ namespace Content.Server.Bible.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public DamageSpecifier DamageOnUntrainedUse = default!;
 
+        //Chance the bible will fail to heal someone with no helmet
+        [DataField("failChance", required:true)]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float FailChance = 0.34f;
+
         public TimeSpan LastAttackTime;
         public TimeSpan CooldownEnd;
         public float CooldownTime { get; } = 1f;

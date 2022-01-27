@@ -9,5 +9,4 @@ namespace Content.Server.Bible.Components
     {
         public override string Name => "BibleUser";
     }
-
 }
