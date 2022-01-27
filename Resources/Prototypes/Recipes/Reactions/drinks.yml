@@ -451,6 +451,16 @@
     Rewriter: 2
 
 - type: reaction
+  id: RootBeerFloat
+  reactants:
+    RootBeer:
+      amount: 2
+    IceCream:
+      amount: 1
+  products:
+    RootBeerFloat: 3
+
+- type: reaction
   id: ScrewdriverCocktail
   reactants:
     JuiceOrange:

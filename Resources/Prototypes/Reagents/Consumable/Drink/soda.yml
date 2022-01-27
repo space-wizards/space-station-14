@@ -74,6 +74,15 @@
   spritePath: rootbeerglass.rsi
 
 - type: reagent
+  id: RootBeerFloat
+  name: root beer float
+  parent: BaseSoda
+  desc: Root beer, but now with ice cream on top. It truly is the magnum opus of Canadian summertime drinks.
+  physicalDesc: fizzy and creamy
+  color: "#4f361f"
+  spritePath: rootbeerfloatglass.rsi
+
+- type: reagent
   id: SpaceMountainWind
   name: Space Mountain Wind
   parent: BaseSoda
