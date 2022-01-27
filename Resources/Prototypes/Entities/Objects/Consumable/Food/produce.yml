@@ -432,6 +432,8 @@
   - type: Extractable
     juiceSolution:
       reagents:
+      - ReagentId: Cornoil
+        Quantity: 3
       - ReagentId: Enzyme
         Quantity: 2
 
