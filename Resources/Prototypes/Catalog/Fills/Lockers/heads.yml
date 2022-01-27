@@ -176,7 +176,7 @@
         prob: 1
       - id: PlushieSlime
         prob: 0.1
-      - id: DoorRemoteScience
+      - id: DoorRemoteResearch
         prob: 1
 
 - type: entity

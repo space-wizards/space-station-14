@@ -54,15 +54,15 @@
 
 - type: entity
   parent: DoorRemoteDefault
-  id: DoorRemoteScience
-  name: science door remote
+  id: DoorRemoteResearch
+  name: research door remote
   components:
   - type: Sprite
     state: door_remotescience
   - type: Access
     tags:
     - ResearchDirector
-    - Science
+    - Research
 
 - type: entity
   parent: DoorRemoteDefault
