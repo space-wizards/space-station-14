@@ -1,0 +1,22 @@
+- type: entity
+  name: bible
+  description: New Interstellar Version 2340
+  parent: BaseItem
+  id: Bible
+  components:
+  - type: Bible
+    damage:
+      groups:
+        Brute: -7
+        Burn: -7
+    damageOnFail:
+      groups:
+        Brute: 4
+        Airloss: 6
+  - type: Sprite
+    sprite: Objects/Specific/Chapel/bible.rsi
+    state: icon
+  - type: Item
+    size: 15
+    sprite: Objects/Specific/Chapel/bible.rsi
+    prefix: inhand

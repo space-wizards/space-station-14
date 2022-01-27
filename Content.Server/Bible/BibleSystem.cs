@@ -21,12 +21,11 @@ namespace Content.Server.Bible
 
         private void OnAfterInteract(EntityUid uid, BibleComponent component, AfterInteractEvent args)
         {
-            EntityManager.TryGetComponent<MindComponent?>(args.User, out var bibleUser);
             var invSystem = EntitySystem.Get<InventorySystem>();
             var random = IoCManager.Resolve<IRobustRandom>();
 
 
-            if (bibleUser?.Mind?.HasRole == false)
+            if (!EntityManager.HasComponent<BibleUserComponent>(args.User))
             {
                 return;
             }

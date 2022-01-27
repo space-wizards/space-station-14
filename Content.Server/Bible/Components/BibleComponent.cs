@@ -1,4 +1,3 @@
-using Content.Shared.Damage;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Content.Shared.Damage;
@@ -9,7 +8,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Bible.Components
 {
-    [RegisterComponent, Friend(typeof(BibleSystem))]
+    [RegisterComponent]
     public class BibleComponent : Component
     {
         public override string Name => "Bible";
