@@ -1,5 +1,5 @@
 ﻿- type: constructionGraph
-  id: solarpanel
+  id: SolarPanel
   start: start
   graph:
     - node: start

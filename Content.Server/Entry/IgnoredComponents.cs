@@ -13,10 +13,8 @@ namespace Content.Server.Entry
             "ItemStatus",
             "Marker",
             "Clickable",
-            "RadiatingLight",
             "Icon",
             "ClientEntitySpawner",
-            "ToySingularity",
             "CharacterInfo"
         };
     }
