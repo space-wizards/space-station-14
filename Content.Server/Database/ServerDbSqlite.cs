@@ -215,21 +215,30 @@ namespace Content.Server.Database
                 unban.UnbanTime);
         }
 
-        public override async Task AddConnectionLogAsync(NetUserId userId, string userName, IPAddress address,
-            ImmutableArray<byte> hwId)
+        public override async Task<int>  AddConnectionLogAsync(
+            NetUserId userId,
+            string userName,
+            IPAddress address,
+            ImmutableArray<byte> hwId,
+            ConnectionDenyReason? denied)
         {
             await using var db = await GetDbImpl();
 
-            db.SqliteDbContext.ConnectionLog.Add(new ConnectionLog
+            var connectionLog = new ConnectionLog
             {
                 Address = address,
                 Time = DateTime.UtcNow,
                 UserId = userId.UserId,
                 UserName = userName,
-                HWId = hwId.ToArray()
-            });
+                HWId = hwId.ToArray(),
+                Denied = denied
+            };
+
+            db.SqliteDbContext.ConnectionLog.Add(connectionLog);
 
             await db.SqliteDbContext.SaveChangesAsync();
+
+            return connectionLog.Id;
         }
 
         public override async Task<((Admin, string? lastUserName)[] admins, AdminRank[])> GetAllAdminAndRanksAsync(
