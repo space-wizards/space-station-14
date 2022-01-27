@@ -76,6 +76,7 @@ namespace Content.Server.Physics.Controllers
                 !grid.TryGetTileRef(xform.Coordinates, out var tile)) yield break;
 
             var tileAABB = _lookup.GetLocalBounds(tile, grid.TileSize).Enlarged(0.01f);
+            var gridMatrix = Transform(grid.GridEntityId).InvWorldMatrix;
 
             foreach (var entity in _lookup.GetEntitiesIntersecting(tile))
             {
@@ -97,9 +98,10 @@ namespace Content.Server.Physics.Controllers
                 }
 
                 var transform = Transform(entity);
-                var gridPos = grid.InvWorldMatrix.Transform(transform.WorldPosition);
+                var gridPos = gridMatrix.Transform(transform.WorldPosition);
+                var gridAABB = new Box2(gridPos - 0.1f, gridPos + 0.1f);
 
-                if (!tileAABB.Contains(gridPos)) continue;
+                if (!tileAABB.Intersects(gridAABB)) continue;
 
                 yield return (entity, transform);
             }
