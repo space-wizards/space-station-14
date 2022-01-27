@@ -21,7 +21,7 @@ namespace Content.Server.Climbing.Components
             get => base.IsClimbing;
             set
             {
-                if (_isClimbing == value)
+                if (base.IsClimbing == value)
                     return;
 
                 base.IsClimbing = value;
@@ -102,7 +102,7 @@ namespace Content.Server.Climbing.Components
 
         public override ComponentState GetComponentState()
         {
-            return new ClimbModeComponentState(_isClimbing, OwnerIsTransitioning);
+            return new ClimbModeComponentState(base.IsClimbing, OwnerIsTransitioning);
         }
     }
 }
