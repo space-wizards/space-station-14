@@ -17,7 +17,9 @@
   name: command door remote
   components:
   - type: Sprite
-    state: door_remotecommand
+    layers:
+    - state: door_remotebase
+    - state: door_remotecommand
   - type: Access
     tags: 
     - Captain
@@ -30,7 +32,9 @@
   name: security door remote
   components:
   - type: Sprite
-    state: door_remotesecurity
+    layers:
+    - state: door_remotebase
+    - state: door_remotesecurity
   - type: Access
     tags:
     - HeadOfSecurity
@@ -42,7 +46,9 @@
   name: service door remote
   components:
   - type: Sprite
-    state: door_remoteservice
+    layers:
+    - state: door_remotebase
+    - state: door_remoteservice
   - type: Access
     tags:
     - HeadOfPersonnel
@@ -59,7 +65,9 @@
   name: research door remote
   components:
   - type: Sprite
-    state: door_remotescience
+    layers:
+    - state: door_remotebase
+    - state: door_remotescience
   - type: Access
     tags:
     - ResearchDirector
@@ -71,7 +79,9 @@
   name: cargo door remote
   components:
   - type: Sprite
-    state: door_remotecargo
+    layers:
+    - state: door_remotebase
+    - state: door_remotecargo
   - type: Access
     tags:
     - Cargo
@@ -83,7 +93,9 @@
   name: medical door remote
   components:
   - type: Sprite
-    state: door_remotemedical
+    layers:
+    - state: door_remotebase
+    - state: door_remotemedical
   - type: Access
     tags:
     - Medical
@@ -95,7 +107,9 @@
   name: engineering door remote
   components:
   - type: Sprite
-    state: door_remoteengineering
+    layers:
+    - state: door_remotebase
+    - state: door_remoteengineering
   - type: Access
     tags:
     - ChiefEngineer

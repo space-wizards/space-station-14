@@ -11,6 +11,9 @@
       "name": "door_remotecommand"
     },
     {
+      "name": "door_remotebase"
+    },
+    {
       "name": "door_remotesecurity"
     },
     {
