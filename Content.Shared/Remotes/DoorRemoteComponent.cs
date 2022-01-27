@@ -8,5 +8,14 @@ namespace Content.Shared.Remotes
     public class DoorRemoteComponent : Component
     {
         public override string Name => "DoorRemote";
+
+        public OperatingMode Mode = OperatingMode.OpenClose;
+
+        public enum OperatingMode
+        {
+            OpenClose,
+            ToggleBolts
+            // ToggleEmergencyAccess
+        }
     }
 }

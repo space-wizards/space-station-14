@@ -115,15 +115,39 @@ namespace Content.Server.Doors.Systems
 
         private void OnRangedInteract(EntityUid uid, AirlockComponent component, RangedInteractEvent args)
         {
+            args.Handled = true;
             var doorComponent = EntityManager.GetComponent<ServerDoorComponent>(component.Owner);
-
-            if (doorComponent.State == SharedDoorComponent.DoorState.Open)
+            
+            // If it isn't a door remote we don't use it
+            if(!EntityManager.TryGetComponent<DoorRemoteComponent?>(args.UsedUid, out var remoteComponent))
             {
-                doorComponent.TryClose(args.UsedUid);
+                args.Handled = false;
+                return;
             }
-            else if (doorComponent.State == SharedDoorComponent.DoorState.Closed)
+
+            if (remoteComponent.Mode == DoorRemoteComponent.OperatingMode.OpenClose)
             {
-                doorComponent.TryOpen(args.UsedUid);
+                if (doorComponent.State == SharedDoorComponent.DoorState.Open)
+                {
+                    doorComponent.TryClose(args.UsedUid);
+                }
+                else if (doorComponent.State == SharedDoorComponent.DoorState.Closed)
+                {
+                    doorComponent.TryOpen(args.UsedUid);
+                }
+            }
+
+            if (remoteComponent.Mode == DoorRemoteComponent.OperatingMode.ToggleBolts
+                    && component.IsPowered())
+            {
+                if(component.IsBolted())
+                {
+                    component.SetBoltsWithAudio(false);
+                }
+                else
+                {
+                    component.SetBoltsWithAudio(true);
+                }
             }
         }
     }
