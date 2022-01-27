@@ -145,7 +145,7 @@ namespace Content.Server.Doors.Systems
 
             if (remoteComponent.Mode == DoorRemoteComponent.OperatingMode.ToggleBolts
                     && component.IsPowered()
-                    && doorComponent.CanOpenByEntity(args.UsedUid))
+                    && doorComponent.EntityCanAccess(args.UsedUid))
             {
                 if(component.IsBolted())
                 {
@@ -156,7 +156,7 @@ namespace Content.Server.Doors.Systems
                     component.SetBoltsWithAudio(true);
                 }
             }
-            else if (!doorComponent.CanOpenByEntity(args.UsedUid))
+            else if (!doorComponent.EntityCanAccess(args.UsedUid))
             {
                 doorComponent.Deny();
             }
