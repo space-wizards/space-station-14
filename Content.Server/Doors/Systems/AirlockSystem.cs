@@ -4,10 +4,10 @@ using Content.Server.WireHacking;
 using Content.Shared.Doors;
 using Content.Shared.Popups;
 using Content.Shared.Interaction;
-using Content.Shared.Remotes;
+using Content.Shared.Access.Components;
+using Content.Server.Remotes;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 
 namespace Content.Server.Doors.Systems
@@ -116,15 +116,21 @@ namespace Content.Server.Doors.Systems
         private void OnRangedInteract(EntityUid uid, AirlockComponent component, RangedInteractEvent args)
         {
             args.Handled = true;
-            var doorComponent = EntityManager.GetComponent<ServerDoorComponent>(component.Owner);
-            
             // If it isn't a door remote we don't use it
-            if(!EntityManager.TryGetComponent<DoorRemoteComponent?>(args.UsedUid, out var remoteComponent))
+            if (!EntityManager.TryGetComponent<DoorRemoteComponent?>(args.UsedUid, out var remoteComponent))
             {
                 args.Handled = false;
                 return;
             }
+            // Remotes don't work on doors without access
+            if (!EntityManager.HasComponent<AccessReaderComponent>(component.Owner))
+            {
+                args.Handled = false;
+                return;
+            }
+            var doorComponent = EntityManager.GetComponent<ServerDoorComponent>(component.Owner);
 
+            
             if (remoteComponent.Mode == DoorRemoteComponent.OperatingMode.OpenClose)
             {
                 if (doorComponent.State == SharedDoorComponent.DoorState.Open)
@@ -138,7 +144,8 @@ namespace Content.Server.Doors.Systems
             }
 
             if (remoteComponent.Mode == DoorRemoteComponent.OperatingMode.ToggleBolts
-                    && component.IsPowered())
+                    && component.IsPowered()
+                    && doorComponent.CanOpenByEntity(args.UsedUid))
             {
                 if(component.IsBolted())
                 {
@@ -148,6 +155,10 @@ namespace Content.Server.Doors.Systems
                 {
                     component.SetBoltsWithAudio(true);
                 }
+            }
+            else if (!doorComponent.CanOpenByEntity(args.UsedUid))
+            {
+                doorComponent.Deny();
             }
         }
     }
