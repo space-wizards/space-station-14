@@ -1484,7 +1484,7 @@
 
 - type: entity
   parent: DrinkGlassBase
-  id: DrinkRootBeerGlass
+  id: DrinkRootBeerFloatGlass
   name: root beer float glass
   description: Fizzy, foamy, and now with ice cream on top! Amazing!
   components:
