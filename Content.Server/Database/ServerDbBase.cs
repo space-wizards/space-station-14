@@ -365,11 +365,28 @@ namespace Content.Server.Database
         /*
          * CONNECTION LOG
          */
-        public abstract Task AddConnectionLogAsync(
+        public abstract Task<int> AddConnectionLogAsync(
             NetUserId userId,
             string userName,
             IPAddress address,
-            ImmutableArray<byte> hwId);
+            ImmutableArray<byte> hwId,
+            ConnectionDenyReason? denied);
+
+        public async Task AddServerBanHitsAsync(int connection, IEnumerable<ServerBanDef> bans)
+        {
+            await using var db = await GetDb();
+
+            foreach (var ban in bans)
+            {
+                db.DbContext.ServerBanHit.Add(new ServerBanHit
+                {
+                    ConnectionId = connection, BanId = ban.Id!.Value
+                });
+            }
+
+            await db.DbContext.SaveChangesAsync();
+        }
+
         #endregion
 
         #region Admin Ranks
