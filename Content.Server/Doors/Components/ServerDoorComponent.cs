@@ -723,7 +723,7 @@ namespace Content.Server.Doors.Components
             _beingWelded = true;
 
             // perform a do-after delay
-            var result = await toolSystem.UseTool(eventArgs.Using, eventArgs.User, Owner, 3f, 3f, _weldingQuality, () => CanWeldShut);
+            var result = await toolSystem.UseTool(eventArgs.Using, eventArgs.User, Owner, 3f, 3f, _weldingQuality, () => CanWeldShut, tool);
 
             // if successful, toggle the weld-status (while also ensuring that it can still be welded shut after the delay)
             if (result)
