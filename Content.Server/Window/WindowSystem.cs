@@ -13,6 +13,7 @@ namespace Content.Server.Window;
 public class WindowSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
 
     public override void Initialize()
     {
@@ -31,7 +32,8 @@ public class WindowSystem : EntitySystem
         SoundSystem.Play(Filter.Pvs(args.Target), component.KnockSound.GetSound(),
             Transform(args.Target).Coordinates, AudioHelpers.WithVariation(0.05f));
 
-        args.Target.PopupMessageEveryone(Loc.GetString("comp-window-knock"));
+        var msg = Loc.GetString("comp-window-knock");
+        _popupSystem.PopupEntity(msg, uid, Filter.Pvs(uid));
 
         component.LastKnockTime = _gameTiming.CurTime;
         args.Handled = true;
