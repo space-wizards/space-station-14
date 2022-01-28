@@ -232,30 +232,24 @@ namespace Content.Server.Database
                 record.LastSeenHWId?.ToImmutableArray());
         }
 
-        public override async Task<int> AddConnectionLogAsync(
+        public override async Task AddConnectionLogAsync(
             NetUserId userId,
             string userName,
             IPAddress address,
-            ImmutableArray<byte> hwId,
-            ConnectionDenyReason? denied)
+            ImmutableArray<byte> hwId)
         {
             await using var db = await GetDbImpl();
 
-            var connectionLog = new ConnectionLog
+            db.PgDbContext.ConnectionLog.Add(new ConnectionLog
             {
                 Address = address,
                 Time = DateTime.UtcNow,
                 UserId = userId.UserId,
                 UserName = userName,
-                HWId = hwId.ToArray(),
-                Denied = denied,
-            };
-
-            db.PgDbContext.ConnectionLog.Add(connectionLog);
+                HWId = hwId.ToArray()
+            });
 
             await db.PgDbContext.SaveChangesAsync();
-
-            return connectionLog.Id;
         }
 
         public override async Task<((Admin, string? lastUserName)[] admins, AdminRank[])>
