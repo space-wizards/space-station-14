@@ -292,8 +292,6 @@ namespace Content.Shared.Interaction
             Ignored? predicate = null,
             bool ignoreInsideBlocker = false)
         {
-            if (!origin.InRange(other, range)) return false;
-
             var dir = other.Position - origin.Position;
 
             if (dir.LengthSquared.Equals(0f)) return true;
