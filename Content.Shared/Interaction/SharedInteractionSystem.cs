@@ -45,6 +45,7 @@ namespace Content.Shared.Interaction
         [Dependency] private readonly SharedVerbSystem _verbSystem = default!;
         [Dependency] private readonly SharedAdminLogSystem _adminLogSystem = default!;
         [Dependency] private readonly RotateToFaceSystem _rotateToFaceSystem = default!;
+        [Dependency] private readonly UseDelaySystem _useDelay = default!;
 
         public const float InteractionRange = 2;
         public const float InteractionRangeSquared = InteractionRange * InteractionRange;
@@ -620,7 +621,7 @@ namespace Content.Shared.Interaction
             RaiseLocalEvent(used, activateMsg);
             if (activateMsg.Handled)
             {
-                delayComponent?.BeginDelay();
+                _useDelay.BeginDelay(delayComponent);
                 _adminLogSystem.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user):user} activated {ToPrettyString(used):used}");
                 return;
             }
@@ -630,7 +631,7 @@ namespace Content.Shared.Interaction
 
             var activateEventArgs = new ActivateEventArgs(user, used);
             activateComp.Activate(activateEventArgs);
-            delayComponent?.BeginDelay();
+            _useDelay.BeginDelay(delayComponent);
             _adminLogSystem.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user):user} activated {ToPrettyString(used):used}"); // No way to check success.
         }
         #endregion
@@ -664,7 +665,7 @@ namespace Content.Shared.Interaction
             RaiseLocalEvent(used, useMsg);
             if (useMsg.Handled)
             {
-                delayComponent?.BeginDelay();
+                _useDelay.BeginDelay(delayComponent);
                 return true;
             }
 
@@ -676,7 +677,7 @@ namespace Content.Shared.Interaction
                 // If a Use returns a status completion we finish our interaction
                 if (use.UseEntity(new UseEntityEventArgs(user)))
                 {
-                    delayComponent?.BeginDelay();
+                    _useDelay.BeginDelay(delayComponent);
                     return true;
                 }
             }
