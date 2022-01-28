@@ -29,7 +29,7 @@
     - type: Anchorable
     - type: Pullable
     - type: Construction
-      graph: disposalMachine
+      graph: DisposalMachine
       node: frame
     - type: Damageable
       damageContainer: Inorganic

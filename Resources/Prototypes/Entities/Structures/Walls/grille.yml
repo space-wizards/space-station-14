@@ -17,7 +17,7 @@
       sprite: Structures/Walls/grille.rsi
       state: grille
     - type: Construction
-      graph: grille
+      graph: Grille
       node: grille
       deconstructionTarget: start
     - type: Damageable
@@ -88,7 +88,7 @@
       tags:
         - RCDDeconstructWhitelist
     - type: Construction
-      graph: grille
+      graph: Grille
       node: grilleBroken
       deconstructionTarget: start
     - type: Fixtures # overwrite BaseStructure parent.

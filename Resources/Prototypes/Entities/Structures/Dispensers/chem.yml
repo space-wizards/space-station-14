@@ -12,7 +12,7 @@
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: Construction
-    graph: machine
+    graph: Machine
     node: machine
   - type: Destructible
     thresholds:

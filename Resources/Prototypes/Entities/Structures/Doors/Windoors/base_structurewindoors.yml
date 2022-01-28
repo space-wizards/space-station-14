@@ -83,7 +83,7 @@
       path: /Audio/Machines/airlock_deny.ogg
   - type: Wires
     BoardName: "Windoor Control"
-    LayoutId: Airlock
+    LayoutId: Windoors
   - type: UserInterface
     interfaces:
     - key: enum.WiresUiKey.Key
@@ -102,7 +102,7 @@
     airBlockedDirection:
       - South
   - type: Construction
-    graph: windoor
+    graph: Windoor
     node: windoor
 
 - type: entity
@@ -128,6 +128,8 @@
     - state: panel_open
       map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       visible: false
+  - type: Wires
+    LayoutId: Secure Windoors
   - type: Destructible
     thresholds:
     - trigger:
@@ -151,5 +153,5 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Construction
-    graph: windoor
+    graph: Windoor
     node: windoorSecure
