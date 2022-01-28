@@ -26,7 +26,10 @@ public class WindowSystem : EntitySystem
         if (args.Handled)
             return;
 
-        if (component.RateLimitedKnocking && _gameTiming.CurTime < component.LastKnockTime + component.KnockDelay)
+        if (component.KnockDelay.TotalSeconds <= 0)
+            return;
+
+        if (_gameTiming.CurTime < component.LastKnockTime + component.KnockDelay)
             return;
 
         SoundSystem.Play(Filter.Pvs(args.Target), component.KnockSound.GetSound(),

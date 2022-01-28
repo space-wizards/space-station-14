@@ -15,10 +15,6 @@ namespace Content.Server.Window
         [ViewVariables(VVAccess.ReadWrite)]
         public TimeSpan KnockDelay = TimeSpan.FromSeconds(0.5);
 
-        [DataField("rateLimitedKnocking")]
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool RateLimitedKnocking = true;
-
         [DataField("knockSound")]
         public SoundSpecifier KnockSound = new SoundPathSpecifier("/Audio/Effects/glass_knock.ogg");
 
