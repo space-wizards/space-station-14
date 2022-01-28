@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Content.Server.Database;
@@ -65,35 +64,6 @@ The ban reason is: ""{ban.Reason}""
 
         private async Task NetMgrOnConnecting(NetConnectingArgs e)
         {
-            var deny = await ShouldDeny(e);
-
-            var addr = e.IP.Address;
-            var userId = e.UserId;
-
-            if (deny != null)
-            {
-                var (reason, msg, banHits) = deny.Value;
-
-                var id = await _db.AddConnectionLogAsync(userId, e.UserName, addr, e.UserData.HWId, reason);
-                if (banHits is { Count: > 0 })
-                    await _db.AddServerBanHitsAsync(id, banHits);
-
-                e.Deny(msg);
-            }
-            else
-            {
-                await _db.AddConnectionLogAsync(userId, e.UserName, addr, e.UserData.HWId, null);
-
-                if (!ServerPreferencesManager.ShouldStorePrefs(e.AuthType))
-                    return;
-
-                await _db.UpdatePlayerRecordAsync(userId, e.UserName, addr, e.UserData.HWId);
-            }
-        }
-
-        private async Task<(ConnectionDenyReason, string, List<ServerBanDef>? bansHit)?> ShouldDeny(
-            NetConnectingArgs e)
-        {
             // Check if banned.
             var addr = e.IP.Address;
             var userId = e.UserId;
@@ -107,26 +77,34 @@ The ban reason is: ""{ban.Reason}""
 
             var adminData = await _dbManager.GetAdminDataForAsync(e.UserId);
             var wasInGame = EntitySystem.TryGet<GameTicker>(out var ticker) && ticker.PlayersInGame.Contains(userId);
-            if ((_plyMgr.PlayerCount >= _cfg.GetCVar(CCVars.SoftMaxPlayers) && adminData is null) && !wasInGame)
+            if ((_plyMgr.PlayerCount >= _cfg.GetCVar(CCVars.SoftMaxPlayers) && adminData is null) && !wasInGame )
             {
-                return (ConnectionDenyReason.Full, Loc.GetString("soft-player-cap-full"), null);
+                e.Deny(Loc.GetString("soft-player-cap-full"));
+                return;
             }
 
-            var bans = await _db.GetServerBansAsync(addr, userId, hwId);
-            if (bans.Count > 0)
+            var ban = await _db.GetServerBanAsync(addr, userId, hwId);
+            if (ban != null)
             {
-                var firstBan = bans[0];
-                return (ConnectionDenyReason.Ban, firstBan.DisconnectMessage, bans);
+                e.Deny(ban.DisconnectMessage);
+                return;
             }
 
             if (_cfg.GetCVar(CCVars.WhitelistEnabled)
                 && await _db.GetWhitelistStatusAsync(userId) == false
                 && adminData is null)
             {
-                return (ConnectionDenyReason.Whitelist, Loc.GetString("whitelist-not-whitelisted"), null);
+                e.Deny(Loc.GetString("whitelist-not-whitelisted"));
+                return;
             }
 
-            return null;
+            if (!ServerPreferencesManager.ShouldStorePrefs(e.AuthType))
+            {
+                return;
+            }
+
+            await _db.UpdatePlayerRecordAsync(userId, e.UserName, addr, e.UserData.HWId);
+            await _db.AddConnectionLogAsync(userId, e.UserName, addr, e.UserData.HWId);
         }
 
         private async Task<NetUserId?> AssignUserIdCallback(string name)

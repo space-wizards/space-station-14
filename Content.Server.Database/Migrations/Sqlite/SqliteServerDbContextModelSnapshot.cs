@@ -279,10 +279,6 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("address");
 
-                    b.Property<byte?>("Denied")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("denied");
-
                     b.Property<byte[]>("HWId")
                         .HasColumnType("BLOB")
                         .HasColumnName("hwid");
@@ -576,33 +572,6 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.HasCheckConstraint("HaveEitherAddressOrUserIdOrHWId", "address IS NOT NULL OR user_id IS NOT NULL OR hwid IS NOT NULL");
                 });
 
-            modelBuilder.Entity("Content.Server.Database.ServerBanHit", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("server_ban_hit_id");
-
-                    b.Property<int>("BanId")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("ban_id");
-
-                    b.Property<int>("ConnectionId")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("connection_id");
-
-                    b.HasKey("Id")
-                        .HasName("PK_server_ban_hit");
-
-                    b.HasIndex("BanId")
-                        .HasDatabaseName("IX_server_ban_hit_ban_id");
-
-                    b.HasIndex("ConnectionId")
-                        .HasDatabaseName("IX_server_ban_hit_connection_id");
-
-                    b.ToTable("server_ban_hit", (string)null);
-                });
-
             modelBuilder.Entity("Content.Server.Database.ServerUnban", b =>
                 {
                     b.Property<int>("Id")
@@ -776,27 +745,6 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.Navigation("Preference");
                 });
 
-            modelBuilder.Entity("Content.Server.Database.ServerBanHit", b =>
-                {
-                    b.HasOne("Content.Server.Database.ServerBan", "Ban")
-                        .WithMany("BanHits")
-                        .HasForeignKey("BanId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_server_ban_hit_server_ban_ban_id");
-
-                    b.HasOne("Content.Server.Database.ConnectionLog", "Connection")
-                        .WithMany("BanHits")
-                        .HasForeignKey("ConnectionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_server_ban_hit_connection_log_connection_id");
-
-                    b.Navigation("Ban");
-
-                    b.Navigation("Connection");
-                });
-
             modelBuilder.Entity("Content.Server.Database.ServerUnban", b =>
                 {
                     b.HasOne("Content.Server.Database.ServerBan", "Ban")
@@ -845,11 +793,6 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.Navigation("Flags");
                 });
 
-            modelBuilder.Entity("Content.Server.Database.ConnectionLog", b =>
-                {
-                    b.Navigation("BanHits");
-                });
-
             modelBuilder.Entity("Content.Server.Database.Player", b =>
                 {
                     b.Navigation("AdminLogs");
@@ -874,8 +817,6 @@ namespace Content.Server.Database.Migrations.Sqlite
 
             modelBuilder.Entity("Content.Server.Database.ServerBan", b =>
                 {
-                    b.Navigation("BanHits");
-
                     b.Navigation("Unban");
                 });
 #pragma warning restore 612, 618
