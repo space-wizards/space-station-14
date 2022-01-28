@@ -2,6 +2,7 @@
 using Content.Server.GameTicking.Events;
 using Content.Server.GameTicking.Rules;
 using Content.Server.StationEvents;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Robust.Shared.Configuration;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
@@ -20,18 +21,28 @@ public partial class DynamicModeSystem : GameRuleSystem
     // Cached so we can re-enable random events if dynamic is disabled.
     private bool _stationEventsWereEnabled;
 
+    private float _midroundAccumulator;
+    private float _refundAccumulator;
+
+    /// <summary>
+    ///     Has dynamic actually started yet?
+    /// </summary>
+    public bool DynamicStarted { get; private set; }
+
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnRoundStarted);
+
+        InitializeEvents();
     }
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
-        if (!Enabled) return;
+        if (!DynamicStarted) return;
 
         // Midround injection loop.
         _midroundAccumulator += frameTime;
@@ -41,6 +52,16 @@ public partial class DynamicModeSystem : GameRuleSystem
         {
 
             // Run a midround event
+
+            TryRunMidroundEvent();
+        }
+
+        _refundAccumulator += frameTime;
+
+        // Check refunds every minute.
+        if (_refundAccumulator > 60.0f)
+        {
+            CheckAvailableRefunds();
         }
     }
 
@@ -64,6 +85,7 @@ public partial class DynamicModeSystem : GameRuleSystem
         if (!Enabled)
             return;
 
+        DynamicStarted = true;
         RunRoundstartEvents(ev.Players);
     }
 
@@ -72,7 +94,10 @@ public partial class DynamicModeSystem : GameRuleSystem
         _stationEvents.Enabled = _stationEventsWereEnabled;
 
         TotalEvents.Clear();
-        ActiveEvents.Clear();
+        RefundableEvents.Clear();
+        RoundstartBudget = 0;
+        MidroundBudget = 0;
+        ThreatLevel = 0;
     }
 
     [Dependency] private readonly IPrototypeManager _proto = default!;
@@ -80,4 +105,5 @@ public partial class DynamicModeSystem : GameRuleSystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly StationEventSystem _stationEvents = default!;
+    [Dependency] private readonly GameTicker _gameTicker = default!;
 }

@@ -173,10 +173,10 @@ namespace Content.Shared.CCVar
             CVarDef.Create("dynamic.latejoin_end", 25.0f);
 
         public static readonly CVarDef<float> DynamicMidroundStart =
-            CVarDef.Create("dynamic.midround_start", 15.0f);
+            CVarDef.Create("dynamic.midround_start", 10.0f);
 
         public static readonly CVarDef<float> DynamicMidroundEnd =
-            CVarDef.Create("dynamic.midround_end", 35.0f);
+            CVarDef.Create("dynamic.midround_end", 45.0f);
 
         public static readonly CVarDef<float> DynamicMaxThreat =
             CVarDef.Create("dynamic.max_threat", 100.0f);

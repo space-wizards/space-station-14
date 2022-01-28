@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Database;
 using Content.Server.Dynamic.Prototypes;
+using Content.Server.GameTicking;
 using Content.Server.Mind.Components;
 using Content.Shared.CCVar;
 using NFluidsynth;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using Logger = Robust.Shared.Log.Logger;
 
@@ -20,18 +22,16 @@ public partial class DynamicModeSystem
     ///     Holds the number of times each event has been run.
     /// </summary>
     [ViewVariables]
-    public Dictionary<GameEventPrototype, int> TotalEvents = new();
+    public readonly Dictionary<GameEventPrototype, int> TotalEvents = new();
 
     /// <summary>
     ///     Holds the active events, with the value representing
     ///     when the event started, for refunding purposes.
     /// </summary>
     [ViewVariables]
-    public List<(GameEventPrototype, TimeSpan)> ActiveEvents = new();
+    public readonly List<(GameEventPrototype, TimeSpan)> RefundableEvents = new();
 
     #region Latejoin
-
-    private float _latejoinAccumulator;
 
     /// <summary>
     ///     When will dynamic start accepting latejoin events?
@@ -43,11 +43,19 @@ public partial class DynamicModeSystem
     /// </summary>
     public TimeSpan LatejoinEnd => TimeSpan.FromMinutes(_cfg.GetCVar(CCVars.DynamicLatejoinInjectEnd));
 
+    /// <summary>
+    ///     Above this value, latejoin injection chance is increased.
+    /// </summary>
+    public float HighInjectionChanceThreshold = 70.0f;
+
+    /// <summary>
+    ///     Below this value, latejoin injection chance is decreased.
+    /// </summary>
+    public float LowInjectionChanceThreshold = 10.0f;
+
     #endregion
 
     #region Midround
-
-    private float _midroundAccumulator;
 
     /// <summary>
     ///     When will dynamic start accepting latejoin events?
@@ -61,6 +69,30 @@ public partial class DynamicModeSystem
 
     #endregion
 
+    public void InitializeEvents()
+    {
+        SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerSpawnComplete);
+    }
+
+    private void OnPlayerSpawnComplete(PlayerSpawnCompleteEvent ev)
+    {
+        // We only care about latejoins.
+
+        if (!ev.LateJoin)
+            return;
+
+        // Should we actually run latejoin checks yet?
+        var roundDur = _gameTicker.RoundDuration();
+        if (roundDur < LatejoinStart || roundDur > LatejoinEnd)
+            return;
+
+        TryRunLatejoinEvent(ev.Player);
+    }
+
+    /// <summary>
+    ///     Purchases and starts a set of roundstart events.
+    /// </summary>
+    /// <param name="players"></param>
     public void RunRoundstartEvents(IPlayerSession[] players)
     {
         var protos = _proto.EnumeratePrototypes<GameEventPrototype>()
@@ -90,12 +122,82 @@ public partial class DynamicModeSystem
     }
 
     /// <summary>
+    ///     Attempts to run a midround event.
+    /// </summary>
+    public void TryRunMidroundEvent()
+    {
+        var chance = 0.0f;
+
+
+    }
+
+    /// <summary>
+    ///     For a given latejoiner, tries to run a latejoin event.
+    /// </summary>
+    /// <param name="player"></param>
+    public void TryRunLatejoinEvent(IPlayerSession player)
+    {
+        // TODO
+        Logger.Info("Tried to run latejoin event, weehee");
+
+
+    }
+
+    /// <summary>
+    ///     Iterates over all active refundable events and checks if they can be refunded.
+    ///     If they've gone past the max time, remove it from the list instead.
+    /// </summary>
+    public void CheckAvailableRefunds()
+    {
+        RemQueue<(GameEventPrototype, TimeSpan)> remove = new();
+        foreach (var item in RefundableEvents.ToArray())
+        {
+            var (ev, time) = item;
+            if (_gameTiming.CurTime - time >= TimeSpan.FromSeconds(ev.MaxRefundTime)
+                || ev.RefundConditions == null)
+            {
+                remove.Add(item);
+                continue;
+            }
+
+            var shouldRefund = true;
+
+            // Refund conditions don't actually have a list of candidates.
+            var data = new GameEventData(GameTicker.PlayersInGame.Count, new());
+            foreach (var cond in ev.RefundConditions)
+            {
+                // If any fail, don't refund
+                if (!cond.Condition(data, EntityManager))
+                {
+                    shouldRefund = false;
+                    break;
+                }
+            }
+
+            if (shouldRefund)
+            {
+                // Always add it to the midround pool because it doesn't
+                // really make sense to refund roundstart events. And if a roundstart event -does- get refunded,
+                // it should just get added to the midround pool anyway so it doesn't get wasted.
+
+                MidroundBudget += ev.ThreatCost;
+                MidroundBudget = Math.Min(MidroundBudget, ThreatLevel);
+                remove.Add(item);
+            }
+        }
+
+        foreach (var item in remove)
+        {
+            RefundableEvents.Remove(item);
+        }
+    }
+
+    #region Utility
+
+    /// <summary>
     ///     Returns a hashset of <see cref="Candidate"/> given a list of players,
     ///     first determining if they are valid candidates
     /// </summary>
-    /// <param name="proto"></param>
-    /// <param name="players"></param>
-    /// <returns></returns>
     public HashSet<Candidate> GetCandidates(GameEventPrototype proto, IPlayerSession[] players)
     {
         var candidates = new HashSet<Candidate>();
@@ -162,7 +264,10 @@ public partial class DynamicModeSystem
     /// </summary>
     public void StartEvent(GameEventPrototype proto, GameEventData data)
     {
-        ActiveEvents.Add((proto, _gameTiming.CurTime));
+        if (proto.RefundConditions != null)
+        {
+            RefundableEvents.Add((proto, _gameTiming.CurTime));
+        }
         if (TotalEvents.ContainsKey(proto))
             TotalEvents[proto] += 1;
         else
@@ -173,6 +278,8 @@ public partial class DynamicModeSystem
             effect.Effect(data, EntityManager);
         }
     }
+
+    #endregion
 }
 
 public class StartEventAttemptEvent : CancellableEntityEventArgs
