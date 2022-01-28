@@ -71,7 +71,7 @@ namespace Content.Server.Physics.Controllers
                 var itemRelative = conveyorPos - worldPos;
 
                 worldPos += Convey(direction, speed, frameTime, itemRelative);
-                transform.WorldPosition += worldPos;
+                transform.WorldPosition = worldPos;
             }
         }
 
@@ -84,7 +84,7 @@ namespace Content.Server.Physics.Controllers
             var dirNormal = new Vector2(direction.Y, direction.X);
             var dot = Vector2.Dot(itemRelative, dirNormal);
 
-            var velocity = direction * speed * 5;
+            var velocity = direction * speed;
             velocity += dirNormal * speed * -dot;
 
             return velocity * frameTime;
