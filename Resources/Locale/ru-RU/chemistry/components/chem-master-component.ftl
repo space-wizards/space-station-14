@@ -1,7 +1,7 @@
 ## Entity
 
 chem-master-component-activate-no-hands = У вас нет рук.
-chem-master-component-cannot-put-entity-message = Вы не можете поместить это в ChemMaster!
+chem-master-component-cannot-put-entity-message = Вы не можете поместить это в Мастер реагентов!
 
 ## Bound UI
 

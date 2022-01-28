@@ -1,8 +1,8 @@
 buzzochloricbees-effect-oh-god-bees = Над вами роится много-много пчел.
-buzzochloricbees-effect-its-the-bees = Это пчёлы, о боже, пчёлы.
+buzzochloricbees-effect-its-the-bees = Это пчёлы, о господи, пчёлы.
 buzzochloricbees-effect-why-am-i-covered-in-bees = Вы покрыты разъярёнными пчёлами.
 buzzochloricbees-effect-one-with-the-bees = Вы одно целое с пчелами.
-buzzochloricbees-effect-squeaky-clean = You feel squeaky clean as the bees try and get rid of you.
+buzzochloricbees-effect-squeaky-clean = Вы чувствуете себя скрепяще-чистым, пока пчёлы пытаются от вас избавиться.
 buzzochloricbees-effect-histamine-bee-allergy = Видимо, у вас сильная аллергия на пчел.
 buzzochloricbees-effect-histamine-swells = Вы раздуваетесь как воздушный шар в присутствии пчёл
 buzzochloricbees-effect-histamine-numb-to-the-bees = Вы оцепенели из-за пчёл.

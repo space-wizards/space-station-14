@@ -1,8 +1,8 @@
-ent-PackPaperRolling = pack of rolling paper
-    .desc = A pack of thin pieces of paper used to make fine smokeables.
-ent-PackPaperRollingFilters = pack of rolling paper with filters
-    .desc = A pack of filters and thin pieces of paper used to make fine smokeables.
-ent-PaperRolling = rolling paper
-    .desc = A thin piece of paper used to make fine smokeables.
-ent-CigaretteFilter = cigarette filter
-    .desc = A strip of firm paper used as a filter for handmade cigarettes.
+ent-PackPaperRolling = пачка сигаретной бумаги
+    .desc = Пачка тонких листов бумаги, используемых для изготовления самокруток.
+ent-PackPaperRollingFilters = пачка сигаретной бумаги с фильтрами
+    .desc = Пачка фильтров и тонких листов бумаги, используемых для изготовления самокруток.
+ent-PaperRolling = сигаретная бумага
+    .desc = Тонкий лист бумаги, используемый для изготовления самокруток.
+ent-CigaretteFilter = сигаретный фильтр
+    .desc = Полоска плотной бумаги, используемая в качестве фильтра для самокруток.

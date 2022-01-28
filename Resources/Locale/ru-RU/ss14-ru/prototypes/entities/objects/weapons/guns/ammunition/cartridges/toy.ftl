@@ -1,4 +1,4 @@
 ent-CartridgeCapBase = cartridge (cap)
     .desc = { ent-BaseItem.desc }
-ent-CartridgeCap = cap gun cartridge
+ent-CartridgeCap = пистоны
     .desc = { ent-CartridgeCapBase.desc }

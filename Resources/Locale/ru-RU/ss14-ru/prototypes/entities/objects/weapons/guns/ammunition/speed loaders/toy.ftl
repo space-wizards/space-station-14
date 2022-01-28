@@ -1,4 +1,4 @@
-ent-CapAmmoBase = cap gun loader
+ent-CapAmmoBase = зарядник пистонов
     .desc = { ent-BaseItem.desc }
-ent-CapLoader = cap gun loader
+ent-CapLoader = зарядник пистонов
     .desc = { ent-CapAmmoBase.desc }

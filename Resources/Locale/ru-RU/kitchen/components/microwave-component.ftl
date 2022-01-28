@@ -21,5 +21,5 @@ microwave-bound-user-interface-cook-time-label = ВРЕМЯ ПРИГОТОВЛЕ
 microwave-menu-title = Микроволновая печь
 microwave-menu-start-button = Старт
 microwave-menu-eject-all-text = Извлечь все содержимое
-microwave-menu-eject-all-tooltip = При этом испаряются все реагенты, но возвращаются твердые вещества.
+microwave-menu-eject-all-tooltip = Это испарит все реагенты, но вернет твердые вещества.
 microwave-menu-instant-button = МГНОВЕННО
