@@ -528,13 +528,13 @@ namespace Content.Server.Database
         public async Task<Server> AddOrGetServer(string serverName)
         {
             await using var db = await GetDb();
-            var servers = db.DbContext.Server.Where(server => server.Name.Equals(serverName));
-            if (servers.Any())
+            var server = await db.DbContext.Server.Where(server => server.Name.Equals(serverName)).SingleOrDefaultAsync();
+            if (server != default)
             {
-                return servers.First();
+                return server;
             }
 
-            var server = new Server
+            server = new Server
             {
                 Name = serverName
             };

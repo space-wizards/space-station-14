@@ -203,7 +203,7 @@ namespace Content.Server.GameTicking
                 RoundLengthMetric.Set(0);
 
                 var playerIds = _playersInLobby.Keys.Select(player => player.UserId.UserId).ToArray();
-                var serverName = _configurationManager.GetCVar(CCVars.ServerId);
+                var serverName = _configurationManager.GetCVar(CCVars.AdminLogsServerName);
                 var server = await _db.AddOrGetServer(serverName);
                 RoundId = await _db.AddNewRound(server, playerIds);
 
