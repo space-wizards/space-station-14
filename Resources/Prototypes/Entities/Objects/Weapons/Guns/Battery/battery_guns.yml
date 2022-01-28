@@ -211,6 +211,36 @@
       startingItem: PowerCellSmallSuper
 
 - type: entity
+  name: NT Destroyer pulse rifle
+  parent: BatteryGunBase
+  id: PulseRifleDestroyer
+  description: In the hands of Death Squad operatives this weapon fully lives up to its name.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Weapons/Guns/Battery/pulse_rifle.rsi
+    layers:
+      - state: base
+        map: ["enum.RangedBarrelVisualLayers.Base"]
+      - state: mag-unshaded-4
+        map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
+        shader: unshaded
+  - type: Item
+    size: 24
+    sprite: Objects/Weapons/Guns/Battery/pulse_rifle.rsi
+  - type: BatteryBarrel
+    fireCost: 6
+    ammoPrototype: RedHeavyLaser
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+  - type: PowerCellSlot
+    cellSlot:
+      ejectOnUse: true
+      soundOptions: 
+        volume: -2
+      startingItem: PowerCellSmallHigh
+
+- type: entity
   name: x-ray cannon
   parent: BatteryGunBase
   id: XrayCannon
