@@ -295,7 +295,7 @@ namespace Content.Shared.Interaction
             var dir = other.Position - origin.Position;
 
             if (dir.LengthSquared.Equals(0f)) return true;
-            if (range > 0f && !(dir.LengthSquared <= range * range)) return false;
+            if (range >= 0f && !(dir.LengthSquared < range * range)) return false;
 
             predicate ??= _ => false;
 
