@@ -67,14 +67,27 @@ namespace Content.Server.Physics.Controllers
             {
                 if (!conveyed.Add(entity)) continue;
 
-                transform.WorldPosition += Convey(direction, speed, frameTime);
+                var worldPos = transform.WorldPosition;
+                var itemRelative = conveyorPos - worldPos;
+
+                worldPos += Convey(direction, speed, frameTime, itemRelative);
+                transform.WorldPosition += worldPos;
             }
         }
 
-        private Vector2 Convey(Vector2 direction, float speed, float frameTime)
+        private static Vector2 Convey(Vector2 direction, float speed, float frameTime, Vector2 itemRelative)
         {
             if (speed == 0 || direction.Length == 0) return Vector2.Zero;
-            return direction * speed * frameTime;
+
+            direction = direction.Normalized;
+
+            var dirNormal = new Vector2(direction.Y, direction.X);
+            var dot = Vector2.Dot(itemRelative, dirNormal);
+
+            var velocity = direction * speed * 5;
+            velocity += dirNormal * speed * -dot;
+
+            return velocity * frameTime;
         }
 
         public IEnumerable<(EntityUid, TransformComponent)> GetEntitiesToMove(ConveyorComponent comp, TransformComponent xform)
