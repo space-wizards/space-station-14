@@ -104,6 +104,20 @@
       effects:
       - !type:SatiateThirst
         factor: 4
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Cream # TODO cooking rework - separate using heat or other mixer
+        Quantity: 0.8
+  - type: tag
+    tags:
+    - Milk
+        
+- type: reagent
+  id: MilkGoat
+  parent: Milk
+  name: goats milk
+  desc: An opaque white liquid produced by a goat. High buttermilk content.
 
 - type: reagent
   id: MilkOat
@@ -117,19 +131,14 @@
       effects:
       - !type:SatiateThirst
         factor: 4
+  - type: tag
+    tags:
+    - Milk
 
 - type: reagent
   id: MilkSoy
+  parent: MilkOat
   name: soy milk
-  group: Drinks
-  desc: Surprisingly tasty.
-  physicalDesc: refreshing
-  color: "#302000"
-  metabolisms:
-    Drink:
-      effects:
-      - !type:SatiateThirst
-        factor: 5 # soyboys stay winning
 
 - type: reagent
   id: MilkSpoiled
@@ -159,13 +168,13 @@
         # TODO heal mimes
 
 - type: reagent
-  id: NukaCola
-  name: nuka cola
+  id: NuclearCola
+  name: nuclear cola
   group: Drinks
   desc: Cola, cola never changes.
   physicalDesc: fizzy
   color: "#100800"
-  spritePath: nuka_colaglass.rsi
+  spritePath: nuclear_colaglass.rsi
   metabolisms:
     Drink:
       effects:
