@@ -23,9 +23,9 @@ namespace Content.Server.Arcade.Components
 
         public override string Name => "BlockGameArcade";
 
-        [ComponentDependency] private readonly ApcPowerReceiverComponent? _powerReceiverComponent = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
-        private bool Powered => _powerReceiverComponent?.Powered ?? false;
+        private bool Powered => _entityManager.TryGetComponent<ApcPowerReceiverComponent>(Owner, out var powerReceiverComponent) && powerReceiverComponent.Powered;
         private BoundUserInterface? UserInterface => Owner.GetUIOrNull(BlockGameUiKey.Key);
 
         private BlockGame? _game;
@@ -33,9 +33,12 @@ namespace Content.Server.Arcade.Components
         private IPlayerSession? _player;
         private readonly List<IPlayerSession> _spectators = new();
 
+        [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
         public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
+#pragma warning disable 618
             base.HandleMessage(message, component);
+#pragma warning restore 618
             switch (message)
             {
                 case PowerChangedMessage powerChanged:
@@ -46,14 +49,17 @@ namespace Content.Server.Arcade.Components
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if(!Powered || !eventArgs.User.TryGetComponent(out ActorComponent? actor))
+            if(!Powered || !IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.User, out ActorComponent? actor))
                 return;
 
             if(!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User))
                 return;
 
             UserInterface?.Toggle(actor.PlayerSession);
-            RegisterPlayerSession(actor.PlayerSession);
+            if (UserInterface?.SessionHasOpen(actor.PlayerSession) == true)
+            {
+                RegisterPlayerSession(actor.PlayerSession);
+            }
         }
 
         private void RegisterPlayerSession(IPlayerSession session)
@@ -661,11 +667,11 @@ namespace Content.Server.Arcade.Components
                 _running = false;
                 _gameOver = true;
 
-                if (_component._player?.AttachedEntity != null)
+                if (_component._player?.AttachedEntity is {Valid: true} playerEntity)
                 {
                     var blockGameSystem = EntitySystem.Get<BlockGameSystem>();
 
-                    _highScorePlacement = blockGameSystem.RegisterHighScore(_component._player.AttachedEntity.Name, Points);
+                    _highScorePlacement = blockGameSystem.RegisterHighScore(IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(playerEntity).EntityName, Points);
                     SendHighscoreUpdate();
                 }
                 _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameGameOverScreenMessage(Points, _highScorePlacement?.LocalPlacement, _highScorePlacement?.GlobalPlacement));
@@ -697,6 +703,22 @@ namespace Content.Server.Arcade.Components
                 var result = new List<BlockGameBlock>();
                 result.AddRange(_field);
                 result.AddRange(_currentPiece.Blocks(_currentPiecePosition, _currentRotation));
+
+                var dropGhostPosition = _currentPiecePosition;
+                while (_currentPiece.Positions(dropGhostPosition.AddToY(1), _currentRotation)
+                       .All(DropCheck))
+                {
+                    dropGhostPosition = dropGhostPosition.AddToY(1);
+                }
+
+                if (dropGhostPosition != _currentPiecePosition)
+                {
+                    var blox = _currentPiece.Blocks(dropGhostPosition, _currentRotation);
+                    for (var i = 0; i < blox.Length; i++)
+                    {
+                        result.Add(new BlockGameBlock(blox[i].Position, BlockGameBlock.ToGhostBlockColor(blox[i].GameBlockColor)));
+                    }
+                }
                 return result;
             }
 

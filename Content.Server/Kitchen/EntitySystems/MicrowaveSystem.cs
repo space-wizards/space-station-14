@@ -1,5 +1,5 @@
+using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Kitchen.Components;
-using Content.Shared.Chemistry.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 

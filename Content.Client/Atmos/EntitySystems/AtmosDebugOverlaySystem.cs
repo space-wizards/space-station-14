@@ -62,8 +62,8 @@ namespace Content.Client.Atmos.EntitySystems
             base.Shutdown();
             _mapManager.OnGridRemoved -= OnGridRemoved;
             var overlayManager = IoCManager.Resolve<IOverlayManager>();
-            if(!overlayManager.HasOverlay<GasTileOverlay>())
-                overlayManager.RemoveOverlay<GasTileOverlay>();
+            if (overlayManager.HasOverlay<AtmosDebugOverlay>())
+                overlayManager.RemoveOverlay<AtmosDebugOverlay>();
         }
 
         public void Reset(RoundRestartCleanupEvent ev)

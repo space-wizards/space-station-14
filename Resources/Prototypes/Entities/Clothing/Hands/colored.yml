@@ -120,3 +120,30 @@
   - type: Clothing
     sprite: Clothing/Hands/Gloves/Color/yellow.rsi
     HeatResistance: 1400
+  - type: Insulated
+
+- type: entity
+  parent: ClothingHandsGlovesColorYellow
+  id: ClothingHandsGlovesColorYellowBudget
+  name: budget insulated gloves
+  description: These gloves are cheap knockoffs of the coveted ones - no way this can end badly.
+  components:
+    - type: Clothing
+      HeatResistance: 0
+    - type: Insulated
+    - type: RandomInsulation
+      # Why repeated numbers? So some numbers are more common, of course!
+      list:
+        - 0
+        - 0
+        - 0
+        - 0.5
+        - 0.5
+        - 0.5
+        - 0.75
+        - 1.25
+        - 1.25
+        - 1.5
+        - 1.5
+        - 1.5
+        - 1.5

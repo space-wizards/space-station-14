@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Cargo
@@ -15,6 +15,7 @@ namespace Content.Shared.Cargo
         public int Amount;
         public int PayingAccountId;
         public bool Approved;
+        public string Approver = string.Empty;
 
         public CargoOrderData(int orderNumber, string requester, string reason, string productId, int amount, int payingAccountId)
         {
@@ -24,7 +25,6 @@ namespace Content.Shared.Cargo
             ProductId = productId;
             Amount = amount;
             PayingAccountId = payingAccountId;
-            Approved = false;
         }
     }
 }

@@ -7,7 +7,6 @@ using Content.Server.AI.Utility.AiLogic;
 using NUnit.Framework;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Reflection;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.IntegrationTests.Tests.AI
 {
@@ -18,8 +17,7 @@ namespace Content.IntegrationTests.Tests.AI
         [Test]
         public async Task TestBehaviorSets()
         {
-            var options = new ServerIntegrationOptions();
-            var server = StartServerDummyTicker(options);
+            var server = StartServer();
             await server.WaitIdleAsync();
 
             var protoManager = server.ResolveDependency<IPrototypeManager>();

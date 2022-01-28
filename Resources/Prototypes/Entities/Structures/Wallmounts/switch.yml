@@ -21,6 +21,7 @@
       - key: enum.SignalTransmitterUiKey.Key
         type: SignalPortSelectorBoundUserInterface
   placement:
+    mode: SnapgridCenter
     snap:
     - Wallmount
 
@@ -41,6 +42,7 @@
     outputs:
       - name: pressed
   placement:
+    mode: SnapgridCenter
     snap:
     - Wallmount
 
@@ -52,12 +54,14 @@
     - type: Clickable
     - type: InteractionOutline
     - type: Physics
+    - type: Transform
+      anchored: true
     - type: Sprite
       sprite: Structures/Wallmounts/switch.rsi
       state: on
     - type: Rotatable
     - type: Construction
-      graph: lightSwitch
+      graph: LightSwitch
       node: lightSwitch
     - type: ExtensionCableReceiver
     - type: DeviceNetworkComponent
@@ -65,5 +69,6 @@
     - type: ApcNetworkConnection
     - type: ApcNetSwitch
   placement:
+    mode: SnapgridCenter
     snap:
       - Wallmount

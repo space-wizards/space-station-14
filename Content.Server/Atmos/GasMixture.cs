@@ -26,6 +26,8 @@ namespace Content.Server.Atmos
         [DataField("moles")] [ViewVariables]
         public float[] Moles = new float[Atmospherics.AdjustedNumberOfGases];
 
+        public float[] MolesArchived = new float[Atmospherics.AdjustedNumberOfGases];
+
         [DataField("temperature")] [ViewVariables]
         private float _temperature = Atmospherics.TCMB;
 
@@ -70,6 +72,8 @@ namespace Content.Server.Atmos
             }
         }
 
+        public float TemperatureArchived { get; private set; }
+
         [DataField("volume")] [ViewVariables]
         public float Volume { get; set; }
 
@@ -91,6 +95,13 @@ namespace Content.Server.Atmos
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Archive()
+        {
+            Moles.AsSpan().CopyTo(MolesArchived.AsSpan());
+            TemperatureArchived = Temperature;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float GetMoles(int gasId)
         {
             return Moles[gasId];
@@ -105,7 +116,7 @@ namespace Content.Server.Atmos
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetMoles(int gasId, float quantity)
         {
-            if (float.IsInfinity(quantity) || float.IsNaN(quantity) || float.IsNegative(quantity))
+            if (!float.IsFinite(quantity) || float.IsNegative(quantity))
                 throw new ArgumentException($"Invalid quantity \"{quantity}\" specified!", nameof(quantity));
 
             if (!Immutable)
@@ -123,14 +134,14 @@ namespace Content.Server.Atmos
         {
             if (!Immutable)
             {
-                if (float.IsInfinity(quantity) || float.IsNaN(quantity))
+                if (!float.IsFinite(quantity))
                     throw new ArgumentException($"Invalid quantity \"{quantity}\" specified!", nameof(quantity));
 
                 Moles[gasId] += quantity;
 
                 var moles = Moles[gasId];
 
-                if (float.IsInfinity(moles) || float.IsNaN(moles) || float.IsNegative(moles))
+                if (!float.IsFinite(moles) || float.IsNegative(moles))
                     throw new Exception($"Invalid mole quantity \"{moles}\" in gas Id {gasId} after adjusting moles with \"{quantity}\"!");
             }
         }
@@ -240,6 +251,7 @@ namespace Content.Server.Atmos
         {
             // The arrays MUST have a specific length.
             Array.Resize(ref Moles, Atmospherics.AdjustedNumberOfGases);
+            Array.Resize(ref MolesArchived, Atmospherics.AdjustedNumberOfGases);
         }
 
         public override bool Equals(object? obj)
@@ -254,10 +266,12 @@ namespace Content.Server.Atmos
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
             return Moles.SequenceEqual(other.Moles)
+                   && MolesArchived.SequenceEqual(other.MolesArchived)
                    && _temperature.Equals(other._temperature)
                    && ReactionResults.SequenceEqual(other.ReactionResults)
                    && Immutable == other.Immutable
                    && LastShare.Equals(other.LastShare)
+                   && TemperatureArchived.Equals(other.TemperatureArchived)
                    && Volume.Equals(other.Volume);
         }
 
@@ -268,10 +282,13 @@ namespace Content.Server.Atmos
             for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
             {
                 var moles = Moles[i];
+                var molesArchived = MolesArchived[i];
                 hashCode.Add(moles);
+                hashCode.Add(molesArchived);
             }
 
             hashCode.Add(_temperature);
+            hashCode.Add(TemperatureArchived);
             hashCode.Add(Immutable);
             hashCode.Add(LastShare);
             hashCode.Add(Volume);
@@ -284,9 +301,11 @@ namespace Content.Server.Atmos
             var newMixture = new GasMixture()
             {
                 Moles = (float[])Moles.Clone(),
+                MolesArchived = (float[])MolesArchived.Clone(),
                 _temperature = _temperature,
                 Immutable = Immutable,
                 LastShare = LastShare,
+                TemperatureArchived = TemperatureArchived,
                 Volume = Volume,
             };
             return newMixture;

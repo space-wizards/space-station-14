@@ -1,4 +1,4 @@
-﻿<SS14Window xmlns="https://spacestation14.io"
+﻿<DefaultWindow xmlns="https://spacestation14.io"
             Title="{Loc 'research-console-menu-title'}"
             MinSize="800 400"
             SetSize="800 400">
@@ -71,14 +71,17 @@
                               Align="End"
                               HorizontalExpand="True"
                               VerticalExpand="True">
-                    <Button Name="ServerSelectionButtonProtected"
+                    <Button Name="ServerSelectionButton"
+                            Access="Public"
                             Text="{Loc 'research-console-menu-server-selection-button'}" />
-                    <Button Name="ServerSyncButtonProtected"
+                    <Button Name="ServerSyncButton"
+                            Access="Public"
                             Text="{Loc 'research-console-menu-server-sync-button'}" />
-                    <Button Name="UnlockButtonProtected"
+                    <Button Name="UnlockButton"
+                            Access="Public"
                             Disabled="True" />
                 </BoxContainer>
             </BoxContainer>
         </BoxContainer>
     </BoxContainer>
-</SS14Window>
+</DefaultWindow>

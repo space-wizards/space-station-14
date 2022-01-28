@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Shared.DoAfter;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Players;
@@ -15,7 +15,7 @@ namespace Content.Server.DoAfter
         // we'll just send them the index. Doesn't matter if it wraps around.
         private byte _runningIndex;
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             var toAdd = new List<ClientDoAfter>();
 
@@ -31,7 +31,7 @@ namespace Content.Server.DoAfter
                     doAfter.EventArgs.BreakOnUserMove,
                     doAfter.EventArgs.BreakOnTargetMove,
                     doAfter.EventArgs.MovementThreshold,
-                    doAfter.EventArgs.Target ?? EntityUid.Invalid);
+                    doAfter.EventArgs.Target);
 
                 toAdd.Add(clientDoAfter);
             }
@@ -52,7 +52,9 @@ namespace Content.Server.DoAfter
                 return;
 
             _doAfters.Remove(doAfter);
+#pragma warning disable 618
             SendNetworkMessage(new CancelledDoAfterMessage(index));
+#pragma warning restore 618
         }
 
         /// <summary>

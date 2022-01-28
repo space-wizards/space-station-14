@@ -34,3 +34,9 @@
   id: Genetic
   damageTypes:
     - Cellular
+
+- type: damageGroup
+  id: Caustic
+  damageTypes:
+  - Heat
+  - Poison

@@ -1,0 +1,56 @@
+#Wizard outfit startingGear definitions.
+- type: startingGear
+  id: WizardBlueGear
+  equipment:
+    innerclothing: ClothingUniformJumpsuitColorDarkBlue
+    backpack: ClothingBackpackFilled
+    head: ClothingHeadHatWizard
+    outerClothing: ClothingOuterWizard
+    shoes: ClothingShoesWizard
+    idcard: AssistantPDA
+    ears: ClothingHeadsetService
+  innerclothingskirt: ClothingUniformJumpskirtColorDarkBlue
+  satchel: ClothingBackpackSatchelFilled
+  duffelbag: ClothingBackpackDuffelFilled
+
+- type: startingGear
+  id: WizardRedGear
+  equipment:
+    innerclothing: ClothingUniformJumpsuitColorRed
+    backpack: ClothingBackpackFilled
+    head: ClothingHeadHatRedwizard
+    outerClothing: ClothingOuterWizardRed
+    shoes: ClothingShoesWizard
+    idcard: AssistantPDA
+    ears: ClothingHeadsetService
+  innerclothingskirt: ClothingUniformJumpskirtColorRed
+  satchel: ClothingBackpackSatchelFilled
+  duffelbag: ClothingBackpackDuffelFilled
+
+- type: startingGear
+  id: WizardVioletGear
+  equipment:
+    innerclothing: ClothingUniformJumpsuitColorPurple
+    backpack: ClothingBackpackFilled
+    head: ClothingHeadHatVioletwizard
+    outerClothing: ClothingOuterWizardViolet
+    shoes: ClothingShoesWizard
+    idcard: AssistantPDA
+    ears: ClothingHeadsetService
+  innerclothingskirt: ClothingUniformJumpskirtColorPurple
+  satchel: ClothingBackpackSatchelFilled
+  duffelbag: ClothingBackpackDuffelFilled
+
+- type: startingGear
+  id: WizardHardsuitGear
+  equipment:
+    innerclothing: ClothingUniformJumpsuitColorPurple
+    backpack: ClothingBackpackFilled
+    head: ClothingHeadHelmetHardsuitWizard
+    outerClothing: ClothingOuterHardsuitWizard
+    shoes: ClothingShoesWizard
+    idcard: AssistantPDA
+    ears: ClothingHeadsetService
+  innerclothingskirt: ClothingUniformJumpskirtColorPurple
+  satchel: ClothingBackpackSatchelFilled
+  duffelbag: ClothingBackpackDuffelFilled

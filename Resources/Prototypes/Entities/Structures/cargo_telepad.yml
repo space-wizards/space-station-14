@@ -6,7 +6,10 @@
   components:
   - type: InteractionOutline
   - type: Physics
-    bodyType: Static
+    bodyType: Static  
+  - type: Transform
+    anchored: true
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb

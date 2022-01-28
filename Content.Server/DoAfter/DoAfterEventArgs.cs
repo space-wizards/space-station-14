@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Threading;
-using Content.Shared.Interaction.Helpers;
-using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
-
-// ReSharper disable UnassignedReadonlyField
 
 namespace Content.Server.DoAfter
 {
@@ -97,14 +93,6 @@ namespace Content.Server.DoAfter
         ///     Event to be broadcast when the DoAfter is finished successfully.
         /// </summary>
         public object? BroadcastFinishedEvent { get; set; }
-
-        public DoAfterEventArgs(
-            IEntity user,
-            float delay,
-            CancellationToken cancelToken = default,
-            IEntity? target = null) : this(user.Uid, delay, cancelToken, target?.Uid ?? null)
-        {
-        }
 
         public DoAfterEventArgs(
             EntityUid user,

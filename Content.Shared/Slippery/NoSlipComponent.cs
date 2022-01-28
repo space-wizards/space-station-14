@@ -1,13 +1,10 @@
-using Content.Shared.EffectBlocker;
 using Robust.Shared.GameObjects;
 
 namespace Content.Shared.Slippery
 {
     [RegisterComponent]
-    public class NoSlipComponent : Component, IEffectBlocker
+    public class NoSlipComponent : Component
     {
         public override string Name => "NoSlip";
-
-        bool IEffectBlocker.CanSlip() => false;
     }
 }

@@ -6,6 +6,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Whitelist
 {
@@ -36,7 +37,8 @@ namespace Content.Shared.Whitelist
         /// <summary>
         ///     Tags that are allowed in the whitelist.
         /// </summary>
-        [DataField("tags")] public string[]? Tags = null;
+        [DataField("tags")]
+        public string[]? Tags = null;
 
         void ISerializationHooks.AfterDeserialization()
         {
@@ -67,11 +69,13 @@ namespace Content.Shared.Whitelist
         /// <summary>
         ///     Returns whether a given entity fits the whitelist.
         /// </summary>
-        public bool IsValid(IEntity entity)
+        public bool IsValid(EntityUid uid, IEntityManager? entityManager = null)
         {
-            if (Tags != null)
+            entityManager ??= IoCManager.Resolve<IEntityManager>();
+
+            if (Tags != null && entityManager.TryGetComponent(uid, out TagComponent? tags))
             {
-                if (entity.HasAnyTag(Tags))
+                if (tags.HasAnyTag(Tags))
                         return true;
             }
 
@@ -79,7 +83,7 @@ namespace Content.Shared.Whitelist
             {
                 foreach (var reg in _registrations)
                 {
-                    if (entity.HasComponent(reg.Type))
+                    if (entityManager.HasComponent(uid, reg.Type))
                         return true;
                 }
             }

@@ -1,4 +1,4 @@
-﻿using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.Radio.Components
 {
@@ -10,8 +10,8 @@ namespace Content.Server.Radio.Components
     {
         int ListenRange { get; }
 
-        bool CanListen(string message, IEntity source);
+        bool CanListen(string message, EntityUid source);
 
-        void Listen(string message, IEntity speaker);
+        void Listen(string message, EntityUid speaker);
     }
 }

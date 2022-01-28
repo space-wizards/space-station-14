@@ -1,5 +1,6 @@
 ﻿using Content.Server.Disposal.Unit.Components;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -16,7 +17,7 @@ namespace Content.Server.Disposal.Tube.Components
 
         protected override Direction[] ConnectableDirections()
         {
-            var direction = Owner.Transform.LocalRotation;
+            var direction = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).LocalRotation;
             var side = new Angle(MathHelper.DegreesToRadians(direction.Degrees + _sideDegrees));
 
             return new[] {direction.GetDir(), side.GetDir()};
@@ -25,15 +26,14 @@ namespace Content.Server.Disposal.Tube.Components
         public override Direction NextDirection(DisposalHolderComponent holder)
         {
             var directions = ConnectableDirections();
-            var previousTube = holder.PreviousTube;
+            var previousDF = holder.PreviousDirectionFrom;
 
-            if (previousTube == null)
+            if (previousDF == Direction.Invalid)
             {
                 return directions[0];
             }
 
-            var previousDirection = DirectionTo(previousTube);
-            return previousDirection == directions[0] ? directions[1] : directions[0];
+            return previousDF == directions[0] ? directions[1] : directions[0];
         }
     }
 }

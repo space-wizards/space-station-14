@@ -1,7 +1,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatBunny
-  name: bunny
+  name: bunny ears
   description: Cute bunny ears.
   components:
   - type: Sprite
@@ -30,6 +30,7 @@
     sprite: Clothing/Head/Misc/chickenhead.rsi
   - type: Clothing
     sprite: Clothing/Head/Misc/chickenhead.rsi
+  - type: IngestionBlocker
 
 - type: entity
   parent: ClothingHeadBase
@@ -52,6 +53,7 @@
       sprite: Clothing/Head/Misc/pumpkin.rsi
     - type: Clothing
       sprite: Clothing/Head/Misc/pumpkin.rsi
+    - type: IngestionBlocker
 
 - type: entity
   parent: ClothingHeadBase
@@ -74,39 +76,19 @@
     sprite: Clothing/Head/Misc/richard.rsi
   - type: Clothing
     sprite: Clothing/Head/Misc/richard.rsi
+  - type: IngestionBlocker
 
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatSkub
-  name: Skub Hat
+  name: skub hat
   description: 'Best paired with the Skub Suit.'
   components:
   - type: Sprite
     sprite: Clothing/Head/Misc/skubhead.rsi
   - type: Clothing
     sprite: Clothing/Head/Misc/skubhead.rsi
-
-- type: entity
-  parent: ClothingHeadBase
-  id: ClothingHeadHatXenoMom
-  name: xeno matriarch
-  description: Hiss hiss hiss!
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Misc/xenom.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Misc/xenom.rsi
-
-- type: entity
-  parent: ClothingHeadBase
-  id: ClothingHeadHatXeno
-  name: xenos
-  description: Hiss hiss hiss!
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Misc/xenos.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Misc/xenos.rsi
+  - type: IngestionBlocker
 
 - type: entity
   parent: ClothingHeadBase
@@ -118,3 +100,14 @@
     sprite: Clothing/Head/Misc/shrine-maidens-wig.rsi
   - type: Clothing
     sprite: Clothing/Head/Misc/shrine-maidens-wig.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatCone
+  name: warning cone
+  description: This cone is trying to warn you of something!
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/cone.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/cone.rsi

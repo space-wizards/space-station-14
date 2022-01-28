@@ -2,12 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.Power.Components;
-using Content.Server.PowerCell.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Coordinates;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -16,7 +15,7 @@ using Robust.Shared.Timing;
 namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
-    [TestOf(typeof(Entity))]
+    [TestOf(typeof(EntityUid))]
     public class EntityTest : ContentIntegrationTest
     {
         [Test]
@@ -24,10 +23,10 @@ namespace Content.IntegrationTests.Tests
         {
             var options = new ServerContentIntegrationOption()
             {
-                CVarOverrides = {{CCVars.AIMaxUpdates.Name, int.MaxValue.ToString()}}
+                CVarOverrides = {{CCVars.NPCMaxUpdates.Name, int.MaxValue.ToString()}}
             };
 
-            var server = StartServerDummyTicker(options);
+            var server = StartServer(options);
             await server.WaitIdleAsync();
 
             var mapManager = server.ResolveDependency<IMapManager>();
@@ -38,7 +37,7 @@ namespace Content.IntegrationTests.Tests
 
             var prototypes = new List<EntityPrototype>();
             IMapGrid grid = default;
-            IEntity testEntity;
+            EntityUid testEntity;
 
             //Build up test environment
             server.Post(() =>
@@ -89,8 +88,8 @@ namespace Content.IntegrationTests.Tests
                                 Logger.LogS(LogLevel.Debug, "EntityTest", $"Testing: {prototype.ID}");
                                 testEntity = entityMan.SpawnEntity(prototype.ID, testLocation);
                                 server.RunTicks(2);
-                                Assert.That(testEntity.Initialized);
-                                entityMan.DeleteEntity(testEntity.Uid);
+                                if(!entityMan.Deleted(testEntity))
+                                    entityMan.DeleteEntity(testEntity);
                             }, "Entity '{0}' threw an exception.",
                             prototype.ID);
                     }
@@ -118,7 +117,7 @@ namespace Content.IntegrationTests.Tests
 - type: entity
   id: AllComponentsOneToOneDeleteTestEntity";
 
-            var server = StartServerDummyTicker(new ServerContentIntegrationOption
+            var server = StartServer(new ServerContentIntegrationOption
             {
                 ExtraPrototypes = testEntity,
                 FailureLogLevel = LogLevel.Error
@@ -174,11 +173,11 @@ namespace Content.IntegrationTests.Tests
 
                         var entity = entityManager.SpawnEntity("AllComponentsOneToOneDeleteTestEntity", testLocation);
 
-                        Assert.That(entity.Initialized);
+                        Assert.That(entityManager.GetComponent<MetaDataComponent>(entity).EntityInitialized);
 
                         // The component may already exist if it is a mandatory component
                         // such as MetaData or Transform
-                        if (entity.HasComponent(type))
+                        if (entityManager.HasComponent(entity, type))
                         {
                             continue;
                         }
@@ -195,7 +194,7 @@ namespace Content.IntegrationTests.Tests
 
                         server.RunTicks(2);
 
-                        entityManager.DeleteEntity(entity.Uid);
+                        entityManager.DeleteEntity(entity);
                     }
                 });
             });
@@ -221,10 +220,11 @@ namespace Content.IntegrationTests.Tests
 - type: entity
   id: AllComponentsOneEntityDeleteTestEntity";
 
-            var server = StartServerDummyTicker(new ServerContentIntegrationOption
+            var server = StartServer(new ServerContentIntegrationOption
             {
                 ExtraPrototypes = testEntity,
-                FailureLogLevel = LogLevel.Error
+                FailureLogLevel = LogLevel.Error,
+                Pool = false
             });
             await server.WaitIdleAsync();
 
@@ -302,14 +302,14 @@ namespace Content.IntegrationTests.Tests
                         var testLocation = grid.ToCoordinates();
                         var entity = entityManager.SpawnEntity("AllComponentsOneEntityDeleteTestEntity", testLocation);
 
-                        Assert.That(entity.Initialized);
+                        Assert.That(entityManager.GetComponent<MetaDataComponent>(entity).EntityInitialized);
 
                         foreach (var type in distinct.components)
                         {
                             var component = (Component) componentFactory.GetComponent(type);
 
                             // If the entity already has this component, if it was ensured or added by another
-                            if (entity.HasComponent(component.GetType()))
+                            if (entityManager.HasComponent(entity, component.GetType()))
                             {
                                 continue;
                             }
@@ -336,7 +336,7 @@ namespace Content.IntegrationTests.Tests
                         }
 
                         server.RunTicks(2);
-                        entityManager.DeleteEntity(entity.Uid);
+                        entityManager.DeleteEntity(entity);
                     }
                 });
             });

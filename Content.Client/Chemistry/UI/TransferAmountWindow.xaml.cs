@@ -6,11 +6,8 @@ using Robust.Client.UserInterface.XAML;
 namespace Content.Client.Chemistry.UI
 {
     [GenerateTypedNameReferences]
-    public partial class TransferAmountWindow : SS14Window
+    public partial class TransferAmountWindow : DefaultWindow
     {
-        public Button applyButton => ApplyButton;
-        public LineEdit amountLineEdit => AmountLineEdit;
-
         public TransferAmountWindow()
         {
             RobustXamlLoader.Load(this);

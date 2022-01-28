@@ -15,3 +15,6 @@ tool-quality-welding-tool-name = Welder
 
 tool-quality-pulsing-name = Pulsing
 tool-quality-pulsing-tool-name = Multitool
+
+tool-quality-slicing-name = Slicing
+tool-quality-slicing-tool-name = Knife

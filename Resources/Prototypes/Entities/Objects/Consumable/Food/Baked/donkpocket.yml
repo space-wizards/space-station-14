@@ -18,6 +18,9 @@
           Quantity: 3
   - type: Item
     size: 1
+  - type: Tag
+    tags:
+    - DonkPocket
 
 # Donkpocket
 

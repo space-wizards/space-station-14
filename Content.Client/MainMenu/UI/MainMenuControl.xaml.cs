@@ -14,13 +14,6 @@ namespace Content.Client.MainMenu.UI
     [GenerateTypedNameReferences]
     public partial class MainMenuControl : Control
         {
-            public LineEdit UserNameBox => UsernameBoxProtected;
-            public Button JoinPublicServerButton => JoinPublicServerButtonProtected;
-            public LineEdit AddressBox => AddressBoxProtected;
-            public Button DirectConnectButton => DirectConnectButtonProtected;
-            public Button OptionsButton => OptionsButtonProtected;
-            public Button QuitButton => QuitButtonProtected;
-
             public MainMenuControl(IResourceCache resCache, IConfigurationManager configMan)
             {
                 RobustXamlLoader.Load(this);
@@ -36,7 +29,7 @@ namespace Content.Client.MainMenu.UI
                 Logo.Texture = logoTexture;
 
                 var currentUserName = configMan.GetCVar(CVars.PlayerName);
-                UserNameBox.Text = currentUserName;
+                UsernameBox.Text = currentUserName;
 
 #if !FULL_RELEASE
                 JoinPublicServerButton.Disabled = true;

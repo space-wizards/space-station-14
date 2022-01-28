@@ -35,5 +35,17 @@ namespace Content.Shared.Construction.Steps
             examinedEvent.PushMarkup(Loc.GetString("construction-use-tool-entity", ("toolName", Loc.GetString(quality.ToolName))));
 
         }
+
+        public override ConstructionGuideEntry GenerateGuideEntry()
+        {
+            var quality = IoCManager.Resolve<IPrototypeManager>().Index<ToolQualityPrototype>(Tool);
+
+            return new ConstructionGuideEntry()
+            {
+                Localization = "construction-presenter-tool-step",
+                Arguments = new (string, object)[]{("tool", quality.ToolName)},
+                Icon = quality.Icon,
+            };
+        }
     }
 }

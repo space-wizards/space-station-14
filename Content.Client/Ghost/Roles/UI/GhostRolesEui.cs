@@ -9,14 +9,27 @@ namespace Content.Client.Ghost.Roles.UI
     public class GhostRolesEui : BaseEui
     {
         private readonly GhostRolesWindow _window;
+        private GhostRoleRulesWindow? _windowRules = null;
+        private uint _windowRulesId = 0;
 
         public GhostRolesEui()
         {
             _window = new GhostRolesWindow();
 
-            _window.RoleRequested += id =>
+            _window.RoleRequested += info =>
             {
-                SendMessage(new GhostRoleTakeoverRequestMessage(id));
+                if (_windowRules != null)
+                    _windowRules.Close();
+                _windowRules = new GhostRoleRulesWindow(info.Rules, _ =>
+                {
+                    SendMessage(new GhostRoleTakeoverRequestMessage(info.Identifier));
+                });
+                _windowRulesId = info.Identifier;
+                _windowRules.OnClose += () =>
+                {
+                    _windowRules = null;
+                };
+                _windowRules.OpenCentered();
             };
 
             _window.OnClose += () =>
@@ -35,6 +48,7 @@ namespace Content.Client.Ghost.Roles.UI
         {
             base.Closed();
             _window.Close();
+            _windowRules?.Close();
         }
 
         public override void HandleState(EuiStateBase state)
@@ -43,11 +57,22 @@ namespace Content.Client.Ghost.Roles.UI
 
             if (state is not GhostRolesEuiState ghostState) return;
 
+            var closeRulesWindow = true;
+
             _window.ClearEntries();
 
             foreach (var info in ghostState.GhostRoles)
             {
                 _window.AddEntry(info);
+                if (info.Identifier == _windowRulesId)
+                {
+                    closeRulesWindow = false;
+                }
+            }
+
+            if (closeRulesWindow)
+            {
+                _windowRules?.Close();
             }
         }
     }

@@ -1,7 +1,6 @@
 ﻿using Content.Server.Chemistry.Components;
 using Content.Server.Popups;
-using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -22,14 +21,14 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void OnSolutionChange(EntityUid uid, RehydratableComponent component, SolutionChangedEvent args)
         {
-            if (_solutionsSystem.GetReagentQuantity(uid, component.CatalystPrototype) > ReagentUnit.Zero)
+            if (_solutionsSystem.GetReagentQuantity(uid, component.CatalystPrototype) > FixedPoint2.Zero)
             {
                 Expand(component, component.Owner);
             }
         }
 
         // Try not to make this public if you can help it.
-        private void Expand(RehydratableComponent component, IEntity owner)
+        private void Expand(RehydratableComponent component, EntityUid owner)
         {
             if (component.Expanding)
             {
@@ -40,12 +39,12 @@ namespace Content.Server.Chemistry.EntitySystems
             owner.PopupMessageEveryone(Loc.GetString("rehydratable-component-expands-message", ("owner", owner)));
             if (!string.IsNullOrEmpty(component.TargetPrototype))
             {
-                var ent = component.Owner.EntityManager.SpawnEntity(component.TargetPrototype,
-                    owner.Transform.Coordinates);
-                ent.Transform.AttachToGridOrMap();
+                var ent = EntityManager.SpawnEntity(component.TargetPrototype,
+                    EntityManager.GetComponent<TransformComponent>(owner).Coordinates);
+                EntityManager.GetComponent<TransformComponent>(ent).AttachToGridOrMap();
             }
 
-            owner.QueueDelete();
+            EntityManager.QueueDeleteEntity((EntityUid) owner);
         }
     }
 }

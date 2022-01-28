@@ -6,6 +6,17 @@
   color: "#a1000b"
   boilingPoint: 111.0
   meltingPoint: -5.0
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 3
+      - !type:PopupMessage
+        type: Local
+        messages: [ "generic-reagent-effect-burning-insides" ]
+        probability: 0.33
 
 - type: reagent
   id: SpaceCleaner

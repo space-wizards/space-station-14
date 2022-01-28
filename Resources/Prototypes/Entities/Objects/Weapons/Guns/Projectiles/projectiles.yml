@@ -13,6 +13,9 @@
     state: bullet
   - type: Physics
     bodyType: Dynamic
+    linearDamping: 0
+    angularDamping: 0
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -22,8 +25,6 @@
       - Impassable
       layer:
       - MobImpassable
-    linearDamping: 0
-    angularDamping: 0
   - type: Projectile
     damage:
       types:
@@ -32,15 +33,33 @@
       path: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
 
 - type: entity
-  id: BulletBaseFlash
-  name: base bullet flash
+  id: TriggerBulletBase # Trigger-on-collide bullets
   parent: BulletBase
   abstract: true
   components:
+  - type: TriggerOnCollide
   - type: Projectile
     damage:
       types:
-        Piercing: 10
+        Blunt: 7 # more damage than a punch.
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.15,-0.45,0.15,0.15"
+      hard: false
+      mask:
+      - Impassable
+      layer:
+      - MobImpassable
+
+- type: entity
+  id: BulletBaseFlash
+  name: base bullet flash
+  parent: TriggerBulletBase
+  abstract: true
+  components:
+  - type: Projectile
     soundHit:
       path: /Audio/Weapons/Guns/Hits/snap.ogg
   - type: FlashOnTrigger
@@ -48,8 +67,6 @@
   - type: SoundOnTrigger
     sound:
       path: "/Audio/Effects/flash_bang.ogg"
-  - type: TriggerOnCollide
-  - type: DeleteOnTrigger
 
 - type: entity
   id: BulletBaseHV
@@ -97,13 +114,14 @@
   abstract: true
   components:
   - type: Sprite
-    directional: false
+    noRot: true
     sprite: Objects/Weapons/Guns/Projectiles/spark.rsi
     color: "#ffff33"
     layers:
     - state: spark
       shader: unshaded
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -138,6 +156,7 @@
     sprite: Structures/Power/Generation/Singularity/emitter.rsi
     state: 'projectile'
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -159,7 +178,7 @@
 - type: entity
   id: BulletRocket
   name: rocket
-  parent: BulletBase
+  parent: TriggerBulletBase
   abstract: true
   components:
   - type: Sprite
@@ -167,13 +186,6 @@
     sprite: Objects/Weapons/Guns/Projectiles/rocket.rsi
     state: frag
   - type: ExplodeOnTrigger
-  - type: DeleteOnTrigger
-  - type: TriggerOnCollide
-  - type: Projectile
-    deleteOnCollide: false
-    damage:
-      types:
-        Blunt: 1
   - type: Explosive
     devastationRange: 1
     heavyImpactRange: 2
@@ -208,7 +220,7 @@
 - type: entity
   id: BulletGrenadeBlast
   name: blast grenade
-  parent: BulletBase
+  parent: TriggerBulletBase
   abstract: true
   components:
   - type: Sprite
@@ -216,13 +228,6 @@
     sprite: Objects/Weapons/Guns/Projectiles/grenade.rsi
     state: grenade
   - type: ExplodeOnTrigger
-  - type: DeleteOnTrigger
-  - type: TriggerOnCollide
-  - type: Projectile
-    deleteOnCollide: false
-    damage:
-      types:
-        Blunt: 1
   - type: Explosive
     devastationRange: 1
     heavyImpactRange: 2
@@ -232,33 +237,21 @@
 - type: entity
   id: BulletGrenadeFlash
   name: flash grenade
-  parent: BulletBase
+  parent: BulletBaseFlash
   abstract: true
   components:
   - type: Sprite
     netsync: false
     sprite: Objects/Weapons/Guns/Projectiles/grenade.rsi
     state: grenade
-  - type: Projectile
-    deleteOnCollide: false
-    damage:
-      types:
-        Blunt: 1
-    soundHit:
-      path: /Audio/Effects/flash_bang.ogg
   - type: FlashOnTrigger
     range: 7
-  - type: SoundOnTrigger
-    sound:
-      path: "/Audio/Effects/flash_bang.ogg"
-  - type: TriggerOnCollide
-  - type: DeleteOnTrigger
 
 # This is supposed to spawn shrapnel and stuff so uhh... TODO?
 - type: entity
   id: BulletGrenadeFrag
   name: frag grenade
-  parent: BulletBase
+  parent: TriggerBulletBase
   abstract: true
   components:
   - type: Sprite
@@ -266,13 +259,6 @@
     sprite: Objects/Weapons/Guns/Projectiles/grenade.rsi
     state: grenade
   - type: ExplodeOnTrigger
-  - type: DeleteOnTrigger
-  - type: TriggerOnCollide
-  - type: Projectile
-    deleteOnCollide: false
-    damage:
-      types:
-        Blunt: 1
   - type: Explosive
     devastationRange: 0
     heavyImpactRange: 1
@@ -312,30 +298,3 @@
     damage:
       types:
         Piercing: 0
-
-- type: entity
-  id: BulletCreampie
-  name: cream pie
-  parent: BulletBase
-  description: get creampied, honk!!
-  abstract: true
-  components:
-  - type: Projectile
-    deleteOnCollide: false # CreamPie component handles this.
-    damage:
-      types:
-        Blunt: 1
-  - type: CreamPie
-  - type: ThrownItem
-  - type: Sprite
-    sprite: Objects/Consumable/Food/Baked/pie.rsi
-    netsync: false
-    layers:
-    - state: tin
-    - state: plain
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 8

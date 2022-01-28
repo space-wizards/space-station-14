@@ -6,6 +6,7 @@ using Content.Shared.Paper;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
@@ -14,11 +15,21 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Paper
 {
     [RegisterComponent]
-    public class PaperComponent : SharedPaperComponent, IExamine, IInteractUsing, IUse
+#pragma warning disable 618
+    [ComponentReference(typeof(SharedPaperComponent))]
+    [ComponentReference(typeof(IActivate))]
+    public sealed class PaperComponent : SharedPaperComponent, IExamine, IInteractUsing, IActivate
+#pragma warning restore 618
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         private PaperAction _mode;
         [DataField("content")]
-        public string Content { get; private set; } = "";
+        public string Content { get; set; } = "";
+
+        [DataField("contentSize")]
+        public int ContentSize { get; set; } = 500;
+
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(PaperUiKey.Key);
 
@@ -34,6 +45,23 @@ namespace Content.Server.Paper
             _mode = PaperAction.Read;
             UpdateUserInterface();
         }
+
+        public void SetContent(string content)
+        {
+
+            Content = content + '\n';
+            UpdateUserInterface();
+
+            if (!_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
+                return;
+
+            var status = string.IsNullOrWhiteSpace(content)
+                ? PaperStatus.Blank
+                : PaperStatus.Written;
+
+            appearance.SetData(PaperVisuals.Status, status);
+        }
+
         private void UpdateUserInterface()
         {
             UserInterface?.SetState(new PaperBoundUserInterfaceState(Content, _mode));
@@ -53,15 +81,15 @@ namespace Content.Server.Paper
             );
         }
 
-        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
+        void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
-                return false;
+            if (!_entMan.TryGetComponent(eventArgs.User, out ActorComponent? actor))
+                return;
 
             _mode = PaperAction.Read;
             UpdateUserInterface();
             UserInterface?.Toggle(actor.PlayerSession);
-            return true;
+            return;
         }
 
         private void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
@@ -70,14 +98,16 @@ namespace Content.Server.Paper
             if (string.IsNullOrEmpty(msg.Text))
                 return;
 
-            Content += msg.Text + '\n';
 
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (msg.Text.Length + Content.Length <= ContentSize)
+                Content += msg.Text + '\n';
+
+            if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
             {
                 appearance.SetData(PaperVisuals.Status, PaperStatus.Written);
             }
 
-            Owner.Description = "";
+            _entMan.GetComponent<MetaDataComponent>(Owner).EntityDescription = "";
             UpdateUserInterface();
         }
 
@@ -85,7 +115,7 @@ namespace Content.Server.Paper
         {
             if (!eventArgs.Using.HasTag("Write"))
                 return false;
-            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
+            if (!_entMan.TryGetComponent(eventArgs.User, out ActorComponent? actor))
                 return false;
 
             _mode = PaperAction.Write;

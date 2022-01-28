@@ -6,8 +6,7 @@ namespace Content.Shared.Singularity.Components
     [NetSerializable, Serializable]
     public enum EmitterVisuals
     {
-        VisualState,
-        Locked
+        VisualState
     }
 
     [NetSerializable, Serializable]

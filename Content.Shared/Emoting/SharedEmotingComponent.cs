@@ -28,7 +28,7 @@ namespace Content.Shared.Emoting
             }
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new EmotingComponentState(Enabled);
         }

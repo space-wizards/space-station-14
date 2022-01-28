@@ -23,15 +23,15 @@ namespace Content.Shared.Interaction
     [PublicAPI]
     public class RangedInteractEventArgs : EventArgs
     {
-        public RangedInteractEventArgs(IEntity user, IEntity @using, EntityCoordinates clickLocation)
+        public RangedInteractEventArgs(EntityUid user, EntityUid @using, EntityCoordinates clickLocation)
         {
             User = user;
             Using = @using;
             ClickLocation = clickLocation;
         }
 
-        public IEntity User { get; }
-        public IEntity Using { get; }
+        public EntityUid User { get; }
+        public EntityUid Using { get; }
         public EntityCoordinates ClickLocation { get; }
     }
 
@@ -44,28 +44,28 @@ namespace Content.Shared.Interaction
         /// <summary>
         ///     Entity that triggered the interaction.
         /// </summary>
-        public IEntity User { get; }
+        public EntityUid UserUid { get; }
 
         /// <summary>
         ///     Entity that the user used to interact.
         /// </summary>
-        public IEntity Used { get; }
+        public EntityUid UsedUid { get; }
 
         /// <summary>
         ///     Entity that was interacted on.
         /// </summary>
-        public IEntity Target { get; }
+        public EntityUid TargetUid { get; }
 
         /// <summary>
         ///     Location that the user clicked outside of their interaction range.
         /// </summary>
         public EntityCoordinates ClickLocation { get; }
 
-        public RangedInteractEvent(IEntity user, IEntity used, IEntity target, EntityCoordinates clickLocation)
+        public RangedInteractEvent(EntityUid user, EntityUid used, EntityUid target, EntityCoordinates clickLocation)
         {
-            User = user;
-            Used = used;
-            Target = target;
+            UserUid = user;
+            UsedUid = used;
+            TargetUid = target;
             ClickLocation = clickLocation;
         }
     }

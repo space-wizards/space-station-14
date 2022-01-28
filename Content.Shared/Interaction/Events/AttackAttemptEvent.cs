@@ -4,11 +4,13 @@ namespace Content.Shared.Interaction.Events
 {
     public class AttackAttemptEvent : CancellableEntityEventArgs
     {
-        public AttackAttemptEvent(IEntity entity)
-        {
-            Entity = entity;
-        }
+        public EntityUid Uid { get; }
+        public EntityUid? Target { get; }
 
-        public IEntity Entity { get; }
+        public AttackAttemptEvent(EntityUid uid, EntityUid? target = null)
+        {
+            Uid = uid;
+            Target = target;
+        }
     }
 }

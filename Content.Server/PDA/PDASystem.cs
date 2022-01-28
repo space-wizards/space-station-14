@@ -1,66 +1,41 @@
-using Content.Server.Access.Components;
 using Content.Server.Light.Components;
 using Content.Server.Light.EntitySystems;
 using Content.Server.Light.Events;
 using Content.Server.Traitor.Uplink;
+using Content.Server.Traitor.Uplink.Account;
 using Content.Server.Traitor.Uplink.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Interaction;
 using Content.Shared.PDA;
 using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Server.PDA
 {
-    public class PDASystem : EntitySystem
+    public sealed class PDASystem : SharedPDASystem
     {
-        [Dependency] private readonly SharedItemSlotsSystem _slotsSystem = default!;
         [Dependency] private readonly UplinkSystem _uplinkSystem = default!;
+        [Dependency] private readonly UplinkAccountsSystem _uplinkAccounts = default!;
         [Dependency] private readonly UnpoweredFlashlightSystem _unpoweredFlashlight = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            SubscribeLocalEvent<PDAComponent, ComponentInit>(OnComponentInit);
-            SubscribeLocalEvent<PDAComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<PDAComponent, ActivateInWorldEvent>(OnActivateInWorld);
-            SubscribeLocalEvent<PDAComponent, UseInHandEvent>(OnUse);
-            SubscribeLocalEvent<PDAComponent, ItemSlotChangedEvent>(OnItemSlotChanged);
             SubscribeLocalEvent<PDAComponent, LightToggleEvent>(OnLightToggle);
-
-            SubscribeLocalEvent<PDAComponent, UplinkInitEvent>(OnUplinkInit);
-            SubscribeLocalEvent<PDAComponent, UplinkRemovedEvent>(OnUplinkRemoved);
         }
 
-        private void OnComponentInit(EntityUid uid, PDAComponent pda, ComponentInit args)
+        protected override void OnComponentInit(EntityUid uid, PDAComponent pda, ComponentInit args)
         {
+            base.OnComponentInit(uid, pda, args);
+
             var ui = pda.Owner.GetUIOrNull(PDAUiKey.Key);
             if (ui != null)
                 ui.OnReceiveMessage += (msg) => OnUIMessage(pda, msg);
-
-            UpdatePDAAppearance(pda);
-        }
-
-        private void OnMapInit(EntityUid uid, PDAComponent pda, MapInitEvent args)
-        {
-            // try to place ID inside item slot
-            if (!string.IsNullOrEmpty(pda.StartingIdCard))
-            {
-                // if pda prototype doesn't have slots, ID will drop down on ground 
-                var idCard = EntityManager.SpawnEntity(pda.StartingIdCard, pda.Owner.Transform.Coordinates);
-                if (EntityManager.TryGetComponent(uid, out SharedItemSlotsComponent? itemSlots))
-                    _slotsSystem.TryInsertContent(itemSlots, idCard, pda.IdSlot);
-            }
-        }
-
-        private void OnUse(EntityUid uid, PDAComponent pda, UseInHandEvent args)
-        {
-            if (args.Handled)
-                return;
-            args.Handled = OpenUI(pda, args.User);
         }
 
         private void OnActivateInWorld(EntityUid uid, PDAComponent pda, ActivateInWorldEvent args)
@@ -70,24 +45,15 @@ namespace Content.Server.PDA
             args.Handled = OpenUI(pda, args.User);
         }
 
-        private void OnItemSlotChanged(EntityUid uid, PDAComponent pda, ItemSlotChangedEvent args)
+        protected override void OnItemInserted(EntityUid uid, PDAComponent pda, EntInsertedIntoContainerMessage args)
         {
-            // check if ID slot changed
-            if (args.SlotName == pda.IdSlot)
-            {
-                var item = args.ContainedItem;
-                if (item == null || !EntityManager.TryGetComponent(item.Value, out IdCardComponent ? idCard))
-                    pda.ContainedID = null;
-                else
-                    pda.ContainedID = idCard;
-            }
-            else if (args.SlotName == pda.PenSlot)
-            {
-                var item = args.ContainedItem;
-                pda.PenInserted = item != null;
-            }
+            base.OnItemInserted(uid, pda, args);
+            UpdatePDAUserInterface(pda);
+        }
 
-            UpdatePDAAppearance(pda);
+        protected override void OnItemRemoved(EntityUid uid, PDAComponent pda, EntRemovedFromContainerMessage args)
+        {
+            base.OnItemRemoved(uid, pda, args);
             UpdatePDAUserInterface(pda);
         }
 
@@ -113,11 +79,12 @@ namespace Content.Server.PDA
             UpdatePDAUserInterface(pda);
         }
 
-        private bool OpenUI(PDAComponent pda, IEntity user)
+        private bool OpenUI(PDAComponent pda, EntityUid user)
         {
-            if (!user.TryGetComponent(out ActorComponent? actor))
+            if (!EntityManager.TryGetComponent(user, out ActorComponent? actor))
                 return false;
 
+            UpdatePDAUserInterface(pda, user);
             var ui = pda.Owner.GetUIOrNull(PDAUiKey.Key);
             ui?.Toggle(actor.PlayerSession);
 
@@ -126,11 +93,11 @@ namespace Content.Server.PDA
 
         private void UpdatePDAAppearance(PDAComponent pda)
         {
-            if (pda.Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (EntityManager.TryGetComponent(pda.Owner, out AppearanceComponent? appearance))
                 appearance.SetData(PDAVisuals.IDCardInserted, pda.ContainedID != null);
         }
 
-        private void UpdatePDAUserInterface(PDAComponent pda)
+        private void UpdatePDAUserInterface(PDAComponent pda, EntityUid? user = null)
         {
             var ownerInfo = new PDAIdInfoText
             {
@@ -139,39 +106,72 @@ namespace Content.Server.PDA
                 JobTitle = pda.ContainedID?.JobTitle
             };
 
-            var hasUplink = pda.Owner.HasComponent<UplinkComponent>();
-
             var ui = pda.Owner.GetUIOrNull(PDAUiKey.Key);
-            ui?.SetState(new PDAUpdateState(pda.FlashlightOn, pda.PenInserted, ownerInfo, hasUplink));
+            if (ui == null)
+                return;
+
+            ui.SetState(new PDAUpdateState(pda.FlashlightOn, pda.PenSlot.HasItem, ownerInfo, ShouldShowUplink(pda.Owner, ui, user)));
+        }
+
+        /// <summary>
+        ///     Check whether the PDA has an uplink, and ensure that the only person that can see the PDA UI has an
+        ///     uplink account.
+        /// </summary>
+        public bool ShouldShowUplink(EntityUid uid, BoundUserInterface ui, EntityUid? user = null)
+        {
+            // TODO UPLINK RINGTONES/SECRETS This is just a janky placeholder way of hiding uplinks from non syndicate
+            // players. This should really use a sort of key-code entry system that selects an account which is not directly tied to
+            // a player entity.
+
+            if (!HasComp<UplinkComponent>(uid))
+                return false;
+
+            // If a user is trying to open the UI, make sure that they have an uplink account before showing the UI.
+            if (user != null && !_uplinkAccounts.HasAccount(user.Value))
+                return false;
+
+            // If other users currently have the UI open, check that they too should be allowed to see the button..
+            foreach (var session in ui.SubscribedSessions)
+            {
+                if (session.AttachedEntity != null && !_uplinkAccounts.HasAccount(session.AttachedEntity.Value))
+                    return false;
+            }
+
+            // everyone has an uplink account, show the button.
+            return true;
         }
 
         private void OnUIMessage(PDAComponent pda, ServerBoundUserInterfaceMessage msg)
         {
+            // cast EntityUid? to EntityUid
+            if (msg.Session.AttachedEntity is not {Valid: true} playerUid)
+                return;
+
             switch (msg.Message)
             {
                 case PDARequestUpdateInterfaceMessage _:
-                    UpdatePDAUserInterface(pda);
+                    UpdatePDAUserInterface(pda, playerUid);
                     break;
                 case PDAToggleFlashlightMessage _:
                     {
-                        if (pda.Owner.TryGetComponent(out UnpoweredFlashlightComponent? flashlight))
+                        if (EntityManager.TryGetComponent(pda.Owner, out UnpoweredFlashlightComponent? flashlight))
                             _unpoweredFlashlight.ToggleLight(flashlight);
                         break;
                     }
 
                 case PDAEjectIDMessage _:
                     {
-                        _slotsSystem.TryEjectContent(pda.Owner.Uid, pda.IdSlot, msg.Session.AttachedEntity);
+                        ItemSlotsSystem.TryEjectToHands(pda.Owner, pda.IdSlot, playerUid);
                         break;
                     }
                 case PDAEjectPenMessage _:
                     {
-                        _slotsSystem.TryEjectContent(pda.Owner.Uid, pda.PenSlot, msg.Session.AttachedEntity);
+                        ItemSlotsSystem.TryEjectToHands(pda.Owner, pda.PenSlot, playerUid);
                         break;
                     }
                 case PDAShowUplinkMessage _:
                     {
-                        if (pda.Owner.TryGetComponent(out UplinkComponent? uplink))
+                        if (EntityManager.TryGetComponent(pda.Owner, out UplinkComponent? uplink))
                             _uplinkSystem.ToggleUplinkUI(uplink, msg.Session);
                         break;
                     }

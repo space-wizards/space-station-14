@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Tag
@@ -17,7 +18,7 @@ namespace Content.Shared.Tag
         /// <exception cref="UnknownPrototypeException">
         ///     Thrown if no <see cref="TagPrototype"/> exists with the given id.
         /// </exception>
-        public static bool AddTag(this IEntity entity, string id)
+        public static bool AddTag(this EntityUid entity, string id)
         {
             return entity.EnsureComponent(out TagComponent tagComponent) &&
                    tagComponent.AddTag(id);
@@ -34,7 +35,7 @@ namespace Content.Shared.Tag
         /// <exception cref="UnknownPrototypeException">
         ///     Thrown if one of the ids represents an unregistered <see cref="TagPrototype"/>.
         /// </exception>
-        public static bool AddTags(this IEntity entity, params string[] ids)
+        public static bool AddTags(this EntityUid entity, params string[] ids)
         {
             return entity.EnsureComponent(out TagComponent tagComponent) &&
                    tagComponent.AddTags(ids);
@@ -51,7 +52,7 @@ namespace Content.Shared.Tag
         /// <exception cref="UnknownPrototypeException">
         ///     Thrown if one of the ids represents an unregistered <see cref="TagPrototype"/>.
         /// </exception>
-        public static bool AddTags(this IEntity entity, IEnumerable<string> ids)
+        public static bool AddTags(this EntityUid entity, IEnumerable<string> ids)
         {
             return entity.EnsureComponent(out TagComponent tagComponent) &&
                    tagComponent.AddTags(ids);
@@ -69,9 +70,9 @@ namespace Content.Shared.Tag
         /// <exception cref="UnknownPrototypeException">
         ///     Thrown if no <see cref="TagPrototype"/> exists with the given id.
         /// </exception>
-        public static bool TryAddTag(this IEntity entity, string id)
+        public static bool TryAddTag(this EntityUid entity, string id)
         {
-            return entity.TryGetComponent(out TagComponent? tagComponent) &&
+            return IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out TagComponent? tagComponent) &&
                    tagComponent.AddTag(id);
         }
 
@@ -87,9 +88,9 @@ namespace Content.Shared.Tag
         /// <exception cref="UnknownPrototypeException">
         ///     Thrown if one of the ids represents an unregistered <see cref="TagPrototype"/>.
         /// </exception>
-        public static bool TryAddTags(this IEntity entity, params string[] ids)
+        public static bool TryAddTags(this EntityUid entity, params string[] ids)
         {
-            return entity.TryGetComponent(out TagComponent? tagComponent) &&
+            return IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out TagComponent? tagComponent) &&
                    tagComponent.AddTags(ids);
         }
 
@@ -105,9 +106,9 @@ namespace Content.Shared.Tag
         /// <exception cref="UnknownPrototypeException">
         ///     Thrown if one of the ids represents an unregistered <see cref="TagPrototype"/>.
         /// </exception>
-        public static bool TryAddTags(this IEntity entity, IEnumerable<string> ids)
+        public static bool TryAddTags(this EntityUid entity, IEnumerable<string> ids)
         {
-            return entity.TryGetComponent(out TagComponent? tagComponent) &&
+            return IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out TagComponent? tagComponent) &&
                    tagComponent.AddTags(ids);
         }
 
@@ -120,9 +121,9 @@ namespace Content.Shared.Tag
         /// <exception cref="UnknownPrototypeException">
         ///     Thrown if no <see cref="TagPrototype"/> exists with the given id.
         /// </exception>
-        public static bool HasTag(this IEntity entity, string id)
+        public static bool HasTag(this EntityUid entity, string id)
         {
-            return entity.TryGetComponent(out TagComponent? tagComponent) &&
+            return IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out TagComponent? tagComponent) &&
                    tagComponent.HasTag(id);
         }
 
@@ -135,9 +136,9 @@ namespace Content.Shared.Tag
         /// <exception cref="UnknownPrototypeException">
         ///     Thrown if one of the ids represents an unregistered <see cref="TagPrototype"/>.
         /// </exception>
-        public static bool HasAllTags(this IEntity entity, params string[] ids)
+        public static bool HasAllTags(this EntityUid entity, params string[] ids)
         {
-            return entity.TryGetComponent(out TagComponent? tagComponent) &&
+            return IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out TagComponent? tagComponent) &&
                    tagComponent.HasAllTags(ids);
         }
 
@@ -150,9 +151,9 @@ namespace Content.Shared.Tag
         /// <exception cref="UnknownPrototypeException">
         ///     Thrown if one of the ids represents an unregistered <see cref="TagPrototype"/>.
         /// </exception>
-        public static bool HasAllTags(this IEntity entity, IEnumerable<string> ids)
+        public static bool HasAllTags(this EntityUid entity, IEnumerable<string> ids)
         {
-            return entity.TryGetComponent(out TagComponent? tagComponent) &&
+            return IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out TagComponent? tagComponent) &&
                    tagComponent.HasAllTags(ids);
         }
 
@@ -165,9 +166,9 @@ namespace Content.Shared.Tag
         /// <exception cref="UnknownPrototypeException">
         ///     Thrown if one of the ids represents an unregistered <see cref="TagPrototype"/>.
         /// </exception>
-        public static bool HasAnyTag(this IEntity entity, params string[] ids)
+        public static bool HasAnyTag(this EntityUid entity, params string[] ids)
         {
-            return entity.TryGetComponent(out TagComponent? tagComponent) &&
+            return IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out TagComponent? tagComponent) &&
                    tagComponent.HasAnyTag(ids);
         }
 
@@ -180,9 +181,9 @@ namespace Content.Shared.Tag
         /// <exception cref="UnknownPrototypeException">
         ///     Thrown if one of the ids represents an unregistered <see cref="TagPrototype"/>.
         /// </exception>
-        public static bool HasAnyTag(this IEntity entity, IEnumerable<string> ids)
+        public static bool HasAnyTag(this EntityUid entity, IEnumerable<string> ids)
         {
-            return entity.TryGetComponent(out TagComponent? tagComponent) &&
+            return IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out TagComponent? tagComponent) &&
                    tagComponent.HasAnyTag(ids);
         }
 
@@ -197,9 +198,9 @@ namespace Content.Shared.Tag
         /// <exception cref="UnknownPrototypeException">
         ///     Thrown if no <see cref="TagPrototype"/> exists with the given id.
         /// </exception>
-        public static bool RemoveTag(this IEntity entity, string id)
+        public static bool RemoveTag(this EntityUid entity, string id)
         {
-            return entity.TryGetComponent(out TagComponent? tagComponent) &&
+            return IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out TagComponent? tagComponent) &&
                    tagComponent.RemoveTag(id);
         }
 
@@ -214,9 +215,9 @@ namespace Content.Shared.Tag
         ///     Thrown if one of the ids represents an unregistered <see cref="TagPrototype"/>.
         /// </exception>
         /// </returns>
-        public static bool RemoveTags(this IEntity entity, params string[] ids)
+        public static bool RemoveTags(this EntityUid entity, params string[] ids)
         {
-            return entity.TryGetComponent(out TagComponent? tagComponent) &&
+            return IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out TagComponent? tagComponent) &&
                    tagComponent.RemoveTags(ids);
         }
 
@@ -231,9 +232,9 @@ namespace Content.Shared.Tag
         /// <exception cref="UnknownPrototypeException">
         ///     Thrown if one of the ids represents an unregistered <see cref="TagPrototype"/>.
         /// </exception>
-        public static bool RemoveTags(this IEntity entity, IEnumerable<string> ids)
+        public static bool RemoveTags(this EntityUid entity, IEnumerable<string> ids)
         {
-            return entity.TryGetComponent(out TagComponent? tagComponent) &&
+            return IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out TagComponent? tagComponent) &&
                    tagComponent.RemoveTags(ids);
         }
     }

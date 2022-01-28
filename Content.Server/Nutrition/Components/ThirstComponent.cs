@@ -1,10 +1,13 @@
 using System;
 using System.Collections.Generic;
-using Content.Server.Alert;
+using Content.Server.Administration.Logs;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
-using Content.Shared.MobState;
+using Content.Shared.Database;
+using Content.Shared.MobState.Components;
 using Content.Shared.Movement.Components;
+using Content.Shared.Movement.EntitySystems;
 using Content.Shared.Nutrition.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -19,6 +22,7 @@ namespace Content.Server.Nutrition.Components
     [RegisterComponent]
     public sealed class ThirstComponent : SharedThirstComponent
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
         private float _accumulatedFrameTime;
@@ -83,21 +87,19 @@ namespace Content.Server.Nutrition.Components
             {
                 // Revert slow speed if required
                 if (_lastThirstThreshold == ThirstThreshold.Parched && _currentThirstThreshold != ThirstThreshold.Dead &&
-                    Owner.TryGetComponent(out MovementSpeedModifierComponent? movementSlowdownComponent))
+                    _entMan.TryGetComponent(Owner, out MovementSpeedModifierComponent? movementSlowdownComponent))
                 {
-                    movementSlowdownComponent.RefreshMovementSpeedModifiers();
+                    EntitySystem.Get<MovementSpeedModifierSystem>().RefreshMovementSpeedModifiers(Owner);
                 }
 
                 // Update UI
-                Owner.TryGetComponent(out ServerAlertsComponent? alertsComponent);
-
                 if (ThirstThresholdAlertTypes.TryGetValue(_currentThirstThreshold, out var alertId))
                 {
-                    alertsComponent?.ShowAlert(alertId);
+                    EntitySystem.Get<AlertsSystem>().ShowAlert(Owner, alertId);
                 }
                 else
                 {
-                    alertsComponent?.ClearAlertCategory(AlertCategory.Thirst);
+                    EntitySystem.Get<AlertsSystem>().ClearAlertCategory(Owner, AlertCategory.Thirst);
                 }
 
                 switch (_currentThirstThreshold)
@@ -119,10 +121,7 @@ namespace Content.Server.Nutrition.Components
                         return;
 
                     case ThirstThreshold.Parched:
-                        if (Owner.TryGetComponent(out MovementSpeedModifierComponent? movementSlowdownComponent1))
-                        {
-                            movementSlowdownComponent1.RefreshMovementSpeedModifiers();
-                        }
+                        EntitySystem.Get<MovementSpeedModifierSystem>().RefreshMovementSpeedModifiers(Owner);
                         _lastThirstThreshold = _currentThirstThreshold;
                         _actualDecayRate = _baseDecayRate * 0.6f;
                         return;
@@ -181,7 +180,7 @@ namespace Content.Server.Nutrition.Components
                 return;
             // --> Current Hunger is below dead threshold
 
-            if (!Owner.TryGetComponent(out IMobStateComponent? mobState))
+            if (!_entMan.TryGetComponent(Owner, out MobStateComponent? mobState))
                 return;
 
             if (!mobState.IsDead())
@@ -190,7 +189,7 @@ namespace Content.Server.Nutrition.Components
                 _accumulatedFrameTime += frametime;
                 if (_accumulatedFrameTime >= 1)
                 {
-                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner.Uid, Damage * (int) _accumulatedFrameTime, true);
+                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner, Damage * (int) _accumulatedFrameTime, true);
                     _accumulatedFrameTime -= (int) _accumulatedFrameTime;
                 }
             }
@@ -202,6 +201,11 @@ namespace Content.Server.Nutrition.Components
             // _trySound(calculatedThreshold);
             if (calculatedThirstThreshold != _currentThirstThreshold)
             {
+                if (_currentThirstThreshold == ThirstThreshold.Dead)
+                    EntitySystem.Get<AdminLogSystem>().Add(LogType.Thirst, $"{_entMan.ToPrettyString(Owner):entity} has stopped taking dehydration damage");
+                else if (calculatedThirstThreshold == ThirstThreshold.Dead)
+                    EntitySystem.Get<AdminLogSystem>().Add(LogType.Thirst, $"{_entMan.ToPrettyString(Owner):entity} has started taking dehydration damage");
+
                 _currentThirstThreshold = calculatedThirstThreshold;
                 ThirstThresholdEffect();
                 Dirty();
@@ -214,7 +218,7 @@ namespace Content.Server.Nutrition.Components
             UpdateCurrentThreshold();
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new ThirstComponentState(_currentThirstThreshold);
         }

@@ -13,17 +13,13 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Research.UI
 {
     [GenerateTypedNameReferences]
-    public partial class ResearchConsoleMenu : SS14Window
+    public partial class ResearchConsoleMenu : DefaultWindow
     {
         public ResearchConsoleBoundUserInterface Owner { get; }
 
         private readonly List<TechnologyPrototype> _unlockedTechnologyPrototypes = new();
         private readonly List<TechnologyPrototype> _unlockableTechnologyPrototypes = new();
         private readonly List<TechnologyPrototype> _futureTechnologyPrototypes = new();
-
-        public Button UnlockButton => UnlockButtonProtected;
-        public Button ServerSelectionButton => ServerSelectionButtonProtected;
-        public Button ServerSyncButton => ServerSyncButtonProtected;
 
         public TechnologyPrototype? TechnologySelected;
 

@@ -1,0 +1,36 @@
+- type: gameMap
+  id: packedstationxmas
+  mapName: 'Packedmasstation'
+  mapNameTemplate: '{0} Packedmasstation {1}'
+  nameGenerator:
+    !type:NanotrasenNameGenerator
+    prefixCreator: 'VG'
+  mapPath: Maps/packedstationxmas.yml
+  minPlayers: 15
+  conditions:
+    - !type:HolidayMapCondition
+      holidays: [ "Christmas" ]
+  overflowJobs:
+    - Assistant
+  availableJobs:
+    CargoTechnician: [ 2, 3 ]
+    Assistant: [ -1, -1 ]
+    Bartender: [ 1, 1 ]
+    Botanist: [ 2, 2 ]
+    Chef: [ 1, 1 ]
+    Clown: [ 1, 1 ]
+    Janitor: [ 1, 1 ]
+    Mime: [ 1, 1 ]
+    Captain: [ 1, 1 ]
+    HeadOfPersonnel: [ 1, 1 ]
+    ChiefEngineer: [ 1, 1 ]
+    StationEngineer: [ 4, 6 ]
+    ChiefMedicalOfficer: [ 1, 1 ]
+    MedicalDoctor: [ 3, 4 ]
+    Chemist: [ 2, 2 ]
+    ResearchDirector: [ 1, 1 ]
+    Scientist: [ 3, 4 ]
+    HeadOfSecurity: [ 1, 1 ]
+    SecurityOfficer: [ 2, 3 ]
+    Chaplain: [ 1, 1 ]
+    Warden: [ 1, 1 ]

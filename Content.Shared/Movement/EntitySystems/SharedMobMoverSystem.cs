@@ -43,7 +43,7 @@ namespace Content.Shared.Movement.EntitySystems
 
             if (otherBody.BodyType != BodyType.Dynamic || !otherFixture.Hard) return;
 
-            if (!ourFixture.Body.Owner.TryGetComponent(out IMobMoverComponent? mobMover) || worldNormal == Vector2.Zero) return;
+            if (!EntityManager.TryGetComponent(ourFixture.Body.Owner, out IMobMoverComponent? mobMover) || worldNormal == Vector2.Zero) return;
 
             otherBody.ApplyLinearImpulse(-worldNormal * mobMover.PushStrength * frameTime);
         }

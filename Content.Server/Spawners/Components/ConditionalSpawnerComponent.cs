@@ -1,10 +1,14 @@
 using System.Collections.Generic;
 using Content.Server.GameTicking;
+using Content.Server.GameTicking.Rules;
+using Content.Server.Holiday.Greet;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Spawners.Components
@@ -12,16 +16,17 @@ namespace Content.Server.Spawners.Components
     [RegisterComponent]
     public class ConditionalSpawnerComponent : Component, IMapInit
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
         public override string Name => "ConditionalSpawner";
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("prototypes")]
+        [DataField("prototypes", customTypeSerializer:typeof(PrototypeIdListSerializer<EntityPrototype>))]
         public List<string> Prototypes { get; set; } = new();
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("gameRules")]
+        [DataField("gameRules", customTypeSerializer:typeof(PrototypeIdListSerializer<GameRulePrototype>))]
         private readonly List<string> _gameRules = new();
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -30,7 +35,7 @@ namespace Content.Server.Spawners.Components
 
         public void RuleAdded(GameRuleAddedEvent obj)
         {
-            if(_gameRules.Contains(obj.Rule.GetType().Name))
+            if(_gameRules.Contains(obj.Rule.ID))
                 Spawn();
         }
 
@@ -61,8 +66,8 @@ namespace Content.Server.Spawners.Components
                 return;
             }
 
-            if(!Owner.Deleted)
-                Owner.EntityManager.SpawnEntity(_robustRandom.Pick(Prototypes), Owner.Transform.Coordinates);
+            if(!_entMan.Deleted(Owner))
+                _entMan.SpawnEntity(_robustRandom.Pick(Prototypes), _entMan.GetComponent<TransformComponent>(Owner).Coordinates);
         }
 
         public virtual void MapInit()

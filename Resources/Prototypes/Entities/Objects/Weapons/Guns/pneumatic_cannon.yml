@@ -1,0 +1,56 @@
+﻿- type: entity
+  name: improvised pneumatic cannon
+  parent: BaseItem
+  id: ImprovisedPneumaticCannon
+  description: Improvised using nothing but a pipe, some zipties, and a pneumatic cannon.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Cannons/pneumatic_cannon.rsi
+    netsync: false
+    layers:
+    - state: pneumaticCannon
+      map: [ "enum.PneumaticCannonVisualLayers.Base" ]
+    - state: oxygen
+      map: [ "enum.PneumaticCannonVisualLayers.Tank" ]
+      visible: false
+  - type: Item
+    size: 40
+    sprite: Objects/Weapons/Guns/Cannons/pneumatic_cannon.rsi
+  - type: PneumaticCannon
+  - type: Storage
+    # todo mirror pneum replace with ecs/evnts
+    clickInsert: false
+    capacity: 30
+  - type: Appearance
+    visuals:
+    - type: PneumaticCannonVisualizer
+  - type: Construction
+    graph: PneumaticCannon
+    node: cannon
+
+- type: entity
+  name: pie cannon
+  parent: BaseItem
+  id: LauncherCreamPie
+  description: Load cream pie for optimal results.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Cannons/pie_cannon.rsi
+    layers:
+    - state: piecannon
+  - type: Storage
+    whitelist:
+      components:
+      - CreamPie
+    clickInsert: false
+    storageSoundCollection:
+      collection: BikeHorn
+    capacity: 40
+  - type: PneumaticCannon
+    gasTankRequired: false
+    throwStrength: 30
+    baseThrowRange: 12
+    fireInterval: 0.4
+  - type: Item
+    size: 50
+    sprite: Objects/Weapons/Guns/Cannons/pie_cannon.rsi

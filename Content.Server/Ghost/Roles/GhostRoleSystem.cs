@@ -1,17 +1,27 @@
 using System.Collections.Generic;
 using Content.Server.Administration;
+using Content.Server.Administration.Logs;
 using Content.Server.EUI;
 using Content.Server.Ghost.Components;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Ghost.Roles.UI;
+using Content.Server.Mind.Components;
+using Content.Server.MobState.States;
+using Content.Server.Players;
+using Content.Shared.Administration;
+using Content.Shared.Database;
 using Content.Shared.GameTicking;
+using Content.Shared.Ghost;
 using Content.Shared.Ghost.Roles;
+using Content.Shared.MobState;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Console;
+using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Ghost.Roles
@@ -20,8 +30,11 @@ namespace Content.Server.Ghost.Roles
     public class GhostRoleSystem : EntitySystem
     {
         [Dependency] private readonly EuiManager _euiManager = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly AdminLogSystem _adminLogSystem = default!;
 
-        private uint _nextRoleIdentifier = 0;
+        private uint _nextRoleIdentifier;
+        private bool _needsUpdateGhostRoleCount = true;
         private readonly Dictionary<uint, GhostRoleComponent> _ghostRoles = new();
         private readonly Dictionary<IPlayerSession, GhostRolesEui> _openUis = new();
         private readonly Dictionary<IPlayerSession, MakeGhostRoleEui> _openMakeGhostRoleUis = new();
@@ -35,6 +48,34 @@ namespace Content.Server.Ghost.Roles
 
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttached);
+            SubscribeLocalEvent<GhostTakeoverAvailableComponent, MindAddedMessage>(OnMindAdded);
+            SubscribeLocalEvent<GhostTakeoverAvailableComponent, MindRemovedMessage>(OnMindRemoved);
+            SubscribeLocalEvent<GhostTakeoverAvailableComponent, MobStateChangedEvent>(OnMobStateChanged);
+            _playerManager.PlayerStatusChanged += PlayerStatusChanged;
+        }
+
+        private void OnMobStateChanged(EntityUid uid, GhostRoleComponent component, MobStateChangedEvent args)
+        {
+            switch (args.CurrentMobState)
+            {
+                case NormalMobState:
+                {
+                    if (!component.Taken)
+                        RegisterGhostRole(component);
+                    break;
+                }
+                case CriticalMobState:
+                case DeadMobState:
+                    UnregisterGhostRole(component);
+                    break;
+            }
+        }
+
+        public override void Shutdown()
+        {
+            base.Shutdown();
+
+            _playerManager.PlayerStatusChanged -= PlayerStatusChanged;
         }
 
         private uint GetNextRoleIdentifier()
@@ -44,7 +85,8 @@ namespace Content.Server.Ghost.Roles
 
         public void OpenEui(IPlayerSession session)
         {
-            if (session.AttachedEntity == null || !session.AttachedEntity.HasComponent<GhostComponent>())
+            if (session.AttachedEntity is not {Valid: true} attached ||
+                !EntityManager.HasComponent<GhostComponent>(attached))
                 return;
 
             if(_openUis.ContainsKey(session))
@@ -81,7 +123,7 @@ namespace Content.Server.Ghost.Roles
         {
             if (_openMakeGhostRoleUis.Remove(session, out var eui))
             {
-                eui?.Close();
+                eui.Close();
             }
         }
 
@@ -90,6 +132,33 @@ namespace Content.Server.Ghost.Roles
             foreach (var eui in _openUis.Values)
             {
                 eui.StateDirty();
+            }
+            // Note that this, like the EUIs, is deferred.
+            // This is for roughly the same reasons, too:
+            // Someone might spawn a ton of ghost roles at once.
+            _needsUpdateGhostRoleCount = true;
+        }
+
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+            if (_needsUpdateGhostRoleCount)
+            {
+                _needsUpdateGhostRoleCount = false;
+                var response = new GhostUpdateGhostRoleCountEvent(_ghostRoles.Count);
+                foreach (var player in _playerManager.Sessions)
+                {
+                    RaiseNetworkEvent(response, player.ConnectedClient);
+                }
+            }
+        }
+
+        private void PlayerStatusChanged(object? blah, SessionStatusEventArgs args)
+        {
+            if (args.NewStatus == SessionStatus.InGame)
+            {
+                var response = new GhostUpdateGhostRoleCountEvent(_ghostRoles.Count);
+                RaiseNetworkEvent(response, args.Session.ConnectedClient);
             }
         }
 
@@ -112,7 +181,29 @@ namespace Content.Server.Ghost.Roles
         {
             if (!_ghostRoles.TryGetValue(identifier, out var role)) return;
             if (!role.Take(player)) return;
+
+            if (player.AttachedEntity != null)
+                _adminLogSystem.Add(LogType.GhostRoleTaken, LogImpact.Low, $"{player:player} took the {role.RoleName:roleName} ghost role {ToPrettyString(player.AttachedEntity.Value):entity}");
+
             CloseEui(player);
+        }
+
+        public void GhostRoleInternalCreateMindAndTransfer(IPlayerSession player, EntityUid roleUid, EntityUid mob, GhostRoleComponent? role = null)
+        {
+            if (!Resolve(roleUid, ref role)) return;
+
+            var contentData = player.ContentData();
+
+            DebugTools.AssertNotNull(contentData);
+
+            var newMind = new Mind.Mind(player.UserId)
+            {
+                CharacterName = EntityManager.GetComponent<MetaDataComponent>(mob).EntityName
+            };
+            newMind.AddRole(new GhostRoleMarkerRole(newMind, role.RoleName));
+
+            newMind.ChangeOwningPlayer(player.UserId);
+            newMind.TransferTo(mob);
         }
 
         public GhostRoleInfo[] GetGhostRolesInfo()
@@ -123,7 +214,7 @@ namespace Content.Server.Ghost.Roles
 
             foreach (var (id, role) in _ghostRoles)
             {
-                roles[i] = new GhostRoleInfo(){Identifier = id, Name = role.RoleName, Description = role.RoleDescription};
+                roles[i] = new GhostRoleInfo(){Identifier = id, Name = role.RoleName, Description = role.RoleDescription, Rules = role.RoleRules};
                 i++;
             }
 
@@ -134,8 +225,24 @@ namespace Content.Server.Ghost.Roles
         {
             // Close the session of any player that has a ghost roles window open and isn't a ghost anymore.
             if (!_openUis.ContainsKey(message.Player)) return;
-            if (message.Entity.HasComponent<GhostComponent>()) return;
+            if (EntityManager.HasComponent<GhostComponent>(message.Entity)) return;
             CloseEui(message.Player);
+        }
+
+        private void OnMindAdded(EntityUid uid, GhostTakeoverAvailableComponent component, MindAddedMessage args)
+        {
+            component.Taken = true;
+            UnregisterGhostRole(component);
+        }
+
+        private void OnMindRemoved(EntityUid uid, GhostRoleComponent component, MindRemovedMessage args)
+        {
+            // Avoid re-registering it for duplicate entries and potential exceptions.
+            if (!component.ReregisterOnGhost || component.LifeStage > ComponentLifeStage.Running)
+                return;
+
+            component.Taken = false;
+            RegisterGhostRole(component);
         }
 
         public void Reset(RoundRestartCleanupEvent ev)

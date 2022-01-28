@@ -11,11 +11,8 @@ namespace Content.Client.Disposal.UI
     /// Client-side UI used to control a <see cref="SharedDisposalTaggerComponent"/>
     /// </summary>
     [GenerateTypedNameReferences]
-    public partial class DisposalTaggerWindow : SS14Window
+    public partial class DisposalTaggerWindow : DefaultWindow
     {
-        public LineEdit TagInput => TagInputProtected;
-        public Button Confirm => ConfirmProtected;
-
         public DisposalTaggerWindow()
         {
             RobustXamlLoader.Load(this);

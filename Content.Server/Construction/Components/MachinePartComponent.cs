@@ -9,7 +9,9 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Construction.Components
 {
     [RegisterComponent]
+#pragma warning disable 618
     public class MachinePartComponent : Component, IExamine
+#pragma warning restore 618
     {
         // I'm so sorry for hard-coding this. But trust me, it should make things less painful.
         public static IReadOnlyDictionary<MachinePart, string> Prototypes { get; } = new Dictionary<MachinePart, string>()

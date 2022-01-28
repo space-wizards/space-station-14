@@ -1,6 +1,9 @@
-#- type: accessLevel
-#  id: ChiefMedicalOfficer
-#  name: Chief Medical Officer
+- type: accessLevel
+  id: ChiefMedicalOfficer
+  name: Chief Medical Officer
 
 - type: accessLevel
   id: Medical
+  
+- type: accessLevel
+  id: Chemistry

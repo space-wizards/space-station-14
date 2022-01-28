@@ -1,70 +1,74 @@
 - type: reagent
   id: EZNutrient
   name: EZ nutrient
+  group: Botanical
   desc: Give your plants some of those EZ nutrients!
   color: "#664330"
   physicalDesc: thick
   plantMetabolism:
-    - !type:AdjustNutrition
+    - !type:PlantAdjustNutrition
       amount: 1
 
 - type: reagent
   id: Left4Zed
   name: left-4-zed
+  group: Botanical
   desc: A cocktail of mutagenic compounds, which cause plant life to become highly unstable.
   color: "#5b406c"
   physicalDesc: heterogeneous
   plantMetabolism:
-    - !type:AdjustNutrition
+    - !type:PlantAdjustNutrition
       amount: 1
-    - !type:AdjustHealth
+    - !type:PlantAdjustHealth
       amount: -0.5
-    - !type:AdjustMutationMod
+    - !type:PlantAdjustMutationMod
       prob: 0.3
       amount: 0.2
 
 - type: reagent
   id: PestKiller
   name: pest killer
+  group: Botanical
   desc: A mixture that targets pests.
   color: "#9e9886"
   physicalDesc: bubbling
   plantMetabolism:
-    - !type:AdjustToxins
+    - !type:PlantAdjustToxins
       amount: 4
-    - !type:AdjustPests
+    - !type:PlantAdjustPests
       amount: -6
 
 - type: reagent
   id: PlantBGone
   name: plant-B-gone
+  group: Botanical
   desc: A harmful toxic mixture to kill plantlife. Do not ingest!
   color: "#49002E"
   physicalDesc: bubbling
   plantMetabolism:
-    - !type:AdjustToxins
+    - !type:PlantAdjustToxins
       amount: 6
-    - !type:AdjustWeeds
+    - !type:PlantAdjustWeeds
       amount: -8
-    - !type:AdjustHealth
+    - !type:PlantAdjustHealth
       amount: -20
-    - !type:AdjustMutationMod
+    - !type:PlantAdjustMutationMod
       amount: 0.1
 
 - type: reagent
   id: RobustHarvest
   name: robust harvest
+  group: Botanical
   desc: Plant-enhancing hormones, good for increasing potency.
   color: "#3e901c"
   physicalDesc: robust
-  customPlantMetabolism: 0.1
   plantMetabolism:
-    - !type:AdjustNutrition
+    - !type:PlantAdjustNutrition
       amount: 0.05
-    - !type:AdjustWeeds
+    - !type:PlantAdjustWeeds
       prob: 0.025
       amount: 1
-    - !type:AdjustPests
+    - !type:PlantAdjustPests
       prob: 0.025
       amount: 1
     - !type:RobustHarvest {}
@@ -72,33 +76,63 @@
 - type: reagent
   id: WeedKiller
   name: weed killer
+  group: Botanical
   desc: A mixture that targets weeds.
   color: "#968395"
   physicalDesc: bubbling
   plantMetabolism:
-    - !type:AdjustToxins
+    - !type:PlantAdjustToxins
       amount: 4
-    - !type:AdjustWeeds
+    - !type:PlantAdjustWeeds
       amount: -6
 
 - type: reagent
-  id: THC
-  name: THC
-  desc: The main psychoactive compound in cannabis.
-  color: "#808080"
-  physicalDesc: crystalline
+  id: Ammonia
+  name: ammonia
+  group: Botanical
+  desc: An effective fertilizer which is better than what is available to the botanist initially, though it isn't as powerful as Diethylamine
+  physicalDesc: pungent
+  color: "#77b58e"
+  boilingPoint: -33.0
+  meltingPoint: -77.7
   plantMetabolism:
-    - !type:AdjustNutrition
-      amount: -5
-    - !type:AdjustHealth
-      amount: -1
+  - !type:PlantAdjustNutrition
+    amount: 1
+  - !type:PlantAdjustHealth
+    amount: 0.5
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          groups:
+            Caustic: 1
 
 - type: reagent
-  id: Nicotine
-  name: Nicotine
-  desc: Dangerous and highly addictive.
-  color: "#C0C0C0"
-  physicalDesc: strong smelling
+  id: Diethylamine
+  name: diethylamine
+  group: Botanical
+  desc: A very potent fertilizer.
+  physicalDesc: strong-smelling
+  color: "#a1000b"
+  boilingPoint: 55.5
+  meltingPoint: -50.0
   plantMetabolism:
-    - !type:AdjustHealth
-      amount: -5
+  - !type:PlantAdjustNutrition
+    amount: 0.1
+  - !type:PlantAdjustPests
+    prob: 0.1
+    amount: -1
+  - !type:PlantAdjustHealth
+    amount: 0.1
+  - !type:PlantAffectGrowth
+    prob: 0.2
+    amount: 1
+  - !type:PlantDiethylamine {}
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          groups:
+            Caustic: 1

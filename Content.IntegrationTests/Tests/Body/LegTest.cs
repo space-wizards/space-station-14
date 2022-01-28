@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Content.Server.Body;
+using Content.Server.Body.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Rotation;
@@ -34,7 +35,7 @@ namespace Content.IntegrationTests.Tests.Body
         public async Task RemoveLegsFallTest()
         {
             var options = new ServerContentIntegrationOption{ExtraPrototypes = Prototypes};
-            var server = StartServerDummyTicker(options);
+            var server = StartServer(options);
 
             AppearanceComponent appearance = null;
 
@@ -47,8 +48,8 @@ namespace Content.IntegrationTests.Tests.Body
                 var entityManager = IoCManager.Resolve<IEntityManager>();
                 var human = entityManager.SpawnEntity("HumanBodyAndAppearanceDummy", new MapCoordinates(Vector2.Zero, mapId));
 
-                Assert.That(human.TryGetComponent(out SharedBodyComponent body));
-                Assert.That(human.TryGetComponent(out appearance));
+                Assert.That(entityManager.TryGetComponent(human, out SharedBodyComponent body));
+                Assert.That(entityManager.TryGetComponent(human, out appearance));
 
                 Assert.That(!appearance.TryGetData(RotationVisuals.RotationState, out RotationState _));
 

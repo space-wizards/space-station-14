@@ -1,17 +1,18 @@
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using Content.Server.Explosion.EntitySystems;
 using Content.Server.Flash.Components;
 using Content.Server.Throwing;
 using Content.Shared.Explosion;
 using Content.Shared.Interaction;
-using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Explosion.Components
@@ -19,6 +20,8 @@ namespace Content.Server.Explosion.Components
     [RegisterComponent]
     public sealed class ClusterFlashComponent : Component, IInteractUsing, IUse
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "ClusterFlash";
 
         private Container _grenadesContainer = default!;
@@ -26,7 +29,7 @@ namespace Content.Server.Explosion.Components
         /// <summary>
         ///     What we fill our prototype with if we want to pre-spawn with grenades.
         /// </summary>
-        [ViewVariables] [DataField("fillPrototype")]
+        [ViewVariables] [DataField("fillPrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         private string? _fillPrototype;
 
         /// <summary>
@@ -60,7 +63,7 @@ namespace Content.Server.Explosion.Components
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs args)
         {
             if (_grenadesContainer.ContainedEntities.Count >= _maxGrenades ||
-                !args.Using.HasComponent<FlashOnTriggerComponent>())
+                !_entMan.HasComponent<FlashOnTriggerComponent>(args.Using))
                 return false;
 
             _grenadesContainer.Insert(args.Using);
@@ -93,14 +96,14 @@ namespace Content.Server.Explosion.Components
                 return false;
             Owner.SpawnTimer((int) (_delay * 1000), () =>
             {
-                if (Owner.Deleted)
+                if (_entMan.Deleted(Owner))
                     return;
                 _countDown = true;
                 var random = IoCManager.Resolve<IRobustRandom>();
                 var delay = 20;
                 var grenadesInserted = _grenadesContainer.ContainedEntities.Count + _unspawnedCount;
                 var thrownCount = 0;
-                var segmentAngle = (int) (360 / grenadesInserted);
+                var segmentAngle = 360 / grenadesInserted;
                 while (TryGetGrenade(out var grenade))
                 {
                     var angleMin = segmentAngle * thrownCount;
@@ -116,26 +119,26 @@ namespace Content.Server.Explosion.Components
 
                     grenade.SpawnTimer(delay, () =>
                     {
-                        if (grenade.Deleted)
+                        if ((!_entMan.EntityExists(grenade) ? EntityLifeStage.Deleted : _entMan.GetComponent<MetaDataComponent>(grenade).EntityLifeStage) >= EntityLifeStage.Deleted)
                             return;
 
                         EntitySystem.Get<TriggerSystem>().Trigger(grenade, eventArgs.User);
                     });
                 }
 
-                Owner.Delete();
+                _entMan.DeleteEntity(Owner);
             });
             return true;
         }
 
-        private bool TryGetGrenade([NotNullWhen(true)] out IEntity? grenade)
+        private bool TryGetGrenade(out EntityUid grenade)
         {
-            grenade = null;
+            grenade = default;
 
             if (_unspawnedCount > 0)
             {
                 _unspawnedCount--;
-                grenade = Owner.EntityManager.SpawnEntity(_fillPrototype, Owner.Transform.MapPosition);
+                grenade = _entMan.SpawnEntity(_fillPrototype, _entMan.GetComponent<TransformComponent>(Owner).MapPosition);
                 return true;
             }
 
@@ -155,7 +158,7 @@ namespace Content.Server.Explosion.Components
 
         private void UpdateAppearance()
         {
-            if (!Owner.TryGetComponent(out AppearanceComponent? appearance)) return;
+            if (!_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance)) return;
 
             appearance.SetData(ClusterFlashVisuals.GrenadesCounter, _grenadesContainer.ContainedEntities.Count + _unspawnedCount);
         }

@@ -10,6 +10,7 @@ namespace Content.Shared.Ghost.Roles
         public uint Identifier { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public string Rules { get; set; }
     }
 
     [NetSerializable, Serializable]

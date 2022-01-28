@@ -1,3 +1,5 @@
+using System;
+using System.Threading;
 using Content.Server.DoAfter;
 using Content.Server.RCD.Components;
 using Content.Shared.Coordinates;
@@ -14,8 +16,6 @@ using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Player;
-using System;
-using System.Threading;
 
 namespace Content.Server.RCD.Systems
 {
@@ -64,16 +64,25 @@ namespace Content.Server.RCD.Systems
                 return;
 
             // FIXME: Make this work properly. Right now it relies on the click location being on a grid, which is bad.
-            if (!args.ClickLocation.IsValid(EntityManager))
+            var clickLocationMod = args.ClickLocation;
+            // Initial validity check
+            if (!clickLocationMod.IsValid(EntityManager))
                 return;
-
-            var gridID = args.ClickLocation.GetGridId(EntityManager);
+            // Try to fix it (i.e. if clicking on space)
+            // Note: Ideally there'd be a better way, but there isn't right now.
+            var gridID = clickLocationMod.GetGridId(EntityManager);
+            if (!gridID.IsValid())
+            {
+                clickLocationMod = clickLocationMod.AlignWithClosestGridTile();
+                gridID = clickLocationMod.GetGridId(EntityManager);
+            }
+            // Check if fixing it failed / get final grid ID
             if (!gridID.IsValid())
                 return;
 
             var mapGrid = _mapManager.GetGrid(gridID);
-            var tile = mapGrid.GetTileRef(args.ClickLocation);
-            var snapPos = mapGrid.TileIndicesFor(args.ClickLocation);
+            var tile = mapGrid.GetTileRef(clickLocationMod);
+            var snapPos = mapGrid.TileIndicesFor(clickLocationMod);
 
             //No changing mode mid-RCD
             var startingMode = rcd.Mode;
@@ -99,7 +108,7 @@ namespace Content.Server.RCD.Systems
             {
                 //Floor mode just needs the tile to be a space tile (subFloor)
                 case RcdMode.Floors:
-                    mapGrid.SetTile(args.ClickLocation, new Tile(_tileDefinitionManager["floor_steel"].TileId));
+                    mapGrid.SetTile(clickLocationMod, new Tile(_tileDefinitionManager["floor_steel"].TileId));
                     break;
                 //We don't want to place a space tile on something that's already a space tile. Let's do the inverse of the last check.
                 case RcdMode.Deconstruct:
@@ -109,18 +118,21 @@ namespace Content.Server.RCD.Systems
                     }
                     else //Delete what the user targeted
                     {
-                        args.Target?.Delete();
+                        if (args.Target is {Valid: true} target)
+                        {
+                            EntityManager.DeleteEntity(target);
+                        }
                     }
                     break;
                 //Walls are a special behaviour, and require us to build a new object with a transform rather than setting a grid tile,
                 // thus we early return to avoid the tile set code.
                 case RcdMode.Walls:
                     var ent = EntityManager.SpawnEntity("WallSolid", mapGrid.GridTileToLocal(snapPos));
-                    ent.Transform.LocalRotation = Angle.Zero; // Walls always need to point south.
+                    EntityManager.GetComponent<TransformComponent>(ent).LocalRotation = Angle.Zero; // Walls always need to point south.
                     break;
                 case RcdMode.Airlock:
                     var airlock = EntityManager.SpawnEntity("Airlock", mapGrid.GridTileToLocal(snapPos));
-                    airlock.Transform.LocalRotation = rcd.Owner.Transform.LocalRotation; //Now apply icon smoothing.
+                    EntityManager.GetComponent<TransformComponent>(airlock).LocalRotation = EntityManager.GetComponent<TransformComponent>(rcd.Owner).LocalRotation; //Now apply icon smoothing.
                     break;
                 default:
                     args.Handled = true;
@@ -177,7 +189,7 @@ namespace Content.Server.RCD.Systems
                         return false;
                     }
                     //They tried to decon a non-turf but it's not in the whitelist
-                    if (eventArgs.Target != null && !eventArgs.Target.HasTag("RCDDeconstructWhitelist"))
+                    if (eventArgs.Target != null && !eventArgs.Target.Value.HasTag("RCDDeconstructWhitelist"))
                     {
                         rcd.Owner.PopupMessage(eventArgs.User, Loc.GetString("rcd-component-deconstruct-target-not-on-whitelist-message"));
                         return false;
@@ -215,7 +227,7 @@ namespace Content.Server.RCD.Systems
             }
         }
 
-        private void NextMode(EntityUid uid, RCDComponent rcd, IEntity? user)
+        private void NextMode(EntityUid uid, RCDComponent rcd, EntityUid user)
         {
             SoundSystem.Play(Filter.Pvs(uid), rcd.SwapModeSound.GetSound(), uid);
 
@@ -223,11 +235,8 @@ namespace Content.Server.RCD.Systems
             mode = (++mode) % _modes.Length; //Then, do a rollover on the value so it doesnt hit an invalid state
             rcd.Mode = (RcdMode) mode; //Finally, cast the newly acquired int mode to an RCDmode so we can use it.
 
-            if (user != null)
-            {
-                var msg = Loc.GetString("rcd-component-change-mode", ("mode", rcd.Mode.ToString()));
-                rcd.Owner.PopupMessage(user, msg); //Prints an overhead message above the RCD
-            }
+            var msg = Loc.GetString("rcd-component-change-mode", ("mode", rcd.Mode.ToString()));
+            rcd.Owner.PopupMessage(user, msg); //Prints an overhead message above the RCD
         }
     }
 }

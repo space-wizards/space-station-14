@@ -31,7 +31,7 @@ namespace Content.Shared.Friction
         [DataField("modifier")]
         private float _modifier = 1.0f;
 
-        public override ComponentState GetComponentState(ICommonSession session)
+        public override ComponentState GetComponentState()
         {
             return new TileFrictionComponentState(_modifier);
         }

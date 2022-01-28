@@ -1,28 +1,23 @@
-﻿using System.Collections.Generic;
-using Content.Client.Administration.Managers;
-using Content.Shared.Administration.Menu;
-using Robust.Client.Graphics;
+﻿using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
-using Robust.Shared.Containers;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
-using Robust.Shared.Physics;
 
 namespace Content.Client.Administration
 {
     internal class AdminNameOverlay : Overlay
     {
-        private readonly AdminMenuManager _manager;
+        private readonly AdminSystem _system;
         private readonly IEntityManager _entityManager;
         private readonly IEyeManager _eyeManager;
         private readonly IEntityLookup _entityLookup;
-        private IReadOnlyList<AdminMenuPlayerListMessage.PlayerInfo>? _playerInfos;
         private readonly Font _font;
 
-        public AdminNameOverlay(AdminMenuManager manager, IEntityManager entityManager, IEyeManager eyeManager, IResourceCache resourceCache, IEntityLookup entityLookup)
+        public AdminNameOverlay(AdminSystem system, IEntityManager entityManager, IEyeManager eyeManager, IResourceCache resourceCache, IEntityLookup entityLookup)
         {
-            _manager = manager;
+            _system = system;
             _entityManager = entityManager;
             _eyeManager = eyeManager;
             _entityLookup = entityLookup;
@@ -32,30 +27,21 @@ namespace Content.Client.Administration
 
         public override OverlaySpace Space => OverlaySpace.ScreenSpace;
 
-        public void UpdatePlayerInfo(List<AdminMenuPlayerListMessage.PlayerInfo> playerInfos)
-        {
-            _playerInfos = playerInfos;
-        }
-
         protected override void Draw(in OverlayDrawArgs args)
         {
-            if (_playerInfos == null)
-            {
-                return;
-            }
-
             var viewport = _eyeManager.GetWorldViewport();
 
-            foreach (var playerInfo in _playerInfos)
+            foreach (var playerInfo in _system.PlayerList)
             {
                 // Otherwise the entity can not exist yet
-                if (!_entityManager.TryGetEntity(playerInfo.EntityUid, out var entity))
+                var entity = playerInfo.EntityUid;
+                if (!_entityManager.EntityExists(entity))
                 {
                     continue;
                 }
 
                 // if not on the same map, continue
-                if (entity.Transform.MapID != _eyeManager.CurrentMap)
+                if (_entityManager.GetComponent<TransformComponent>(entity).MapID != _eyeManager.CurrentMap)
                 {
                     continue;
                 }
@@ -68,14 +54,16 @@ namespace Content.Client.Administration
                     continue;
                 }
 
-                var lineoffset = new Vector2(0, 11f);
-                var screenCoordinates = _eyeManager.WorldToScreen(aabb.TopRight + (0, -0.1f));
+                var lineoffset = new Vector2(0f, 11f);
+                var screenCoordinates = _eyeManager.WorldToScreen(aabb.Center +
+                                                                  new Angle(-_eyeManager.CurrentEye.Rotation).RotateVec(
+                                                                      aabb.TopRight - aabb.Center)) + new Vector2(1f, 7f);
                 if (playerInfo.Antag)
                 {
                     args.ScreenHandle.DrawString(_font, screenCoordinates + (lineoffset * 2), "ANTAG", Color.OrangeRed);
                 }
-                args.ScreenHandle.DrawString(_font, screenCoordinates+(lineoffset), playerInfo.Username, Color.Yellow);
-                args.ScreenHandle.DrawString(_font, screenCoordinates, playerInfo.CharacterName, Color.Aquamarine);
+                args.ScreenHandle.DrawString(_font, screenCoordinates+lineoffset, playerInfo.Username, playerInfo.Connected ? Color.Yellow : Color.White);
+                args.ScreenHandle.DrawString(_font, screenCoordinates, playerInfo.CharacterName, playerInfo.Connected ? Color.Aquamarine : Color.White);
             }
         }
     }

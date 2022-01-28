@@ -1,0 +1,25 @@
+﻿- type: entity
+  id: RandomArtifactSpawner
+  name: random artifact spawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - texture: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi/ano01.png
+    - type: RandomSpawner
+      prototypes:
+        - BadfeelingArtifact
+        - GoodfeelingArtifact
+        - AngryMobsSpawnArtifact
+        - JunkSpawnArtifact
+        - BananaSpawnArtifact
+      chance: 1
+
+- type: entity
+  id: RandomArtifactSpawner20
+  name: random artifact spawner [20]
+  parent: RandomArtifactSpawner
+  components:
+    - type: RandomSpawner
+      chance: 0.2

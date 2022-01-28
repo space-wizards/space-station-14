@@ -1,5 +1,7 @@
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.PDA
@@ -11,7 +13,7 @@ namespace Content.Shared.PDA
         [DataField("id", required: true)]
         public string ID { get; } = default!;
 
-        [DataField("itemId")]
+        [DataField("itemId", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string ItemId { get; } = string.Empty;
 
         [DataField("price")]
@@ -25,5 +27,8 @@ namespace Content.Shared.PDA
 
         [DataField("listingName")]
         public string ListingName { get; } = string.Empty;
+
+        [DataField("icon")]
+        public SpriteSpecifier? Icon { get; } = null;
     }
 }

@@ -7,6 +7,7 @@
   - type: Tag
     tags:
     - ShotgunShell
+    - Cartridge
   - type: Ammo
     caliber: Shotgun
     ammoSpread: 40
@@ -20,7 +21,6 @@
     layers:
     - state: base
       map: ["enum.AmmoVisualLayers.Base"]
-    drawdepth: FloorObjects
   - type: Appearance
     visuals:
     - type: SpentAmmoVisualizer

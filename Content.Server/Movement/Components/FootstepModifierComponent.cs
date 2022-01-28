@@ -2,6 +2,7 @@ using Content.Shared.Audio;
 using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -24,7 +25,7 @@ namespace Content.Server.Movement.Components
 
         public void PlayFootstep()
         {
-            SoundSystem.Play(Filter.Pvs(Owner), SoundCollection.GetSound(), Owner.Transform.Coordinates, AudioHelpers.WithVariation(Variation).WithVolume(-2f));
+            SoundSystem.Play(Filter.Pvs(Owner), SoundCollection.GetSound(), IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates, AudioHelpers.WithVariation(Variation).WithVolume(-2f));
         }
     }
 }

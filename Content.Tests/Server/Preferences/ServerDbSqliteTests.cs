@@ -42,6 +42,7 @@ namespace Content.Tests.Server.Preferences
         {
             return new(
                 "Charlie Charlieson",
+                "Human",
                 21,
                 Sex.Male,
                 Gender.Epicene,
@@ -57,7 +58,7 @@ namespace Content.Tests.Server.Preferences
                 BackpackPreference.Backpack,
                 new Dictionary<string, JobPriority>
                 {
-                    {SharedGameTicker.OverflowJob, JobPriority.High}
+                    {SharedGameTicker.FallbackOverflowJob, JobPriority.High}
                 },
                 PreferenceUnavailableMode.StayInLobby,
                 new List<string> ()

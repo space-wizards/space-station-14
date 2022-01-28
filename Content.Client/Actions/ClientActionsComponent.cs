@@ -1,7 +1,5 @@
 using Content.Client.Actions.Assignments;
 using Content.Client.Actions.UI;
-using Content.Client.Hands;
-using Content.Client.Inventory;
 using Content.Client.Items.Managers;
 using Content.Shared.Actions.Components;
 using Content.Shared.Actions.Prototypes;
@@ -113,7 +111,9 @@ namespace Content.Client.Actions
             {
                 case BehaviorType.Instant:
                     // for instant actions, we immediately tell the server we're doing it
+#pragma warning disable 618
                     SendNetworkMessage(attempt.PerformInstantActionMessage());
+#pragma warning restore 618
                     break;
                 case BehaviorType.Toggle:
                     // for toggle actions, we immediately tell the server we're toggling it.
@@ -123,7 +123,9 @@ namespace Content.Client.Actions
                         // even if it sometimes may not (it will be reset by the server if wrong).
                         attempt.ToggleAction(this, !actionState.ToggledOn);
                         slot.ToggledOn = !actionState.ToggledOn;
+#pragma warning disable 618
                         SendNetworkMessage(attempt.PerformToggleActionMessage(!actionState.ToggledOn));
+#pragma warning restore 618
                     }
                     else
                     {
@@ -178,7 +180,9 @@ namespace Content.Client.Actions
                 case BehaviorType.TargetPoint:
                 {
                     // send our action to the server, we chose our target
+#pragma warning disable 618
                     SendNetworkMessage(attempt.PerformTargetPointActionMessage(args));
+#pragma warning restore 618
                     if (!attempt.Action.Repeat)
                     {
                         _ui.StopTargeting();
@@ -189,7 +193,9 @@ namespace Content.Client.Actions
                 case BehaviorType.TargetEntity when args.EntityUid != EntityUid.Invalid:
                 {
                     // send our action to the server, we chose our target
+#pragma warning disable 618
                     SendNetworkMessage(attempt.PerformTargetEntityActionMessage(args));
+#pragma warning restore 618
                     if (!attempt.Action.Repeat)
                     {
                         _ui.StopTargeting();
@@ -218,17 +224,17 @@ namespace Content.Client.Actions
         /// Highlights the item slot (inventory or hand) that contains this item
         /// </summary>
         /// <param name="item"></param>
-        public void HighlightItemSlot(IEntity item)
+        public void HighlightItemSlot(EntityUid item)
         {
             StopHighlightingItemSlots();
 
-            _highlightedEntity = item.Uid;
-            _itemSlotManager.HighlightEntity(item.Uid);
+            _highlightedEntity = item;
+            _itemSlotManager.HighlightEntity(item);
         }
 
         /// <summary>
         /// Stops highlighting any item slots we are currently highlighting.
-        /// </summary>
+        /// </summary>H
         public void StopHighlightingItemSlots()
         {
             if (_highlightedEntity == default)

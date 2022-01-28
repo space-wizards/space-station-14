@@ -13,7 +13,7 @@
       drink:
         maxVol: 20
         reagents:
-          - ReagentId: Meth
+          - ReagentId: Desoxyephedrine
             Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/beer.rsi

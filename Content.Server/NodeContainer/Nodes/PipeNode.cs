@@ -4,7 +4,6 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Shared.Atmos;
-using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -35,6 +34,26 @@ namespace Content.Server.NodeContainer.Nodes
         ///     Used to check if this pipe can connect to another pipe in a given direction.
         /// </summary>
         public PipeDirection CurrentPipeDirection { get; private set; }
+
+        private HashSet<PipeNode>? _alwaysReachable;
+
+        public void AddAlwaysReachable(PipeNode pipeNode)
+        {
+            if (NodeGroup == null) return;
+            if (pipeNode.NodeGroupID != NodeGroupID) return;
+            _alwaysReachable ??= new();
+            _alwaysReachable.Add(pipeNode);
+            EntitySystem.Get<NodeGroupSystem>().QueueRemakeGroup((BaseNodeGroup) NodeGroup);
+        }
+
+        public void RemoveAlwaysReachable(PipeNode pipeNode)
+        {
+            if (_alwaysReachable == null) return;
+            if (NodeGroup == null) return;
+            if (pipeNode.NodeGroupID != NodeGroupID) return;
+            _alwaysReachable.Remove(pipeNode);
+            EntitySystem.Get<NodeGroupSystem>().QueueRemakeGroup((BaseNodeGroup) NodeGroup);
+        }
 
         /// <summary>
         ///     The directions in which this node is connected to other nodes.
@@ -145,6 +164,24 @@ namespace Content.Server.NodeContainer.Nodes
                     yield return pipe;
                 }
             }
+
+            if(_alwaysReachable != null)
+            {
+                var remQ = new RemQueue<PipeNode>();
+                foreach(var pipe in _alwaysReachable)
+                {
+                    if (pipe.Deleting)
+                    {
+                        remQ.Add(pipe);
+                    }
+                    yield return pipe;
+                }
+
+                foreach(var pipe in remQ)
+                {
+                    _alwaysReachable.Remove(pipe);
+                }
+            }
         }
 
         /// <summary>
@@ -167,14 +204,14 @@ namespace Content.Server.NodeContainer.Nodes
         /// </summary>
         protected IEnumerable<PipeNode> PipesInDirection(PipeDirection pipeDir)
         {
-            if (!Owner.Transform.Anchored)
+            if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Anchored)
                 yield break;
 
-            var grid = IoCManager.Resolve<IMapManager>().GetGrid(Owner.Transform.GridID);
-            var position = Owner.Transform.Coordinates;
+            var grid = IoCManager.Resolve<IMapManager>().GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).GridID);
+            var position = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates;
             foreach (var entity in grid.GetInDir(position, pipeDir.ToDirection()))
             {
-                if (!Owner.EntityManager.TryGetComponent<NodeContainerComponent>(entity, out var container))
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<NodeContainerComponent>(entity, out var container))
                     continue;
 
                 foreach (var node in container.Nodes.Values)
@@ -190,14 +227,14 @@ namespace Content.Server.NodeContainer.Nodes
         /// </summary>
         protected IEnumerable<PipeNode> PipesInTile()
         {
-            if (!Owner.Transform.Anchored)
+            if (!IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Anchored)
                 yield break;
 
-            var grid = IoCManager.Resolve<IMapManager>().GetGrid(Owner.Transform.GridID);
-            var position = Owner.Transform.Coordinates;
+            var grid = IoCManager.Resolve<IMapManager>().GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).GridID);
+            var position = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates;
             foreach (var entity in grid.GetLocal(position))
             {
-                if (!Owner.EntityManager.TryGetComponent<NodeContainerComponent>(entity, out var container))
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<NodeContainerComponent>(entity, out var container))
                     continue;
 
                 foreach (var node in container.Nodes.Values)
@@ -216,7 +253,7 @@ namespace Content.Server.NodeContainer.Nodes
         {
             if (RotationsEnabled)
             {
-                CurrentPipeDirection = _originalPipeDirection.RotatePipeDirection(Owner.Transform.LocalRotation);
+                CurrentPipeDirection = _originalPipeDirection.RotatePipeDirection(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).LocalRotation);
             }
             else
             {
@@ -276,8 +313,8 @@ namespace Content.Server.NodeContainer.Nodes
         /// </summary>
         private void UpdateAppearance()
         {
-            if (!Owner.TryGetComponent(out AppearanceComponent? appearance)
-                || !Owner.TryGetComponent(out NodeContainerComponent? container))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AppearanceComponent? appearance)
+                || !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out NodeContainerComponent? container))
                 return;
 
             var netConnectedDirections = PipeDirection.None;

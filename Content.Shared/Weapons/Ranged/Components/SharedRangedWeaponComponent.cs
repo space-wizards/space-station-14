@@ -32,7 +32,9 @@ namespace Content.Shared.Weapons.Ranged.Components
     /// A component message raised when the weapon is fired at a position on the map.
     /// </summary>
     [Serializable, NetSerializable]
+#pragma warning disable 618
     public sealed class FirePosComponentMessage : ComponentMessage
+#pragma warning restore 618
     {
         /// <summary>
         /// If this is not invalid, the target position is relative to the grid.

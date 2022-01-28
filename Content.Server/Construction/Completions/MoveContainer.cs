@@ -2,6 +2,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
+using Robust.Server.Containers;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -15,13 +16,16 @@ namespace Content.Server.Construction.Completions
         [DataField("from")] public string? FromContainer { get; } = null;
         [DataField("to")] public string? ToContainer { get; } = null;
 
-        public async Task PerformAction(IEntity entity, IEntity? user)
+        public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {
             if (string.IsNullOrEmpty(FromContainer) || string.IsNullOrEmpty(ToContainer))
                 return;
 
-            var from = entity.EnsureContainer<Container>(FromContainer);
-            var to = entity.EnsureContainer<Container>(ToContainer);
+            var containerSystem = entityManager.EntitySysManager.GetEntitySystem<ContainerSystem>();
+            var containerManager = entityManager.EnsureComponent<ContainerManagerComponent>(uid);
+
+            var from = containerSystem.EnsureContainer<Container>(uid, FromContainer, containerManager);
+            var to = containerSystem.EnsureContainer<Container>(uid, ToContainer, containerManager);
 
             foreach (var contained in from.ContainedEntities.ToArray())
             {

@@ -1,10 +1,9 @@
-﻿using Content.Client.Ghost.UI;
+using Content.Client.Ghost.UI;
 using Content.Client.HUD;
 using Content.Shared.Ghost;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
-using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
@@ -15,6 +14,10 @@ namespace Content.Client.Ghost
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IGameHud _gameHud = default!;
+
+        // Changes to this value are manually propagated.
+        // No good way to get an event into the UI.
+        public int AvailableGhostRoleCount { get; private set; } = 0;
 
         private bool _ghostVisibility;
 
@@ -32,7 +35,7 @@ namespace Content.Client.Ghost
 
                 foreach (var ghost in EntityManager.GetAllComponents(typeof(GhostComponent), true))
                 {
-                    if (ghost.Owner.TryGetComponent(out SpriteComponent? sprite))
+                    if (EntityManager.TryGetComponent(ghost.Owner, out SpriteComponent? sprite))
                     {
                         sprite.Visible = value;
                     }
@@ -51,11 +54,12 @@ namespace Content.Client.Ghost
             SubscribeLocalEvent<GhostComponent, PlayerDetachedEvent>(OnGhostPlayerDetach);
 
             SubscribeNetworkEvent<GhostWarpsResponseEvent>(OnGhostWarpsResponse);
+            SubscribeNetworkEvent<GhostUpdateGhostRoleCountEvent>(OnUpdateGhostRoleCount);
         }
 
         private void OnGhostInit(EntityUid uid, GhostComponent component, ComponentInit args)
         {
-            if (component.Owner.TryGetComponent(out SpriteComponent? sprite))
+            if (EntityManager.TryGetComponent(component.Owner, out SpriteComponent? sprite))
             {
                 sprite.Visible = GhostVisibility;
             }
@@ -78,7 +82,7 @@ namespace Content.Client.Ghost
             // I hate UI I hate UI I Hate UI
             if (component.Gui == null)
             {
-                component.Gui = new GhostGui(component, EntityManager.EntityNetManager!);
+                component.Gui = new GhostGui(component, this, EntityManager.EntityNetManager!);
                 component.Gui.Update();
             }
 
@@ -99,7 +103,7 @@ namespace Content.Client.Ghost
             var entity = _playerManager.LocalPlayer?.ControlledEntity;
 
             if (entity == null ||
-                !entity.TryGetComponent(out GhostComponent? ghost))
+                !EntityManager.TryGetComponent(entity.Value, out GhostComponent? ghost))
             {
                 return;
             }
@@ -112,6 +116,13 @@ namespace Content.Client.Ghost
                 window.Players = msg.Players;
                 window.Populate();
             }
+        }
+
+        private void OnUpdateGhostRoleCount(GhostUpdateGhostRoleCountEvent msg)
+        {
+            AvailableGhostRoleCount = msg.AvailableGhostRoles;
+            foreach (var ghost in EntityManager.EntityQuery<GhostComponent>(true))
+                ghost.Gui?.Update();
         }
     }
 }

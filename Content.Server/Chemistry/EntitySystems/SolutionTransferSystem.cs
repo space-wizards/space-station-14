@@ -6,7 +6,9 @@ using Robust.Shared.Localization;
 using Robust.Server.GameObjects;
 using System.Collections.Generic;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using Content.Shared.Popups;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Chemistry.EntitySystems
 {
@@ -30,9 +32,9 @@ namespace Content.Server.Chemistry.EntitySystems
             if (!args.CanAccess || !args.CanInteract || !component.CanChangeTransferAmount)
                 return;
 
-            if (!args.User.TryGetComponent<ActorComponent>(out var actor))
+            if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
                 return;
-            
+
             // Custom transfer verb
             Verb custom = new();
             custom.Text = Loc.GetString("comp-solution-transfer-verb-custom-amount");
@@ -53,14 +55,14 @@ namespace Content.Server.Chemistry.EntitySystems
                 verb.Category = VerbCategory.SetTransferAmount;
                 verb.Act = () =>
                 {
-                    component.TransferAmount = ReagentUnit.New(amount);
+                    component.TransferAmount = FixedPoint2.New(amount);
                     args.User.PopupMessage(Loc.GetString("comp-solution-transfer-set-amount", ("amount", amount)));
                 };
 
                 // we want to sort by size, not alphabetically by the verb text.
                 verb.Priority = priority;
                 priority--;
-                
+
                 args.Verbs.Add(verb);
             }
         }

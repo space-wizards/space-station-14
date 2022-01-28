@@ -8,10 +8,8 @@ using Robust.Shared.Utility;
 namespace Content.Client.Paper.UI
 {
     [GenerateTypedNameReferences]
-    public partial class PaperWindow : SS14Window
+    public partial class PaperWindow : DefaultWindow
     {
-        public LineEdit Input => InputProtected;
-
         public PaperWindow()
         {
             RobustXamlLoader.Load(this);

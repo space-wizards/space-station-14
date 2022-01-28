@@ -10,11 +10,9 @@ namespace Content.Server.Construction.Completions
     [DataDefinition]
     public class DeleteEntity : IGraphAction
     {
-        public async Task PerformAction(IEntity entity, IEntity? user)
+        public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {
-            if (entity.Deleted) return;
-
-            entity.Delete();
+            entityManager.DeleteEntity(uid);
         }
     }
 }

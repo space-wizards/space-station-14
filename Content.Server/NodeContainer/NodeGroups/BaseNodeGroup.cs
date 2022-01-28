@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.ViewVariables;
 
@@ -76,7 +77,7 @@ namespace Content.Server.NodeContainer.NodeGroups
         public virtual void Initialize(Node sourceNode)
         {
             // TODO: Can we get rid of this GridId?
-            GridId = sourceNode.Owner.Transform.GridID;
+            GridId = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(sourceNode.Owner).GridID;
         }
 
         /// <summary>

@@ -1,3 +1,4 @@
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Sound;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -21,10 +22,11 @@ namespace Content.Server.Cabinet
         public SoundSpecifier DoorSound { get; set; } = default!;
 
         /// <summary>
-        ///     The slot name, used to get the actual item slot from the ItemSlotsComponent.
+        ///     The <see cref="ItemSlot"/> that stores the actual item. The entity whitelist, sounds, and other
+        ///     behaviours are specified by this <see cref="ItemSlot"/> definition.
         /// </summary>
         [DataField("cabinetSlot")]
-        public string CabinetSlot = "cabinetSlot";
+        public ItemSlot CabinetSlot = new();
 
         /// <summary>
         ///     Whether the cabinet is currently open or not.

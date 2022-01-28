@@ -1,3 +1,4 @@
+# TODO move this to tiles once tile smoothing is supported
 - type: entity
   id: Catwalk
   name: catwalk
@@ -8,6 +9,7 @@
   - type: Clickable
   - type: Physics
     canCollide: false
+  - type: Fixtures
     fixtures:
       - shape:
           !type:PhysShapeAabb

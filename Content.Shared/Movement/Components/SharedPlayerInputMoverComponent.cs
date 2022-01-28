@@ -38,8 +38,7 @@ namespace Content.Shared.Movement.Components
 
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-
-        [ComponentDependency] private readonly MovementSpeedModifierComponent? _movementSpeed = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         public override string Name => "PlayerInputMover";
 
@@ -50,9 +49,20 @@ namespace Content.Shared.Movement.Components
 
         private MoveButtons _heldMoveButtons = MoveButtons.None;
 
-        public float CurrentWalkSpeed => _movementSpeed?.CurrentWalkSpeed ?? MovementSpeedModifierComponent.DefaultBaseWalkSpeed;
+        [ViewVariables]
+        public Angle LastGridAngle { get; set; } = new(0);
 
-        public float CurrentSprintSpeed => _movementSpeed?.CurrentSprintSpeed ?? MovementSpeedModifierComponent.DefaultBaseSprintSpeed;
+        public float CurrentWalkSpeed =>
+            _entityManager.TryGetComponent<MovementSpeedModifierComponent>(Owner,
+                out var movementSpeedModifierComponent)
+                ? movementSpeedModifierComponent.CurrentWalkSpeed
+                : MovementSpeedModifierComponent.DefaultBaseWalkSpeed;
+
+        public float CurrentSprintSpeed =>
+            _entityManager.TryGetComponent<MovementSpeedModifierComponent>(Owner,
+                out var movementSpeedModifierComponent)
+                ? movementSpeedModifierComponent.CurrentSprintSpeed
+                : MovementSpeedModifierComponent.DefaultBaseSprintSpeed;
 
         public bool Sprinting => !HasFlag(_heldMoveButtons, MoveButtons.Walk);
 
@@ -117,6 +127,7 @@ namespace Content.Shared.Movement.Components
         {
             base.Initialize();
             Owner.EnsureComponentWarn<PhysicsComponent>();
+            LastGridAngle = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Parent?.WorldRotation ?? new Angle(0);
         }
 
         /// <summary>
@@ -195,7 +206,7 @@ namespace Content.Shared.Movement.Components
             }
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new MoverComponentState(_heldMoveButtons);
         }

@@ -111,7 +111,7 @@ namespace Content.Server.StationEvents.Events
                 var offset = angle.RotateVec(new Vector2((maximumDistance - minimumDistance) * _robustRandom.NextFloat() + minimumDistance, 0));
                 var spawnPosition = new MapCoordinates(center + offset, mapId);
                 var meteor = _entityManager.SpawnEntity("MeteorLarge", spawnPosition);
-                var physics = _entityManager.GetComponent<PhysicsComponent>(meteor.Uid);
+                var physics = _entityManager.GetComponent<PhysicsComponent>(meteor);
                 physics.BodyStatus = BodyStatus.InAir;
                 physics.LinearDamping = 0f;
                 physics.AngularDamping = 0f;
@@ -121,7 +121,7 @@ namespace Content.Server.StationEvents.Events
                     physics.Mass * ((MaxAngularVelocity - MinAngularVelocity) * _robustRandom.NextFloat() +
                                     MinAngularVelocity));
                 // TODO: God this disgusts me but projectile needs a refactor.
-                meteor.GetComponent<ProjectileComponent>().TimeLeft = 120f;
+                IoCManager.Resolve<IEntityManager>().GetComponent<ProjectileComponent>(meteor).TimeLeft = 120f;
             }
         }
     }

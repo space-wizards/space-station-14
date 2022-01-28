@@ -42,7 +42,7 @@ namespace Content.Server.Tabletop
             if (!args.CanAccess || !args.CanInteract)
                 return;
 
-            if (!args.User.TryGetComponent<ActorComponent>(out var actor))
+            if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
                 return;
 
             Verb verb = new();
@@ -55,7 +55,7 @@ namespace Content.Server.Tabletop
         private void OnTabletopActivate(EntityUid uid, TabletopGameComponent component, ActivateInWorldEvent args)
         {
             // Check that a player is attached to the entity.
-            if (!EntityManager.TryGetComponent(args.User.Uid, out ActorComponent? actor))
+            if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
 
             // Check that the entity can interact with the game board.
@@ -94,20 +94,22 @@ namespace Content.Server.Tabletop
 
             foreach (var gamer in EntityManager.EntityQuery<TabletopGamerComponent>())
             {
-                if (!EntityManager.TryGetEntity(gamer.Tabletop, out var table))
+                if (!EntityManager.EntityExists(gamer.Tabletop))
                     continue;
 
-                if (!gamer.Owner.TryGetComponent(out ActorComponent? actor))
+                if (!EntityManager.TryGetComponent(gamer.Owner, out ActorComponent? actor))
                 {
-                    gamer.Owner.RemoveComponent<TabletopGamerComponent>();
+                    EntityManager.RemoveComponent<TabletopGamerComponent>(gamer.Owner);
                     return;
                 };
 
-                if (actor.PlayerSession.Status > SessionStatus.Connected || CanSeeTable(gamer.Owner, table)
-                                                                         || !StunnedOrNoHands(gamer.Owner))
+                var gamerUid = (gamer).Owner;
+
+                if (actor.PlayerSession.Status > SessionStatus.Connected || CanSeeTable(gamerUid, gamer.Tabletop)
+                                                                         || !StunnedOrNoHands(gamerUid))
                     continue;
 
-                CloseSessionFor(actor.PlayerSession, table.Uid);
+                CloseSessionFor(actor.PlayerSession, gamer.Tabletop);
             }
         }
     }

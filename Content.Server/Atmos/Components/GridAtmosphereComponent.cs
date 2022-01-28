@@ -25,9 +25,6 @@ namespace Content.Server.Atmos.Components
         public virtual bool Simulated => true;
 
         [ViewVariables]
-        public bool RevalidatePaused { get; set; } = false;
-
-        [ViewVariables]
         public bool ProcessingPaused { get; set; } = false;
 
         [ViewVariables]

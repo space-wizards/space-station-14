@@ -16,7 +16,8 @@ namespace Content.Shared.Verbs
         public readonly SpriteSpecifier? Icon;
 
         /// <summary>
-        ///     If true, this verb category is shown in the context menu as a row of icons without any text.
+        ///     If true, the members of this verb category will be shown in the context menu as a row of icons without
+        ///     any text.
         /// </summary>
         /// <remarks>
         ///     For example, the 'Rotate' category simply shows two icons for rotating left and right.
@@ -29,6 +30,9 @@ namespace Content.Shared.Verbs
             Icon = icon == null ? null : new SpriteSpecifier.Texture(new ResourcePath(icon));
             IconsOnly = iconsOnly;
         }
+
+        public static readonly VerbCategory Admin =
+            new("verb-categories-admin", "/Textures/Interface/character.svg.192dpi.png");
 
         public static readonly VerbCategory Debug =
             new("verb-categories-debug", "/Textures/Interface/VerbIcons/debug.svg.192dpi.png");
@@ -50,5 +54,10 @@ namespace Content.Shared.Verbs
 
         public static readonly VerbCategory SetTransferAmount =
             new("verb-categories-transfer", "/Textures/Interface/VerbIcons/spill.svg.192dpi.png");
+
+        public static readonly VerbCategory Split =
+            new("verb-categories-split", null);
+
+        public static readonly VerbCategory SetSensor = new("verb-categories-set-sensor", null);
     }
 }

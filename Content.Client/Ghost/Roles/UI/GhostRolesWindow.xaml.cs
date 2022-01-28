@@ -6,9 +6,9 @@ using Robust.Client.UserInterface.CustomControls;
 namespace Content.Client.Ghost.Roles.UI
 {
     [GenerateTypedNameReferences]
-    public partial class GhostRolesWindow : SS14Window
+    public partial class GhostRolesWindow : DefaultWindow
     {
-        public event Action<uint>? RoleRequested;
+        public event Action<GhostRoleInfo>? RoleRequested;
 
         public void ClearEntries()
         {
@@ -19,7 +19,7 @@ namespace Content.Client.Ghost.Roles.UI
         public void AddEntry(GhostRoleInfo info)
         {
             NoRolesMessage.Visible = false;
-            EntryContainer.AddChild(new GhostRolesEntry(info, _ => RoleRequested?.Invoke(info.Identifier)));
+            EntryContainer.AddChild(new GhostRolesEntry(info, _ => RoleRequested?.Invoke(info)));
         }
     }
 }

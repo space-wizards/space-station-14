@@ -24,22 +24,25 @@ namespace Content.Server.Atmos.Commands
             GridId gridId;
             Gas? gas = null;
 
+            var entMan = IoCManager.Resolve<IEntityManager>();
+
             switch (args.Length)
             {
                 case 0:
+                {
                     if (player == null)
                     {
                         shell.WriteLine("A grid must be specified when the command isn't used by a player.");
                         return;
                     }
 
-                    if (player.AttachedEntity == null)
+                    if (player.AttachedEntity is not {Valid: true} playerEntity)
                     {
                         shell.WriteLine("You have no entity to get a grid from.");
                         return;
                     }
 
-                    gridId = player.AttachedEntity.Transform.GridID;
+                    gridId = entMan.GetComponent<TransformComponent>(playerEntity).GridID;
 
                     if (gridId == GridId.Invalid)
                     {
@@ -48,6 +51,7 @@ namespace Content.Server.Atmos.Commands
                     }
 
                     break;
+                }
                 case 1:
                 {
                     if (!int.TryParse(args[0], out var number))
@@ -59,13 +63,13 @@ namespace Content.Server.Atmos.Commands
                             return;
                         }
 
-                        if (player.AttachedEntity == null)
+                        if (player.AttachedEntity is not {Valid: true} playerEntity)
                         {
                             shell.WriteLine("You have no entity from which to get a grid id.");
                             return;
                         }
 
-                        gridId = player.AttachedEntity.Transform.GridID;
+                        gridId = entMan.GetComponent<TransformComponent>(playerEntity).GridID;
 
                         if (gridId == GridId.Invalid)
                         {

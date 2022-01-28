@@ -16,7 +16,7 @@ namespace Content.IntegrationTests.Tests.Pathfinding
         [Test]
         public async Task Test()
         {
-            var server = StartServerDummyTicker();
+            var server = StartServer();
 
             server.Assert(() =>
             {
@@ -24,17 +24,15 @@ namespace Content.IntegrationTests.Tests.Pathfinding
                 var mapMan = IoCManager.Resolve<IMapManager>();
 
                 // Setup
-                var mapId = mapMan.CreateMap(new MapId(1));
-                var gridId = new GridId(2);
-                mapMan.CreateGrid(mapId, gridId);
-                var chunkTile = mapMan.GetGrid(gridId).GetTileRef(new Vector2i(0, 0));
+                var grid = GetMainGrid(mapMan);
+                var chunkTile = grid.GetTileRef(new Vector2i(0, 0));
                 var chunk = pathfindingSystem.GetChunk(chunkTile);
                 Assert.That(chunk.Nodes.Length == PathfindingChunk.ChunkSize * PathfindingChunk.ChunkSize);
 
                 // Neighbors
                 var chunkNeighbors = chunk.GetNeighbors().ToList();
                 Assert.That(chunkNeighbors.Count == 0);
-                var neighborChunkTile = mapMan.GetGrid(gridId).GetTileRef(new Vector2i(PathfindingChunk.ChunkSize, PathfindingChunk.ChunkSize));
+                var neighborChunkTile = grid.GetTileRef(new Vector2i(PathfindingChunk.ChunkSize, PathfindingChunk.ChunkSize));
                 var neighborChunk = pathfindingSystem.GetChunk(neighborChunkTile);
                 chunkNeighbors = chunk.GetNeighbors().ToList();
                 Assert.That(chunkNeighbors.Count == 1);

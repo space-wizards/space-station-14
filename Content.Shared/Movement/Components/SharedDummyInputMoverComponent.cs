@@ -12,6 +12,8 @@ namespace Content.Shared.Movement.Components
         public float CurrentWalkSpeed => 0f;
         public float CurrentSprintSpeed => 0f;
 
+        public Angle LastGridAngle { get => Angle.Zero; set {} }
+
         public bool Sprinting => false;
         public (Vector2 walking, Vector2 sprinting) VelocityDir => (Vector2.Zero, Vector2.Zero);
 

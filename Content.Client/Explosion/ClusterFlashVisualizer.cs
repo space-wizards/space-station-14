@@ -1,6 +1,8 @@
 using Content.Shared.Explosion;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.Explosion
@@ -16,7 +18,8 @@ namespace Content.Client.Explosion
         {
             base.OnChangeData(component);
 
-            if (!component.Owner.TryGetComponent<ISpriteComponent>(out var sprite))
+            var entities = IoCManager.Resolve<IEntityManager>();
+            if (!entities.TryGetComponent<ISpriteComponent>(component.Owner, out var sprite))
             {
                 return;
             }

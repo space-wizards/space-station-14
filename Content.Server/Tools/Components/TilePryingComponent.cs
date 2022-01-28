@@ -3,7 +3,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Maps;
 using Content.Shared.Tools;
-using Content.Shared.Tools.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -15,6 +14,7 @@ namespace Content.Server.Tools.Components
     [RegisterComponent]
     public class TilePryingComponent : Component, IAfterInteract
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
 
@@ -32,12 +32,12 @@ namespace Content.Server.Tools.Components
             return true;
         }
 
-        public async void TryPryTile(IEntity user, EntityCoordinates clickLocation)
+        public async void TryPryTile(EntityUid user, EntityCoordinates clickLocation)
         {
-            if (!Owner.TryGetComponent<ToolComponent>(out var tool) && _toolComponentNeeded)
+            if (!_entMan.TryGetComponent<ToolComponent?>(Owner, out var tool) && _toolComponentNeeded)
                 return;
 
-            if (!_mapManager.TryGetGrid(clickLocation.GetGridId(Owner.EntityManager), out var mapGrid))
+            if (!_mapManager.TryGetGrid(clickLocation.GetGridId(_entMan), out var mapGrid))
                 return;
 
             var tile = mapGrid.GetTileRef(clickLocation);
@@ -52,10 +52,10 @@ namespace Content.Server.Tools.Components
             if (!tileDef.CanCrowbar)
                 return;
 
-            if (_toolComponentNeeded && !await EntitySystem.Get<ToolSystem>().UseTool(Owner.Uid, user.Uid, null, 0f, 0f, _qualityNeeded, toolComponent:tool))
+            if (_toolComponentNeeded && !await EntitySystem.Get<ToolSystem>().UseTool(Owner, user, null, 0f, 0f, _qualityNeeded, toolComponent:tool))
                 return;
 
-            coordinates.PryTile(Owner.EntityManager, _mapManager);
+            coordinates.PryTile(_entMan, _mapManager);
         }
     }
 }

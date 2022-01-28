@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -13,7 +14,7 @@ namespace Content.Server.Chemistry.Components
 
         [DataField("transferAmount")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public ReagentUnit TransferAmount { get; set; } = ReagentUnit.New(10);
+        public FixedPoint2 TransferAmount { get; set; } = FixedPoint2.New(10);
 
         [DataField("tankType")]
         [ViewVariables(VVAccess.ReadWrite)]

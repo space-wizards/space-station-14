@@ -3,7 +3,6 @@ using Content.Server.Advertisements;
 using Content.Server.Chat.Managers;
 using Content.Server.Power.Components;
 using Content.Server.VendingMachines;
-using Content.Shared.Acts;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -61,7 +60,7 @@ namespace Content.Server.Advertise
                 return;
 
             if (_prototypeManager.TryIndex(advertise.PackPrototypeId, out AdvertisementsPackPrototype? advertisements))
-                _chatManager.EntitySay(advertise.Owner, Loc.GetString(_random.Pick(advertisements.Advertisements)));
+                _chatManager.EntitySay(advertise.Owner, Loc.GetString(_random.Pick(advertisements.Advertisements)), hideChat: true);
 
             if(refresh)
                 RefreshTimer(uid, true, advertise);
@@ -117,7 +116,7 @@ namespace Content.Server.Advertise
                 if (advertise.NextAdvertisementTime > curTime)
                     continue;
 
-                SayAdvertisement(advertise.Owner.Uid, true, advertise);
+                SayAdvertisement(advertise.Owner, true, advertise);
             }
         }
     }

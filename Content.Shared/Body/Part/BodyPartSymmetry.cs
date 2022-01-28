@@ -1,4 +1,5 @@
 ﻿using System;
+using Content.Shared.Body.Components;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Body.Part

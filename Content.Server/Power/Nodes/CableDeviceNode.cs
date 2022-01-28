@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Server.NodeContainer.Nodes;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -15,13 +15,16 @@ namespace Content.Server.Power.Nodes
     {
         public override IEnumerable<Node> GetReachableNodes()
         {
+            if (!Anchored)
+                yield break;
+
             var entMan = IoCManager.Resolve<IEntityManager>();
 
             // If we're in an invalid grid, such as grid 0, we cannot connect to anything.
-            if(!IoCManager.Resolve<IMapManager>().TryGetGrid(Owner.Transform.GridID, out var grid))
+            if(!IoCManager.Resolve<IMapManager>().TryGetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).GridID, out var grid))
                 yield break;
 
-            var gridIndex = grid.TileIndicesFor(Owner.Transform.Coordinates);
+            var gridIndex = grid.TileIndicesFor(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
 
             foreach (var node in NodeHelpers.GetNodesInTile(entMan, grid, gridIndex))
             {

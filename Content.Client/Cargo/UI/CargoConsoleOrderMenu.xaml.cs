@@ -8,13 +8,8 @@ using Robust.Shared.IoC;
 namespace Content.Client.Cargo.UI
 {
     [GenerateTypedNameReferences]
-    partial class CargoConsoleOrderMenu : SS14Window
+    partial class CargoConsoleOrderMenu : DefaultWindow
     {
-        public LineEdit Requester => RequesterProtected;
-        public LineEdit Reason => ReasonProtected;
-        public SpinBox Amount => AmountProtected;
-        public Button SubmitButton => SubmitButtonProtected;
-
         public CargoConsoleOrderMenu()
         {
             RobustXamlLoader.Load(this);

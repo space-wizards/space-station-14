@@ -1,8 +1,7 @@
 using Content.Shared.Chemistry;
-using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
 
 namespace Content.Client.Chemistry.UI
 {
@@ -16,11 +15,11 @@ namespace Content.Client.Chemistry.UI
             base.Open();
             _window = new TransferAmountWindow();
 
-            _window.applyButton.OnPressed += _ =>
+            _window.ApplyButton.OnPressed += _ =>
             {
-                if (int.TryParse(_window.amountLineEdit.Text, out var i))
+                if (int.TryParse(_window.AmountLineEdit.Text, out var i))
                 {
-                    SendMessage(new TransferAmountSetValueMessage(ReagentUnit.New(i)));
+                    SendMessage(new TransferAmountSetValueMessage(FixedPoint2.New(i)));
                     _window.Close();
                 }
             };
@@ -30,6 +29,13 @@ namespace Content.Client.Chemistry.UI
 
         public TransferAmountBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+            if (!disposing) return;
+            _window?.Dispose();
         }
     }
 }

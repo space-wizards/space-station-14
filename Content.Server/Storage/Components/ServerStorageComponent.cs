@@ -5,8 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
-using Content.Server.Items;
-using Content.Shared.ActionBlocker;
+using Content.Server.Interaction;
 using Content.Shared.Acts;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
@@ -14,8 +13,9 @@ using Content.Shared.Item;
 using Content.Shared.Placeable;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
+using Content.Shared.Stacks;
 using Content.Shared.Storage;
-using Content.Shared.Verbs;
+using Content.Shared.Storage.Components;
 using Content.Shared.Whitelist;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -24,13 +24,13 @@ using Robust.Shared.Containers;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Storage.Components
@@ -41,18 +41,25 @@ namespace Content.Server.Storage.Components
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IStorageComponent))]
-    public class ServerStorageComponent : SharedStorageComponent, IInteractUsing, IUse, IActivate, IStorageComponent, IDestroyAct, IExAct, IAfterInteract
+    [ComponentReference(typeof(SharedStorageComponent))]
+    public class ServerStorageComponent : SharedStorageComponent, IInteractUsing, IActivate, IStorageComponent, IDestroyAct, IExAct, IAfterInteract
     {
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+
         private const string LoggerName = "Storage";
 
-        private Container? _storage;
-        private readonly Dictionary<IEntity, int> _sizeCache = new();
+        public Container? Storage;
+
+        private readonly Dictionary<EntityUid, int> _sizeCache = new();
 
         [DataField("occludesLight")]
         private bool _occludesLight = true;
 
         [DataField("quickInsert")]
         private bool _quickInsert = false; // Can insert storables by "attacking" them with the storage entity
+
+        [DataField("clickInsert")]
+        private bool _clickInsert = true; // Can insert stuff by clicking the storage entity with it
 
         [DataField("areaInsert")]
         private bool _areaInsert = false;  // "Attacking" with the storage entity causes it to insert all nearby storables after a delay
@@ -72,7 +79,7 @@ namespace Content.Server.Storage.Components
         public SoundSpecifier StorageSoundCollection { get; set; } = new SoundCollectionSpecifier("storageRustle");
 
         [ViewVariables]
-        public override IReadOnlyList<IEntity>? StoredEntities => _storage?.ContainedEntities;
+        public override IReadOnlyList<EntityUid>? StoredEntities => Storage?.ContainedEntities;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool OccludesLight
@@ -81,8 +88,22 @@ namespace Content.Server.Storage.Components
             set
             {
                 _occludesLight = value;
-                if (_storage != null) _storage.OccludesLight = value;
+                if (Storage != null) Storage.OccludesLight = value;
             }
+        }
+
+        private void UpdateStorageVisualization()
+        {
+            if (!_entityManager.TryGetComponent(Owner, out AppearanceComponent appearance))
+                return;
+
+            bool open = SubscribedSessions.Count != 0;
+
+            appearance.SetData(StorageVisuals.Open, open);
+            appearance.SetData(SharedBagOpenVisuals.BagState, open ? SharedBagState.Open : SharedBagState.Closed);
+
+            if (_entityManager.HasComponent<ItemCounterComponent>(Owner))
+                appearance.SetData(StackVisuals.Hide, !open);
         }
 
         private void EnsureInitialCalculated()
@@ -101,14 +122,14 @@ namespace Content.Server.Storage.Components
         {
             _storageUsed = 0;
 
-            if (_storage == null)
+            if (Storage == null)
             {
                 return;
             }
 
-            foreach (var entity in _storage.ContainedEntities)
+            foreach (var entity in Storage.ContainedEntities)
             {
-                var item = entity.GetComponent<SharedItemComponent>();
+                var item = _entityManager.GetComponent<SharedItemComponent>(entity);
                 _storageUsed += item.Size;
             }
         }
@@ -118,23 +139,28 @@ namespace Content.Server.Storage.Components
         /// </summary>
         /// <param name="entity">The entity to check</param>
         /// <returns>true if it can be inserted, false otherwise</returns>
-        public bool CanInsert(IEntity entity)
+        public bool CanInsert(EntityUid entity)
         {
             EnsureInitialCalculated();
 
-            if (entity.TryGetComponent(out ServerStorageComponent? storage) &&
+            if (_entityManager.TryGetComponent(entity, out ServerStorageComponent? storage) &&
                 storage._storageCapacityMax >= _storageCapacityMax)
             {
                 return false;
             }
 
-            if (entity.TryGetComponent(out SharedItemComponent? store) &&
+            if (_entityManager.TryGetComponent(entity, out SharedItemComponent? store) &&
                 store.Size > _storageCapacityMax - _storageUsed)
             {
                 return false;
             }
 
             if (_whitelist != null && !_whitelist.IsValid(entity))
+            {
+                return false;
+            }
+
+            if (_entityManager.GetComponent<TransformComponent>(entity).Anchored)
             {
                 return false;
             }
@@ -147,20 +173,20 @@ namespace Content.Server.Storage.Components
         /// </summary>
         /// <param name="entity">The entity to insert</param>
         /// <returns>true if the entity was inserted, false otherwise</returns>
-        public bool Insert(IEntity entity)
+        public bool Insert(EntityUid entity)
         {
-            return CanInsert(entity) && _storage?.Insert(entity) == true;
+            return CanInsert(entity) && Storage?.Insert(entity) == true;
         }
 
-        public override bool Remove(IEntity entity)
+        public override bool Remove(EntityUid entity)
         {
             EnsureInitialCalculated();
-            return _storage?.Remove(entity) == true;
+            return Storage?.Remove(entity) == true;
         }
 
         public void HandleEntityMaybeInserted(EntInsertedIntoContainerMessage message)
         {
-            if (message.Container != _storage)
+            if (message.Container != Storage)
             {
                 return;
             }
@@ -168,10 +194,10 @@ namespace Content.Server.Storage.Components
             PlaySoundCollection();
             EnsureInitialCalculated();
 
-            Logger.DebugS(LoggerName, $"Storage (UID {Owner.Uid}) had entity (UID {message.Entity.Uid}) inserted into it.");
+            Logger.DebugS(LoggerName, $"Storage (UID {Owner}) had entity (UID {message.Entity}) inserted into it.");
 
             var size = 0;
-            if (message.Entity.TryGetComponent(out SharedItemComponent? storable))
+            if (_entityManager.TryGetComponent(message.Entity, out SharedItemComponent? storable))
                 size = storable.Size;
 
             _storageUsed += size;
@@ -182,7 +208,7 @@ namespace Content.Server.Storage.Components
 
         public void HandleEntityMaybeRemoved(EntRemovedFromContainerMessage message)
         {
-            if (message.Container != _storage)
+            if (message.Container != Storage)
             {
                 return;
             }
@@ -193,7 +219,7 @@ namespace Content.Server.Storage.Components
 
             if (!_sizeCache.TryGetValue(message.Entity, out var size))
             {
-                Logger.WarningS(LoggerName, $"Removed entity {message.Entity} without a cached size from storage {Owner} at {Owner.Transform.MapPosition}");
+                Logger.WarningS(LoggerName, $"Removed entity {message.Entity} without a cached size from storage {Owner} at {_entityManager.GetComponent<TransformComponent>(Owner).MapPosition}");
 
                 RecalculateStorageUsed();
                 return;
@@ -209,17 +235,17 @@ namespace Content.Server.Storage.Components
         /// </summary>
         /// <param name="player">The player to insert an entity from</param>
         /// <returns>true if inserted, false otherwise</returns>
-        public bool PlayerInsertHeldEntity(IEntity player)
+        public bool PlayerInsertHeldEntity(EntityUid player)
         {
             EnsureInitialCalculated();
 
-            if (!player.TryGetComponent(out IHandsComponent? hands) ||
-                hands.GetActiveHand == null)
+            if (!_entityManager.TryGetComponent(player, out HandsComponent? hands) ||
+                hands.GetActiveHandItem == null)
             {
                 return false;
             }
 
-            var toInsert = hands.GetActiveHand;
+            var toInsert = hands.GetActiveHandItem;
 
             if (!hands.Drop(toInsert.Owner))
             {
@@ -239,11 +265,11 @@ namespace Content.Server.Storage.Components
 
         /// <summary>
         ///     Inserts an Entity (<paramref name="toInsert"/>) in the world into storage, informing <paramref name="player"/> if it fails.
-        ///     <paramref name="toInsert"/> is *NOT* held, see <see cref="PlayerInsertHeldEntity(IEntity)"/>.
+        ///     <paramref name="toInsert"/> is *NOT* held, see <see cref="PlayerInsertHeldEntity(Robust.Shared.GameObjects.EntityUid)"/>.
         /// </summary>
         /// <param name="player">The player to insert an entity with</param>
         /// <returns>true if inserted, false otherwise</returns>
-        public bool PlayerInsertEntityInWorld(IEntity player, IEntity toInsert)
+        public bool PlayerInsertEntityInWorld(EntityUid player, EntityUid toInsert)
         {
             EnsureInitialCalculated();
 
@@ -259,17 +285,19 @@ namespace Content.Server.Storage.Components
         ///     Opens the storage UI for an entity
         /// </summary>
         /// <param name="entity">The entity to open the UI for</param>
-        public void OpenStorageUI(IEntity entity)
+        public void OpenStorageUI(EntityUid entity)
         {
             PlaySoundCollection();
             EnsureInitialCalculated();
 
-            var userSession = entity.GetComponent<ActorComponent>().PlayerSession;
+            var userSession = _entityManager.GetComponent<ActorComponent>(entity).PlayerSession;
 
-            Logger.DebugS(LoggerName, $"Storage (UID {Owner.Uid}) \"used\" by player session (UID {userSession.AttachedEntityUid}).");
+            Logger.DebugS(LoggerName, $"Storage (UID {Owner}) \"used\" by player session (UID {userSession.AttachedEntity}).");
 
             SubscribeSession(userSession);
+#pragma warning disable 618
             SendNetworkMessage(new OpenStorageUIMessage(), userSession.ConnectedClient);
+#pragma warning restore 618
             UpdateClientInventory(userSession);
         }
 
@@ -292,15 +320,15 @@ namespace Content.Server.Storage.Components
         {
             if (session.AttachedEntity == null)
             {
-                Logger.DebugS(LoggerName, $"Storage (UID {Owner.Uid}) detected no attached entity in player session (UID {session.AttachedEntityUid}).");
+                Logger.DebugS(LoggerName, $"Storage (UID {Owner}) detected no attached entity in player session (UID {session.AttachedEntity}).");
 
                 UnsubscribeSession(session);
                 return;
             }
 
-            if (_storage == null)
+            if (Storage == null)
             {
-                Logger.WarningS(LoggerName, $"{nameof(UpdateClientInventory)} called with null {nameof(_storage)}");
+                Logger.WarningS(LoggerName, $"{nameof(UpdateClientInventory)} called with null {nameof(Storage)}");
 
                 return;
             }
@@ -312,9 +340,11 @@ namespace Content.Server.Storage.Components
                 return;
             }
 
-            var stored = StoredEntities.Select(e => e.Uid).ToArray();
+            var stored = StoredEntities.Select(e => e).ToArray();
 
+#pragma warning disable 618
             SendNetworkMessage(new StorageHeldItemsMessage(stored, _storageUsed, _storageCapacityMax), session.ConnectedClient);
+#pragma warning restore 618
         }
 
         /// <summary>
@@ -327,13 +357,14 @@ namespace Content.Server.Storage.Components
 
             if (!SubscribedSessions.Contains(session))
             {
-                Logger.DebugS(LoggerName, $"Storage (UID {Owner.Uid}) subscribed player session (UID {session.AttachedEntityUid}).");
+                Logger.DebugS(LoggerName, $"Storage (UID {Owner}) subscribed player session (UID {session.AttachedEntity}).");
 
                 session.PlayerStatusChanged += HandlePlayerSessionChangeEvent;
                 SubscribedSessions.Add(session);
-
-                UpdateDoorState();
             }
+
+            if (SubscribedSessions.Count == 1)
+                UpdateStorageVisualization();
         }
 
         /// <summary>
@@ -344,30 +375,54 @@ namespace Content.Server.Storage.Components
         {
             if (SubscribedSessions.Contains(session))
             {
-                Logger.DebugS(LoggerName, $"Storage (UID {Owner.Uid}) unsubscribed player session (UID {session.AttachedEntityUid}).");
+                Logger.DebugS(LoggerName, $"Storage (UID {Owner}) unsubscribed player session (UID {session.AttachedEntity}).");
 
                 SubscribedSessions.Remove(session);
+#pragma warning disable 618
                 SendNetworkMessage(new CloseStorageUIMessage(), session.ConnectedClient);
+#pragma warning restore 618
+            }
 
-                UpdateDoorState();
+            CloseNestedInterfaces(session);
+
+            if (SubscribedSessions.Count == 0)
+                UpdateStorageVisualization();
+        }
+
+        /// <summary>
+        ///     If the user has nested-UIs open (e.g., PDA UI open when pda is in a backpack), close them.
+        /// </summary>
+        /// <param name="session"></param>
+        public void CloseNestedInterfaces(IPlayerSession session)
+        {
+            if (StoredEntities == null)
+                return;
+
+            foreach (var entity in StoredEntities)
+            {
+                if (_entityManager.TryGetComponent(entity, out ServerStorageComponent storageComponent))
+                {
+                    DebugTools.Assert(storageComponent != this, $"Storage component contains itself!? Entity: {Owner}");
+                    storageComponent.UnsubscribeSession(session);
+                }
+
+                if (_entityManager.TryGetComponent(entity, out ServerUserInterfaceComponent uiComponent))
+                {
+                    foreach (var ui in uiComponent.Interfaces)
+                    {
+                        ui.Close(session);
+                    }
+                }
             }
         }
 
         private void HandlePlayerSessionChangeEvent(object? obj, SessionStatusEventArgs sessionStatus)
         {
-            Logger.DebugS(LoggerName, $"Storage (UID {Owner.Uid}) handled a status change in player session (UID {sessionStatus.Session.AttachedEntityUid}).");
+            Logger.DebugS(LoggerName, $"Storage (UID {Owner}) handled a status change in player session (UID {sessionStatus.Session.AttachedEntity}).");
 
             if (sessionStatus.NewStatus != SessionStatus.InGame)
             {
                 UnsubscribeSession(sessionStatus.Session);
-            }
-        }
-
-        private void UpdateDoorState()
-        {
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
-            {
-                appearance.SetData(StorageVisuals.Open, SubscribedSessions.Count != 0);
             }
         }
 
@@ -376,10 +431,12 @@ namespace Content.Server.Storage.Components
             base.Initialize();
 
             // ReSharper disable once StringLiteralTypo
-            _storage = Owner.EnsureContainer<Container>("storagebase");
-            _storage.OccludesLight = _occludesLight;
+            Storage = Owner.EnsureContainer<Container>("storagebase");
+            Storage.OccludesLight = _occludesLight;
+            UpdateStorageVisualization();
         }
 
+        [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession? session = null)
         {
             base.HandleNetworkMessage(message, channel, session);
@@ -395,28 +452,26 @@ namespace Content.Server.Storage.Components
                 {
                     EnsureInitialCalculated();
 
-                    var player = session.AttachedEntity;
-
-                    if (player == null)
+                    if (session.AttachedEntity is not {Valid: true} player)
                     {
                         break;
                     }
 
-                    var ownerTransform = Owner.Transform;
-                    var playerTransform = player.Transform;
+                    var ownerTransform = _entityManager.GetComponent<TransformComponent>(Owner);
+                    var playerTransform = _entityManager.GetComponent<TransformComponent>(player);
 
-                    if (!playerTransform.Coordinates.InRange(Owner.EntityManager, ownerTransform.Coordinates, 2) ||
+                    if (!playerTransform.Coordinates.InRange(_entityManager, ownerTransform.Coordinates, 2) ||
                         Owner.IsInContainer() && !playerTransform.ContainsEntity(ownerTransform))
                     {
                         break;
                     }
 
-                    if (!Owner.EntityManager.TryGetEntity(remove.EntityUid, out var entity) || _storage?.Contains(entity) == false)
+                    if (!remove.EntityUid.Valid || Storage?.Contains(remove.EntityUid) == false)
                     {
                         break;
                     }
 
-                    if (!entity.TryGetComponent(out ItemComponent? item) || !player.TryGetComponent(out HandsComponent? hands))
+                    if (!_entityManager.TryGetComponent(remove.EntityUid, out SharedItemComponent? item) || !_entityManager.TryGetComponent(player, out HandsComponent? hands))
                     {
                         break;
                     }
@@ -434,9 +489,7 @@ namespace Content.Server.Storage.Components
                 {
                     EnsureInitialCalculated();
 
-                    var player = session.AttachedEntity;
-
-                    if (player == null)
+                    if (session.AttachedEntity is not {Valid: true} player)
                     {
                         break;
                     }
@@ -470,9 +523,11 @@ namespace Content.Server.Storage.Components
         /// <returns>true if inserted, false otherwise</returns>
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            Logger.DebugS(LoggerName, $"Storage (UID {Owner.Uid}) attacked by user (UID {eventArgs.User.Uid}) with entity (UID {eventArgs.Using.Uid}).");
+            if (!_clickInsert)
+                return false;
+            Logger.DebugS(LoggerName, $"Storage (UID {Owner}) attacked by user (UID {eventArgs.User}) with entity (UID {eventArgs.Using}).");
 
-            if (Owner.HasComponent<PlaceableSurfaceComponent>())
+            if (_entityManager.HasComponent<PlaceableSurfaceComponent>(Owner))
             {
                 return false;
             }
@@ -485,16 +540,10 @@ namespace Content.Server.Storage.Components
         /// </summary>
         /// <param name="eventArgs"></param>
         /// <returns></returns>
-        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
+        void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             EnsureInitialCalculated();
             OpenStorageUI(eventArgs.User);
-            return false;
-        }
-
-        void IActivate.Activate(ActivateEventArgs eventArgs)
-        {
-            ((IUse) this).UseEntity(new UseEntityEventArgs(eventArgs.User));
         }
 
         /// <summary>
@@ -509,14 +558,15 @@ namespace Content.Server.Storage.Components
 
             // Pick up all entities in a radius around the clicked location.
             // The last half of the if is because carpets exist and this is terrible
-            if (_areaInsert && (eventArgs.Target == null || !eventArgs.Target.HasComponent<SharedItemComponent>()))
+            if (_areaInsert && (eventArgs.Target == null || !_entityManager.HasComponent<SharedItemComponent>(eventArgs.Target.Value)))
             {
-                var validStorables = new List<IEntity>();
-                foreach (var entity in IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(eventArgs.ClickLocation, _areaInsertRadius))
+                var validStorables = new List<EntityUid>();
+                foreach (var entity in IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(eventArgs.ClickLocation, _areaInsertRadius, LookupFlags.None))
                 {
                     if (entity.IsInContainer()
                         || entity == eventArgs.User
-                        || !entity.HasComponent<SharedItemComponent>())
+                        || !_entityManager.HasComponent<SharedItemComponent>(entity)
+                        || !EntitySystem.Get<InteractionSystem>().InRangeUnobstructed(eventArgs.User, entity))
                         continue;
                     validStorables.Add(entity);
                 }
@@ -543,12 +593,12 @@ namespace Content.Server.Storage.Components
                     // Check again, situation may have changed for some entities, but we'll still pick up any that are valid
                     if (entity.IsInContainer()
                         || entity == eventArgs.User
-                        || !entity.HasComponent<SharedItemComponent>())
+                        || !_entityManager.HasComponent<SharedItemComponent>(entity))
                         continue;
-                    var position = EntityCoordinates.FromMap(Owner.Transform.Parent?.Owner ?? Owner, entity.Transform.MapPosition);
+                    var position = EntityCoordinates.FromMap(_entityManager.GetComponent<TransformComponent>(Owner).Parent?.Owner ?? Owner, _entityManager.GetComponent<TransformComponent>(entity).MapPosition);
                     if (PlayerInsertEntityInWorld(eventArgs.User, entity))
                     {
-                        successfullyInserted.Add(entity.Uid);
+                        successfullyInserted.Add(entity);
                         successfullyInsertedPositions.Add(position);
                     }
                 }
@@ -557,7 +607,9 @@ namespace Content.Server.Storage.Components
                 if (successfullyInserted.Count > 0)
                 {
                     PlaySoundCollection();
+#pragma warning disable 618
                     SendNetworkMessage(
+#pragma warning restore 618
                         new AnimateInsertingEntitiesMessage(
                             successfullyInserted,
                             successfullyInsertedPositions
@@ -569,17 +621,25 @@ namespace Content.Server.Storage.Components
             // Pick up the clicked entity
             else if (_quickInsert)
             {
-                if (eventArgs.Target == null
-                    || eventArgs.Target.IsInContainer()
-                    || eventArgs.Target == eventArgs.User
-                    || !eventArgs.Target.HasComponent<SharedItemComponent>())
-                    return false;
-                var position = EntityCoordinates.FromMap(Owner.Transform.Parent?.Owner ?? Owner, eventArgs.Target.Transform.MapPosition);
-                if (PlayerInsertEntityInWorld(eventArgs.User, eventArgs.Target))
+                if (eventArgs.Target is not {Valid: true} target)
                 {
+                    return false;
+                }
+
+                if (target.IsInContainer()
+                    || target == eventArgs.User
+                    || !_entityManager.HasComponent<SharedItemComponent>(target))
+                    return false;
+                var position = EntityCoordinates.FromMap(
+                    _entityManager.GetComponent<TransformComponent>(Owner).Parent?.Owner ?? Owner,
+                    _entityManager.GetComponent<TransformComponent>(target).MapPosition);
+                if (PlayerInsertEntityInWorld(eventArgs.User, target))
+                {
+#pragma warning disable 618
                     SendNetworkMessage(new AnimateInsertingEntitiesMessage(
-                        new List<EntityUid>() { eventArgs.Target.Uid },
-                        new List<EntityCoordinates>() { position }
+#pragma warning restore 618
+                        new List<EntityUid> {target},
+                        new List<EntityCoordinates> {position}
                     ));
                     return true;
                 }
@@ -619,7 +679,7 @@ namespace Content.Server.Storage.Components
 
             foreach (var entity in storedEntities)
             {
-                var exActs = entity.GetAllComponents<IExAct>().ToArray();
+                var exActs = _entityManager.GetComponents<IExAct>(entity).ToArray();
                 foreach (var exAct in exActs)
                 {
                     exAct.OnExplosion(eventArgs);

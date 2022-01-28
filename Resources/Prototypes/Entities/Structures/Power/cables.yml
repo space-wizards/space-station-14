@@ -6,6 +6,7 @@
   components:
   - type: Clickable
   - type: Physics
+  - type: Fixtures
     fixtures:
       - shape:
           !type:PhysShapeAabb
@@ -17,7 +18,7 @@
     anchored: true
   - type: Sprite
     netsync: false
-    drawdepth: BelowFloor
+    drawdepth: ThinWire
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -25,11 +26,19 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 50
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: SubFloorHide
+  - type: Electrified
+    onHandInteract: false
+    onInteractUsing: false # wire-cutting handled separately.
+    onBump: false
+    requirePower: true
+    highVoltageNode: power
+    mediumVoltageNode: power
+    lowVoltageNode: power
   - type: CableVis
     node: power
 
@@ -42,6 +51,7 @@
   - type: Sprite
     sprite: Structures/Power/Cables/hv_cable.rsi
     state: hvcable_0
+    drawdepth: ThickWire
   - type: Icon
     sprite: Structures/Power/Cables/hv_cable.rsi
     state: hvcable_4
@@ -58,6 +68,12 @@
     - trigger:
         !type:DamageTrigger
         damage: 100
+      behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -68,6 +84,7 @@
         acts: [ "Destruction" ]
   - type: Appearance
     visuals:
+    - type: TrayScannerSubFloorVisualizer
     - type: CableVisualizer
       base: hvcable_
 
@@ -98,6 +115,12 @@
     - trigger:
         !type:DamageTrigger
         damage: 100
+      behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -108,6 +131,7 @@
         acts: [ "Destruction" ]
   - type: Appearance
     visuals:
+    - type: TrayScannerSubFloorVisualizer
     - type: CableVisualizer
       base: mvcable_
 
@@ -141,6 +165,12 @@
     - trigger:
         !type:DamageTrigger
         damage: 100
+      behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -151,5 +181,6 @@
         acts: [ "Destruction" ]
   - type: Appearance
     visuals:
+    - type: TrayScannerSubFloorVisualizer
     - type: CableVisualizer
       base: lvcable_

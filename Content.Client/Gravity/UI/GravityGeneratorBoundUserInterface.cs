@@ -10,28 +10,25 @@ namespace Content.Client.Gravity.UI
     {
         private GravityGeneratorWindow? _window;
 
-        public bool IsOn;
-
         public GravityGeneratorBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base (owner, uiKey)
         {
-            SendMessage(new SharedGravityGeneratorComponent.GeneratorStatusRequestMessage());
         }
 
         protected override void Open()
         {
             base.Open();
 
-            IsOn = false;
+            _window = new GravityGeneratorWindow(this, Owner);
 
-            _window = new GravityGeneratorWindow(this);
-
+            /*
             _window.Switch.OnPressed += _ =>
             {
                 SendMessage(new SharedGravityGeneratorComponent.SwitchGeneratorMessage(!IsOn));
-                SendMessage(new SharedGravityGeneratorComponent.GeneratorStatusRequestMessage());
             };
+            */
 
             _window.OpenCentered();
+            _window.OnClose += Close;
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)
@@ -39,8 +36,7 @@ namespace Content.Client.Gravity.UI
             base.UpdateState(state);
 
             var castState = (SharedGravityGeneratorComponent.GeneratorState) state;
-            IsOn = castState.On;
-            _window?.UpdateButton();
+            _window?.UpdateState(castState);
         }
 
         protected override void Dispose(bool disposing)
@@ -49,6 +45,11 @@ namespace Content.Client.Gravity.UI
             if (!disposing) return;
 
             _window?.Dispose();
+        }
+
+        public void SetPowerSwitch(bool on)
+        {
+            SendMessage(new SharedGravityGeneratorComponent.SwitchGeneratorMessage(on));
         }
     }
 }

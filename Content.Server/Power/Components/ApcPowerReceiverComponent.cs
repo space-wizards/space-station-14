@@ -4,7 +4,6 @@ using Content.Server.Power.NodeGroups;
 using Content.Server.Power.Pow3r;
 using Content.Shared.Examine;
 using Content.Shared.Power;
-using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -21,8 +20,12 @@ namespace Content.Server.Power.Components
     ///     so that it can receive power from a <see cref="IApcNet"/>.
     /// </summary>
     [RegisterComponent]
+#pragma warning disable 618
     public class ApcPowerReceiverComponent : Component, IExamine
+#pragma warning restore 618
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "ApcPowerReceiver";
 
         [ViewVariables]
@@ -34,6 +37,8 @@ namespace Content.Server.Power.Components
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("powerLoad")]
         public float Load { get => NetworkLoad.DesiredPower; set => NetworkLoad.DesiredPower = value; }
+
+        public ApcPowerProviderComponent? Provider = null;
 
         /// <summary>
         ///     When false, causes this to appear powered even if not receiving power from an Apc.
@@ -68,17 +73,23 @@ namespace Content.Server.Power.Components
             DesiredPower = 5
         };
 
-        public void ApcPowerChanged()
+        public float PowerReceived => NetworkLoad.ReceivingPower;
+
+        protected override void OnRemove()
         {
-            OnNewPowerState();
+            Provider?.RemoveReceiver(this);
+
+            base.OnRemove();
         }
 
-        private void OnNewPowerState()
+        public void ApcPowerChanged()
         {
+#pragma warning disable 618
             SendMessage(new PowerChangedMessage(Powered));
-            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new PowerChangedEvent(Powered));
+#pragma warning restore 618
+            _entMan.EventBus.RaiseLocalEvent(Owner, new PowerChangedEvent(Powered, NetworkLoad.ReceivingPower));
 
-            if (Owner.TryGetComponent<AppearanceComponent>(out var appearance))
+            if (_entMan.TryGetComponent<AppearanceComponent?>(Owner, out var appearance))
             {
                 appearance.SetData(PowerDeviceVisuals.Powered, Powered);
             }
@@ -95,7 +106,9 @@ namespace Content.Server.Power.Components
         }
     }
 
+#pragma warning disable 618
     public class PowerChangedMessage : ComponentMessage
+#pragma warning restore 618
     {
         public readonly bool Powered;
 
@@ -111,10 +124,12 @@ namespace Content.Server.Power.Components
     public sealed class PowerChangedEvent : EntityEventArgs
     {
         public readonly bool Powered;
+        public readonly float ReceivingPower;
 
-        public PowerChangedEvent(bool powered)
+        public PowerChangedEvent(bool powered, float receivingPower)
         {
             Powered = powered;
+            ReceivingPower = receivingPower;
         }
     }
 }

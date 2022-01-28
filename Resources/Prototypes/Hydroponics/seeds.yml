@@ -424,3 +424,48 @@
       Min: 1
       Max: 10
       PotencyDivisor: 10
+
+- type: seed
+  id: nettle
+  name: nettle
+  seedName: nettle
+  displayName: nettles
+  plantRsi: Objects/Specific/Hydroponics/nettle.rsi
+  productPrototypes:
+    - Nettle
+  lifespan: 25
+  maturation: 8
+  production: 6
+  yield: 3
+  potency: 20
+  growthStages: 5
+  idealLight: 8
+  waterConsumption: 6
+  idealHeat: 298
+  chemicals:
+    Histamine:
+      Min: 1
+      Max: 25
+      PotencyDivisor: 4
+
+- type: seed
+  id: chili
+  name: chili
+  seedName: chili
+  displayName: chilis
+  plantRsi: Objects/Specific/Hydroponics/chili.rsi
+  productPrototypes:
+    - FoodChili
+  harvestRepeat: Repeat
+  lifespan: 25
+  maturation: 6
+  production: 6
+  yield: 3
+  potency: 20
+  idealLight: 9
+  idealHeat: 298
+  chemicals:
+    CapsaicinOil:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10

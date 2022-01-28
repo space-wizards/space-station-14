@@ -7,13 +7,13 @@ namespace Content.Shared.Pulling.Events
     /// </summary>
     public class StartPullAttemptEvent : CancellableEntityEventArgs
     {
-        public StartPullAttemptEvent(IEntity puller, IEntity pulled)
+        public StartPullAttemptEvent(EntityUid puller, EntityUid pulled)
         {
             Puller = puller;
             Pulled = pulled;
         }
 
-        public IEntity Puller { get; }
-        public IEntity Pulled { get; }
+        public EntityUid Puller { get; }
+        public EntityUid Pulled { get; }
     }
 }

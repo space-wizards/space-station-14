@@ -13,7 +13,9 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Construction.Components
 {
     [RegisterComponent]
+#pragma warning disable 618
     public class MachineBoardComponent : Component, IExamine
+#pragma warning restore 618
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 

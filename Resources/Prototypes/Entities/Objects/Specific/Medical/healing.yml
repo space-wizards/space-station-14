@@ -14,6 +14,7 @@
     sprite: Objects/Specific/Medical/medical.rsi
     HeldPrefix: ointment
   - type: Healing
+    damageContainer: Biological
     damage:
       groups:
         Burn: -10 # 5 for each type in the group
@@ -34,6 +35,7 @@
   - type: Sprite
     state: brutepack
   - type: Healing
+    damageContainer: Biological
     damage:
       groups:
         Brute: -15 # 5 for each type in the group
@@ -52,6 +54,7 @@
   - type: Sprite
     state: gauze
   - type: Healing
+    damageContainer: Biological
     damage:
       types:
         Slash: -5

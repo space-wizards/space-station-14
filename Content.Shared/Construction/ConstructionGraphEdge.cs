@@ -11,17 +11,17 @@ namespace Content.Shared.Construction
     public class ConstructionGraphEdge
     {
         [DataField("steps")]
-        private List<ConstructionGraphStep> _steps = new();
+        private ConstructionGraphStep[] _steps = Array.Empty<ConstructionGraphStep>();
 
         [DataField("conditions", serverOnly: true)]
-        private List<IGraphCondition> _conditions = new();
+        private IGraphCondition[] _conditions = Array.Empty<IGraphCondition>();
 
         [DataField("completed", serverOnly: true)]
-        private List<IGraphAction> _completed = new();
+        private IGraphAction[] _completed = Array.Empty<IGraphAction>();
 
         [ViewVariables]
-        [DataField("to")]
-        public string Target { get; private set; } = string.Empty;
+        [DataField("to", required:true)]
+        public string Target { get; } = string.Empty;
 
         [ViewVariables]
         public IReadOnlyList<IGraphCondition> Conditions => _conditions;

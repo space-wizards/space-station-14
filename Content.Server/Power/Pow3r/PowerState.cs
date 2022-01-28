@@ -451,6 +451,9 @@ namespace Content.Server.Power.Pow3r
             // "Supplying" means the network is connected to the OUTPUT port of the battery.
             [ViewVariables] public List<NodeId> BatteriesDischarging = new();
 
+            [ViewVariables] public float LastAvailableSupplySum = 0f;
+            [ViewVariables] public float LastMaxSupplySum = 0f;
+
             [ViewVariables] [JsonIgnore] public int Height;
             [JsonIgnore] public bool HeightTouched;
         }

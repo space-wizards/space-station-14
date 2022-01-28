@@ -10,14 +10,9 @@ using Robust.Shared.Localization;
 namespace Content.Client.Administration.UI
 {
     [GenerateTypedNameReferences]
-    public partial class AdminAnnounceWindow : SS14Window
+    public partial class AdminAnnounceWindow : DefaultWindow
     {
-        [Dependency] private readonly IGameHud? _gameHud = default!;
         [Dependency] private readonly ILocalizationManager _localization = default!;
-        public Button AnnounceButton => _announceButton;
-        public OptionButton AnnounceMethod => _announceMethod;
-        public LineEdit Announcer => _announcer;
-        public LineEdit Announcement => _announcement;
 
         public AdminAnnounceWindow()
         {

@@ -82,32 +82,3 @@
       magState: mag
       steps: 1
       zeroVisible: true
-
-- type: entity
-  name: pie cannon
-  parent: LauncherBase
-  id: LauncherCreamPie
-  description: Load cream pie for optimal results.
-  components:
-    - type: Sprite
-      sprite: Objects/Weapons/Guns/Launchers/pie_cannon.rsi
-      state: piecannon
-    - type: Item
-      size: 24
-      sprite: Objects/Weapons/Guns/Launchers/pie_cannon.rsi
-    - type: RangedWeapon
-      clumsyCheck: false
-    - type: RevolverBarrel
-      caliber: CreamPie
-      currentSelector: Single
-      allSelectors:
-        - Single
-      fillPrototype: FoodPieBananaCream
-      fireRate: 5
-      capacity: 5
-      soundEmpty:
-        path: /Audio/Weapons/Guns/Empty/empty.ogg
-      soundGunshot:
-        path: /Audio/Effects/bang.ogg
-      soundInsert:
-        path: /Audio/Items/bikehorn.ogg

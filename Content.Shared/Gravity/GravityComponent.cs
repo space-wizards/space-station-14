@@ -41,7 +41,7 @@ namespace Content.Shared.Gravity
 
         private bool _enabled;
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new GravityComponentState(_enabled);
         }

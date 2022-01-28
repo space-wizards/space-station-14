@@ -4,12 +4,16 @@ using Content.Shared.Administration;
 using Content.Shared.Nutrition.Components;
 using Robust.Server.Player;
 using Robust.Shared.Console;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Nutrition
 {
     [AdminCommand(AdminFlags.Debug)]
     public class Hungry : IConsoleCommand
     {
+        [Dependency] private readonly IEntityManager _entities = default!;
+
         public string Command => "hungry";
         public string Description => "Makes you hungry.";
         public string Help => $"{Command}";
@@ -23,13 +27,13 @@ namespace Content.Server.Nutrition
                 return;
             }
 
-            if (player.AttachedEntity == null)
+            if (player.AttachedEntity is not {Valid: true} playerEntity)
             {
                 shell.WriteLine("You cannot use this command without an entity.");
                 return;
             }
 
-            if (!player.AttachedEntity.TryGetComponent(out HungerComponent? hunger))
+            if (!_entities.TryGetComponent(playerEntity, out HungerComponent? hunger))
             {
                 shell.WriteLine($"Your entity does not have a {nameof(HungerComponent)} component.");
                 return;

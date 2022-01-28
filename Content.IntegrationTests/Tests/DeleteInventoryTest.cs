@@ -1,11 +1,13 @@
 ﻿using System.Threading.Tasks;
 using Content.Server.Clothing.Components;
-using Content.Server.Inventory.Components;
+using Content.Server.Inventory;
+using Content.Shared.Inventory;
+using Content.Shared.Item;
 using NUnit.Framework;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using static Content.Shared.Inventory.EquipmentSlotDefines;
 
 namespace Content.IntegrationTests.Tests
 {
@@ -17,34 +19,34 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task Test()
         {
-            var server = StartServerDummyTicker();
+            var server = StartServer();
 
-            server.Assert(() =>
+            await server.WaitAssertion(() =>
             {
                 // Spawn everything.
                 var mapMan = IoCManager.Resolve<IMapManager>();
+                var invSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<InventorySystem>();
 
                 mapMan.CreateNewMapEntity(MapId.Nullspace);
 
                 var entMgr = IoCManager.Resolve<IEntityManager>();
                 var container = entMgr.SpawnEntity(null, MapCoordinates.Nullspace);
-                var inv = container.AddComponent<InventoryComponent>();
+                entMgr.AddComponent<ServerInventoryComponent>(container);
+                entMgr.AddComponent<ContainerManagerComponent>(container);
 
                 var child = entMgr.SpawnEntity(null, MapCoordinates.Nullspace);
-                var item = child.AddComponent<ClothingComponent>();
+                var item = entMgr.AddComponent<ItemComponent>(child);
                 item.SlotFlags = SlotFlags.HEAD;
 
                 // Equip item.
-                Assert.That(inv.Equip(Slots.HEAD, item, false), Is.True);
+                Assert.That(invSystem.TryEquip(container, child, "head"), Is.True);
 
                 // Delete parent.
-                container.Delete();
+                entMgr.DeleteEntity(container);
 
                 // Assert that child item was also deleted.
                 Assert.That(item.Deleted, Is.True);
             });
-
-            await server.WaitIdleAsync();
         }
     }
 }

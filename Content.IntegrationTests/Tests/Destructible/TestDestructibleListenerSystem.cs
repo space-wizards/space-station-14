@@ -1,6 +1,7 @@
-using Content.Server.Destructible;
-using Robust.Shared.GameObjects;
 using System.Collections.Generic;
+using Content.Server.Destructible;
+using Content.Shared.GameTicking;
+using Robust.Shared.GameObjects;
 
 namespace Content.IntegrationTests.Tests.Destructible
 {
@@ -10,10 +11,13 @@ namespace Content.IntegrationTests.Tests.Destructible
     /// </summary>
     public class TestDestructibleListenerSystem : EntitySystem
     {
+        public readonly List<DamageThresholdReached> ThresholdsReached = new();
+
         public override void Initialize()
         {
             base.Initialize();
             SubscribeLocalEvent<DestructibleComponent, DamageThresholdReached>(AddThresholdsToList);
+            SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
         }
 
         public void AddThresholdsToList(EntityUid _, DestructibleComponent comp, DamageThresholdReached args)
@@ -21,6 +25,9 @@ namespace Content.IntegrationTests.Tests.Destructible
             ThresholdsReached.Add(args);
         }
 
-        public List<DamageThresholdReached> ThresholdsReached = new();
+        private void OnRoundRestart(RoundRestartCleanupEvent ev)
+        {
+            ThresholdsReached.Clear();
+        }
     }
 }

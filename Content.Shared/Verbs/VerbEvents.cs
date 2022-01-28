@@ -5,7 +5,6 @@ using Content.Shared.Hands.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
-using Robust.Shared.IoC;
 using Content.Shared.Interaction;
 
 namespace Content.Shared.Verbs
@@ -16,10 +15,20 @@ namespace Content.Shared.Verbs
         public readonly EntityUid EntityUid;
         public readonly VerbType Type;
 
-        public RequestServerVerbsEvent(EntityUid entityUid, VerbType type)
+        /// <summary>
+        ///     If the target item is inside of some storage (e.g., backpack), this is the entity that owns that item
+        ///     slot. Needed for validating that the user can access the target item.
+        /// </summary>
+        public readonly EntityUid? SlotOwner;
+
+        public readonly bool AdminRequest;
+
+        public RequestServerVerbsEvent(EntityUid entityUid, VerbType type, EntityUid? slotOwner = null, bool adminRequest = false)
         {
             EntityUid = entityUid;
             Type = type;
+            SlotOwner = slotOwner;
+            AdminRequest = adminRequest;
         }
     }
 
@@ -46,7 +55,7 @@ namespace Content.Shared.Verbs
     }
 
     [Serializable, NetSerializable]
-    public class TryExecuteVerbEvent : EntityEventArgs
+    public class ExecuteVerbEvent : EntityEventArgs
     {
         public readonly EntityUid Target;
         public readonly Verb RequestedVerb;
@@ -56,21 +65,12 @@ namespace Content.Shared.Verbs
         /// </summary>
         public readonly VerbType Type;
 
-        public TryExecuteVerbEvent(EntityUid target, Verb requestedVerb, VerbType type)
+        public ExecuteVerbEvent(EntityUid target, Verb requestedVerb, VerbType type)
         {
             Target = target;
             RequestedVerb = requestedVerb;
             Type = type;
         }
-    }
-
-    /// <summary>
-    ///     Event used to toggle visibility of all context menu entities.
-    /// </summary>
-    [Serializable, NetSerializable]
-    public class SetSeeAllContextEvent : EntityEventArgs
-    {
-        public bool CanSeeAllContext = false;
     }
 
     /// <summary>
@@ -83,7 +83,9 @@ namespace Content.Shared.Verbs
     /// </remarks>
     public class GetInteractionVerbsEvent : GetVerbsEvent
     {
-        public GetInteractionVerbsEvent(IEntity user, IEntity target) : base(user, target) { }
+        public GetInteractionVerbsEvent(EntityUid user, EntityUid target, EntityUid? @using, SharedHandsComponent? hands,
+            bool canInteract, bool canAccess) : base(user, target, @using, hands, canInteract, canAccess) { }
+
     }
 
     /// <summary>
@@ -97,11 +99,12 @@ namespace Content.Shared.Verbs
     /// </remarks>
     public class GetActivationVerbsEvent : GetVerbsEvent
     {
-        public GetActivationVerbsEvent(IEntity user, IEntity target) : base(user, target) { }
+        public GetActivationVerbsEvent(EntityUid user, EntityUid target, EntityUid? @using, SharedHandsComponent? hands,
+            bool canInteract, bool canAccess) : base(user, target, @using, hands, canInteract, canAccess) { }
     }
 
     /// <summary>
-    ///     Request alternative-interaction verbs.    
+    ///     Request alternative-interaction verbs.
     /// </summary>
     /// <remarks>
     ///     When interacting with an entity via alt + left-click/E/Z the highest priority alt-interact verb is executed.
@@ -109,11 +112,12 @@ namespace Content.Shared.Verbs
     /// </remarks>
     public class GetAlternativeVerbsEvent : GetVerbsEvent
     {
-        public GetAlternativeVerbsEvent(IEntity user, IEntity target) : base(user, target) { }
+        public GetAlternativeVerbsEvent(EntityUid user, EntityUid target, EntityUid? @using, SharedHandsComponent? hands,
+            bool canInteract, bool canAccess) : base(user, target, @using, hands, canInteract, canAccess) { }
     }
 
     /// <summary>
-    ///     Request Miscellaneous verbs.    
+    ///     Request Miscellaneous verbs.
     /// </summary>
     /// <remarks>
     ///     Includes (nearly) global interactions like "examine", "pull", or "debug". These verbs are collectively shown
@@ -121,7 +125,8 @@ namespace Content.Shared.Verbs
     /// </remarks>
     public class GetOtherVerbsEvent : GetVerbsEvent
     {
-        public GetOtherVerbsEvent(IEntity user, IEntity target) : base(user, target) { }
+        public GetOtherVerbsEvent(EntityUid user, EntityUid target, EntityUid? @using, SharedHandsComponent? hands,
+            bool canInteract, bool canAccess) : base(user, target, @using, hands, canInteract, canAccess) { }
     }
 
     /// <summary>
@@ -132,7 +137,7 @@ namespace Content.Shared.Verbs
         /// <summary>
         ///     Event output. Set of verbs that can be executed.
         /// </summary>
-        public SortedSet<Verb> Verbs = new();
+        public readonly SortedSet<Verb> Verbs = new();
 
         /// <summary>
         ///     Can the user physically access the target?
@@ -141,17 +146,17 @@ namespace Content.Shared.Verbs
         ///     This is a combination of <see cref="ContainerHelpers.IsInSameOrParentContainer"/> and
         ///     <see cref="SharedInteractionSystem.InRangeUnobstructed"/>.
         /// </remarks>
-        public bool CanAccess;
+        public readonly bool CanAccess = false;
 
         /// <summary>
         ///     The entity being targeted for the verb.
         /// </summary>
-        public IEntity Target;
+        public readonly EntityUid Target;
 
         /// <summary>
         ///     The entity that will be "performing" the verb.
         /// </summary>
-        public IEntity User;
+        public readonly EntityUid User;
 
         /// <summary>
         ///     Can the user physically interact?
@@ -161,7 +166,7 @@ namespace Content.Shared.Verbs
         ///     to check this, it prevents it from having to be repeatedly called by each individual system that might
         ///     contribute a verb.
         /// </remarks>
-        public bool CanInteract;
+        public readonly bool CanInteract;
 
         /// <summary>
         ///     The User's hand component.
@@ -169,43 +174,25 @@ namespace Content.Shared.Verbs
         /// <remarks>
         ///     This may be null if the user has no hands.
         /// </remarks>
-        public SharedHandsComponent? Hands;
+        public readonly SharedHandsComponent? Hands;
 
         /// <summary>
         ///     The entity currently being held by the active hand.
         /// </summary>
         /// <remarks>
-        ///     This is only ever not null when <see cref="ActionBlockerSystem.CanUse(IEntity)"/> is true and the user
+        ///     This is only ever not null when <see cref="ActionBlockerSystem.CanUse(Robust.Shared.GameObjects.EntityUid)"/> is true and the user
         ///     has hands.
         /// </remarks>
-        public IEntity? Using;
+        public readonly EntityUid? Using;
 
-        public GetVerbsEvent(IEntity user, IEntity target)
+        public GetVerbsEvent(EntityUid user, EntityUid target, EntityUid? @using, SharedHandsComponent? hands, bool canInteract, bool canAccess)
         {
             User = user;
             Target = target;
-
-            CanAccess = (Target == User) || user.IsInSameOrParentContainer(target) &&
-                EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(user, target);
-
-            // A large number of verbs need to check action blockers. Instead of repeatedly having each system individually
-            // call ActionBlocker checks, just cache it for the verb request.
-            var actionBlockerSystem = EntitySystem.Get<ActionBlockerSystem>();
-            CanInteract = actionBlockerSystem.CanInteract(user);
-
-            if (!user.TryGetComponent(out Hands) ||
-                !actionBlockerSystem.CanUse(user))
-                return;
-
-            Hands.TryGetActiveHeldEntity(out Using);
-
-            // Check whether the "Held" entity is a virtual pull entity. If yes, set that as the entity being "Used".
-            // This allows you to do things like buckle a dragged person onto a surgery table, without click-dragging
-            // their sprite.
-            if (Using != null && Using.TryGetComponent<HandVirtualItemComponent>(out var pull))
-            {
-                Using = IoCManager.Resolve<IEntityManager>().GetEntity(pull.BlockingEntity);
-            }
+            Using = @using;
+            Hands = hands;
+            CanAccess = canAccess;
+            CanInteract = canInteract;
         }
     }
 }

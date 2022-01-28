@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using Content.Server.Atmos.Components;
 using Content.Server.Doors.Components;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Atmos;
+using Content.Shared.Database;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -85,7 +87,7 @@ namespace Content.Server.Atmos.EntitySystems
                     if(tileCount < Atmospherics.MonstermosHardTileLimit)
                         _equalizeTiles[tileCount++] = adj;
 
-                    if (adj.Air.Immutable)
+                    if (adj.Air.Immutable && MonstermosDepressurization)
                     {
                         // Looks like someone opened an airlock to space!
 
@@ -360,7 +362,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             const int limit = Atmospherics.MonstermosHardTileLimit;
 
-            var totalGasesRemoved = 0f;
+            var totalMolesRemoved = 0f;
             var queueCycle = ++gridAtmosphere.EqualizationQueueCycleControl;
 
             var tileCount = 0;
@@ -447,7 +449,7 @@ namespace Content.Server.Atmos.EntitySystems
                 var otherTile2 = otherTile.AdjacentTiles[otherTile.MonstermosInfo.CurrentTransferDirection.ToIndex()];
                 if (otherTile2?.Air == null) continue;
                 var sum = otherTile2.Air.TotalMoles;
-                totalGasesRemoved += sum;
+                totalMolesRemoved += sum;
                 otherTile.MonstermosInfo.CurrentTransferAmount += sum;
                 otherTile2.MonstermosInfo.CurrentTransferAmount += otherTile.MonstermosInfo.CurrentTransferAmount;
                 otherTile.PressureDifference = otherTile.MonstermosInfo.CurrentTransferAmount;
@@ -459,7 +461,14 @@ namespace Content.Server.Atmos.EntitySystems
                     otherTile2.PressureDirection = otherTile.MonstermosInfo.CurrentTransferDirection;
                 }
 
-                otherTile.Air?.Clear();
+
+                // This gas mixture cannot be null, no tile in _depressurizeProgressionOrder can have a null gas mixture
+                otherTile.Air!.Clear();
+
+                // This is a little hacky, but hear me out. It makes sense. We have just vacuumed all of the tile's air
+                // therefore there is no more gas in the tile, therefore the tile should be as cold as space!
+                otherTile.Air.Temperature = Atmospherics.TCMB;
+
                 InvalidateVisuals(otherTile.GridIndex, otherTile.GridIndices);
                 HandleDecompressionFloorRip(mapGrid, otherTile, sum);
             }
@@ -468,12 +477,16 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 var direction = ((Vector2)_depressurizeTiles[tileCount - 1].GridIndices - tile.GridIndices).Normalized;
 
-                var gridPhysics = EntityManager.GetComponent<PhysicsComponent>(mapGrid.GridEntityId);
+                var gridPhysics = Comp<PhysicsComponent>(mapGrid.GridEntityId);
 
                 // TODO ATMOS: Come up with better values for these.
-                gridPhysics.ApplyLinearImpulse(direction * totalGasesRemoved * gridPhysics.Mass);
-                gridPhysics.ApplyAngularImpulse(Vector2.Cross(tile.GridIndices - gridPhysics.LocalCenter, direction) * totalGasesRemoved);
+                gridPhysics.ApplyLinearImpulse(direction * totalMolesRemoved * gridPhysics.Mass);
+                gridPhysics.ApplyAngularImpulse(Vector2.Cross(tile.GridIndices - gridPhysics.LocalCenter, direction) * totalMolesRemoved);
             }
+
+            if(tileCount > 10 && (totalMolesRemoved / tileCount) > 20)
+                _adminLog.Add(LogType.ExplosiveDepressurization, LogImpact.High,
+                    $"Explosive depressurization removed {totalMolesRemoved} moles from {tileCount} tiles starting from position {tile.GridIndices:position} on grid ID {tile.GridIndex:grid}");
 
             Array.Clear(_depressurizeTiles, 0, Atmospherics.MonstermosHardTileLimit);
             Array.Clear(_depressurizeSpaceTiles, 0, Atmospherics.MonstermosHardTileLimit);
@@ -489,7 +502,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             foreach (var entity in mapGrid.GetAnchoredEntities(tile.GridIndices))
             {
-                if (!EntityManager.TryGetComponent(entity, out FirelockComponent firelock))
+                if (!TryComp(entity, out FirelockComponent? firelock))
                     continue;
 
                 reconsiderAdjacent |= firelock.EmergencyPressureStop();
@@ -497,7 +510,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             foreach (var entity in mapGrid.GetAnchoredEntities(other.GridIndices))
             {
-                if (!EntityManager.TryGetComponent(entity, out FirelockComponent firelock))
+                if (!TryComp(entity, out FirelockComponent? firelock))
                     continue;
 
                 reconsiderAdjacent |= firelock.EmergencyPressureStop();

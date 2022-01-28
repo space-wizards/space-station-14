@@ -65,7 +65,7 @@ namespace Content.Shared.CombatMode
         }
 
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new CombatModeComponentState(IsInCombatMode, ActiveZone);
         }

@@ -5,7 +5,6 @@ using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos.Piping;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
@@ -26,7 +25,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnThermoMachineUpdated(EntityUid uid, GasThermoMachineComponent thermoMachine, AtmosDeviceUpdateEvent args)
         {
-            var appearance = thermoMachine.Owner.GetComponentOrNull<AppearanceComponent>();
+            var appearance = EntityManager.GetComponentOrNull<AppearanceComponent>(thermoMachine.Owner);
 
             if (!thermoMachine.Enabled
                 || !EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)

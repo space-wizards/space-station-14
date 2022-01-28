@@ -17,14 +17,50 @@
       sprite: Structures/Walls/grille.rsi
       state: grille
     - type: Construction
-      graph: grille
+      graph: Grille
       node: grille
       deconstructionTarget: start
     - type: Damageable
       damageContainer: Inorganic
       damageModifierSet: FlimsyMetallic
+    - type: PowerConsumer
+    - type: Electrified
+      requirePower: true
+      noWindowInTile: true
+      highVoltageNode: high
+      mediumVoltageNode: medium
+      lowVoltageNode: low
+    - type: NodeContainer
+      nodes:
+        high:
+          !type:CableDeviceNode
+          nodeGroupID: HVPower
+        medium:
+          !type:CableDeviceNode
+          nodeGroupID: MVPower
+        low:
+          !type:CableDeviceNode
+          nodeGroupID: Apc
+    - type: Physics
+      bodyType: Static
+    - type: Fixtures
+      fixtures:
+        - shape:
+            !type:PhysShapeAabb
+            bounds: "-0.5,-0.5,0.5,0.5"
+          layer:
+            - Impassable
+            - MobImpassable
+            - VaultImpassable
+            - SmallImpassable
     - type: Destructible
       thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 50 #excess damage (nuke?). avoid computational cost of spawning entities.
+          behaviors:
+            - !type:DoActsBehavior
+              acts: ["Destruction"]
         - trigger:
             !type:DamageTrigger
             damage: 20
@@ -36,7 +72,7 @@
 
 - type: entity
   id: GrilleBroken
-  parent: Grille
+  parent: BaseStructure
   name: grille
   description: A flimsy framework of iron rods. It has seen better days.
   components:
@@ -52,19 +88,13 @@
       tags:
         - RCDDeconstructWhitelist
     - type: Construction
-      graph: grille
+      graph: Grille
       node: grilleBroken
       deconstructionTarget: start
-    - type: Physics
-      fixtures:
-        - shape:
-            !type:PhysShapeAabb
-            bounds: "-0.45,-0.45,0.45,0.45"
-          mass: 50
-          layer:
-            - Passable
-          mask:
-            - Passable
+    - type: Fixtures # overwrite BaseStructure parent.
+    - type: Damageable
+      damageContainer: Inorganic
+      damageModifierSet: FlimsyMetallic
     - type: Destructible
       thresholds:
         - trigger:

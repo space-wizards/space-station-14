@@ -1,0 +1,39 @@
+- type: entity
+  parent: BaseStructureDynamic
+  id: NuclearBomb
+  name: nuclear fission explosive
+  description: You probably shouldn't stick around to see if this is armed.
+  components:
+    - type: Transform
+      anchored: true
+    - type: Sprite
+      sprite: Objects/Devices/nuke.rsi
+      netsync: false
+      state: nuclearbomb_base
+    - type: Physics
+      bodyType: Dynamic
+    - type: Fixtures
+      fixtures:
+      - shape:
+          !type:PhysShapeCircle
+            radius: 0.45
+        mass: 150
+        layer:
+        - SmallImpassable
+        mask:
+        - VaultImpassable
+    - type: Nuke
+      diskSlot:
+        name: Disk
+        insertSound:
+          path: /Audio/Machines/terminal_insert_disc.ogg
+        ejectSound:
+          path: /Audio/Machines/terminal_insert_disc.ogg
+        whitelist:
+          tags:
+          - NukeDisk
+    - type: InteractionOutline
+    - type: UserInterface
+      interfaces:
+        - key: enum.NukeUiKey.Key
+          type: NukeBoundUserInterface

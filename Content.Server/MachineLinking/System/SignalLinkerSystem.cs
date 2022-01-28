@@ -71,7 +71,7 @@ namespace Content.Server.MachineLinking.System
             {
                 if (!IsInRange(component, link.ReceiverComponent)) continue;
 
-                RaiseLocalEvent(link.ReceiverComponent.Owner.Uid,
+                RaiseLocalEvent(link.ReceiverComponent.Owner,
                     new SignalReceivedEvent(link.Receiverport.Name, args.Value), false);
             }
         }
@@ -80,8 +80,8 @@ namespace Content.Server.MachineLinking.System
         {
             if (args.Handled) return;
 
-            if (!args.Used.TryGetComponent<SignalLinkerComponent>(out var linker) || !linker.Port.HasValue ||
-                !args.User.TryGetComponent(out ActorComponent? actor) ||
+            if (!EntityManager.TryGetComponent<SignalLinkerComponent?>(args.Used, out var linker) || !linker.Port.HasValue ||
+                !EntityManager.TryGetComponent(args.User, out ActorComponent? actor) ||
                 !linker.Port.Value.transmitter.Outputs.TryGetPort(linker.Port.Value.port, out var port))
             {
                 return;
@@ -116,19 +116,21 @@ namespace Content.Server.MachineLinking.System
         private void OnReceiverUIMessage(EntityUid uid, SignalReceiverComponent component,
             ServerBoundUserInterfaceMessage msg)
         {
+            if (msg.Session.AttachedEntity is not { } attached) return;
+
             switch (msg.Message)
             {
                 case SignalPortSelected portSelected:
-                    if (msg.Session.AttachedEntity == null ||
-                        !msg.Session.AttachedEntity.TryGetComponent(out HandsComponent? hands) ||
+                    if (msg.Session.AttachedEntity == default ||
+                        !EntityManager.TryGetComponent(msg.Session.AttachedEntity, out HandsComponent? hands) ||
                         !hands.TryGetActiveHeldEntity(out var heldEntity) ||
-                        !heldEntity.TryGetComponent(out SignalLinkerComponent? signalLinkerComponent) ||
-                        !_interaction.InRangeUnobstructed(msg.Session.AttachedEntity, component.Owner, ignoreInsideBlocker: true) ||
+                        !EntityManager.TryGetComponent(heldEntity, out SignalLinkerComponent? signalLinkerComponent) ||
+                        !_interaction.InRangeUnobstructed(attached, component.Owner, ignoreInsideBlocker: true) ||
                         !signalLinkerComponent.Port.HasValue ||
                         !signalLinkerComponent.Port.Value.transmitter.Outputs.ContainsPort(signalLinkerComponent.Port
                             .Value.port) || !component.Inputs.ContainsPort(portSelected.Port))
                         return;
-                    LinkerInteraction(msg.Session.AttachedEntity, signalLinkerComponent.Port.Value.transmitter,
+                    LinkerInteraction(attached, signalLinkerComponent.Port.Value.transmitter,
                         signalLinkerComponent.Port.Value.port, component, portSelected.Port);
                     break;
             }
@@ -156,16 +158,19 @@ namespace Content.Server.MachineLinking.System
         private void OnTransmitterUIMessage(EntityUid uid, SignalTransmitterComponent component,
             ServerBoundUserInterfaceMessage msg)
         {
+            if (msg.Session.AttachedEntity is not { } attached)
+                return;
+
             switch (msg.Message)
             {
                 case SignalPortSelected portSelected:
-                    if (msg.Session.AttachedEntity == null ||
-                        !msg.Session.AttachedEntity.TryGetComponent(out HandsComponent? hands) ||
+                    if (msg.Session.AttachedEntity == default ||
+                        !EntityManager.TryGetComponent(msg.Session.AttachedEntity, out HandsComponent? hands) ||
                         !hands.TryGetActiveHeldEntity(out var heldEntity) ||
-                        !heldEntity.TryGetComponent(out SignalLinkerComponent? signalLinkerComponent) ||
-                        !_interaction.InRangeUnobstructed(msg.Session.AttachedEntity, component.Owner, ignoreInsideBlocker: true))
+                        !EntityManager.TryGetComponent(heldEntity, out SignalLinkerComponent? signalLinkerComponent) ||
+                        !_interaction.InRangeUnobstructed(attached, component.Owner, ignoreInsideBlocker: true))
                         return;
-                    LinkerSaveInteraction(msg.Session.AttachedEntity, signalLinkerComponent, component,
+                    LinkerSaveInteraction(attached, signalLinkerComponent, component,
                         portSelected.Port);
                     break;
             }
@@ -176,8 +181,8 @@ namespace Content.Server.MachineLinking.System
         {
             if (args.Handled) return;
 
-            if (!args.Used.TryGetComponent<SignalLinkerComponent>(out var linker) ||
-                !args.User.TryGetComponent(out ActorComponent? actor))
+            if (!EntityManager.TryGetComponent<SignalLinkerComponent?>(args.Used, out var linker) ||
+                !EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
             {
                 return;
             }
@@ -197,15 +202,15 @@ namespace Content.Server.MachineLinking.System
             args.Handled = true;
         }
 
-        private void LinkerInteraction(IEntity entity, SignalTransmitterComponent transmitter, string transmitterPort,
+        private void LinkerInteraction(EntityUid entity, SignalTransmitterComponent transmitter, string transmitterPort,
             SignalReceiverComponent receiver, string receiverPort)
         {
             if (_linkCollection.LinkExists(transmitter, transmitterPort, receiver, receiverPort))
             {
                 if (_linkCollection.RemoveLink(transmitter, transmitterPort, receiver, receiverPort))
                 {
-                    RaiseLocalEvent(receiver.Owner.Uid, new PortDisconnectedEvent(receiverPort));
-                    RaiseLocalEvent(transmitter.Owner.Uid, new PortDisconnectedEvent(transmitterPort));
+                    RaiseLocalEvent(receiver.Owner, new PortDisconnectedEvent(receiverPort));
+                    RaiseLocalEvent(transmitter.Owner, new PortDisconnectedEvent(transmitterPort));
                     entity.PopupMessageCursor(Loc.GetString("signal-linker-component-unlinked-port",
                         ("port", receiverPort), ("machine", receiver)));
                 }
@@ -240,14 +245,14 @@ namespace Content.Server.MachineLinking.System
                 }
 
                 var linkAttempt = new LinkAttemptEvent(entity, transmitter, transmitterPort, receiver, receiverPort);
-                RaiseLocalEvent(receiver.Owner.Uid, linkAttempt);
-                RaiseLocalEvent(transmitter.Owner.Uid, linkAttempt);
+                RaiseLocalEvent(receiver.Owner, linkAttempt);
+                RaiseLocalEvent(transmitter.Owner, linkAttempt);
 
                 if (linkAttempt.Cancelled) return;
 
                 var link = _linkCollection.AddLink(transmitter, transmitterPort, receiver, receiverPort);
                 if (link.Transmitterport.Signal != null)
-                    RaiseLocalEvent(receiver.Owner.Uid,
+                    RaiseLocalEvent(receiver.Owner,
                         new SignalReceivedEvent(receiverPort, link.Transmitterport.Signal));
 
                 entity.PopupMessageCursor(Loc.GetString("signal-linker-component-linked-port", ("port", receiverPort),
@@ -255,7 +260,7 @@ namespace Content.Server.MachineLinking.System
             }
         }
 
-        private void LinkerSaveInteraction(IEntity entity, SignalLinkerComponent linkerComponent,
+        private void LinkerSaveInteraction(EntityUid entity, SignalLinkerComponent linkerComponent,
             SignalTransmitterComponent transmitterComponent, string transmitterPort)
         {
             if (SavePortInSignalLinker(linkerComponent, transmitterComponent, transmitterPort))
@@ -276,17 +281,15 @@ namespace Content.Server.MachineLinking.System
         private bool IsInRange(SignalTransmitterComponent transmitterComponent,
             SignalReceiverComponent receiverComponent)
         {
-            if (transmitterComponent.Owner.TryGetComponent<ApcPowerReceiverComponent>(
-                    out var transmitterPowerReceiverComponent) &&
-                receiverComponent.Owner.TryGetComponent<ApcPowerReceiverComponent>(
-                    out var receiverPowerReceiverComponent)
+            if (EntityManager.TryGetComponent<ApcPowerReceiverComponent?>(transmitterComponent.Owner, out var transmitterPowerReceiverComponent) &&
+                EntityManager.TryGetComponent<ApcPowerReceiverComponent?>(receiverComponent.Owner, out var receiverPowerReceiverComponent)
             ) //&& todo are they on the same powernet?
             {
                 return true;
             }
 
-            return transmitterComponent.Owner.Transform.MapPosition.InRange(
-                receiverComponent.Owner.Transform.MapPosition, 30f);
+            return EntityManager.GetComponent<TransformComponent>(transmitterComponent.Owner).MapPosition.InRange(
+                EntityManager.GetComponent<TransformComponent>(receiverComponent.Owner).MapPosition, 30f);
         }
     }
 }

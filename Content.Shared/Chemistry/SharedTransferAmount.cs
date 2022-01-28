@@ -1,5 +1,6 @@
 ﻿using System;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
@@ -8,10 +9,10 @@ namespace Content.Shared.Chemistry
     [Serializable, NetSerializable]
     public class TransferAmountBoundInterfaceState : BoundUserInterfaceState
     {
-        public ReagentUnit Max;
-        public ReagentUnit Min;
+        public FixedPoint2 Max;
+        public FixedPoint2 Min;
 
-        public TransferAmountBoundInterfaceState(ReagentUnit max, ReagentUnit min)
+        public TransferAmountBoundInterfaceState(FixedPoint2 max, FixedPoint2 min)
         {
             Max = max;
             Min = min;
@@ -21,9 +22,9 @@ namespace Content.Shared.Chemistry
     [Serializable, NetSerializable]
     public class TransferAmountSetValueMessage : BoundUserInterfaceMessage
     {
-        public ReagentUnit Value;
+        public FixedPoint2 Value;
 
-        public TransferAmountSetValueMessage(ReagentUnit value)
+        public TransferAmountSetValueMessage(FixedPoint2 value)
         {
             Value = value;
         }

@@ -29,6 +29,14 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/medical.rsi
+    
+- type: entity
+  parent: Airlock
+  id: AirlockChemistry
+  suffix: Chemistry
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/medical.rsi
 
 - type: entity
   parent: Airlock

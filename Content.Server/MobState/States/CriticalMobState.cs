@@ -9,13 +9,13 @@ namespace Content.Server.MobState.States
 {
     public class CriticalMobState : SharedCriticalMobState
     {
-        public override void EnterState(IEntity entity)
+        public override void EnterState(EntityUid uid, IEntityManager entityManager)
         {
-            base.EnterState(entity);
+            base.EnterState(uid, entityManager);
 
-            if (entity.TryGetComponent(out StatusEffectsComponent? stun))
+            if (entityManager.TryGetComponent(uid, out StatusEffectsComponent? stun))
             {
-                EntitySystem.Get<StatusEffectsSystem>().TryRemoveStatusEffect(entity.Uid, "Stun");
+                EntitySystem.Get<StatusEffectsSystem>().TryRemoveStatusEffect(uid, "Stun");
             }
         }
     }

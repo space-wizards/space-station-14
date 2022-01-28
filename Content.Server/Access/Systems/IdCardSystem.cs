@@ -1,12 +1,19 @@
-using Content.Server.Access.Components;
-using Content.Shared.Access;
+using Content.Shared.Hands.Components;
+using Content.Shared.Inventory;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
+using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Access.Components;
+using Content.Shared.Access.Systems;
+using Content.Shared.PDA;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Access.Systems
 {
-    public class IdCardSystem : EntitySystem
+    public class IdCardSystem : SharedIdCardSystem
     {
+        [Dependency] private readonly InventorySystem _inventorySystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -15,7 +22,7 @@ namespace Content.Server.Access.Systems
 
         private void OnInit(EntityUid uid, IdCardComponent id, ComponentInit args)
         {
-            id.OriginalOwnerName ??= id.Owner.Name;
+            id.OriginalOwnerName ??= EntityManager.GetComponent<MetaDataComponent>(id.Owner).EntityName;
             UpdateEntityName(uid, id);
         }
 
@@ -60,19 +67,65 @@ namespace Content.Server.Access.Systems
 
             if (string.IsNullOrWhiteSpace(id.FullName) && string.IsNullOrWhiteSpace(id.JobTitle))
             {
-                id.Owner.Name = id.OriginalOwnerName;
+                EntityManager.GetComponent<MetaDataComponent>(id.Owner).EntityName = id.OriginalOwnerName;
                 return;
             }
 
             var jobSuffix = string.IsNullOrWhiteSpace(id.JobTitle) ? string.Empty : $" ({id.JobTitle})";
 
-            id.Owner.Name = string.IsNullOrWhiteSpace(id.FullName)
+            var val = string.IsNullOrWhiteSpace(id.FullName)
                 ? Loc.GetString("access-id-card-component-owner-name-job-title-text",
-                                ("originalOwnerName", id.OriginalOwnerName),
-                                ("jobSuffix", jobSuffix))
+                    ("originalOwnerName", id.OriginalOwnerName),
+                    ("jobSuffix", jobSuffix))
                 : Loc.GetString("access-id-card-component-owner-full-name-job-title-text",
-                                ("fullName", id.FullName),
-                                ("jobSuffix", jobSuffix));
+                    ("fullName", id.FullName),
+                    ("jobSuffix", jobSuffix));
+            EntityManager.GetComponent<MetaDataComponent>(id.Owner).EntityName = val;
+        }
+
+        /// <summary>
+        ///     Attempt to find an ID card on an entity. This will look in the entity itself, in the entity's hands, and
+        ///     in the entity's inventory.
+        /// </summary>
+        public bool TryFindIdCard(EntityUid uid, [NotNullWhen(true)] out IdCardComponent? idCard)
+        {
+            // check held item?
+            if (EntityManager.TryGetComponent(uid, out SharedHandsComponent? hands) &&
+                hands.TryGetActiveHeldEntity(out var heldItem) &&
+                TryGetIdCard(heldItem.Value, out idCard))
+            {
+                return true;
+            }
+
+            // check entity itself
+            if (TryGetIdCard(uid, out idCard))
+                return true;
+
+            // check inventory slot?
+            if (_inventorySystem.TryGetSlotEntity(uid, "id", out var idUid) && TryGetIdCard(idUid.Value, out idCard))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        ///     Attempt to get an id card component from an entity, either by getting it directly from the entity, or by
+        ///     getting the contained id from a <see cref="PDAComponent"/>.
+        /// </summary>
+        public bool TryGetIdCard(EntityUid uid, [NotNullWhen(true)] out IdCardComponent? idCard)
+        {
+            if (EntityManager.TryGetComponent(uid, out idCard))
+                return true;
+
+            if (EntityManager.TryGetComponent(uid, out PDAComponent? pda) && pda.ContainedID != null)
+            {
+                idCard = pda.ContainedID;
+                return true;
+            }
+
+            return false;
         }
     }
 }

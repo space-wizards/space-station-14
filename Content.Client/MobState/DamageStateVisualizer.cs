@@ -1,10 +1,12 @@
 using System.Collections.Generic;
-using Content.Shared.DrawDepth;
 using Content.Shared.MobState;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
+using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
 namespace Content.Client.MobState
 {
@@ -16,41 +18,49 @@ namespace Content.Client.MobState
         private int? _originalDrawDepth;
 
         [DataField("normal")]
-        private string? normal;
+        private string? _normal;
+
         [DataField("crit")]
-        private string? crit;
+        private string? _crit;
+
         [DataField("dead")]
-        private string? dead;
+        private string? _dead;
+
+        /// <summary>
+        /// Should noRot be turned off when crit / dead.
+        /// </summary>
+        [DataField("rotate")]
+        private bool _rotate;
 
         void ISerializationHooks.BeforeSerialization()
         {
-            _stateMap.TryGetValue(DamageState.Alive, out normal);
-            _stateMap.TryGetValue(DamageState.Critical, out crit);
-            _stateMap.TryGetValue(DamageState.Dead, out dead);
+            _stateMap.TryGetValue(DamageState.Alive, out _normal);
+            _stateMap.TryGetValue(DamageState.Critical, out _crit);
+            _stateMap.TryGetValue(DamageState.Dead, out _dead);
         }
 
         void ISerializationHooks.AfterDeserialization()
         {
-            if (normal != null)
+            if (_normal != null)
             {
-                _stateMap.Add(DamageState.Alive, normal);
+                _stateMap.Add(DamageState.Alive, _normal);
             }
 
-            if (crit != null)
+            if (_crit != null)
             {
-                _stateMap.Add(DamageState.Critical, crit);
+                _stateMap.Add(DamageState.Critical, _crit);
             }
 
-            if (dead != null)
+            if (_dead != null)
             {
-                _stateMap.Add(DamageState.Dead, dead);
+                _stateMap.Add(DamageState.Dead, _dead);
             }
         }
 
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
-            var sprite = component.Owner.GetComponent<ISpriteComponent>();
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner);
             if (!component.TryGetData(DamageStateVisuals.State, out DamageState data))
             {
                 return;
@@ -63,16 +73,26 @@ namespace Content.Client.MobState
 
             _data = data;
 
+            if (_rotate)
+            {
+                sprite.NoRotation = data switch
+                {
+                    DamageState.Critical => false,
+                    DamageState.Dead => false,
+                    _ => true
+                };
+            }
+
             if (_stateMap.TryGetValue(_data, out var state))
             {
                 sprite.LayerSetState(DamageStateVisualLayers.Base, state);
             }
 
             // So they don't draw over mobs anymore
-            if (_data == DamageState.Dead)
+            if (_data == DamageState.Dead && sprite.DrawDepth > (int) DrawDepth.Items)
             {
                 _originalDrawDepth = sprite.DrawDepth;
-                sprite.DrawDepth = (int) DrawDepth.FloorObjects;
+                sprite.DrawDepth = (int) DrawDepth.Items;
             }
             else if (_originalDrawDepth != null)
             {

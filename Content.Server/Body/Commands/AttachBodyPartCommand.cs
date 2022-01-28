@@ -1,12 +1,10 @@
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Body.Components;
-using Content.Shared.Body.Part;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using static Content.Server.Body.Part.BodyPartComponent;
 
 namespace Content.Server.Body.Commands
 {
@@ -22,7 +20,7 @@ namespace Content.Server.Body.Commands
             var player = shell.Player as IPlayerSession;
             var entityManager = IoCManager.Resolve<IEntityManager>();
 
-            IEntity entity;
+            EntityUid entity;
             EntityUid partUid;
 
             switch (args.Length)
@@ -46,7 +44,7 @@ namespace Content.Server.Body.Commands
                         return;
                     }
 
-                    entity = player.AttachedEntity;
+                    entity = player.AttachedEntity.Value;
 
                     break;
                 case 2:
@@ -62,44 +60,44 @@ namespace Content.Server.Body.Commands
                         return;
                     }
 
-                    if (!entityManager.TryGetEntity(entityUid, out var tempEntity))
+                    if (!entityManager.EntityExists(entityUid))
                     {
                         shell.WriteLine($"{entityUid} is not a valid entity.");
                         return;
                     }
 
-                    entity = tempEntity;
+                    entity = entityUid;
                     break;
                 default:
                     shell.WriteLine(Help);
                     return;
             }
 
-            if (!entity.TryGetComponent(out SharedBodyComponent? body))
+            if (!entityManager.TryGetComponent(entity, out SharedBodyComponent? body))
             {
-                shell.WriteLine($"Entity {entity.Name} with uid {entity.Uid} does not have a {nameof(SharedBodyComponent)} component.");
+                shell.WriteLine($"Entity {entityManager.GetComponent<MetaDataComponent>(entity).EntityName} with uid {entity} does not have a {nameof(SharedBodyComponent)} component.");
                 return;
             }
 
-            if (!entityManager.TryGetEntity(partUid, out var partEntity))
+            if (!entityManager.EntityExists(partUid))
             {
                 shell.WriteLine($"{partUid} is not a valid entity.");
                 return;
             }
 
-            if (!partEntity.TryGetComponent(out SharedBodyPartComponent? part))
+            if (!entityManager.TryGetComponent(partUid, out SharedBodyPartComponent? part))
             {
-                shell.WriteLine($"Entity {partEntity.Name} with uid {args[0]} does not have a {nameof(SharedBodyPartComponent)} component.");
+                shell.WriteLine($"Entity {entityManager.GetComponent<MetaDataComponent>(partUid).EntityName} with uid {args[0]} does not have a {nameof(SharedBodyPartComponent)} component.");
                 return;
             }
 
             if (body.HasPart(part))
             {
-                shell.WriteLine($"Body part {partEntity.Name} with uid {partEntity.Uid} is already attached to entity {entity.Name} with uid {entity.Uid}");
+                shell.WriteLine($"Body part {entityManager.GetComponent<MetaDataComponent>(partUid).EntityName} with uid {partUid} is already attached to entity {entityManager.GetComponent<MetaDataComponent>(entity).EntityName} with uid {entity}");
                 return;
             }
 
-            body.SetPart($"AttachBodyPartVerb-{partEntity.Uid}", part);
+            body.SetPart($"AttachBodyPartVerb-{partUid}", part);
         }
     }
 }

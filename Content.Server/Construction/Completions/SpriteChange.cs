@@ -15,11 +15,11 @@ namespace Content.Server.Construction.Completions
         [DataField("layer")] public int Layer { get; private set; } = 0;
         [DataField("specifier")]  public SpriteSpecifier? SpriteSpecifier { get; private set; } = SpriteSpecifier.Invalid;
 
-        public async Task PerformAction(IEntity entity, IEntity? user)
+        public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {
-            if (entity.Deleted || SpriteSpecifier == null || SpriteSpecifier == SpriteSpecifier.Invalid) return;
+            if (SpriteSpecifier == null || SpriteSpecifier == SpriteSpecifier.Invalid) return;
 
-            if (!entity.TryGetComponent(out SpriteComponent? sprite)) return;
+            if (!entityManager.TryGetComponent(uid, out SpriteComponent? sprite)) return;
 
             // That layer doesn't exist, we do nothing.
             if (sprite.LayerCount <= Layer) return;

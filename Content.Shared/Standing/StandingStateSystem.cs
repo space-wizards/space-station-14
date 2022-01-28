@@ -24,7 +24,7 @@ namespace Content.Shared.Standing
 
         public bool Down(EntityUid uid, bool playSound = true, bool dropHeldItems = true,
             StandingStateComponent? standingState = null,
-            SharedAppearanceComponent? appearance = null,
+            AppearanceComponent? appearance = null,
             SharedHandsComponent? hands = null)
         {
             // TODO: This should actually log missing comps...
@@ -43,7 +43,7 @@ namespace Content.Shared.Standing
             // and ultimately this is just to avoid boilerplate in Down callers + keep their behavior consistent.
             if (dropHeldItems && hands != null)
             {
-                _sharedHandsSystem.DropHandItems(uid, false, hands);
+                RaiseLocalEvent(uid, new DropHandItemsEvent(), false);
             }
 
             var msg = new DownAttemptEvent();
@@ -70,7 +70,7 @@ namespace Content.Shared.Standing
 
         public bool Stand(EntityUid uid,
             StandingStateComponent? standingState = null,
-            SharedAppearanceComponent? appearance = null)
+            AppearanceComponent? appearance = null)
         {
             // TODO: This should actually log missing comps...
             if (!Resolve(uid, ref standingState, false))
@@ -95,6 +95,10 @@ namespace Content.Shared.Standing
             appearance?.SetData(RotationVisuals.RotationState, RotationState.Vertical);
             return true;
         }
+    }
+
+    public sealed class DropHandItemsEvent : EventArgs
+    {
     }
 
     /// <summary>

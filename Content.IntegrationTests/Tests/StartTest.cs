@@ -13,7 +13,10 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task TestServerStart()
         {
-            var server = StartServer();
+            var server = StartServer(new ServerContentIntegrationOption
+            {
+                Pool = false
+            });
             server.RunTicks(5);
             await server.WaitIdleAsync();
             Assert.That(server.IsAlive);
@@ -30,7 +33,10 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task TestClientStart()
         {
-            var client = StartClient();
+            var client = StartClient(new ClientContentIntegrationOption
+            {
+                Pool = false
+            });
             await client.WaitIdleAsync();
             Assert.That(client.IsAlive);
             client.RunTicks(5);

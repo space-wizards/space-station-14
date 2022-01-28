@@ -7,11 +7,11 @@ namespace Content.Shared.Interaction
         /// <summary>
         /// Performer of the attack
         /// </summary>
-        IEntity User { get; }
+        EntityUid User { get; }
         /// <summary>
         /// Target of the attack
         /// </summary>
-        IEntity Target { get; }
+        EntityUid Target { get; }
 
     }
 }

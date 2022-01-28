@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using Content.Shared.Vapor;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
@@ -12,7 +13,7 @@ namespace Content.Server.Chemistry.Components
     {
         [ViewVariables]
         [DataField("transferAmount")]
-        internal ReagentUnit TransferAmount = ReagentUnit.New(0.5);
+        internal FixedPoint2 TransferAmount = FixedPoint2.New(0.5);
 
         internal bool Reached;
         internal float ReactTimer;

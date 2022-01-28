@@ -1,10 +1,64 @@
 # Last match in file takes precedence.
 
-# I pretend to have authority over these things.
-/Resources/ @SweptWasTaken
+# Ping for all PRs except ones with specific pings
+* @PJB3005
+
+# Moony's Gargantuan List Of Things She Cares About, or MGLOTSCA for short.
+# You need to add your name to these entries, not make a new one, if you care about them.
+/Content.*/Bql/ @moonheart08
+/Content.*/Administration/ @moonheart08 @PaulRitter
+/Content.*/Station/ @moonheart08
+/Content.*/Maps/ @moonheart08
+/Content.*/GameTicking/ @moonheart08 @Zumorica
+/Resources/Server\ Info/ @moonheart08
+/Resources/engineCommandPerms.yml @moonheart08
+/Resources/clientCommandPerms.yml @moonheart08
+/Resources/Prototypes/species.yml @moonheart08
+/Resources/Prototypes/Body/ @moonheart08 @mirrorcult # suffering
+/Resources/Prototypes/Maps/ @moonheart08
+/Resources/Prototypes/Entities/Mobs/Player/ @moonheart08 @mirrorcult
+/Resources/Prototypes/Entities/Mobs/Species/ @moonheart08 @mirrorcult
+
+/Content.*/Atmos/ @Zumorica
+/Content.*/Botany/ @Zumorica
+/Content.*/Construction/ @Zumorica
+/Content.*/Holiday/ @Zumorica
+/Content.*/Instruments/ @Zumorica
+/Content.*/Stunnable/ @Zumorica
+/Resources/Prototypes/game_* @Zumorica # Both game_presets.yml and game_rules.yml
+/Resources/Prototypes/holidays.yml @Zumorica
+/Resources/Prototypes/tool_qualities.yml @Zumorica
+/Resources/Prototypes/Atmospherics/ @Zumorica
+/Resources/Prototypes/Recipes/Construction @Zumorica
+/Resources/Prototypes/Recipes/Crafting @Zumorica
+
+/Content.*/Body/ @mirrorcult
+/Content.*/Chemistry/ @mirrorcult
+/Content.*/StatusEffect/ @mirrorcult
+/Content.*/Whitelist/ @mirrorcult
+/Resources/Prototypes/Reagents/ @mirrorcult
+/Resources/Prototypes/Recipes/Reactions @mirrorcult
+/Resources/Prototypes/Chemistry @mirrorcult
+
+/Content.*/Verbs/ @ElectroJr
+/Content.Client/ContextMenu/ @ElectroJr
+/Content.Shared/Damage/ @ElectroJr
+/Content.Shared/Containers/ItemSlot/ @ElectroJr
+/Content.*/PowerCell/ @ElectroJr
+
+# Only some of this shit code is my responsibility, but I wanna get notified:
+/Content.*/Interaction/ @ElectroJr
+/Content.*/Hands/ @ElectroJr
+
+/Content.YAMLLinter @PaulRitter
+/Content.*/Inventory @PaulRitter
+/Content.*/Arcade @PaulRitter
+/Content.*/Conveyor @PaulRitter
+/Content.*/Decals @PaulRitter
+/Content.*/Objectives @PaulRitter
+/Content.*/MachineLinking @PaulRitter
+/Content.*/Crayon @PaulRitter
+/Content.*/Clothing @PaulRitter
 
 # Be they Fluent translations or Freemarker templates, I know them both!
 *.ftl @RemieRichards
-
-# Ping for all PRs
-* @PJB3005 @Zumorica

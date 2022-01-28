@@ -1,7 +1,6 @@
 - type: job
   id: Bartender
   name: "bartender"
-  positions: 1
   startingGear: BartenderGear
   departments:
   - Civilian
@@ -16,11 +15,11 @@
   id: BartenderGear
   equipment:
     head: ClothingHeadHatTophat
-    innerclothing: ClothingUniformJumpsuitBartender
-    outerclothing: ClothingOuterVestKevlar
-    backpack: ClothingBackpackFilled
+    jumpsuit: ClothingUniformJumpsuitBartender
+    outerClothing: ClothingOuterVestKevlar
+    back: ClothingBackpackFilled
     shoes: ClothingShoesColorBlack
-    idcard: BartenderPDA
+    id: BartenderPDA
     ears: ClothingHeadsetService
   innerclothingskirt: ClothingUniformJumpskirtBartender
   satchel: ClothingBackpackSatchelFilled

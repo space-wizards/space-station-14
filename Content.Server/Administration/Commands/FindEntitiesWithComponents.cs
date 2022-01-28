@@ -47,17 +47,17 @@ namespace Content.Server.Administration.Commands
             var entityManager = IoCManager.Resolve<IEntityManager>();
             var entityIds = new HashSet<string>();
 
-            var entitiesWithComponents = components.Select(c => entityManager.GetAllComponents(c).Select(x => x.Owner));
-            var entitiesWithAllComponents = entitiesWithComponents.Skip(1).Aggregate(new HashSet<IEntity>(entitiesWithComponents.First()), (h, e) => { h.IntersectWith(e); return h; });
+            var entitiesWithComponents = components.Select(c => entityManager.GetAllComponents(c).Select(x => x.Owner)).ToArray();
+            var entitiesWithAllComponents = entitiesWithComponents.Skip(1).Aggregate(new HashSet<EntityUid>(entitiesWithComponents.First()), (h, e) => { h.IntersectWith(e); return h; });
 
             foreach (var entity in entitiesWithAllComponents)
             {
-                if (entity.Prototype == null)
+                if (entityManager.GetComponent<MetaDataComponent>(entity).EntityPrototype is not { } prototypeId)
                 {
                     continue;
                 }
 
-                entityIds.Add(entity.Prototype.ID);
+                entityIds.Add(prototypeId.ID);
             }
 
             if (entityIds.Count == 0)

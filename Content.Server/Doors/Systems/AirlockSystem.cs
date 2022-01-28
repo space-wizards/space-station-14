@@ -1,9 +1,11 @@
 ﻿using Content.Server.Doors.Components;
 using Content.Server.Power.Components;
+using Content.Server.WireHacking;
 using Content.Shared.Doors;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 
 namespace Content.Server.Doors.Systems
@@ -28,9 +30,9 @@ namespace Content.Server.Doors.Systems
 
         private void OnPowerChanged(EntityUid uid, AirlockComponent component, PowerChangedEvent args)
         {
-            if (component.AppearanceComponent != null)
+            if (TryComp<AppearanceComponent>(uid, out var appearanceComponent))
             {
-                component.AppearanceComponent.SetData(DoorVisuals.Powered, args.Powered);
+                appearanceComponent.SetData(DoorVisuals.Powered, args.Powered);
             }
 
             // BoltLights also got out
@@ -40,9 +42,9 @@ namespace Content.Server.Doors.Systems
         private void OnStateChanged(EntityUid uid, AirlockComponent component, DoorStateChangedEvent args)
         {
             // Only show the maintenance panel if the airlock is closed
-            if (component.WiresComponent != null)
+            if (TryComp<WiresComponent>(uid, out var wiresComponent))
             {
-                component.WiresComponent.IsPanelVisible =
+                wiresComponent.IsPanelVisible =
                     component.OpenPanelVisible
                     ||  args.State != SharedDoorComponent.DoorState.Open;
             }
@@ -86,10 +88,10 @@ namespace Content.Server.Doors.Systems
 
         private void OnDoorClickShouldActivate(EntityUid uid, AirlockComponent component, DoorClickShouldActivateEvent args)
         {
-            if (component.WiresComponent != null && component.WiresComponent.IsPanelOpen &&
-                args.Args.User.TryGetComponent(out ActorComponent? actor))
+            if (TryComp<WiresComponent>(uid, out var wiresComponent) && wiresComponent.IsPanelOpen &&
+                EntityManager.TryGetComponent(args.Args.User, out ActorComponent? actor))
             {
-                component.WiresComponent.OpenInterface(actor.PlayerSession);
+                wiresComponent.OpenInterface(actor.PlayerSession);
                 args.Handled = true;
             }
         }

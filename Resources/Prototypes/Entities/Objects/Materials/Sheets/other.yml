@@ -93,7 +93,7 @@
       - plasma_2
       - plasma_3
   - type: Extractable
-    extractableSolution: plasma
+    grindableSolutionName: plasma
   - type: SolutionContainerManager
     solutions:
       plasma:

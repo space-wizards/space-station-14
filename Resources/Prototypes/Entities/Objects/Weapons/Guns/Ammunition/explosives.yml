@@ -12,7 +12,6 @@
     netsync: false
     sprite: Objects/Weapons/Guns/Ammunition/Explosives/rpg.rsi
     state: frag
-    drawdepth: FloorObjects
 
 - type: entity
   id: GrenadeBaton
@@ -28,7 +27,6 @@
     layers:
     - state: base
       map: ["enum.AmmoVisualLayers.Base"]
-    drawdepth: FloorObjects
   - type: Appearance
     visuals:
     - type: SpentAmmoVisualizer
@@ -47,7 +45,6 @@
     layers:
     - state: base
       map: ["enum.AmmoVisualLayers.Base"]
-    drawdepth: FloorObjects
   - type: Appearance
     visuals:
     - type: SpentAmmoVisualizer
@@ -66,7 +63,6 @@
     layers:
     - state: base
       map: ["enum.AmmoVisualLayers.Base"]
-    drawdepth: FloorObjects
   - type: Appearance
     visuals:
     - type: SpentAmmoVisualizer
@@ -85,7 +81,6 @@
     layers:
     - state: base
       map: ["enum.AmmoVisualLayers.Base"]
-    drawdepth: FloorObjects
   - type: Appearance
     visuals:
     - type: SpentAmmoVisualizer

@@ -11,10 +11,10 @@ namespace Content.Shared.Construction
     public class ConstructionGraphNode
     {
         [DataField("actions", serverOnly: true)]
-        private List<IGraphAction> _actions = new();
+        private IGraphAction[] _actions = Array.Empty<IGraphAction>();
 
         [DataField("edges")]
-        private List<ConstructionGraphEdge> _edges = new();
+        private ConstructionGraphEdge[] _edges = Array.Empty<ConstructionGraphEdge>();
 
         [ViewVariables]
         [DataField("node", required: true)]
@@ -36,6 +36,18 @@ namespace Content.Shared.Construction
             {
                 if (edge.Target == target)
                     return edge;
+            }
+
+            return null;
+        }
+
+        public int? GetEdgeIndex(string target)
+        {
+            for (var i = 0; i < _edges.Length; i++)
+            {
+                var edge = _edges[i];
+                if (edge.Target == target)
+                    return i;
             }
 
             return null;

@@ -33,10 +33,7 @@ namespace Content.Client.Chemistry.UI
             base.Open();
 
             //Setup window layout/elements
-            _window = new ReagentDispenserWindow
-            {
-                Title = Loc.GetString("reagent-dispenser-bound-user-interface-title"),
-            };
+            _window = new();
 
             _window.OpenCentered();
             _window.OnClose += Close;

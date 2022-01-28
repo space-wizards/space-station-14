@@ -2,7 +2,7 @@
 - type: entity
   name: Xeno
   id: MobXeno
-  parent: SimpleMobBase
+  parent: SimpleSpaceMobBase
   description: They mostly come at night. Mostly.
   components:
   - type: UtilityAI
@@ -15,17 +15,18 @@
   - type: Hands
   - type: Sprite
     drawdepth: Mobs
+    sprite: Mobs/Aliens/Xenos/burrower.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: running
-      sprite: Mobs/Aliens/Xenos/xeno.rsi
   - type: Physics
     bodyType: Dynamic
+  - type: Fixtures
     fixtures:
     - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.4,-1,0.4,-0.2"
-      mass: 85
+        !type:PhysShapeCircle
+        radius: 0.35
+      mass: 120
       mask:
       - Impassable
       - MobImpassable
@@ -55,7 +56,11 @@
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
+      rotate: true
       normal: running
       crit: crit
       dead: dead
   - type: Puller
+  - type: Butcherable
+    meat: FoodMeatXeno
+    pieces: 5

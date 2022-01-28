@@ -103,13 +103,13 @@ namespace Content.Server.Administration.Commands
 
             response.Append(expires == null ?
                 " permanently."
-                : $" until {expires.ToString()}");
+                : $" until {expires}");
 
             shell.WriteLine(response.ToString());
 
             if (plyMgr.TryGetSessionById(targetUid, out var targetPlayer))
             {
-                targetPlayer.ConnectedClient.Disconnect("You've been banned. Tough shit.");
+                targetPlayer.ConnectedClient.Disconnect(banDef.DisconnectMessage);
             }
         }
     }

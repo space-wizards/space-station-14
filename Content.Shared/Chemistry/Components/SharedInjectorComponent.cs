@@ -1,5 +1,6 @@
 using System;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -20,11 +21,11 @@ namespace Content.Shared.Chemistry.Components
         [Serializable, NetSerializable]
         protected sealed class InjectorComponentState : ComponentState
         {
-            public ReagentUnit CurrentVolume { get; }
-            public ReagentUnit TotalVolume { get; }
+            public FixedPoint2 CurrentVolume { get; }
+            public FixedPoint2 TotalVolume { get; }
             public InjectorToggleMode CurrentMode { get; }
 
-            public InjectorComponentState(ReagentUnit currentVolume, ReagentUnit totalVolume, InjectorToggleMode currentMode)
+            public InjectorComponentState(FixedPoint2 currentVolume, FixedPoint2 totalVolume, InjectorToggleMode currentMode)
             {
                 CurrentVolume = currentVolume;
                 TotalVolume = totalVolume;

@@ -22,6 +22,8 @@ namespace Content.Shared.Movement.Components
         /// </summary>
         bool Sprinting { get; }
 
+        Angle LastGridAngle { get; set; }
+
         /// <summary>
         ///     Calculated linear velocity direction of the entity.
         /// </summary>

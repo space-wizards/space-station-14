@@ -1,8 +1,11 @@
 ﻿using System.Threading.Tasks;
+using Content.Server.Popups;
 using Content.Shared.Construction;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Localization;
+using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Construction.Completions
@@ -14,14 +17,17 @@ namespace Content.Server.Construction.Completions
         [DataField("cursor")] public bool Cursor { get; } = false;
         [DataField("text")] public string Text { get; } = string.Empty;
 
-        public async Task PerformAction(IEntity entity, IEntity? user)
+        public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {
-            if (user == null) return;
+            if (userUid == null)
+                return;
+
+            var popupSystem = entityManager.EntitySysManager.GetEntitySystem<PopupSystem>();
 
             if(Cursor)
-                user.PopupMessageCursor(Text);
+                popupSystem.PopupCursor(Loc.GetString(Text), Filter.Entities(userUid.Value));
             else
-                entity.PopupMessage(user, Text);
+                popupSystem.PopupEntity(Loc.GetString(Text), uid, Filter.Entities(userUid.Value));
         }
     }
 }

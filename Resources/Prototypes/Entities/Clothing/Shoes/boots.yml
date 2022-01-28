@@ -1,7 +1,7 @@
 - type: entity
   parent: ClothingShoesBase
   id: ClothingShoesBootsWork
-  name: workboots shoes
+  name: workboots
   description: Engineering lace-up work boots for the especially blue-collar.
   components:
   - type: Sprite

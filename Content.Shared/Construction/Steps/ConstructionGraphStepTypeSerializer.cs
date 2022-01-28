@@ -18,34 +18,33 @@ namespace Content.Shared.Construction.Steps
             {
                 return typeof(MaterialConstructionGraphStep);
             }
-            else if (node.Has("tool"))
+
+            if (node.Has("tool"))
             {
                 return typeof(ToolConstructionGraphStep);
             }
-            else if (node.Has("prototype"))
+
+            if (node.Has("prototype"))
             {
                 return typeof(PrototypeConstructionGraphStep);
             }
-            else if (node.Has("component"))
+
+            if (node.Has("component"))
             {
                 return typeof(ComponentConstructionGraphStep);
             }
-            else if (node.Has("tag"))
+
+            if (node.Has("tag"))
             {
                 return typeof(TagConstructionGraphStep);
             }
-            else if (node.Has("allTags") || node.Has("anyTags"))
+
+            if (node.Has("allTags") || node.Has("anyTags"))
             {
                 return typeof(MultipleTagsConstructionGraphStep);
             }
-            else if (node.Has("steps"))
-            {
-                return typeof(NestedConstructionGraphStep);
-            }
-            else
-            {
-                return null;
-            }
+
+            return null;
         }
 
         public DeserializationResult Read(ISerializationManager serializationManager,

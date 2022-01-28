@@ -1,6 +1,8 @@
 using Content.Shared.Nutrition.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.Nutrition.Visualizers
@@ -18,7 +20,8 @@ namespace Content.Client.Nutrition.Visualizers
         {
             base.OnChangeData(component);
 
-            if (!component.Owner.TryGetComponent<ISpriteComponent>(out var sprite))
+            var entities = IoCManager.Resolve<IEntityManager>();
+            if (!entities.TryGetComponent(component.Owner, out ISpriteComponent sprite))
             {
                 return;
             }

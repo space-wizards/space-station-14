@@ -7,6 +7,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Placeable;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
@@ -15,20 +16,22 @@ namespace Content.Shared.Storage
     [NetworkedComponent()]
     public abstract class SharedStorageComponent : Component, IDraggable
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
+
         public override string Name => "Storage";
 
-        public abstract IReadOnlyList<IEntity>? StoredEntities { get; }
+        public abstract IReadOnlyList<EntityUid>? StoredEntities { get; }
 
         /// <summary>
         ///     Removes from the storage container and updates the stored value
         /// </summary>
         /// <param name="entity">The entity to remove</param>
         /// <returns>True if no longer in storage, false otherwise</returns>
-        public abstract bool Remove(IEntity entity);
+        public abstract bool Remove(EntityUid entity);
 
         bool IDraggable.CanDrop(CanDropEvent args)
         {
-            return args.Target.TryGetComponent(out PlaceableSurfaceComponent? placeable) &&
+            return _entMan.TryGetComponent(args.Target, out PlaceableSurfaceComponent? placeable) &&
                    placeable.IsPlaceable;
         }
 
@@ -51,7 +54,7 @@ namespace Content.Shared.Storage
             {
                 if (Remove(storedEntity))
                 {
-                    storedEntity.Transform.WorldPosition = eventArgs.DropLocation.Position;
+                    _entMan.GetComponent<TransformComponent>(storedEntity).WorldPosition = eventArgs.DropLocation.Position;
                 }
             }
 
@@ -74,7 +77,9 @@ namespace Content.Shared.Storage
     /// Updates the client component about what entities this storage is holding
     /// </summary>
     [Serializable, NetSerializable]
+#pragma warning disable 618
     public class StorageHeldItemsMessage : ComponentMessage
+#pragma warning restore 618
     {
         public readonly int StorageSizeMax;
         public readonly int StorageSizeUsed;
@@ -93,7 +98,9 @@ namespace Content.Shared.Storage
     /// Component message for adding an entity to the storage entity.
     /// </summary>
     [Serializable, NetSerializable]
+#pragma warning disable 618
     public class InsertEntityMessage : ComponentMessage
+#pragma warning restore 618
     {
         public InsertEntityMessage()
         {
@@ -105,7 +112,9 @@ namespace Content.Shared.Storage
     /// Component message for displaying an animation of entities flying into a storage entity
     /// </summary>
     [Serializable, NetSerializable]
+#pragma warning disable 618
     public class AnimateInsertingEntitiesMessage : ComponentMessage
+#pragma warning restore 618
     {
         public readonly List<EntityUid> StoredEntities;
         public readonly List<EntityCoordinates> EntityPositions;
@@ -121,7 +130,9 @@ namespace Content.Shared.Storage
     /// Component message for removing a contained entity from the storage entity
     /// </summary>
     [Serializable, NetSerializable]
+#pragma warning disable 618
     public class RemoveEntityMessage : ComponentMessage
+#pragma warning restore 618
     {
         public EntityUid EntityUid;
 
@@ -136,7 +147,9 @@ namespace Content.Shared.Storage
     /// Component message for opening the storage UI
     /// </summary>
     [Serializable, NetSerializable]
+#pragma warning disable 618
     public class OpenStorageUIMessage : ComponentMessage
+#pragma warning restore 618
     {
         public OpenStorageUIMessage()
         {
@@ -149,7 +162,9 @@ namespace Content.Shared.Storage
     /// E.g when the player moves too far away from the container.
     /// </summary>
     [Serializable, NetSerializable]
+#pragma warning disable 618
     public class CloseStorageUIMessage : ComponentMessage
+#pragma warning restore 618
     {
         public CloseStorageUIMessage()
         {

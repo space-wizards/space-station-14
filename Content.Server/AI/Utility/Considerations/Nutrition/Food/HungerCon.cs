@@ -2,6 +2,8 @@ using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
 using Content.Server.Nutrition.Components;
 using Content.Shared.Nutrition.Components;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Utility.Considerations.Nutrition.Food
 {
@@ -12,7 +14,7 @@ namespace Content.Server.AI.Utility.Considerations.Nutrition.Food
         {
             var owner = context.GetState<SelfState>().GetValue();
 
-            if (owner == null || !owner.TryGetComponent(out HungerComponent? hunger))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(owner, out HungerComponent? hunger))
             {
                 return 0.0f;
             }

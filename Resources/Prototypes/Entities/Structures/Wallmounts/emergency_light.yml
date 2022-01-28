@@ -8,7 +8,7 @@
     enabled: false
     radius: 10
     energy: 2.5
-    offset: "0, 0.8"
+    offset: "0, 0.5"
     color: "#FF4020"
     mask: /Textures/Effects/LightMasks/cone.png
   - type: ApcPowerReceiver

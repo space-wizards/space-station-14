@@ -4,11 +4,11 @@ namespace Content.Shared.Interaction.Events
 {
     public class ChangeDirectionAttemptEvent : CancellableEntityEventArgs
     {
-        public ChangeDirectionAttemptEvent(IEntity entity)
+        public ChangeDirectionAttemptEvent(EntityUid uid)
         {
-            Entity = entity;
+            Uid = uid;
         }
 
-        public IEntity Entity { get; }
+        public EntityUid Uid { get; }
     }
 }

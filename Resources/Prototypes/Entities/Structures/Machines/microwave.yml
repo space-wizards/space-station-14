@@ -19,6 +19,7 @@
     - key: enum.MicrowaveUiKey.Key
       type: MicrowaveBoundUserInterface
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -32,7 +33,7 @@
   - type: Sprite
     netsync: false
     sprite: Structures/Machines/microwave.rsi
-    drawdepth: WallMountedItems
+    drawdepth: SmallObjects
     layers:
     - state: mw0
       map: ["enum.MicrowaveVisualizerLayers.Base"]

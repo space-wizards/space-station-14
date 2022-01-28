@@ -15,7 +15,7 @@ namespace Content.IntegrationTests.Tests.Atmos
         [Test]
         public async Task TotalGasesTest()
         {
-            var server = StartServerDummyTicker();
+            var server = StartServer();
 
             await server.WaitIdleAsync();
 

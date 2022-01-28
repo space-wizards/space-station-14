@@ -9,7 +9,7 @@ using Robust.Shared.Localization;
 
 namespace Content.Server.Administration.Commands
 {
-    [AdminCommand(AdminFlags.Server)]
+    [AdminCommand(AdminFlags.Round)]
     public class CallShuttleCommand : IConsoleCommand
     {
         public string Command => "callshuttle";
@@ -23,7 +23,7 @@ namespace Content.Server.Administration.Commands
             // ReSharper disable once ConvertIfStatementToSwitchStatement
             if (args.Length == 1 && TimeSpan.TryParseExact(args[0], Localization.TimeSpanMinutesFormats, loc.DefaultCulture, out var timeSpan))
             {
-                EntitySystem.Get<RoundEndSystem>().RequestRoundEnd(timeSpan, false);
+                EntitySystem.Get<RoundEndSystem>().RequestRoundEnd(timeSpan, shell.Player?.AttachedEntity, false);
             }
             else if (args.Length == 1)
             {
@@ -31,12 +31,12 @@ namespace Content.Server.Administration.Commands
             }
             else
             {
-                EntitySystem.Get<RoundEndSystem>().RequestRoundEnd(false);
+                EntitySystem.Get<RoundEndSystem>().RequestRoundEnd(shell.Player?.AttachedEntity, false);
             }
         }
     }
 
-    [AdminCommand(AdminFlags.Server)]
+    [AdminCommand(AdminFlags.Round)]
     public class RecallShuttleCommand : IConsoleCommand
     {
         public string Command => "recallshuttle";
@@ -45,7 +45,7 @@ namespace Content.Server.Administration.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            EntitySystem.Get<RoundEndSystem>().CancelRoundEndCountdown(false);
+            EntitySystem.Get<RoundEndSystem>().CancelRoundEndCountdown(shell.Player?.AttachedEntity, false);
         }
     }
 }

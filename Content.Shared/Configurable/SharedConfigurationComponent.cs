@@ -23,7 +23,9 @@ namespace Content.Shared.Configurable
         /// <summary>
         ///     Message sent to other components on this entity when DeviceNetwork configuration updated.
         /// </summary>
+#pragma warning disable 618
         public class ConfigUpdatedComponentMessage : ComponentMessage
+#pragma warning restore 618
         {
             public Dictionary<string, string> Config { get; }
 
