@@ -271,7 +271,6 @@ namespace Content.Server.Database
         public Server Server { get; set; } = default!;
     }
 
-    [Table("server")]
     public class Server
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
