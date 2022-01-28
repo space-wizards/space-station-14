@@ -11,6 +11,7 @@ using Content.Shared.Audio;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
@@ -18,6 +19,8 @@ namespace Content.Server.Tools
 {
     public partial class ToolSystem : EntitySystem
     {
+        [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
@@ -30,6 +33,7 @@ namespace Content.Server.Tools
         {
             base.Initialize();
 
+            InitializeTilePrying();
             InitializeWelders();
             InitializeMultipleTools();
 
@@ -98,10 +102,18 @@ namespace Content.Server.Tools
         ///          the <see cref="doAfterCompleteEvent"/> and <see cref="doAfterCancelledEvent"/> being broadcast
         ///          to see whether using the tool succeeded or not. If the <see cref="doAfterDelay"/> is zero,
         ///          this simply returns whether using the tool succeeded or not.</returns>
-        public bool UseTool(EntityUid tool, EntityUid user, EntityUid? target, float fuel,
-            float doAfterDelay, IEnumerable<string> toolQualitiesNeeded,
-            object? doAfterCompleteEvent = null, object? doAfterCancelledEvent = null, EntityUid? doAfterEventTarget = null,
-            Func<bool>? doAfterCheck = null, ToolComponent? toolComponent = null)
+        public bool UseTool(
+            EntityUid tool,
+            EntityUid user,
+            EntityUid? target,
+            float fuel,
+            float doAfterDelay,
+            IEnumerable<string> toolQualitiesNeeded,
+            object? doAfterCompleteEvent = null,
+            object? doAfterCancelledEvent = null,
+            EntityUid? doAfterEventTarget = null,
+            Func<bool>? doAfterCheck = null,
+            ToolComponent? toolComponent = null)
         {
             // No logging here, after all that'd mean the caller would need to check if the component is there or not.
             if (!Resolve(tool, ref toolComponent, false))
