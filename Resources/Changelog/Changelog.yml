@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Doors now shut properly on a rotated shuttle., type: Fix}
-  id: 440
-  time: '2021-10-15T03:04:23.0000000+00:00'
 - author: Swept
   changes:
   - {message: Converted most of the codebase to Supernorn sprites, type: Tweak}
@@ -2935,3 +2930,11 @@ Entries:
       machines, type: Tweak}
   id: 940
   time: '2022-01-27T07:33:27.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Chief Engineers now have access to the advanced magboots in their locker.,
+    type: Add}
+  - {message: The 'Steal Magboots' objective is now 'Steal Advanced Magboots' and
+      considered more difficult., type: Tweak}
+  id: 941
+  time: '2022-01-28T18:28:05.0000000+00:00'
