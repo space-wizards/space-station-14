@@ -189,6 +189,8 @@
       - KitchenReagentGrinderMachineCircuitboard
       - CrewMonitoringComputerCircuitboard
       - ShuttleConsoleCircuitboard
+      - DawInstrumentMachineCircuitboard
+      - SynthesizerInstrument
       - Bucket
       - MopItem
       - SprayBottle

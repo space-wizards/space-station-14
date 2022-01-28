@@ -82,9 +82,17 @@
     - state: daw-base
     - state: daw-display
       shader: unshaded
+    - state: daw-panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Appearance
+    visuals:
+    - type: WiresVisualizer
   - type: Construction
     graph: Machine
     node: machine
+  - type: Wires
+    BoardName: "DawInstrument"
+    LayoutId: DawInstrument
   - type: Machine
     board: DawInstrumentMachineCircuitboard
   - type: Instrument

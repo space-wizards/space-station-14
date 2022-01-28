@@ -40,6 +40,10 @@
       "directions": 1
     },
     {
+      "name": "daw-panel",
+      "directions": 1
+    },
+    {
       "name": "daw-display",
       "directions": 1,
       "delays": [
