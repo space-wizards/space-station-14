@@ -100,11 +100,16 @@ namespace Content.Server.Database
         #endregion
 
         #region Connection Logs
-        Task AddConnectionLogAsync(
+        /// <returns>ID of newly inserted connection log row.</returns>
+        Task<int> AddConnectionLogAsync(
             NetUserId userId,
             string userName,
             IPAddress address,
-            ImmutableArray<byte> hwId);
+            ImmutableArray<byte> hwId,
+            ConnectionDenyReason? denied);
+
+        Task AddServerBanHitsAsync(int connection, IEnumerable<ServerBanDef> bans);
+
         #endregion
 
         #region Admin Ranks
@@ -276,13 +281,19 @@ namespace Content.Server.Database
             return _db.GetPlayerRecordByUserId(userId, cancel);
         }
 
-        public Task AddConnectionLogAsync(
+        public Task<int> AddConnectionLogAsync(
             NetUserId userId,
             string userName,
             IPAddress address,
-            ImmutableArray<byte> hwId)
+            ImmutableArray<byte> hwId,
+            ConnectionDenyReason? denied)
         {
-            return _db.AddConnectionLogAsync(userId, userName, address, hwId);
+            return _db.AddConnectionLogAsync(userId, userName, address, hwId, denied);
+        }
+
+        public Task AddServerBanHitsAsync(int connection, IEnumerable<ServerBanDef> bans)
+        {
+            return _db.AddServerBanHitsAsync(connection, bans);
         }
 
         public Task<Admin?> GetAdminDataForAsync(NetUserId userId, CancellationToken cancel = default)
