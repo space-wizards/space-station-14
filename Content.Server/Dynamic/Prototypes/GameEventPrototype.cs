@@ -4,6 +4,7 @@ using Content.Server.Dynamic.Abstract;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
 namespace Content.Server.Dynamic.Prototypes;
@@ -34,6 +35,13 @@ public class GameEventPrototype : IPrototype
     /// </summary>
     [DataField("eventTags", customTypeSerializer:typeof(PrototypeIdHashSetSerializer<GameEventTagPrototype>))]
     public HashSet<string> EventTags = default!;
+
+    /// <summary>
+    ///     Which scheduler does this event fall under? e.g. Antagonist or Event, which run
+    ///     at different frequencies and stop at different times.
+    /// </summary>
+    [DataField("scheduler", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<DynamicSchedulerPrototype>))]
+    public string Scheduler = default!;
 
     /// <summary>
     ///    Which type of event is this?

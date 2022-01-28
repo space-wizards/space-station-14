@@ -104,6 +104,7 @@ namespace Content.Client.Entry
             prototypes.RegisterIgnore("gameEvent");
             prototypes.RegisterIgnore("gameEventTag");
             prototypes.RegisterIgnore("storyteller");
+            prototypes.RegisterIgnore("dynamicScheduler");
 
             ClientContentIoC.Register();
 

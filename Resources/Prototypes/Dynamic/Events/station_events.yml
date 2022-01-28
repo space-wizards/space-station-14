@@ -2,9 +2,10 @@
   id: Kudzu
   name: Kudzu!
   description: idk lol
+  scheduler: Event
   eventTags: [ "StationEvent" ]
-  eventType: Roundstart
-  threat: 1
+  eventType: Midround
+  threat: 5
   effects:
   - !type:RunStationEventEffect
     name: KudzuGrowth

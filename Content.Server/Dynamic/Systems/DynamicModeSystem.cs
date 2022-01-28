@@ -21,7 +21,6 @@ public partial class DynamicModeSystem : GameRuleSystem
     // Cached so we can re-enable random events if dynamic is disabled.
     private bool _stationEventsWereEnabled;
 
-    private float _midroundAccumulator;
     private float _refundAccumulator;
 
     /// <summary>
@@ -36,6 +35,15 @@ public partial class DynamicModeSystem : GameRuleSystem
         SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnRoundStarted);
 
         InitializeEvents();
+
+        _proto.PrototypesReloaded += ReloadSchedulers;
+    }
+
+    public override void Shutdown()
+    {
+        base.Shutdown();
+
+        _proto.PrototypesReloaded -= ReloadSchedulers;
     }
 
     public override void Update(float frameTime)
@@ -45,16 +53,7 @@ public partial class DynamicModeSystem : GameRuleSystem
         if (!DynamicStarted) return;
 
         // Midround injection loop.
-        _midroundAccumulator += frameTime;
-
-        // debug
-        if (_midroundAccumulator > 30.0f)
-        {
-
-            // Run a midround event
-
-            TryRunMidroundEvent();
-        }
+        ScheduleMidroundInjection(frameTime);
 
         _refundAccumulator += frameTime;
 
@@ -74,6 +73,8 @@ public partial class DynamicModeSystem : GameRuleSystem
             _stationEventsWereEnabled = true;
             _stationEvents.Enabled = false;
         }
+
+        RebuildSchedulers();
 
         // Calculate budget
         GenerateThreat();

@@ -1,0 +1,14 @@
+﻿- type: dynamicScheduler
+  id: Default
+  frequency: 4
+
+- type: dynamicScheduler
+  id: Event
+  frequency: 5
+  minRoundTime: 0
+
+- type: dynamicScheduler
+  id: Antagonist
+  frequency: 20
+  minRoundTime: 0
+  maxRoundTime: 2400

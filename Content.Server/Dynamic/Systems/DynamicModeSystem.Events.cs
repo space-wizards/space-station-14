@@ -55,20 +55,6 @@ public partial class DynamicModeSystem
 
     #endregion
 
-    #region Midround
-
-    /// <summary>
-    ///     When will dynamic start accepting latejoin events?
-    /// </summary>
-    public TimeSpan MidroundStart => TimeSpan.FromMinutes(_cfg.GetCVar(CCVars.DynamicMidroundStart));
-
-    /// <summary>
-    ///     When will dynamic stop accepting latejoin events?
-    /// </summary>
-    public TimeSpan MidroundEnd => TimeSpan.FromMinutes(_cfg.GetCVar(CCVars.DynamicMidroundEnd));
-
-    #endregion
-
     public void InitializeEvents()
     {
         SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerSpawnComplete);
@@ -123,24 +109,26 @@ public partial class DynamicModeSystem
 
     /// <summary>
     ///     Attempts to run a midround event.
+    ///     Takes in a list of event candidates which are determined by the scheduler responsible for them.
+    ///     A midround event with no scheduler will not be run.
     /// </summary>
-    public void TryRunMidroundEvent()
+    public void TryRunMidroundEvent(List<GameEventPrototype> eventCandidates, string schedule)
     {
         var chance = 0.0f;
 
+        // TODO
+        var cand = _random.Pick(eventCandidates);
 
+        Logger.Info($"dynamic midround picked {cand.Name} on schedule {schedule}");
     }
 
     /// <summary>
     ///     For a given latejoiner, tries to run a latejoin event.
     /// </summary>
-    /// <param name="player"></param>
     public void TryRunLatejoinEvent(IPlayerSession player)
     {
         // TODO
         Logger.Info("Tried to run latejoin event, weehee");
-
-
     }
 
     /// <summary>
