@@ -27,7 +27,7 @@
           steps:
             - material: Cable
               amount: 5
-              doAfter: 3
+              doAfter: 2.5
         - to: start
           conditions:
             - !type:EntityAnchored
