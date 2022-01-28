@@ -387,7 +387,9 @@ namespace Content.Server.Shuttles.EntitySystems
 
             foreach (var comp in _activeThrusters.ToArray())
             {
-                if (!comp.Firing || comp.Damage == null || comp.Paused || comp.Deleted) continue;
+                MetaDataComponent? metaData = null;
+
+                if (!comp.Firing || comp.Damage == null || Paused(comp.Owner, metaData) || Deleted(comp.Owner, metaData)) continue;
 
                 DebugTools.Assert(comp.Colliding.Count > 0);
 
