@@ -39,7 +39,6 @@ namespace Content.Server.Bible
         private void OnAfterInteract(EntityUid uid, BibleComponent component, AfterInteractEvent args)
         {
             var currentTime = _gameTiming.CurTime;
-            var meta = MetaData(uid);
 
             if (currentTime < component.CooldownEnd)
             {
@@ -49,6 +48,11 @@ namespace Content.Server.Bible
             {
                 return;
             }
+
+            component.LastAttackTime = currentTime;
+            component.CooldownEnd = component.LastAttackTime + TimeSpan.FromSeconds(component.CooldownTime);
+            RaiseLocalEvent(uid, new RefreshItemCooldownEvent(component.LastAttackTime, component.CooldownEnd), false);
+
             if (!EntityManager.HasComponent<BibleUserComponent>(args.User))
             {
                 args.User.PopupMessage(Loc.GetString("bible-sizzle"));
@@ -58,11 +62,6 @@ namespace Content.Server.Bible
 
                 return;
             }
-
-            component.LastAttackTime = currentTime;
-            component.CooldownEnd = component.LastAttackTime + TimeSpan.FromSeconds(component.CooldownTime);
-
-            RaiseLocalEvent(uid, new RefreshItemCooldownEvent(component.LastAttackTime, component.CooldownEnd), false);
 
             if (!_invSystem.TryGetSlotEntity(args.Target.Value, "head", out var entityUid))
             {
