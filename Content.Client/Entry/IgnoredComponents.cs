@@ -70,6 +70,7 @@ namespace Content.Client.Entry
             "SpeedLoader",
             "Hitscan",
             "StunOnCollide",
+            "ExaminableDamage",
             "RandomPottedPlant",
             "Brain",
             "CommunicationsConsole",
