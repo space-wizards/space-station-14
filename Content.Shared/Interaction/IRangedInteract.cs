@@ -1,26 +1,9 @@
-using System;
 using JetBrains.Annotations;
-using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 
 namespace Content.Shared.Interaction
 {
-    [PublicAPI]
-    public class RangedInteractEventArgs : EventArgs
-    {
-        public RangedInteractEventArgs(EntityUid user, EntityUid @using, EntityCoordinates clickLocation)
-        {
-            User = user;
-            Using = @using;
-            ClickLocation = clickLocation;
-        }
-
-        public EntityUid User { get; }
-        public EntityUid Using { get; }
-        public EntityCoordinates ClickLocation { get; }
-    }
-
     /// <summary>
     ///     Raised when an entity is interacted with that is out of the user entity's range of direct use.
     /// </summary>
