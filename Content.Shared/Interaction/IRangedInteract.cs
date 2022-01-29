@@ -6,20 +6,6 @@ using Robust.Shared.Map;
 
 namespace Content.Shared.Interaction
 {
-    /// <summary>
-    /// This interface gives components behavior when being clicked on by a user with an object
-    /// outside the range of direct use
-    /// </summary>
-    [RequiresExplicitImplementation]
-    public interface IRangedInteract
-    {
-        /// <summary>
-        /// Called when we try to interact with an entity out of range
-        /// </summary>
-        [Obsolete("Use RangedInteractMessage instead")]
-        bool RangedInteract(RangedInteractEventArgs eventArgs);
-    }
-
     [PublicAPI]
     public class RangedInteractEventArgs : EventArgs
     {

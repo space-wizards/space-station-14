@@ -273,21 +273,9 @@ namespace Content.Server.Interaction
             {
                 var rangedMsg = new RangedInteractEvent(user, used, target.Value, clickLocation);
                 RaiseLocalEvent(target.Value, rangedMsg);
+
                 if (rangedMsg.Handled)
                     return true;
-
-                var rangedInteractions = AllComps<IRangedInteract>(target.Value).ToList();
-                var rangedInteractionEventArgs = new RangedInteractEventArgs(user, used, clickLocation);
-
-                // See if we have a ranged interaction
-                foreach (var t in rangedInteractions)
-                {
-                    // If an InteractUsingRanged returns a status completion we finish our interaction
-#pragma warning disable 618
-                    if (t.RangedInteract(rangedInteractionEventArgs))
-#pragma warning restore 618
-                        return true;
-                }
             }
 
             return await InteractDoAfter(user, used, inRangeUnobstructed ? target : null, clickLocation, false);
