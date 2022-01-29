@@ -1,12 +1,4 @@
 Entries:
-- author: Swept
-  changes:
-  - {message: Converted most of the codebase to Supernorn sprites, type: Tweak}
-  - {message: Removes most of the cev-eris sprites, type: Remove}
-  - {message: Removed low walls, type: Remove}
-  - {message: Removed shelves, type: Remove}
-  id: 441
-  time: '2021-10-15T09:58:40.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: Adapts window construction to the new sprites and grilles., type: Tweak}
@@ -2938,3 +2930,8 @@ Entries:
       considered more difficult., type: Tweak}
   id: 941
   time: '2022-01-28T18:28:05.0000000+00:00'
+- author: aaronmell
+  changes:
+  - {message: Admin and AdminRank windows show the save button correctly now, type: Fix}
+  id: 942
+  time: '2022-01-29T05:20:26.0000000+00:00'
