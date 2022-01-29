@@ -1,7 +1,7 @@
 - type: entity
   parent: BaseItem
   id: BaseComputerCircuitboard
-  name: circuit PCB
+  name: computer board
   abstract: true
   components:
     - type: ComputerBoard
@@ -12,7 +12,7 @@
 - type: entity
   parent: BaseComputerCircuitboard
   id: AlertsComputerCircuitboard
-  name: alerts computer PCB
+  name: alerts computer board
   description: A computer printed circuit board for an alerts computer
   components:
     - type: ComputerBoard
@@ -21,7 +21,7 @@
 - type: entity
   parent: BaseComputerCircuitboard
   id: PowerComputerCircuitboard
-  name: power monitoring PCB
+  name: power monitoring computer board
   description: A computer printed circuit board for a power monitoring computer
   components:
     - type: ComputerBoard
@@ -30,7 +30,7 @@
 - type: entity
   parent: BaseComputerCircuitboard
   id: MedicalRecordsComputerCircuitboard
-  name: medical records PCB
+  name: medical records computer board
   description: A computer printed circuit board for a medical records computer
   components:
     - type: ComputerBoard
@@ -39,7 +39,7 @@
 - type: entity
   parent: BaseComputerCircuitboard
   id: CriminalRecordsComputerCircuitboard
-  name: criminal records PCB
+  name: criminal records computer board
   description: A computer printed circuit board for a criminal records computer
   components:
     - type: ComputerBoard
@@ -48,7 +48,7 @@
 - type: entity
   parent: BaseComputerCircuitboard
   id: SupplyComputerCircuitboard
-  name: supply ordering PCB
+  name: supply ordering computer board
   description: A computer printed circuit board for a supply ordering console
   components:
     - type: ComputerBoard
@@ -57,7 +57,7 @@
 - type: entity
   parent: BaseComputerCircuitboard
   id: SupplyRequestComputerCircuitboard
-  name: supply request PCB
+  name: supply request computer board
   description: A computer printed circuit board for a supply request console
   components:
     - type: ComputerBoard
@@ -66,7 +66,7 @@
 - type: entity
   parent: BaseComputerCircuitboard
   id: ResearchComputerCircuitboard
-  name: R&D computer PCB
+  name: R&D computer board
   description: A computer printed circuit board for a R&D console
   components:
     - type: ComputerBoard
@@ -75,7 +75,7 @@
 - type: entity
   parent: BaseComputerCircuitboard
   id: CrewMonitoringComputerCircuitboard
-  name: crew monitoring console PCB
+  name: crew monitoring computer board
   description: A computer printed circuit board for a crew monitoring console
   components:
     - type: ComputerBoard
@@ -84,7 +84,7 @@
 - type: entity
   parent: BaseComputerCircuitboard
   id: IDComputerCircuitboard
-  name: ID card terminal PCB
+  name: ID card computer board
   description: A computer printed circuit board for an ID card console
   components:
     - type: ComputerBoard
@@ -93,7 +93,7 @@
 - type: entity
   parent: BaseComputerCircuitboard
   id: BodyScannerComputerCircuitboard
-  name: body scanner computer PCB
+  name: body scanner computer board
   description: A computer printed circuit board for a body scanner console
   components:
     - type: ComputerBoard
@@ -102,7 +102,7 @@
 - type: entity
   parent: BaseComputerCircuitboard
   id: CommsComputerCircuitboard
-  name: communications computer PCB
+  name: communications computer board
   description: A computer printed circuit board for a communications console
   components:
     - type: ComputerBoard
@@ -111,7 +111,7 @@
 - type: entity
   parent: BaseComputerCircuitboard
   id: SolarControlComputerCircuitboard
-  name: solar control computer PCB
+  name: solar control computer board
   description: A computer printed circuit board for a solar control console
   components:
     - type: ComputerBoard
@@ -120,7 +120,7 @@
 - type: entity
   parent: BaseComputerCircuitboard
   id: SpaceVillainArcadeComputerCircuitboard
-  name: space villain arcade PCB
+  name: space villain arcade board
   description: A computer printed circuit board for a space villain arcade cabinet
   components:
     - type: ComputerBoard
@@ -129,7 +129,7 @@
 - type: entity
   parent: BaseComputerCircuitboard
   id: BlockGameArcadeComputerCircuitboard
-  name: block game arcade PCB
+  name: block game arcade board
   description: A computer printed circuit board for a block game arcade cabinet
   components:
     - type: ComputerBoard
@@ -138,9 +138,8 @@
 - type: entity
   parent: BaseComputerCircuitboard
   id: ParticleAcceleratorComputerCircuitboard
-  name: PA control box
-  suffix: Circuit Board
-  description: A computer printed circuit PCB for a particle accelerator control box
+  name: PA control box computer board
+  description: A computer printed circuit board for a particle accelerator control box
   components:
     - type: ComputerBoard
       prototype: ParticleAcceleratorControlBoxUnfinished
@@ -148,7 +147,7 @@
 - type: entity
   parent: BaseComputerCircuitboard
   id: ShuttleConsoleCircuitboard
-  name: shuttle console PCB
+  name: shuttle console board
   description: A computer printed circuit board for a shuttle console
   components:
     - type: ComputerBoard
@@ -157,7 +156,7 @@
 - type: entity
   parent: BaseComputerCircuitboard
   id: SyndicateShuttleConsoleCircuitboard
-  name: syndicate shuttle console PCB
+  name: syndicate shuttle console board
   description: A computer printed circuit board for a syndicate shuttle console
   components:
     - type: ComputerBoard

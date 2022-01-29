@@ -1,7 +1,7 @@
 ﻿- type: entity
   id: AutolatheMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: autolathe PCB
+  name: autolathe machine board
   description: A machine printed circuit board for an autolathe
   components:
     - type: MachineBoard
@@ -15,7 +15,7 @@
 - type: entity
   id: ProtolatheMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: protolathe PCB
+  name: protolathe machine board
   description: A machine printed circuit board for a protolathe
   components:
     - type: MachineBoard
@@ -32,7 +32,7 @@
 - type: entity
   id: CloningPodMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: cloning pod PCB
+  name: cloning pod machine board
   description: A machine printed circuit board for a cloning pod
   components:
     - type: MachineBoard
@@ -47,7 +47,7 @@
 - type: entity
   id: MedicalScannerMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: medical scanner PCB
+  name: medical scanner machine board
   description: A machine printed circuit board for a medical scanner
   components:
     - type: MachineBoard
@@ -63,7 +63,7 @@
 - type: entity
   id: ChemMasterMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: ChemMaster 4000 PCB
+  name: ChemMaster 4000 machine board
   description: A machine printed circuit board for a ChemMaster 4000
   components:
     - type: MachineBoard
@@ -81,7 +81,7 @@
 - type: entity
   id: ChemDispenserMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: chem dispenser PCB
+  name: chem dispenser machine board
   description: A machine printed circuit board for a chem dispenser
   components:
     - type: MachineBoard
@@ -96,7 +96,7 @@
 - type: entity
   id: HydroponicsTrayMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: hydroponics tray PCB
+  name: hydroponics tray machine board
   description: A machine printed circuit board for a hydroponics tray
   components:
     - type: MachineBoard
@@ -118,7 +118,7 @@
 - type: entity
   id: SMESMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: SMES PCB
+  name: SMES machine board
   description: A machine printed circuit board for a SMES
   components:
     - type: Sprite
@@ -132,7 +132,7 @@
 - type: entity
   id: SubstationMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: substation PCB
+  name: substation machine board
   description: A machine printed circuit board for a substation
   components:
     - type: MachineBoard
@@ -146,7 +146,7 @@
 - type: entity
   id: ReagentGrinderMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: reagent grinder PCB
+  name: reagent grinder machine board
   description: A machine printed circuit board for a reagent grinder
   components:
     - type: MachineBoard
