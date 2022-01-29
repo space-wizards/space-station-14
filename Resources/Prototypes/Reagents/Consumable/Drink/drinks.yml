@@ -157,8 +157,8 @@
         # TODO heal mimes
 
 - type: reagent
-  id: NuclearCola
-  name: nuclear cola
+  id: NukaCola
+  name: nuka cola
   group: Drinks
   desc: Cola, cola never changes.
   physicalDesc: fizzy
