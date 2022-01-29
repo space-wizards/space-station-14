@@ -5,6 +5,7 @@ using Content.Shared.Doors;
 using Content.Shared.Popups;
 using Content.Shared.Interaction;
 using Content.Shared.Access.Components;
+using Content.Shared.Physics;
 using Content.Server.Remotes;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
@@ -116,6 +117,12 @@ namespace Content.Server.Doors.Systems
         private void OnRangedInteract(EntityUid uid, AirlockComponent component, RangedInteractEvent args)
         {
             args.Handled = true;
+            var interactionSystem = EntityManager.EntitySysManager.GetEntitySystem<SharedInteractionSystem>();
+            if (!interactionSystem.InRangeUnobstructed(args.UserUid, args.TargetUid, -1f, CollisionGroup.Opaque))
+            {
+                args.Handled = false;
+                return;
+            }
             // If it isn't a door remote we don't use it
             if (!EntityManager.TryGetComponent<DoorRemoteComponent?>(args.UsedUid, out var remoteComponent))
             {
