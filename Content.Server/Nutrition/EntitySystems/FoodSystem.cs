@@ -387,7 +387,7 @@ namespace Content.Server.Nutrition.EntitySystems
         /// </summary>
         public void ProjectileForceFeed(EntityUid uid, EntityUid target, EntityUid? user, FoodComponent? food = null, BodyComponent? body = null)
         {
-            if (!Resolve(uid, ref food) || !Resolve(target, ref body, false))
+            if (!Resolve(uid, ref food, false) || !Resolve(target, ref body, false))
                 return;
 
             if (IsMouthBlocked(target))

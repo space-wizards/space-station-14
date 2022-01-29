@@ -1,5 +1,5 @@
 ﻿- type: constructionGraph
-  id: lightTorch
+  id: LightTorch
   start: start
   graph:
     - node: start

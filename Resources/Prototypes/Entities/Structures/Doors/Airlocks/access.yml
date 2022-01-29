@@ -95,6 +95,14 @@
   components:
   - type: AccessReader
     access: [["Cargo"]]
+    
+- type: entity
+  parent: AirlockCargo
+  id: AirlockQuartermasterLocked
+  suffix: Quartermaster, Locked
+  components:
+  - type: AccessReader
+    access: [["Quartermaster"]]
 
 - type: entity
   parent: AirlockMedical
@@ -135,6 +143,8 @@
   components:
   - type: AccessReader
     access: [["Command"]]
+  - type: Wires
+    LayoutId: AirlockCommand
 
 - type: entity
   parent: AirlockCommand
@@ -191,6 +201,8 @@
   components:
   - type: AccessReader
     access: [["Security"]]
+  - type: Wires
+    LayoutId: AirlockSecurity
 
 - type: entity
   parent: AirlockSecurity
@@ -199,6 +211,8 @@
   components:
   - type: AccessReader
     access: [["Armory"]]
+  - type: Wires
+    LayoutId: AirlockArmory
 
 - type: entity
   parent: AirlockSecurity
@@ -272,6 +286,14 @@
   components:
   - type: AccessReader
     access: [["Cargo"]]
+    
+- type: entity
+  parent: AirlockCargoGlass
+  id: AirlockQuartermasterGlassLocked
+  suffix: Quartermaster, Locked
+  components:
+  - type: AccessReader
+    access: [["Quartermaster"]]
 
 - type: entity
   parent: AirlockMedicalGlass

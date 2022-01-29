@@ -54,12 +54,14 @@
     - type: Clickable
     - type: InteractionOutline
     - type: Physics
+    - type: Transform
+      anchored: true
     - type: Sprite
       sprite: Structures/Wallmounts/switch.rsi
       state: on
     - type: Rotatable
     - type: Construction
-      graph: lightSwitch
+      graph: LightSwitch
       node: lightSwitch
     - type: ExtensionCableReceiver
     - type: DeviceNetworkComponent

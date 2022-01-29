@@ -144,7 +144,7 @@ namespace Content.Server.Weapon.Ranged
         /// <param name="targetPos">Target position on the map to shoot at.</param>
         private void TryFire(EntityUid user, Vector2 targetPos)
         {
-            if (!_entMan.TryGetComponent(user, out HandsComponent? hands) || hands.GetActiveHand?.Owner != Owner)
+            if (!_entMan.TryGetComponent(user, out HandsComponent? hands) || hands.GetActiveHandItem?.Owner != Owner)
             {
                 return;
             }

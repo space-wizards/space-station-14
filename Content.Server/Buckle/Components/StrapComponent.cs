@@ -20,7 +20,7 @@ namespace Content.Server.Buckle.Components
     [ComponentReference(typeof(SharedStrapComponent))]
     public class StrapComponent : SharedStrapComponent, IInteractHand, ISerializationHooks, IDestroyAct
     {
-        [ComponentDependency] public readonly SpriteComponent? SpriteComponent = null;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private readonly HashSet<EntityUid> _buckledEntities = new();
 
@@ -153,7 +153,8 @@ namespace Content.Server.Buckle.Components
 
             _occupiedSize += buckle.Size;
 
-            buckle.Appearance?.SetData(StrapVisuals.RotationAngle, _rotation);
+            if(_entityManager.TryGetComponent<AppearanceComponent>(buckle.Owner, out var appearanceComponent))
+                appearanceComponent.SetData(StrapVisuals.RotationAngle, _rotation);
 
             // Update the visuals of the strap object
             if (IoCManager.Resolve<IEntityManager>().TryGetComponent<AppearanceComponent>(Owner, out var appearance))

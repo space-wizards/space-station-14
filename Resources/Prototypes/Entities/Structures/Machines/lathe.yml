@@ -32,7 +32,7 @@
       - Opaque
       - MobImpassable
   - type: Construction
-    graph: machine
+    graph: Machine
     node: machine
   - type: Destructible
     thresholds:
@@ -53,8 +53,6 @@
   - type: LatheDatabase
     static: true
     recipes:
-      - Brutepack
-      - Ointment
       - Wirecutter
       - Screwdriver
       - Welder
@@ -113,7 +111,7 @@
       - MobImpassable
   - type: ResearchClient
   - type: Construction
-    graph: machine
+    graph: Machine
     node: machine
   - type: Destructible
     thresholds:
@@ -190,6 +188,7 @@
       - ProtolatheMachineCircuitboard
       - KitchenReagentGrinderMachineCircuitboard
       - CrewMonitoringComputerCircuitboard
+      - ShuttleConsoleCircuitboard
       - Bucket
       - MopItem
       - SprayBottle

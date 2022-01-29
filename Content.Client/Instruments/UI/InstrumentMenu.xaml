@@ -1,4 +1,4 @@
-<SS14Window xmlns="https://spacestation14.io"
+<DefaultWindow xmlns="https://spacestation14.io"
             xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client">
     <BoxContainer Orientation="Vertical" SeparationOverride="5">
         <BoxContainer Orientation="Horizontal" VerticalExpand="True">
@@ -29,4 +29,4 @@
                StyleClasses="LabelBig"
                Text="{Loc instruments-component-menu-no-midi-support}" />
     </PanelContainer>
-</SS14Window>
+</DefaultWindow>

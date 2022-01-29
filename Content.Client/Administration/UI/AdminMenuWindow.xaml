@@ -1,4 +1,4 @@
-﻿<SS14Window
+﻿<DefaultWindow
     xmlns="https://spacestation14.io"
     xmlns:adminTab="clr-namespace:Content.Client.Administration.UI.Tabs.AdminTab"
     xmlns:adminbusTab="clr-namespace:Content.Client.Administration.UI.Tabs.AdminbusTab"
@@ -13,4 +13,4 @@
         <tabs:ServerTab />
         <playerTab:PlayerTab Name="PlayerTabControl" Access="Public" />
     </TabContainer>
-</SS14Window>
+</DefaultWindow>

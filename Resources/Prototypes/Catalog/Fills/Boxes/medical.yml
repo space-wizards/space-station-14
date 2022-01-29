@@ -65,3 +65,25 @@
     layers:
       - state: box
       - state: latex
+      
+- type: entity
+  name: body bag box
+  parent: BoxCardboard
+  id: BoxBodyBag
+  description: Contains body bags.
+  components:
+  - type: StorageFill
+    contents:
+      - id: BodyBag_Folded
+        amount: 5
+  - type: Item
+    size: 30
+  - type: Storage
+    capacity: 30
+  - type: Sprite
+    layers:
+      - state: box
+      - state: bodybags
+    whitelist:
+      tags:
+        - BodyBag

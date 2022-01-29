@@ -10,7 +10,7 @@ using Robust.Shared.Localization;
 namespace Content.Client.Medical.CrewMonitoring
 {
     [GenerateTypedNameReferences]
-    public partial class CrewMonitoringWindow : SS14Window
+    public partial class CrewMonitoringWindow : DefaultWindow
     {
         private List<Control> _rowsContent = new();
 
