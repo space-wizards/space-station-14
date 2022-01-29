@@ -13,3 +13,18 @@
     - type: ItemActions
       actions:
         - actionType: ToggleMagboots
+
+- type: entity
+  parent: ClothingShoesBootsMag
+  id: ClothingShoesBootsMagAdv
+  name: advanced magboots
+  description: State-of-the-art magnetic boots that do not slow down their wearer.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/magboots-advanced.rsi
+    state: icon
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/magboots-advanced.rsi
+  - type: Magboots
+    walkMoveCoeffecient: 1
+    sprintMoveCoeffecient: 1
