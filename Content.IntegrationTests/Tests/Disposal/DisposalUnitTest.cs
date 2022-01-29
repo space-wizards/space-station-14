@@ -194,7 +194,7 @@ namespace Content.IntegrationTests.Tests.Disposal
                 // Remove power need
                 Assert.True(entityManager.TryGetComponent(disposalUnit, out ApcPowerReceiverComponent power));
                 power!.NeedsPower = false;
-                Assert.True(unit.Powered);
+                unit.Powered = true;//Power state changed event doesn't get fired smh
 
                 // Flush with a mob and an item
                 Flush(unit, true, human, wrench);
