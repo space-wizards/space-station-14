@@ -104,7 +104,7 @@
     prefixCreator: '14'
   mapPath: Maps/ssreach.yml
   minPlayers: 8
-  maxPlayers: 25
+  maxPlayers: 15
   overflowJobs:
     - Assistant
   availableJobs:
