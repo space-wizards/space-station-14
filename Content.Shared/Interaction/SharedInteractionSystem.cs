@@ -719,14 +719,6 @@ namespace Content.Shared.Interaction
                 return;
             }
 
-            var comps = AllComps<IThrown>(thrown).ToList();
-            var args = new ThrownEventArgs(user);
-
-            // Call Thrown on all components that implement the interface
-            foreach (var comp in comps)
-            {
-                comp.Thrown(args);
-            }
             _adminLogSystem.Add(LogType.Throw, LogImpact.Low,$"{ToPrettyString(user):user} threw {ToPrettyString(thrown):entity}");
         }
         #endregion
