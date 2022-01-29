@@ -6,7 +6,7 @@
     !type:NanotrasenNameGenerator
     prefixCreator: '14'
   mapPath: Maps/saltern.yml
-  minPlayers: 10
+  minPlayers: 0
   maxPlayers: 25
   fallback: true
   overflowJobs:
