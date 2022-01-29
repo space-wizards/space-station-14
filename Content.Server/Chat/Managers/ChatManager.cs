@@ -277,15 +277,18 @@ namespace Content.Server.Chat.Managers
             var sourceCoords = transformSource.Coordinates;
             var messageWrap = Loc.GetString("chat-manager-entity-whisper-wrap-message",("entityName", _entManager.GetComponent<MetaDataComponent>(source).EntityName));
 
+            var xforms = _entManager.GetEntityQuery<TransformComponent>();
+            var ghosts = _entManager.GetEntityQuery<GhostComponent>();
+
             foreach (var session in sessions)
             {
                 if (session.AttachedEntity is not {Valid: true} playerEntity)
                     continue;
 
-                var transformEntity = _entManager.GetComponent<TransformComponent>(playerEntity);
+                var transformEntity = xforms.GetComponent(playerEntity);
 
                 if (sourceCoords.InRange(_entManager, transformEntity.Coordinates, WhisperRange) ||
-                    _entManager.HasComponent<GhostComponent>(playerEntity))
+                    ghosts.HasComponent(playerEntity))
                 {
                     NetMessageToOne(ChatChannel.Whisper, message, messageWrap, source, hideChat, session.ConnectedClient);
                 }
@@ -354,18 +357,16 @@ namespace Content.Server.Chat.Managers
             }
 
             message = FormattedMessage.EscapeText(message);
+            var sessions = new List<ICommonSession>();
 
-            var clients = Filter.Empty()
-                .AddInRange(_entManager.GetComponent<TransformComponent>(entity).MapPosition, VoiceRange)
-                .Recipients
-                .Select(p => p.ConnectedClient)
-                .ToList();
+            ClientDistanceToList(entity, VoiceRange, sessions);
 
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.LOOC;
             msg.Message = message;
             msg.MessageWrap = Loc.GetString("chat-manager-entity-looc-wrap-message", ("entityName", Name: _entManager.GetComponent<MetaDataComponent>(entity).EntityName));
-            _netManager.ServerSendToMany(msg, clients);
+
+            _netManager.ServerSendToMany(msg, sessions.Select(o => o.ConnectedClient).ToList());
 
             _logs.Add(LogType.Chat, LogImpact.Low, $"LOOC from {player:Player}: {message}");
         }
@@ -624,7 +625,10 @@ namespace Content.Server.Chat.Managers
 
         public void ClientDistanceToList(EntityUid source, int voiceRange, List<ICommonSession> playerSessions)
         {
-            var transformSource = _entManager.GetComponent<TransformComponent>(source);
+            var ghosts = _entManager.GetEntityQuery<GhostComponent>();
+            var xforms = _entManager.GetEntityQuery<TransformComponent>();
+
+            var transformSource = xforms.GetComponent(source);
             var sourceMapId = transformSource.MapID;
             var sourceCoords = transformSource.Coordinates;
 
@@ -633,10 +637,10 @@ namespace Content.Server.Chat.Managers
                 if (player.AttachedEntity is not {Valid: true} playerEntity)
                     continue;
 
-                var transformEntity = _entManager.GetComponent<TransformComponent>(playerEntity);
+                var transformEntity = xforms.GetComponent(playerEntity);
 
                 if (transformEntity.MapID != sourceMapId ||
-                    !_entManager.HasComponent<GhostComponent>(playerEntity) &&
+                    !ghosts.HasComponent(playerEntity) &&
                     !sourceCoords.InRange(_entManager, transformEntity.Coordinates, voiceRange))
                     continue;
 

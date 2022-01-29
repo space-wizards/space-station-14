@@ -37,6 +37,9 @@ namespace Content.Server.Database
         public DbSet<AdminLog> AdminLog { get; set; } = null!;
         public DbSet<AdminLogPlayer> AdminLogPlayer { get; set; } = null!;
         public DbSet<Whitelist> Whitelist { get; set; } = null!;
+        public DbSet<ServerBan> Ban { get; set; } = default!;
+        public DbSet<ServerUnban> Unban { get; set; } = default!;
+        public DbSet<ConnectionLog> ConnectionLog { get; set; } = default!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -101,6 +104,32 @@ namespace Content.Server.Database
 
             modelBuilder.Entity<AdminLogPlayer>()
                 .HasKey(logPlayer => new {logPlayer.PlayerUserId, logPlayer.LogId, logPlayer.RoundId});
+
+            modelBuilder.Entity<ServerBan>()
+                .HasIndex(p => p.UserId);
+
+            modelBuilder.Entity<ServerBan>()
+                .HasIndex(p => p.Address);
+
+            modelBuilder.Entity<ServerBan>()
+                .HasIndex(p => p.UserId);
+
+            modelBuilder.Entity<ServerUnban>()
+                .HasIndex(p => p.BanId)
+                .IsUnique();
+
+            modelBuilder.Entity<ServerBan>()
+                .HasCheckConstraint("HaveEitherAddressOrUserIdOrHWId", "address IS NOT NULL OR user_id IS NOT NULL OR hwid IS NOT NULL");
+
+            modelBuilder.Entity<Player>()
+                .HasIndex(p => p.UserId)
+                .IsUnique();
+
+            modelBuilder.Entity<Player>()
+                .HasIndex(p => p.LastSeenUserName);
+
+            modelBuilder.Entity<ConnectionLog>()
+                .HasIndex(p => p.UserId);
         }
     }
 
@@ -299,5 +328,50 @@ namespace Content.Server.Database
     {
         [Required, Key] public int Uid { get; set; }
         public string? Name { get; set; } = default!;
+    }
+
+    [Table("server_ban")]
+    public class ServerBan
+    {
+        public int Id { get; set; }
+        public Guid? UserId { get; set; }
+        [Column(TypeName = "inet")] public (IPAddress, int)? Address { get; set; }
+        public byte[]? HWId { get; set; }
+
+        public DateTime BanTime { get; set; }
+
+        public DateTime? ExpirationTime { get; set; }
+
+        public string Reason { get; set; } = null!;
+        public Guid? BanningAdmin { get; set; }
+
+        public ServerUnban? Unban { get; set; }
+    }
+
+    [Table("server_unban")]
+    public class ServerUnban
+    {
+        [Column("unban_id")] public int Id { get; set; }
+
+        public int BanId { get; set; }
+        public ServerBan Ban { get; set; } = null!;
+
+        public Guid? UnbanningAdmin { get; set; }
+
+        public DateTime UnbanTime { get; set; }
+    }
+
+    [Table("connection_log")]
+    public class ConnectionLog
+    {
+        public int Id { get; set; }
+
+        public Guid UserId { get; set; }
+        public string UserName { get; set; } = null!;
+
+        public DateTime Time { get; set; }
+
+        public IPAddress Address { get; set; } = null!;
+        public byte[]? HWId { get; set; }
     }
 }

@@ -34,6 +34,9 @@ namespace Content.Server.Sound
 
         private void HandleEmitSoundOnUseInHand(EntityUid eUI, BaseEmitSoundComponent component, UseInHandEvent arg)
         {
+            if (arg.Handled) return;
+
+            arg.Handled = true;
             TryEmitSound(component);
         }
 
@@ -44,6 +47,9 @@ namespace Content.Server.Sound
 
         private void HandleEmitSoundOnActivateInWorld(EntityUid eUI, BaseEmitSoundComponent component, ActivateInWorldEvent arg)
         {
+            if (arg.Handled) return;
+
+            arg.Handled = true;
             TryEmitSound(component);
         }
 
