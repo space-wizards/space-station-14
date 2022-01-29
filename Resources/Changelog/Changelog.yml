@@ -1,9 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: Adapts window construction to the new sprites and grilles., type: Tweak}
-  id: 442
-  time: '2021-10-15T10:21:58.640854+00:00'
 - author: Macoron
   changes:
   - {message: Uplinks UI now have description of items., type: Add}
@@ -2935,3 +2930,8 @@ Entries:
   - {message: Admin and AdminRank windows show the save button correctly now, type: Fix}
   id: 942
   time: '2022-01-29T05:20:26.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Welding toilets no longer annihilate characters sitting on them., type: Fix}
+  id: 943
+  time: '2022-01-29T05:34:57.0000000+00:00'
