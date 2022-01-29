@@ -214,7 +214,7 @@
   name: NT Destroyer pulse rifle
   parent: BatteryGunBase
   id: PulseRifleDestroyer
-  description: In the hands of Death Squad operatives this weapon fully lives up to its name.
+  description: Used by a certain infamous squad, this pulse weapon fully lives up to its name. Can switch to an explosive fire mode.
   components:
   - type: Sprite
     netsync: false
