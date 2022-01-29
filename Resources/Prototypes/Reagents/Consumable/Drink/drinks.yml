@@ -104,14 +104,6 @@
       effects:
       - !type:SatiateThirst
         factor: 4
-  - type: Extractable
-    juiceSolution:
-      reagents:
-      - ReagentId: Cream # TODO cooking rework - separate using heat or other mixer
-        Quantity: 0.8
-  - type: tag
-    tags:
-    - Milk
         
 - type: reagent
   id: MilkGoat
@@ -131,9 +123,6 @@
       effects:
       - !type:SatiateThirst
         factor: 4
-  - type: tag
-    tags:
-    - Milk
 
 - type: reagent
   id: MilkSoy

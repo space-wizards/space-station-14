@@ -176,9 +176,6 @@
 
 - type: Tag
   id: Matchstick
-  
-- type: Tag
-  id: Milk
 
 - type: Tag
   id: MonkeyCube
