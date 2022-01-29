@@ -1,6 +1,7 @@
 ﻿using System;
 using Content.Shared.Body.Components;
 using Content.Shared.Disposal.Components;
+using Content.Shared.DragDrop;
 using Content.Shared.Item;
 using Content.Shared.MobState.Components;
 using Content.Shared.Throwing;
@@ -27,6 +28,7 @@ namespace Content.Shared.Disposal
         {
             base.Initialize();
             SubscribeLocalEvent<SharedDisposalUnitComponent, PreventCollideEvent>(HandlePreventCollide);
+            SubscribeLocalEvent<SharedDisposalUnitComponent, CanDragDropOnEvent>(HandleCanDragDropOn);
         }
 
         private void HandlePreventCollide(EntityUid uid, SharedDisposalUnitComponent component, PreventCollideEvent args)
@@ -45,6 +47,12 @@ namespace Content.Shared.Disposal
             {
                 args.Cancel();
             }
+        }
+
+        private void HandleCanDragDropOn(EntityUid uid, SharedDisposalUnitComponent component, CanDragDropOnEvent args)
+        {
+            args.CanDrop = CanInsert(component, args.Dragged);
+            args.Handled = true;
         }
 
         public virtual bool CanInsert(SharedDisposalUnitComponent component, EntityUid entity)
