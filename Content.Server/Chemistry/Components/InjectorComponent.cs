@@ -44,7 +44,7 @@ namespace Content.Server.Chemistry.Components
         /// </summary>
         [ViewVariables]
         [DataField("injectOnly")]
-        private bool _injectOnly;
+        public bool InjectOnly;
 
         /// <summary>
         /// Amount to inject or draw on each usage. If the injector is inject only, it will
@@ -52,7 +52,7 @@ namespace Content.Server.Chemistry.Components
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("transferAmount")]
-        private FixedPoint2 _transferAmount = FixedPoint2.New(5);
+        public FixedPoint2 TransferAmount = FixedPoint2.New(5);
 
         /// <summary>
         /// Injection delay (seconds) when the target is a mob.
