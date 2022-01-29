@@ -1,62 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {message: Central Command has installed a bluespace railgun. Pray they do not
-      use it., type: Add}
-  id: 431
-  time: '2021-10-12T05:11:09.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Grown food isn't empty anymore - "Long monkey" no longer the only long-term
-      option, type: Fix}
-  id: 432
-  time: '2021-10-12T08:01:23.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Fixes thrown slippery items causing the thrower to become horizontal
-      when they shouldn't., type: Fix}
-  id: 433
-  time: '2021-10-12T19:59:18.230928+00:00'
-- author: Jazpixel
-  changes:
-  - {message: Removed single line that broke crayons., type: Remove}
-  id: 434
-  time: '2021-10-13T06:56:35.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: 'Condiments, baked goods, bowls, some produce have solution properties
-      somewhat fixed', type: Fix}
-  - {message: remaining references to Salt have been migrated to TableSalt, type: Fix}
-  id: 435
-  time: '2021-10-13T08:03:12.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Monkey cubes are available to Cargo, type: Add}
-  id: 436
-  time: '2021-10-13T17:14:34.0000000+00:00'
-- author: PJB3005
-  changes:
-  - {message: Examine details like welder fuel level now show up for items in your
-      inventory., type: Fix}
-  id: 437
-  time: '2021-10-13T21:04:16.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Reduced radiation pulse damage to be around 20 for a direct sustained
-      hit., type: Tweak}
-  id: 438
-  time: '2021-10-14T18:02:08.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: 'Add solar control computer board to the lathe, so solar panels can
-      actually be controlled in theory', type: Add}
-  id: 439
-  time: '2021-10-15T00:05:05.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Doors now shut properly on a rotated shuttle., type: Fix}
-  id: 440
-  time: '2021-10-15T03:04:23.0000000+00:00'
 - author: Swept
   changes:
   - {message: Converted most of the codebase to Supernorn sprites, type: Tweak}
@@ -2925,3 +2867,74 @@ Entries:
   - {message: Fixes Random Traitor Alive Objective's icon!, type: Fix}
   id: 931
   time: '2022-01-25T09:29:31.0000000+00:00'
+- author: Pancake
+  changes:
+  - {message: Radiation range of the singularity has been reduced from 15 to 10.,
+    type: Tweak}
+  id: 932
+  time: '2022-01-25T23:33:45.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Power tools now do their job faster! Power drills and jaws of life never
+      looked so good to borrow..., type: Add}
+  - {message: Emergency welders are now slower than their bigger counterpart., type: Fix}
+  - {message: Metal crate deconstruction now requires a welder as it used to. Plastic
+      crates are still screwed., type: Fix}
+  id: 933
+  time: '2022-01-26T04:12:20.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Hacking doors now actually use their randomised layouts and hacking
+      takes time, type: Tweak}
+  id: 934
+  time: '2022-01-26T04:26:54.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Range limit removed from LOOC for ghosts, type: Tweak}
+  id: 935
+  time: '2022-01-26T13:18:56.0000000+00:00'
+- author: Lamrr
+  changes:
+  - {message: 'The mysterious red phone has returned, the favoured weapon of the Centcom
+      Official and the second favourite instrument of the Clown.', type: Add}
+  id: 936
+  time: '2022-01-26T17:27:04.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Captain and HoP now have Quartermaster access. Find somewhere else to
+      hide your contraband QM., type: Fix}
+  id: 937
+  time: '2022-01-26T18:29:44.0000000+00:00'
+- author: moony
+  changes:
+  - {message: 'The game rules have been updated. In short, no more revolutions unless
+      you''re an antagonist with administrator permission.', type: Tweak}
+  id: 938
+  time: '2022-01-26T22:50:44.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Lights now consume slighly more power than before. Can you cope?',
+    type: Fix}
+  - {message: 'LED lights are now less bright so won''t burn your eyes out, just your
+      hands.', type: Fix}
+  - {message: There's two high energy lightbulb specifically for shuttles and station
+      exteriors. Spot the blue and orange glow!, type: Add}
+  id: 939
+  time: '2022-01-27T00:01:32.0000000+00:00'
+- author: Plasmaguy
+  changes:
+  - {message: 'Added three new drinks (root beer, ice cream, and root beer floats).',
+    type: Add}
+  - {message: Root beer can be dispensed from the Bar's soda machine, type: Tweak}
+  - {message: Cans of root beer can be dispensed from the Robust Softdrinks vending
+      machines, type: Tweak}
+  id: 940
+  time: '2022-01-27T07:33:27.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Chief Engineers now have access to the advanced magboots in their locker.,
+    type: Add}
+  - {message: The 'Steal Magboots' objective is now 'Steal Advanced Magboots' and
+      considered more difficult., type: Tweak}
+  id: 941
+  time: '2022-01-28T18:28:05.0000000+00:00'
