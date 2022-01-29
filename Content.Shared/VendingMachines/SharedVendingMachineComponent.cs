@@ -76,7 +76,7 @@ namespace Content.Shared.VendingMachines
             }
         }
         [Serializable, NetSerializable]
-        public enum VendingMachineWireStatus
+        public enum VendingMachineWireStatus : byte
         {
             Power,
             Access,

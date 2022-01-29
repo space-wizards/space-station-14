@@ -25,7 +25,6 @@ namespace Content.Server.VendingMachines.systems
 {
     public sealed class VendingMachineSystem : EntitySystem
     {
-        [Dependency] private readonly AdvertiseSystem _advertisementSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
@@ -35,6 +34,7 @@ namespace Content.Server.VendingMachines.systems
             SubscribeLocalEvent<VendingMachineComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<VendingMachineComponent, ActivateInWorldEvent>(HandleActivate);
             SubscribeLocalEvent<VendingMachineComponent, PowerChangedEvent>(OnPowerChanged);
+            // SubscribeLocalEvent<VendingMachineComponent,
         }
 
         private void OnComponentInit(EntityUid uid, VendingMachineComponent component, ComponentInit args)
@@ -47,43 +47,56 @@ namespace Content.Server.VendingMachines.systems
             }
             if (EntityManager.TryGetComponent(component.Owner, out ApcPowerReceiverComponent? receiver))
             {
-                TryUpdateVisualState(component, receiver.Powered ? VendingMachineVisualState.Normal : VendingMachineVisualState.Off);
+                TryUpdateVisualState(uid, receiver.Powered ? VendingMachineVisualState.Normal : VendingMachineVisualState.Off, component);
             }
 
-            InitializeFromPrototype(component);
+            InitializeFromPrototype(uid, component);
         }
 
         private void HandleActivate(EntityUid uid, VendingMachineComponent component, ActivateInWorldEvent args)
         {
-            if (!component.Powered ||
-                !EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
+            if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
             {
                 return;
             }
-            var wires = EntityManager.GetComponent<WiresComponent>(component.Owner);
-            if (wires.IsPanelOpen)
-            {
-                wires.OpenInterface(actor.PlayerSession);
-            } else
-            {
-                component.UserInterface?.Toggle(actor.PlayerSession);
+            if (!IsPowered(component.Owner, component)) {
+                return;
             }
+            if (EntityManager.TryGetComponent<WiresComponent>(uid, out var wires))
+            {
+                if (wires.IsPanelOpen)
+                {
+                    wires.OpenInterface(actor.PlayerSession);
+                    return;
+                }
+            }
+            component.UserInterface?.Toggle(actor.PlayerSession);
         }
 
         private void OnPowerChanged(EntityUid uid, VendingMachineComponent component, PowerChangedEvent args)
         {
-            TryUpdateVisualState(component);
+            TryUpdateVisualState(uid, null, component);
         }
 
-        public void InitializeFromPrototype(VendingMachineComponent component)
+        public bool IsPowered(EntityUid uid, VendingMachineComponent vendComp)
+        {
+            if (vendComp.PowerPulsed
+            || vendComp.PowerCut
+            || !EntityManager.TryGetComponent(vendComp.Owner, out ApcPowerReceiverComponent? receiver)) {
+                return false;
+            }
+            return receiver.Powered;
+        }
+
+        public void InitializeFromPrototype(EntityUid uid, VendingMachineComponent component)
         {
             if (string.IsNullOrEmpty(component.PackPrototypeId)) { return; }
             if (!_prototypeManager.TryIndex(component.PackPrototypeId, out VendingMachineInventoryPrototype? packPrototype))
             {
                 return;
             }
-            EntityManager.GetComponent<MetaDataComponent>(component.Owner).EntityName = packPrototype.Name;
-            component._animationDuration = TimeSpan.FromSeconds(packPrototype.AnimationDuration);
+            MetaData(uid).EntityName = packPrototype.Name;
+            component.AnimationDuration = TimeSpan.FromSeconds(packPrototype.AnimationDuration);
             component.SpriteName = packPrototype.SpriteName;
             if (!string.IsNullOrEmpty(component.SpriteName))
             {
@@ -103,35 +116,33 @@ namespace Content.Server.VendingMachines.systems
             component.Inventory = inventory;
         }
 
-        public void Deny(VendingMachineComponent component)
+        public void Deny(EntityUid uid, VendingMachineComponent component)
         {
             SoundSystem.Play(Filter.Pvs(component.Owner), component.SoundDeny.GetSound(), component.Owner, AudioParams.Default.WithVolume(-2f));
-
             // Play the Deny animation
-            TryUpdateVisualState(component, VendingMachineVisualState.Deny);
+            TryUpdateVisualState(uid, VendingMachineVisualState.Deny, component);
             //TODO: This duration should be a distinct value specific to the deny animation
-            component.Owner.SpawnTimer(component._animationDuration, () =>
+            component.Owner.SpawnTimer(component.AnimationDuration, () =>
             {
-                TryUpdateVisualState(component, VendingMachineVisualState.Normal);
+                TryUpdateVisualState(uid, VendingMachineVisualState.Normal, component);
             });
         }
 
-        public bool IsAuthorized(VendingMachineComponent component, EntityUid? sender)
+        public bool IsAuthorized(EntityUid? sender, VendingMachineComponent component)
         {
             if (!component.AllAccess && EntityManager.TryGetComponent<AccessReaderComponent?>(component.Owner, out var accessReader))
             {
-                var accessSystem = EntitySystem.Get<AccessReaderSystem>();
-                if (sender == null || !accessSystem.IsAllowed(accessReader, sender.Value))
+                if (sender == null || !EntitySystem.Get<AccessReaderSystem>().IsAllowed(accessReader, sender.Value))
                 {
                     component.Owner.PopupMessageEveryone(Loc.GetString("vending-machine-component-try-eject-access-denied"));
-                    Deny(component);
+                    Deny(component.Owner, component);
                     return false;
                 }
             }
             return true;
         }
 
-        private void TryDispense(VendingMachineComponent component, string id, bool throwItem = false)
+        private void TryDispense(EntityUid uid, string id, bool throwItem, VendingMachineComponent component)
         {
             if (component.Ejecting || component.Broken)
             {
@@ -141,32 +152,32 @@ namespace Content.Server.VendingMachines.systems
             if (entry == null)
             {
                 component.Owner.PopupMessageEveryone(Loc.GetString("vending-machine-component-try-eject-invalid-item"));
-                Deny(component);
+                Deny(uid, component);
                 return;
             }
             if (entry.Amount <= 0)
             {
                 component.Owner.PopupMessageEveryone(Loc.GetString("vending-machine-component-try-eject-out-of-stock"));
-                Deny(component);
+                Deny(uid, component);
                 return;
             }
             if (entry.ID != null) { // If this item is not a stored entity, eject as a new entity of type
-                TryEjectVendorItem(component, entry, throwItem || !component.SpeedLimiter);
+                TryEjectVendorItem(uid, entry, throwItem || !component.SpeedLimiter, component);
                 return;
             }
             return;
         }
 
-        public void TryEjectVendorItem(VendingMachineComponent component, VendingMachineInventoryEntry entry, bool throwItem = false)
+        public void TryEjectVendorItem(EntityUid uid, VendingMachineInventoryEntry entry, bool throwItem, VendingMachineComponent component)
         {
             component.Ejecting = true;
             entry.Amount--;
             component.UserInterface?.SendMessage(new VendingMachineInventoryMessage(component.Inventory));
-            TryUpdateVisualState(component, VendingMachineVisualState.Eject);
-            component.Owner.SpawnTimer(component._animationDuration, () =>
+            TryUpdateVisualState(uid, VendingMachineVisualState.Eject, component);
+            component.Owner.SpawnTimer(component.AnimationDuration, () =>
             {
                 component.Ejecting = false;
-                TryUpdateVisualState(component, VendingMachineVisualState.Normal);
+                TryUpdateVisualState(uid, VendingMachineVisualState.Normal, component);
                 var ent = EntityManager.SpawnEntity(entry.ID, EntityManager.GetComponent<TransformComponent>(component.Owner).Coordinates);
                 if (throwItem) {
                     float range = component.NonLimitedEjectRange;
@@ -177,15 +188,15 @@ namespace Content.Server.VendingMachines.systems
 
             SoundSystem.Play(Filter.Pvs(component.Owner), component.SoundVend.GetSound(), component.Owner, AudioParams.Default.WithVolume(-2f));
         }
-        public void AuthorizedVend(VendingMachineComponent component, string id, EntityUid? sender)
+        public void AuthorizedVend(EntityUid sender, string id, VendingMachineComponent component)
         {
-            if (IsAuthorized(component, sender))
+            if (IsAuthorized(sender, component))
             {
-                TryDispense(component, id);
+                TryDispense(sender, id, !component.SpeedLimiter, component);
             }
             return;
         }
-        public void TryUpdateVisualState(VendingMachineComponent component, VendingMachineVisualState state = VendingMachineVisualState.Normal)
+        public void TryUpdateVisualState(EntityUid uid, VendingMachineVisualState? state, VendingMachineComponent component)
         {
             var finalState = state;
             if (component.Broken)
@@ -196,7 +207,7 @@ namespace Content.Server.VendingMachines.systems
             {
                 finalState = VendingMachineVisualState.Eject;
             }
-            else if (!component.Powered)
+            else if (IsPowered(component.Owner, component))
             {
                 finalState = VendingMachineVisualState.Off;
             }
@@ -206,24 +217,24 @@ namespace Content.Server.VendingMachines.systems
             }
         }
 
-        public void EjectRandom(VendingMachineComponent component)
+        public void EjectRandom(EntityUid uid, bool throwItem, VendingMachineComponent component)
         {
             var availableItems = component.Inventory.Where(x => x.Amount > 0).ToList();
             if (availableItems.Count <= 0)
             {
                 return;
             }
-            TryDispense(component, _random.Pick(availableItems).ID, true);
+            TryDispense(uid, _random.Pick(availableItems).ID, throwItem, component);
         }
 
-        public void SetAdvertisementState(VendingMachineComponent component, bool state)
+        public void SetAdvertisementState(EntityUid uid, bool state, VendingMachineComponent component)
         {
             if (EntityManager.TryGetComponent(component.Owner, out AdvertiseComponent? advertise))
             {
-                _advertisementSystem.SetEnabled(advertise.Owner, state);
+                EntitySystem.Get<AdvertiseSystem>().SetEnabled(advertise.Owner, state);
             }
         }
-        public bool? GetAdvertisementState(VendingMachineComponent component)
+        public bool? GetAdvertisementState(EntityUid uid, VendingMachineComponent component)
         {
             if (EntityManager.TryGetComponent(component.Owner, out AdvertiseComponent? advertise))
             {
@@ -232,11 +243,11 @@ namespace Content.Server.VendingMachines.systems
             return null;
         }
 
-        public void SayAdvertisement(VendingMachineComponent component)
+        public void SayAdvertisement(EntityUid uid, VendingMachineComponent component)
         {
             if (EntityManager.TryGetComponent(component.Owner, out AdvertiseComponent? advertise))
             {
-                _advertisementSystem.SayAdvertisement(advertise.Owner);
+                EntitySystem.Get<AdvertiseSystem>().SayAdvertisement(advertise.Owner);
             }
         }
     }

@@ -22,15 +22,11 @@ namespace Content.Server.VendingMachines
     public class VendingMachineComponent : SharedVendingMachineComponent, IWires, IBreakAct
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
-        [ComponentDependency] private readonly WiresComponent? WiresComponent = null;
-
-        private VendingMachineSystem? _vendingMachineSystem;
         public bool Ejecting;
-        public TimeSpan _animationDuration = TimeSpan.Zero;
+        public TimeSpan AnimationDuration = TimeSpan.Zero;
         [DataField("pack")]
         public string PackPrototypeId = string.Empty;
         public string SpriteName = "";
-        public bool Powered => (PowerPulsed || PowerCut) ? false : !_entMan.TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
         public bool Broken;
         [DataField("allAccess")]
         public bool AllAccess = false;
@@ -43,24 +39,21 @@ namespace Content.Server.VendingMachines
         // Yoinked from: https://github.com/discordia-space/CEV-Eris/blob/35bbad6764b14e15c03a816e3e89aa1751660ba9/sound/machines/Custom_deny.ogg
         public SoundSpecifier SoundDeny = new SoundPathSpecifier("/Audio/Machines/custom_deny.ogg");
         [ViewVariables] public BoundUserInterface? UserInterface => Owner.GetUIOrNull(VendingMachineUiKey.Key);
-        private CancellationTokenSource _powerPulsedCancel = new();
-        private int PowerPulsedTimeout = 10;
+        public CancellationTokenSource PowerPulsedCancel = new();
+        public int PowerPulsedTimeout = 10;
         public float NonLimitedEjectForce = 7.5f;
         public float NonLimitedEjectRange = 5f;
 
         public void OnUiReceiveMessage(ServerBoundUserInterfaceMessage serverMsg)
         {
-            if (!Powered)
+            if (!EntitySystem.Get<VendingMachineSystem>().IsPowered(this.Owner, this))
                 return;
-
-            if (_vendingMachineSystem == null)
-                _vendingMachineSystem = EntitySystem.Get<VendingMachineSystem>();
 
             var message = serverMsg.Message;
             switch (message)
             {
                 case VendingMachineEjectMessage msg:
-                    _vendingMachineSystem.AuthorizedVend(this, msg.ID, serverMsg.Session.AttachedEntity);
+                    EntitySystem.Get<VendingMachineSystem>().AuthorizedVend(serverMsg.Session.AttachedEntity, msg.ID, this);
                     break;
                 case InventorySyncRequestMessage _:
                     UserInterface?.SendMessage(new VendingMachineInventoryMessage(Inventory));
@@ -69,12 +62,8 @@ namespace Content.Server.VendingMachines
         }
         public void OnBreak(BreakageEventArgs eventArgs)
         {
-
-            if (_vendingMachineSystem == null)
-                _vendingMachineSystem = EntitySystem.Get<VendingMachineSystem>();
-
             Broken = true;
-            _vendingMachineSystem.TryUpdateVisualState(this, VendingMachineVisualState.Broken);
+            EntitySystem.Get<VendingMachineSystem>().TryUpdateVisualState(this.Owner, VendingMachineVisualState.Broken, this);
         }
         private enum Wires
         {
@@ -102,10 +91,7 @@ namespace Content.Server.VendingMachines
 
         public void UpdateWires()
         {
-            if (_vendingMachineSystem == null)
-                _vendingMachineSystem = EntitySystem.Get<VendingMachineSystem>();
-
-            if (WiresComponent == null) return;
+            if (!_entMan.TryGetComponent<WiresComponent>(Owner, out var wires)) return;
 
             var pwrLightState = (PowerPulsed, PowerCut) switch {
                 (true, false) => StatusLightState.BlinkingFast,
@@ -121,7 +107,7 @@ namespace Content.Server.VendingMachines
                 "ACCESS"
             );
 
-            bool? hasAdvert = _vendingMachineSystem.GetAdvertisementState(this);
+            bool? hasAdvert = EntitySystem.Get<VendingMachineSystem>().GetAdvertisementState(this.Owner, this);
 
             StatusLightState adState = hasAdvert != null ?
             (hasAdvert == true ? StatusLightState.On : StatusLightState.BlinkingSlow)
@@ -139,14 +125,14 @@ namespace Content.Server.VendingMachines
                 "LIMITER"
             );
 
-            WiresComponent.SetStatus(VendingMachineWireStatus.Power, powerLight);
-            WiresComponent.SetStatus(VendingMachineWireStatus.Access, accessLight);
-            WiresComponent.SetStatus(VendingMachineWireStatus.Advertisement, advertisementLight);
-            WiresComponent.SetStatus(VendingMachineWireStatus.Limiter, limiterLight);
+            wires.SetStatus(VendingMachineWireStatus.Power, powerLight);
+            wires.SetStatus(VendingMachineWireStatus.Access, accessLight);
+            wires.SetStatus(VendingMachineWireStatus.Advertisement, advertisementLight);
+            wires.SetStatus(VendingMachineWireStatus.Limiter, limiterLight);
         }
 
         private bool _powerCut;
-        private bool PowerCut
+        public bool PowerCut
         {
             get => _powerCut;
             set
@@ -156,7 +142,7 @@ namespace Content.Server.VendingMachines
         }
 
         private bool _powerPulsed;
-        private bool PowerPulsed
+        public bool PowerPulsed
         {
             get => _powerPulsed && !_powerCut;
             set
@@ -167,10 +153,6 @@ namespace Content.Server.VendingMachines
 
         public void WiresUpdate(WiresUpdateEventArgs args)
         {
-
-            if (_vendingMachineSystem == null)
-                _vendingMachineSystem = EntitySystem.Get<VendingMachineSystem>();
-
             switch (args.Action)
             {
                 case Pulse:
@@ -178,16 +160,16 @@ namespace Content.Server.VendingMachines
                     {
                         case Wires.Power:
                             PowerPulsed = true;
-                            _vendingMachineSystem.TryUpdateVisualState(this);
-                            _powerPulsedCancel.Cancel();
-                            _powerPulsedCancel = new CancellationTokenSource();
+                            EntitySystem.Get<VendingMachineSystem>().TryUpdateVisualState(this.Owner, null, this);
+                            PowerPulsedCancel.Cancel();
+                            PowerPulsedCancel = new CancellationTokenSource();
                             Owner.SpawnTimer(TimeSpan.FromSeconds(PowerPulsedTimeout),
                                 () => {
                                     PowerPulsed = false;
                                     UpdateWires();
-                                    _vendingMachineSystem.TryUpdateVisualState(this);
+                                    EntitySystem.Get<VendingMachineSystem>().TryUpdateVisualState(this.Owner, null, this);
                                 },
-                                _powerPulsedCancel.Token);
+                                PowerPulsedCancel.Token);
                             break;
                         case Wires.Access:
                             if (!PowerPulsed && !PowerCut) {
@@ -197,12 +179,12 @@ namespace Content.Server.VendingMachines
 
                         case Wires.Advertisement:
                             if (!PowerPulsed && !PowerCut) {
-                                _vendingMachineSystem.SayAdvertisement(this);
+                                EntitySystem.Get<VendingMachineSystem>().SayAdvertisement(this.Owner, this);
                             }
                             break;
                         case Wires.Limiter:
                             if (!PowerPulsed && !PowerCut) {
-                                _vendingMachineSystem.EjectRandom(this);
+                                EntitySystem.Get<VendingMachineSystem>().EjectRandom(this.Owner, true, this);
                             }
                             break;
                     }
@@ -211,13 +193,13 @@ namespace Content.Server.VendingMachines
                     switch (args.Identifier)
                     {
                         case Wires.Power:
-                            _powerPulsedCancel.Cancel();
+                            PowerPulsedCancel.Cancel();
                             PowerPulsed = false;
                             PowerCut = false;
-                            _vendingMachineSystem.TryUpdateVisualState(this);
+                            EntitySystem.Get<VendingMachineSystem>().TryUpdateVisualState(this.Owner, null, this);
                             break;
                         case Wires.Advertisement:
-                            _vendingMachineSystem.SetAdvertisementState(this, true);
+                            EntitySystem.Get<VendingMachineSystem>().SetAdvertisementState(this.Owner, true, this);
                         break;
                         case Wires.Limiter:
                             SpeedLimiter = true;
@@ -229,10 +211,10 @@ namespace Content.Server.VendingMachines
                     {
                         case Wires.Power:
                             PowerCut = true;
-                            _vendingMachineSystem.TryUpdateVisualState(this);
+                            EntitySystem.Get<VendingMachineSystem>().TryUpdateVisualState(this.Owner, null, this);
                             break;
                         case Wires.Advertisement:
-                            _vendingMachineSystem.SetAdvertisementState(this, false);
+                            EntitySystem.Get<VendingMachineSystem>().SetAdvertisementState(this.Owner, false, this);
                         break;
                         case Wires.Limiter:
                             SpeedLimiter = false;
