@@ -1,14 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: Added Hydroponics tray machine board, type: Add}
-  id: 453
-  time: '2021-10-18T06:12:50.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Pipe rotation is less chaotic evil., type: Fix}
-  id: 454
-  time: '2021-10-18T11:42:30.0000000+00:00'
 - author: ike709
   changes:
   - {message: '"Prefer integer scaling" setting will now properly save', type: Fix}
@@ -2933,3 +2923,17 @@ Entries:
   - {message: Conveyors now 20% less jank., type: Tweak}
   id: 953
   time: '2022-01-30T14:30:16.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'Wood floor tiles can no longer be placed directly on space, and do
+      not space so easily.', type: Fix}
+  - {message: Cryobeaker capacity reduced from 60 to 40., type: Tweak}
+  - {message: Explosive grenades and minibombs no longer beep., type: Tweak}
+  id: 954
+  time: '2022-01-30T14:34:11.0000000+00:00'
+- author: Pancake
+  changes:
+  - {message: Admins now have more animals to release into the station!, type: Add}
+  - {message: Vending machines are now less murderous., type: Tweak}
+  id: 955
+  time: '2022-01-30T14:35:00.0000000+00:00'
