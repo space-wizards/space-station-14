@@ -27,11 +27,11 @@ namespace Content.Shared.Disposal
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<SharedDisposalUnitComponent, PreventCollideEvent>(HandlePreventCollide);
-            SubscribeLocalEvent<SharedDisposalUnitComponent, CanDragDropOnEvent>(HandleCanDragDropOn);
+            SubscribeLocalEvent<SharedDisposalUnitComponent, PreventCollideEvent>(OnPreventCollide);
+            SubscribeLocalEvent<SharedDisposalUnitComponent, CanDragDropOnEvent>(OnCanDragDropOn);
         }
 
-        private void HandlePreventCollide(EntityUid uid, SharedDisposalUnitComponent component, PreventCollideEvent args)
+        private void OnPreventCollide(EntityUid uid, SharedDisposalUnitComponent component, PreventCollideEvent args)
         {
             var otherBody = args.BodyB.Owner;
 
@@ -49,8 +49,10 @@ namespace Content.Shared.Disposal
             }
         }
 
-        private void HandleCanDragDropOn(EntityUid uid, SharedDisposalUnitComponent component, CanDragDropOnEvent args)
+        private void OnCanDragDropOn(EntityUid uid, SharedDisposalUnitComponent component, CanDragDropOnEvent args)
         {
+            if (args.Handled) return;
+
             args.CanDrop = CanInsert(component, args.Dragged);
             args.Handled = true;
         }
