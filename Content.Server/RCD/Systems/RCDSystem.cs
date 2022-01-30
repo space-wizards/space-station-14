@@ -160,8 +160,7 @@ namespace Content.Server.RCD.Systems
             }
 
             var coordinates = mapGrid.ToCoordinates(tile.GridIndices);
-            if (
-                coordinates == EntityCoordinates.Invalid
+            if (coordinates == EntityCoordinates.Invalid
                 ||  eventArgs.Target == null
                 || !_interactionSystem.InRangeUnobstructed(eventArgs.User, eventArgs.Target.Value, ignoreInsideBlocker: true, popup: true))
             {
