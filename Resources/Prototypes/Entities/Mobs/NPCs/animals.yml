@@ -430,6 +430,52 @@
         dead: kangaroo-dead
 
 - type: entity
+  name: boxing kangaroo
+  parent: SimpleMobBase
+  id: MobKangaroo
+  description: A large marsupial herbivore. It has powerful hind legs and... boxing gloves?
+  components:
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 4
+    baseSprintSpeed: 7
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+      - map: ["enum.DamageStateVisualLayers.Base"]
+        state: kangaroo
+        sprite: Mobs/Animals/kangaroo.rsi
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      - shape:
+          !type:PhysShapeCircle
+          radius: 0.25
+        mass: 60
+        mask:
+          - Impassable
+          - MobImpassable
+          - VaultImpassable
+          - SmallImpassable
+        layer:
+          - Opaque
+  - type: Appearance
+    visuals:
+      - type: DamageStateVisualizer
+        normal: kangaroo-boxing
+        crit: kangaroo-boxing-dead
+        dead: kangaroo-boxing-dead
+  - type: UnarmedCombat
+      arcwidth: 0
+      arc: fist
+      damage:
+        types:
+          Blunt: 15
+  - type: UtilityAI
+    behaviorSets:
+    - Idle
+    - UnarmedAttackHostiles
+
+- type: entity
   name: monkey
   id: MobMonkey
   parent: SimpleMobBase

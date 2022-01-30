@@ -116,6 +116,32 @@
       dead: cat2_dead
 
 - type: entity
+  name: space cat
+  id: MobCatSpace
+  parent: MobCat
+  description: Feline pet, prepared for the worst.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Pets/cat.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: spacecat
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: spacecat
+      crit: spacecat_dead
+      dead: spacecat_dead
+  - type: Respirator #Space kitty should be immune to Asphyxiation. Taken from xenos.yml
+    damage:
+      types:
+        Asphyxiation: 1
+    damageRecovery:
+      types:
+        Asphyxiation: -1
+
+- type: entity
   name: caracal cat
   id: MobCatCaracal
   parent: MobCat
