@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
+using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
 using Content.Server.Tools;
 using Content.Server.Tools.Components;
 using Content.Server.UserInterface;
 using Content.Server.VendingMachines;
-using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Popups;
@@ -24,29 +25,37 @@ using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.WireHacking
 {
     [RegisterComponent]
-#pragma warning disable 618
-    public class WiresComponent : SharedWiresComponent, IInteractUsing, IExamine, IMapInit
-#pragma warning restore 618
+    public class WiresComponent : SharedWiresComponent, IInteractUsing
     {
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IEntityManager _entities = default!;
 
         private bool _isPanelOpen;
 
+        [DataField("cuttingTime")] public float CuttingTime = 1f;
+
+        [DataField("mendTime")] public float MendTime = 1f;
+
+        [DataField("pulseTime")] public float PulseTime = 3f;
+
         [DataField("screwingQuality", customTypeSerializer:typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
-        private string _screwingQuality = "Screwing";
+        public string ScrewingQuality = "Screwing";
 
         [DataField("cuttingQuality", customTypeSerializer:typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
-        private string _cuttingQuality = "Cutting";
+        public string CuttingQuality = "Cutting";
 
         [DataField("pulsingQuality", customTypeSerializer:typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
-        private string _pulsingQuality = "Pulsing";
+        public string PulsingQuality = "Pulsing";
+
+        /// <summary>
+        /// Make do_afters for hacking unique per wire so we can't spam a single wire.
+        /// </summary>
+        public HashSet<int> PendingDoAfters = new();
 
         /// <summary>
         /// Opening the maintenance panel (typically with a screwdriver) changes this.
@@ -152,13 +161,12 @@ namespace Content.Server.WireHacking
         // We honestly don't care what it is or such but do care that it doesn't change between UI re-opens.
         [ViewVariables]
         [DataField("WireSeed")]
-        private int _wireSeed;
+        public int WireSeed;
         [ViewVariables]
         [DataField("LayoutId")]
-        private string? _layoutId = default;
+        public string? LayoutId = default;
 
-        [DataField("pulseSound")]
-        private SoundSpecifier _pulseSound = new SoundPathSpecifier("/Audio/Effects/multitool_pulse.ogg");
+        [DataField("pulseSound")] public SoundSpecifier PulseSound = new SoundPathSpecifier("/Audio/Effects/multitool_pulse.ogg");
 
         [DataField("screwdriverOpenSound")]
         private SoundSpecifier _screwdriverOpenSound = new SoundPathSpecifier("/Audio/Machines/screwdriveropen.ogg");
@@ -181,92 +189,6 @@ namespace Content.Server.WireHacking
             {
                 UserInterface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
             }
-        }
-
-        private void GenerateSerialNumber()
-        {
-            var random = IoCManager.Resolve<IRobustRandom>();
-            Span<char> data = stackalloc char[9];
-            data[4] = '-';
-
-            if (random.Prob(0.01f))
-            {
-                for (var i = 0; i < 4; i++)
-                {
-                    // Cyrillic Letters
-                    data[i] = (char) random.Next(0x0410, 0x0430);
-                }
-            }
-            else
-            {
-                for (var i = 0; i < 4; i++)
-                {
-                    // Letters
-                    data[i] = (char) random.Next(0x41, 0x5B);
-                }
-            }
-
-            for (var i = 5; i < 9; i++)
-            {
-                // Digits
-                data[i] = (char) random.Next(0x30, 0x3A);
-            }
-
-            SerialNumber = new string(data);
-        }
-
-        protected override void Startup()
-        {
-            base.Startup();
-
-
-            WireLayout? layout = null;
-            var hackingSystem = EntitySystem.Get<WireHackingSystem>();
-            if (_layoutId != null)
-            {
-                hackingSystem.TryGetLayout(_layoutId, out layout);
-            }
-
-            foreach (var wiresProvider in _entities.GetComponents<IWires>(Owner))
-            {
-                var builder = new WiresBuilder(this, wiresProvider, layout);
-                wiresProvider.RegisterWires(builder);
-            }
-
-            if (layout != null)
-            {
-                WiresList.Sort((a, b) =>
-                {
-                    var pA = layout.Specifications[a.Identifier].Position;
-                    var pB = layout.Specifications[b.Identifier].Position;
-
-                    return pA.CompareTo(pB);
-                });
-            }
-            else
-            {
-                IoCManager.Resolve<IRobustRandom>().Shuffle(WiresList);
-
-                if (_layoutId != null)
-                {
-                    var dict = new Dictionary<object, WireLayout.WireData>();
-                    for (var i = 0; i < WiresList.Count; i++)
-                    {
-                        var d = WiresList[i];
-                        dict.Add(d.Identifier, new WireLayout.WireData(d.Letter, d.Color, i));
-                    }
-
-                    hackingSystem.AddLayout(_layoutId, new WireLayout(dict));
-                }
-            }
-
-            var id = 0;
-            foreach (var wire in WiresList)
-            {
-                wire.Id = ++id;
-            }
-
-            UpdateUserInterface();
         }
 
         /// <summary>
@@ -400,6 +322,31 @@ namespace Content.Server.WireHacking
             UserInterface?.CloseAll();
         }
 
+        public bool CanWiresInteract(EntityUid user, [NotNullWhen(true)] out ToolComponent? tool)
+        {
+            tool = null;
+
+            if (!_entities.TryGetComponent(user, out HandsComponent? handsComponent))
+            {
+                Owner.PopupMessage(user, Loc.GetString("wires-component-ui-on-receive-message-no-hands"));
+                return false;
+            }
+
+            if (!user.InRangeUnobstructed(Owner))
+            {
+                Owner.PopupMessage(user, Loc.GetString("wires-component-ui-on-receive-message-cannot-reach"));
+                return false;
+            }
+
+            if (handsComponent.GetActiveHand()?.HeldEntity is not { Valid: true } activeHandEntity ||
+                !_entities.TryGetComponent(activeHandEntity, out tool))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         private void UserInterfaceOnReceiveMessage(ServerBoundUserInterfaceMessage serverMsg)
         {
             var message = serverMsg.Message;
@@ -407,54 +354,74 @@ namespace Content.Server.WireHacking
             {
                 case WiresActionMessage msg:
                     var wire = WiresList.Find(x => x.Id == msg.Id);
-                    if (wire == null || serverMsg.Session.AttachedEntity is not {} player)
+                    if (wire == null ||
+                        serverMsg.Session.AttachedEntity is not {} player ||
+                        PendingDoAfters.Contains(wire.Id))
                     {
                         return;
                     }
 
-                    if (!_entities.TryGetComponent(player, out HandsComponent? handsComponent))
-                    {
-                        Owner.PopupMessage(player, Loc.GetString("wires-component-ui-on-receive-message-no-hands"));
+                    if (!CanWiresInteract(player, out var tool))
                         return;
-                    }
 
-                    if (!player.InRangeUnobstructed(Owner))
-                    {
-                        Owner.PopupMessage(player, Loc.GetString("wires-component-ui-on-receive-message-cannot-reach"));
-                        return;
-                    }
-
-                    ToolComponent? tool = null;
-                    if (handsComponent.GetActiveHandItem?.Owner is EntityUid activeHandEntity)
-                        _entities.TryGetComponent(activeHandEntity, out tool);
-                    var toolSystem = EntitySystem.Get<ToolSystem>();
+                    var doAfterSystem = EntitySystem.Get<DoAfterSystem>();
 
                     switch (msg.Action)
                     {
                         case WiresAction.Cut:
-                            if (tool == null || !tool.Qualities.Contains(_cuttingQuality))
+                            if (!tool.Qualities.Contains(CuttingQuality))
                             {
                                 player.PopupMessageCursor(Loc.GetString("wires-component-ui-on-receive-message-need-wirecutters"));
                                 return;
                             }
 
-                            toolSystem.PlayToolSound(tool.Owner, tool);
-                            wire.IsCut = true;
-                            UpdateUserInterface();
+                            doAfterSystem.DoAfter(
+                                new DoAfterEventArgs(player, CuttingTime, target: Owner)
+                                {
+                                    TargetFinishedEvent = new WiresCutEvent
+                                    {
+                                        Wire = wire,
+                                        Tool = tool,
+                                        User = player,
+                                    },
+                                    TargetCancelledEvent = new WiresCancelledEvent()
+                                    {
+                                        Wire = wire,
+                                    },
+                                    NeedHand = true,
+                                });
+
+                            PendingDoAfters.Add(wire.Id);
+
                             break;
                         case WiresAction.Mend:
-                            if (tool == null || !tool.Qualities.Contains(_cuttingQuality))
+                            if (!tool.Qualities.Contains(CuttingQuality))
                             {
                                 player.PopupMessageCursor(Loc.GetString("wires-component-ui-on-receive-message-need-wirecutters"));
                                 return;
                             }
 
-                            toolSystem.PlayToolSound(tool.Owner, tool);
-                            wire.IsCut = false;
-                            UpdateUserInterface();
+                            doAfterSystem.DoAfter(
+                                new DoAfterEventArgs(player, MendTime, target: Owner)
+                                {
+                                    TargetFinishedEvent = new WiresMendedEvent()
+                                    {
+                                        Wire = wire,
+                                        Tool = tool,
+                                        User = player,
+                                    },
+                                    TargetCancelledEvent = new WiresCancelledEvent()
+                                    {
+                                        Wire = wire,
+                                    },
+                                    NeedHand = true,
+                                });
+
+                            PendingDoAfters.Add(wire.Id);
+
                             break;
                         case WiresAction.Pulse:
-                            if (tool == null || !tool.Qualities.Contains(_pulsingQuality))
+                            if (!tool.Qualities.Contains(PulsingQuality))
                             {
                                 player.PopupMessageCursor(Loc.GetString("wires-component-ui-on-receive-message-need-wirecutters"));
                                 return;
@@ -466,16 +433,56 @@ namespace Content.Server.WireHacking
                                 return;
                             }
 
-                            SoundSystem.Play(Filter.Pvs(Owner), _pulseSound.GetSound(), Owner);
+                            doAfterSystem.DoAfter(
+                                new DoAfterEventArgs(player, PulseTime, target: Owner)
+                                {
+                                    TargetFinishedEvent = new WiresPulsedEvent
+                                    {
+                                        Wire = wire,
+                                        Tool = tool,
+                                        User = player,
+                                    },
+                                    TargetCancelledEvent = new WiresCancelledEvent()
+                                    {
+                                        Wire = wire,
+                                    },
+                                    NeedHand = true,
+                                });
+
+                            PendingDoAfters.Add(wire.Id);
+
                             break;
                     }
 
-                    wire.Owner.WiresUpdate(new WiresUpdateEventArgs(wire.Identifier, msg.Action));
                     break;
             }
         }
 
-        private void UpdateUserInterface()
+        public sealed class WiresCancelledEvent : EntityEventArgs
+        {
+            public Wire Wire { get; init; } = default!;
+        }
+
+        public abstract class WiresEvent : EntityEventArgs
+        {
+            public EntityUid User { get; init; } = default!;
+            public Wire Wire { get; init; } = default!;
+            public ToolComponent Tool { get; init; } = default!;
+        }
+
+        public sealed class WiresCutEvent : WiresEvent
+        {
+        }
+
+        public sealed class WiresMendedEvent : WiresEvent
+        {
+        }
+
+        public sealed class WiresPulsedEvent : WiresEvent
+        {
+        }
+
+        internal void UpdateUserInterface()
         {
             var clientList = new List<ClientWire>();
             foreach (var entry in WiresList)
@@ -490,7 +497,7 @@ namespace Content.Server.WireHacking
                     _statuses.Select(p => new StatusEntry(p.Key, p.Value)).ToArray(),
                     BoardName,
                     SerialNumber,
-                    _wireSeed));
+                    WireSeed));
         }
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
@@ -504,8 +511,8 @@ namespace Content.Server.WireHacking
 
             // opens the wires ui if using a tool with cutting or multitool quality on it
             if (IsPanelOpen &&
-               (tool.Qualities.Contains(_cuttingQuality) ||
-                tool.Qualities.Contains(_pulsingQuality)))
+               (tool.Qualities.Contains(CuttingQuality) ||
+                tool.Qualities.Contains(PulsingQuality)))
             {
                 if (_entities.TryGetComponent(eventArgs.User, out ActorComponent? actor))
                 {
@@ -516,7 +523,7 @@ namespace Content.Server.WireHacking
 
             // screws the panel open if the tool can do so
             else if (await toolSystem.UseTool(tool.Owner, eventArgs.User, Owner,
-                0f, WireHackingSystem.ScrewTime, _screwingQuality, toolComponent:tool))
+                0f, WireHackingSystem.ScrewTime, ScrewingQuality, toolComponent:tool))
             {
                 IsPanelOpen = !IsPanelOpen;
                 if (IsPanelOpen)
@@ -534,13 +541,6 @@ namespace Content.Server.WireHacking
             return false;
         }
 
-        void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
-        {
-            message.AddMarkup(Loc.GetString(IsPanelOpen
-                ? "wires-component-on-examine-panel-open"
-                : "wires-component-on-examine-panel-closed"));
-        }
-
         public void SetStatus(object statusIdentifier, object status)
         {
             if (_statuses.TryGetValue(statusIdentifier, out var storedMessage))
@@ -553,20 +553,6 @@ namespace Content.Server.WireHacking
 
             _statuses[statusIdentifier] = status;
             UpdateUserInterface();
-        }
-
-        void IMapInit.MapInit()
-        {
-            if (SerialNumber == null)
-            {
-                GenerateSerialNumber();
-            }
-
-            if (_wireSeed == 0)
-            {
-                _wireSeed = IoCManager.Resolve<IRobustRandom>().Next(1, int.MaxValue);
-                UpdateUserInterface();
-            }
         }
     }
 }

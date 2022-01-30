@@ -1,5 +1,5 @@
 ﻿- type: constructionGraph
-  id: particleAcceleratorControlBox
+  id: ParticleAcceleratorControlBox
   start: start
   graph:
     - node: start
@@ -51,7 +51,7 @@
 
 
 - type: constructionGraph
-  id: particleAcceleratorPowerBox
+  id: ParticleAcceleratorPowerBox
   start: start
   graph:
     - node: start
@@ -103,7 +103,7 @@
 
 
 - type: constructionGraph
-  id: particleAcceleratorFuelChamber
+  id: ParticleAcceleratorFuelChamber
   start: start
   graph:
     - node: start
@@ -154,7 +154,7 @@
               doAfter: 0.5
 
 - type: constructionGraph
-  id: particleAcceleratorEndCap
+  id: ParticleAcceleratorEndCap
   start: start
   graph:
     - node: start
@@ -205,7 +205,7 @@
               doAfter: 0.5
 
 - type: constructionGraph
-  id: particleAcceleratorEmitterLeft
+  id: ParticleAcceleratorEmitterLeft
   start: start
   graph:
     - node: start
@@ -256,7 +256,7 @@
               doAfter: 0.5
 
 - type: constructionGraph
-  id: particleAcceleratorEmitterCenter
+  id: ParticleAcceleratorEmitterCenter
   start: start
   graph:
     - node: start
@@ -307,7 +307,7 @@
               doAfter: 0.5
 
 - type: constructionGraph
-  id: particleAcceleratorEmitterRight
+  id: ParticleAcceleratorEmitterRight
   start: start
   graph:
     - node: start

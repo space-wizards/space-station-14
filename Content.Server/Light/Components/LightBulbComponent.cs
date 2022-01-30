@@ -39,7 +39,7 @@ namespace Content.Server.Light.Components
         public float LightSoftness = 1;
 
         [DataField("PowerUse")]
-        public int PowerUse = 40;
+        public int PowerUse = 60;
 
         [DataField("breakSound")]
         public SoundSpecifier BreakSound = new SoundCollectionSpecifier("GlassBreak");

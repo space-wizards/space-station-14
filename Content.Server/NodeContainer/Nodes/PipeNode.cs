@@ -327,7 +327,7 @@ namespace Content.Server.NodeContainer.Nodes
                 }
             }
 
-            appearance.SetData(PipeVisuals.VisualState, new PipeVisualState(netConnectedDirections));
+            appearance.SetData(PipeVisuals.VisualState, netConnectedDirections);
         }
     }
 }

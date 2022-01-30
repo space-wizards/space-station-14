@@ -29,34 +29,16 @@ namespace Content.Shared.Weapons.Ranged.Components
     }
 
     /// <summary>
-    /// A component message raised when the weapon is fired at a position on the map.
+    /// An event raised when the weapon is fired at a position on the map by a client.
     /// </summary>
     [Serializable, NetSerializable]
-#pragma warning disable 618
-    public sealed class FirePosComponentMessage : ComponentMessage
-#pragma warning restore 618
+    public sealed class FirePosEvent : EntityEventArgs
     {
-        /// <summary>
-        /// If this is not invalid, the target position is relative to the grid.
-        /// Otherwise, it is a map position.
-        /// </summary>
-        public GridId TargetGrid { get; }
+        public EntityCoordinates Coordinates;
 
-        /// <summary>
-        /// If Target Grid is not invalid, this is relative to the grid, otherwise
-        /// it is a map position.
-        /// </summary>
-        public Vector2 TargetPosition { get; }
-
-        /// <summary>
-        /// Constructs a new instance of <see cref="FirePosComponentMessage"/>.
-        /// </summary>
-        /// <param name="targetGrid">The grid that the target position is on, if any.</param>
-        /// <param name="targetPosition">Target position relative to the grid, or a map position if the grid is invalid.</param>
-        public FirePosComponentMessage(GridId targetGrid, Vector2 targetPosition)
+        public FirePosEvent(EntityCoordinates coordinates)
         {
-            TargetGrid = targetGrid;
-            TargetPosition = targetPosition;
+            Coordinates = coordinates;
         }
     }
 }

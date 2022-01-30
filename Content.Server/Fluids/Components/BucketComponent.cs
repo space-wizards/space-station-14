@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.DoAfter;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
@@ -70,11 +71,7 @@ namespace Content.Server.Fluids.Components
                 return false;
             }
 
-            if (mopComponent.CurrentVolume == mopComponent.MaxVolume)
-            {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("bucket-component-mop-is-full-message"));
-                return false;
-            }
+
 
             _currentlyUsing.Add(eventArgs.Using);
 
@@ -92,25 +89,49 @@ namespace Content.Server.Fluids.Components
                 CurrentVolume <= 0 || !Owner.InRangeUnobstructed(mopComponent.Owner))
                 return false;
 
-            // Top up mops solution given it needs it to annihilate puddles I guess
-
-            var transferAmount = FixedPoint2.Min(mopComponent.MaxVolume - mopComponent.CurrentVolume, CurrentVolume);
-            if (transferAmount == 0)
+            //Checks if the mop is empty
+            if(mopComponent.CurrentVolume == 0)
             {
-                return false;
+                // Transfers up to half the mop's available capacity to the mop
+                // Takes the lower of the mop's available volume and the bucket's current volume.
+                var transferAmount = FixedPoint2.Min(0.5*mopComponent.AvailableVolume, CurrentVolume);
+                if (transferAmount == 0)
+                {
+                    return false;
+                }
+
+                var mopContents = mopComponent.MopSolution;
+
+                if (mopContents == null)
+                {
+                    return false;
+                }
+
+                // Transfer solution from the bucket to the mop
+                // Owner is the bucket being interacted with. contents is the Solution contained by said bucket.
+                var solution = solutionsSys.SplitSolution(Owner, contents, transferAmount);
+                if (!solutionsSys.TryAddSolution(mopComponent.Owner, mopComponent.MopSolution, solution))
+                {
+                    return false; //if the attempt fails
+                }
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("bucket-component-mop-is-now-wet-message"));
+
             }
-
-            var mopContents = mopComponent.MopSolution;
-
-            if (mopContents == null)
+            else //if mop is not empty
             {
-                return false;
-            }
+                //Transfer the mop solution to the bucket
 
-            var solution = solutionsSys.SplitSolution(Owner, contents, transferAmount);
-            if (!solutionsSys.TryAddSolution(mopComponent.Owner, mopContents, solution))
-            {
-                return false;
+                if (mopComponent.MopSolution == null)
+                    return false;
+
+                var solutionFromMop = solutionsSys.SplitSolution(mopComponent.Owner, mopComponent.MopSolution, mopComponent.CurrentVolume);
+                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution);
+                if (!solutionsSys.TryAddSolution(Owner, solution, solutionFromMop))
+                {
+                    return false; //if the attempt fails
+                }
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("bucket-component-mop-is-now-dry-message"));
+
             }
 
             SoundSystem.Play(Filter.Pvs(Owner), _sound.GetSound(), Owner);

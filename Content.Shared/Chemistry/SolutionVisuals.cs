@@ -11,7 +11,7 @@ namespace Content.Shared.Chemistry
     }
 
     [Serializable, NetSerializable]
-    public class SolutionContainerVisualState
+    public class SolutionContainerVisualState : ICloneable
     {
         public readonly Color Color;
 
@@ -32,6 +32,11 @@ namespace Content.Shared.Chemistry
         {
             Color = color;
             FilledVolumeFraction = (byte) (byte.MaxValue * filledVolumeFraction);
+        }
+
+        public object Clone()
+        {
+            return new SolutionContainerVisualState(Color, FilledVolumeFraction);
         }
     }
 

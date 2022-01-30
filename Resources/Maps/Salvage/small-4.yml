@@ -829,7 +829,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 53
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: -0.5,-3.5
     parent: 0
