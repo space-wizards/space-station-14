@@ -1299,7 +1299,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 35
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 0.5,-4.5
     parent: 8
