@@ -2,6 +2,7 @@ using Content.Server.Atmos.Components;
 using Content.Shared.Atmos.Visuals;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Random;
 
 namespace Content.Server.Atmos.EntitySystems;
@@ -45,15 +46,15 @@ public sealed class AtmosPlaqueSystem : EntitySystem
         var val = component.Type switch
         {
             PlaqueType.Zumos =>
-                "This plaque commemorates the rise of the Atmos ZUM division. May they carry the torch that the Atmos ZAS, LINDA and FEA divisions left behind.",
+                Loc.GetString("atmos-plaque-component-desc-zum"),
             PlaqueType.Fea =>
-                "This plaque commemorates the fall of the Atmos FEA division. For all the charred, dizzy, and brittle men who have died in its hands.",
+                Loc.GetString("atmos-plaque-component-desc-fea"),
             PlaqueType.Linda =>
-                "This plaque commemorates the fall of the Atmos LINDA division. For all the charred, dizzy, and brittle men who have died in its hands.",
+                Loc.GetString("atmos-plaque-component-desc-linda"),
             PlaqueType.Zas =>
-                "This plaque commemorates the fall of the Atmos ZAS division. For all the charred, dizzy, and brittle men who have died in its hands.",
-            PlaqueType.Unset => "Uhm",
-            _ => "Uhm",
+                Loc.GetString("atmos-plaque-component-desc-zas"),
+            PlaqueType.Unset => Loc.GetString("atmos-plaque-component-desc-unset"),
+            _ => Loc.GetString("atmos-plaque-component-desc-unset"),
         };
 
         metaData.EntityDescription = val;
@@ -61,15 +62,15 @@ public sealed class AtmosPlaqueSystem : EntitySystem
         var val1 = component.Type switch
         {
             PlaqueType.Zumos =>
-                "ZUM Atmospherics Division plaque",
+                Loc.GetString("atmos-plaque-component-name-zum"),
             PlaqueType.Fea =>
-                "FEA Atmospherics Division plaque",
+                Loc.GetString("atmos-plaque-component-name-fea"),
             PlaqueType.Linda =>
-                "LINDA Atmospherics Division plaque",
+                Loc.GetString("atmos-plaque-component-name-linda"),
             PlaqueType.Zas =>
-                "ZAS Atmospherics Division plaque",
-            PlaqueType.Unset => "Uhm",
-            _ => "Uhm",
+                Loc.GetString("atmos-plaque-component-name-zas"),
+            PlaqueType.Unset => Loc.GetString("atmos-plaque-component-name-unset"),
+            _ => Loc.GetString("atmos-plaque-component-name-unset"),
         };
 
         metaData.EntityName = val1;
