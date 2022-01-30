@@ -513,7 +513,7 @@ public abstract class SharedDoorSystem : EntitySystem
                 continue;
             }
 
-            if (door.Paused)
+            if (Paused(door.Owner))
                 continue;
 
             if (door.NextStateChange.Value < time)
