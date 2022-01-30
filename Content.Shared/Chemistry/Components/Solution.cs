@@ -108,11 +108,9 @@ namespace Content.Shared.Chemistry.Components
             if (!IoCManager.Resolve<IPrototypeManager>().TryIndex(reagentId, out ReagentPrototype? proto))
                 proto = new ReagentPrototype();
 
-            if (temperature == null)
-                temperature = Temperature;
-
+            var actualTemp = temperature ?? Temperature;
             var oldThermalEnergy = Temperature * GetHeatCapacity();
-            var addedThermalEnergy = (float) ((float) quantity * proto.SpecificHeat * temperature);
+            var addedThermalEnergy = (float) quantity * proto.SpecificHeat * actualTemp;
             for (var i = 0; i < Contents.Count; i++)
             {
                 var reagent = Contents[i];

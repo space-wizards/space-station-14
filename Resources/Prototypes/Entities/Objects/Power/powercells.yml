@@ -2,10 +2,11 @@
 # Power cells
 
 - type: entity
-  id: PowerCellBase
+  id: PowerCellSmallBase
   abstract: true
   parent: BaseItem
   components:
+  - type: Battery
   - type: PowerCell
   - type: Sprite
     netsync: false
@@ -24,17 +25,9 @@
           Quantity: 5
 
 - type: entity
-  id: PowerCellSmallBase
-  abstract: true
-  parent: PowerCellBase
-  components:
-  - type: PowerCell
-    cellSize: Small
-
-- type: entity
   id: PowerCellMediumBase
   abstract: true
-  parent: PowerCellBase
+  parent: PowerCellSmallBase
   components:
   - type: PowerCell
     cellSize: Medium
@@ -42,7 +35,7 @@
 - type: entity
   id: PowerCellLargeBase
   abstract: true
-  parent: PowerCellBase
+  parent: PowerCellSmallBase
   components:
   - type: PowerCell
     cellSize: Large
@@ -57,10 +50,9 @@
     sprite: Objects/Power/PowerCells/potato_battery.rsi
     layers:
       - state: potato_battery
-  - type: PowerCell
+  - type: Battery
     maxCharge: 360
     startingCharge: 360
-    updateVisual: false
 
 - type: entity
   name: small standard power cell
@@ -72,14 +64,13 @@
     sprite: Objects/Power/PowerCells/power_cell_small_st.rsi
     layers:
     - state: s_st
-  - type: PowerCell
+  - type: Battery
     maxCharge: 360
     startingCharge: 360
   - type: Appearance
     visuals:
     - type: PowerCellVisualizer
       prefix: s_st
-
 
 - type: entity
   name: small high-capacity power cell
@@ -91,14 +82,13 @@
     sprite: Objects/Power/PowerCells/power_cell_small_hi.rsi
     layers:
     - state: s_hi
-  - type: PowerCell
+  - type: Battery
     maxCharge: 720
     startingCharge: 720
   - type: Appearance
     visuals:
     - type: PowerCellVisualizer
       prefix: s_hi
-
 
 - type: entity
   name: small super-capacity power cell
@@ -110,7 +100,7 @@
     sprite: Objects/Power/PowerCells/power_cell_small_sup.rsi
     layers:
     - state: s_sup
-  - type: PowerCell
+  - type: Battery
     maxCharge: 1080
     startingCharge: 1080
   - type: Appearance
@@ -129,7 +119,7 @@
     sprite: Objects/Power/PowerCells/power_cell_small_hy.rsi
     layers:
     - state: s_hy
-  - type: PowerCell
+  - type: Battery
     maxCharge: 1800
     startingCharge: 1800
   - type: Appearance
@@ -147,7 +137,7 @@
       sprite: Objects/Power/PowerCells/power_cell_small_autorecharge.rsi
       layers:
         - state: s_ar
-    - type: PowerCell
+    - type: Battery
       maxCharge: 50
       startingCharge: 50
     - type: BatterySelfRecharger
@@ -168,7 +158,7 @@
       sprite: Objects/Power/PowerCells/power_cell_small_autorecharge.rsi
       layers:
         - state: s_ar
-    - type: PowerCell
+    - type: Battery
       maxCharge: 600 #lights drain 3/s but recharge of 2 makes this 1/s. Therefore 600 is 10 minutes of light.
       startingCharge: 600
     - type: BatterySelfRecharger
@@ -178,7 +168,6 @@
       visuals:
         - type: PowerCellVisualizer
           prefix: s_ar
-
 
 - type: entity
   name: medium standard power cell
@@ -190,7 +179,7 @@
       sprite: Objects/Power/PowerCells/power_cell_medium_st.rsi
       layers:
         - state: m_st
-    - type: PowerCell
+    - type: Battery
       maxCharge: 2160
       startingCharge: 2160
     - type: Appearance
@@ -208,10 +197,9 @@
       sprite: Objects/Power/PowerCells/power_cell_medium_hi.rsi
       layers:
         - state: m_hi
-    - type: PowerCell
+    - type: Battery
       maxCharge: 2880
       startingCharge: 2880
-      powerCellSize: Medium
     - type: Appearance
       visuals:
         - type: PowerCellVisualizer
@@ -227,7 +215,7 @@
       sprite: Objects/Power/PowerCells/power_cell_medium_sup.rsi
       layers:
         - state: m_sup
-    - type: PowerCell
+    - type: Battery
       maxCharge: 3600
       startingCharge: 3600
     - type: Appearance
@@ -245,7 +233,7 @@
       sprite: Objects/Power/PowerCells/power_cell_medium_hy.rsi
       layers:
         - state: m_hy
-    - type: PowerCell
+    - type: Battery
       maxCharge: 5400
       startingCharge: 5400
     - type: Appearance
@@ -263,7 +251,7 @@
       sprite: Objects/Power/PowerCells/power_cell_large_st.rsi
       layers:
         - state: l_st
-    - type: PowerCell
+    - type: Battery
       maxCharge: 9000
       startingCharge: 9000
     - type: Appearance
@@ -281,7 +269,7 @@
       sprite: Objects/Power/PowerCells/power_cell_large_hi.rsi
       layers:
         - state: l_hi
-    - type: PowerCell
+    - type: Battery
       maxCharge: 18000
       startingCharge: 18000
     - type: Appearance
@@ -299,7 +287,7 @@
       sprite: Objects/Power/PowerCells/power_cell_large_sup.rsi
       layers:
         - state: l_sup
-    - type: PowerCell
+    - type: Battery
       maxCharge: 54000
       startingCharge: 54000
     - type: Appearance
@@ -317,7 +305,7 @@
       sprite: Objects/Power/PowerCells/power_cell_large_hy.rsi
       layers:
         - state: l_hy
-    - type: PowerCell
+    - type: Battery
       maxCharge: 72000
       startingCharge: 72000
     - type: Appearance

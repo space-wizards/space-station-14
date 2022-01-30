@@ -1,4 +1,4 @@
-﻿<SS14Window
+﻿<DefaultWindow
     xmlns="https://spacestation14.io"
     xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
     Title="{Loc Ban}" MinSize="425 325">
@@ -26,4 +26,4 @@
         <Control MinWidth="50" />
         <Button Name="SubmitButton" Text="{Loc Ban}" />
     </BoxContainer>
-</SS14Window>
+</DefaultWindow>

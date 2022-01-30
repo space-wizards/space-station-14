@@ -1,7 +1,7 @@
 using Content.Server.Hands.Components;
 using Content.Server.Interaction;
-using Content.Server.Items;
 using Content.Shared.Interaction.Helpers;
+using Content.Shared.Item;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -25,7 +25,7 @@ namespace Content.Server.AI.Operators.Inventory
             var entMan = IoCManager.Resolve<IEntityManager>();
 
             if (entMan.Deleted(_target)
-                || !entMan.HasComponent<ItemComponent>(_target)
+                || !entMan.HasComponent<SharedItemComponent>(_target)
                 || _target.IsInContainer()
                 || !_owner.InRangeUnobstructed(_target, popup: true))
             {

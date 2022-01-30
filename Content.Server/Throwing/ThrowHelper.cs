@@ -1,6 +1,6 @@
 using System;
 using Content.Server.Interaction;
-using Content.Server.Items;
+using Content.Shared.Item;
 using Content.Shared.MobState.Components;
 using Content.Shared.Tag;
 using Content.Shared.Throwing;
@@ -54,7 +54,7 @@ namespace Content.Server.Throwing
             }
 
             var comp = entity.EnsureComponent<ThrownItemComponent>();
-            if (entities.HasComponent<ItemComponent>(entity))
+            if (entities.HasComponent<SharedItemComponent>(entity))
             {
                 comp.Thrower = user;
                 // Give it a l'il spin.

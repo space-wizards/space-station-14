@@ -117,8 +117,8 @@
   - type: Anchorable
 
 - type: entity
-  id: DebugSmes
-  parent: BaseSmes
+  id: DebugSMES
+  parent: BaseSMES
   suffix: DEBUG
   components:
   - type: Tag
@@ -135,8 +135,8 @@
       - Debug
 
 - type: entity
-  id: DebugApc
-  parent: BaseApc
+  id: DebugAPC
+  parent: BaseAPC
   suffix: DEBUG
   components:
   - type: Tag

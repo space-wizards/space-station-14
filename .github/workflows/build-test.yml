@@ -9,7 +9,10 @@ on:
       - '**.sln'
       - '**.git**'
       - '**.yml'
-      - 'RobustToolbox/'
+      # no docs on which one of these is supposed to work, so
+      # why not just do both
+      - 'RobustToolbox'
+      - 'RobustToolbox/**'
   pull_request:
     branches: [ master ]
     paths:
@@ -18,7 +21,8 @@ on:
       - '**.sln'
       - '**.git**'
       - '**.yml'
-      - 'RobustToolbox/'
+      - 'RobustToolbox'
+      - 'RobustToolbox/**'
 
 jobs:
   build:

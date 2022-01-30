@@ -16,7 +16,7 @@ using Robust.Shared.Timing;
 namespace Content.Client.Power
 {
     [GenerateTypedNameReferences]
-    public sealed partial class SolarControlWindow : SS14Window, IComputerWindow<SolarControlConsoleBoundInterfaceState>
+    public sealed partial class SolarControlWindow : DefaultWindow, IComputerWindow<SolarControlConsoleBoundInterfaceState>
     {
         private SolarControlConsoleBoundInterfaceState _lastState = new(0, 0, 0, 0);
 

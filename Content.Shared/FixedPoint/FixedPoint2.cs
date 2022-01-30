@@ -264,11 +264,11 @@ namespace Content.Shared.FixedPoint
 
         public readonly int CompareTo(FixedPoint2 other)
         {
-            if(other._value > _value)
+            if (other._value > _value)
             {
                 return -1;
             }
-            if(other._value < _value)
+            if (other._value < _value)
             {
                 return 1;
             }

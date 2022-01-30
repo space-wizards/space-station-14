@@ -20,7 +20,7 @@
   - type: Eye
   - type: CameraRecoil
   - type: Examiner
-  - type: HumanInventoryController
+  - type: CanHostGuardian
   - type: AiFactionTag
     factions:
     - NanoTrasen
@@ -34,7 +34,7 @@
     sprite: Markers/jobs.rsi
     state: centcom
   - type: GhostRoleMobSpawner
-    prototype: HumanMob_CentcomOfficial
+    prototype: MobHumanCentcomOfficial
     deleteOnSpawn: true
     makeSentient: false
     name: centcom official

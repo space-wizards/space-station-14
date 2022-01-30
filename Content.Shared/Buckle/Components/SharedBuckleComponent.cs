@@ -29,8 +29,6 @@ namespace Content.Shared.Buckle.Components
 
         public EntityUid? LastEntityBuckledTo { get; set; }
 
-        public bool IsOnStrapEntityThisFrame { get; set; }
-
         public bool DontCollide { get; set; }
 
         public abstract bool TryBuckle(EntityUid user, EntityUid to);

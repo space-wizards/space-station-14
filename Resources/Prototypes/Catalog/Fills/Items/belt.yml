@@ -50,3 +50,36 @@
       #- name: GrenadeChem
       #- name: GrenadeChem
       - id: FlashlightLantern
+      
+- type: entity
+  id: ClothingBeltMedicalFilled
+  parent: ClothingBeltMedical
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: Brutepack
+        amount: 3
+      - id: Ointment
+        amount: 3
+      - id: EpinephrineMedipen #You never know what people are going to latejoin into
+      
+- type: entity
+  id: ClothingBeltPlantFilled
+  parent: ClothingBeltPlant
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+    - id: HydroponicsToolMiniHoe
+    - id: HydroponicsToolSpade
+    - id: RobustHarvestChemistryBottle
+
+- type: entity
+  id: ClothingBeltSheathFilled
+  parent: ClothingBeltSheath
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: CaptainSabre

@@ -136,8 +136,10 @@ namespace Content.Server.Chemistry.Components
                 return;
 
             var chemistry = EntitySystem.Get<ReactiveSystem>();
-            var mapGrid = MapManager.GetGrid(_entities.GetComponent<TransformComponent>(Owner).GridID);
-            var tile = mapGrid.GetTileRef(_entities.GetComponent<TransformComponent>(Owner).Coordinates.ToVector2i(_entities, MapManager));
+            var xform = _entities.GetComponent<TransformComponent>(Owner);
+            var mapGrid = MapManager.GetGrid(xform.GridID);
+            var tile = mapGrid.GetTileRef(xform.Coordinates.ToVector2i(_entities, MapManager));
+            var lookup = IoCManager.Resolve<IEntityLookup>();
 
             var solutionFraction = 1 / Math.Floor(averageExposures);
 
@@ -155,14 +157,14 @@ namespace Content.Server.Chemistry.Components
                 }
 
                 // Touch every entity on the tile
-                foreach (var entity in tile.GetEntitiesInTileFast().ToArray())
+                foreach (var entity in lookup.GetEntitiesIntersecting(tile).ToArray())
                 {
                     chemistry.ReactionEntity(entity, ReactionMethod.Touch, reagent,
                         reagentQuantity.Quantity * solutionFraction, solution);
                 }
             }
 
-            foreach (var entity in tile.GetEntitiesInTileFast().ToArray())
+            foreach (var entity in lookup.GetEntitiesIntersecting(tile).ToArray())
             {
                 ReactWithEntity(entity, solutionFraction);
             }

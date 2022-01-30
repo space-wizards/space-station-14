@@ -4,8 +4,10 @@ using Content.Client.Inventory;
 using Content.Client.Preferences;
 using Content.Shared.CharacterAppearance.Systems;
 using Content.Shared.GameTicking;
+using Content.Shared.Inventory;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
+using Content.Shared.Species;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -15,7 +17,6 @@ using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
-using static Content.Shared.Inventory.EquipmentSlotDefines;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Lobby.UI
@@ -24,17 +25,20 @@ namespace Content.Client.Lobby.UI
     {
         private readonly IEntityManager _entMan;
         private readonly IClientPreferencesManager _preferencesManager;
-        private EntityUid _previewDummy;
+        private readonly IPrototypeManager _prototypeManager;
+        private EntityUid? _previewDummy;
         private readonly Label _summaryLabel;
         private readonly BoxContainer _loaded;
+        private readonly BoxContainer _viewBox;
         private readonly Label _unloaded;
 
         public LobbyCharacterPreviewPanel(IEntityManager entityManager,
-            IClientPreferencesManager preferencesManager)
+            IClientPreferencesManager preferencesManager,
+            IPrototypeManager prototypeManager)
         {
             _entMan = entityManager;
             _preferencesManager = preferencesManager;
-            _previewDummy = entityManager.SpawnEntity("MobHumanDummy", MapCoordinates.Nullspace);
+            _prototypeManager = prototypeManager;
 
             var header = new NanoHeading
             {
@@ -49,11 +53,6 @@ namespace Content.Client.Lobby.UI
 
             _summaryLabel = new Label();
 
-            var viewSouth = MakeSpriteView(_previewDummy, Direction.South);
-            var viewNorth = MakeSpriteView(_previewDummy, Direction.North);
-            var viewWest = MakeSpriteView(_previewDummy, Direction.West);
-            var viewEast = MakeSpriteView(_previewDummy, Direction.East);
-
             var vBox = new BoxContainer
             {
                 Orientation = LayoutOrientation.Vertical
@@ -61,7 +60,7 @@ namespace Content.Client.Lobby.UI
 
             vBox.AddChild(header);
 
-            _unloaded = new Label {Text = Loc.GetString("lobby-character-preview-panel-unloaded-preferences-label")};
+            _unloaded = new Label { Text = Loc.GetString("lobby-character-preview-panel-unloaded-preferences-label") };
 
             _loaded = new BoxContainer
             {
@@ -72,16 +71,12 @@ namespace Content.Client.Lobby.UI
             _loaded.AddChild(CharacterSetupButton);
             _loaded.AddChild(_summaryLabel);
 
-            var hBox = new BoxContainer
+            _viewBox = new BoxContainer
             {
                 Orientation = LayoutOrientation.Horizontal
             };
-            hBox.AddChild(viewSouth);
-            hBox.AddChild(viewNorth);
-            hBox.AddChild(viewWest);
-            hBox.AddChild(viewEast);
 
-            _loaded.AddChild(hBox);
+            _loaded.AddChild(_viewBox);
 
             vBox.AddChild(_loaded);
             vBox.AddChild(_unloaded);
@@ -100,7 +95,7 @@ namespace Content.Client.Lobby.UI
             _preferencesManager.OnServerDataLoaded -= UpdateUI;
 
             if (!disposing) return;
-            _entMan.DeleteEntity(_previewDummy);
+            if (_previewDummy != null) _entMan.DeleteEntity(_previewDummy.Value);
             _previewDummy = default;
         }
 
@@ -131,9 +126,19 @@ namespace Content.Client.Lobby.UI
                 }
                 else
                 {
+                    _previewDummy = _entMan.SpawnEntity(_prototypeManager.Index<SpeciesPrototype>(selectedCharacter.Species).DollPrototype, MapCoordinates.Nullspace);
+                    var viewSouth = MakeSpriteView(_previewDummy.Value, Direction.South);
+                    var viewNorth = MakeSpriteView(_previewDummy.Value, Direction.North);
+                    var viewWest = MakeSpriteView(_previewDummy.Value, Direction.West);
+                    var viewEast = MakeSpriteView(_previewDummy.Value, Direction.East);
+                    _viewBox.DisposeAllChildren();
+                    _viewBox.AddChild(viewSouth);
+                    _viewBox.AddChild(viewNorth);
+                    _viewBox.AddChild(viewWest);
+                    _viewBox.AddChild(viewEast);
                     _summaryLabel.Text = selectedCharacter.Summary;
-                    EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(_previewDummy, selectedCharacter);
-                    GiveDummyJobClothes(_previewDummy, selectedCharacter);
+                    EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(_previewDummy.Value, selectedCharacter);
+                    GiveDummyJobClothes(_previewDummy.Value, selectedCharacter);
                 }
             }
         }
@@ -141,29 +146,30 @@ namespace Content.Client.Lobby.UI
         public static void GiveDummyJobClothes(EntityUid dummy, HumanoidCharacterProfile profile)
         {
             var protoMan = IoCManager.Resolve<IPrototypeManager>();
-
             var entMan = IoCManager.Resolve<IEntityManager>();
-            var inventory = entMan.GetComponent<ClientInventoryComponent>(dummy);
+            var invSystem = EntitySystem.Get<ClientInventorySystem>();
 
             var highPriorityJob = profile.JobPriorities.FirstOrDefault(p => p.Value == JobPriority.High).Key;
 
             // ReSharper disable once ConstantNullCoalescingCondition
             var job = protoMan.Index<JobPrototype>(highPriorityJob ?? SharedGameTicker.FallbackOverflowJob);
 
-            inventory.ClearAllSlotVisuals();
-
-            if (job.StartingGear != null)
+            if (job.StartingGear != null && invSystem.TryGetSlots(dummy, out var slots))
             {
                 var gear = protoMan.Index<StartingGearPrototype>(job.StartingGear);
 
-                foreach (var slot in AllSlots)
+                foreach (var slot in slots)
                 {
-                    var itemType = gear.GetGear(slot, profile);
+                    var itemType = gear.GetGear(slot.Name, profile);
+                    if (invSystem.TryUnequip(dummy, slot.Name, out var unequippedItem, true, true))
+                    {
+                        entMan.DeleteEntity(unequippedItem.Value);
+                    }
+
                     if (itemType != string.Empty)
                     {
                         var item = entMan.SpawnEntity(itemType, MapCoordinates.Nullspace);
-                        inventory.SetSlotVisuals(slot, item);
-                        entMan.DeleteEntity(item);
+                        invSystem.TryEquip(dummy, item, slot.Name, true, true);
                     }
                 }
             }
