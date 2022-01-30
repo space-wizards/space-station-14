@@ -1,9 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: Ad-dd-ded st-tutt-ter-ring-g-g, type: Add}
-  id: 452
-  time: '2021-10-16T23:23:31.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: Added Hydroponics tray machine board, type: Add}
@@ -2933,3 +2928,8 @@ Entries:
       reduced by 9/10.', type: Tweak}
   id: 952
   time: '2022-01-30T14:19:27.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Conveyors now 20% less jank., type: Tweak}
+  id: 953
+  time: '2022-01-30T14:30:16.0000000+00:00'
