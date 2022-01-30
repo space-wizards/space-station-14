@@ -34,6 +34,8 @@ public sealed class AtmosPlaqueSystem : EntitySystem
         else if (rand <= 55) component.Type = PlaqueType.Zas;
         // 45% LINDA
         else component.Type = PlaqueType.Linda;
+
+        UpdateSign(component);
     }
 
     public void UpdateSign(AtmosPlaqueComponent component)
