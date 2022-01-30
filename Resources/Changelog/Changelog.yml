@@ -1,10 +1,4 @@
 Entries:
-- author: Watermelon914
-  changes:
-  - {message: Adds hand labelers which allow you to append and remove labels from
-      structures and objects., type: Add}
-  id: 450
-  time: '2021-10-16T20:34:05.0000000+00:00'
 - author: moony
   changes:
   - {message: Nanotrasen has found the budget to install proper atmospherics., type: Add}
@@ -2930,3 +2924,9 @@ Entries:
       use., type: Fix}
   id: 950
   time: '2022-01-30T13:27:29.0000000+00:00'
+- author: scaly-chimp
+  changes:
+  - {message: Added new flare shotgun shells, type: Add}
+  - {message: fixed the incediary shotgun shells being a reskin., type: Fix}
+  id: 951
+  time: '2022-01-30T13:44:45.0000000+00:00'
