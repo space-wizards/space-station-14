@@ -1,119 +1,6 @@
 Entries:
 - author: Zumorica
   changes:
-  - {message: Fixes thrown slippery items causing the thrower to become horizontal
-      when they shouldn't., type: Fix}
-  id: 433
-  time: '2021-10-12T19:59:18.230928+00:00'
-- author: Jazpixel
-  changes:
-  - {message: Removed single line that broke crayons., type: Remove}
-  id: 434
-  time: '2021-10-13T06:56:35.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: 'Condiments, baked goods, bowls, some produce have solution properties
-      somewhat fixed', type: Fix}
-  - {message: remaining references to Salt have been migrated to TableSalt, type: Fix}
-  id: 435
-  time: '2021-10-13T08:03:12.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Monkey cubes are available to Cargo, type: Add}
-  id: 436
-  time: '2021-10-13T17:14:34.0000000+00:00'
-- author: PJB3005
-  changes:
-  - {message: Examine details like welder fuel level now show up for items in your
-      inventory., type: Fix}
-  id: 437
-  time: '2021-10-13T21:04:16.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Reduced radiation pulse damage to be around 20 for a direct sustained
-      hit., type: Tweak}
-  id: 438
-  time: '2021-10-14T18:02:08.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: 'Add solar control computer board to the lathe, so solar panels can
-      actually be controlled in theory', type: Add}
-  id: 439
-  time: '2021-10-15T00:05:05.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Doors now shut properly on a rotated shuttle., type: Fix}
-  id: 440
-  time: '2021-10-15T03:04:23.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: Converted most of the codebase to Supernorn sprites, type: Tweak}
-  - {message: Removes most of the cev-eris sprites, type: Remove}
-  - {message: Removed low walls, type: Remove}
-  - {message: Removed shelves, type: Remove}
-  id: 441
-  time: '2021-10-15T09:58:40.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Adapts window construction to the new sprites and grilles., type: Tweak}
-  id: 442
-  time: '2021-10-15T10:21:58.640854+00:00'
-- author: Macoron
-  changes:
-  - {message: Uplinks UI now have description of items., type: Add}
-  - {message: Admins can spawn ready to use uplinks., type: Add}
-  id: 443
-  time: '2021-10-15T10:49:59.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Black gloves and the captain's gloves now protect you against burn damage
-      from replacing lightbulbs., type: Tweak}
-  id: 444
-  time: '2021-10-15T11:07:27.972020+00:00'
-- author: Zumorica
-  changes:
-  - {message: Balanced SSS weapon spawns to be more fair., type: Tweak}
-  id: 445
-  time: '2021-10-15T12:46:50.053991+00:00'
-- author: Zumorica
-  changes:
-  - {message: 'Fixes slips not working. GO FORTH AND SLIP, MY CHILDREN!', type: Fix}
-  id: 446
-  time: '2021-10-15T22:21:14.743072+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: ChemMaster UI has been repaired., type: Fix}
-  - {message: Pills are now edible again., type: Fix}
-  id: 447
-  time: '2021-10-16T12:56:21.0000000+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: Ghost have now attuned themselves to radio waves allowing them to listen
-      in on the station chatter., type: Add}
-  id: 448
-  time: '2021-10-16T19:04:35.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: 'Saltern''s security substation''s protective APC is now inside the
-      security substation chamber, which has been made a little bigger accordingly.',
-    type: Tweak}
-  - {message: 'Saltern now has solars - north set in north-west maintenance, south
-      set a bit east of library.', type: Add}
-  id: 449
-  time: '2021-10-16T20:02:40.0000000+00:00'
-- author: Watermelon914
-  changes:
-  - {message: Adds hand labelers which allow you to append and remove labels from
-      structures and objects., type: Add}
-  id: 450
-  time: '2021-10-16T20:34:05.0000000+00:00'
-- author: moony
-  changes:
-  - {message: Nanotrasen has found the budget to install proper atmospherics., type: Add}
-  id: 451
-  time: '2021-10-16T23:11:06.0000000+00:00'
-- author: Zumorica
-  changes:
   - {message: Ad-dd-ded st-tutt-ter-ring-g-g, type: Add}
   id: 452
   time: '2021-10-16T23:23:31.0000000+00:00'
@@ -2928,3 +2815,121 @@ Entries:
       crates are still screwed., type: Fix}
   id: 933
   time: '2022-01-26T04:12:20.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Hacking doors now actually use their randomised layouts and hacking
+      takes time, type: Tweak}
+  id: 934
+  time: '2022-01-26T04:26:54.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Range limit removed from LOOC for ghosts, type: Tweak}
+  id: 935
+  time: '2022-01-26T13:18:56.0000000+00:00'
+- author: Lamrr
+  changes:
+  - {message: 'The mysterious red phone has returned, the favoured weapon of the Centcom
+      Official and the second favourite instrument of the Clown.', type: Add}
+  id: 936
+  time: '2022-01-26T17:27:04.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Captain and HoP now have Quartermaster access. Find somewhere else to
+      hide your contraband QM., type: Fix}
+  id: 937
+  time: '2022-01-26T18:29:44.0000000+00:00'
+- author: moony
+  changes:
+  - {message: 'The game rules have been updated. In short, no more revolutions unless
+      you''re an antagonist with administrator permission.', type: Tweak}
+  id: 938
+  time: '2022-01-26T22:50:44.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Lights now consume slighly more power than before. Can you cope?',
+    type: Fix}
+  - {message: 'LED lights are now less bright so won''t burn your eyes out, just your
+      hands.', type: Fix}
+  - {message: There's two high energy lightbulb specifically for shuttles and station
+      exteriors. Spot the blue and orange glow!, type: Add}
+  id: 939
+  time: '2022-01-27T00:01:32.0000000+00:00'
+- author: Plasmaguy
+  changes:
+  - {message: 'Added three new drinks (root beer, ice cream, and root beer floats).',
+    type: Add}
+  - {message: Root beer can be dispensed from the Bar's soda machine, type: Tweak}
+  - {message: Cans of root beer can be dispensed from the Robust Softdrinks vending
+      machines, type: Tweak}
+  id: 940
+  time: '2022-01-27T07:33:27.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Chief Engineers now have access to the advanced magboots in their locker.,
+    type: Add}
+  - {message: The 'Steal Magboots' objective is now 'Steal Advanced Magboots' and
+      considered more difficult., type: Tweak}
+  id: 941
+  time: '2022-01-28T18:28:05.0000000+00:00'
+- author: aaronmell
+  changes:
+  - {message: Admin and AdminRank windows show the save button correctly now, type: Fix}
+  id: 942
+  time: '2022-01-29T05:20:26.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Welding toilets no longer annihilate characters sitting on them., type: Fix}
+  id: 943
+  time: '2022-01-29T05:34:57.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Airlocks no longer close when an entity is blocking the way. If the
+      safety is disabled, airlocks will now properly crush entities.', type: Fix}
+  id: 944
+  time: '2022-01-30T00:49:57.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Prying tiles now takes time., type: Tweak}
+  id: 945
+  time: '2022-01-30T03:48:18.0000000+00:00'
+- author: Lamrr
+  changes:
+  - {message: Dog beds have now arrived. You can now give Ian a place to sleep., type: Add}
+  - {message: Normal beds can now be constructed and deconstructed., type: Fix}
+  id: 946
+  time: '2022-01-30T04:47:12.0000000+00:00'
+- author: Schiene
+  changes:
+  - {message: Added a Knightship Emergency Shuttle., type: Add}
+  id: 947
+  time: '2022-01-30T07:32:01.0000000+00:00'
+- author: Pancake
+  changes:
+  - {message: '"Russian accent."', type: Add}
+  id: 948
+  time: '2022-01-30T08:06:16.0000000+00:00'
+- author: Schiene
+  changes:
+  - {message: Adds CentComm Outpost spawnable map, type: Add}
+  id: 949
+  time: '2022-01-30T09:06:20.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix potential crash on item cooldowns where the item was deleted during
+      use., type: Fix}
+  id: 950
+  time: '2022-01-30T13:27:29.0000000+00:00'
+- author: scaly-chimp
+  changes:
+  - {message: Added new flare shotgun shells, type: Add}
+  - {message: fixed the incediary shotgun shells being a reskin., type: Fix}
+  id: 951
+  time: '2022-01-30T13:44:45.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Removed the objective to stay alive., type: Remove}
+  - {message: Lowered max objective difficulty., type: Tweak}
+  - {message: 'Steal objective probability reduced by 1/3, and die objective probability
+      reduced by 9/10.', type: Tweak}
+  id: 952
+  time: '2022-01-30T14:19:27.0000000+00:00'

@@ -1,69 +1,35 @@
-using System;
-using System.Collections.Generic;
-using Content.Shared.Doors;
+using Content.Shared.Doors.Components;
+using Content.Shared.Doors.Systems;
 using Robust.Client.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using static Content.Shared.Doors.SharedDoorComponent;
+using Robust.Shared.Player;
 
-namespace Content.Client.Doors
+namespace Content.Client.Doors;
+
+public sealed class DoorSystem : SharedDoorSystem
 {
-    /// <summary>
-    /// Used by the client to "predict" when doors will change how collideable they are as part of their opening / closing.
-    /// </summary>
-    internal sealed class DoorSystem : SharedDoorSystem
+    // Gotta love it when both the client-side and server-side sprite components both have a draw depth, but for
+    // whatever bloody reason the shared component doesn't.
+    protected override void UpdateAppearance(EntityUid uid, DoorComponent? door = null)
     {
-        /// <summary>
-        /// List of doors that need to be periodically checked.
-        /// </summary>
-        private readonly List<ClientDoorComponent> _activeDoors = new();
+        if (!Resolve(uid, ref door))
+            return;
 
-        public override void Initialize()
+        base.UpdateAppearance(uid, door);
+
+        if (TryComp(uid, out SpriteComponent? sprite))
         {
-            base.Initialize();
-
-            UpdatesOutsidePrediction = true;
-
-            SubscribeLocalEvent<ClientDoorComponent, DoorStateChangedEvent>(OnDoorStateChanged);
-        }
-
-        private void OnDoorStateChanged(EntityUid uid, ClientDoorComponent door, DoorStateChangedEvent args)
-        {
-            switch (args.State)
-            {
-                case DoorState.Closed:
-                case DoorState.Open:
-                    _activeDoors.Remove(door);
-                    break;
-                case DoorState.Closing:
-                case DoorState.Opening:
-                    _activeDoors.Add(door);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-
-            if (!EntityManager.TryGetComponent(uid, out SpriteComponent sprite))
-                return;
-
-            // Update sprite draw depth.  If the door is opening or closing, we will use the closed-draw depth.
-            sprite.DrawDepth = (args.State == DoorState.Open)
+            sprite.DrawDepth = (door.State == DoorState.Open)
                 ? door.OpenDrawDepth
                 : door.ClosedDrawDepth;
         }
+    }
 
-        /// <inheritdoc />
-        public override void Update(float frameTime)
-        {
-            for (var i = _activeDoors.Count - 1; i >= 0; i--)
-            {
-                var comp = _activeDoors[i];
-                if (comp.Deleted)
-                {
-                    _activeDoors.RemoveAt(i);
-                    continue;
-                }
-                comp.OnUpdate();
-            }
-        }
+    // TODO AUDIO PREDICT see comments in server-side PlaySound()
+    protected override void PlaySound(EntityUid uid, string sound, AudioParams audioParams, EntityUid? predictingPlayer, bool predicted)
+    {
+        if (GameTiming.InPrediction && GameTiming.IsFirstTimePredicted)
+            SoundSystem.Play(Filter.Local(), sound, uid, audioParams);
     }
 }
