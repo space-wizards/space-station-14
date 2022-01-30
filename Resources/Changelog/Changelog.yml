@@ -1,15 +1,4 @@
 Entries:
-- author: Efruit
-  changes:
-  - {message: NT took the tele-trashbags back. At least they left some normal ones
-      for us..., type: Fix}
-  id: 461
-  time: '2021-10-20T13:25:22.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Anti-matter engine actually generates power again., type: Fix}
-  id: 462
-  time: '2021-10-20T18:31:53.0000000+00:00'
 - author: juliangiebel
   changes:
   - {message: Cable terminals can be built now., type: Add}
@@ -2937,3 +2926,19 @@ Entries:
       lying on the floor after being stunned., type: Fix}
   id: 961
   time: '2022-01-30T16:34:48.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: The bible's sounds are now positional and won't play at max volume every
+      time., type: Fix}
+  - {message: 'The bible''s cooldown has been increased to reduce sound spam, but
+      its healing rate remains the same.', type: Tweak}
+  id: 962
+  time: '2022-01-30T21:33:46.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Kitchen and Chemistry now have access to specific windoors. Look out
+      for these in future., type: Add}
+  - {message: Brig specific access has been added for Warden and HoS - To be mapped
+      in future., type: Tweak}
+  id: 963
+  time: '2022-01-30T21:34:36.0000000+00:00'
