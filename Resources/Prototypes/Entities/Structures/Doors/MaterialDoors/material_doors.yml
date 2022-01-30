@@ -69,6 +69,7 @@
   id: InflatableDoor
   name: inflatable door
   parent: BaseMaterialDoor
+  description: An inflated membrane. Activate to deflate. Now with a door. Do not puncture.
   components:
   - type: Clickable
   - type: InteractionOutline
