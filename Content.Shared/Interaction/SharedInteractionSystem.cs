@@ -50,6 +50,7 @@ namespace Content.Shared.Interaction
 
         public override void Initialize()
         {
+            SubscribeLocalEvent<BoundUserInterfaceMessageAttempt>(OnBoundInterfaceInteractAttempt);
             SubscribeAllEvent<InteractInventorySlotEvent>(HandleInteractInventorySlotEvent);
 
             CommandBinds.Builder
@@ -62,6 +63,30 @@ namespace Content.Shared.Interaction
         {
             CommandBinds.Unregister<SharedInteractionSystem>();
             base.Shutdown();
+        }
+
+        /// <summary>
+        ///     Check that the user that is interacting with the BUI is capable of interacting and can access the entity.
+        /// </summary>
+        private void OnBoundInterfaceInteractAttempt(BoundUserInterfaceMessageAttempt ev)
+        {
+            if (ev.Sender.AttachedEntity is not EntityUid user || !_actionBlockerSystem.CanInteract(user))
+            {
+                ev.Cancel();
+                return;
+            }
+
+            if (!user.IsInSameOrParentContainer(ev.Target) && !CanAccessViaStorage(user, ev.Target))
+            {
+                ev.Cancel();
+                return;
+            }
+
+            if (!user.InRangeUnobstructed(ev.Target))
+            {
+                ev.Cancel();
+                return;
+            }
         }
 
         /// <summary>
