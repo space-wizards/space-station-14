@@ -133,7 +133,7 @@ namespace Content.Server.Storage.Components
             {
                 var item = _entityManager.GetComponent<SharedItemComponent>(entity);
                 _storageUsed += item.Size;
-                _sizeCache[entity] = item.Size;
+                _sizeCache.Add(entity, item.Size);
             }
         }
 
