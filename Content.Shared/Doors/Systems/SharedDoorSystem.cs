@@ -46,8 +46,8 @@ public abstract class SharedDoorSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<DoorComponent, ComponentStartup>(OnStartup);
-        SubscribeLocalEvent<DoorComponent, ComponentShutdown>(OnShutdown);
+        SubscribeLocalEvent<DoorComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<DoorComponent, ComponentRemove>(OnRemove);
 
         SubscribeLocalEvent<DoorComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<DoorComponent, ComponentHandleState>(OnHandleState);
@@ -59,26 +59,22 @@ public abstract class SharedDoorSystem : EntitySystem
         SubscribeLocalEvent<DoorComponent, PreventCollideEvent>(PreventCollision);
     }
 
-    private void OnStartup(EntityUid uid, DoorComponent door, ComponentStartup args)
+    private void OnInit(EntityUid uid, DoorComponent door, ComponentInit args)
     {
         // if the door state is not standard (i.e., door starts open), make sure collision & occlusion are properly set.
-        if (door.StartOpen)
+        if (door.State == DoorState.Open)
         {
-            // disable occluder & physics
-            OnPartialOpen(uid, door);
-
-            // THEN set the correct state, inc disabling partial = true
-            SetState(uid, DoorState.Open, door);
-
-            // The airlock component may schedule an auto-close for this door during the SetState.
-            // Give the door is supposed to start open, let's prevent any auto-closing that might occur.
-            door.NextStateChange = null;
+            if (TryComp(uid, out PhysicsComponent? physics))
+                physics.CanCollide = false;
+            
+            if (door.Occludes && TryComp(uid, out OccluderComponent? occluder))
+                occluder.Enabled = false;
         }
 
         UpdateAppearance(uid, door);
     }
 
-    private void OnShutdown(EntityUid uid, DoorComponent door, ComponentShutdown args)
+    private void OnRemove(EntityUid uid, DoorComponent door, ComponentRemove args)
     {
         _activeDoors.Remove(door);
     }

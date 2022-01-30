@@ -86,7 +86,7 @@
   suffix: Open
   components:
   - type: Door
-    startOpen: true
+    state: Open
 
 - type: entity
   id: ShuttersRadiation
@@ -108,7 +108,7 @@
   suffix: Open
   components:
   - type: Door
-    startOpen: true
+    state: Open
 
 - type: entity
   id: ShuttersWindow
@@ -129,4 +129,4 @@
   suffix: Open
   components:
   - type: Door
-    startOpen: true
+    state: Open
