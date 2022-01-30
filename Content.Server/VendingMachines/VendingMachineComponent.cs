@@ -1,5 +1,4 @@
 using System;
-using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Server.WireHacking;
 using Content.Shared.Acts;
@@ -13,9 +12,10 @@ using Robust.Shared.ViewVariables;
 using System.Threading;
 using Robust.Shared.Maths;
 using Content.Server.VendingMachines.systems;
-
+using Content.Server.Advertise;
 using static Content.Shared.Wires.SharedWiresComponent;
 using static Content.Shared.Wires.SharedWiresComponent.WiresAction;
+
 namespace Content.Server.VendingMachines
 {
     [RegisterComponent]
@@ -44,22 +44,6 @@ namespace Content.Server.VendingMachines
         public float NonLimitedEjectForce = 7.5f;
         public float NonLimitedEjectRange = 5f;
 
-        public void OnUiReceiveMessage(ServerBoundUserInterfaceMessage serverMsg)
-        {
-            if (!EntitySystem.Get<VendingMachineSystem>().IsPowered(this.Owner, this))
-                return;
-
-            var message = serverMsg.Message;
-            switch (message)
-            {
-                case VendingMachineEjectMessage msg:
-                    EntitySystem.Get<VendingMachineSystem>().AuthorizedVend(serverMsg.Session.AttachedEntity, msg.ID, this);
-                    break;
-                case InventorySyncRequestMessage _:
-                    UserInterface?.SendMessage(new VendingMachineInventoryMessage(Inventory));
-                    break;
-            }
-        }
         public void OnBreak(BreakageEventArgs eventArgs)
         {
             Broken = true;
@@ -107,11 +91,9 @@ namespace Content.Server.VendingMachines
                 "ACCESS"
             );
 
-            bool? hasAdvert = EntitySystem.Get<VendingMachineSystem>().GetAdvertisementState(this.Owner, this);
+            bool hasAdvert = EntitySystem.Get<VendingMachineSystem>().GetAdvertisementState(this.Owner, this);
 
-            StatusLightState adState = hasAdvert != null ?
-            (hasAdvert == true ? StatusLightState.On : StatusLightState.BlinkingSlow)
-            : StatusLightState.Off;
+            StatusLightState adState = hasAdvert ? StatusLightState.On : StatusLightState.Off;
 
             var advertisementLight = new StatusLightData(
                 Color.Green,
@@ -179,7 +161,7 @@ namespace Content.Server.VendingMachines
 
                         case Wires.Advertisement:
                             if (!PowerPulsed && !PowerCut) {
-                                EntitySystem.Get<VendingMachineSystem>().SayAdvertisement(this.Owner, this);
+                                EntitySystem.Get<AdvertiseSystem>().SayAdvertisement(this.Owner);
                             }
                             break;
                         case Wires.Limiter:
@@ -199,7 +181,7 @@ namespace Content.Server.VendingMachines
                             EntitySystem.Get<VendingMachineSystem>().TryUpdateVisualState(this.Owner, null, this);
                             break;
                         case Wires.Advertisement:
-                            EntitySystem.Get<VendingMachineSystem>().SetAdvertisementState(this.Owner, true, this);
+                            EntitySystem.Get<AdvertiseSystem>().SetEnabled(this.Owner, true);
                         break;
                         case Wires.Limiter:
                             SpeedLimiter = true;
@@ -214,7 +196,7 @@ namespace Content.Server.VendingMachines
                             EntitySystem.Get<VendingMachineSystem>().TryUpdateVisualState(this.Owner, null, this);
                             break;
                         case Wires.Advertisement:
-                            EntitySystem.Get<VendingMachineSystem>().SetAdvertisementState(this.Owner, false, this);
+                            EntitySystem.Get<AdvertiseSystem>().SetEnabled(this.Owner, false);
                         break;
                         case Wires.Limiter:
                             SpeedLimiter = false;
@@ -242,7 +224,6 @@ namespace Content.Server.VendingMachines
     {
         void RegisterWires(WiresComponent.WiresBuilder builder);
         void WiresUpdate(WiresUpdateEventArgs args);
-
     }
 }
 
