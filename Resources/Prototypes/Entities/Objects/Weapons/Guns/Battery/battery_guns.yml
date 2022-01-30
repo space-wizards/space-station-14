@@ -119,7 +119,7 @@
     sprite: Objects/Weapons/Guns/Battery/pulse_pistol.rsi
   - type: BatteryBarrel
     fireCost: 25
-    ammoPrototype: RedHeavyLaser
+    ammoPrototype: RedLaser
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
   - type: PowerCellSlot
@@ -170,7 +170,7 @@
     sprite: Objects/Weapons/Guns/Battery/pulse_carbine.rsi
   - type: BatteryBarrel
     fireCost: 12
-    ammoPrototype: RedHeavyLaser
+    ammoPrototype: RedLaser
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
   - type: PowerCellSlot
@@ -230,7 +230,7 @@
     sprite: Objects/Weapons/Guns/Battery/pulse_rifle.rsi
   - type: BatteryBarrel
     fireCost: 6
-    ammoPrototype: RedHeavyLaser
+    ammoPrototype: RedLaser
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
   - type: PowerCellSlot
