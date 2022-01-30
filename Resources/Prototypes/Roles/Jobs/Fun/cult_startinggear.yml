@@ -2,7 +2,7 @@
 - type: startingGear
   id: CultLeaderGear
   equipment:
-    innerclothing: ClothingUniformJumpsuitColorBlack
+    jumpsuit: ClothingUniformJumpsuitColorBlack
     backpack: ClothingBackpackFilled
     head: ClothingHeadHelmetCult
     neck: BedsheetCult
@@ -17,7 +17,7 @@
 - type: startingGear
   id: CultistGear
   equipment:
-    innerclothing: ClothingUniformJumpsuitColorBlack
+    jumpsuit: ClothingUniformJumpsuitColorBlack
     backpack: ClothingBackpackFilled
     head: ClothingHeadHatHoodCulthood
     outerClothing: ClothingOuterRobesCult

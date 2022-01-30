@@ -61,7 +61,7 @@
       closeTimeTwo: 0.6
       openTimeOne: 0.1
       openTimeTwo: 0.6
-      startOpen: true
+      state: Open
       bumpOpen: false
       clickOpen: false
       crushDamage:
