@@ -125,7 +125,7 @@
   description: A direction sign, pointing out which way solars are.
   components:
   - type: Sprite
-    state: direction_solars
+    state: direction_solar
 
 - type: entity
   parent: BaseSign
