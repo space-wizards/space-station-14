@@ -1,9 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: 'Fixes slips not working. GO FORTH AND SLIP, MY CHILDREN!', type: Fix}
-  id: 446
-  time: '2021-10-15T22:21:14.743072+00:00'
 - author: ShadowCommander
   changes:
   - {message: ChemMaster UI has been repaired., type: Fix}
@@ -2935,3 +2930,8 @@ Entries:
   - {message: Normal beds can now be constructed and deconstructed., type: Fix}
   id: 946
   time: '2022-01-30T04:47:12.0000000+00:00'
+- author: Schiene
+  changes:
+  - {message: Added a Knightship Emergency Shuttle., type: Add}
+  id: 947
+  time: '2022-01-30T07:32:01.0000000+00:00'
