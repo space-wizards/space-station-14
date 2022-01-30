@@ -149,7 +149,7 @@ namespace Content.Shared.StatusEffect
         /// <remarks>
         ///     This obviously does not add any actual 'effects' on its own. Use the generic overload,
         ///     which takes in a component type, if you want to automatically add and remove a component.
-        /// 
+        ///
         ///     If the effect already exists, it will simply replace the cooldown with the new one given.
         ///     If you want special 'effect merging' behavior, do it your own damn self!
         /// </remarks>
@@ -196,7 +196,7 @@ namespace Content.Shared.StatusEffect
                 _alertsSystem.ShowAlert(uid, proto.Alert.Value, null, cooldown1);
             }
 
-            status.Dirty();
+            Dirty(status);
             // event?
             return true;
         }
@@ -270,7 +270,7 @@ namespace Content.Shared.StatusEffect
 
             status.ActiveEffects.Remove(key);
 
-            status.Dirty();
+            Dirty(status);
             // event?
             return true;
         }
@@ -294,7 +294,7 @@ namespace Content.Shared.StatusEffect
                     failed = true;
             }
 
-            status.Dirty();
+            Dirty(status);
             return failed;
         }
 
@@ -362,7 +362,7 @@ namespace Content.Shared.StatusEffect
                 _alertsSystem.ShowAlert(uid, proto.Alert.Value, null, cooldown);
             }
 
-            status.Dirty();
+            Dirty(status);
             return true;
         }
 
@@ -398,7 +398,7 @@ namespace Content.Shared.StatusEffect
                 _alertsSystem.ShowAlert(uid, proto.Alert.Value, null, cooldown);
             }
 
-            status.Dirty();
+            Dirty(status);
             return true;
         }
 
@@ -419,7 +419,7 @@ namespace Content.Shared.StatusEffect
 
             status.ActiveEffects[key].Cooldown = (_gameTiming.CurTime, _gameTiming.CurTime + time);
 
-            status.Dirty();
+            Dirty(status);
             return true;
         }
 
