@@ -5,12 +5,12 @@
   id: IHSGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorBlack
-    backpack: ClothingBackpackFilled
+    back: ClothingBackpackFilled
     head: ClothingHeadHelmetIHSVoidHelm
     gloves: ClothingHandsGlovesIhscombat
     outerClothing: IHSVoidsuit
     shoes: ClothingShoesBootsJack
-    idcard: AssistantPDA
+    id: AssistantPDA
     ears: ClothingHeadsetService
   innerclothingskirt: ClothingUniformJumpskirtColorBlack
   satchel: ClothingBackpackSatchelFilled
@@ -21,11 +21,11 @@
   id: PirateGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorLightBrown
-    backpack: ClothingBackpackSatchelEngineering
+    back: ClothingBackpackSatchelEngineering
     head: ClothingHeadHatPirate
     outerClothing: ClothingOuterCoatPirate
     shoes: ClothingShoesBootsWork
-    idcard: AssistantPDA
+    id: AssistantPDA
     belt: ClothingBeltUtility
   innerclothingskirt: ClothingUniformJumpskirtColorLightBrown
   satchel: ClothingBackpackSatchelEngineering
@@ -36,12 +36,12 @@
   id: SpaceNinjaGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorBlack
-    backpack: ClothingBackpackFilled
+    back: ClothingBackpackFilled
     head: ClothingHeadHelmetSpaceNinja
     gloves: ClothingHandsGlovesSpaceNinja
     outerClothing: ClothingOuterSuitSpaceninja
     shoes: ClothingShoesSpaceNinja
-    idcard: AssistantPDA
+    id: AssistantPDA
   innerclothingskirt: ClothingUniformJumpskirtColorBlack
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled
@@ -51,7 +51,7 @@
   id: DeadsquadGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorBlack
-    backpack: ClothingBackpackDuffelSyndicateAmmo
+    back: ClothingBackpackDuffelSyndicateAmmo
     head: ClothingHeadHelmetHardsuitDeathsquad
     mask: ClothingMaskBreath
     eyes: ClothingEyesGlassesSecurity
@@ -59,7 +59,7 @@
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitDeathsquad
     shoes: ClothingShoesChameleonNoSlips
-    idcard: CentcomPDA
+    id: CentcomPDA
     pocket1: EmergencyOxygenTankFilled
     belt: ClothingBeltUtilityFilled
   innerclothingskirt: ClothingUniformJumpskirtColorBlack
