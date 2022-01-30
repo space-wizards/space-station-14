@@ -1,4 +1,4 @@
-﻿<SS14Window xmlns="https://spacestation14.io"
+﻿<DefaultWindow xmlns="https://spacestation14.io"
             Title="{Loc 'disposal-router-window-title'}"
             MinSize="500 110"
             SetSize="500 110">
@@ -17,4 +17,4 @@
                     Text="{Loc 'disposal-router-window-tag-input-confirm-button'}" />
         </BoxContainer>
     </BoxContainer>
-</SS14Window>
+</DefaultWindow>

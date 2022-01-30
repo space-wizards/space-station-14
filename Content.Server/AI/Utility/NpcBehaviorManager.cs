@@ -28,7 +28,6 @@ namespace Content.Server.AI.Utility
     internal sealed class NpcBehaviorManager : INpcBehaviorManager
     {
         [Dependency] private readonly IDynamicTypeFactory _typeFactory = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private readonly NpcActionComparer _comparer = new();
 

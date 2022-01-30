@@ -31,7 +31,7 @@
     - type: Rotatable
     - type: Pullable
     - type: Construction
-      graph: machine
+      graph: Machine
       node: missingWires
     - type: Damageable
       damageContainer: Inorganic
@@ -82,7 +82,7 @@
     - type: Rotatable
     - type: Pullable
     - type: Construction
-      graph: machine
+      graph: Machine
       node: machineFrame
     - type: Damageable
       damageContainer: Inorganic
@@ -117,7 +117,7 @@
     - type: Transform
       anchored: true
     - type: Construction
-      graph: machine
+      graph: Machine
       node: destroyedMachineFrame
     - type: Damageable
       damageContainer: Inorganic

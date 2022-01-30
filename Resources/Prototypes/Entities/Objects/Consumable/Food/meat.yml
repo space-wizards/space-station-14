@@ -366,13 +366,25 @@
   name: meatball
   parent: FoodMeatBase
   id: FoodMeatMeatball
-  description: A raw ball of meat. Not a homosexual.
+  description: A raw ball of meat. Meat ball.
   components:
   - type: Tag
     tags:
     - Raw
   - type: Sprite
     state: meatball
+
+- type: entity
+  name: slimeball
+  parent: FoodMeatBase
+  id: FoodMeatSlime
+  description: A gelatinous shaping of slime jelly.
+  components:
+  - type: Tag
+    tags:
+    - Raw
+  - type: Sprite
+    state: slime
 
 # Cooked
 

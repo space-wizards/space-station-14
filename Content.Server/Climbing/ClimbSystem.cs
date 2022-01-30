@@ -1,14 +1,19 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Climbing.Components;
+using Content.Server.Popups;
+using Content.Server.Stunnable;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Climbing;
+using Content.Shared.Damage;
 using Content.Shared.GameTicking;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Player;
 
 namespace Content.Server.Climbing
 {
@@ -18,6 +23,9 @@ namespace Content.Server.Climbing
         private readonly HashSet<ClimbingComponent> _activeClimbers = new();
 
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
+        [Dependency] private readonly StunSystem _stunSystem = default!;
+        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
 
         public override void Initialize()
         {
@@ -25,6 +33,7 @@ namespace Content.Server.Climbing
 
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<ClimbableComponent, GetAlternativeVerbsEvent>(AddClimbVerb);
+            SubscribeLocalEvent<GlassTableComponent, ClimbedOnEvent>(OnGlassClimbed);
         }
 
         public void ForciblySetClimbing(EntityUid uid, ClimbingComponent? component = null)
@@ -47,10 +56,22 @@ namespace Content.Server.Climbing
 
             // Add a climb verb
             Verb verb = new();
-            verb.Act = () => component.TryClimb(args.User);
+            verb.Act = () => component.TryClimb(args.User, args.Target);
             verb.Text = Loc.GetString("comp-climbable-verb-climb");
             // TODO VERBS ICON add a climbing icon?
             args.Verbs.Add(verb);
+        }
+
+        private void OnGlassClimbed(EntityUid uid, GlassTableComponent component, ClimbedOnEvent args)
+        {
+            _damageableSystem.TryChangeDamage(args.Climber, component.ClimberDamage);
+            _damageableSystem.TryChangeDamage(uid, component.TableDamage);
+            _stunSystem.TryParalyze(args.Climber, TimeSpan.FromSeconds(component.StunTime), true);
+
+            // Not shown to the user, since they already get a 'you climb on the glass table' popup
+            _popupSystem.PopupEntity(Loc.GetString("glass-table-shattered-others",
+                    ("table", uid), ("climber", args.Climber)), args.Climber,
+                Filter.Pvs(uid).RemoveWhereAttachedEntity(puid => puid == args.Climber));
         }
 
         public void AddActiveClimber(ClimbingComponent climbingComponent)

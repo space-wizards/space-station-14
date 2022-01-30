@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  id: BaseApc
+  id: BaseAPC
   name: APC
   description: A control terminal for the area's electrical systems.
   placement:
@@ -41,7 +41,7 @@
     - type: ApcVisualizer
   - type: Battery
     maxCharge: 10000
-    startingCharge: 10000
+    startingCharge: 0
   - type: ExaminableBattery
   - type: NodeContainer
     examinable: true
@@ -68,7 +68,7 @@
     singleUser: true
     key: enum.ApcUiKey.Key
   - type: Construction
-    graph: apc
+    graph: APC
     node: apc
   - type: PowerNetworkBattery
     maxSupply: 10000

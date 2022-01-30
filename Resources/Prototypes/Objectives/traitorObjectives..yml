@@ -118,7 +118,7 @@
       prototype: IDComputerCircuitboard
 
 - type: objective
-  id: MagbootsStealObjective #Replace this with CE magboots when we get those
+  id: MagbootsStealObjective
   issuer: syndicate
   difficultyOverride: 1.75
   prob: 0.2
@@ -129,7 +129,7 @@
         - DieCondition
   conditions:
     - !type:StealCondition
-      prototype: ClothingShoesBootsMag
+      prototype: ClothingShoesBootsMagAdv
 
 - type: objective
   id: SupplyConsoleBoardStealObjective
