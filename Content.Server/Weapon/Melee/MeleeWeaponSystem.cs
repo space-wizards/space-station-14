@@ -9,6 +9,8 @@ using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Cooldown;
 using Content.Server.Weapon.Melee.Components;
 using Content.Shared.Damage;
+using Content.Shared.Sound;
+using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
@@ -107,7 +109,14 @@ namespace Content.Server.Weapon.Melee
                                 $"{ToPrettyString(args.User):user} melee attacked {ToPrettyString(args.Target.Value):target} using {ToPrettyString(args.Used):used} and dealt {damageResult.Total:damage} damage");
                     }
 
-                    SoundSystem.Play(Filter.Pvs(owner), comp.HitSound.GetSound(), target);
+                    if (hitEvent.HitSoundOverride != null)
+                    {
+                        SoundSystem.Play(Filter.Pvs(owner), hitEvent.HitSoundOverride.GetSound(), target, AudioHelpers.WithVariation(0.25f));
+                    }
+                    else
+                    {
+                        SoundSystem.Play(Filter.Pvs(owner), comp.HitSound.GetSound(), target);
+                    }
                 }
             }
             else
@@ -160,11 +169,18 @@ namespace Content.Server.Weapon.Melee
             {
                 if (entities.Count != 0)
                 {
-                    SoundSystem.Play(Filter.Pvs(owner), comp.HitSound.GetSound(), EntityManager.GetComponent<TransformComponent>(entities.First()).Coordinates);
+                    if (hitEvent.HitSoundOverride != null)
+                    {
+                        SoundSystem.Play(Filter.Pvs(owner), hitEvent.HitSoundOverride.GetSound(), Transform(entities.First()).Coordinates);
+                    }
+                    else
+                    {
+                        SoundSystem.Play(Filter.Pvs(owner), comp.HitSound.GetSound(), Transform(entities.First()).Coordinates);
+                    }
                 }
                 else
                 {
-                    SoundSystem.Play(Filter.Pvs(owner), comp.MissSound.GetSound(), EntityManager.GetComponent<TransformComponent>(args.User).Coordinates);
+                    SoundSystem.Play(Filter.Pvs(owner), comp.MissSound.GetSound(), Transform(args.User).Coordinates);
                 }
 
                 var modifiedDamage = DamageSpecifier.ApplyModifierSets(comp.Damage + hitEvent.BonusDamage, hitEvent.ModifiersList);
@@ -319,6 +335,12 @@ namespace Content.Server.Weapon.Melee
         ///     A list containing every hit entity. Can be zero.
         /// </summary>
         public IEnumerable<EntityUid> HitEntities { get; }
+
+        /// <summary>
+        ///     Used to define a new hit sound in case you want to override the default GenericHit.
+        ///     Also gets a pitch modifier added to it.
+        /// </summary>
+        public SoundSpecifier? HitSoundOverride {get; set;}
 
         /// <summary>
         /// The user who attacked with the melee weapon.
