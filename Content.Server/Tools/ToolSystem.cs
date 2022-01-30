@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chemistry.EntitySystems;
@@ -98,6 +99,7 @@ namespace Content.Server.Tools
         /// <param name="doAfterEventTarget">Where to direct the do-after events. If null, events are broadcast</param>
         /// <param name="doAfterCheck">An optional check to perform for the doAfter.</param>
         /// <param name="toolComponent">The tool component.</param>
+        /// <param name="cancelToken">Token to provide to do_after for cancelling</param>
         /// <returns>Whether initially, using the tool succeeded. If there's a doAfter delay, you'll need to listen to
         ///          the <see cref="doAfterCompleteEvent"/> and <see cref="doAfterCancelledEvent"/> being broadcast
         ///          to see whether using the tool succeeded or not. If the <see cref="doAfterDelay"/> is zero,
@@ -113,7 +115,8 @@ namespace Content.Server.Tools
             object? doAfterCancelledEvent = null,
             EntityUid? doAfterEventTarget = null,
             Func<bool>? doAfterCheck = null,
-            ToolComponent? toolComponent = null)
+            ToolComponent? toolComponent = null,
+            CancellationToken? cancelToken = null)
         {
             // No logging here, after all that'd mean the caller would need to check if the component is there or not.
             if (!Resolve(tool, ref toolComponent, false))
@@ -124,7 +127,7 @@ namespace Content.Server.Tools
 
             if (doAfterDelay > 0f)
             {
-                var doAfterArgs = new DoAfterEventArgs(user, doAfterDelay / toolComponent.SpeedModifier, default, target)
+                var doAfterArgs = new DoAfterEventArgs(user, doAfterDelay / toolComponent.SpeedModifier, cancelToken ?? default, target)
                 {
                     ExtraCheck = doAfterCheck,
                     BreakOnDamage = true,

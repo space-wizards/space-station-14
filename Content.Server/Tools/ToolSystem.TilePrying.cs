@@ -1,3 +1,5 @@
+using System;
+using System.Threading;
 using Content.Server.Tools.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
@@ -12,19 +14,13 @@ public sealed partial class ToolSystem
     private void InitializeTilePrying()
     {
         SubscribeLocalEvent<TilePryingComponent, AfterInteractEvent>(OnTilePryingAfterInteract);
-        SubscribeLocalEvent<TilePryingCompleteEvent>(OnTilePryComplete);
-        SubscribeLocalEvent<TilePryingCancelledEvent>(OnTilePryCancelled);
+        SubscribeLocalEvent<TilePryingComponent, TilePryingCompleteEvent>(OnTilePryComplete);
     }
 
-    private void OnTilePryComplete(TilePryingCompleteEvent ev)
+    private void OnTilePryComplete(EntityUid uid, TilePryingComponent component, TilePryingCompleteEvent args)
     {
-        ev.Component.Prying = false;
-        ev.Coordinates.PryTile(EntityManager, _mapManager);
-    }
-
-    private static void OnTilePryCancelled(TilePryingCancelledEvent ev)
-    {
-        ev.Component.Prying = false;
+        component.CancelToken = null;
+        args.Coordinates.PryTile(EntityManager, _mapManager);
     }
 
     private void OnTilePryingAfterInteract(EntityUid uid, TilePryingComponent component, AfterInteractEvent args)
@@ -37,6 +33,13 @@ public sealed partial class ToolSystem
 
     private bool TryPryTile(EntityUid user, TilePryingComponent component, EntityCoordinates clickLocation)
     {
+        if (component.CancelToken != null)
+        {
+            component.CancelToken.Cancel();
+            component.CancelToken = null;
+            return false;
+        }
+
         if (!TryComp<ToolComponent?>(component.Owner, out var tool) && component.ToolComponentNeeded)
             return false;
 
@@ -55,11 +58,8 @@ public sealed partial class ToolSystem
         if (!tileDef.CanCrowbar)
             return false;
 
-        if (component.Prying)
-            return true;
-
-        // Should tools be unique per UseTool? Future concern
-        component.Prying = true;
+        var token = new CancellationTokenSource();
+        component.CancelToken = token;
 
         UseTool(
             component.Owner,
@@ -70,26 +70,17 @@ public sealed partial class ToolSystem
             new [] {component.QualityNeeded},
             new TilePryingCompleteEvent
             {
-                Component = component,
                 Coordinates = clickLocation,
             },
-            new TilePryingCancelledEvent
-            {
-                Component = component,
-            },
-            toolComponent: tool);
+            toolComponent: tool,
+            doAfterEventTarget: component.Owner,
+            cancelToken: token.Token);
 
         return true;
     }
 
-    private sealed class TilePryingCancelledEvent : EntityEventArgs
-    {
-        public TilePryingComponent Component { get; init; } = default!;
-    }
-
     private sealed class TilePryingCompleteEvent : EntityEventArgs
     {
-        public TilePryingComponent Component { get; init; } = default!;
         public EntityCoordinates Coordinates { get; init; }
     }
 }

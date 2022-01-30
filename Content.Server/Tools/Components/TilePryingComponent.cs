@@ -1,4 +1,5 @@
-﻿using Content.Shared.Tools;
+﻿using System.Threading;
+using Content.Shared.Tools;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -22,5 +23,10 @@ namespace Content.Server.Tools.Components
         public float Delay = 1f;
 
         public bool Prying = false;
+
+        /// <summary>
+        /// Used for do_afters.
+        /// </summary>
+        public CancellationTokenSource? CancelToken = null;
     }
 }
