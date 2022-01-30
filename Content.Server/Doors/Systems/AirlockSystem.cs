@@ -34,15 +34,18 @@ namespace Content.Server.Doors.Systems
                 appearanceComponent.SetData(DoorVisuals.Powered, args.Powered);
             }
 
+            if (!TryComp(uid, out DoorComponent? door))
+                return;
+
             if (!args.Powered)
             {
                 // stop any scheduled auto-closing
-                DoorSystem.SetNextStateChange(uid, null);
+                if (door.State == DoorState.Open)
+                    DoorSystem.SetNextStateChange(uid, null);
             }
             else
             {
-                // door received power. Lets "wake" the door up, in case it is currently open and needs to auto-close.
-                DoorSystem.SetNextStateChange(uid, TimeSpan.FromSeconds(1));
+                UpdateAutoClose(uid, door: door);
             }
 
             // BoltLights also got out

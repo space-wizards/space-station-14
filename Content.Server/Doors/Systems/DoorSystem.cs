@@ -42,6 +42,18 @@ public sealed class DoorSystem : SharedDoorSystem
         SubscribeLocalEvent<DoorComponent, WeldCancelledEvent>(OnWeldCancelled);
     }
 
+    protected override void OnInit(EntityUid uid, DoorComponent door, ComponentInit args)
+    {
+        base.OnInit(uid, door, args);
+
+        if (door.State == DoorState.Open
+            && door.ChangeAirtight
+            && TryComp(uid, out AirtightComponent? airtight))
+        {
+            _airtightSystem.SetAirblocked(airtight, false);
+        }
+    }
+
     // TODO AUDIO PREDICT Figure out a better way to handle sound and prediction. For now, this works well enough?
     //
     // Currently a client will predict when a door is going to close automatically. So any client in PVS range can just

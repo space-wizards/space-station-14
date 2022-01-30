@@ -251,6 +251,7 @@ namespace Content.Client.Entry
             "ExplosionLaunched",
             "BeingCloned",
             "Advertise",
+            "Bible",
             "PowerNetworkBattery",
             "BatteryCharger",
             "UnpoweredFlashlight",
@@ -292,13 +293,14 @@ namespace Content.Client.Entry
             "MonkeyAccent",
             "ReplacementAccent",
             "ResistLocker",
+            "IgniteOnCollide",
             "SpawnArtifact",
             "TelepathicArtifact",
             "ArtifactGasTrigger",
             "ArtifactInteractionTrigger",
             "Artifact",
             "RandomArtifactSprite",
-            "EnergySword",
+            "EnergySword"
         };
     }
 }

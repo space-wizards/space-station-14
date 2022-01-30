@@ -28,10 +28,8 @@ public sealed class DoorComponent : Component
     /// This should never be set directly.
     /// </remarks>
     [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("state")]
     public DoorState State = DoorState.Closed;
-
-    [DataField("startOpen")]
-    public readonly bool StartOpen = false;
 
     #region Timing
     // if you want do dynamically adjust these times, you need to add networking for them. So for now, they are all
