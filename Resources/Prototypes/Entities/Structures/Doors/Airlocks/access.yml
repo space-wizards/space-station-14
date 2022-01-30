@@ -346,7 +346,7 @@
     access: [["Security"]]
     
 - type: entity
-  parent: AirlockBrigGlass
+  parent: AirlockSecurityGlass
   id: AirlockBrigGlassLocked
   suffix: Brig, Locked
   components:
