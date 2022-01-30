@@ -22,8 +22,6 @@ namespace Content.Server.Tools.Components
         [DataField("delay")]
         public float Delay = 1f;
 
-        public bool Prying = false;
-
         /// <summary>
         /// Used for do_afters.
         /// </summary>
