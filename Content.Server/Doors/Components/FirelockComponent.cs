@@ -1,6 +1,7 @@
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
-using Content.Shared.Doors;
+using Content.Server.Doors.Systems;
+using Content.Shared.Doors.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -27,9 +28,14 @@ namespace Content.Server.Doors.Components
 
         public bool EmergencyPressureStop()
         {
-            if (_entMan.TryGetComponent<ServerDoorComponent>(Owner, out var doorComp) && doorComp.State == SharedDoorComponent.DoorState.Open && doorComp.CanCloseGeneric())
+            var doorSys = EntitySystem.Get<DoorSystem>();
+            if (_entMan.TryGetComponent<DoorComponent>(Owner, out var door) &&
+                door.State == DoorState.Open &&
+                doorSys.CanClose(Owner, door))
             {
-                doorComp.Close();
+                doorSys.StartClosing(Owner, door);
+
+                // Door system also sets airtight, but only after a delay. We want it to be immediate.
                 if (_entMan.TryGetComponent(Owner, out AirtightComponent? airtight))
                 {
                     EntitySystem.Get<AirtightSystem>().SetAirblocked(airtight, true);

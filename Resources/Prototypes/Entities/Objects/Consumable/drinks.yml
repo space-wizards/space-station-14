@@ -1337,8 +1337,8 @@
 
 - type: entity
   parent: DrinkGlassBase
-  id: DrinkNukaColaGlass
-  name: nuka cola glass
+  id: DrinkNuclearColaGlass
+  name: nuclear cola glass
   description: Don't cry, Don't raise your eye, It's only nuclear wasteland.
   components:
   - type: SolutionContainerManager
@@ -1346,11 +1346,11 @@
       drink:
         maxVol: 50
         reagents:
-        - ReagentId: NukaCola
+        - ReagentId: NuclearCola
           Quantity: 50
   - type: Drink
   - type: Sprite
-    sprite: Objects/Consumable/Drinks/nuka_colaglass.rsi
+    sprite: Objects/Consumable/Drinks/nuclear_colaglass.rsi
 
 - type: entity
   parent: DrinkGlassBase

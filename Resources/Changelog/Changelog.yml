@@ -1,38 +1,4 @@
 Entries:
-- author: Macoron
-  changes:
-  - {message: Uplinks UI now have description of items., type: Add}
-  - {message: Admins can spawn ready to use uplinks., type: Add}
-  id: 443
-  time: '2021-10-15T10:49:59.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Black gloves and the captain's gloves now protect you against burn damage
-      from replacing lightbulbs., type: Tweak}
-  id: 444
-  time: '2021-10-15T11:07:27.972020+00:00'
-- author: Zumorica
-  changes:
-  - {message: Balanced SSS weapon spawns to be more fair., type: Tweak}
-  id: 445
-  time: '2021-10-15T12:46:50.053991+00:00'
-- author: Zumorica
-  changes:
-  - {message: 'Fixes slips not working. GO FORTH AND SLIP, MY CHILDREN!', type: Fix}
-  id: 446
-  time: '2021-10-15T22:21:14.743072+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: ChemMaster UI has been repaired., type: Fix}
-  - {message: Pills are now edible again., type: Fix}
-  id: 447
-  time: '2021-10-16T12:56:21.0000000+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: Ghost have now attuned themselves to radio waves allowing them to listen
-      in on the station chatter., type: Add}
-  id: 448
-  time: '2021-10-16T19:04:35.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: 'Saltern''s security substation''s protective APC is now inside the
@@ -2935,3 +2901,35 @@ Entries:
   - {message: Welding toilets no longer annihilate characters sitting on them., type: Fix}
   id: 943
   time: '2022-01-29T05:34:57.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Airlocks no longer close when an entity is blocking the way. If the
+      safety is disabled, airlocks will now properly crush entities.', type: Fix}
+  id: 944
+  time: '2022-01-30T00:49:57.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Prying tiles now takes time., type: Tweak}
+  id: 945
+  time: '2022-01-30T03:48:18.0000000+00:00'
+- author: Lamrr
+  changes:
+  - {message: Dog beds have now arrived. You can now give Ian a place to sleep., type: Add}
+  - {message: Normal beds can now be constructed and deconstructed., type: Fix}
+  id: 946
+  time: '2022-01-30T04:47:12.0000000+00:00'
+- author: Schiene
+  changes:
+  - {message: Added a Knightship Emergency Shuttle., type: Add}
+  id: 947
+  time: '2022-01-30T07:32:01.0000000+00:00'
+- author: Pancake
+  changes:
+  - {message: '"Russian accent."', type: Add}
+  id: 948
+  time: '2022-01-30T08:06:16.0000000+00:00'
+- author: Schiene
+  changes:
+  - {message: Adds CentComm Outpost spawnable map, type: Add}
+  id: 949
+  time: '2022-01-30T09:06:20.0000000+00:00'

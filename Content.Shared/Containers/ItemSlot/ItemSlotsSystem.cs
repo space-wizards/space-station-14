@@ -180,7 +180,7 @@ namespace Content.Shared.Containers.ItemSlots
                 if (slot.Item != null)
                     hands.TryPutInAnyHand(slot.Item.Value);
 
-                Insert(uid, slot, args.Used, args.User);
+                Insert(uid, slot, args.Used, args.User, excludeUserAudio: args.Predicted);
                 args.Handled = true;
                 return;
             }
