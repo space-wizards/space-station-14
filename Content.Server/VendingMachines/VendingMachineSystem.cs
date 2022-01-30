@@ -177,7 +177,6 @@ namespace Content.Server.VendingMachines.systems
             {
                 if (sender == null || !_accessReader.IsAllowed(accessReader, sender.Value))
                 {
-                    vendComponent.Owner.PopupMessageEveryone(Loc.GetString("vending-machine-component-try-eject-access-denied"));
                     _popupSystem.PopupEntity(Loc.GetString("vending-machine-component-try-eject-access-denied"), uid, Filter.Pvs(uid));
                     Deny(uid, vendComponent);
                     return false;
