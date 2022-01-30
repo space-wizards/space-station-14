@@ -1,10 +1,4 @@
 Entries:
-- author: Macoron
-  changes:
-  - {message: Uplinks UI now have description of items., type: Add}
-  - {message: Admins can spawn ready to use uplinks., type: Add}
-  id: 443
-  time: '2021-10-15T10:49:59.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: Black gloves and the captain's gloves now protect you against burn damage
@@ -2935,3 +2929,9 @@ Entries:
   - {message: Welding toilets no longer annihilate characters sitting on them., type: Fix}
   id: 943
   time: '2022-01-29T05:34:57.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Airlocks no longer close when an entity is blocking the way. If the
+      safety is disabled, airlocks will now properly crush entities.', type: Fix}
+  id: 944
+  time: '2022-01-30T00:49:57.0000000+00:00'
