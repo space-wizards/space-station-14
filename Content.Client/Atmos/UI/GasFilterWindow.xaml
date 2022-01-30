@@ -1,4 +1,4 @@
-<SS14Window xmlns="https://spacestation14.io"
+<DefaultWindow xmlns="https://spacestation14.io"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             xmlns:s="clr-namespace:Content.Client.Stylesheets"
             MinSize="480 400" Title="Filter">
@@ -25,4 +25,4 @@
             <Button Name="SelectGasButton" Text="{Loc comp-gas-filter-ui-filter-gas-confirm}" HorizontalExpand="True" Disabled="True" />
         </BoxContainer>
     </BoxContainer>
-</SS14Window>
+</DefaultWindow>

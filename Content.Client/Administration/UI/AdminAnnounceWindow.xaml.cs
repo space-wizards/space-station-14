@@ -10,7 +10,7 @@ using Robust.Shared.Localization;
 namespace Content.Client.Administration.UI
 {
     [GenerateTypedNameReferences]
-    public partial class AdminAnnounceWindow : SS14Window
+    public partial class AdminAnnounceWindow : DefaultWindow
     {
         [Dependency] private readonly ILocalizationManager _localization = default!;
 

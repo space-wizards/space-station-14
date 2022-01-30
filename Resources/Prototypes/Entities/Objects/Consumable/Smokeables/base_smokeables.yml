@@ -20,6 +20,8 @@
   id: BaseCigar
   abstract: true
   components:
+  - type: Smokable
+    exposeTemperature: 1173.15
   - type: Cigar
   - type: InjectableSolution
     solution: smokable

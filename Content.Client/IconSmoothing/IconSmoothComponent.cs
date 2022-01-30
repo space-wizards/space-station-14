@@ -36,7 +36,7 @@ namespace Content.Client.IconSmoothing
 
         internal ISpriteComponent? Sprite { get; private set; }
 
-        private (GridId, Vector2i) _lastPosition;
+        public (GridId, Vector2i)? LastPosition;
 
         /// <summary>
         ///     We will smooth with other objects with the same key.
@@ -77,7 +77,7 @@ namespace Content.Client.IconSmoothing
                 // ensures lastposition initial value is populated on spawn. Just calling
                 // the hook here would cause a dirty event to fire needlessly
                 UpdateLastPosition();
-                _entMan.EventBus.RaiseEvent(EventSource.Local, new IconSmoothDirtyEvent(Owner, null, Mode));
+                EntitySystem.Get<IconSmoothSystem>().UpdateSmoothing(Owner, this);
             }
 
             if (Sprite != null && Mode == IconSmoothingMode.Corners)
@@ -96,29 +96,39 @@ namespace Content.Client.IconSmoothing
 
         private void UpdateLastPosition()
         {
-            if (_mapManager.TryGetGrid(_entMan.GetComponent<TransformComponent>(Owner).GridID, out var grid))
+            var transform = _entMan.GetComponent<TransformComponent>(Owner);
+
+            if (_mapManager.TryGetGrid(transform.GridID, out var grid))
             {
-                _lastPosition = (_entMan.GetComponent<TransformComponent>(Owner).GridID, grid.TileIndicesFor(_entMan.GetComponent<TransformComponent>(Owner).Coordinates));
+                LastPosition = (transform.GridID, grid.TileIndicesFor(transform.Coordinates));
             }
             else
             {
                 // When this is called during component startup, the transform can end up being with an invalid grid ID.
                 // In that case, use this.
-                _lastPosition = (GridId.Invalid, new Vector2i(0, 0));
+                LastPosition = (GridId.Invalid, new Vector2i(0, 0));
             }
         }
 
         internal virtual void CalculateNewSprite()
         {
-            if (!_mapManager.TryGetGrid(_entMan.GetComponent<TransformComponent>(Owner).GridID, out var grid))
+            var transform = _entMan.GetComponent<TransformComponent>(Owner);
+
+            if (!transform.Anchored)
             {
-                Logger.Error($"Failed to calculate IconSmoothComponent sprite in {Owner} because grid {_entMan.GetComponent<TransformComponent>(Owner).GridID} was missing.");
+                CalculateNewSprite(null);
+                return;
+            }
+
+            if (!_mapManager.TryGetGrid(transform.GridID, out var grid))
+            {
+                Logger.Error($"Failed to calculate IconSmoothComponent sprite in {Owner} because grid {transform.GridID} was missing.");
                 return;
             }
             CalculateNewSprite(grid);
         }
 
-        internal virtual void CalculateNewSprite(IMapGrid grid)
+        internal virtual void CalculateNewSprite(IMapGrid? grid)
         {
             switch (Mode)
             {
@@ -135,14 +145,20 @@ namespace Content.Client.IconSmoothing
             }
         }
 
-        private void CalculateNewSpriteCardinal(IMapGrid grid)
+        private void CalculateNewSpriteCardinal(IMapGrid? grid)
         {
-            if (!_entMan.GetComponent<TransformComponent>(Owner).Anchored || Sprite == null)
+            if (Sprite == null)
             {
                 return;
             }
 
             var dirs = CardinalConnectDirs.None;
+
+            if (grid == null)
+            {
+                Sprite.LayerSetState(0, $"{StateBase}{(int) dirs}");
+                return;
+            }
 
             var position = _entMan.GetComponent<TransformComponent>(Owner).Coordinates;
             if (MatchingEntity(grid.GetInDir(position, Direction.North)))
@@ -157,7 +173,7 @@ namespace Content.Client.IconSmoothing
             Sprite.LayerSetState(0, $"{StateBase}{(int) dirs}");
         }
 
-        private void CalculateNewSpriteCorners(IMapGrid grid)
+        private void CalculateNewSpriteCorners(IMapGrid? grid)
         {
             if (Sprite == null)
             {
@@ -172,9 +188,9 @@ namespace Content.Client.IconSmoothing
             Sprite.LayerSetState(CornerLayers.NW, $"{StateBase}{(int) cornerNW}");
         }
 
-        protected (CornerFill ne, CornerFill nw, CornerFill sw, CornerFill se) CalculateCornerFill(IMapGrid grid)
+        protected (CornerFill ne, CornerFill nw, CornerFill sw, CornerFill se) CalculateCornerFill(IMapGrid? grid)
         {
-            if (!_entMan.GetComponent<TransformComponent>(Owner).Anchored)
+            if (grid == null)
             {
                 return (CornerFill.None, CornerFill.None, CornerFill.None, CornerFill.None);
             }
@@ -259,19 +275,7 @@ namespace Content.Client.IconSmoothing
         {
             base.Shutdown();
 
-            if (_entMan.GetComponent<TransformComponent>(Owner).Anchored)
-            {
-                _entMan.EventBus.RaiseEvent(EventSource.Local, new IconSmoothDirtyEvent(Owner, _lastPosition, Mode));
-            }
-        }
-
-        public void AnchorStateChanged()
-        {
-            if (_entMan.GetComponent<TransformComponent>(Owner).Anchored)
-            {
-                _entMan.EventBus.RaiseEvent(EventSource.Local, new IconSmoothDirtyEvent(Owner, _lastPosition, Mode));
-                UpdateLastPosition();
-            }
+            EntitySystem.Get<IconSmoothSystem>().UpdateSmoothing(Owner, this);
         }
 
         [System.Diagnostics.Contracts.Pure]

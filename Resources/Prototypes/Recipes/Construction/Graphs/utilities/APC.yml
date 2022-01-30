@@ -1,5 +1,5 @@
 ﻿- type: constructionGraph
-  id: apc
+  id: APC
   start: start
   graph:
     - node: start
@@ -10,4 +10,4 @@
               amount: 3
 
     - node: apc
-      entity: BaseApc
+      entity: BaseAPC

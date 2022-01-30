@@ -15,7 +15,7 @@
   - type: SolutionContainerManager
     solutions:
       mop:
-        maxVol: 10
+        maxVol: 50
 
 - type: entity
   name: mop bucket
@@ -38,7 +38,7 @@
         maxVol: 500
         reagents:
         - ReagentId: Water
-          Quantity: 500
+          Quantity: 250 # half-full at roundstart to leave room for puddles
   - type: Physics
     bodyType: Dynamic
   - type: Fixtures

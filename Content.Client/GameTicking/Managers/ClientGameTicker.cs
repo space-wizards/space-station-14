@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Content.Client.Lobby;
 using Content.Client.RoundEnd;
@@ -32,7 +32,7 @@ namespace Content.Client.GameTicking.Managers
         [ViewVariables] public bool DisallowedLateJoin { get; private set; }
         [ViewVariables] public string? ServerInfoBlob { get; private set; }
         [ViewVariables] public TimeSpan StartTime { get; private set; }
-        [ViewVariables] public bool Paused { get; private set; }
+        [ViewVariables] public new bool Paused { get; private set; }
         [ViewVariables] public Dictionary<NetUserId, LobbyPlayerStatus> Status { get; private set; } = new();
         [ViewVariables] public IReadOnlyDictionary<StationId, Dictionary<string, int>> JobsAvailable => _jobsAvailable;
         [ViewVariables] public IReadOnlyDictionary<StationId, string> StationNames => _stationNames;

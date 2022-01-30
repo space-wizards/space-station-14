@@ -407,7 +407,7 @@ namespace Content.Server.Chemistry.Components
                 return;
             }
 
-            var activeHandEntity = hands.GetActiveHand?.Owner;
+            var activeHandEntity = hands.GetActiveHandItem?.Owner;
             if (activeHandEntity == null)
             {
                 UserInterface?.Open(actor.PlayerSession);

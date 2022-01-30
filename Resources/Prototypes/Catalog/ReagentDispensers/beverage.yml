@@ -1,7 +1,6 @@
 - type: reagentDispenserInventory
   id: SodaDispenserInventory
   inventory:
-
   - Water
   - Ice
   - Coffee
@@ -13,6 +12,7 @@
   - Cola
   - SpaceMountainWind
   - DrGibb
+  - RootBeer
   - SpaceUp
   - TonicWater
   - SodaWater
