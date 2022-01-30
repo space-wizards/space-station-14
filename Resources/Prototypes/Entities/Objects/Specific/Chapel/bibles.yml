@@ -7,15 +7,15 @@
   - type: Bible
     damage:
       groups:
-        Brute: -7
-        Burn: -7
+        Brute: -35
+        Burn: -35
     damageOnFail:
       groups:
-        Brute: 4
-        Airloss: 6
+        Brute: 15
+        Airloss: 25
     damageOnUntrainedUse: ## What a non-chaplain takes when attempting to heal someone
       groups:
-        Burn: 10
+        Burn: 30
   - type: ItemCooldown
   - type: Sprite
     netsync: false

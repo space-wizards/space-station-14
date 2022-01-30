@@ -33,6 +33,6 @@ namespace Content.Server.Bible.Components
 
         public TimeSpan LastAttackTime;
         public TimeSpan CooldownEnd;
-        public float CooldownTime { get; } = 1f;
+        public float CooldownTime { get; } = 5f;
     }
 }
