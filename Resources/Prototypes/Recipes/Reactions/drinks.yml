@@ -423,14 +423,14 @@
     Moonshine: 3
 
 - type: reaction
-  id: NukaCola
+  id: NuclearCola
   reactants:
     Cola:
       amount: 5
     Uranium:
       amount: 1
   products:
-    NukaCola: 5
+    NuclearCola: 5
 
 - type: reaction
   id: Patron

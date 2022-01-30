@@ -159,13 +159,13 @@
         # TODO heal mimes
 
 - type: reagent
-  id: NukaCola
-  name: nuka cola
+  id: NuclearCola
+  name: nuclear cola
   group: Drinks
   desc: Cola, cola never changes.
   physicalDesc: fizzy
   color: "#100800"
-  spritePath: nuka_colaglass.rsi
+  spritePath: nuclear_colaglass.rsi
   metabolisms:
     Drink:
       effects:
