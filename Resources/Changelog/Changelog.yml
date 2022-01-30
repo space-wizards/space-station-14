@@ -1,13 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: 'Saltern''s security substation''s protective APC is now inside the
-      security substation chamber, which has been made a little bigger accordingly.',
-    type: Tweak}
-  - {message: 'Saltern now has solars - north set in north-west maintenance, south
-      set a bit east of library.', type: Add}
-  id: 449
-  time: '2021-10-16T20:02:40.0000000+00:00'
 - author: Watermelon914
   changes:
   - {message: Adds hand labelers which allow you to append and remove labels from
@@ -2933,3 +2924,9 @@ Entries:
   - {message: Adds CentComm Outpost spawnable map, type: Add}
   id: 949
   time: '2022-01-30T09:06:20.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix potential crash on item cooldowns where the item was deleted during
+      use., type: Fix}
+  id: 950
+  time: '2022-01-30T13:27:29.0000000+00:00'
