@@ -59,7 +59,7 @@ public abstract class SharedDoorSystem : EntitySystem
         SubscribeLocalEvent<DoorComponent, PreventCollideEvent>(PreventCollision);
     }
 
-    private void OnInit(EntityUid uid, DoorComponent door, ComponentInit args)
+    protected virtual void OnInit(EntityUid uid, DoorComponent door, ComponentInit args)
     {
         // if the door state is not standard (i.e., door starts open), make sure collision & occlusion are properly set.
         if (door.State == DoorState.Open)
