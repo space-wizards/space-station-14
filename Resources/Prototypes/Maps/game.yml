@@ -168,5 +168,4 @@
     Captain: [ 1, 1 ]
     ChiefEngineer: [ 1, 1 ]
     ChiefMedicalOfficer: [ 1, 1 ]
-    HeadOfSecurity: [ 1, 1 ]
-    SecurityOfficer: [ 2, 3 ]
+    SecurityOfficer: [ 3, 6 ]
