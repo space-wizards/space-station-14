@@ -2,12 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using Content.Shared.Cooldown;
+using Content.Shared.Timing;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.Timing;
+namespace Content.Server.Timing;
 
 public sealed class UseDelaySystem : EntitySystem
 {

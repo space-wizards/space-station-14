@@ -12,6 +12,7 @@ namespace Content.Shared.Timing
     [RegisterComponent, ComponentProtoName("UseDelay")]
     public sealed class UseDelayComponent : Component
     {
+        [ViewVariables]
         public TimeSpan LastUseTime;
 
         [ViewVariables]
