@@ -1,0 +1,19 @@
+- type: entity
+  name: sink
+  id: SinkEmpty
+  suffix: Empty
+  description: The faucets have been tightened to the maximum possible torque but are still known to drip.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Anchorable
+  - type: InteractionOutline
+  - type: Sprite
+    offset: "0, 0.3"
+    sprite: Structures/Furniture/sink.rsi
+    state: sink
+    netsync: false
+  - type: SolutionContainerManager
+    solutions:
+      toilet:
+        maxVol: 250

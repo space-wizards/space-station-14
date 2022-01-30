@@ -1425,16 +1425,6 @@
 
 - type: entity
   parent: DrinkGlassBase
-  id: DrinkRamen
-  name: cup ramen
-  description: Just add 10ml water, self heats! A taste that reminds you of your school years.
-  components:
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/ramen.rsi
-
-- type: entity
-  parent: DrinkGlassBase
   id: DrinkRedMeadGlass
   name: red mead glass
   description: A true Viking's beverage, though its color is strange.
@@ -2108,3 +2098,37 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shake-white.rsi
+
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkRamen
+  name: cup ramen
+  description: Just add 10ml water, self heats! A taste that reminds you of your school years
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: DryRamen
+          Quantity: 30
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/ramen.rsi
+
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkHellRamen
+  name: hell ramen
+  description: Just add 10ml water, self heats! Super spicy flavor.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: DryRamen
+          Quantity: 30
+        - ReagentId: CapsaicinOil
+          Quantity: 5
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/ramen.rsi
