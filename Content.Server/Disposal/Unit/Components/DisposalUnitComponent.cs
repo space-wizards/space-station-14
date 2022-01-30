@@ -63,16 +63,12 @@ namespace Content.Server.Disposal.Unit.Components
         /// </summary>
         [ViewVariables] public Container Container = default!;
 
-        [ViewVariables] public IReadOnlyList<EntityUid> ContainedEntities => Container.ContainedEntities;
-
         [ViewVariables] public bool Powered = false;
 
-        [ViewVariables] public PressureState State => Pressure >= 1 ? PressureState.Ready : PressureState.Pressurizing;
+        [ViewVariables] public PressureState State = PressureState.Ready;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Engaged { get; set; }
-
-        [ViewVariables] public BoundUserInterface? UserInterface => Owner.GetUIOrNull(DisposalUnitUiKey.Key);
 
         [DataField("air")]
         public GasMixture Air { get; set; } = new(Atmospherics.CellVolume);

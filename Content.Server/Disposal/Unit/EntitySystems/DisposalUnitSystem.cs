@@ -9,6 +9,7 @@ using Content.Server.Disposal.Unit.Components;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
 using Content.Server.Power.Components;
+using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Acts;
 using Content.Shared.Atmos;
@@ -78,48 +79,9 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             SubscribeLocalEvent<DisposalUnitComponent, SharedDisposalUnitComponent.UiButtonPressedMessage>(OnUiButtonPressed);
         }
 
-        private void HandleDestruction(EntityUid uid, DisposalUnitComponent component, DestructionEventArgs args)
-        {
-            TryEjectContents(component);
-        }
-
-        private void HandleDragDropOn(EntityUid uid, DisposalUnitComponent component, DragDropEvent args)
-        {
-            args.Handled = TryInsert(component.Owner, args.Dragged, args.User);
-        }
-
-        private void OnUiButtonPressed(EntityUid uid, DisposalUnitComponent component, SharedDisposalUnitComponent.UiButtonPressedMessage args)
-        {
-            if (args.Session.AttachedEntity is not {Valid: true} player)
-            {
-                return;
-            }
-
-            if (!_actionBlockerSystem.CanInteract(player) || !_actionBlockerSystem.CanUse(player))
-            {
-                return;
-            }
-
-            switch (args.Button)
-            {
-                case SharedDisposalUnitComponent.UiButton.Eject:
-                        TryEjectContents(component);
-                    break;
-                case SharedDisposalUnitComponent.UiButton.Engage:
-                        ToggleEngage(component);
-                    break;
-                case SharedDisposalUnitComponent.UiButton.Power:
-                    TogglePower(component);
-                    SoundSystem.Play(Filter.Pvs(component.Owner), "/Audio/Machines/machine_switch.ogg", component.Owner, AudioParams.Default.WithVolume(-2f));
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
-
         private void AddFlushEjectVerbs(EntityUid uid, DisposalUnitComponent component, GetAlternativeVerbsEvent args)
         {
-            if (!args.CanAccess || !args.CanInteract || component.ContainedEntities.Count == 0)
+            if (!args.CanAccess || !args.CanInteract || component.Container.ContainedEntities.Count == 0)
                 return;
 
             // Verbs to flush the unit
@@ -144,7 +106,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             // unwilling to accept that this is where they belong and don't want to accidentally climb inside.
             if (!args.CanAccess ||
                 !args.CanInteract ||
-                component.ContainedEntities.Contains(args.User) ||
+                component.Container.ContainedEntities.Contains(args.User) ||
                 !_actionBlockerSystem.CanMove(args.User))
                 return;
 
@@ -190,6 +152,35 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         }
 
         #region UI Handlers
+        private void OnUiButtonPressed(EntityUid uid, DisposalUnitComponent component, SharedDisposalUnitComponent.UiButtonPressedMessage args)
+        {
+            if (args.Session.AttachedEntity is not {Valid: true} player)
+            {
+                return;
+            }
+
+            if (!_actionBlockerSystem.CanInteract(player) || !_actionBlockerSystem.CanUse(player))
+            {
+                return;
+            }
+
+            switch (args.Button)
+            {
+                case SharedDisposalUnitComponent.UiButton.Eject:
+                    TryEjectContents(component);
+                    break;
+                case SharedDisposalUnitComponent.UiButton.Engage:
+                    ToggleEngage(component);
+                    break;
+                case SharedDisposalUnitComponent.UiButton.Power:
+                    TogglePower(component);
+                    SoundSystem.Play(Filter.Pvs(component.Owner), "/Audio/Machines/machine_switch.ogg", component.Owner, AudioParams.Default.WithVolume(-2f));
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
         public void ToggleEngage(DisposalUnitComponent component)
         {
             component.Engaged ^= true;
@@ -228,7 +219,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
             if (IsValidInteraction(args))
             {
-                component.UserInterface?.Open(actor.PlayerSession);
+                component.Owner.GetUIOrNull(SharedDisposalUnitComponent.DisposalUnitUiKey.Key)?.Open(actor.PlayerSession);
             }
         }
 
@@ -239,7 +230,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             // Duplicated code here, not sure how else to get actor inside to make UserInterface happy.
 
             if (!IsValidInteraction(args)) return;
-            component.UserInterface?.Open(actor.PlayerSession);
+            component.Owner.GetUIOrNull(SharedDisposalUnitComponent.DisposalUnitUiKey.Key)?.Open(actor.PlayerSession);
             args.Handled = true;
         }
 
@@ -293,7 +284,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 component.Container.ForceRemove(entity);
             }
 
-            component.UserInterface?.CloseAll();
+            component.Owner.GetUIOrNull(SharedDisposalUnitComponent.DisposalUnitUiKey.Key)?.CloseAll();
 
             component.AutomaticEngageToken?.Cancel();
             component.AutomaticEngageToken = null;
@@ -363,6 +354,16 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             if (!args.Anchored)
                 TryEjectContents(component);
         }
+
+        private void HandleDestruction(EntityUid uid, DisposalUnitComponent component, DestructionEventArgs args)
+        {
+            TryEjectContents(component);
+        }
+
+        private void HandleDragDropOn(EntityUid uid, DisposalUnitComponent component, DragDropEvent args)
+        {
+            args.Handled = TryInsert(component.Owner, args.Dragged, args.User);
+        }
         #endregion
 
         /// <summary>
@@ -373,6 +374,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             var oldPressure = component.Pressure;
 
             component.Pressure = MathF.Min(1.0f, component.Pressure + PressurePerSecond * frameTime);
+            component.State = component.Pressure >= 1 ? SharedDisposalUnitComponent.PressureState.Ready : SharedDisposalUnitComponent.PressureState.Pressurizing;
 
             var state = component.State;
 
@@ -511,6 +513,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             component.AutomaticEngageToken = null;
 
             component.Pressure = 0;
+            component.State = component.Pressure >= 1 ? SharedDisposalUnitComponent.PressureState.Ready : SharedDisposalUnitComponent.PressureState.Pressurizing;
 
             component.Engaged = false;
 
@@ -525,7 +528,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         {
             var stateString = Loc.GetString($"{component.State}");
             var state = new SharedDisposalUnitComponent.DisposalUnitBoundUserInterfaceState(EntityManager.GetComponent<MetaDataComponent>(component.Owner).EntityName, stateString, EstimatedFullPressure(component), powered, component.Engaged);
-            component.UserInterface?.SetState(state);
+            component.Owner.GetUIOrNull(SharedDisposalUnitComponent.DisposalUnitUiKey.Key)?.SetState(state);
         }
 
         private TimeSpan EstimatedFullPressure(DisposalUnitComponent component)
@@ -577,7 +580,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 return;
             }
 
-            if (component.ContainedEntities.Count > 0)
+            if (component.Container.ContainedEntities.Count > 0)
             {
                 appearance.SetData(SharedDisposalUnitComponent.Visuals.Light, SharedDisposalUnitComponent.LightState.Full);
                 return;
@@ -592,7 +595,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         {
             component.Container.Remove(entity);
 
-            if (component.ContainedEntities.Count == 0)
+            if (component.Container.ContainedEntities.Count == 0)
             {
                 component.AutomaticEngageToken?.Cancel();
                 component.AutomaticEngageToken = null;
@@ -654,7 +657,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         /// </summary>
         public void TryQueueEngage(DisposalUnitComponent component)
         {
-            if (component.Deleted || !component.Powered && component.ContainedEntities.Count == 0)
+            if (component.Deleted || !component.Powered && component.Container.ContainedEntities.Count == 0)
             {
                 return;
             }
@@ -676,7 +679,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
             if (EntityManager.TryGetComponent(entity, out ActorComponent? actor))
             {
-                component.UserInterface?.Close(actor.PlayerSession);
+                component.Owner.GetUIOrNull(SharedDisposalUnitComponent.DisposalUnitUiKey.Key)?.Close(actor.PlayerSession);
             }
 
             UpdateVisualState(component);
