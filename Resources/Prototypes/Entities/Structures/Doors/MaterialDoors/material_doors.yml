@@ -42,7 +42,7 @@
     visuals:
       - type: AirlockVisualizer
         simpleVisuals: true
-        animationTime: 1.0
+        animationTime: 1.2
   - type: Airtight
     fixVacuum: true
   - type: Damageable
@@ -60,13 +60,10 @@
     key: walls
     mode: NoSprite
 
-
-
 - type: entity
   id: WoodDoor
   name: wooden door
   parent: BaseMaterialDoor
-
 
 - type: entity
   id: InflatableDoor
