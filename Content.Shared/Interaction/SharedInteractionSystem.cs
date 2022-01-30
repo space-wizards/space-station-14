@@ -292,12 +292,17 @@ namespace Content.Shared.Interaction
             Ignored? predicate = null,
             bool ignoreInsideBlocker = false)
         {
-            if (!origin.InRange(other, range)) return false;
+            // Have to be on same map regardless.
+            if (other.MapId != origin.MapId) return false;
 
+            // Uhh this does mean we could raycast infinity distance so may need to limit it.
             var dir = other.Position - origin.Position;
+            var lengthSquared = dir.LengthSquared;
 
-            if (dir.LengthSquared.Equals(0f)) return true;
-            if (range > 0f && !(dir.LengthSquared <= range * range)) return false;
+            if (lengthSquared.Equals(0f)) return true;
+
+            // If range specified also check it
+            if (range > 0f && lengthSquared > range * range) return false;
 
             predicate ??= _ => false;
 
@@ -533,7 +538,7 @@ namespace Content.Shared.Interaction
         /// Finds components with the InteractUsing interface and calls their function
         /// NOTE: Does not have an InRangeUnobstructed check
         /// </summary>
-        public async Task InteractUsing(EntityUid user, EntityUid used, EntityUid target, EntityCoordinates clickLocation)
+        public async Task InteractUsing(EntityUid user, EntityUid used, EntityUid target, EntityCoordinates clickLocation, bool predicted = false)
         {
             if (!_actionBlockerSystem.CanInteract(user))
                 return;
@@ -542,7 +547,7 @@ namespace Content.Shared.Interaction
                 return;
 
             // all interactions should only happen when in range / unobstructed, so no range check is needed
-            var interactUsingEvent = new InteractUsingEvent(user, used, target, clickLocation);
+            var interactUsingEvent = new InteractUsingEvent(user, used, target, clickLocation, predicted);
             RaiseLocalEvent(target, interactUsingEvent);
             if (interactUsingEvent.Handled)
                 return;
