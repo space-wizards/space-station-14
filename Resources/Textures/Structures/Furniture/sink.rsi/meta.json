@@ -12,15 +12,7 @@
             "directions": 4
         },
         {
-            "name": "sink_alt",
-            "directions": 4
-        },
-        {
-            "name": "sink_frame",
-            "directions": 4
-        },
-        {
-            "name": "sink_greyscale",
+            "name": "sink_wide",
             "directions": 4
         }
     ]

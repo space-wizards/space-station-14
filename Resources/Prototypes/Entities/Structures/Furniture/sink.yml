@@ -6,7 +6,7 @@
   placement:
     mode: SnapgridCenter
   components:
-  - type: Anchorable
+  - type: Clickable
   - type: InteractionOutline
   - type: Sprite
     offset: "0, 0.3"
@@ -15,5 +15,33 @@
     netsync: false
   - type: SolutionContainerManager
     solutions:
-      toilet:
-        maxVol: 250
+      tank:
+        maxVol: 99999
+  - type: DrainableSolution
+    solution: tank
+  - type: ReagentTank
+
+
+- type: entity
+  name: sink
+  id: Sink
+  parent: SinkEmpty
+  suffix: Water
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        reagents:
+        - ReagentId: Water
+          Quantity: 99999
+
+- type: entity
+  name: wide sink
+  id: SinkWide
+  parent: Sink
+  components:
+  - type: Sprite
+    offset: "0, 0.3"
+    sprite: Structures/Furniture/sink.rsi
+    state: sink_wide
+    netsync: false
