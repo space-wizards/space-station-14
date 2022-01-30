@@ -169,7 +169,7 @@ namespace Content.Server.Storage.Components
 
             if (_entMan.TryGetComponent<PlaceableSurfaceComponent?>(Owner, out var surface))
             {
-                EntitySystem.Get<PlaceableSurfaceSystem>().SetPlaceable(Owner, Open, surface);
+                EntitySystem.Get<SharedPlaceableSurfaceSystem>().SetPlaceable(Owner, Open, surface);
             }
 
             UpdateAppearance();
@@ -332,7 +332,7 @@ namespace Content.Server.Storage.Components
 
             if (_entMan.TryGetComponent<PlaceableSurfaceComponent?>(Owner, out var surface))
             {
-                EntitySystem.Get<PlaceableSurfaceSystem>().SetPlaceable(Owner, Open, surface);
+                EntitySystem.Get<SharedPlaceableSurfaceSystem>().SetPlaceable(Owner, Open, surface);
             }
 
             if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
