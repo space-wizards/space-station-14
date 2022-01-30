@@ -29,7 +29,7 @@ namespace Content.Shared.Placeable
                 return;
 
             surface.PositionOffset = offset;
-            surface.Dirty();
+            Dirty(surface);
         }
     }
 }
