@@ -25435,7 +25435,7 @@ entities:
     parent: 63
     type: Transform
 - uid: 2526
-  type: SignSecurearea
+  type: SignWarningSecurearea
   components:
   - pos: -8.5,0.5
     parent: 63

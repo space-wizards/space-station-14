@@ -83423,7 +83423,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 8168
-  type: SignSecurearea
+  type: SignWarningSecurearea
   components:
   - pos: 7.5,-2.5
     parent: 0
@@ -98248,7 +98248,7 @@ entities:
   - color: '#FF0000FF'
     type: AtmosPipeColor
 - uid: 9688
-  type: SignSecurearea
+  type: SignWarningSecurearea
   components:
   - pos: 10.5,-2.5
     parent: 0
@@ -112409,7 +112409,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 10895
-  type: SignRadiation
+  type: SignWarningRadiation
   components:
   - pos: 18.5,-37.5
     parent: 0
@@ -112963,7 +112963,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 10960
-  type: SignRadiation
+  type: SignWarningRadiation
   components:
   - pos: 24.5,-37.5
     parent: 0
@@ -113629,7 +113629,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 11055
-  type: SignShock
+  type: SignWarningShock
   components:
   - pos: 42.5,-13.5
     parent: 0
@@ -113645,13 +113645,13 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 11057
-  type: SignShock
+  type: SignWarningShock
   components:
   - pos: 20.5,38.5
     parent: 0
     type: Transform
 - uid: 11058
-  type: SignShock
+  type: SignWarningShock
   components:
   - pos: 25.5,38.5
     parent: 0
@@ -114273,7 +114273,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 11127
-  type: SignShock
+  type: SignWarningShock
   components:
   - pos: 28.5,22.5
     parent: 0
