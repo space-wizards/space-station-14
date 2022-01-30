@@ -863,16 +863,6 @@
 
 - type: entity
   parent: DrinkGlassBase
-  id: DrinkHell
-  name: hell ramen
-  description: The noodles are boiled, the flavors are artificial, just like being back in school.
-  components:
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/hell.rsi
-
-- type: entity
-  parent: DrinkGlassBase
   id: DrinkHippiesDelightGlass
   name: hippies' delight glass
   description: A drink enjoyed by people during the 1960's.
