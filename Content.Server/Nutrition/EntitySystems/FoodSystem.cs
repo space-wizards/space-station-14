@@ -202,7 +202,7 @@ namespace Content.Server.Nutrition.EntitySystems
             }
 
             if (string.IsNullOrEmpty(food.TrashPrototype))
-                EntityManager.QueueDeleteEntity((food).Owner);
+                EntityManager.QueueDeleteEntity(food.Owner);
             else
                 DeleteAndSpawnTrash(food, user);
 
@@ -231,7 +231,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 return;
             }
 
-            EntityManager.QueueDeleteEntity((component).Owner);
+            EntityManager.QueueDeleteEntity(component.Owner);
         }
 
         private void AddEatVerb(EntityUid uid, FoodComponent component, GetInteractionVerbsEvent ev)

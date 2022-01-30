@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
@@ -7,6 +6,7 @@ using Content.Server.CombatMode;
 using Content.Server.Hands.Components;
 using Content.Server.Pulling;
 using Content.Server.Storage.Components;
+using Content.Server.Timing;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Database;
 using Content.Shared.DragDrop;
@@ -14,18 +14,16 @@ using Content.Shared.Input;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Item;
-using Content.Shared.Popups;
 using Content.Shared.Pulling.Components;
+using Content.Shared.Timing;
 using Content.Shared.Weapons.Melee;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
@@ -41,6 +39,7 @@ namespace Content.Server.Interaction
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly PullingSystem _pullSystem = default!;
         [Dependency] private readonly AdminLogSystem _adminLogSystem = default!;
+        [Dependency] private readonly UseDelaySystem _useDelay = default!;
 
         public override void Initialize()
         {
@@ -85,6 +84,11 @@ namespace Content.Server.Interaction
 
             // we don't check if the user can access the storage entity itself. This should be handed by the UI system.
             return storage.SubscribedSessions.Contains(actor.PlayerSession);
+        }
+
+        protected override void BeginDelay(UseDelayComponent? component = null)
+        {
+            _useDelay.BeginDelay(component);
         }
 
         #region Drag drop

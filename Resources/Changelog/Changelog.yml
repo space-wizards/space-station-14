@@ -1,50 +1,4 @@
 Entries:
-- author: ShadowCommander
-  changes:
-  - {message: Ghost have now attuned themselves to radio waves allowing them to listen
-      in on the station chatter., type: Add}
-  id: 448
-  time: '2021-10-16T19:04:35.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: 'Saltern''s security substation''s protective APC is now inside the
-      security substation chamber, which has been made a little bigger accordingly.',
-    type: Tweak}
-  - {message: 'Saltern now has solars - north set in north-west maintenance, south
-      set a bit east of library.', type: Add}
-  id: 449
-  time: '2021-10-16T20:02:40.0000000+00:00'
-- author: Watermelon914
-  changes:
-  - {message: Adds hand labelers which allow you to append and remove labels from
-      structures and objects., type: Add}
-  id: 450
-  time: '2021-10-16T20:34:05.0000000+00:00'
-- author: moony
-  changes:
-  - {message: Nanotrasen has found the budget to install proper atmospherics., type: Add}
-  id: 451
-  time: '2021-10-16T23:11:06.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Ad-dd-ded st-tutt-ter-ring-g-g, type: Add}
-  id: 452
-  time: '2021-10-16T23:23:31.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Added Hydroponics tray machine board, type: Add}
-  id: 453
-  time: '2021-10-18T06:12:50.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Pipe rotation is less chaotic evil., type: Fix}
-  id: 454
-  time: '2021-10-18T11:42:30.0000000+00:00'
-- author: ike709
-  changes:
-  - {message: '"Prefer integer scaling" setting will now properly save', type: Fix}
-  id: 455
-  time: '2021-10-18T22:47:27.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Security gear will now actually protect you against attacks., type: Add}
@@ -2934,3 +2888,53 @@ Entries:
   - {message: '"Russian accent."', type: Add}
   id: 948
   time: '2022-01-30T08:06:16.0000000+00:00'
+- author: Schiene
+  changes:
+  - {message: Adds CentComm Outpost spawnable map, type: Add}
+  id: 949
+  time: '2022-01-30T09:06:20.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix potential crash on item cooldowns where the item was deleted during
+      use., type: Fix}
+  id: 950
+  time: '2022-01-30T13:27:29.0000000+00:00'
+- author: scaly-chimp
+  changes:
+  - {message: Added new flare shotgun shells, type: Add}
+  - {message: fixed the incediary shotgun shells being a reskin., type: Fix}
+  id: 951
+  time: '2022-01-30T13:44:45.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Removed the objective to stay alive., type: Remove}
+  - {message: Lowered max objective difficulty., type: Tweak}
+  - {message: 'Steal objective probability reduced by 1/3, and die objective probability
+      reduced by 9/10.', type: Tweak}
+  id: 952
+  time: '2022-01-30T14:19:27.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Conveyors now 20% less jank., type: Tweak}
+  id: 953
+  time: '2022-01-30T14:30:16.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'Wood floor tiles can no longer be placed directly on space, and do
+      not space so easily.', type: Fix}
+  - {message: Cryobeaker capacity reduced from 60 to 40., type: Tweak}
+  - {message: Explosive grenades and minibombs no longer beep., type: Tweak}
+  id: 954
+  time: '2022-01-30T14:34:11.0000000+00:00'
+- author: Pancake
+  changes:
+  - {message: Admins now have more animals to release into the station!, type: Add}
+  - {message: Vending machines are now less murderous., type: Tweak}
+  id: 955
+  time: '2022-01-30T14:35:00.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Fire extinguisher spray now applies touch reactions., type: Add}
+  - {message: Fire extinguishers can be refilled from any source now., type: Tweak}
+  id: 956
+  time: '2022-01-30T14:42:15.0000000+00:00'

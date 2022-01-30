@@ -1,17 +1,14 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CombatMode;
 using Content.Shared.Database;
-using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Input;
 using Content.Shared.Interaction.Helpers;
-using Content.Shared.Inventory;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Throwing;
@@ -625,7 +622,7 @@ namespace Content.Shared.Interaction
             RaiseLocalEvent(used, activateMsg);
             if (activateMsg.Handled)
             {
-                delayComponent?.BeginDelay();
+                BeginDelay(delayComponent);
                 _adminLogSystem.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user):user} activated {ToPrettyString(used):used}");
                 return;
             }
@@ -635,7 +632,7 @@ namespace Content.Shared.Interaction
 
             var activateEventArgs = new ActivateEventArgs(user, used);
             activateComp.Activate(activateEventArgs);
-            delayComponent?.BeginDelay();
+            BeginDelay(delayComponent);
             _adminLogSystem.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user):user} activated {ToPrettyString(used):used}"); // No way to check success.
         }
         #endregion
@@ -669,7 +666,7 @@ namespace Content.Shared.Interaction
             RaiseLocalEvent(used, useMsg);
             if (useMsg.Handled)
             {
-                delayComponent?.BeginDelay();
+                BeginDelay(delayComponent);
                 return true;
             }
 
@@ -681,12 +678,18 @@ namespace Content.Shared.Interaction
                 // If a Use returns a status completion we finish our interaction
                 if (use.UseEntity(new UseEntityEventArgs(user)))
                 {
-                    delayComponent?.BeginDelay();
+                    BeginDelay(delayComponent);
                     return true;
                 }
             }
 
             return false;
+        }
+
+        protected virtual void BeginDelay(UseDelayComponent? component = null)
+        {
+            // This is temporary until we have predicted UseDelay.
+            return;
         }
 
         /// <summary>

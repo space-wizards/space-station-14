@@ -3,12 +3,12 @@
   id: CultLeaderGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorBlack
-    backpack: ClothingBackpackFilled
+    back: ClothingBackpackFilled
     head: ClothingHeadHelmetCult
     neck: BedsheetCult
     outerClothing: ClothingOuterArmorCult
     shoes: ClothingShoesCult
-    idcard: AssistantPDA
+    id: AssistantPDA
     ears: ClothingHeadsetService
   innerclothingskirt: ClothingUniformJumpskirtColorBlack
   satchel: ClothingBackpackSatchelFilled
@@ -18,11 +18,11 @@
   id: CultistGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorBlack
-    backpack: ClothingBackpackFilled
+    back: ClothingBackpackFilled
     head: ClothingHeadHatHoodCulthood
     outerClothing: ClothingOuterRobesCult
     shoes: ClothingShoesColorRed
-    idcard: AssistantPDA
+    id: AssistantPDA
     ears: ClothingHeadsetService
   innerclothingskirt: ClothingUniformJumpskirtColorBlack
   satchel: ClothingBackpackSatchelFilled
