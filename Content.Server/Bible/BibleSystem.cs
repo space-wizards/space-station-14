@@ -54,7 +54,7 @@ namespace Content.Server.Bible
 
             if (!HasComp<BibleUserComponent>(args.User))
             {
-                args.User.PopupMessage(Loc.GetString("bible-sizzle"));
+                _popupSystem.PopupEntity(Loc.GetString("bible-sizzle"), args.User, Filter.Entities(args.User));
 
                 SoundSystem.Play(Filter.Pvs(args.User), "/Audio/Effects/lightburn.ogg");
                 _damageableSystem.TryChangeDamage(args.User, component.DamageOnUntrainedUse, true);
