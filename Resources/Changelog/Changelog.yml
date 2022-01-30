@@ -1,13 +1,6 @@
 Entries:
 - author: Efruit
   changes:
-  - {message: Show set pressure when examining gas pumps., type: Add}
-  - {message: Show set rate when examining volumetric gas pumps., type: Add}
-  - {message: Show valve status (open/closed) when examining manual valves., type: Add}
-  id: 460
-  time: '2021-10-19T21:46:31.0000000+00:00'
-- author: Efruit
-  changes:
   - {message: NT took the tele-trashbags back. At least they left some normal ones
       for us..., type: Fix}
   id: 461
@@ -2938,3 +2931,9 @@ Entries:
   - {message: Remastered the Dart shuttle, type: Add}
   id: 960
   time: '2022-01-30T16:01:49.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a visual bug that would sometimes result in players getting stuck
+      lying on the floor after being stunned., type: Fix}
+  id: 961
+  time: '2022-01-30T16:34:48.0000000+00:00'
