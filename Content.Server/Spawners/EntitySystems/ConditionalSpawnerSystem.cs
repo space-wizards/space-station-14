@@ -10,7 +10,7 @@ using Robust.Shared.Random;
 namespace Content.Server.Spawners.EntitySystems
 {
     [UsedImplicitly]
-    public class ConditionalSpawnerSystem : EntitySystem
+    public sealed class ConditionalSpawnerSystem : EntitySystem
     {
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly GameTicker _ticker = default!;
@@ -37,7 +37,7 @@ namespace Content.Server.Spawners.EntitySystems
 
         private void OnRuleAdded(GameRuleAddedEvent args)
         {
-            foreach (var spawner in EntityManager.EntityQuery<ConditionalSpawnerComponent>(true))
+            foreach (var spawner in EntityManager.EntityQuery<ConditionalSpawnerComponent>())
             {
                 RuleAdded(spawner, args);
             }
@@ -76,7 +76,7 @@ namespace Content.Server.Spawners.EntitySystems
                 return;
             }
 
-            if(!Deleted(component.Owner))
+            if (!Deleted(component.Owner))
                 EntityManager.SpawnEntity(_robustRandom.Pick(component.Prototypes), Transform(component.Owner).Coordinates);
         }
 
@@ -89,9 +89,7 @@ namespace Content.Server.Spawners.EntitySystems
             }
 
             if (component.Chance != 1.0f && !_robustRandom.Prob(component.Chance))
-            {
                 return;
-            }
 
             if (component.Prototypes.Count == 0)
             {
@@ -99,14 +97,14 @@ namespace Content.Server.Spawners.EntitySystems
                 return;
             }
 
-            if(!Deleted(component.Owner))
-            {
-                var x_negative = _robustRandom.Prob(0.5f) ? -1 : 1;
-                var y_negative = _robustRandom.Prob(0.5f) ? -1 : 1;
+            if (Deleted(component.Owner)) return;
 
-                var entity = EntityManager.SpawnEntity(_robustRandom.Pick(component.Prototypes), Transform(component.Owner).Coordinates);
-                Transform(entity).LocalPosition += new Vector2(_robustRandom.NextFloat() * component.Offset * x_negative, _robustRandom.NextFloat() * component.Offset * y_negative);
-            }
+            var xOffset = _robustRandom.NextFloat(-1, 1);
+            var yOffset = _robustRandom.NextFloat(-1, 1);
+
+            var coordinates = Transform(component.Owner).Coordinates.Offset(new Vector2(xOffset, yOffset));
+
+            var entity = EntityManager.SpawnEntity(_robustRandom.Pick(component.Prototypes), coordinates);
         }
     }
 }

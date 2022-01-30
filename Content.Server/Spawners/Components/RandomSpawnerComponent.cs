@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Spawners.Components
@@ -9,7 +12,7 @@ namespace Content.Server.Spawners.Components
     public class RandomSpawnerComponent : ConditionalSpawnerComponent
     {
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("rarePrototypes")]
+        [DataField("rarePrototypes", customTypeSerializer:typeof(PrototypeIdListSerializer<EntityPrototype>))]
         public List<string> RarePrototypes { get; set; } = new();
 
         [ViewVariables(VVAccess.ReadWrite)]
