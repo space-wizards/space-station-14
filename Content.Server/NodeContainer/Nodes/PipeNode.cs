@@ -35,6 +35,26 @@ namespace Content.Server.NodeContainer.Nodes
         /// </summary>
         public PipeDirection CurrentPipeDirection { get; private set; }
 
+        private HashSet<PipeNode>? _alwaysReachable;
+
+        public void AddAlwaysReachable(PipeNode pipeNode)
+        {
+            if (NodeGroup == null) return;
+            if (pipeNode.NodeGroupID != NodeGroupID) return;
+            _alwaysReachable ??= new();
+            _alwaysReachable.Add(pipeNode);
+            EntitySystem.Get<NodeGroupSystem>().QueueRemakeGroup((BaseNodeGroup) NodeGroup);
+        }
+
+        public void RemoveAlwaysReachable(PipeNode pipeNode)
+        {
+            if (_alwaysReachable == null) return;
+            if (NodeGroup == null) return;
+            if (pipeNode.NodeGroupID != NodeGroupID) return;
+            _alwaysReachable.Remove(pipeNode);
+            EntitySystem.Get<NodeGroupSystem>().QueueRemakeGroup((BaseNodeGroup) NodeGroup);
+        }
+
         /// <summary>
         ///     The directions in which this node is connected to other nodes.
         ///     Used by <see cref="PipeVisualState"/>.
@@ -142,6 +162,24 @@ namespace Content.Server.NodeContainer.Nodes
                 foreach (var pipe in LinkableNodesInDirection(pipeDir))
                 {
                     yield return pipe;
+                }
+            }
+
+            if(_alwaysReachable != null)
+            {
+                var remQ = new RemQueue<PipeNode>();
+                foreach(var pipe in _alwaysReachable)
+                {
+                    if (pipe.Deleting)
+                    {
+                        remQ.Add(pipe);
+                    }
+                    yield return pipe;
+                }
+
+                foreach(var pipe in remQ)
+                {
+                    _alwaysReachable.Remove(pipe);
                 }
             }
         }

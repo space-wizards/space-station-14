@@ -4,10 +4,12 @@
   description: "An unpowered light."
   suffix: Unpowered
   components:
+  - type: Transform
+    anchored: true
   - type: Clickable
   - type: InteractionOutline
   - type: Construction
-    graph: lightFixture
+    graph: LightFixture
     node: tubeLight
   - type: Physics
     canCollide: false
@@ -112,6 +114,30 @@
     damage:
       types:
         Heat: 20
+        
+- type: entity
+  id: PoweredlightExterior
+  description: "A light fixture. Draws power and produces light when equipped with a light tube."
+  suffix: Exterior tube, Powered
+  parent: Poweredlight
+  components:
+  - type: PoweredLight
+    hasLampOnSpawn: ExteriorLightTube
+    damage:
+      types:
+        Heat: 20
+        
+- type: entity
+  id: PoweredlightSodium
+  description: "A light fixture. Draws power and produces light when equipped with a light tube."
+  suffix: Sodium tube, Powered
+  parent: Poweredlight
+  components:
+  - type: PoweredLight
+    hasLampOnSpawn: SodiumLightTube
+    damage:
+      types:
+        Heat: 20
 
 - type: entity
   name: small light
@@ -150,7 +176,7 @@
         - !type:DoActsBehavior
           acts: ["Destruction"]
     - type: Construction
-      graph: lightFixture
+      graph: LightFixture
       node: bulbLight
 
 - type: entity

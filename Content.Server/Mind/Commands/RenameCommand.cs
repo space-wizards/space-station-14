@@ -8,6 +8,7 @@ using Content.Server.PDA;
 using Content.Shared.Access.Components;
 using Content.Shared.Administration;
 using Content.Shared.PDA;
+using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
@@ -89,6 +90,13 @@ public class RenameCommand : IConsoleCommand
                     continue;
                 pdaSystem.SetOwner(pdaComponent, name);
             }
+        }
+
+        // Admin Overlay
+        if (entSysMan.TryGetEntitySystem<AdminSystem>(out var adminSystem)
+            && entMan.TryGetComponent<ActorComponent>(entityUid, out var actorComp))
+        {
+            adminSystem.UpdatePlayerList(actorComp.PlayerSession);
         }
     }
 

@@ -37,7 +37,7 @@ namespace Content.Server.Explosion.EntitySystems
     }
 
     [UsedImplicitly]
-    public sealed class TriggerSystem : EntitySystem
+    public sealed partial class TriggerSystem : EntitySystem
     {
         [Dependency] private readonly ExplosionSystem _explosions = default!;
         [Dependency] private readonly FlashSystem _flashSystem = default!;
@@ -46,6 +46,9 @@ namespace Content.Server.Explosion.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
+
+            InitializeOnUse();
+
             SubscribeLocalEvent<TriggerOnCollideComponent, StartCollideEvent>(HandleCollide);
 
             SubscribeLocalEvent<DeleteOnTriggerComponent, TriggerEvent>(HandleDeleteTrigger);
