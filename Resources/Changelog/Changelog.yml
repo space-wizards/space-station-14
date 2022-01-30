@@ -1,13 +1,6 @@
 Entries:
 - author: 20kdc
   changes:
-  - {message: Monkey cubes and rehydratable space carp work properly and don't rely
-      on the RefillableSolution workaround., type: Fix}
-  - {message: Poisoning something that can be sliced now poisons the slices., type: Tweak}
-  id: 457
-  time: '2021-10-19T07:13:44.0000000+00:00'
-- author: 20kdc
-  changes:
   - {message: freezers are rotatable now., type: Fix}
   id: 458
   time: '2021-10-19T07:22:41.0000000+00:00'
@@ -2938,3 +2931,9 @@ Entries:
     type: Add}
   id: 957
   time: '2022-01-30T15:11:40.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'Chaplains'' prayers have been answered, and they now spawn with a fully
+      functional bible.', type: Add}
+  id: 958
+  time: '2022-01-30T15:20:23.0000000+00:00'
