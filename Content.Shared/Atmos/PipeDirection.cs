@@ -11,19 +11,6 @@ namespace Content.Shared.Atmos
         VisualState
     }
 
-    [Serializable, NetSerializable]
-    public class PipeVisualState
-    {
-        // TODO ATMOS: Make this not a class and just be the field below...
-        [ViewVariables]
-        public readonly PipeDirection ConnectedDirections;
-
-        public PipeVisualState(PipeDirection connectedDirections)
-        {
-            ConnectedDirections = connectedDirections;
-        }
-    }
-
     [Flags]
     [Serializable, NetSerializable]
     public enum PipeDirection

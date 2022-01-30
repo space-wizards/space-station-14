@@ -718,7 +718,7 @@ namespace Content.Shared.Hands.Components
     }
 
     [Serializable, NetSerializable]
-    public class HandsVisualState
+    public class HandsVisualState : ICloneable
     {
         public List<HandVisualState> Hands { get; } = new();
 
@@ -726,10 +726,15 @@ namespace Content.Shared.Hands.Components
         {
             Hands = hands;
         }
+
+        public object Clone()
+        {
+            return new HandsVisualState(new List<HandVisualState>(Hands));
+        }
     }
 
     [Serializable, NetSerializable]
-    public class HandVisualState
+    public struct HandVisualState
     {
         public string RsiPath { get; }
         public string? EquippedPrefix { get; }
