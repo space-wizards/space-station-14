@@ -444,23 +444,6 @@ namespace Content.Shared.Interaction.Helpers
 
             return true;
         }
-
-        public static bool InRangeUnobstructed(
-            this AfterInteractEvent args,
-            float range = InteractionRange,
-            CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored? predicate = null,
-            bool ignoreInsideBlocker = false,
-            bool popup = false)
-        {
-            var user = args.User;
-            var target = args.Target;
-
-            if (target == null)
-                return SharedInteractionSystem.InRangeUnobstructed(user, args.ClickLocation, range, collisionMask, predicate, ignoreInsideBlocker, popup);
-            else
-                return SharedInteractionSystem.InRangeUnobstructed(user, target.Value, range, collisionMask, predicate, ignoreInsideBlocker, popup);
-        }
         #endregion
     }
 }

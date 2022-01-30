@@ -58,8 +58,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
             // Interactions
             SubscribeLocalEvent<DisposalUnitComponent, ActivateInWorldEvent>(HandleActivate);
-            SubscribeLocalEvent<DisposalUnitComponent, InteractHandEvent>(HandleInteractHand);
-            SubscribeLocalEvent<DisposalUnitComponent, InteractUsingEvent>(HandleInteractUsing);
+            SubscribeLocalEvent<DisposalUnitComponent, AfterInteractUsingEvent>(HandleAfterInteractUsing);
 
             // Verbs
             SubscribeLocalEvent<DisposalUnitComponent, GetAlternativeVerbsEvent>(AddFlushEjectVerbs);
@@ -184,19 +183,11 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             }
         }
 
-        private void HandleInteractHand(EntityUid uid, DisposalUnitComponent component, InteractHandEvent args)
+        private void HandleAfterInteractUsing(EntityUid uid, DisposalUnitComponent component, AfterInteractUsingEvent args)
         {
-            if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor)) return;
+            if (args.Handled || !args.CanReach)
+                return;
 
-            // Duplicated code here, not sure how else to get actor inside to make UserInterface happy.
-
-            if (!IsValidInteraction(args)) return;
-            component.UserInterface?.Open(actor.PlayerSession);
-            args.Handled = true;
-        }
-
-        private void HandleInteractUsing(EntityUid uid, DisposalUnitComponent component, InteractUsingEvent args)
-        {
             if (!EntityManager.TryGetComponent(args.User, out HandsComponent? hands))
             {
                 return;

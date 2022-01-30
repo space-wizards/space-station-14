@@ -25,6 +25,7 @@ namespace Content.Server.RCD.Systems
         [Dependency] private readonly IMapManager _mapManager = default!;
 
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
 
         private readonly RcdMode[] _modes = (RcdMode[]) Enum.GetValues(typeof(RcdMode));
 
@@ -60,7 +61,7 @@ namespace Content.Server.RCD.Systems
 
         private async void OnAfterInteract(EntityUid uid, RCDComponent rcd, AfterInteractEvent args)
         {
-            if (args.Handled)
+            if (args.Handled || !args.CanReach)
                 return;
 
             // FIXME: Make this work properly. Right now it relies on the click location being on a grid, which is bad.
@@ -159,7 +160,10 @@ namespace Content.Server.RCD.Systems
             }
 
             var coordinates = mapGrid.ToCoordinates(tile.GridIndices);
-            if (coordinates == EntityCoordinates.Invalid || !eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
+            if (
+                coordinates == EntityCoordinates.Invalid
+                ||  eventArgs.Target == null
+                || !_interactionSystem.InRangeUnobstructed(eventArgs.User, eventArgs.Target.Value, ignoreInsideBlocker: true, popup: true))
             {
                 return false;
             }

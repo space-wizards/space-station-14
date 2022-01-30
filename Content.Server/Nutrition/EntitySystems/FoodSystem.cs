@@ -77,15 +77,6 @@ namespace Content.Server.Nutrition.EntitySystems
             if (ev.Handled)
                 return;
 
-            if (!_actionBlockerSystem.CanInteract(ev.User) || !_actionBlockerSystem.CanUse(ev.User))
-                return;
-
-            if (!ev.User.InRangeUnobstructed(uid, popup: true))
-            {
-                ev.Handled = true;
-                return;
-            }
-
             ev.Handled = TryUseFood(uid, ev.User);
         }
 
@@ -94,27 +85,12 @@ namespace Content.Server.Nutrition.EntitySystems
         /// </summary>
         private void OnFeedFood(EntityUid uid, FoodComponent foodComponent, AfterInteractEvent args)
         {
-            if (args.Handled || args.Target == null)
+            if (args.Handled || args.Target == null || !args.CanReach)
                 return;
-
-            if (!_actionBlockerSystem.CanInteract(args.User) || !_actionBlockerSystem.CanUse(args.User))
-                return;
-
-            if (!args.User.InRangeUnobstructed(uid, popup: true))
-            {
-                args.Handled = true;
-                return;
-            }
 
             if (args.User == args.Target)
             {
                 args.Handled = TryUseFood(uid, args.User);
-                return;
-            }
-
-            if (!args.User.InRangeUnobstructed(args.Target.Value, popup: true))
-            {
-                args.Handled = true;
                 return;
             }
 
