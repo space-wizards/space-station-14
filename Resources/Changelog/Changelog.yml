@@ -1,11 +1,6 @@
 Entries:
 - author: Zumorica
   changes:
-  - {message: Balanced SSS weapon spawns to be more fair., type: Tweak}
-  id: 445
-  time: '2021-10-15T12:46:50.053991+00:00'
-- author: Zumorica
-  changes:
   - {message: 'Fixes slips not working. GO FORTH AND SLIP, MY CHILDREN!', type: Fix}
   id: 446
   time: '2021-10-15T22:21:14.743072+00:00'
@@ -2934,3 +2929,9 @@ Entries:
   - {message: Prying tiles now takes time., type: Tweak}
   id: 945
   time: '2022-01-30T03:48:18.0000000+00:00'
+- author: Lamrr
+  changes:
+  - {message: Dog beds have now arrived. You can now give Ian a place to sleep., type: Add}
+  - {message: Normal beds can now be constructed and deconstructed., type: Fix}
+  id: 946
+  time: '2022-01-30T04:47:12.0000000+00:00'
