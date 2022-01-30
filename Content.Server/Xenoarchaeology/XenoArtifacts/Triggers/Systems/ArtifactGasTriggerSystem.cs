@@ -1,4 +1,5 @@
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -15,7 +16,16 @@ public class ArtifactGasTriggerSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<ArtifactGasTriggerComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<ArtifactGasTriggerComponent, RandomizeTriggerEvent>(OnRandomizeTrigger);
+    }
+
+    private void OnRandomizeTrigger(EntityUid uid, ArtifactGasTriggerComponent component, RandomizeTriggerEvent args)
+    {
+        if (component.ActivationGas == null)
+        {
+            var gas = _random.Pick(component.PossibleGases);
+            component.ActivationGas = gas;
+        }
     }
 
     public override void Update(float frameTime)
@@ -37,15 +47,6 @@ public class ArtifactGasTriggerSystem : EntitySystem
                 continue;
 
             _artifactSystem.TryActivateArtifact(trigger.Owner);
-        }
-    }
-
-    private void OnMapInit(EntityUid uid, ArtifactGasTriggerComponent component, MapInitEvent args)
-    {
-        if (component.ActivationGas == null)
-        {
-            var gas = _random.Pick(component.PossibleGases);
-            component.ActivationGas = gas;
         }
     }
 }
