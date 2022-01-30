@@ -103,6 +103,9 @@
   id: Document
 
 - type: Tag
+  id: DoorBumpOpener
+
+- type: Tag
   id: DoorElectronics
 
 - type: Tag
