@@ -2,7 +2,7 @@
 
 namespace Content.Shared.DragDrop;
 
-public class SharedDragDropSystem : EntitySystem
+public abstract class SharedDragDropSystem : EntitySystem
 {
     protected bool? CheckDragDropOn(DragDropEvent eventArgs)
     {
