@@ -36,14 +36,14 @@ namespace Content.Server.Physics.Controllers
             // TODO: This won't work if someone wants a massive fuckoff conveyor so look at using StartCollide or something.
             foreach (var (comp, xform) in EntityManager.EntityQuery<ConveyorComponent, TransformComponent>())
             {
-                Convey(_conveyor, comp, xform, conveyed, frameTime);
+                Convey(comp, xform, conveyed, frameTime);
             }
         }
 
-        private void Convey(ConveyorSystem system, ConveyorComponent comp, TransformComponent xform, HashSet<EntityUid> conveyed, float frameTime)
+        private void Convey(ConveyorComponent comp, TransformComponent xform, HashSet<EntityUid> conveyed, float frameTime)
         {
             // Use an event for conveyors to know what needs to run
-            if (!system.CanRun(comp))
+            if (!_conveyor.CanRun(comp))
             {
                 return;
             }
