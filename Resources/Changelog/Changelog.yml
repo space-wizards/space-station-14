@@ -1,10 +1,4 @@
 Entries:
-- author: ShadowCommander
-  changes:
-  - {message: Ghost have now attuned themselves to radio waves allowing them to listen
-      in on the station chatter., type: Add}
-  id: 448
-  time: '2021-10-16T19:04:35.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: 'Saltern''s security substation''s protective APC is now inside the
@@ -2934,3 +2928,8 @@ Entries:
   - {message: '"Russian accent."', type: Add}
   id: 948
   time: '2022-01-30T08:06:16.0000000+00:00'
+- author: Schiene
+  changes:
+  - {message: Adds CentComm Outpost spawnable map, type: Add}
+  id: 949
+  time: '2022-01-30T09:06:20.0000000+00:00'
