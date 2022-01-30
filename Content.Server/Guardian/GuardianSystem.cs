@@ -1,7 +1,6 @@
 using Content.Server.Actions;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
-using Content.Server.Inventory.Components;
 using Content.Server.Popups;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
@@ -9,8 +8,8 @@ using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.MobState;
-using Content.Shared.MobState.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -50,6 +49,8 @@ namespace Content.Server.Guardian
             SubscribeLocalEvent<GuardianHostComponent, MoveEvent>(OnHostMove);
             SubscribeLocalEvent<GuardianHostComponent, MobStateChangedEvent>(OnHostStateChange);
             SubscribeLocalEvent<GuardianHostComponent, ComponentShutdown>(OnHostShutdown);
+
+            SubscribeLocalEvent<GuardianComponent, AttackAttemptEvent>(OnGuardianAttackAttempt);
         }
 
         private void OnGuardianUnplayer(EntityUid uid, GuardianComponent component, PlayerDetachedEvent args)
@@ -79,6 +80,15 @@ namespace Content.Server.Guardian
         {
             if (component.HostedGuardian == null) return;
             EntityManager.QueueDeleteEntity(component.HostedGuardian.Value);
+        }
+
+        private void OnGuardianAttackAttempt(EntityUid uid, GuardianComponent component, AttackAttemptEvent args)
+        {
+            if (args.Cancelled || args.Target != component.Host)
+                return;
+
+            _popupSystem.PopupCursor(Loc.GetString("guardian-attack-host"), Filter.Entities(uid));
+            args.Cancel();
         }
 
         public void ToggleGuardian(GuardianHostComponent hostComponent)
@@ -125,6 +135,14 @@ namespace Content.Server.Guardian
                 _popupSystem.PopupEntity(Loc.GetString("guardian-activator-empty-invalid-creation"), user, Filter.Entities(user));
                 return;
             }
+
+            // Can only inject things with the component...
+            if (!HasComp<CanHostGuardianComponent>(target))
+            {
+                _popupSystem.PopupEntity(Loc.GetString("guardian-activator-invalid-target"), user, Filter.Entities(user));
+                return;
+            }
+
 
             // If user is already a host don't duplicate.
             if (HasComp<GuardianHostComponent>(target))

@@ -60,10 +60,15 @@
       - id: BoxLightMixed
         amount: 1
 
-#- type: entity
-#  id: LockerLegalFilled
-#  suffix: Filled
-#  parent: LockerLegal
+- type: entity
+  id: ClosetLegalFilled
+  suffix: Filled
+  parent: ClosetLegal
+  components:
+  - type: StorageFill
+    contents:
+      - id: BriefcaseBrownFilled
+        prob: 0.75
 
 - type: entity
   id: LockerBotanistFilled

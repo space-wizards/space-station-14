@@ -1,8 +1,6 @@
 ﻿using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.EntitySystems;
-using Content.Server.Inventory.Components;
-using Content.Server.Items;
 using Content.Shared.FixedPoint;
 using Content.Shared.Foam;
 using Content.Shared.Inventory;
@@ -40,20 +38,22 @@ namespace Content.Server.Chemistry.Components
             if (!_entMan.TryGetComponent(entity, out BloodstreamComponent? bloodstream))
                 return;
 
+            var invSystem = EntitySystem.Get<InventorySystem>();
+
             // TODO: Add a permeability property to clothing
             // For now it just adds to protection for each clothing equipped
             var protection = 0f;
-            if (_entMan.TryGetComponent(entity, out InventoryComponent? inventory))
+            if (invSystem.TryGetSlots(entity, out var slotDefinitions))
             {
-                foreach (var slot in inventory.Slots)
+                foreach (var slot in slotDefinitions)
                 {
-                    if (slot == EquipmentSlotDefines.Slots.BACKPACK ||
-                        slot == EquipmentSlotDefines.Slots.POCKET1 ||
-                        slot == EquipmentSlotDefines.Slots.POCKET2 ||
-                        slot == EquipmentSlotDefines.Slots.IDCARD)
+                    if (slot.Name == "back" ||
+                        slot.Name == "pocket1" ||
+                        slot.Name == "pocket2" ||
+                        slot.Name == "id")
                         continue;
 
-                    if (inventory.TryGetSlotItem(slot, out ItemComponent? _))
+                    if (invSystem.TryGetSlotEntity(entity, slot.Name, out _))
                         protection += 0.025f;
                 }
             }

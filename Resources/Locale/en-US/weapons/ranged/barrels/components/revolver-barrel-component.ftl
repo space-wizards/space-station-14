@@ -1,7 +1,7 @@
 ## RevolverBarrelComponent
 
-revolver-barrel-component-try-inser-bullet-wrong-caliber = Wrong caliber
-revolver-barrel-component-try-inser-bullet-ammo-full = Ammo full
+revolver-barrel-component-try-insert-bullet-wrong-caliber = Wrong caliber
+revolver-barrel-component-try-insert-bullet-ammo-full = Ammo full
 
 ## SpinRevolverVerb
 

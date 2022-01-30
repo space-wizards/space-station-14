@@ -31,7 +31,7 @@
               doAfter: 3
 
 - type: constructionGraph
-  id: leverGraph
+  id: LeverGraph
   start: start
   graph:
   - node: start

@@ -42,6 +42,7 @@ namespace Content.Client.Audio
         public override void Initialize()
         {
             base.Initialize();
+            UpdatesOutsidePrediction = true;
             var configManager = IoCManager.Resolve<IConfigurationManager>();
             configManager.OnValueChanged(CCVars.AmbientCooldown, SetCooldown, true);
             configManager.OnValueChanged(CCVars.MaxAmbientSources, SetAmbientCount, true);

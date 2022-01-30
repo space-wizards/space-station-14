@@ -49,7 +49,9 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 7
     baseSprintSpeed : 7
-  - type: AsteroidRock
+  - type: RandomAppearance
+    # relic
+    key: enum.AsteroidRockVisuals.State
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -105,6 +107,72 @@
       dead: dead-0
   - type: Butcherable
     meat: FoodMeatChicken
+    pieces: 1
+
+- type: entity
+  name: mallard duck #Quack
+  parent: SimpleMobBase
+  id: MobDuckMallard
+  description: An adorable mallard duck, it's fluffy and soft!
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: duck-0
+      sprite: Mobs/Animals/duck.rsi
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: duck-0
+      crit: dead-0
+      dead: dead-0
+  - type: Butcherable
+    meat: FoodMeatDuck
+    pieces: 1
+
+- type: entity
+  name: white duck #Quack
+  parent: SimpleMobBase
+  id: MobDuckWhite
+  description: An adorable white duck, it's fluffy and soft!
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: duck-1
+      sprite: Mobs/Animals/duck.rsi
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: duck-1
+      crit: dead-1
+      dead: dead-1
+  - type: Butcherable
+    meat: FoodMeatDuck
+    pieces: 1
+
+- type: entity
+  name: brown duck #Quack
+  parent: SimpleMobBase
+  id: MobDuckBrown
+  description: An adorable brown duck, it's fluffy and soft!
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: duck-2
+      sprite: Mobs/Animals/duck.rsi
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: duck-2
+      crit: dead-2
+      dead: dead-2
+  - type: Butcherable
+    meat: FoodMeatDuck
     pieces: 1
 
 - type: entity
@@ -371,6 +439,9 @@
     makeSentient: true
     name: monkey
     description: Ook ook!
+    rules: |
+      Being a monkey does NOT give you a free pass to kill, RDM or self-antag.
+
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -416,9 +487,8 @@
     QuickEquip: false
     sprite: Mobs/Animals/mouse.rsi
     HeldPrefix: 0
-    ClothingPrefix: 0
     Slots:
-    - Helmet
+    - HEAD
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -475,7 +545,6 @@
       sprite: Mobs/Animals/mouse.rsi
   - type: Clothing
     HeldPrefix: 1
-    ClothingPrefix: 1
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
@@ -495,7 +564,6 @@
       sprite: Mobs/Animals/mouse.rsi
   - type: Clothing
     HeldPrefix: 1
-    ClothingPrefix: 2
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer

@@ -50,16 +50,16 @@ namespace Content.Server.Morgue.Components
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
-            if (Appearance == null) return;
+            if (!_entities.TryGetComponent<AppearanceComponent>(Owner, out var appearance)) return;
 
             if (inDetailsRange)
             {
-                if (Appearance.TryGetData(CrematoriumVisuals.Burning, out bool isBurning) && isBurning)
+                if (appearance.TryGetData(CrematoriumVisuals.Burning, out bool isBurning) && isBurning)
                 {
                     message.AddMarkup(Loc.GetString("crematorium-entity-storage-component-on-examine-details-is-burning", ("owner", Owner)) + "\n");
                 }
 
-                if (Appearance.TryGetData(MorgueVisuals.HasContents, out bool hasContents) && hasContents)
+                if (appearance.TryGetData(MorgueVisuals.HasContents, out bool hasContents) && hasContents)
                 {
                     message.AddMarkup(Loc.GetString("crematorium-entity-storage-component-on-examine-details-has-contents"));
                 }
@@ -96,7 +96,8 @@ namespace Content.Server.Morgue.Components
             if (Open)
                 CloseStorage();
 
-            Appearance?.SetData(CrematoriumVisuals.Burning, true);
+            if(_entities.TryGetComponent(Owner, out AppearanceComponent appearanceComponent))
+                appearanceComponent.SetData(CrematoriumVisuals.Burning, true);
             Cooking = true;
 
             SoundSystem.Play(Filter.Pvs(Owner), _crematingSound.GetSound(), Owner);
@@ -108,8 +109,8 @@ namespace Content.Server.Morgue.Components
             {
                 if (_entities.Deleted(Owner))
                     return;
-
-                Appearance?.SetData(CrematoriumVisuals.Burning, false);
+                if(_entities.TryGetComponent(Owner, out appearanceComponent))
+                    appearanceComponent.SetData(CrematoriumVisuals.Burning, false);
                 Cooking = false;
 
                 if (Contents.ContainedEntities.Count > 0)

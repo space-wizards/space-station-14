@@ -56,6 +56,6 @@
     board: ChemMasterMachineCircuitboard
   - type: MaterialStorage
   - type: Construction
-    graph: machine
+    graph: Machine
     node: machine
 

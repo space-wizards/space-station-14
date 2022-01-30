@@ -37,6 +37,7 @@ namespace Content.Client.DoAfter
         public override void Initialize()
         {
             base.Initialize();
+            UpdatesOutsidePrediction = true;
             SubscribeLocalEvent<PlayerAttachSysMessage>(HandlePlayerAttached);
         }
 

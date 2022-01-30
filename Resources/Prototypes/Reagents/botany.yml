@@ -1,6 +1,7 @@
 - type: reagent
   id: EZNutrient
   name: EZ nutrient
+  group: Botanical
   desc: Give your plants some of those EZ nutrients!
   color: "#664330"
   physicalDesc: thick
@@ -11,6 +12,7 @@
 - type: reagent
   id: Left4Zed
   name: left-4-zed
+  group: Botanical
   desc: A cocktail of mutagenic compounds, which cause plant life to become highly unstable.
   color: "#5b406c"
   physicalDesc: heterogeneous
@@ -26,6 +28,7 @@
 - type: reagent
   id: PestKiller
   name: pest killer
+  group: Botanical
   desc: A mixture that targets pests.
   color: "#9e9886"
   physicalDesc: bubbling
@@ -38,6 +41,7 @@
 - type: reagent
   id: PlantBGone
   name: plant-B-gone
+  group: Botanical
   desc: A harmful toxic mixture to kill plantlife. Do not ingest!
   color: "#49002E"
   physicalDesc: bubbling
@@ -54,6 +58,7 @@
 - type: reagent
   id: RobustHarvest
   name: robust harvest
+  group: Botanical
   desc: Plant-enhancing hormones, good for increasing potency.
   color: "#3e901c"
   physicalDesc: robust
@@ -71,6 +76,7 @@
 - type: reagent
   id: WeedKiller
   name: weed killer
+  group: Botanical
   desc: A mixture that targets weeds.
   color: "#968395"
   physicalDesc: bubbling
@@ -83,6 +89,7 @@
 - type: reagent
   id: Ammonia
   name: ammonia
+  group: Botanical
   desc: An effective fertilizer which is better than what is available to the botanist initially, though it isn't as powerful as Diethylamine
   physicalDesc: pungent
   color: "#77b58e"
@@ -104,6 +111,7 @@
 - type: reagent
   id: Diethylamine
   name: diethylamine
+  group: Botanical
   desc: A very potent fertilizer.
   physicalDesc: strong-smelling
   color: "#a1000b"

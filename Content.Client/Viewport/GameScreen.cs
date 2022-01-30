@@ -1,4 +1,4 @@
-using Content.Client.Administration.Managers;
+using Content.Client.Alerts.UI;
 using Content.Client.Chat;
 using Content.Client.Chat.Managers;
 using Content.Client.Chat.UI;
@@ -38,6 +38,7 @@ namespace Content.Client.Viewport
 
         [ViewVariables] private ChatBox? _gameChat;
         private ConstructionMenuPresenter? _constructionMenu;
+        private AlertsFramePresenter? _alertsFramePresenter;
 
         private FpsCounter _fpsCounter = default!;
 
@@ -107,6 +108,10 @@ namespace Content.Client.Viewport
         /// </summary>
         private void SetupPresenters()
         {
+            // HUD
+            _alertsFramePresenter = new AlertsFramePresenter();
+
+            // Windows
             _constructionMenu = new ConstructionMenuPresenter(_gameHud);
         }
 
@@ -115,7 +120,11 @@ namespace Content.Client.Viewport
         /// </summary>
         private void DisposePresenters()
         {
+            // Windows
             _constructionMenu?.Dispose();
+
+            // HUD
+            _alertsFramePresenter?.Dispose();
         }
 
         internal static void FocusChat(ChatBox chat)

@@ -240,7 +240,6 @@
         - PillCanister
       components:
         - Hypospray
-        - SurgeryTool
         - Radio
   - type: ItemMapper
     mapLayers:
@@ -385,55 +384,8 @@
     whitelist:
       tags:
         - CaptainSabre
-        - Baguette
-        - Carrot
-        - Crowbar
-        - Katana
-        - Machete
-        - CombatKnife
-        - RodMetal1
-        - Spear
-      components:
-        - Mop
-  - type: StorageFill
-    contents:
-      - id: CaptainSabre
   - type: ItemMapper
     mapLayers:
-      sheath-bag:
-        whitelist:
-          tags:
-          - Baguette
-      sheath-carrot:
-        whitelist:
-          tags:
-          - Carrot
-      sheath-crowbar:
-        whitelist:
-          tags:
-          - Crowbar
-      sheath-crowbarr:
-        whitelist:
-          tags:
-          - CrowbarRed
-      sheath-katana:
-        whitelist:
-          tags:
-          - Katana
-      sheath-knife:
-        whitelist:
-          tags:
-          - Machete
-          - CombatKnife
-      sheath-mop:
-        whitelist:
-          components:
-          - Mop
-      sheath-rod:
-        whitelist:
-          tags:
-          - RodMetal1
-          - Spear
       sheath-sabre:
         whitelist:
           tags:

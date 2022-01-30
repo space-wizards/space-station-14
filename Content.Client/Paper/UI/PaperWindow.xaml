@@ -1,4 +1,4 @@
-﻿<SS14Window xmlns="https://spacestation14.io"
+﻿<DefaultWindow xmlns="https://spacestation14.io"
             MinSize="300 300"
             SetSize="300 300">
     <BoxContainer Orientation="Vertical">
@@ -7,4 +7,4 @@
                   Access="Public"
                   Visible="False" />
     </BoxContainer>
-</SS14Window>
+</DefaultWindow>

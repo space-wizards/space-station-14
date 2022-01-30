@@ -118,7 +118,12 @@ namespace Content.Server.Shuttles.EntitySystems
 
             Disable(physicsComponent);
 
-            foreach (var fixture in physicsComponent.Fixtures)
+            if (!EntityManager.TryGetComponent(component.Owner, out FixturesComponent? fixturesComponent))
+            {
+                return;
+            }
+
+            foreach (var fixture in fixturesComponent.Fixtures.Values)
             {
                 fixture.Mass = 0f;
             }

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using Content.Server.Items;
 using Content.Server.MachineLinking.Events;
 using Content.Server.MachineLinking.Models;
 using Content.Server.Power.Components;
 using Content.Server.Stunnable;
 using Content.Shared.Conveyor;
+using Content.Shared.Item;
 using Content.Shared.MachineLinking;
 using Content.Shared.Movement.Components;
 using Content.Shared.Popups;
@@ -104,7 +104,7 @@ namespace Content.Server.Conveyor
                 return false;
             }
 
-            if (EntityManager.HasComponent<ItemComponent>(component.Owner))
+            if (EntityManager.HasComponent<SharedItemComponent>(component.Owner))
             {
                 return false;
             }

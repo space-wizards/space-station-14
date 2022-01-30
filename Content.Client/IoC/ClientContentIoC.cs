@@ -19,7 +19,6 @@ using Content.Client.Viewport;
 using Content.Client.Voting;
 using Content.Shared.Actions;
 using Content.Shared.Administration;
-using Content.Shared.Alert;
 using Content.Shared.Module;
 using Robust.Shared.IoC;
 
@@ -41,7 +40,6 @@ namespace Content.Client.IoC
             IoCManager.Register<IScreenshotHook, ScreenshotHook>();
             IoCManager.Register<IClickMapManager, ClickMapManager>();
             IoCManager.Register<IStationEventManager, StationEventManager>();
-            IoCManager.Register<AlertManager, AlertManager>();
             IoCManager.Register<ActionManager, ActionManager>();
             IoCManager.Register<IClientAdminManager, ClientAdminManager>();
             IoCManager.Register<EuiManager, EuiManager>();

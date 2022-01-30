@@ -5,16 +5,15 @@ using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Server.CombatMode;
 using Content.Server.Hands.Components;
-using Content.Server.Items;
 using Content.Server.Pulling;
 using Content.Server.Storage.Components;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.DragDrop;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
+using Content.Shared.Item;
 using Content.Shared.Popups;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Weapons.Melee;
@@ -274,21 +273,9 @@ namespace Content.Server.Interaction
             {
                 var rangedMsg = new RangedInteractEvent(user, used, target.Value, clickLocation);
                 RaiseLocalEvent(target.Value, rangedMsg);
+
                 if (rangedMsg.Handled)
                     return true;
-
-                var rangedInteractions = AllComps<IRangedInteract>(target.Value).ToList();
-                var rangedInteractionEventArgs = new RangedInteractEventArgs(user, used, clickLocation);
-
-                // See if we have a ranged interaction
-                foreach (var t in rangedInteractions)
-                {
-                    // If an InteractUsingRanged returns a status completion we finish our interaction
-#pragma warning disable 618
-                    if (t.RangedInteract(rangedInteractionEventArgs))
-#pragma warning restore 618
-                        return true;
-                }
             }
 
             return await InteractDoAfter(user, used, inRangeUnobstructed ? target : null, clickLocation, false);
@@ -300,7 +287,7 @@ namespace Content.Server.Interaction
             if (!ValidateInteractAndFace(user, coordinates))
                 return;
 
-            if (!_actionBlockerSystem.CanAttack(user))
+            if (!_actionBlockerSystem.CanAttack(user, target))
                 return;
 
             if (!wideAttack)
@@ -321,7 +308,7 @@ namespace Content.Server.Interaction
             // Verify user has a hand, and find what object they are currently holding in their active hand
             if (TryComp(user, out HandsComponent? hands))
             {
-                var item = hands.GetActiveHand?.Owner;
+                var item = hands.GetActiveHandItem?.Owner;
 
                 if (item != null && !Deleted(item.Value))
                 {
@@ -358,7 +345,7 @@ namespace Content.Server.Interaction
                         }
                     }
                 }
-                else if (!wideAttack && target != null && HasComp<ItemComponent>(target.Value))
+                else if (!wideAttack && target != null && HasComp<SharedItemComponent>(target.Value))
                 {
                     // We pick up items if our hand is empty, even if we're in combat mode.
                     InteractHand(user, target.Value);

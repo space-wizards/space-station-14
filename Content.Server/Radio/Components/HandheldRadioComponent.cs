@@ -17,8 +17,9 @@ namespace Content.Server.Radio.Components
     [RegisterComponent]
     [ComponentReference(typeof(IRadio))]
     [ComponentReference(typeof(IListen))]
+    [ComponentReference(typeof(IActivate))]
 #pragma warning disable 618
-    public class HandheldRadioComponent : Component, IUse, IListen, IRadio, IActivate, IExamine
+    public class HandheldRadioComponent : Component, IListen, IRadio, IActivate, IExamine
 #pragma warning restore 618
     {
         [Dependency] private readonly IChatManager _chatManager = default!;
@@ -72,11 +73,6 @@ namespace Content.Server.Radio.Components
             Owner.PopupMessage(user, message);
 
             return true;
-        }
-
-        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
-        {
-            return Use(eventArgs.User);
         }
 
         public bool CanListen(string message, EntityUid source)

@@ -31,7 +31,7 @@ namespace Content.Server.Atmos.Components
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
 #pragma warning disable 618
-    public class GasTankComponent : Component, IExamine, IGasMixtureHolder, IUse, IDropped, IActivate
+    public class GasTankComponent : Component, IExamine, IGasMixtureHolder, IDropped, IActivate
 #pragma warning restore 618
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
@@ -43,7 +43,7 @@ namespace Content.Server.Atmos.Components
 
         private int _integrity = 3;
 
-        [ComponentDependency] private readonly ItemActionsComponent? _itemActions = null;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         [ViewVariables] private BoundUserInterface? _userInterface;
 
@@ -155,13 +155,6 @@ namespace Content.Server.Atmos.Components
             return air;
         }
 
-        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
-        {
-            if (!_entMan.TryGetComponent(eventArgs.User, out ActorComponent? actor)) return false;
-            OpenInterface(actor.PlayerSession);
-            return true;
-        }
-
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             if (!_entMan.TryGetComponent(eventArgs.User, out ActorComponent? actor)) return;
@@ -197,8 +190,8 @@ namespace Content.Server.Atmos.Components
                     CanConnectInternals = IsFunctional && internals != null
                 });
 
-            if (internals == null) return;
-            _itemActions?.GrantOrUpdate(ItemActionType.ToggleInternals, IsFunctional, IsConnected);
+            if (internals == null || !_entityManager.TryGetComponent<ItemActionsComponent>(Owner, out var itemActions)) return;
+            itemActions.GrantOrUpdate(ItemActionType.ToggleInternals, IsFunctional, IsConnected);
         }
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage message)

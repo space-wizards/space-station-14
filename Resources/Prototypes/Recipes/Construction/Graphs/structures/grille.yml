@@ -1,5 +1,5 @@
 - type: constructionGraph
-  id: grille
+  id: Grille
   start: start
   graph:
     - node: start
