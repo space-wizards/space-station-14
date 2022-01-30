@@ -13,7 +13,7 @@ using Robust.Shared.Physics.Controllers;
 
 namespace Content.Server.Physics.Controllers
 {
-    internal sealed class ConveyorController : VirtualController
+    public sealed class ConveyorController : VirtualController
     {
         [Dependency] private readonly IEntityLookup _lookup = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
@@ -79,15 +79,22 @@ namespace Content.Server.Physics.Controllers
         {
             if (speed == 0 || direction.Length == 0) return Vector2.Zero;
 
+            /* TODO: Figure out how to fix corner cuts.
             direction = direction.Normalized;
 
             var dirNormal = new Vector2(direction.Y, direction.X);
             var dot = Vector2.Dot(itemRelative, dirNormal);
+            */
 
             var velocity = direction * speed;
+
+            return velocity * frameTime;
+
+            /*
             velocity += dirNormal * speed * -dot;
 
             return velocity * frameTime;
+            */
         }
 
         public IEnumerable<(EntityUid, TransformComponent)> GetEntitiesToMove(ConveyorComponent comp, TransformComponent xform)
