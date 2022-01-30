@@ -251,6 +251,7 @@ namespace Content.Client.Entry
             "ExplosionLaunched",
             "BeingCloned",
             "Advertise",
+            "Bible",
             "PowerNetworkBattery",
             "BatteryCharger",
             "UnpoweredFlashlight",
@@ -299,7 +300,7 @@ namespace Content.Client.Entry
             "ArtifactInteractionTrigger",
             "Artifact",
             "RandomArtifactSprite",
-            "EnergySword",
+            "EnergySword"
         };
     }
 }
