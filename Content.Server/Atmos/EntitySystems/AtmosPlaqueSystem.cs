@@ -14,13 +14,7 @@ public sealed class AtmosPlaqueSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<AtmosPlaqueComponent, ComponentStartup>(OnPlaqueStartup);
         SubscribeLocalEvent<AtmosPlaqueComponent, MapInitEvent>(OnPlaqueMapInit);
-    }
-
-    private void OnPlaqueStartup(EntityUid uid, AtmosPlaqueComponent component, ComponentStartup args)
-    {
-        UpdateSign(component);
     }
 
     private void OnPlaqueMapInit(EntityUid uid, AtmosPlaqueComponent component, MapInitEvent args)
