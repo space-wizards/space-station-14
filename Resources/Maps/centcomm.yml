@@ -9393,7 +9393,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 477
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 29.5,19.5
     parent: 27
@@ -9439,7 +9439,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 482
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 26.5,2.5
     parent: 27
@@ -9451,7 +9451,7 @@ entities:
     currentSupply: 10
     type: PowerNetworkBattery
 - uid: 483
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 6.5,-2.5
     parent: 27
@@ -9464,7 +9464,7 @@ entities:
     supplyRampPosition: 0.0195117
     type: PowerNetworkBattery
 - uid: 484
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: -22.5,4.5
     parent: 27
@@ -9477,7 +9477,7 @@ entities:
     supplyRampPosition: 0.0195117
     type: PowerNetworkBattery
 - uid: 485
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 8.5,15.5
     parent: 27
@@ -9485,7 +9485,7 @@ entities:
   - startingCharge: 12000
     type: Battery
 - uid: 486
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 7.5,28.5
     parent: 27
@@ -15926,7 +15926,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1444
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 3.5,-20.5
     parent: 27
@@ -22165,7 +22165,7 @@ entities:
     parent: 27
     type: Transform
 - uid: 2102
-  type: SalternSmes
+  type: SalternSMES
   components:
   - pos: 24.5,10.5
     parent: 27
@@ -22183,7 +22183,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 2103
-  type: SalternSmes
+  type: SalternSMES
   components:
   - pos: 24.5,11.5
     parent: 27
@@ -22201,7 +22201,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 2104
-  type: SalternSmes
+  type: SalternSMES
   components:
   - pos: 24.5,12.5
     parent: 27
@@ -22219,7 +22219,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 2105
-  type: SalternSmes
+  type: SalternSMES
   components:
   - pos: 24.5,13.5
     parent: 27
@@ -22237,7 +22237,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 2106
-  type: SalternSmes
+  type: SalternSMES
   components:
   - pos: 24.5,14.5
     parent: 27
@@ -22255,7 +22255,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 2107
-  type: SalternSmes
+  type: SalternSMES
   components:
   - pos: 24.5,15.5
     parent: 27
@@ -22273,7 +22273,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 2108
-  type: SalternSmes
+  type: SalternSMES
   components:
   - pos: 24.5,16.5
     parent: 27
@@ -22297,7 +22297,7 @@ entities:
     parent: 27
     type: Transform
 - uid: 2110
-  type: SalternSmes
+  type: SalternSMES
   components:
   - pos: 26.5,16.5
     parent: 27
@@ -22315,7 +22315,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 2111
-  type: SalternSmes
+  type: SalternSMES
   components:
   - pos: 26.5,15.5
     parent: 27
@@ -22333,7 +22333,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 2112
-  type: SalternSmes
+  type: SalternSMES
   components:
   - pos: 26.5,14.5
     parent: 27
@@ -22351,7 +22351,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 2113
-  type: SalternSmes
+  type: SalternSMES
   components:
   - pos: 26.5,13.5
     parent: 27
@@ -22369,7 +22369,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 2114
-  type: SalternSmes
+  type: SalternSMES
   components:
   - pos: 26.5,12.5
     parent: 27
@@ -22387,7 +22387,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 2115
-  type: SalternSmes
+  type: SalternSMES
   components:
   - pos: 26.5,11.5
     parent: 27
@@ -22405,7 +22405,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 2116
-  type: SalternSmes
+  type: SalternSMES
   components:
   - pos: 26.5,10.5
     parent: 27
