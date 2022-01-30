@@ -48,12 +48,6 @@ grids:
     tilesize: 1
   chunks:
   - ind: "-1,-1"
-    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
-- settings:
-    chunksize: 16
-    tilesize: 1
-  chunks:
-  - ind: "-1,-1"
     tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIwAAACMAAAAjAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIwAAACQAAAAkAAAAFwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACQAAAAkAAAACQAAACQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXAAAAEQAAACQAAAAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFwAAABEAAAAkAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABcAAAARAAAAJAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAkAAAAJAAAACQAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIwAAACQAAAAkAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACMAAAAkAAAAEQAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACMAAAAAAAAAJAAAACQAAAAXAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAjAAAAAAAAACQAAAAgAAAAIAAAAA==
   - ind: "-1,0"
     tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAkAAAAJAAAACQAAAAgAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJAAAACAAAAAkAAAAIAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACQAAAAgAAAAFwAAACAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAkAAAAIAAAACQAAAAgAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJAAAACQAAAAkAAAAIAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACMAAAAAAAAAJAAAACAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAjAAAAAAAAACQAAAAXAAAAFwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIwAAACMAAAAkAAAAIQAAACEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAjAAAAFwAAACEAAAAhAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIwAAABcAAAAhAAAAIQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAkAAAAIQAAACEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJAAAACQAAAAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACMAAAAkAAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAjAAAAFwAAABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIwAAABcAAAAZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXAAAAFwAAAA==
@@ -67,308 +61,31 @@ grids:
     tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAjAAAAFwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
 entities:
 - uid: 0
-  type: AirlockCommandGlassLocked
+  type: SheetSteel
   components:
-  - pos: 0.5,11.5
-    parent: 35
+  - pos: -1.2527237,-7.4453177
+    parent: 17
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 1
+  type: AirlockExternal
+  components:
+  - pos: 4.5,1.5
+    parent: 17
     type: Transform
   - containers:
       board: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 1
-  type: GasVentPump
-  components:
-  - rot: -1.5707963267948966 rad
-    pos: 2.5,4.5
-    parent: 35
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
 - uid: 2
   type: Catwalk
   components:
   - rot: 1.5707963267948966 rad
-    pos: 3.5,-4.5
-    parent: 35
+    pos: 3.5,-8.5
+    parent: 17
     type: Transform
 - uid: 3
-  type: CableMV
-  components:
-  - pos: 2.5,10.5
-    parent: 35
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 4
-  type: CableMV
-  components:
-  - pos: -0.5,3.5
-    parent: 35
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 5
-  type: WindowReinforcedDirectional
-  components:
-  - rot: -1.5707963267948966 rad
-    pos: 3.5,-8.5
-    parent: 35
-    type: Transform
-- uid: 6
-  type: MagazineSRifleHV
-  components:
-  - parent: 170
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      RangedMagazine-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 7
-  type: RifleWintermute
-  components:
-  - parent: 292
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      MagazineBarrel-chamber: !type:ContainerSlot {}
-      MagazineBarrel-magazine: !type:ContainerSlot
-        ent: 53
-    type: ContainerContainer
-- uid: 8
-  type: WindoorSecure
-  components:
-  - rot: 3.141592653589793 rad
-    pos: 2.5,-5.5
-    parent: 35
-    type: Transform
-- uid: 9
-  type: Grille
-  components:
-  - pos: -3.5,-5.5
-    parent: 35
-    type: Transform
-- uid: 10
-  type: MagazineSRifleHV
-  components:
-  - parent: 491
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      RangedMagazine-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 11
-  type: SheetPlastic
-  components:
-  - pos: -0.5652237,-7.4765677
-    parent: 35
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 12
-  type: GasPipeStraight
-  components:
-  - pos: -0.5,-5.5
-    parent: 35
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 13
-  type: RCDAmmo
-  components:
-  - pos: 0.6847763,-7.5703177
-    parent: 35
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 14
-  type: CableApcExtension
-  components:
-  - pos: 1.5,-6.5
-    parent: 35
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 15
-  type: Grille
-  components:
-  - pos: 5.5,-6.5
-    parent: 35
-    type: Transform
-- uid: 16
-  type: SheetSteel
-  components:
-  - pos: -1.2527237,-7.4453177
-    parent: 35
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 17
-  type: CableMV
-  components:
-  - pos: -0.5,-1.5
-    parent: 35
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 18
-  type: Catwalk
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: 4.5,-6.5
-    parent: 35
-    type: Transform
-- uid: 19
-  type: CableHV
-  components:
-  - pos: -0.5,-2.5
-    parent: 35
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 20
-  type: CableHV
-  components:
-  - pos: 2.5,-8.5
-    parent: 35
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 21
-  type: MagazineMagnumHV
-  components:
-  - parent: 152
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      RangedMagazine-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 22
-  type: AirlockSecurityGlassLocked
-  components:
-  - pos: 0.5,4.5
-    parent: 35
-    type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 23
-  type: AirlockExternal
-  components:
-  - pos: 4.5,3.5
-    parent: 35
-    type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 24
-  type: AirlockCommandGlassLocked
-  components:
-  - pos: 1.5,11.5
-    parent: 35
-    type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 25
-  type: PistolLamia
-  components:
-  - parent: 292
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      MagazineBarrel-chamber: !type:ContainerSlot {}
-      MagazineBarrel-magazine: !type:ContainerSlot
-        ent: 162
-    type: ContainerContainer
-- uid: 26
-  type: MagazineSRifleHV
-  components:
-  - parent: 75
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      RangedMagazine-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 27
-  type: Catwalk
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: 2.5,-4.5
-    parent: 35
-    type: Transform
-- uid: 28
-  type: WindowReinforcedDirectional
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: 0.5,-2.5
-    parent: 35
-    type: Transform
-- uid: 29
-  type: GasPort
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -1.5,-4.5
-    parent: 35
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 30
-  type: CableApcExtension
-  components:
-  - pos: 1.5,15.5
-    parent: 35
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 31
-  type: DebugSMES
-  components:
-  - pos: -1.5,-8.5
-    parent: 35
-    type: Transform
-  - startingCharge: 1000
-    type: Battery
-  - loadingNetworkDemand: 15859.984
-    currentReceiving: 7929.992
-    currentSupply: 7929.992
-    type: PowerNetworkBattery
-  - containers:
-      machine_board: !type:Container
-        ents: []
-      machine_parts: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 32
   type: ClothingBeltAssault
   components:
   - parent: 265
@@ -384,29 +101,146 @@ entities:
         - 385
         - 151
     type: ContainerContainer
-- uid: 33
+- uid: 4
   type: AirlockExternal
   components:
   - pos: 4.5,2.5
-    parent: 35
+    parent: 17
     type: Transform
   - containers:
       board: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 34
-  type: ClothingHeadHelmetHardsuitDeathsquad
+- uid: 5
+  type: AirlockGlass
   components:
-  - parent: 266
+  - pos: -0.5,6.5
+    parent: 17
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 6
+  type: MagazineSRifleHV
+  components:
+  - parent: 75
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 35
+  - containers:
+      RangedMagazine-magazine: !type:Container
+        ents: []
+      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 7
+  type: MagazineMagnumHV
+  components:
+  - parent: 152
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      RangedMagazine-magazine: !type:Container
+        ents: []
+      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 8
+  type: MagazineMagnumHV
+  components:
+  - parent: 370
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      RangedMagazine-magazine: !type:Container
+        ents: []
+      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 9
+  type: RifleWintermute
+  components:
+  - parent: 197
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      MagazineBarrel-chamber: !type:ContainerSlot {}
+      MagazineBarrel-magazine: !type:ContainerSlot
+        ent: 38
+      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-chamber: !type:ContainerSlot {}
+      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-magazine: !type:ContainerSlot
+        ent: 575
+    type: ContainerContainer
+- uid: 10
+  type: Grille
+  components:
+  - pos: 5.5,-7.5
+    parent: 17
+    type: Transform
+- uid: 11
+  type: CableApcExtension
+  components:
+  - pos: 2.5,9.5
+    parent: 17
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 12
+  type: CableHV
+  components:
+  - pos: 0.5,-8.5
+    parent: 17
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 13
+  type: AirlockGlass
+  components:
+  - pos: -1.5,6.5
+    parent: 17
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 14
+  type: SheetPlastic
+  components:
+  - pos: -0.8777237,-7.4765677
+    parent: 17
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 15
+  type: SheetSteel
+  components:
+  - pos: -1.5339737,-7.4140677
+    parent: 17
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 16
+  type: CableApcExtension
+  components:
+  - pos: 4.5,2.5
+    parent: 17
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 17
   components:
   - pos: 2.2710133,-2.4148211
     parent: null
     type: Transform
-  - index: 1
+  - index: 0
     type: MapGrid
   - linearDamping: 0.1
     fixedRotation: False
@@ -425,58 +259,6 @@ entities:
       layer:
       - MapGrid
       mass: 11.681595
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - -0.01,7.01
-        - -0.01,7.99
-        - -4.99,7.99
-        - -4.99,7.01
-      id: grid_chunk--4.99-7.01
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 19.521591
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 4.99,10.01
-        - 4.99,14.99
-        - 0.01,14.99
-        - 0.01,10.01
-      id: grid_chunk-0.01-10.01
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 99.201584
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 5.99,-9.99
-        - 5.99,-2.01
-        - 0.01,-2.01
-        - 0.01,-9.99
-      id: grid_chunk-0.01--9.99
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 190.88159
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 6.99,-1.99
-        - 6.99,-0.01
-        - 6.01,-0.01
-        - 6.01,-1.99
-      id: grid_chunk-6.01--1.99
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 7.7615967
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -506,107 +288,16 @@ entities:
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
-        - 5.99,8.01
-        - 5.99,9.99
-        - 0.01,9.99
-        - 0.01,8.01
-      id: grid_chunk-0.01-8.01
+        - -0.01,-1.99
+        - -0.01,-0.01
+        - -2.99,-0.01
+        - -2.99,-1.99
+      id: grid_chunk--2.99--1.99
       mask:
       - MapGrid
       layer:
       - MapGrid
-      mass: 47.361588
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - -0.01,5.01
-        - -0.01,6.99
-        - -2.99,6.99
-        - -2.99,5.01
-      id: grid_chunk--2.99-5.01
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 23.601595
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 4.99,-10.99
-        - 4.99,-10.01
-        - 0.01,-10.01
-        - 0.01,-10.99
-      id: grid_chunk-0.01--10.99
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 19.521591
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 3.99,15.01
-        - 3.99,15.99
-        - 0.01,15.99
-        - 0.01,15.01
-      id: grid_chunk-0.01-15.01
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 15.601593
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 6.99,7.01
-        - 6.99,7.99
-        - 0.01,7.99
-        - 0.01,7.01
-      id: grid_chunk-0.01-7.01
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 27.361588
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 3.99,16.01
-        - 3.99,16.99
-        - 0.01,16.99
-        - 0.01,16.01
-      id: grid_chunk-0.01-16.01
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 15.601593
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - -0.01,8.01
-        - -0.01,9.99
-        - -3.99,9.99
-        - -3.99,8.01
-      id: grid_chunk--3.99-8.01
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 31.521593
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - -4.01,5.01
-        - -4.01,6.99
-        - -4.99,6.99
-        - -4.99,5.01
-      id: grid_chunk--4.99-5.01
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 7.761595
+      mass: 23.6016
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -623,29 +314,55 @@ entities:
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
-        - -0.01,16.01
-        - -0.01,16.99
-        - -1.99,16.99
-        - -1.99,16.01
-      id: grid_chunk--1.99-16.01
+        - -4.01,5.01
+        - -4.01,6.99
+        - -4.99,6.99
+        - -4.99,5.01
+      id: grid_chunk--4.99-5.01
       mask:
       - MapGrid
       layer:
       - MapGrid
-      mass: 7.7615967
+      mass: 7.761595
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
-        - -0.01,-1.99
-        - -0.01,-0.01
-        - -2.99,-0.01
-        - -2.99,-1.99
-      id: grid_chunk--2.99--1.99
+        - -0.01,5.01
+        - -0.01,6.99
+        - -2.99,6.99
+        - -2.99,5.01
+      id: grid_chunk--2.99-5.01
       mask:
       - MapGrid
       layer:
       - MapGrid
-      mass: 23.6016
+      mass: 23.601595
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -0.01,7.01
+        - -0.01,7.99
+        - -4.99,7.99
+        - -4.99,7.01
+      id: grid_chunk--4.99-7.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 19.521591
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -0.01,8.01
+        - -0.01,9.99
+        - -3.99,9.99
+        - -3.99,8.01
+      id: grid_chunk--3.99-8.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 31.521593
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -675,42 +392,29 @@ entities:
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
-        - 6.99,5.01
-        - 6.99,6.99
-        - 6.01,6.99
-        - 6.01,5.01
-      id: grid_chunk-6.01-5.01
+        - 4.99,-10.99
+        - 4.99,-10.01
+        - 0.01,-10.01
+        - 0.01,-10.99
+      id: grid_chunk-0.01--10.99
       mask:
       - MapGrid
       layer:
       - MapGrid
-      mass: 7.761595
+      mass: 19.521591
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
-        - 6.99,0.01
-        - 6.99,4.99
-        - 0.01,4.99
-        - 0.01,0.01
-      id: grid_chunk-0.01-0.01
+        - 5.99,-9.99
+        - 5.99,-2.01
+        - 0.01,-2.01
+        - 0.01,-9.99
+      id: grid_chunk-0.01--9.99
       mask:
       - MapGrid
       layer:
       - MapGrid
-      mass: 139.0416
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - -0.01,17.01
-        - -0.01,17.99
-        - -0.99,17.99
-        - -0.99,17.01
-      id: grid_chunk--0.99-17.01
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 3.8415983
+      mass: 190.88159
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -727,16 +431,29 @@ entities:
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
-        - 2.99,17.01
-        - 2.99,17.99
-        - 0.01,17.99
-        - 0.01,17.01
-      id: grid_chunk-0.01-17.01
+        - 6.99,-1.99
+        - 6.99,-0.01
+        - 6.01,-0.01
+        - 6.01,-1.99
+      id: grid_chunk-6.01--1.99
       mask:
       - MapGrid
       layer:
       - MapGrid
-      mass: 11.681595
+      mass: 7.7615967
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 6.99,0.01
+        - 6.99,4.99
+        - 0.01,4.99
+        - 0.01,0.01
+      id: grid_chunk-0.01-0.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 139.0416
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -750,6 +467,123 @@ entities:
       layer:
       - MapGrid
       mass: 39.44159
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 6.99,5.01
+        - 6.99,6.99
+        - 6.01,6.99
+        - 6.01,5.01
+      id: grid_chunk-6.01-5.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 7.761595
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 6.99,7.01
+        - 6.99,7.99
+        - 0.01,7.99
+        - 0.01,7.01
+      id: grid_chunk-0.01-7.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 27.361588
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 5.99,8.01
+        - 5.99,9.99
+        - 0.01,9.99
+        - 0.01,8.01
+      id: grid_chunk-0.01-8.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 47.361588
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 4.99,10.01
+        - 4.99,14.99
+        - 0.01,14.99
+        - 0.01,10.01
+      id: grid_chunk-0.01-10.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 99.201584
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 3.99,15.01
+        - 3.99,15.99
+        - 0.01,15.99
+        - 0.01,15.01
+      id: grid_chunk-0.01-15.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 15.601593
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 3.99,16.01
+        - 3.99,16.99
+        - 0.01,16.99
+        - 0.01,16.01
+      id: grid_chunk-0.01-16.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 15.601593
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 2.99,17.01
+        - 2.99,17.99
+        - 0.01,17.99
+        - 0.01,17.01
+      id: grid_chunk-0.01-17.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 11.681595
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -0.01,16.01
+        - -0.01,16.99
+        - -1.99,16.99
+        - -1.99,16.01
+      id: grid_chunk--1.99-16.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 7.7615967
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -0.01,17.01
+        - -0.01,17.99
+        - -0.99,17.99
+        - -0.99,17.01
+      id: grid_chunk--0.99-17.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 3.8415983
       restitution: 0.1
     type: Fixtures
   - gravityShakeSound: !type:SoundPathSpecifier
@@ -930,6 +764,110 @@ entities:
       3,16: 0
       -2,16: 0
       -1,17: 0
+      -4,-9: 1
+      -4,-8: 1
+      -4,-7: 1
+      -4,-6: 1
+      -4,-5: 1
+      -3,-10: 1
+      -3,-9: 1
+      -3,-5: 1
+      -3,-4: 1
+      -3,-3: 1
+      -3,-2: 1
+      -3,-1: 1
+      -2,-10: 1
+      -2,-2: 1
+      -1,-10: 1
+      -1,-2: 1
+      -5,0: 1
+      -5,1: 1
+      -5,2: 1
+      -5,3: 1
+      -5,4: 1
+      -4,0: 1
+      -4,4: 1
+      -3,0: 1
+      -3,1: 1
+      -3,2: 1
+      -3,3: 1
+      -3,4: 1
+      -3,5: 1
+      -3,6: 1
+      -3,7: 1
+      -3,8: 1
+      -3,9: 1
+      -3,10: 1
+      -3,11: 1
+      -2,6: 1
+      -2,11: 1
+      -2,12: 1
+      -2,13: 1
+      -2,14: 1
+      -2,15: 1
+      -1,6: 1
+      -1,11: 1
+      -1,15: 1
+      0,-10: 1
+      0,-2: 1
+      0,-1: 1
+      1,-10: 1
+      1,-2: 1
+      2,-10: 1
+      2,-2: 1
+      3,-10: 1
+      3,-2: 1
+      4,-10: 1
+      4,-9: 1
+      4,-5: 1
+      4,-4: 1
+      4,-3: 1
+      4,-2: 1
+      4,-1: 1
+      5,-9: 1
+      5,-8: 1
+      5,-7: 1
+      5,-6: 1
+      5,-5: 1
+      0,0: 1
+      0,1: 1
+      0,2: 1
+      0,3: 1
+      0,4: 1
+      0,5: 1
+      0,6: 1
+      0,11: 1
+      1,6: 1
+      1,11: 1
+      2,6: 1
+      2,11: 1
+      2,15: 1
+      3,6: 1
+      3,11: 1
+      3,12: 1
+      3,13: 1
+      3,14: 1
+      3,15: 1
+      4,0: 1
+      4,1: 1
+      4,2: 1
+      4,3: 1
+      4,4: 1
+      4,5: 1
+      4,6: 1
+      4,7: 1
+      4,8: 1
+      4,9: 1
+      4,10: 1
+      4,11: 1
+      5,0: 1
+      5,4: 1
+      6,0: 1
+      6,4: 1
+      0,16: 1
+      1,16: 1
+      2,16: 1
+      -1,16: 1
     uniqueMixes:
     - volume: 2500
       immutable: True
@@ -954,14 +892,7 @@ entities:
       - 0
       - 0
     type: GridAtmosphere
-- uid: 36
-  type: WindowReinforcedDirectional
-  components:
-  - rot: 3.141592653589793 rad
-    pos: 3.5,-5.5
-    parent: 35
-    type: Transform
-- uid: 37
+- uid: 18
   type: PistolLamia
   components:
   - parent: 265
@@ -972,124 +903,155 @@ entities:
       MagazineBarrel-chamber: !type:ContainerSlot {}
       MagazineBarrel-magazine: !type:ContainerSlot
         ent: 433
+      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-chamber: !type:ContainerSlot {}
+      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-magazine: !type:ContainerSlot
+        ent: 573
     type: ContainerContainer
-- uid: 38
-  type: CableHV
+- uid: 19
+  type: ClothingHeadHelmetHardsuitDeathsquad
   components:
-  - pos: 0.5,-8.5
-    parent: 35
+  - parent: 266
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 39
-  type: CableApcExtension
+- uid: 20
+  type: WindowReinforcedDirectional
   components:
-  - pos: 4.5,2.5
-    parent: 35
+  - rot: 3.141592653589793 rad
+    pos: 3.5,-5.5
+    parent: 17
+    type: Transform
+- uid: 21
+  type: CableHV
+  components:
+  - pos: -0.5,-2.5
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
   - canCollide: False
     type: Physics
-- uid: 40
-  type: CableApcExtension
-  components:
-  - pos: 2.5,9.5
-    parent: 35
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 41
-  type: Catwalk
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: 3.5,-8.5
-    parent: 35
-    type: Transform
-- uid: 42
-  type: SheetSteel
-  components:
-  - pos: -1.5339737,-7.4140677
-    parent: 35
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 43
-  type: SheetPlastic
-  components:
-  - pos: -0.8777237,-7.4765677
-    parent: 35
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 44
-  type: CableHV
-  components:
-  - pos: -0.5,-8.5
-    parent: 35
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 45
-  type: AirlockExternal
-  components:
-  - pos: 4.5,1.5
-    parent: 35
-    type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 46
-  type: Catwalk
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: 3.5,-2.5
-    parent: 35
-    type: Transform
-- uid: 47
-  type: AirlockGlass
-  components:
-  - pos: -1.5,6.5
-    parent: 35
-    type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 48
-  type: AirlockGlass
-  components:
-  - pos: -0.5,6.5
-    parent: 35
-    type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 49
+- uid: 22
   type: CableMV
   components:
-  - pos: 2.5,11.5
-    parent: 35
+  - pos: -0.5,-1.5
+    parent: 17
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 23
+  type: RCDAmmo
+  components:
+  - pos: 0.6847763,-7.5703177
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 50
-  type: BoxPillCanister
+- uid: 24
+  type: CableApcExtension
   components:
-  - pos: -1.6812348,8.763246
-    parent: 35
+  - pos: 1.5,-6.5
+    parent: 17
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 25
+  type: Catwalk
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 4.5,-6.5
+    parent: 17
+    type: Transform
+- uid: 26
+  type: Grille
+  components:
+  - pos: 5.5,-6.5
+    parent: 17
+    type: Transform
+- uid: 27
+  type: CableMV
+  components:
+  - pos: 2.5,10.5
+    parent: 17
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 28
+  type: MagazineSRifleHV
+  components:
+  - parent: 170
     type: Transform
   - canCollide: False
     type: Physics
   - containers:
-      storagebase: !type:Container
+      RangedMagazine-magazine: !type:Container
+        ents: []
+      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 51
+- uid: 29
+  type: RifleWintermute
+  components:
+  - parent: 292
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      MagazineBarrel-chamber: !type:ContainerSlot {}
+      MagazineBarrel-magazine: !type:ContainerSlot
+        ent: 60
+      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-chamber: !type:ContainerSlot {}
+      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-magazine: !type:ContainerSlot
+        ent: 36
+    type: ContainerContainer
+- uid: 30
+  type: WindowReinforcedDirectional
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 3.5,-8.5
+    parent: 17
+    type: Transform
+- uid: 31
+  type: WindoorSecure
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 2.5,-5.5
+    parent: 17
+    type: Transform
+- uid: 32
+  type: MagazineSRifleHV
+  components:
+  - parent: 491
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      RangedMagazine-magazine: !type:Container
+        ents: []
+      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 33
+  type: Grille
+  components:
+  - pos: -3.5,-5.5
+    parent: 17
+    type: Transform
+- uid: 34
+  type: SheetPlastic
+  components:
+  - pos: -0.5652237,-7.4765677
+    parent: 17
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 35
   type: MagazineSRifleHV
   components:
   - parent: 289
@@ -1099,945 +1061,21 @@ entities:
   - containers:
       RangedMagazine-magazine: !type:Container
         ents: []
+      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
+        ents: []
     type: ContainerContainer
-- uid: 52
-  type: GasPort
+- uid: 36
+  type: MagazineSRifle
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -1.5,-3.5
-    parent: 35
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 53
-  type: MagazineSRifleHV
-  components:
-  - parent: 7
+  - parent: 29
     type: Transform
   - canCollide: False
     type: Physics
   - containers:
-      RangedMagazine-magazine: !type:Container
+      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 54
-  type: Grille
-  components:
-  - pos: 5.5,-7.5
-    parent: 35
-    type: Transform
-- uid: 55
-  type: CableApcExtension
-  components:
-  - pos: 0.5,-8.5
-    parent: 35
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 56
-  components:
-  - pos: 0.4558292,0.42837813
-    parent: null
-    type: Transform
-  - index: 0
-    type: MapGrid
-  - id: Dart
-    type: BecomesStation
-  - linearDamping: 0.1
-    fixedRotation: False
-    bodyType: Dynamic
-    type: Physics
-  - fixtures:
-    - shape: !type:PolygonShape
-        vertices:
-        - 0,-15
-        - 0,-10
-        - -1,-10
-        - -1,-15
-      id: grid_chunk--1--15
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 20
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 0,-10
-        - 0,-2
-        - -2,-2
-        - -2,-10
-      id: grid_chunk--2--10
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 64
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 0,-2
-        - 0,0
-        - -3,0
-        - -3,-2
-      id: grid_chunk--3--2
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 24
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 0,0
-        - 0,1
-        - -3,1
-        - -3,0
-      id: grid_chunk--3-0
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 12
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 0,1
-        - 0,5
-        - -2,5
-        - -2,1
-      id: grid_chunk--2-1
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 32
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 0,5
-        - 0,9
-        - -1,9
-        - -1,5
-      id: grid_chunk--1-5
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 16
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 7,0
-        - 7,5
-        - 0,5
-        - 0,0
-      id: grid_chunk-0-0
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 140
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 6,5
-        - 6,9
-        - 0,9
-        - 0,5
-      id: grid_chunk-0-5
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 96
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 7,-10
-        - 7,0
-        - 0,0
-        - 0,-10
-      id: grid_chunk-0--10
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 280
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 6,-15
-        - 6,-10
-        - 0,-10
-        - 0,-15
-      id: grid_chunk-0--15
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 120
-      restitution: 0.1
-    type: Fixtures
-  - gravityShakeSound: !type:SoundPathSpecifier
-      path: /Audio/Effects/alert.ogg
-    type: Gravity
-  - chunkCollection: {}
-    type: DecalGrid
-  - tiles:
-      -2,-10: 0
-      -2,-9: 0
-      -2,-8: 0
-      -2,-7: 0
-      -2,-6: 0
-      -2,-5: 0
-      -2,-4: 0
-      -2,-3: 0
-      -2,-2: 1
-      -2,-1: 2
-      -1,-11: 0
-      -1,-10: 0
-      -1,-9: 0
-      -1,-8: 0
-      -1,-7: 0
-      -1,-6: 0
-      -1,-5: 0
-      -1,-4: 0
-      -1,-3: 0
-      -1,-2: 3
-      -1,-1: 4
-      0,-11: 5
-      0,-10: 6
-      0,-9: 7
-      0,-8: 0
-      0,-7: 0
-      0,-6: 0
-      0,-5: 0
-      0,-4: 0
-      0,-3: 0
-      0,-2: 0
-      0,-1: 0
-      1,-11: 0
-      1,-10: 0
-      1,-9: 0
-      1,-8: 0
-      1,-7: 0
-      1,-6: 0
-      1,-5: 0
-      1,-4: 0
-      1,-3: 0
-      1,-2: 0
-      1,-1: 0
-      2,-11: 0
-      2,-10: 0
-      2,-9: 0
-      2,-8: 0
-      2,-7: 0
-      2,-6: 0
-      2,-5: 0
-      2,-4: 0
-      2,-3: 0
-      2,-2: 0
-      2,-1: 0
-      3,-11: 0
-      3,-10: 0
-      3,-9: 0
-      3,-8: 0
-      3,-7: 0
-      3,-6: 0
-      3,-5: 0
-      3,-4: 0
-      3,-3: 0
-      3,-2: 0
-      3,-1: 0
-      4,-11: 5
-      4,-10: 6
-      4,-9: 7
-      4,-8: 0
-      4,-7: 0
-      4,-6: 0
-      4,-5: 0
-      4,-4: 0
-      4,-3: 0
-      4,-2: 0
-      4,-1: 0
-      5,-11: 0
-      5,-10: 0
-      5,-9: 8
-      5,-8: 9
-      5,-7: 10
-      5,-6: 11
-      5,-5: 12
-      5,-4: 13
-      5,-3: 14
-      5,-2: 15
-      5,-1: 0
-      6,-10: 0
-      6,-9: 0
-      6,-8: 0
-      6,-7: 0
-      6,-6: 0
-      6,-5: 0
-      6,-4: 16
-      6,-3: 0
-      6,-2: 0
-      6,-1: 0
-      -2,0: 17
-      -2,1: 0
-      -2,2: 0
-      -2,3: 0
-      -2,4: 0
-      -1,0: 18
-      -1,1: 19
-      -1,2: 20
-      -1,3: 21
-      -1,4: 0
-      -1,5: 0
-      -1,6: 0
-      -1,7: 0
-      -1,8: 0
-      0,0: 0
-      0,1: 0
-      0,2: 0
-      0,3: 22
-      0,4: 23
-      0,5: 24
-      0,6: 25
-      0,7: 26
-      0,8: 0
-      1,0: 0
-      1,1: 0
-      1,2: 0
-      1,3: 27
-      1,4: 0
-      1,5: 0
-      1,6: 0
-      1,7: 28
-      1,8: 0
-      2,0: 0
-      2,1: 0
-      2,2: 0
-      2,3: 29
-      2,4: 0
-      2,5: 0
-      2,6: 0
-      2,7: 30
-      2,8: 0
-      3,0: 0
-      3,1: 0
-      3,2: 0
-      3,3: 31
-      3,4: 0
-      3,5: 0
-      3,6: 0
-      3,7: 32
-      3,8: 0
-      4,0: 0
-      4,1: 0
-      4,2: 0
-      4,3: 33
-      4,4: 34
-      4,5: 35
-      4,6: 0
-      4,7: 32
-      4,8: 0
-      5,0: 0
-      5,1: 0
-      5,2: 0
-      5,3: 28
-      5,4: 0
-      5,5: 0
-      5,6: 0
-      5,7: 0
-      5,8: 0
-      6,0: 36
-      6,1: 0
-      6,2: 0
-      6,3: 0
-      6,4: 0
-      -3,-2: 37
-      -3,-1: 38
-      -3,0: 39
-      -1,-15: 40
-      -1,-14: 40
-      -1,-13: 40
-      -1,-12: 40
-      0,-15: 40
-      0,-14: 40
-      0,-13: 40
-      0,-12: 41
-      1,-15: 40
-      1,-14: 40
-      1,-13: 40
-      1,-12: 40
-      2,-15: 40
-      2,-14: 40
-      2,-13: 40
-      2,-12: 40
-      3,-15: 40
-      3,-14: 40
-      3,-13: 40
-      3,-12: 40
-      4,-15: 40
-      4,-14: 40
-      4,-13: 40
-      4,-12: 41
-      5,-15: 40
-      5,-14: 40
-      5,-13: 40
-      5,-12: 40
-      7,-4: 42
-      7,-3: 40
-      7,-2: 40
-      7,-1: 40
-      8,-4: 43
-      8,-3: 44
-      8,-2: 45
-      8,-1: 46
-      7,0: 47
-      8,0: 48
-    uniqueMixes:
-    - volume: 2500
-      temperature: 293.15
-      moles:
-      - 21.824879
-      - 82.10312
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 256.84375
-      moles:
-      - 17.732716
-      - 66.708786
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 256.84375
-      moles:
-      - 17.050686
-      - 64.14306
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 284.07343
-      moles:
-      - 20.801838
-      - 78.25453
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 281.8043
-      moles:
-      - 20.375572
-      - 76.650955
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.15
-      moles:
-      - 17.732714
-      - 66.708786
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.15
-      moles:
-      - 20.801838
-      - 78.25453
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.15
-      moles:
-      - 21.569118
-      - 81.140976
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.15
-      moles:
-      - 21.76094
-      - 81.86258
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.15
-      moles:
-      - 21.808895
-      - 82.042984
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.15
-      moles:
-      - 21.82088
-      - 82.08809
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.15
-      moles:
-      - 21.82388
-      - 82.099365
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.15
-      moles:
-      - 21.824627
-      - 82.10218
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.15
-      moles:
-      - 21.824814
-      - 82.10288
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.15
-      moles:
-      - 21.824863
-      - 82.10306
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.15
-      moles:
-      - 21.824875
-      - 82.1031
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.15
-      moles:
-      - 16.368643
-      - 61.57728
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 240.95978
-      moles:
-      - 16.965433
-      - 63.82235
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 277.266
-      moles:
-      - 20.24769
-      - 76.16988
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 289.17902
-      moles:
-      - 21.430582
-      - 80.61981
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 292.15726
-      moles:
-      - 21.726303
-      - 81.73229
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 292.90182
-      moles:
-      - 21.800236
-      - 82.010414
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.08795
-      moles:
-      - 21.818718
-      - 82.07994
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.1345
-      moles:
-      - 21.823338
-      - 82.09732
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.14612
-      moles:
-      - 21.824493
-      - 82.10167
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.14905
-      moles:
-      - 21.824783
-      - 82.10275
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.14978
-      moles:
-      - 21.824856
-      - 82.10303
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.13446
-      moles:
-      - 21.82334
-      - 82.09732
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.14993
-      moles:
-      - 21.824875
-      - 82.103096
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.14612
-      moles:
-      - 21.824495
-      - 82.10167
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.14996
-      moles:
-      - 21.824879
-      - 82.10311
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.14902
-      moles:
-      - 21.824783
-      - 82.10275
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.14996
-      moles:
-      - 21.824879
-      - 82.10312
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.14975
-      moles:
-      - 21.824856
-      - 82.10303
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.14993
-      moles:
-      - 21.824871
-      - 82.103096
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.15
-      moles:
-      - 21.824875
-      - 82.10311
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.15
-      moles:
-      - 16.36866
-      - 61.57734
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 147.925
-      moles:
-      - 5.4562197
-      - 20.52578
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 184.23125
-      moles:
-      - 6.8202744
-      - 25.657225
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 120.69531
-      moles:
-      - 7.1612883
-      - 26.940086
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.15
-      moles:
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.15
-      moles:
-      - 5.4562197
-      - 20.52578
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 220.5375
-      moles:
-      - 4.0921607
-      - 15.39432
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 129.77188
-      moles:
-      - 1.0230402
-      - 3.84858
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 179.69296
-      moles:
-      - 0.25576004
-      - 0.962145
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 192.17325
-      moles:
-      - 0.06394001
-      - 0.24053624
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 195.2933
-      moles:
-      - 0.015985003
-      - 0.06013406
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 220.5375
-      moles:
-      - 4.092165
-      - 15.394335
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 105.3077
-      moles:
-      - 1.0270375
-      - 3.8636172
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    type: GridAtmosphere
-- uid: 57
+- uid: 37
   type: RifleWintermute
   components:
   - parent: 266
@@ -2047,93 +1085,193 @@ entities:
   - containers:
       MagazineBarrel-chamber: !type:ContainerSlot {}
       MagazineBarrel-magazine: !type:ContainerSlot
-        ent: 64
+        ent: 42
+      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-chamber: !type:ContainerSlot {}
+      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-magazine: !type:ContainerSlot
+        ent: 574
     type: ContainerContainer
-- uid: 58
-  type: RifleWintermute
+- uid: 38
+  type: MagazineSRifleHV
   components:
-  - parent: 197
+  - parent: 9
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      RangedMagazine-magazine: !type:Container
+        ents: []
+      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 39
+  type: CableApcExtension
+  components:
+  - pos: 2.5,8.5
+    parent: 17
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 40
+  type: CableHV
+  components:
+  - pos: -2.5,-6.5
+    parent: 17
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 41
+  type: CableMV
+  components:
+  - pos: -0.5,9.5
+    parent: 17
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 42
+  type: MagazineSRifleHV
+  components:
+  - parent: 37
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      RangedMagazine-magazine: !type:Container
+        ents: []
+      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 43
+  type: VendingMachineCoffee
+  components:
+  - name: Hot drinks machine
+    type: MetaData
+  - pos: -1.5,-0.5
+    parent: 17
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+- uid: 44
+  type: WindowReinforcedDirectional
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -1.5,-8.5
+    parent: 17
+    type: Transform
+- uid: 45
+  type: CableApcExtension
+  components:
+  - pos: 1.5,15.5
+    parent: 17
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 46
+  type: CableMV
+  components:
+  - pos: 2.5,11.5
+    parent: 17
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 47
+  type: AirlockCommandGlassLocked
+  components:
+  - pos: 0.5,11.5
+    parent: 17
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 48
+  type: GasVentPump
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 2.5,4.5
+    parent: 17
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 49
+  type: Catwalk
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 3.5,-4.5
+    parent: 17
+    type: Transform
+- uid: 50
+  type: CableApcExtension
+  components:
+  - pos: 0.5,-8.5
+    parent: 17
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 51
+  type: CableHV
+  components:
+  - pos: 2.5,-8.5
+    parent: 17
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 52
+  type: AirlockSecurityGlassLocked
+  components:
+  - pos: 0.5,4.5
+    parent: 17
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 53
+  type: AirlockCommandGlassLocked
+  components:
+  - pos: 1.5,11.5
+    parent: 17
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 54
+  type: PistolLamia
+  components:
+  - parent: 292
     type: Transform
   - canCollide: False
     type: Physics
   - containers:
       MagazineBarrel-chamber: !type:ContainerSlot {}
       MagazineBarrel-magazine: !type:ContainerSlot
-        ent: 59
+        ent: 162
+      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-chamber: !type:ContainerSlot {}
+      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-magazine: !type:ContainerSlot
+        ent: 572
     type: ContainerContainer
-- uid: 59
-  type: MagazineSRifleHV
-  components:
-  - parent: 58
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      RangedMagazine-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 60
-  type: CableApcExtension
-  components:
-  - pos: 2.5,8.5
-    parent: 35
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 61
-  type: MagazineMagnumHV
-  components:
-  - parent: 370
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      RangedMagazine-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 62
-  type: CableMV
-  components:
-  - pos: -0.5,9.5
-    parent: 35
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 63
-  type: VendingMachineCoffee
-  components:
-  - name: Hot drinks machine
-    type: MetaData
-  - pos: -1.5,-0.5
-    parent: 35
-    type: Transform
-- uid: 64
-  type: MagazineSRifleHV
-  components:
-  - parent: 57
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      RangedMagazine-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 65
+- uid: 55
   type: WindowReinforcedDirectional
   components:
-  - rot: 3.141592653589793 rad
-    pos: 1.5,-5.5
-    parent: 35
+  - rot: 1.5707963267948966 rad
+    pos: 0.5,-2.5
+    parent: 17
     type: Transform
-- uid: 66
+- uid: 56
   type: DebugSMES
   components:
-  - pos: 3.5,-8.5
-    parent: 35
+  - pos: -1.5,-8.5
+    parent: 17
     type: Transform
   - startingCharge: 1000
     type: Battery
@@ -2147,28 +1285,131 @@ entities:
       machine_parts: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 67
-  type: CableHV
+- uid: 57
+  type: AirlockExternal
   components:
-  - pos: -2.5,-6.5
-    parent: 35
+  - pos: 4.5,3.5
+    parent: 17
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 58
+  type: GasPort
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -1.5,-3.5
+    parent: 17
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 59
+  type: Catwalk
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 3.5,-2.5
+    parent: 17
+    type: Transform
+- uid: 60
+  type: MagazineSRifleHV
+  components:
+  - parent: 29
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      RangedMagazine-magazine: !type:Container
+        ents: []
+      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 61
+  type: CableMV
+  components:
+  - pos: -0.5,3.5
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
   - canCollide: False
     type: Physics
-- uid: 68
-  type: WindowReinforcedDirectional
+- uid: 62
+  type: GasPort
   components:
   - rot: 1.5707963267948966 rad
-    pos: -1.5,-8.5
-    parent: 35
+    pos: -1.5,-4.5
+    parent: 17
     type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 63
+  type: Catwalk
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 2.5,-4.5
+    parent: 17
+    type: Transform
+- uid: 64
+  type: GasPipeStraight
+  components:
+  - pos: -0.5,-5.5
+    parent: 17
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 65
+  type: WindowReinforcedDirectional
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 1.5,-5.5
+    parent: 17
+    type: Transform
+- uid: 66
+  type: CableHV
+  components:
+  - pos: -0.5,-8.5
+    parent: 17
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 67
+  type: BoxPillCanister
+  components:
+  - pos: -1.6812348,8.763246
+    parent: 17
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      storagebase: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 68
+  type: DebugSMES
+  components:
+  - pos: 3.5,-8.5
+    parent: 17
+    type: Transform
+  - startingCharge: 1000
+    type: Battery
+  - loadingNetworkDemand: 15859.984
+    currentReceiving: 7929.992
+    currentSupply: 7929.992
+    type: PowerNetworkBattery
+  - containers:
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 69
   type: AirTankFilled
   components:
   - pos: 2.4455438,-0.6412182
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -2176,13 +1417,13 @@ entities:
   type: Grille
   components:
   - pos: -0.5,-9.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 71
   type: GasPipeStraight
   components:
   - pos: -0.5,-6.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -2193,21 +1434,21 @@ entities:
   components:
   - rot: 1.5707963267948966 rad
     pos: -1.5,-8.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 73
   type: Catwalk
   components:
   - rot: 1.5707963267948966 rad
     pos: 4.5,-7.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 74
   type: Catwalk
   components:
   - rot: 1.5707963267948966 rad
     pos: 4.5,-5.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 75
   type: RifleWintermute
@@ -2219,13 +1460,16 @@ entities:
   - containers:
       MagazineBarrel-chamber: !type:ContainerSlot {}
       MagazineBarrel-magazine: !type:ContainerSlot
-        ent: 26
+        ent: 6
+      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-chamber: !type:ContainerSlot {}
+      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-magazine: !type:ContainerSlot
+        ent: 576
     type: ContainerContainer
 - uid: 76
   type: AirlockGlass
   components:
   - pos: -0.5,-1.5
-    parent: 35
+    parent: 17
     type: Transform
   - containers:
       board: !type:Container
@@ -2235,7 +1479,7 @@ entities:
   type: Grille
   components:
   - pos: 2.5,-9.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 78
   type: MagazineMagnumHV
@@ -2247,24 +1491,26 @@ entities:
   - containers:
       RangedMagazine-magazine: !type:Container
         ents: []
+      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
+        ents: []
     type: ContainerContainer
 - uid: 79
   type: WallReinforced
   components:
   - pos: 6.5,0.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 80
   type: WallReinforced
   components:
   - pos: 0.5,0.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 81
   type: CableMV
   components:
   - pos: -0.5,2.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -2275,7 +1521,7 @@ entities:
   components:
   - rot: -1.5707963267948966 rad
     pos: 0.5,9.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -2286,13 +1532,13 @@ entities:
   components:
   - anchored: True
     pos: 2.5,-8.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 84
   type: GasVentPump
   components:
   - pos: 0.5,13.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -2322,20 +1568,22 @@ entities:
   type: VendingMachineCola
   components:
   - pos: -1.5,0.5
-    parent: 35
+    parent: 17
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 88
   type: WindowReinforcedDirectional
   components:
   - rot: 1.5707963267948966 rad
     pos: 0.5,-4.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 89
   type: SalternAPC
   components:
   - pos: 2.5,11.5
-    parent: 35
+    parent: 17
     type: Transform
   - startingCharge: 12000
     type: Battery
@@ -2347,7 +1595,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 0.5,-3.5
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -2355,7 +1603,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 0.5,-7.5
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -2363,13 +1611,13 @@ entities:
   type: WallReinforced
   components:
   - pos: 3.5,6.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 93
   type: CableApcExtension
   components:
   - pos: 1.5,14.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -2379,7 +1627,7 @@ entities:
   type: WallReinforced
   components:
   - pos: -3.5,0.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 95
   type: RifleWintermute
@@ -2392,13 +1640,18 @@ entities:
       MagazineBarrel-chamber: !type:ContainerSlot {}
       MagazineBarrel-magazine: !type:ContainerSlot
         ent: 470
+      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-chamber: !type:ContainerSlot {}
+      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-magazine: !type:ContainerSlot
+        ent: 577
     type: ContainerContainer
 - uid: 96
   type: GravityGenerator
   components:
   - pos: 2.5,-3.5
-    parent: 35
+    parent: 17
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 500
     type: ApcPowerReceiver
   - radius: 2.5
@@ -2407,13 +1660,15 @@ entities:
   type: Thruster
   components:
   - pos: -2.5,12.5
-    parent: 35
+    parent: 17
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 98
   type: CableHV
   components:
   - pos: -0.5,-3.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -2423,7 +1678,7 @@ entities:
   type: GasPipeStraight
   components:
   - pos: -0.5,-0.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -2433,7 +1688,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 1.5,13.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -2443,7 +1698,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: -0.5,9.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -2454,7 +1709,7 @@ entities:
   components:
   - rot: 1.5707963267948966 rad
     pos: -1.5,-4.5
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -2462,13 +1717,15 @@ entities:
   type: Gyroscope
   components:
   - pos: -3.5,3.5
-    parent: 35
+    parent: 17
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 104
   type: CableHV
   components:
   - pos: -2.5,-7.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -2484,18 +1741,20 @@ entities:
   - containers:
       RangedMagazine-magazine: !type:Container
         ents: []
+      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
+        ents: []
     type: ContainerContainer
 - uid: 106
   type: ChairPilotSeat
   components:
   - pos: 3.5,8.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 107
   type: MedkitBurnFilled
   components:
   - pos: 2.8996391,7.4365673
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -2507,7 +1766,7 @@ entities:
   type: ComputerCrewMonitoring
   components:
   - pos: 1.5,15.5
-    parent: 35
+    parent: 17
     type: Transform
   - containers:
       board: !type:Container
@@ -2517,32 +1776,32 @@ entities:
   type: TableGlass
   components:
   - pos: -0.5,12.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 110
   type: SpawnPointSecurityOfficer
   components:
   - pos: 2.5,2.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 111
   type: SpawnPointSecurityOfficer
   components:
   - pos: 3.5,3.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 112
   type: SpawnPointObserver
   components:
   - pos: -0.5,2.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 113
   type: PoweredSmallLight
   components:
   - rot: 3.141592653589793 rad
     pos: 2.5,7.5
-    parent: 35
+    parent: 17
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
@@ -2577,13 +1836,13 @@ entities:
   components:
   - rot: 1.5707963267948966 rad
     pos: -2.5,8.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 118
   type: CableHV
   components:
   - pos: 4.5,-7.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -2599,6 +1858,8 @@ entities:
   - containers:
       RangedMagazine-magazine: !type:Container
         ents: []
+      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
+        ents: []
     type: ContainerContainer
 - uid: 120
   type: ClothingShoesBootsJack
@@ -2612,68 +1873,68 @@ entities:
   components:
   - rot: 1.5707963267948966 rad
     pos: 5.5,-6.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 122
   type: ReinforcedWindow
   components:
   - rot: 1.5707963267948966 rad
     pos: -3.5,-6.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 123
   type: WallReinforced
   components:
   - pos: 2.5,11.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 124
   type: WallReinforced
   components:
   - pos: -2.5,10.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 125
   type: WallReinforced
   components:
   - pos: -1.5,-9.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 126
   type: WallReinforced
   components:
   - pos: -3.5,-4.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 127
   type: WallReinforced
   components:
   - pos: -2.5,-1.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 128
   type: WallReinforced
   components:
   - pos: 2.5,-1.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 129
   type: WallReinforced
   components:
   - pos: 0.5,1.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 130
   type: WallReinforced
   components:
   - pos: 4.5,7.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 131
   type: BoxBeaker
   components:
   - pos: -1.3374848,8.544496
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -2695,31 +1956,31 @@ entities:
   type: WallReinforced
   components:
   - pos: 5.5,0.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 134
   type: WallReinforced
   components:
   - pos: 4.5,-2.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 135
   type: WallReinforced
   components:
   - pos: 5.5,-8.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 136
   type: WallReinforced
   components:
   - pos: 1.5,-9.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 137
   type: AirlockGlass
   components:
   - pos: -2.5,2.5
-    parent: 35
+    parent: 17
     type: Transform
   - containers:
       board: !type:Container
@@ -2729,44 +1990,44 @@ entities:
   type: Grille
   components:
   - pos: -3.5,-6.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 139
   type: Grille
   components:
   - pos: -0.5,16.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 140
   type: Grille
   components:
   - pos: 2.5,15.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 141
   type: Grille
   components:
   - pos: 4.5,8.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 142
   type: WallReinforced
   components:
   - pos: 4.5,11.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 143
   type: Catwalk
   components:
   - rot: 1.5707963267948966 rad
     pos: -2.5,-7.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 144
   type: CableTerminal
   components:
   - pos: -1.5,-7.5
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -2774,7 +2035,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 2.5,10.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -2785,7 +2046,7 @@ entities:
   components:
   - rot: 1.5707963267948966 rad
     pos: -0.5,-7.5
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -2794,17 +2055,19 @@ entities:
   components:
   - rot: 3.141592653589793 rad
     pos: -1.5,-8.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 148
   type: MagazineSRifleHV
   components:
-  - parent: 32
+  - parent: 3
     type: Transform
   - canCollide: False
     type: Physics
   - containers:
       RangedMagazine-magazine: !type:Container
+        ents: []
+      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
         ents: []
     type: ContainerContainer
 - uid: 149
@@ -2827,16 +2090,20 @@ entities:
   - containers:
       RangedMagazine-magazine: !type:Container
         ents: []
+      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
+        ents: []
     type: ContainerContainer
 - uid: 151
   type: MagazineMagnumHV
   components:
-  - parent: 32
+  - parent: 3
     type: Transform
   - canCollide: False
     type: Physics
   - containers:
       RangedMagazine-magazine: !type:Container
+        ents: []
+      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
         ents: []
     type: ContainerContainer
 - uid: 152
@@ -2849,7 +2116,10 @@ entities:
   - containers:
       MagazineBarrel-chamber: !type:ContainerSlot {}
       MagazineBarrel-magazine: !type:ContainerSlot
-        ent: 21
+        ent: 7
+      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-chamber: !type:ContainerSlot {}
+      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-magazine: !type:ContainerSlot
+        ent: 578
     type: ContainerContainer
 - uid: 153
   type: ClothingHandsGlovesCombat
@@ -2904,7 +2174,7 @@ entities:
   components:
   - rot: -1.5707963267948966 rad
     pos: 4.5,-7.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 159
   type: MagazineSRifleHV
@@ -2915,6 +2185,8 @@ entities:
     type: Physics
   - containers:
       RangedMagazine-magazine: !type:Container
+        ents: []
+      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
         ents: []
     type: ContainerContainer
 - uid: 160
@@ -2929,30 +2201,32 @@ entities:
   components:
   - rot: 1.5707963267948966 rad
     pos: -3.5,-5.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 162
   type: MagazineMagnumHV
   components:
-  - parent: 25
+  - parent: 54
     type: Transform
   - canCollide: False
     type: Physics
   - containers:
       RangedMagazine-magazine: !type:Container
         ents: []
+      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
+        ents: []
     type: ContainerContainer
 - uid: 163
   type: Grille
   components:
   - pos: -3.5,-7.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 164
   type: CableApcExtension
   components:
   - pos: 2.5,-6.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -2962,7 +2236,7 @@ entities:
   type: CableMV
   components:
   - pos: -0.5,8.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -2973,14 +2247,14 @@ entities:
   components:
   - rot: 1.5707963267948966 rad
     pos: 2.5,-2.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 167
   type: Catwalk
   components:
   - rot: 1.5707963267948966 rad
     pos: -1.5,-2.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 168
   type: FlashlightSeclite
@@ -2997,7 +2271,7 @@ entities:
   components:
   - rot: 1.5707963267948966 rad
     pos: -0.5,13.5
-    parent: 35
+    parent: 17
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
@@ -3016,13 +2290,16 @@ entities:
   - containers:
       MagazineBarrel-chamber: !type:ContainerSlot {}
       MagazineBarrel-magazine: !type:ContainerSlot
-        ent: 6
+        ent: 28
+      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-chamber: !type:ContainerSlot {}
+      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-magazine: !type:ContainerSlot
+        ent: 579
     type: ContainerContainer
 - uid: 171
   type: PoweredSmallLight
   components:
   - pos: 2.5,5.5
-    parent: 35
+    parent: 17
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
@@ -3047,7 +2324,7 @@ entities:
   type: DebugGenerator
   components:
   - pos: 4.5,-5.5
-    parent: 35
+    parent: 17
     type: Transform
   - supplyRampPosition: 2643.3308
     type: PowerSupplier
@@ -3055,7 +2332,7 @@ entities:
   type: GasPipeFourway
   components:
   - pos: -0.5,-4.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -3072,7 +2349,7 @@ entities:
   type: CableMV
   components:
   - pos: 1.5,10.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -3082,7 +2359,7 @@ entities:
   type: CableMV
   components:
   - pos: -0.5,-2.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -3092,7 +2369,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: -0.5,-1.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -3102,7 +2379,7 @@ entities:
   type: Protolathe
   components:
   - pos: -1.5,-5.5
-    parent: 35
+    parent: 17
     type: Transform
   - containers:
       machine_board: !type:Container
@@ -3114,13 +2391,15 @@ entities:
   type: Thruster
   components:
   - pos: 4.5,12.5
-    parent: 35
+    parent: 17
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 181
   type: CableApcExtension
   components:
   - pos: -2.5,-6.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -3130,7 +2409,7 @@ entities:
   type: LockerChiefEngineerFilled
   components:
   - pos: 0.5,-2.5
-    parent: 35
+    parent: 17
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
@@ -3149,7 +2428,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: -3.5,3.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -3160,13 +2439,13 @@ entities:
   components:
   - rot: 1.5707963267948966 rad
     pos: -2.5,-7.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 186
   type: CableApcExtension
   components:
   - pos: 2.5,0.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -3176,7 +2455,7 @@ entities:
   type: LockerMedicineFilled
   components:
   - pos: 1.5,7.5
-    parent: 35
+    parent: 17
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
@@ -3188,21 +2467,21 @@ entities:
   type: TableGlass
   components:
   - pos: 3.5,10.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 189
   type: NitrogenCanister
   components:
   - anchored: True
     pos: 1.5,-8.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 190
   type: OxygenCanister
   components:
   - anchored: True
     pos: -1.5,-4.5
-    parent: 35
+    parent: 17
     type: Transform
   - releasePressure: 10.1325
     type: GasCanister
@@ -3210,7 +2489,7 @@ entities:
   type: CableMV
   components:
   - pos: 0.5,10.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -3236,7 +2515,7 @@ entities:
   type: ClothingMaskBreath
   components:
   - pos: 1.5392938,2.7025318
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -3244,7 +2523,7 @@ entities:
   type: ClothingMaskBreath
   components:
   - pos: 2.3830438,5.515032
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -3252,7 +2531,7 @@ entities:
   type: AirTankFilled
   components:
   - pos: 2.3205438,-0.2662182
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -3260,13 +2539,13 @@ entities:
   type: TableReinforced
   components:
   - pos: 1.5,2.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 197
   type: LockerSyndicatePersonal
   components:
   - pos: 1.5,3.5
-    parent: 35
+    parent: 17
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
@@ -3276,7 +2555,7 @@ entities:
         - 480
         - 468
         - 318
-        - 58
+        - 9
         - 349
         - 154
         - 114
@@ -3288,7 +2567,7 @@ entities:
   type: LockerSyndicatePersonal
   components:
   - pos: 1.5,1.5
-    parent: 35
+    parent: 17
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
@@ -3311,7 +2590,7 @@ entities:
   components:
   - rot: -1.5707963267948966 rad
     pos: 2.5,4.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -3321,7 +2600,7 @@ entities:
   type: CableMV
   components:
   - pos: -0.5,1.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -3331,7 +2610,7 @@ entities:
   type: CableHV
   components:
   - pos: -0.5,-4.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -3342,13 +2621,13 @@ entities:
   components:
   - rot: 1.5707963267948966 rad
     pos: 1.5,-2.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 203
   type: GasVentPump
   components:
   - pos: -0.5,10.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -3358,7 +2637,7 @@ entities:
   type: CableMV
   components:
   - pos: -0.5,7.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -3368,7 +2647,7 @@ entities:
   type: SalternAPC
   components:
   - pos: 0.5,-1.5
-    parent: 35
+    parent: 17
     type: Transform
   - startingCharge: 12000
     type: Battery
@@ -3381,7 +2660,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 0.5,-2.5
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -3389,7 +2668,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 0.5,-6.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -3399,7 +2678,7 @@ entities:
   type: GasPipeHalf
   components:
   - pos: -0.5,10.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -3410,7 +2689,7 @@ entities:
   components:
   - rot: 1.5707963267948966 rad
     pos: -0.5,9.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -3420,7 +2699,7 @@ entities:
   type: GasPipeStraight
   components:
   - pos: -0.5,5.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -3430,7 +2709,7 @@ entities:
   type: GasPipeStraight
   components:
   - pos: -0.5,-1.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -3440,7 +2719,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 2.5,13.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -3450,7 +2729,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: -0.5,8.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -3460,13 +2739,13 @@ entities:
   type: WallReinforced
   components:
   - pos: -4.5,2.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 215
   type: LockerChiefMedicalOfficerFilled
   components:
   - pos: 0.5,7.5
-    parent: 35
+    parent: 17
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
@@ -3478,7 +2757,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: -3.5,2.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -3488,7 +2767,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: -1.5,-6.5
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -3496,13 +2775,13 @@ entities:
   type: WallReinforced
   components:
   - pos: -4.5,0.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 219
   type: DebugSubstation
   components:
   - pos: -1.5,-2.5
-    parent: 35
+    parent: 17
     type: Transform
   - startingCharge: 1000
     type: Battery
@@ -3526,13 +2805,15 @@ entities:
   - containers:
       RangedMagazine-magazine: !type:Container
         ents: []
+      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
+        ents: []
     type: ContainerContainer
 - uid: 221
   type: GasPipeHalf
   components:
   - rot: 3.141592653589793 rad
     pos: 0.5,-8.5
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -3540,7 +2821,7 @@ entities:
   type: chem_dispenser
   components:
   - pos: -1.5,9.5
-    parent: 35
+    parent: 17
     type: Transform
   - containers:
       ReagentDispenser-beaker: !type:ContainerSlot {}
@@ -3553,14 +2834,14 @@ entities:
   type: TableGlass
   components:
   - pos: -1.5,8.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 224
   type: NitrogenCanister
   components:
   - anchored: True
     pos: 0.5,-8.5
-    parent: 35
+    parent: 17
     type: Transform
   - releasePressure: 10.1325
     type: GasCanister
@@ -3569,7 +2850,7 @@ entities:
   components:
   - rot: 3.141592653589793 rad
     pos: 2.5,-8.5
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -3577,7 +2858,7 @@ entities:
   type: CableMV
   components:
   - pos: -0.5,10.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -3603,7 +2884,7 @@ entities:
   type: ClothingMaskBreath
   components:
   - pos: 1.2892938,2.4525318
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -3612,7 +2893,7 @@ entities:
   components:
   - rot: 0.0005503417341969907 rad
     pos: 2.6634488,5.737282
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -3620,7 +2901,7 @@ entities:
   type: AirTankFilled
   components:
   - pos: 1.5392938,2.4837818
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -3628,13 +2909,13 @@ entities:
   type: TableReinforced
   components:
   - pos: 2.5,-0.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 232
   type: LockerSyndicatePersonal
   components:
   - pos: 3.5,-0.5
-    parent: 35
+    parent: 17
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
@@ -3657,7 +2938,7 @@ entities:
   components:
   - rot: -1.5707963267948966 rad
     pos: 1.5,4.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -3667,7 +2948,7 @@ entities:
   type: GasPipeHalf
   components:
   - pos: 0.5,13.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -3677,7 +2958,7 @@ entities:
   type: CableMV
   components:
   - pos: -1.5,-2.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -3687,7 +2968,7 @@ entities:
   type: CableMV
   components:
   - pos: -0.5,0.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -3697,7 +2978,7 @@ entities:
   type: CableHV
   components:
   - pos: -0.5,-5.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -3708,13 +2989,13 @@ entities:
   components:
   - rot: 1.5707963267948966 rad
     pos: 1.5,-3.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 239
   type: GasPipeStraight
   components:
   - pos: -0.5,8.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -3725,7 +3006,7 @@ entities:
   components:
   - rot: 1.5707963267948966 rad
     pos: -0.5,4.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -3735,7 +3016,7 @@ entities:
   type: GasPipeStraight
   components:
   - pos: -0.5,-2.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -3745,7 +3026,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 2.5,12.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -3755,7 +3036,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 0.5,8.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -3766,7 +3047,7 @@ entities:
   components:
   - rot: -1.5707963267948966 rad
     pos: 0.5,-4.5
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -3774,7 +3055,7 @@ entities:
   type: CableMV
   components:
   - pos: -0.5,6.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -3784,7 +3065,7 @@ entities:
   type: CableHV
   components:
   - pos: -1.5,-2.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -3794,7 +3075,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 0.5,-1.5
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -3802,7 +3083,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 0.5,-5.5
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -3810,19 +3091,21 @@ entities:
   type: WallReinforced
   components:
   - pos: -4.5,1.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 250
   type: VendingMachineWallMedical
   components:
   - pos: 0.5,2.5
-    parent: 35
+    parent: 17
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 251
   type: CableApcExtension
   components:
   - pos: -3.5,1.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -3832,7 +3115,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: -0.5,-6.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -3842,13 +3125,13 @@ entities:
   type: Grille
   components:
   - pos: 5.5,-5.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 254
   type: CableHV
   components:
   - pos: -2.5,-5.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -3858,7 +3141,7 @@ entities:
   type: Catwalk
   components:
   - pos: 3.5,-7.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 256
   type: ClothingHeadHelmetHardsuitDeathsquad
@@ -3871,7 +3154,7 @@ entities:
   type: chem_master
   components:
   - pos: -1.5,10.5
-    parent: 35
+    parent: 17
     type: Transform
   - containers:
       ChemMaster-beaker: !type:ContainerSlot {}
@@ -3888,21 +3171,21 @@ entities:
   type: TableGlass
   components:
   - pos: 2.5,7.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 259
   type: NitrogenCanister
   components:
   - anchored: True
     pos: -0.5,-8.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 260
   type: GasPort
   components:
   - rot: 3.141592653589793 rad
     pos: 1.5,-8.5
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -3926,7 +3209,7 @@ entities:
   type: ClothingMaskBreath
   components:
   - pos: 2.4767938,-0.6412182
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -3934,7 +3217,7 @@ entities:
   type: AirTankFilled
   components:
   - pos: 2.4455438,5.390032
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -3942,7 +3225,7 @@ entities:
   type: AirTankFilled
   components:
   - pos: 1.2892938,2.6712818
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -3950,7 +3233,7 @@ entities:
   type: LockerSyndicatePersonal
   components:
   - pos: 3.5,5.5
-    parent: 35
+    parent: 17
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
@@ -3961,9 +3244,9 @@ entities:
         - 419
         - 116
         - 481
-        - 32
+        - 3
         - 120
-        - 37
+        - 18
         - 85
         - 415
         - 170
@@ -3972,7 +3255,7 @@ entities:
   type: LockerSyndicatePersonal
   components:
   - pos: 1.5,-0.5
-    parent: 35
+    parent: 17
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
@@ -3980,9 +3263,9 @@ entities:
       EntityStorageComponent: !type:Container
         ents:
         - 289
-        - 57
+        - 37
         - 465
-        - 34
+        - 19
         - 354
         - 431
         - 370
@@ -3995,7 +3278,7 @@ entities:
   components:
   - rot: -1.5707963267948966 rad
     pos: 0.5,4.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -4006,7 +3289,7 @@ entities:
   components:
   - rot: 3.141592653589793 rad
     pos: 0.5,12.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -4016,7 +3299,7 @@ entities:
   type: GasPipeStraight
   components:
   - pos: -0.5,7.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -4027,7 +3310,7 @@ entities:
   components:
   - rot: 3.141592653589793 rad
     pos: -0.5,3.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -4038,7 +3321,7 @@ entities:
   components:
   - rot: -1.5707963267948966 rad
     pos: -0.5,-3.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -4048,7 +3331,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 2.5,7.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -4058,7 +3341,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 1.5,8.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -4068,7 +3351,7 @@ entities:
   type: CableMV
   components:
   - pos: -0.5,-0.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -4078,7 +3361,7 @@ entities:
   type: CableHV
   components:
   - pos: -0.5,-6.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -4089,7 +3372,7 @@ entities:
   components:
   - rot: 1.5707963267948966 rad
     pos: 1.5,-4.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 277
   type: MagazineSRifleHV
@@ -4100,6 +3383,8 @@ entities:
     type: Physics
   - containers:
       RangedMagazine-magazine: !type:Container
+        ents: []
+      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
         ents: []
     type: ContainerContainer
 - uid: 278
@@ -4112,6 +3397,8 @@ entities:
   - containers:
       RangedMagazine-magazine: !type:Container
         ents: []
+      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
+        ents: []
     type: ContainerContainer
 - uid: 279
   type: MagazineSRifleHV
@@ -4122,6 +3409,8 @@ entities:
     type: Physics
   - containers:
       RangedMagazine-magazine: !type:Container
+        ents: []
+      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
         ents: []
     type: ContainerContainer
 - uid: 280
@@ -4134,18 +3423,22 @@ entities:
   - containers:
       RangedMagazine-magazine: !type:Container
         ents: []
+      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
+        ents: []
     type: ContainerContainer
 - uid: 281
   type: VendingMachineWallMedical
   components:
   - pos: 0.5,3.5
-    parent: 35
+    parent: 17
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 282
   type: CableApcExtension
   components:
   - pos: -2.5,2.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -4155,7 +3448,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 4.5,-6.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -4165,7 +3458,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: -1.5,2.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -4175,27 +3468,29 @@ entities:
   type: VendingMachineMedical
   components:
   - pos: 2.5,10.5
-    parent: 35
+    parent: 17
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 286
   type: TableGlass
   components:
   - pos: 3.5,7.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 287
   type: OxygenCanister
   components:
   - anchored: True
     pos: -1.5,-3.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 288
   type: GasPort
   components:
   - rot: 3.141592653589793 rad
     pos: 0.5,-8.5
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -4210,7 +3505,7 @@ entities:
       storagebase: !type:Container
         ents:
         - 279
-        - 51
+        - 35
         - 105
         - 435
         - 150
@@ -4219,7 +3514,7 @@ entities:
   type: ClothingMaskBreath
   components:
   - pos: 2.8205438,-0.3287182
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -4227,7 +3522,7 @@ entities:
   type: AirTankFilled
   components:
   - pos: 2.2580438,5.733782
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -4235,7 +3530,7 @@ entities:
   type: LockerSyndicatePersonal
   components:
   - pos: 1.5,5.5
-    parent: 35
+    parent: 17
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
@@ -4244,13 +3539,13 @@ entities:
         ents:
         - 365
         - 183
-        - 7
+        - 29
         - 168
         - 153
         - 256
         - 469
         - 551
-        - 25
+        - 54
         - 192
     type: ContainerContainer
 - uid: 293
@@ -4258,7 +3553,7 @@ entities:
   components:
   - rot: 1.5707963267948966 rad
     pos: -1.5,1.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -4268,19 +3563,19 @@ entities:
   type: TableReinforced
   components:
   - pos: 2.5,5.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 295
   type: WallReinforced
   components:
   - pos: -2.5,0.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 296
   type: CableMV
   components:
   - pos: -0.5,5.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -4290,7 +3585,7 @@ entities:
   type: CableHV
   components:
   - pos: 0.5,-6.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -4301,7 +3596,7 @@ entities:
   components:
   - rot: 3.141592653589793 rad
     pos: -0.5,2.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -4311,13 +3606,13 @@ entities:
   type: WallReinforced
   components:
   - pos: -4.5,3.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 300
   type: CableMV
   components:
   - pos: -0.5,4.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -4327,14 +3622,16 @@ entities:
   type: VendingMachineSnack
   components:
   - pos: -1.5,4.5
-    parent: 35
+    parent: 17
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 302
   type: GasPipeHalf
   components:
   - rot: -1.5707963267948966 rad
     pos: 0.5,-4.5
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -4342,7 +3639,7 @@ entities:
   type: CableMV
   components:
   - pos: 0.5,-1.5
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -4350,7 +3647,7 @@ entities:
   type: CableHV
   components:
   - pos: 0.5,-7.5
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -4359,7 +3656,7 @@ entities:
   components:
   - rot: 3.141592653589793 rad
     pos: 0.5,11.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -4369,7 +3666,7 @@ entities:
   type: GasPipeStraight
   components:
   - pos: -0.5,6.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -4380,7 +3677,7 @@ entities:
   components:
   - rot: -1.5707963267948966 rad
     pos: -0.5,1.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -4391,7 +3688,7 @@ entities:
   components:
   - rot: -1.5707963267948966 rad
     pos: 3.5,-8.5
-    parent: 35
+    parent: 17
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
@@ -4405,7 +3702,7 @@ entities:
   components:
   - rot: 1.5707963267948966 rad
     pos: -1.5,-8.5
-    parent: 35
+    parent: 17
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
@@ -4419,7 +3716,7 @@ entities:
   components:
   - rot: 3.141592653589793 rad
     pos: 2.5,-0.5
-    parent: 35
+    parent: 17
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
@@ -4433,7 +3730,7 @@ entities:
   components:
   - rot: 1.5707963267948966 rad
     pos: 1.5,2.5
-    parent: 35
+    parent: 17
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
@@ -4447,7 +3744,7 @@ entities:
   components:
   - rot: 3.141592653589793 rad
     pos: 5.5,1.5
-    parent: 35
+    parent: 17
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
@@ -4461,7 +3758,7 @@ entities:
   components:
   - rot: 1.5707963267948966 rad
     pos: -1.5,-3.5
-    parent: 35
+    parent: 17
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
@@ -4475,7 +3772,7 @@ entities:
   components:
   - rot: -1.5707963267948966 rad
     pos: 3.5,-3.5
-    parent: 35
+    parent: 17
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
@@ -4488,7 +3785,7 @@ entities:
   type: PoweredSmallLight
   components:
   - pos: -0.5,10.5
-    parent: 35
+    parent: 17
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
@@ -4502,7 +3799,7 @@ entities:
   components:
   - rot: -1.5707963267948966 rad
     pos: 2.5,13.5
-    parent: 35
+    parent: 17
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
@@ -4515,7 +3812,7 @@ entities:
   type: PoweredSmallLight
   components:
   - pos: 5.5,3.5
-    parent: 35
+    parent: 17
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
@@ -4538,7 +3835,7 @@ entities:
   type: RCDAmmo
   components:
   - pos: 0.4972763,-7.5703177
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -4546,7 +3843,7 @@ entities:
   type: RCD
   components:
   - pos: 0.5597763,-7.3515677
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -4554,7 +3851,7 @@ entities:
   type: SheetGlass
   components:
   - pos: 0.091026306,-7.5078177
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -4562,7 +3859,7 @@ entities:
   type: SheetGlass
   components:
   - pos: -0.2527237,-7.4765677
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -4577,12 +3874,15 @@ entities:
       MagazineBarrel-chamber: !type:ContainerSlot {}
       MagazineBarrel-magazine: !type:ContainerSlot
         ent: 78
+      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-chamber: !type:ContainerSlot {}
+      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-magazine: !type:ContainerSlot
+        ent: 580
     type: ContainerContainer
 - uid: 324
   type: CableApcExtension
   components:
   - pos: -0.5,13.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -4592,7 +3892,7 @@ entities:
   type: CableHV
   components:
   - pos: 1.5,-8.5
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -4601,122 +3901,122 @@ entities:
   components:
   - rot: 1.5707963267948966 rad
     pos: 3.5,-3.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 327
   type: Grille
   components:
   - pos: -1.5,13.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 328
   type: Grille
   components:
   - pos: -1.5,14.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 329
   type: WallReinforced
   components:
   - pos: -2.5,1.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 330
   type: WallReinforced
   components:
   - pos: 0.5,-9.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 331
   type: WallReinforced
   components:
   - pos: 4.5,-8.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 332
   type: WallReinforced
   components:
   - pos: 4.5,-3.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 333
   type: WallReinforced
   components:
   - pos: 4.5,0.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 334
   type: WallReinforced
   components:
   - pos: 4.5,4.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 335
   type: WallReinforced
   components:
   - pos: 4.5,6.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 336
   type: WallReinforced
   components:
   - pos: 0.5,6.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 337
   type: WallReinforced
   components:
   - pos: 0.5,2.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 338
   type: WallReinforced
   components:
   - pos: 1.5,-1.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 339
   type: WallReinforced
   components:
   - pos: -2.5,-0.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 340
   type: WallReinforced
   components:
   - pos: -2.5,-4.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 341
   type: WallReinforced
   components:
   - pos: -2.5,-9.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 342
   type: WallReinforced
   components:
   - pos: -2.5,7.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 343
   type: WallReinforced
   components:
   - pos: -1.5,12.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 344
   type: WallReinforced
   components:
   - pos: -0.5,11.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 345
   type: AirlockShuttle
   components:
   - rot: 1.5707963267948966 rad
     pos: 6.5,1.5
-    parent: 35
+    parent: 17
     type: Transform
   - containers:
       board: !type:Container
@@ -4727,21 +4027,21 @@ entities:
   components:
   - rot: 1.5707963267948966 rad
     pos: 5.5,-7.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 347
   type: ReinforcedWindow
   components:
   - rot: 1.5707963267948966 rad
     pos: 2.5,-9.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 348
   type: ReinforcedWindow
   components:
   - rot: 1.5707963267948966 rad
     pos: 4.5,9.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 349
   type: ClothingHeadHelmetHardsuitDeathsquad
@@ -4754,7 +4054,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 3.5,2.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -4765,7 +4065,7 @@ entities:
   components:
   - rot: 1.5707963267948966 rad
     pos: -1.5,15.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 352
   type: ClothingHeadHelmetHardsuitDeathsquad
@@ -4793,7 +4093,7 @@ entities:
   components:
   - rot: 1.5707963267948966 rad
     pos: -1.5,4.5
-    parent: 35
+    parent: 17
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
@@ -4806,25 +4106,25 @@ entities:
   type: SpawnPointCaptain
   components:
   - pos: 1.5,13.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 357
   type: SpawnPointSecurityOfficer
   components:
   - pos: 3.5,2.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 358
   type: SpawnPointSecurityOfficer
   components:
   - pos: 2.5,1.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 359
   type: LockerCaptainFilled
   components:
   - pos: -0.5,13.5
-    parent: 35
+    parent: 17
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
@@ -4836,7 +4136,7 @@ entities:
   type: ComputerShuttle
   components:
   - pos: 0.5,15.5
-    parent: 35
+    parent: 17
     type: Transform
   - containers:
       board: !type:Container
@@ -4846,7 +4146,7 @@ entities:
   type: MedkitBurnFilled
   components:
   - pos: 2.8996391,7.7803173
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -4859,7 +4159,7 @@ entities:
   components:
   - rot: 0.0016620183596387506 rad
     pos: 3.2132988,10.735481
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -4928,6 +4228,8 @@ entities:
   - containers:
       RangedMagazine-magazine: !type:Container
         ents: []
+      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
+        ents: []
     type: ContainerContainer
 - uid: 369
   type: MagazineMagnumHV
@@ -4938,6 +4240,8 @@ entities:
     type: Physics
   - containers:
       RangedMagazine-magazine: !type:Container
+        ents: []
+      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
         ents: []
     type: ContainerContainer
 - uid: 370
@@ -4950,7 +4254,10 @@ entities:
   - containers:
       MagazineBarrel-chamber: !type:ContainerSlot {}
       MagazineBarrel-magazine: !type:ContainerSlot
-        ent: 61
+        ent: 8
+      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-chamber: !type:ContainerSlot {}
+      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-magazine: !type:ContainerSlot
+        ent: 581
     type: ContainerContainer
 - uid: 371
   type: Stunbaton
@@ -4965,12 +4272,14 @@ entities:
 - uid: 372
   type: MagazineSRifleHV
   components:
-  - parent: 32
+  - parent: 3
     type: Transform
   - canCollide: False
     type: Physics
   - containers:
       RangedMagazine-magazine: !type:Container
+        ents: []
+      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
         ents: []
     type: ContainerContainer
 - uid: 373
@@ -4978,13 +4287,13 @@ entities:
   components:
   - rot: 3.141592653589793 rad
     pos: 3.5,-8.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 374
   type: GasPipeBend
   components:
   - pos: 2.5,-7.5
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -4992,7 +4301,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 2.5,11.5
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -5000,7 +4309,7 @@ entities:
   type: CableTerminal
   components:
   - pos: 3.5,-7.5
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -5009,31 +4318,31 @@ entities:
   components:
   - rot: 1.5707963267948966 rad
     pos: -2.5,-6.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 378
   type: WallReinforced
   components:
   - pos: 3.5,12.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 379
   type: Grille
   components:
   - pos: 4.5,9.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 380
   type: Grille
   components:
   - pos: 3.5,15.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 381
   type: Grille
   components:
   - pos: 0.5,16.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 382
   type: PistolLamia
@@ -5046,6 +4355,9 @@ entities:
       MagazineBarrel-chamber: !type:ContainerSlot {}
       MagazineBarrel-magazine: !type:ContainerSlot
         ent: 368
+      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-chamber: !type:ContainerSlot {}
+      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-magazine: !type:ContainerSlot
+        ent: 582
     type: ContainerContainer
 - uid: 383
   type: MagazineMagnumHV
@@ -5056,6 +4368,8 @@ entities:
     type: Physics
   - containers:
       RangedMagazine-magazine: !type:Container
+        ents: []
+      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
         ents: []
     type: ContainerContainer
 - uid: 384
@@ -5071,7 +4385,7 @@ entities:
 - uid: 385
   type: Stunbaton
   components:
-  - parent: 32
+  - parent: 3
     type: Transform
   - canCollide: False
     type: Physics
@@ -5081,12 +4395,14 @@ entities:
 - uid: 386
   type: MagazineSRifleHV
   components:
-  - parent: 32
+  - parent: 3
     type: Transform
   - canCollide: False
     type: Physics
   - containers:
       RangedMagazine-magazine: !type:Container
+        ents: []
+      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
         ents: []
     type: ContainerContainer
 - uid: 387
@@ -5094,13 +4410,13 @@ entities:
   components:
   - rot: -1.5707963267948966 rad
     pos: 4.5,-5.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 388
   type: GasPipeTJunction
   components:
   - pos: 0.5,-7.5
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -5108,7 +4424,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 2.5,5.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -5118,7 +4434,7 @@ entities:
   type: CableHV
   components:
   - pos: 4.5,-5.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -5129,134 +4445,134 @@ entities:
   components:
   - rot: 1.5707963267948966 rad
     pos: -2.5,-5.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 392
   type: WallReinforced
   components:
   - pos: 4.5,10.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 393
   type: Grille
   components:
   - pos: -2.5,9.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 394
   type: Grille
   components:
   - pos: 3.5,14.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 395
   type: Grille
   components:
   - pos: 1.5,16.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 396
   type: Grille
   components:
   - pos: -1.5,15.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 397
   type: WallReinforced
   components:
   - pos: -3.5,4.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 398
   type: WallReinforced
   components:
   - pos: -2.5,4.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 399
   type: WallReinforced
   components:
   - pos: 4.5,-9.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 400
   type: WallReinforced
   components:
   - pos: 4.5,-4.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 401
   type: WallReinforced
   components:
   - pos: 4.5,-0.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 402
   type: WallReinforced
   components:
   - pos: 5.5,4.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 403
   type: WallReinforced
   components:
   - pos: 4.5,5.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 404
   type: WallReinforced
   components:
   - pos: 1.5,6.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 405
   type: WallReinforced
   components:
   - pos: 0.5,3.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 406
   type: WallReinforced
   components:
   - pos: 0.5,-1.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 407
   type: WallReinforced
   components:
   - pos: -1.5,-1.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 408
   type: WallReinforced
   components:
   - pos: -2.5,-3.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 409
   type: WallReinforced
   components:
   - pos: -2.5,-8.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 410
   type: WallReinforced
   components:
   - pos: -2.5,6.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 411
   type: WallReinforced
   components:
   - pos: -1.5,11.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 412
   type: AirlockShuttle
   components:
   - rot: 1.5707963267948966 rad
     pos: 6.5,2.5
-    parent: 35
+    parent: 17
     type: Transform
   - containers:
       board: !type:Container
@@ -5267,14 +4583,14 @@ entities:
   components:
   - rot: 1.5707963267948966 rad
     pos: -0.5,-9.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 414
   type: ReinforcedWindow
   components:
   - rot: 1.5707963267948966 rad
     pos: -1.5,14.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 415
   type: ClothingOuterHardsuitDeathsquad
@@ -5288,7 +4604,7 @@ entities:
   components:
   - rot: 1.5707963267948966 rad
     pos: -1.5,-3.5
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -5297,7 +4613,7 @@ entities:
   components:
   - rot: 1.5707963267948966 rad
     pos: 1.5,16.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 418
   type: ClothingOuterHardsuitDeathsquad
@@ -5325,7 +4641,7 @@ entities:
   components:
   - rot: -1.5707963267948966 rad
     pos: -0.5,0.5
-    parent: 35
+    parent: 17
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
@@ -5338,24 +4654,26 @@ entities:
   type: SpawnPointChiefMedicalOfficer
   components:
   - pos: 2.5,8.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 423
   type: SpawnPointSecurityOfficer
   components:
   - pos: 3.5,1.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 424
   type: SLMagnum
   components:
   - pos: -0.3838296,12.437054
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
   - containers:
       SpeedLoader-container: !type:Container
+        ents: []
+      Content.Server.Weapon.Ranged.Ammunition.Components.SpeedLoaderComponent-container: !type:Container
         ents: []
     type: ContainerContainer
 - uid: 425
@@ -5363,13 +4681,13 @@ entities:
   components:
   - rot: 3.141592653589793 rad
     pos: 1.5,14.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 426
   type: MedkitCombat
   components:
   - pos: 3.6496391,7.8740673
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -5381,7 +4699,7 @@ entities:
   type: MedkitBruteFilled
   components:
   - pos: 2.3058891,7.4365673
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -5393,7 +4711,7 @@ entities:
   type: BoxSterile
   components:
   - pos: 3.4621391,10.561567
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -5446,12 +4764,14 @@ entities:
 - uid: 433
   type: MagazineMagnumHV
   components:
-  - parent: 37
+  - parent: 18
     type: Transform
   - canCollide: False
     type: Physics
   - containers:
       RangedMagazine-magazine: !type:Container
+        ents: []
+      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
         ents: []
     type: ContainerContainer
 - uid: 434
@@ -5463,6 +4783,8 @@ entities:
     type: Physics
   - containers:
       RangedMagazine-magazine: !type:Container
+        ents: []
+      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
         ents: []
     type: ContainerContainer
 - uid: 435
@@ -5495,19 +4817,21 @@ entities:
   - containers:
       RangedMagazine-magazine: !type:Container
         ents: []
+      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
+        ents: []
     type: ContainerContainer
 - uid: 438
   type: WindowReinforcedDirectional
   components:
   - rot: -1.5707963267948966 rad
     pos: 4.5,-6.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 439
   type: GasPipeTJunction
   components:
   - pos: 1.5,-7.5
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -5515,7 +4839,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 5.5,2.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -5525,7 +4849,7 @@ entities:
   type: CableHV
   components:
   - pos: 4.5,-6.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -5536,128 +4860,128 @@ entities:
   components:
   - rot: 1.5707963267948966 rad
     pos: 3.5,14.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 443
   type: WallReinforced
   components:
   - pos: 3.5,11.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 444
   type: Grille
   components:
   - pos: -2.5,8.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 445
   type: Grille
   components:
   - pos: 3.5,13.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 446
   type: Grille
   components:
   - pos: 2.5,16.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 447
   type: Grille
   components:
   - pos: -0.5,15.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 448
   type: WallReinforced
   components:
   - pos: -4.5,4.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 449
   type: WallReinforced
   components:
   - pos: -2.5,3.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 450
   type: WallReinforced
   components:
   - pos: 3.5,-9.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 451
   type: WallReinforced
   components:
   - pos: 5.5,-4.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 452
   type: WallReinforced
   components:
   - pos: 4.5,-1.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 453
   type: WallReinforced
   components:
   - pos: 6.5,4.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 454
   type: WallReinforced
   components:
   - pos: 2.5,6.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 455
   type: WallReinforced
   components:
   - pos: 0.5,5.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 456
   type: WallReinforced
   components:
   - pos: 0.5,-0.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 457
   type: WallReinforced
   components:
   - pos: 3.5,-1.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 458
   type: WallReinforced
   components:
   - pos: -2.5,-2.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 459
   type: WallReinforced
   components:
   - pos: -3.5,-8.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 460
   type: WallReinforced
   components:
   - pos: -2.5,5.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 461
   type: WallReinforced
   components:
   - pos: -2.5,11.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 462
   type: AirlockShuttle
   components:
   - rot: 1.5707963267948966 rad
     pos: 6.5,3.5
-    parent: 35
+    parent: 17
     type: Transform
   - containers:
       board: !type:Container
@@ -5668,14 +4992,14 @@ entities:
   components:
   - rot: 1.5707963267948966 rad
     pos: -3.5,-7.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 464
   type: ReinforcedWindow
   components:
   - rot: 1.5707963267948966 rad
     pos: 0.5,16.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 465
   type: ClothingOuterHardsuitDeathsquad
@@ -5689,14 +5013,14 @@ entities:
   components:
   - rot: 1.5707963267948966 rad
     pos: -2.5,-6.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 467
   type: ReinforcedWindow
   components:
   - rot: 1.5707963267948966 rad
     pos: 3.5,13.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 468
   type: ClothingShoesBootsJack
@@ -5722,30 +5046,32 @@ entities:
   - containers:
       RangedMagazine-magazine: !type:Container
         ents: []
+      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
+        ents: []
     type: ContainerContainer
 - uid: 471
   type: SpawnPointLatejoin
   components:
   - pos: -0.5,2.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 472
   type: SpawnPointChiefEngineer
   components:
   - pos: -0.5,-4.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 473
   type: SpawnPointSecurityOfficer
   components:
   - pos: 2.5,3.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 474
   type: RevolverDeckard
   components:
   - pos: -0.5378609,12.716614
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -5753,19 +5079,22 @@ entities:
       BoltActionBarrel-ammo-container: !type:Container
         ents: []
       BoltActionBarrel-chamber-container: !type:ContainerSlot {}
+      Content.Server.Weapon.Ranged.Barrels.Components.BoltActionBarrelComponent-ammo-container: !type:Container
+        ents: []
+      Content.Server.Weapon.Ranged.Barrels.Components.BoltActionBarrelComponent-chamber-container: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 475
   type: ChairPilotSeat
   components:
   - rot: 3.141592653589793 rad
     pos: 0.5,14.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 476
   type: MedkitCombat
   components:
   - pos: 3.6496391,7.4990673
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -5777,7 +5106,7 @@ entities:
   type: MedkitBruteFilled
   components:
   - pos: 2.3058891,7.7490673
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -5789,7 +5118,7 @@ entities:
   type: BoxLatex
   components:
   - pos: 3.6496391,10.717817
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -5839,7 +5168,7 @@ entities:
   components:
   - rot: 1.5707963267948966 rad
     pos: -1.5,1.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -5850,7 +5179,7 @@ entities:
   components:
   - rot: 3.141592653589793 rad
     pos: -0.5,-8.5
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -5859,20 +5188,20 @@ entities:
   components:
   - rot: 1.5707963267948966 rad
     pos: 0.5,-3.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 486
   type: Catwalk
   components:
   - rot: 1.5707963267948966 rad
     pos: 2.5,-3.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 487
   type: CableApcExtension
   components:
   - pos: 0.5,13.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -5882,13 +5211,15 @@ entities:
   type: Gyroscope
   components:
   - pos: -3.5,1.5
-    parent: 35
+    parent: 17
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 489
   type: CableHV
   components:
   - pos: 3.5,-7.5
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -5897,7 +5228,7 @@ entities:
   components:
   - rot: 1.5707963267948966 rad
     pos: 3.5,15.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 491
   type: ClothingBeltAssault
@@ -5911,7 +5242,7 @@ entities:
         ents:
         - 494
         - 567
-        - 10
+        - 32
         - 384
         - 568
     type: ContainerContainer
@@ -5919,7 +5250,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 0.5,-4.5
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -5927,7 +5258,7 @@ entities:
   type: DebugGenerator
   components:
   - pos: 4.5,-7.5
-    parent: 35
+    parent: 17
     type: Transform
   - supplyRampPosition: 2643.3308
     type: PowerSupplier
@@ -5941,13 +5272,15 @@ entities:
   - containers:
       RangedMagazine-magazine: !type:Container
         ents: []
+      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
+        ents: []
     type: ContainerContainer
 - uid: 495
   type: GasPipeStraight
   components:
   - rot: 3.141592653589793 rad
     pos: 0.5,10.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -5957,7 +5290,7 @@ entities:
   type: GasPipeStraight
   components:
   - pos: -0.5,0.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -5967,7 +5300,7 @@ entities:
   type: DebugGenerator
   components:
   - pos: -2.5,-5.5
-    parent: 35
+    parent: 17
     type: Transform
   - supplyRampPosition: 2643.3308
     type: PowerSupplier
@@ -5975,7 +5308,7 @@ entities:
   type: DebugGenerator
   components:
   - pos: -2.5,-6.5
-    parent: 35
+    parent: 17
     type: Transform
   - supplyRampPosition: 2643.3308
     type: PowerSupplier
@@ -5984,7 +5317,7 @@ entities:
   components:
   - rot: 3.141592653589793 rad
     pos: 2.5,-8.5
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -5992,7 +5325,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 3.5,2.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -6002,7 +5335,7 @@ entities:
   type: CableHV
   components:
   - pos: 3.5,-8.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -6013,41 +5346,43 @@ entities:
   components:
   - rot: 1.5707963267948966 rad
     pos: 2.5,15.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 503
   type: ReinforcedWindow
   components:
   - rot: 1.5707963267948966 rad
     pos: -0.5,16.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 504
   type: ReinforcedWindow
   components:
   - rot: 1.5707963267948966 rad
     pos: -1.5,13.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 505
   type: ReinforcedWindow
   components:
   - rot: 1.5707963267948966 rad
     pos: 4.5,8.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 506
   type: Thruster
   components:
   - rot: 3.141592653589793 rad
     pos: 5.5,-9.5
-    parent: 35
+    parent: 17
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 507
   type: CableApcExtension
   components:
   - pos: -1.5,-8.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -6057,7 +5392,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: -2.5,-8.5
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -6065,7 +5400,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: -1.5,-3.5
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -6074,7 +5409,7 @@ entities:
   components:
   - rot: 3.141592653589793 rad
     pos: -0.5,-8.5
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -6082,13 +5417,13 @@ entities:
   type: Table
   components:
   - pos: 0.5,-7.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 512
   type: CableApcExtension
   components:
   - pos: 2.5,1.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -6098,13 +5433,15 @@ entities:
   type: VendingMachineYouTool
   components:
   - pos: 3.5,-7.5
-    parent: 35
+    parent: 17
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 514
   type: CableApcExtension
   components:
   - pos: 3.5,-3.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -6114,7 +5451,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 2.5,2.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -6124,7 +5461,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: -0.5,-3.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -6134,7 +5471,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 1.5,-8.5
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -6142,7 +5479,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: -0.5,-8.5
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -6151,27 +5488,33 @@ entities:
   components:
   - rot: 3.141592653589793 rad
     pos: -3.5,-9.5
-    parent: 35
+    parent: 17
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 520
   type: Thruster
   components:
   - rot: 1.5707963267948966 rad
     pos: -3.5,-3.5
-    parent: 35
+    parent: 17
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 521
   type: Thruster
   components:
   - rot: 3.141592653589793 rad
     pos: -1.5,-10.5
-    parent: 35
+    parent: 17
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 522
   type: CableApcExtension
   components:
   - pos: 2.5,-8.5
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -6179,7 +5522,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: -3.5,-8.5
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -6187,7 +5530,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 2.5,-3.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -6197,13 +5540,13 @@ entities:
   type: Table
   components:
   - pos: -1.5,-7.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 526
   type: CableApcExtension
   components:
   - pos: 2.5,3.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -6213,7 +5556,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: -0.5,1.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -6223,7 +5566,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: -0.5,4.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -6233,7 +5576,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 2.5,4.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -6243,25 +5586,27 @@ entities:
   type: VendingMachineEngivend
   components:
   - pos: 2.5,-7.5
-    parent: 35
+    parent: 17
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 531
   type: Catwalk
   components:
   - pos: 0.5,-7.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 532
   type: Catwalk
   components:
   - pos: -1.5,-5.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 533
   type: CableApcExtension
   components:
   - pos: 1.5,-3.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -6271,13 +5616,13 @@ entities:
   type: Table
   components:
   - pos: -0.5,-7.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 535
   type: CableApcExtension
   components:
   - pos: 3.5,4.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -6288,20 +5633,24 @@ entities:
   components:
   - rot: -1.5707963267948966 rad
     pos: 5.5,-3.5
-    parent: 35
+    parent: 17
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 537
   type: Thruster
   components:
   - rot: 3.141592653589793 rad
     pos: 3.5,-10.5
-    parent: 35
+    parent: 17
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 538
   type: CableApcExtension
   components:
   - pos: 3.5,-8.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -6311,25 +5660,25 @@ entities:
   type: Catwalk
   components:
   - pos: 2.5,-7.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 540
   type: Catwalk
   components:
   - pos: -0.5,-7.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 541
   type: Catwalk
   components:
   - pos: -1.5,-6.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 542
   type: CableApcExtension
   components:
   - pos: -0.5,0.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -6339,7 +5688,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: -0.5,3.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -6349,7 +5698,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 1.5,4.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -6359,19 +5708,19 @@ entities:
   type: Catwalk
   components:
   - pos: 1.5,-7.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 546
   type: Catwalk
   components:
   - pos: -1.5,-7.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 547
   type: Autolathe
   components:
   - pos: -1.5,-6.5
-    parent: 35
+    parent: 17
     type: Transform
   - containers:
       machine_board: !type:Container
@@ -6383,7 +5732,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: -0.5,-0.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -6393,7 +5742,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: -0.5,2.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -6403,7 +5752,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 0.5,4.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -6427,7 +5776,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: -2.5,-3.5
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -6455,20 +5804,22 @@ entities:
   - containers:
       RangedMagazine-magazine: !type:Container
         ents: []
+      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
+        ents: []
     type: ContainerContainer
 - uid: 557
   type: WindowReinforcedDirectional
   components:
   - rot: 1.5707963267948966 rad
     pos: -2.5,-5.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 558
   type: GasPipeHalf
   components:
   - rot: 3.141592653589793 rad
     pos: 1.5,-8.5
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -6476,7 +5827,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 2.5,-0.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -6486,7 +5837,7 @@ entities:
   type: CableHV
   components:
   - pos: -1.5,-8.5
-    parent: 35
+    parent: 17
     type: Transform
   - visible: False
     type: Sprite
@@ -6497,28 +5848,28 @@ entities:
   components:
   - rot: 1.5707963267948966 rad
     pos: 2.5,16.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 562
   type: ReinforcedWindow
   components:
   - rot: 1.5707963267948966 rad
     pos: -0.5,15.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 563
   type: ReinforcedWindow
   components:
   - rot: 1.5707963267948966 rad
     pos: -2.5,9.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 564
   type: ReinforcedWindow
   components:
   - rot: 1.5707963267948966 rad
     pos: 5.5,-5.5
-    parent: 35
+    parent: 17
     type: Transform
 - uid: 565
   type: MagazineSRifleHV
@@ -6530,12 +5881,14 @@ entities:
   - containers:
       RangedMagazine-magazine: !type:Container
         ents: []
+      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
+        ents: []
     type: ContainerContainer
 - uid: 566
   type: CableHV
   components:
   - pos: -1.5,-7.5
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
@@ -6549,6 +5902,8 @@ entities:
   - containers:
       RangedMagazine-magazine: !type:Container
         ents: []
+      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
+        ents: []
     type: ContainerContainer
 - uid: 568
   type: MagazineMagnumHV
@@ -6560,12 +5915,14 @@ entities:
   - containers:
       RangedMagazine-magazine: !type:Container
         ents: []
+      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
+        ents: []
     type: ContainerContainer
 - uid: 569
   type: DebugGenerator
   components:
   - pos: 4.5,-6.5
-    parent: 35
+    parent: 17
     type: Transform
   - supplyRampPosition: 2643.3308
     type: PowerSupplier
@@ -6573,7 +5930,7 @@ entities:
   type: DebugGenerator
   components:
   - pos: -2.5,-7.5
-    parent: 35
+    parent: 17
     type: Transform
   - supplyRampPosition: 2643.3308
     type: PowerSupplier
@@ -6581,8 +5938,129 @@ entities:
   type: CableApcExtension
   components:
   - pos: 3.5,-6.5
-    parent: 35
+    parent: 17
     type: Transform
   - canCollide: False
     type: Physics
+- uid: 572
+  type: MagazineMagnum
+  components:
+  - parent: 54
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 573
+  type: MagazineMagnum
+  components:
+  - parent: 18
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 574
+  type: MagazineSRifle
+  components:
+  - parent: 37
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 575
+  type: MagazineSRifle
+  components:
+  - parent: 9
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 576
+  type: MagazineSRifle
+  components:
+  - parent: 75
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 577
+  type: MagazineSRifle
+  components:
+  - parent: 95
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 578
+  type: MagazineMagnum
+  components:
+  - parent: 152
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 579
+  type: MagazineSRifle
+  components:
+  - parent: 170
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 580
+  type: MagazineMagnum
+  components:
+  - parent: 323
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 581
+  type: MagazineMagnum
+  components:
+  - parent: 370
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 582
+  type: MagazineMagnum
+  components:
+  - parent: 382
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
+        ents: []
+    type: ContainerContainer
 ...
