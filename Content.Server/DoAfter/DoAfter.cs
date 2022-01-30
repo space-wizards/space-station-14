@@ -42,7 +42,7 @@ namespace Content.Server.DoAfter
                 UserGrid = entityManager.GetComponent<TransformComponent>(eventArgs.User).Coordinates;
             }
 
-            if (eventArgs.BreakOnTargetMove)
+            if (eventArgs.Target != null && eventArgs.BreakOnTargetMove)
             {
                 // Target should never be null if the bool is set.
                 TargetGrid = entityManager.GetComponent<TransformComponent>(eventArgs.Target!.Value).Coordinates;
@@ -122,8 +122,9 @@ namespace Content.Server.DoAfter
                 return true;
             }
 
-            if (EventArgs.BreakOnTargetMove && !entityManager.GetComponent<TransformComponent>(EventArgs.Target!.Value).Coordinates.InRange(
-                entityManager, TargetGrid, EventArgs.MovementThreshold))
+            if (EventArgs.Target != null &&
+                EventArgs.BreakOnTargetMove &&
+                !entityManager.GetComponent<TransformComponent>(EventArgs.Target!.Value).Coordinates.InRange(entityManager, TargetGrid, EventArgs.MovementThreshold))
             {
                 return true;
             }

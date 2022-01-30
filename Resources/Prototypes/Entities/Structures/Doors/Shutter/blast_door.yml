@@ -31,4 +31,4 @@
   suffix: Open
   components:
   - type: Door
-    startOpen: true
+    state: Open
