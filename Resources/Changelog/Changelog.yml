@@ -1,10 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Security gear will now actually protect you against attacks., type: Add}
-  - {message: Mesons and hardsuits now actually protect against radiation., type: Add}
-  id: 456
-  time: '2021-10-18T23:24:37.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: Monkey cubes and rehydratable space carp work properly and don't rely
@@ -2938,3 +2932,9 @@ Entries:
   - {message: Fire extinguishers can be refilled from any source now., type: Tweak}
   id: 956
   time: '2022-01-30T14:42:15.0000000+00:00'
+- author: Schiene
+  changes:
+  - {message: 'Added a new non-votable map, Moonrise-class Emergency Response Cruiser.',
+    type: Add}
+  id: 957
+  time: '2022-01-30T15:11:40.0000000+00:00'
