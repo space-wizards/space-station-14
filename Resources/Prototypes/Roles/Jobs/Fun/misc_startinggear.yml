@@ -4,7 +4,7 @@
 - type: startingGear
   id: IHSGear
   equipment:
-    innerclothing: ClothingUniformJumpsuitColorBlack
+    jumpsuit: ClothingUniformJumpsuitColorBlack
     backpack: ClothingBackpackFilled
     head: ClothingHeadHelmetIHSVoidHelm
     gloves: ClothingHandsGlovesIhscombat
@@ -20,7 +20,7 @@
 - type: startingGear
   id: PirateGear
   equipment:
-    innerclothing: ClothingUniformJumpsuitColorLightBrown
+    jumpsuit: ClothingUniformJumpsuitColorLightBrown
     backpack: ClothingBackpackSatchelEngineering
     head: ClothingHeadHatPirate
     outerClothing: ClothingOuterCoatPirate
@@ -35,7 +35,7 @@
 - type: startingGear
   id: SpaceNinjaGear
   equipment:
-    innerclothing: ClothingUniformJumpsuitColorBlack
+    jumpsuit: ClothingUniformJumpsuitColorBlack
     backpack: ClothingBackpackFilled
     head: ClothingHeadHelmetSpaceNinja
     gloves: ClothingHandsGlovesSpaceNinja
@@ -50,7 +50,7 @@
 - type: startingGear
   id: DeadsquadGear
   equipment:
-    innerclothing: ClothingUniformJumpsuitColorBlack
+    jumpsuit: ClothingUniformJumpsuitColorBlack
     backpack: ClothingBackpackDuffelSyndicateAmmo
     head: ClothingHeadHelmetHardsuitDeathsquad
     mask: ClothingMaskBreath
