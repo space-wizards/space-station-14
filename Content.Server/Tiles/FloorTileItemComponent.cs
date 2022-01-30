@@ -56,7 +56,7 @@ namespace Content.Server.Tiles
 
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            if (!eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
+            if (!eventArgs.CanReach)
                 return true;
 
             if (!_entMan.TryGetComponent(Owner, out StackComponent? stack))

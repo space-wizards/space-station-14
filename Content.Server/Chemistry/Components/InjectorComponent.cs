@@ -138,10 +138,7 @@ namespace Content.Server.Chemistry.Components
                 return true;
             }
 
-            if (!eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
-                return false;
-
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User))
+            if (!eventArgs.CanReach)
                 return false;
 
             var solutionsSys = EntitySystem.Get<SolutionContainerSystem>();

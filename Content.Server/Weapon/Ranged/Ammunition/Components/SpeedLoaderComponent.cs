@@ -143,7 +143,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
 
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            if (eventArgs.Target == null)
+            if (eventArgs.Target == null || !eventArgs.CanReach)
             {
                 return false;
             }

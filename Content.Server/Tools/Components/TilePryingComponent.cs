@@ -28,6 +28,9 @@ namespace Content.Server.Tools.Components
 
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
+            if (eventArgs.CanReach)
+                return false;
+
             TryPryTile(eventArgs.User, eventArgs.ClickLocation);
             return true;
         }

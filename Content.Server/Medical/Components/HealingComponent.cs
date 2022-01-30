@@ -37,7 +37,7 @@ namespace Content.Server.Medical.Components
 
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            if (eventArgs.Target == null)
+            if (eventArgs.Target == null || !eventArgs.CanReach)
             {
                 return false;
             }
@@ -52,12 +52,6 @@ namespace Content.Server.Medical.Components
             }
 
             if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User))
-            {
-                return true;
-            }
-
-            if (eventArgs.User != eventArgs.Target &&
-                !eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
             {
                 return true;
             }

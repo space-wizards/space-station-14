@@ -88,8 +88,6 @@ namespace Content.Server.Fluids.Components
 
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User))
-                return false;
 
             if (CurrentVolume <= 0)
             {
