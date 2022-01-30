@@ -14,7 +14,9 @@
     HeldPrefix: default
   - type: Access
   - type: IdCard
-  - type: DoorBumpOpener
+  - type: Tag
+    tags:
+    - DoorBumpOpener
 
 #IDs with layers
 

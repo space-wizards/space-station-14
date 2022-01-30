@@ -33,7 +33,7 @@ public class SharedInstrumentComponent : Component
     public bool AllowProgramChange { get ; set; }
 
     [DataField("respectMidiLimits"), ViewVariables(VVAccess.ReadWrite)]
-    public bool RespectMidiLimits { get; set; }
+    public bool RespectMidiLimits { get; set; } = true;
 
     [ViewVariables(VVAccess.ReadWrite)]
     public bool DirtyRenderer { get; set; }

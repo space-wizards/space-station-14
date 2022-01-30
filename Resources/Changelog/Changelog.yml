@@ -1,40 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: 'Add solar control computer board to the lathe, so solar panels can
-      actually be controlled in theory', type: Add}
-  id: 439
-  time: '2021-10-15T00:05:05.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Doors now shut properly on a rotated shuttle., type: Fix}
-  id: 440
-  time: '2021-10-15T03:04:23.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: Converted most of the codebase to Supernorn sprites, type: Tweak}
-  - {message: Removes most of the cev-eris sprites, type: Remove}
-  - {message: Removed low walls, type: Remove}
-  - {message: Removed shelves, type: Remove}
-  id: 441
-  time: '2021-10-15T09:58:40.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Adapts window construction to the new sprites and grilles., type: Tweak}
-  id: 442
-  time: '2021-10-15T10:21:58.640854+00:00'
-- author: Macoron
-  changes:
-  - {message: Uplinks UI now have description of items., type: Add}
-  - {message: Admins can spawn ready to use uplinks., type: Add}
-  id: 443
-  time: '2021-10-15T10:49:59.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Black gloves and the captain's gloves now protect you against burn damage
-      from replacing lightbulbs., type: Tweak}
-  id: 444
-  time: '2021-10-15T11:07:27.972020+00:00'
 - author: Zumorica
   changes:
   - {message: Balanced SSS weapon spawns to be more fair., type: Tweak}
@@ -2932,3 +2896,41 @@ Entries:
       exteriors. Spot the blue and orange glow!, type: Add}
   id: 939
   time: '2022-01-27T00:01:32.0000000+00:00'
+- author: Plasmaguy
+  changes:
+  - {message: 'Added three new drinks (root beer, ice cream, and root beer floats).',
+    type: Add}
+  - {message: Root beer can be dispensed from the Bar's soda machine, type: Tweak}
+  - {message: Cans of root beer can be dispensed from the Robust Softdrinks vending
+      machines, type: Tweak}
+  id: 940
+  time: '2022-01-27T07:33:27.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Chief Engineers now have access to the advanced magboots in their locker.,
+    type: Add}
+  - {message: The 'Steal Magboots' objective is now 'Steal Advanced Magboots' and
+      considered more difficult., type: Tweak}
+  id: 941
+  time: '2022-01-28T18:28:05.0000000+00:00'
+- author: aaronmell
+  changes:
+  - {message: Admin and AdminRank windows show the save button correctly now, type: Fix}
+  id: 942
+  time: '2022-01-29T05:20:26.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Welding toilets no longer annihilate characters sitting on them., type: Fix}
+  id: 943
+  time: '2022-01-29T05:34:57.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Airlocks no longer close when an entity is blocking the way. If the
+      safety is disabled, airlocks will now properly crush entities.', type: Fix}
+  id: 944
+  time: '2022-01-30T00:49:57.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Prying tiles now takes time., type: Tweak}
+  id: 945
+  time: '2022-01-30T03:48:18.0000000+00:00'
