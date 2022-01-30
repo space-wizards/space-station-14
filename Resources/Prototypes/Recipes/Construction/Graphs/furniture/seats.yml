@@ -1,5 +1,5 @@
 - type: constructionGraph
-  id: seat
+  id: Seat
   start: start
   graph:
     - node: start

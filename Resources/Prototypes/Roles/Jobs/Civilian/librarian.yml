@@ -14,7 +14,7 @@
   id: LibrarianGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitLibrarian
-    back: ClothingBackpackFilled
+    back: ClothingBackpackBriefcaseFilled
     shoes: ClothingShoesColorBlack
     id: LibrarianPDA
     ears: ClothingHeadsetService

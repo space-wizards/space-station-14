@@ -16,7 +16,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Kitchen.UI
 {
     [GenerateTypedNameReferences]
-    public partial class GrinderMenu : SS14Window
+    public partial class GrinderMenu : DefaultWindow
     {
         private readonly IEntityManager _entityManager;
         private readonly IPrototypeManager _prototypeManager ;

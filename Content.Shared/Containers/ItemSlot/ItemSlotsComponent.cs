@@ -156,7 +156,7 @@ namespace Content.Shared.Containers.ItemSlots
         public string? EjectVerbText;
 
         [ViewVariables]
-        public ContainerSlot ContainerSlot = default!;
+        public ContainerSlot? ContainerSlot = default!;
 
         /// <summary>
         ///     If this slot belongs to some de-constructible component, should the item inside the slot be ejected upon
@@ -192,10 +192,10 @@ namespace Content.Shared.Containers.ItemSlots
         [DataField("swap")]
         public bool Swap = true;
 
-        public string ID => ContainerSlot.ID;
+        public string? ID => ContainerSlot?.ID;
 
         // Convenience properties
-        public bool HasItem => ContainerSlot.ContainedEntity != null;
-        public EntityUid? Item => ContainerSlot.ContainedEntity;
+        public bool HasItem => ContainerSlot?.ContainedEntity != null;
+        public EntityUid? Item => ContainerSlot?.ContainedEntity;
     }
 }

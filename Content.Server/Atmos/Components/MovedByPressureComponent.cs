@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Atmos;
 using Content.Shared.MobState.Components;
@@ -45,6 +45,8 @@ namespace Content.Server.Atmos.Components
         {
             if (!_entMan.TryGetComponent(Owner, out PhysicsComponent? physics))
                 return;
+            if (!_entMan.TryGetComponent(Owner, out FixturesComponent? fixtureComponent))
+                return;
 
             // TODO ATMOS stuns?
 
@@ -65,8 +67,7 @@ namespace Content.Server.Atmos.Components
                 if (_entMan.HasComponent<MobStateComponent>(physics.Owner))
                 {
                     physics.BodyStatus = BodyStatus.InAir;
-
-                    foreach (var fixture in physics.Fixtures)
+                    foreach (var fixture in fixtureComponent.Fixtures.Values)
                     {
                         fixture.CollisionMask &= ~(int) CollisionGroup.VaultImpassable;
                     }
@@ -107,20 +108,6 @@ namespace Content.Server.Atmos.Components
                     LastHighPressureMovementAirCycle = cycle;
                 }
             }
-        }
-    }
-
-    public static class MovedByPressureExtensions
-    {
-        public static bool IsMovedByPressure(this EntityUid entity)
-        {
-            return entity.IsMovedByPressure(out _);
-        }
-
-        public static bool IsMovedByPressure(this EntityUid entity, [NotNullWhen(true)] out MovedByPressureComponent? moved)
-        {
-            return IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out moved) &&
-                   moved.Enabled;
         }
     }
 }

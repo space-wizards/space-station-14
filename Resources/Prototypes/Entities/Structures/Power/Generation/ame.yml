@@ -151,5 +151,5 @@
     visuals:
     - type: AMEVisualizer
   - type: Construction
-    graph: ameShielding
+    graph: AMEShielding
     node: ameShielding

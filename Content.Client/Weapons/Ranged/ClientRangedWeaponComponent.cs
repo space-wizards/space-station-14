@@ -18,7 +18,7 @@ namespace Content.Client.Weapons.Ranged
     [RegisterComponent]
     public sealed class ClientRangedWeaponComponent : SharedRangedWeaponComponent
     {
-        public FireRateSelector FireRateSelector { get; private set; } = FireRateSelector.Safety;
+        public FireRateSelector FireRateSelector { get; private set; } = FireRateSelector.Automatic;
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
@@ -29,13 +29,6 @@ namespace Content.Client.Weapons.Ranged
             }
 
             FireRateSelector = rangedState.FireRateSelector;
-        }
-
-        public void SyncFirePos(GridId targetGrid, Vector2 targetPosition)
-        {
-#pragma warning disable 618
-            SendNetworkMessage(new FirePosComponentMessage(targetGrid, targetPosition));
-#pragma warning restore 618
         }
     }
 }

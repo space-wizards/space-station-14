@@ -43,7 +43,7 @@ namespace Content.Server.Atmos.Components
 
         private int _integrity = 3;
 
-        [ComponentDependency] private readonly ItemActionsComponent? _itemActions = null;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         [ViewVariables] private BoundUserInterface? _userInterface;
 
@@ -190,8 +190,8 @@ namespace Content.Server.Atmos.Components
                     CanConnectInternals = IsFunctional && internals != null
                 });
 
-            if (internals == null) return;
-            _itemActions?.GrantOrUpdate(ItemActionType.ToggleInternals, IsFunctional, IsConnected);
+            if (internals == null || !_entityManager.TryGetComponent<ItemActionsComponent>(Owner, out var itemActions)) return;
+            itemActions.GrantOrUpdate(ItemActionType.ToggleInternals, IsFunctional, IsConnected);
         }
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage message)
