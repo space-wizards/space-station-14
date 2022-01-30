@@ -56,7 +56,7 @@ namespace Content.Server.Bible
             {
                 _popupSystem.PopupEntity(Loc.GetString("bible-sizzle"), args.User, Filter.Entities(args.User));
 
-                SoundSystem.Play(Filter.Pvs(args.User), "/Audio/Effects/lightburn.ogg");
+                SoundSystem.Play(Filter.Pvs(args.User), "/Audio/Effects/lightburn.ogg", args.User);
                 _damageableSystem.TryChangeDamage(args.User, component.DamageOnUntrainedUse, true);
 
                 return;
@@ -72,7 +72,7 @@ namespace Content.Server.Bible
                 var selfFailMessage = Loc.GetString("bible-heal-fail-self", ("target", args.Target),("bible", uid));
                 _popupSystem.PopupEntity(selfFailMessage, args.User, Filter.Entities(args.User));
 
-                SoundSystem.Play(Filter.Pvs(args.Target.Value), "/Audio/Effects/hit_kick.ogg");
+                SoundSystem.Play(Filter.Pvs(args.Target.Value), "/Audio/Effects/hit_kick.ogg", args.User);
                 _damageableSystem.TryChangeDamage(args.Target.Value, component.DamageOnFail, true);
                 return;
                 }
@@ -84,7 +84,7 @@ namespace Content.Server.Bible
             var selfMessage = Loc.GetString("bible-heal-success-self", ("target", args.Target),("bible", uid));
             _popupSystem.PopupEntity(selfMessage, args.User, Filter.Entities(args.User));
 
-            SoundSystem.Play(Filter.Pvs(args.Target.Value), "/Audio/Effects/holy.ogg");
+            SoundSystem.Play(Filter.Pvs(args.Target.Value), "/Audio/Effects/holy.ogg", args.User);
             _damageableSystem.TryChangeDamage(args.Target.Value, component.Damage, true);
         }
 
