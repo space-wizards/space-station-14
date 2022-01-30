@@ -26,8 +26,7 @@ namespace Content.Server.Bible
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-
-
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
 
         public override void Initialize()
         {
@@ -44,7 +43,7 @@ namespace Content.Server.Bible
             {
                 return;
             }
-            if (args.Target == null || args.Target == args.User || !EntityManager.HasComponent<MobStateComponent>(args.Target))
+            if (args.Target == null || args.Target == args.User || !HasComp<MobStateComponent>(args.Target))
             {
                 return;
             }
@@ -53,7 +52,7 @@ namespace Content.Server.Bible
             component.CooldownEnd = component.LastAttackTime + TimeSpan.FromSeconds(component.CooldownTime);
             RaiseLocalEvent(uid, new RefreshItemCooldownEvent(component.LastAttackTime, component.CooldownEnd), false);
 
-            if (!EntityManager.HasComponent<BibleUserComponent>(args.User))
+            if (!HasComp<BibleUserComponent>(args.User))
             {
                 args.User.PopupMessage(Loc.GetString("bible-sizzle"));
 
@@ -68,10 +67,10 @@ namespace Content.Server.Bible
                 if (_random.Prob(component.FailChance))
                 {
                 var othersFailMessage = Loc.GetString("bible-heal-fail-others", ("user", args.User),("target", args.Target),("bible", uid));
-                args.User.PopupMessageOtherClients(othersFailMessage);
+            _popupSystem.PopupEntity(othersFailMessage, args.User, Filter.Pvs(args.User).RemoveWhereAttachedEntity(puid => puid == args.User));
 
                 var selfFailMessage = Loc.GetString("bible-heal-fail-self", ("target", args.Target),("bible", uid));
-                args.User.PopupMessage(selfFailMessage);
+                _popupSystem.PopupEntity(selfFailMessage, args.User, Filter.Entities(args.User));
 
                 SoundSystem.Play(Filter.Pvs(args.Target.Value), "/Audio/Effects/hit_kick.ogg");
                 _damageableSystem.TryChangeDamage(args.Target.Value, component.DamageOnFail, true);
@@ -80,10 +79,10 @@ namespace Content.Server.Bible
             }
 
             var othersMessage = Loc.GetString("bible-heal-success-others", ("user", args.User),("target", args.Target),("bible", uid));
-            args.User.PopupMessageOtherClients(othersMessage);
+            _popupSystem.PopupEntity(othersMessage, args.User, Filter.Pvs(args.User).RemoveWhereAttachedEntity(puid => puid == args.User));
 
             var selfMessage = Loc.GetString("bible-heal-success-self", ("target", args.Target),("bible", uid));
-            args.User.PopupMessage(selfMessage);
+            _popupSystem.PopupEntity(selfMessage, args.User, Filter.Entities(args.User));
 
             SoundSystem.Play(Filter.Pvs(args.Target.Value), "/Audio/Effects/holy.ogg");
             _damageableSystem.TryChangeDamage(args.Target.Value, component.Damage, true);

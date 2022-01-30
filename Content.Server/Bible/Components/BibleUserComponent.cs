@@ -3,10 +3,6 @@ using Robust.Shared.Analyzers;
 
 namespace Content.Server.Bible.Components
 {
-    [RegisterComponent]
-
-    public class BibleUserComponent : Component
-    {
-        public override string Name => "BibleUser";
-    }
+    [RegisterComponent, ComponentProtoName("BibleUser")]
+    public sealed class BibleUserComponent : Component {}
 }

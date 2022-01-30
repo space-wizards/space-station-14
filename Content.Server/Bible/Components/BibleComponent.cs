@@ -9,10 +9,9 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Bible.Components
 {
-    [RegisterComponent]
-    public class BibleComponent : Component
+    [RegisterComponent, ComponentProtoName("Bible")]
+    public sealed class BibleComponent : Component
     {
-        public override string Name => "Bible";
 
         // Damage that will be healed on a success
         [DataField("damage", required: true)]

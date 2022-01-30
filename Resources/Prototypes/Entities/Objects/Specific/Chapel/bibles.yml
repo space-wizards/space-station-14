@@ -18,6 +18,7 @@
         Burn: 10
   - type: ItemCooldown
   - type: Sprite
+    netsync: false
     sprite: Objects/Specific/Chapel/bible.rsi
     state: icon
   - type: Item
