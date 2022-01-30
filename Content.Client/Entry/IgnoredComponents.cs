@@ -292,6 +292,7 @@ namespace Content.Client.Entry
             "MonkeyAccent",
             "ReplacementAccent",
             "ResistLocker",
+            "IgniteOnCollide",
             "SpawnArtifact",
             "TelepathicArtifact",
             "ArtifactGasTrigger",
