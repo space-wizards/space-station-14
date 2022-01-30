@@ -442,7 +442,7 @@
     drawdepth: Mobs
     layers:
       - map: ["enum.DamageStateVisualLayers.Base"]
-        state: kangaroo
+        state: kangaroo-boxing
         sprite: Mobs/Animals/kangaroo.rsi
   - type: Physics
   - type: Fixtures
