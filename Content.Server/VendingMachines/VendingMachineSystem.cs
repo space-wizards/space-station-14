@@ -16,9 +16,9 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Content.Server.Advertise;
 using Content.Server.Throwing;
 using Robust.Shared.Maths;
+using Content.Shared.Acts;
 using static Content.Shared.VendingMachines.SharedVendingMachineComponent;
 
 namespace Content.Server.VendingMachines.systems
@@ -27,6 +27,8 @@ namespace Content.Server.VendingMachines.systems
     {
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly AccessReaderSystem _accessReader = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
 
         public override void Initialize()
         {
@@ -36,15 +38,16 @@ namespace Content.Server.VendingMachines.systems
             SubscribeLocalEvent<VendingMachineComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<VendingMachineComponent, InventorySyncRequestMessage>(OnInventoryRequestMessage);
             SubscribeLocalEvent<VendingMachineComponent, VendingMachineEjectMessage>(OnInventoryEjectMessage);
+            SubscribeLocalEvent<VendingMachineComponent, BreakageEventArgs>(OnBreak);
         }
 
         private void OnComponentInit(EntityUid uid, VendingMachineComponent component, ComponentInit args)
         {
             base.Initialize();
 
-            if (EntityManager.TryGetComponent(component.Owner, out ApcPowerReceiverComponent? receiver))
+            if (TryComp<ApcPowerReceiverComponent>(component.Owner, out var receiver))
             {
-                TryUpdateVisualState(uid, receiver.Powered ? VendingMachineVisualState.Normal : VendingMachineVisualState.Off, component);
+                TryUpdateVisualState(uid, null, component);
             }
 
             InitializeFromPrototype(uid, component);
@@ -71,7 +74,7 @@ namespace Content.Server.VendingMachines.systems
 
         private void HandleActivate(EntityUid uid, VendingMachineComponent component, ActivateInWorldEvent args)
         {
-            if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
+            if (!TryComp<ActorComponent>(args.User, out var actor))
             {
                 return;
             }
@@ -81,7 +84,7 @@ namespace Content.Server.VendingMachines.systems
                 return;
             }
 
-            if (EntityManager.TryGetComponent<WiresComponent>(uid, out var wires))
+            if (TryComp<WiresComponent>(uid, out var wires))
             {
                 if (wires.IsPanelOpen)
                 {
@@ -98,14 +101,18 @@ namespace Content.Server.VendingMachines.systems
             TryUpdateVisualState(uid, null, component);
         }
 
+        private void OnBreak(EntityUid uid, VendingMachineComponent vendComponent, BreakageEventArgs eventArgs)
+        {
+            vendComponent.Broken = true;
+            TryUpdateVisualState(uid, VendingMachineVisualState.Broken, vendComponent);
+        }
+
         public bool IsPowered(EntityUid uid, VendingMachineComponent? vendComponent = null)
         {
             if (!Resolve(uid, ref vendComponent))
                 return false;
 
-            if (vendComponent.PowerPulsed
-            || vendComponent.PowerCut
-            || !EntityManager.TryGetComponent(vendComponent.Owner, out ApcPowerReceiverComponent? receiver))
+            if (!TryComp<ApcPowerReceiverComponent>(vendComponent.Owner, out var receiver))
             {
                 return false;
             }
@@ -129,9 +136,10 @@ namespace Content.Server.VendingMachines.systems
             vendComponent.SpriteName = packPrototype.SpriteName;
             if (!string.IsNullOrEmpty(vendComponent.SpriteName))
             {
-                var spriteComponent = EntityManager.GetComponent<SpriteComponent>(vendComponent.Owner);
-                const string vendingMachineRSIPath = "Structures/Machines/VendingMachines/{0}.rsi";
-                spriteComponent.BaseRSIPath = string.Format(vendingMachineRSIPath, vendComponent.SpriteName);
+                if (TryComp<SpriteComponent>(vendComponent.Owner, out var spriteComp)) {
+                    const string vendingMachineRSIPath = "Structures/Machines/VendingMachines/{0}.rsi";
+                    spriteComp.BaseRSIPath = string.Format(vendingMachineRSIPath, vendComponent.SpriteName);
+                }
             }
             var inventory = new List<VendingMachineInventoryEntry>();
             foreach (var (id, amount) in packPrototype.StartingInventory)
@@ -165,11 +173,12 @@ namespace Content.Server.VendingMachines.systems
             if (!Resolve(uid, ref vendComponent))
                 return false;
 
-            if (!vendComponent.AllAccess && EntityManager.TryGetComponent<AccessReaderComponent?>(vendComponent.Owner, out var accessReader))
+            if (TryComp<AccessReaderComponent?>(vendComponent.Owner, out var accessReader))
             {
-                if (sender == null || !EntitySystem.Get<AccessReaderSystem>().IsAllowed(accessReader, sender.Value))
+                if (sender == null || !_accessReader.IsAllowed(accessReader, sender.Value))
                 {
                     vendComponent.Owner.PopupMessageEveryone(Loc.GetString("vending-machine-component-try-eject-access-denied"));
+                    _popupSystem.PopupEntity(Loc.GetString("vending-machine-component-try-eject-access-denied"), uid, Filter.Pvs(uid));
                     Deny(uid, vendComponent);
                     return false;
                 }
@@ -190,22 +199,23 @@ namespace Content.Server.VendingMachines.systems
             var entry = vendComponent.Inventory.Find(x => x.ID == itemId);
             if (entry == null)
             {
-                vendComponent.Owner.PopupMessageEveryone(Loc.GetString("vending-machine-component-try-eject-invalid-item"));
+                _popupSystem.PopupEntity(Loc.GetString("vending-machine-component-try-eject-invalid-item"), uid, Filter.Pvs(uid));
                 Deny(uid, vendComponent);
                 return;
             }
 
             if (entry.Amount <= 0)
             {
-                vendComponent.Owner.PopupMessageEveryone(Loc.GetString("vending-machine-component-try-eject-out-of-stock"));
+                _popupSystem.PopupEntity(Loc.GetString("vending-machine-component-try-eject-out-of-stock"), uid, Filter.Pvs(uid));
                 Deny(uid, vendComponent);
                 return;
             }
 
             if (entry.ID == null)
-            { // If this item is not a stored entity, eject as a new entity of type
                 return;
-            }
+
+            if (!TryComp<TransformComponent>(vendComponent.Owner, out var transformComp))
+                return;
 
             // Start Ejecting, and prevent users from ordering while anim playing
             vendComponent.Ejecting = true;
@@ -216,7 +226,7 @@ namespace Content.Server.VendingMachines.systems
             {
                 vendComponent.Ejecting = false;
                 TryUpdateVisualState(uid, VendingMachineVisualState.Normal, vendComponent);
-                var ent = EntityManager.SpawnEntity(entry.ID, EntityManager.GetComponent<TransformComponent>(vendComponent.Owner).Coordinates);
+                var ent = EntityManager.SpawnEntity(entry.ID, transformComp.Coordinates);
                 if (throwItem)
                 {
                     float range = vendComponent.NonLimitedEjectRange;
@@ -236,7 +246,7 @@ namespace Content.Server.VendingMachines.systems
             return;
         }
 
-        public void TryUpdateVisualState(EntityUid uid, VendingMachineVisualState? state, VendingMachineComponent? vendComponent = null)
+        public void TryUpdateVisualState(EntityUid uid, VendingMachineVisualState? state = VendingMachineVisualState.Normal, VendingMachineComponent? vendComponent = null)
         {
             if (!Resolve(uid, ref vendComponent))
                 return;
@@ -255,7 +265,7 @@ namespace Content.Server.VendingMachines.systems
                 finalState = VendingMachineVisualState.Off;
             }
 
-            if (EntityManager.TryGetComponent(vendComponent.Owner, out AppearanceComponent? appearance))
+            if (TryComp<AppearanceComponent>(vendComponent.Owner, out var appearance))
             {
                 appearance.SetData(VendingMachineVisuals.VisualState, finalState);
             }
@@ -273,19 +283,6 @@ namespace Content.Server.VendingMachines.systems
             }
 
             TryEjectVendorItem(uid, _random.Pick(availableItems).ID, throwItem, vendComponent);
-        }
-
-        public bool GetAdvertisementState(EntityUid uid, VendingMachineComponent? vendComponent = null)
-        {
-            if (!Resolve(uid, ref vendComponent))
-                return false;
-
-            if (EntityManager.TryGetComponent(vendComponent.Owner, out AdvertiseComponent? advertise))
-            {
-                return advertise.Enabled;
-            }
-
-            return false;
         }
     }
 }
