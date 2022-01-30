@@ -16,7 +16,7 @@ using Robust.Shared.Localization;
 namespace Content.Client.Atmos.Monitor.UI
 {
     [GenerateTypedNameReferences]
-    public partial class AirAlarmWindow : SS14Window
+    public partial class AirAlarmWindow : DefaultWindow
     {
         public event Action<string, IAtmosDeviceData>? AtmosDeviceDataChanged;
         public event Action<AtmosMonitorThresholdType, AtmosAlarmThreshold, Gas?>? AtmosAlarmThresholdChanged;

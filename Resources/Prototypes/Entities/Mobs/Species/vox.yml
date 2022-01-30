@@ -113,4 +113,5 @@
     categoriesFacialHair: VoxFacialHair
   - type: Inventory
     speciesId: vox
-  - type: DoorBumpOpener
+  - type: Butcherable
+    meat: FoodMeatChicken

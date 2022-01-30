@@ -40,6 +40,9 @@ namespace Content.Client.Info
             var websiteButton = new Button {Text = Loc.GetString("server-info-website-button") };
             websiteButton.OnPressed += args => uriOpener.OpenUri(UILinks.Website);
 
+            var wikiButton = new Button {Text = Loc.GetString("server-info-wiki-button") };
+            wikiButton.OnPressed += args => uriOpener.OpenUri(UILinks.Wiki);
+
             var reportButton = new Button { Text = Loc.GetString("server-info-report-button") };
             reportButton.OnPressed += args => uriOpener.OpenUri(UILinks.BugReport);
 
@@ -55,6 +58,7 @@ namespace Content.Client.Info
             buttons.AddChild(rulesButton);
             buttons.AddChild(discordButton);
             buttons.AddChild(websiteButton);
+            buttons.AddChild(wikiButton);
             buttons.AddChild(reportButton);
             buttons.AddChild(creditsButton);
             buttons.AddChild(changelogButton);

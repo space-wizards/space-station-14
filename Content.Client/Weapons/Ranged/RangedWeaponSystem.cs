@@ -85,20 +85,26 @@ namespace Content.Client.Weapons.Ranged
             }
 
             if (_blocked)
-            {
                 return;
-            }
 
-            var worldPos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
+            var mapCoordinates = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
+            EntityCoordinates coordinates;
 
-            if (!_mapManager.TryFindGridAt(worldPos, out var grid))
+            if (_mapManager.TryFindGridAt(mapCoordinates, out var grid))
             {
-                weapon.SyncFirePos(GridId.Invalid, worldPos.Position);
+                coordinates = EntityCoordinates.FromMap(grid.GridEntityId, mapCoordinates);
             }
             else
             {
-                weapon.SyncFirePos(grid.Index, grid.MapToGrid(worldPos).Position);
+                coordinates = EntityCoordinates.FromMap(_mapManager.GetMapEntityId(mapCoordinates.MapId), mapCoordinates);
             }
+
+            SyncFirePos(coordinates);
+        }
+
+        private void SyncFirePos(EntityCoordinates coordinates)
+        {
+            RaiseNetworkEvent(new FirePosEvent(coordinates));
         }
     }
 }

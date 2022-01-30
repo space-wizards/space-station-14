@@ -13,7 +13,7 @@ using static Content.Shared.Access.Components.SharedIdCardConsoleComponent;
 namespace Content.Client.Access.UI
 {
     [GenerateTypedNameReferences]
-    public partial class IdCardConsoleWindow : SS14Window
+    public partial class IdCardConsoleWindow : DefaultWindow
     {
         private readonly IdCardConsoleBoundUserInterface _owner;
 

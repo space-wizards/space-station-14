@@ -543,6 +543,35 @@
     - type: StorageVisualizer
       state_open: weaponcrate_open
       state_closed: weaponcrate_door
+      
+- type: entity
+  id: CrateCommandSecure
+  name: command crate
+  parent: CrateBaseSecure
+  components:
+  - type: AccessReader
+    access: [["Command"]]
+  - type: Lock
+  - type: Sprite
+    sprite: Structures/Storage/Crates/secure.rsi
+    layers:
+    - state: securecrate
+    - state: securecrate_door
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: welded
+      visible: false
+      map: ["enum.StorageVisualLayers.Welded"]
+    - state: locked
+      map: ["enum.StorageVisualLayers.Lock"]
+      shader: unshaded
+  - type: Icon
+    sprite: Structures/Storage/Crates/secure.rsi
+    state: securecrate_icon
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state_open: securecrate_open
+      state_closed: securecrate_door
 
 - type: entity
   id: CrateLivestock
