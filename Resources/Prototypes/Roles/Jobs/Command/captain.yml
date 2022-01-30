@@ -27,6 +27,7 @@
  # - Brig
   - Engineering
   - Medical
+  - Quartermaster
   - Cargo
   - Research
   - Service
@@ -49,7 +50,7 @@
     head: ClothingHeadHatCaptain
     eyes: ClothingEyesGlassesSunglasses
     gloves: ClothingHandsGlovesCaptain
-    outerclothing: ClothingOuterHardsuitCap
+    outerClothing: ClothingOuterArmorCaptainCarapace
     id: CaptainPDA
     ears: ClothingHeadsetAltCommand
   innerclothingskirt: ClothingUniformJumpskirtCaptain

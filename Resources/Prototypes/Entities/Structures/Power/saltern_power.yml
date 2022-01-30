@@ -6,8 +6,8 @@
     supplyRate: 3000
 
 - type: entity
-  parent: BaseSmes
-  id: SalternSmes
+  parent: BaseSMES
+  id: SalternSMES
   components:
   - type: Battery
     maxCharge: 10000000
@@ -22,8 +22,8 @@
     startingCharge: 4000000
 
 - type: entity
-  parent: BaseApc
-  id: SalternApc
+  parent: BaseAPC
+  id: SalternAPC
   components:
   - type: Battery
     maxCharge: 12000

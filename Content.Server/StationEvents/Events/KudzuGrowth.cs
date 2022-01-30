@@ -24,6 +24,10 @@ public class KudzuGrowth : StationEvent
 
     public override int MinimumPlayers => 15;
 
+    public override float Weight => WeightLow;
+
+    public override int? MaxOccurrences => 2;
+
     // Get players to scatter a bit looking for it.
     protected override float StartAfter => 50f;
 

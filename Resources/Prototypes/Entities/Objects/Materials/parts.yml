@@ -24,7 +24,7 @@
 #  - type: Item
 #    HeldPrefix: rods
   - type: Construction
-    graph: metalRod
+    graph: MetalRod
     node: MetalRod
   - type: Appearance
     visuals:

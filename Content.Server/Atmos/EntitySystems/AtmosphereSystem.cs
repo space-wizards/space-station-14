@@ -1,11 +1,16 @@
+using Content.Server.Administration;
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
+using Content.Server.Database;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.Temperature.Components;
 using Content.Server.Temperature.Systems;
+using Content.Shared.Administration;
 using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
+using Robust.Shared.Console;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -20,6 +25,7 @@ namespace Content.Server.Atmos.EntitySystems
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly AdminLogSystem _adminLog = default!;
+        [Dependency] private readonly SharedContainerSystem _containers = default!;
 
         private const float ExposedUpdateDelay = 1f;
         private float _exposedTimer = 0f;
@@ -31,6 +37,7 @@ namespace Content.Server.Atmos.EntitySystems
             UpdatesAfter.Add(typeof(NodeGroupSystem));
 
             InitializeGases();
+            InitializeCommands();
             InitializeCVars();
             InitializeGrid();
 
@@ -47,6 +54,8 @@ namespace Content.Server.Atmos.EntitySystems
             base.Shutdown();
 
             _mapManager.TileChanged -= OnTileChanged;
+
+            ShutdownCommands();
         }
 
         private void OnTileChanged(object? sender, TileChangedEventArgs eventArgs)

@@ -83,7 +83,7 @@ namespace Content.Server.Strip
         private async void PlaceActiveHandItemInInventory(EntityUid user, string slot)
         {
             var userHands = _entities.GetComponent<HandsComponent>(user);
-            var item = userHands.GetActiveHand;
+            var item = userHands.GetActiveHandItem;
             var invSystem = EntitySystem.Get<InventorySystem>();
 
             bool Check()
@@ -149,7 +149,7 @@ namespace Content.Server.Strip
         {
             var hands = _entities.GetComponent<HandsComponent>(Owner);
             var userHands = _entities.GetComponent<HandsComponent>(user);
-            var item = userHands.GetActiveHand;
+            var item = userHands.GetActiveHandItem;
 
             bool Check()
             {
@@ -324,7 +324,7 @@ namespace Content.Server.Strip
                 !_entities.TryGetComponent(user, out HandsComponent? userHands))
                 return;
 
-            var placingItem = userHands.GetActiveHand != null;
+            var placingItem = userHands.GetActiveHandItem != null;
 
             switch (obj.Message)
             {

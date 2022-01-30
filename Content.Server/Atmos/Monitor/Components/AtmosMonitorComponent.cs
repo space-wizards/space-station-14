@@ -16,12 +16,6 @@ namespace Content.Server.Atmos.Monitor.Components
     {
         public override string Name => "AtmosMonitor";
 
-        // Requires power. No logic related to this will be performed here, however,
-        // save for ensuring that the data is valid upon set.
-        // This is how the system discovers entities that are alarmable.
-        [ComponentDependency] public readonly ApcPowerReceiverComponent? PowerRecvComponent = default!;
-        [ComponentDependency] public readonly AtmosDeviceComponent? AtmosDeviceComponent = default!;
-
         // Whether this monitor can send alarms,
         // or recieve atmos command events.
         //

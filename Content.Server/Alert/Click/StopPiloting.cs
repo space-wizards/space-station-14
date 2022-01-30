@@ -1,4 +1,4 @@
-﻿using Content.Server.Shuttles;
+using Content.Server.Shuttles;
 using Content.Server.Shuttles.EntitySystems;
 using Content.Shared.Alert;
 using Content.Shared.Shuttles;
@@ -17,9 +17,9 @@ namespace Content.Server.Alert.Click
     [DataDefinition]
     public class StopPiloting : IAlertClick
     {
-        public void AlertClicked(ClickAlertEventArgs args)
+        public void AlertClicked(EntityUid player)
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(args.Player, out PilotComponent? pilotComponent) &&
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(player, out PilotComponent? pilotComponent) &&
                 pilotComponent.Console != null)
             {
                 EntitySystem.Get<ShuttleConsoleSystem>().RemovePilot(pilotComponent);

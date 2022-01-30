@@ -19,6 +19,7 @@ using Content.Shared.Inventory;
 using Content.Shared.PDA;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
+using Content.Shared.Species;
 using Content.Shared.Station;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
@@ -33,7 +34,6 @@ namespace Content.Server.GameTicking
 {
     public partial class GameTicker
     {
-        private const string PlayerPrototypeName = "MobHuman";
         private const string ObserverPrototypeName = "MobObserver";
 
         [Dependency] private readonly IdCardSystem _cardSystem = default!;
@@ -91,9 +91,13 @@ namespace Content.Server.GameTicking
 
             // Pick best job best on prefs.
             jobId ??= PickBestAvailableJob(character, station);
-            // If no job available, just bail out.
+            // If no job available, stay in lobby, or if no lobby spawn as observer
             if (jobId is null)
             {
+                if (!LobbyEnabled)
+                {
+                    MakeObserve(player);
+                }
                 _chatManager.DispatchServerMessage(player, Loc.GetString("game-ticker-player-no-jobs-available-when-joining"));
                 return;
             }
@@ -183,8 +187,6 @@ namespace Content.Server.GameTicking
             if (DummyTicker)
                 return;
 
-            if (!_playersInLobby.ContainsKey(player)) return;
-
             PlayerJoinGame(player);
 
             var name = GetPlayerProfile(player).Name;
@@ -212,7 +214,9 @@ namespace Content.Server.GameTicking
         private EntityUid SpawnPlayerMob(Job job, HumanoidCharacterProfile? profile, StationId station, bool lateJoin = true)
         {
             var coordinates = lateJoin ? GetLateJoinSpawnPoint(station) : GetJobSpawnPoint(job.Prototype.ID, station);
-            var entity = EntityManager.SpawnEntity(PlayerPrototypeName, coordinates);
+            var entity = EntityManager.SpawnEntity(
+                _prototypeManager.Index<SpeciesPrototype>(profile?.Species ?? SpeciesManager.DefaultSpecies).Prototype,
+                coordinates);
 
             if (job.StartingGear != null)
             {

@@ -1,4 +1,4 @@
-﻿<SS14Window xmlns="https://spacestation14.io"
+﻿<DefaultWindow xmlns="https://spacestation14.io"
             Title="{Loc 'ghost-target-window-title'}"
             MinSize="300 450"
             SetSize="300 450">
@@ -11,4 +11,4 @@
             <!-- Target buttons get added here by code -->
         </BoxContainer>
     </ScrollContainer>
-</SS14Window>
+</DefaultWindow>

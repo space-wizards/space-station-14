@@ -12,8 +12,8 @@ namespace Content.Shared.Movement.Components
     [NetworkedComponent, Friend(typeof(MovementSpeedModifierSystem))]
     public sealed class MovementSpeedModifierComponent : Component
     {
-        public const float DefaultBaseWalkSpeed = 4.0f;
-        public const float DefaultBaseSprintSpeed = 7.0f;
+        public const float DefaultBaseWalkSpeed = 3.0f;
+        public const float DefaultBaseSprintSpeed = 5.0f;
 
         public override string Name => "MovementSpeedModifier";
 

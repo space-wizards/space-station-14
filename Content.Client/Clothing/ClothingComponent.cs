@@ -18,6 +18,8 @@ namespace Content.Client.Clothing
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("femaleMask")]
         public FemaleClothingMask FemaleMask { get; } = FemaleClothingMask.UniformFull;
+
+        public string? InSlot;
     }
 
     public enum FemaleClothingMask : byte

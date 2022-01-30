@@ -50,6 +50,7 @@
   name: base hardsuit helmet with light
   components:
   - type: Sprite
+    netsync: true
     layers:
     - state: icon
     - state: icon-flash

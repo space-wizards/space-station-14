@@ -1,4 +1,4 @@
-<SS14Window xmlns="https://spacestation14.io"
+<DefaultWindow xmlns="https://spacestation14.io"
             Title="{Loc 'ghost-roles-window-title'}"
             MinSize="375 275">
     <Label Name="NoRolesMessage"
@@ -13,4 +13,4 @@
             <!-- Ghost role entries are added here by code -->
         </BoxContainer>
     </ScrollContainer>
-</SS14Window>
+</DefaultWindow>

@@ -8,12 +8,12 @@ namespace Content.Shared.Speech
         {
             base.Initialize();
 
-            SubscribeLocalEvent<SharedSpeechComponent, SpeakAttemptEvent>(OnSpeakAttempt);
+            SubscribeLocalEvent<SpeakAttemptEvent>(OnSpeakAttempt);
         }
 
-        private void OnSpeakAttempt(EntityUid uid, SharedSpeechComponent component, SpeakAttemptEvent args)
+        private void OnSpeakAttempt(SpeakAttemptEvent args)
         {
-            if (!component.Enabled)
+            if (!TryComp(args.Uid, out SharedSpeechComponent? speech) || !speech.Enabled)
                 args.Cancel();
         }
     }

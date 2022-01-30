@@ -61,7 +61,7 @@ namespace Content.Shared.Containers.ItemSlots
                     continue;
 
                 var item = EntityManager.SpawnEntity(slot.StartingItem, EntityManager.GetComponent<TransformComponent>(itemSlots.Owner).Coordinates);
-                slot.ContainerSlot.Insert(item);
+                slot.ContainerSlot?.Insert(item);
             }
         }
 
@@ -95,6 +95,9 @@ namespace Content.Shared.Containers.ItemSlots
         /// </summary>
         public void RemoveItemSlot(EntityUid uid, ItemSlot slot, ItemSlotsComponent? itemSlots = null)
         {
+            if (slot.ContainerSlot == null)
+                return;
+
             slot.ContainerSlot.Shutdown();
 
             // Don't log missing resolves. when an entity has all of its components removed, the ItemSlotsComponent may
@@ -102,7 +105,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (!Resolve(uid, ref itemSlots, logMissing: false))
                 return;
 
-            itemSlots.Slots.Remove(slot.ID);
+            itemSlots.Slots.Remove(slot.ContainerSlot.ID);
 
             if (itemSlots.Slots.Count == 0)
                 EntityManager.RemoveComponent(uid, itemSlots);
@@ -193,7 +196,7 @@ namespace Content.Shared.Containers.ItemSlots
         /// Useful for predicted interactions</param>
         private void Insert(EntityUid uid, ItemSlot slot, EntityUid item, EntityUid? user, bool excludeUserAudio = false)
         {
-            slot.ContainerSlot.Insert(item);
+            slot.ContainerSlot?.Insert(item);
             // ContainerSlot automatically raises a directed EntInsertedIntoContainerMessage
 
             PlaySound(uid, slot.InsertSound, slot.SoundOptions, excludeUserAudio ? user : null);
@@ -242,7 +245,7 @@ namespace Content.Shared.Containers.ItemSlots
                 return false;
             }
 
-            return slot.ContainerSlot.CanInsertIfEmpty(usedUid, EntityManager);
+            return slot.ContainerSlot?.CanInsertIfEmpty(usedUid, EntityManager) ?? false;
         }
 
         /// <summary>
@@ -305,7 +308,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (slot.Locked || slot.Item == null)
                 return false;
 
-            return slot.ContainerSlot.CanRemove(slot.Item.Value, EntityManager);
+            return slot.ContainerSlot?.CanRemove(slot.Item.Value, EntityManager) ?? false;
         }
 
         /// <summary>
@@ -316,7 +319,7 @@ namespace Content.Shared.Containers.ItemSlots
         /// Useful for predicted interactions</param>
         private void Eject(EntityUid uid, ItemSlot slot, EntityUid item, EntityUid? user, bool excludeUserAudio = false)
         {
-            slot.ContainerSlot.Remove(item);
+            slot.ContainerSlot?.Remove(item);
             // ContainerSlot automatically raises a directed EntRemovedFromContainerMessage
 
             PlaySound(uid, slot.EjectSound, slot.SoundOptions, excludeUserAudio ? user : null);
@@ -520,14 +523,17 @@ namespace Content.Shared.Containers.ItemSlots
             if (!itemSlots.Slots.TryGetValue(id, out var slot))
                 return;
 
-            SetLock(itemSlots, slot, locked);
+            SetLock(uid, slot, locked, itemSlots);
         }
 
         /// <summary>
         ///     Lock an item slot. This stops items from being inserted into or ejected from this slot.
         /// </summary>
-        public void SetLock(ItemSlotsComponent itemSlots, ItemSlot slot, bool locked)
+        public void SetLock(EntityUid uid, ItemSlot slot, bool locked, ItemSlotsComponent? itemSlots = null)
         {
+            if (!Resolve(uid, ref itemSlots))
+                return;
+
             slot.Locked = locked;
             itemSlots.Dirty();
         }
