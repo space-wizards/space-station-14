@@ -1,9 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: Singularity field generators should be easier to move around., type: Tweak}
-  id: 459
-  time: '2021-10-19T07:24:07.0000000+00:00'
 - author: Efruit
   changes:
   - {message: Show set pressure when examining gas pumps., type: Add}
@@ -2938,3 +2933,8 @@ Entries:
     type: Fix}
   id: 959
   time: '2022-01-30T15:26:08.0000000+00:00'
+- author: Schiene
+  changes:
+  - {message: Remastered the Dart shuttle, type: Add}
+  id: 960
+  time: '2022-01-30T16:01:49.0000000+00:00'
