@@ -53,7 +53,6 @@ public sealed class DoorSystem : SharedDoorSystem
             _airtightSystem.SetAirblocked(airtight, false);
         }
     }
-    // if the door state is not standard (i.e., door starts open), make sure collision & occlusion are properly set.
 
     // TODO AUDIO PREDICT Figure out a better way to handle sound and prediction. For now, this works well enough?
     //
