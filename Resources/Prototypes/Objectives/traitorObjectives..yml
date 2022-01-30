@@ -120,7 +120,7 @@
 - type: objective
   id: MagbootsStealObjective
   issuer: syndicate
-  difficultyOverride: 1.75
+  difficultyOverride: 2.75
   prob: 0.2
   requirements:
     - !type:TraitorRequirement {}
