@@ -11,15 +11,6 @@
 
 - type: entity
   parent: BaseSign
-  id: SignDirectionalBotany
-  name: botany sign
-  description: A direction sign, pointing out which way hydroponics is.
-  components:
-  - type: Sprite
-    state: direction_botany
-
-- type: entity
-  parent: BaseSign
   id: SignDirectionalBridge
   name: bridge sign
   description: A direction sign, pointing out which way the Bridge is.
@@ -80,6 +71,15 @@
   components:
   - type: Sprite
     state: direction_gravity
+
+- type: entity
+  parent: BaseSign
+  id: SignDirectionalHydro
+  name: hydro sign
+  description: A direction sign, pointing out which way hydroponics is.
+  components:
+  - type: Sprite
+    state: direction_hydro
 
 - type: entity
   parent: BaseSign
