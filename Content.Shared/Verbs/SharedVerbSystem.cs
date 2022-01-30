@@ -12,6 +12,7 @@ namespace Content.Shared.Verbs
     {
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
+        [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
 
         public override void Initialize()
         {
@@ -53,7 +54,7 @@ namespace Content.Shared.Verbs
                 canAccess = true;
             else if (EntityManager.EntityExists(target) && _interactionSystem.InRangeUnobstructed(user, target, ignoreInsideBlocker: true))
             {
-                if (user.IsInSameOrParentContainer(target))
+                if (ContainerSystem.IsInSameOrParentContainer(user, target))
                     canAccess = true;
                 else
                     // the item might be in a backpack that the user has open
