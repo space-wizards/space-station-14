@@ -448,16 +448,18 @@
         crit: kangaroo-boxing-dead
         dead: kangaroo-boxing-dead
   - type: UnarmedCombat
-      range: 1.5
-      arcwidth: 0
-      arc: fist
-      damage:
-        types:
-          Blunt: 15
+    range: 1.5
+    arcwidth: 0
+    arc: fist
+    damage:
+      types:
+        Blunt: 10
   - type: UtilityAI
     behaviorSets:
-    - Idle
     - UnarmedAttackHostiles
+  - type: AiFactionTag
+    factions:
+    - SimpleHostile
 
 - type: entity
   name: monkey
