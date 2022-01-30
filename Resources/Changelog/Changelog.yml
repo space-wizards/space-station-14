@@ -1,9 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {message: Nanotrasen has found the budget to install proper atmospherics., type: Add}
-  id: 451
-  time: '2021-10-16T23:11:06.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: Ad-dd-ded st-tutt-ter-ring-g-g, type: Add}
@@ -2930,3 +2925,11 @@ Entries:
   - {message: fixed the incediary shotgun shells being a reskin., type: Fix}
   id: 951
   time: '2022-01-30T13:44:45.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Removed the objective to stay alive., type: Remove}
+  - {message: Lowered max objective difficulty., type: Tweak}
+  - {message: 'Steal objective probability reduced by 1/3, and die objective probability
+      reduced by 9/10.', type: Tweak}
+  id: 952
+  time: '2022-01-30T14:19:27.0000000+00:00'
