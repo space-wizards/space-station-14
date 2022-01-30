@@ -308,7 +308,7 @@ namespace Content.Server.Doors.Components
                         BoltLightsVisible = !_boltLightsWirePulsed;
                         break;
                     case Wires.Timing:
-                        // This is permanent, until the wire gets cut & mended. Is this intentional?
+                        // This is permanent, until the wire gets cut & mended.
                         AutoCloseDelayModifier = 0.5f; 
                         EntitySystem.Get<AirlockSystem>().UpdateAutoClose(Owner, this);
                         break;

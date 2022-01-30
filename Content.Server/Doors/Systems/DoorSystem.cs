@@ -194,7 +194,7 @@ public sealed class DoorSystem : SharedDoorSystem
         if (user == null || AccessType == AccessTypes.AllowAll)
             return true;
 
-        if (!Resolve(uid, ref access))
+        if (!Resolve(uid, ref access, false))
             return true;
 
         var isExternal = access.AccessLists.Any(list => list.Contains("External"));
