@@ -21,9 +21,8 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Fluids.EntitySystems;
 
-public class SpraySystem : EntitySystem
+public sealed class SpraySystem : EntitySystem
 {
-    [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly VaporSystem _vaporSystem = default!;
@@ -42,8 +41,6 @@ public class SpraySystem : EntitySystem
             return;
 
         args.Handled = true;
-        if (!_actionBlockerSystem.CanInteract(args.User))
-            return;
 
         if (!_solutionContainerSystem.TryGetSolution(uid, SprayComponent.SolutionName, out var solution))
             return;
