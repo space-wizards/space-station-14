@@ -21,8 +21,11 @@ namespace Content.Server.VendingMachines
         public string PackPrototypeId = string.Empty;
         public string SpriteName = "";
         public bool Broken;
+        /// <summary>
+        /// When true, will forcefully throw any object it dispenses
+        /// </summary>
         [DataField("speedLimiter")]
-        public bool SpeedLimiter = true;
+        public bool CanShoot = false;
         [DataField("soundVend")]
         // Grabbed from: https://github.com/discordia-space/CEV-Eris/blob/f702afa271136d093ddeb415423240a2ceb212f0/sound/machines/vending_drop.ogg
         public SoundSpecifier SoundVend = new SoundPathSpecifier("/Audio/Machines/machine_vend.ogg");

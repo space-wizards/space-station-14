@@ -240,7 +240,7 @@ namespace Content.Server.VendingMachines.systems
         {
             if (IsAuthorized(uid, sender, component))
             {
-                TryEjectVendorItem(uid, itemId, !component.SpeedLimiter, component);
+                TryEjectVendorItem(uid, itemId, component.CanShoot, component);
             }
             return;
         }
