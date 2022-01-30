@@ -245,6 +245,18 @@
     Grog: 2
 
 - type: reaction
+  id: IceCream
+  reactants:
+    Cream:
+      amount: 1
+    Ice:
+      amount: 1
+    Sugar:
+      amount: 1
+  products:
+    IceCream: 3
+
+- type: reaction
   id: IcedCoffee
   reactants:
     Coffee:
@@ -411,14 +423,14 @@
     Moonshine: 3
 
 - type: reaction
-  id: NukaCola
+  id: NuclearCola
   reactants:
     Cola:
       amount: 5
     Uranium:
       amount: 1
   products:
-    NukaCola: 5
+    NuclearCola: 5
 
 - type: reaction
   id: Patron
@@ -439,6 +451,16 @@
       amount: 1
   products:
     Rewriter: 2
+
+- type: reaction
+  id: RootBeerFloat
+  reactants:
+    RootBeer:
+      amount: 2
+    IceCream:
+      amount: 1
+  products:
+    RootBeerFloat: 3
 
 - type: reaction
   id: ScrewdriverCocktail

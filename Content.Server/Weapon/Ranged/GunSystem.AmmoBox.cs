@@ -54,7 +54,7 @@ public sealed partial class GunSystem
     {
         if (args.Handled) return;
 
-        if (EntityManager.TryGetComponent(args.Used, out AmmoComponent? ammoComponent))
+        if (TryComp(args.Used, out AmmoComponent? ammoComponent))
         {
             if (TryInsertAmmo(args.User, args.Used, component, ammoComponent))
             {
@@ -64,18 +64,18 @@ public sealed partial class GunSystem
             return;
         }
 
-        if (!EntityManager.TryGetComponent(args.Used, out RangedMagazineComponent? rangedMagazine)) return;
+        if (!TryComp(args.Used, out RangedMagazineComponent? rangedMagazine)) return;
 
         for (var i = 0; i < Math.Max(10, rangedMagazine.ShotsLeft); i++)
         {
-            if (rangedMagazine.TakeAmmo() is not {Valid: true} ammo)
+            if (TakeAmmo(rangedMagazine) is not {Valid: true} ammo)
             {
                 continue;
             }
 
             if (!TryInsertAmmo(args.User, ammo, component))
             {
-                rangedMagazine.TryInsertAmmo(args.User, ammo);
+                TryInsertAmmo(args.User, ammo, rangedMagazine);
                 args.Handled = true;
                 return;
             }
@@ -135,13 +135,13 @@ public sealed partial class GunSystem
             ejectAmmo.Add(ammo);
         }
 
-        ServerRangedBarrelComponent.EjectCasings(ejectAmmo);
+        EjectCasings(ejectAmmo);
         UpdateAmmoBoxAppearance(ammoBox.Owner, ammoBox);
     }
 
     private bool TryUse(EntityUid user, AmmoBoxComponent ammoBox)
     {
-        if (!EntityManager.TryGetComponent(user, out HandsComponent? handsComponent))
+        if (!TryComp(user, out HandsComponent? handsComponent))
         {
             return false;
         }
@@ -151,7 +151,7 @@ public sealed partial class GunSystem
             return false;
         }
 
-        if (EntityManager.TryGetComponent(ammo, out ItemComponent? item))
+        if (TryComp(ammo, out ItemComponent? item))
         {
             if (!handsComponent.CanPutInHand(item))
             {
