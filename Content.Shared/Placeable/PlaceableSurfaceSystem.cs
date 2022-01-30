@@ -1,8 +1,8 @@
+using Content.Shared.Construction;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 
 namespace Content.Shared.Placeable
@@ -13,7 +13,7 @@ namespace Content.Shared.Placeable
         {
             base.Initialize();
 
-            SubscribeLocalEvent<PlaceableSurfaceComponent, InteractUsingEvent>(OnInteractUsing);
+            SubscribeLocalEvent<PlaceableSurfaceComponent, InteractUsingEvent>(OnInteractUsing, after:new[] {typeof(SharedConstructionSystem)});
             SubscribeLocalEvent<PlaceableSurfaceComponent, ComponentHandleState>(OnHandleState);
         }
 
