@@ -292,11 +292,17 @@ namespace Content.Shared.Interaction
             Ignored? predicate = null,
             bool ignoreInsideBlocker = false)
         {
-            if (range > 0f && !origin.InRange(other, range)) return false;
+            // Have to be on same map regardless.
+            if (other.MapId != origin.MapId) return false;
 
+            // Uhh this does mean we could raycast infinity distance so may need to limit it.
             var dir = other.Position - origin.Position;
+            var lengthSquared = dir.LengthSquared;
 
-            if (dir.LengthSquared.Equals(0f)) return true;
+            if (lengthSquared.Equals(0f)) return true;
+
+            // If range specified also check it
+            if (range > 0f && lengthSquared > range * range) return false;
 
             predicate ??= _ => false;
 
