@@ -11,21 +11,12 @@
 
 - type: entity
   parent: BaseSign
-  id: SignDirectionalSec
-  name: sec sign
-  description: A direction sign, pointing out which way Security is.
+  id: SignDirectionalBotany
+  name: botany sign
+  description: A direction sign, pointing out which way hydroponics is.
   components:
   - type: Sprite
-    state: direction_sec
-
-- type: entity
-  parent: BaseSign
-  id: SignDirectionalEvac
-  name: evac sign
-  description: A direction sign, pointing out which way evac is.
-  components:
-  - type: Sprite
-    state: direction_evac
+    state: direction_botany
 
 - type: entity
   parent: BaseSign
@@ -38,12 +29,30 @@
 
 - type: entity
   parent: BaseSign
-  id: SignDirectionalMed
-  name: medical sign
-  description: A direction sign, pointing out which way the Medical department is.
+  id: SignDirectionalBrig
+  name: brig sign
+  description: A direction sign, pointing out which way the Brig is.
   components:
   - type: Sprite
-    state: direction_med
+    state: direction_brig
+
+- type: entity
+  parent: BaseSign
+  id: SignDirectionalChapel
+  name: chapel sign
+  description: A direction sign, pointing out which way the Chapel is.
+  components:
+  - type: Sprite
+    state: direction_chapel
+
+- type: entity
+  parent: BaseSign
+  id: SignDirectionalDorms
+  name: dorms sign
+  description: A direction sign, pointing out which way the Dorms are.
+  components:
+  - type: Sprite
+    state: direction_dorms
 
 - type: entity
   parent: BaseSign
@@ -53,6 +62,43 @@
   components:
   - type: Sprite
     state: direction_eng
+    
+- type: entity
+  parent: BaseSign
+  id: SignDirectionalEvac
+  name: evac sign
+  description: A direction sign, pointing out which way evac is.
+  components:
+  - type: Sprite
+    state: direction_evac
+
+- type: entity
+  parent: BaseSign
+  id: SignDirectionalGravity
+  name: gravity sign
+  description: A direction sign, pointing out which way the gravity generator is.
+  components:
+  - type: Sprite
+    state: direction_gravity
+
+- type: entity
+  parent: BaseSign
+  id: SignDirectionalMed
+  name: medical sign
+  description: A direction sign, pointing out which way the Medical department is.
+  components:
+  - type: Sprite
+    state: direction_med
+
+- type: entity
+  parent: BaseSign
+  id: SignDirectionalSalvage
+  name: salvage sign
+  description: A direction sign, pointing out which way the Salvage department is.
+  components:
+  - type: Sprite
+    state: direction_salvage
+
 
 - type: entity
   parent: BaseSign
@@ -65,12 +111,39 @@
 
 - type: entity
   parent: BaseSign
+  id: SignDirectionalSec
+  name: sec sign
+  description: A direction sign, pointing out which way Security is.
+  components:
+  - type: Sprite
+    state: direction_sec
+
+- type: entity
+  parent: BaseSign
+  id: SignDirectionalSolar
+  name: solars sign
+  description: A direction sign, pointing out which way solars are.
+  components:
+  - type: Sprite
+    state: direction_solars
+
+- type: entity
+  parent: BaseSign
   id: SignDirectionalSupply
   name: supply sign
   description: A direction sign, pointing to some supplies.
   components:
   - type: Sprite
     state: direction_supply
+    
+- type: entity
+  parent: BaseSign
+  id: SignDirectionalWash
+  name: washroom sign
+  description: A direction sign, pointing to the way to a washroom.
+  components:
+  - type: Sprite
+    state: direction_wash
 
 # Regular Signs
 # Descriptions intentionally left empty.
