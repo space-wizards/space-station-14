@@ -99,12 +99,13 @@ namespace Content.Server.Spawners.EntitySystems
 
             if (Deleted(component.Owner)) return;
 
-            var xOffset = _robustRandom.NextFloat(-1, 1);
-            var yOffset = _robustRandom.NextFloat(-1, 1);
+            var offset = component.Offset;
+            var xOffset = _robustRandom.NextFloat(-offset, offset);
+            var yOffset = _robustRandom.NextFloat(-offset, offset);
 
             var coordinates = Transform(component.Owner).Coordinates.Offset(new Vector2(xOffset, yOffset));
 
-            var entity = EntityManager.SpawnEntity(_robustRandom.Pick(component.Prototypes), coordinates);
+            EntityManager.SpawnEntity(_robustRandom.Pick(component.Prototypes), coordinates);
         }
     }
 }
