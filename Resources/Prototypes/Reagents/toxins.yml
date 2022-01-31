@@ -1,6 +1,7 @@
 ﻿- type: reagent
   id: Toxin
   name: toxin
+  group: Toxins
   desc: A Toxic chemical.
   color: "#cf3600"
   physicalDesc: opaque
@@ -20,6 +21,7 @@
 - type: reagent
   id: PolytrinicAcid
   name: polytrinic acid
+  group: Toxins
   desc: An extremely corrosive chemical substance. The slightest touch of it will melt off most masks and headgear, and it deals extreme damage to anyone who comes directly into contact with it.
   physicalDesc: strong-smelling
   color: "#a1000b"
@@ -60,6 +62,7 @@
 - type: reagent
   id: FluorosulfuricAcid
   name: fluorosulfuric acid
+  group: Toxins
   desc: An extremely corrosive chemical substance.
   physicalDesc: strong-smelling
   color: "#5050ff"
@@ -93,6 +96,7 @@
 - type: reagent
   id: SulfuricAcid
   name: sulfuric acid
+  group: Toxins
   desc: A highly corrosive, oily, colorless liquid.
   physicalDesc: oily
   color: "#BF8C00"
@@ -134,6 +138,7 @@
 - type: reagent
   id: Plasma
   name: plasma
+  group: Toxins
   desc: Funky, space-magic pixie dust. You probably shouldn't eat this, but we both know you will anyways.
   physicalDesc: gaseous
   color: "#7e009e"
@@ -161,6 +166,7 @@
 - type: reagent
   id: UnstableMutagen
   name: unstable mutagen
+  group: Toxins
   desc: Causes mutations when injected into living people or plants. High doses may be lethal, especially in humans.
   physicalDesc: glowing
   color: "#00ff5f"
@@ -180,6 +186,7 @@
 - type: reagent
   id: HeartbreakerToxin
   name: heartbreaker toxin
+  group: Toxins
   desc: A hallucinogenic compound that is illegal under space law. A synthetic drug derived from Mindbreaker toxin, it blocks some neurological signals to the respiratory system which causes choking.
   physicalDesc: strong-smelling
   color: "#5f959c"
@@ -197,6 +204,7 @@
 - type: reagent
   id: Lexorin
   name: lexorin
+  group: Toxins
   desc: Temporarily stops respiration and causes tissue damage. Large doses are fatal, and will cause people to pass out very quickly. Dexalin and Dexalin Plus will both remove it, however.
   physicalDesc: pungent
   color: "#6b0007"
@@ -211,6 +219,7 @@
 - type: reagent
   id: MindbreakerToxin
   name: mindbreaker toxin
+  group: Toxins
   desc: A potent hallucinogenic compound that is illegal under space law. Formerly known as LSD.
   physicalDesc: opaque
   color: "#77b58e"
@@ -222,6 +231,7 @@
 - type: reagent
   id: Soporific
   name: soporific (sleep-toxin)
+  group: Toxins
   desc: A less powerful sedative that takes a while to work, intended to help insomniacs and patients that are too aggressive to be treated normally. Takes roughly 50 seconds to make the patient fall asleep. Is safe in large quantities. Can be counteracted with Anti-Toxin.
   physicalDesc: acrid
   color: "#215263"
@@ -230,6 +240,7 @@
 - type: reagent
   id: Histamine
   name: histamine
+  group: Toxins
   desc: Histamine's effects become more dangerous depending on the dosage amount. They range from mildly annoying to incredibly lethal.
   physicalDesc: abrasive
   color: "#FA6464"
@@ -266,6 +277,7 @@
 - type: reagent
   id: Theobromine
   name: theobromine
+  group: Toxins
   desc: Theobromine is a bitter alkaloid of the cacao plant found in chocolate, and some other foods.
   physicalDesc: grainy
   color: "#f5f5f5"

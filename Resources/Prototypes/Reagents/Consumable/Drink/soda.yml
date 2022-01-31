@@ -39,6 +39,15 @@
   color: "#ae94a6"
 
 - type: reagent
+  id: IceCream
+  name: ice cream
+  parent: BaseSoda
+  desc: It was either this or the microwave, and nobody wants ice cream soup!
+  physicalDesc: creamy
+  color: "#fffbd6"
+  spritePath: icecreamglass.rsi
+
+- type: reagent
   id: LemonLime
   name: lemon-lime
   parent: BaseSoda
@@ -54,6 +63,24 @@
   desc: The only drink with the PWR that true gamers crave.
   physicalDesc: fizzy
   color: "#9385bf"
+
+- type: reagent
+  id: RootBeer
+  name: root beer
+  parent: BaseSoda
+  desc: A very sweet, carbonated drink reminiscent of sarsparilla. Goes well with ice cream.
+  physicalDesc: fizzy
+  color: "#381c07"
+  spritePath: rootbeerglass.rsi
+
+- type: reagent
+  id: RootBeerFloat
+  name: root beer float
+  parent: BaseSoda
+  desc: Root beer, but now with ice cream on top. It truly is the magnum opus of Canadian summertime drinks.
+  physicalDesc: fizzy and creamy
+  color: "#4f361f"
+  spritePath: rootbeerfloatglass.rsi
 
 - type: reagent
   id: SpaceMountainWind

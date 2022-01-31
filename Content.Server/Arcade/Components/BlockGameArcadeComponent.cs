@@ -56,7 +56,10 @@ namespace Content.Server.Arcade.Components
                 return;
 
             UserInterface?.Toggle(actor.PlayerSession);
-            RegisterPlayerSession(actor.PlayerSession);
+            if (UserInterface?.SessionHasOpen(actor.PlayerSession) == true)
+            {
+                RegisterPlayerSession(actor.PlayerSession);
+            }
         }
 
         private void RegisterPlayerSession(IPlayerSession session)

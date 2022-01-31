@@ -195,6 +195,11 @@ namespace Content.Server.Shuttles.EntitySystems
                 return;
             }
 
+            if (TryComp<SharedEyeComponent>(entity, out var eye))
+            {
+                eye.Zoom = component.Zoom;
+            }
+
             component.SubscribedPilots.Add(pilotComponent);
 
             _alertsSystem.ShowAlert(entity, AlertType.PilotingShuttle);
@@ -213,6 +218,11 @@ namespace Content.Server.Shuttles.EntitySystems
 
             pilotComponent.Console = null;
             pilotComponent.Position = null;
+
+            if (TryComp<SharedEyeComponent>(pilotComponent.Owner, out var eye))
+            {
+                eye.Zoom = new(1.0f, 1.0f);
+            }
 
             if (!helmsman.SubscribedPilots.Remove(pilotComponent)) return;
 
