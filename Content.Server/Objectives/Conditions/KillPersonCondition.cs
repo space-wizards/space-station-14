@@ -22,8 +22,6 @@ namespace Content.Server.Objectives.Conditions
                 if (Target == null)
                     return Loc.GetString("objective-condition-kill-person-title", ("targetName", targetName), ("job", jobName));
 
-                var targetJob = Target.CurrentJob;
-
                 if (Target.CharacterName != null)
                     targetName = Target.CharacterName;
                 else if (Target.OwnedEntity is {Valid: true} owned)
