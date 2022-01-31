@@ -43,7 +43,7 @@ namespace Content.Client.Fluids
 
         public override void OnChangeData(AppearanceComponent component)
         {
-            base.OnChangeData(component); // runs OnChangeData from the base class (AppearanceVisualizer)
+            base.OnChangeData(component);
 
             var entities = IoCManager.Resolve<IEntityManager>();
             if (component.TryGetData<float>(PuddleVisuals.VolumeScale, out var volumeScale) &&

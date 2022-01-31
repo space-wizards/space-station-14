@@ -80,7 +80,7 @@ namespace Content.Server.Fluids.Components
         /// <summary>
         ///     To leave behind a wet floor, the mop will be unable to take from puddles with a volume less than this amount.
         /// </summary>
-        [DataField("MopLowerLimit")]
+        [DataField("mopLowerLimit")]
         public FixedPoint2 MopLowerLimit { get; } = FixedPoint2.New(5);
 
         [DataField("pickup_sound")]
