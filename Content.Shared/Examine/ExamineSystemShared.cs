@@ -30,6 +30,9 @@ namespace Content.Shared.Examine
 
     public abstract class ExamineSystemShared : EntitySystem
     {
+        [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+        [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+
         /// <summary>
         ///     Examine range to use when the examiner is in critical condition.
         /// </summary>
@@ -54,11 +57,17 @@ namespace Content.Shared.Examine
             if (EntityManager.TryGetComponent(examiner, out MobStateComponent mobState) && mobState.IsIncapacitated())
                 return false;
 
-            if (entity.TryGetContainerMan(out var man) && man.Owner == examiner)
+            if (!_interactionSystem.InRangeUnobstructed(examiner, entity, ExamineDetailsRange, ignoreInsideBlocker: true))
+                return false;
+
+            // Is the target hidden in a opaque locker or something? Currently this check allows players to examine
+            // their organs, if they can somehow target them. Really this should be with userSeeInsideSelf: false, and a
+            // separate check for if the item is in their inventory or hands.
+            if (_containerSystem.IsInSameOrTransparentContainer(examiner, entity, userSeeInsideSelf: true))
                 return true;
 
-            return examiner.InRangeUnobstructed(entity, ExamineDetailsRange, ignoreInsideBlocker: true) &&
-                   examiner.IsInSameOrNoContainer(entity);
+            // is it inside of an open storage (e.g., an open backpack)?
+            return _interactionSystem.CanAccessViaStorage(examiner, entity);
         }
 
         [Pure]
