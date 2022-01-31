@@ -19,7 +19,10 @@
   - type: Sprite
     layers:
     - state: door_remotebase
-    - state: door_remotecommand
+    - state: door_remotelightscolour
+      color: "#e6e600"
+    - state: door_remotescreencolour
+      color: "#9f9f00"
   - type: Access
     tags: 
     - Captain
@@ -34,7 +37,10 @@
   - type: Sprite
     layers:
     - state: door_remotebase
-    - state: door_remotesecurity
+    - state: door_remotelightscolour
+      color: "#cb0000"
+    - state: door_remotescreencolour
+      color: "#830000"
   - type: Access
     tags:
     - HeadOfSecurity
@@ -48,7 +54,10 @@
   - type: Sprite
     layers:
     - state: door_remotebase
-    - state: door_remoteservice
+    - state: door_remotelightscolour
+      color: "#58c800"
+    - state: door_remotescreencolour
+      color: "#3a7231"
   - type: Access
     tags:
     - HeadOfPersonnel
@@ -67,7 +76,10 @@
   - type: Sprite
     layers:
     - state: door_remotebase
-    - state: door_remotescience
+    - state: door_remotelightscolour
+      color: "#a53aaa"
+    - state: door_remotescreencolour
+      color: "#652368"
   - type: Access
     tags:
     - ResearchDirector
@@ -81,7 +93,10 @@
   - type: Sprite
     layers:
     - state: door_remotebase
-    - state: door_remotecargo
+    - state: door_remotelightscolour
+      color: "#b18644"
+    - state: door_remotescreencolour
+      color: "#5b4523"
   - type: Access
     tags:
     - Cargo
@@ -95,7 +110,10 @@
   - type: Sprite
     layers:
     - state: door_remotebase
-    - state: door_remotemedical
+    - state: door_remotelightscolour
+      color: "#68aed6"
+    - state: door_remotescreencolour
+      color: "#325f7a"
   - type: Access
     tags:
     - Medical
@@ -109,7 +127,10 @@
   - type: Sprite
     layers:
     - state: door_remotebase
-    - state: door_remoteengineering
+    - state: door_remotelightscolour
+      color: "#ffa62b"
+    - state: door_remotescreencolour
+      color: "#bc5b00"
   - type: Access
     tags:
     - ChiefEngineer

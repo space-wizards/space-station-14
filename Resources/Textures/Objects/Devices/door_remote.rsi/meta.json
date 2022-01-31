@@ -8,28 +8,13 @@
   },
   "states": [
     {
-      "name": "door_remotecommand"
-    },
-    {
       "name": "door_remotebase"
     },
     {
-      "name": "door_remotesecurity"
+      "name": "door_remotelightscolour"
     },
     {
-      "name": "door_remoteservice"
-    },
-    {
-      "name": "door_remotemedical"
-    },
-    {
-      "name": "door_remoteengineering"
-    },
-    {
-      "name": "door_remotecargo"
-    },
-    {
-      "name": "door_remotescience"
+      "name": "door_remotescreencolour"
     }
   ]
 }
