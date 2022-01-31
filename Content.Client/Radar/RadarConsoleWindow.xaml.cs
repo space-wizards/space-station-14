@@ -34,13 +34,13 @@ public partial class RadarConsoleWindow : DefaultWindow, IComputerWindow<RadarCo
 
 public sealed class RadarControl : Control
 {
-    private const int RadarArea = 512;
+    private float _radarArea = 256f;
 
-    private const int RadarCircleRadius = (RadarArea - 8) / 2;
+    private float RadarCircleRadius => MathF.Max(0, _radarArea - 8) / 2;
 
-    private RadarConsoleBoundInterfaceState _lastState = new RadarConsoleBoundInterfaceState(new RadarObjectData[] { });
+    private RadarConsoleBoundInterfaceState _lastState = new(256f, Array.Empty<RadarObjectData>());
 
-    private int SizeFull => (int) (RadarArea * UIScale);
+    private float SizeFull => (int) (_radarArea * UIScale);
 
     public int RadiusCircle => (int) (RadarCircleRadius * UIScale);
 
@@ -51,6 +51,12 @@ public sealed class RadarControl : Control
 
     public void UpdateState(RadarConsoleBoundInterfaceState ls)
     {
+        if (!_radarArea.Equals(ls.Range * 2))
+        {
+            _radarArea = ls.Range * 2;
+            MinSize = (SizeFull, SizeFull);
+        }
+
         _lastState = ls;
     }
 

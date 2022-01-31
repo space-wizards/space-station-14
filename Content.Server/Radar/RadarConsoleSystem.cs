@@ -62,7 +62,7 @@ public class RadarConsoleSystem : EntitySystem
                 objects.Add(new RadarObjectData {Color = Color.Aqua, Position = pos, Radius = (float)rad});
             }
 
-            s.SetState(new RadarConsoleBoundInterfaceState(objects.ToArray()));
+            s.SetState(new RadarConsoleBoundInterfaceState(component.Range, objects.ToArray()));
         }
     }
 }

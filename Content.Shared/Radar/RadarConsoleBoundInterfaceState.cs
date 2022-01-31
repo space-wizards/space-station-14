@@ -8,10 +8,12 @@ namespace Content.Shared.Radar;
 [Serializable, NetSerializable]
 public sealed class RadarConsoleBoundInterfaceState : BoundUserInterfaceState
 {
+    public float Range;
     public RadarObjectData[] Objects;
 
-    public RadarConsoleBoundInterfaceState(RadarObjectData[] objects)
+    public RadarConsoleBoundInterfaceState(float range, RadarObjectData[] objects)
     {
+        Range = range;
         Objects = objects;
     }
 }
