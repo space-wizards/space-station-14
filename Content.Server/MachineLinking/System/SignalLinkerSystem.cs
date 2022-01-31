@@ -256,7 +256,7 @@ namespace Content.Server.MachineLinking.System
                         new SignalReceivedEvent(receiverPort, link.Transmitterport.Signal));
 
                 entity.PopupMessageCursor(Loc.GetString("signal-linker-component-linked-port", ("port", receiverPort),
-                    ("machine", receiver)));
+                    ("machine", receiver.Owner)));
             }
         }
 

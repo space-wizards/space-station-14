@@ -1,6 +1,7 @@
 ﻿- type: entity
   id: TableFrame
-  parent: TableBase
+  # BaseStructure and not BaseTable, since these shouldn't be climbable/placeable.
+  parent: BaseStructure
   name: table frame
   description: Pieces of metal that make the frame of a table.
   components:
@@ -8,9 +9,21 @@
     sprite: Structures/Furniture/Tables/frame.rsi
   - type: Icon
     sprite: Structures/Furniture/Tables/frame.rsi
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.45,-0.45,0.45,0.45"
+      mass: 50
+      mask:
+      - Impassable
+      - VaultImpassable
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
+  - type: IconSmooth
+    key: state
+    base: state_
   - type: Destructible
     thresholds:
     - trigger:
@@ -28,7 +41,7 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Construction
-    graph: table
+    graph: Table
     node: TableFrame
 
 - type: entity
@@ -61,7 +74,7 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Construction
-    graph: table
+    graph: Table
     node: Table
 
 - type: entity
@@ -91,7 +104,7 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Construction
-    graph: table
+    graph: Table
     node: TableReinforced
 
 - type: entity
@@ -104,6 +117,13 @@
     sprite: Structures/Furniture/Tables/glass.rsi
   - type: Icon
     sprite: Structures/Furniture/Tables/glass.rsi
+  - type: GlassTable
+    climberDamage:
+      types:
+        Slash: 15
+    tableDamage:
+      types:
+        Blunt: 25
   - type: Destructible
     thresholds:
     - trigger:
@@ -118,10 +138,12 @@
           ShardGlass:
             min: 1
             max: 1
+      - !type:ChangeConstructionNodeBehavior
+        node: TableFrame
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Construction
-    graph: table
+    graph: Table
     node: TableGlass
 
 - type: entity
@@ -134,6 +156,13 @@
     sprite: Structures/Furniture/Tables/r_glass.rsi
   - type: Icon
     sprite: Structures/Furniture/Tables/r_glass.rsi
+  - type: GlassTable
+    climberDamage:
+      types:
+        Slash: 25
+    tableDamage:
+      types:
+        Blunt: 40
   - type: Destructible
     thresholds:
     - trigger:
@@ -143,6 +172,8 @@
       - !type:PlaySoundBehavior
         sound:
           path: /Audio/Effects/glass_break2.ogg
+      - !type:ChangeConstructionNodeBehavior
+        node: TableFrame
       - !type:SpawnEntitiesBehavior
         spawn:
           ShardGlass:
@@ -154,7 +185,7 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Construction
-    graph: table
+    graph: Table
     node: TableReinforcedGlass
 
 - type: entity
@@ -167,15 +198,24 @@
     sprite: Structures/Furniture/Tables/plasma.rsi
   - type: Icon
     sprite: Structures/Furniture/Tables/plasma.rsi
+  - type: GlassTable
+    climberDamage:
+      types:
+        Slash: 30
+    tableDamage:
+      types:
+        Blunt: 100
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 20
+        damage: 50
       behaviors:
       - !type:PlaySoundBehavior
         sound:
           path: /Audio/Effects/glass_break2.ogg
+      - !type:ChangeConstructionNodeBehavior
+        node: TableFrame
       - !type:SpawnEntitiesBehavior
         spawn:
           ShardGlassPlasma:
@@ -187,7 +227,7 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Construction
-    graph: table
+    graph: Table
     node: TablePlasmaGlass
 
 - type: entity
@@ -219,7 +259,7 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Construction
-    graph: table
+    graph: Table
     node: TableWood
   - type: Tag
     tags:
@@ -257,7 +297,7 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Construction
-    graph: table
+    graph: Table
     node: TableCarpet
   - type: Tag
     tags:

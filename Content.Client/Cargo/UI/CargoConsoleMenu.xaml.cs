@@ -19,7 +19,7 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 namespace Content.Client.Cargo.UI
 {
     [GenerateTypedNameReferences]
-    public partial class CargoConsoleMenu : SS14Window
+    public partial class CargoConsoleMenu : DefaultWindow
     {
         public CargoConsoleBoundUserInterface Owner { get; private set; }
 

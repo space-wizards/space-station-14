@@ -23,7 +23,7 @@ namespace Content.Client.Inventory
         public Control BottomRightButtons = default!;
         public Control TopQuickButtons = default!;
 
-        public SS14Window InventoryWindow = default!;
+        public DefaultWindow InventoryWindow = default!;
 
         public readonly Dictionary<string, List<ItemSlotButton>> SlotButtons = new();
 

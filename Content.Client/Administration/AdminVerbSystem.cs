@@ -12,7 +12,6 @@ namespace Content.Client.Verbs
     class AdminVerbSystem : EntitySystem
     {
         [Dependency] private readonly IClientConGroupController _clientConGroupController = default!;
-        [Dependency] private readonly IViewVariablesManager _viewVariablesManager = default!;
         [Dependency] private readonly IClientConsoleHost _clientConsoleHost = default!;
 
         public override void Initialize()

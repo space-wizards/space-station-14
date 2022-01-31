@@ -37,6 +37,9 @@
   - type: Tag
     tags:
     - Trash
+  - type: ItemCooldown
+  - type: UseDelay
+    delay: 1.0
 
 - type: entity
   parent: DrinkCanBaseFull
@@ -113,6 +116,24 @@
     sprite: Objects/Consumable/Drinks/purple_can.rsi
   - type: Item
     sprite: Objects/Consumable/Drinks/purple_can.rsi
+
+- type: entity
+  parent: DrinkCanBaseFull
+  id: DrinkRootBeerCan
+  name: root beer can
+  description: Some of that tasty root beer goodness, now in a portable can!
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: RootBeer
+          Quantity: 30
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/rootbeer.rsi
+  - type: Item
+    sprite: Objects/Consumable/Drinks/rootbeer.rsi
 
 - type: entity
   parent: DrinkGlassBase
