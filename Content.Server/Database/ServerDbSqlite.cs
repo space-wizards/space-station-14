@@ -97,7 +97,7 @@ namespace Content.Server.Database
         }
 
         private static bool BanMatches(
-            SqliteServerBan ban,
+            ServerBan ban,
             IPAddress? address,
             NetUserId? userId,
             ImmutableArray<byte>? hwId)
@@ -124,7 +124,7 @@ namespace Content.Server.Database
         {
             await using var db = await GetDbImpl();
 
-            db.SqliteDbContext.Ban.Add(new SqliteServerBan
+            db.SqliteDbContext.Ban.Add(new ServerBan
             {
                 Address = serverBan.Address,
                 Reason = serverBan.Reason,
@@ -142,7 +142,7 @@ namespace Content.Server.Database
         {
             await using var db = await GetDbImpl();
 
-            db.SqliteDbContext.Unban.Add(new SqliteServerUnban
+            db.SqliteDbContext.Unban.Add(new ServerUnban
             {
                 BanId = serverUnban.BanId,
                 UnbanningAdmin = serverUnban.UnbanningAdmin?.UserId,
@@ -163,7 +163,7 @@ namespace Content.Server.Database
                 record.LastSeenHWId?.ToImmutableArray());
         }
 
-        private static ServerBanDef? ConvertBan(SqliteServerBan? ban)
+        private static ServerBanDef? ConvertBan(ServerBan? ban)
         {
             if (ban == null)
             {
@@ -196,7 +196,7 @@ namespace Content.Server.Database
                 unban);
         }
 
-        private static ServerUnbanDef? ConvertUnban(SqliteServerUnban? unban)
+        private static ServerUnbanDef? ConvertUnban(ServerUnban? unban)
         {
             if (unban == null)
             {
@@ -220,9 +220,9 @@ namespace Content.Server.Database
         {
             await using var db = await GetDbImpl();
 
-            db.SqliteDbContext.ConnectionLog.Add(new SqliteConnectionLog
+            db.SqliteDbContext.ConnectionLog.Add(new ConnectionLog
             {
-                Address = address.ToString(),
+                Address = address,
                 Time = DateTime.UtcNow,
                 UserId = userId.UserId,
                 UserName = userName,
@@ -298,7 +298,7 @@ namespace Content.Server.Database
                     entity.Name = name;
                     logEntities.Add(entity);
                 }
-                
+
                 foreach (var player in log.Players)
                 {
                     player.LogId = log.Id;
