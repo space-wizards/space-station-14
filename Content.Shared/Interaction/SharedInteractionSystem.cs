@@ -1,17 +1,14 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CombatMode;
 using Content.Shared.Database;
-using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Input;
 using Content.Shared.Interaction.Helpers;
-using Content.Shared.Inventory;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Throwing;
@@ -54,6 +51,7 @@ namespace Content.Shared.Interaction
 
         public override void Initialize()
         {
+            SubscribeLocalEvent<BoundUserInterfaceMessageAttempt>(OnBoundInterfaceInteractAttempt);
             SubscribeAllEvent<InteractInventorySlotEvent>(HandleInteractInventorySlotEvent);
 
             CommandBinds.Builder
@@ -66,6 +64,30 @@ namespace Content.Shared.Interaction
         {
             CommandBinds.Unregister<SharedInteractionSystem>();
             base.Shutdown();
+        }
+
+        /// <summary>
+        ///     Check that the user that is interacting with the BUI is capable of interacting and can access the entity.
+        /// </summary>
+        private void OnBoundInterfaceInteractAttempt(BoundUserInterfaceMessageAttempt ev)
+        {
+            if (ev.Sender.AttachedEntity is not EntityUid user || !_actionBlockerSystem.CanInteract(user))
+            {
+                ev.Cancel();
+                return;
+            }
+
+            if (!user.IsInSameOrParentContainer(ev.Target) && !CanAccessViaStorage(user, ev.Target))
+            {
+                ev.Cancel();
+                return;
+            }
+
+            if (!user.InRangeUnobstructed(ev.Target))
+            {
+                ev.Cancel();
+                return;
+            }
         }
 
         /// <summary>
@@ -293,11 +315,17 @@ namespace Content.Shared.Interaction
             Ignored? predicate = null,
             bool ignoreInsideBlocker = false)
         {
-            if (range > 0f && !origin.InRange(other, range)) return false;
+            // Have to be on same map regardless.
+            if (other.MapId != origin.MapId) return false;
 
+            // Uhh this does mean we could raycast infinity distance so may need to limit it.
             var dir = other.Position - origin.Position;
+            var lengthSquared = dir.LengthSquared;
 
-            if (dir.LengthSquared.Equals(0f)) return true;
+            if (lengthSquared.Equals(0f)) return true;
+
+            // If range specified also check it
+            if (range > 0f && lengthSquared > range * range) return false;
 
             predicate ??= _ => false;
 
@@ -318,7 +346,7 @@ namespace Content.Shared.Interaction
 
                 var bBox = p.GetWorldAABB();
 
-                if (bBox.Contains(origin.Position) || bBox.Contains(other.Position))
+                if (bBox.Contains(other.Position))
                 {
                     continue;
                 }
@@ -620,7 +648,7 @@ namespace Content.Shared.Interaction
             RaiseLocalEvent(used, activateMsg);
             if (activateMsg.Handled)
             {
-                delayComponent?.BeginDelay();
+                BeginDelay(delayComponent);
                 _adminLogSystem.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user):user} activated {ToPrettyString(used):used}");
                 return;
             }
@@ -630,7 +658,7 @@ namespace Content.Shared.Interaction
 
             var activateEventArgs = new ActivateEventArgs(user, used);
             activateComp.Activate(activateEventArgs);
-            delayComponent?.BeginDelay();
+            BeginDelay(delayComponent);
             _adminLogSystem.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user):user} activated {ToPrettyString(used):used}"); // No way to check success.
         }
         #endregion
@@ -664,7 +692,7 @@ namespace Content.Shared.Interaction
             RaiseLocalEvent(used, useMsg);
             if (useMsg.Handled)
             {
-                delayComponent?.BeginDelay();
+                BeginDelay(delayComponent);
                 return true;
             }
 
@@ -676,12 +704,18 @@ namespace Content.Shared.Interaction
                 // If a Use returns a status completion we finish our interaction
                 if (use.UseEntity(new UseEntityEventArgs(user)))
                 {
-                    delayComponent?.BeginDelay();
+                    BeginDelay(delayComponent);
                     return true;
                 }
             }
 
             return false;
+        }
+
+        protected virtual void BeginDelay(UseDelayComponent? component = null)
+        {
+            // This is temporary until we have predicted UseDelay.
+            return;
         }
 
         /// <summary>

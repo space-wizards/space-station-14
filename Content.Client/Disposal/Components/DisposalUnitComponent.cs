@@ -17,10 +17,5 @@ namespace Content.Client.Disposal.Components
 
             RecentlyEjected = state.RecentlyEjected;
         }
-
-        public override bool DragDropOn(DragDropEvent eventArgs)
-        {
-            return false;
-        }
     }
 }
