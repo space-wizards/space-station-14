@@ -87,10 +87,10 @@ public sealed class RadarControl : Control
 
             switch (obj.Shape)
             {
-                case ObjectShape.CircleFilled:
-                case ObjectShape.Circle:
+                case RadarObjectShape.CircleFilled:
+                case RadarObjectShape.Circle:
                 {
-                    handle.DrawCircle(obj.Position + point, obj.Radius, obj.Color, obj.Shape == ObjectShape.CircleFilled);
+                    handle.DrawCircle(obj.Position + point, obj.Radius, obj.Color, obj.Shape == RadarObjectShape.CircleFilled);
                     break;
                 }
                 default:

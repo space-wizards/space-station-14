@@ -22,19 +22,19 @@ public sealed class RadarConsoleBoundInterfaceState : BoundUserInterfaceState
 public struct RadarObjectData
 {
     public Color Color;
-    public ObjectShape Shape;
+    public RadarObjectShape Shape;
     public Vector2 Position;
     public float Radius;
 }
 
-public enum ObjectShape
+public enum RadarObjectShape : byte
 {
     Circle,
     CircleFilled,
 }
 
 [Serializable, NetSerializable]
-public enum RadarConsoleUiKey
+public enum RadarConsoleUiKey : byte
 {
     Key
 }

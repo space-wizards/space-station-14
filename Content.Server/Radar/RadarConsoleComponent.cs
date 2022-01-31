@@ -1,12 +1,11 @@
-using System;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Radar;
 
-[RegisterComponent]
+[RegisterComponent, ComponentProtoName("RadarConsole")]
 public class RadarConsoleComponent : Component
 {
-    public override string Name => "RadarConsole";
+    [DataField("range")]
+    public float Range = 256f;
 }
-

@@ -292,7 +292,7 @@
         - key: enum.RadarConsoleUiKey.Key
           type: RadarConsoleBoundUserInterface
     - type: Computer
-      board: SolarControlComputerCircuitboard
+      board: RadarConsoleCircuitboard
     - type: PointLight
       radius: 1.5
       energy: 1.6
