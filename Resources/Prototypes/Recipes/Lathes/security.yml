@@ -34,7 +34,7 @@
 - type: latheRecipe
   id: ShellShotgunBeanbag
   icon:
-    sprite: Objects\Weapons\Guns\Ammunition\Casings\shotgun_shell_beanbag.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_beanbag.rsi
     state: base
   result: ShellShotgunBeanbag
   completetime: 500
