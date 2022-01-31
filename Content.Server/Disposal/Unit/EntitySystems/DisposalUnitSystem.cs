@@ -417,7 +417,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             }
 
             if (count != component.RecentlyEjected.Count)
-                component.Dirty();
+                Dirty(component);
 
             return state == SharedDisposalUnitComponent.PressureState.Ready && component.RecentlyEjected.Count == 0;
         }
@@ -604,7 +604,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             if (!component.RecentlyEjected.Contains(entity))
                 component.RecentlyEjected.Add(entity);
 
-            component.Dirty();
+            Dirty(component);
             HandleStateChange(component, true);
             UpdateVisualState(component);
         }
