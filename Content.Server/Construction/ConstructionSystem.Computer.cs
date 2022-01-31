@@ -3,16 +3,12 @@ using Content.Server.Power.Components;
 using Content.Shared.Computer;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Log;
 
 namespace Content.Server.Construction;
 
 public sealed partial class ConstructionSystem
 {
-    [Dependency] private readonly ConstructionSystem _construction = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-
     private void InitializeComputer()
     {
         SubscribeLocalEvent<ComputerComponent, ComponentInit>(OnCompInit);
@@ -54,7 +50,7 @@ public sealed partial class ConstructionSystem
     {
         // Ensure that the construction component is aware of the board container.
         if (TryComp<ConstructionComponent>(component.Owner, out var construction))
-            _construction.AddContainer(component.Owner, "board", construction);
+            AddContainer(component.Owner, "board", construction);
 
         // We don't do anything if this is null or empty.
         if (string.IsNullOrEmpty(component.BoardPrototype))
