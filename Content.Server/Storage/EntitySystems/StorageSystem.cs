@@ -11,14 +11,16 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Storage.EntitySystems
 {
     [UsedImplicitly]
-    internal sealed class StorageSystem : EntitySystem
+    public sealed partial class StorageSystem : EntitySystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
 
         private readonly List<IPlayerSession> _sessionCache = new();
 
@@ -33,6 +35,8 @@ namespace Content.Server.Storage.EntitySystems
             SubscribeLocalEvent<EntityStorageComponent, GetInteractionVerbsEvent>(AddToggleOpenVerb);
             SubscribeLocalEvent<ServerStorageComponent, GetActivationVerbsEvent>(AddOpenUiVerb);
             SubscribeLocalEvent<EntityStorageComponent, RelayMovementEntityEvent>(OnRelayMovement);
+
+            SubscribeLocalEvent<StorageFillComponent, MapInitEvent>(OnStorageFillMapInit);
         }
 
         private void OnRelayMovement(EntityUid uid, EntityStorageComponent component, RelayMovementEntityEvent args)

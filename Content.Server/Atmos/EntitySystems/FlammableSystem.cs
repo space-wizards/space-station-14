@@ -49,6 +49,15 @@ namespace Content.Server.Atmos.EntitySystems
             SubscribeLocalEvent<FlammableComponent, StartCollideEvent>(OnCollideEvent);
             SubscribeLocalEvent<FlammableComponent, IsHotEvent>(OnIsHotEvent);
             SubscribeLocalEvent<FlammableComponent, TileFireEvent>(OnTileFireEvent);
+            SubscribeLocalEvent<IgniteOnCollideComponent, StartCollideEvent>(IgniteOnCollide);
+        }
+
+        private void IgniteOnCollide(EntityUid uid, IgniteOnCollideComponent component, StartCollideEvent args)
+        {
+            var otherfixture = args.OtherFixture.Body.Owner;
+            if (EntityManager.TryGetComponent(otherfixture, out FlammableComponent flammable))
+                flammable.FireStacks += component.FireStacks;
+                Ignite(otherfixture, flammable);
         }
 
         private void OnInteractUsingEvent(EntityUid uid, FlammableComponent flammable, InteractUsingEvent args)
