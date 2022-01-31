@@ -4,7 +4,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.Computer
+namespace Content.Server.Construction.Components
 {
     [RegisterComponent, ComponentProtoName("Computer")]
     public sealed class ComputerComponent : Component

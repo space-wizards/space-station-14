@@ -38,6 +38,7 @@ namespace Content.Server.Construction
 
             _sawmill = _logManager.GetSawmill(SawmillName);
 
+            InitializeComputer();
             InitializeGraphs();
             InitializeGuided();
             InitializeInteractions();

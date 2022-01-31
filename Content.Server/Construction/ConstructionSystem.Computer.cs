@@ -1,4 +1,3 @@
-using Content.Server.Construction;
 using Content.Server.Construction.Components;
 using Content.Server.Power.Components;
 using Content.Shared.Computer;
@@ -7,16 +6,15 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 
-namespace Content.Server.Computer;
+namespace Content.Server.Construction;
 
-public sealed class ComputerSystem : EntitySystem
+public sealed partial class ConstructionSystem
 {
     [Dependency] private readonly ConstructionSystem _construction = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
 
-    public override void Initialize()
+    private void InitializeComputer()
     {
-        base.Initialize();
         SubscribeLocalEvent<ComputerComponent, ComponentInit>(OnCompInit);
         SubscribeLocalEvent<ComputerComponent, MapInitEvent>(OnCompMapInit);
         SubscribeLocalEvent<ComputerComponent, PowerChangedEvent>(OnCompPowerChange);
