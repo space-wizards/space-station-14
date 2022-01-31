@@ -1,119 +1,4 @@
 Entries:
-- author: Macoron
-  changes:
-  - {message: Uplinks UI now have description of items., type: Add}
-  - {message: Admins can spawn ready to use uplinks., type: Add}
-  id: 443
-  time: '2021-10-15T10:49:59.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Black gloves and the captain's gloves now protect you against burn damage
-      from replacing lightbulbs., type: Tweak}
-  id: 444
-  time: '2021-10-15T11:07:27.972020+00:00'
-- author: Zumorica
-  changes:
-  - {message: Balanced SSS weapon spawns to be more fair., type: Tweak}
-  id: 445
-  time: '2021-10-15T12:46:50.053991+00:00'
-- author: Zumorica
-  changes:
-  - {message: 'Fixes slips not working. GO FORTH AND SLIP, MY CHILDREN!', type: Fix}
-  id: 446
-  time: '2021-10-15T22:21:14.743072+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: ChemMaster UI has been repaired., type: Fix}
-  - {message: Pills are now edible again., type: Fix}
-  id: 447
-  time: '2021-10-16T12:56:21.0000000+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: Ghost have now attuned themselves to radio waves allowing them to listen
-      in on the station chatter., type: Add}
-  id: 448
-  time: '2021-10-16T19:04:35.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: 'Saltern''s security substation''s protective APC is now inside the
-      security substation chamber, which has been made a little bigger accordingly.',
-    type: Tweak}
-  - {message: 'Saltern now has solars - north set in north-west maintenance, south
-      set a bit east of library.', type: Add}
-  id: 449
-  time: '2021-10-16T20:02:40.0000000+00:00'
-- author: Watermelon914
-  changes:
-  - {message: Adds hand labelers which allow you to append and remove labels from
-      structures and objects., type: Add}
-  id: 450
-  time: '2021-10-16T20:34:05.0000000+00:00'
-- author: moony
-  changes:
-  - {message: Nanotrasen has found the budget to install proper atmospherics., type: Add}
-  id: 451
-  time: '2021-10-16T23:11:06.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Ad-dd-ded st-tutt-ter-ring-g-g, type: Add}
-  id: 452
-  time: '2021-10-16T23:23:31.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Added Hydroponics tray machine board, type: Add}
-  id: 453
-  time: '2021-10-18T06:12:50.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Pipe rotation is less chaotic evil., type: Fix}
-  id: 454
-  time: '2021-10-18T11:42:30.0000000+00:00'
-- author: ike709
-  changes:
-  - {message: '"Prefer integer scaling" setting will now properly save', type: Fix}
-  id: 455
-  time: '2021-10-18T22:47:27.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Security gear will now actually protect you against attacks., type: Add}
-  - {message: Mesons and hardsuits now actually protect against radiation., type: Add}
-  id: 456
-  time: '2021-10-18T23:24:37.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Monkey cubes and rehydratable space carp work properly and don't rely
-      on the RefillableSolution workaround., type: Fix}
-  - {message: Poisoning something that can be sliced now poisons the slices., type: Tweak}
-  id: 457
-  time: '2021-10-19T07:13:44.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: freezers are rotatable now., type: Fix}
-  id: 458
-  time: '2021-10-19T07:22:41.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Singularity field generators should be easier to move around., type: Tweak}
-  id: 459
-  time: '2021-10-19T07:24:07.0000000+00:00'
-- author: Efruit
-  changes:
-  - {message: Show set pressure when examining gas pumps., type: Add}
-  - {message: Show set rate when examining volumetric gas pumps., type: Add}
-  - {message: Show valve status (open/closed) when examining manual valves., type: Add}
-  id: 460
-  time: '2021-10-19T21:46:31.0000000+00:00'
-- author: Efruit
-  changes:
-  - {message: NT took the tele-trashbags back. At least they left some normal ones
-      for us..., type: Fix}
-  id: 461
-  time: '2021-10-20T13:25:22.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Anti-matter engine actually generates power again., type: Fix}
-  id: 462
-  time: '2021-10-20T18:31:53.0000000+00:00'
 - author: juliangiebel
   changes:
   - {message: Cable terminals can be built now., type: Add}
@@ -2935,3 +2820,125 @@ Entries:
   - {message: Welding toilets no longer annihilate characters sitting on them., type: Fix}
   id: 943
   time: '2022-01-29T05:34:57.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Airlocks no longer close when an entity is blocking the way. If the
+      safety is disabled, airlocks will now properly crush entities.', type: Fix}
+  id: 944
+  time: '2022-01-30T00:49:57.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Prying tiles now takes time., type: Tweak}
+  id: 945
+  time: '2022-01-30T03:48:18.0000000+00:00'
+- author: Lamrr
+  changes:
+  - {message: Dog beds have now arrived. You can now give Ian a place to sleep., type: Add}
+  - {message: Normal beds can now be constructed and deconstructed., type: Fix}
+  id: 946
+  time: '2022-01-30T04:47:12.0000000+00:00'
+- author: Schiene
+  changes:
+  - {message: Added a Knightship Emergency Shuttle., type: Add}
+  id: 947
+  time: '2022-01-30T07:32:01.0000000+00:00'
+- author: Pancake
+  changes:
+  - {message: '"Russian accent."', type: Add}
+  id: 948
+  time: '2022-01-30T08:06:16.0000000+00:00'
+- author: Schiene
+  changes:
+  - {message: Adds CentComm Outpost spawnable map, type: Add}
+  id: 949
+  time: '2022-01-30T09:06:20.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix potential crash on item cooldowns where the item was deleted during
+      use., type: Fix}
+  id: 950
+  time: '2022-01-30T13:27:29.0000000+00:00'
+- author: scaly-chimp
+  changes:
+  - {message: Added new flare shotgun shells, type: Add}
+  - {message: fixed the incediary shotgun shells being a reskin., type: Fix}
+  id: 951
+  time: '2022-01-30T13:44:45.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Removed the objective to stay alive., type: Remove}
+  - {message: Lowered max objective difficulty., type: Tweak}
+  - {message: 'Steal objective probability reduced by 1/3, and die objective probability
+      reduced by 9/10.', type: Tweak}
+  id: 952
+  time: '2022-01-30T14:19:27.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Conveyors now 20% less jank., type: Tweak}
+  id: 953
+  time: '2022-01-30T14:30:16.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'Wood floor tiles can no longer be placed directly on space, and do
+      not space so easily.', type: Fix}
+  - {message: Cryobeaker capacity reduced from 60 to 40., type: Tweak}
+  - {message: Explosive grenades and minibombs no longer beep., type: Tweak}
+  id: 954
+  time: '2022-01-30T14:34:11.0000000+00:00'
+- author: Pancake
+  changes:
+  - {message: Admins now have more animals to release into the station!, type: Add}
+  - {message: Vending machines are now less murderous., type: Tweak}
+  id: 955
+  time: '2022-01-30T14:35:00.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Fire extinguisher spray now applies touch reactions., type: Add}
+  - {message: Fire extinguishers can be refilled from any source now., type: Tweak}
+  id: 956
+  time: '2022-01-30T14:42:15.0000000+00:00'
+- author: Schiene
+  changes:
+  - {message: 'Added a new non-votable map, Moonrise-class Emergency Response Cruiser.',
+    type: Add}
+  id: 957
+  time: '2022-01-30T15:11:40.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'Chaplains'' prayers have been answered, and they now spawn with a fully
+      functional bible.', type: Add}
+  id: 958
+  time: '2022-01-30T15:20:23.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed ghost being able to interact with the world via various UI elements.,
+    type: Fix}
+  id: 959
+  time: '2022-01-30T15:26:08.0000000+00:00'
+- author: Schiene
+  changes:
+  - {message: Remastered the Dart shuttle, type: Add}
+  id: 960
+  time: '2022-01-30T16:01:49.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a visual bug that would sometimes result in players getting stuck
+      lying on the floor after being stunned., type: Fix}
+  id: 961
+  time: '2022-01-30T16:34:48.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: The bible's sounds are now positional and won't play at max volume every
+      time., type: Fix}
+  - {message: 'The bible''s cooldown has been increased to reduce sound spam, but
+      its healing rate remains the same.', type: Tweak}
+  id: 962
+  time: '2022-01-30T21:33:46.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Kitchen and Chemistry now have access to specific windoors. Look out
+      for these in future., type: Add}
+  - {message: Brig specific access has been added for Warden and HoS - To be mapped
+      in future., type: Tweak}
+  id: 963
+  time: '2022-01-30T21:34:36.0000000+00:00'

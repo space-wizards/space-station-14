@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseItem
+  parent: DrinkBase
   id: DrinkBottleBaseFull
   abstract: true
   components:
@@ -10,12 +10,6 @@
     solutions:
       drink:
         maxVol: 100
-  - type: SolutionTransfer
-    canChangeTransferAmount: true
-  - type: UserInterface
-    interfaces:
-    - key: enum.TransferAmountUiKey.Key
-      type: TransferAmountBoundUserInterface
   - type: Sprite
     state: icon
   - type: DamageOnLand
@@ -26,8 +20,6 @@
     damage:
       types:
         Blunt: 4
-  - type: Spillable
-    solution: drink
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible

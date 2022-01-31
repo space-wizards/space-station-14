@@ -294,6 +294,8 @@
     sprite: Clothing/Head/Hats/ushanka.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/ushanka.rsi
+  - type: AddAccentClothing
+    accent: RussianAccent
 
 - type: entity
   parent: ClothingHeadBase

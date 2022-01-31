@@ -58,12 +58,18 @@ namespace Content.Client.Botany
 
             var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner);
 
-            if (component.TryGetData<SpriteSpecifier>(PlantHolderVisuals.Plant, out var specifier))
+            if (component.TryGetData<string>(PlantHolderVisuals.PlantRsi, out var rsi)
+                && component.TryGetData<string>(PlantHolderVisuals.PlantState, out var state))
             {
-                var valid = !specifier.Equals(SpriteSpecifier.Invalid);
+                var valid = !string.IsNullOrWhiteSpace(state);
+
                 sprite.LayerSetVisible(PlantHolderLayers.Plant, valid);
+
                 if(valid)
-                    sprite.LayerSetSprite(PlantHolderLayers.Plant, specifier);
+                {
+                    sprite.LayerSetRSI(PlantHolderLayers.Plant, rsi);
+                    sprite.LayerSetState(PlantHolderLayers.Plant, state);
+                }
             }
 
             if (component.TryGetData<bool>(PlantHolderVisuals.HealthLight, out var health))

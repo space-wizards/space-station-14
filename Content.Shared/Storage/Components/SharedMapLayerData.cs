@@ -24,7 +24,7 @@ namespace Content.Shared.Storage.Components
     }
 
     [Serializable, NetSerializable]
-    public class ShowLayerData
+    public class ShowLayerData : ICloneable
     {
         public IReadOnlyList<string> QueuedEntities { get; internal set; }
 
@@ -33,14 +33,14 @@ namespace Content.Shared.Storage.Components
             QueuedEntities = new List<string>();
         }
 
-        public ShowLayerData(IReadOnlyList<string> other)
+        public ShowLayerData(IEnumerable<string> other)
         {
-            QueuedEntities = other;
+            QueuedEntities = new List<string>(other);
         }
 
-        public ShowLayerData(ShowLayerData other)
+        public object Clone()
         {
-            QueuedEntities = other.QueuedEntities;
+            return new ShowLayerData(QueuedEntities);
         }
     }
 }
