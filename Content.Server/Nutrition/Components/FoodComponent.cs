@@ -51,8 +51,8 @@ namespace Content.Server.Nutrition.Components
         /// <summary>
         /// How long it takes to eat the food personally.
         /// </summary>
-        [DataField("eatDelay")]
-        public float EatDelay = 1;
+        [DataField("delay")]
+        public float Delay = 1;
 
         /// <summary>
         ///     This is how many seconds it takes to force feed someone this food.
