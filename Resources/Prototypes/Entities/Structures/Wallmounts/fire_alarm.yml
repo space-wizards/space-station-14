@@ -64,6 +64,8 @@
   - type: Sprite
     sprite: Structures/Wallmounts/air_monitors.rsi
     state: fire_b1
+  - type: Transform
+    anchored: true
   - type: Construction
     graph: FireAlarm
     node: assembly

@@ -81,6 +81,8 @@
   - type: Sprite
     sprite: Structures/Wallmounts/air_monitors.rsi
     state: alarm_b1
+  - type: Transform
+    anchored: true
   - type: Construction
     graph: AirAlarm
     node: assembly
