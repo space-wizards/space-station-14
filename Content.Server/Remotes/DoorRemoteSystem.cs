@@ -69,21 +69,23 @@ namespace Content.Server.Remotes
             }
 
             if (component.Mode == DoorRemoteComponent.OperatingMode.ToggleBolts
-                && airlockComponent.IsPowered()
-                && _doorSystem.HasAccess(args.Used))
+                && airlockComponent.IsPowered())
             {
-                if(airlockComponent.IsBolted())
+                if (_doorSystem.HasAccess(args.Used))
                 {
-                    airlockComponent.SetBoltsWithAudio(false);
+                    if(airlockComponent.IsBolted())
+                    {
+                        airlockComponent.SetBoltsWithAudio(false);
+                    }
+                    else
+                    {
+                        airlockComponent.SetBoltsWithAudio(true);
+                    }
                 }
                 else
                 {
-                    airlockComponent.SetBoltsWithAudio(true);
+                    _sharedDoorSystem.Deny(airlockComponent.Owner, user: args.User);
                 }
-            }
-            else if (!_doorSystem.HasAccess(args.Used))
-            {
-                _sharedDoorSystem.Deny(airlockComponent.Owner, user: args.User);
             }
         }
     }
