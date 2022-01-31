@@ -11,8 +11,6 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Components;
 [RegisterComponent]
 public class ArtifactGasTriggerComponent : Component
 {
-    public override string Name => "ArtifactGasTrigger";
-
     /// <summary>
     ///     List of possible activation gases to pick on startup.
     /// </summary>

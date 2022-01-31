@@ -17,9 +17,6 @@ namespace Content.Server.TraitorDeathMatch.Components
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        /// <inheritdoc />
-        public override string Name => "TraitorDeathMatchRedemption";
-
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!_entMan.TryGetComponent<MindComponent?>(eventArgs.User, out var userMindComponent))

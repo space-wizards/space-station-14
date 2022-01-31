@@ -17,8 +17,6 @@ namespace Content.Shared.Chemistry.Components
     {
         [DataField("beakerSlot")]
         public ItemSlot BeakerSlot = new();
-
-        public override string Name => "ChemMaster";
         public const string SolutionName = "buffer";
 
         [Serializable, NetSerializable]

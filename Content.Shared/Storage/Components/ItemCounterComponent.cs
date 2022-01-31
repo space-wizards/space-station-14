@@ -22,8 +22,6 @@ namespace Content.Shared.Storage.Components
     [Friend(typeof(SharedItemCounterSystem))]
     public class ItemCounterComponent : Component
     {
-        public override string Name => "ItemCounter";
-
         [DataField("count", required: true)]
         public EntityWhitelist Count { get; set; } = default!;
 

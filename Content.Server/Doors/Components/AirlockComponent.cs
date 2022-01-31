@@ -28,8 +28,6 @@ namespace Content.Server.Doors.Components
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
-        public override string Name => "Airlock";
-
         /// <summary>
         /// Sound to play when the bolts on the airlock go up.
         /// </summary>
@@ -309,7 +307,7 @@ namespace Content.Server.Doors.Components
                         break;
                     case Wires.Timing:
                         // This is permanent, until the wire gets cut & mended.
-                        AutoCloseDelayModifier = 0.5f; 
+                        AutoCloseDelayModifier = 0.5f;
                         EntitySystem.Get<AirlockSystem>().UpdateAutoClose(Owner, this);
                         break;
                     case Wires.Safety:

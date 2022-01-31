@@ -19,8 +19,6 @@ namespace Content.Server.Spawners.Components
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
-        public override string Name => "ConditionalSpawner";
-
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("prototypes", customTypeSerializer:typeof(PrototypeIdListSerializer<EntityPrototype>))]
         public List<string> Prototypes { get; set; } = new();

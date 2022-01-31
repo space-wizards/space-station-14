@@ -22,8 +22,6 @@ namespace Content.Server.Explosion.Components
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public override string Name => "ClusterFlash";
-
         private Container _grenadesContainer = default!;
 
         /// <summary>

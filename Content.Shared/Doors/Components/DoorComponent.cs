@@ -19,8 +19,6 @@ namespace Content.Shared.Doors.Components;
 [RegisterComponent]
 public sealed class DoorComponent : Component
 {
-    public override string Name => "Door";
-
     /// <summary>
     /// The current state of the door -- whether it is open, closed, opening, or closing.
     /// </summary>

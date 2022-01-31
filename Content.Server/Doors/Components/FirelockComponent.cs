@@ -17,8 +17,6 @@ namespace Content.Server.Doors.Components
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public override string Name => "Firelock";
-
         /// <summary>
         /// Pry time modifier to be used when the firelock is currently closed due to fire or pressure.
         /// </summary>

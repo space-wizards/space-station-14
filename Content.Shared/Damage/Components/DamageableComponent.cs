@@ -27,8 +27,6 @@ namespace Content.Shared.Damage
     [Friend(typeof(DamageableSystem))]
     public class DamageableComponent : Component, IRadiationAct, IExAct
     {
-        public override string Name => "Damageable";
-
         /// <summary>
         ///     This <see cref="DamageContainerPrototype"/> specifies what damage types are supported by this component.
         ///     If null, all damage types will be supported.
