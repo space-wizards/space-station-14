@@ -26,7 +26,7 @@ namespace Content.Server.Disposal.Tube.Components
             var holder = _entMan.SpawnEntity(HolderPrototypeId, _entMan.GetComponent<TransformComponent>(Owner).MapPosition);
             var holderComponent = _entMan.GetComponent<DisposalHolderComponent>(holder);
 
-            foreach (var entity in from.ContainedEntities.ToArray())
+            foreach (var entity in from.Container.ContainedEntities.ToArray())
             {
                 holderComponent.TryInsert(entity);
             }

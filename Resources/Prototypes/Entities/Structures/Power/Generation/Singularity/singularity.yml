@@ -27,7 +27,7 @@
     radsPerLevel: 1 # determines RadiationPulse's radiation per second.
   - type: SingularityDistortion
   - type: RadiationPulse
-    range: 15
+    range: 10
     decay: false
     minPulseLifespan: 1
     maxPulseLifespan: 1

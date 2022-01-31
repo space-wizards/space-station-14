@@ -26,7 +26,6 @@ namespace Content.Server.Disposal.Tube.Components
         public TimeSpan LastClang;
 
         private bool _connected;
-        private bool _broken;
         [DataField("clangSound")] public SoundSpecifier ClangSound = new SoundPathSpecifier("/Audio/Effects/clang.ogg");
 
         /// <summary>
@@ -51,7 +50,7 @@ namespace Content.Server.Disposal.Tube.Components
         // TODO: Make disposal pipes extend the grid
         private void Connect()
         {
-            if (_connected || _broken)
+            if (_connected)
             {
                 return;
             }
@@ -62,11 +61,6 @@ namespace Content.Server.Disposal.Tube.Components
         public bool CanConnect(Direction direction, IDisposalTubeComponent with)
         {
             if (!_connected)
-            {
-                return false;
-            }
-
-            if (_broken)
             {
                 return false;
             }
@@ -113,11 +107,9 @@ namespace Content.Server.Disposal.Tube.Components
                 return;
             }
 
-            var state = _broken
-                ? DisposalTubeVisualState.Broken
-                : Anchored
-                    ? DisposalTubeVisualState.Anchored
-                    : DisposalTubeVisualState.Free;
+            var state = Anchored
+                ? DisposalTubeVisualState.Anchored 
+                : DisposalTubeVisualState.Free;
 
             appearance.SetData(DisposalTubeVisuals.VisualState, state);
         }
@@ -182,9 +174,7 @@ namespace Content.Server.Disposal.Tube.Components
 
         void IBreakAct.OnBreak(BreakageEventArgs eventArgs)
         {
-            _broken = true; // TODO: Repair
             Disconnect();
-            UpdateVisualState();
         }
     }
 }

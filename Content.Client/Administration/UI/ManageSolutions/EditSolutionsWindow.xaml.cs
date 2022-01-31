@@ -17,7 +17,7 @@ namespace Content.Client.Administration.UI.ManageSolutions
     ///     A simple window that displays solutions and their contained reagents. Allows you to edit the reagent quantities and add new reagents.
     /// </summary>
     [GenerateTypedNameReferences]
-    public sealed partial class EditSolutionsWindow : SS14Window
+    public sealed partial class EditSolutionsWindow : DefaultWindow
     {
         [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;

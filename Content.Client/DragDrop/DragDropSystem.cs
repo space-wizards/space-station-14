@@ -1,5 +1,6 @@
+using System;
 using System.Collections.Generic;
-using Content.Client.State;
+using Content.Client.Outline;
 using Content.Client.Viewport;
 using Content.Shared.ActionBlocker;
 using Content.Shared.DragDrop;
@@ -29,13 +30,14 @@ namespace Content.Client.DragDrop
     /// Handles clientside drag and drop logic
     /// </summary>
     [UsedImplicitly]
-    public class DragDropSystem : EntitySystem
+    public class DragDropSystem : SharedDragDropSystem
     {
         [Dependency] private readonly IStateManager _stateManager = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly InteractionOutlineSystem _outline = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
         [Dependency] private readonly InputSystem _inputSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
@@ -201,7 +203,7 @@ namespace Content.Client.DragDrop
                 }
 
                 HighlightTargets();
-                EntityManager.EventBus.RaiseEvent(EventSource.Local, new OutlineToggleMessage(false));
+                _outline.Enabled = false;
 
                 // drag initiated
                 return true;
@@ -254,7 +256,7 @@ namespace Content.Client.DragDrop
                 EntityManager.DeleteEntity(_dragShadow);
             }
 
-            EntityManager.EventBus.RaiseEvent(EventSource.Local, new OutlineToggleMessage(true));
+            _outline.Enabled = true;
             _dragShadow = default;
             _draggables.Clear();
             _dragger = default;
@@ -307,7 +309,17 @@ namespace Content.Client.DragDrop
                 return false;
             }
 
-            var entities = GameScreenBase.GetEntitiesUnderPosition(_stateManager, args.Coordinates);
+            IList<EntityUid> entities;
+
+            if (_stateManager.CurrentState is GameScreen screen)
+            {
+                entities = screen.GetEntitiesUnderPosition(args.Coordinates);
+            }
+            else
+            {
+                entities = Array.Empty<EntityUid>();
+            }
+
             var outOfRange = false;
 
             foreach (var entity in entities)
@@ -421,7 +433,7 @@ namespace Content.Client.DragDrop
                 return false;
             }
 
-            bool? valid = null;
+            var valid = CheckDragDropOn(eventArgs);
 
             foreach (var comp in EntityManager.GetComponents<IDragDropOn>(eventArgs.Target))
             {

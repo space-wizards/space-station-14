@@ -32,11 +32,5 @@ namespace Content.Server.Light.Components
         /// Sound played when you ignite the matchstick.
         /// </summary>
         [DataField("igniteSound", required: true)] public SoundSpecifier IgniteSound = default!;
-
-        /// <summary>
-        /// Point light component. Gives matches a glow in dark effect.
-        /// </summary>
-        [ComponentDependency]
-        public readonly PointLightComponent? PointLightComponent = default!;
     }
 }

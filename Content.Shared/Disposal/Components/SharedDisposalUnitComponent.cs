@@ -9,7 +9,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Disposal.Components
 {
     [NetworkedComponent]
-    public abstract class SharedDisposalUnitComponent : Component, IDragDropOn
+    public abstract class SharedDisposalUnitComponent : Component
     {
         public override string Name => "DisposalUnit";
 
@@ -134,13 +134,5 @@ namespace Content.Shared.Disposal.Components
         {
             Key
         }
-
-        // TODO: Unfortunately these aren't really ECS yet so soontm
-        public virtual bool CanDragDropOn(DragDropEvent eventArgs)
-        {
-            return EntitySystem.Get<SharedDisposalUnitSystem>().CanInsert(this, eventArgs.Dragged);
-        }
-
-        public abstract bool DragDropOn(DragDropEvent eventArgs);
     }
 }

@@ -1,4 +1,4 @@
-﻿<SS14Window xmlns="https://spacestation14.io"
+﻿<DefaultWindow xmlns="https://spacestation14.io"
             Title="{Loc 'comp-pda-ui-menu-title'}"
             MinSize="512 256"
             SetSize="512 256">
@@ -34,4 +34,4 @@
                     Text="{Loc 'pda-bound-user-interface-uplink-tab-title'}" />
         </BoxContainer>
     </TabContainer>
-</SS14Window>
+</DefaultWindow>

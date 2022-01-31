@@ -108,7 +108,7 @@ namespace Content.Client.Atmos.UI
                     },
                     (CloseButton = new TextureButton
                     {
-                        StyleClasses = {SS14Window.StyleClassWindowCloseButton},
+                        StyleClasses = {DefaultWindow.StyleClassWindowCloseButton},
                         VerticalAlignment = VAlignment.Center
                     })
                 }

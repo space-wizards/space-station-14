@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Content.Server.Administration.Managers;
 using Content.Server.Players;
@@ -33,7 +34,7 @@ namespace Content.Server.Administration
             SubscribeLocalEvent<RoleRemovedEvent>(OnRoleEvent);
         }
 
-        private void UpdatePlayerList(IPlayerSession player)
+        public void UpdatePlayerList(IPlayerSession player)
         {
             _playerList[player.UserId] = GetPlayerInfo(player);
 
@@ -112,11 +113,16 @@ namespace Content.Server.Administration
             if (session.AttachedEntity != null)
                 username = EntityManager.GetComponent<MetaDataComponent>(session.AttachedEntity.Value).EntityName;
 
-            var antag = session.ContentData()?.Mind?.AllRoles.Any(r => r.Antagonist) ?? false;
+            var mind = session.ContentData()?.Mind;
+
+            var job = mind?.AllRoles.FirstOrDefault(role => role is Job);
+            var startingRole = job != null ? CultureInfo.CurrentCulture.TextInfo.ToTitleCase(job.Name) : string.Empty;
+
+            var antag = mind?.AllRoles.Any(r => r.Antagonist) ?? false;
 
             var connected = session.Status is SessionStatus.Connected or SessionStatus.InGame;
 
-            return new PlayerInfo(name, username, antag, session.AttachedEntity.GetValueOrDefault(), session.UserId,
+            return new PlayerInfo(name, username, startingRole, antag, session.AttachedEntity.GetValueOrDefault(), session.UserId,
                 connected);
         }
     }
