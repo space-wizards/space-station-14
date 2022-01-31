@@ -8,8 +8,8 @@
 - type: accessLevel
   id: Armory
 
-#- type: accessLevel
-#  id: Brig
+- type: accessLevel
+  id: Brig
 
 #- type: accessLevel
 #  id: Detective

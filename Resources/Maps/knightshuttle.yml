@@ -1,0 +1,1774 @@
+meta:
+  format: 2
+  name: DemoStation
+  author: Space-Wizards
+  postmapinit: false
+tilemap:
+  0: space
+  1: floor_asteroid_coarse_sand0
+  2: floor_asteroid_coarse_sand1
+  3: floor_asteroid_coarse_sand2
+  4: floor_asteroid_coarse_sand_dug
+  5: floor_asteroid_sand
+  6: floor_asteroid_tile
+  7: floor_bar
+  8: floor_blue
+  9: floor_blue_circuit
+  10: floor_clown
+  11: floor_dark
+  12: floor_elevator_shaft
+  13: floor_freezer
+  14: floor_glass
+  15: floor_gold
+  16: floor_grass
+  17: floor_green_circuit
+  18: floor_hydro
+  19: floor_kitchen
+  20: floor_laundry
+  21: floor_lino
+  22: floor_mime
+  23: floor_mono
+  24: floor_reinforced
+  25: floor_rglass
+  26: floor_rock_vault
+  27: floor_showroom
+  28: floor_silver
+  29: floor_snow
+  30: floor_steel
+  31: floor_steel_dirty
+  32: floor_techmaint
+  33: floor_white
+  34: floor_wood
+  35: lattice
+  36: plating
+  37: underplating
+grids:
+- settings:
+    chunksize: 16
+    tilesize: 1
+  chunks:
+  - ind: "-1,-1"
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAjAAAAJAAAACQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJAAAACQAAAARAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACQAAAARAAAAEQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAkAAAAIAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJAAAACAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACQAAAAgAAAAIAAAAA==
+  - ind: "0,-1"
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACQAAAAjAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAkAAAAJAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEQAAACQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAJAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAABcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+  - ind: "-1,0"
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACQAAAAgAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAkAAAAIAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJAAAACAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABcAAAAgAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXAAAAFwAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIwAAABcAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXAAAAFwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+  - ind: "0,0"
+    tiles: IAAAABcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAXAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAJAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAABcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABcAAAAXAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXAAAAIwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+entities:
+- uid: 0
+  type: CableApcExtension
+  components:
+  - pos: -0.5,-1.5
+    parent: 8
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 1
+  type: WindoorSecurityLocked
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -0.5,-1.5
+    parent: 8
+    type: Transform
+- uid: 2
+  type: CableApcExtension
+  components:
+  - pos: 0.5,-4.5
+    parent: 8
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 3
+  type: CableApcExtension
+  components:
+  - pos: -0.5,-0.5
+    parent: 8
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 4
+  type: CableApcExtension
+  components:
+  - pos: -0.5,5.5
+    parent: 8
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 5
+  type: ReinforcedWindow
+  components:
+  - pos: 0.5,4.5
+    parent: 8
+    type: Transform
+- uid: 6
+  type: CableMV
+  components:
+  - pos: 0.5,-3.5
+    parent: 8
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 7
+  type: ComputerShuttle
+  components:
+  - pos: -0.5,5.5
+    parent: 8
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 8
+  components:
+  - pos: 0.4558292,0.42837813
+    parent: null
+    type: Transform
+  - index: 0
+    type: MapGrid
+  - linearDamping: 0.1
+    fixedRotation: False
+    bodyType: Dynamic
+    type: Physics
+  - fixtures:
+    - shape: !type:PolygonShape
+        vertices:
+        - 1.99,-5.99
+        - 1.99,-0.01
+        - 0.01,-0.01
+        - 0.01,-5.99
+      id: grid_chunk-0.01--5.99
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 47.361595
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 1.99,0.01
+        - 1.99,5.99
+        - 0.01,5.99
+        - 0.01,0.01
+      id: grid_chunk-0.01-0.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 47.361595
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -0.01,-5.99
+        - -0.01,-0.01
+        - -2.99,-0.01
+        - -2.99,-5.99
+      id: grid_chunk--2.99--5.99
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 71.2816
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -0.01,7.01
+        - -0.01,7.99
+        - -0.99,7.99
+        - -0.99,7.01
+      id: grid_chunk--0.99-7.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 3.8415983
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -0.01,6.01
+        - -0.01,6.99
+        - -1.99,6.99
+        - -1.99,6.01
+      id: grid_chunk--1.99-6.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 7.7615967
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -0.01,0.01
+        - -0.01,5.99
+        - -2.99,5.99
+        - -2.99,0.01
+      id: grid_chunk--2.99-0.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 71.2816
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 0,-15
+        - 0,-10
+        - -1,-10
+        - -1,-15
+      id: grid_chunk--1--15
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 20
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 0,-10
+        - 0,-2
+        - -2,-2
+        - -2,-10
+      id: grid_chunk--2--10
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 64
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 0,-2
+        - 0,0
+        - -3,0
+        - -3,-2
+      id: grid_chunk--3--2
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 24
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 0,0
+        - 0,1
+        - -3,1
+        - -3,0
+      id: grid_chunk--3-0
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 12
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 0,1
+        - 0,5
+        - -2,5
+        - -2,1
+      id: grid_chunk--2-1
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 32
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 0,5
+        - 0,9
+        - -1,9
+        - -1,5
+      id: grid_chunk--1-5
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 16
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 7,0
+        - 7,5
+        - 0,5
+        - 0,0
+      id: grid_chunk-0-0
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 140
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 6,5
+        - 6,9
+        - 0,9
+        - 0,5
+      id: grid_chunk-0-5
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 96
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 7,-10
+        - 7,0
+        - 0,0
+        - 0,-10
+      id: grid_chunk-0--10
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 280
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 6,-15
+        - 6,-10
+        - 0,-10
+        - 0,-15
+      id: grid_chunk-0--15
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 120
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 0.99,6.01
+        - 0.99,6.99
+        - 0.01,6.99
+        - 0.01,6.01
+      id: grid_chunk-0.01-6.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 3.8415983
+      restitution: 0.1
+    type: Fixtures
+  - gravityShakeSound: !type:SoundPathSpecifier
+      path: /Audio/Effects/alert.ogg
+    type: Gravity
+  - chunkCollection: {}
+    type: DecalGrid
+  - tiles:
+      -2,-10: 0
+      -2,-9: 0
+      -2,-8: 0
+      -2,-7: 0
+      -2,-6: 0
+      -2,-5: 0
+      -2,-4: 0
+      -2,-3: 0
+      -2,-2: 1
+      -2,-1: 2
+      -1,-11: 0
+      -1,-10: 0
+      -1,-9: 0
+      -1,-8: 0
+      -1,-7: 0
+      -1,-6: 0
+      -1,-5: 0
+      -1,-4: 0
+      -1,-3: 0
+      -1,-2: 3
+      -1,-1: 4
+      0,-11: 5
+      0,-10: 6
+      0,-9: 0
+      0,-8: 0
+      0,-7: 0
+      0,-6: 0
+      0,-5: 0
+      0,-4: 0
+      0,-3: 0
+      0,-2: 0
+      0,-1: 0
+      1,-11: 0
+      1,-10: 0
+      1,-9: 0
+      1,-8: 0
+      1,-7: 0
+      1,-6: 0
+      1,-5: 0
+      1,-4: 0
+      1,-3: 0
+      1,-2: 0
+      1,-1: 0
+      2,-11: 0
+      2,-10: 0
+      2,-9: 0
+      2,-8: 0
+      2,-7: 0
+      2,-6: 0
+      2,-5: 0
+      2,-4: 0
+      2,-3: 0
+      2,-2: 0
+      2,-1: 0
+      3,-11: 0
+      3,-10: 0
+      3,-9: 0
+      3,-8: 0
+      3,-7: 0
+      3,-6: 0
+      3,-5: 0
+      3,-4: 0
+      3,-3: 0
+      3,-2: 0
+      3,-1: 0
+      4,-11: 7
+      4,-10: 8
+      4,-9: 9
+      4,-8: 0
+      4,-7: 0
+      4,-6: 0
+      4,-5: 0
+      4,-4: 0
+      4,-3: 0
+      4,-2: 0
+      4,-1: 0
+      5,-11: 0
+      5,-10: 0
+      5,-9: 0
+      5,-8: 0
+      5,-7: 0
+      5,-6: 0
+      5,-5: 0
+      5,-4: 10
+      5,-3: 0
+      5,-2: 0
+      5,-1: 0
+      6,-10: 0
+      6,-9: 0
+      6,-8: 0
+      6,-7: 0
+      6,-6: 0
+      6,-5: 0
+      6,-4: 11
+      6,-3: 0
+      6,-2: 0
+      6,-1: 0
+      -2,0: 12
+      -2,1: 0
+      -2,2: 13
+      -2,3: 0
+      -2,4: 0
+      -1,0: 14
+      -1,1: 15
+      -1,2: 16
+      -1,3: 17
+      -1,4: 0
+      -1,5: 0
+      -1,6: 0
+      -1,7: 0
+      -1,8: 0
+      0,0: 0
+      0,1: 0
+      0,2: 18
+      0,3: 19
+      0,4: 20
+      0,5: 21
+      0,6: 22
+      0,7: 23
+      0,8: 0
+      1,0: 0
+      1,1: 0
+      1,2: 0
+      1,3: 24
+      1,4: 0
+      1,5: 0
+      1,6: 0
+      1,7: 25
+      1,8: 0
+      2,0: 0
+      2,1: 0
+      2,2: 0
+      2,3: 26
+      2,4: 0
+      2,5: 0
+      2,6: 0
+      2,7: 27
+      2,8: 0
+      3,0: 0
+      3,1: 0
+      3,2: 0
+      3,3: 28
+      3,4: 0
+      3,5: 0
+      3,6: 0
+      3,7: 29
+      3,8: 0
+      4,0: 0
+      4,1: 0
+      4,2: 0
+      4,3: 30
+      4,4: 31
+      4,5: 32
+      4,6: 0
+      4,7: 29
+      4,8: 0
+      5,0: 0
+      5,1: 0
+      5,2: 0
+      5,3: 25
+      5,4: 0
+      5,5: 0
+      5,6: 0
+      5,7: 0
+      5,8: 0
+      6,0: 7
+      6,1: 0
+      6,2: 0
+      6,3: 0
+      6,4: 0
+      -3,-2: 33
+      -3,-1: 34
+      -3,0: 35
+      -1,-15: 36
+      -1,-14: 36
+      -1,-13: 36
+      -1,-12: 36
+      0,-15: 36
+      0,-14: 36
+      0,-13: 36
+      0,-12: 37
+      1,-15: 36
+      1,-14: 36
+      1,-13: 36
+      1,-12: 36
+      2,-15: 36
+      2,-14: 36
+      2,-13: 36
+      2,-12: 36
+      3,-15: 36
+      3,-14: 36
+      3,-13: 36
+      3,-12: 36
+      4,-15: 36
+      4,-14: 36
+      4,-13: 36
+      4,-12: 38
+      5,-15: 36
+      5,-14: 36
+      5,-13: 36
+      5,-12: 36
+      7,-4: 39
+      7,-3: 36
+      7,-2: 36
+      7,-1: 36
+      8,-4: 40
+      8,-3: 41
+      8,-2: 42
+      8,-1: 43
+      7,0: 44
+      8,0: 45
+    uniqueMixes:
+    - volume: 2500
+      temperature: 293.15
+      moles:
+      - 21.824879
+      - 82.10312
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 256.84375
+      moles:
+      - 17.732716
+      - 66.708786
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 256.84375
+      moles:
+      - 17.050686
+      - 64.14306
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 284.07343
+      moles:
+      - 20.801838
+      - 78.25453
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 281.8043
+      moles:
+      - 20.375572
+      - 76.650955
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.15
+      moles:
+      - 17.732714
+      - 66.708786
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.15
+      moles:
+      - 20.801838
+      - 78.25453
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.15
+      moles:
+      - 16.36866
+      - 61.57734
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.15
+      moles:
+      - 20.460823
+      - 76.97167
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.15
+      moles:
+      - 21.483864
+      - 80.82026
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 288.61172
+      moles:
+      - 20.801838
+      - 78.25453
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 274.9969
+      moles:
+      - 17.732714
+      - 66.708786
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 240.95978
+      moles:
+      - 16.965433
+      - 63.82235
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 220.28932
+      moles:
+      - 16.344015
+      - 61.484634
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 277.266
+      moles:
+      - 20.24769
+      - 76.16988
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 289.17902
+      moles:
+      - 21.430582
+      - 80.61981
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 273.88004
+      moles:
+      - 20.349928
+      - 76.55449
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 292.90182
+      moles:
+      - 21.800236
+      - 82.010414
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 288.317
+      moles:
+      - 21.454601
+      - 80.71017
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.08795
+      moles:
+      - 21.818718
+      - 82.07994
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.1345
+      moles:
+      - 21.823338
+      - 82.09732
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.14612
+      moles:
+      - 21.824493
+      - 82.10167
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.14905
+      moles:
+      - 21.824783
+      - 82.10275
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.14978
+      moles:
+      - 21.824856
+      - 82.10303
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.13446
+      moles:
+      - 21.82334
+      - 82.09732
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.14993
+      moles:
+      - 21.824875
+      - 82.103096
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.14612
+      moles:
+      - 21.824495
+      - 82.10167
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.14996
+      moles:
+      - 21.824879
+      - 82.10311
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.14902
+      moles:
+      - 21.824783
+      - 82.10275
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.14996
+      moles:
+      - 21.824879
+      - 82.10312
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.14975
+      moles:
+      - 21.824856
+      - 82.10303
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.14993
+      moles:
+      - 21.824871
+      - 82.103096
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.15
+      moles:
+      - 21.824875
+      - 82.10311
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 147.925
+      moles:
+      - 5.4562197
+      - 20.52578
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 132.04102
+      moles:
+      - 7.4170485
+      - 27.902231
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 120.69531
+      moles:
+      - 7.1612883
+      - 26.940086
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.15
+      moles:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.15
+      moles:
+      - 5.4562197
+      - 20.52578
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.15
+      moles:
+      - 4.092165
+      - 15.394335
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 220.5375
+      moles:
+      - 5.4562197
+      - 20.52578
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 129.77188
+      moles:
+      - 1.3640549
+      - 5.131445
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 161.53986
+      moles:
+      - 0.34101373
+      - 1.2828612
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 220.5375
+      moles:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 202.38437
+      moles:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 220.5375
+      moles:
+      - 4.092165
+      - 15.394335
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 107.08047
+      moles:
+      - 1.0230412
+      - 3.8485837
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    type: GridAtmosphere
+- uid: 9
+  type: ChairPilotSeat
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -1.5,2.5
+    parent: 8
+    type: Transform
+- uid: 10
+  type: CableApcExtension
+  components:
+  - pos: -0.5,-3.5
+    parent: 8
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 11
+  type: ChairPilotSeat
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 0.5,2.5
+    parent: 8
+    type: Transform
+- uid: 12
+  type: CableMV
+  components:
+  - pos: -0.5,-3.5
+    parent: 8
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 13
+  type: CableMV
+  components:
+  - pos: 0.5,-4.5
+    parent: 8
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 14
+  type: CableApcExtension
+  components:
+  - pos: -0.5,-4.5
+    parent: 8
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 15
+  type: ChairPilotSeat
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -0.5,4.5
+    parent: 8
+    type: Transform
+- uid: 16
+  type: ReinforcedWindow
+  components:
+  - pos: -2.5,-2.5
+    parent: 8
+    type: Transform
+- uid: 17
+  type: ReinforcedWindow
+  components:
+  - pos: -2.5,-0.5
+    parent: 8
+    type: Transform
+- uid: 18
+  type: WallReinforced
+  components:
+  - pos: 1.5,-4.5
+    parent: 8
+    type: Transform
+- uid: 19
+  type: WallReinforced
+  components:
+  - pos: -1.5,-5.5
+    parent: 8
+    type: Transform
+- uid: 20
+  type: Grille
+  components:
+  - pos: 1.5,-2.5
+    parent: 8
+    type: Transform
+- uid: 21
+  type: Grille
+  components:
+  - pos: -2.5,1.5
+    parent: 8
+    type: Transform
+- uid: 22
+  type: ChairPilotSeat
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 0.5,-1.5
+    parent: 8
+    type: Transform
+- uid: 23
+  type: ChairPilotSeat
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -1.5,1.5
+    parent: 8
+    type: Transform
+- uid: 24
+  type: SalternGenerator
+  components:
+  - pos: 0.5,-3.5
+    parent: 8
+    type: Transform
+  - supplyRampPosition: 3000
+    type: PowerSupplier
+- uid: 25
+  type: Thruster
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 1.5,-5.5
+    parent: 8
+    type: Transform
+- uid: 26
+  type: AirlockShuttle
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 1.5,1.5
+    parent: 8
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 27
+  type: CableMV
+  components:
+  - pos: -1.5,-3.5
+    parent: 8
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 28
+  type: PoweredSmallLight
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -1.5,2.5
+    parent: 8
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - enabled: False
+    type: AmbientSound
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 29
+  type: WindowReinforcedDirectional
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 0.5,-2.5
+    parent: 8
+    type: Transform
+- uid: 30
+  type: CableApcExtension
+  components:
+  - pos: -0.5,0.5
+    parent: 8
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 31
+  type: CableApcExtension
+  components:
+  - pos: -0.5,4.5
+    parent: 8
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 32
+  type: CableApcExtension
+  components:
+  - pos: -0.5,3.5
+    parent: 8
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 33
+  type: ReinforcedWindow
+  components:
+  - pos: 1.5,3.5
+    parent: 8
+    type: Transform
+- uid: 34
+  type: CableApcExtension
+  components:
+  - pos: -0.5,2.5
+    parent: 8
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 35
+  type: SalternAPC
+  components:
+  - pos: 0.5,-4.5
+    parent: 8
+    type: Transform
+  - startingCharge: 12000
+    type: Battery
+  - loadingNetworkDemand: 7725
+    currentReceiving: 7724.972
+    currentSupply: 7725
+    supplyRampPosition: 0.027832031
+    type: PowerNetworkBattery
+- uid: 36
+  type: CableApcExtension
+  components:
+  - pos: -0.5,1.5
+    parent: 8
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 37
+  type: ReinforcedWindow
+  components:
+  - pos: 1.5,4.5
+    parent: 8
+    type: Transform
+- uid: 38
+  type: CableApcExtension
+  components:
+  - pos: -0.5,-2.5
+    parent: 8
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 39
+  type: WindowReinforcedDirectional
+  components:
+  - pos: 0.5,-0.5
+    parent: 8
+    type: Transform
+- uid: 40
+  type: ChairPilotSeat
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -1.5,-1.5
+    parent: 8
+    type: Transform
+- uid: 41
+  type: WallReinforced
+  components:
+  - pos: 1.5,-1.5
+    parent: 8
+    type: Transform
+- uid: 42
+  type: WallReinforced
+  components:
+  - pos: -2.5,-1.5
+    parent: 8
+    type: Transform
+- uid: 43
+  type: WallReinforced
+  components:
+  - pos: -1.5,-4.5
+    parent: 8
+    type: Transform
+- uid: 44
+  type: WallReinforced
+  components:
+  - pos: 0.5,-4.5
+    parent: 8
+    type: Transform
+- uid: 45
+  type: ReinforcedWindow
+  components:
+  - pos: -2.5,1.5
+    parent: 8
+    type: Transform
+- uid: 46
+  type: WindoorCommandLocked
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -0.5,3.5
+    parent: 8
+    type: Transform
+- uid: 47
+  type: PoweredSmallLight
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -1.5,-1.5
+    parent: 8
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - enabled: False
+    type: AmbientSound
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 48
+  type: CableHV
+  components:
+  - pos: -1.5,-3.5
+    parent: 8
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 49
+  type: AirlockShuttle
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 1.5,0.5
+    parent: 8
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 50
+  type: Thruster
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -2.5,-5.5
+    parent: 8
+    type: Transform
+- uid: 51
+  type: SalternGenerator
+  components:
+  - pos: -0.5,-3.5
+    parent: 8
+    type: Transform
+  - supplyRampPosition: 3000
+    type: PowerSupplier
+- uid: 52
+  type: WindowReinforcedDirectional
+  components:
+  - pos: 0.5,-2.5
+    parent: 8
+    type: Transform
+- uid: 53
+  type: PoweredSmallLight
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 0.5,-1.5
+    parent: 8
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - enabled: False
+    type: AmbientSound
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 54
+  type: CableHV
+  components:
+  - pos: -0.5,-3.5
+    parent: 8
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 55
+  type: AirlockShuttle
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 1.5,-0.5
+    parent: 8
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 56
+  type: Thruster
+  components:
+  - pos: 1.5,5.5
+    parent: 8
+    type: Transform
+- uid: 57
+  type: SalternSubstation
+  components:
+  - pos: -1.5,-3.5
+    parent: 8
+    type: Transform
+  - startingCharge: 3928500.2
+    type: Battery
+  - loadingNetworkDemand: 7724.972
+    currentReceiving: 6000
+    currentSupply: 7724.972
+    supplyRampPosition: 1724.9722
+    type: PowerNetworkBattery
+  - containers:
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 58
+  type: WindowReinforcedDirectional
+  components:
+  - pos: -0.5,-2.5
+    parent: 8
+    type: Transform
+- uid: 59
+  type: ChairPilotSeat
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -1.5,-0.5
+    parent: 8
+    type: Transform
+- uid: 60
+  type: WallReinforced
+  components:
+  - pos: 1.5,2.5
+    parent: 8
+    type: Transform
+- uid: 61
+  type: Grille
+  components:
+  - pos: -2.5,-0.5
+    parent: 8
+    type: Transform
+- uid: 62
+  type: WallReinforced
+  components:
+  - pos: -2.5,-4.5
+    parent: 8
+    type: Transform
+- uid: 63
+  type: WallReinforced
+  components:
+  - pos: 0.5,-5.5
+    parent: 8
+    type: Transform
+- uid: 64
+  type: Grille
+  components:
+  - pos: -2.5,-2.5
+    parent: 8
+    type: Transform
+- uid: 65
+  type: ChairPilotSeat
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 0.5,3.5
+    parent: 8
+    type: Transform
+- uid: 66
+  type: PoweredSmallLight
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 0.5,2.5
+    parent: 8
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - enabled: False
+    type: AmbientSound
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 67
+  type: CableHV
+  components:
+  - pos: 0.5,-3.5
+    parent: 8
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 68
+  type: ChairPilotSeat
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -1.5,3.5
+    parent: 8
+    type: Transform
+- uid: 69
+  type: Thruster
+  components:
+  - pos: -2.5,5.5
+    parent: 8
+    type: Transform
+- uid: 70
+  type: Gyroscope
+  components:
+  - pos: -0.5,-4.5
+    parent: 8
+    type: Transform
+- uid: 71
+  type: WindowReinforcedDirectional
+  components:
+  - pos: -1.5,-2.5
+    parent: 8
+    type: Transform
+- uid: 72
+  type: ChairPilotSeat
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -1.5,0.5
+    parent: 8
+    type: Transform
+- uid: 73
+  type: WallReinforced
+  components:
+  - pos: -2.5,2.5
+    parent: 8
+    type: Transform
+- uid: 74
+  type: WallReinforced
+  components:
+  - pos: -2.5,0.5
+    parent: 8
+    type: Transform
+- uid: 75
+  type: WallReinforced
+  components:
+  - pos: -2.5,-3.5
+    parent: 8
+    type: Transform
+- uid: 76
+  type: WallReinforced
+  components:
+  - pos: -0.5,-5.5
+    parent: 8
+    type: Transform
+- uid: 77
+  type: WallReinforced
+  components:
+  - pos: 1.5,-3.5
+    parent: 8
+    type: Transform
+- uid: 78
+  type: ReinforcedWindow
+  components:
+  - pos: 1.5,-2.5
+    parent: 8
+    type: Transform
+- uid: 79
+  type: ReinforcedWindow
+  components:
+  - pos: -0.5,6.5
+    parent: 8
+    type: Transform
+- uid: 80
+  type: ReinforcedWindow
+  components:
+  - pos: 0.5,6.5
+    parent: 8
+    type: Transform
+- uid: 81
+  type: ReinforcedWindow
+  components:
+  - pos: 0.5,5.5
+    parent: 8
+    type: Transform
+- uid: 82
+  type: ReinforcedWindow
+  components:
+  - pos: -1.5,5.5
+    parent: 8
+    type: Transform
+- uid: 83
+  type: ReinforcedWindow
+  components:
+  - pos: -1.5,6.5
+    parent: 8
+    type: Transform
+- uid: 84
+  type: ReinforcedWindow
+  components:
+  - pos: -0.5,7.5
+    parent: 8
+    type: Transform
+- uid: 85
+  type: Grille
+  components:
+  - pos: 0.5,4.5
+    parent: 8
+    type: Transform
+- uid: 86
+  type: ReinforcedWindow
+  components:
+  - pos: -2.5,4.5
+    parent: 8
+    type: Transform
+- uid: 87
+  type: ReinforcedWindow
+  components:
+  - pos: -1.5,4.5
+    parent: 8
+    type: Transform
+- uid: 88
+  type: Grille
+  components:
+  - pos: 1.5,4.5
+    parent: 8
+    type: Transform
+- uid: 89
+  type: Grille
+  components:
+  - pos: 1.5,3.5
+    parent: 8
+    type: Transform
+- uid: 90
+  type: ReinforcedWindow
+  components:
+  - pos: -2.5,3.5
+    parent: 8
+    type: Transform
+- uid: 91
+  type: Grille
+  components:
+  - pos: -0.5,6.5
+    parent: 8
+    type: Transform
+- uid: 92
+  type: Grille
+  components:
+  - pos: 0.5,6.5
+    parent: 8
+    type: Transform
+- uid: 93
+  type: Grille
+  components:
+  - pos: 0.5,5.5
+    parent: 8
+    type: Transform
+- uid: 94
+  type: Grille
+  components:
+  - pos: -1.5,5.5
+    parent: 8
+    type: Transform
+- uid: 95
+  type: Grille
+  components:
+  - pos: -1.5,6.5
+    parent: 8
+    type: Transform
+- uid: 96
+  type: Grille
+  components:
+  - pos: -0.5,7.5
+    parent: 8
+    type: Transform
+- uid: 97
+  type: Grille
+  components:
+  - pos: -2.5,3.5
+    parent: 8
+    type: Transform
+- uid: 98
+  type: Grille
+  components:
+  - pos: -2.5,4.5
+    parent: 8
+    type: Transform
+- uid: 99
+  type: Grille
+  components:
+  - pos: -1.5,4.5
+    parent: 8
+    type: Transform
+...

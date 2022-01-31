@@ -28,7 +28,7 @@ namespace Content.Server.Fluids.Components
 
         public override string Name => "Mop";
         public const string SolutionName = "mop";
-
+        
         /// <summary>
         ///     Used to prevent do_after spam if we're currently mopping.
         /// </summary>
@@ -169,12 +169,9 @@ namespace Content.Server.Fluids.Components
                     transferAmount = puddleSolution.TotalVolume - MopLowerLimit; // Then the transferAmount should bring the puddle down to the MopLowerLimit exactly
             }
 
-
-
             // Transfers solution from the puddle to the mop
             solutionSystem.TryAddSolution(Owner, contents, solutionSystem.SplitSolution(target, puddleSolution, transferAmount));
-
-
+            
             SoundSystem.Play(Filter.Pvs(Owner), _pickupSound.GetSound(), Owner);
 
             // if the mop became full after that puddle, let the player know.

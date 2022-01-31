@@ -14,6 +14,5 @@ namespace Content.Shared.Disposal.Components
     {
         Free = 0,
         Anchored,
-        Broken,
     }
 }

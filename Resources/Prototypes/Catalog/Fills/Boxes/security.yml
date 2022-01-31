@@ -57,3 +57,35 @@
     layers:
       - state: box_security
       - state: ziptie
+
+- type: entity
+  name: box of beanbag shots
+  parent: BoxCardboard
+  id: BoxBeanbag
+  description: A box full of beanbag shots, designed for riot shotguns.
+  components:
+  - type: StorageFill
+    contents:
+      - id: ShellShotgunBeanbag
+        amount: 6
+  - type: Sprite
+    layers:
+      - state: box_beanbag
+  - type: Storage
+    capacity: 30
+
+- type: entity
+  name: box of lethal shots
+  parent: BoxCardboard
+  id: BoxLethalshot
+  description: A box full of lethal shots, designed for riot shotguns.
+  components:
+  - type: StorageFill
+    contents:
+      - id: ShellShotgunBase
+        amount: 6
+  - type: Sprite
+    layers:
+      - state: box_lethalshot
+  - type: Storage
+    capacity: 30

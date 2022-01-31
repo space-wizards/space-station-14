@@ -1,7 +1,7 @@
 - type: construction
   name: girder
-  id: girder
-  graph: girder
+  id: Girder
+  graph: Girder
   startNode: start
   targetNode: girder
   category: Structures
@@ -18,8 +18,8 @@
 
 - type: construction
   name: wall
-  id: wall
-  graph: girder
+  id: Wall
+  graph: Girder
   startNode: start
   targetNode: wall
   category: Structures
@@ -36,8 +36,8 @@
 
 - type: construction
   name: reinforced wall
-  id: reinforcedWall
-  graph: girder
+  id: ReinforcedWall
+  graph: Girder
   startNode: start
   targetNode: reinforcedWall
   category: Structures
@@ -55,7 +55,7 @@
 - type: construction
   name: grille
   id: Grille
-  graph: grille
+  graph: Grille
   startNode: start
   targetNode: grille
   category: Structures
@@ -72,7 +72,7 @@
 - type: construction
   name: window
   id: Window
-  graph: window
+  graph: Window
   startNode: start
   targetNode: window
   category: Structures
@@ -91,7 +91,7 @@
 - type: construction
   name: reinforced window
   id: ReinforcedWindow
-  graph: window
+  graph: Window
   startNode: start
   targetNode: reinforcedWindow
   category: Structures
@@ -108,9 +108,28 @@
   canRotate: false
 
 - type: construction
+  name: tinted window
+  id: TintedWindow
+  graph: Window
+  startNode: start
+  targetNode: tintedWindow
+  category: Structures
+  description: Not clear but tough.
+  canBuildInImpassable: true
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  icon:
+    sprite: Structures/Windows/tinted_window.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+
+- type: construction
   name: plasma window
   id: PlasmaWindow
-  graph: window
+  graph: Window
   startNode: start
   targetNode: plasmaWindow
   category: Structures
@@ -129,7 +148,7 @@
 - type: construction
   name: reinforced plasma window
   id: ReinforcedPlasmaWindow
-  graph: window
+  graph: Window
   startNode: start
   targetNode: reinforcedPlasmaWindow
   category: Structures
@@ -148,7 +167,7 @@
 - type: construction
   name: directional window
   id: WindowDirectional
-  graph: windowDirectional
+  graph: WindowDirectional
   startNode: start
   targetNode: windowDirectional
   category: Structures
@@ -166,7 +185,7 @@
 - type: construction
   name: directional reinforced window
   id: WindowReinforcedDirectional
-  graph: windowDirectional
+  graph: WindowDirectional
   startNode: start
   targetNode: windowReinforcedDirectional
   category: Structures
@@ -184,7 +203,7 @@
 - type: construction
   name: directional plasma window
   id: PlasmaWindowDirectional
-  graph: windowDirectional
+  graph: WindowDirectional
   startNode: start
   targetNode: plasmaWindowDirectional
   category: Structures
@@ -202,7 +221,7 @@
 - type: construction
   name: directional reinforced plasma window
   id: PlasmaReinforcedWindowDirectional
-  graph: windowDirectional
+  graph: WindowDirectional
   startNode: start
   targetNode: plasmaReinforcedWindowDirectional
   category: Structures
@@ -259,7 +278,7 @@
 - type: construction
   name: wooden barricade
   id: Barricade
-  graph: barricade
+  graph: Barricade
   startNode: start
   targetNode: barricadewooden
   category: Structures
@@ -276,7 +295,7 @@
 - type: construction
   name: railing
   id: Railing
-  graph: railing
+  graph: Railing
   startNode: start
   targetNode: railing
   category: Structures
@@ -293,7 +312,7 @@
 - type: construction
   name: railing corner
   id: RailingCorner
-  graph: railing
+  graph: Railing
   startNode: start
   targetNode: railingCorner
   category: Structures
@@ -309,8 +328,8 @@
 
 - type: construction
   name: railing corner small
-  id: RailingCornerSmall	
-  graph: railing
+  id: RailingCornerSmall
+  graph: Railing
   startNode: start
   targetNode: railingCornerSmall
   category: Structures
@@ -326,8 +345,8 @@
 
 - type: construction
   name: airlock
-  id: airlock
-  graph: airlock
+  id: Airlock
+  graph: Airlock
   startNode: start
   targetNode: airlock
   category: Structures
@@ -343,8 +362,8 @@
 
 - type: construction
   name: windoor
-  id: windoor
-  graph: windoor
+  id: Windoor
+  graph: Windoor
   startNode: start
   targetNode: windoor
   category: Structures
@@ -360,8 +379,8 @@
 
 - type: construction
   name: secure windoor
-  id: secureWindoor
-  graph: windoor
+  id: SecureWindoor
+  graph: Windoor
   startNode: start
   targetNode: windoorSecure
   category: Structures
@@ -380,7 +399,7 @@
 - type: construction
   name: wall light
   id: LightTubeFixture
-  graph: lightFixture
+  graph: LightFixture
   startNode: start
   targetNode: tubeLight
   category: Structures
@@ -400,7 +419,7 @@
 - type: construction
   name: small wall light
   id: LightSmallFixture
-  graph: lightFixture
+  graph: LightFixture
   startNode: start
   targetNode: bulbLight
   category: Structures
@@ -419,7 +438,7 @@
 - type: construction
   name: light switch
   id: LightSwitchRecipe
-  graph: lightSwitch
+  graph: LightSwitch
   startNode: start
   targetNode: lightSwitch
   category: Structures
@@ -438,7 +457,7 @@
 #conveyor
 - type: construction
   name: conveyor belt
-  id: conveyorbelt
+  id: ConveyorBelt
   graph: ConveyorGraph
   startNode: start
   targetNode: entity
@@ -455,8 +474,8 @@
 
 - type: construction
   name: two-way lever
-  id: twowaylever
-  graph: leverGraph
+  id: TwoWayLever
+  graph: LeverGraph
   startNode: start
   targetNode: lever
   category: Structures

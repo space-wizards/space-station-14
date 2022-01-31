@@ -70,20 +70,6 @@ namespace Content.Client.Inventory
             _config.OnValueChanged(CCVars.HudTheme, UpdateHudTheme);
         }
 
-        public override bool TryEquip(EntityUid actor, EntityUid target, EntityUid itemUid, string slot, bool silent = false, bool force = false,
-            InventoryComponent? inventory = null, SharedItemComponent? item = null)
-        {
-            if(!target.IsClientSide() && !actor.IsClientSide() && !itemUid.IsClientSide()) RaiseNetworkEvent(new TryEquipNetworkMessage(actor, target, itemUid, slot, silent, force));
-            return base.TryEquip(actor, target, itemUid, slot, silent, force, inventory, item);
-        }
-
-        public override bool TryUnequip(EntityUid actor, EntityUid target, string slot, [NotNullWhen(true)] out EntityUid? removedItem, bool silent = false, bool force = false,
-            InventoryComponent? inventory = null)
-        {
-            if(!target.IsClientSide() && !actor.IsClientSide()) RaiseNetworkEvent(new TryUnequipNetworkMessage(actor, target, slot, silent, force));
-            return base.TryUnequip(actor, target, slot, out removedItem, silent, force, inventory);
-        }
-
         private void OnDidUnequip(EntityUid uid, ClientInventoryComponent component, DidUnequipEvent args)
         {
             UpdateComponentUISlot(uid, args.Slot, null, component);
@@ -213,17 +199,15 @@ namespace Content.Client.Inventory
         private void HandleSlotButtonPressed(EntityUid uid, string slot, ItemSlotButton button,
             GUIBoundKeyEventArgs args)
         {
-            if (TryGetSlotEntity(uid, slot, out var itemUid))
-            {
-                if (!_itemSlotManager.OnButtonPressed(args, itemUid.Value) && args.Function == EngineKeyFunctions.UIClick)
-                {
-                    RaiseNetworkEvent(new UseSlotNetworkMessage(uid, slot));
-                }
+            if (TryGetSlotEntity(uid, slot, out var itemUid) && _itemSlotManager.OnButtonPressed(args, itemUid.Value))
                 return;
-            }
 
-            if (args.Function != EngineKeyFunctions.UIClick) return;
-            TryEquipActiveHandTo(uid, slot);
+            if (args.Function != EngineKeyFunctions.UIClick)
+                return;
+
+            // only raise event if either itemUid is not null, or the user is holding something
+            if (itemUid != null || TryComp(uid, out SharedHandsComponent? hands) && hands.TryGetActiveHeldEntity(out _))
+                EntityManager.RaisePredictiveEvent(new UseSlotNetworkMessage(slot)); 
         }
 
         private bool TryGetUIElements(EntityUid uid, [NotNullWhen(true)] out DefaultWindow? invWindow,

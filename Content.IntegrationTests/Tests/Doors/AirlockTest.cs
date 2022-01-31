@@ -1,10 +1,10 @@
 using System;
 using System.Threading.Tasks;
 using Content.Server.Doors.Components;
-using Content.Shared.Doors;
+using Content.Server.Doors.Systems;
+using Content.Shared.Doors.Components;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 
@@ -57,7 +57,7 @@ namespace Content.IntegrationTests.Tests.Doors
             var entityManager = server.ResolveDependency<IEntityManager>();
 
             EntityUid airlock = default;
-            ServerDoorComponent doorComponent = null;
+            DoorComponent doorComponent = null;
 
             server.Assert(() =>
             {
@@ -66,32 +66,32 @@ namespace Content.IntegrationTests.Tests.Doors
                 airlock = entityManager.SpawnEntity("AirlockDummy", MapCoordinates.Nullspace);
 
                 Assert.True(entityManager.TryGetComponent(airlock, out doorComponent));
-                Assert.That(doorComponent.State, Is.EqualTo(SharedDoorComponent.DoorState.Closed));
+                Assert.That(doorComponent.State, Is.EqualTo(DoorState.Closed));
             });
 
             await server.WaitIdleAsync();
 
             server.Assert(() =>
             {
-                doorComponent.Open();
-                Assert.That(doorComponent.State, Is.EqualTo(SharedDoorComponent.DoorState.Opening));
+                EntitySystem.Get<DoorSystem>().StartOpening(airlock);
+                Assert.That(doorComponent.State, Is.EqualTo(DoorState.Opening));
             });
 
             await server.WaitIdleAsync();
 
-            await WaitUntil(server, () => doorComponent.State == SharedDoorComponent.DoorState.Open);
+            await WaitUntil(server, () => doorComponent.State == DoorState.Open);
 
-            Assert.That(doorComponent.State, Is.EqualTo(SharedDoorComponent.DoorState.Open));
+            Assert.That(doorComponent.State, Is.EqualTo(DoorState.Open));
 
             server.Assert(() =>
             {
-                doorComponent.Close();
-                Assert.That(doorComponent.State, Is.EqualTo(SharedDoorComponent.DoorState.Closing));
+                EntitySystem.Get<DoorSystem>().TryClose((EntityUid) airlock);
+                Assert.That(doorComponent.State, Is.EqualTo(DoorState.Closing));
             });
 
-            await WaitUntil(server, () => doorComponent.State == SharedDoorComponent.DoorState.Closed);
+            await WaitUntil(server, () => doorComponent.State == DoorState.Closed);
 
-            Assert.That(doorComponent.State, Is.EqualTo(SharedDoorComponent.DoorState.Closed));
+            Assert.That(doorComponent.State, Is.EqualTo(DoorState.Closed));
 
             server.Assert(() =>
             {
@@ -123,7 +123,7 @@ namespace Content.IntegrationTests.Tests.Doors
             IPhysBody physBody = null;
             EntityUid physicsDummy = default;
             EntityUid airlock = default;
-            ServerDoorComponent doorComponent = null;
+            DoorComponent doorComponent = null;
 
             var physicsDummyStartingX = -1;
 
@@ -139,7 +139,7 @@ namespace Content.IntegrationTests.Tests.Doors
                 Assert.True(entityManager.TryGetComponent(physicsDummy, out physBody));
 
                 Assert.True(entityManager.TryGetComponent(airlock, out doorComponent));
-                Assert.That(doorComponent.State, Is.EqualTo(SharedDoorComponent.DoorState.Closed));
+                Assert.That(doorComponent.State, Is.EqualTo(DoorState.Closed));
             });
 
             await server.WaitIdleAsync();

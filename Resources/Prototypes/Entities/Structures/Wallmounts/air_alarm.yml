@@ -64,7 +64,7 @@
   - type: Transform
     anchored: true
   - type: Construction
-    graph: air_alarm
+    graph: AirAlarm
     node: air_alarm
   placement:
     mode: SnapgridCenter
@@ -82,7 +82,7 @@
     sprite: Structures/Wallmounts/air_monitors.rsi
     state: alarm_b1
   - type: Construction
-    graph: air_alarm
+    graph: AirAlarm
     node: assembly
   placement:
     mode: SnapgridCenter
