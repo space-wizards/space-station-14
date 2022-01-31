@@ -42,6 +42,7 @@ namespace Content.Shared.Interaction
         [Dependency] private readonly SharedVerbSystem _verbSystem = default!;
         [Dependency] private readonly SharedAdminLogSystem _adminLogSystem = default!;
         [Dependency] private readonly RotateToFaceSystem _rotateToFaceSystem = default!;
+        [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
 
         public const float InteractionRange = 2;
         public const float InteractionRangeSquared = InteractionRange * InteractionRange;
@@ -76,7 +77,7 @@ namespace Content.Shared.Interaction
                 return;
             }
 
-            if (!user.IsInSameOrParentContainer(ev.Target) && !CanAccessViaStorage(user, ev.Target))
+            if (!ContainerSystem.IsInSameOrParentContainer(user, ev.Target) && !CanAccessViaStorage(user, ev.Target))
             {
                 ev.Cancel();
                 return;
@@ -154,7 +155,7 @@ namespace Content.Shared.Interaction
 
             // Check if interacted entity is in the same container, the direct child, or direct parent of the user.
             // This is bypassed IF the interaction happened through an item slot (e.g., backpack UI)
-            if (target != null && !user.IsInSameOrParentContainer(target.Value) && !CanAccessViaStorage(user, target.Value))
+            if (target != null && !ContainerSystem.IsInSameOrParentContainer(user, target.Value) && !CanAccessViaStorage(user, target.Value))
                 return;
 
             // Verify user has a hand, and find what object they are currently holding in their active hand
@@ -640,7 +641,7 @@ namespace Content.Shared.Interaction
 
             // Check if interacted entity is in the same container, the direct child, or direct parent of the user.
             // This is bypassed IF the interaction happened through an item slot (e.g., backpack UI)
-            if (!user.IsInSameOrParentContainer(used) && !CanAccessViaStorage(user, used))
+            if (!ContainerSystem.IsInSameOrParentContainer(user, used) && !CanAccessViaStorage(user, used))
                 return;
 
             var activateMsg = new ActivateInWorldEvent(user, used);
