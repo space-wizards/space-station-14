@@ -38,7 +38,7 @@ public sealed class RadarControl : Control
 
     private const int RadarCircleRadius = (RadarArea - 8) / 2;
 
-    private RadarConsoleBoundInterfaceState _lastState = new RadarConsoleBoundInterfaceState(new RadarObjectData[] { }, Vector2i.Zero);
+    private RadarConsoleBoundInterfaceState _lastState = new RadarConsoleBoundInterfaceState(new RadarObjectData[] { });
 
     private int SizeFull => (int) (RadarArea * UIScale);
 

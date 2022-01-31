@@ -35,9 +35,9 @@ public class RadarConsoleSystem : EntitySystem
             if (s is null)
                 continue;
 
-            var (radarPos, radarRot, radarInvMatrix) = xform.GetWorldPositionRotationInvMatrix();
-            var mapId = xform.MapID;
+            var (radarPos, _, radarInvMatrix) = xform.GetWorldPositionRotationInvMatrix();
 
+            var mapId = xform.MapID;
             var objects = new List<RadarObjectData>();
 
             _mapManager.FindGridsIntersectingEnumerator(mapId, new Box2(radarPos - component.Range, radarPos + component.Range), out var enumerator, true);
@@ -51,16 +51,18 @@ public class RadarConsoleSystem : EntitySystem
                     continue;
 
                 var rad = Math.Log2(phy.Mass);
-                var pos = radarInvMatrix.Transform(transform.WorldMatrix.Transform(phy.LocalCenter));
+                var gridCenter = transform.WorldMatrix.Transform(phy.LocalCenter);
+
+                var pos = radarInvMatrix.Transform(gridCenter);
                 pos.Y = -pos.Y; // Robust has an inverted Y, like BYOND. This undoes that.
 
-                if (pos.Length > 256)
+                if (pos.Length > component.Range)
                     continue;
 
                 objects.Add(new RadarObjectData {Color = Color.Aqua, Position = pos, Radius = (float)rad});
             }
 
-            s.SetState(new RadarConsoleBoundInterfaceState(objects.ToArray(), radarPos));
+            s.SetState(new RadarConsoleBoundInterfaceState(objects.ToArray()));
         }
     }
 }

@@ -9,12 +9,10 @@ namespace Content.Shared.Radar;
 public sealed class RadarConsoleBoundInterfaceState : BoundUserInterfaceState
 {
     public RadarObjectData[] Objects;
-    public Vector2 Position;
 
-    public RadarConsoleBoundInterfaceState(RadarObjectData[] objects, Vector2 position)
+    public RadarConsoleBoundInterfaceState(RadarObjectData[] objects)
     {
         Objects = objects;
-        Position = position;
     }
 }
 
