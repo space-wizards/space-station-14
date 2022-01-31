@@ -69,6 +69,14 @@
 
 - type: entity
   parent: BaseComputerCircuitboard
+  id: RadarConsoleCircuitboard
+  name: radar console computer board
+  components:
+  - type: ComputerBoard
+    prototype: ComputerRadar
+
+- type: entity
+  parent: BaseComputerCircuitboard
   id: SolarControlComputerCircuitboard
   name: solar control computer board
   components:

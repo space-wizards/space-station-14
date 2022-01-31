@@ -70,12 +70,19 @@ namespace Content.Shared.Interaction
         /// </summary>
         public EntityCoordinates ClickLocation { get; }
 
-        public InteractUsingEvent(EntityUid user, EntityUid used, EntityUid target, EntityCoordinates clickLocation)
+        /// <summary>
+        ///     If true, this prediction is also being predicted client-side. So care has to be taken to avoid audio
+        ///     duplication.
+        /// </summary>
+        public bool Predicted { get; }
+
+        public InteractUsingEvent(EntityUid user, EntityUid used, EntityUid target, EntityCoordinates clickLocation, bool predicted = false)
         {
             User = user;
             Used = used;
             Target = target;
             ClickLocation = clickLocation;
+            Predicted = predicted;
         }
     }
 }

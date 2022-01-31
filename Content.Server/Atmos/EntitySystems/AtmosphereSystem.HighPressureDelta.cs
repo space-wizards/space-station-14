@@ -2,12 +2,9 @@ using Content.Server.Atmos.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Audio;
 using Robust.Shared.Audio;
-using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Physics;
 using Robust.Shared.Player;
 using Robust.Shared.ViewVariables;
 
@@ -22,7 +19,7 @@ namespace Content.Server.Atmos.EntitySystems
         [ViewVariables(VVAccess.ReadWrite)]
         public string? SpaceWindSound { get; private set; } = "/Audio/Effects/space_wind.ogg";
 
-        private void HighPressureMovements(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile)
+        private void HighPressureMovements(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, EntityQuery<PhysicsComponent> bodies, EntityQuery<TransformComponent> xforms, EntityQuery<MovedByPressureComponent> pressureQuery)
         {
             // TODO ATMOS finish this
 
@@ -39,9 +36,10 @@ namespace Content.Server.Atmos.EntitySystems
 
             foreach (var entity in _lookup.GetEntitiesIntersecting(tile.GridIndex, tile.GridIndices))
             {
-                if (!HasComp<IPhysBody>(entity)
-                    || !entity.IsMovedByPressure(out var pressure)
-                    || entity.IsInContainer())
+                // Ideally containers would have their own EntityQuery internally or something given recursively it may need to slam GetComp<T> anyway.
+                if (!bodies.HasComponent(entity)
+                    || !pressureQuery.TryGetComponent(entity, out var pressure) || !pressure.Enabled
+                    || _containers.IsEntityInContainer(entity, xforms.GetComponent(entity)))
                     continue;
 
                 var pressureMovements = EnsureComp<MovedByPressureComponent>(entity);

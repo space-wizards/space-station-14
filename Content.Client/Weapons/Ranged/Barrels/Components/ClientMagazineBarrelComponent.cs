@@ -3,7 +3,6 @@ using Content.Client.IoC;
 using Content.Client.Items.Components;
 using Content.Client.Resources;
 using Content.Client.Stylesheets;
-using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Client.Animations;
 using Robust.Client.Graphics;
@@ -13,8 +12,6 @@ using Robust.Shared.Animations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Maths;
-using Robust.Shared.Network;
-using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
@@ -104,18 +101,9 @@ namespace Content.Client.Weapons.Ranged.Barrels.Components
             _statusControl?.Update();
         }
 
-        [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
-        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession? session = null)
+        public void PlayAlarmAnimation()
         {
-            base.HandleNetworkMessage(message, channel, session);
-
-            switch (message)
-            {
-
-                case MagazineAutoEjectMessage _:
-                    _statusControl?.PlayAlarmAnimation();
-                    return;
-            }
+            _statusControl?.PlayAlarmAnimation();
         }
 
         public Control MakeControl()

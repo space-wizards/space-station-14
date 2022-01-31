@@ -1,7 +1,7 @@
 # Base
 
 - type: entity
-  parent: BaseItem
+  parent: FoodBase
   id: FoodSnackBase
   abstract: true
   components:

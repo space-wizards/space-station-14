@@ -283,7 +283,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             {
                 user = sEntities.SpawnEntity(null, coords);
                 user.EnsureComponent<HandsComponent>().AddHand("hand", HandLocation.Left);
-                target = sEntities.SpawnEntity(null, new MapCoordinates((InteractionSystem.InteractionRange, 0), mapId));
+                target = sEntities.SpawnEntity(null, new MapCoordinates((SharedInteractionSystem.InteractionRange + 0.01f, 0), mapId));
                 item = sEntities.SpawnEntity(null, coords);
                 item.EnsureComponent<ItemComponent>();
             });

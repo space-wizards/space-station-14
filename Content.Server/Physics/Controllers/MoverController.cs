@@ -106,7 +106,7 @@ namespace Content.Server.Physics.Controllers
             // then do the movement input once for it.
             foreach (var (shuttle, pilots) in _shuttlePilots)
             {
-                if (shuttle.Paused || !EntityManager.TryGetComponent((shuttle).Owner, out PhysicsComponent? body)) continue;
+                if (Paused(shuttle.Owner) || !TryComp(shuttle.Owner, out PhysicsComponent? body)) continue;
 
                 // Collate movement linear and angular inputs together
                 var linearInput = Vector2.Zero;
@@ -129,7 +129,7 @@ namespace Content.Server.Physics.Controllers
 
                             if (sprint.Equals(Vector2.Zero)) continue;
 
-                            var offsetRotation = EntityManager.GetComponent<TransformComponent>((console).Owner).LocalRotation;
+                            var offsetRotation = EntityManager.GetComponent<TransformComponent>(console.Owner).LocalRotation;
 
                             linearInput += offsetRotation.RotateVec(new Vector2(0f, sprint.Y));
                             angularInput += sprint.X;
