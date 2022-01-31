@@ -17,24 +17,19 @@ namespace Content.Server.Objectives.Conditions
             get
             {
                 var targetName = string.Empty;
-                var jobTitle = "!!ERR:No Job";
+                var jobName = Target?.CurrentJob?.Name ?? "Unknown";
 
                 if (Target == null)
-                    return Loc.GetString("objective-condition-kill-person-title", ("targetName", targetName), ("job", jobTitle));
+                    return Loc.GetString("objective-condition-kill-person-title", ("targetName", targetName), ("job", jobName));
+
+                var targetJob = Target.CurrentJob;
 
                 if (Target.CharacterName != null)
                     targetName = Target.CharacterName;
                 else if (Target.OwnedEntity is {Valid: true} owned)
                     targetName = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(owned).EntityName;
 
-                foreach (var role in Target.AllRoles)
-                {
-                    if (role.GetType() != typeof(Job)) continue;
-                    jobTitle = role.Name;
-                    break;
-                }
-
-                return Loc.GetString("objective-condition-kill-person-title", ("targetName", targetName), ("job", jobTitle));
+                return Loc.GetString("objective-condition-kill-person-title", ("targetName", targetName), ("job", jobName));
             }
         }
 
