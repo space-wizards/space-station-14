@@ -44,7 +44,6 @@ namespace Content.Client.Entry
             "ResearchPointSource",
             "ResearchClient",
             "IdCardConsole",
-            "Airlock",
             "ThermalRegulator",
             "AtmosFixMarker",
             "CablePlacer",
@@ -75,7 +74,6 @@ namespace Content.Client.Entry
             "Brain",
             "CommunicationsConsole",
             "BarSign",
-            "DoorBumpOpener",
             "SolarPanel",
             "BodyScanner",
             "Stunbaton",
@@ -253,6 +251,7 @@ namespace Content.Client.Entry
             "ExplosionLaunched",
             "BeingCloned",
             "Advertise",
+            "Bible",
             "PowerNetworkBattery",
             "BatteryCharger",
             "UnpoweredFlashlight",
@@ -284,6 +283,7 @@ namespace Content.Client.Entry
             "AtmosAlarmable",
             "FireAlarm",
             "AirAlarm",
+            "RadarConsole",
             "Guardian",
             "GuardianCreator",
             "GuardianHost",
@@ -294,13 +294,14 @@ namespace Content.Client.Entry
             "MonkeyAccent",
             "ReplacementAccent",
             "ResistLocker",
+            "IgniteOnCollide",
             "SpawnArtifact",
             "TelepathicArtifact",
             "ArtifactGasTrigger",
             "ArtifactInteractionTrigger",
             "Artifact",
             "RandomArtifactSprite",
-            "EnergySword",
+            "EnergySword"
         };
     }
 }

@@ -1,16 +1,21 @@
-﻿using System;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Hands.Components;
+using Content.Shared.Interaction;
+using Content.Shared.Interaction.Helpers;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.Movement.EntitySystems;
 using Content.Shared.Popups;
+using Content.Shared.Strip.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Map;
 using Robust.Shared.Player;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Inventory;
 
@@ -18,12 +23,17 @@ public abstract partial class InventorySystem
 {
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeed = default!;
+    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
 
     private void InitializeEquip()
     {
         //these events ensure that the client also gets its proper events raised when getting its containerstate updated
         SubscribeLocalEvent<InventoryComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
         SubscribeLocalEvent<InventoryComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
+
+        SubscribeAllEvent<UseSlotNetworkMessage>(OnUseSlot);
     }
 
     private void OnEntRemoved(EntityUid uid, InventoryComponent component, EntRemovedFromContainerMessage args)
@@ -50,56 +60,126 @@ public abstract partial class InventorySystem
         RaiseLocalEvent(args.Entity, gotEquippedEvent);
     }
 
-    public bool TryEquipActiveHandTo(EntityUid uid, string slot, bool silent = false, bool force = false,
-        InventoryComponent? component = null, SharedHandsComponent? hands = null)
+    /// <summary>
+    ///     Will attempt to equip or unequip an item to/from the clicked slot. If the user clicked on an occupied slot
+    ///     with some entity, will instead attempt to interact with this entity.
+    /// </summary>
+    private void OnUseSlot(UseSlotNetworkMessage ev, EntitySessionEventArgs eventArgs)
     {
-        if (!Resolve(uid, ref component, false) || !Resolve(uid, ref hands, false))
-            return false;
+        if (eventArgs.SenderSession.AttachedEntity is not EntityUid { Valid: true } actor)
+            return;
 
-        if (!hands.TryGetActiveHeldEntity(out var heldEntity))
-            return false;
+        if (!TryComp(actor, out InventoryComponent? inventory) || !TryComp<SharedHandsComponent>(actor, out var hands))
+            return;
 
-        return TryEquip(uid, heldEntity.Value, slot, silent, force, component);
-    }
+        hands.TryGetActiveHeldEntity(out var held);
+        TryGetSlotEntity(actor, ev.Slot, out var itemUid, inventory);
 
-    public bool TryEquip(EntityUid uid, EntityUid itemUid, string slot, bool silent = false, bool force = false,
+        // attempt to perform some interaction
+        if (held != null && itemUid != null)
+        {
+            _interactionSystem.InteractUsing(actor, held.Value, itemUid.Value,
+                new EntityCoordinates(), predicted: true);
+            return;
+        }
+
+        // un-equip to hands
+        if (itemUid != null)
+        {
+            if (hands.CanPickupEntityToActiveHand(itemUid.Value) && TryUnequip(actor, ev.Slot, inventory: inventory))
+                hands.PutInHand(itemUid.Value, false);
+            return;
+        }
+
+        // finally, just try to equip the held item.
+        if (held == null)
+            return;
+
+        // before we drop the item, check that it can be equipped in the first place.
+        if (!CanEquip(actor, held.Value, ev.Slot, out var reason))
+        {
+            if (_gameTiming.IsFirstTimePredicted)
+                _popup.PopupCursor(Loc.GetString(reason), Filter.Local());
+            return;
+        }
+
+        if (hands.TryDropNoInteraction())
+            TryEquip(actor, actor, held.Value, ev.Slot, predicted: true, inventory: inventory);
+        }
+
+    public bool TryEquip(EntityUid uid, EntityUid itemUid, string slot, bool silent = false, bool force = false, bool predicted = false,
         InventoryComponent? inventory = null, SharedItemComponent? item = null) =>
-        TryEquip(uid, uid, itemUid, slot, silent, force, inventory, item);
+        TryEquip(uid, uid, itemUid, slot, silent, force, predicted, inventory, item);
 
-    public virtual bool TryEquip(EntityUid actor, EntityUid target, EntityUid itemUid, string slot, bool silent = false, bool force = false, InventoryComponent? inventory = null, SharedItemComponent? item = null)
+    public bool TryEquip(EntityUid actor, EntityUid target, EntityUid itemUid, string slot, bool silent = false, bool force = false, bool predicted = false,
+        InventoryComponent? inventory = null, SharedItemComponent? item = null)
     {
         if (!Resolve(target, ref inventory, false) || !Resolve(itemUid, ref item, false))
         {
-            if(!silent) _popup.PopupCursor(Loc.GetString("inventory-component-can-equip-cannot"), Filter.Local());
+            if(!silent && _gameTiming.IsFirstTimePredicted)
+                _popup.PopupCursor(Loc.GetString("inventory-component-can-equip-cannot"), Filter.Local());
             return false;
         }
 
         if (!TryGetSlotContainer(target, slot, out var slotContainer, out var slotDefinition, inventory))
         {
-            if(!silent) _popup.PopupCursor(Loc.GetString("inventory-component-can-equip-cannot"), Filter.Local());
+            if(!silent && _gameTiming.IsFirstTimePredicted)
+                _popup.PopupCursor(Loc.GetString("inventory-component-can-equip-cannot"), Filter.Local());
             return false;
         }
 
         if (!force && !CanEquip(actor, target, itemUid, slot, out var reason, slotDefinition, inventory, item))
         {
-            if(!silent) _popup.PopupCursor(Loc.GetString(reason), Filter.Local());
+            if(!silent && _gameTiming.IsFirstTimePredicted)
+                _popup.PopupCursor(Loc.GetString(reason), Filter.Local());
             return false;
         }
 
         if (!slotContainer.Insert(itemUid))
         {
-            if(!silent)  _popup.PopupCursor(Loc.GetString("inventory-component-can-unequip-cannot"), Filter.Local());
+            if(!silent && _gameTiming.IsFirstTimePredicted)
+                _popup.PopupCursor(Loc.GetString("inventory-component-can-unequip-cannot"), Filter.Local());
             return false;
         }
 
-        if(!silent && item.EquipSound != null)
-            SoundSystem.Play(Filter.Pvs(target), item.EquipSound.GetSound(), target, AudioParams.Default.WithVolume(-2f));
+        if(!silent && item.EquipSound != null && _gameTiming.IsFirstTimePredicted)
+        {
+            var filter = Filter.Pvs(target);
+
+            // don't play double audio for predicted interactions
+            if (predicted)
+                filter.RemoveWhereAttachedEntity(entity => entity == actor);
+
+            SoundSystem.Play(filter, item.EquipSound.GetSound(), target, AudioParams.Default.WithVolume(-2f));
+        }
 
         inventory.Dirty();
 
         _movementSpeed.RefreshMovementSpeedModifiers(target);
 
         return true;
+    }
+
+    public bool CanAccess(EntityUid actor, EntityUid target, EntityUid itemUid)
+    {
+        // Can the actor reach the target?
+        if (actor != target && !( actor.InRangeUnobstructed(target) && _containerSystem.IsInSameOrParentContainer(actor, target)))
+            return false;
+
+        // Can the actor reach the item?
+        if (_interactionSystem.InRangeUnobstructed(actor, itemUid) && _containerSystem.IsInSameOrParentContainer(actor, itemUid))
+            return true;
+
+        // Is the item in an open storage UI, i.e., is the user quick-equipping from an open backpack?
+        if (_interactionSystem.CanAccessViaStorage(actor, itemUid))
+            return true;
+
+        // Is the actor currently stripping the target? Here we could check if the actor has the stripping UI open, but
+        // that requires server/client specific code. so lets just check if they **could** open the stripping UI.
+        // Note that this doesn't check that the item is equipped by the target, as this is done elsewhere.
+        return actor != target
+            && TryComp(target, out SharedStrippableComponent? strip)
+            && strip.CanBeStripped(actor);
     }
 
     public bool CanEquip(EntityUid uid, EntityUid itemUid, string slot, [NotNullWhen(false)] out string? reason,
@@ -122,6 +202,12 @@ public abstract partial class InventorySystem
         if(!item.SlotFlags.HasFlag(slotDefinition.SlotFlags) && (!slotDefinition.SlotFlags.HasFlag(SlotFlags.POCKET) || item.Size > (int) ReferenceSizes.Pocket))
         {
             reason = "inventory-component-can-equip-does-not-fit";
+            return false;
+        }
+
+        if (!CanAccess(actor, target, itemUid))
+        {
+            reason = "interaction-system-user-interaction-cannot-reach";
             return false;
         }
 
@@ -166,19 +252,21 @@ public abstract partial class InventorySystem
     public bool TryUnequip(EntityUid uid, string slot, [NotNullWhen(true)] out EntityUid? removedItem, bool silent = false, bool force = false,
         InventoryComponent? inventory = null) => TryUnequip(uid, uid, slot, out removedItem, silent, force, inventory);
 
-    public virtual bool TryUnequip(EntityUid actor, EntityUid target, string slot, [NotNullWhen(true)] out EntityUid? removedItem, bool silent = false,
+    public bool TryUnequip(EntityUid actor, EntityUid target, string slot, [NotNullWhen(true)] out EntityUid? removedItem, bool silent = false,
         bool force = false, InventoryComponent? inventory = null)
     {
         removedItem = null;
         if (!Resolve(target, ref inventory, false))
         {
-            if(!silent) _popup.PopupCursor(Loc.GetString("inventory-component-can-unequip-cannot"), Filter.Local());
+            if(!silent && _gameTiming.IsFirstTimePredicted)
+                _popup.PopupCursor(Loc.GetString("inventory-component-can-unequip-cannot"), Filter.Local());
             return false;
         }
 
         if (!TryGetSlotContainer(target, slot, out var slotContainer, out var slotDefinition, inventory))
         {
-            if(!silent) _popup.PopupCursor(Loc.GetString("inventory-component-can-unequip-cannot"), Filter.Local());
+            if(!silent && _gameTiming.IsFirstTimePredicted)
+                _popup.PopupCursor(Loc.GetString("inventory-component-can-unequip-cannot"), Filter.Local());
             return false;
         }
 
@@ -188,7 +276,8 @@ public abstract partial class InventorySystem
 
         if (!force && !CanUnequip(actor, target, slot, out var reason, slotContainer, slotDefinition, inventory))
         {
-            if(!silent) _popup.PopupCursor(Loc.GetString(reason), Filter.Local());
+            if(!silent && _gameTiming.IsFirstTimePredicted)
+                _popup.PopupCursor(Loc.GetString(reason), Filter.Local());
             return false;
         }
 
@@ -248,6 +337,13 @@ public abstract partial class InventorySystem
             return false;
 
         var itemUid = containerSlot.ContainedEntity.Value;
+
+        // make sure the user can actually reach the target
+        if (!CanAccess(actor, target, itemUid))
+        {
+            reason = "interaction-system-user-interaction-cannot-reach";
+            return false;
+        }
 
         var attemptEvent = new IsUnequippingAttemptEvent(actor, target, itemUid, slotDefinition);
         RaiseLocalEvent(target, attemptEvent);

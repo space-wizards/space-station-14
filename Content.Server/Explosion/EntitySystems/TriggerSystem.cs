@@ -1,6 +1,8 @@
 using System;
 using Content.Server.Administration.Logs;
+using Content.Server.Doors;
 using Content.Server.Doors.Components;
+using Content.Server.Doors.Systems;
 using Content.Server.Explosion.Components;
 using Content.Server.Flash;
 using Content.Server.Flash.Components;
@@ -39,6 +41,7 @@ namespace Content.Server.Explosion.EntitySystems
     {
         [Dependency] private readonly ExplosionSystem _explosions = default!;
         [Dependency] private readonly FlashSystem _flashSystem = default!;
+        [Dependency] private readonly DoorSystem _sharedDoorSystem = default!;
 
         public override void Initialize()
         {
@@ -106,21 +109,7 @@ namespace Content.Server.Explosion.EntitySystems
 
         private void HandleDoorTrigger(EntityUid uid, ToggleDoorOnTriggerComponent component, TriggerEvent args)
         {
-            if (EntityManager.TryGetComponent<ServerDoorComponent>(uid, out var door))
-            {
-                switch (door.State)
-                {
-                    case SharedDoorComponent.DoorState.Open:
-                        door.Close();
-                        break;
-                    case SharedDoorComponent.DoorState.Closed:
-                        door.Open();
-                        break;
-                    case SharedDoorComponent.DoorState.Closing:
-                    case SharedDoorComponent.DoorState.Opening:
-                        break;
-                }
-            }
+            _sharedDoorSystem.TryToggleDoor(uid);
         }
 
         private void HandleCollide(EntityUid uid, TriggerOnCollideComponent component, StartCollideEvent args)

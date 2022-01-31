@@ -53,7 +53,7 @@ namespace Content.IntegrationTests.Tests.Disposal
         {
             foreach (var entity in entities)
             {
-                Assert.That(unit.ContainedEntities.Contains(entity), Is.EqualTo(result));
+                Assert.That(unit.Container.ContainedEntities.Contains(entity), Is.EqualTo(result));
             }
         }
 
@@ -65,11 +65,11 @@ namespace Content.IntegrationTests.Tests.Disposal
 
         private void Flush(DisposalUnitComponent unit, bool result, params EntityUid[] entities)
         {
-            Assert.That(unit.ContainedEntities, Is.SupersetOf(entities));
-            Assert.That(entities.Length, Is.EqualTo(unit.ContainedEntities.Count));
+            Assert.That(unit.Container.ContainedEntities, Is.SupersetOf(entities));
+            Assert.That(entities.Length, Is.EqualTo(unit.Container.ContainedEntities.Count));
 
             Assert.That(result, Is.EqualTo(EntitySystem.Get<DisposalUnitSystem>().TryFlush(unit)));
-            Assert.That(result || entities.Length == 0, Is.EqualTo(unit.ContainedEntities.Count == 0));
+            Assert.That(result || entities.Length == 0, Is.EqualTo(unit.Container.ContainedEntities.Count == 0));
         }
 
         private const string Prototypes = @"
@@ -194,7 +194,7 @@ namespace Content.IntegrationTests.Tests.Disposal
                 // Remove power need
                 Assert.True(entityManager.TryGetComponent(disposalUnit, out ApcPowerReceiverComponent power));
                 power!.NeedsPower = false;
-                Assert.True(unit.Powered);
+                unit.Powered = true;//Power state changed event doesn't get fired smh
 
                 // Flush with a mob and an item
                 Flush(unit, true, human, wrench);

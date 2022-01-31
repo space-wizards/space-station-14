@@ -4,13 +4,13 @@
 - type: startingGear
   id: IHSGear
   equipment:
-    innerclothing: ClothingUniformJumpsuitColorBlack
-    backpack: ClothingBackpackFilled
+    jumpsuit: ClothingUniformJumpsuitColorBlack
+    back: ClothingBackpackFilled
     head: ClothingHeadHelmetIHSVoidHelm
     gloves: ClothingHandsGlovesIhscombat
     outerClothing: IHSVoidsuit
     shoes: ClothingShoesBootsJack
-    idcard: AssistantPDA
+    id: AssistantPDA
     ears: ClothingHeadsetService
   innerclothingskirt: ClothingUniformJumpskirtColorBlack
   satchel: ClothingBackpackSatchelFilled
@@ -20,12 +20,12 @@
 - type: startingGear
   id: PirateGear
   equipment:
-    innerclothing: ClothingUniformJumpsuitColorLightBrown
-    backpack: ClothingBackpackSatchelEngineering
+    jumpsuit: ClothingUniformJumpsuitColorLightBrown
+    back: ClothingBackpackSatchelEngineering
     head: ClothingHeadHatPirate
     outerClothing: ClothingOuterCoatPirate
     shoes: ClothingShoesBootsWork
-    idcard: AssistantPDA
+    id: AssistantPDA
     belt: ClothingBeltUtility
   innerclothingskirt: ClothingUniformJumpskirtColorLightBrown
   satchel: ClothingBackpackSatchelEngineering
@@ -35,13 +35,13 @@
 - type: startingGear
   id: SpaceNinjaGear
   equipment:
-    innerclothing: ClothingUniformJumpsuitColorBlack
-    backpack: ClothingBackpackFilled
+    jumpsuit: ClothingUniformJumpsuitColorBlack
+    back: ClothingBackpackFilled
     head: ClothingHeadHelmetSpaceNinja
     gloves: ClothingHandsGlovesSpaceNinja
     outerClothing: ClothingOuterSuitSpaceninja
     shoes: ClothingShoesSpaceNinja
-    idcard: AssistantPDA
+    id: AssistantPDA
   innerclothingskirt: ClothingUniformJumpskirtColorBlack
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled
@@ -50,8 +50,8 @@
 - type: startingGear
   id: DeadsquadGear
   equipment:
-    innerclothing: ClothingUniformJumpsuitColorBlack
-    backpack: ClothingBackpackDuffelSyndicateAmmo
+    jumpsuit: ClothingUniformJumpsuitColorBlack
+    back: ClothingBackpackDuffelSyndicateAmmo
     head: ClothingHeadHelmetHardsuitDeathsquad
     mask: ClothingMaskBreath
     eyes: ClothingEyesGlassesSecurity
@@ -59,7 +59,7 @@
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitDeathsquad
     shoes: ClothingShoesChameleonNoSlips
-    idcard: CentcomPDA
+    id: CentcomPDA
     pocket1: EmergencyOxygenTankFilled
     belt: ClothingBeltUtilityFilled
   innerclothingskirt: ClothingUniformJumpskirtColorBlack
