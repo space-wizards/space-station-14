@@ -109,10 +109,10 @@ namespace Content.Client.Clickable
                 if (sprite.EnableDirectionOverride)
                 {
                     dir = sprite.DirectionOverride.Convert(state.Directions);
-                    dir = OffsetRsiDir(dir, layer.DirOffset);
+                    dir = dir.OffsetRsiDir(layer.DirOffset);
                 }
                 else
-                    dir = OffsetRsiDir(dir, layer.DirOffset);
+                    dir = dir.OffsetRsiDir(layer.DirOffset);
 
                 if (_clickMapManager.IsOccluding(layer.ActualRsi, layer.State, dir, layer.AnimationFrame, layerImagePos))
                     return true;
