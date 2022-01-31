@@ -125,7 +125,7 @@ namespace Content.Server.Atmos.Monitor.Systems
         {
             if (!Resolve(uid, ref component, ref appearance)) return;
 
-            var transform = Transform(component.Owner);
+            var transform = Transform(uid);
             // atmos alarms will first attempt to get the air
             // directly underneath it - if not, then it will
             // instead get the air from the tile in front of it
@@ -213,9 +213,7 @@ namespace Content.Server.Atmos.Monitor.Systems
                     if (atmosDeviceComponent.JoinedGrid == null)
                     {
                         _atmosDeviceSystem.JoinAtmosphere(atmosDeviceComponent);
-                        var coords = Transform(component.Owner).Coordinates;
-                        var air = _atmosphereSystem.GetTileMixture(coords);
-                        component.TileGas = air;
+                        GetOpenAir(uid);
                     }
                 }
             }
