@@ -77,7 +77,7 @@ namespace Content.Shared.Interaction
                 return;
             }
 
-            if (!user.IsInSameOrParentContainer(ev.Target) && !CanAccessViaStorage(user, ev.Target))
+            if (!ContainerSystem.IsInSameOrParentContainer(user, ev.Target) && !CanAccessViaStorage(user, ev.Target))
             {
                 ev.Cancel();
                 return;
