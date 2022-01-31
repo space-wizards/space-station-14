@@ -15,7 +15,7 @@
   - type: SolutionContainerManager
     solutions:
       tank:
-        maxVol: 99999
+        maxVol: 500
   - type: DrainableSolution
     solution: tank
   - type: ReagentTank
@@ -31,7 +31,7 @@
       tank:
         reagents:
         - ReagentId: Water
-          Quantity: 99999
+          Quantity: 500
 
 - type: entity
   name: wide sink
