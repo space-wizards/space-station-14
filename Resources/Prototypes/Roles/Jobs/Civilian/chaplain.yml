@@ -9,15 +9,18 @@
   access:
   - Chapel
   - Maintenance
+  special:
+  - !type:AddComponentSpecial
+    component: BibleUser #Lets them heal with bibles
 
 - type: startingGear
   id: ChaplainGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitChaplain
-    back: ClothingBackpackFilled
+    back: ClothingBackpackChaplainFilled
     shoes: ClothingShoesColorBlack
     id: ChaplainPDA
     ears: ClothingHeadsetService
   innerclothingskirt: ClothingUniformJumpskirtChaplain
-  satchel: ClothingBackpackSatchelFilled
-  duffelbag: ClothingBackpackDuffelFilled
+  satchel: ClothingBackpackSatchelChaplainFilled
+  duffelbag: ClothingBackpackDuffelChaplainFilled
