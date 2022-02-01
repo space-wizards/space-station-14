@@ -37,6 +37,9 @@
   - type: Tag
     tags:
     - Trash
+  - type: ItemCooldown
+  - type: UseDelay
+    delay: 1.0
 
 - type: entity
   parent: DrinkCanBaseFull

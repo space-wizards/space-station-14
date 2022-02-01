@@ -1,0 +1,32 @@
+- type: entity
+  name: bible
+  description: New Interstellar Version 2340
+  parent: BaseItem
+  id: Bible
+  components:
+  - type: Bible
+    damage:
+      groups:
+        Brute: -35
+        Burn: -35
+    damageOnFail:
+      groups:
+        Brute: 15
+        Airloss: 25
+    damageOnUntrainedUse: ## What a non-chaplain takes when attempting to heal someone
+      groups:
+        Burn: 30
+  - type: ItemCooldown
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Specific/Chapel/bible.rsi
+    state: icon
+  - type: Item
+    size: 15
+    sprite: Objects/Specific/Chapel/bible.rsi
+    prefix: inhand
+  - type: Storage
+    capacity: 10
+    storageSoundCollection:
+      collection: storageRustle
+

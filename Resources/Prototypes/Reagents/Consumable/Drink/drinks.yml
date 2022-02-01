@@ -159,13 +159,13 @@
         # TODO heal mimes
 
 - type: reagent
-  id: NukaCola
-  name: nuka cola
+  id: NuclearCola
+  name: nuclear cola
   group: Drinks
   desc: Cola, cola never changes.
   physicalDesc: fizzy
   color: "#100800"
-  spritePath: nuka_colaglass.rsi
+  spritePath: nuclear_colaglass.rsi
   metabolisms:
     Drink:
       effects:
@@ -237,3 +237,29 @@
   plantMetabolism:
   - !type:PlantAdjustWater
     amount: 1
+
+- type: reagent
+  id: DryRamen
+  name: dry ramen
+  parent: BaseDrink
+  desc: Dry noodles and salt.
+  physicalDesc: wormy
+  color: "#664300"
+  metabolisms:
+    Food:
+      effects:
+      - !type:SatiateHunger
+        factor: 1
+
+- type: reagent
+  id: HotRamen
+  name: hot ramen
+  parent: BaseDrink
+  desc: Hot noodles.
+  physicalDesc: wormy
+  color: "#664300"
+  metabolisms:
+    Food:
+      effects:
+      - !type:SatiateHunger
+        factor: 4
