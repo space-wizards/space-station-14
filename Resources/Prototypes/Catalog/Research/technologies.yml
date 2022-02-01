@@ -276,6 +276,7 @@
     - IndustrialEngineering
   unlockedRecipes:
     - ShuttleConsoleCircuitboard
+    - Drone
 
 # Electromagnetic Theory Technology Tree
 

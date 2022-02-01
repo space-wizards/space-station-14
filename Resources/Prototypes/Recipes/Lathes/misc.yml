@@ -70,3 +70,15 @@
   completetime: 10
   materials:
     Wood: 100
+
+- type: latheRecipe
+  id: Drone
+  icon:
+    sprite: Mobs/Silicon/drone.rsi
+    state: shell
+  result: Drone
+  completetime: 1500
+  materials:
+    Steel: 500
+    Glass: 500
+    Plastic: 500
