@@ -1,0 +1,32 @@
+- type: entity
+  name: drone
+  parent: SimpleMobBase
+  id: Drone
+  description: A maintainance drone.
+  components:
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 6
+    baseSprintSpeed : 6
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: drone
+      sprite: Mobs/Silicon/drone.rsi
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.25
+      mass: 5
+      mask:
+      - VaultImpassable
+      layer:
+      - Opaque
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: drone
+      crit: shell
+      dead: shell
