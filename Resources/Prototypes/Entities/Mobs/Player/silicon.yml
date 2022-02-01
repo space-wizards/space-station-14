@@ -1,19 +1,39 @@
 - type: entity
   name: drone
-  parent: SimpleMobBase
   id: Drone
   description: A maintainance drone.
   components:
+  - type: Reactive
+    groups:
+      Acidic: [Touch]
+  - type: Input
+    context: "human"
+  - type: MovedByPressure
+  - type: DamageOnHighSpeedImpact
+    damage:
+      types:
+        Blunt: 5
+    soundHit:
+      path: /Audio/Effects/hit_kick.ogg
+  - type: Clickable
+  - type: InteractionOutline
   - type: MovementSpeedModifier
     baseWalkSpeed : 6
     baseSprintSpeed : 6
   - type: Sprite
+    noRot: true
     drawdepth: Mobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: drone
       sprite: Mobs/Silicon/drone.rsi
+  - type: MobState
+    thresholds:
+      0: !type:NormalMobState {}
+      50: !type:CriticalMobState {}
+      100: !type:DeadMobState {}
   - type: Physics
+    bodyType: KinematicController
   - type: Fixtures
     fixtures:
     - shape:
@@ -30,3 +50,42 @@
       normal: drone
       crit: shell
       dead: shell
+  - type: Hands
+  - type: Body
+    template: DroneTemplate
+    preset: HumanPreset
+  - type: DoAfter
+  - type: Pullable
+  - type: Examiner
+  - type: Puller
+  - type: Recyclable
+    safe: false
+  - type: StandingState
+  - type: Alerts
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+  - type: Access
+    #GOD DEAR FUCKING GOD WE NEED AN ALL-ACCESS FLAG
+    tags:
+    - Maintenance
+    - Cargo
+  #  - Quartermaster
+    - Engineering
+    - ChiefEngineer
+    - Medical
+    - ChiefMedicalOfficer
+    - Research
+    - ResearchDirector
+    - Security
+    - Service
+    - Captain
+    - Command
+    - External
+    - HeadOfSecurity
+    - HeadOfPersonnel
+    - Bar
+    - Hydroponics
+    - Kitchen
+    - Janitor
+    - Theatre
