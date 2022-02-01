@@ -384,7 +384,20 @@ namespace Content.Shared.Damage
             return newDamage;
         }
 
-        public static DamageSpecifier operator -(DamageSpecifier damageSpecA, DamageSpecifier damageSpecB) => damageSpecA + -damageSpecB;
+        // doing subtraction explicitly, rather than A + (-1 * B) is faster, because FixedPoint2 multiplication is somewhat involved.
+        public static DamageSpecifier operator -(DamageSpecifier damageSpecA, DamageSpecifier damageSpecB)
+        {
+            DamageSpecifier newDamage = new(damageSpecA);
+
+            foreach (var entry in damageSpecB.DamageDict)
+            {
+                if (!newDamage.DamageDict.TryAdd(entry.Key, entry.Value))
+                {
+                    newDamage.DamageDict[entry.Key] -= entry.Value;
+                }
+            }
+            return newDamage;
+        }
 
         public static DamageSpecifier operator +(DamageSpecifier damageSpec) => damageSpec;
 
