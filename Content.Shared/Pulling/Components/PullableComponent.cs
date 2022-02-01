@@ -78,13 +78,6 @@ namespace Content.Shared.Pulling.Components
             EntitySystem.Get<SharedPullingStateManagementSystem>().ForceRelationship(comp, this);
         }
 
-        protected override void Shutdown()
-        {
-            if (Puller != null)
-                EntitySystem.Get<SharedPullingStateManagementSystem>().ForceDisconnectPullable(this);
-            base.Shutdown();
-        }
-
         protected override void OnRemove()
         {
             if (Puller != null)
