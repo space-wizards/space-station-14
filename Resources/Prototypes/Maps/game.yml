@@ -5,7 +5,7 @@
   nameGenerator:
     !type:NanotrasenNameGenerator
     prefixCreator: '14'
-  mapPath: Maps/saltern.yml
+  mapPath: /Maps/saltern.yml
   minPlayers: 0
   maxPlayers: 20
   fallback: true
@@ -41,7 +41,7 @@
   nameGenerator:
     !type:NanotrasenNameGenerator
     prefixCreator: 'VG'
-  mapPath: Maps/packedstation.yml
+  mapPath: /Maps/packedstation.yml
   minPlayers: 15
   conditions:
     - !type:HolidayMapCondition
@@ -81,7 +81,7 @@
   nameGenerator:
     !type:NanotrasenNameGenerator
     prefixCreator: '14'
-  mapPath: Maps/knightship.yml
+  mapPath: /Maps/knightship.yml
   minPlayers: 0
   maxPlayers: 8
   overflowJobs: []
@@ -102,7 +102,7 @@
   nameGenerator:
     !type:NanotrasenNameGenerator
     prefixCreator: '14'
-  mapPath: Maps/ssreach.yml
+  mapPath: /Maps/ssreach.yml
   minPlayers: 8
   maxPlayers: 25
   overflowJobs:
@@ -130,7 +130,7 @@
   nameGenerator:
     !type:NanotrasenNameGenerator
     prefixCreator: '14'
-  mapPath: Maps/dart.yml
+  mapPath: /Maps/dart.yml
   minPlayers: 0
   votable: false
   overflowJobs: []
@@ -144,7 +144,7 @@
   nameGenerator:
     !type:NanotrasenNameGenerator
     prefixCreator: 'VG'
-  mapPath: Maps/moonrise.yml
+  mapPath: /Maps/moonrise.yml
   minPlayers: 0
   votable: false
   overflowJobs: []
