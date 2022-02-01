@@ -8,6 +8,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
+using Content.Shared.Tag;
 
 
 namespace Content.Server.Drone
@@ -43,13 +44,17 @@ namespace Content.Server.Drone
 
         private void OnMindAdded(EntityUid uid, DroneComponent drone, MindAddedMessage args)
         {
+            EntityManager.TryGetComponent<TagComponent>(uid, out var tagComp);
             UpdateDroneAppearance(uid, DroneStatus.On);
+            tagComp.AddTag("DoorBumpOpener");
             _popupSystem.PopupEntity(Loc.GetString("drone-activated"), uid, Filter.Pvs(uid));
         }
 
         private void OnMindRemoved(EntityUid uid, DroneComponent drone, MindRemovedMessage args)
         {
+            EntityManager.TryGetComponent<TagComponent>(uid, out var tagComp);
             UpdateDroneAppearance(uid, DroneStatus.Off);
+            tagComp.RemoveTag("DoorBumpOpener");
             EntityManager.EnsureComponent<GhostTakeoverAvailableComponent>(uid);
         }
 

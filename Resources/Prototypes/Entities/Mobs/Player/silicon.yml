@@ -93,8 +93,6 @@
       layer:
       - Opaque
   - type: Tag
-    tags:
-    - DoorBumpOpener
   - type: Access
     tags:
     - Maintenance
