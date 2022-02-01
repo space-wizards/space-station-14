@@ -79,6 +79,9 @@
   parent: BaseShutter
   components:
   - type: Occluder
+  - type: Construction
+    graph: Shutters
+    node: Shutters
 
 - type: entity
   id: ShuttersNormalOpen
@@ -104,6 +107,9 @@
     - state: closed
       map: ["enum.DoorVisualLayers.Base"]
   - type: Occluder
+  - type: Construction
+    graph: Shutters
+    node: ShuttersRadiation
 
 - type: entity
   id: ShuttersRadiationOpen
@@ -112,6 +118,9 @@
   components:
   - type: Door
     state: Open
+  - type: Construction
+    graph: Shutters
+    node: ShuttersRadiation
 
 - type: entity
   id: ShuttersWindow
@@ -125,6 +134,9 @@
     layers:
     - state: closed
       map: ["enum.DoorVisualLayers.Base"]
+  - type: Construction
+    graph: Shutters
+    node: ShuttersWindow
 
 - type: entity
   id: ShuttersWindowOpen
