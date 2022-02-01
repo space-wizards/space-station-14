@@ -7,6 +7,7 @@ using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
 using Content.Server.Interaction;
 using Content.Shared.Acts;
+using Content.Shared.Coordinates;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Item;
@@ -121,6 +122,7 @@ namespace Content.Server.Storage.Components
         private void RecalculateStorageUsed()
         {
             _storageUsed = 0;
+            _sizeCache.Clear();
 
             if (Storage == null)
             {
@@ -131,6 +133,7 @@ namespace Content.Server.Storage.Components
             {
                 var item = _entityManager.GetComponent<SharedItemComponent>(entity);
                 _storageUsed += item.Size;
+                _sizeCache.Add(entity, item.Size);
             }
         }
 
@@ -219,7 +222,7 @@ namespace Content.Server.Storage.Components
 
             if (!_sizeCache.TryGetValue(message.Entity, out var size))
             {
-                Logger.WarningS(LoggerName, $"Removed entity {message.Entity} without a cached size from storage {Owner} at {_entityManager.GetComponent<TransformComponent>(Owner).MapPosition}");
+                Logger.WarningS(LoggerName, $"Removed entity {_entityManager.ToPrettyString(message.Entity)} without a cached size from storage {_entityManager.ToPrettyString(Owner)} at {_entityManager.GetComponent<TransformComponent>(Owner).MapPosition}");
 
                 RecalculateStorageUsed();
                 return;
@@ -434,6 +437,7 @@ namespace Content.Server.Storage.Components
             Storage = Owner.EnsureContainer<Container>("storagebase");
             Storage.OccludesLight = _occludesLight;
             UpdateStorageVisualization();
+            EnsureInitialCalculated();
         }
 
         [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
