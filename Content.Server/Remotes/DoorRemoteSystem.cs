@@ -49,15 +49,15 @@ namespace Content.Server.Remotes
             */
             }
         }
+
         private void OnAfterInteract(EntityUid uid, DoorRemoteComponent component, AfterInteractEvent args)
         {
             if (args.Handled
                 || args.Target == null
-                || !EntityManager.TryGetComponent<DoorComponent>(args.Target, out var doorComponent) // If it isn't a door we don't use it
-                || !EntityManager.HasComponent<AccessReaderComponent>(args.Target) // Remotes do not work on doors without access requirements
-                || !EntityManager.TryGetComponent<AirlockComponent>(args.Target, out var airlockComponent) // Remotes only work on airlocks
+                || !TryComp<DoorComponent>(args.Target, out var doorComponent) // If it isn't a door we don't use it
+                || !HasComp<AccessReaderComponent>(args.Target) // Remotes do not work on doors without access requirements
+                || !TryComp<AirlockComponent>(args.Target, out var airlockComponent) // Remotes only work on airlocks
                 || !_interactionSystem.InRangeUnobstructed(args.User, doorComponent.Owner, -1f, CollisionGroup.Opaque))
-
             {
                 return;
             }
