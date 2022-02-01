@@ -263,3 +263,16 @@
       effects:
       - !type:SatiateHunger
         factor: 4
+
+- type: reagent
+  id: Pilk
+  name: pilk
+  parent: BaseDrink
+  desc: A sickening mixture of milk and cola.
+  physicalDesc: creamy
+  color: "#e7c69f"
+  metabolisms:
+    Drink:
+      effects:
+        - !type:SatiateThirst
+          factor: 1
