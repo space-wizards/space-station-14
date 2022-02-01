@@ -23270,13 +23270,13 @@ entities:
 - uid: 1554
   type: BarSign
   components:
-  - desc: Recently relicensed after a long closure.
-    name: The Emergency Rum Party
+  - desc: All right, buddy. I think you've had EI NATH. Time to get a cab.
+    name: The Ale' Nath
     type: MetaData
   - pos: 31.897861,-1.5027537
     parent: 63
     type: Transform
-  - current: EmergencyRumParty
+  - current: TheAleNath
     type: BarSign
 - uid: 1555
   type: StoolBar
@@ -33054,13 +33054,13 @@ entities:
 - uid: 2913
   type: BarSign
   components:
-  - desc: Caw caw!
-    name: The Birdcage
+  - desc: Where people go that'd rather not be called by their name.
+    name: The Singulo
     type: MetaData
   - pos: 67.998146,-18.498177
     parent: 63
     type: Transform
-  - current: TheBirdCage
+  - current: TheSingulo
     type: BarSign
 - uid: 2914
   type: Window
@@ -50847,7 +50847,7 @@ entities:
 - uid: 5206
   type: CrateMedicalSupplies
   components:
-  - pos: 70.5,6.5
+  - pos: 70.5,4.5
     parent: 63
     type: Transform
   - isPlaceable: False
@@ -50858,53 +50858,56 @@ entities:
       PaperLabel: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 5207
-  type: computerBodyScanner
-  components:
-  - pos: 70.5,5.5
-    parent: 63
-    type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 5208
-  type: MedicalScanner
-  components:
-  - pos: 70.5,4.5
-    parent: 63
-    type: Transform
-  - containers:
-      MedicalScanner-bodyContainer: !type:ContainerSlot {}
-      machine_board: !type:Container
-        ents: []
-      machine_parts: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 5209
-  type: MedicalScanner
+  type: CrateMedicalSupplies
   components:
   - pos: 74.5,4.5
     parent: 63
     type: Transform
+  - isPlaceable: False
+    type: PlaceableSurface
   - containers:
-      MedicalScanner-bodyContainer: !type:ContainerSlot {}
-      machine_board: !type:Container
+      EntityStorageComponent: !type:Container
         ents: []
-      machine_parts: !type:Container
-        ents: []
+      PaperLabel: !type:ContainerSlot {}
     type: ContainerContainer
-- uid: 5210
-  type: MedicalScanner
+- uid: 5208
+  type: CrateMedicalSupplies
   components:
   - pos: 78.5,4.5
     parent: 63
     type: Transform
+  - isPlaceable: False
+    type: PlaceableSurface
   - containers:
-      MedicalScanner-bodyContainer: !type:ContainerSlot {}
-      machine_board: !type:Container
+      EntityStorageComponent: !type:Container
         ents: []
-      machine_parts: !type:Container
+      PaperLabel: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 5209
+  type: CrateMedicalSupplies
+  components:
+  - pos: 70.5,5.5
+    parent: 63
+    type: Transform
+  - isPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
         ents: []
+      PaperLabel: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 5210
+  type: CrateMedicalSupplies
+  components:
+  - pos: 70.5,6.5
+    parent: 63
+    type: Transform
+  - isPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+      PaperLabel: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 5211
   type: ChairOfficeLight

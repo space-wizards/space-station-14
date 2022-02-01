@@ -539,7 +539,7 @@ entities:
 - uid: 55
   type: WallReinforced
   components:
-  - pos: -11.5,-28.5
+  - pos: -12.5,-28.5
     parent: 853
     type: Transform
 - uid: 56
@@ -561,11 +561,13 @@ entities:
     parent: 853
     type: Transform
 - uid: 59
-  type: WallReinforced
+  type: Brutepack
   components:
-  - pos: -12.5,-28.5
+  - pos: 6.604805,-5.5798607
     parent: 853
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 60
   type: APCElectronics
   components:
@@ -882,13 +884,11 @@ entities:
     parent: 853
     type: Transform
 - uid: 102
-  type: Brutepack
+  type: WallReinforced
   components:
-  - pos: 6.604805,-5.5798607
+  - pos: -11.5,-28.5
     parent: 853
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 103
   type: Carpet
   components:
@@ -19892,17 +19892,17 @@ entities:
     parent: 853
     type: Transform
 - uid: 1329
-  type: MedicalScanner
+  type: CrateMedicalSupplies
   components:
   - pos: 7.5,-13.5
     parent: 853
     type: Transform
+  - isPlaceable: False
+    type: PlaceableSurface
   - containers:
-      MedicalScanner-bodyContainer: !type:ContainerSlot {}
-      machine_board: !type:Container
+      EntityStorageComponent: !type:Container
         ents: []
-      machine_parts: !type:Container
-        ents: []
+      PaperLabel: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1330
   type: SignDirectionalMed
@@ -45406,15 +45406,17 @@ entities:
     parent: 853
     type: Transform
 - uid: 4163
-  type: computerBodyScanner
+  type: CrateMedicalSupplies
   components:
-  - rot: 1.5707963267948966 rad
-    pos: 7.5,-15.5
+  - pos: 7.5,-15.5
     parent: 853
     type: Transform
+  - isPlaceable: False
+    type: PlaceableSurface
   - containers:
-      board: !type:Container
+      EntityStorageComponent: !type:Container
         ents: []
+      PaperLabel: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4164
   type: CableApcExtension
