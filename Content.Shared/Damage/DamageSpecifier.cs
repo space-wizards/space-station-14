@@ -22,7 +22,7 @@ namespace Content.Shared.Damage
     ///     functions to apply resistance sets and supports basic math operations to modify this dictionary.
     /// </remarks>
     [DataDefinition]
-    public class DamageSpecifier
+    public class DamageSpecifier : IEquatable<DamageSpecifier>
     {
         [JsonPropertyName("types")]
         [DataField("types", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, DamageTypePrototype>))]
@@ -392,7 +392,7 @@ namespace Content.Shared.Damage
 
             foreach (var entry in damageSpecB.DamageDict)
             {
-                if (!newDamage.DamageDict.TryAdd(entry.Key, entry.Value))
+                if (!newDamage.DamageDict.TryAdd(entry.Key, -entry.Value))
                 {
                     newDamage.DamageDict[entry.Key] -= entry.Value;
                 }
@@ -407,6 +407,20 @@ namespace Content.Shared.Damage
         public static DamageSpecifier operator *(float factor, DamageSpecifier damageSpec) => damageSpec * factor;
 
         public static DamageSpecifier operator *(FixedPoint2 factor, DamageSpecifier damageSpec) => damageSpec * factor;
+
+        public bool Equals(DamageSpecifier? other)
+        {
+            if (other == null || DamageDict.Count != other.DamageDict.Count)
+                return false;
+
+            foreach (var (key, value) in DamageDict)
+            {
+                if (!other.DamageDict.TryGetValue(key, out var otherValue) || value != otherValue)
+                    return false;
+            }
+
+            return true;
+        }
     }
     #endregion
 }
