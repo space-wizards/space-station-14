@@ -62,8 +62,8 @@
   name: drone
   id: Drone
   parent: PlayerSiliconBase
-  description: A maintainance drone.
   components:
+  - type: Drone
   - type: GhostTakeoverAvailable
     makeSentient: true
     name: Maintainance Drone
@@ -78,9 +78,9 @@
     baseSprintSpeed : 6
   - type: Sprite
     drawdepth: Mobs
+    netsync: false
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: drone
+    - state: shell
       sprite: Mobs/Silicon/drone.rsi
   - type: Fixtures
     fixtures:
@@ -92,12 +92,6 @@
       - VaultImpassable
       layer:
       - Opaque
-  - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: drone
-      crit: shell
-      dead: shell
   - type: Tag
     tags:
     - DoorBumpOpener
@@ -124,3 +118,11 @@
     - Kitchen
     - Janitor
     - Theatre
+  - type: Appearance
+    visuals:
+      - type: GenericEnumVisualizer
+        key: enum.DroneVisuals.Status
+        layer: 0
+        states:
+          enum.DroneStatus.Off: shell
+          enum.DroneStatus.On: drone
