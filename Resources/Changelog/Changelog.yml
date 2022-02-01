@@ -1,11 +1,4 @@
 Entries:
-- author: ike709
-  changes:
-  - {message: Character names are now restricted to alphanumerics by default., type: Tweak}
-  - {message: Completely invalid names are now randomized instead of defaulting to
-      "Urist McHands", type: Tweak}
-  id: 465
-  time: '2021-10-21T10:52:26.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: Fixes mobs being on fire permanently, type: Fix}
@@ -2943,3 +2936,8 @@ Entries:
       rubber bullets and beanbag shells., type: Add}
   id: 965
   time: '2022-02-01T06:15:29.0000000+00:00'
+- author: Fishfish458
+  changes:
+  - {message: 'Added insta-heat ramen, just add water!', type: Add}
+  id: 966
+  time: '2022-02-01T06:16:49.0000000+00:00'
