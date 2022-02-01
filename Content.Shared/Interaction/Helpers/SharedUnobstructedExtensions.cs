@@ -453,6 +453,7 @@ namespace Content.Shared.Interaction.Helpers
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {
+            // TODO: These should early out if user is target.
             var user = args.User;
             var target = args.Target;
 
