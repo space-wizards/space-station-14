@@ -139,7 +139,7 @@
 - type: entity
   parent: BaseMachineCircuitboard
   id: DawInstrumentMachineCircuitboard
-  name: Digital Audio Workstaiton (Machine Board)
+  name: Digital Audio Workstation (Machine Board)
   components:
     - type: MachineBoard
       prototype: DawInstrument
