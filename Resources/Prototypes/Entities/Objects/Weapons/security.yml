@@ -29,6 +29,32 @@
     - Belt
 
 - type: entity
+  name: telescopic baton
+  parent: BaseItem
+  id: Telescopicbaton
+  description: A retractable steel baton for incapacitating people with. 
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/telescopic_baton.rsi
+    state: telescopic_on
+  - type: Stunbaton
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 15
+    range: 1.5
+    arcwidth: 60
+    arc: default
+  - type: ItemCooldown
+  - type: Clothing
+    sprite: Objects/Weapons/Melee/telescopic_baton.rsi
+    HeldPrefix: off
+    QuickEquip: false
+    size: 20
+    Slots:
+    - Belt
+
+- type: entity
   name: flash
   parent: BaseItem
   id: Flash
