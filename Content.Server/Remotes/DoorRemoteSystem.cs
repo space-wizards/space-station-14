@@ -71,7 +71,7 @@ namespace Content.Server.Remotes
             if (component.Mode == DoorRemoteComponent.OperatingMode.ToggleBolts
                 && airlockComponent.IsPowered())
             {
-                if (_doorSystem.HasAccess(args.Used))
+                if (_doorSystem.HasAccess(doorComponent.Owner, args.Used))
                 {
                     airlockComponent.SetBoltsWithAudio(!airlockComponent.IsBolted());
                 }
