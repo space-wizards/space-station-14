@@ -1,9 +1,4 @@
 Entries:
-- author: Fortune
-  changes:
-  - {message: Overdosing on meth will result in you dying about twice as fast., type: Add}
-  id: 464
-  time: '2021-10-20T20:30:55.0000000+00:00'
 - author: ike709
   changes:
   - {message: Character names are now restricted to alphanumerics by default., type: Tweak}
@@ -2942,3 +2937,9 @@ Entries:
   - {message: Prevents cutoff of drinks, type: Fix}
   id: 964
   time: '2022-01-31T23:55:38.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added non lethal technology to research tree. Allows protolathe to produce
+      rubber bullets and beanbag shells., type: Add}
+  id: 965
+  time: '2022-02-01T06:15:29.0000000+00:00'
