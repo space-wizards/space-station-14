@@ -79,16 +79,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             }
         }
 
-        private bool CheckInteract(ICommonSession session)
-        {
-            if (session.AttachedEntity is not {Valid: true} uid
-                || !_actionBlockerSystem.CanInteract(uid)
-                || !_actionBlockerSystem.CanUse(uid))
-                return false;
-
-            return true;
-        }
-
         private void DirtyUI(EntityUid uid,
             GasCanisterComponent? canister = null, NodeContainerComponent? nodeContainer = null,
             ContainerManagerComponent? containerManager = null)
@@ -120,9 +110,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnHoldingTankEjectMessage(EntityUid uid, GasCanisterComponent canister, GasCanisterHoldingTankEjectMessage args)
         {
-            if (!CheckInteract(args.Session))
-                return;
-
             if (!EntityManager.TryGetComponent(uid, out ContainerManagerComponent? containerManager)
                 || !containerManager.TryGetContainer(canister.ContainerName, out var container))
                 return;
@@ -136,9 +123,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnCanisterChangeReleasePressure(EntityUid uid, GasCanisterComponent canister, GasCanisterChangeReleasePressureMessage args)
         {
-            if (!CheckInteract(args.Session))
-                return;
-
             var pressure = Math.Clamp(args.Pressure, canister.MinReleasePressure, canister.MaxReleasePressure);
 
             _adminLogSystem.Add(LogType.CanisterPressure, LogImpact.Medium, $"{ToPrettyString(args.Session.AttachedEntity.GetValueOrDefault()):player} set the release pressure on {ToPrettyString(uid):canister} to {args.Pressure}");
@@ -149,9 +133,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnCanisterChangeReleaseValve(EntityUid uid, GasCanisterComponent canister, GasCanisterChangeReleaseValveMessage args)
         {
-            if (!CheckInteract(args.Session))
-                return;
-
             var impact = LogImpact.High;
             if (EntityManager.TryGetComponent(uid, out ContainerManagerComponent containerManager)
                 && containerManager.TryGetContainer(canister.ContainerName, out var container))

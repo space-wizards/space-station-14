@@ -2,6 +2,7 @@
   id: CaptainIDStealObjective
   issuer: syndicate
   difficultyOverride: 2.75
+  prob: 0.2
   requirements:
     - !type:TraitorRequirement {}
     - !type:IncompatibleConditionsRequirement
@@ -36,20 +37,23 @@
     - !type:RandomTraitorAliveCondition {}
   canBeDuplicate: true
 
-- type: objective
-  id: StayAliveObjective
-  issuer: syndicate
-  requirements:
-    - !type:TraitorRequirement {}
-    - !type:IncompatibleConditionsRequirement
-        conditions:
-          - DieCondition
-  conditions:
-    - !type:StayAliveCondition {}
+#  These are disabled until we get an evac shuttle and more involved round ends
+#
+#- type: objective
+#  id: StayAliveObjective
+#  issuer: syndicate
+#  requirements:
+#    - !type:TraitorRequirement {}
+#    - !type:IncompatibleConditionsRequirement
+#        conditions:
+#          - DieCondition
+#  conditions:
+#    - !type:StayAliveCondition {}
 
 - type: objective
   id: DieObjective
   issuer: syndicate
+  prob: 0.03
   requirements:
     - !type:TraitorRequirement {}
     - !type:IncompatibleConditionsRequirement
@@ -63,6 +67,7 @@
   id: CMOHyposprayStealObjective
   issuer: syndicate
   difficultyOverride: 2.75
+  prob: 0.2
   requirements:
     - !type:TraitorRequirement {}
     - !type:IncompatibleConditionsRequirement
@@ -76,6 +81,7 @@
   id: RDHardsuitStealObjective
   issuer: syndicate
   difficultyOverride: 2.75
+  prob: 0.2
   requirements:
     - !type:TraitorRequirement {}
     - !type:IncompatibleConditionsRequirement
@@ -88,6 +94,7 @@
 - type: objective
   id: NukeDiskStealObjective
   issuer: syndicate
+  prob: 0.2
   requirements:
     - !type:TraitorRequirement {}
     - !type:IncompatibleConditionsRequirement
@@ -100,6 +107,7 @@
 - type: objective
   id: IDComputerBoardStealObjective
   issuer: syndicate
+  prob: 0.2
   requirements:
     - !type:TraitorRequirement {}
     - !type:IncompatibleConditionsRequirement
@@ -113,6 +121,7 @@
   id: MagbootsStealObjective
   issuer: syndicate
   difficultyOverride: 2.75
+  prob: 0.2
   requirements:
     - !type:TraitorRequirement {}
     - !type:IncompatibleConditionsRequirement
@@ -125,6 +134,7 @@
 - type: objective
   id: SupplyConsoleBoardStealObjective
   issuer: syndicate
+  prob: 0.2
   requirements:
     - !type:TraitorRequirement {}
     - !type:IncompatibleConditionsRequirement

@@ -24,6 +24,7 @@ public abstract partial class InventorySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeed = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
 
     private void InitializeEquip()
@@ -162,11 +163,11 @@ public abstract partial class InventorySystem
     public bool CanAccess(EntityUid actor, EntityUid target, EntityUid itemUid)
     {
         // Can the actor reach the target?
-        if (actor != target && !( actor.InRangeUnobstructed(target) && actor.IsInSameOrParentContainer(target)))
+        if (actor != target && !( actor.InRangeUnobstructed(target) && _containerSystem.IsInSameOrParentContainer(actor, target)))
             return false;
 
         // Can the actor reach the item?
-        if (actor.InRangeUnobstructed(itemUid) && actor.IsInSameOrParentContainer(itemUid))
+        if (_interactionSystem.InRangeUnobstructed(actor, itemUid) && _containerSystem.IsInSameOrParentContainer(actor, itemUid))
             return true;
 
         // Is the item in an open storage UI, i.e., is the user quick-equipping from an open backpack?

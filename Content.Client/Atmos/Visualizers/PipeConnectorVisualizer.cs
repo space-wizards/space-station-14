@@ -72,7 +72,7 @@ namespace Content.Client.Atmos.Visualizers
             if (!component.TryGetData(PipeColorVisuals.Color, out Color color))
                 color = Color.White;
 
-            if (!component.TryGetData(PipeVisuals.VisualState, out PipeVisualState state))
+            if (!component.TryGetData(PipeVisuals.VisualState, out PipeDirection connectedDirections))
                 return;
 
             if(!component.TryGetData(SubFloorVisuals.SubFloor, out bool subfloor))
@@ -84,7 +84,7 @@ namespace Content.Client.Atmos.Visualizers
             {
                 var layer = sprite.LayerMapGet(layerKey);
                 var dir = (PipeDirection) layerKey;
-                var visible = subfloor && state.ConnectedDirections.HasDirection(dir);
+                var visible = subfloor && connectedDirections.HasDirection(dir);
                 sprite.LayerSetVisible(layer, visible);
 
                 if (!visible) continue;
