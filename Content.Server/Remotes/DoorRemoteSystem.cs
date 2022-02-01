@@ -73,14 +73,7 @@ namespace Content.Server.Remotes
             {
                 if (_doorSystem.HasAccess(args.Used))
                 {
-                    if(airlockComponent.IsBolted())
-                    {
-                        airlockComponent.SetBoltsWithAudio(false);
-                    }
-                    else
-                    {
-                        airlockComponent.SetBoltsWithAudio(true);
-                    }
+                    airlockComponent.SetBoltsWithAudio(!airlockComponent.IsBolted());
                 }
                 else
                 {
