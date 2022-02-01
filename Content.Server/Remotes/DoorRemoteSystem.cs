@@ -2,6 +2,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.IoC;
+using Robust.Shared.Audio;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Doors.Components;
@@ -77,7 +78,14 @@ namespace Content.Server.Remotes
                 }
                 else
                 {
-                    _sharedDoorSystem.Deny(airlockComponent.Owner, user: args.User);
+                    if (doorComponent.State != DoorState.Open)
+                    {
+                        _sharedDoorSystem.Deny(airlockComponent.Owner, user: args.User);
+                    }
+                    else if (doorComponent.DenySound != null)
+                    {
+                        SoundSystem.Play(Filter.Pvs(args.Target.Value), doorComponent.DenySound.GetSound(), args.Target.Value);
+                    }
                 }
             }
         }
