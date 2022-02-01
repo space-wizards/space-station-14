@@ -3,12 +3,9 @@
   name: "drone"
   centerSlot: "torso"
   slots:
-    left arm: Arm
-    left hand: Hand
-    right arm: Arm
-    right hand: Hand
-  connections:
-    left arm:
-    - left hand
-    right arm:
-    - right hand
+    hand 1: hand
+    hand 2: hand
+    hand 3: hand
+    hand 4: hand
+    hand 5: hand
+    hand 6: hand

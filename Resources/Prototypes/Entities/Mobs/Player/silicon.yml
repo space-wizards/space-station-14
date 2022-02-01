@@ -47,7 +47,7 @@
   - type: Hands
   - type: Body
     template: DroneTemplate
-    preset: HumanPreset
+    preset: DronePreset
   - type: DoAfter
   - type: Pullable
   - type: Examiner
