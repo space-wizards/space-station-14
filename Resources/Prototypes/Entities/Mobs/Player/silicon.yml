@@ -1,7 +1,7 @@
 - type: entity
-  name: drone
-  id: Drone
-  description: A maintainance drone.
+  save: false
+  abstract: true
+  id: PlayerSiliconBase #for player controlled silicons
   components:
   - type: Reactive
     groups:
@@ -17,16 +17,26 @@
       path: /Audio/Effects/hit_kick.ogg
   - type: Clickable
   - type: InteractionOutline
+  - type: Fixtures
+    fixtures:
+    - shape:
+        # Circles, cuz rotation of rectangles looks very bad
+        !type:PhysShapeCircle
+        radius: 0.35
+      mass: 20
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
   - type: MovementSpeedModifier
-    baseWalkSpeed : 6
-    baseSprintSpeed : 6
+    baseWalkSpeed : 4
+    baseSprintSpeed : 3
   - type: Sprite
     noRot: true
     drawdepth: Mobs
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: drone
-      sprite: Mobs/Silicon/drone.rsi
   - type: MobState
     thresholds:
       0: !type:NormalMobState {}
@@ -34,6 +44,44 @@
       100: !type:DeadMobState {}
   - type: Physics
     bodyType: KinematicController
+  - type: Hands
+  - type: Body
+    template: DroneTemplate
+    preset: HumanPreset
+  - type: DoAfter
+  - type: Pullable
+  - type: Examiner
+  - type: Puller
+  - type: Recyclable
+    safe: false
+  - type: StandingState
+  - type: Alerts
+
+
+- type: entity
+  name: drone
+  id: Drone
+  parent: PlayerSiliconBase
+  description: A maintainance drone.
+  components:
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: Maintainance Drone
+    description: Maintain the station. Ignore organics.
+    rules: |
+     You are bound by these laws both in-game and out-of-character:
+     1. You may not involve yourself in the matters of another being, even if such matters conflict with Law Two or Law Three, unless the other being is another Drone.
+     2. You may not harm any being, regardless of intent or circumstance.
+     3. Your goals are to build, maintain, repair, improve, and power to the best of your abilities, You must never actively work against these goals.
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 6
+    baseSprintSpeed : 6
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: drone
+      sprite: Mobs/Silicon/drone.rsi
   - type: Fixtures
     fixtures:
     - shape:
@@ -50,23 +98,10 @@
       normal: drone
       crit: shell
       dead: shell
-  - type: Hands
-  - type: Body
-    template: DroneTemplate
-    preset: HumanPreset
-  - type: DoAfter
-  - type: Pullable
-  - type: Examiner
-  - type: Puller
-  - type: Recyclable
-    safe: false
-  - type: StandingState
-  - type: Alerts
   - type: Tag
     tags:
     - DoorBumpOpener
   - type: Access
-    #GOD DEAR FUCKING GOD WE NEED AN ALL-ACCESS FLAG
     tags:
     - Maintenance
     - Cargo
