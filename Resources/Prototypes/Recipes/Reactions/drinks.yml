@@ -551,3 +551,13 @@
       amount: 1
   products:
     WhiteRussian: 3
+
+- type: reaction
+  id: HotRamen
+  reactants:
+    DryRamen:
+      amount: 3
+    Water:
+      amount: 1
+  products:
+    HotRamen: 3

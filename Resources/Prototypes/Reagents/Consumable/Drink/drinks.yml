@@ -237,3 +237,29 @@
   plantMetabolism:
   - !type:PlantAdjustWater
     amount: 1
+
+- type: reagent
+  id: DryRamen
+  name: dry ramen
+  parent: BaseDrink
+  desc: Dry noodles and salt.
+  physicalDesc: wormy
+  color: "#664300"
+  metabolisms:
+    Food:
+      effects:
+      - !type:SatiateHunger
+        factor: 1
+
+- type: reagent
+  id: HotRamen
+  name: hot ramen
+  parent: BaseDrink
+  desc: Hot noodles.
+  physicalDesc: wormy
+  color: "#664300"
+  metabolisms:
+    Food:
+      effects:
+      - !type:SatiateHunger
+        factor: 4
