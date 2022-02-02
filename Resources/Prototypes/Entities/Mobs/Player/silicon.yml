@@ -39,10 +39,6 @@
   - type: Sprite
     noRot: true
     drawdepth: Mobs
-  - type: MobState
-    thresholds:
-      0: !type:NormalMobState {}
-      65: !type:DeadMobState {}
   - type: Physics
     bodyType: KinematicController
   - type: Hands
@@ -80,6 +76,10 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 6
     baseSprintSpeed : 6
+  - type: MobState
+    thresholds:
+      0: !type:NormalMobState {}
+      70: !type:DeadMobState {}
   - type: Sprite
     drawdepth: Mobs
     netsync: false

@@ -12,6 +12,8 @@ namespace Content.Server.Drone.Components
     {
         [DataField("tools")] public List<EntitySpawnEntry> Tools = new();
 
+        public List<EntityUid> ToolUids = new();
+
 
         public bool alreadyAwoken = false;
     }

@@ -3,8 +3,9 @@ using Content.Server.Drone.Components;
 using Content.Shared.Drone.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.Events;
+using Content.Shared.MobState.Components;
+using Content.Shared.MobState;
 using Content.Shared.DragDrop;
-using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Server.Popups;
 using Content.Server.Mind.Components;
@@ -27,7 +28,7 @@ namespace Content.Server.Drone
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<DroneComponent, DamageChangedEvent>(OnDamageChanged);
+            SubscribeLocalEvent<DroneComponent, MobStateChangedEvent>(OnMobStateChanged);
             SubscribeLocalEvent<DroneComponent, DisarmedActEvent>(OnDisarmedAct);
             SubscribeLocalEvent<DroneComponent, DropAttemptEvent>(OnDropAttempt);
             SubscribeLocalEvent<DroneComponent, IsUnequippingAttemptEvent>(OnUnequipAttempt);
@@ -51,12 +52,11 @@ namespace Content.Server.Drone
             }
         }
 
-        private void OnDamageChanged(EntityUid uid, DroneComponent drone, DamageChangedEvent args)
+        private void OnMobStateChanged(EntityUid uid, DroneComponent drone, MobStateChangedEvent args)
         {
-            if (args.Damageable.TotalDamage >= 70)
+            if (args.Component.IsDead())
             {
-                EntityManager.TryGetComponent<HandsComponent>(uid, out var hands);
-                foreach (var item in hands.GetAllHeldEntities())
+                foreach (var item in drone.ToolUids)
                 {
                     if (EntityManager.TryGetComponent<DroneToolComponent>(item, out var droneTool))
                     {
@@ -97,6 +97,7 @@ namespace Content.Server.Drone
                         var item = EntityManager.SpawnEntity(entry.PrototypeId, spawnCoord);
                         EntityManager.AddComponent<DroneToolComponent>(item);
                         hands.PutInHand(item);
+                        drone.ToolUids.Add(item);
                     }
                 }
 
