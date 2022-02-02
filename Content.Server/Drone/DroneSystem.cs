@@ -1,9 +1,15 @@
 using Content.Shared.Drone;
+using Content.Server.Drone.Components;
 using Content.Shared.Drone.Components;
+using Content.Shared.Interaction.Events;
+using Content.Shared.Inventory.Events;
+using Content.Shared.DragDrop;
 using Content.Shared.Examine;
 using Content.Server.Popups;
 using Content.Server.Mind.Components;
 using Content.Server.Ghost.Roles.Components;
+using Content.Server.Hands.Components;
+using Content.Server.Act;
 using Robust.Shared.IoC;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -20,11 +26,12 @@ namespace Content.Server.Drone
         public override void Initialize()
         {
             base.Initialize();
-
+            SubscribeLocalEvent<DroneComponent, DisarmedActEvent>(OnDisarmedAct);
+            SubscribeLocalEvent<DroneComponent, DropAttemptEvent>(OnDropAttempt);
+            SubscribeLocalEvent<DroneComponent, IsUnequippingAttemptEvent>(OnUnequipAttempt);
             SubscribeLocalEvent<DroneComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<DroneComponent, MindAddedMessage>(OnMindAdded);
             SubscribeLocalEvent<DroneComponent, MindRemovedMessage>(OnMindRemoved);
-
         }
 
         private void OnExamined(EntityUid uid, DroneComponent component, ExaminedEvent args)
@@ -42,12 +49,40 @@ namespace Content.Server.Drone
             }
         }
 
+        private void OnDisarmedAct(EntityUid uid, DroneComponent drone, DisarmedActEvent args)
+        {
+            EntityManager.TryGetComponent<HandsComponent>(args.Target, out var hands);
+            var item = hands.GetActiveHandItem;
+            if (EntityManager.TryGetComponent<DroneToolComponent>(item?.Owner, out var itemInHand))
+            {
+            args.Handled = true;
+            }
+        }
+
         private void OnMindAdded(EntityUid uid, DroneComponent drone, MindAddedMessage args)
         {
             EntityManager.TryGetComponent<TagComponent>(uid, out var tagComp);
             UpdateDroneAppearance(uid, DroneStatus.On);
             tagComp.AddTag("DoorBumpOpener");
             _popupSystem.PopupEntity(Loc.GetString("drone-activated"), uid, Filter.Pvs(uid));
+
+            if (drone.alreadyAwoken == false)
+            {
+                var spawnCoord = Transform(uid).Coordinates;
+
+                if (drone.Tools.Count == 0) return;
+
+                if (EntityManager.TryGetComponent<HandsComponent>(uid, out var hands))
+                {
+                   foreach (var entry in drone.Tools)
+                    {
+                        var item = EntityManager.SpawnEntity(entry.PrototypeId, spawnCoord);
+                       hands.PutInHand(item);
+                    }
+                }
+
+                drone.alreadyAwoken = true;
+            }
         }
 
         private void OnMindRemoved(EntityUid uid, DroneComponent drone, MindRemovedMessage args)
@@ -56,6 +91,24 @@ namespace Content.Server.Drone
             UpdateDroneAppearance(uid, DroneStatus.Off);
             tagComp.RemoveTag("DoorBumpOpener");
             EntityManager.EnsureComponent<GhostTakeoverAvailableComponent>(uid);
+        }
+
+        private void OnDropAttempt(EntityUid uid, DroneComponent drone, DropAttemptEvent args)
+        {
+            EntityManager.TryGetComponent<HandsComponent>(uid, out var hands);
+            var item = hands.GetActiveHandItem;
+            if (EntityManager.TryGetComponent<DroneToolComponent>(item?.Owner, out var itemInHand))
+            {
+            args.Cancel();
+            }
+        }
+
+        private void OnUnequipAttempt(EntityUid uid, DroneComponent drone, IsUnequippingAttemptEvent args)
+        {
+            if (EntityManager.TryGetComponent<DroneToolComponent>(args.UnEquipTarget, out var droneTool))
+            {
+            args.Cancel();
+            }
         }
 
         private void UpdateDroneAppearance(EntityUid uid, DroneStatus status)

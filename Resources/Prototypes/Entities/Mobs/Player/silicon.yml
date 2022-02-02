@@ -57,13 +57,16 @@
   - type: StandingState
   - type: Alerts
 
-
 - type: entity
   name: drone
   id: Drone
   parent: PlayerSiliconBase
   components:
   - type: Drone
+    tools:
+      - id: PowerDrillDrone
+      - id: JawsOfLifeDrone
+      - id: WelderExperimentalDrone
   - type: GhostTakeoverAvailable
     makeSentient: true
     name: Maintainance Drone
@@ -124,3 +127,23 @@
         states:
           enum.DroneStatus.Off: shell
           enum.DroneStatus.On: drone
+
+## Drone Tools
+
+- type: entity
+  id: PowerDrillDrone
+  parent: PowerDrill
+  components:
+  - type: DroneTool
+
+- type: entity
+  id: JawsOfLifeDrone
+  parent: JawsOfLife
+  components:
+  - type: DroneTool
+
+- type: entity
+  id: WelderExperimentalDrone
+  parent: WelderExperimental
+  components:
+  - type: DroneTool
