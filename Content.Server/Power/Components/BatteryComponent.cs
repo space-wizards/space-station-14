@@ -15,8 +15,6 @@ namespace Content.Server.Power.Components
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public override string Name => "Battery";
-
         /// <summary>
         /// Maximum charge of the battery in joules (ie. watt seconds)
         /// </summary>

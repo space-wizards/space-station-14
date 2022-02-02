@@ -17,8 +17,6 @@ namespace Content.Shared.Chemistry.Dispenser
     /// </summary>
     public class SharedReagentDispenserComponent : Component
     {
-        public override string Name => "ReagentDispenser";
-
         [DataField("beakerSlot")]
         public ItemSlot BeakerSlot = new();
 

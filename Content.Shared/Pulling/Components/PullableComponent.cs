@@ -16,8 +16,6 @@ namespace Content.Shared.Pulling.Components
     [RegisterComponent]
     public class SharedPullableComponent : Component
     {
-        public override string Name => "Pullable";
-
         public float? MaxDistance => PullJoint?.MaxLength;
 
         /// <summary>

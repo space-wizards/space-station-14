@@ -14,8 +14,6 @@ namespace Content.Shared.Research.Components
     [NetworkedComponent()]
     public class SharedTechnologyDatabaseComponent : Component, IEnumerable<TechnologyPrototype>, ISerializationHooks
     {
-        public override string Name => "TechnologyDatabase";
-
         [DataField("technologies")] private List<string> _technologyIds = new();
 
         protected List<TechnologyPrototype> _technologies = new();

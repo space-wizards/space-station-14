@@ -8,8 +8,6 @@ namespace Content.Server.Fluids.Components;
 [RegisterComponent]
 public class SpillableComponent : Component
 {
-    public override string Name => "Spillable";
-
     [DataField("solution")]
     public string SolutionName = "puddle";
 

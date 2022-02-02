@@ -9,8 +9,6 @@ namespace Content.Server.Extinguisher;
 [Friend(typeof(FireExtinguisherSystem))]
 public class FireExtinguisherComponent : Component
 {
-    public override string Name => "FireExtinguisher";
-
     [DataField("refillSound")] public SoundSpecifier RefillSound = new SoundPathSpecifier("/Audio/Effects/refill.ogg");
 
     [DataField("hasSafety")] public bool HasSafety = true;

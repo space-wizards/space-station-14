@@ -7,8 +7,6 @@ namespace Content.Client.Construction
     [RegisterComponent]
     public class ConstructionGhostComponent : Component
     {
-        public override string Name => "ConstructionGhost";
-
         [ViewVariables] public ConstructionPrototype? Prototype { get; set; }
         [ViewVariables] public int GhostId { get; set; }
     }
