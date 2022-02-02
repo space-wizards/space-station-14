@@ -318,7 +318,7 @@ namespace Content.Shared.Interaction
             bool ignoreInsideBlocker = false)
         {
             // Have to be on same map regardless.
-            if (other.MapId != origin.MapId || other.MapId == MapId.Nullspace) return false;
+            if (other.MapId != origin.MapId) return false;
 
             var dir = other.Position - origin.Position;
             var length = dir.Length;
