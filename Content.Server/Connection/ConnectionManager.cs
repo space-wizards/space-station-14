@@ -112,7 +112,7 @@ The ban reason is: ""{ban.Reason}""
                 return (ConnectionDenyReason.Full, Loc.GetString("soft-player-cap-full"), null);
             }
 
-            var bans = await _db.GetServerBansAsync(addr, userId, hwId);
+            var bans = await _db.GetServerBansAsync(addr, userId, hwId, includeUnbanned: false);
             if (bans.Count > 0)
             {
                 var firstBan = bans[0];

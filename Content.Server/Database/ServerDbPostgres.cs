@@ -59,8 +59,7 @@ namespace Content.Server.Database
 
             await using var db = await GetDbImpl();
 
-            var query = MakeBanLookupQuery(address, userId, hwId, db)
-                .Where(p => p.Unban == null && (p.ExpirationTime == null || p.ExpirationTime.Value > DateTime.Now))
+            var query = MakeBanLookupQuery(address, userId, hwId, db, includeUnbanned: false)
                 .OrderByDescending(b => b.BanTime);
 
             var ban = await query.FirstOrDefaultAsync();
@@ -68,10 +67,9 @@ namespace Content.Server.Database
             return ConvertBan(ban);
         }
 
-        public override async Task<List<ServerBanDef>> GetServerBansAsync(
-            IPAddress? address,
+        public override async Task<List<ServerBanDef>> GetServerBansAsync(IPAddress? address,
             NetUserId? userId,
-            ImmutableArray<byte>? hwId)
+            ImmutableArray<byte>? hwId, bool includeUnbanned)
         {
             if (address == null && userId == null && hwId == null)
             {
@@ -80,7 +78,7 @@ namespace Content.Server.Database
 
             await using var db = await GetDbImpl();
 
-            var query = MakeBanLookupQuery(address, userId, hwId, db);
+            var query = MakeBanLookupQuery(address, userId, hwId, db, includeUnbanned);
 
             var queryBans = await query.ToArrayAsync();
             var bans = new List<ServerBanDef>(queryBans.Length);
@@ -102,7 +100,8 @@ namespace Content.Server.Database
             IPAddress? address,
             NetUserId? userId,
             ImmutableArray<byte>? hwId,
-            DbGuardImpl db)
+            DbGuardImpl db,
+            bool includeUnbanned)
         {
             IQueryable<ServerBan>? query = null;
 
@@ -131,6 +130,12 @@ namespace Content.Server.Database
                     .Where(b => b.HWId!.SequenceEqual(hwId.Value.ToArray()));
 
                 query = query == null ? newQ : query.Union(newQ);
+            }
+
+            if (!includeUnbanned)
+            {
+                query = query?.Where(p =>
+                    p.Unban == null && (p.ExpirationTime == null || p.ExpirationTime.Value > DateTime.Now));
             }
 
             query = query!.Distinct();
