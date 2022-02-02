@@ -1,6 +1,6 @@
 using System;
 using Content.Client.Wires.Visualizers;
-using Content.Shared.Doors;
+using Content.Shared.Doors.Components;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
@@ -8,6 +8,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Doors
 {
@@ -15,6 +16,7 @@ namespace Content.Client.Doors
     public class AirlockVisualizer : AppearanceVisualizer, ISerializationHooks
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         private const string AnimationKey = "airlock_animation";
 
@@ -122,15 +124,20 @@ namespace Content.Client.Doors
 
         public override void OnChangeData(AppearanceComponent component)
         {
+            // only start playing animations once.
+            if (!_gameTiming.IsFirstTimePredicted)
+                return;
+
             base.OnChangeData(component);
 
             var sprite = _entMan.GetComponent<ISpriteComponent>(component.Owner);
             var animPlayer = _entMan.GetComponent<AnimationPlayerComponent>(component.Owner);
-            if (!component.TryGetData(DoorVisuals.VisualState, out DoorVisualState state))
+            if (!component.TryGetData(DoorVisuals.State, out DoorState state))
             {
-                state = DoorVisualState.Closed;
+                state = DoorState.Closed;
             }
 
+            var door = _entMan.GetComponent<DoorComponent>(component.Owner);
             var unlitVisible = true;
             var boltedVisible = false;
             var weldedVisible = false;
@@ -141,7 +148,7 @@ namespace Content.Client.Doors
             }
             switch (state)
             {
-                case DoorVisualState.Open:
+                case DoorState.Open:
                     sprite.LayerSetState(DoorVisualLayers.Base, "open");
                     unlitVisible = _openUnlitVisible;
                     if (_openUnlitVisible && !_simpleVisuals)
@@ -149,7 +156,7 @@ namespace Content.Client.Doors
                         sprite.LayerSetState(DoorVisualLayers.BaseUnlit, "open_unlit");
                     }
                     break;
-                case DoorVisualState.Closed:
+                case DoorState.Closed:
                     sprite.LayerSetState(DoorVisualLayers.Base, "closed");
                     if (!_simpleVisuals)
                     {
@@ -157,17 +164,19 @@ namespace Content.Client.Doors
                         sprite.LayerSetState(DoorVisualLayers.BaseBolted, "bolted_unlit");
                     }
                     break;
-                case DoorVisualState.Opening:
+                case DoorState.Opening:
                     animPlayer.Play(OpenAnimation, AnimationKey);
                     break;
-                case DoorVisualState.Closing:
-                    animPlayer.Play(CloseAnimation, AnimationKey);
+                case DoorState.Closing:
+                    if (door.CurrentlyCrushing.Count == 0)
+                        animPlayer.Play(CloseAnimation, AnimationKey);
+                    else
+                        sprite.LayerSetState(DoorVisualLayers.Base, "closed");
                     break;
-                case DoorVisualState.Deny:
-                    if (!animPlayer.HasRunningAnimation(AnimationKey))
-                        animPlayer.Play(DenyAnimation, AnimationKey);
+                case DoorState.Denying:
+                    animPlayer.Play(DenyAnimation, AnimationKey);
                     break;
-                case DoorVisualState.Welded:
+                case DoorState.Welded:
                     weldedVisible = true;
                     break;
                 default:
@@ -185,7 +194,7 @@ namespace Content.Client.Doors
 
             if (!_simpleVisuals)
             {
-                sprite.LayerSetVisible(DoorVisualLayers.BaseUnlit, unlitVisible && state != DoorVisualState.Closed);
+                sprite.LayerSetVisible(DoorVisualLayers.BaseUnlit, unlitVisible && state != DoorState.Closed && state != DoorState.Welded);
                 sprite.LayerSetVisible(DoorVisualLayers.BaseWelded, weldedVisible);
                 sprite.LayerSetVisible(DoorVisualLayers.BaseBolted, unlitVisible && boltedVisible);
             }

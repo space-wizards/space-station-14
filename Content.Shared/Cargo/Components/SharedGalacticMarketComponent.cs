@@ -15,8 +15,6 @@ namespace Content.Shared.Cargo.Components
     [NetworkedComponent()]
     public class SharedGalacticMarketComponent : Component, IEnumerable<CargoProductPrototype>, ISerializationHooks
     {
-        public sealed override string Name => "GalacticMarket";
-
         [DataField("products", customTypeSerializer: typeof(PrototypeIdListSerializer<CargoProductPrototype>))]
         protected List<string> _productIds = new();
 

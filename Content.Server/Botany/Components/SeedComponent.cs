@@ -14,8 +14,6 @@ namespace Content.Server.Botany.Components
     public class SeedComponent : Component, IExamine
 #pragma warning restore 618
     {
-        public override string Name => "Seed";
-
         [DataField("seed")]
         private string? _seedName;
 

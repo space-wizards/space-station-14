@@ -10,6 +10,5 @@ namespace Content.Server.Nutrition.Components
     [RegisterComponent, Friend(typeof(SmokingSystem))]
     public class CigarComponent : Component
     {
-        public override string Name => "Cigar";
     }
 }

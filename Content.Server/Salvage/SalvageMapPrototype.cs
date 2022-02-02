@@ -3,6 +3,8 @@ using System.Linq;
 using Content.Server.Objectives.Interfaces;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations;
+using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Salvage
@@ -19,7 +21,7 @@ namespace Content.Server.Salvage
         /// </summary>
         [ViewVariables]
         [DataField("mapPath", required: true)]
-        public string MapPath { get; } = default!;
+        public ResourcePath MapPath { get; } = default!;
 
         /// <summary>
         /// Size *from 0,0* in units of the map (used to determine if it fits)

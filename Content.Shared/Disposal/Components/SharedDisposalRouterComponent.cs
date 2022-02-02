@@ -7,8 +7,6 @@ namespace Content.Shared.Disposal.Components
 {
     public class SharedDisposalRouterComponent : Component
     {
-        public override string Name => "DisposalRouter";
-
         public static readonly Regex TagRegex = new("^[a-zA-Z0-9, ]*$", RegexOptions.Compiled);
 
         [Serializable, NetSerializable]

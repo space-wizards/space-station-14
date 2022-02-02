@@ -8,7 +8,6 @@ namespace Content.Shared.Research.Components
     [NetworkedComponent()]
     public class SharedResearchConsoleComponent : Component
     {
-        public override string Name => "ResearchConsole";
 
         [NetSerializable, Serializable]
         public enum ResearchConsoleUiKey

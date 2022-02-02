@@ -13,7 +13,7 @@
   access:
   - HeadOfSecurity
   - Command
-#  - Brig
+  - Brig
   - Security
   - Armory
   - Maintenance

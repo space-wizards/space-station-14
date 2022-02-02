@@ -19,8 +19,6 @@ namespace Content.Server.Construction.Components
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-        public override string Name => "MachineBoard";
-
         [ViewVariables]
         [DataField("requirements")]
         public readonly Dictionary<MachinePart, int> Requirements = new();

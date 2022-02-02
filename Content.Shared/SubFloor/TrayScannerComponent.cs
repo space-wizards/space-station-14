@@ -13,8 +13,6 @@ namespace Content.Shared.SubFloor;
 [NetworkedComponent]
 public class TrayScannerComponent : Component
 {
-    public override string Name { get; } = "TrayScanner";
-
     [ViewVariables]
     public bool Toggled { get; set; }
 

@@ -548,9 +548,9 @@ namespace Content.Client.Damage
             {
                 UpdateDamageVisuals(damageComponent, spriteComponent, damageData);
             }
-            else if (component.TryGetData<List<string>>(DamageVisualizerKeys.DamageUpdateGroups, out List<string>? delta))
+            else if (component.TryGetData(DamageVisualizerKeys.DamageUpdateGroups, out DamageVisualizerGroupData data))
             {
-                UpdateDamageVisuals(delta, damageComponent, spriteComponent, damageData);
+                UpdateDamageVisuals(data.GroupList, damageComponent, spriteComponent, damageData);
             }
         }
 
