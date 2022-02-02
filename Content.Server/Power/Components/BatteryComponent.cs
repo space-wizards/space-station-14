@@ -93,5 +93,5 @@ namespace Content.Server.Power.Components
         }
     }
 
-    public class ChargeChangedEvent : EventArgs { }
+    public struct ChargeChangedEvent {}
 }
