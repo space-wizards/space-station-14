@@ -19,8 +19,6 @@ namespace Content.Server.NodeContainer
     public class NodeContainerComponent : Component, IExamine
 #pragma warning restore 618
     {
-        public override string Name => "NodeContainer";
-
         //HACK: THIS BEING readOnly IS A FILTHY HACK AND I HATE IT --moony
         [DataField("nodes", readOnly: true)] [ViewVariables] public Dictionary<string, Node> Nodes { get; } = new();
 

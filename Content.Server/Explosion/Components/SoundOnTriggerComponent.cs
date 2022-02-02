@@ -12,8 +12,6 @@ namespace Content.Server.Explosion.Components
     [RegisterComponent]
     public sealed class SoundOnTriggerComponent : Component
     {
-        public override string Name => "SoundOnTrigger";
-
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("sound")]
         public SoundSpecifier? Sound { get; set; }

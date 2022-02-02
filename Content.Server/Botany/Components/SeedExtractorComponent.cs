@@ -15,8 +15,6 @@ namespace Content.Server.Botany.Components
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
-        public override string Name => "SeedExtractor";
-
         // TODO: Upgradeable machines.
         private int _minSeeds = 1;
         private int _maxSeeds = 4;

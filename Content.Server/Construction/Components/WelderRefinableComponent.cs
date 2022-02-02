@@ -35,8 +35,6 @@ namespace Content.Server.Construction.Components
 
         private bool _beingWelded;
 
-        public override string Name => "WelderRefinable";
-
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             // check if object is welder

@@ -28,7 +28,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void OnSolutionChange(EntityUid uid, InjectorComponent component, SolutionChangedEvent args)
         {
-            component.Dirty();
+            Dirty(component);
         }
     }
 }

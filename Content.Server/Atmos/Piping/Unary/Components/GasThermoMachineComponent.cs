@@ -13,8 +13,6 @@ namespace Content.Server.Atmos.Piping.Unary.Components
     [RegisterComponent]
     public class GasThermoMachineComponent : Component, IRefreshParts, ISerializationHooks
     {
-        public override string Name => "GasThermoMachine";
-
         [DataField("inlet")]
         public string InletName { get; set; } = "pipe";
 

@@ -135,6 +135,24 @@
     - Stunbaton
 
 - type: technology
+  name: "non-lethal technology"
+  id: NonLethalTechnology
+  description: For the softer approach to detaining.
+  icon:
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_beanbag.rsi
+    state: base
+  requiredPoints: 8000
+  requiredTechnologies:
+     - SecurityTechnology
+  unlockedRecipes:
+    - ShellShotgunBeanbag
+    - CartridgePistolRubber
+    - CartridgeMagnumRubber
+    - CartridgeClRifleRubber
+    - CartridgeLRifleRubber
+    - CartridgeSRifleRubber
+
+- type: technology
   name: "ballistic technology"
   id: BallisticTechnology
   description: Just a fancy term for guns.

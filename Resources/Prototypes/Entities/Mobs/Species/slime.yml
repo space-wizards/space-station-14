@@ -93,7 +93,6 @@
     - type: Body
       template: HumanoidTemplate
       preset: SlimePreset
-    - type: DoorBumpOpener
     - type: HumanoidAppearance
       hairMatchesSkin: true
       hairAlpha: 0.5

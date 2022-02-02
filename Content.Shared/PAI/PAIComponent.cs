@@ -17,7 +17,6 @@ namespace Content.Shared.PAI
     [RegisterComponent, NetworkedComponent]
     public class PAIComponent : Component
     {
-        public override string Name => "PAI";
     }
 }
 

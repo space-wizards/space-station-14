@@ -14,42 +14,55 @@ namespace Content.Server.Radar;
 public class RadarConsoleSystem : EntitySystem
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
-    public override void Initialize()
-    {
-        base.Initialize();
-    }
+
+    private static float Frequency = 1.5f;
+
+    private float _accumulator;
 
     public override void Update(float frameTime)
     {
-        foreach (var component in EntityManager.EntityQuery<RadarConsoleComponent>())
+        _accumulator += frameTime;
+
+        if (_accumulator < Frequency)
+            return;
+
+        _accumulator -= Frequency;
+
+        foreach (var (component, xform) in EntityManager.EntityQuery<RadarConsoleComponent, TransformComponent>())
         {
             var s = component.Owner.GetUIOrNull(RadarConsoleUiKey.Key);
-            var radarTransform = Transform(component.Owner);
-            var radarPos = radarTransform.WorldPosition;
-            var radarRot = radarTransform.WorldRotation;
 
             if (s is null)
                 continue;
 
-            var map = Transform(component.Owner).MapID;
+            var (radarPos, _, radarInvMatrix) = xform.GetWorldPositionRotationInvMatrix();
 
+            var mapId = xform.MapID;
             var objects = new List<RadarObjectData>();
 
-            foreach (var grid in _mapManager.GetAllMapGrids(map))
+            _mapManager.FindGridsIntersectingEnumerator(mapId, new Box2(radarPos - component.Range, radarPos + component.Range), out var enumerator, true);
+
+            while (enumerator.MoveNext(out var grid))
             {
                 var phy = Comp<PhysicsComponent>(grid.GridEntityId);
                 var transform = Transform(grid.GridEntityId);
+
                 if (phy.Mass < 50)
                     continue;
-                var rad = Math.Log10(phy.Mass);
-                var pos = radarTransform.InvWorldMatrix.Transform(transform.WorldPosition);
+
+                var rad = Math.Log2(phy.Mass);
+                var gridCenter = transform.WorldMatrix.Transform(phy.LocalCenter);
+
+                var pos = radarInvMatrix.Transform(gridCenter);
                 pos.Y = -pos.Y; // Robust has an inverted Y, like BYOND. This undoes that.
-                if (pos.Length > 256)
+
+                if (pos.Length > component.Range)
                     continue;
-                objects.Add(new RadarObjectData() {Color = Color.Aqua, Position = pos, Radius = (float)rad});
+
+                objects.Add(new RadarObjectData {Color = Color.Aqua, Position = pos, Radius = (float)rad});
             }
 
-            s.SetState(new RadarConsoleBoundInterfaceState(objects.ToArray(), radarPos));
+            s.SetState(new RadarConsoleBoundInterfaceState(component.Range, objects.ToArray()));
         }
     }
 }

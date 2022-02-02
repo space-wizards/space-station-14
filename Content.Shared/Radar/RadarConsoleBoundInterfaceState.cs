@@ -8,13 +8,13 @@ namespace Content.Shared.Radar;
 [Serializable, NetSerializable]
 public sealed class RadarConsoleBoundInterfaceState : BoundUserInterfaceState
 {
+    public float Range;
     public RadarObjectData[] Objects;
-    public Vector2 Position;
 
-    public RadarConsoleBoundInterfaceState(RadarObjectData[] objects, Vector2 position)
+    public RadarConsoleBoundInterfaceState(float range, RadarObjectData[] objects)
     {
+        Range = range;
         Objects = objects;
-        Position = position;
     }
 }
 
@@ -22,19 +22,19 @@ public sealed class RadarConsoleBoundInterfaceState : BoundUserInterfaceState
 public struct RadarObjectData
 {
     public Color Color;
-    public ObjectShape Shape;
+    public RadarObjectShape Shape;
     public Vector2 Position;
     public float Radius;
 }
 
-public enum ObjectShape
+public enum RadarObjectShape : byte
 {
     Circle,
     CircleFilled,
 }
 
 [Serializable, NetSerializable]
-public enum RadarConsoleUiKey
+public enum RadarConsoleUiKey : byte
 {
     Key
 }
