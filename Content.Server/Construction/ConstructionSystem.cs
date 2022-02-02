@@ -27,9 +27,9 @@ namespace Content.Server.Construction
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly SharedContainerSystem _container = default!;
         [Dependency] private readonly StackSystem _stackSystem = default!;
         [Dependency] private readonly ToolSystem _toolSystem = default!;
-        [Dependency] private readonly SharedContainerSystem _container = default!;
 
         private const string SawmillName = "Construction";
         private ISawmill _sawmill = default!;
@@ -40,6 +40,7 @@ namespace Content.Server.Construction
 
             _sawmill = _logManager.GetSawmill(SawmillName);
 
+            InitializeComputer();
             InitializeGraphs();
             InitializeGuided();
             InitializeInteractions();
