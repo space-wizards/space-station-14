@@ -130,7 +130,7 @@
   nameGenerator:
     !type:NanotrasenNameGenerator
     prefixCreator: '14'
-  mapPath: Maps/syndiebase.yml
+  mapPath: /Maps/syndiebase.yml
   minPlayers: 0
   votable: false
   overflowJobs: []
@@ -144,7 +144,7 @@
   nameGenerator:
     !type:NanotrasenNameGenerator
     prefixCreator: '14'
-  mapPath: Maps/infiltrator.yml
+  mapPath: /Maps/infiltrator.yml
   minPlayers: 0
   votable: false
   overflowJobs: []
@@ -172,7 +172,7 @@
   nameGenerator:
     !type:NanotrasenNameGenerator
     prefixCreator: '14'
-  mapPath: Maps/constructionstation.yml
+  mapPath: /Maps/constructionstation.yml
   minPlayers: 0
   maxPlayers: 8
   overflowJobs: []
