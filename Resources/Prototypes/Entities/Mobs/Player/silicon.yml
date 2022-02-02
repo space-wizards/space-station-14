@@ -66,7 +66,7 @@
       - id: WelderExperimental
   - type: GhostTakeoverAvailable
     makeSentient: true
-    name: Maintainance Drone
+    name: Maintenance Drone
     description: Maintain the station. Ignore organics.
     rules: |
      You are bound by these laws both in-game and out-of-character:
