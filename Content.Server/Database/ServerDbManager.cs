@@ -73,17 +73,18 @@ namespace Content.Server.Database
 
         /// <summary>
         ///     Looks up an user's ban history.
-        ///     This will return pardoned bans as well.
         ///     One of <see cref="address"/> or <see cref="userId"/> need to not be null.
         /// </summary>
         /// <param name="address">The ip address of the user.</param>
         /// <param name="userId">The id of the user.</param>
         /// <param name="hwId">The HWId of the user.</param>
+        /// <param name="includeUnbanned">If true, bans that have been expired or pardoned are also included.</param>
         /// <returns>The user's ban history.</returns>
         Task<List<ServerBanDef>> GetServerBansAsync(
             IPAddress? address,
             NetUserId? userId,
-            ImmutableArray<byte>? hwId);
+            ImmutableArray<byte>? hwId,
+            bool includeUnbanned=true);
 
         Task AddServerBanAsync(ServerBanDef serverBan);
         Task AddServerUnbanAsync(ServerUnbanDef serverBan);
@@ -100,11 +101,16 @@ namespace Content.Server.Database
         #endregion
 
         #region Connection Logs
-        Task AddConnectionLogAsync(
+        /// <returns>ID of newly inserted connection log row.</returns>
+        Task<int> AddConnectionLogAsync(
             NetUserId userId,
             string userName,
             IPAddress address,
-            ImmutableArray<byte> hwId);
+            ImmutableArray<byte> hwId,
+            ConnectionDenyReason? denied);
+
+        Task AddServerBanHitsAsync(int connection, IEnumerable<ServerBanDef> bans);
+
         #endregion
 
         #region Admin Ranks
@@ -242,9 +248,10 @@ namespace Content.Server.Database
         public Task<List<ServerBanDef>> GetServerBansAsync(
             IPAddress? address,
             NetUserId? userId,
-            ImmutableArray<byte>? hwId)
+            ImmutableArray<byte>? hwId,
+            bool includeUnbanned=true)
         {
-            return _db.GetServerBansAsync(address, userId, hwId);
+            return _db.GetServerBansAsync(address, userId, hwId, includeUnbanned);
         }
 
         public Task AddServerBanAsync(ServerBanDef serverBan)
@@ -276,13 +283,19 @@ namespace Content.Server.Database
             return _db.GetPlayerRecordByUserId(userId, cancel);
         }
 
-        public Task AddConnectionLogAsync(
+        public Task<int> AddConnectionLogAsync(
             NetUserId userId,
             string userName,
             IPAddress address,
-            ImmutableArray<byte> hwId)
+            ImmutableArray<byte> hwId,
+            ConnectionDenyReason? denied)
         {
-            return _db.AddConnectionLogAsync(userId, userName, address, hwId);
+            return _db.AddConnectionLogAsync(userId, userName, address, hwId, denied);
+        }
+
+        public Task AddServerBanHitsAsync(int connection, IEnumerable<ServerBanDef> bans)
+        {
+            return _db.AddServerBanHitsAsync(connection, bans);
         }
 
         public Task<Admin?> GetAdminDataForAsync(NetUserId userId, CancellationToken cancel = default)
