@@ -12,6 +12,7 @@
   overflowJobs:
     - Assistant
   availableJobs:
+    Quartermaster: [ 1, 1 ]
     CargoTechnician: [ 1, 2 ]
     Assistant: [ -1, -1 ]
     Bartender: [ 1, 1 ]

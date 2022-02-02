@@ -42,7 +42,7 @@
   name: quartermaster
   components:
   - type: SpawnPoint
-      job_id: Quartermaster
+    job_id: Quartermaster
   - type: Sprite
     layers:
       - state: green
