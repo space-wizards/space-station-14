@@ -19,8 +19,6 @@ namespace Content.Shared.Foldable;
 [Friend(typeof(SharedFoldableSystem))]
 public class FoldableComponent : Component
 {
-    public override string Name => "Foldable";
-
     [DataField("folded")]
     public bool IsFolded = false;
 }

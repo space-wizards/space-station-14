@@ -11,8 +11,6 @@ namespace Content.Server.Botany.Components
     [RegisterComponent]
     public class LogComponent : Component, IInteractUsing
     {
-        public override string Name => "Log";
-
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User))

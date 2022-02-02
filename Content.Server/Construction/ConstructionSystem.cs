@@ -30,6 +30,7 @@ namespace Content.Server.Construction
         [Dependency] private readonly SharedContainerSystem _container = default!;
         [Dependency] private readonly StackSystem _stackSystem = default!;
         [Dependency] private readonly ToolSystem _toolSystem = default!;
+        [Dependency] private readonly SharedContainerSystem _container = default!;
 
         private const string SawmillName = "Construction";
         private ISawmill _sawmill = default!;
@@ -45,6 +46,7 @@ namespace Content.Server.Construction
             InitializeGuided();
             InitializeInteractions();
             InitializeInitial();
+            InitializeMachines();
 
             SubscribeLocalEvent<ConstructionComponent, ComponentInit>(OnConstructionInit);
             SubscribeLocalEvent<ConstructionComponent, ComponentStartup>(OnConstructionStartup);

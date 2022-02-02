@@ -30,12 +30,10 @@
     board: DoorElectronics
     bumpOpen: false
     clickOpen: false
-    autoClose: false
     closeTimeOne: 0.2
     closeTimeTwo: 1.2
     openTimeOne: 1.2
     openTimeTwo: 0.2
-    inhibitCrush: false
     crushDamage:
       types:
         Blunt: 5 # getting shutters closed on you probably doesn't hurt that much
@@ -88,7 +86,7 @@
   suffix: Open
   components:
   - type: Door
-    startOpen: true
+    state: Open
 
 - type: entity
   id: ShuttersRadiation
@@ -110,7 +108,7 @@
   suffix: Open
   components:
   - type: Door
-    startOpen: true
+    state: Open
 
 - type: entity
   id: ShuttersWindow
@@ -131,4 +129,4 @@
   suffix: Open
   components:
   - type: Door
-    startOpen: true
+    state: Open

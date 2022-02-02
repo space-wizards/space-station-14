@@ -11,8 +11,6 @@ namespace Content.Shared.Nutrition.Components
     [RegisterComponent]
     public class CreamPiedComponent : Component
     {
-        public override string Name => "CreamPied";
-
         [ViewVariables]
         public bool CreamPied { get; set; } = false;
     }

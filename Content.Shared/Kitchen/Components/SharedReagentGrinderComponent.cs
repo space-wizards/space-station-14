@@ -7,8 +7,6 @@ namespace Content.Shared.Kitchen.Components
 {
     public abstract class SharedReagentGrinderComponent : Component
     {
-        public override string Name => "ReagentGrinder";
-
         [Serializable, NetSerializable]
         public class ReagentGrinderGrindStartMessage : BoundUserInterfaceMessage
         {

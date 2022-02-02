@@ -15,8 +15,6 @@ namespace Content.Server.Lathe.Components
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-        public override string Name => "ProtolatheDatabase";
-
         public override ComponentState GetComponentState()
         {
             return new ProtolatheDatabaseState(GetRecipeIdList());
