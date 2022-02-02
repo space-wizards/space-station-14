@@ -14,7 +14,6 @@ namespace Content.Shared.Light.Component;
 /// </summary>
 [NetworkedComponent]
 [RegisterComponent]
-[ComponentProtoName("RgbLightController")]
 [Friend(typeof(SharedRgbLightControllerSystem))]
 public sealed class RgbLightControllerComponent : Robust.Shared.GameObjects.Component
 {
