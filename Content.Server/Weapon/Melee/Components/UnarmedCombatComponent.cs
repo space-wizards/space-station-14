@@ -7,6 +7,5 @@ namespace Content.Server.Weapon.Melee.Components
     [ComponentReference(typeof(MeleeWeaponComponent))]
     public class UnarmedCombatComponent : MeleeWeaponComponent
     {
-        public override string Name => "UnarmedCombat";
     }
 }

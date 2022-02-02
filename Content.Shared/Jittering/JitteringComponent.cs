@@ -12,8 +12,6 @@ namespace Content.Shared.Jittering
     [RegisterComponent, NetworkedComponent]
     public class JitteringComponent : Component
     {
-        public override string Name => "Jittering";
-
         [ViewVariables(VVAccess.ReadWrite)]
         public float Amplitude { get; set; }
 

@@ -19,8 +19,6 @@ namespace Content.Server.Disposal.Tube.Components
 
         private const string HolderPrototypeId = "DisposalHolder";
 
-        public override string Name => "DisposalEntry";
-
         public bool TryInsert(DisposalUnitComponent from)
         {
             var holder = _entMan.SpawnEntity(HolderPrototypeId, _entMan.GetComponent<TransformComponent>(Owner).MapPosition);

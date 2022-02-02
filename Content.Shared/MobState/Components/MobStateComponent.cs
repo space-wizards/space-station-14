@@ -28,8 +28,6 @@ namespace Content.Shared.MobState.Components
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public override string Name => "MobState";
-
         /// <summary>
         ///     States that this <see cref="MobStateComponent"/> mapped to
         ///     the amount of damage at which they are triggered.

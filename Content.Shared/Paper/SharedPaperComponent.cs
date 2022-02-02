@@ -6,8 +6,6 @@ namespace Content.Shared.Paper
 {
     public class SharedPaperComponent : Component
     {
-        public override string Name => "Paper";
-
         [Serializable, NetSerializable]
         public class PaperBoundUserInterfaceState : BoundUserInterfaceState
         {

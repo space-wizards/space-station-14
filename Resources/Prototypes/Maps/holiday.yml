@@ -5,7 +5,7 @@
   nameGenerator:
     !type:NanotrasenNameGenerator
     prefixCreator: 'VG'
-  mapPath: Maps/packedstationxmas.yml
+  mapPath: /Maps/packedstationxmas.yml
   minPlayers: 15
   conditions:
     - !type:HolidayMapCondition

@@ -14,8 +14,6 @@ namespace Content.Shared.Standing
     [RegisterComponent, NetworkedComponent]
     public sealed class StandingStateComponent : Component
     {
-        public override string Name => "StandingState";
-
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("downSoundCollection")]
         public SoundSpecifier DownSoundCollection { get; } = new SoundCollectionSpecifier("BodyFall");

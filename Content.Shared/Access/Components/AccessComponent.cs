@@ -15,8 +15,6 @@ namespace Content.Shared.Access.Components
     [Friend(typeof(AccessSystem))]
     public class AccessComponent : Component
     {
-        public override string Name => "Access";
-
         [DataField("tags", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<AccessLevelPrototype>))]
         [ViewVariables]
         public HashSet<string> Tags = new();

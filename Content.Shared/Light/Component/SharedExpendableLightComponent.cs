@@ -31,8 +31,6 @@ namespace Content.Shared.Light.Component
     {
         public static readonly AudioParams LoopedSoundParams = new(0, 1, "Master", 62.5f, 1, 1, true, 0.3f);
 
-        public sealed override string Name => "ExpendableLight";
-
         [ViewVariables(VVAccess.ReadOnly)]
         public ExpendableLightState CurrentState { get; set; }
 

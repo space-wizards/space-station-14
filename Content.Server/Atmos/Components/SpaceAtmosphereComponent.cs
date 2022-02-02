@@ -6,8 +6,6 @@ namespace Content.Server.Atmos.Components
     [ComponentReference(typeof(IAtmosphereComponent))]
     public class SpaceAtmosphereComponent : Component, IAtmosphereComponent
     {
-        public override string Name => "SpaceAtmosphere";
-
         public bool Simulated => false;
     }
 }

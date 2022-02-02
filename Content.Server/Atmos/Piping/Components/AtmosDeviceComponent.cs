@@ -13,8 +13,6 @@ namespace Content.Server.Atmos.Piping.Components
     [RegisterComponent]
     public class AtmosDeviceComponent : Component
     {
-        public override string Name => "AtmosDevice";
-
         /// <summary>
         ///     Whether this device requires being anchored to join an atmosphere.
         /// </summary>
