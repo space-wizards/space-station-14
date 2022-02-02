@@ -11,6 +11,8 @@ using Content.Server.Popups;
 using Content.Server.Mind.Components;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Hands.Components;
+using Content.Server.Explosion.EntitySystems;
+using Content.Server.Explosion;
 using Content.Server.Act;
 using Robust.Shared.IoC;
 using Robust.Shared.GameObjects;
@@ -24,6 +26,7 @@ namespace Content.Server.Drone
     public class DroneSystem : SharedDroneSystem
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly ExplosionSystem _explosions = default!;
 
         public override void Initialize()
         {
@@ -63,7 +66,8 @@ namespace Content.Server.Drone
                         EntityManager.DeleteEntity(item);
                     }
                 }
-                UpdateDroneAppearance(uid, DroneStatus.Off);
+                _explosions.SpawnExplosion(uid);
+                EntityManager.DeleteEntity(uid);
             }
         }
 
