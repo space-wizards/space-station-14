@@ -13,7 +13,7 @@ using Content.Server.Ghost.Roles.Components;
 using Content.Server.Hands.Components;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Explosion;
-using Content.Server.Act;
+using Content.Server.Actions.Events;
 using Robust.Shared.IoC;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -32,7 +32,7 @@ namespace Content.Server.Drone
         {
             base.Initialize();
             SubscribeLocalEvent<DroneComponent, MobStateChangedEvent>(OnMobStateChanged);
-            SubscribeLocalEvent<DroneComponent, DisarmedActEvent>(OnDisarmedAct);
+            SubscribeLocalEvent<DroneComponent, DisarmAttemptEvent>(OnDisarmAttempt);
             SubscribeLocalEvent<DroneComponent, DropAttemptEvent>(OnDropAttempt);
             SubscribeLocalEvent<DroneComponent, IsUnequippingAttemptEvent>(OnUnequipAttempt);
             SubscribeLocalEvent<DroneComponent, ExaminedEvent>(OnExamined);
@@ -61,23 +61,20 @@ namespace Content.Server.Drone
             {
                 foreach (var item in drone.ToolUids)
                 {
-                    if (EntityManager.TryGetComponent<DroneToolComponent>(item, out var droneTool))
-                    {
                         EntityManager.DeleteEntity(item);
-                    }
                 }
                 _explosions.SpawnExplosion(uid);
                 EntityManager.DeleteEntity(uid);
             }
         }
 
-        private void OnDisarmedAct(EntityUid uid, DroneComponent drone, DisarmedActEvent args)
+        private void OnDisarmAttempt(EntityUid uid, DroneComponent drone, DisarmAttemptEvent args)
         {
-            EntityManager.TryGetComponent<HandsComponent>(args.Target, out var hands);
+            EntityManager.TryGetComponent<HandsComponent>(args.TargetUid, out var hands);
             var item = hands.GetActiveHandItem;
             if (EntityManager.TryGetComponent<DroneToolComponent>(item?.Owner, out var itemInHand))
             {
-            args.Handled = true;
+            args.Cancel();
             }
         }
 
