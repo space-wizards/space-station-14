@@ -50,6 +50,18 @@
     ammoSpread: 10
 
 - type: entity
+  id: ShellShotgunFlare
+  name: shell (.50 flare)
+  parent: ShellShotgunBase
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_flare.rsi
+  - type: Ammo
+    projectile: PelletShotgunFlare
+    projectilesFired: 1
+    ammoSpread: 0
+
+- type: entity
   id: ShellShotgun
   name: shell (.50)
   parent: ShellShotgunBase
@@ -77,7 +89,9 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_incendiary.rsi
   - type: Ammo
-    projectile: PelletShotgun
+    projectile: PelletShotgunIncendiary
+    projectilesFired: 6
+    ammoSpread: 125
 
 - type: entity
   id: ShellShotgunPractice

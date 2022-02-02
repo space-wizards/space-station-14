@@ -13,8 +13,6 @@ namespace Content.Shared.Clothing
     [NetworkedComponent()]
     public abstract class SharedMagbootsComponent : Component
     {
-        public sealed override string Name => "Magboots";
-
         public abstract bool On { get; set; }
 
         protected void OnChanged()

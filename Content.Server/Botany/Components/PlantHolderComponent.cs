@@ -47,8 +47,6 @@ namespace Content.Server.Botany.Components
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public override string Name => "PlantHolder";
-
         [ViewVariables] private int _lastProduce;
 
         [ViewVariables(VVAccess.ReadWrite)] private int _missingGas;
@@ -592,30 +590,31 @@ namespace Content.Server.Botany.Components
 
                 if (Dead)
                 {
-                    appearanceComponent.SetData(PlantHolderVisuals.Plant,
-                        new SpriteSpecifier.Rsi(Seed.PlantRsi, "dead"));
+                    appearanceComponent.SetData(PlantHolderVisuals.PlantRsi, Seed.PlantRsi.ToString());
+                    appearanceComponent.SetData(PlantHolderVisuals.PlantState, "dead");
                 }
                 else if (Harvest)
                 {
-                    appearanceComponent.SetData(PlantHolderVisuals.Plant,
-                        new SpriteSpecifier.Rsi(Seed.PlantRsi, "harvest"));
+                    appearanceComponent.SetData(PlantHolderVisuals.PlantRsi, Seed.PlantRsi.ToString());
+                    appearanceComponent.SetData(PlantHolderVisuals.PlantState, "harvest");
                 }
                 else if (Age < Seed.Maturation)
                 {
                     var growthStage = Math.Max(1, (int) ((Age * Seed.GrowthStages) / Seed.Maturation));
-                    appearanceComponent.SetData(PlantHolderVisuals.Plant,
-                        new SpriteSpecifier.Rsi(Seed.PlantRsi, $"stage-{growthStage}"));
+
+                    appearanceComponent.SetData(PlantHolderVisuals.PlantRsi, Seed.PlantRsi.ToString());
+                    appearanceComponent.SetData(PlantHolderVisuals.PlantState, $"stage-{growthStage}");
                     _lastProduce = Age;
                 }
                 else
                 {
-                    appearanceComponent.SetData(PlantHolderVisuals.Plant,
-                        new SpriteSpecifier.Rsi(Seed.PlantRsi, $"stage-{Seed.GrowthStages}"));
+                    appearanceComponent.SetData(PlantHolderVisuals.PlantRsi, Seed.PlantRsi.ToString());
+                    appearanceComponent.SetData(PlantHolderVisuals.PlantState, $"stage-{Seed.GrowthStages}");
                 }
             }
             else
             {
-                appearanceComponent.SetData(PlantHolderVisuals.Plant, SpriteSpecifier.Invalid);
+                appearanceComponent.SetData(PlantHolderVisuals.PlantState, "");
                 appearanceComponent.SetData(PlantHolderVisuals.HealthLight, false);
             }
 

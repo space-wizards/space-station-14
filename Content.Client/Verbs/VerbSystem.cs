@@ -130,7 +130,7 @@ namespace Content.Client.Verbs
             {
                 foreach (var entity in entities.ToList())
                 {
-                    if (!player.Value.IsInSameOrTransparentContainer(entity))
+                    if (!ContainerSystem.IsInSameOrTransparentContainer(player.Value, entity))
                         entities.Remove(entity);
                 }
             }
