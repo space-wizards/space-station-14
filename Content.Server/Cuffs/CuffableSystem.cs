@@ -122,7 +122,7 @@ namespace Content.Server.Cuffs
             {
                 cuffable.CanStillInteract = handCount > cuffable.CuffedHandCount;
                 cuffable.CuffedStateChanged();
-                cuffable.Dirty();
+                Dirty(cuffable);
             }
         }
     }
