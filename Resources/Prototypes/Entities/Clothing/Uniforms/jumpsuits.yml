@@ -649,11 +649,11 @@
 
 - type: entity
   parent: ClothingUniformBase
-  id: ClothingUniformJumpsuitPajamaSyndicate
-  name: syndicate pajamas
+  id: ClothingUniformJumpsuitPyjamaSyndicate
+  name: syndicate pyjamas
   description: For those long nights in perma.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/pajamasyndicate.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/pyjamasyndicate.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/pajamasyndicate.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/pyjamasyndicate.rsi

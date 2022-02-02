@@ -149,15 +149,15 @@
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicate
-  id: ClothingBackpackDuffelSyndicateCostumePajama
-  name: syndicate pajama duffel bag
-  description: "Contains a syndicate pajama kit."
+  id: ClothingBackpackDuffelSyndicateCostumePyjama
+  name: syndicate pyjama duffel bag
+  description: "Contains a syndicate pyjama kit."
   components:
   - type: StorageFill
     contents:
-      - id: ClothingUniformJumpsuitPajamaSyndicate
+      - id: ClothingUniformJumpsuitPyjamaSyndicate
       - id: ClothingShoesSlippers
-      - id: ClothingHeadPajamaSyndicate
+      - id: ClothingHeadPyjamaSyndicate
       - id: BedsheetSyndie
       - id: PlushieCarp
       - id: DrinkHotCoffee

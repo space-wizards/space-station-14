@@ -376,11 +376,11 @@
 
 - type: entity
   parent: ClothingHeadBase
-  id: ClothingHeadPajamaSyndicate
-  name: syndicate pajama hat
+  id: ClothingHeadPyjamaSyndicate
+  name: syndicate pyjama hat
   description: For keeping that traitor head of yours warm.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hats/syndicatepajama.rsi
+    sprite: Clothing/Head/Hats/pyjamasyndicate.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hats/syndicatepajama.rsi
+    sprite: Clothing/Head/Hats/pyjamasyndicate.rsi
