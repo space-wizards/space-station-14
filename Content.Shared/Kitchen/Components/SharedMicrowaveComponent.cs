@@ -10,9 +10,6 @@ namespace Content.Shared.Kitchen.Components
     [NetworkedComponent()]
     public class SharedMicrowaveComponent : Component
     {
-
-        public override string Name => "Microwave";
-
         [Serializable, NetSerializable]
         public class MicrowaveStartCookMessage : BoundUserInterfaceMessage
         {

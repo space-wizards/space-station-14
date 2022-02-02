@@ -430,6 +430,38 @@
         dead: kangaroo-dead
 
 - type: entity
+  name: boxing kangaroo
+  parent: MobKangaroo
+  id: MobKangarooBoxer
+  description: A large marsupial herbivore. It has powerful hind legs and... boxing gloves?
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+      - map: ["enum.DamageStateVisualLayers.Base"]
+        state: kangaroo-boxing
+        sprite: Mobs/Animals/kangaroo.rsi
+  - type: Appearance
+    visuals:
+      - type: DamageStateVisualizer
+        normal: kangaroo-boxing
+        crit: kangaroo-boxing-dead
+        dead: kangaroo-boxing-dead
+  - type: UnarmedCombat
+    range: 1.5
+    arcwidth: 0
+    arc: claw
+    damage:
+      types:
+        Blunt: 10
+  - type: UtilityAI
+    behaviorSets:
+    - UnarmedAttackHostiles
+  - type: AiFactionTag
+    factions:
+    - SimpleHostile
+
+- type: entity
   name: monkey
   id: MobMonkey
   parent: SimpleMobBase
@@ -570,6 +602,85 @@
       normal: mouse-2
       crit: dead-2
       dead: splat-2
+
+
+- type: entity
+  name: lizard
+  parent: SimpleMobBase
+  id: MobLizard
+  description: I think it's lost.
+  components:
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 2
+    baseSprintSpeed : 3
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: lizard
+      sprite: Mobs/Animals/lizard.rsi
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.2
+      mass: 5
+      mask:
+      - Impassable
+      - MobImpassable #Bullets?!
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: lizard
+      crit: dead
+      dead: dead
+  - type: Butcherable
+    meat: FoodMeat
+    pieces: 1
+
+- type: entity
+  name: frog
+  parent: SimpleMobBase
+  id: MobFrog
+  description: Hop hop hop. Lookin' moist.
+  components:
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 4
+    baseSprintSpeed : 6
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: frog
+      sprite: Mobs/Animals/frog.rsi
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.2
+      mass: 2
+      mask:
+      - Impassable
+      - MobImpassable #Bullets?!
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: frog
+      crit: dead
+      dead: dead
+  - type: Butcherable
+    meat: FoodMeat
+    pieces: 1
 
 # Would be cool to have some functionality for the parrot to be able to sit on stuff
 - type: entity

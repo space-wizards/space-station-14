@@ -10,8 +10,6 @@ namespace Content.Shared.Decals
     [Friend(typeof(SharedDecalSystem))]
     public class DecalGridComponent : Component
     {
-        public override string Name => "DecalGrid";
-
         [DataField("chunkCollection", serverOnly: true)]
         public DecalGridChunkCollection ChunkCollection = new(new ());
 
