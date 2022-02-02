@@ -128,3 +128,5 @@
         states:
           enum.DroneStatus.Off: shell
           enum.DroneStatus.On: drone
+  - type: ReplacementAccent
+    accent: silicon
