@@ -26,8 +26,6 @@ namespace Content.Shared.Actions.Components
     [RegisterComponent]
     public class ItemActionsComponent : Component
     {
-        public override string Name => "ItemActions";
-
         /// <summary>
         /// Configuration for the item actions initially provided by this item. Actions defined here
         /// will be automatically granted unless their state is modified using the methods

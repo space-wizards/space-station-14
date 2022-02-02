@@ -18,7 +18,7 @@
             <Button Name="DispenseButton100" Access="Public" Text="100" StyleClasses="OpenLeft"/>
         </BoxContainer>
         <Control MinSize="0 10"/>
-        <GridContainer Name="ChemicalList" Access="Public" Columns="5">
+        <GridContainer Name="ChemicalList" Access="Public" Columns="4">
         </GridContainer>
         <Control MinSize="0 10"/>
         <BoxContainer Orientation="Horizontal">

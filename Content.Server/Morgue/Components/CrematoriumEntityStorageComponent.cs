@@ -33,9 +33,6 @@ namespace Content.Server.Morgue.Components
 #pragma warning restore 618
     {
         [Dependency] private readonly IEntityManager _entities = default!;
-
-        public override string Name => "CrematoriumEntityStorage";
-
         [DataField("cremateStartSound")] private SoundSpecifier _cremateStartSound = new SoundPathSpecifier("/Audio/Items/lighter1.ogg");
         [DataField("crematingSound")] private SoundSpecifier _crematingSound = new SoundPathSpecifier("/Audio/Effects/burning.ogg");
         [DataField("cremateFinishSound")] private SoundSpecifier _cremateFinishSound = new SoundPathSpecifier("/Audio/Machines/ding.ogg");

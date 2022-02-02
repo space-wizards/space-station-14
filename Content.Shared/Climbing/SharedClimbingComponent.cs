@@ -15,8 +15,6 @@ namespace Content.Shared.Climbing
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public sealed override string Name => "Climbing";
-
         protected bool IsOnClimbableThisFrame
         {
             get

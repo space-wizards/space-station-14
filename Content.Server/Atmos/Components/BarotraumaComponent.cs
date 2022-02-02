@@ -12,8 +12,6 @@ namespace Content.Server.Atmos.Components
     [RegisterComponent]
     public class BarotraumaComponent : Component
     {
-        public override string Name => "Barotrauma";
-
         [DataField("damage", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
         public DamageSpecifier Damage = default!;

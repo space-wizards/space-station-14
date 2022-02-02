@@ -32,8 +32,6 @@ namespace Content.Client.IconSmoothing
         [DataField("mode")]
         private IconSmoothingMode _mode = IconSmoothingMode.Corners;
 
-        public override string Name => "IconSmooth";
-
         internal ISpriteComponent? Sprite { get; private set; }
 
         public (GridId, Vector2i)? LastPosition;

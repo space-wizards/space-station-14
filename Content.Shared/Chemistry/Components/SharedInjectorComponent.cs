@@ -13,8 +13,6 @@ namespace Content.Shared.Chemistry.Components
     [NetworkedComponent()]
     public class SharedInjectorComponent : Component
     {
-        public override string Name => "Injector";
-
         /// <summary>
         /// Component data used for net updates. Used by client for item status ui
         /// </summary>

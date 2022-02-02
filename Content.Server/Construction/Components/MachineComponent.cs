@@ -13,8 +13,6 @@ namespace Content.Server.Construction.Components
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public override string Name => "Machine";
-
         [DataField("board")]
         public string? BoardPrototype { get; private set; }
 

@@ -11,8 +11,6 @@ namespace Content.Server.Damage.Components;
 [RegisterComponent]
 public class ExaminableDamageComponent : Component
 {
-    public override string Name => "ExaminableDamage";
-
     [DataField("messages", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<ExaminableDamagePrototype>))]
     public string? MessagesProtoId;
 

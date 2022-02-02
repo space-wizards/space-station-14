@@ -18,12 +18,12 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Tiles
 {
     [RegisterComponent]
+    [ComponentProtoName("FloorTile")]
     public class FloorTileItemComponent : Component, IAfterInteract
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
 
-        public override string Name => "FloorTile";
         [DataField("outputs", customTypeSerializer: typeof(PrototypeIdListSerializer<ContentTileDefinition>))]
         private List<string>? _outputTiles;
 
