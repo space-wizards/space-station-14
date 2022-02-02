@@ -270,3 +270,9 @@
   category: Misc
   itemId: ClothingBackpackDuffelSyndicateCostumeClown
   price: 4
+
+- type: uplinkListing
+  id: UplinkCostumePajama
+  category: Misc
+  itemId: ClothingBackpackDuffelSyndicateCostumePajama
+  price: 4
