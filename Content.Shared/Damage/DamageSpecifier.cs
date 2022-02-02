@@ -384,8 +384,8 @@ namespace Content.Shared.Damage
             return newDamage;
         }
 
-        // Defining subtraction operator explicitly, rather implicitly via X + (-1 * Y) is faster because FixedPoint2
-        // multiplication is somewhat involved.
+        // Here we define the subtraction operator explicitly, rather than implicitly via something like X + (-1 * Y).
+        // This is faster because FixedPoint2 multiplication is somewhat involved.
         public static DamageSpecifier operator -(DamageSpecifier damageSpecA, DamageSpecifier damageSpecB)
         {
             DamageSpecifier newDamage = new(damageSpecA);
