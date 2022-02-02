@@ -16,6 +16,8 @@
     soundHit:
       path: /Audio/Effects/hit_kick.ogg
   - type: Clickable
+  - type: Damageable
+    damageContainer: Inorganic
   - type: InteractionOutline
   - type: Fixtures
     fixtures:
@@ -40,8 +42,7 @@
   - type: MobState
     thresholds:
       0: !type:NormalMobState {}
-      50: !type:CriticalMobState {}
-      100: !type:DeadMobState {}
+      65: !type:DeadMobState {}
   - type: Physics
     bodyType: KinematicController
   - type: Hands
@@ -64,9 +65,9 @@
   components:
   - type: Drone
     tools:
-      - id: PowerDrillDrone
-      - id: JawsOfLifeDrone
-      - id: WelderExperimentalDrone
+      - id: PowerDrill
+      - id: JawsOfLife
+      - id: WelderExperimental
   - type: GhostTakeoverAvailable
     makeSentient: true
     name: Maintainance Drone
@@ -127,23 +128,3 @@
         states:
           enum.DroneStatus.Off: shell
           enum.DroneStatus.On: drone
-
-## Drone Tools
-
-- type: entity
-  id: PowerDrillDrone
-  parent: PowerDrill
-  components:
-  - type: DroneTool
-
-- type: entity
-  id: JawsOfLifeDrone
-  parent: JawsOfLife
-  components:
-  - type: DroneTool
-
-- type: entity
-  id: WelderExperimentalDrone
-  parent: WelderExperimental
-  components:
-  - type: DroneTool

@@ -4,6 +4,7 @@ using Content.Shared.Drone.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.Events;
 using Content.Shared.DragDrop;
+using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Server.Popups;
 using Content.Server.Mind.Components;
@@ -26,6 +27,7 @@ namespace Content.Server.Drone
         public override void Initialize()
         {
             base.Initialize();
+            SubscribeLocalEvent<DroneComponent, DamageChangedEvent>(OnDamageChanged);
             SubscribeLocalEvent<DroneComponent, DisarmedActEvent>(OnDisarmedAct);
             SubscribeLocalEvent<DroneComponent, DropAttemptEvent>(OnDropAttempt);
             SubscribeLocalEvent<DroneComponent, IsUnequippingAttemptEvent>(OnUnequipAttempt);
@@ -46,6 +48,22 @@ namespace Content.Server.Drone
                 {
                     args.PushMarkup(Loc.GetString("drone-dormant"));
                 }
+            }
+        }
+
+        private void OnDamageChanged(EntityUid uid, DroneComponent drone, DamageChangedEvent args)
+        {
+            if (args.Damageable.TotalDamage >= 70)
+            {
+                EntityManager.TryGetComponent<HandsComponent>(uid, out var hands);
+                foreach (var item in hands.GetAllHeldEntities())
+                {
+                    if (EntityManager.TryGetComponent<DroneToolComponent>(item, out var droneTool))
+                    {
+                        EntityManager.DeleteEntity(item);
+                    }
+                }
+                UpdateDroneAppearance(uid, DroneStatus.Off);
             }
         }
 
@@ -77,7 +95,8 @@ namespace Content.Server.Drone
                    foreach (var entry in drone.Tools)
                     {
                         var item = EntityManager.SpawnEntity(entry.PrototypeId, spawnCoord);
-                       hands.PutInHand(item);
+                        EntityManager.AddComponent<DroneToolComponent>(item);
+                        hands.PutInHand(item);
                     }
                 }
 

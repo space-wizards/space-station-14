@@ -5,6 +5,6 @@
     hand 1: LeftHandHuman
     hand 2: LeftHandHuman
     hand 3: LeftHandHuman
-    hand 4: LeftHandHuman
-    hand 5: LeftHandHuman
-    hand 6: LeftHandHuman
+    hand 4: RightHandHuman
+    hand 5: RightHandHuman
+    hand 6: RightHandHuman
