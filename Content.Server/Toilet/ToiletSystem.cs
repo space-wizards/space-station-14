@@ -1,4 +1,4 @@
-﻿using Content.Server.Act;
+using Content.Server.Act;
 using Content.Server.Buckle.Components;
 using Content.Server.Popups;
 using Content.Server.Storage.Components;
@@ -129,7 +129,7 @@ namespace Content.Server.Toilet
             if (!Resolve(uid, ref component, ref meta))
                 return SuicideKind.Special;
 
-            if (!Resolve(uid, ref victimMeta))
+            if (!Resolve(victimUid, ref victimMeta))
                 return SuicideKind.Special;
 
             // check that victim even have head
@@ -137,11 +137,11 @@ namespace Content.Server.Toilet
                 body.HasPartOfType(BodyPartType.Head))
             {
                 var othersMessage = Loc.GetString("toilet-component-suicide-head-message-others",
-                    ("victim",victimMeta.Name),("owner", meta.Name));
-                _popupSystem.PopupEntity(othersMessage, uid, Filter.Pvs(victimUid));
+                    ("victim",victimMeta.EntityName),("owner", meta.EntityName));
+                _popupSystem.PopupEntity(othersMessage, uid, Filter.Pvs(victimUid).RemoveWhereAttachedEntity(puid => puid == victimUid));
 
                 var selfMessage = Loc.GetString("toilet-component-suicide-head-message",
-                    ("owner", meta.Name));
+                    ("owner", meta.EntityName));
                 _popupSystem.PopupEntity(selfMessage, uid, Filter.Entities(victimUid));
 
                 return SuicideKind.Asphyxiation;
@@ -149,11 +149,11 @@ namespace Content.Server.Toilet
             else
             {
                 var othersMessage = Loc.GetString("toilet-component-suicide-message-others",
-                    ("victim", victimMeta.Name),("owner", meta.Name));
-                _popupSystem.PopupEntity(othersMessage, uid, Filter.Pvs(uid));
+                    ("victim", victimMeta.EntityName),("owner", meta.EntityName));
+                _popupSystem.PopupEntity(othersMessage, uid, Filter.Pvs(uid).RemoveWhereAttachedEntity(puid => puid == victimUid));
 
                 var selfMessage = Loc.GetString("toilet-component-suicide-message",
-                    ("owner",meta.Name));
+                    ("owner",meta.EntityName));
                 _popupSystem.PopupEntity(selfMessage, uid, Filter.Entities(victimUid));
 
                 return SuicideKind.Blunt;
