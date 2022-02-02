@@ -2536,7 +2536,7 @@ entities:
               - 384
         type: ContainerContainer
   - uid: 196
-    type: ClothingOuterSuitSyndicate
+    type: ClothingOuterHardsuitSyndicate
     components:
       - pos: 5.6624527,-2.5333352
         parent: 63
