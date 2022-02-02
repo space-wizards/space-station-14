@@ -373,3 +373,14 @@
     sprite: Clothing/Head/Hats/truckershat.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/truckershat.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadPajamaSyndicate
+  name: syndicate pajama hat
+  description: For keeping that traitor head of yours warm.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/syndicatepajama.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/syndicatepajama.rsi
