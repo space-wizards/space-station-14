@@ -303,7 +303,6 @@ namespace Content.Client.Entry
             "ResistLocker",
             "Meltable",
             "Reprocessor",
-            "RadarConsole",
             "EnergySword",
         };
     }
