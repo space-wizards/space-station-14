@@ -1,9 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: Fixes mobs being on fire permanently, type: Fix}
-  id: 466
-  time: '2021-10-21T21:09:28.187458+00:00'
 - author: 20kdc
   changes:
   - {message: Saltern now uses SMES terminals, type: Add}
@@ -2941,3 +2936,8 @@ Entries:
   - {message: 'Added insta-heat ramen, just add water!', type: Add}
   id: 966
   time: '2022-02-01T06:16:49.0000000+00:00'
+- author: Veritius
+  changes:
+  - {message: added pilk, type: Add}
+  id: 967
+  time: '2022-02-02T06:20:54.0000000+00:00'
