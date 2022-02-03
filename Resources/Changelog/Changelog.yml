@@ -1,11 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: Saltern now uses SMES terminals, type: Add}
-  - {message: SMESes in solars, type: Add}
-  - {message: Nudge a trash spawner back in-bounds, type: Fix}
-  id: 467
-  time: '2021-10-21T21:25:21.0000000+00:00'
 - author: PJB
   changes:
   - {message: 'You can now see your held active item next to your mouse cursor, to
@@ -2941,3 +2934,8 @@ Entries:
   - {message: added pilk, type: Add}
   id: 967
   time: '2022-02-02T06:20:54.0000000+00:00'
+- author: wrexbe
+  changes:
+  - {message: Suicide by toilet shows correct messages., type: Fix}
+  id: 968
+  time: '2022-02-02T23:14:42.0000000+00:00'
