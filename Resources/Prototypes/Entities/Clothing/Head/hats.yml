@@ -376,11 +376,33 @@
 
 - type: entity
   parent: ClothingHeadBase
-  id: ClothingHeadPyjamaSyndicate
-  name: syndicate pyjama hat
+  id: ClothingHeadPyjamaSyndicateBlack
+  name: syndicate black pyjama hat
   description: For keeping that traitor head of yours warm.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hats/pyjamasyndicate.rsi
+    sprite: Clothing/Head/Hats/pyjamasyndicateblack.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hats/pyjamasyndicate.rsi
+    sprite: Clothing/Head/Hats/pyjamasyndicateblack.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadPyjamaSyndicatePink
+  name: syndicate pink pyjama hat
+  description: For keeping that traitor head of yours warm.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/pyjamasyndicatePink.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/pyjamasyndicatePink.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadPyjamaSyndicateRed
+  name: syndicate red pyjama hat
+  description: For keeping that traitor head of yours warm.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/pyjamasyndicatered.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/pyjamasyndicatered.rsi

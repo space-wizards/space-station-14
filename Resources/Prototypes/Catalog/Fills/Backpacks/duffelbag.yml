@@ -158,8 +158,9 @@
       - id: ClothingUniformJumpsuitPyjamaSyndicateRed
       - id: ClothingUniformJumpsuitPyjamaSyndicateBlack
       - id: ClothingUniformJumpsuitPyjamaSyndicatePink
-      - id: ClothingHeadPyjamaSyndicate
-        amount: 3      
+      - id: ClothingHeadPyjamaSyndicateRed
+      - id: ClothingHeadPyjamaSyndicateBlack
+      - id: ClothingHeadPyjamaSyndicatePink
       - id: ClothingShoesSlippers
         amount: 3   
       - id: BedsheetSyndie
