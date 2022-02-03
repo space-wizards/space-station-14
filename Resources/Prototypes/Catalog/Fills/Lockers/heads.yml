@@ -156,6 +156,8 @@
         prob: 1
       - id: ProtolatheMachineCircuitboard
         prob: 1
+      - id: CircuitImprinterMachineCircuitboard
+        prov: 1
       - id: ClothingNeckCloakRd
         prob: 1
       - id: ClothingHeadsetMedicalScience

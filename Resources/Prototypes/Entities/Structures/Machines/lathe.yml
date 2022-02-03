@@ -208,7 +208,7 @@
   parent: Protolathe
   id: CircuitImprinter
   name: Circuit Imprinter
-  description: Prints circuit boards for machines using glass.
+  description: Prints circuit boards for machines.
   components:
   - type: Sprite
     sprite: Structures/Machines/circuit_imprinter.rsi
@@ -237,6 +237,7 @@
       - KitchenReagentGrinderMachineCircuitboard
       - CrewMonitoringComputerCircuitboard
       - ShuttleConsoleCircuitboard
+      - CircuitImprinterMachineCircuitboard
   - type: Machine
     board: CircuitImprinterMachineCircuitboard
 
