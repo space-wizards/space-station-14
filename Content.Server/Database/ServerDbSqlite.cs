@@ -31,7 +31,7 @@ namespace Content.Server.Database
         private readonly Task _dbReadyTask;
         private readonly SqliteServerDbContext _prefsCtx;
 
-        public ServerDbSqlite(DbContextOptions<ServerDbContext> options)
+        public ServerDbSqlite(DbContextOptions<SqliteServerDbContext> options)
         {
             _prefsCtx = new SqliteServerDbContext(options);
 

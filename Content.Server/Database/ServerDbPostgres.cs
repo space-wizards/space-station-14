@@ -13,10 +13,10 @@ namespace Content.Server.Database
 {
     public sealed class ServerDbPostgres : ServerDbBase
     {
-        private readonly DbContextOptions<ServerDbContext> _options;
+        private readonly DbContextOptions<PostgresServerDbContext> _options;
         private readonly Task _dbReadyTask;
 
-        public ServerDbPostgres(DbContextOptions<ServerDbContext> options)
+        public ServerDbPostgres(DbContextOptions<PostgresServerDbContext> options)
         {
             _options = options;
 

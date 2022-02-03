@@ -11,20 +11,8 @@ namespace Content.Server.Database
 {
     public abstract class ServerDbContext : DbContext
     {
-        /// <summary>
-        /// The "dotnet ef" CLI tool uses the parameter-less constructor.
-        /// When that happens we want to supply the <see cref="DbContextOptions"/> via <see cref="DbContext.OnConfiguring"/>.
-        /// To use the context within the application, the options need to be passed the constructor instead.
-        /// </summary>
-        protected readonly bool InitializedWithOptions;
-
-        public ServerDbContext()
+        protected ServerDbContext(DbContextOptions options) : base(options)
         {
-        }
-
-        public ServerDbContext(DbContextOptions<ServerDbContext> options) : base(options)
-        {
-            InitializedWithOptions = true;
         }
 
         public DbSet<Preference> Preference { get; set; } = null!;

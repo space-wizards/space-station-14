@@ -180,12 +180,12 @@ namespace Content.Server.Database
             switch (engine)
             {
                 case "sqlite":
-                    var options = CreateSqliteOptions();
-                    _db = new ServerDbSqlite(options);
+                    var sqliteOptions = CreateSqliteOptions();
+                    _db = new ServerDbSqlite(sqliteOptions);
                     break;
                 case "postgres":
-                    options = CreatePostgresOptions();
-                    _db = new ServerDbPostgres(options);
+                    var pgOptions = CreatePostgresOptions();
+                    _db = new ServerDbPostgres(pgOptions);
                     break;
                 default:
                     throw new InvalidDataException($"Unknown database engine {engine}.");
@@ -394,7 +394,7 @@ namespace Content.Server.Database
             return _db.RemoveFromWhitelistAsync(player);
         }
 
-        private DbContextOptions<ServerDbContext> CreatePostgresOptions()
+        private DbContextOptions<PostgresServerDbContext> CreatePostgresOptions()
         {
             var host = _cfg.GetCVar(CCVars.DatabasePgHost);
             var port = _cfg.GetCVar(CCVars.DatabasePgPort);
@@ -402,7 +402,7 @@ namespace Content.Server.Database
             var user = _cfg.GetCVar(CCVars.DatabasePgUsername);
             var pass = _cfg.GetCVar(CCVars.DatabasePgPassword);
 
-            var builder = new DbContextOptionsBuilder<ServerDbContext>();
+            var builder = new DbContextOptionsBuilder<PostgresServerDbContext>();
             var connectionString = new NpgsqlConnectionStringBuilder
             {
                 Host = host,
@@ -419,9 +419,9 @@ namespace Content.Server.Database
             return builder.Options;
         }
 
-        private DbContextOptions<ServerDbContext> CreateSqliteOptions()
+        private DbContextOptions<SqliteServerDbContext> CreateSqliteOptions()
         {
-            var builder = new DbContextOptionsBuilder<ServerDbContext>();
+            var builder = new DbContextOptionsBuilder<SqliteServerDbContext>();
 
             var configPreferencesDbPath = _cfg.GetCVar(CCVars.DatabaseSqliteDbPath);
             var inMemory = _res.UserData.RootDir == null;
@@ -447,7 +447,7 @@ namespace Content.Server.Database
             return builder.Options;
         }
 
-        private void SetupLogging(DbContextOptionsBuilder<ServerDbContext> builder)
+        private void SetupLogging(DbContextOptionsBuilder builder)
         {
             builder.UseLoggerFactory(_msLoggerFactory);
         }
