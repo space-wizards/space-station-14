@@ -16,12 +16,12 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Fluids.EntitySystems;
 
-public partial class PuddleSystem
+public sealed partial class PuddleSystem
 {
     private readonly List<PuddleExpansion> _puddleExpansionQueue = new();
     private int VisitedEntitiesLimit = 100;
 
-    struct PuddleExpansion
+    public class PuddleExpansion
     {
         public List<PuddleComponent> PuddlesToExpand = new();
         public readonly HashSet<Vector2i> VisitedTiles = new();
@@ -156,9 +156,9 @@ public partial class PuddleSystem
     private bool TryGetAdjacentPuddle(string prototype, TransformComponent originPuddle, Direction direction,
         IMapGrid mapGrid, [NotNullWhen(true)] out Func<PuddleComponent>? puddlePlacer)
     {
-        var coords = originPuddle.Coordinates;
-
-        if (!coords.Offset(direction).TryGetTileRef(out var tile)
+        var offset = originPuddle.Coordinates.Offset(direction);
+        
+        if (!offset.TryGetTileRef(out var tile)
             || tile.Value.Tile.IsEmpty
             || !originPuddle.Anchored)
 
@@ -168,7 +168,7 @@ public partial class PuddleSystem
         }
 
         puddlePlacer = null;
-        foreach (var entity in mapGrid.GetAnchoredEntities(coords.Offset(direction)))
+        foreach (var entity in mapGrid.GetAnchoredEntities(tile.Value.GridIndices))
         {
             IPhysBody? physics = null;
 
