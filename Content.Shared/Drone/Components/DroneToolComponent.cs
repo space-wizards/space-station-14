@@ -3,6 +3,6 @@ using Robust.Shared.Analyzers;
 
 namespace Content.Shared.Drone.Components
 {
-    [RegisterComponent, ComponentProtoName("DroneTool")]
+    [RegisterComponent]
     public sealed class DroneToolComponent : Component {}
 }

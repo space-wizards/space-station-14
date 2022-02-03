@@ -7,14 +7,10 @@ using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Drone.Components
 {
-    [RegisterComponent, ComponentProtoName("Drone")]
+    [RegisterComponent]
     public sealed class DroneComponent : Component
-    {
-        [DataField("tools")] public List<EntitySpawnEntry> Tools = new();
-
+    {        [DataField("tools")] public List<EntitySpawnEntry> Tools = new();
         public List<EntityUid> ToolUids = new();
-
-
-        public bool alreadyAwoken = false;
+        public bool AlreadyAwoken = false;
     }
 }
