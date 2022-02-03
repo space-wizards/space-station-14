@@ -17,7 +17,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitSalvageSpationaut
     back: ClothingBackpackFilled
-    shoes: ClothingShoesBootsWork
+    shoes: ClothingShoesBootsSalvage
     id: SalvagePDA
     ears: ClothingHeadsetCargo
   satchel: ClothingBackpackSatchelFilled

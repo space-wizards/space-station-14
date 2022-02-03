@@ -88,3 +88,18 @@
     size: 10
     sprite: Objects/Weapons/Melee/combat_knife.rsi
     prefix: inhand
+
+- type: entity
+  name: survival knife
+  parent: CombatKnife
+  id: SurvivalKnife
+  description: Weapon of first and last resort for combatting space carp.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/survival_knife.rsi
+    size: 2
+    state: icon
+  - type: Item
+    size: 10
+    sprite: Objects/Weapons/Melee/survival_knife.rsi
+    prefix: inhand
