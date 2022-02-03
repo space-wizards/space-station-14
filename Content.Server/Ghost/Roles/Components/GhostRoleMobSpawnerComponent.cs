@@ -20,8 +20,6 @@ namespace Content.Server.Ghost.Roles.Components
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public override string Name => "GhostRoleMobSpawner";
-
         [ViewVariables(VVAccess.ReadWrite)] [DataField("deleteOnSpawn")]
         private bool _deleteOnSpawn = true;
 

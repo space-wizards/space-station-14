@@ -9,8 +9,6 @@ namespace Content.Shared.Atmos.Components
     [NetworkedComponent()]
     public class SharedGasAnalyzerComponent : Component
     {
-        public override string Name => "GasAnalyzer";
-
         [Serializable, NetSerializable]
         public enum GasAnalyzerUiKey
         {

@@ -19,7 +19,7 @@
               prototype: SheetSteel1
               amount: 5
             - !type:EmptyAllContainers {}
-            - !type:DeleteEntity {}
+            - !type:DestroyEntity {}
           conditions:
             - !type:EntityAnchored
               anchored: false

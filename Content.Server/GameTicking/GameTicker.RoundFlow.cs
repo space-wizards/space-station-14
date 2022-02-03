@@ -89,7 +89,7 @@ namespace Content.Server.GameTicking
                     _pauseManager.AddUninitializedMap(toLoad);
                 }
 
-                _mapLoader.LoadMap(toLoad, map.MapPath);
+                _mapLoader.LoadMap(toLoad, map.MapPath.ToString());
 
                 var grids = _mapManager.GetAllMapGrids(toLoad).ToList();
                 var dict = new Dictionary<string, StationId>();

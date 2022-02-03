@@ -12,8 +12,6 @@ namespace Content.Server.Body.Components
     [RegisterComponent, Friend(typeof(RespiratorSystem))]
     public class RespiratorComponent : Component
     {
-        public override string Name => "Respirator";
-
         [ViewVariables]
         [DataField("needsGases")]
         public Dictionary<Gas, float> NeedsGases { get; set; } = new();

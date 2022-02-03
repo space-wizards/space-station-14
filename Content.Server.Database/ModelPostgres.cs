@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -9,35 +8,19 @@ using NpgsqlTypes;
 
 namespace Content.Server.Database
 {
-    public sealed class PostgresServerDbContext : ServerDbContext, IDesignTimeDbContextFactory<PostgresServerDbContext>
+    public sealed class PostgresServerDbContext : ServerDbContext
     {
-        // This is used by the "dotnet ef" CLI tool.
-        public PostgresServerDbContext()
-        {
-        }
-
-        public PostgresServerDbContext(DbContextOptions<PostgresServerDbContext> options) : base(options)
-        {
-            Database.SetCommandTimeout(7200);
-        }
-
-        public PostgresServerDbContext CreateDbContext(string[] args)
-        {
-            var optionsBuilder = new DbContextOptionsBuilder<PostgresServerDbContext>();
-            optionsBuilder.UseNpgsql(args[0]);
-            return new PostgresServerDbContext(optionsBuilder.Options);
-        }
-
         static PostgresServerDbContext()
         {
             AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         }
 
+        public PostgresServerDbContext(DbContextOptions<PostgresServerDbContext> options) : base(options)
+        {
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            if (!InitializedWithOptions)
-                options.UseNpgsql("dummy connection string");
-
             options.ReplaceService<IRelationalTypeMappingSource, CustomNpgsqlTypeMappingSource>();
 
             ((IDbContextOptionsBuilderInfrastructure) options).AddOrUpdateExtension(new SnakeCaseExtension());
@@ -54,10 +37,6 @@ namespace Content.Server.Database
 #if DEBUG
             options.EnableSensitiveDataLogging();
 #endif
-        }
-
-        public PostgresServerDbContext(DbContextOptions<ServerDbContext> options) : base(options)
-        {
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

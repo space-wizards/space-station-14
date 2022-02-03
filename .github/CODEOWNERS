@@ -45,6 +45,7 @@
 /Content.Shared/Damage/ @ElectroJr
 /Content.Shared/Containers/ItemSlot/ @ElectroJr
 /Content.*/PowerCell/ @ElectroJr
+/Content.*/Doors/ @ElectroJr
 
 # Only some of this shit code is my responsibility, but I wanna get notified:
 /Content.*/Interaction/ @ElectroJr

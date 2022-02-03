@@ -294,11 +294,13 @@ namespace Content.Server.Database
         /// <param name="address">The ip address of the user.</param>
         /// <param name="userId">The id of the user.</param>
         /// <param name="hwId">The HWId of the user.</param>
+        /// <param name="includeUnbanned">Include pardoned and expired bans.</param>
         /// <returns>The user's ban history.</returns>
         public abstract Task<List<ServerBanDef>> GetServerBansAsync(
             IPAddress? address,
             NetUserId? userId,
-            ImmutableArray<byte>? hwId);
+            ImmutableArray<byte>? hwId,
+            bool includeUnbanned);
 
         public abstract Task AddServerBanAsync(ServerBanDef serverBan);
         public abstract Task AddServerUnbanAsync(ServerUnbanDef serverUnban);

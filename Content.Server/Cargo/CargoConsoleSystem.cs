@@ -223,7 +223,8 @@ namespace Content.Server.Cargo
             {
                 if (comp.Database == null || comp.Database.Id != id)
                     continue;
-                comp.Dirty();
+
+                Dirty(comp);
             }
         }
     }

@@ -18,9 +18,6 @@ namespace Content.Shared.Body.Components
     public abstract class SharedBodyPartComponent : Component
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
-
-        public override string Name => "BodyPart";
-
         private SharedBodyComponent? _body;
 
         // TODO BODY Remove
