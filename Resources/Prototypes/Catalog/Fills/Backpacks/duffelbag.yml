@@ -151,7 +151,7 @@
   parent: ClothingBackpackDuffelSyndicate
   id: ClothingBackpackDuffelSyndicatePyjamaBundle
   name: syndicate pyjama duffel bag
-  description: "Contains a bundle of syndicate pyjamas."
+  description: "Contains 3 syndicate pyjamas."
   components:
   - type: StorageFill
     contents:
