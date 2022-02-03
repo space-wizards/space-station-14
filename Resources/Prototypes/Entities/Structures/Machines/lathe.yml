@@ -166,6 +166,12 @@
       - ShellShotgun
       - CartridgeLRifle
       - CartridgeMagnum
+      - ShellShotgunBeanbag
+      - CartridgePistolRubber
+      - CartridgeMagnumRubber
+      - CartridgeClRifleRubber
+      - CartridgeLRifleRubber
+      - CartridgeSRifleRubber
       - MicroManipulatorStockPart
       - ScanningModuleStockPart
       - MicroLaserStockPart

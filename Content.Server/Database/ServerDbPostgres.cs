@@ -98,13 +98,13 @@ namespace Content.Server.Database
             return bans;
         }
 
-        private static IQueryable<PostgresServerBan> MakeBanLookupQuery(
+        private static IQueryable<ServerBan> MakeBanLookupQuery(
             IPAddress? address,
             NetUserId? userId,
             ImmutableArray<byte>? hwId,
             DbGuardImpl db)
         {
-            IQueryable<PostgresServerBan>? query = null;
+            IQueryable<ServerBan>? query = null;
 
             if (userId is { } uid)
             {
@@ -137,7 +137,7 @@ namespace Content.Server.Database
             return query;
         }
 
-        private static ServerBanDef? ConvertBan(PostgresServerBan? ban)
+        private static ServerBanDef? ConvertBan(ServerBan? ban)
         {
             if (ban == null)
             {
@@ -170,7 +170,7 @@ namespace Content.Server.Database
                 unbanDef);
         }
 
-        private static ServerUnbanDef? ConvertUnban(PostgresServerUnban? unban)
+        private static ServerUnbanDef? ConvertUnban(ServerUnban? unban)
         {
             if (unban == null)
             {
@@ -193,7 +193,7 @@ namespace Content.Server.Database
         {
             await using var db = await GetDbImpl();
 
-            db.PgDbContext.Ban.Add(new PostgresServerBan
+            db.PgDbContext.Ban.Add(new ServerBan
             {
                 Address = serverBan.Address,
                 HWId = serverBan.HWId?.ToArray(),
@@ -211,7 +211,7 @@ namespace Content.Server.Database
         {
             await using var db = await GetDbImpl();
 
-            db.PgDbContext.Unban.Add(new PostgresServerUnban
+            db.PgDbContext.Unban.Add(new ServerUnban
             {
                  BanId = serverUnban.BanId,
                  UnbanningAdmin = serverUnban.UnbanningAdmin?.UserId,
@@ -240,7 +240,7 @@ namespace Content.Server.Database
         {
             await using var db = await GetDbImpl();
 
-            db.PgDbContext.ConnectionLog.Add(new PostgresConnectionLog
+            db.PgDbContext.ConnectionLog.Add(new ConnectionLog
             {
                 Address = address,
                 Time = DateTime.UtcNow,

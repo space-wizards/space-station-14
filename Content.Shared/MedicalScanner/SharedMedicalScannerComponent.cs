@@ -12,8 +12,6 @@ namespace Content.Shared.MedicalScanner
 {
     public abstract class SharedMedicalScannerComponent : Component, IDragDropOn
     {
-        public override string Name => "MedicalScanner";
-
         [Serializable, NetSerializable]
         public class MedicalScannerBoundUserInterfaceState : BoundUserInterfaceState
         {

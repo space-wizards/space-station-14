@@ -24,9 +24,6 @@ namespace Content.Server.Atmos.Monitor.Components
         [Dependency] private readonly IEntityManager _entMan = default!;
 
         private AtmosMonitorSystem? _atmosMonitorSystem;
-
-        public override string Name => "FireAlarm";
-
         private CancellationTokenSource _powerPulsedCancel = new();
         private int PowerPulsedTimeout = 30;
 

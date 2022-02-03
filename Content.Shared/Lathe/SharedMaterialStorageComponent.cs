@@ -12,8 +12,6 @@ namespace Content.Shared.Lathe
     [NetworkedComponent()]
     public class SharedMaterialStorageComponent : Component, IEnumerable<KeyValuePair<string, int>>
     {
-        public override string Name => "MaterialStorage";
-
         [ViewVariables]
         protected virtual Dictionary<string, int> Storage { get; set; } = new();
 

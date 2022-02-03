@@ -17,8 +17,6 @@ namespace Content.Server.Materials
     [RegisterComponent]
     public class MaterialComponent : Component
     {
-        public override string Name => "Material";
-
         [ViewVariables]
         [DataField("materials", customTypeSerializer:typeof(PrototypeIdListSerializer<MaterialPrototype>))]
         // ReSharper disable once CollectionNeverUpdated.Local

@@ -12,7 +12,6 @@ namespace Content.Shared.Hands.Components
     public sealed class HandVirtualItemComponent : Component
     {
         private EntityUid _blockingEntity;
-        public override string Name => "HandVirtualItem";
 
         /// <summary>
         ///     The entity blocking this hand.

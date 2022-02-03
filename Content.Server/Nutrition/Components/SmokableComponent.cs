@@ -11,8 +11,6 @@ namespace Content.Server.Nutrition.Components
     [RegisterComponent, Friend(typeof(SmokingSystem))]
     public class SmokableComponent : Component
     {
-        public override string Name => "Smokable";
-
         [DataField("solution")]
         public string Solution { get; } = "smokable";
 

@@ -6,7 +6,6 @@ namespace Content.Shared.Computer
 {
     public class SharedComputerComponent : Component
     {
-        public override string Name => "Computer";
     }
 
     [Serializable, NetSerializable]

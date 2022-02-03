@@ -29,8 +29,6 @@ namespace Content.Server.Atmos.Monitor.Components
         // Remember to null this afterwards.
         [ViewVariables] public IAirAlarmModeUpdate? CurrentModeUpdater { get; set; }
 
-        public override string Name => "AirAlarm";
-
         public Dictionary<string, IAtmosDeviceData> DeviceData = new();
 
         public HashSet<NetUserId> ActivePlayers = new();

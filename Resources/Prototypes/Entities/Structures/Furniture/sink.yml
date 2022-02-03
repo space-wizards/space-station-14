@@ -1,0 +1,44 @@
+- type: entity
+  name: sink
+  id: SinkEmpty
+  suffix: Empty
+  description: The faucets have been tightened to the maximum possible torque but are still known to drip.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    sprite: Structures/Furniture/sink.rsi
+    state: sink
+    netsync: false
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+  - type: DrainableSolution
+    solution: tank
+  - type: ReagentTank
+
+- type: entity
+  name: sink
+  id: Sink
+  parent: SinkEmpty
+  suffix: Water
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        reagents:
+        - ReagentId: Water
+          Quantity: 500
+
+- type: entity
+  name: wide sink
+  id: SinkWide
+  parent: Sink
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/sink.rsi
+    state: sink_wide
+    netsync: false

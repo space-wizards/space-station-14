@@ -10,8 +10,6 @@ namespace Content.Server.Atmos.Piping.Components
     [RegisterComponent]
     public class AtmosPipeColorComponent : Component
     {
-        public override string Name => "AtmosPipeColor";
-
         [DataField("color")]
         public Color Color { get; set; } = Color.White;
 
