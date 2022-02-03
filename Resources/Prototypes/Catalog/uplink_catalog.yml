@@ -274,5 +274,5 @@
 - type: uplinkListing
   id: UplinkCostumePyjama
   category: Misc
-  itemId: ClothingBackpackDuffelSyndicateCostumePyjama
-  price: 2
+  itemId: ClothingBackpackDuffelSyndicatePyjamaBundle
+  price: 3
