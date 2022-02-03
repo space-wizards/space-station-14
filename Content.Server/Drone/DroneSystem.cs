@@ -33,7 +33,6 @@ namespace Content.Server.Drone
             SubscribeLocalEvent<DroneComponent, MobStateChangedEvent>(OnMobStateChanged);
             SubscribeLocalEvent<DroneComponent, DisarmAttemptEvent>(OnDisarmAttempt);
             SubscribeLocalEvent<DroneComponent, DropAttemptEvent>(OnDropAttempt);
-//            SubscribeLocalEvent<DroneToolComponent, BeingUnequippedAttemptEvent>(OnUnequipAttempt);
             SubscribeLocalEvent<DroneComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<DroneComponent, MindAddedMessage>(OnMindAdded);
             SubscribeLocalEvent<DroneComponent, MindRemovedMessage>(OnMindRemoved);
@@ -122,11 +121,6 @@ namespace Content.Server.Drone
                 args.Cancel();
             }
         }
-
-//        private void OnUnequipAttempt(EntityUid uid, DroneToolComponent drone, BeingUnequippedAttemptEvent args)
-//        {
-//                args.Cancel();
-//        }
 
         private void UpdateDroneAppearance(EntityUid uid, DroneStatus status)
         {
