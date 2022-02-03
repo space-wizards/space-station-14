@@ -53,6 +53,19 @@ namespace Content.Server.Cargo
         private void InitializeConsole()
         {
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
+        }
+
+        private void Reset(RoundRestartCleanupEvent ev)
+        {
+            Reset();
+        }
+
+        private void Reset()
+        {
+            _accountsDict.Clear();
+            _databasesDict.Clear();
+            _timer = 0;
+            _accountIndex = 0;
 
             CreateBankAccount("Space Station 14", 1000);
             CreateOrderDatabase(0);
@@ -71,15 +84,6 @@ namespace Content.Server.Cargo
                     account.Balance += PointIncrease;
                 }
             }
-        }
-
-        public void Reset(RoundRestartCleanupEvent ev)
-        {
-            _accountsDict.Clear();
-            _databasesDict.Clear();
-            _timer = 0;
-            _accountIndex = 0;
-            Initialize();
         }
 
         /// <summary>

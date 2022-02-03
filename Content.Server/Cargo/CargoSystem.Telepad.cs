@@ -74,7 +74,7 @@ public sealed partial class CargoSystem
         SetEnabled(component);
     }
 
-    private void OnTelepadAnchorChange(EntityUid uid, CargoTelepadComponent component, AnchorStateChangedEvent args)
+    private void OnTelepadAnchorChange(EntityUid uid, CargoTelepadComponent component, ref AnchorStateChangedEvent args)
     {
         SetEnabled(component);
     }
