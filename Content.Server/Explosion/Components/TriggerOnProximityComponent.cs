@@ -1,12 +1,9 @@
-using Content.Server.Construction.Components;
 using Content.Server.Explosion.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
-using System;
 using System.Collections.Generic;
-using System.Threading;
 
 namespace Content.Server.Explosion.Components
 {
@@ -17,19 +14,12 @@ namespace Content.Server.Explosion.Components
     [RegisterComponent]
     public sealed class TriggerOnProximityComponent : Component
     {
-        public override string Name => "TriggerOnProximity";
-        public TimeSpan NextTrigger = TimeSpan.Zero;
         public const string FixtureID  = "trigger-on-proximity-fixture";
 
-        public HashSet<EntityUid> Colliding = new();
-
-        /// <summary>
-        /// Token that's used for the repeating proximity timer.
-        /// </summary>
-        public CancellationTokenSource? RepeatCancelTokenSource;
+        public HashSet<PhysicsComponent> Colliding = new();
 
         [DataField("shape", required: true)]
-        public IPhysShape Shape { get; set; } = new PhysShapeCircle(){Radius = 2};
+        public IPhysShape Shape { get; set; } = new PhysShapeCircle {Radius = 2};
 
         /// <summary>
         /// How long the the proximity trigger animation plays for.
@@ -45,22 +35,17 @@ namespace Content.Server.Explosion.Components
         [DataField("requiresAnchored")]
         public bool RequiresAnchored { get; set; } = true;
 
+        [ViewVariables]
         [DataField("enabled")]
         public bool Enabled = true;
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool EnabledVV
-        {
-            get => Enabled;
-            set
-            {
-                if (Enabled == value) return;
-                EntitySystem.Get<TriggerSystem>().SetProximityFixture(Owner, this, value);
-            }
-        }
-
         [DataField("cooldown")]
         public float Cooldown { get; set; } = 5f;
+
+        /// <summary>
+        /// How much cooldown has elapsed (if relevant).
+        /// </summary>
+        public float Accumulator = 0f;
 
         /// <summary>
         /// What speed should the other object be moving at to trigger the proximity fixture?
