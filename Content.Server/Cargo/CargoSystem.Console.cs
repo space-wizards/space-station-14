@@ -11,7 +11,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.Cargo
 {
-    public class CargoConsoleSystem : EntitySystem
+    public sealed partial class CargoSystem
     {
         /// <summary>
         /// How much time to wait (in seconds) before increasing bank accounts balance.
@@ -50,7 +50,7 @@ namespace Content.Server.Cargo
         [Dependency] private readonly IdCardSystem _idCardSystem = default!;
         [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
 
-        public override void Initialize()
+        private void InitializeConsole()
         {
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
 
@@ -58,18 +58,18 @@ namespace Content.Server.Cargo
             CreateOrderDatabase(0);
         }
 
-        public override void Update(float frameTime)
+        private void UpdateConsole(float frameTime)
         {
             _timer += frameTime;
-            if (_timer < Delay)
-            {
-                return;
-            }
 
-            _timer -= Delay;
-            foreach (var account in BankAccounts)
+            while (_timer > Delay)
             {
-                account.Balance += PointIncrease;
+                _timer -= Delay;
+
+                foreach (var account in BankAccounts)
+                {
+                    account.Balance += PointIncrease;
+                }
             }
         }
 
