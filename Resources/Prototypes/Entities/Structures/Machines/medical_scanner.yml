@@ -4,16 +4,16 @@
   name: medical scanner
   description: A bulky medical scanner.
   components:
-  - type: MedicalScanner
+  - type: GeneticScanner
   - type: Sprite
     netsync: false
     noRot: true
     sprite: Structures/Machines/scanner.rsi
     layers:
     - state: open
-      map: ["enum.MedicalScannerVisualLayers.Machine"]
+      map: ["enum.GeneticScannerVisualLayers.Machine"]
     - state: idle_unlit
-      map: ["enum.MedicalScannerVisualLayers.Terminal"]
+      map: ["enum.GeneticScannerVisualLayers.Terminal"]
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -48,8 +48,12 @@
     LayoutId: MedicalScanner
   - type: Appearance
     visuals:
-    - type: MedicalScannerVisualizer
-  - type: UserInterface
-    interfaces:
-    - key: enum.MedicalScannerUiKey.Key
-      type: MedicalScannerBoundUserInterface
+    - type: GeneticScannerVisualizer
+  # - type: GeneticScannerEntityStorage
+  #   CanWeldShut: false
+  #   Capacity: 1
+  #   IsCollidableWhenOpen: false
+    # closeSound:
+    #   path: /Audio/Misc/zip.ogg
+    # openSound:
+    #   path: /Audio/Misc/zip.ogg

@@ -10,7 +10,7 @@ medical-scanner-verb-noun-occupant = occupant
 
 ## UI
 
-medical-scanner-window-save-button-text = Scan and Save DNA
+medical-scanner-window-save-button-text = Clone
 medical-scanner-window-no-patient-data-text = No patient data.
 medical-scanner-window-entity-health-text = {$entityName}'s health:
 medical-scanner-window-entity-damage-total-text = Total Damage: {$amount}

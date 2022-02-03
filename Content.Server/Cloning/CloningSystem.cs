@@ -28,7 +28,6 @@ namespace Content.Server.Cloning
             base.Initialize();
 
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
-            SubscribeLocalEvent<CloningPodComponent, ActivateInWorldEvent>(HandleActivate);
             SubscribeLocalEvent<BeingClonedComponent, MindAddedMessage>(HandleMindAdded);
         }
 
@@ -43,17 +42,6 @@ namespace Content.Server.Cloning
             mind.TransferTo(entity, ghostCheckOverride: true);
             mind.UnVisit();
             ClonesWaitingForMind.Remove(mind);
-        }
-
-        private void HandleActivate(EntityUid uid, CloningPodComponent component, ActivateInWorldEvent args)
-        {
-            if (!component.Powered ||
-                !EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
-            {
-                return;
-            }
-
-            component.UserInterface?.Open(actor.PlayerSession);
         }
 
         private void HandleMindAdded(EntityUid uid, BeingClonedComponent component, MindAddedMessage message)
@@ -74,12 +62,12 @@ namespace Content.Server.Cloning
         {
             foreach (var (cloning, power) in EntityManager.EntityQuery<CloningPodComponent, ApcPowerReceiverComponent>())
             {
-                if (cloning.UiKnownPowerState != power.Powered)
-                {
+                // if (cloning.UiKnownPowerState != power.Powered)
+                // {
                     // Must be *before* update
-                    cloning.UiKnownPowerState = power.Powered;
-                    UpdateUserInterface(cloning);
-                }
+                    // cloning.UiKnownPowerState = power.Powered;
+                    // UpdateUserInterface(cloning);
+                // }
 
                 if (!power.Powered)
                     continue;
@@ -97,39 +85,39 @@ namespace Content.Server.Cloning
             }
         }
 
-        public void UpdateUserInterface(CloningPodComponent comp)
-        {
-            var idToUser = GetIdToUser();
-            comp.UserInterface?.SetState(
-                new CloningPodBoundUserInterfaceState(
-                    idToUser,
-                    // now
-                    _timing.CurTime,
-                    // progress, time, progressing
-                    comp.CloningProgress,
-                    comp.CloningTime,
-                    // this is duplicate w/ the above check that actually updates progress
-                    // better here than on client though
-                    comp.UiKnownPowerState && (comp.BodyContainer.ContainedEntity != null),
-                    comp.Status == CloningPodStatus.Cloning));
-        }
+        // public void UpdateUserInterface(CloningPodComponent comp)
+        // {
+        //     var idToUser = GetIdToUser();
+        //     comp.UserInterface?.SetState(
+        //         new CloningPodBoundUserInterfaceState(
+        //             idToUser,
+        //             // now
+        //             _timing.CurTime,
+        //             // progress, time, progressing
+        //             comp.CloningProgress,
+        //             comp.CloningTime,
+        //             // this is duplicate w/ the above check that actually updates progress
+        //             // better here than on client though
+        //             comp.UiKnownPowerState && (comp.BodyContainer.ContainedEntity != null),
+        //             comp.Status == CloningPodStatus.Cloning));
+        // }
 
-        public void AddToDnaScans(ClonerDNAEntry dna)
-        {
-            if (!MindToId.ContainsKey(dna.Mind))
-            {
-                int id = _nextAllocatedMindId++;
-                MindToId.Add(dna.Mind, id);
-                IdToDNA.Add(id, dna);
-            }
-            OnChangeMadeToDnaScans();
-        }
+        // public void AddToDnaScans(ClonerDNAEntry dna)
+        // {
+        //     if (!MindToId.ContainsKey(dna.Mind))
+        //     {
+        //         int id = _nextAllocatedMindId++;
+        //         MindToId.Add(dna.Mind, id);
+        //         IdToDNA.Add(id, dna);
+        //     }
+        //     OnChangeMadeToDnaScans();
+        // }
 
-        public void OnChangeMadeToDnaScans()
-        {
-            foreach (var cloning in EntityManager.EntityQuery<CloningPodComponent>())
-                UpdateUserInterface(cloning);
-        }
+        // public void OnChangeMadeToDnaScans()
+        // {
+        //     foreach (var cloning in EntityManager.EntityQuery<CloningPodComponent>())
+        //         UpdateUserInterface(cloning);
+        // }
 
         public bool HasDnaScan(Mind.Mind mind)
         {

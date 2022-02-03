@@ -2,28 +2,27 @@
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using static Content.Shared.MedicalScanner.SharedMedicalScannerComponent;
+using static Content.Shared.HealthScanner.SharedHealthScannerComponent;
 
-namespace Content.Client.MedicalScanner.UI
+namespace Content.Client.HealthScanner.UI
 {
     [UsedImplicitly]
-    public sealed class MedicalScannerBoundUserInterface : BoundUserInterface
+    public class HealthScannerBoundUserInterface : BoundUserInterface
     {
-        private MedicalScannerWindow? _window;
+        private HealthScannerWindow? _window;
 
-        public MedicalScannerBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        public HealthScannerBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
         }
 
         protected override void Open()
         {
             base.Open();
-            _window = new MedicalScannerWindow
+            _window = new HealthScannerWindow
             {
                 Title = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Owner).EntityName,
             };
             _window.OnClose += Close;
-            _window.ScanButton.OnPressed += _ => SendMessage(new UiButtonPressedMessage(UiButton.ScanDNA));
             _window.OpenCentered();
         }
 
@@ -31,7 +30,7 @@ namespace Content.Client.MedicalScanner.UI
         {
             base.UpdateState(state);
 
-            _window?.Populate((MedicalScannerBoundUserInterfaceState) state);
+            _window?.Populate((HealthScannerBoundUserInterfaceState) state);
         }
 
         protected override void Dispose(bool disposing)

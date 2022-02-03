@@ -52,7 +52,3 @@
           enum.CloningPodStatus.NoMind: pod_e
           enum.CloningPodStatus.Gore: pod_g
           enum.CloningPodStatus.Idle: pod_0
-  - type: UserInterface
-    interfaces:
-      - key: enum.CloningPodUIKey.Key
-        type: CloningPodBoundUserInterface

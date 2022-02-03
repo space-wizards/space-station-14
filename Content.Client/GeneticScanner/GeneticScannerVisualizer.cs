@@ -3,25 +3,25 @@ using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using static Content.Shared.MedicalScanner.SharedMedicalScannerComponent;
-using static Content.Shared.MedicalScanner.SharedMedicalScannerComponent.MedicalScannerStatus;
+using static Content.Shared.GeneticScanner.SharedGeneticScannerComponent;
+using static Content.Shared.GeneticScanner.SharedGeneticScannerComponent.GeneticScannerStatus;
 
-namespace Content.Client.MedicalScanner
+namespace Content.Client.GeneticScanner
 {
     [UsedImplicitly]
-    public sealed class MedicalScannerVisualizer : AppearanceVisualizer
+    public sealed class GeneticScannerVisualizer : AppearanceVisualizer
     {
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
 
             var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner);
-            if (!component.TryGetData(MedicalScannerVisuals.Status, out MedicalScannerStatus status)) return;
-            sprite.LayerSetState(MedicalScannerVisualLayers.Machine, StatusToMachineStateId(status));
-            sprite.LayerSetState(MedicalScannerVisualLayers.Terminal, StatusToTerminalStateId(status));
+            if (!component.TryGetData(GeneticScannerVisuals.Status, out GeneticScannerStatus status)) return;
+            sprite.LayerSetState(GeneticScannerVisualLayers.Machine, StatusToMachineStateId(status));
+            sprite.LayerSetState(GeneticScannerVisualLayers.Terminal, StatusToTerminalStateId(status));
         }
 
-        private string StatusToMachineStateId(MedicalScannerStatus status)
+        private string StatusToMachineStateId(GeneticScannerStatus status)
         {
             switch (status)
             {
@@ -32,11 +32,11 @@ namespace Content.Client.MedicalScanner
                 case Green: return "occupied";
                 case Yellow: return "closed";
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(status), status, "unknown MedicalScannerStatus");
+                    throw new ArgumentOutOfRangeException(nameof(status), status, "unknown GeneticScannerStatus");
             }
         }
 
-        private string StatusToTerminalStateId(MedicalScannerStatus status)
+        private string StatusToTerminalStateId(GeneticScannerStatus status)
         {
             switch (status)
             {
@@ -47,11 +47,11 @@ namespace Content.Client.MedicalScanner
                 case Green: return "idle_unlit";
                 case Yellow: return "maint_unlit";
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(status), status, "unknown MedicalScannerStatus");
+                    throw new ArgumentOutOfRangeException(nameof(status), status, "unknown GeneticScannerStatus");
             }
         }
 
-        public enum MedicalScannerVisualLayers : byte
+        public enum GeneticScannerVisualLayers : byte
         {
             Machine,
             Terminal,

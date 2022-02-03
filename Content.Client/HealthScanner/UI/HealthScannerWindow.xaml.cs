@@ -9,19 +9,19 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
-using static Content.Shared.MedicalScanner.SharedMedicalScannerComponent;
+using static Content.Shared.HealthScanner.SharedHealthScannerComponent;
 
-namespace Content.Client.MedicalScanner.UI
+namespace Content.Client.HealthScanner.UI
 {
     [GenerateTypedNameReferences]
-    public sealed partial class MedicalScannerWindow : DefaultWindow
+    public sealed class HealthScannerWindow : DefaultWindow
     {
-        public MedicalScannerWindow()
+        public HealthScannerWindow()
         {
             RobustXamlLoader.Load(this);
         }
 
-        public void Populate(MedicalScannerBoundUserInterfaceState state)
+        public void Populate(HealthScannerBoundUserInterfaceState state)
         {
             var text = new StringBuilder();
 
@@ -31,7 +31,6 @@ namespace Content.Client.MedicalScanner.UI
                 !entities.EntityExists(state.Entity.Value))
             {
                 Diagnostics.Text = Loc.GetString("medical-scanner-window-no-patient-data-text");
-                ScanButton.Disabled = true;
                 SetSize = (250, 100);
             }
             else
@@ -70,9 +69,8 @@ namespace Content.Client.MedicalScanner.UI
                 }
 
                 Diagnostics.Text = text.ToString();
-                ScanButton.Disabled = state.IsScanned;
 
-                // TODO MEDICALSCANNER resize window based on the length of text / number of damage types?
+                // TODO HealthScanner resize window based on the length of text / number of damage types?
                 // Also, maybe add color schemes for specific damage groups?
                 SetSize = (250, 600);
             }

@@ -1,26 +1,23 @@
 using System;
 using System.Collections.Generic;
-using Content.Shared.Body.Components;
 using Content.Shared.Damage;
-using Content.Shared.DragDrop;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.MedicalScanner
+namespace Content.Shared.CloningConsole
 {
-    public abstract class SharedMedicalScannerComponent : Component, IDragDropOn
+    public abstract class SharedCloningConsoleComponent : Component
     {
         [Serializable, NetSerializable]
-        public sealed class MedicalScannerBoundUserInterfaceState : BoundUserInterfaceState
+        public sealed class CloningConsoleBoundUserInterfaceState : BoundUserInterfaceState
         {
             public readonly EntityUid? Entity;
             public readonly IReadOnlyDictionary<string, FixedPoint2> DamagePerGroup;
             public readonly IReadOnlyDictionary<string, FixedPoint2> DamagePerType;
             public readonly bool IsScanned;
 
-            public MedicalScannerBoundUserInterfaceState(
+            public CloningConsoleBoundUserInterfaceState(
                 EntityUid? entity,
                 DamageableComponent? damageable,
                 bool isScanned)
@@ -38,32 +35,17 @@ namespace Content.Shared.MedicalScanner
         }
 
         [Serializable, NetSerializable]
-        public enum MedicalScannerUiKey
+        public enum CloningConsoleUiKey
         {
             Key
         }
 
         [Serializable, NetSerializable]
-        public enum MedicalScannerVisuals
-        {
-            Status
-        }
-
-        [Serializable, NetSerializable]
-        public enum MedicalScannerStatus
-        {
-            Off,
-            Open,
-            Red,
-            Death,
-            Green,
-            Yellow,
-        }
-
-        [Serializable, NetSerializable]
         public enum UiButton
         {
-            ScanDNA,
+            Clone,
+            Eject
+
         }
 
         [Serializable, NetSerializable]
@@ -76,17 +58,5 @@ namespace Content.Shared.MedicalScanner
                 Button = button;
             }
         }
-
-        public bool CanInsert(EntityUid entity)
-        {
-            return IoCManager.Resolve<IEntityManager>().HasComponent<SharedBodyComponent>(entity);
-        }
-
-        bool IDragDropOn.CanDragDropOn(DragDropEvent eventArgs)
-        {
-            return CanInsert(eventArgs.Dragged);
-        }
-
-        public abstract bool DragDropOn(DragDropEvent eventArgs);
     }
 }

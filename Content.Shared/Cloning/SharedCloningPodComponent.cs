@@ -56,26 +56,5 @@ namespace Content.Shared.Cloning
             Gore,
             NoMind
         }
-
-        [Serializable, NetSerializable]
-        public enum UiButton
-        {
-            Clone,
-            Eject
-        }
-
-        [Serializable, NetSerializable]
-        public sealed class CloningPodUiButtonPressedMessage : BoundUserInterfaceMessage
-        {
-            public readonly UiButton Button;
-            public readonly int? ScanId;
-
-            public CloningPodUiButtonPressedMessage(UiButton button, int? scanId)
-            {
-                Button = button;
-                ScanId = scanId;
-            }
-        }
-
     }
 }

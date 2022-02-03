@@ -203,11 +203,11 @@
   name: body scanner computer
   description: That's a body scanner.
   components:
-  - type: BodyScanner
+  - type: CloningConsole
   - type: UserInterface
     interfaces:
-    - key: enum.BodyScannerUiKey.Key
-      type: BodyScannerBoundUserInterface
+    - key: enum.CloningConsoleUiKey.Key
+      type: CloningConsoleBoundUserInterface
   - type: Appearance
     visuals:
     - type: ComputerVisualizer

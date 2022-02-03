@@ -18,6 +18,8 @@ using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
+using Content.Shared.Preferences;
+using Robust.Shared.Log;
 
 namespace Content.Server.Cloning.Components
 {
@@ -33,9 +35,6 @@ namespace Content.Server.Cloning.Components
         [ViewVariables]
         public bool Powered => !_entities.TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
-        [ViewVariables]
-        public BoundUserInterface? UserInterface =>
-            Owner.GetUIOrNull(CloningPodUIKey.Key);
 
         [ViewVariables] public ContainerSlot BodyContainer = default!;
         [ViewVariables] public Mind.Mind? CapturedMind;
@@ -52,24 +51,14 @@ namespace Content.Server.Cloning.Components
         {
             base.Initialize();
 
-            if (UserInterface != null)
-            {
-                UserInterface.OnReceiveMessage += OnUiReceiveMessage;
-            }
-
             BodyContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-bodyContainer");
 
             //TODO: write this so that it checks for a change in power events for GORE POD cases
-            EntitySystem.Get<CloningSystem>().UpdateUserInterface(this);
+            // EntitySystem.Get<CloningSystem>().UpdateUserInterface(this);
         }
 
         protected override void OnRemove()
         {
-            if (UserInterface != null)
-            {
-                UserInterface.OnReceiveMessage -= OnUiReceiveMessage;
-            }
-
             base.OnRemove();
         }
 
@@ -81,107 +70,66 @@ namespace Content.Server.Cloning.Components
             }
         }
 
-        private void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
+        public void StartCloning(Mind.Mind mind, HumanoidCharacterProfile hcp)
         {
-            if (obj.Message is not CloningPodUiButtonPressedMessage message || obj.Session.AttachedEntity == null)
-                return;
-
-            switch (message.Button)
+            if (BodyContainer.ContainedEntity != null)
             {
-                case UiButton.Clone:
-                    if (BodyContainer.ContainedEntity != null)
-                    {
-                        obj.Session.AttachedEntity.Value.PopupMessageCursor(Loc.GetString("cloning-pod-component-msg-occupied"));
-                        return;
-                    }
-
-                    if (message.ScanId == null)
-                    {
-                        obj.Session.AttachedEntity.Value.PopupMessageCursor(Loc.GetString("cloning-pod-component-msg-no-selection"));
-                        return;
-                    }
-
-                    var cloningSystem = EntitySystem.Get<CloningSystem>();
-
-                    if (!cloningSystem.IdToDNA.TryGetValue(message.ScanId.Value, out var dna))
-                    {
-                        obj.Session.AttachedEntity.Value.PopupMessageCursor(Loc.GetString("cloning-pod-component-msg-bad-selection"));
-                        return; // ScanId is not in database
-                    }
-
-                    var mind = dna.Mind;
-
-                    if (cloningSystem.ClonesWaitingForMind.TryGetValue(mind, out var clone))
-                    {
-                        if (_entities.EntityExists(clone) &&
-                            _entities.TryGetComponent<MobStateComponent?>(clone, out var cloneState) &&
-                            !cloneState.IsDead() &&
-                            _entities.TryGetComponent(clone, out MindComponent? cloneMindComp) &&
-                            (cloneMindComp.Mind == null || cloneMindComp.Mind == mind))
-                        {
-                            obj.Session.AttachedEntity.Value.PopupMessageCursor(Loc.GetString("cloning-pod-component-msg-already-cloning"));
-                            return; // Mind already has clone
-                        }
-
-                        cloningSystem.ClonesWaitingForMind.Remove(mind);
-                    }
-
-                    if (mind.OwnedEntity != null &&
-                        _entities.TryGetComponent<MobStateComponent?>(mind.OwnedEntity.Value, out var state) &&
-                        !state.IsDead())
-                    {
-                        obj.Session.AttachedEntity.Value.PopupMessageCursor(Loc.GetString("cloning-pod-component-msg-already-alive"));
-                        return; // Body controlled by mind is not dead
-                    }
-
-                    // Yes, we still need to track down the client because we need to open the Eui
-                    if (mind.UserId == null || !_playerManager.TryGetSessionById(mind.UserId.Value, out var client))
-                    {
-                        obj.Session.AttachedEntity.Value.PopupMessageCursor(Loc.GetString("cloning-pod-component-msg-user-offline"));
-                        return; // If we can't track down the client, we can't offer transfer. That'd be quite bad.
-                    }
-
-                    var speciesProto = _prototype.Index<SpeciesPrototype>(dna.Profile.Species).Prototype;
-                    var mob = _entities.SpawnEntity(speciesProto, _entities.GetComponent<TransformComponent>(Owner).MapPosition);
-
-
-                    EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(mob, dna.Profile);
-                    _entities.GetComponent<MetaDataComponent>(mob).EntityName = dna.Profile.Name;
-
-                    var cloneMindReturn = _entities.AddComponent<BeingClonedComponent>(mob);
-                    cloneMindReturn.Mind = mind;
-                    cloneMindReturn.Parent = Owner;
-
-                    BodyContainer.Insert(mob);
-                    CapturedMind = mind;
-                    cloningSystem.ClonesWaitingForMind.Add(mind, mob);
-
-                    UpdateStatus(CloningPodStatus.NoMind);
-
-                    var acceptMessage = new AcceptCloningEui(mind);
-                    _euiManager.OpenEui(acceptMessage, client);
-
-                    break;
-
-                case UiButton.Eject:
-                    if (BodyContainer.ContainedEntity == null)
-                    {
-                        obj.Session.AttachedEntity.Value.PopupMessageCursor(Loc.GetString("cloning-pod-component-msg-empty"));
-                        return;
-                    }
-                    if (CloningProgress < CloningTime)
-                    {
-                        obj.Session.AttachedEntity.Value.PopupMessageCursor(Loc.GetString("cloning-pod-component-msg-incomplete"));
-                        return;
-                    }
-                    Eject();
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException();
+                // obj.Session.AttachedEntity.Value.PopupMessageCursor(Loc.GetString("cloning-pod-component-msg-occupied"));
+                return;
             }
+                Logger.Debug("enter");
+                // if (message.ScanId == null)
+                // {
+                    // obj.Session.AttachedEntity.Value.PopupMessageCursor(Loc.GetString("cloning-pod-component-msg-no-selection"));
+                //     return;
+                // }
+                var cloningSystem = EntitySystem.Get<CloningSystem>();
+                // if (!cloningSystem.IdToDNA.TryGetValue(message.ScanId.Value, out var dna))
+                // {
+                //     obj.Session.AttachedEntity.Value.PopupMessageCursor(Loc.GetString("cloning-pod-component-msg-bad-selection"));
+                //     return; // ScanId is not in database
+                // }
+                // var mind = dna.Mind;
+                if (cloningSystem.ClonesWaitingForMind.TryGetValue(mind, out var clone))
+                {
+                    if (_entities.EntityExists(clone) &&
+                        _entities.TryGetComponent<MobStateComponent?>(clone, out var cloneState) &&
+                        !cloneState.IsDead() &&
+                        _entities.TryGetComponent(clone, out MindComponent? cloneMindComp) &&
+                        (cloneMindComp.Mind == null || cloneMindComp.Mind == mind))
+                    {
+                        // obj.Session.AttachedEntity.Value.PopupMessageCursor(Loc.GetString("cloning-pod-component-msg-already-cloning"));
+                        return; // Mind already has clone
+                    }
+                    cloningSystem.ClonesWaitingForMind.Remove(mind);
+                }
+                if (mind.OwnedEntity != null &&
+                    _entities.TryGetComponent<MobStateComponent?>(mind.OwnedEntity.Value, out var state) &&
+                    !state.IsDead())
+                {
+                    // obj.Session.AttachedEntity.Value.PopupMessageCursor(Loc.GetString("cloning-pod-component-msg-already-alive"));
+                    return; // Body controlled by mind is not dead
+                }
+                // Yes, we still need to track down the client because we need to open the Eui
+                if (mind.UserId == null || !_playerManager.TryGetSessionById(mind.UserId.Value, out var client))
+                {
+                    // obj.Session.AttachedEntity.Value.PopupMessageCursor(Loc.GetString("cloning-pod-component-msg-user-offline"));
+                    return; // If we can't track down the client, we can't offer transfer. That'd be quite bad.
+                }
+                var speciesProto = _prototype.Index<SpeciesPrototype>(hcp.Species).Prototype;
+                var mob = _entities.SpawnEntity(speciesProto, _entities.GetComponent<TransformComponent>(Owner).MapPosition);
+                EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(mob, hcp);
+                _entities.GetComponent<MetaDataComponent>(mob).EntityName = hcp.Name;
+                var cloneMindReturn = _entities.AddComponent<BeingClonedComponent>(mob);
+                cloneMindReturn.Mind = mind;
+                cloneMindReturn.Parent = Owner;
+                BodyContainer.Insert(mob);
+                CapturedMind = mind;
+                cloningSystem.ClonesWaitingForMind.Add(mind, mob);
+                UpdateStatus(CloningPodStatus.NoMind);
+                var acceptMessage = new AcceptCloningEui(mind);
+                _euiManager.OpenEui(acceptMessage, client);
         }
-
         public void Eject()
         {
             if (BodyContainer.ContainedEntity is not {Valid: true} entity || CloningProgress < CloningTime)
@@ -199,7 +147,18 @@ namespace Content.Server.Cloning.Components
         {
             Status = status;
             UpdateAppearance();
-            EntitySystem.Get<CloningSystem>().UpdateUserInterface(this);
+            // EntitySystem.Get<CloningSystem>().UpdateUserInterface(this);
         }
+
+        struct ClonerDNAEntry {
+        public Mind.Mind Mind;
+        public HumanoidCharacterProfile Profile;
+
+        public ClonerDNAEntry(Mind.Mind m, HumanoidCharacterProfile hcp)
+        {
+            Mind = m;
+            Profile = hcp;
+        }
+    }
     }
 }
