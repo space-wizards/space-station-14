@@ -40,6 +40,14 @@
           1
         ]
       ]
+    },
+    {
+      "name": "l_hand",
+      "directions": 4
+    },
+    {
+      "name": "r_hand",
+      "directions": 4
     }
   ]
 }
