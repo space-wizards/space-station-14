@@ -159,6 +159,7 @@
   - type: Sprite
     sprite: Structures/Doors/Shutters/shutters.rsi
     state: frame
+    netsync: false
   - type: Construction
     graph: Shutters
     node: frame1
@@ -183,6 +184,4 @@
           bounds: "-0.49,-0.49,0.49,0.49"
       mass: 50
       layer:
-      - SmallImpassable
-      mask:
-      - VaultImpassable
+      - Opaque
