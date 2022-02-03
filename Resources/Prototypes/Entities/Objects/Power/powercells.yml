@@ -252,8 +252,8 @@
       layers:
         - state: l_st
     - type: Battery
-      maxCharge: 9000
-      startingCharge: 9000
+      maxCharge: 20000
+      startingCharge: 20000
     - type: Appearance
       visuals:
         - type: PowerCellVisualizer
@@ -270,8 +270,8 @@
       layers:
         - state: l_hi
     - type: Battery
-      maxCharge: 18000
-      startingCharge: 18000
+      maxCharge: 40000
+      startingCharge: 40000
     - type: Appearance
       visuals:
         - type: PowerCellVisualizer
@@ -288,8 +288,8 @@
       layers:
         - state: l_sup
     - type: Battery
-      maxCharge: 54000
-      startingCharge: 54000
+      maxCharge: 60000
+      startingCharge: 60000
     - type: Appearance
       visuals:
         - type: PowerCellVisualizer
@@ -306,8 +306,8 @@
       layers:
         - state: l_hy
     - type: Battery
-      maxCharge: 72000
-      startingCharge: 72000
+      maxCharge: 80000
+      startingCharge: 80000
     - type: Appearance
       visuals:
         - type: PowerCellVisualizer
