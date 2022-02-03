@@ -1,3 +1,4 @@
+# Base APC
 - type: entity
   abstract: true
   id: BaseAPC
@@ -75,3 +76,41 @@
     maxChargeRate: 5000
     supplyRampTolerance: 1000
     supplyRampRate: 500
+
+# APCs in use
+
+- type: entity
+  parent: BaseAPC
+  id: APCBasic
+  suffix: Basic, 20kW
+  components:
+  - type: Battery
+    maxCharge: 20000
+    startingCharge: 20000
+
+- type: entity
+  parent: BaseAPC
+  id: APCHighCapacity
+  suffix: High Cap, 40kW
+  components:
+  - type: Battery
+    maxCharge: 40000
+    startingCharge: 40000
+    
+- type: entity
+  parent: BaseAPC
+  id: APCSuperCapacity
+  suffix: High Cap, 60kW
+  components:
+  - type: Battery
+    maxCharge: 60000
+    startingCharge: 60000
+    
+- type: entity
+  parent: BaseAPC
+  id: APCHyperCapacity
+  suffix: Hyper Cap, 80kW
+  components:
+  - type: Battery
+    maxCharge: 80000
+    startingCharge: 80000
