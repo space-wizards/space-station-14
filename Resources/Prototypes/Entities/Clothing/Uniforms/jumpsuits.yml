@@ -55,6 +55,21 @@
 
 - type: entity
   parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitSalvageSpationaut
+  name: salvage spationaut's jumpsuit
+  description: It's a snappy jumpsuit with a sturdy set of overalls. It is very dirty.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/salvagenaut.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/salvagenaut.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9 # Those overalls ARE sturdy.
+
+- type: entity
+  parent: ClothingUniformBase
   id: ClothingUniformJumpsuitChiefEngineer
   name: chief engineer's jumpsuit
   description: It's a high visibility jumpsuit given to those engineers insane enough to achieve the rank of Chief Engineer. It has minor radiation shielding.

@@ -1,0 +1,24 @@
+- type: job
+  id: SalvageSpationaut
+  name: "salvage spationaut"
+  icon: "ShaftMiner"
+  startingGear: SalvageSpationautGear
+  departments:
+  - Cargo
+  supervisors: "the quartermaster and head of personnel"
+  access:
+  - Cargo
+  - Salvage
+  - Maintenance
+  - External
+
+- type: startingGear
+  id: SalvageSpationautGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSalvageSpationaut
+    back: ClothingBackpackFilled
+    shoes: ClothingShoesBootsWork
+    id: SalvagePDA
+    ears: ClothingHeadsetCargo
+  satchel: ClothingBackpackSatchelFilled
+  duffelbag: ClothingBackpackDuffelFilled

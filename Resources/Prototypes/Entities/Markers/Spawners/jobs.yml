@@ -58,6 +58,18 @@
       - state: green
       - state: cargo_tech
 
+- type: entity
+  id: SpawnPointSalvageSpationaut
+  parent: SpawnPointJobBase
+  name: salvagespationaut
+  components:
+  - type: SpawnPoint
+    job_id: SalvageSpationaut
+  - type: Sprite
+    layers:
+      - state: green
+      - state: miner
+
 # Civilian
 
 - type: entity
