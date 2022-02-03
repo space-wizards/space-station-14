@@ -60,7 +60,7 @@ namespace Content.Server.Cargo.Components
         private SoundSpecifier _errorSound = new SoundPathSpecifier("/Audio/Effects/error.ogg");
 
         private bool Powered => !_entMan.TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
-        private CargoConsoleSystem _cargoConsoleSystem = default!;
+        private CargoSystem _cargoConsoleSystem = default!;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(CargoConsoleUiKey.Key);
 
@@ -76,7 +76,7 @@ namespace Content.Server.Cargo.Components
                 UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
             }
 
-            _cargoConsoleSystem = EntitySystem.Get<CargoConsoleSystem>();
+            _cargoConsoleSystem = EntitySystem.Get<CargoSystem>();
             BankAccount = _cargoConsoleSystem.StationAccount;
         }
 
@@ -188,7 +188,7 @@ namespace Content.Server.Cargo.Components
                             orders.Database.ClearOrderCapacity();
                             foreach (var order in approvedOrders)
                             {
-                                telepadComponent.QueueTeleport(order);
+                                _cargoConsoleSystem.QueueTeleport(telepadComponent, order);
                             }
                         }
                     }

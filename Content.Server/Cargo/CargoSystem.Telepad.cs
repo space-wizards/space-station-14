@@ -3,7 +3,6 @@ using Content.Server.Labels.Components;
 using Content.Server.Paper;
 using Content.Server.Power.Components;
 using Content.Shared.Cargo;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -29,90 +28,45 @@ public sealed partial class CargoSystem
             if (comp.CurrentState == CargoTelepadState.Unpowered || comp.TeleportQueue.Count <= 0)
             {
                 comp.CurrentState = CargoTelepadState.Idle;
-                appearance.SetData();
-                comp.Accumulator = comp.Delay + comp.Duration;
+                appearance?.SetData(CargoTelepadVisuals.State, CargoTelepadState.Idle);
+                comp.Accumulator = comp.Delay;
                 continue;
             }
 
             comp.Accumulator -= frameTime;
 
             // Uhh listen teleporting takes time and I just want the 1 float.
-            if (comp.Accumulator > comp.Duration)
+            if (comp.Accumulator > 0f)
             {
-                comp.CurrentState = CargoTelepadState.Charging;
-                appearance.SetData();
-
-                if (TryComp<SpriteComponent>(comp.Owner, out var spriteComponent) && spriteComponent.LayerCount > 0)
-                    spriteComponent.LayerSetState(0, "idle");
-
+                comp.CurrentState = CargoTelepadState.Idle;
+                appearance?.SetData(CargoTelepadVisuals.State, CargoTelepadState.Idle);
                 continue;
             }
 
-            if (comp.Accumulator > 0f)
-            {
-                comp.CurrentState = CargoTelepadState.Teleporting;
-                appearance.SetData();
+            var product = comp.TeleportQueue.Pop();
 
-                if (TryComp<SpriteComponent>(comp.Owner, out var spriteComponent) && spriteComponent.LayerCount > 0)
-                    spriteComponent.LayerSetState(0, "beam");
-            }
-            else
-            {
-                var product = comp.TeleportQueue.Pop();
+            SoundSystem.Play(Filter.Pvs(comp.Owner), comp.TeleportSound.GetSound(), comp.Owner, AudioParams.Default.WithVolume(-8f));
+            SpawnProduct(comp, product);
 
-                SoundSystem.Play(Filter.Pvs(comp.Owner), comp.TeleportSound.GetSound(), comp.Owner, AudioParams.Default.WithVolume(-8f));
-                SpawnProduct(comp, product);
-
-                appearance.SetData();
-
-                if (TryComp<SpriteComponent>(comp.Owner, out var spriteComponent) && spriteComponent.LayerCount > 0)
-                    spriteComponent.LayerSetState(0, "idle");
-
-                comp.CurrentState = CargoTelepadState.Idle;
-                comp.Accumulator = comp.Delay + comp.Duration;
-            }
+            comp.CurrentState = CargoTelepadState.Teleporting;
+            appearance?.SetData(CargoTelepadVisuals.State, CargoTelepadState.Teleporting);
+            comp.Accumulator = comp.Delay;
         }
     }
 
-    private void SetEnabled(CargoTelepadComponent component, ApcPowerReceiverComponent? receiver = null, TransformComponent? xform = null)
+    private void SetEnabled(CargoTelepadComponent component, ApcPowerReceiverComponent? receiver = null,
+        TransformComponent? xform = null)
     {
         if (!Resolve(component.Owner, ref receiver, ref xform)) return;
 
-        var enabled = receiver.Powered && xform.Anchored;
+        var disabled = !receiver.Powered || !xform.Anchored;
 
-        if (enabled == component.Enabled) return;
+        // Setting idle state should be handled by Update();
+        if (disabled) return;
 
-        component.Enabled = enabled;
         TryComp<AppearanceComponent>(component.Owner, out var appearance);
-
-        if (!enabled)
-        {
-            component.CurrentState = CargoTelepadState.Unpowered;
-            appearance.SetData();
-        }
-        else
-        {
-            component.CurrentState = CargoTelepadState.Idle;
-
-        }
-
-        if (args.Powered && component.CurrentState == CargoTelepadState.Unpowered)
-        {
-            component.CurrentState = CargoTelepadState.Idle;
-
-            if(TryComp<SpriteComponent>(uid, out var spriteComponent) && spriteComponent.LayerCount > 0)
-                spriteComponent.LayerSetState(0, "idle");
-
-            SetEnabled(component);
-        }
-        else if (!args.Powered)
-        {
-            component.CurrentState = CargoTelepadState.Unpowered;
-            if (TryComp<SpriteComponent>(uid, out var spriteComponent) && spriteComponent.LayerCount > 0)
-                spriteComponent.LayerSetState(0, "offline");
-
-            SetEnabled(component);
-        }
+        component.CurrentState = CargoTelepadState.Unpowered;
+        appearance?.SetData(CargoTelepadVisuals.State, CargoTelepadState.Unpowered);
     }
 
     private void OnTelepadPowerChange(EntityUid uid, CargoTelepadComponent component, PowerChangedEvent args)
