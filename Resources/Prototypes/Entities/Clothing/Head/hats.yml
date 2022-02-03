@@ -392,9 +392,9 @@
   description: For keeping that traitor head of yours warm.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hats/pyjamasyndicatePink.rsi
+    sprite: Clothing/Head/Hats/pyjamasyndicatepink.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hats/pyjamasyndicatePink.rsi
+    sprite: Clothing/Head/Hats/pyjamasyndicatepink.rsi
 
 - type: entity
   parent: ClothingHeadBase
