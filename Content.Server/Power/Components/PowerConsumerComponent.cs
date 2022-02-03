@@ -12,8 +12,6 @@ namespace Content.Server.Power.Components
     [RegisterComponent]
     public class PowerConsumerComponent : BaseNetConnectorComponent<IBasePowerNet>
     {
-        public override string Name => "PowerConsumer";
-
         /// <summary>
         ///     How much power this needs to be fully powered.
         /// </summary>

@@ -10,8 +10,6 @@ namespace Content.Shared.VendingMachines
     [NetworkedComponent()]
     public class SharedVendingMachineComponent : Component
     {
-        public override string Name => "VendingMachine";
-
         [ViewVariables]
         public List<VendingMachineInventoryEntry> Inventory = new();
 
@@ -74,6 +72,14 @@ namespace Content.Shared.VendingMachines
                 ID = id;
                 Amount = amount;
             }
+        }
+        [Serializable, NetSerializable]
+        public enum VendingMachineWireStatus : byte
+        {
+            Power,
+            Access,
+            Advertisement,
+            Limiter
         }
     }
 }

@@ -65,7 +65,7 @@
       - !type:DoActsBehavior
         acts: ["Breakage"]
   - type: Construction
-    graph: solarpanel
+    graph: SolarPanel
     node: solarpanel
 
 - type: entity
@@ -96,7 +96,7 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Construction
-    graph: solarpanel
+    graph: SolarPanel
     node: solarpanel_broken
 
 - type: entity
@@ -139,7 +139,7 @@
   - type: Anchorable
   - type: Pullable
   - type: Construction
-    graph: solarpanel
+    graph: SolarPanel
     node: solarassembly
 
 - type: entity
@@ -186,5 +186,5 @@
   - type: Anchorable
   - type: Pullable
   - type: Construction
-    graph: solarpanel
+    graph: SolarPanel
     node: solartracker

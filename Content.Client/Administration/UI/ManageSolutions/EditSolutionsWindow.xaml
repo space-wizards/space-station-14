@@ -1,4 +1,4 @@
-<SS14Window
+<DefaultWindow
     SetSize="300 300"
     Margin="4 0"
     xmlns="https://spacestation14.io">
@@ -20,4 +20,4 @@
         </ScrollContainer>
         <Button Name="AddButton" Text="{Loc 'admin-solutions-window-add-new-button'}" HorizontalExpand="True"  Margin="0 4"/>
     </BoxContainer>
-</SS14Window>
+</DefaultWindow>

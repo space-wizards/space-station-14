@@ -2,6 +2,7 @@
 using Content.Shared.Construction.Conditions;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -27,7 +28,7 @@ namespace Content.Shared.Construction.Prototypes
         /// <summary>
         ///     The <see cref="ConstructionGraphPrototype"/> this construction will be using.
         /// </summary>
-        [DataField("graph")]
+        [DataField("graph", customTypeSerializer:typeof(PrototypeIdSerializer<ConstructionGraphPrototype>))]
         public string Graph { get; } = string.Empty;
 
         /// <summary>

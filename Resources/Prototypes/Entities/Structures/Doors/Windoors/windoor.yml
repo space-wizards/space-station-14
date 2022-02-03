@@ -11,7 +11,6 @@
   description: It's a sturdy window and a sliding door. Wow!
 
 # TODO remove these with parameterized prototypes/whatever we end up doing
-# Bar windoor
 - type: entity
   parent: Windoor
   id: WindoorBarLocked
@@ -20,7 +19,6 @@
   - type: AccessReader
     access: [["Bar"]]
 
-# Botany Windoor
 - type: entity
   parent: Windoor
   id: WindoorHydroponicsLocked
@@ -29,16 +27,22 @@
   - type: AccessReader
     access: [["Hydroponics"]]
 
-# Chemistry windoor
 - type: entity
   parent: WindoorSecure
   id: WindoorMedicalLocked
   suffix: Medical, Locked
   components:
   - type: AccessReader
+    access: [["Medical"]]
+    
+- type: entity
+  parent: WindoorSecure
+  id: WindoorChemistryLocked
+  suffix: Chemistry, Locked
+  components:
+  - type: AccessReader
     access: [["Chemistry"]]
 
-# Science windoor
 - type: entity
   parent: WindoorSecure
   id: WindoorScienceLocked
@@ -47,7 +51,6 @@
   - type: AccessReader
     access: [["Research"]]
 
-# HOP's office windoor
 - type: entity
   parent: WindoorSecure
   id: WindoorCommandLocked
@@ -55,8 +58,9 @@
   components:
   - type: AccessReader
     access: [["Command"]]
+  - type: Wires
+    LayoutId: WindoorCommand
 
-# Cargo windoor
 - type: entity
   parent: Windoor
   id: WindoorCargoLocked
@@ -65,7 +69,6 @@
   - type: AccessReader
     access: [["Cargo"]]
 
-# Security windoor
 - type: entity
   parent: WindoorSecure
   id: WindoorSecurityLocked
@@ -73,6 +76,16 @@
   components:
   - type: AccessReader
     access: [["Security"]]
+  - type: Wires
+    LayoutId: WindoorSecurity
+    
+- type: entity
+  parent: WindoorSecurityLocked
+  id: WindoorBrigLocked
+  suffix: Brig, Locked
+  components:
+  - type: AccessReader
+    access: [["Brig"]]
     
 - type: entity
   parent: WindoorSecure
@@ -97,3 +110,11 @@
   components:
   - type: AccessReader
     access: [["Janitor"]]
+    
+- type: entity
+  parent: WindoorSecure
+  id: WindoorKitchenLocked
+  suffix: Kitchen, Locked
+  components:
+  - type: AccessReader
+    access: [["Kitchen"]]

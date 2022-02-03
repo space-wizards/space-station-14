@@ -7,8 +7,6 @@ namespace Content.Server.Power.Components
     [RegisterComponent]
     public sealed class CableVisComponent : Component
     {
-        public override string Name => "CableVis";
-
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("node")]
         public string? Node;

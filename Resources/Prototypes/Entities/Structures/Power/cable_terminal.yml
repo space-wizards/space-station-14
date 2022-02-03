@@ -34,7 +34,7 @@
               acts: ["Destruction"]
     - type: SubFloorHide
     - type: Construction
-      graph: cable_terminal
+      graph: CableTerminal
       node: cable_terminal
     - type: NodeContainer
       nodes:

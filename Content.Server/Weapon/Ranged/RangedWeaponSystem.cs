@@ -17,7 +17,7 @@ namespace Content.Server.Weapon.Ranged
             // Instead of dirtying on hand-select this component should probably by dirtied whenever it needs to be.
             // I take no responsibility for this code. It was like this when I got here.
 
-            component.Dirty();
+            Dirty(component);
         }
     }
 }

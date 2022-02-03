@@ -5,6 +5,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Maps;
 
@@ -52,7 +53,7 @@ public class GameMapPrototype : IPrototype
     /// Relative directory path to the given map, i.e. `Maps/saltern.yml`
     /// </summary>
     [DataField("mapPath", required: true)]
-    public string MapPath { get; } = default!;
+    public ResourcePath MapPath { get; } = default!;
 
     /// <summary>
     /// Controls if the map can be used as a fallback if no maps are eligible.

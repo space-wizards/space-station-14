@@ -9,8 +9,6 @@ namespace Content.Shared.Radiation
     [NetworkedComponent()]
     public abstract class SharedRadiationPulseComponent : Component
     {
-        public override string Name => "RadiationPulse";
-
         [DataField("radsPerSecond")]
         public float RadsPerSecond { get; set; } = 1;
 
