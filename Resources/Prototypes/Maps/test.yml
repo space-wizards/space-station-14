@@ -1,7 +1,7 @@
 - type: gameMap
   id: empty
   mapName: Empty
-  mapPath: Maps/Test/empty.yml
+  mapPath: /Maps/Test/empty.yml
   minPlayers: 0
   votable: false
   overflowJobs:
@@ -16,7 +16,7 @@
   nameGenerator:
     !type:NanotrasenNameGenerator
     prefixCreator: '14'
-  mapPath: Maps/knightship.yml
+  mapPath: /Maps/knightship.yml
   minPlayers: 0
   votable: false
   overflowJobs:

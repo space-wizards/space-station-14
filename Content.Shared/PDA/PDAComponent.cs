@@ -11,8 +11,6 @@ namespace Content.Shared.PDA
     [RegisterComponent]
     public class PDAComponent : Component
     {
-        public override string Name => "PDA";
-
         [DataField("idSlot")]
         public ItemSlot IdSlot = new();
 

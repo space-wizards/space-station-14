@@ -15,8 +15,6 @@ namespace Content.Server.Light.Components
     [RegisterComponent, Friend(typeof(LightBulbSystem))]
     public class LightBulbComponent : Component, IBreakAct
     {
-        public override string Name => "LightBulb";
-
         [DataField("color")]
         public Color Color = Color.White;
 

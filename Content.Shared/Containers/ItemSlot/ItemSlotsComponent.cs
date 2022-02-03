@@ -22,8 +22,6 @@ namespace Content.Shared.Containers.ItemSlots
     [Friend(typeof(ItemSlotsSystem))]
     public class ItemSlotsComponent : Component
     {
-        public override string Name => "ItemSlots";
-
         /// <summary>
         ///     The dictionary that stores all of the item slots whose interactions will be managed by the <see
         ///     cref="ItemSlotsSystem"/>.
@@ -84,7 +82,7 @@ namespace Content.Shared.Containers.ItemSlots
         ///     Options used for playing the insert/eject sounds.
         /// </summary>
         [DataField("soundOptions")]
-        public AudioParams SoundOptions = AudioParams.Default; 
+        public AudioParams SoundOptions = AudioParams.Default;
 
         /// <summary>
         ///     The name of this item slot. This will be shown to the user in the verb menu.

@@ -21,8 +21,6 @@ namespace Content.Server.Construction.Components
         public const string PartContainer = "machine_parts";
         public const string BoardContainer = "machine_board";
 
-        public override string Name => "MachineFrame";
-
         [ViewVariables]
         public bool IsComplete
         {

@@ -8,8 +8,6 @@ namespace Content.Server.Atmos.Piping.Binary.Components
     [RegisterComponent]
     public class GasPressurePumpComponent : Component
     {
-        public override string Name => "GasPressurePump";
-
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Enabled { get; set; } = true;
 

@@ -297,7 +297,7 @@ namespace Content.Server.Interaction
             if (!wideAttack)
             {
                 // Check if interacted entity is in the same container, the direct child, or direct parent of the user.
-                if (target != null && !Deleted(target.Value) && !user.IsInSameOrParentContainer(target.Value) && !CanAccessViaStorage(user, target.Value))
+                if (target != null && !Deleted(target.Value) && !ContainerSystem.IsInSameOrParentContainer(user, target.Value) && !CanAccessViaStorage(user, target.Value))
                 {
                     Logger.WarningS("system.interaction",
                         $"User entity {ToPrettyString(user):user} clicked on object {ToPrettyString(target.Value):target} that isn't the parent, child, or in the same container");

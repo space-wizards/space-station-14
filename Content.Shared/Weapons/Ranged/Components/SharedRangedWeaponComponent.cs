@@ -12,7 +12,6 @@ namespace Content.Shared.Weapons.Ranged.Components
     {
         // Each RangedWeapon should have a RangedWeapon component +
         // some kind of RangedBarrelComponent (this dictates what ammo is retrieved).
-        public override string Name => "RangedWeapon";
     }
 
     [Serializable, NetSerializable]

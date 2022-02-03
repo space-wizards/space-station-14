@@ -7,6 +7,5 @@ namespace Content.Server.Body.Components
     [RegisterComponent, Friend(typeof(BrainSystem))]
     public class BrainComponent : Component
     {
-        public override string Name => "Brain";
     }
 }

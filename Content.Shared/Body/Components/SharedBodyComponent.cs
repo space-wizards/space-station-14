@@ -26,8 +26,6 @@ namespace Content.Shared.Body.Components
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-        public override string Name => "Body";
-
         [ViewVariables]
         [DataField("template", required: true)]
         private string? TemplateId { get; }

@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Explosion
 {
     [Serializable, NetSerializable]
-    public enum ClusterFlashVisuals : byte
+    public enum ClusterGrenadeVisuals : byte
     {
         GrenadesCounter
     }

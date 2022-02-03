@@ -10,8 +10,6 @@ namespace Content.Server.Chemistry.Components
     [RegisterComponent]
     public class ReagentTankComponent : Component
     {
-        public override string Name => "ReagentTank";
-
         [DataField("transferAmount")]
         [ViewVariables(VVAccess.ReadWrite)]
         public FixedPoint2 TransferAmount { get; set; } = FixedPoint2.New(10);
