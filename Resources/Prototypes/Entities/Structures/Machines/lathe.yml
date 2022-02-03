@@ -180,21 +180,8 @@
       - FirelockElectronics
       - DoorElectronics
       - APCElectronics
-      - SMESMachineCircuitboard
-      - SubstationMachineCircuitboard
       - AirAlarmElectronics
       - FireAlarmElectronics
-      - CloningPodMachineCircuitboard
-      - MedicalScannerMachineCircuitboard
-      - ChemMasterMachineCircuitboard
-      - ChemDispenserMachineCircuitboard
-      - HydroponicsTrayMachineCircuitboard
-      - SolarControlComputerCircuitboard
-      - AutolatheMachineCircuitboard
-      - ProtolatheMachineCircuitboard
-      - KitchenReagentGrinderMachineCircuitboard
-      - CrewMonitoringComputerCircuitboard
-      - ShuttleConsoleCircuitboard
       - Bucket
       - MopItem
       - SprayBottle
@@ -216,3 +203,40 @@
     anchored: true
   - type: Pullable
   - type: Lathe
+
+- type: entity
+  parent: Protolathe
+  id: CircuitImprinter
+  name: Circuit Imprinter
+  description: Prints circuit boards for machines using glass.
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/circuit_imprinter.rsi
+    layers:
+    - state: icon
+      map: ["enum.ProtolatheVisualLayers.Base"]
+    - state: unlit
+      shader: unshaded
+      map: ["enum.ProtolatheVisualLayers.BaseUnlit"]
+    - state: icon
+      map: ["enum.ProtolatheVisualLayers.AnimationLayer"]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: ProtolatheDatabase
+    protolatherecipes:
+      - SMESMachineCircuitboard
+      - SubstationMachineCircuitboard
+      - CloningPodMachineCircuitboard
+      - MedicalScannerMachineCircuitboard
+      - ChemMasterMachineCircuitboard
+      - ChemDispenserMachineCircuitboard
+      - HydroponicsTrayMachineCircuitboard
+      - SolarControlComputerCircuitboard
+      - AutolatheMachineCircuitboard
+      - ProtolatheMachineCircuitboard
+      - KitchenReagentGrinderMachineCircuitboard
+      - CrewMonitoringComputerCircuitboard
+      - ShuttleConsoleCircuitboard
+  - type: Machine
+    board: CircuitImprinterMachineCircuitboard
+

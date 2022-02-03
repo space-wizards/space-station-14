@@ -30,6 +30,23 @@
           ExamineName: Glass Beaker
 
 - type: entity
+  id: CircuitImprinterMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: Circuit Imprinter (Machine Board)
+  components:
+  - type: MachineBoard
+    prototype: CircuitImprinter
+    requirements:
+      MatterBin: 1
+      Manipulator: 1
+    tagRequirements:
+      GlassBeaker:
+        Amount: 2
+        DefaultPrototype: Beaker
+        ExamineName: Glass Beaker
+
+
+- type: entity
   id: CloningPodMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: Cloning Pod (Machine Board)
