@@ -1,12 +1,4 @@
 Entries:
-- author: PJB
-  changes:
-  - {message: 'You can now see your held active item next to your mouse cursor, to
-      hopefully aid in remembering which your active hand is.', type: Add}
-  - {message: This feature can be toggled in the options menu if you'd prefer not
-      having it., type: Tweak}
-  id: 468
-  time: '2021-10-22T02:26:02.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Gunpet, type: Add}
@@ -2939,3 +2931,8 @@ Entries:
   - {message: Suicide by toilet shows correct messages., type: Fix}
   id: 968
   time: '2022-02-02T23:14:42.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Deconstructing crates now requires a screwdriver again., type: Fix}
+  id: 969
+  time: '2022-02-03T23:43:52.815666+00:00'
