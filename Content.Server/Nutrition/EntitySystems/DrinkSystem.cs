@@ -260,7 +260,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 BreakOnDamage = true,
                 BreakOnStun = true,
                 BreakOnTargetMove = true,
-                MovementThreshold = 1.0f,
+                MovementThreshold = 0.01f,
                 TargetFinishedEvent = new DrinkEvent(user, drink, drinkSolution),
                 BroadcastCancelledEvent = new DrinkCancelledEvent(drink),
                 NeedHand = true,
