@@ -104,10 +104,11 @@
     prefixCreator: '14'
   mapPath: Maps/nss_pillar.yml
   minPlayers: 20
-  overflowJobs: []
+  overflowJobs:
+    - Assistant
   availableJobs:
-    CargoTechnician: [ 4, 5 ]
     Assistant: [ -1, -1 ]
+    CargoTechnician: [ 4, 5 ]
     Bartender: [ 1, 1 ]
     Botanist: [ 2, 2 ]
     Chef: [ 2, 2 ]
