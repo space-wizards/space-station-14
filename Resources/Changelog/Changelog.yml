@@ -1,11 +1,4 @@
 Entries:
-- author: ShadowCommander
-  changes:
-  - {message: 'The context menu, examining, and activating now works on items inside
-      storage entities. (The last one means boxes can now be opened while still inside
-      a backpack.)', type: Add}
-  id: 477
-  time: '2021-10-24T05:42:47.0000000+00:00'
 - author: moony
   changes:
   - {message: pipes can once again be picked up, type: Add}
@@ -2945,3 +2938,9 @@ Entries:
   - {message: Added handheld crew monitor to research and proto-lathe, type: Add}
   id: 977
   time: '2022-02-04T21:17:16.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Added a new large pop map. Welcome to NSS Pillar! Familiar cousin to
+      box, follow the signs so you don''t get lost.', type: Add}
+  id: 978
+  time: '2022-02-04T21:34:52.0000000+00:00'
