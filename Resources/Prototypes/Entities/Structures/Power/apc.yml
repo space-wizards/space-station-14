@@ -100,7 +100,7 @@
 - type: entity
   parent: BaseAPC
   id: APCSuperCapacity
-  suffix: High Cap, 60kW
+  suffix: Super Cap, 60kW
   components:
   - type: Battery
     maxCharge: 60000
