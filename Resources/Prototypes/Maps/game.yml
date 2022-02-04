@@ -102,7 +102,7 @@
   nameGenerator:
     !type:NanotrasenNameGenerator
     prefixCreator: '14'
-  mapPath: Maps/ssreach.yml
+  mapPath: /Maps/ssreach.yml
   minPlayers: 0
   maxPlayers: 15
   overflowJobs:
