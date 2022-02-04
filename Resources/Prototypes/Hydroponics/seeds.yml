@@ -507,7 +507,7 @@
   production: 1
   yield: 5
   potency: 10
-  growthStages: 3
+  growthStages: 5
   waterConsumption: 6
   chemicals:
     Nutriment:
