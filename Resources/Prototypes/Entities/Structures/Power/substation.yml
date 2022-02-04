@@ -58,7 +58,7 @@
         sound:
           path: /Audio/Effects/metalbreak.ogg
       - !type:ExplodeBehavior
-      - !type:SpawnEntitiesBehavior #in future should also emit a cloud of hot gas
+      - !type:SpawnEntitiesBehavior # in future should also emit a cloud of hot gas
         spawn:
           MachineFrameDestroyed:
             min: 1
@@ -108,17 +108,18 @@
         layer: [ Passable ]
   - type: Transform
     anchored: true
-  - type: Sprite
+  - type: Sprite # TODO: add sprite for maintenance panel open
     drawdepth: WallMountedItems
     netsync: false
-    sprite: Structures/Power/apc.rsi
-    state: apc0
-  - type: Appearance
-    visuals:
-    - type: ApcVisualizer
+    sprite: Structures/Power/substation.rsi
+    layers:
+    - state: substation_wall
+    - state: screen
+      shader: unshaded
   - type: Battery
     maxCharge: 2000000
     startingCharge: 0
+  - type: ExaminableBattery
   - type: NodeContainer
     examinable: true
     nodes:
