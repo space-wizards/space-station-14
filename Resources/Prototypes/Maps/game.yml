@@ -96,6 +96,43 @@
     Botanist: [ 1, 1 ]
 
 - type: gameMap
+  id: NSSPillar
+  mapName: 'NSS Pillar'
+  mapNameTemplate: '{0} NSSPillar {1}'
+  nameGenerator:
+    !type:NanotrasenNameGenerator
+    prefixCreator: '14'
+  mapPath: Maps/nss_pillar.yml
+  minPlayers: 20
+  overflowJobs:
+    - Assistant
+  availableJobs:
+    Assistant: [ -1, -1 ]
+    CargoTechnician: [ 4, 5 ]
+    Bartender: [ 1, 1 ]
+    Botanist: [ 2, 2 ]
+    Chef: [ 2, 2 ]
+    Clown: [ 1, 1 ]
+    Janitor: [ 2, 3 ]
+    Mime: [ 1, 1 ]
+    Captain: [ 1, 1 ]
+    HeadOfPersonnel: [ 1, 1 ]
+    ChiefEngineer: [ 1, 1 ]
+    StationEngineer: [ 4, 6 ]
+    ChiefMedicalOfficer: [ 1, 1 ]
+    MedicalDoctor: [ 4, 6 ]
+    Chemist: [ 2, 2 ]
+    ResearchDirector: [ 1, 1 ]
+    Scientist: [ 3, 5 ]
+    HeadOfSecurity: [ 1, 1 ]
+    SecurityOfficer: [ 5, 6 ]
+    Chaplain: [ 1, 1 ]
+    Librarian: [ 1, 1 ]
+    Lawyer: [ 1, 2 ]
+    Warden: [ 1, 1 ]
+    Quartermaster: [ 1, 1 ]
+
+- type: gameMap
   id: ssreach
   mapName: 'Reach'
   mapNameTemplate: '{0} Reach {1}'
