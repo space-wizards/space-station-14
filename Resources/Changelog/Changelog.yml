@@ -1,20 +1,4 @@
 Entries:
-- author: Seth
-  changes:
-  - {message: Added Plasma into the cargo console, type: Add}
-  id: 470
-  time: '2021-10-22T09:47:47.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Fixes pulling items with hand item cursor overlay freezing the game.,
-    type: Fix}
-  id: 471
-  time: '2021-10-22T11:45:45.025249+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: Fixed being spaced causing the player to gib, type: Fix}
-  id: 472
-  time: '2021-10-23T18:45:58.0000000+00:00'
 - author: juliangiebel
   changes:
   - {message: Added light switches that turn lights connected to the same apc on and
@@ -2937,3 +2921,23 @@ Entries:
   - {message: Changed map Saltern from 20 to 25 max players., type: Tweak}
   id: 970
   time: '2022-02-04T13:20:25.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: You can now milk goats for their milk. Try keep them still long enough!,
+    type: Add}
+  id: 971
+  time: '2022-02-04T21:14:47.0000000+00:00'
+- author: Seth
+  changes:
+  - {message: Goats are back into the cargo console, type: Tweak}
+  id: 972
+  time: '2022-02-04T21:14:54.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Universal Enzyme and corn oil can now be produced by juicing corn.,
+    type: Add}
+  - {message: 'Ketchup can now be made by combining 10 tomato juice and 5 sugar. BBQ
+      Sauce can be made by 5 ketchup, vinegar and sugar each. Hot Sauce with 5 tomato
+      juice, salt and capsaicin oil.', type: Add}
+  id: 973
+  time: '2022-02-04T21:15:10.0000000+00:00'
