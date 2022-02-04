@@ -1,9 +1,0 @@
-﻿- type: entity
-  id: APCElectronics
-  parent: BaseItem
-  name: APC electronics
-  description: Circuit used in APC construction.
-  components:
-    - type: Sprite
-      sprite: Objects/Misc/module.rsi
-      state: charger_APC
