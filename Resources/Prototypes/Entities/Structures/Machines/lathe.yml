@@ -211,6 +211,7 @@
   description: Prints circuit boards for machines.
   components:
   - type: Sprite
+    netsync: false
     sprite: Structures/Machines/circuit_imprinter.rsi
     layers:
     - state: icon
