@@ -11,7 +11,7 @@
 
 - type: Tag
   id: Brutepack
-  
+
 - type: Tag
   id: BodyBag
 
@@ -44,7 +44,7 @@
 
 - type: Tag
   id: CaptainSabre
-  
+
 - type: Tag
   id: Cartridge
 
@@ -98,6 +98,9 @@
 
 - type: Tag
   id: Debug
+
+- type: Tag
+  id: Dice
 
 - type: Tag
   id: Document
@@ -251,7 +254,7 @@
 
 - type: Tag
   id: Taser
-  
+
 - type: Tag
   id: Trash
 
