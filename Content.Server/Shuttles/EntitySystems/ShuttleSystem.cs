@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using Content.Server.Shuttles.Components;
+using Content.Shared.CCVar;
 using JetBrains.Annotations;
+using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Physics;
@@ -12,11 +14,14 @@ namespace Content.Server.Shuttles.EntitySystems
     {
         private const float TileMassMultiplier = 4f;
 
-        public float ShuttleIdleLinearDamping = 0.1f;
-        public float ShuttleIdleAngularDamping = 0.2f;
+        public float ShuttleMaxLinearAcc = 13f;
+        public float ShuttleMaxAngularAcc = 24f;
 
-        public float ShuttleMovingLinearDamping = 0.05f;
-        public float ShuttleMovingAngularDamping = 0.05f;
+        public float ShuttleMovingLinearDamping = 1.3f;
+        public float ShuttleIdleLinearDamping = 0.5f;
+
+        public float ShuttleMovingAngularDamping = 3f;
+        public float ShuttleIdleAngularDamping = 3f;
 
         public override void Initialize()
         {
@@ -27,6 +32,14 @@ namespace Content.Server.Shuttles.EntitySystems
 
             SubscribeLocalEvent<GridInitializeEvent>(OnGridInit);
             SubscribeLocalEvent<GridFixtureChangeEvent>(OnGridFixtureChange);
+
+            var configManager = IoCManager.Resolve<IConfigurationManager>();
+            configManager.OnValueChanged(CCVars.ShuttleMaxLinearAcc, value => ShuttleMaxLinearAcc = value, true);
+            configManager.OnValueChanged(CCVars.ShuttleMaxAngularAcc, value => ShuttleMaxAngularAcc = value, true);
+            configManager.OnValueChanged(CCVars.ShuttleIdleLinearDamping, value => ShuttleIdleLinearDamping = value, true);
+            configManager.OnValueChanged(CCVars.ShuttleIdleAngularDamping, value => ShuttleIdleAngularDamping = value, true);
+            configManager.OnValueChanged(CCVars.ShuttleMovingLinearDamping, value => ShuttleMovingLinearDamping = value, true);
+            configManager.OnValueChanged(CCVars.ShuttleMovingAngularDamping, value => ShuttleMovingAngularDamping = value, true);
         }
 
         private void OnShuttleAdd(EntityUid uid, ShuttleComponent component, ComponentAdd args)

@@ -49,7 +49,7 @@ namespace Content.Server.Shuttles.Components
         /// </summary>
         public bool IsOn;
 
-        [ViewVariables]
+        [ViewVariables(VVAccess.ReadWrite)]
         [DataField("impulse")]
         public float Impulse = 450f;
 
@@ -69,6 +69,9 @@ namespace Content.Server.Shuttles.Components
         /// How much damage is done per second to anything colliding with our thrust.
         /// </summary>
         [ViewVariables] [DataField("damage")] public DamageSpecifier? Damage = new();
+
+        [ViewVariables] [DataField("requireSpace")]
+        public bool RequireSpace = true;
 
         // Used for burns
 

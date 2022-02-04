@@ -118,7 +118,8 @@ namespace Content.Server.Shuttles.EntitySystems
 
                     foreach (var ent in _mapManager.GetGrid(e.NewTile.GridIndex).GetAnchoredEntities(checkPos))
                     {
-                        if (!EntityManager.TryGetComponent(ent, out ThrusterComponent? thruster) || thruster.Type == ThrusterType.Angular) continue;
+                        if (!EntityManager.TryGetComponent(ent, out ThrusterComponent? thruster) || thruster.Type == ThrusterType.Angular ||
+                            !thruster.RequireSpace) continue;
 
                         // Work out if the thruster is facing this direction
                         var direction = EntityManager.GetComponent<TransformComponent>(ent).LocalRotation.ToWorldVec();
@@ -359,7 +360,7 @@ namespace Content.Server.Shuttles.EntitySystems
                 return false;
             }
 
-            if (component.Type == ThrusterType.Angular)
+            if (component.Type == ThrusterType.Angular || !component.RequireSpace)
                 return true;
 
             return NozzleExposed(xform);

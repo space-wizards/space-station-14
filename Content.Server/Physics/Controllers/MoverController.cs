@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Content.Server.Movement.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.EntitySystems;
@@ -231,6 +232,10 @@ namespace Content.Server.Physics.Controllers
                         var index = (int) Math.Log2((int) dir);
                         var speed = shuttle.LinearThrusterImpulse[index] * length;
 
+                        var maxImpulse = body.Mass * shuttleSystem.ShuttleMaxLinearAcc;
+
+                        speed = Math.Clamp(speed, 0f, maxImpulse);
+
                         if (body.LinearVelocity.LengthSquared < 0.5f)
                         {
                             speed *= 5f;
@@ -253,7 +258,11 @@ namespace Content.Server.Physics.Controllers
                     body.AngularDamping = shuttleSystem.ShuttleMovingAngularDamping;
                     var angularSpeed = shuttle.AngularThrust;
 
-                    if (body.AngularVelocity < 0.5f)
+                    var maxAngImpulse = body.Mass * shuttleSystem.ShuttleMaxAngularAcc;
+
+                    angularSpeed = Math.Clamp(angularSpeed, 0f, maxAngImpulse);
+
+                    if (body.AngularVelocity * body.AngularVelocity < 0.5f)
                     {
                         angularSpeed *= 5f;
                     }
