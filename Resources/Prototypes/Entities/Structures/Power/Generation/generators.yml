@@ -191,7 +191,21 @@
   - type: Sprite
     sprite: Structures/Power/Generation/rtg.rsi
     state: rtg
-  - type: RadiationPulse # ideally only when opened. TODO: need radioactive fallout when destroyed
+# TODO: need radioactive fallout when destroyed
+
+- type: entity
+  parent: BaseGenerator
+  id: GeneratorRTGDamaged
+  name: damaged RTG
+  description: A Radioisotope Thermoelectric Generator for long term power. This one has damaged shielding.
+  suffix: 20kW
+  components:
+  - type: PowerSupplier
+    supplyRate: 20000
+  - type: Sprite
+    sprite: Structures/Power/Generation/rtg.rsi
+    state: rtg_damaged
+  - type: RadiationPulse # ideally only when opened.
     range: 2
     decay: false
     minPulseLifespan: 1

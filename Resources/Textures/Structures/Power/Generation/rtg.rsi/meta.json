@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/99ed48ce8d3ba7e2d26d68519e05eae277c94685",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/99ed48ce8d3ba7e2d26d68519e05eae277c94685, rtg_damaged by Peptide90",
   "size": {
     "x": 32,
     "y": 32
@@ -12,6 +12,17 @@
     },
     {
       "name": "rtg_open"
+    },
+    {
+      "name": "rtg_damaged",
+      "delays": [
+        [
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ]
+      ]
     }
   ]
 }
