@@ -300,8 +300,13 @@
     - APCElectronics
     - SMESMachineCircuitboard
     - SubstationMachineCircuitboard
+    - WallmountSubstationElectronics
+    - WallmountGeneratorElectronics
+    - WallmountGeneratorAPUElectronics
     - HydroponicsTrayMachineCircuitboard
     - SolarControlComputerCircuitboard
+    - GeneratorPlasmaMachineCircuitboard
+    - GeneratorUraniumMachineCircuitboard
 
 # Basic Parts Technology Tree
 

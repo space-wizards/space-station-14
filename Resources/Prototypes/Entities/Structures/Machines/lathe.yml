@@ -180,6 +180,9 @@
       - FirelockElectronics
       - DoorElectronics
       - APCElectronics
+      - WallmountSubstationElectronics
+      - WallmountGeneratorElectronics
+      - WallmountGeneratorAPUElectronics
       - SMESMachineCircuitboard
       - SubstationMachineCircuitboard
       - AirAlarmElectronics
@@ -195,6 +198,8 @@
       - KitchenReagentGrinderMachineCircuitboard
       - CrewMonitoringComputerCircuitboard
       - ShuttleConsoleCircuitboard
+      - GeneratorPlasmaMachineCircuitboard
+      - GeneratorUraniumMachineCircuitboard
       - Bucket
       - MopItem
       - SprayBottle
