@@ -1,24 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: Saltern now uses SMES terminals, type: Add}
-  - {message: SMESes in solars, type: Add}
-  - {message: Nudge a trash spawner back in-bounds, type: Fix}
-  id: 467
-  time: '2021-10-21T21:25:21.0000000+00:00'
-- author: PJB
-  changes:
-  - {message: 'You can now see your held active item next to your mouse cursor, to
-      hopefully aid in remembering which your active hand is.', type: Add}
-  - {message: This feature can be toggled in the options menu if you'd prefer not
-      having it., type: Tweak}
-  id: 468
-  time: '2021-10-22T02:26:02.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Gunpet, type: Add}
-  id: 469
-  time: '2021-10-22T09:14:09.0000000+00:00'
 - author: Seth
   changes:
   - {message: Added Plasma into the cargo console, type: Add}
@@ -2941,3 +2921,19 @@ Entries:
   - {message: added pilk, type: Add}
   id: 967
   time: '2022-02-02T06:20:54.0000000+00:00'
+- author: wrexbe
+  changes:
+  - {message: Suicide by toilet shows correct messages., type: Fix}
+  id: 968
+  time: '2022-02-02T23:14:42.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Deconstructing crates now requires a screwdriver again., type: Fix}
+  id: 969
+  time: '2022-02-03T23:43:52.815666+00:00'
+- author: Peptide90
+  changes:
+  - {message: Changed map Reach from 25 players max to 15., type: Tweak}
+  - {message: Changed map Saltern from 20 to 25 max players., type: Tweak}
+  id: 970
+  time: '2022-02-04T13:20:25.0000000+00:00'

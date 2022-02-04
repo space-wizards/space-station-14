@@ -294,11 +294,13 @@ namespace Content.Server.Database
         /// <param name="address">The ip address of the user.</param>
         /// <param name="userId">The id of the user.</param>
         /// <param name="hwId">The HWId of the user.</param>
+        /// <param name="includeUnbanned">Include pardoned and expired bans.</param>
         /// <returns>The user's ban history.</returns>
         public abstract Task<List<ServerBanDef>> GetServerBansAsync(
             IPAddress? address,
             NetUserId? userId,
-            ImmutableArray<byte>? hwId);
+            ImmutableArray<byte>? hwId,
+            bool includeUnbanned);
 
         public abstract Task AddServerBanAsync(ServerBanDef serverBan);
         public abstract Task AddServerUnbanAsync(ServerUnbanDef serverUnban);
@@ -365,11 +367,28 @@ namespace Content.Server.Database
         /*
          * CONNECTION LOG
          */
-        public abstract Task AddConnectionLogAsync(
+        public abstract Task<int> AddConnectionLogAsync(
             NetUserId userId,
             string userName,
             IPAddress address,
-            ImmutableArray<byte> hwId);
+            ImmutableArray<byte> hwId,
+            ConnectionDenyReason? denied);
+
+        public async Task AddServerBanHitsAsync(int connection, IEnumerable<ServerBanDef> bans)
+        {
+            await using var db = await GetDb();
+
+            foreach (var ban in bans)
+            {
+                db.DbContext.ServerBanHit.Add(new ServerBanHit
+                {
+                    ConnectionId = connection, BanId = ban.Id!.Value
+                });
+            }
+
+            await db.DbContext.SaveChangesAsync();
+        }
+
         #endregion
 
         #region Admin Ranks
