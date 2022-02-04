@@ -11,8 +11,7 @@ using Content.Server.Popups;
 using Content.Server.Mind.Components;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Hands.Components;
-using Content.Server.Explosion.EntitySystems;
-using Content.Server.Explosion;
+using Content.Shared.Body.Components;
 using Content.Server.Actions.Events;
 using Robust.Shared.IoC;
 using Robust.Shared.GameObjects;
@@ -25,8 +24,6 @@ namespace Content.Server.Drone
     public class DroneSystem : SharedDroneSystem
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly ExplosionSystem _explosions = default!;
-
         public override void Initialize()
         {
             base.Initialize();
@@ -57,11 +54,13 @@ namespace Content.Server.Drone
         {
             if (args.Component.IsDead())
             {
+                var body = Comp<SharedBodyComponent>(uid); //There's no way something can have a mobstate but not a body...
+
                 foreach (var item in drone.ToolUids)
                 {
                     EntityManager.DeleteEntity(item);
                 }
-                _explosions.SpawnExplosion(uid);
+                body.Gib();
                 EntityManager.DeleteEntity(uid);
             }
         }
