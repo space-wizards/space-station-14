@@ -55,8 +55,8 @@
 
 - type: entity
   parent: ClothingUniformBase
-  id: ClothingUniformJumpsuitSalvageSpationaut
-  name: salvage spationaut's jumpsuit
+  id: ClothingUniformJumpsuitSalvageSpecialist
+  name: salvage specialist's jumpsuit
   description: It's a snappy jumpsuit with a sturdy set of overalls. It is very dirty.
   components:
   - type: Sprite

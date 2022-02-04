@@ -35,9 +35,9 @@
     access: [["Quartermaster"]]
 
 - type: entity
-  id: LockerSalvageSpationaut
+  id: LockerSalvageSpecialist
   parent: LockerBase
-  name: salvage spationaut's equipment
+  name: salvage specialist's equipment
   description: Nevermind the pickaxe.
   components:
   - type: Appearance

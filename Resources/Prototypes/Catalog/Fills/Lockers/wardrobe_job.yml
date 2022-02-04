@@ -196,7 +196,7 @@
          amount: 1
        - id: ClothingShoesBootsSalvage
          amount: 2
-       - id: ClothingUniformJumpsuitSalvageSpationaut
+       - id: ClothingUniformJumpsuitSalvageSpecialist
          amount: 2
 
 # - type: entity

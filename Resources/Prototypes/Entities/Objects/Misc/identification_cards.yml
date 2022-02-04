@@ -128,7 +128,7 @@
     - state: default
     - state: idshaftminer
   - type: PresetIdCard
-    job: SalvageSpationaut
+    job: SalvageSpecialist
 
 - type: entity
   parent: IDCardStandard

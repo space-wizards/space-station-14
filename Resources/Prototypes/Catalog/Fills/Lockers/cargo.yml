@@ -1,7 +1,7 @@
 - type: entity
-  id: LockerSalvageSpationautFilled
+  id: LockerSalvageSpecialistFilled
   suffix: Filled
-  parent: LockerSalvageSpationaut
+  parent: LockerSalvageSpecialist
   components:
   - type: StorageFill
     contents:

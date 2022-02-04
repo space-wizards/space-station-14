@@ -59,12 +59,12 @@
       - state: cargo_tech
 
 - type: entity
-  id: SpawnPointSalvageSpationaut
+  id: SpawnPointSalvageSpecialist
   parent: SpawnPointJobBase
-  name: salvagespationaut
+  name: salvagespecialist
   components:
   - type: SpawnPoint
-    job_id: SalvageSpationaut
+    job_id: SalvageSpecialist
   - type: Sprite
     layers:
       - state: green
