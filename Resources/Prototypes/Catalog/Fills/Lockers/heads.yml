@@ -123,27 +123,18 @@
   - type: StorageFill
     contents:
       - id: MedkitFilled
-        prob: 1
       - id: ClothingHandsGlovesLatex
-        prob: 1
       #- name: ClothingEyesHudMedical #Removed until working properly
       #  prob: 1
       - id: ClothingHeadsetAltMedical
-        prob: 1
       - id: ClothingCloakCmo
-        prob: 1
       - id: ClothingBackpackDuffelSurgeryFilled
-        prob: 1
       - id: ClothingOuterCoatLabCmo
-        prob: 1
       - id: ClothingMaskSterile
-        prob: 1
       - id: ClothingHeadHelmetHardsuitMedical
-        prob: 1
       - id: ClothingOuterHardsuitMedical
-        prob: 1
       - id: Hypospray
-        prob: 1
+      - id: HandheldCrewMonitor
 
 - type: entity
   id: LockerResearchDirectorFilled

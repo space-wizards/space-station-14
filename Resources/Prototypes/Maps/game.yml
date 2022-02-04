@@ -7,7 +7,7 @@
     prefixCreator: '14'
   mapPath: /Maps/saltern.yml
   minPlayers: 0
-  maxPlayers: 20
+  maxPlayers: 25
   fallback: true
   overflowJobs:
     - Assistant
@@ -103,8 +103,8 @@
     !type:NanotrasenNameGenerator
     prefixCreator: '14'
   mapPath: /Maps/ssreach.yml
-  minPlayers: 8
-  maxPlayers: 25
+  minPlayers: 0
+  maxPlayers: 15
   overflowJobs:
     - Assistant
   availableJobs:

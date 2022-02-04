@@ -25,8 +25,6 @@ namespace Content.Server.Headset
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IServerNetManager _netManager = default!;
 
-        public override string Name => "Headset";
-
         private RadioSystem _radioSystem = default!;
 
         [DataField("channels")]

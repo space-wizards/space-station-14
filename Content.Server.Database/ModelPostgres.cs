@@ -8,21 +8,17 @@ namespace Content.Server.Database
 {
     public sealed class PostgresServerDbContext : ServerDbContext
     {
-        // This is used by the "dotnet ef" CLI tool.
-        public PostgresServerDbContext()
-        {
-        }
-
         static PostgresServerDbContext()
         {
             AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         }
 
+        public PostgresServerDbContext(DbContextOptions<PostgresServerDbContext> options) : base(options)
+        {
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            if (!InitializedWithOptions)
-                options.UseNpgsql("dummy connection string");
-
             options.ReplaceService<IRelationalTypeMappingSource, CustomNpgsqlTypeMappingSource>();
 
             ((IDbContextOptionsBuilderInfrastructure) options).AddOrUpdateExtension(new SnakeCaseExtension());
@@ -39,10 +35,6 @@ namespace Content.Server.Database
 #if DEBUG
             options.EnableSensitiveDataLogging();
 #endif
-        }
-
-        public PostgresServerDbContext(DbContextOptions<ServerDbContext> options) : base(options)
-        {
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

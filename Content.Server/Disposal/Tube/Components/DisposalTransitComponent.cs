@@ -11,8 +11,6 @@ namespace Content.Server.Disposal.Tube.Components
     [ComponentReference(typeof(IDisposalTubeComponent))]
     public class DisposalTransitComponent : DisposalTubeComponent
     {
-        public override string Name => "DisposalTransit";
-
         protected override Direction[] ConnectableDirections()
         {
             var rotation = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).LocalRotation;
