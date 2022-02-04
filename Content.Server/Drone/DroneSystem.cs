@@ -89,12 +89,12 @@ namespace Content.Server.Drone
 
                 if (drone.Tools.Count == 0) return;
 
-                if (EntityManager.TryGetComponent<HandsComponent>(uid, out var hands) && hands.Count >= drone.Tools.Count)
+                if (TryComp<HandsComponent>(uid, out var hands) && hands.Count >= drone.Tools.Count)
                 {
                    foreach (var entry in drone.Tools)
                     {
                         var item = EntityManager.SpawnEntity(entry.PrototypeId, spawnCoord);
-                        EntityManager.AddComponent<DroneToolComponent>(item);
+                        AddComp<DroneToolComponent>(item);
                         hands.PutInHand(item);
                         drone.ToolUids.Add(item);
                     }
@@ -109,7 +109,7 @@ namespace Content.Server.Drone
             TryComp<TagComponent>(uid, out var tagComp);
             UpdateDroneAppearance(uid, DroneStatus.Off);
             tagComp?.RemoveTag("DoorBumpOpener");
-            EntityManager.EnsureComponent<GhostTakeoverAvailableComponent>(uid);
+            EnsureComp<GhostTakeoverAvailableComponent>(uid);
         }
 
         private void OnDropAttempt(EntityUid uid, DroneComponent drone, DropAttemptEvent args)

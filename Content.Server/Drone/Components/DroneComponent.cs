@@ -9,7 +9,8 @@ namespace Content.Server.Drone.Components
 {
     [RegisterComponent]
     public sealed class DroneComponent : Component
-    {        [DataField("tools")] public List<EntitySpawnEntry> Tools = new();
+    {
+        [DataField("tools")] public List<EntitySpawnEntry> Tools = new();
         public List<EntityUid> ToolUids = new();
         public bool AlreadyAwoken = false;
     }
