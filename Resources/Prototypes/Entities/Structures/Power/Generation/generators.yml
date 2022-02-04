@@ -1,4 +1,5 @@
 # Base Generator
+
 - type: entity
   abstract: true
   id: BaseGenerator
@@ -203,8 +204,11 @@
   - type: PowerSupplier
     supplyRate: 20000
   - type: Sprite
+    netsync: false
     sprite: Structures/Power/Generation/rtg.rsi
-    state: rtg_damaged
+    layers:
+      - state: rtg_damaged
+      - state: rtg_glow
   - type: RadiationPulse # ideally only when opened.
     range: 2
     decay: false
