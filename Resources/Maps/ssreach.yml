@@ -3118,7 +3118,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 8
-  type: SalternGenerator
+  type: GeneratorPlasma
   components:
   - pos: -13.5,-3.5
     parent: 4
@@ -3182,7 +3182,7 @@ entities:
   - radius: 2.2553093
     type: PointLight
 - uid: 16
-  type: SalternSMES
+  type: SMESBasic
   components:
   - pos: -14.5,-3.5
     parent: 4
@@ -3534,7 +3534,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 55
-  type: SalternGenerator
+  type: GeneratorPlasma
   components:
   - pos: -12.5,-3.5
     parent: 4
@@ -6332,7 +6332,7 @@ entities:
     parent: 4
     type: Transform
 - uid: 456
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: -4.5,2.5
     parent: 4
@@ -6345,7 +6345,7 @@ entities:
     supplyRampPosition: 3464.4934
     type: PowerNetworkBattery
 - uid: 457
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 4.5,-3.5
     parent: 4
@@ -6358,7 +6358,7 @@ entities:
     supplyRampPosition: 3464.4934
     type: PowerNetworkBattery
 - uid: 458
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 13.5,-2.5
     parent: 4
@@ -6371,7 +6371,7 @@ entities:
     supplyRampPosition: 3464.4934
     type: PowerNetworkBattery
 - uid: 459
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 25.5,-2.5
     parent: 4
@@ -6384,7 +6384,7 @@ entities:
     supplyRampPosition: 3464.4934
     type: PowerNetworkBattery
 - uid: 460
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 27.5,2.5
     parent: 4
@@ -7540,7 +7540,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 585
-  type: SalternSubstation
+  type: SubstationBasic
   components:
   - pos: -12.5,-4.5
     parent: 4
@@ -12156,7 +12156,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1135
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 4.5,-8.5
     parent: 4
@@ -13545,7 +13545,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1293
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 13.5,15.5
     parent: 4
@@ -14417,7 +14417,7 @@ entities:
     parent: 4
     type: Transform
 - uid: 1391
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 14.5,-17.5
     parent: 4
@@ -20274,7 +20274,7 @@ entities:
     parent: 4
     type: Transform
 - uid: 1964
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 4.5,11.5
     parent: 4
@@ -21096,7 +21096,7 @@ entities:
   - enabled: False
     type: AmbientSound
 - uid: 2061
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 11.5,9.5
     parent: 4
@@ -21125,7 +21125,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 2064
-  type: SalternSubstation
+  type: SubstationBasic
   components:
   - pos: 3.5,9.5
     parent: 4
@@ -21560,7 +21560,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 2114
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: -8.5,-2.5
     parent: 4

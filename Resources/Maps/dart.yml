@@ -1580,7 +1580,7 @@ entities:
     parent: 17
     type: Transform
 - uid: 89
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 2.5,11.5
     parent: 17
@@ -2644,7 +2644,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 205
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 0.5,-1.5
     parent: 17

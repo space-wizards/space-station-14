@@ -45232,14 +45232,14 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 3914
-  type: GeneratorBasic
+  type: GeneratorPlasma
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 40.5,7.5
     parent: 853
     type: Transform
 - uid: 3915
-  type: GeneratorBasic
+  type: GeneratorPlasma
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 42.5,7.5
