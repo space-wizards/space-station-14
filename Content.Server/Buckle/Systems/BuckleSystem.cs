@@ -94,7 +94,7 @@ namespace Content.Server.Buckle.Systems
                     continue;
                 }
                 buckled.ReAttach(strap);
-                buckled.Dirty();
+                Dirty(buckled);
             }
         }
 

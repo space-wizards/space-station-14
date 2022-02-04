@@ -20,9 +20,6 @@ namespace Content.Server.Arcade.Components
     public class BlockGameArcadeComponent : Component, IActivate
     {
         [Dependency] private readonly IRobustRandom _random = default!;
-
-        public override string Name => "BlockGameArcade";
-
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private bool Powered => _entityManager.TryGetComponent<ApcPowerReceiverComponent>(Owner, out var powerReceiverComponent) && powerReceiverComponent.Powered;

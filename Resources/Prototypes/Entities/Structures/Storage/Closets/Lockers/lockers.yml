@@ -286,7 +286,7 @@
       state_open: warden_open
       state_closed: warden_door
   - type: AccessReader
-    access: [["Security", "Armory"]] # TODO access [["Brig"]]
+    access: [["Brig"]]
 
 # Security Officer
 - type: entity
@@ -312,6 +312,15 @@
   components:
   - type: AccessReader
     access: [["Security"]] # TODO access [["Detective"]]
+
+- type: entity
+  id: LockerEvidence
+  parent: LockerSecurity
+  name: evidence locker
+  description: To store bags of bullet casings and detainee belongings.
+  components:
+  - type: AccessReader
+    access: [["Security"]]
 
 # Syndicate
 - type: entity

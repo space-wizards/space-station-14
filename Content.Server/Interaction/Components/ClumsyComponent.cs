@@ -12,8 +12,6 @@ namespace Content.Server.Interaction.Components
     {
         [Dependency] private readonly IRobustRandom _random = default!;
 
-        public override string Name => "Clumsy";
-
         public bool RollClumsy(float chance)
         {
             return Running && _random.Prob(chance);

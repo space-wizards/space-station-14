@@ -1,24 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Alert;
 using Content.Shared.Buckle.Components;
-using Content.Shared.GameTicking;
-using Content.Shared.Input;
 using Content.Shared.Physics.Pull;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Pulling.Events;
-using Content.Shared.Rotatable;
-using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using Robust.Shared.Players;
 using Robust.Shared.Log;
 
 namespace Content.Shared.Pulling
@@ -26,6 +15,7 @@ namespace Content.Shared.Pulling
     public abstract partial class SharedPullingSystem : EntitySystem
     {
         [Dependency] private readonly ActionBlockerSystem _blocker = default!;
+        [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
 
         public bool CanPull(EntityUid puller, EntityUid pulled)
         {
@@ -54,7 +44,7 @@ namespace Content.Shared.Pulling
                 return false;
             }
 
-            if (!puller.IsInSameOrNoContainer(pulled))
+            if (!_containerSystem.IsInSameOrNoContainer(puller, pulled))
             {
                 return false;
             }

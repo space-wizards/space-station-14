@@ -11,20 +11,8 @@ namespace Content.Server.Database
 {
     public abstract class ServerDbContext : DbContext
     {
-        /// <summary>
-        /// The "dotnet ef" CLI tool uses the parameter-less constructor.
-        /// When that happens we want to supply the <see cref="DbContextOptions"/> via <see cref="DbContext.OnConfiguring"/>.
-        /// To use the context within the application, the options need to be passed the constructor instead.
-        /// </summary>
-        protected readonly bool InitializedWithOptions;
-
-        public ServerDbContext()
+        protected ServerDbContext(DbContextOptions options) : base(options)
         {
-        }
-
-        public ServerDbContext(DbContextOptions<ServerDbContext> options) : base(options)
-        {
-            InitializedWithOptions = true;
         }
 
         public DbSet<Preference> Preference { get; set; } = null!;
@@ -40,6 +28,7 @@ namespace Content.Server.Database
         public DbSet<ServerBan> Ban { get; set; } = default!;
         public DbSet<ServerUnban> Unban { get; set; } = default!;
         public DbSet<ConnectionLog> ConnectionLog { get; set; } = default!;
+        public DbSet<ServerBanHit> ServerBanHit { get; set; } = default!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -346,6 +335,8 @@ namespace Content.Server.Database
         public Guid? BanningAdmin { get; set; }
 
         public ServerUnban? Unban { get; set; }
+
+        public List<ServerBanHit> BanHits { get; set; } = null!;
     }
 
     [Table("server_unban")]
@@ -373,5 +364,27 @@ namespace Content.Server.Database
 
         public IPAddress Address { get; set; } = null!;
         public byte[]? HWId { get; set; }
+
+        public ConnectionDenyReason? Denied { get; set; }
+
+        public List<ServerBanHit> BanHits { get; set; } = null!;
+    }
+
+    public enum ConnectionDenyReason : byte
+    {
+        Ban = 0,
+        Whitelist = 1,
+        Full = 2,
+    }
+
+    public class ServerBanHit
+    {
+        public int Id { get; set; }
+
+        public int BanId { get; set; }
+        public int ConnectionId { get; set; }
+
+        public ServerBan Ban { get; set; } = null!;
+        public ConnectionLog Connection { get; set; } = null!;
     }
 }

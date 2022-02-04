@@ -39,9 +39,6 @@ namespace Content.Shared.Movement.Components
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
-
-        public override string Name => "PlayerInputMover";
-
         private GameTick _lastInputTick;
         private ushort _lastInputSubTick;
         private Vector2 _curTickWalkMovement;

@@ -11,8 +11,6 @@ namespace Content.Server.Tools.Components
     [RegisterComponent, Friend(typeof(ToolSystem))]
     public class ToolComponent : Component
     {
-        public override string Name => "Tool";
-
         [DataField("qualities")]
         public PrototypeFlags<ToolQualityPrototype> Qualities { get; set; } = new();
 

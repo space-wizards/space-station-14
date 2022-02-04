@@ -203,6 +203,16 @@
     access: [["Security"]]
   - type: Wires
     LayoutId: AirlockSecurity
+    
+- type: entity
+  parent: AirlockSecurity
+  id: AirlockBrigLocked
+  suffix: Brig, Locked
+  components:
+  - type: AccessReader
+    access: [["Brig"]]
+  - type: Wires
+    LayoutId: AirlockSecurity
 
 - type: entity
   parent: AirlockSecurity
@@ -334,6 +344,22 @@
   components:
   - type: AccessReader
     access: [["Security"]]
+    
+- type: entity
+  parent: AirlockSecurityGlass
+  id: AirlockBrigGlassLocked
+  suffix: Brig, Locked
+  components:
+  - type: AccessReader
+    access: [["Brig"]]
+  
+- type: entity
+  parent: AirlockEVALocked
+  id: AirlockEVAGlassLocked
+  suffix: EVA, Locked
+  components:
+  - type: AccessReader
+    access: [["External"]]
 
 # Maintenance Hatches
 - type: entity
