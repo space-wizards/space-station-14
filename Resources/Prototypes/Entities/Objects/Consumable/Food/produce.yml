@@ -429,6 +429,13 @@
     sprite: Objects/Specific/Hydroponics/corn.rsi
   - type: Produce
     seed: corn
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Cornoil
+        Quantity: 3
+      - ReagentId: Enzyme
+        Quantity: 2
 
 - type: entity
   name: corn cob
