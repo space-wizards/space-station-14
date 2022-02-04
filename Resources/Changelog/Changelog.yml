@@ -1,26 +1,4 @@
 Entries:
-- author: juliangiebel
-  changes:
-  - {message: Added light switches that turn lights connected to the same apc on and
-      off., type: Add}
-  id: 473
-  time: '2021-10-23T23:23:19.0000000+00:00'
-- author: moony
-  changes:
-  - {message: Placing cables on lattices works again, type: Fix}
-  id: 474
-  time: '2021-10-24T00:32:33.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed ghosts being able interact with objects., type: Fix}
-  id: 475
-  time: '2021-10-24T02:29:38.0000000+00:00'
-- author: Efruit
-  changes:
-  - {message: It is no longer advised to anger the magically-inclined janitorial staff.,
-    type: Tweak}
-  id: 476
-  time: '2021-10-24T02:34:31.0000000+00:00'
 - author: ShadowCommander
   changes:
   - {message: 'The context menu, examining, and activating now works on items inside
@@ -2941,3 +2919,29 @@ Entries:
       juice, salt and capsaicin oil.', type: Add}
   id: 973
   time: '2022-02-04T21:15:10.0000000+00:00'
+- author: Lamrr
+  changes:
+  - {message: 'Fingerless gloves have arrived. Protect your hands, well at least some
+      parts of them.', type: Add}
+  id: 974
+  time: '2022-02-04T21:16:22.0000000+00:00'
+- author: Zyme
+  changes:
+  - {message: The Syndicate now offers a pyjama bundle! You can find it on your nearest
+      uplink., type: Add}
+  id: 975
+  time: '2022-02-04T21:16:31.0000000+00:00'
+- author: Lamrr
+  changes:
+  - {message: Improve your MIDI track rendition five fold through the new digital
+      audio workstation. This end-of-the-line instrument won't be cheap to construct
+      however..., type: Add}
+  - {message: NanoTrasen has updated its research programme to include cutting edge
+      advances in applied musicology., type: Add}
+  id: 976
+  time: '2022-02-04T21:17:09.0000000+00:00'
+- author: Fishfish458
+  changes:
+  - {message: Added handheld crew monitor to research and proto-lathe, type: Add}
+  id: 977
+  time: '2022-02-04T21:17:16.0000000+00:00'
