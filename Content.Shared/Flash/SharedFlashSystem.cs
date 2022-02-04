@@ -20,7 +20,7 @@ namespace Content.Shared.Flash
                 args.Cancelled = true;
         }
 
-        private void OnFlashableGetState(EntityUid uid, SharedFlashableComponent component, ref ComponentGetState args)
+        private static void OnFlashableGetState(EntityUid uid, SharedFlashableComponent component, ref ComponentGetState args)
         {
             args.State = new FlashableComponentState(component.Duration, component.LastFlash);
         }
