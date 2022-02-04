@@ -755,7 +755,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 56
-  type: SalternSMES
+  type: SMESBasic
   components:
   - pos: -2.5,0.5
     parent: 0
