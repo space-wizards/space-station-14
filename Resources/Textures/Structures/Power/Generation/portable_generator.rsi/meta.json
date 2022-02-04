@@ -11,6 +11,12 @@
       "name": "portgen0_0"
     },
     {
+      "name": "portgen1_0",
+    },
+    {
+      "name": "portgen2_0",
+    },
+    {
       "name": "portgen0_1",
       "delays": [
         [
@@ -37,9 +43,6 @@
       ]
     },
     {
-      "name": "portgen1_0",
-    },
-    {
       "name": "portgen1_1",
       "delays": [
         [
@@ -64,9 +67,6 @@
           0.05
         ]
       ]
-    },
-    {
-      "name": "portgen2_0",
     },
     {
       "name": "portgen2_1",
