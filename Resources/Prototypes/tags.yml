@@ -10,6 +10,9 @@
   id: Bee
 
 - type: Tag
+  id: BrassInstrument
+
+- type: Tag
   id: Brutepack
 
 - type: Tag
@@ -175,6 +178,9 @@
   id: Katana
 
 - type: Tag
+  id: KeyedInstrument
+
+- type: Tag
   id: Knife
 
 - type: Tag
@@ -197,6 +203,9 @@
 
 - type: Tag
   id: Ore
+
+- type: Tag
+  id: PercussionInstrument
 
 - type: Tag
   id: Pill
@@ -253,6 +262,9 @@
   id: Spear
 
 - type: Tag
+  id: StringInstrument
+
+- type: Tag
   id: Taser
 
 - type: Tag
@@ -266,6 +278,9 @@
 
 - type: Tag
   id: Wooden # just like our atmos
+
+- type: Tag
+  id: WoodwindInstrument # even more like our atmos
 
 - type: Tag
   id: Wrench

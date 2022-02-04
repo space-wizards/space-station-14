@@ -303,6 +303,20 @@
     - HydroponicsTrayMachineCircuitboard
     - SolarControlComputerCircuitboard
 
+- type: technology
+  name: "applied musicology"
+  id: AppliedMusicology
+  description: Bringing you the latest in audio-audio technology.
+  icon:
+    sprite: Objects/Fun/Instruments/guitar.rsi
+    state: icon
+  requiredPoints: 10000
+  requiredTechnologies:
+    - ElectromagneticTheory
+  unlockedRecipes:
+    - SynthesizerInstrument
+    - DawInstrumentMachineCircuitboard
+
 # Basic Parts Technology Tree
 
 - type: technology
