@@ -5992,7 +5992,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 565
-  type: cargoTelepad
+  type: CargoTelepad
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 21.5,11.5

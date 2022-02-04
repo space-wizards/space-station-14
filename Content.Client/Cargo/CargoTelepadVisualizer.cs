@@ -1,5 +1,8 @@
+using System;
 using Content.Shared.Cargo;
+using Robust.Client.Animations;
 using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
@@ -7,6 +10,22 @@ namespace Content.Client.Cargo;
 
 public class CargoTelepadVisualizer : AppearanceVisualizer
 {
+    private static readonly Animation CargoTelepadAnimation = new()
+    {
+        Length = TimeSpan.FromSeconds(0.5),
+        AnimationTracks =
+        {
+            new AnimationTrackSpriteFlick
+            {
+                LayerKey = CargoTelepadLayers.Base,
+                KeyFrames =
+                {
+                    new AnimationTrackSpriteFlick.KeyFrame(new RSI.StateId("beam"), 0f)
+                }
+            }
+        }
+    };
+
     public override void OnChangeData(AppearanceComponent component)
     {
         base.OnChangeData(component);
@@ -20,15 +39,20 @@ public class CargoTelepadVisualizer : AppearanceVisualizer
         switch (state)
         {
             case CargoTelepadState.Teleporting:
-                // TODO: Play animation for 0.5s
-                sprite.LayerSetState(0, "beam");
+                EntitySystem.Get<AnimationPlayerSystem>().Play(component.Owner, CargoTelepadAnimation, "cargo-telepad");
                 break;
             case CargoTelepadState.Unpowered:
-                sprite.LayerSetState(0, "offline");
+                sprite.LayerSetVisible(CargoTelepadLayers.Beam, false);
                 break;
             default:
-                sprite.LayerSetState(0, "idle");
+                sprite.LayerSetVisible(CargoTelepadLayers.Beam, true);
                 break;
         }
+    }
+
+    private enum CargoTelepadLayers : byte
+    {
+        Base = 0,
+        Beam = 1,
     }
 }

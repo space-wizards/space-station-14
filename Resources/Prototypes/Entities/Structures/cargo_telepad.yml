@@ -1,12 +1,12 @@
 ﻿- type: entity
-  id: cargoTelepad
+  id: CargoTelepad
   parent: BaseStructureDynamic
   name: cargo telepad
   description: 'Temporary cargo delivery for developing Nanotrasen stations! Warning: destroying this while goods are in transit will lose them forever!'
   components:
   - type: InteractionOutline
   - type: Physics
-    bodyType: Static  
+    bodyType: Static
   - type: Transform
     anchored: true
   - type: Fixtures
@@ -18,9 +18,15 @@
       layer:
       - Passable
   - type: Sprite
+    netsync: false
     sprite: Structures/cargo_telepad.rsi
-    state: offline
     drawdepth: FloorObjects
+    layers:
+    - state: offline
+      map: ["enum.CargoTelepadLayers.Base"]
+    - state: idle
+      map: [ "enum.CargoTelepadLayers.Beam" ]
+      shader: unshaded
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -40,3 +46,6 @@
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: CargoTelepad
+  - type: Appearance
+    visuals:
+    - type: CargoTelepadVisualizer

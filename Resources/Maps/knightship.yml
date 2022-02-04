@@ -3394,7 +3394,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 307
-  type: cargoTelepad
+  type: CargoTelepad
   components:
   - pos: 3.5,-1.5
     parent: 0
