@@ -135,6 +135,30 @@
       materialRequirements:
         CableMV: 5
         CableHV: 5
+        
+- type: entity
+  id: GeneratorPlasmaMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: generator (plasma) machine board
+  components:
+    - type: MachineBoard
+      prototype: GeneratorPlasma
+      requirements:
+        Capacitor: 1
+      materialRequirements:
+        CableHV: 5
+        
+- type: entity
+  id: GeneratorUraniumMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: generator (uranium) machine board
+  components:
+    - type: MachineBoard
+      prototype: GeneratorUranium
+      requirements:
+        Capacitor: 2
+      materialRequirements:
+        CableHV: 10
 
 - type: entity
   id: KitchenReagentGrinderMachineCircuitboard #unsure why the reagent grinder has 'kitchen' in the id name when multiple departments use it but that's for another time
