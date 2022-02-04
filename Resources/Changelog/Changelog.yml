@@ -1,9 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Gunpet, type: Add}
-  id: 469
-  time: '2021-10-22T09:14:09.0000000+00:00'
 - author: Seth
   changes:
   - {message: Added Plasma into the cargo console, type: Add}
@@ -2936,3 +2931,9 @@ Entries:
   - {message: Deconstructing crates now requires a screwdriver again., type: Fix}
   id: 969
   time: '2022-02-03T23:43:52.815666+00:00'
+- author: Peptide90
+  changes:
+  - {message: Changed map Reach from 25 players max to 15., type: Tweak}
+  - {message: Changed map Saltern from 20 to 25 max players., type: Tweak}
+  id: 970
+  time: '2022-02-04T13:20:25.0000000+00:00'
