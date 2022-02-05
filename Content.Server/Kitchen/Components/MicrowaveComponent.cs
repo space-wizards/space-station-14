@@ -374,6 +374,7 @@ namespace Content.Server.Kitchen.Components
 
         public void AddTemperature(float time)
         {
+            var solutionContainerSystem = EntitySystem.Get<SolutionContainerSystem>();
             foreach (var entity in _storage.ContainedEntities)
             {
                 if (_entities.TryGetComponent(entity, out TemperatureComponent? temp))
@@ -389,7 +390,7 @@ namespace Content.Server.Kitchen.Components
                         if (solution.Temperature > 373.15)
                             continue;
 
-                        solution.ThermalEnergy += time * 100;
+                        solutionContainerSystem.AddThermalEnergy(entity, solution, time * 100);
                     }
                 }
             }

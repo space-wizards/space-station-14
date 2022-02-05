@@ -48,6 +48,8 @@ public class PowerCellSystem : SharedPowerCellSystem
 
     private void OnMicrowaved(EntityUid uid, BatteryComponent component, BeingMicrowavedEvent args)
     {
+        args.Handled = true;
+
         // What the fuck are you doing???
         Explode(uid, component);
     }
