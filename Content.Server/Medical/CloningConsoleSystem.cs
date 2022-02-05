@@ -147,15 +147,17 @@ namespace Content.Server.Medical
 
         public void TryEject(EntityUid uid, CloningConsoleComponent consoleComponent)
         {
-
+            if (consoleComponent.CloningPod == null)
+                return;
+            EntitySystem.Get<CloningPodSystem>().Eject(consoleComponent.CloningPod);
         }
 
         public void TryClone(EntityUid uid, CloningConsoleComponent consoleComponent)
         {
-             if (consoleComponent.GeneticScanner != null && consoleComponent.GeneticScanner._bodyContainer.ContainedEntity != null)
+             if (consoleComponent.GeneticScanner != null && consoleComponent.GeneticScanner.BodyContainer.ContainedEntity != null)
                 {
                     var cloningPodSystem = EntitySystem.Get<CloningPodSystem>();
-                    if (!TryComp<MindComponent>( consoleComponent.GeneticScanner._bodyContainer.ContainedEntity.Value, out MindComponent? mindComp) || mindComp.Mind == null)
+                    if (!TryComp<MindComponent>( consoleComponent.GeneticScanner.BodyContainer.ContainedEntity.Value, out MindComponent? mindComp) || mindComp.Mind == null)
                     {
                         // obj.Session.AttachedEntity.Value.PopupMessageCursor(Loc.GetString("medical-scanner-component-msg-no-soul"));
                         // break;
@@ -218,7 +220,7 @@ namespace Content.Server.Medical
                 return null;
             }
 
-            var scanBody = consoleComponent.GeneticScanner._bodyContainer.ContainedEntity;
+            var scanBody = consoleComponent.GeneticScanner.BodyContainer.ContainedEntity;
             if (scanBody == null)
             {
                 return null;

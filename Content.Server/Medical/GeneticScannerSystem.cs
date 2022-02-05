@@ -10,13 +10,9 @@ using Content.Shared.GeneticScanner;
 using Content.Server.Climbing;
 using Content.Shared.MobState.Components;
 using Content.Shared.DragDrop;
-using Robust.Shared.Log;
 using Content.Shared.Acts;
 using Content.Server.Power.Components;
-
-
-using Content.Server.Preferences.Managers;
-
+using Robust.Shared.Containers;
 
 using static Content.Shared.GeneticScanner.SharedGeneticScannerComponent;
 
@@ -28,13 +24,12 @@ namespace Content.Server.Medical.GeneticScanner
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly ActionBlockerSystem _blocker = default!;
-        [Dependency] private readonly IServerPreferencesManager _prefsManager = null!;
-
 
         public override void Initialize()
         {
             base.Initialize();
 
+            SubscribeLocalEvent<GeneticScannerComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<GeneticScannerComponent, RelayMovementEntityEvent>(OnRelayMovement);
             SubscribeLocalEvent<GeneticScannerComponent, GetInteractionVerbsEvent>(AddInsertOtherVerb);
             SubscribeLocalEvent<GeneticScannerComponent, GetAlternativeVerbsEvent>(AddAlternativeVerbs);
@@ -42,12 +37,17 @@ namespace Content.Server.Medical.GeneticScanner
             SubscribeLocalEvent<GeneticScannerComponent, DragDropEvent>(HandleDragDropOn);
         }
 
+        private void OnComponentInit(EntityUid uid, GeneticScannerComponent scannerComponent, ComponentInit args)
+        {
+            scannerComponent.BodyContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(scannerComponent.Owner, $"{Name}-bodyContainer");
+        }
+
         private void AddInsertOtherVerb(EntityUid uid, GeneticScannerComponent component, GetInteractionVerbsEvent args)
         {
             if (args.Using == null ||
                 !args.CanAccess ||
                 !args.CanInteract ||
-                component.IsOccupied ||
+                IsOccupied(component) ||
                 !component.CanInsert(args.Using.Value))
                 return;
 
@@ -64,7 +64,7 @@ namespace Content.Server.Medical.GeneticScanner
                 return;
 
             // Eject verb
-            if (component.IsOccupied)
+            if (IsOccupied(component))
             {
                 Verb verb = new();
                 verb.Act = () => EjectBody(uid, component);
@@ -73,12 +73,12 @@ namespace Content.Server.Medical.GeneticScanner
                 args.Verbs.Add(verb);
             }
 
-            if (component._bodyContainer == null) {
-                Logger.Debug("CONTAINER NULL");
+            if (component.BodyContainer == null) {
+                return;
             }
 
             // Self-insert verb
-            if (!component.IsOccupied &&
+            if (!IsOccupied(component) &&
                 component.CanInsert(args.User) &&
                 _actionBlockerSystem.CanMove(args.User))
             {
@@ -111,14 +111,14 @@ namespace Content.Server.Medical.GeneticScanner
 
         private void HandleDragDropOn(EntityUid uid, GeneticScannerComponent scannerComponent, DragDropEvent args)
         {
-            scannerComponent._bodyContainer.Insert(args.Dragged);
+            scannerComponent.BodyContainer.Insert(args.Dragged);
         }
 
         public GeneticScannerStatus GetStatus(GeneticScannerComponent scannerComponent)
         {
             if (IsPowered(scannerComponent))
             {
-                var body = scannerComponent._bodyContainer.ContainedEntity;
+                var body = scannerComponent.BodyContainer.ContainedEntity;
                 if (body == null)
                     return GeneticScannerStatus.Open;
 
@@ -137,6 +137,15 @@ namespace Content.Server.Medical.GeneticScanner
             if (TryComp<ApcPowerReceiverComponent>(scannerComponent.Owner, out var receiver))
             {
                 return receiver.Powered;
+            }
+            return false;
+        }
+
+        public bool IsOccupied(GeneticScannerComponent scannerComponent)
+        {
+            if (scannerComponent.BodyContainer != null)
+            {
+                return scannerComponent.BodyContainer.ContainedEntity != null;
             }
             return false;
         }
@@ -171,15 +180,14 @@ namespace Content.Server.Medical.GeneticScanner
 
         public void InsertBody(EntityUid user, GeneticScannerComponent scannerComponent)
         {
-            // if (TryComp<GeneticScannerEntityStorageComponent>(scannerComponent.Owner, out var storage))
-            scannerComponent._bodyContainer.Insert(user);
+            scannerComponent.BodyContainer.Insert(user);
             UpdateAppearance(scannerComponent.Owner, scannerComponent);
         }
 
         public void EjectBody(EntityUid uid, GeneticScannerComponent scannerComponent)
         {
-            if (scannerComponent._bodyContainer.ContainedEntity is not {Valid: true} contained) return;
-            scannerComponent._bodyContainer.Remove(contained);
+            if (scannerComponent.BodyContainer.ContainedEntity is not {Valid: true} contained) return;
+            scannerComponent.BodyContainer.Remove(contained);
             UpdateAppearance(scannerComponent.Owner, scannerComponent);
             EntitySystem.Get<ClimbSystem>().ForciblySetClimbing(contained);
         }
@@ -188,7 +196,6 @@ namespace Content.Server.Medical.GeneticScanner
         {
             foreach (var comp in EntityManager.EntityQuery<GeneticScannerComponent>())
             {
-                // comp.Update(frameTime);
                 UpdateAppearance(comp.Owner, comp);
             }
         }

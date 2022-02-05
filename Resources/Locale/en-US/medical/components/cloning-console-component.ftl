@@ -16,7 +16,7 @@ cloning-console-window-pod-details-label = Cloning Pod Status
 
 cloning-console-eject-body-button = Eject Body
 cloning-console-neural-interface-label = Neural Interface:
-cloning-console-no-activity-text = Neural Interface: No Activity
+cloning-console-no-mind-activity-text = Neural Interface: No Activity
 cloning-console-mind-present-text = Neural Interface: Consciousness Detected
 
 

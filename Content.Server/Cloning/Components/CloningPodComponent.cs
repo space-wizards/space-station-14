@@ -31,15 +31,5 @@ namespace Content.Server.Cloning.Components
 
         [ViewVariables]
         public CloningPodStatus Status;
-
-        protected override void Initialize()
-        {
-            base.Initialize();
-
-            BodyContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-bodyContainer");
-
-            //TODO: write this so that it checks for a change in power events for GORE POD cases
-            // EntitySystem.Get<CloningSystem>().UpdateUserInterface(this);
-        }
     }
 }

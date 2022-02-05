@@ -98,21 +98,21 @@ namespace Content.Client.CloningConsole.UI
             // }
             // else
 
-            if (_lastUpdate == null || _lastUpdate.CloneHistory.Count != state.CloneHistory.Count)
-            {
-                _historyManager = state.CloneHistory;
+            // if (_lastUpdate == null || _lastUpdate.CloneHistory.Count != state.CloneHistory.Count)
+            // {
+            //     _historyManager = state.CloneHistory;
                 // if (_historyManager == null)
                 // {
                 //     _historyManager = new List<string>();
                 // }
-                BuildHistory();
+            //     BuildHistory();
             // }
-            _lastUpdate = state;
+            // _lastUpdate = state;
 
             CloningProgressBar.MaxValue = state.Maximum;
             UpdateProgress();
 
-            ClonerBrainActivity.Text = Loc.GetString(state.MindPresent ? "ClonerBrain-console-mind-present-text" : "cloning-console-no-activity-text");
+            ClonerBrainActivity.Text = Loc.GetString(state.MindPresent ? "cloning-console-mind-present-text" : "cloning-console-no-mind-activity-text");
             ClonerBrainActivity.FontColorOverride = state.MindPresent ? Color.LimeGreen : Color.Red;
             if (state.ScannerBodyInfo != null)
             {
@@ -148,7 +148,7 @@ namespace Content.Client.CloningConsole.UI
             // SetSize = (250, 200);
         }
 
-        [DebuggerDisplay("cloningbutton {" + nameof(Index) + "}")]
+        [DebuggerDisplay("cloninghistory {" + nameof(Index) + "}")]
         private class HistoryRow : Control
         {
             public string CloneName { get; set; } = default!;

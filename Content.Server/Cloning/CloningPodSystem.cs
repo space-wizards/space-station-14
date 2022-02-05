@@ -15,6 +15,7 @@ using Robust.Shared.Log;
 using Robust.Server.Player;
 using Robust.Shared.Prototypes;
 using Content.Server.EUI;
+using Robust.Shared.Containers;
 
 
 using static Content.Shared.Cloning.SharedCloningPodComponent;
@@ -30,7 +31,17 @@ namespace Content.Server.Cloning
 
         public readonly Dictionary<Mind.Mind, EntityUid> ClonesWaitingForMind = new();
 
+        public override void Initialize()
+        {
+            base.Initialize();
 
+            SubscribeLocalEvent<CloningPodComponent, ComponentInit>(OnComponentInit);
+        }
+
+        private void OnComponentInit(EntityUid uid, CloningPodComponent clonePod, ComponentInit args)
+        {
+            clonePod.BodyContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(clonePod.Owner, $"{Name}-bodyContainer");
+        }
 
         private void UpdateAppearance(CloningPodComponent clonePod)
         {
@@ -109,7 +120,7 @@ namespace Content.Server.Cloning
             cloneMindReturn.Parent = clonePod.Owner;
             clonePod.BodyContainer.Insert(mob);
             clonePod.CapturedMind = mind;
-            ClonesWaitingForMind.Add(mind, mob);
+            EntitySystem.Get<CloningSystem>().ClonesWaitingForMind.Add(mind, mob);
             UpdateStatus(CloningPodStatus.NoMind, clonePod);
             var acceptMessage = new AcceptCloningEui(mind);
             _euiManager.OpenEui(acceptMessage, client);

@@ -11,6 +11,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
+using Content.Server.Climbing;
 using static Content.Shared.Cloning.SharedCloningPodComponent;
 
 namespace Content.Server.Cloning
@@ -35,7 +36,7 @@ namespace Content.Server.Cloning
         {
             if (!ClonesWaitingForMind.TryGetValue(mind, out var entity) ||
                 !EntityManager.EntityExists(entity) ||
-                !EntityManager.TryGetComponent(entity, out MindComponent? mindComp) ||
+                !TryComp<MindComponent>(entity, out MindComponent? mindComp) ||
                 mindComp.Mind != null)
                 return;
 
@@ -54,8 +55,7 @@ namespace Content.Server.Cloning
                 EntityManager.RemoveComponent<BeingClonedComponent>(component.Owner);
                 return;
             }
-
-            // cloningPodComponent.UpdateStatus(CloningPodStatus.Cloning);
+            EntitySystem.Get<CloningPodSystem>().UpdateStatus(CloningPodStatus.Cloning, cloningPodComponent);
         }
 
         public override void Update(float frameTime)
@@ -94,8 +94,8 @@ namespace Content.Server.Cloning
             clonePod.BodyContainer.Remove(entity);
             clonePod.CapturedMind = null;
             clonePod.CloningProgress = 0f;
-            // UpdateStatus(CloningPodStatus.Idle);
-            // EntitySystem.Get<ClimbSystem>().ForciblySetClimbing(entity);
+            EntitySystem.Get<CloningPodSystem>().UpdateStatus(CloningPodStatus.Idle, clonePod);
+            EntitySystem.Get<ClimbSystem>().ForciblySetClimbing(entity);
         }
         // public void UpdateUserInterface(CloningPodComponent comp)
         // {
