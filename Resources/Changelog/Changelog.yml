@@ -1,9 +1,4 @@
 Entries:
-- author: Seth
-  changes:
-  - {message: Added Reinforced Plasma Windows, type: Add}
-  id: 480
-  time: '2021-10-24T12:46:38.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Pipes look 90% less jank on rotated shuttles., type: Fix}
@@ -2948,3 +2943,8 @@ Entries:
     type: Tweak}
   id: 980
   time: '2022-02-04T23:17:11.0000000+00:00'
+- author: Lamrr
+  changes:
+  - {message: 'The digital audio workstaiton [sic] has been relabelled.', type: Fix}
+  id: 981
+  time: '2022-02-05T01:23:43.0000000+00:00'
