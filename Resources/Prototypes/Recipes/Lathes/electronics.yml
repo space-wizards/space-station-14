@@ -159,3 +159,12 @@
   materials:
      Steel: 100
      Plastic: 100
+
+- type: latheRecipe
+  id: DawInstrumentMachineCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: DawInstrumentMachineCircuitboard
+  completetime: 1000
+  materials:
+     Steel: 100
+     Plastic: 100
