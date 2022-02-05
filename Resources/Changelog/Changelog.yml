@@ -1,10 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: 'RCDs work on space again, if close to an existing non-space tile',
-    type: Fix}
-  id: 482
-  time: '2021-10-25T03:33:50.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Station will now start with a random rotation., type: Tweak}
@@ -2953,3 +2947,9 @@ Entries:
       5u is how wet floors work. But hey, that''s what evaporation is for!', type: Tweak}
   id: 982
   time: '2022-02-05T02:26:11.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'You should now be able to un-anchor things like disposal units, instead
+      of just discarding your wrench.', type: Tweak}
+  id: 983
+  time: '2022-02-05T02:39:02.0000000+00:00'
