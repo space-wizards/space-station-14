@@ -369,7 +369,7 @@ namespace Content.Server.Kitchen.Components
             {
                 if (_entities.TryGetComponent(entity, out TemperatureComponent? temp))
                 {
-                    EntitySystem.Get<TemperatureSystem>().ChangeHeat(entity, time * 10, false, temp);
+                    EntitySystem.Get<TemperatureSystem>().ChangeHeat(entity, time * 100, false, temp);
                 }
 
                 if (_entities.TryGetComponent(entity, out SolutionContainerManagerComponent? solutions))
@@ -380,7 +380,7 @@ namespace Content.Server.Kitchen.Components
                         if (solution.Temperature > 373.15)
                             continue;
 
-                        solution.ThermalEnergy += time * 10;
+                        solution.ThermalEnergy += time * 100;
                     }
                 }
             }
