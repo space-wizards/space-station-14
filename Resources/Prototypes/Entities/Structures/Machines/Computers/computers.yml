@@ -336,6 +336,7 @@
       - LivestockCow
       - LivestockChicken
       - LivestockDuck
+      - LivestockGoat
       - FoodPizza
       - ServiceJanitorial
       - ServiceLightsReplacement

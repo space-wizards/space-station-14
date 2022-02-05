@@ -646,3 +646,36 @@
     sprite: Clothing/Uniforms/Jumpsuit/lawyerpurple.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/lawyerpurple.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitPyjamaSyndicateBlack
+  name: black syndicate pyjamas
+  description: For those long nights in perma.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/pyjamasyndicateblack.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/pyjamasyndicateblack.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitPyjamaSyndicatePink
+  name: pink syndicate pyjamas
+  description: For those long nights in perma.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/pyjamasyndicatepink.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/pyjamasyndicatepink.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitPyjamaSyndicateRed
+  name: red syndicate pyjamas
+  description: For those long nights in perma.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/pyjamasyndicatered.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/pyjamasyndicatered.rsi

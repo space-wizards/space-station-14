@@ -13,8 +13,6 @@ namespace Content.Client.Damage
     [RegisterComponent]
     public class DamageVisualizerDataComponent : Component
     {
-        public override string Name => "DamageVisualizerData";
-
         public List<object> TargetLayerMapKeys = new();
         public bool Disabled = false;
         public bool Valid = true;

@@ -235,7 +235,7 @@ namespace Content.Client.Entry
             "LightReplacer",
             "SecretStash",
             "Toilet",
-            "ClusterFlash",
+            "ClusterGrenade",
             "Repairable",
             "SolutionTransfer",
             "Evaporation",

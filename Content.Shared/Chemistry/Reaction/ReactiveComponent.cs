@@ -10,8 +10,6 @@ namespace Content.Shared.Chemistry.Reaction;
 [RegisterComponent]
 public class ReactiveComponent : Component
 {
-    public override string Name => "Reactive";
-
     /// <summary>
     ///     A dictionary of reactive groups -> methods that work on them.
     /// </summary>

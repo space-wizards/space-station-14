@@ -61,3 +61,15 @@
         Piercing: -5
   - type: Stack
     stackType: Gauze
+
+- type: entity
+  name: aloe cream
+  description: A topical cream for burns.
+  parent: Ointment ##Yes it's a direct reskin
+  id: AloeCream
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Specific/Hydroponics/aloe.rsi
+    state: cream
+

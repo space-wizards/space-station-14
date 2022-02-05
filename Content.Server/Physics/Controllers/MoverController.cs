@@ -49,10 +49,10 @@ namespace Content.Server.Physics.Controllers
             base.UpdateBeforeSolve(prediction, frameTime);
             _excludedMobs.Clear();
 
-            foreach (var (mobMover, mover, physics) in EntityManager.EntityQuery<IMobMoverComponent, IMoverComponent, PhysicsComponent>())
+            foreach (var (mobMover, mover, physics, xform) in EntityManager.EntityQuery<IMobMoverComponent, IMoverComponent, PhysicsComponent, TransformComponent>())
             {
                 _excludedMobs.Add(mover.Owner);
-                HandleMobMovement(mover, physics, mobMover);
+                HandleMobMovement(mover, physics, mobMover, xform);
             }
 
             HandleShuttleMovement(frameTime);

@@ -22,11 +22,10 @@ namespace Content.Server.AI.Utility.AiLogic
 {
     // TODO: Need to split out the IMover stuff for NPC to a generic one that can be used for hoomans as well.
     [RegisterComponent]
+    [ComponentProtoName("UtilityAI")]
     [ComponentReference(typeof(AiControllerComponent)), ComponentReference(typeof(IMoverComponent))]
     public sealed class UtilityAi : AiControllerComponent, ISerializationHooks
     {
-        public override string Name => "UtilityAI";
-
         // TODO: Look at having ParallelOperators (probably no more than that as then you'd have a full-blown BT)
         // Also RepeatOperators (e.g. if we're following an entity keep repeating MoveToEntity)
         private AiActionSystem _planner = default!;

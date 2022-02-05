@@ -12,8 +12,6 @@ namespace Content.Server.Power.Components
     public class ExaminableBatteryComponent : Component, IExamine
 #pragma warning restore 618
     {
-        public override string Name => "ExaminableBattery";
-
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)

@@ -6,7 +6,6 @@ namespace Content.Shared.Communications
 {
     public class SharedCommunicationsConsoleComponent : Component
     {
-        public override string Name => "CommunicationsConsole";
     }
 
     [Serializable, NetSerializable]
