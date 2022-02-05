@@ -71,7 +71,7 @@ namespace Content.Server.Nutrition.EntitySystems
         /// </summary>
         private void OnFeedFood(EntityUid uid, FoodComponent foodComponent, AfterInteractEvent args)
         {
-            if (args.Handled || args.Target == null)
+            if (args.Handled || args.Target == null || !args.CanReach)
                 return;
 
             args.Handled = TryFeed(args.User, args.Target.Value, foodComponent);
@@ -80,9 +80,6 @@ namespace Content.Server.Nutrition.EntitySystems
         public bool TryFeed(EntityUid user, EntityUid target, FoodComponent food)
         {
             if (!_actionBlockerSystem.CanInteract(user) || !_actionBlockerSystem.CanUse(user))
-                return false;
-
-            if (!user.InRangeUnobstructed(user, popup: true))
                 return false;
 
             // if currently being used to feed, cancel that action.

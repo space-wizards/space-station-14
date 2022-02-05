@@ -111,21 +111,9 @@ namespace Content.Server.Nutrition.EntitySystems
             if (args.Handled || args.Target == null || !args.CanReach)
                 return;
 
-            // CanInteract already checked
+            // CanInteract already checked CanInteract
             if (!_actionBlockerSystem.CanUse(args.User))
                 return;
-
-            if (!args.User.InRangeUnobstructed(uid, popup: true))
-            {
-                args.Handled = true;
-                return;
-            }
-
-            if (!args.User.InRangeUnobstructed(args.Target.Value, popup: true))
-            {
-                args.Handled = true;
-                return;
-            }
 
             args.Handled = TryDrink(args.User, args.Target.Value, component);
         }
@@ -237,6 +225,9 @@ namespace Content.Server.Nutrition.EntitySystems
             }
 
             if (_foodSystem.IsMouthBlocked(target, user))
+                return true;
+
+            if (!user.InRangeUnobstructed(drink.Owner, popup: true))
                 return true;
 
             var forceDrink = user != target;
