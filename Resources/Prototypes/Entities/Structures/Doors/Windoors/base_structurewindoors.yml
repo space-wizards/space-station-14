@@ -73,9 +73,6 @@
   - type: Door
     canCrush: false
     weldable: false
-    crushDamage:
-      types:
-        Blunt: 10
     openSound:
       path: /Audio/Machines/windoor_open.ogg
     closeSound:
