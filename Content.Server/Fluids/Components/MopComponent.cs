@@ -103,13 +103,12 @@ namespace Content.Server.Fluids.Components
             var solutionSystem = EntitySystem.Get<SolutionContainerSystem>();
             var spillableSystem = EntitySystem.Get<SpillableSystem>();
 
-            if (!solutionSystem.TryGetSolution(Owner, SolutionName, out var contents ) ||
-                Mopping ||
-                !eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
+            if (!eventArgs.CanReach ||
+                !solutionSystem.TryGetSolution(Owner, SolutionName, out var contents ) ||
+                Mopping)
             {
                 return false;
             }
-
 
             if (eventArgs.Target is not {Valid: true} target)
             {
