@@ -24,6 +24,9 @@
     size: 3
     compatibility: Biological ##Does this do anything? Revisit when surgery is in
     symmetry: Left
+  - type: Tag
+    tags:
+    - Trash
 
 - type: entity
   id: RightHandDrone
@@ -42,3 +45,6 @@
     size: 3
     compatibility: Biological
     symmetry: Right
+  - type: Tag
+    tags:
+    - Trash
