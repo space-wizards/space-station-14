@@ -404,8 +404,6 @@ namespace Content.Server.Kitchen.Components
 
         private void SubtractContents(FoodRecipePrototype recipe)
         {
-            var solutionUid = Owner;
-
             var totalReagentsToRemove = new Dictionary<string, FixedPoint2>(recipe.IngredientsReagents);
             var solutionContainerSystem = EntitySystem.Get<SolutionContainerSystem>();
 
