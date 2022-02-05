@@ -263,7 +263,15 @@ namespace Content.Server.Kitchen.Components
             var reagentDict = new Dictionary<string, FixedPoint2>();
             foreach (var item in _storage.ContainedEntities)
             {
-                if (item.HasTag("MicrowaveMachineUnsafe"))
+                // special behavior when being microwaved ;)
+                var ev = new BeingMicrowavedEvent(Owner);
+                _entities.EventBus.RaiseLocalEvent(item, ev, false);
+
+                if (ev.Handled)
+                    return;
+
+                if (item.HasTag("MicrowaveMachineUnsafe")
+                    || item.HasTag("Plastic"))
                 {
                     // destroy microwave
                     _broken = true;
@@ -272,7 +280,8 @@ namespace Content.Server.Kitchen.Components
                     return;
                 }
 
-                if (item.HasTag("MicrowaveSelfUnsafe"))
+                if (item.HasTag("MicrowaveSelfUnsafe")
+                    || item.HasTag("Plastic"))
                 {
                     _entities.SpawnEntity(_badRecipeName,
                         _entities.GetComponent<TransformComponent>(Owner).Coordinates);
@@ -546,6 +555,16 @@ namespace Content.Server.Kitchen.Components
             _uiDirty = true;
             Wzhzhzh();
             return SuicideKind.Heat;
+        }
+    }
+
+    public class BeingMicrowavedEvent : HandledEntityEventArgs
+    {
+        public EntityUid Microwave;
+
+        public BeingMicrowavedEvent(EntityUid microwave)
+        {
+            Microwave = microwave;
         }
     }
 }

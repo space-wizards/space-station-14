@@ -190,6 +190,9 @@
   id: Matchstick
 
 - type: Tag
+  id: Metal
+
+- type: Tag
   id: MicrowaveMachineUnsafe
 
 - type: Tag
@@ -212,6 +215,9 @@
 
 - type: Tag
   id: PercussionInstrument
+
+- type: Tag
+  id: Plastic
 
 - type: Tag
   id: Pill
