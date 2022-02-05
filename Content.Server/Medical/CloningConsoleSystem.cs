@@ -30,7 +30,10 @@ using Robust.Shared.Localization;
 using Robust.Shared.Network;
 using Robust.Shared.ViewVariables;
 using Robust.Shared.Log;
+using System.Collections.Generic;
+using Content.Shared.Cloning;
 
+using static Content.Shared.Cloning.SharedCloningPodComponent;
 using static Content.Shared.CloningConsole.SharedCloningConsoleComponent;
 
 namespace Content.Server.Medical
@@ -51,6 +54,7 @@ namespace Content.Server.Medical
         {
             base.Initialize();
 
+            SubscribeLocalEvent<CloningConsoleComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<CloningConsoleComponent, ActivateInWorldEvent>(HandleActivateInWorld);
             SubscribeLocalEvent<CloningConsoleComponent, UiButtonPressedMessage>(OnButtonPressed);
         }
@@ -58,6 +62,8 @@ namespace Content.Server.Medical
         private void OnComponentInit(EntityUid uid, CloningConsoleComponent comp, ComponentInit args)
         {
             var newState = GetUserInterfaceState(comp);
+            if (newState == null)
+                return;
             comp.UserInterface?.SetState(newState);
             UpdateUserInterface(comp);
         }
@@ -118,18 +124,13 @@ namespace Content.Server.Medical
             }
 
             var newState = GetUserInterfaceState(consoleComponent);
+            if (newState == null)
+                return;
             consoleComponent.UserInterface?.SetState(newState);
         }
 
 
-        private static readonly CloningConsoleBoundUserInterfaceState EmptyUIState =
-            new(
-                null,
-                null,
-                false);
-
-
-        public void OnButtonPressed(EntityUid uid, CloningConsoleComponent consoleComponent, UiButtonPressedMessage args)
+        private void OnButtonPressed(EntityUid uid, CloningConsoleComponent consoleComponent, UiButtonPressedMessage args)
         {
             if (!IsPowered(consoleComponent))
                 return;
@@ -153,7 +154,7 @@ namespace Content.Server.Medical
         {
              if (consoleComponent.GeneticScanner != null && consoleComponent.GeneticScanner._bodyContainer.ContainedEntity != null)
                 {
-                    var cloningSystem = EntitySystem.Get<CloningSystem>();
+                    var cloningPodSystem = EntitySystem.Get<CloningPodSystem>();
                     if (!TryComp<MindComponent>( consoleComponent.GeneticScanner._bodyContainer.ContainedEntity.Value, out MindComponent? mindComp) || mindComp.Mind == null)
                     {
                         // obj.Session.AttachedEntity.Value.PopupMessageCursor(Loc.GetString("medical-scanner-component-msg-no-soul"));
@@ -161,59 +162,132 @@ namespace Content.Server.Medical
                         return;
                     }
                     // Null suppression based on above check. Yes, it's explicitly needed
-                    // var mind = mindComp.Mind!;
+                    var mind = mindComp.Mind!;
+
                     // We need the HumanoidCharacterProfile
                     // TODO: Move this further 'outwards' into a DNAComponent or somesuch.
                     // Ideally this ends with GameTicker & CloningSystem handing DNA to a function that sets up a body for that DNA.
-                    // var mindUser = mind.UserId;
-                    // if (mindUser.HasValue == false || mind.Session == null)
-                    // {
-                    //     // For now assume this means soul departed
-                    //     obj.Session.AttachedEntity.Value.PopupMessageCursor(Loc.GetString("medical-scanner-component-msg-soul-broken"));
-                    //     break;
-                    // }
-                    // var profile = GetPlayerProfileAsync(mindUser.Value);
-                    // cloningSystem.AddToDnaScans(new ClonerDNAEntry(mind, profile));
-                    if (consoleComponent.CloningPod != null && consoleComponent.GeneticScanner != null)
-                    {
-                        var mind = mindComp.Mind!;
-                        var mindUser = mind.UserId;
+                    var mindUser = mind.UserId;
                     if (mindUser.HasValue == false || mind.Session == null)
                     {
                         // For now assume this means soul departed
                         // obj.Session.AttachedEntity.Value.PopupMessageCursor(Loc.GetString("medical-scanner-component-msg-soul-broken"));
                         return;
                     }
-                    var profile = GetPlayerProfileAsync(mindUser.Value);
-                        consoleComponent.CloningPod.StartCloning(mind, profile);
+                    // var profile = GetPlayerProfileAsync(mindUser.Value);
+                    // cloningSystem.AddToDnaScans(new ClonerDNAEntry(mind, profile));
+                    if (consoleComponent.CloningPod != null && consoleComponent.GeneticScanner != null)
+                    {
+                        // var mind = mindComp.Mind!;
+                        // var mindUser = mind.UserId;
+                        if (mindUser.HasValue == false || mind.Session == null)
+                        {
+                            // For now assume this means soul departed
+                            // obj.Session.AttachedEntity.Value.PopupMessageCursor(Loc.GetString("medical-scanner-component-msg-soul-broken"));
+                            return;
+                        }
+                        var profile = GetPlayerProfileAsync(mindUser.Value);
+
+                            cloningPodSystem.TryCloning(mind, profile, consoleComponent.CloningPod);
                     }
                 }
         }
-        public CloningConsoleBoundUserInterfaceState GetUserInterfaceState(CloningConsoleComponent consoleComponent)
+        public CloningConsoleBoundUserInterfaceState? GetUserInterfaceState(CloningConsoleComponent consoleComponent)
         {
+
+            // CloningConsoleBoundUserInterfaceState EmptyUIState =
+            // new(
+            //     null,
+            //     null,
+            //     null,
+            //     null,
+            //     null,
+            //     null,
+            //     null,
+            //     null,
+            //     null
+            //     );
+
             FindScanner(consoleComponent.Owner, consoleComponent);
 
             if (consoleComponent.GeneticScanner == null) {
-                return EmptyUIState;
+                return null;
+            }
+            if (consoleComponent.CloningPod == null)
+            {
+                return null;
             }
 
-            var body = consoleComponent.GeneticScanner._bodyContainer.ContainedEntity;
-            if (body == null)
+            var scanBody = consoleComponent.GeneticScanner._bodyContainer.ContainedEntity;
+            if (scanBody == null)
             {
-                return EmptyUIState;
+                return null;
             }
 
-            if (!TryComp<DamageableComponent>(body.Value, out var damageable))
+            var cloneBody = consoleComponent.CloningPod.BodyContainer.ContainedEntity;
+            if (scanBody == null)
             {
-                return EmptyUIState;
+                return null;
             }
+            if (!TryComp<DamageableComponent>(scanBody.Value, out var damageable))
+            {
+                return null;
+            }
+
+            var isAlive = false;
+            if (TryComp<MobStateComponent>(scanBody, out MobStateComponent? mobState))
+            {
+                isAlive = mobState.IsAlive();
+            }
+
+            var scanBodyInfo = "Unknown";
+            if (TryComp<MetaDataComponent>(scanBody, out var scanMetaData))
+            {
+                scanBodyInfo = scanMetaData.EntityName;
+            }
+
+            var cloneBodyInfo = "Unknown";
+            if (TryComp<MetaDataComponent>(scanBody, out var cloneMetaData))
+            {
+                scanBodyInfo = cloneMetaData.EntityName;
+            }
+
+            // CHECK IF ALIVE/CLONING IN PROGRESS/ IS CLONING RETURN INFO
             var cloningSystem = EntitySystem.Get<CloningSystem>();
+
+                // MindIdName = mindIdName;
+                // ReferenceTime = refTime;
+                // Progress = progress;
+                // Maximum = maximum;
+                // Progressing = progressing;
+                // MindPresent = mindPresent;
+
+            bool? scannerIsAlive = isAlive;
+            string? scannerBodyInfo = scanBodyInfo;
+            string? cloningBodyInfo = cloneBodyInfo;
+            List<string> cloneHistory = consoleComponent.CloningHistory;
+            Logger.Debug(_gameTiming.CurFrame.ToString());
+            TimeSpan referenceTime = _gameTiming.CurTime;
+            float progress = consoleComponent.CloningPod.CloningProgress;
+            float maximum = consoleComponent.CloningPod.CloningTime;
+            bool progressing = consoleComponent.CloningPod.UiKnownPowerState && (consoleComponent.CloningPod.BodyContainer.ContainedEntity != null);
+            bool mindPresent = consoleComponent.CloningPod.Status == CloningPodStatus.Cloning;
 
             // var scanned = TryComp<MindComponent>(body.Value, out var mindComponent) &&
             //              mindComponent.Mind != null &&
             //              cloningSystem.HasDnaScan(mindComponent.Mind);
 
-            return new CloningConsoleBoundUserInterfaceState(body, damageable, false);
+            return new CloningConsoleBoundUserInterfaceState(
+                scannerIsAlive,
+                scannerBodyInfo,
+                cloningBodyInfo,
+                cloneHistory,
+                referenceTime,
+                progress,
+                maximum,
+                progressing,
+                mindPresent
+                );
         }
 
 

@@ -23,6 +23,7 @@ using Robust.Shared.ViewVariables;
 using Robust.Shared.Log;
 using Content.Server.Medical.GeneticScanner;
 using Content.Server.Cloning.Components;
+using System.Collections.Generic;
 
 namespace Content.Server.Medical.Components
 {
@@ -35,9 +36,8 @@ namespace Content.Server.Medical.Components
 
         [ViewVariables]
         public BoundUserInterface? UserInterface => Owner.GetUIOrNull(CloningConsoleUiKey.Key);
-
         public GeneticScannerComponent? GeneticScanner = null;
-
         public CloningPodComponent? CloningPod = null;
+        public List<String> CloningHistory = default!;
     }
 }

@@ -55,7 +55,7 @@ namespace Content.Server.Cloning
                 return;
             }
 
-            cloningPodComponent.UpdateStatus(CloningPodStatus.Cloning);
+            // cloningPodComponent.UpdateStatus(CloningPodStatus.Cloning);
         }
 
         public override void Update(float frameTime)
@@ -80,11 +80,23 @@ namespace Content.Server.Cloning
 
                 if (cloning.CapturedMind?.Session?.AttachedEntity == cloning.BodyContainer.ContainedEntity)
                 {
-                    cloning.Eject();
+                    Eject(cloning);
                 }
             }
         }
 
+        public void Eject(CloningPodComponent clonePod)
+        {
+            if (clonePod.BodyContainer.ContainedEntity is not {Valid: true} entity || clonePod.CloningProgress < clonePod.CloningTime)
+                return;
+
+            EntityManager.RemoveComponent<BeingClonedComponent>(entity);
+            clonePod.BodyContainer.Remove(entity);
+            clonePod.CapturedMind = null;
+            clonePod.CloningProgress = 0f;
+            // UpdateStatus(CloningPodStatus.Idle);
+            // EntitySystem.Get<ClimbSystem>().ForciblySetClimbing(entity);
+        }
         // public void UpdateUserInterface(CloningPodComponent comp)
         // {
         //     var idToUser = GetIdToUser();

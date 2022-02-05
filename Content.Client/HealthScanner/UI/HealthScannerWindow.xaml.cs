@@ -25,17 +25,14 @@ namespace Content.Client.HealthScanner.UI
         {
             var text = new StringBuilder();
 
-            var entities = IoCManager.Resolve<IEntityManager>();
-            if (!state.Entity.HasValue ||
-                !state.HasDamage() ||
-                !entities.EntityExists(state.Entity.Value))
+            if (state.TargetName == null || state.IsAlive == null)
             {
                 Diagnostics.Text = Loc.GetString("medical-scanner-window-no-patient-data-text");
                 SetSize = (250, 100);
             }
             else
             {
-                text.Append($"{Loc.GetString("medical-scanner-window-entity-health-text", ("entityName", entities.GetComponent<MetaDataComponent>(state.Entity.Value).EntityName))}\n");
+                text.Append($"{Loc.GetString("medical-scanner-window-entity-health-text", ("entityName", state.TargetName))}\n");
 
                 var totalDamage = state.DamagePerType.Values.Sum();
 
@@ -59,9 +56,6 @@ namespace Content.Client.HealthScanner.UI
                             {
                                 shownTypes.Add(type);
                                 text.Append($"\n- {Loc.GetString("medical-scanner-window-damage-type-text", ("damageType", type), ("amount", typeAmount))}");
-                            }
-                            else {
-                                text.Append($"\n- {Loc.GetString("medical-scanner-window-damage-type-duplicate-text", ("damageType", type), ("amount", typeAmount))}");
                             }
                         }
                     }

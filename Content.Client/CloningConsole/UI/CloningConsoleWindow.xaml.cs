@@ -10,6 +10,22 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Log;
+using Content.Client.Message;
+using Content.Client.Resources;
+using Content.Client.Stylesheets;
+using Content.Shared.Atmos.Components;
+using Robust.Client.Graphics;
+using Robust.Client.ResourceManagement;
+using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.Controls;
+using System;
+using System.Diagnostics;
+using Robust.Shared.Maths;
+using Robust.Shared.Timing;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
+
+
+
 using static Content.Shared.CloningConsole.SharedCloningConsoleComponent;
 
 namespace Content.Client.CloningConsole.UI
@@ -20,64 +36,150 @@ namespace Content.Client.CloningConsole.UI
         public CloningConsoleWindow()
         {
             RobustXamlLoader.Load(this);
+
+        }
+        private CloningConsoleBoundUserInterfaceState? _lastUpdate;
+        private List<string> _historyManager = default!;
+
+        protected override void FrameUpdate(FrameEventArgs args)
+        {
+            base.FrameUpdate(args);
+            UpdateProgress();
+        }
+
+        private void UpdateProgress()
+        {
+            if (_lastUpdate == null)
+                return;
+            float simulatedProgress = _lastUpdate.Progress;
+            if (_lastUpdate.Progressing)
+            {
+                TimeSpan sinceReference = IoCManager.Resolve<IGameTiming>().CurTime - _lastUpdate.ReferenceTime;
+                simulatedProgress += (float) sinceReference.TotalSeconds;
+                simulatedProgress = MathHelper.Clamp(simulatedProgress, 0f, _lastUpdate.Maximum);
+            }
+            var percentage = simulatedProgress / CloningProgressBar.MaxValue * 100;
+            ProgressLabel.Text = $"{percentage:0}%";
+            CloningProgressBar.Value = simulatedProgress;
+        }
+
+        private void BuildHistory()
+        {
+            HistoryList.RemoveAllChildren();
+
+            foreach (var historyItem in _historyManager)
+            {
+                var historyRowItem = new HistoryRow
+                {
+                  CloneName = historyItem
+                };
+                historyRowItem.EntityLabel.Text = historyItem;
+
+                HistoryList.AddChild(historyRowItem);
+            }
+
+            //TODO: set up sort
+            //_filteredScans.Sort((a, b) => string.Compare(a.ToString(), b.ToString(), StringComparison.Ordinal));
         }
 
         public void Populate(CloningConsoleBoundUserInterfaceState state)
         {
-            var text = new StringBuilder();
-
+            // var text = new StringBuilder();
+            Logger.Debug("RUNNING FUCKING POPULATE");
             var entities = IoCManager.Resolve<IEntityManager>();
 
-            if (!state.Entity.HasValue ||
-                !state.HasDamage() ||
-                !entities.EntityExists(state.Entity.Value))
-            {
+            // if (!state.Entity.HasValue ||
+            //     !state.HasDamage() ||
+            //     !entities.EntityExists(state.Entity.Value))
+            // {
                 // Diagnostics.Text = Loc.GetString("medical-scanner-window-no-patient-data-text");
                 // ScanButton.Disabled = true;
-                SetSize = (250, 100);
-            }
-            else
+                // SetSize = (250, 100);
+            // }
+            // else
+
+            if (_lastUpdate == null || _lastUpdate.CloneHistory.Count != state.CloneHistory.Count)
             {
-                 Logger.Debug($"{entities.GetComponent<MetaDataComponent>(state.Entity.Value).EntityName}");
-                text.Append($"{Loc.GetString("medical-scanner-window-entity-health-text", ("entityName", entities.GetComponent<MetaDataComponent>(state.Entity.Value).EntityName))}\n");
+                _historyManager = state.CloneHistory;
+                // if (_historyManager == null)
+                // {
+                //     _historyManager = new List<string>();
+                // }
+                BuildHistory();
+            // }
+            _lastUpdate = state;
 
-                var totalDamage = state.DamagePerType.Values.Sum();
+            CloningProgressBar.MaxValue = state.Maximum;
+            UpdateProgress();
 
-                text.Append($"{Loc.GetString("medical-scanner-window-entity-damage-total-text", ("amount", totalDamage))}\n");
+            ClonerBrainActivity.Text = Loc.GetString(state.MindPresent ? "ClonerBrain-console-mind-present-text" : "cloning-console-no-activity-text");
+            ClonerBrainActivity.FontColorOverride = state.MindPresent ? Color.LimeGreen : Color.Red;
+            if (state.ScannerBodyInfo != null)
+            {
+                ScannerInfoLabel.SetMarkup(Loc.GetString("cloning-console-window-scanner-id",
+                ("scannerOccupantName", state.ScannerBodyInfo)));
+            } else
+            {
+                ScannerInfoLabel.SetMarkup(Loc.GetString("cloning-console-window-id-blank"));
+            }
+            if (state.ClonerBodyInfo != null)
+            {
+                ClonerInfoLabel.SetMarkup(Loc.GetString("cloning-console-window-pod-id",
+                ("podOccupantName", state.ClonerBodyInfo)));
+            } else
+            {
+                ClonerInfoLabel.SetMarkup(Loc.GetString("cloning-console-window-id-blank"));
+            }
+            // if (state.ScannerBodyInfo != null)
+            // {
+            //     Logger.Debug(state.ScannerBodyInfo);
+            //     text.Append($"{Loc.GetString("medical-scanner-window-entity-health-text", ("entityName", state.ScannerBodyInfo))}\n");
+            // }
+            // text.Append('\n');
+            bool buttonState = false;
+            if (state.ScannerIsAlive != null)
+            {
+                buttonState = state.ScannerIsAlive == false ? false : true;
+            }
+            // Diagnostics.Text = text.ToString();
+            CloneButton.Disabled = buttonState;
+            // TODO MEDICALSCANNER resize window based on the length of text / number of damage types?
+            // Also, maybe add color schemes for specific damage groups?
+            // SetSize = (250, 200);
+        }
 
-                HashSet<string> shownTypes = new();
+        [DebuggerDisplay("cloningbutton {" + nameof(Index) + "}")]
+        private class HistoryRow : Control
+        {
+            public string CloneName { get; set; } = default!;
+            public Label EntityLabel { get; private set; }
+            public TextureRect EntityTextureRect { get; private set; }
+            public int Index { get; set; }
 
-                // Show the total damage and type breakdown for each damage group.
-                foreach (var (damageGroupId, damageAmount) in state.DamagePerGroup)
+            public HistoryRow()
+            {
+                AddChild(new BoxContainer
                 {
-                    text.Append($"\n{Loc.GetString("medical-scanner-window-damage-group-text", ("damageGroup", damageGroupId), ("amount", damageAmount))}");
-
-                    // Show the damage for each type in that group.
-                    var group = IoCManager.Resolve<IPrototypeManager>().Index<DamageGroupPrototype>(damageGroupId);
-                    foreach (var type in group.DamageTypes)
+                    Orientation = LayoutOrientation.Horizontal,
+                    Children =
                     {
-                        if (state.DamagePerType.TryGetValue(type, out var typeAmount))
+                        (EntityTextureRect = new TextureRect
                         {
-                            // If damage types are allowed to belong to more than one damage group, they may appear twice here. Mark them as duplicate.
-                            if (!shownTypes.Contains(type))
-                            {
-                                shownTypes.Add(type);
-                                text.Append($"\n- {Loc.GetString("medical-scanner-window-damage-type-text", ("damageType", type), ("amount", typeAmount))}");
-                            }
-                            else {
-                                text.Append($"\n- {Loc.GetString("medical-scanner-window-damage-type-duplicate-text", ("damageType", type), ("amount", typeAmount))}");
-                            }
-                        }
+                            MinSize = (32, 32),
+                            HorizontalAlignment = HAlignment.Center,
+                            VerticalAlignment = VAlignment.Center,
+                            Stretch = TextureRect.StretchMode.KeepAspectCentered,
+                            CanShrink = true
+                        }),
+                        (EntityLabel = new Label
+                        {
+                            VerticalAlignment = VAlignment.Center,
+                            HorizontalExpand = true,
+                            Text = string.Empty,
+                            ClipText = true
+                        })
                     }
-                    text.Append('\n');
-                }
-
-                Diagnostics.Text = text.ToString();
-                CloneButton.Disabled = state.IsScanned;
-
-                // TODO MEDICALSCANNER resize window based on the length of text / number of damage types?
-                // Also, maybe add color schemes for specific damage groups?
-                SetSize = (250, 600);
+                });
             }
         }
     }

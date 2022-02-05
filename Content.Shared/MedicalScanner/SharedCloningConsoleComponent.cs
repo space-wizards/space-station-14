@@ -12,25 +12,33 @@ namespace Content.Shared.CloningConsole
         [Serializable, NetSerializable]
         public sealed class CloningConsoleBoundUserInterfaceState : BoundUserInterfaceState
         {
-            public readonly EntityUid? Entity;
-            public readonly IReadOnlyDictionary<string, FixedPoint2> DamagePerGroup;
-            public readonly IReadOnlyDictionary<string, FixedPoint2> DamagePerType;
-            public readonly bool IsScanned;
+            public readonly bool? ScannerIsAlive;
+            public readonly string? ScannerBodyInfo;
+            public readonly string? ClonerBodyInfo;
+            public readonly List<string> CloneHistory;
+            // When this state was created.
+            // The reason this is used rather than a start time is because cloning can be interrupted.
+            public readonly TimeSpan ReferenceTime;
+            // Both of these are in seconds.
+            // They're not TimeSpans because of complicated reasons.
+            // CurTime of receipt is combined with Progress.
+            public readonly float Progress;
+            public readonly float Maximum;
+            // If true, cloning is progressing (predict clone progress)
+            public readonly bool Progressing;
+            public readonly bool MindPresent;
 
-            public CloningConsoleBoundUserInterfaceState(
-                EntityUid? entity,
-                DamageableComponent? damageable,
-                bool isScanned)
+            public CloningConsoleBoundUserInterfaceState(bool? scannerIsAlive, string? scannerBodyInfo, string? cloningBodyInfo, List<string> cloneHistory, TimeSpan refTime, float progress, float maximum, bool progressing, bool mindPresent)
             {
-                Entity = entity;
-                DamagePerGroup = damageable?.DamagePerGroup ?? new();
-                DamagePerType = damageable?.Damage?.DamageDict ?? new();
-                IsScanned = isScanned;
-            }
-
-            public bool HasDamage()
-            {
-                return DamagePerType.Count > 0;
+                ScannerIsAlive = scannerIsAlive;
+                ScannerBodyInfo = scannerBodyInfo;
+                ClonerBodyInfo = cloningBodyInfo;
+                CloneHistory = cloneHistory;
+                ReferenceTime = refTime;
+                Progress = progress;
+                Maximum = maximum;
+                Progressing = progressing;
+                MindPresent = mindPresent;
             }
         }
 

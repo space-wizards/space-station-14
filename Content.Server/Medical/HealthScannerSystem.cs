@@ -1,17 +1,13 @@
 using Content.Server.Medical.Components;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Movement;
-using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Timing;
-using Content.Shared.HealthScanner;
 using Content.Shared.Damage;
 using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
-using Content.Shared.Weapons.Melee;
+using Content.Shared.MobState.Components;
 
 using static Content.Shared.HealthScanner.SharedHealthScannerComponent;
 
@@ -30,7 +26,6 @@ namespace Content.Server.Medical
             SubscribeLocalEvent<HealthScannerComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<HealthScannerComponent, ActivateInWorldEvent>(HandleActivateInWorld);
             SubscribeLocalEvent<HealthScannerComponent, AfterInteractEvent>(OnAfterInteract);
-            SubscribeLocalEvent<HealthScannerComponent, ClickAttackEvent>(OnClickAttack);
         }
 
         private void OnComponentInit(EntityUid uid, HealthScannerComponent healthScanner, ComponentInit args)
@@ -55,24 +50,37 @@ namespace Content.Server.Medical
             UpdateUserInterface(args.Target, healthScanner);
         }
 
-        private void OnClickAttack(EntityUid uid, HealthScannerComponent healthScanner, ClickAttackEvent args)
-        {
-            UpdateUserInterface(args.Target, healthScanner);
-        }
-
         public static readonly HealthScannerBoundUserInterfaceState EmptyUIState =
             new(
+                null,
                 null,
                 null);
 
         public HealthScannerBoundUserInterfaceState GetUserInterfaceState(EntityUid? target, HealthScannerComponent scannerComponent)
         {
-            if (!TryComp<DamageableComponent>(target, out DamageableComponent? damageable))
-            {
+
+            if (target == null)
                 return EmptyUIState;
+
+            if (!TryComp<DamageableComponent>(target, out var damageable))
+                return EmptyUIState;
+
+            var targetName = "Unknown";
+            if (TryComp<MetaDataComponent>(target, out var meta))
+            {
+              targetName = meta.EntityName;
             }
 
-            return new HealthScannerBoundUserInterfaceState(target, damageable);
+            var totalDamage = 0;
+            totalDamage = totalDamage = damageable.TotalDamage.Int();
+
+            var isAlive = false;
+            if (TryComp<MobStateComponent>(target, out var mobState))
+            {
+                isAlive = mobState.IsAlive();
+            }
+
+            return new HealthScannerBoundUserInterfaceState(targetName, isAlive,  damageable);
         }
 
         private void UpdateUserInterface(EntityUid? target, HealthScannerComponent healthScanner)

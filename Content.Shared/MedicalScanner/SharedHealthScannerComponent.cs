@@ -14,16 +14,18 @@ namespace Content.Shared.HealthScanner
         [Serializable, NetSerializable]
         public class HealthScannerBoundUserInterfaceState : BoundUserInterfaceState
         {
-            public readonly EntityUid? Entity;
+            public readonly string? TargetName;
+            public readonly bool? IsAlive;
             public readonly IReadOnlyDictionary<string, FixedPoint2> DamagePerGroup;
             public readonly IReadOnlyDictionary<string, FixedPoint2> DamagePerType;
-            public readonly bool IsScanned;
 
             public HealthScannerBoundUserInterfaceState(
-                EntityUid? entity,
+                string? targetName,
+                bool? isAlive,
                 DamageableComponent? damageable)
             {
-                Entity = entity;
+                TargetName = targetName;
+                IsAlive = isAlive;
                 DamagePerGroup = damageable?.DamagePerGroup ?? new();
                 DamagePerType = damageable?.Damage?.DamageDict ?? new();
             }
