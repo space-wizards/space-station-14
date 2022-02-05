@@ -8,7 +8,6 @@ namespace Content.Shared.Suspicion
     [NetworkedComponent()]
     public abstract class SharedSuspicionRoleComponent : Component
     {
-        public sealed override string Name => "SuspicionRole";
     }
 
     [Serializable, NetSerializable]

@@ -8,6 +8,5 @@ namespace Content.Server.Explosion.Components
     [RegisterComponent]
     public class ExplodeOnTriggerComponent : Component
     {
-        public override string Name => "ExplodeOnTrigger";
     }
 }

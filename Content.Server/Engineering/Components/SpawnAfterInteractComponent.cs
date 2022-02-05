@@ -9,8 +9,6 @@ namespace Content.Server.Engineering.Components
     [RegisterComponent]
     public class SpawnAfterInteractComponent : Component
     {
-        public override string Name => "SpawnAfterInteract";
-
         [ViewVariables]
         [DataField("prototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string? Prototype { get; }

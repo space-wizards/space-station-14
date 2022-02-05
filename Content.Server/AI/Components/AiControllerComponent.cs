@@ -18,8 +18,6 @@ namespace Content.Server.AI.Components
     {
         [DataField("logic")] private float _visionRadius = 8.0f;
 
-        public override string Name => "AiController";
-
         // TODO: Need to ECS a lot more of the AI first before we can ECS this
         /// <summary>
         /// Whether the AI is actively iterated.

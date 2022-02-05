@@ -13,8 +13,6 @@ namespace Content.Shared.Crayon
     [NetworkedComponent()]
     public class SharedCrayonComponent : Component
     {
-        public override string Name => "Crayon";
-
         public string SelectedState { get; set; } = string.Empty;
 
         [DataField("color")]

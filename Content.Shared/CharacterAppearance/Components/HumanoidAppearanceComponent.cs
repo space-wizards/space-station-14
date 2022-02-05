@@ -16,8 +16,6 @@ namespace Content.Shared.CharacterAppearance.Components
     [NetworkedComponent]
     public class HumanoidAppearanceComponent : Component
     {
-        public override string Name => "HumanoidAppearance";
-
         [ViewVariables]
         public HumanoidCharacterAppearance Appearance { get; set; } = HumanoidCharacterAppearance.Default();
 

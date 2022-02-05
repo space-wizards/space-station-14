@@ -8,8 +8,6 @@ namespace Content.Shared.Gravity
     [NetworkedComponent()]
     public class SharedGravityGeneratorComponent : Component
     {
-        public override string Name => "GravityGenerator";
-
         /// <summary>
         ///     Sent to the server to set whether the generator should be on or off
         /// </summary>
