@@ -587,10 +587,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 12 ##I'm pretty sure this has to match the total of 100 potency yields
+        maxVol: 20 ##I'm pretty sure this has to match the total of 100 potency yields
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 2
+        - ReagentId: Aloe
+          Quantity: 10
         - ReagentId: Kelotane
           Quantity: 10
   - type: Sprite
