@@ -16,7 +16,11 @@ namespace Content.Server.Chemistry.TileReactions
     [DataDefinition]
     public class CleanTileReaction : ITileReaction
     {
-
+        /// <summary>
+        ///     Multiplier used in CleanTileReaction.
+        ///     1 (default) means normal consumption rate of the cleaning reagent.
+        ///     0 means no consumption of the cleaning reagent, i.e. the reagent is inexhaustible.
+        /// </summary>
         [DataField("cleanAmountMultiplier")]
         public float CleanAmountMultiplier { get; private set; } = 1.0f;
 
@@ -29,7 +33,7 @@ namespace Content.Server.Chemistry.TileReactions
             {
                 if (entMan.TryGetComponent(entity, out CleanableComponent? cleanable))
                 {
-                    var next = (amount + cleanable.CleanAmount) * CleanAmountMultiplier;
+                    var next = amount + (cleanable.CleanAmount * CleanAmountMultiplier);
                     // Nothing left?
                     if (reactVolume < next)
                         break;

@@ -104,6 +104,7 @@
     prefixCreator: '14'
   mapPath: /Maps/nss_pillar.yml
   minPlayers: 20
+  votable: false
   overflowJobs:
     - Assistant
   availableJobs:
