@@ -271,7 +271,7 @@ namespace Content.Server.Kitchen.Components
                     return;
 
                 if (item.HasTag("MicrowaveMachineUnsafe")
-                    || item.HasTag("Plastic"))
+                    || item.HasTag("Metal"))
                 {
                     // destroy microwave
                     _broken = true;

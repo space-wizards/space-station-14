@@ -32,8 +32,10 @@ public class PowerCellSystem : SharedPowerCellSystem
         SubscribeLocalEvent<PowerCellComponent, SolutionChangedEvent>(OnSolutionChange);
 
         SubscribeLocalEvent<PowerCellComponent, ExaminedEvent>(OnCellExamined);
+
+        // funny
         SubscribeLocalEvent<PowerCellSlotComponent, BeingMicrowavedEvent>(OnSlotMicrowaved);
-        SubscribeLocalEvent<PowerCellComponent, BeingMicrowavedEvent>(OnMicrowaved);
+        SubscribeLocalEvent<BatteryComponent, BeingMicrowavedEvent>(OnMicrowaved);
     }
 
     private void OnSlotMicrowaved(EntityUid uid, PowerCellSlotComponent component, BeingMicrowavedEvent args)
@@ -44,10 +46,10 @@ public class PowerCellSystem : SharedPowerCellSystem
         RaiseLocalEvent(component.CellSlot.Item.Value, args, false);
     }
 
-    private void OnMicrowaved(EntityUid uid, PowerCellComponent component, BeingMicrowavedEvent args)
+    private void OnMicrowaved(EntityUid uid, BatteryComponent component, BeingMicrowavedEvent args)
     {
         // What the fuck are you doing???
-        Explode(uid);
+        Explode(uid, component);
     }
 
     private void OnChargeChanged(EntityUid uid, PowerCellComponent component, ChargeChangedEvent args)
