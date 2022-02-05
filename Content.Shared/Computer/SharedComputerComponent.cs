@@ -4,12 +4,8 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Computer
 {
-    public class SharedComputerComponent : Component
-    {
-    }
-
     [Serializable, NetSerializable]
-    public enum ComputerVisuals
+    public enum ComputerVisuals : byte
     {
         // Bool
         Powered,

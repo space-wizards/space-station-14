@@ -15,6 +15,8 @@ namespace Content.Server.Power.Components
     [RegisterComponent]
     public sealed class PowerNetworkBatteryComponent : Component
     {
+        [ViewVariables] public float LastSupply = 0f;
+
         [DataField("maxChargeRate")]
         [ViewVariables(VVAccess.ReadWrite)]
         public float MaxChargeRate
