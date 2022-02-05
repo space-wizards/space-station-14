@@ -302,7 +302,8 @@ namespace Content.Client.Entry
             "ArtifactInteractionTrigger",
             "Artifact",
             "RandomArtifactSprite",
-            "EnergySword"
+            "EnergySword",
+            "DoorRemote",
         };
     }
 }

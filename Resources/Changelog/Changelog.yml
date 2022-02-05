@@ -1,36 +1,4 @@
 Entries:
-- author: Seth
-  changes:
-  - {message: Added Reinforced Plasma Windows, type: Add}
-  id: 480
-  time: '2021-10-24T12:46:38.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Pipes look 90% less jank on rotated shuttles., type: Fix}
-  id: 481
-  time: '2021-10-25T03:24:55.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: 'RCDs work on space again, if close to an existing non-space tile',
-    type: Fix}
-  id: 482
-  time: '2021-10-25T03:33:50.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Station will now start with a random rotation., type: Tweak}
-  id: 483
-  time: '2021-10-25T04:22:57.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Walking over slippery items (usually) won't slip you anymore., type: Tweak}
-  - {message: Turned-on magboots now stop you from slipping., type: Add}
-  id: 484
-  time: '2021-10-25T06:43:49.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Construction works on rotated grids, type: Fix}
-  id: 485
-  time: '2021-10-25T14:14:21.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: Added electrocution., type: Add}
@@ -2948,3 +2916,39 @@ Entries:
     type: Tweak}
   id: 980
   time: '2022-02-04T23:17:11.0000000+00:00'
+- author: Lamrr
+  changes:
+  - {message: The digital audio workstaiton (sic) has been relabelled., type: Fix}
+  id: 981
+  time: '2022-02-05T01:23:43.0000000+00:00'
+- author: Willhelm53
+  changes:
+  - {message: Added new sparkle sprite that is applied to puddles below a certain
+      volume. Better look out for those wet floor signs!, type: Add}
+  - {message: 'Nerfed regular blue buckets to only hold 100u (down from 500u), bringing
+      them more in line with their capacity in SS13.', type: Fix}
+  - {message: 'Mops can now pick up all but the last 5u of a puddle. The remaining
+      5u is how wet floors work. But hey, that''s what evaporation is for!', type: Tweak}
+  id: 982
+  time: '2022-02-05T02:26:11.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'You should now be able to un-anchor things like disposal units, instead
+      of just discarding your wrench.', type: Tweak}
+  id: 983
+  time: '2022-02-05T02:39:02.0000000+00:00'
+- author: walrusfromspace
+  changes:
+  - {message: Added door remotes to the heads' lockers, type: Add}
+  id: 984
+  time: '2022-02-05T13:33:24.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Windoors should no longer crush people as they auto close., type: Fix}
+  id: 985
+  time: '2022-02-05T17:27:06.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Blast doors can't be opened with a crowbar anymore., type: Tweak}
+  id: 986
+  time: '2022-02-05T18:06:33.0000000+00:00'
