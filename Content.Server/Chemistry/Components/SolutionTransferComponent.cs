@@ -31,8 +31,6 @@ namespace Content.Server.Chemistry.Components
         // If it's anything else, GIVE reagent.
         // Of course, only if possible.
 
-        public override string Name => "SolutionTransfer";
-
         /// <summary>
         ///     The amount of solution to be transferred from this solution when clicking on other solutions with it.
         /// </summary>

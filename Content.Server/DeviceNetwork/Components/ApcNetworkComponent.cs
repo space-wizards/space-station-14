@@ -7,11 +7,10 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.DeviceNetwork.Components
 {
     [RegisterComponent]
+    [ComponentProtoName("ApcNetworkConnection")]
     [Friend(typeof(ApcNetworkSystem))]
     public class ApcNetworkComponent : Component
     {
-        public override string Name => "ApcNetworkConnection";
-
         /// <summary>
         /// The node Group the ApcNetworkConnection is connected to
         /// </summary>

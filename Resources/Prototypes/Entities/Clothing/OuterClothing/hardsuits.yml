@@ -137,6 +137,22 @@
     highPressureMultiplier: 1
     lowPressureMultiplier: 100
 
+# Moved to hardsuits because this is where EVA capable suits are apparently.
+# Same stats as normal EVA suit.
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitSyndicate
+  name: syndicate EVA suit
+  description: "Has a tag on it 'Totally not property of an enemy corporation, honest!'"
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Suits/syndicate.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Suits/syndicate.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 1
+    lowPressureMultiplier: 100
+
 - type: entity
   parent: ClothingOuterHardsuitBase
   id:  ClothingOuterHardsuitEVAPrisoner
@@ -240,7 +256,7 @@
 - type: entity
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitSyndie
-  name: blood-red hardsuit
+  name: blood red hardsuit
   description: A dual-mode advanced hardsuit designed for work in special operations.
   components:
   - type: Sprite

@@ -8,8 +8,6 @@ namespace Content.Shared.Cuffs.Components
     [NetworkedComponent()]
     public abstract class SharedHandcuffComponent : Component
     {
-        public override string Name => "Handcuff";
-
         [Serializable, NetSerializable]
         protected sealed class HandcuffedComponentState : ComponentState
         {

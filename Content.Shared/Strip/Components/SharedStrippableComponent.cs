@@ -11,8 +11,6 @@ namespace Content.Shared.Strip.Components
 {
     public abstract class SharedStrippableComponent : Component, IDraggable
     {
-        public override string Name => "Strippable";
-
         public bool CanBeStripped(EntityUid by)
         {
             return by != Owner

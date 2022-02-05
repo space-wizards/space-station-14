@@ -11,8 +11,6 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 [RegisterComponent]
 public class TelepathicArtifactComponent : Component
 {
-    public override string Name => "TelepathicArtifact";
-
     /// <summary>
     ///     Loc string ids of telepathic messages.
     ///     Will be randomly picked and shown to player.

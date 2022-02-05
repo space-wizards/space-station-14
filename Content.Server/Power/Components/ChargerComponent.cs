@@ -13,8 +13,6 @@ namespace Content.Server.Power.Components
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public override string Name => "Charger";
-
         [ViewVariables]
         public BatteryComponent? HeldBattery;
 

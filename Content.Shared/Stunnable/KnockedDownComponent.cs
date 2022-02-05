@@ -14,8 +14,6 @@ namespace Content.Shared.Stunnable
     [Friend(typeof(SharedStunSystem))]
     public class KnockedDownComponent : Component
     {
-        public override string Name => "KnockedDown";
-
         [DataField("helpInterval")]
         public float HelpInterval { get; set; } = 1f;
 

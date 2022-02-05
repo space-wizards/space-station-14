@@ -31,6 +31,19 @@ namespace Content.Shared.Pulling
     {
         [Dependency] private readonly SharedJointSystem _jointSystem = default!;
 
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            SubscribeLocalEvent<SharedPullableComponent, ComponentShutdown>(OnShutdown);
+        }
+
+        private void OnShutdown(EntityUid uid, SharedPullableComponent component, ComponentShutdown args)
+        {
+            if (component.Puller != null)
+                ForceRelationship(null, component);
+        }
+
         // A WARNING:
         // The following 2 functions are the most internal part of the pulling system's relationship management.
         // They do not expect to be cancellable.

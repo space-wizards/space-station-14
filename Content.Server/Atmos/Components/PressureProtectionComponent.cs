@@ -7,8 +7,6 @@ namespace Content.Server.Atmos.Components
     [RegisterComponent]
     public class PressureProtectionComponent : Component
     {
-        public override string Name => "PressureProtection";
-
         [DataField("highPressureMultiplier")]
         public float HighPressureMultiplier { get; } = 1f;
 

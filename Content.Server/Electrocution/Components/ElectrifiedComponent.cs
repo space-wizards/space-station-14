@@ -9,8 +9,6 @@ namespace Content.Server.Electrocution
     [RegisterComponent]
     public class ElectrifiedComponent : Component
     {
-        public override string Name => "Electrified";
-
         [DataField("enabled")]
         public bool Enabled { get; set; } = true;
 

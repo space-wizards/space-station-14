@@ -39,7 +39,7 @@ namespace Content.Server.Administration.Commands
             {
                 if (int.TryParse(args[1], out var mapId))
                 {
-                    var gameMapEnt = mapLoader.LoadBlueprint(new MapId(mapId), gameMap.MapPath);
+                    var gameMapEnt = mapLoader.LoadBlueprint(new MapId(mapId), gameMap.MapPath.ToString());
                     if (gameMapEnt is null)
                     {
                         shell.WriteError($"Failed to create the given game map, is the path {gameMap.MapPath} correct?");

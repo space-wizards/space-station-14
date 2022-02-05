@@ -19,8 +19,6 @@ namespace Content.Shared.Movement.Components
     [NetworkedComponent()]
     public class SharedPlayerMobMoverComponent : Component, IMobMoverComponent
     {
-        public override string Name => "PlayerMobMover";
-
         private float _stepSoundDistance;
         [DataField("grabRange")]
         private float _grabRange = IMobMoverComponent.GrabRangeDefault;

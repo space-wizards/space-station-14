@@ -10,8 +10,6 @@ namespace Content.Server.Medical.CrewMonitoring
     [Friend(typeof(CrewMonitoringConsoleSystem))]
     public class CrewMonitoringConsoleComponent : Component
     {
-        public override string Name => "CrewMonitoringConsole";
-
         /// <summary>
         ///     List of all currently connected sensors to this console.
         /// </summary>

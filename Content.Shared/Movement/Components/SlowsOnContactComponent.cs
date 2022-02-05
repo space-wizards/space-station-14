@@ -9,5 +9,4 @@ namespace Content.Shared.Movement.Components;
 [NetworkedComponent, RegisterComponent]
 public class SlowsOnContactComponent : Component
 {
-    public override string Name => "SlowsOnContact";
 }

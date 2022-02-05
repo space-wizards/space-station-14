@@ -9,8 +9,6 @@ namespace Content.Server.Power.Components
     [RegisterComponent]
     public class BatteryChargerComponent : BasePowerNetComponent
     {
-        public override string Name => "BatteryCharger";
-
         protected override void AddSelfToNet(IPowerNet net)
         {
             net.AddCharger(this);

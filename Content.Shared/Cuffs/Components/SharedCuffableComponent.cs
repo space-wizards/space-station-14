@@ -10,8 +10,6 @@ namespace Content.Shared.Cuffs.Components
     [NetworkedComponent()]
     public class SharedCuffableComponent : Component
     {
-        public override string Name => "Cuffable";
-
         [ViewVariables]
         public bool CanStillInteract { get; set; } = true;
 
