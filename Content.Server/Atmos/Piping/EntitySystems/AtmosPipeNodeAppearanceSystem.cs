@@ -17,9 +17,11 @@ public class AtmosPipeNodeAppearanceSystem : EntitySystem
     {
         base.Initialize();
 
-        // this should probably just be a directed event... but then you have a weird component that exists only to
-        // receive directed events... really I want to target any entity with a PipeConnectorVisualizer or a
-        // NodeContainerComponent that contains a pipe-node. But No elegant way of doing that....
+        // This should probably just be a directed event, but that would require a weird component that exists only to
+        // receive directed events (*cough* *cough* CableVisComponent *cough*).
+        //
+        // Really I want to target any entity with a PipeConnectorVisualizer or a NodeContainerComponent that contains a
+        // pipe-node. But I don't know of nice way of doing that.
         SubscribeLocalEvent<NodeGroupsRebuilt>(OnNodeUpdate);
     }
 
