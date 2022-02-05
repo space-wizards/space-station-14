@@ -12,8 +12,6 @@ namespace Content.Shared.Access.Components
     [Friend(typeof(SharedIdCardSystem), typeof(SharedPDASystem))]
     public class IdCardComponent : Component
     {
-        public override string Name => "IdCard";
-
         [DataField("originalOwnerName")]
         public string OriginalOwnerName = default!;
 

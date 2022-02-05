@@ -8,8 +8,6 @@ namespace Content.Server.Atmos.Piping.Binary.Components
     [RegisterComponent]
     public class GasPassiveGateComponent : Component
     {
-        public override string Name => "GasPassiveGate";
-
         [DataField("enabled")]
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Enabled { get; set; } = true;

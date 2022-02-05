@@ -12,7 +12,6 @@ namespace Content.Shared.Emoting
     public class SharedEmotingComponent : Component
     {
         [DataField("enabled")] private bool _enabled = true;
-        public override string Name => "Emoting";
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Enabled

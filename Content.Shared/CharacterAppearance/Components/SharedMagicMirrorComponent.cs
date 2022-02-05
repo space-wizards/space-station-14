@@ -7,8 +7,6 @@ namespace Content.Shared.CharacterAppearance.Components
 {
     public class SharedMagicMirrorComponent : Component
     {
-        public override string Name => "MagicMirror";
-
         [Serializable, NetSerializable]
         public enum MagicMirrorUiKey
         {

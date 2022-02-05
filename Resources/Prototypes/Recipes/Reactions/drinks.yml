@@ -561,3 +561,13 @@
       amount: 1
   products:
     HotRamen: 3
+
+- type: reaction
+  id: Pilk
+  reactants:
+    Cola:
+      amount: 1
+    Milk:
+      amount: 1
+  products:
+    Pilk: 2

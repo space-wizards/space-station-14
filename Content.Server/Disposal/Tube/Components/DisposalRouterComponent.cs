@@ -31,8 +31,6 @@ namespace Content.Server.Disposal.Tube.Components
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public override string Name => "DisposalRouter";
-
         [ViewVariables]
         private readonly HashSet<string> _tags = new();
 

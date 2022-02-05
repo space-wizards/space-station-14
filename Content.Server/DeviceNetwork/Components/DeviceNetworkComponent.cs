@@ -6,11 +6,9 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.DeviceNetwork.Components
 {
     [RegisterComponent]
+    [ComponentProtoName("DeviceNetworkComponent")]
     public class DeviceNetworkComponent : Component
     {
-        public override string Name => "DeviceNetworkComponent";
-
-
         /// <summary>
         ///  Valid device network NetIDs.
         /// The netID is used to separate device networks that shouldn't interact with each other e.g. wireless and wired.

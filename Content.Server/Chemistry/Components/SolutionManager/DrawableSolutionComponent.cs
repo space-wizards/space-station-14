@@ -10,8 +10,6 @@ namespace Content.Server.Chemistry.Components.SolutionManager
     [RegisterComponent]
     public class DrawableSolutionComponent : Component
     {
-        public override string Name => "DrawableSolution";
-
         /// <summary>
         /// Solution name that can be removed with syringes.
         /// </summary>

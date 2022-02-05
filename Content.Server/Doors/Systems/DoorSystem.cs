@@ -34,7 +34,7 @@ public sealed class DoorSystem : SharedDoorSystem
         base.Initialize();
 
         SubscribeLocalEvent<DoorComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<DoorComponent, InteractUsingEvent>(OnInteractUsing);
+        SubscribeLocalEvent<DoorComponent, InteractUsingEvent>(OnInteractUsing, after: new[] { typeof(ConstructionSystem) });
 
         SubscribeLocalEvent<DoorComponent, PryFinishedEvent>(OnPryFinished);
         SubscribeLocalEvent<DoorComponent, PryCancelledEvent>(OnPryCancelled);
@@ -109,15 +109,13 @@ public sealed class DoorSystem : SharedDoorSystem
 
         if (tool.Qualities.Contains(door.PryingQuality))
         {
-            TryPryDoor(uid, args.Used, args.User, door);
-            args.Handled = true;
+            args.Handled = TryPryDoor(uid, args.Used, args.User, door);
             return;
         }
 
         if (door.Weldable && tool.Qualities.Contains(door.WeldingQuality))
         {
-            TryWeldDoor(uid, args.Used, args.User, door);
-            args.Handled = true;
+            args.Handled = TryWeldDoor(uid, args.Used, args.User, door);
         }
     }
 
@@ -125,40 +123,44 @@ public sealed class DoorSystem : SharedDoorSystem
     ///     Attempt to weld a door shut, or unweld it if it is already welded. This does not actually check if the user
     ///     is holding the correct tool.
     /// </summary>
-    private async void TryWeldDoor(EntityUid target, EntityUid used, EntityUid user, DoorComponent door)
+    private bool TryWeldDoor(EntityUid target, EntityUid used, EntityUid user, DoorComponent door)
     {
         if (!door.Weldable || door.BeingWelded || door.CurrentlyCrushing.Count > 0)
-            return;
+            return false;
 
         // is the door in a weld-able state?
         if (door.State != DoorState.Closed && door.State != DoorState.Welded)
-            return;
+            return false;
 
         // perform a do-after delay
         door.BeingWelded = true;
         _toolSystem.UseTool(used, user, target, 3f, 3f, door.WeldingQuality,
             new WeldFinishedEvent(), new WeldCancelledEvent(), target);
+
+        return true; // we might not actually succeeded, but a do-after has started
     }
 
     /// <summary>
     ///     Pry open a door. This does not check if the user is holding the required tool.
     /// </summary>
-    private async void TryPryDoor(EntityUid target, EntityUid tool, EntityUid user, DoorComponent door)
+    private bool TryPryDoor(EntityUid target, EntityUid tool, EntityUid user, DoorComponent door)
     {
         if (door.State == DoorState.Welded)
-            return;
+            return false;
 
         var canEv = new BeforeDoorPryEvent(user);
         RaiseLocalEvent(target, canEv, false);
 
         if (canEv.Cancelled)
-            return;
+            return false;
 
         var modEv = new DoorGetPryTimeModifierEvent();
         RaiseLocalEvent(target, modEv, false);
 
         _toolSystem.UseTool(tool, user, target, 0f, modEv.PryTimeModifier * door.PryTime, door.PryingQuality,
                 new PryFinishedEvent(), new PryCancelledEvent(), target);
+
+        return true; // we might not actually succeeded, but a do-after has started
     }
 
     private void OnWeldCancelled(EntityUid uid, DoorComponent door, WeldCancelledEvent args)

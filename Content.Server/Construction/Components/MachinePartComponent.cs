@@ -29,9 +29,6 @@ namespace Content.Server.Construction.Components
             {MachinePart.Crystal, "CrystalSubspaceStockPart"},
             {MachinePart.Transmitter, "TransmitterSubspaceStockPart"}
         };
-
-        public override string Name => "MachinePart";
-
         [ViewVariables] [DataField("part")] public MachinePart PartType { get; private set; } = MachinePart.Capacitor;
 
         [ViewVariables(VVAccess.ReadWrite)]

@@ -146,3 +146,25 @@
       - id: BikeHorn
       - id: ClownPDA
       - id: ClothingHeadsetService
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicate
+  id: ClothingBackpackDuffelSyndicatePyjamaBundle
+  name: syndicate pyjama duffel bag
+  description: "Contains 3 syndicate pyjamas."
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingUniformJumpsuitPyjamaSyndicateRed
+      - id: ClothingUniformJumpsuitPyjamaSyndicateBlack
+      - id: ClothingUniformJumpsuitPyjamaSyndicatePink
+      - id: ClothingHeadPyjamaSyndicateRed
+      - id: ClothingHeadPyjamaSyndicateBlack
+      - id: ClothingHeadPyjamaSyndicatePink
+      - id: ClothingShoesSlippers
+        amount: 3   
+      - id: BedsheetSyndie
+        amount: 3   
+      - id: PlushieCarp
+      - id: PlushieNuke
+      - id: PlushieLizard

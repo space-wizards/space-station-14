@@ -12,8 +12,6 @@ namespace Content.Shared.Instruments;
 [NetworkedComponent, Friend(typeof(SharedInstrumentSystem))]
 public class SharedInstrumentComponent : Component
 {
-    public override string Name => "Instrument";
-
     [ViewVariables]
     public bool Playing { get; set; }
 
