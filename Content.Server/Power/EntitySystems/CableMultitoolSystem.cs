@@ -58,7 +58,7 @@ namespace Content.Server.Power.EntitySystems
                         Act = () =>
                         {
                             var markup = FormattedMessage.FromMarkup(GenerateCableMarkup(uid));
-                            _examineSystem.SendExamineTooltip(args.User, uid, markup, false);
+                            _examineSystem.SendExamineTooltip(args.User, uid, markup, false, false);
                         }
                     };
 

@@ -28,12 +28,14 @@ namespace Content.Shared.Examine
             public readonly FormattedMessage Message;
 
             public readonly bool GetVerbs;
+            public readonly bool CenterAtCursor;
 
-            public ExamineInfoResponseMessage(EntityUid entityUid, FormattedMessage message, bool getVerbs=false)
+            public ExamineInfoResponseMessage(EntityUid entityUid, FormattedMessage message, bool getVerbs=false, bool centerAtCursor=true)
             {
                 EntityUid = entityUid;
                 Message = message;
                 GetVerbs = getVerbs;
+                CenterAtCursor = centerAtCursor;
             }
         }
     }

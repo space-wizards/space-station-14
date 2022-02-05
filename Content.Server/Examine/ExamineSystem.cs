@@ -26,7 +26,7 @@ namespace Content.Server.Examine
             SubscribeNetworkEvent<ExamineSystemMessages.RequestExamineInfoMessage>(ExamineInfoRequest);
         }
 
-        public override void SendExamineTooltip(EntityUid player, EntityUid target, FormattedMessage message, bool getVerbs)
+        public override void SendExamineTooltip(EntityUid player, EntityUid target, FormattedMessage message, bool getVerbs, bool centerAtCursor)
         {
             if (!TryComp<ActorComponent>(player, out var actor))
                 return;
@@ -34,7 +34,7 @@ namespace Content.Server.Examine
             var session = actor.PlayerSession;
 
             var ev = new ExamineSystemMessages.ExamineInfoResponseMessage(
-                target, message, getVerbs
+                target, message, getVerbs, centerAtCursor
             );
 
             RaiseNetworkEvent(ev, session.ConnectedClient);
