@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Station will now start with a random rotation., type: Tweak}
-  id: 483
-  time: '2021-10-25T04:22:57.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Walking over slippery items (usually) won't slip you anymore., type: Tweak}
@@ -2934,7 +2929,7 @@ Entries:
   time: '2022-02-04T23:17:11.0000000+00:00'
 - author: Lamrr
   changes:
-  - {message: 'The digital audio workstaiton (sic) has been relabelled.', type: Fix}
+  - {message: The digital audio workstaiton (sic) has been relabelled., type: Fix}
   id: 981
   time: '2022-02-05T01:23:43.0000000+00:00'
 - author: Willhelm53
@@ -2953,3 +2948,8 @@ Entries:
       of just discarding your wrench.', type: Tweak}
   id: 983
   time: '2022-02-05T02:39:02.0000000+00:00'
+- author: walrusfromspace
+  changes:
+  - {message: Added door remotes to the heads' lockers, type: Add}
+  id: 984
+  time: '2022-02-05T13:33:24.0000000+00:00'
