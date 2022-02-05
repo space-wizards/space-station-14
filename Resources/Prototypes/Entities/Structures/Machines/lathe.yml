@@ -147,6 +147,7 @@
       - HydroponicsToolScythe
       - HydroponicsToolHatchet
       - Shovel
+      - HandheldCrewMonitor
       - Scalpel
       - Retractor
       - Cautery
@@ -239,6 +240,7 @@
       - CrewMonitoringComputerCircuitboard
       - ShuttleConsoleCircuitboard
       - CircuitImprinterMachineCircuitboard
+      - DawInstrumentMachineCircuitboard
   - type: Machine
     board: CircuitImprinterMachineCircuitboard
 

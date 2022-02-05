@@ -24,11 +24,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Content.Shared.Database\Content.Shared.Database.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="Migrations\Sqlite\20220127164435_UnifyMore.cs" />
-    <Compile Remove="Migrations\Sqlite\20220127164435_UnifyMore.Designer.cs" />
-  </ItemGroup>
-
+  
   <Import Project="..\RobustToolbox\MSBuild\Robust.Analyzers.targets" />
 </Project>
