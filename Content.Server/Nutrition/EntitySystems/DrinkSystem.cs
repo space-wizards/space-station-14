@@ -130,27 +130,12 @@ namespace Content.Server.Nutrition.EntitySystems
 
         private void AfterInteract(EntityUid uid, DrinkComponent component, AfterInteractEvent args)
         {
-            if (args.Handled || args.Target == null)
+            if (args.Handled || args.Target == null || !args.CanReach)
                 return;
-
-            if (!_actionBlockerSystem.CanInteract(args.User) || !_actionBlockerSystem.CanUse(args.User))
-                return;
-
-            if (!args.User.InRangeUnobstructed(uid, popup: true))
-            {
-                args.Handled = true;
-                return;
-            }
 
             if (args.User == args.Target)
             {
                 args.Handled = TryUseDrink(uid, args.User);
-                return;
-            }
-
-            if (!args.User.InRangeUnobstructed(args.Target.Value, popup: true))
-            {
-                args.Handled = true;
                 return;
             }
 
@@ -163,15 +148,6 @@ namespace Content.Server.Nutrition.EntitySystems
         private void OnUse(EntityUid uid, DrinkComponent component, UseInHandEvent args)
         {
             if (args.Handled) return;
-
-            if (!_actionBlockerSystem.CanInteract(args.User) || !_actionBlockerSystem.CanUse(args.User))
-                return;
-
-            if (!args.User.InRangeUnobstructed(uid, popup: true))
-            {
-                args.Handled = true;
-                return;
-            }
 
             if (!component.Opened)
             {

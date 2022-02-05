@@ -19,8 +19,6 @@ namespace Content.Client.Weapons.Ranged.Barrels.Components
     [NetworkedComponent()]
     public class ClientPumpBarrelComponent : Component, IItemStatus
     {
-        public override string Name => "PumpBarrel";
-
         private StatusControl? _statusControl;
 
         /// <summary>

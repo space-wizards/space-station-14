@@ -15,8 +15,6 @@ namespace Content.Shared.Movement.Components
         public const float DefaultBaseWalkSpeed = 3.0f;
         public const float DefaultBaseSprintSpeed = 5.0f;
 
-        public override string Name => "MovementSpeedModifier";
-
         [ViewVariables]
         public float WalkSpeedModifier = 1.0f;
 

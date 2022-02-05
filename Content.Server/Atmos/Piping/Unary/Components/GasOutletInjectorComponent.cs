@@ -7,7 +7,6 @@ namespace Content.Server.Atmos.Piping.Unary.Components
     [RegisterComponent]
     public class GasOutletInjectorComponent : Component
     {
-        public override string Name => "GasOutletInjector";
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Enabled { get; set; } = true;

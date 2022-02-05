@@ -63,8 +63,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
             // Interactions
             SubscribeLocalEvent<DisposalUnitComponent, ActivateInWorldEvent>(HandleActivate);
-            SubscribeLocalEvent<DisposalUnitComponent, InteractHandEvent>(HandleInteractHand);
-            SubscribeLocalEvent<DisposalUnitComponent, InteractUsingEvent>(HandleInteractUsing);
+            SubscribeLocalEvent<DisposalUnitComponent, AfterInteractUsingEvent>(HandleAfterInteractUsing);
             SubscribeLocalEvent<DisposalUnitComponent, DragDropEvent>(HandleDragDropOn);
             SubscribeLocalEvent<DisposalUnitComponent, DestructionEventArgs>(HandleDestruction);
 
@@ -223,19 +222,11 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             }
         }
 
-        private void HandleInteractHand(EntityUid uid, DisposalUnitComponent component, InteractHandEvent args)
+        private void HandleAfterInteractUsing(EntityUid uid, DisposalUnitComponent component, AfterInteractUsingEvent args)
         {
-            if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor)) return;
+            if (args.Handled || !args.CanReach)
+                return;
 
-            // Duplicated code here, not sure how else to get actor inside to make UserInterface happy.
-
-            if (!IsValidInteraction(args)) return;
-            component.Owner.GetUIOrNull(SharedDisposalUnitComponent.DisposalUnitUiKey.Key)?.Open(actor.PlayerSession);
-            args.Handled = true;
-        }
-
-        private void HandleInteractUsing(EntityUid uid, DisposalUnitComponent component, InteractUsingEvent args)
-        {
             if (!EntityManager.TryGetComponent(args.User, out HandsComponent? hands))
             {
                 return;
@@ -417,7 +408,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             }
 
             if (count != component.RecentlyEjected.Count)
-                component.Dirty();
+                Dirty(component);
 
             return state == SharedDisposalUnitComponent.PressureState.Ready && component.RecentlyEjected.Count == 0;
         }
@@ -604,7 +595,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             if (!component.RecentlyEjected.Contains(entity))
                 component.RecentlyEjected.Add(entity);
 
-            component.Dirty();
+            Dirty(component);
             HandleStateChange(component, true);
             UpdateVisualState(component);
         }

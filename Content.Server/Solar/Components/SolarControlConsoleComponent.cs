@@ -13,6 +13,5 @@ namespace Content.Server.Solar.Components
     [RegisterComponent]
     public class SolarControlConsoleComponent : Component
     {
-        public override string Name => "SolarControlConsole";
     }
 }

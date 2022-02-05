@@ -16,8 +16,6 @@ namespace Content.Shared.Slippery
     [NetworkedComponent()]
     public sealed class SlipperyComponent : Component
     {
-        public override string Name => "Slippery";
-
         private float _paralyzeTime = 5f;
         private float _intersectPercentage = 0.3f;
         private float _requiredSlipSpeed = 3.5f;

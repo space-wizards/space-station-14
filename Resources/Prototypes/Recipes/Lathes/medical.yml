@@ -62,3 +62,13 @@
   completetime: 300
   materials:
     Plastic: 200
+
+- type: latheRecipe
+  id: HandheldCrewMonitor
+  icon: Objects/Specific/Medical/handheldcrewmonitor.rsi/icon.png
+  result: HandheldCrewMonitor
+  completetime: 5000
+  materials:
+    Glass: 1200
+    Steel: 1000
+    Plastic: 1400

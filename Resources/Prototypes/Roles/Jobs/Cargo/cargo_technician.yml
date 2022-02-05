@@ -18,6 +18,7 @@
     jumpsuit: ClothingUniformJumpsuitCargo
     back: ClothingBackpackFilled
     shoes: ClothingShoesColorBlack
+    gloves: ClothingHandsGlovesFingerless
     id: CargoPDA
     ears: ClothingHeadsetCargo
   innerclothingskirt: ClothingUniformJumpskirtCargo

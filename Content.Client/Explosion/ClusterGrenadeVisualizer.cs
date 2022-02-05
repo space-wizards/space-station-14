@@ -9,7 +9,7 @@ namespace Content.Client.Explosion
 {
     [UsedImplicitly]
     // ReSharper disable once InconsistentNaming
-    public class ClusterFlashVisualizer : AppearanceVisualizer
+    public class ClusterGrenadeVisualizer : AppearanceVisualizer
     {
         [DataField("state")]
         private string? _state;
@@ -24,7 +24,7 @@ namespace Content.Client.Explosion
                 return;
             }
 
-            if (component.TryGetData(ClusterFlashVisuals.GrenadesCounter, out int grenadesCounter))
+            if (component.TryGetData(ClusterGrenadeVisuals.GrenadesCounter, out int grenadesCounter))
             {
                 sprite.LayerSetState(0, $"{_state}-{grenadesCounter}");
             }
