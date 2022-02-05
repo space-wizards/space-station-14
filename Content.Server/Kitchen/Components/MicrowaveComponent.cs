@@ -4,10 +4,13 @@ using System.Threading.Tasks;
 using Content.Server.Act;
 using Content.Server.Chat.Managers;
 using Content.Server.Chemistry.Components;
+using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Hands.Components;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
+using Content.Server.Temperature.Components;
+using Content.Server.Temperature.Systems;
 using Content.Server.UserInterface;
 using Content.Shared.Acts;
 using Content.Shared.Body.Components;
@@ -21,6 +24,7 @@ using Content.Shared.Kitchen.Components;
 using Content.Shared.Popups;
 using Content.Shared.Power;
 using Content.Shared.Sound;
+using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -56,6 +60,8 @@ namespace Content.Server.Kitchen.Components
         [DataField("clickSound")]
         private SoundSpecifier _clickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
 
+        public SoundSpecifier ItemBreakSound = new SoundPathSpecifier("/Audio/Effects/clang.ogg");
+
         #endregion YAMLSERIALIZE
 
         [ViewVariables] private bool _busy = false;
@@ -70,9 +76,7 @@ namespace Content.Server.Kitchen.Components
 
         private bool Powered => !_entities.TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
-        private bool HasContents => EntitySystem.Get<SolutionContainerSystem>()
-                                        .TryGetSolution(Owner, SolutionName, out var solution) &&
-                                    (solution.Contents.Count > 0 || _storage.ContainedEntities.Count > 0);
+        private bool HasContents => _storage.ContainedEntities.Count > 0;
 
         private bool _uiDirty = true;
         private bool _lostPower;
@@ -84,7 +88,6 @@ namespace Content.Server.Kitchen.Components
         }
 
         private Container _storage = default!;
-        private const string SolutionName = "microwave";
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(MicrowaveUiKey.Key);
 
@@ -93,8 +96,6 @@ namespace Content.Server.Kitchen.Components
             base.Initialize();
 
             _currentCookTimerTime = _cookTimeDefault;
-
-            EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, SolutionName);
 
             _storage = ContainerHelpers.EnsureContainer<Container>(Owner, "microwave_entity_container",
                 out _);
@@ -120,7 +121,6 @@ namespace Content.Server.Kitchen.Components
                 case MicrowaveEjectMessage:
                     if (HasContents)
                     {
-                        VaporizeReagents();
                         EjectSolids();
                         ClickSound();
                         _uiDirty = true;
@@ -134,17 +134,8 @@ namespace Content.Server.Kitchen.Components
                         ClickSound();
                         _uiDirty = true;
                     }
-
                     break;
-                case MicrowaveVaporizeReagentIndexedMessage msg:
-                    if (HasContents)
-                    {
-                        VaporizeReagentQuantity(msg.ReagentQuantity);
-                        ClickSound();
-                        _uiDirty = true;
-                    }
 
-                    break;
                 case MicrowaveSelectCookTimeMessage msg:
                     _currentCookTimeButtonIndex = msg.ButtonIndex;
                     _currentCookTimerTime = msg.NewCookTime;
@@ -166,7 +157,6 @@ namespace Content.Server.Kitchen.Components
             {
                 //we lost power while we were cooking/busy!
                 _lostPower = true;
-                VaporizeReagents();
                 EjectSolids();
                 _busy = false;
                 _uiDirty = true;
@@ -177,18 +167,15 @@ namespace Content.Server.Kitchen.Components
                 SetAppearance(MicrowaveVisualState.Broken);
                 //we broke while we were cooking/busy!
                 _lostPower = true;
-                VaporizeReagents();
                 EjectSolids();
                 _busy = false;
                 _uiDirty = true;
             }
 
-            if (_uiDirty && EntitySystem.Get<SolutionContainerSystem>()
-                .TryGetSolution(Owner, SolutionName, out var solution))
+            if (_uiDirty)
             {
                 UserInterface?.SetState(new MicrowaveUpdateUserInterfaceState
                 (
-                    solution.Contents.ToArray(),
                     _storage.ContainedEntities.Select(item => item).ToArray(),
                     _busy,
                     _currentCookTimeButtonIndex,
@@ -249,41 +236,6 @@ namespace Content.Server.Kitchen.Components
                 return false;
             }
 
-            if (_entities.TryGetComponent<SolutionTransferComponent?>(itemEntity, out var attackPourable))
-            {
-                var solutionsSystem = EntitySystem.Get<SolutionContainerSystem>();
-                if (!solutionsSystem.TryGetDrainableSolution(itemEntity, out var attackSolution))
-                {
-                    return false;
-                }
-
-                if (!solutionsSystem.TryGetSolution(Owner, SolutionName, out var solution))
-                {
-                    return false;
-                }
-
-                //Get transfer amount. May be smaller than _transferAmount if not enough room
-                var realTransferAmount = FixedPoint2.Min(attackPourable.TransferAmount, solution.AvailableVolume);
-                if (realTransferAmount <= 0) //Special message if container is full
-                {
-                    Owner.PopupMessage(eventArgs.User,
-                        Loc.GetString("microwave-component-interact-using-container-full"));
-                    return false;
-                }
-
-                //Move units from attackSolution to targetSolution
-                var removedSolution = EntitySystem.Get<SolutionContainerSystem>()
-                    .Drain(itemEntity, attackSolution, realTransferAmount);
-                if (!EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(Owner, solution, removedSolution))
-                {
-                    return false;
-                }
-
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("microwave-component-interact-using-transfer-success",
-                    ("amount", removedSolution.TotalVolume)));
-                return true;
-            }
-
             if (!_entities.TryGetComponent(itemEntity, typeof(SharedItemComponent), out var food))
             {
                 Owner.PopupMessage(eventArgs.User, "microwave-component-interact-using-transfer-fail");
@@ -308,8 +260,25 @@ namespace Content.Server.Kitchen.Components
             _busy = true;
             // Convert storage into Dictionary of ingredients
             var solidsDict = new Dictionary<string, int>();
+            var reagentDict = new Dictionary<string, FixedPoint2>();
             foreach (var item in _storage.ContainedEntities)
             {
+                if (item.HasTag("MicrowaveMachineUnsafe"))
+                {
+                    // destroy microwave
+                    _broken = true;
+                    SetAppearance(MicrowaveVisualState.Broken);
+                    SoundSystem.Play(Filter.Pvs(Owner), ItemBreakSound.GetSound(), Owner);
+                    return;
+                }
+
+                if (item.HasTag("MicrowaveSelfUnsafe"))
+                {
+                    _entities.SpawnEntity(_badRecipeName,
+                        _entities.GetComponent<TransformComponent>(Owner).Coordinates);
+                    _entities.QueueDeleteEntity(item);
+                }
+
                 var metaData = _entities.GetComponent<MetaDataComponent>(item);
                 if (metaData.EntityPrototype == null)
                 {
@@ -324,9 +293,16 @@ namespace Content.Server.Kitchen.Components
                 {
                     solidsDict.Add(metaData.EntityPrototype.ID, 1);
                 }
+
+                if (!_entities.TryGetComponent<SolutionContainerManagerComponent>(item, out var solMan))
+                    continue;
+
+                foreach (var (id, solution) in solMan.Solutions)
+                {
+                    reagentDict.Add(id, solution.GetReagentQuantity(id));
+                }
             }
 
-            var failState = MicrowaveSuccessState.RecipeFail;
             foreach (var id in solidsDict.Keys)
             {
                 if (_recipeManager.SolidAppears(id))
@@ -334,19 +310,19 @@ namespace Content.Server.Kitchen.Components
                     continue;
                 }
 
-                failState = MicrowaveSuccessState.UnwantedForeignObject;
                 break;
             }
 
             // Check recipes
             FoodRecipePrototype? recipeToCook = null;
             foreach (var r in _recipeManager.Recipes.Where(r =>
-                CanSatisfyRecipe(r, solidsDict) == MicrowaveSuccessState.RecipePass))
+                CanSatisfyRecipe(r, solidsDict, reagentDict)))
             {
                 recipeToCook = r;
             }
 
             SetAppearance(MicrowaveVisualState.Cooking);
+            var time = _currentCookTimerTime * _cookTimeMultiplier;
             SoundSystem.Play(Filter.Pvs(Owner), _startCookingSound.GetSound(), Owner, AudioParams.Default);
             Owner.SpawnTimer((int) (_currentCookTimerTime * _cookTimeMultiplier), () =>
             {
@@ -355,25 +331,19 @@ namespace Content.Server.Kitchen.Components
                     return;
                 }
 
-                if (failState == MicrowaveSuccessState.UnwantedForeignObject)
+                AddTemperature(time / 1000);
+
+                if (recipeToCook != null)
                 {
-                    VaporizeReagents();
-                    EjectSolids();
+                    SubtractContents(recipeToCook);
+                    _entities.SpawnEntity(recipeToCook.Result,
+                        _entities.GetComponent<TransformComponent>(Owner).Coordinates);
                 }
                 else
                 {
-                    if (recipeToCook != null)
-                    {
-                        SubtractContents(recipeToCook);
-                        _entities.SpawnEntity(recipeToCook.Result, _entities.GetComponent<TransformComponent>(Owner).Coordinates);
-                    }
-                    else
-                    {
-                        VaporizeReagents();
-                        VaporizeSolids();
-                        _entities.SpawnEntity(_badRecipeName, _entities.GetComponent<TransformComponent>(Owner).Coordinates);
-                    }
+                    EjectSolids();
                 }
+
 
                 SoundSystem.Play(Filter.Pvs(Owner), _cookingCompleteSound.GetSound(), Owner,
                     AudioParams.Default.WithVolume(-1f));
@@ -387,30 +357,26 @@ namespace Content.Server.Kitchen.Components
             _uiDirty = true;
         }
 
-        private void VaporizeReagents()
+        public void AddTemperature(float time)
         {
-            if (EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
+            foreach (var entity in _storage.ContainedEntities)
             {
-                EntitySystem.Get<SolutionContainerSystem>().RemoveAllSolution(Owner, solution);
-            }
-        }
+                if (_entities.TryGetComponent(entity, out TemperatureComponent? temp))
+                {
+                    EntitySystem.Get<TemperatureSystem>().ChangeHeat(entity, time * 10, false, temp);
+                }
 
-        private void VaporizeReagentQuantity(Solution.ReagentQuantity reagentQuantity)
-        {
-            if (EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
-            {
-                EntitySystem.Get<SolutionContainerSystem>()
-                    .TryRemoveReagent(Owner, solution, reagentQuantity.ReagentId, reagentQuantity.Quantity);
-            }
-        }
+                if (_entities.TryGetComponent(entity, out SolutionContainerManagerComponent? solutions))
+                {
+                    foreach (var (_, solution) in solutions.Solutions)
+                    {
+                        // can't heat above value (datafield this later)
+                        if (solution.Temperature > 373.15)
+                            continue;
 
-        private void VaporizeSolids()
-        {
-            for (var i = _storage.ContainedEntities.Count - 1; i >= 0; i--)
-            {
-                var item = _storage.ContainedEntities.ElementAt(i);
-                _storage.Remove(item);
-                _entities.DeleteEntity(item);
+                        solution.ThermalEnergy += time * 10;
+                    }
+                }
             }
         }
 
@@ -433,16 +399,6 @@ namespace Content.Server.Kitchen.Components
         private void SubtractContents(FoodRecipePrototype recipe)
         {
             var solutionUid = Owner;
-            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
-            {
-                return;
-            }
-
-            foreach (var recipeReagent in recipe.IngredientsReagents)
-            {
-                EntitySystem.Get<SolutionContainerSystem>()
-                    .TryRemoveReagent(solutionUid, solution, recipeReagent.Key, FixedPoint2.New(recipeReagent.Value));
-            }
 
             foreach (var recipeSolid in recipe.IngredientsSolids)
             {
@@ -467,45 +423,32 @@ namespace Content.Server.Kitchen.Components
             }
         }
 
-        private MicrowaveSuccessState CanSatisfyRecipe(FoodRecipePrototype recipe, Dictionary<string, int> solids)
+        private bool CanSatisfyRecipe(FoodRecipePrototype recipe, Dictionary<string, int> solids, Dictionary<string, FixedPoint2> reagents)
         {
             if (_currentCookTimerTime != recipe.CookTime)
             {
-                return MicrowaveSuccessState.RecipeFail;
-            }
-
-            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
-            {
-                return MicrowaveSuccessState.RecipeFail;
-            }
-
-            foreach (var reagent in recipe.IngredientsReagents)
-            {
-                if (!solution.ContainsReagent(reagent.Key, out var amount))
-                {
-                    return MicrowaveSuccessState.RecipeFail;
-                }
-
-                if (amount.Int() < reagent.Value)
-                {
-                    return MicrowaveSuccessState.RecipeFail;
-                }
+                return false;
             }
 
             foreach (var solid in recipe.IngredientsSolids)
             {
                 if (!solids.ContainsKey(solid.Key))
-                {
-                    return MicrowaveSuccessState.RecipeFail;
-                }
+                    return false;
 
                 if (solids[solid.Key] < solid.Value)
-                {
-                    return MicrowaveSuccessState.RecipeFail;
-                }
+                    return false;
             }
 
-            return MicrowaveSuccessState.RecipePass;
+            foreach (var reagent in recipe.IngredientsReagents)
+            {
+                if (!reagents.ContainsKey(reagent.Key))
+                    return false;
+
+                if (reagents[reagent.Key] < reagent.Value)
+                    return false;
+            }
+
+            return true;
         }
 
         private void ClickSound()

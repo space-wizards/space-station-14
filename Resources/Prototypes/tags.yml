@@ -190,6 +190,12 @@
   id: Matchstick
 
 - type: Tag
+  id: MicrowaveMachineUnsafe
+
+- type: Tag
+  id: MicrowaveSelfUnsafe
+
+- type: Tag
   id: MonkeyCube
 
 - type: Tag

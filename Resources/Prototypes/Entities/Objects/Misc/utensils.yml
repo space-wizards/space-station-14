@@ -20,6 +20,7 @@
   - type: Tag
     tags:
     - Hoe
+    - MicrowaveMachineUnsafe
   - type: Sprite
     state: fork
   - type: Utensil
@@ -40,6 +41,8 @@
     types:
     - Fork
     breakChance: 0.20
+  - type: Tag
+    tags: [ MicrowaveSelfUnsafe ]
 
 - type: entity
   parent: UtensilBase
