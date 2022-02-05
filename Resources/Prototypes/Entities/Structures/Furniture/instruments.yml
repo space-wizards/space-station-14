@@ -74,7 +74,7 @@
 - type: entity
   parent: BasePlaceableInstrument
   id: DawInstrument
-  name: digital audio workstaiton
+  name: digital audio workstation
   description: Cutting edge music technology, straight from the 90s.
   components:
   - type: Sprite
