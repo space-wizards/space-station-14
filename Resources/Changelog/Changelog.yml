@@ -1,10 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Walking over slippery items (usually) won't slip you anymore., type: Tweak}
-  - {message: Turned-on magboots now stop you from slipping., type: Add}
-  id: 484
-  time: '2021-10-25T06:43:49.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: Construction works on rotated grids, type: Fix}
@@ -2953,3 +2947,8 @@ Entries:
   - {message: Added door remotes to the heads' lockers, type: Add}
   id: 984
   time: '2022-02-05T13:33:24.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Windoors should no longer crush people as they auto close., type: Fix}
+  id: 985
+  time: '2022-02-05T17:27:06.0000000+00:00'
