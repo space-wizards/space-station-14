@@ -1,6 +1,8 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Content.Client.ContextMenu.UI;
+using Content.Client.Verbs;
 using Content.Shared.Examine;
 using Content.Shared.Input;
 using Content.Shared.Verbs;
@@ -17,6 +19,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
+using Robust.Shared.Serialization.TypeSerializers.Implementations;
 using Robust.Shared.Utility;
 using static Content.Shared.Interaction.SharedInteractionSystem;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
@@ -29,6 +32,7 @@ namespace Content.Client.Examine
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
+        [Dependency] private readonly VerbSystem _verbSystem = default!;
 
         public const string StyleClassEntityTooltip = "entity-tooltip";
 
@@ -41,7 +45,10 @@ namespace Content.Client.Examine
         {
             UpdatesOutsidePrediction = true;
 
-            SubscribeLocalEvent<GetOtherVerbsEvent>(AddExamineVerb);
+            SubscribeLocalEvent<GetExamineVerbsEvent>(AddExamineVerb);
+
+            SubscribeNetworkEvent<ExamineSystemMessages.ExamineInfoResponseMessage>(OnExamineInfoResponse);
+            SubscribeNetworkEvent<VerbsResponseEvent>(OnVerbsResponse);
 
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.ExamineEntity, new PointerInputCmdHandler(HandleExamine, outsidePrediction: true))
@@ -90,12 +97,14 @@ namespace Content.Client.Examine
             return true;
         }
 
-        private void AddExamineVerb(GetOtherVerbsEvent args)
+        private void AddExamineVerb(GetExamineVerbsEvent args)
         {
             if (!CanExamine(args.User, args.Target))
                 return;
 
+            // Basic examine verb.
             Verb verb = new();
+            verb.Category = VerbCategory.Examine;
             verb.Act = () => DoExamine(args.Target) ;
             verb.Text = Loc.GetString("examine-verb-name");
             verb.IconTexture = "/Textures/Interface/VerbIcons/examine.svg.192dpi.png";
@@ -103,13 +112,46 @@ namespace Content.Client.Examine
             args.Verbs.Add(verb);
         }
 
-        public async void DoExamine(EntityUid entity)
+        private void OnExamineInfoResponse(ExamineSystemMessages.ExamineInfoResponseMessage ev)
         {
+            if (_playerManager.LocalPlayer?.ControlledEntity == null)
+                return;
+
+            OpenTooltip(_playerManager.LocalPlayer.ControlledEntity.Value, ev.EntityUid, ev.Message, ev.GetVerbs);
+        }
+
+        private void OnVerbsResponse(VerbsResponseEvent ev)
+        {
+            if (ev.Verbs == null || _examineTooltipOpen == null)
+                return;
+
+            // Get examine verbs then add them all to the tooltip
+            if (ev.Verbs.TryGetValue(VerbType.Examine, out var set))
+            {
+                AddVerbsToTooltip(set);
+            }
+        }
+
+        public override void SendExamineTooltip(EntityUid player, EntityUid target, FormattedMessage message, bool getVerbs)
+        {
+            OpenTooltip(player, target, message, getVerbs);
+        }
+
+        public void OpenTooltip(EntityUid player, EntityUid target, FormattedMessage message, bool getVerbs=true)
+        {
+            SortedSet<Verb>? set = null;
+            if (getVerbs)
+            {
+                // Get verbs
+                var verbs = _verbSystem.GetVerbs(target, player, VerbType.Examine);
+                verbs.TryGetValue(VerbType.Examine, out set);
+            }
+
             // Close any examine tooltip that might already be opened
             CloseTooltip();
 
             // cache entity for Update function
-            _examinedEntity = entity;
+            _examinedEntity = target;
 
             const float minWidth = 300;
             var popupPos = _userInterfaceManager.MousePositionScaled;
@@ -117,13 +159,14 @@ namespace Content.Client.Examine
             // Actually open the tooltip.
             _examineTooltipOpen = new Popup { MaxWidth = 400 };
             _userInterfaceManager.ModalRoot.AddChild(_examineTooltipOpen);
-            var panel = new PanelContainer();
+            var panel = new PanelContainer() { Name = "ExaminePopupPanel" };
             panel.AddStyleClass(StyleClassEntityTooltip);
             panel.ModulateSelfOverride = Color.LightGray.WithAlpha(0.90f);
             _examineTooltipOpen.AddChild(panel);
 
             var vBox = new BoxContainer
             {
+                Name = "ExaminePopupVbox",
                 Orientation = LayoutOrientation.Vertical
             };
             panel.AddChild(vBox);
@@ -133,16 +176,21 @@ namespace Content.Client.Examine
                 Orientation = LayoutOrientation.Horizontal,
                 SeparationOverride = 5
             };
+
             vBox.AddChild(hBox);
 
-            if (EntityManager.TryGetComponent(entity, out ISpriteComponent? sprite))
+            if (EntityManager.TryGetComponent(target, out ISpriteComponent? sprite))
             {
-                hBox.AddChild(new SpriteView { Sprite = sprite, OverrideDirection = Direction.South });
+                hBox.AddChild(new SpriteView
+                {
+                    Sprite = sprite, OverrideDirection = Direction.South,
+                    Margin = new Thickness(2, 0, 2, 0),
+                });
             }
 
             hBox.AddChild(new Label
             {
-                Text = EntityManager.GetComponent<MetaDataComponent>(entity).EntityName,
+                Text = EntityManager.GetComponent<MetaDataComponent>(target).EntityName,
                 HorizontalExpand = true,
             });
 
@@ -151,44 +199,93 @@ namespace Content.Client.Examine
 
             _examineTooltipOpen.Open(UIBox2.FromDimensions(popupPos.Position, size));
 
-            FormattedMessage message;
-            if (entity.IsClientSide())
-            {
-                message = GetExamineText(entity, _playerManager.LocalPlayer?.ControlledEntity);
-            }
-            else
-            {
-                // Ask server for extra examine info.
-                RaiseNetworkEvent(new ExamineSystemMessages.RequestExamineInfoMessage(entity));
-
-                ExamineSystemMessages.ExamineInfoResponseMessage response;
-                try
-                {
-                    _requestCancelTokenSource = new CancellationTokenSource();
-                    response =
-                        await AwaitNetworkEvent<ExamineSystemMessages.ExamineInfoResponseMessage>(_requestCancelTokenSource
-                            .Token);
-                }
-                catch (TaskCanceledException)
-                {
-                    return;
-                }
-                finally
-                {
-                    _requestCancelTokenSource = null;
-                }
-
-                message = response.Message;
-            }
-
             foreach (var msg in message.Tags.OfType<FormattedMessage.TagText>())
             {
                 if (string.IsNullOrWhiteSpace(msg.Text)) continue;
 
-                var richLabel = new RichTextLabel();
+                var richLabel = new RichTextLabel() { Margin = new Thickness(4, 4, 0, 4)};
                 richLabel.SetMessage(message);
                 vBox.AddChild(richLabel);
                 break;
+            }
+
+            if (set != null)
+            {
+                AddVerbsToTooltip(set);
+            }
+        }
+
+        private void AddVerbsToTooltip(IEnumerable<Verb> verbs)
+        {
+            if (_examineTooltipOpen == null)
+                return;
+
+            var buttonsHBox = new BoxContainer
+            {
+                Name = "ExamineButtonsHBox",
+                Orientation = LayoutOrientation.Horizontal,
+                HorizontalAlignment = Control.HAlignment.Right,
+                VerticalAlignment = Control.VAlignment.Bottom,
+            };
+
+            // Examine button time
+            foreach (var verb in verbs)
+            {
+                if (verb.IconTexture == null)
+                    continue;
+
+                // snowflake this for now.
+                if (verb.Text == "Basic")
+                    continue;
+
+                var button = new ExamineButton(verb);
+
+                button.OnPressed += VerbButtonPressed;
+                buttonsHBox.AddChild(button);
+            }
+
+            var vbox = _examineTooltipOpen?.GetChild(0).GetChild(0);
+            if (vbox == null)
+            {
+                buttonsHBox.Dispose();
+                return;
+            }
+
+            // Remove any existing buttons hbox, in case we generated it from the client
+            // then received ones from the server
+            var hbox = vbox.Children.Where(c => c.Name == "ExamineButtonsHBox").ToArray();
+            if (hbox.Any())
+            {
+                vbox.Children.Remove(hbox.First());
+            }
+            vbox.AddChild(buttonsHBox);
+        }
+
+        public void VerbButtonPressed(BaseButton.ButtonEventArgs obj)
+        {
+            if (obj.Button is ExamineButton button)
+            {
+                _verbSystem.ExecuteVerb(_examinedEntity, button.Verb, VerbType.Examine);
+            }
+        }
+
+        public void DoExamine(EntityUid entity)
+        {
+            var playerEnt = _playerManager.LocalPlayer?.ControlledEntity;
+            if (playerEnt == null)
+                return;
+
+            FormattedMessage message;
+            if (entity.IsClientSide())
+            {
+                message = GetExamineText(entity, playerEnt);
+
+                OpenTooltip(playerEnt.Value, entity, message, true);
+            }
+            else
+            {
+                // Ask server for extra examine info.
+                RaiseNetworkEvent(new ExamineSystemMessages.RequestExamineInfoMessage(entity, true));
             }
         }
 
@@ -196,6 +293,13 @@ namespace Content.Client.Examine
         {
             if (_examineTooltipOpen != null)
             {
+                foreach (var control in _examineTooltipOpen.Children)
+                {
+                    if (control is ExamineButton button)
+                    {
+                        button.OnPressed -= VerbButtonPressed;
+                    }
+                }
                 _examineTooltipOpen.Dispose();
                 _examineTooltipOpen = null;
             }

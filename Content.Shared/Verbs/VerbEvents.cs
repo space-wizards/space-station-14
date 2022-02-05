@@ -6,6 +6,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Content.Shared.Interaction;
+using JetBrains.Annotations;
 
 namespace Content.Shared.Verbs
 {
@@ -114,6 +115,22 @@ namespace Content.Shared.Verbs
     {
         public GetAlternativeVerbsEvent(EntityUid user, EntityUid target, EntityUid? @using, SharedHandsComponent? hands,
             bool canInteract, bool canAccess) : base(user, target, @using, hands, canInteract, canAccess) { }
+    }
+
+    /// <summary>
+    ///     Request examine verb events.
+    ///     These are shown on the examine tooltip as well, unless it's the basic examine.
+    /// </summary>
+    public class GetExamineVerbsEvent : GetVerbsEvent
+    {
+        public readonly bool IsInDetailsRange;
+
+        public GetExamineVerbsEvent(EntityUid user, EntityUid target, EntityUid? @using, SharedHandsComponent? hands,
+            bool canInteract, bool canAccess, bool detailsRange) : base(user, target, @using, hands, canInteract,
+            canAccess)
+        {
+            IsInDetailsRange = detailsRange;
+        }
     }
 
     /// <summary>

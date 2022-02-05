@@ -652,6 +652,26 @@ namespace Content.Client.Stylesheets
                     .Pseudo(ContainerButton.StylePseudoClassDisabled)
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionDisabled),
 
+                // Examine buttons
+                Element<ExamineButton>().Class(ExamineButton.StyleClassExamineButton)
+                    .Prop(ContainerButton.StylePropertyStyleBox, buttonContext),
+
+                Element<ExamineButton>().Class(ExamineButton.StyleClassExamineButton)
+                    .Pseudo(ContainerButton.StylePseudoClassNormal)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorContext),
+
+                Element<ExamineButton>().Class(ExamineButton.StyleClassExamineButton)
+                    .Pseudo(ContainerButton.StylePseudoClassHover)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorContextHover),
+
+                Element<ExamineButton>().Class(ExamineButton.StyleClassExamineButton)
+                    .Pseudo(ContainerButton.StylePseudoClassPressed)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorContextPressed),
+
+                Element<ExamineButton>().Class(ExamineButton.StyleClassExamineButton)
+                    .Pseudo(ContainerButton.StylePseudoClassDisabled)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorContextDisabled),
+
                 // Thin buttons (No padding nor vertical margin)
                 Element<EntityContainerButton>().Class(StyleClassStorageButton)
                     .Prop(ContainerButton.StylePropertyStyleBox, buttonStorage),

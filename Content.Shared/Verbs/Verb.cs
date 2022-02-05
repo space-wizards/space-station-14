@@ -13,8 +13,9 @@ namespace Content.Shared.Verbs
         Interaction = 1,
         Activation = 2,
         Alternative = 4,
-        Other = 8,
-        All = 1+2+4+8
+        Examine = 8,
+        Other = 16,
+        All = 1+2+4+8+16
     }
 
     /// <summary>

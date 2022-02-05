@@ -13,6 +13,7 @@ using Content.Server.Tools;
 using Content.Shared.Wires;
 using Content.Shared.Examine;
 using Content.Shared.Hands.Components;
+using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
@@ -20,6 +21,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Localization;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Power.EntitySystems
 {
@@ -28,31 +30,39 @@ namespace Content.Server.Power.EntitySystems
     {
         [Dependency] private readonly ToolSystem _toolSystem = default!;
         [Dependency] private readonly PowerNetSystem _pnSystem = default!;
+        [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            SubscribeLocalEvent<CableComponent, ExaminedEvent>(OnExamined);
+            SubscribeLocalEvent<CableComponent, GetExamineVerbsEvent>(OnGetExamineVerbs);
         }
 
-        private void OnExamined(EntityUid uid, CableComponent component, ExaminedEvent args)
+        private void OnGetExamineVerbs(EntityUid uid, CableComponent component, GetExamineVerbsEvent args)
         {
             // Must be in details range to try this.
             // Theoretically there should be a separate range at which a multitool works, but this does just fine.
             if (args.IsInDetailsRange)
             {
-                // Determine if they are holding a multitool.
-                if (EntityManager.TryGetComponent<HandsComponent?>(args.Examiner, out var hands) && hands.TryGetActiveHand(out var hand))
+                var held = args.Using;
+                // Pulsing is hardcoded here because I don't think it needs to be more complex than that right now.
+                // Update if I'm wrong.
+                if (held != null && _toolSystem.HasQuality(held.Value, "Pulsing"))
                 {
-                    var held = hand.HeldEntity;
-                    // Pulsing is hardcoded here because I don't think it needs to be more complex than that right now.
-                    // Update if I'm wrong.
-                    if (held != null && _toolSystem.HasQuality(held.Value, "Pulsing"))
+                    var verb = new Verb
                     {
-                        args.PushMarkup(GenerateCableMarkup(uid));
-                        // args.PushFancyUpdatingPowerGraphs(uid);
-                    }
+                        Text = Loc.GetString("cable-multitool-system-verb-name"),
+                        Category = VerbCategory.Examine,
+                        IconTexture = "/Textures/Interface/VerbIcons/light.svg.192dpi.png",
+                        Act = () =>
+                        {
+                            var markup = FormattedMessage.FromMarkup(GenerateCableMarkup(uid));
+                            _examineSystem.SendExamineTooltip(args.User, uid, markup, false);
+                        }
+                    };
+
+                    args.Verbs.Add(verb);
                 }
             }
         }
