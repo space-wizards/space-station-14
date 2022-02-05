@@ -230,20 +230,15 @@ namespace Content.Server.Physics.Controllers
                         thrusterSystem.EnableLinearThrustDirection(shuttle, dir);
 
                         var index = (int) Math.Log2((int) dir);
-                        var speed = shuttle.LinearThrusterImpulse[index] * length;
+                        var impulse = shuttle.LinearThrusterImpulse[index] * length;
 
                         var maxImpulse = body.Mass * shuttleSystem.ShuttleMaxLinearAcc;
 
-                        speed = Math.Clamp(speed, 0f, maxImpulse);
-
-                        if (body.LinearVelocity.LengthSquared < 0.5f)
-                        {
-                            speed *= 5f;
-                        }
+                        impulse = Math.Clamp(impulse, 0f, maxImpulse);
 
                         body.ApplyLinearImpulse(
                             thrustAngle.RotateVec(shuttleNorth) *
-                            speed *
+                            impulse *
                             frameTime);
                     }
                 }
@@ -256,23 +251,16 @@ namespace Content.Server.Physics.Controllers
                 else
                 {
                     body.AngularDamping = shuttleSystem.ShuttleMovingAngularDamping;
-                    var angularSpeed = shuttle.AngularThrust;
 
-                    var maxAngImpulse = body.Mass * shuttleSystem.ShuttleMaxAngularAcc;
+                    var angularImpulse = shuttle.AngularThrust;
+                    var maxAngImpulse = body.Inertia * shuttleSystem.ShuttleMaxAngularAcc;
 
-                    angularSpeed = Math.Clamp(angularSpeed, 0f, maxAngImpulse);
+                    angularImpulse = Math.Clamp(angularImpulse, 0f, maxAngImpulse);
 
-                    if (body.AngularVelocity * body.AngularVelocity < 0.5f)
-                    {
-                        angularSpeed *= 5f;
-                    }
-
-                    // Scale rotation by mass just to make rotating larger things a bit more bearable.
                     body.ApplyAngularImpulse(
                         -angularInput *
-                        angularSpeed *
-                        frameTime *
-                        body.Mass / 100f);
+                        angularImpulse *
+                        frameTime);
 
                     thrusterSystem.SetAngularThrust(shuttle, true);
                 }
