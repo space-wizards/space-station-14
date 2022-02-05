@@ -130,3 +130,6 @@
           enum.DroneStatus.On: drone
   - type: ReplacementAccent
     accent: silicon
+  - type: Repairable
+    fuelcost: 15
+    doAfterDelay: 8
