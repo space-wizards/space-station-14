@@ -1,10 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: Added insulated gloves (and their cheap knockoffs) to the station.,
-    type: Add}
-  id: 488
-  time: '2021-10-25T14:58:04.292881+00:00'
 - author: 20kdc
   changes:
   - {message: ChemMaster bottles are no longer 'empty', type: Fix}
@@ -2952,3 +2946,10 @@ Entries:
     type: Fix}
   id: 988
   time: '2022-02-05T21:27:43.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Brig access is now the least privileged form of security access and
+      given to lawyers. It may take a while for stations to update their airlock software
+      to the latest version., type: Tweak}
+  id: 989
+  time: '2022-02-05T23:08:15.0000000+00:00'
