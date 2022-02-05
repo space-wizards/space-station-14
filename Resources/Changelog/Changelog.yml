@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Pipes look 90% less jank on rotated shuttles., type: Fix}
-  id: 481
-  time: '2021-10-25T03:24:55.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: 'RCDs work on space again, if close to an existing non-space tile',
@@ -2948,3 +2943,13 @@ Entries:
   - {message: 'The digital audio workstaiton [sic] has been relabelled.', type: Fix}
   id: 981
   time: '2022-02-05T01:23:43.0000000+00:00'
+- author: Willhelm53
+  changes:
+  - {message: Added new sparkle sprite that is applied to puddles below a certain
+      volume. Better look out for those wet floor signs!, type: Add}
+  - {message: 'Nerfed regular blue buckets to only hold 100u (down from 500u), bringing
+      them more in line with their capacity in SS13.', type: Fix}
+  - {message: 'Mops can now pick up all but the last 5u of a puddle. The remaining
+      5u is how wet floors work. But hey, that''s what evaporation is for!', type: Tweak}
+  id: 982
+  time: '2022-02-05T02:26:11.0000000+00:00'
