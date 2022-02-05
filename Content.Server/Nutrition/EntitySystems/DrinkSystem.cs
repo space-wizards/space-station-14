@@ -108,7 +108,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
         private void AfterInteract(EntityUid uid, DrinkComponent component, AfterInteractEvent args)
         {
-            if (args.Handled || args.Target == null)
+            if (args.Handled || args.Target == null || !args.CanReach)
                 return;
 
             // CanInteract already checked

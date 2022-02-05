@@ -108,7 +108,7 @@ namespace Content.Server.Crayon
 
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            if (!eventArgs.InRangeUnobstructed(ignoreInsideBlocker: false, popup: true,
+            if (!eventArgs.User.InRangeUnobstructed(eventArgs.ClickLocation, ignoreInsideBlocker: false, popup: true,
                 collisionMask: Shared.Physics.CollisionGroup.MobImpassable))
             {
                 return true;

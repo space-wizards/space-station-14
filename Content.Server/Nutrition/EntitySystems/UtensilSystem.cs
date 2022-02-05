@@ -32,7 +32,7 @@ namespace Content.Server.Nutrition.EntitySystems
         /// </summary>
         private void OnAfterInteract(EntityUid uid, UtensilComponent component, AfterInteractEvent ev)
         {
-            if (ev.Target == null)
+            if (ev.Target == null || !ev.CanReach)
                 return;
 
             if (TryUseUtensil(ev.User, ev.Target.Value, component))

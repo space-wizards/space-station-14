@@ -67,7 +67,7 @@ namespace Content.Shared.FixedPoint
             => new(a._value + b._value);
 
         public static FixedPoint2 operator -(FixedPoint2 a, FixedPoint2 b)
-            => a + -b;
+            => new(a._value - b._value);
 
         public static FixedPoint2 operator *(FixedPoint2 a, FixedPoint2 b)
         {
