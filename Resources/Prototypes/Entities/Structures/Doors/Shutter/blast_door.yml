@@ -15,6 +15,7 @@
     closeTimeTwo: 0.4
     openTimeOne: 0.4
     openTimeTwo: 0.4
+    pryTime: -1
     crushDamage:
       types:
         Blunt: 25 # yowch
