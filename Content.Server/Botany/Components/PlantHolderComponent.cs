@@ -657,18 +657,15 @@ namespace Content.Server.Botany.Components
             {
                 if (Seed == null)
                 {
-                    if (seeds.Seed == null)
-                    {
-                        user.PopupMessageCursor(Loc.GetString("plant-holder-component-empty-seed-packet-message"));
-                        _entMan.QueueDeleteEntity(usingItem);
+                    var protoMan = IoCManager.Resolve<IPrototypeManager>();
+                    if (!protoMan.TryIndex<Seed>(seeds.SeedName, out var seed))
                         return false;
-                    }
 
                     user.PopupMessageCursor(Loc.GetString("plant-holder-component-plant-success-message",
-                        ("seedName", seeds.Seed.SeedName),
-                        ("seedNoun", seeds.Seed.SeedNoun)));
+                        ("seedName", seed.SeedName),
+                        ("seedNoun", seed.SeedNoun)));
 
-                    Seed = seeds.Seed;
+                    Seed = seed;
                     Dead = false;
                     Age = 1;
                     Health = Seed.Endurance;
