@@ -121,7 +121,7 @@ public partial class BotanySystem
             var produce = entity.EnsureComponent<ProduceComponent>();
 
             produce.SeedName = proto.ID;
-            produce.Grown();
+            ProduceGrown(entity, produce);
 
             if (proto.Mysterious)
             {

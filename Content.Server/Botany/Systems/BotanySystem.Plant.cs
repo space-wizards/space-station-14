@@ -20,9 +20,9 @@ namespace Content.Server.Botany.Systems
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
 
         private int _nextUid = 0;
-        private readonly Dictionary<int, SeedPrototype> _seeds = new();
-
         private float _timer = 0f;
+
+        public readonly Dictionary<int, SeedPrototype> Seeds = new();
 
         public override void Initialize()
         {
@@ -39,7 +39,7 @@ namespace Content.Server.Botany.Systems
         {
             _nextUid = 0;
 
-            _seeds.Clear();
+            Seeds.Clear();
 
             foreach (var seed in _prototypeManager.EnumeratePrototypes<SeedPrototype>())
             {
@@ -54,7 +54,7 @@ namespace Content.Server.Botany.Systems
                 return false;
 
             seed.Uid = GetNextSeedUid();
-            _seeds[seed.Uid] = seed;
+            Seeds[seed.Uid] = seed;
             return true;
         }
 
