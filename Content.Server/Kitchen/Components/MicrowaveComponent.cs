@@ -297,9 +297,15 @@ namespace Content.Server.Kitchen.Components
                 if (!_entities.TryGetComponent<SolutionContainerManagerComponent>(item, out var solMan))
                     continue;
 
-                foreach (var (id, solution) in solMan.Solutions)
+                foreach (var (_, solution) in solMan.Solutions)
                 {
-                    reagentDict.Add(id, solution.GetReagentQuantity(id));
+                    foreach (var reagent in solution.Contents)
+                    {
+                        if (reagentDict.ContainsKey(reagent.ReagentId))
+                            reagentDict[reagent.ReagentId] += reagent.Quantity;
+                        else
+                            reagentDict.Add(reagent.ReagentId, reagent.Quantity);
+                    }
                 }
             }
 
@@ -331,7 +337,7 @@ namespace Content.Server.Kitchen.Components
                     return;
                 }
 
-                AddTemperature(time / 1000);
+                AddTemperature(time / 1000.0f);
 
                 if (recipeToCook != null)
                 {
@@ -399,6 +405,44 @@ namespace Content.Server.Kitchen.Components
         private void SubtractContents(FoodRecipePrototype recipe)
         {
             var solutionUid = Owner;
+
+            var totalReagentsToRemove = new Dictionary<string, FixedPoint2>(recipe.IngredientsReagents);
+            var solutionContainerSystem = EntitySystem.Get<SolutionContainerSystem>();
+
+            // this is spaghetti ngl
+            foreach (var item in _storage.ContainedEntities)
+            {
+                if (!_entities.TryGetComponent<SolutionContainerManagerComponent>(item, out var solMan))
+                    continue;
+
+                // go over every solution
+                foreach (var (_, solution) in solMan.Solutions)
+                {
+                    foreach (var (reagent, _) in recipe.IngredientsReagents)
+                    {
+                        // removed everything
+                        if (!totalReagentsToRemove.ContainsKey(reagent))
+                            continue;
+
+                        if (!solution.ContainsReagent(reagent))
+                            continue;
+
+                        var quant = solution.GetReagentQuantity(reagent);
+
+                        if (quant >= totalReagentsToRemove[reagent])
+                        {
+                            quant = totalReagentsToRemove[reagent];
+                            totalReagentsToRemove.Remove(reagent);
+                        }
+                        else
+                        {
+                            totalReagentsToRemove[reagent] -= quant;
+                        }
+
+                        solutionContainerSystem.TryRemoveReagent(item, solution, reagent, quant);
+                    }
+                }
+            }
 
             foreach (var recipeSolid in recipe.IngredientsSolids)
             {
