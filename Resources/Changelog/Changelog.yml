@@ -1,10 +1,4 @@
 Entries:
-- author: ike709
-  changes:
-  - {message: Stacks can now be split in half by alt-clicking or into different amounts
-      with the new Split verb., type: Add}
-  id: 487
-  time: '2021-10-25T14:36:04.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: Added insulated gloves (and their cheap knockoffs) to the station.,
@@ -2952,3 +2946,9 @@ Entries:
   - {message: Removed Herobrine., type: Remove}
   id: 987
   time: '2022-02-05T19:23:06.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Massive list of changes and fixes for NSS Pillar. See Github for list.,
+    type: Fix}
+  id: 988
+  time: '2022-02-05T21:27:43.0000000+00:00'
