@@ -3,6 +3,8 @@ using Content.Client.HUD.UI;
 using Content.Client.Resources;
 using Content.Client.Stylesheets;
 using Content.Shared.Input;
+using Robust.Client.Input;
+using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Robust.Shared.Localization;
@@ -62,7 +64,7 @@ internal sealed partial class GameHud
     private TopButton _buttonAdminMenu = default!;
     private TopButton _buttonSandboxMenu = default!;
 
-    private BoxContainer GenerateButtonBar()
+    private BoxContainer GenerateButtonBar(IResourceCache resourceCache, IInputManager inputManager)
     {
         var topButtonsContainer = new BoxContainer
         {
@@ -78,8 +80,8 @@ internal sealed partial class GameHud
 
         // Escape
         {
-            _buttonEscapeMenu = new TopButton(_resourceCache.GetTexture("/Textures/Interface/hamburger.svg.192dpi.png"),
-                EngineKeyFunctions.EscapeMenu, _inputManager)
+            _buttonEscapeMenu = new TopButton(resourceCache.GetTexture("/Textures/Interface/hamburger.svg.192dpi.png"),
+                EngineKeyFunctions.EscapeMenu, inputManager)
             {
                 ToolTip = Loc.GetString("game-hud-open-escape-menu-button-tooltip"),
                 MinSize = (70, 64),
@@ -93,8 +95,8 @@ internal sealed partial class GameHud
 
         // Character
         {
-            _buttonCharacterMenu = new TopButton(_resourceCache.GetTexture("/Textures/Interface/character.svg.192dpi.png"),
-                ContentKeyFunctions.OpenCharacterMenu, _inputManager)
+            _buttonCharacterMenu = new TopButton(resourceCache.GetTexture("/Textures/Interface/character.svg.192dpi.png"),
+                ContentKeyFunctions.OpenCharacterMenu, inputManager)
             {
                 ToolTip = Loc.GetString("game-hud-open-character-menu-button-tooltip"),
                 MinSize = topMinSize,
@@ -109,8 +111,8 @@ internal sealed partial class GameHud
 
         // Inventory
         {
-            _buttonInventoryMenu = new TopButton(_resourceCache.GetTexture("/Textures/Interface/inventory.svg.192dpi.png"),
-                ContentKeyFunctions.OpenInventoryMenu, _inputManager)
+            _buttonInventoryMenu = new TopButton(resourceCache.GetTexture("/Textures/Interface/inventory.svg.192dpi.png"),
+                ContentKeyFunctions.OpenInventoryMenu, inputManager)
             {
                 ToolTip = Loc.GetString("game-hud-open-inventory-menu-button-tooltip"),
                 MinSize = topMinSize,
@@ -121,15 +123,12 @@ internal sealed partial class GameHud
             topButtonsContainer.AddChild(_buttonInventoryMenu);
 
             _buttonInventoryMenu.OnToggled += args => InventoryButtonToggled?.Invoke(args.Pressed);
-            
-            //TODO: Deal with this
-            _buttonInventoryMenu.OnToggled += args => InventoryButtonDown = args.Pressed;
         }
 
         // Crafting
         {
-            _buttonCraftingMenu = new TopButton(_resourceCache.GetTexture("/Textures/Interface/hammer.svg.192dpi.png"),
-                ContentKeyFunctions.OpenCraftingMenu, _inputManager)
+            _buttonCraftingMenu = new TopButton(resourceCache.GetTexture("/Textures/Interface/hammer.svg.192dpi.png"),
+                ContentKeyFunctions.OpenCraftingMenu, inputManager)
             {
                 ToolTip = Loc.GetString("game-hud-open-crafting-menu-button-tooltip"),
                 MinSize = topMinSize,
@@ -144,8 +143,8 @@ internal sealed partial class GameHud
 
         // Actions
         {
-            _buttonActionsMenu = new TopButton(_resourceCache.GetTexture("/Textures/Interface/fist.svg.192dpi.png"),
-                ContentKeyFunctions.OpenActionsMenu, _inputManager)
+            _buttonActionsMenu = new TopButton(resourceCache.GetTexture("/Textures/Interface/fist.svg.192dpi.png"),
+                ContentKeyFunctions.OpenActionsMenu, inputManager)
             {
                 ToolTip = Loc.GetString("game-hud-open-actions-menu-button-tooltip"),
                 MinSize = topMinSize,
@@ -160,8 +159,8 @@ internal sealed partial class GameHud
 
         // Admin
         {
-            _buttonAdminMenu = new TopButton(_resourceCache.GetTexture("/Textures/Interface/gavel.svg.192dpi.png"),
-                ContentKeyFunctions.OpenAdminMenu, _inputManager)
+            _buttonAdminMenu = new TopButton(resourceCache.GetTexture("/Textures/Interface/gavel.svg.192dpi.png"),
+                ContentKeyFunctions.OpenAdminMenu, inputManager)
             {
                 ToolTip = Loc.GetString("game-hud-open-admin-menu-button-tooltip"),
                 MinSize = topMinSize,
@@ -176,8 +175,8 @@ internal sealed partial class GameHud
 
         // Sandbox
         {
-            _buttonSandboxMenu = new TopButton(_resourceCache.GetTexture("/Textures/Interface/sandbox.svg.192dpi.png"),
-                ContentKeyFunctions.OpenSandboxWindow, _inputManager)
+            _buttonSandboxMenu = new TopButton(resourceCache.GetTexture("/Textures/Interface/sandbox.svg.192dpi.png"),
+                ContentKeyFunctions.OpenSandboxWindow, inputManager)
             {
                 ToolTip = Loc.GetString("game-hud-open-sandbox-menu-button-tooltip"),
                 MinSize = topMinSize,
@@ -192,8 +191,8 @@ internal sealed partial class GameHud
 
         // Info Window
         {
-            _buttonInfo = new TopButton(_resourceCache.GetTexture("/Textures/Interface/info.svg.192dpi.png"),
-                ContentKeyFunctions.OpenInfo, _inputManager)
+            _buttonInfo = new TopButton(resourceCache.GetTexture("/Textures/Interface/info.svg.192dpi.png"),
+                ContentKeyFunctions.OpenInfo, inputManager)
             {
                 ToolTip = Loc.GetString("ui-options-function-open-info"),
                 MinSize = topMinSize,
@@ -203,12 +202,24 @@ internal sealed partial class GameHud
             topButtonsContainer.AddChild(_buttonInfo);
 
             _buttonInfo.OnToggled += args => InfoButtonToggled?.Invoke(args.Pressed);
-
-            //TODO: Deal with this
-            _buttonInfo.OnToggled += a => ButtonInfoOnOnToggled();
+            _buttonInfo.OnToggled += ButtonInfoToggledHandler;
         }
 
         return topButtonsContainer;
+    }
+
+    private void ButtonInfoToggledHandler(BaseButton.ButtonToggledEventArgs obj)
+    {
+        ButtonInfoToggled(obj.Pressed);
+    }
+
+    private void ButtonInfoToggled(bool pressed)
+    {
+        if(!pressed)
+            return;
+
+        _buttonInfo.StyleClasses.Remove(TopButton.StyleClassRedTopButton);
+        _buttonInfo.OnToggled -= ButtonInfoToggledHandler;
     }
 
     /// <inheritdoc />
@@ -242,12 +253,7 @@ internal sealed partial class GameHud
     public bool InventoryButtonDown
     {
         get => _buttonInventoryMenu.Pressed;
-        set
-        {
-            //TODO: Deal with this
-            TopInventoryQuickButtonContainer.Visible = value;
-            _buttonInventoryMenu.Pressed = value;
-        }
+        set => _buttonInventoryMenu.Pressed = value;
     }
 
     /// <inheritdoc />
@@ -332,7 +338,11 @@ internal sealed partial class GameHud
     public bool InfoButtonDown
     {
         get => _buttonInfo.Pressed;
-        set => _buttonInfo.Pressed = value;
+        set
+        {
+            _buttonInfo.Pressed = value;
+            ButtonInfoToggled(value);
+        }
     }
 
     /// <inheritdoc />

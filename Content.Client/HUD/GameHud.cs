@@ -126,11 +126,13 @@ namespace Content.Client.HUD
             RootControl = new LC { Name = "AAAAAAAAAAAAAAAAAAAAAA"};
             LC.SetAnchorPreset(RootControl, LC.LayoutPreset.Wide);
 
-            RootControl.AddChild(GenerateButtonBar());
+            RootControl.AddChild(GenerateButtonBar(_resourceCache, _inputManager));
+
+            InventoryButtonToggled += down =>  TopInventoryQuickButtonContainer.Visible = down;
+            InfoButtonToggled += _ => ButtonInfoOnOnToggled();
 
             _rulesAndInfoWindow = new RulesAndInfoWindow();
-
-            _rulesAndInfoWindow.OnClose += () => _buttonInfo.Pressed = false;
+            _rulesAndInfoWindow.OnClose += () => InfoButtonDown = false;
 
             _inputManager.SetInputCommand(ContentKeyFunctions.OpenInfo,
                 InputCmdHandler.FromDelegate(s => ButtonInfoOnOnToggled()));
@@ -256,24 +258,23 @@ namespace Content.Client.HUD
 
         private void ButtonInfoOnOnToggled()
         {
-            _buttonInfo.StyleClasses.Remove(TopButton.StyleClassRedTopButton);
             if (_rulesAndInfoWindow.IsOpen)
             {
                 if (!_rulesAndInfoWindow.IsAtFront())
                 {
                     _rulesAndInfoWindow.MoveToFront();
-                    _buttonInfo.Pressed = true;
+                    InfoButtonDown = true;
                 }
                 else
                 {
                     _rulesAndInfoWindow.Close();
-                    _buttonInfo.Pressed = false;
+                    InfoButtonDown = false;
                 }
             }
             else
             {
                 _rulesAndInfoWindow.OpenCentered();
-                _buttonInfo.Pressed = true;
+                InfoButtonDown = true;
             }
         }
 
