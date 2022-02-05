@@ -1,7 +1,11 @@
 using Content.Client.ContextMenu.UI;
 using Content.Shared.Verbs;
+using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.Utility;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Verbs.UI
@@ -29,20 +33,15 @@ namespace Content.Client.Verbs.UI
 
         public VerbType Type;
 
-        public VerbMenuElement(string? text, SpriteSpecifier? icon, VerbType verbType) : base(text)
+        public VerbMenuElement(string? text, VerbType verbType) : base(text)
         {
-            Icon.AddChild(new TextureRect()
-            {
-                Texture = icon?.Frame0(),
-                Stretch = TextureRect.StretchMode.KeepAspectCentered
-            });
-
             Type = verbType;
 
             // Set text font style based on verb type
             switch (verbType)
             {
                 case VerbType.Interaction:
+                case VerbType.Utility:
                     Label.SetOnlyStyleClass(StyleClassVerbInteractionText);
                     break;
                 case VerbType.Activation:
@@ -57,20 +56,49 @@ namespace Content.Client.Verbs.UI
             }
         }
 
-        public VerbMenuElement(Verb verb, VerbType verbType) : this(verb.Text, verb.Icon, verbType)
+        public VerbMenuElement(Verb verb, VerbType verbType) : this(verb.Text, verbType)
         {
             ToolTip = verb.Message;
             TooltipDelay = VerbTooltipDelay;
             Disabled = verb.Disabled;
             Verb = verb;
+            Type = verbType;
 
             if (verb.ConfirmationPopup)
             {
                 ExpansionIndicator.SetOnlyStyleClass(StyleClassVerbMenuConfirmationTexture);
                 ExpansionIndicator.Visible = true;
             }
+
+            if (verb.Icon == null && verb.IconEntity != null)
+            {
+                var spriteView = new SpriteView()
+                {
+                    OverrideDirection = Direction.South,
+                    Sprite = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<ISpriteComponent>(verb.IconEntity.Value)
+                };
+
+                Icon.AddChild(spriteView);
+                return;
+
+            }
+
+            Icon.AddChild(new TextureRect()
+            {
+                Texture = verb.Icon?.Frame0(),
+                Stretch = TextureRect.StretchMode.KeepAspectCentered
+            });
         }
 
-        public VerbMenuElement(VerbCategory category, VerbType verbType) : this(category.Text, category.Icon, verbType) { }
+        public VerbMenuElement(VerbCategory category, VerbType verbType) : this(category.Text, verbType)
+        {
+            Icon.AddChild(new TextureRect()
+            {
+                Texture = category.Icon?.Frame0(),
+                Stretch = TextureRect.StretchMode.KeepAspectCentered
+            });
+
+            Type = verbType;
+        }
     }
 }

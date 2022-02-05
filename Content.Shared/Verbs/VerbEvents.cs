@@ -2,10 +2,11 @@ using System;
 using System.Collections.Generic;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Hands.Components;
+using Content.Shared.Interaction;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
-using Content.Shared.Interaction;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Verbs
 {
@@ -187,6 +188,42 @@ namespace Content.Shared.Verbs
 
         public GetVerbsEvent(EntityUid user, EntityUid target, EntityUid? @using, SharedHandsComponent? hands, bool canInteract, bool canAccess)
         {
+            User = user;
+            Target = target;
+            Using = @using;
+            Hands = hands;
+            CanAccess = canAccess;
+            CanInteract = canInteract;
+        }
+    }
+
+    /// <summary>
+    ///    An event directed at the currently used entity to request primary interaction verbs.
+    /// </summary>
+    /// <remarks>
+    ///    Unlike <see cref="GetVerbsEvent"/> this requires the used entity not be null and not equal to the target.
+    ///    Functionally the verb version of <see cref="IAfterInteract"/> and <see cref="AfterInteractEvent"/>, this
+    ///    requires the target and the used entity to be distinct. Additionally, this allows for verbs that have no
+    ///    target entity at all (e.g., RCD targeting empty tiles). Unless an icon is specified, these verbs will default
+    ///    to using verb icons that are just the used-entity's sprite.
+    /// </remarks>
+    public class GetUtilityVerbsEvent : EntityEventArgs
+    {
+        public readonly SortedSet<Verb> Verbs = new();
+
+        public readonly EntityUid Target;
+        public readonly EntityUid User;
+        public readonly EntityUid Using;
+
+        public readonly bool CanAccess;
+        public readonly bool CanInteract;
+
+        public readonly SharedHandsComponent? Hands;
+
+        public GetUtilityVerbsEvent(EntityUid user, EntityUid target, EntityUid @using, 
+            SharedHandsComponent? hands, bool canInteract, bool canAccess)
+        {
+            DebugTools.Assert(target != @using);
             User = user;
             Target = target;
             Using = @using;

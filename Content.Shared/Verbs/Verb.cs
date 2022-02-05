@@ -10,11 +10,12 @@ namespace Content.Shared.Verbs
     [Flags]
     public enum VerbType
     {
-        Interaction = 1,
-        Activation = 2,
-        Alternative = 4,
-        Other = 8,
-        All = 1+2+4+8
+        Interaction = 1 << 0,
+        Utility     = 1 << 1,
+        Activation  = 1 << 2,
+        Alternative = 1 << 3,
+        Other       = 1 << 4,
+        All         = (1 << 5) - 1
     }
 
     /// <summary>
@@ -117,6 +118,12 @@ namespace Content.Shared.Verbs
         ///     Raw texture path used to load the <see cref="Icon"/> for displaying on the client.
         /// </summary>
         public string? IconTexture;
+
+        /// <summary>
+        ///     If this is not null, and no icon or icon texture were specified, a sprite view of this entity will be
+        ///     used as the icon for this verb.
+        /// </summary>
+        public EntityUid? IconEntity;
 
         /// <summary>
         ///     Whether or not to close the context menu after using it to run this verb.

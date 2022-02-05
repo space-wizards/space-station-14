@@ -87,6 +87,15 @@ namespace Content.Shared.Verbs
                 verbs.Add(VerbType.Interaction, getVerbEvent.Verbs);
             }
 
+            if ((verbTypes & VerbType.Utility) == VerbType.Utility
+                && @using != null
+                && @using != target)
+            {
+                GetUtilityVerbsEvent getVerbEvent = new(user, target, @using.Value, hands, canInteract, canAccess);
+                RaiseLocalEvent(@using.Value, getVerbEvent);
+                verbs.Add(VerbType.Utility, getVerbEvent.Verbs);
+            }
+
             if ((verbTypes & VerbType.Activation) == VerbType.Activation)
             {
                 GetActivationVerbsEvent getVerbEvent = new(user, target, @using, hands, canInteract, canAccess);
