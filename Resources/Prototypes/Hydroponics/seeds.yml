@@ -511,10 +511,10 @@
   growthStages: 5
   waterConsumption: 6
   chemicals:
-    Nutriment:
+    Aloe:
       Min: 1
-      Max: 2
-      PotencyDivisor: 50
+      Max: 10
+      PotencyDivisor: 10
     Dermaline:
       Min: 1
       Max: 10
