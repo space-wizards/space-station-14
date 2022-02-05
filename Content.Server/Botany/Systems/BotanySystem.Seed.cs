@@ -76,7 +76,6 @@ public partial class BotanySystem
         return Enumerable.Empty<EntityUid>();
     }
 
-
     public IEnumerable<EntityUid> Harvest(SeedPrototype proto, EntityUid user, int yieldMod = 1)
     {
         if (AddSeedToDatabase(proto)) proto.Name = proto.Uid.ToString();
@@ -121,7 +120,7 @@ public partial class BotanySystem
 
             var produce = entity.EnsureComponent<ProduceComponent>();
 
-            produce.Seed = proto;
+            produce.SeedName = proto.ID;
             produce.Grown();
 
             if (proto.Mysterious)

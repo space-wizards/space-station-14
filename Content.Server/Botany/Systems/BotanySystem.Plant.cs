@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Content.Server.Botany.Components;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Popups;
 using Content.Shared.GameTicking;
 using JetBrains.Annotations;
@@ -16,6 +17,7 @@ namespace Content.Server.Botany.Systems
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
+        [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
 
         private int _nextUid = 0;
         private readonly Dictionary<int, SeedPrototype> _seeds = new();
