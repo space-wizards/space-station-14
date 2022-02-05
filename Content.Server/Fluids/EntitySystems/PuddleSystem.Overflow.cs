@@ -85,7 +85,6 @@ public sealed partial class PuddleSystem
 
                 if (max == 0)
                 {
-
                     continue;
                 }
 
