@@ -11,7 +11,6 @@
     node: computer
   - type: Computer
   - type: ApcPowerReceiver
-    powerLoad: 500
   - type: ExtensionCableReceiver
   - type: Sprite
     sprite: Structures/Machines/computers.rsi
