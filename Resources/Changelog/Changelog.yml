@@ -1,9 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: Construction works on rotated grids, type: Fix}
-  id: 485
-  time: '2021-10-25T14:14:21.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: Added electrocution., type: Add}
@@ -2952,3 +2947,8 @@ Entries:
   - {message: Windoors should no longer crush people as they auto close., type: Fix}
   id: 985
   time: '2022-02-05T17:27:06.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Blast doors can't be opened with a crowbar anymore., type: Tweak}
+  id: 986
+  time: '2022-02-05T18:06:33.0000000+00:00'
