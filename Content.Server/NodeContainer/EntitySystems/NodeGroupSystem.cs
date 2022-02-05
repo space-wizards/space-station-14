@@ -317,6 +317,9 @@ namespace Content.Server.NodeContainer.EntitySystems
             var xform = xformQuery.GetComponent(node.Owner);
             _mapManager.TryGetGrid(xform.GridID, out var grid);
 
+            if (!node.Connectable(EntityManager, xform))
+                    yield break;
+
             foreach (var reachable in node.GetReachableNodes(xform, nodeQuery, xformQuery, grid, EntityManager))
             {
                 DebugTools.Assert(reachable != node, "GetReachableNodes() should not include self.");
