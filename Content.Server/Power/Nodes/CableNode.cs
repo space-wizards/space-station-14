@@ -13,7 +13,10 @@ namespace Content.Server.Power.Nodes
     public class CableNode : Node
     {
         public override IEnumerable<Node> GetReachableNodes(TransformComponent xform,
-            EntityQuery<NodeContainerComponent> nodeQuery, IMapGrid? grid, IEntityManager entMan)
+            EntityQuery<NodeContainerComponent> nodeQuery,
+            EntityQuery<TransformComponent> xformQuery,
+            IMapGrid? grid,
+            IEntityManager entMan)
         {
             if (!xform.Anchored || grid == null)
                 yield break;
@@ -43,11 +46,11 @@ namespace Content.Server.Power.Nodes
                     if (dir == Direction.Invalid)
                     {
                         // On own tile, block direction it faces
-                        terminalDirs |= 1 << (int) entMan.GetComponent<TransformComponent>(node.Owner).LocalRotation.GetCardinalDir();
+                        terminalDirs |= 1 << (int) xformQuery.GetComponent(node.Owner).LocalRotation.GetCardinalDir();
                     }
                     else
                     {
-                        var terminalDir = entMan.GetComponent<TransformComponent>(node.Owner).LocalRotation.GetCardinalDir();
+                        var terminalDir = xformQuery.GetComponent(node.Owner).LocalRotation.GetCardinalDir();
                         if (terminalDir.GetOpposite() == dir)
                         {
                             // Target tile has a terminal towards us, block the direction.

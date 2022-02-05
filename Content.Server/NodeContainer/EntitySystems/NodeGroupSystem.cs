@@ -317,12 +317,15 @@ namespace Content.Server.NodeContainer.EntitySystems
             var xform = xformQuery.GetComponent(node.Owner);
             _mapManager.TryGetGrid(xform.GridID, out var grid);
 
-            foreach (var reachable in node.GetReachableNodes(xform, nodeQuery, grid, EntityManager))
+            foreach (var reachable in node.GetReachableNodes(xform, nodeQuery, xformQuery, grid, EntityManager))
             {
                 DebugTools.Assert(reachable != node, "GetReachableNodes() should not include self.");
 
-                if (reachable.NodeGroupID == node.NodeGroupID && reachable.Connectable(entMan: EntityManager))
+                if (reachable.NodeGroupID == node.NodeGroupID
+                    && reachable.Connectable(EntityManager, xformQuery.GetComponent(reachable.Owner)))
+                {
                     yield return reachable;
+                }
             }
         }
 

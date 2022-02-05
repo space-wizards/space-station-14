@@ -12,7 +12,10 @@ namespace Content.Server.Power.Nodes
     public class CableTerminalNode : CableDeviceNode
     {
         public override IEnumerable<Node> GetReachableNodes(TransformComponent xform,
-            EntityQuery<NodeContainerComponent> nodeQuery, IMapGrid? grid, IEntityManager entMan)
+            EntityQuery<NodeContainerComponent> nodeQuery,
+            EntityQuery<TransformComponent> xformQuery,
+            IMapGrid? grid,
+            IEntityManager entMan)
         {
             if (!xform.Anchored || grid == null)
                 yield break;
@@ -28,7 +31,7 @@ namespace Content.Server.Power.Nodes
                     yield return node;
             }
 
-            foreach (var node in base.GetReachableNodes(xform, nodeQuery, grid, entMan))
+            foreach (var node in base.GetReachableNodes(xform, nodeQuery, xformQuery, grid, entMan))
             {
                 yield return node;
             }

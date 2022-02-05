@@ -159,6 +159,10 @@ namespace Content.Server.NodeContainer.Nodes
         /// of this asymmetric relation are made to manually update with <see cref="NodeGroupSystem.QueueReflood"/>.
         /// </para>
         /// </remarks>
-        public abstract IEnumerable<Node> GetReachableNodes(TransformComponent xform, EntityQuery<NodeContainerComponent> nodeQuery, IMapGrid? grid, IEntityManager entMan);
+        public abstract IEnumerable<Node> GetReachableNodes(TransformComponent xform,
+            EntityQuery<NodeContainerComponent> nodeQuery,
+            EntityQuery<TransformComponent> xformQuery,
+            IMapGrid? grid,
+            IEntityManager entMan);
     }
 }

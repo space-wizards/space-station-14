@@ -16,7 +16,10 @@ namespace Content.Server.Electrocution
         public string NodeName = default!;
 
         public override IEnumerable<Node> GetReachableNodes(TransformComponent xform,
-            EntityQuery<NodeContainerComponent> nodeQuery, IMapGrid? grid, IEntityManager entMan)
+            EntityQuery<NodeContainerComponent> nodeQuery,
+            EntityQuery<TransformComponent> xformQuery,
+            IMapGrid? grid,
+            IEntityManager entMan)
         {
             if (!nodeQuery.TryGetComponent(CableEntity, out var nodeContainer))
                 yield break;

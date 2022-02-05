@@ -157,7 +157,10 @@ namespace Content.Server.NodeContainer.Nodes
         }
 
         public override IEnumerable<Node> GetReachableNodes(TransformComponent xform,
-            EntityQuery<NodeContainerComponent> nodeQuery, IMapGrid? grid, IEntityManager entMan)
+            EntityQuery<NodeContainerComponent> nodeQuery,
+            EntityQuery<TransformComponent> xformQuery,
+            IMapGrid? grid,
+            IEntityManager entMan)
         {
             if (_alwaysReachable != null)
             {
@@ -177,7 +180,7 @@ namespace Content.Server.NodeContainer.Nodes
                 }
             }
 
-            if (!Connectable(entMan, xform) || grid == null)
+            if (!xform.Anchored || grid == null)
                 yield break;
 
             var pos = grid.TileIndicesFor(xform.Coordinates);
