@@ -32,6 +32,72 @@
     Steel: 100
 
 - type: latheRecipe
+  id: ShellShotgunBeanbag
+  icon:
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_beanbag.rsi
+    state: base
+  result: ShellShotgunBeanbag
+  completetime: 500
+  materials:
+    Plastic: 15
+    Steel: 10
+    
+- type: latheRecipe
+  id: CartridgePistolRubber
+  icon:
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
+    state: base
+  result: CartridgePistolRubber
+  completetime: 500
+  materials:
+    Plastic: 5
+    Steel: 5
+    
+- type: latheRecipe
+  id: CartridgeMagnumRubber
+  icon:
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
+    state: base
+  result: CartridgeMagnumRubber
+  completetime: 500
+  materials:
+    Plastic: 5
+    Steel: 5
+    
+- type: latheRecipe
+  id: CartridgeClRifleRubber
+  icon:
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
+    state: base
+  result: CartridgeClRifleRubber
+  completetime: 500
+  materials:
+    Plastic: 10
+    Steel: 5
+    
+- type: latheRecipe
+  id: CartridgeLRifleRubber
+  icon:
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
+    state: base
+  result: CartridgeLRifleRubber
+  completetime: 500
+  materials:
+    Plastic: 10
+    Steel: 5
+    
+- type: latheRecipe
+  id: CartridgeSRifleRubber
+  icon:
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
+    state: base
+  result: CartridgeSRifleRubber
+  completetime: 500
+  materials:
+    Plastic: 10
+    Steel: 5
+
+- type: latheRecipe
   id: CartridgePistol
   icon:
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi

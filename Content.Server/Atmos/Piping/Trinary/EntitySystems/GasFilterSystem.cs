@@ -1,5 +1,6 @@
 using System;
 using Content.Server.Administration.Logs;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.Trinary.Components;
 using Content.Server.NodeContainer;
@@ -26,6 +27,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
         [Dependency] private IGameTiming _gameTiming = default!;
         [Dependency] private UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private AdminLogSystem _adminLogSystem = default!;
+        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 
         public override void Initialize()
         {
@@ -76,10 +78,10 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
                 removed.SetMoles(filter.FilteredGas.Value, 0f);
 
                 var target = filterNode.Air.Pressure < Atmospherics.MaxOutputPressure ? filterNode : inletNode;
-                target.AssumeAir(filteredOut);
+                _atmosphereSystem.Merge(target.Air, filteredOut);
             }
 
-            outletNode.AssumeAir(removed);
+            _atmosphereSystem.Merge(outletNode.Air, removed);
         }
 
         private void OnFilterInteractHand(EntityUid uid, GasFilterComponent component, InteractHandEvent args)

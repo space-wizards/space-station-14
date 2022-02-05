@@ -17,8 +17,6 @@ namespace Content.Server.Ghost.Components
         [Dependency] private readonly IServerNetManager _netManager = default!;
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public override string Name => "GhostRadio";
-
         [DataField("channels")]
         private List<int> _channels = new(){1459};
 

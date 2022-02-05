@@ -9,8 +9,6 @@ namespace Content.Server.Singularity.Components
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public override string Name => "SingularityGenerator";
-
         [ViewVariables] private int _power;
 
         public int Power

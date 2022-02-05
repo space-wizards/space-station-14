@@ -12,8 +12,6 @@ namespace Content.Shared.Audio
     [NetworkedComponent]
     public sealed class AmbientSoundComponent : Component
     {
-        public override string Name => "AmbientSound";
-
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("enabled")]
         public bool Enabled { get; set; } = true;

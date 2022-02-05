@@ -184,6 +184,8 @@
          amount: 1
        - id: ClothingUniformJumpskirtCargo
          amount: 1
+       - id: ClothingHandsGlovesFingerless
+         amount: 1
 
 
 # - type: entity

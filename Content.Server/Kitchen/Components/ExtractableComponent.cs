@@ -14,13 +14,11 @@ namespace Content.Server.Kitchen.Components
     [Friend(typeof(ReagentGrinderSystem))]
     public class ExtractableComponent : Component
     {
-        public override string Name => "Extractable";
-
         [ViewVariables]
-        [DataField("juiceSolution")] 
+        [DataField("juiceSolution")]
         public Solution? JuiceSolution;
 
-        [ViewVariables] 
+        [ViewVariables]
         [DataField("grindableSolutionName")]
         public string? GrindableSolution;
     }

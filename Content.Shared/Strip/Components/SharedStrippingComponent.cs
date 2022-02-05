@@ -10,8 +10,6 @@ namespace Content.Shared.Strip.Components
     [RegisterComponent]
     public class SharedStrippingComponent : Component, IDragDropOn
     {
-        public override string Name => "Stripping";
-
         bool IDragDropOn.CanDragDropOn(DragDropEvent eventArgs)
         {
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Dragged, out SharedStrippableComponent? strippable)) return false;
