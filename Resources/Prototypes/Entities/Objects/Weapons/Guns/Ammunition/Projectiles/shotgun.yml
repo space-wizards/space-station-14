@@ -64,13 +64,20 @@
   parent: BulletBase
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/buckshot.rsi
+    sprite: Objects/Weapons/Guns/Projectiles/flare_buckshot.rsi
     state: base
   - type: Projectile
     damage:
-      types:
-        Blunt: 13
-
+      groups:
+        Burn: 10
+  - type: PointLight
+    enabled: true   
+    color: "#ff4300"
+    radius: 2.0
+    energy: 7.0
+  - type: IgniteOnCollide
+    fireStacks: 1
+    
 - type: entity
   id: PelletShotgunPractice
   name: pellet (.50 practice)
@@ -110,3 +117,24 @@
     transferAmount: 15
   - type: InjectableSolution
     solution: ammo
+
+- type: entity
+  id: PelletShotgunFlare
+  name: pellet (.50 flare)
+  abstract: true
+  parent: BulletBase
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/flare_buckshot.rsi
+    state: base
+  - type: Projectile
+    damage:
+      groups:
+        Burn: 20
+  - type: PointLight
+    enabled: true   
+    color: "#FF8080"
+    radius: 15.0
+    energy: 9.0
+  - type: IgniteOnCollide
+    fireStacks: 4

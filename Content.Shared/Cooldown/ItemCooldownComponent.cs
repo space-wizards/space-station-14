@@ -14,8 +14,6 @@ namespace Content.Shared.Cooldown
     [NetworkedComponent()]
     public sealed class ItemCooldownComponent : Component
     {
-        public override string Name => "ItemCooldown";
-
         private TimeSpan? _cooldownEnd;
         private TimeSpan? _cooldownStart;
 

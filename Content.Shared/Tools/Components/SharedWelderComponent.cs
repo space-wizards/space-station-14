@@ -8,8 +8,6 @@ namespace Content.Shared.Tools.Components
     [NetworkedComponent]
     public abstract class SharedWelderComponent : Component
     {
-        public override string Name => "Welder";
-
         public bool Lit { get; set; }
     }
 

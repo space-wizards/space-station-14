@@ -118,7 +118,7 @@ namespace Content.Server.Guardian
 
         private void OnCreatorInteract(EntityUid uid, GuardianCreatorComponent component, AfterInteractEvent args)
         {
-            if (args.Handled || args.Target == null) return;
+            if (args.Handled || args.Target == null || !args.CanReach) return;
             args.Handled = true;
             UseCreator(args.User, args.Target.Value, component);
         }

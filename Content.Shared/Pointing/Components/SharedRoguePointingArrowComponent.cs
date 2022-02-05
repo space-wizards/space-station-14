@@ -6,7 +6,6 @@ namespace Content.Shared.Pointing.Components
 {
     public class SharedRoguePointingArrowComponent : Component
     {
-        public sealed override string Name => "RoguePointingArrow";
     }
 
     [Serializable, NetSerializable]

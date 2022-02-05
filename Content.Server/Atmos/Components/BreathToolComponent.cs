@@ -12,6 +12,7 @@ namespace Content.Server.Atmos.Components
     /// Used in internals as breath tool.
     /// </summary>
     [RegisterComponent]
+    [ComponentProtoName("BreathMask")]
     public class BreathToolComponent : Component
     {
         [Dependency] private readonly IEntityManager _entities = default!;
@@ -21,8 +22,6 @@ namespace Content.Server.Atmos.Components
         /// </summary>
         [DataField("allowedSlots")]
         public SlotFlags AllowedSlots = SlotFlags.MASK;
-
-        public override string Name => "BreathMask";
         public bool IsFunctional;
         public EntityUid ConnectedInternalsEntity;
 

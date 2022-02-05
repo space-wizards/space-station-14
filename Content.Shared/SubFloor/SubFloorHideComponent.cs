@@ -19,9 +19,6 @@ namespace Content.Shared.SubFloor
     [RegisterComponent]
     public sealed class SubFloorHideComponent : Component
     {
-        /// <inheritdoc />
-        public override string Name => "SubFloorHide";
-
         /// <summary>
         ///     Whether the entity will be hid when not in subfloor.
         /// </summary>

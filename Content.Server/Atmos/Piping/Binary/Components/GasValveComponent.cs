@@ -8,8 +8,6 @@ namespace Content.Server.Atmos.Piping.Binary.Components
     [RegisterComponent]
     public class GasValveComponent : Component
     {
-        public override string Name => "GasValve";
-
         [ViewVariables]
         [DataField("open")]
         public bool Open { get; set; } = true;

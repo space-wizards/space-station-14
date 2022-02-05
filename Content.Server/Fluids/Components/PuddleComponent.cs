@@ -20,9 +20,6 @@ namespace Content.Server.Fluids.Components
         private static readonly FixedPoint2 DefaultSlipThreshold = FixedPoint2.New(3);
         public static readonly FixedPoint2 DefaultOverflowVolume = FixedPoint2.New(20);
 
-        public override string Name => "Puddle";
-
-
         // Current design: Something calls the SpillHelper.Spill, that will either
         // A) Add to an existing puddle at the location (normalised to tile-center) or
         // B) add a new one

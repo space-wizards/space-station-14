@@ -51,9 +51,6 @@ namespace Content.Server.Atmos.EntitySystems
             }
 
             SetAirblocked(airtight, false, xform);
-
-            InvalidatePosition(airtight.LastPosition.Item1, airtight.LastPosition.Item2, airtight.FixVacuum);
-            RaiseLocalEvent(new AirtightChanged(airtight));
         }
 
         private void OnAirtightPositionChanged(EntityUid uid, AirtightComponent airtight, ref AnchorStateChangedEvent args)

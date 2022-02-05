@@ -18,8 +18,6 @@ namespace Content.Server.Light.Components
     [RegisterComponent]
     public class LightReplacerComponent : Component
     {
-        public override string Name => "LightReplacer";
-
         [DataField("sound")]
         public SoundSpecifier Sound = new SoundPathSpecifier("/Audio/Weapons/click.ogg");
 

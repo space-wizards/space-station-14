@@ -1,4 +1,4 @@
-using Content.Shared.Interaction;
+using Content.Shared.Doors.Components;
 using Robust.Shared.GameObjects;
 
 namespace Content.Shared.Doors
@@ -8,9 +8,9 @@ namespace Content.Shared.Doors
     /// </summary>
     public class DoorStateChangedEvent : EntityEventArgs
     {
-        public SharedDoorComponent.DoorState State;
+        public readonly DoorState State;
 
-        public DoorStateChangedEvent(SharedDoorComponent.DoorState state)
+        public DoorStateChangedEvent(DoorState state)
         {
             State = state;
         }
@@ -28,6 +28,11 @@ namespace Content.Shared.Doors
     /// Raised when the door is determining whether it is able to close.
     /// Cancel to stop the door from being closed.
     /// </summary>
+    /// <remarks>
+    /// This event is raised both when the door is initially closed, and when it is just about to become "partially"
+    /// closed (opaque & collidable). If canceled while partially closing, it will start opening again. Useful for
+    /// things like airlock anti-crush safety features.
+    /// </remarks>
     public class BeforeDoorClosedEvent : CancellableEntityEventArgs
     {
     }
@@ -41,18 +46,12 @@ namespace Content.Shared.Doors
     }
 
     /// <summary>
-    /// Raised to determine whether the door's safety is on.
-    /// Modify Safety to set the door's safety.
-    /// </summary>
-    public class DoorSafetyEnabledEvent : HandledEntityEventArgs
-    {
-        public bool Safety = false;
-    }
-
-    /// <summary>
     /// Raised to determine whether the door should automatically close.
     /// Cancel to stop it from automatically closing.
     /// </summary>
+    /// <remarks>
+    /// This is called when a door decides whether it SHOULD auto close, not when it actually closes.
+    /// </remarks>
     public class BeforeDoorAutoCloseEvent : CancellableEntityEventArgs
     {
     }
@@ -67,51 +66,16 @@ namespace Content.Shared.Doors
     }
 
     /// <summary>
-    /// Raised to determine how long the door's close time should be modified by.
-    /// Multiply CloseTimeModifier by the desired amount.
-    /// </summary>
-    public class DoorGetCloseTimeModifierEvent : EntityEventArgs
-    {
-        public float CloseTimeModifier = 1.0f;
-    }
-
-    /// <summary>
-    /// Raised to determine whether clicking the door should open/close it.
-    /// </summary>
-    public class DoorClickShouldActivateEvent : HandledEntityEventArgs
-    {
-        public ActivateEventArgs Args;
-
-        public DoorClickShouldActivateEvent(ActivateEventArgs args)
-        {
-            Args = args;
-        }
-    }
-
-    /// <summary>
     /// Raised when an attempt to pry open the door is made.
     /// Cancel to stop the door from being pried open.
     /// </summary>
     public class BeforeDoorPryEvent : CancellableEntityEventArgs
     {
-        public InteractUsingEventArgs Args;
+        public readonly EntityUid User;
 
-        public BeforeDoorPryEvent(InteractUsingEventArgs args)
+        public BeforeDoorPryEvent(EntityUid user)
         {
-            Args = args;
-        }
-    }
-
-    /// <summary>
-    /// Raised when a door is successfully pried open.
-    /// </summary>
-    public class OnDoorPryEvent : EntityEventArgs
-    {
-        public InteractUsingEventArgs Args;
-
-        public OnDoorPryEvent(InteractUsingEventArgs args)
-        {
-            Args = args;
+            User = user;
         }
     }
 }

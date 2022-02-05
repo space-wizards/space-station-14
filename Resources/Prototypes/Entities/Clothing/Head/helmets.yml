@@ -114,7 +114,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHelmetSyndicate
-  name: syndicate helmet
+  name: syndicate EVA helmet
   description: A stylish, robust syndicate helmet
   components:
   - type: Sprite

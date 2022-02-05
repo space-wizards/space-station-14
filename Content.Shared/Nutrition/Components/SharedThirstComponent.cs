@@ -10,8 +10,6 @@ namespace Content.Shared.Nutrition.Components
     [NetworkedComponent()]
     public abstract class SharedThirstComponent : Component
     {
-        public sealed override string Name => "Thirst";
-
         [ViewVariables]
         public abstract ThirstThreshold CurrentThirstThreshold { get; }
 

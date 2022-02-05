@@ -112,12 +112,6 @@ namespace Content.Server.NodeContainer.Nodes
             }
         }
 
-        public void AssumeAir(GasMixture giver)
-        {
-            if(PipeNet != null)
-                EntitySystem.Get<AtmosphereSystem>().Merge(PipeNet.Air, giver);
-        }
-
         [ViewVariables]
         [DataField("volume")]
         public float Volume { get; set; } = DefaultVolume;
@@ -327,7 +321,7 @@ namespace Content.Server.NodeContainer.Nodes
                 }
             }
 
-            appearance.SetData(PipeVisuals.VisualState, new PipeVisualState(netConnectedDirections));
+            appearance.SetData(PipeVisuals.VisualState, netConnectedDirections);
         }
     }
 }

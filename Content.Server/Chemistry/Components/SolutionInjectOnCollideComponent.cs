@@ -13,7 +13,6 @@ namespace Content.Server.Chemistry.Components
     [RegisterComponent]
     internal sealed class SolutionInjectOnCollideComponent : Component
     {
-        public override string Name => "SolutionInjectOnCollide";
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("transferAmount")]
