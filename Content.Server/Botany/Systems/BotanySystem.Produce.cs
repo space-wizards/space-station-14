@@ -1,6 +1,6 @@
 ﻿namespace Content.Server.Botany.Systems;
 
-public class ProduceSystem
+public partial class BotanySystem
 {
-    
+
 }

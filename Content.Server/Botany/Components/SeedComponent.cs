@@ -7,7 +7,7 @@ namespace Content.Server.Botany.Components
     [RegisterComponent]
     public class SeedComponent : Component
     {
-        [DataField("seed", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<Seed>))]
+        [DataField("seed", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<SeedPrototype>))]
         public string SeedName = default!;
     }
 }

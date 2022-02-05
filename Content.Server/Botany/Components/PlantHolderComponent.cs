@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Botany.Systems;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Chemistry.Components;
 using Content.Server.Fluids.Components;
@@ -107,7 +108,7 @@ namespace Content.Server.Botany.Components
         public float WeedCoefficient { get; set; } = 1f;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public Seed? Seed { get; set; }
+        public SeedPrototype? Seed { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool ImproperHeat { get; set; }
@@ -272,7 +273,7 @@ namespace Content.Server.Botany.Components
                 }
             }
 
-            // Seed pressure resistance.
+            // SeedPrototype pressure resistance.
             var pressure = environment.Pressure;
             if (pressure < Seed.LowPressureTolerance || pressure > Seed.HighPressureTolerance)
             {
@@ -286,7 +287,7 @@ namespace Content.Server.Botany.Components
                 ImproperPressure = false;
             }
 
-            // Seed ideal temperature.
+            // SeedPrototype ideal temperature.
             if (MathF.Abs(environment.Temperature - Seed.IdealHeat) > Seed.HeatTolerance)
             {
                 Health -= healthMod;
@@ -658,7 +659,7 @@ namespace Content.Server.Botany.Components
                 if (Seed == null)
                 {
                     var protoMan = IoCManager.Resolve<IPrototypeManager>();
-                    if (!protoMan.TryIndex<Seed>(seeds.SeedName, out var seed))
+                    if (!protoMan.TryIndex<SeedPrototype>(seeds.SeedName, out var seed))
                         return false;
 
                     user.PopupMessageCursor(Loc.GetString("plant-holder-component-plant-success-message",

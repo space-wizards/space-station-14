@@ -21,9 +21,9 @@ namespace Content.Server.Botany.Components
         [DataField("seed")] private string? _seedName;
 
         [ViewVariables]
-        public Seed? Seed
+        public SeedPrototype? Seed
         {
-            get => _seedName != null ? IoCManager.Resolve<IPrototypeManager>().Index<Seed>(_seedName) : null;
+            get => _seedName != null ? IoCManager.Resolve<IPrototypeManager>().Index<SeedPrototype>(_seedName) : null;
             set => _seedName = value?.ID;
         }
 

@@ -1,31 +1,34 @@
 ﻿using System.Collections.Generic;
-using Content.Server.Botany;
 using Content.Server.Botany.Components;
+using Content.Server.Popups;
 using Content.Shared.GameTicking;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
-namespace Content.Server.Plants
+namespace Content.Server.Botany.Systems
 {
     [UsedImplicitly]
-    public class PlantSystem : EntitySystem
+    public partial class BotanySystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
         private int _nextUid = 0;
-        private readonly Dictionary<int, Seed> _seeds = new();
+        private readonly Dictionary<int, SeedPrototype> _seeds = new();
 
         private float _timer = 0f;
-
-        public IReadOnlyDictionary<int, Seed> Seeds => _seeds;
 
         public override void Initialize()
         {
             base.Initialize();
 
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
+
+            InitializeSeeds();
 
             PopulateDatabase();
         }
@@ -36,13 +39,13 @@ namespace Content.Server.Plants
 
             _seeds.Clear();
 
-            foreach (var seed in _prototypeManager.EnumeratePrototypes<Seed>())
+            foreach (var seed in _prototypeManager.EnumeratePrototypes<SeedPrototype>())
             {
                 AddSeedToDatabase(seed);
             }
         }
 
-        public bool AddSeedToDatabase(Seed seed)
+        public bool AddSeedToDatabase(SeedPrototype seed)
         {
             // If it's not -1, it's already in the database. Probably.
             if (seed.Uid != -1)
