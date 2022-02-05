@@ -1,11 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: Added electrocution., type: Add}
-  - {message: Cutting cables without insulated gloves shocks you., type: Tweak}
-  - {message: Grilles can now be electrified by placing a cable below them., type: Tweak}
-  id: 486
-  time: '2021-10-25T14:21:56.0000000+00:00'
 - author: ike709
   changes:
   - {message: Stacks can now be split in half by alt-clicking or into different amounts
@@ -2952,3 +2945,10 @@ Entries:
   - {message: Blast doors can't be opened with a crowbar anymore., type: Tweak}
   id: 986
   time: '2022-02-05T18:06:33.0000000+00:00'
+- author: router
+  changes:
+  - {message: Replaced all ingot mints to fix a typo in their stamping. All "Nanotransen"
+      gold and silver bars have been melted down and reformed., type: Fix}
+  - {message: Removed Herobrine., type: Remove}
+  id: 987
+  time: '2022-02-05T19:23:06.0000000+00:00'
