@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Content.Server.NodeContainer.Nodes;
-using Content.Server.Power.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -67,13 +66,6 @@ namespace Content.Server.Power.Nodes
 
                 yield return node;
             }
-        }
-
-        public override void OnPostRebuild()
-        {
-            base.OnPostRebuild();
-
-            EntitySystem.Get<CableVisSystem>().QueueUpdate(Owner);
         }
     }
 }
