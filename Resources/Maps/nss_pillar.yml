@@ -37668,7 +37668,7 @@ entities:
   - dockedWith: 13266
     type: Docking
   - changeAirtight: False
-    state: open
+    state: Open
     type: Door
   - containers:
       board: !type:Container
@@ -37683,7 +37683,7 @@ entities:
   - dockedWith: 13267
     type: Docking
   - changeAirtight: False
-    state: open
+    state: Open
     type: Door
   - containers:
       board: !type:Container
@@ -37698,7 +37698,7 @@ entities:
   - dockedWith: 13268
     type: Docking
   - changeAirtight: False
-    state: open
+    state: Open
     type: Door
   - containers:
       board: !type:Container
@@ -126420,7 +126420,7 @@ entities:
   - dockedWith: 13178
     type: Docking
   - changeAirtight: False
-    state: open
+    state: Open
     type: Door
 - uid: 12614
   type: AirlockShuttle
@@ -126431,7 +126431,7 @@ entities:
   - dockedWith: 13179
     type: Docking
   - changeAirtight: False
-    state: open
+    state: Open
     type: Door
 - uid: 12615
   type: WallSolid
@@ -131276,7 +131276,7 @@ entities:
   - dockedWith: 12613
     type: Docking
   - changeAirtight: False
-    state: open
+    state: Open
     type: Door
   - canCollide: False
     type: Physics
@@ -131292,7 +131292,7 @@ entities:
   - dockedWith: 12614
     type: Docking
   - changeAirtight: False
-    state: open
+    state: Open
     type: Door
   - canCollide: False
     type: Physics
@@ -132372,7 +132372,7 @@ entities:
   - dockedWith: 3596
     type: Docking
   - changeAirtight: False
-    state: open
+    state: Open
     type: Door
   - canCollide: False
     type: Physics
@@ -132388,7 +132388,7 @@ entities:
   - dockedWith: 3597
     type: Docking
   - changeAirtight: False
-    state: open
+    state: Open
     type: Door
   - canCollide: False
     type: Physics
@@ -132404,7 +132404,7 @@ entities:
   - dockedWith: 3598
     type: Docking
   - changeAirtight: False
-    state: open
+    state: Open
     type: Door
   - canCollide: False
     type: Physics
