@@ -353,7 +353,6 @@ public abstract class SharedDoorSystem : EntitySystem
 
         door.NextStateChange = GameTiming.CurTime + door.CloseTimeTwo;
         _activeDoors.Add(door);
-
         
         // Crush any entities. Note that we don't check airlock safety here. This should have been checked before
         // the door closed.
