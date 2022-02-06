@@ -71,27 +71,4 @@ public class LungSystem : EntitySystem
             // Most things will just want to exhale again.
         }
     }
-
-    public void ReagentToGas(EntityUid uid, LungComponent lung)
-    {
-        var queue = new RemQueue<Solution.ReagentQuantity>();
-
-        foreach (var reagent in lung.LungSolution.Contents)
-        {
-            if (!_atmosphereSystem.GasReagents.Contains(reagent.ReagentId))
-                continue;
-
-            var moles = reagent.Quantity.Float() / Atmospherics.BreathMolesToReagentMultiplier;
-            if (Enum.TryParse<Gas>(reagent.ReagentId, out var gas))
-            {
-                queue.Add(reagent);
-                lung.Air.AdjustMoles(gas, moles);
-            }
-        }
-
-        foreach (var reagent in queue)
-        {
-            lung.LungSolution.RemoveReagent(reagent.ReagentId, reagent.Quantity);
-        }
-    }
 }

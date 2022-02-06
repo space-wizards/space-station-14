@@ -142,7 +142,6 @@ namespace Content.Server.Body.Systems
             var outGas = new GasMixture(ev.Gas.Volume);
             foreach (var (lung, _) in organs)
             {
-                _lungSystem.ReagentToGas(lung.Owner, lung);
                 _atmosSys.Merge(outGas, lung.Air);
                 lung.Air.Clear();
                 lung.LungSolution.RemoveAllSolution();
