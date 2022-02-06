@@ -1,9 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: 'Wall lights can be placed again, APCs place where they should', type: Fix}
-  id: 490
-  time: '2021-10-26T14:15:02.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Construction recipes are now sorted alphabetically., type: Tweak}
@@ -2953,3 +2948,9 @@ Entries:
   - {message: Hopefully fix pillar spawning., type: Fix}
   id: 990
   time: '2022-02-06T02:22:28.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Directional windows no longer look weird when viewed while rotated.,
+    type: Tweak}
+  id: 991
+  time: '2022-02-06T02:25:13.0000000+00:00'
