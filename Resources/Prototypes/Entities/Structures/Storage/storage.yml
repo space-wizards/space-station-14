@@ -7,8 +7,7 @@
   - type: Construction
     graph: Rack
     node: Rack
-# Anchorable is currently incompatiable with PlaceableSurface
-# - type: Anchorable
+  - type: Anchorable
   - type: InteractionOutline
   - type: PlaceableSurface
   - type: Sprite
