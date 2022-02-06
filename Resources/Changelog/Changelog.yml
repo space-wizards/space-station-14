@@ -1,11 +1,6 @@
 Entries:
 - author: 20kdc
   changes:
-  - {message: ChemMaster bottles are no longer 'empty', type: Fix}
-  id: 489
-  time: '2021-10-25T14:58:16.0000000+00:00'
-- author: 20kdc
-  changes:
   - {message: 'Wall lights can be placed again, APCs place where they should', type: Fix}
   id: 490
   time: '2021-10-26T14:15:02.0000000+00:00'
@@ -2953,3 +2948,8 @@ Entries:
       to the latest version., type: Tweak}
   id: 989
   time: '2022-02-05T23:08:15.0000000+00:00'
+- author: moony
+  changes:
+  - {message: Hopefully fix pillar spawning., type: Fix}
+  id: 990
+  time: '2022-02-06T02:22:28.0000000+00:00'
