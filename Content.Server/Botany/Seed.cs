@@ -356,7 +356,7 @@ namespace Content.Server.Botany
 
         public bool CheckHarvest(EntityUid user, EntityUid? held = null)
         {
-            return !Ligneous || (Ligneous && held != null && held.Value.HasTag("BotanySharp"));
+            return !Ligneous || (Ligneous && held != null && EntitySystem.Get<TagSystem>().HasTag(held.Value, "BotanySharp"));
         }
     }
 }

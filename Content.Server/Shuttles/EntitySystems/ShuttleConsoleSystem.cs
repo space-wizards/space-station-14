@@ -25,6 +25,7 @@ namespace Content.Server.Shuttles.EntitySystems
         [Dependency] private readonly ActionBlockerSystem _blocker = default!;
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
+        [Dependency] private readonly TagSystem _tags = default!;
 
         public override void Initialize()
         {
@@ -147,7 +148,7 @@ namespace Content.Server.Shuttles.EntitySystems
         /// </summary>
         private void HandleConsoleInteract(EntityUid uid, ShuttleConsoleComponent component, ActivateInWorldEvent args)
         {
-            if (!args.User.HasTag("CanPilot"))
+            if (!_tags.HasTag(args.User, "CanPilot"))
             {
                 return;
             }

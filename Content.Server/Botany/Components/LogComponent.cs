@@ -18,7 +18,7 @@ namespace Content.Server.Botany.Components
 
             var entMan = IoCManager.Resolve<IEntityManager>();
 
-            if (eventArgs.Using.HasTag("BotanySharp"))
+            if (EntitySystem.Get<TagSystem>().HasTag(eventArgs.Using, "BotanySharp"))
             {
                 for (var i = 0; i < 2; i++)
                 {

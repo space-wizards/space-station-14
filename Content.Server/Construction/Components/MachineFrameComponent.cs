@@ -17,6 +17,7 @@ namespace Content.Server.Construction.Components
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IComponentFactory _componentFactory = default!;
+        [Dependency] private readonly TagSystem _tag = default!;
 
         public const string PartContainer = "machine_parts";
         public const string BoardContainer = "machine_board";
@@ -239,7 +240,7 @@ namespace Content.Server.Construction.Components
                 // I have MANY regrets.
                 foreach (var (tagName, _) in TagRequirements)
                 {
-                    if (!part.HasTag(tagName))
+                    if (!_tag.HasTag(part, tagName))
                         continue;
 
                     if (!_tagProgress.ContainsKey(tagName))
@@ -344,7 +345,7 @@ namespace Content.Server.Construction.Components
                     if (_tagProgress[tagName] >= info.Amount)
                         continue;
 
-                    if (!eventArgs.Using.HasTag(tagName))
+                    if (!_tag.HasTag(eventArgs.Using, tagName))
                         continue;
 
                     if (!eventArgs.Using.TryRemoveFromContainer() || !_partContainer.Insert(eventArgs.Using)) continue;
