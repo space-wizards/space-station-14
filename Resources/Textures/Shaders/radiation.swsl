@@ -25,11 +25,11 @@ highp float noise(highp vec2 uv) {
 }
 
 highp float fbm(highp vec2 uv) {
-    int octaves = 6;
+    const int octaves = 6;
     highp float amplitude = 0.5;
     highp float frequency = 3.0;
     highp float value = 0.0;
-	
+
     for(int i = 0; i < octaves; i++) {
         value += amplitude * noise(frequency * uv);
         amplitude *= 0.5;

@@ -39,6 +39,8 @@
     - type: ComputerVisualizer
       key: generic_key
       screen: shuttle
+  - type: Computer
+    board: ShuttleConsoleCircuitboard
 
 - type: entity
   parent: ComputerShuttleBase
@@ -271,6 +273,32 @@
     color: "#e6e227"
 
 - type: entity
+  parent: ComputerBase
+  id: ComputerRadar
+  name: mass scanner computer
+  description: A computer for detecting nearby bodies, displaying them by position and mass.
+  components:
+    - type: Appearance
+      visuals:
+        - type: ComputerVisualizer
+          key: generic_key
+          screen: solar_screen
+    - type: RadarConsole
+    - type: ActivatableUI
+      key: enum.RadarConsoleUiKey.Key
+    - type: ActivatableUIRequiresPower
+    - type: UserInterface
+      interfaces:
+        - key: enum.RadarConsoleUiKey.Key
+          type: RadarConsoleBoundUserInterface
+    - type: Computer
+      board: RadarConsoleCircuitboard
+    - type: PointLight
+      radius: 1.5
+      energy: 1.6
+      color: "#e6e227"
+
+- type: entity
   id: ComputerSupplyOrdering
   parent: ComputerBase
   name: Cargo ordering computer
@@ -308,12 +336,14 @@
       - LivestockCow
       - LivestockChicken
       - LivestockDuck
+      - LivestockGoat
       - FoodPizza
       - ServiceJanitorial
       - ServiceLightsReplacement
       - ServiceSmokeables
       - ServiceCustomSmokable
       - ServiceBureaucracy
+      - ServicePersonnel
       - EngineeringCableLv
       - EngineeringCableMv
       - EngineeringCableHv

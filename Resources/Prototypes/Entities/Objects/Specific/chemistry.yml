@@ -120,7 +120,7 @@
   - type: SolutionContainerManager
     solutions:
       beaker:
-        maxVol: 60
+        maxVol: 40
         canReact: false
 
 - type: entity

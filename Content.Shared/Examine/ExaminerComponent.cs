@@ -10,8 +10,6 @@ namespace Content.Shared.Examine
     [RegisterComponent]
     public sealed class ExaminerComponent : Component
     {
-        public override string Name => "Examiner";
-
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("DoRangeCheck")]
         private bool _doRangeCheck = true;

@@ -9,12 +9,17 @@
   - type: Sprite
     sprite: Objects/Fun/dice.rsi
     noRot: true # If their sprites rotate, the number becomes even more illegible than usual.
+  - type: Tag
+    tags:
+    - Dice
+  - type: Item
+    size: 2
 
 - type: entity
   parent: BaseDice
   id: d100Dice
   name: d100
-  description: A die with one hundred sides! Probably not fairly weighted...
+  description: A die with ten sides. Works better for d100 rolls than a golf ball.
   components:
   - type: Dice
     sides: 100

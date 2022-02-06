@@ -10,7 +10,6 @@ namespace Content.Shared.Body.Components;
 
 [RegisterComponent]
 [Friend(typeof(MechanismSystem), typeof(SharedBodyPartSystem))]
-[ComponentProtoName("Mechanism")]
 public class MechanismComponent : Component
 {
     public SharedBodyComponent? Body => Part?.Body;

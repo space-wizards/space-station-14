@@ -57,3 +57,39 @@
   effects:
     - !type:CreateEntityReactionEffect
       entity: FoodCakeBatter
+
+# Condiments
+
+- type: reaction
+  id: CookingKetchup
+  reactants:
+    JuiceTomato:
+      amount: 10
+    Sugar:
+      amount: 5
+  products:
+    Ketchup: 15
+    
+- type: reaction
+  id: CookingBbqSauce
+  reactants:
+    Ketchup:
+      amount: 5
+    Vinegar:
+      amount: 5
+    Sugar:
+      amount: 5   
+  products:
+    BbqSauce: 15
+    
+- type: reaction
+  id: CookingHotsauce
+  reactants:
+    JuiceTomato:
+      amount: 5
+    TableSalt:
+      amount: 5
+    CapsaicinOil:
+      amount: 5
+  products:
+    Hotsauce: 15

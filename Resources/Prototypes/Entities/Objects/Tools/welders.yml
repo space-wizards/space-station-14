@@ -90,6 +90,11 @@
         - ReagentId: WeldingFuel
           Quantity: 25
         maxVol: 25
+  - type: Tool
+    useSound:
+      collection: Welder
+    qualities: Welding
+    speed: 0.7
   - type: PointLight
     enabled: false
     radius: 1.0

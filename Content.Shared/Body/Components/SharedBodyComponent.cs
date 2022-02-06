@@ -17,8 +17,6 @@ namespace Content.Shared.Body.Components;
 [Friend(typeof(SharedBodySystem))]
 public abstract class SharedBodyComponent : Component
 {
-    public override string Name => "Body";
-
     [DataField("template", required: true)]
     public string TemplateId = default!;
 

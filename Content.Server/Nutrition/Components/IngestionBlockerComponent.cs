@@ -15,8 +15,6 @@ namespace Content.Server.Nutrition.EntitySystems;
 [RegisterComponent, Friend(typeof(FoodSystem), typeof(DrinkSystem))]
 public class IngestionBlockerComponent : Component
 {
-    public override string Name => "IngestionBlocker";
-
     /// <summary>
     ///     Is this component currently blocking consumption.
     /// </summary>

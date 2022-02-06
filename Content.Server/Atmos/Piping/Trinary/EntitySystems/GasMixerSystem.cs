@@ -1,5 +1,6 @@
 using System;
 using Content.Server.Administration.Logs;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.Trinary.Components;
 using Content.Server.NodeContainer;
@@ -22,6 +23,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
     {
         [Dependency] private UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private AdminLogSystem _adminLogSystem = default!;
+        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 
         public override void Initialize()
         {
@@ -98,13 +100,13 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             if (transferMolesOne > 0f)
             {
                 var removed = inletOne.Air.Remove(transferMolesOne);
-                outlet.AssumeAir(removed);
+                _atmosphereSystem.Merge(outlet.Air, removed);
             }
 
             if (transferMolesTwo > 0f)
             {
                 var removed = inletTwo.Air.Remove(transferMolesTwo);
-                outlet.AssumeAir(removed);
+                _atmosphereSystem.Merge(outlet.Air, removed);
             }
         }
 

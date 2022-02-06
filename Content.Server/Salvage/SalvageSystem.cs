@@ -278,7 +278,7 @@ namespace Content.Server.Salvage
                 Report("salvage-system-announcement-spawn-no-debris-available");
                 return false;
             }
-            var bp = _mapLoader.LoadBlueprint(spl.MapId, map.MapPath);
+            var bp = _mapLoader.LoadBlueprint(spl.MapId, map.MapPath.ToString());
             if (bp == null)
             {
                 Report("salvage-system-announcement-spawn-debris-disintegrated");

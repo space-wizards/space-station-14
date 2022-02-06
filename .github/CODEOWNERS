@@ -6,7 +6,7 @@
 # Moony's Gargantuan List Of Things She Cares About, or MGLOTSCA for short.
 # You need to add your name to these entries, not make a new one, if you care about them.
 /Content.*/Bql/ @moonheart08
-/Content.*/Administration/ @moonheart08
+/Content.*/Administration/ @moonheart08 @PaulRitter
 /Content.*/Station/ @moonheart08
 /Content.*/Maps/ @moonheart08
 /Content.*/GameTicking/ @moonheart08 @Zumorica
@@ -45,6 +45,7 @@
 /Content.Shared/Damage/ @ElectroJr
 /Content.Shared/Containers/ItemSlot/ @ElectroJr
 /Content.*/PowerCell/ @ElectroJr
+/Content.*/Doors/ @ElectroJr
 
 # Only some of this shit code is my responsibility, but I wanna get notified:
 /Content.*/Interaction/ @ElectroJr
@@ -58,7 +59,6 @@
 /Content.*/Objectives @PaulRitter
 /Content.*/MachineLinking @PaulRitter
 /Content.*/Crayon @PaulRitter
-/Content.*/Administration @PaulRitter
 /Content.*/Clothing @PaulRitter
 
 # Be they Fluent translations or Freemarker templates, I know them both!

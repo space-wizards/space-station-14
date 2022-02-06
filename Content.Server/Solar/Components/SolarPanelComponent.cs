@@ -19,8 +19,6 @@ namespace Content.Server.Solar.Components
     [Friend(typeof(PowerSolarSystem))]
     public class SolarPanelComponent : Component
     {
-        public override string Name => "SolarPanel";
-
         /// <summary>
         /// Maximum supply output by this panel (coverage = 1)
         /// </summary>

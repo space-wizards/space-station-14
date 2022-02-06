@@ -1,5 +1,5 @@
 ﻿- type: constructionGraph
-  id: barricade
+  id: Barricade
   start: start
   graph:
     - node: start

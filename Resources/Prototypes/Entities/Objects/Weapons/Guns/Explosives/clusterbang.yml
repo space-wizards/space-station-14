@@ -10,9 +10,9 @@
     state: base-0
   - type: Appearance
     visuals:
-    - type: ClusterFlashVisualizer
+    - type: ClusterGrenadeVisualizer
       state: base
-  - type: ClusterFlash
+  - type: ClusterGrenade
 
 - type: entity
   parent: ClusterBang
@@ -21,5 +21,5 @@
   components:
   - type: Sprite
     state: base-3
-  - type: ClusterFlash
+  - type: ClusterGrenade
     fillPrototype: GrenadeFlashBang

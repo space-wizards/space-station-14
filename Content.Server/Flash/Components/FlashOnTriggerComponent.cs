@@ -9,11 +9,7 @@ namespace Content.Server.Flash.Components
     [RegisterComponent]
     internal sealed class FlashOnTriggerComponent : Component
     {
-        public override string Name => "FlashOnTrigger";
-
         [DataField("range")] internal float Range = 1.0f;
         [DataField("duration")] internal float Duration = 8.0f;
-
-        internal bool Flashed;
     }
 }

@@ -132,15 +132,41 @@
       - state: green
       - state: mime
 
-#- type: entity
-#  id: SpawnPointChaplain
-#  parent: SpawnPointJobBase
-#  name: chaplain
-#  components:
-#    - type: SpawnPoint
-#      job_id: Chaplain
-#    - type: Sprite
-#      state: Chaplain
+- type: entity
+  id: SpawnPointChaplain
+  parent: SpawnPointJobBase
+  name: chaplain
+  components:
+  - type: SpawnPoint
+    job_id: Chaplain
+  - type: Sprite
+    layers:
+      - state: green
+      - state: chaplain
+      
+- type: entity
+  id: SpawnPointLibrarian
+  parent: SpawnPointJobBase
+  name: librarian
+  components:
+  - type: SpawnPoint
+    job_id: Librarian
+  - type: Sprite
+    layers:
+      - state: green
+      - state: librarian
+
+- type: entity
+  id: SpawnPointLawyer
+  parent: SpawnPointJobBase
+  name: lawyer
+  components:
+  - type: SpawnPoint
+    job_id: Lawyer
+  - type: Sprite
+    layers:
+      - state: green
+      - state: lawyer 
 
 - type: entity
   id: SpawnPointJanitor

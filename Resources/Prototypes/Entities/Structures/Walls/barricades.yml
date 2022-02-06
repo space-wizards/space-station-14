@@ -5,7 +5,7 @@
   components:
   - type: InteractionOutline
   - type: Construction
-    graph: barricade
+    graph: Barricade
     node: barricadewooden
   - type: Sprite
     sprite: Structures/Walls/barricades.rsi

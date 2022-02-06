@@ -26,8 +26,6 @@ namespace Content.Server.Recycling.Components
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public override string Name => "Recycler";
-
         /// <summary>
         ///     Whether or not sentient beings will be recycled
         /// </summary>

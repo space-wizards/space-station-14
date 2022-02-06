@@ -15,7 +15,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Body.Components
 {
-    [NetworkedComponent(), ComponentProtoName("BodyPart")]
+    [NetworkedComponent()]
     [Friend(typeof(SharedBodyPartSystem), typeof(SharedBodySystem))]
     public abstract class SharedBodyPartComponent : Component
     {

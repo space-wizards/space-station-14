@@ -200,7 +200,7 @@ namespace Content.Shared.CCVar
             CVarDef.Create("traitor.starting_balance", 20);
 
         public static readonly CVarDef<int> TraitorMaxDifficulty =
-            CVarDef.Create("traitor.max_difficulty", 6);
+            CVarDef.Create("traitor.max_difficulty", 5);
 
         public static readonly CVarDef<int> TraitorMaxPicks =
             CVarDef.Create("traitor.max_picks", 20);
@@ -380,12 +380,6 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool> SpaceWind =
             CVarDef.Create("atmos.space_wind", true, CVar.SERVERONLY);
-
-        /// <summary>
-        ///     The sound that plays when space wind occurs.
-        /// </summary>
-        public static readonly CVarDef<string> SpaceWindSound =
-            CVarDef.Create("atmos.space_wind_sound", "/Audio/Effects/space_wind.ogg", CVar.SERVERONLY);
 
         /// <summary>
         ///     Whether monstermos tile equalization is enabled.
@@ -632,5 +626,12 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<float> RulesWaitTime =
             CVarDef.Create("rules.time", 45f, CVar.SERVER | CVar.REPLICATED);
+
+        /*
+         * Autogeneration
+         */
+
+        public static readonly CVarDef<string> DestinationFile =
+            CVarDef.Create("autogen.destination_file", "", CVar.SERVER | CVar.SERVERONLY);
     }
 }

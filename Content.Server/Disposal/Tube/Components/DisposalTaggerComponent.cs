@@ -28,8 +28,6 @@ namespace Content.Server.Disposal.Tube.Components
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public override string Name => "DisposalTagger";
-
         [ViewVariables(VVAccess.ReadWrite)]
         private string _tag = "";
 
@@ -139,7 +137,7 @@ namespace Content.Server.Disposal.Tube.Components
                 return;
             }
 
-            var activeHandEntity = hands.GetActiveHand?.Owner;
+            var activeHandEntity = hands.GetActiveHandItem?.Owner;
             if (activeHandEntity == null)
             {
                 OpenUserInterface(actor);
