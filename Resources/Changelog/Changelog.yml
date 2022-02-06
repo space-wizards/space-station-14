@@ -1,9 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: Morgue trays now extend to the proper position., type: Fix}
-  id: 494
-  time: '2021-10-27T01:23:44.0000000+00:00'
 - author: ShadowCommander
   changes:
   - {message: Fixed speech bubble position on rotated grids., type: Fix}
@@ -2955,3 +2950,10 @@ Entries:
   - {message: adds a portable flasher for security to lock down areas, type: Add}
   id: 994
   time: '2022-02-06T15:59:42.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'The L6 Saw, C20r, Bojevic, and Grenade Launcher are no longer purchasable
+      without another traitor''s help. Do something more creative.', type: Tweak}
+  - {message: Holoparasites cost 14TC down from 16TC., type: Tweak}
+  id: 995
+  time: '2022-02-06T23:46:06.0000000+00:00'
