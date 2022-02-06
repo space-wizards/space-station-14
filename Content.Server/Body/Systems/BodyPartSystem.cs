@@ -44,8 +44,7 @@ public class BodyPartSystem : SharedBodyPartSystem
     /// <summary>
     ///     Gibs the body part.
     /// </summary>
-    public void Gib(EntityUid uid,
-        SharedBodyPartComponent? part=null)
+    public void Gib(EntityUid uid, SharedBodyPartComponent? part=null)
     {
         if (!Resolve(uid, ref part))
             return;
