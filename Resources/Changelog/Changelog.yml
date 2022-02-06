@@ -1,26 +1,4 @@
 Entries:
-- author: ike709
-  changes:
-  - {message: Stacks can now be split in half by alt-clicking or into different amounts
-      with the new Split verb., type: Add}
-  id: 487
-  time: '2021-10-25T14:36:04.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Added insulated gloves (and their cheap knockoffs) to the station.,
-    type: Add}
-  id: 488
-  time: '2021-10-25T14:58:04.292881+00:00'
-- author: 20kdc
-  changes:
-  - {message: ChemMaster bottles are no longer 'empty', type: Fix}
-  id: 489
-  time: '2021-10-25T14:58:16.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: 'Wall lights can be placed again, APCs place where they should', type: Fix}
-  id: 490
-  time: '2021-10-26T14:15:02.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Construction recipes are now sorted alphabetically., type: Tweak}
@@ -2952,3 +2930,27 @@ Entries:
   - {message: Removed Herobrine., type: Remove}
   id: 987
   time: '2022-02-05T19:23:06.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Massive list of changes and fixes for NSS Pillar. See Github for list.,
+    type: Fix}
+  id: 988
+  time: '2022-02-05T21:27:43.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Brig access is now the least privileged form of security access and
+      given to lawyers. It may take a while for stations to update their airlock software
+      to the latest version., type: Tweak}
+  id: 989
+  time: '2022-02-05T23:08:15.0000000+00:00'
+- author: moony
+  changes:
+  - {message: Hopefully fix pillar spawning., type: Fix}
+  id: 990
+  time: '2022-02-06T02:22:28.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Directional windows no longer look weird when viewed while rotated.,
+    type: Tweak}
+  id: 991
+  time: '2022-02-06T02:25:13.0000000+00:00'
