@@ -11,8 +11,6 @@ namespace Content.Server.Research.Components
     [ComponentReference(typeof(IActivate))]
     public class ResearchPointSourceComponent : ResearchClientComponent
     {
-        public override string Name => "ResearchPointSource";
-
         [DataField("pointspersecond")]
         private int _pointsPerSecond;
         [DataField("active")]

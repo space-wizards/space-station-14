@@ -95,7 +95,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 }
             }
 
-            outlet.AssumeAir(removed);
+            _atmosphereSystem.Merge(outlet.Air, removed);
         }
 
         private void OnPumpInteractHand(EntityUid uid, GasVolumePumpComponent component, InteractHandEvent args)

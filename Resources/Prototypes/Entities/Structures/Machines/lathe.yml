@@ -147,6 +147,7 @@
       - HydroponicsToolScythe
       - HydroponicsToolHatchet
       - Shovel
+      - HandheldCrewMonitor
       - Scalpel
       - Retractor
       - Cautery
@@ -166,6 +167,12 @@
       - ShellShotgun
       - CartridgeLRifle
       - CartridgeMagnum
+      - ShellShotgunBeanbag
+      - CartridgePistolRubber
+      - CartridgeMagnumRubber
+      - CartridgeClRifleRubber
+      - CartridgeLRifleRubber
+      - CartridgeSRifleRubber
       - MicroManipulatorStockPart
       - ScanningModuleStockPart
       - MicroLaserStockPart
@@ -189,6 +196,8 @@
       - KitchenReagentGrinderMachineCircuitboard
       - CrewMonitoringComputerCircuitboard
       - ShuttleConsoleCircuitboard
+      - DawInstrumentMachineCircuitboard
+      - SynthesizerInstrument
       - Bucket
       - MopItem
       - SprayBottle

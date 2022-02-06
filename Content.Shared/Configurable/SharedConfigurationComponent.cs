@@ -7,8 +7,6 @@ namespace Content.Shared.Configurable
 {
     public class SharedConfigurationComponent : Component
     {
-        public override string Name => "Configuration";
-
         [Serializable, NetSerializable]
         public class ConfigurationBoundUserInterfaceState : BoundUserInterfaceState
         {

@@ -203,3 +203,25 @@
       seed: chili
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/chili.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of aloe seeds
+  description: "Soothing."
+  id: AloeSeeds
+  components:
+    - type: Seed
+      seed: aloe
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/aloe.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of poppy seeds
+  description: "Do not eat within 72 hours of a drug test."
+  id: PoppySeeds
+  components:
+    - type: Seed
+      seed: poppy
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/poppy.rsi

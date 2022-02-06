@@ -142,3 +142,15 @@
     sprite: Clothing/Hands/Gloves/Color/black.rsi
     HeatResistance: 1400
   - type: Insulated
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesFingerless
+  name: fingerless gloves
+  description: Plain black gloves without fingertips for the hard working.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/fingerless.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/fingerless.rsi
+

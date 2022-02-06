@@ -1,20 +1,28 @@
 using Content.Server.Electrocution;
 using Content.Server.Power.Components;
+using Content.Server.Stack;
 using Content.Server.Tools;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Map;
 
 namespace Content.Server.Power.EntitySystems;
 
-public class CableSystem : EntitySystem
+public sealed partial class CableSystem : EntitySystem
 {
+    [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly ITileDefinitionManager _tileManager = default!;
     [Dependency] private readonly ToolSystem _toolSystem = default!;
+    [Dependency] private readonly StackSystem _stack = default!;
     [Dependency] private readonly ElectrocutionSystem _electrocutionSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
+
+        InitializeCablePlacer();
 
         SubscribeLocalEvent<CableComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<CableComponent, CuttingFinishedEvent>(OnCableCut);

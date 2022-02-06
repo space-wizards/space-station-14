@@ -10,8 +10,6 @@ namespace Content.Server.Speech.Components;
 [RegisterComponent]
 public class AddAccentClothingComponent : Component
 {
-    public override string Name => "AddAccentClothing";
-
     /// <summary>
     ///     Component name for accent that will be applied.
     /// </summary>

@@ -17,8 +17,6 @@ namespace Content.Server.Body.Components
     [RegisterComponent, Friend(typeof(MetabolizerSystem))]
     public class MetabolizerComponent : Component
     {
-        public override string Name => "Metabolizer";
-
         public float AccumulatedFrametime = 0.0f;
 
         /// <summary>
