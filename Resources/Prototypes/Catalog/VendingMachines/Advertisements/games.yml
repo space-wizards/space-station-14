@@ -1,0 +1,11 @@
+- type: advertisementsPack
+  id: GoodCleanFunAds
+  advertisements:
+  - advertisement-goodcleanfun-1
+  - advertisement-goodcleanfun-2
+  - advertisement-goodcleanfun-3
+  - advertisement-goodcleanfun-4
+  - advertisement-goodcleanfun-5
+  - advertisement-goodcleanfun-6
+  - advertisement-goodcleanfun-7
+  - advertisement-goodcleanfun-8

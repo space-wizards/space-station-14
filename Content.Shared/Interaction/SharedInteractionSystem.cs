@@ -26,6 +26,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
+using Robust.Shared.Player;
 
 #pragma warning disable 618
 
@@ -42,6 +43,7 @@ namespace Content.Shared.Interaction
         [Dependency] private readonly SharedVerbSystem _verbSystem = default!;
         [Dependency] private readonly SharedAdminLogSystem _adminLogSystem = default!;
         [Dependency] private readonly RotateToFaceSystem _rotateToFaceSystem = default!;
+        [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
 
         public const float InteractionRange = 2;
@@ -166,14 +168,16 @@ namespace Content.Shared.Interaction
             var inRangeUnobstructed = user.InRangeUnobstructed(coordinates, ignoreInsideBlocker: true);
             if (target == null || !inRangeUnobstructed)
             {
-                if (!hands.TryGetActiveHeldEntity(out var heldEntity))
+                if (!hands.TryGetActiveHeldEntity(out var heldEntity) || !_actionBlockerSystem.CanUse(user))
                     return;
 
-                if (!await InteractUsingRanged(user, heldEntity.Value, target, coordinates, inRangeUnobstructed) &&
-                    !inRangeUnobstructed)
+                if (await InteractUsingRanged(user, heldEntity.Value, target, coordinates, inRangeUnobstructed))
+                    return;
+
+                // Generate popup only if user actually tried to click on something.
+                if (!inRangeUnobstructed && target != null)
                 {
-                    var message = Loc.GetString("interaction-system-user-interaction-cannot-reach");
-                    user.PopupMessage(message);
+                    _popupSystem.PopupCursor(Loc.GetString("interaction-system-user-interaction-cannot-reach"), Filter.Entities(user));
                 }
 
                 return;
@@ -188,15 +192,15 @@ namespace Content.Shared.Interaction
             else if (!hands.TryGetActiveHeldEntity(out var heldEntity))
             {
                 // Since our hand is empty we will use InteractHand/Activate
-                InteractHand(user, target.Value);
+                InteractHand(user, target.Value, checkActionBlocker: false);
             }
-            else if (heldEntity != target)
+            else if (heldEntity != target && _actionBlockerSystem.CanUse(user))
             {
-                await InteractUsing(user, heldEntity.Value, target.Value, coordinates);
+                await InteractUsing(user, heldEntity.Value, target.Value, coordinates, checkActionBlocker: false);
             }
         }
 
-        public virtual void InteractHand(EntityUid user, EntityUid target)
+        public virtual void InteractHand(EntityUid user, EntityUid target, bool checkActionBlocker = true)
         {
             // TODO PREDICTION move server-side interaction logic into the shared system for interaction prediction.
         }
@@ -561,9 +565,9 @@ namespace Content.Shared.Interaction
         /// Finds components with the InteractUsing interface and calls their function
         /// NOTE: Does not have an InRangeUnobstructed check
         /// </summary>
-        public async Task InteractUsing(EntityUid user, EntityUid used, EntityUid target, EntityCoordinates clickLocation, bool predicted = false)
+        public async Task InteractUsing(EntityUid user, EntityUid used, EntityUid target, EntityCoordinates clickLocation, bool predicted = false, bool checkActionBlocker = true)
         {
-            if (!_actionBlockerSystem.CanInteract(user))
+            if (checkActionBlocker && (!_actionBlockerSystem.CanInteract(user) || !_actionBlockerSystem.CanUse(user)))
                 return;
 
             if (InteractDoBefore(user, used, target, clickLocation, true))
@@ -585,12 +589,11 @@ namespace Content.Shared.Interaction
                     return;
             }
 
-            // If we aren't directly interacting with the nearby object, lets see if our item has an after interact we can do
             await InteractDoAfter(user, used, target, clickLocation, true);
         }
 
         /// <summary>
-        ///     We didn't click on any entity, try doing an AfterInteract on the click location
+        ///     Used when clicking on an entity resulted in no other interaction. Used for low-priority interactions.
         /// </summary>
         public async Task<bool> InteractDoAfter(EntityUid user, EntityUid used, EntityUid? target, EntityCoordinates clickLocation, bool canReach)
         {
@@ -611,7 +614,12 @@ namespace Content.Shared.Interaction
                     return true;
             }
 
-            return false;
+            if (target == null)
+                return false;
+
+            var afterInteractUsingEvent = new AfterInteractUsingEvent(user, used, target, clickLocation, canReach);
+            RaiseLocalEvent(target.Value, afterInteractUsingEvent, false);
+            return afterInteractEvent.Handled;
         }
 
         #region ActivateItemInWorld

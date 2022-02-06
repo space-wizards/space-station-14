@@ -56,6 +56,7 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             var targetEntity = args.Target;
             if (targetEntity == null ||
+                !args.CanReach ||
                 !EntityManager.TryGetComponent(uid, out SmokableComponent? smokable) ||
                 smokable.State == SmokableState.Lit)
                 return;

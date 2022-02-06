@@ -403,24 +403,6 @@ namespace Content.Shared.Interaction.Helpers
         {
             return SharedInteractionSystem.InRangeUnobstructed(args.User, args.Target, range, collisionMask, predicate, ignoreInsideBlocker, popup);
         }
-
-        public static bool InRangeUnobstructed(
-            this AfterInteractEventArgs args,
-            float range = InteractionRange,
-            CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored? predicate = null,
-            bool ignoreInsideBlocker = false,
-            bool popup = false)
-        {
-            var user = args.User;
-            var target = args.Target;
-
-            if (target == null)
-                return SharedInteractionSystem.InRangeUnobstructed(user, args.ClickLocation, range, collisionMask, predicate, ignoreInsideBlocker, popup);
-            else
-                return SharedInteractionSystem.InRangeUnobstructed(user, target.Value, range, collisionMask, predicate, ignoreInsideBlocker, popup);
-
-        }
         #endregion
 
         #region EntityEventArgs
@@ -443,23 +425,6 @@ namespace Content.Shared.Interaction.Helpers
                 return false;
 
             return true;
-        }
-
-        public static bool InRangeUnobstructed(
-            this AfterInteractEvent args,
-            float range = InteractionRange,
-            CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored? predicate = null,
-            bool ignoreInsideBlocker = false,
-            bool popup = false)
-        {
-            var user = args.User;
-            var target = args.Target;
-
-            if (target == null)
-                return SharedInteractionSystem.InRangeUnobstructed(user, args.ClickLocation, range, collisionMask, predicate, ignoreInsideBlocker, popup);
-            else
-                return SharedInteractionSystem.InRangeUnobstructed(user, target.Value, range, collisionMask, predicate, ignoreInsideBlocker, popup);
         }
         #endregion
     }

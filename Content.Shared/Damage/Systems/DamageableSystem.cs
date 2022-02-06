@@ -84,7 +84,7 @@ namespace Content.Shared.Damage
         {
             component.DamagePerGroup = component.Damage.GetDamagePerGroup();
             component.TotalDamage = component.Damage.Total;
-            component.Dirty();
+            Dirty(component);
 
             if (EntityManager.TryGetComponent<AppearanceComponent>(component.Owner, out var appearance) && damageDelta != null)
             {

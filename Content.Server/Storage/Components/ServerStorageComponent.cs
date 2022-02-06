@@ -558,7 +558,7 @@ namespace Content.Server.Storage.Components
         /// <returns></returns>
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            if (!eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true)) return false;
+            if (!eventArgs.CanReach) return false;
 
             // Pick up all entities in a radius around the clicked location.
             // The last half of the if is because carpets exist and this is terrible
