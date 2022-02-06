@@ -29,7 +29,7 @@ public abstract class SharedBodyComponent : Component
     public Dictionary<string, BodyPartSlot> SlotIds = new();
 
     [ViewVariables]
-    public Dictionary<SharedBodyPartComponent, BodyPartSlot> Parts = new();
+    public Dictionary<EntityUid, BodyPartSlot> Parts = new();
 
     [ViewVariables]
     public Container PartContainer = default!;

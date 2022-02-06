@@ -54,7 +54,7 @@ public abstract partial class SharedBodySystem
         foreach (var (oldPart, slot) in body.Parts)
         {
             if (!newParts.TryGetValue(slot.Id, out var newPart) ||
-                newPart != oldPart.Owner)
+                newPart != oldPart)
             {
                 RemovePart(uid, oldPart, body);
             }
@@ -63,12 +63,9 @@ public abstract partial class SharedBodySystem
         foreach (var (slotId, newPart) in newParts)
         {
             if (!body.SlotIds.TryGetValue(slotId, out var slot) ||
-                slot.Part?.Owner != newPart)
+                slot.Part != newPart)
             {
-                if (TryComp<SharedBodyPartComponent>(newPart, out var comp))
-                {
-                    AddPart(uid, slotId, comp, body);
-                }
+                ForceSetPart(uid, slotId, body);
             }
         }
     }

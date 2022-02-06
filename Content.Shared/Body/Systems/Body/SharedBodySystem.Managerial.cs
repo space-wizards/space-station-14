@@ -112,6 +112,17 @@ public abstract partial class SharedBodySystem
     }
 
     /// <summary>
+    ///     Adds a part without assuming it has a SharedBodyPartComponent.
+    ///     Needed for proper networking.
+    /// </summary>
+    public bool ForceSetPart(EntityUid uid, EntityUid part, BodyPartType type,
+        SharedBodyComponent? body = null)
+    {
+        if (!Resolve(uid, ref body))
+            return false;
+    }
+
+    /// <summary>
     ///     Adds a given part, generating a new slot name for it.
     ///
     ///     Does not check if this can be done.
