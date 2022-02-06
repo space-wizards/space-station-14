@@ -97,6 +97,7 @@ namespace Content.Client.Examine
             // Basic examine verb.
             Verb verb = new();
             verb.Category = VerbCategory.Examine;
+            verb.Priority = 10;
             // Center it on the entity if they use the verb instead.
             verb.Act = () => DoExamine(args.Target, false);
             verb.Text = Loc.GetString("examine-verb-name");
