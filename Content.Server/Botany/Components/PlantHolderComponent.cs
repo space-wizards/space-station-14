@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Botany.Systems;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Chemistry.Components;
 using Content.Server.Fluids.Components;
@@ -107,7 +108,7 @@ namespace Content.Server.Botany.Components
         public float WeedCoefficient { get; set; } = 1f;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public Seed? Seed { get; set; }
+        public SeedPrototype? Seed { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool ImproperHeat { get; set; }
@@ -146,6 +147,8 @@ namespace Content.Server.Botany.Components
 
             _lastCycle = curTime;
 
+            // todo ecs.
+            var botanySystem = EntitySystem.Get<BotanySystem>();
 
             // Weeds like water and nutrients! They may appear even if there's not a seed planted.
             if (WaterLevel > 10 && NutritionLevel > 2 && _random.Prob(Seed == null ? 0.05f : 0.01f))
@@ -272,7 +275,7 @@ namespace Content.Server.Botany.Components
                 }
             }
 
-            // Seed pressure resistance.
+            // SeedPrototype pressure resistance.
             var pressure = environment.Pressure;
             if (pressure < Seed.LowPressureTolerance || pressure > Seed.HighPressureTolerance)
             {
@@ -286,7 +289,7 @@ namespace Content.Server.Botany.Components
                 ImproperPressure = false;
             }
 
-            // Seed ideal temperature.
+            // SeedPrototype ideal temperature.
             if (MathF.Abs(environment.Temperature - Seed.IdealHeat) > Seed.HeatTolerance)
             {
                 Health -= healthMod;
@@ -359,7 +362,7 @@ namespace Content.Server.Botany.Components
             }
             else if (Age < 0) // Revert back to seed packet!
             {
-                Seed.SpawnSeedPacket(_entMan.GetComponent<TransformComponent>(Owner).Coordinates);
+                botanySystem.SpawnSeedPacket(Seed, _entMan.GetComponent<TransformComponent>(Owner).Coordinates);
                 RemovePlant();
                 ForceUpdate = true;
                 Update();
@@ -422,19 +425,21 @@ namespace Content.Server.Botany.Components
             if (Seed == null || _entMan.Deleted(user) || !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 return false;
 
+            var botanySystem = EntitySystem.Get<BotanySystem>();
+
             if (Harvest && !Dead)
             {
                 if (_entMan.TryGetComponent(user, out HandsComponent? hands))
                 {
-                    if (!Seed.CheckHarvest(user, hands.GetActiveHandItem?.Owner))
+                    if (!botanySystem.CanHarvest(Seed, hands.GetActiveHandItem?.Owner))
                         return false;
                 }
-                else if (!Seed.CheckHarvest(user))
+                else if (!botanySystem.CanHarvest(Seed))
                 {
                     return false;
                 }
 
-                Seed.Harvest(user, YieldMod);
+                botanySystem.Harvest(Seed, user, YieldMod);
                 AfterHarvest();
                 return true;
             }
@@ -451,7 +456,9 @@ namespace Content.Server.Botany.Components
             if (Seed == null || !Harvest)
                 return;
 
-            Seed.AutoHarvest(_entMan.GetComponent<TransformComponent>(Owner).Coordinates);
+            var botanySystem = EntitySystem.Get<BotanySystem>();
+
+            botanySystem.AutoHarvest(Seed, _entMan.GetComponent<TransformComponent>(Owner).Coordinates);
             AfterHarvest();
         }
 
@@ -633,7 +640,7 @@ namespace Content.Server.Botany.Components
             // If this seed is not in the global seed list, then no products of this line have been harvested yet.
             // It is then safe to assume it's restricted to this tray.
             if (Seed == null) return;
-            var plantSystem = EntitySystem.Get<PlantSystem>();
+            var plantSystem = EntitySystem.Get<BotanySystem>();
             if (plantSystem.Seeds.ContainsKey(Seed.Uid))
                 Seed = Seed.Diverge(modified);
         }
@@ -653,22 +660,21 @@ namespace Content.Server.Botany.Components
             if ((!_entMan.EntityExists(usingItem) ? EntityLifeStage.Deleted : _entMan.GetComponent<MetaDataComponent>(usingItem).EntityLifeStage) >= EntityLifeStage.Deleted || !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 return false;
 
+            var botanySystem = EntitySystem.Get<BotanySystem>();
+
             if (_entMan.TryGetComponent(usingItem, out SeedComponent? seeds))
             {
                 if (Seed == null)
                 {
-                    if (seeds.Seed == null)
-                    {
-                        user.PopupMessageCursor(Loc.GetString("plant-holder-component-empty-seed-packet-message"));
-                        _entMan.QueueDeleteEntity(usingItem);
+                    var protoMan = IoCManager.Resolve<IPrototypeManager>();
+                    if (!protoMan.TryIndex<SeedPrototype>(seeds.SeedName, out var seed))
                         return false;
-                    }
 
                     user.PopupMessageCursor(Loc.GetString("plant-holder-component-plant-success-message",
-                        ("seedName", seeds.Seed.SeedName),
-                        ("seedNoun", seeds.Seed.SeedNoun)));
+                        ("seedName", seed.SeedName),
+                        ("seedNoun", seed.SeedNoun)));
 
-                    Seed = seeds.Seed;
+                    Seed = seed;
                     Dead = false;
                     Age = 1;
                     Health = Seed.Endurance;
@@ -778,7 +784,7 @@ namespace Content.Server.Botany.Components
                     return false;
                 }
 
-                var seed = Seed.SpawnSeedPacket(_entMan.GetComponent<TransformComponent>(user).Coordinates);
+                var seed = botanySystem.SpawnSeedPacket(Seed, _entMan.GetComponent<TransformComponent>(user).Coordinates);
                 seed.RandomOffset(0.25f);
                 user.PopupMessageCursor(Loc.GetString("plant-holder-component-take-sample-message",
                     ("seedName", Seed.DisplayName)));
