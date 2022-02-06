@@ -29,8 +29,6 @@ namespace Content.Shared.Buckle.Components
     [NetworkedComponent()]
     public abstract class SharedStrapComponent : Component, IDragDropOn
     {
-        public sealed override string Name => "Strap";
-
         bool IDragDropOn.CanDragDropOn(DragDropEvent eventArgs)
         {
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Dragged, out SharedBuckleComponent? buckleComponent)) return false;

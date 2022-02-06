@@ -9,6 +9,5 @@ namespace Content.Server.Atmos.Components
     [RegisterComponent]
     public class AtmosExposedComponent : Component
     {
-        public override string Name => "AtmosExposed";
     }
 }

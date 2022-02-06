@@ -26,8 +26,6 @@ namespace Content.Shared.Hands.Components
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public sealed override string Name => "Hands";
-
         /// <summary>
         ///     The name of the currently active hand.
         /// </summary>
@@ -533,7 +531,7 @@ namespace Content.Shared.Hands.Components
 
             handSys.PickupAnimation(entity, initialPosition, finalPosition, animateUser ? null : Owner);
             handSys.PutEntityIntoHand(Owner, hand, entity, this);
-            
+
             return true;
         }
 

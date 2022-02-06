@@ -6,8 +6,6 @@ namespace Content.Shared.Arcade
 {
     public abstract class SharedSpaceVillainArcadeComponent : Component
     {
-        public override string Name => "SpaceVillainArcade";
-
         [Serializable, NetSerializable]
         public enum Indicators
         {

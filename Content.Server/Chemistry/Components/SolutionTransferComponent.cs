@@ -31,8 +31,6 @@ namespace Content.Server.Chemistry.Components
         // If it's anything else, GIVE reagent.
         // Of course, only if possible.
 
-        public override string Name => "SolutionTransfer";
-
         /// <summary>
         ///     The amount of solution to be transferred from this solution when clicking on other solutions with it.
         /// </summary>
@@ -117,7 +115,7 @@ namespace Content.Server.Chemistry.Components
         {
             var solutionsSys = EntitySystem.Get<SolutionContainerSystem>();
 
-            if (!eventArgs.InRangeUnobstructed() || eventArgs.Target == null)
+            if (!eventArgs.CanReach || eventArgs.Target == null)
                 return false;
 
             if (!_entities.HasComponent<SolutionContainerManagerComponent>(Owner))

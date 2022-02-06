@@ -16,8 +16,6 @@ namespace Content.Client.Tools.Components
     [RegisterComponent, Friend(typeof(ToolSystem), typeof(StatusControl))]
     public class WelderComponent : SharedWelderComponent, IItemStatus
     {
-        public override string Name => "Welder";
-
         [ViewVariables(VVAccess.ReadWrite)]
         public bool UiUpdateNeeded { get; set; }
 

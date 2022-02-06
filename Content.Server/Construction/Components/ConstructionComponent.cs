@@ -11,8 +11,6 @@ namespace Content.Server.Construction.Components
     [RegisterComponent, Friend(typeof(ConstructionSystem))]
     public class ConstructionComponent : Component
     {
-        public override string Name => "Construction";
-
         [DataField("graph", required:true, customTypeSerializer:typeof(PrototypeIdSerializer<ConstructionGraphPrototype>))]
         public string Graph { get; set; } = string.Empty;
 

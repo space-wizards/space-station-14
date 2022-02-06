@@ -234,10 +234,10 @@ namespace Content.Server.Interaction
         /// Finds components with the InteractHand interface and calls their function
         /// NOTE: Does not have an InRangeUnobstructed check
         /// </summary>
-        public override void InteractHand(EntityUid user, EntityUid target)
+        public override void InteractHand(EntityUid user, EntityUid target, bool checkActionBlocker = true)
         {
             // TODO PREDICTION move server-side interaction logic into the shared system for interaction prediction.
-            if (!_actionBlockerSystem.CanInteract(user))
+            if (checkActionBlocker && !_actionBlockerSystem.CanInteract(user))
                 return;
 
             // all interactions should only happen when in range / unobstructed, so no range check is needed
@@ -270,7 +270,7 @@ namespace Content.Server.Interaction
         public override async Task<bool> InteractUsingRanged(EntityUid user, EntityUid used, EntityUid? target, EntityCoordinates clickLocation, bool inRangeUnobstructed)
         {
             // TODO PREDICTION move server-side interaction logic into the shared system for interaction prediction.
-            if (InteractDoBefore(user, used, inRangeUnobstructed ? target : null, clickLocation, false))
+            if (InteractDoBefore(user, used, target, clickLocation, inRangeUnobstructed))
                 return true;
 
             if (target != null)
@@ -282,7 +282,7 @@ namespace Content.Server.Interaction
                     return true;
             }
 
-            return await InteractDoAfter(user, used, inRangeUnobstructed ? target : null, clickLocation, false);
+            return await InteractDoAfter(user, used, target, clickLocation, inRangeUnobstructed);
         }
 
         public override void DoAttack(EntityUid user, EntityCoordinates coordinates, bool wideAttack, EntityUid? target = null)
@@ -297,7 +297,7 @@ namespace Content.Server.Interaction
             if (!wideAttack)
             {
                 // Check if interacted entity is in the same container, the direct child, or direct parent of the user.
-                if (target != null && !Deleted(target.Value) && !user.IsInSameOrParentContainer(target.Value) && !CanAccessViaStorage(user, target.Value))
+                if (target != null && !Deleted(target.Value) && !ContainerSystem.IsInSameOrParentContainer(user, target.Value) && !CanAccessViaStorage(user, target.Value))
                 {
                     Logger.WarningS("system.interaction",
                         $"User entity {ToPrettyString(user):user} clicked on object {ToPrettyString(target.Value):target} that isn't the parent, child, or in the same container");

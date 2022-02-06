@@ -13,8 +13,6 @@ namespace Content.Server.Disposal.Tube.Components
         [DataField("sideDegrees")]
         private int _sideDegrees = -90;
 
-        public override string Name => "DisposalBend";
-
         protected override Direction[] ConnectableDirections()
         {
             var direction = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).LocalRotation;

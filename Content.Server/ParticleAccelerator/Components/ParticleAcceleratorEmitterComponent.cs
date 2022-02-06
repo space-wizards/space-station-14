@@ -10,7 +10,6 @@ namespace Content.Server.ParticleAccelerator.Components
     [ComponentReference(typeof(ParticleAcceleratorPartComponent))]
     public class ParticleAcceleratorEmitterComponent : ParticleAcceleratorPartComponent
     {
-        public override string Name => "ParticleAcceleratorEmitter";
         [DataField("emitterType")]
         public ParticleAcceleratorEmitterType Type = ParticleAcceleratorEmitterType.Center;
 

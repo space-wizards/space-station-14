@@ -13,6 +13,5 @@ namespace Content.Server.Light.Components
     [RegisterComponent, Friend(typeof(PoweredLightSystem))]
     public class LitOnPoweredComponent : Component
     {
-        public override string Name => "LitOnPowered";
     }
 }

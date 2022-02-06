@@ -10,8 +10,6 @@ namespace Content.Server.Tabletop.Components
     [RegisterComponent, Friend(typeof(TabletopSystem))]
     public class TabletopGamerComponent : Component
     {
-        public override string Name => "TabletopGamer";
-
         [DataField("tabletop")]
         public EntityUid Tabletop { get; set; } = EntityUid.Invalid;
     }

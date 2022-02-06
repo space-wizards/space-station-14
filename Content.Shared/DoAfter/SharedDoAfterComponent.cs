@@ -10,7 +10,6 @@ namespace Content.Shared.DoAfter
     [NetworkedComponent()]
     public abstract class SharedDoAfterComponent : Component
     {
-        public override string Name => "DoAfter";
     }
 
     [Serializable, NetSerializable]

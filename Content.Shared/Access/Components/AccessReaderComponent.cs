@@ -12,8 +12,6 @@ namespace Content.Shared.Access.Components
     [RegisterComponent]
     public class AccessReaderComponent : Component
     {
-        public override string Name => "AccessReader";
-
         /// <summary>
         ///     Whether this reader is enabled or not. If disabled, all access
         ///     checks will pass.

@@ -8,7 +8,6 @@ namespace Content.Shared.Tools.Components
     [NetworkedComponent]
     public class SharedMultipleToolComponent : Component
     {
-        public override string Name => "MultipleTool";
     }
 
     [NetSerializable, Serializable]
