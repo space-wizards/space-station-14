@@ -878,6 +878,8 @@ entities:
     type: Transform
   - index: 0
     type: MapGrid
+  - type: BecomesStation
+    id: Pillar
   - linearDamping: 0.1
     fixedRotation: False
     bodyType: Dynamic
@@ -130549,6 +130551,8 @@ entities:
     type: Transform
   - index: 1
     type: MapGrid
+  - type: PartOfStation
+    id: Pillar
   - linearDamping: 0.1
     fixedRotation: False
     bodyType: Dynamic
@@ -130705,6 +130709,8 @@ entities:
     type: Transform
   - index: 2
     type: MapGrid
+  - type: PartOfStation
+    id: Pillar
   - linearDamping: 0.1
     fixedRotation: False
     bodyType: Dynamic
@@ -131662,6 +131668,8 @@ entities:
     type: Transform
   - index: 3
     type: MapGrid
+  - type: PartOfStation
+    id: Pillar
   - linearDamping: 0.1
     fixedRotation: False
     bodyType: Dynamic
