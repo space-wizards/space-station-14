@@ -46,6 +46,12 @@ namespace Content.Client.Doors
         [DataField("openUnlitVisible")]
         private bool _openUnlitVisible = false;
 
+        /// <summary>
+        ///     Whether the door should have an emergency access layer
+        /// </summary>
+        [DataField("emergencyAccessLayer")]
+        private bool _emergencyAccessLayer = true;
+
         private Animation CloseAnimation = default!;
         private Animation OpenAnimation = default!;
         private Animation DenyAnimation = default!;
@@ -203,7 +209,15 @@ namespace Content.Client.Doors
                 sprite.LayerSetVisible(DoorVisualLayers.BaseUnlit, unlitVisible && state != DoorState.Closed && state != DoorState.Welded);
                 sprite.LayerSetVisible(DoorVisualLayers.BaseWelded, weldedVisible);
                 sprite.LayerSetVisible(DoorVisualLayers.BaseBolted, unlitVisible && boltedVisible);
-                sprite.LayerSetVisible(DoorVisualLayers.BaseEAccess, emergecyLightsVisible);
+                if (_emergencyAccessLayer)
+                {
+                    sprite.LayerSetVisible(DoorVisualLayers.BaseEAccess, 
+                            emergecyLightsVisible 
+                            && state != DoorState.Open 
+                            && state != DoorState.Opening 
+                            && state != DoorState.Closing
+                            && unlitVisible);
+                }
             }
         }
     }
