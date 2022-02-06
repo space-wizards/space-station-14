@@ -32,6 +32,12 @@ public sealed partial class ChemistrySystem
         SubscribeLocalEvent<InjectorComponent, ComponentGetState>(OnInjectorGetState);
 
         SubscribeLocalEvent<InjectionCompleteEvent>(OnInjectionComplete);
+        SubscribeLocalEvent<InjectionCancelledEvent>(OnInjectionCancelled);
+    }
+
+    private static void OnInjectionCancelled(InjectionCancelledEvent ev)
+    {
+        ev.Component.CancelToken = null;
     }
 
     private void OnInjectionComplete(InjectionCompleteEvent ev)
@@ -230,13 +236,17 @@ public sealed partial class ChemistrySystem
             BreakOnDamage = true,
             BreakOnStun = true,
             BreakOnTargetMove = true,
-            MovementThreshold = 1.0f,
+            MovementThreshold = 0.1f,
             BroadcastFinishedEvent = new InjectionCompleteEvent()
             {
                 Component = component,
                 User = user,
                 Target = target,
             },
+            BroadcastCancelledEvent = new InjectionCancelledEvent()
+            {
+                Component = component,
+            }
         });
     }
 
@@ -366,5 +376,10 @@ public sealed partial class ChemistrySystem
         public InjectorComponent Component { get; init; } = default!;
         public EntityUid User { get; init; }
         public EntityUid Target { get; init; }
+    }
+
+    private sealed class InjectionCancelledEvent : EntityEventArgs
+    {
+        public InjectorComponent Component { get; init; } = default!;
     }
 }
