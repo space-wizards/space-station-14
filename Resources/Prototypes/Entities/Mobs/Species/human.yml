@@ -199,13 +199,6 @@
     shiveringHeatRegulation: 2000
     normalBodyTemperature: 310.15
     thermalRegulationTemperatureThreshold: 25
-  - type: Respirator
-    damage:
-      types:
-        Asphyxiation: 3
-    damageRecovery:
-      types:
-        Asphyxiation: -1.5
   - type: Internals
   - type: MobState
     thresholds:
