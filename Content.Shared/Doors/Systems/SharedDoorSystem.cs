@@ -367,10 +367,11 @@ public abstract class SharedDoorSystem : EntitySystem
         PhysicsComponent? physics = null,
         OccluderComponent? occluder = null)
     {
-        if (!Resolve(uid, ref door, ref physics))
+        if (!Resolve(uid, ref door))
             return;
 
-        physics.CanCollide = collidable;
+        if (Resolve(uid, ref physics))
+            physics.CanCollide = collidable;
 
         if (!collidable)
             door.CurrentlyCrushing.Clear();
