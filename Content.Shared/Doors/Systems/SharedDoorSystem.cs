@@ -370,7 +370,7 @@ public abstract class SharedDoorSystem : EntitySystem
         if (!Resolve(uid, ref door))
             return;
 
-        if (Resolve(uid, ref physics))
+        if (Resolve(uid, ref physics, false))
             physics.CanCollide = collidable;
 
         if (!collidable)
