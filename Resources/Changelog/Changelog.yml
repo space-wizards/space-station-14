@@ -1,9 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: Fix computer dupe bug., type: Fix}
-  id: 493
-  time: '2021-10-26T23:30:17.397968+00:00'
 - author: 20kdc
   changes:
   - {message: Morgue trays now extend to the proper position., type: Fix}
@@ -2955,3 +2950,8 @@ Entries:
   - {message: Lasers can now pass through glass airlocks, type: Add}
   id: 993
   time: '2022-02-06T13:48:31.0000000+00:00'
+- author: scaly-chimp
+  changes:
+  - {message: adds a portable flasher for security to lock down areas, type: Add}
+  id: 994
+  time: '2022-02-06T15:59:42.0000000+00:00'
