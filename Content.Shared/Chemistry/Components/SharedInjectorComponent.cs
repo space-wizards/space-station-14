@@ -1,5 +1,4 @@
 using System;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
@@ -10,20 +9,20 @@ namespace Content.Shared.Chemistry.Components
     /// <summary>
     /// Shared class for injectors & syringes
     /// </summary>
-    [NetworkedComponent()]
-    public class SharedInjectorComponent : Component
+    [NetworkedComponent, ComponentProtoName("Injector")]
+    public abstract class SharedInjectorComponent : Component
     {
         /// <summary>
         /// Component data used for net updates. Used by client for item status ui
         /// </summary>
         [Serializable, NetSerializable]
-        protected sealed class InjectorComponentState : ComponentState
+        public sealed class InjectorComponentState : ComponentState
         {
             public FixedPoint2 CurrentVolume { get; }
             public FixedPoint2 TotalVolume { get; }
             public InjectorToggleMode CurrentMode { get; }
 
-            public InjectorComponentState(FixedPoint2 currentVolume, FixedPoint2 totalVolume, InjectorToggleMode currentMode)
+            public InjectorComponentState(FixedPoint2 currentVolume, FixedPoint2 totalVolume, SharedInjectorComponent.InjectorToggleMode currentMode)
             {
                 CurrentVolume = currentVolume;
                 TotalVolume = totalVolume;
@@ -31,7 +30,7 @@ namespace Content.Shared.Chemistry.Components
             }
         }
 
-        public enum InjectorToggleMode
+        public enum InjectorToggleMode : byte
         {
             Inject,
             Draw

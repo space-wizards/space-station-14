@@ -32,7 +32,7 @@
       state_open: qm_open
       state_closed: qm_door
   - type: AccessReader
-    access: [["Quartermaster"]] 
+    access: [["Quartermaster"]]
 
 # Command
 - type: entity
@@ -286,7 +286,7 @@
       state_open: warden_open
       state_closed: warden_door
   - type: AccessReader
-    access: [["Brig"]]
+    access: [["Armory"]]
 
 # Security Officer
 - type: entity

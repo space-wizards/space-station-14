@@ -6,25 +6,29 @@ using Content.Server.Doors.Systems;
 using Content.Server.Explosion.Components;
 using Content.Server.Flash;
 using Content.Server.Flash.Components;
-using Content.Server.Projectiles.Components;
 using Content.Shared.Audio;
-using Content.Shared.Database;
 using Content.Shared.Doors;
-using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
+using System.Threading;
+using Content.Server.Construction.Components;
+using Content.Shared.Trigger;
+using Timer = Robust.Shared.Timing.Timer;
+using Content.Shared.Physics;
+using System.Collections.Generic;
 
 namespace Content.Server.Explosion.EntitySystems
 {
     /// <summary>
     /// Raised whenever something is Triggered on the entity.
     /// </summary>
-    public class TriggerEvent : HandledEntityEventArgs
+    public sealed class TriggerEvent : HandledEntityEventArgs
     {
         public EntityUid Triggered { get; }
         public EntityUid? User { get; }
@@ -40,16 +44,19 @@ namespace Content.Server.Explosion.EntitySystems
     public sealed partial class TriggerSystem : EntitySystem
     {
         [Dependency] private readonly ExplosionSystem _explosions = default!;
+        [Dependency] private readonly FixtureSystem _fixtures = default!;
         [Dependency] private readonly FlashSystem _flashSystem = default!;
         [Dependency] private readonly DoorSystem _sharedDoorSystem = default!;
+        [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
+            InitializeProximity();
             InitializeOnUse();
 
-            SubscribeLocalEvent<TriggerOnCollideComponent, StartCollideEvent>(HandleCollide);
+            SubscribeLocalEvent<TriggerOnCollideComponent, StartCollideEvent>(OnTriggerCollide);
 
             SubscribeLocalEvent<DeleteOnTriggerComponent, TriggerEvent>(HandleDeleteTrigger);
             SubscribeLocalEvent<SoundOnTriggerComponent, TriggerEvent>(HandleSoundTrigger);
@@ -88,11 +95,8 @@ namespace Content.Server.Explosion.EntitySystems
         #region Flash
         private void HandleFlashTrigger(EntityUid uid, FlashOnTriggerComponent component, TriggerEvent args)
         {
-            if (component.Flashed) return;
-
             // TODO Make flash durations sane ffs.
             _flashSystem.FlashArea(uid, args.User, component.Range, component.Duration * 1000f);
-            component.Flashed = true;
         }
         #endregion
 
@@ -112,15 +116,9 @@ namespace Content.Server.Explosion.EntitySystems
             _sharedDoorSystem.TryToggleDoor(uid);
         }
 
-        private void HandleCollide(EntityUid uid, TriggerOnCollideComponent component, StartCollideEvent args)
+        private void OnTriggerCollide(EntityUid uid, TriggerOnCollideComponent component, StartCollideEvent args)
         {
-            EntityUid? user = null;
-            if (EntityManager.TryGetComponent(uid, out ProjectileComponent projectile))
-                user = projectile.Shooter;
-            else if (EntityManager.TryGetComponent(uid, out ThrownItemComponent thrown))
-                user = thrown.Thrower;
-
-            Trigger(component.Owner, user);
+            Trigger(component.Owner);
         }
 
 
@@ -143,6 +141,13 @@ namespace Content.Server.Explosion.EntitySystems
                 if (Deleted(triggered)) return;
                 Trigger(triggered, user);
             });
+        }
+
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+
+            UpdateProximity(frameTime);
         }
     }
 }
