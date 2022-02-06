@@ -100,7 +100,7 @@ public sealed partial class ChemistrySystem
 
     private void OnInjectorAfterInteract(EntityUid uid, InjectorComponent component, AfterInteractEvent args)
     {
-        if (args.Handled) return;
+        if (args.Handled || !args.CanReach) return;
 
         if (component.CancelToken != null)
         {
@@ -109,9 +109,6 @@ public sealed partial class ChemistrySystem
             args.Handled = true;
             return;
         }
-
-        if (!args.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
-            return;
 
         if (!_blocker.CanInteract(args.User))
             return;
