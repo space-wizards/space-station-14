@@ -1,15 +1,10 @@
 ﻿using Content.Shared.Body.Part;
-using Content.Shared.Body.Systems;
 using Content.Shared.Body.Systems.Part;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Body.Components;
 
 [RegisterComponent]
-[Friend(typeof(MechanismSystem), typeof(SharedBodyPartSystem))]
+[Friend(typeof(SharedBodyPartSystem))]
 public class MechanismComponent : Component
 {
     public SharedBodyComponent? Body => Part?.Body;

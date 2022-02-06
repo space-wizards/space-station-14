@@ -29,7 +29,6 @@ public sealed class BodySystem : SharedBodySystem
         base.Initialize();
         SubscribeLocalEvent<BodyComponent, RelayMoveInputEvent>(OnRelayMoveInput);
         SubscribeLocalEvent<BodyComponent, ComponentStartup>(OnComponentStartup);
-        SubscribeLocalEvent<BodyComponent, PartRemovedFromBodyEvent>(OnPartRemoved);
 
         SubscribeLocalEvent<FallDownNoLegsComponent, ComponentInit>(OnFallDownInit);
         SubscribeLocalEvent<FallDownNoLegsComponent, PartRemovedFromBodyEvent>(OnFallDownPartRemoved);
@@ -56,6 +55,17 @@ public sealed class BodySystem : SharedBodySystem
 
             AddPart(uid, slot.Id, part, component);
         }
+    }
+
+    protected override void OnPartAdded(SharedBodyComponent body, SharedBodyPartComponent part)
+    {
+        body.PartContainer.Insert(part.Owner);
+    }
+
+    protected override void OnPartRemoved(SharedBodyComponent body, SharedBodyPartComponent part)
+    {
+        body.PartContainer.Remove(part.Owner);
+        part.Owner.RandomOffset(0.25f);
     }
 
     #endregion
@@ -86,11 +96,6 @@ public sealed class BodySystem : SharedBodySystem
 
             _ticker.OnGhostAttempt(mind.Mind!, true);
         }
-    }
-
-    private void OnPartRemoved(EntityUid uid, BodyComponent component, PartRemovedFromBodyEvent args)
-    {
-        args.Part.Owner.RandomOffset(0.25f);
     }
 
     #endregion

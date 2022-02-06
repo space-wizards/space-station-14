@@ -152,7 +152,7 @@ public abstract partial class SharedBodySystem
         body.Parts[part] = slot;
         var ev = new PartAddedToBodyEvent(part, body, slot);
         part.Body = body;
-        body.PartContainer.Insert(part.Owner);
+        OnPartAdded(body, part);
 
         // Raise the event on both the body and the part.
         RaiseLocalEvent(uid, ev, false);
@@ -164,59 +164,15 @@ public abstract partial class SharedBodySystem
         return true;
     }
 
+    /// <summary>
+    ///     Server needs to do things like add the part to a container,
+    ///     so we'll just have a virtual call.
+    /// </summary>
+    protected virtual void OnPartAdded(SharedBodyComponent body, SharedBodyPartComponent part) {}
+
     #endregion
 
     #region Removing Parts
-
-    /// <summary>
-    ///     Removes the part inside of a body part slot.
-    /// </summary>
-    public bool RemovePart(EntityUid uid, BodyPartSlot slot,
-        SharedBodyComponent? body = null)
-    {
-        if (!Resolve(uid, ref body))
-            return false;
-
-        if (slot.Part == null) return false;
-
-        var old = slot.Part;
-
-        var ev = new PartRemovedFromBodyEvent(old, body, slot);
-        slot.Part = null;
-        body.Parts.Remove(old);
-        body.PartContainer.Remove(old.Owner);
-        old.Body = null;
-
-        foreach (var part in GetHangingParts(uid, slot, body))
-        {
-            RemovePart(uid, part.Value, body);
-        }
-
-        // Raise the event on both the body and the part.
-        RaiseLocalEvent(uid, ev, false);
-        RaiseLocalEvent(old.Owner, ev, false);
-
-        body.Dirty();
-
-        return true;
-    }
-
-    /// <summary>
-    ///     Removes the given part from the body. Defaults to finding the slot and removing the part that way.
-    /// </summary>
-    public bool RemovePart(EntityUid uid, SharedBodyPartComponent part,
-        SharedBodyComponent? body=null)
-    {
-        if (!Resolve(uid, ref body))
-            return false;
-
-        if (body.Parts.TryGetValue(part, out var slot))
-        {
-            return RemovePart(uid, slot, body);
-        }
-
-        return false;
-    }
 
     public bool TryRemovePart(EntityUid uid, BodyPartSlot slot, [NotNullWhen(true)] out Dictionary<BodyPartSlot, SharedBodyPartComponent>? dropped,
         SharedBodyComponent? body=null)
@@ -247,6 +203,59 @@ public abstract partial class SharedBodySystem
         dropped[slot] = oldPart;
         return true;
     }
+
+    /// <summary>
+    ///     Removes the given part from the body. Defaults to finding the slot and removing the part that way.
+    /// </summary>
+    public bool RemovePart(EntityUid uid, SharedBodyPartComponent part,
+        SharedBodyComponent? body=null)
+    {
+        if (!Resolve(uid, ref body))
+            return false;
+
+        if (body.Parts.TryGetValue(part, out var slot))
+        {
+            return RemovePart(uid, slot, body);
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    ///     Removes the part inside of a body part slot.
+    /// </summary>
+    public bool RemovePart(EntityUid uid, BodyPartSlot slot,
+        SharedBodyComponent? body = null)
+    {
+        if (!Resolve(uid, ref body))
+            return false;
+
+        if (slot.Part == null) return false;
+
+        var old = slot.Part;
+
+        var ev = new PartRemovedFromBodyEvent(old, body, slot);
+        slot.Part = null;
+        body.Parts.Remove(old);
+
+        OnPartRemoved(body, old);
+        old.Body = null;
+
+        foreach (var part in GetHangingParts(uid, slot, body))
+        {
+            RemovePart(uid, part.Value, body);
+        }
+
+        // Raise the event on both the body and the part.
+        RaiseLocalEvent(uid, ev, false);
+        RaiseLocalEvent(old.Owner, ev, false);
+
+        body.Dirty();
+
+        return true;
+    }
+
+    protected virtual void OnPartRemoved(SharedBodyComponent body, SharedBodyPartComponent part) {}
 
     #endregion
 }

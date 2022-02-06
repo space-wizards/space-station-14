@@ -7,6 +7,8 @@ namespace Content.Shared.Body.Systems.Part;
 
 public abstract partial class SharedBodyPartSystem
 {
+    // TODO maybe clean up the try stuff
+
     /// <summary>
     ///     Tries to add a <see cref="MechanismComponent" /> to this part.
     /// </summary>
@@ -28,9 +30,8 @@ public abstract partial class SharedBodyPartSystem
         if (!force && !CanAddMechanism(uid, mechanism, part)) return false;
 
         if (!part.Mechanisms.Add(mechanism)) return false;
-        if (!part.MechanismContainer.Insert(mechanism.Owner)) return false;
 
-        RaiseLocalEvent(mechanism.Owner, new MechanismAddedToPartEvent(part));
+        RaiseMechanismEvent(mechanism.Owner, part, mechanism);
 
         mechanism.Part = part;
         part.Dirty();
@@ -54,9 +55,8 @@ public abstract partial class SharedBodyPartSystem
             return false;
 
         if (!part.Mechanisms.Remove(mechanism)) return false;
-        if (!part.MechanismContainer.Remove(mechanism.Owner)) return false;
 
-        RaiseLocalEvent(mechanism.Owner, new MechanismRemovedFromPartEvent(part));
+        RaiseMechanismEvent(mechanism.Owner, part, mechanism);
 
         mechanism.Part = null;
         part.Dirty();
@@ -112,9 +112,51 @@ public abstract partial class SharedBodyPartSystem
     }
 
     /// <summary>
+    ///     Finds out which mechanism event to raise depending on the circumstances.
+    /// </summary>
+    /// <param name="uid">The mechanism's entity.</param>
+    /// <param name="part">The part to set the mechanism's owner to. Can be null.</param>
+    /// <param name="mech">Resolve comp</param>
+    public void RaiseMechanismEvent(EntityUid uid, SharedBodyPartComponent? part,
+        MechanismComponent? mech = null)
+    {
+        if (!Resolve(uid, ref mech))
+            return;
+
+        if (part == mech.Part)
+            return;
+
+        // We're replacing an existing part
+        if (mech.Part != null)
+        {
+            // It's on a body
+            if (mech.Part.Body != null)
+            {
+                RaiseLocalEvent(uid, new MechanismRemovedFromPartInBodyEvent(mech.Part.Body, mech.Part), false);
+            }
+            else
+            {
+                RaiseLocalEvent(uid, new MechanismRemovedFromPartEvent(mech.Part), false);
+            }
+        }
+
+        if (part != null)
+        {
+            if (part.Body != null)
+            {
+                RaiseLocalEvent(uid, new MechanismAddedToPartInBodyEvent(part.Body, part), false);
+            }
+            else
+            {
+                RaiseLocalEvent(uid, new MechanismAddedToPartEvent(part), false);
+            }
+        }
+    }
+
+    /// <summary>
     ///     Gibs the body part.
     /// </summary>
-    public virtual void GibPart(EntityUid uid,
+    public void GibPart(EntityUid uid,
         SharedBodyPartComponent? part=null)
     {
         if (!Resolve(uid, ref part))
@@ -126,6 +168,10 @@ public abstract partial class SharedBodyPartSystem
         }
     }
 
+    /// <remarks>
+    ///     These are needed so that the server can
+    ///     insert/remove parts from their container.
+    /// </remarks>
     protected virtual void OnAddMechanism(EntityUid uid, MechanismComponent mechanism, SharedBodyPartComponent part)
     {
     }

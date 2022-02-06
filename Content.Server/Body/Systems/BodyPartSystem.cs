@@ -34,12 +34,25 @@ public class BodyPartSystem : SharedBodyPartSystem
         }
     }
 
+    #region Overrides
+
+    protected override void OnAddMechanism(EntityUid uid, MechanismComponent mechanism, SharedBodyPartComponent part)
+    {
+        base.OnRemoveMechanism(uid, mechanism, part);
+
+        part.MechanismContainer.Insert(mechanism.Owner);
+    }
+
+
     protected override void OnRemoveMechanism(EntityUid uid, MechanismComponent mechanism, SharedBodyPartComponent part)
     {
         base.OnRemoveMechanism(uid, mechanism, part);
 
+        part.MechanismContainer.Remove(mechanism.Owner);
         mechanism.Owner.RandomOffset(0.25f);
     }
+
+    #endregion
 
     /// <summary>
     ///     Gibs the body part.

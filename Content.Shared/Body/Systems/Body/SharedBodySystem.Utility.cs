@@ -67,7 +67,6 @@ public abstract partial class SharedBodySystem
 
     #region Slots
 
-    // TODO BODY optimize this (apparently)
     public BodyPartSlot SlotAt(EntityUid uid, int index,
         SharedBodyComponent body)
     {
@@ -93,6 +92,9 @@ public abstract partial class SharedBodySystem
         return (slot = GetSlot(uid, part, body)) != null;
     }
 
+    /// <summary>
+    ///     Each body template can have a 'center' slot, usually a torso. This gets that.
+    /// </summary>
     public BodyPartSlot? GetCenterSlot(EntityUid uid,
         SharedBodyComponent? body=null)
     {
@@ -103,6 +105,13 @@ public abstract partial class SharedBodySystem
         return body.SlotIds.GetValueOrDefault(template.CenterSlot);
     }
 
+    /// <summary>
+    ///     Returns all slots with a given part type.
+    /// </summary>
+    /// <remarks>
+    ///     This includes slots that do not have a part inserted,
+    ///     so it can be used for things like checking how many parts an entity 'should' have.
+    /// </remarks>
     public IEnumerable<BodyPartSlot> GetSlotsOfType(EntityUid uid, BodyPartType type,
         SharedBodyComponent? body=null)
     {
@@ -146,6 +155,9 @@ public abstract partial class SharedBodySystem
         return GetPartsOfType(uid, type).Any();
     }
 
+    /// <summary>
+    ///     Returns all parts of a given type.
+    /// </summary>
     public IEnumerable<SharedBodyPartComponent> GetPartsOfType(EntityUid uid, BodyPartType type,
         SharedBodyComponent? body=null)
     {
