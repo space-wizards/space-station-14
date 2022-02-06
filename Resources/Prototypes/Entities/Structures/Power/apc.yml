@@ -126,3 +126,22 @@
   - type: Construction
     graph: APC
     node: hyper
+    
+# APC Construction Frame
+- type: entity
+  id: APCFrame
+  name: APC frame
+  description: A frame for constructing an APC.
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    sprite: Structures/Power/apc.rsi
+    state: apcframe
+  - type: Construction
+    graph: APC
+    node: start
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wallmount

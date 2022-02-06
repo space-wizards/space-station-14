@@ -4,7 +4,7 @@
   id: APC
   graph: APC
   startNode: start
-  targetNode: apc
+  targetNode: basic
   category: Utilities
   description: "Area Power Controller (APC). Controls power. In an area."
   icon:
