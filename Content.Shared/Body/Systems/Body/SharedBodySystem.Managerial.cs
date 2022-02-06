@@ -1,14 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Events;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Prototypes;
+using Content.Shared.Body.Systems.Part;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 
 namespace Content.Shared.Body.Systems.Body;
 
@@ -48,6 +47,16 @@ public abstract partial class SharedBodySystem
 
     #region Slots
 
+    /// <summary>
+    ///     Creates a new slot name for a given part.
+    /// </summary>
+    public string GenerateUniqueSlotName(SharedBodyPartComponent part)
+    {
+        // e.g. 8912-Arm-Left
+        // Can't see how we'd get a collision from this.
+        return $"{part.Owner.ToString()}-{part.PartType.ToString()}-{part.Compatibility.ToString()}";
+    }
+
     public BodyPartSlot SetSlot(EntityUid uid, string id, BodyPartType type, SharedBodyComponent body)
     {
         var slot = new BodyPartSlot(id, type);
@@ -60,7 +69,7 @@ public abstract partial class SharedBodySystem
 
     #region Adding Parts
 
-    public virtual bool CanAddPart(EntityUid uid, string slotId, SharedBodyPartComponent part,
+    public bool CanAddPart(EntityUid uid, string slotId, SharedBodyPartComponent part,
         SharedBodyComponent? body=null)
     {
         if (!Resolve(uid, ref body))
@@ -75,6 +84,21 @@ public abstract partial class SharedBodySystem
         return true;
     }
 
+    /// <summary>
+    ///     Tries to add a given part, generating a new slot name for it.
+    /// </summary>
+    public bool TryAddPart(EntityUid uid, SharedBodyPartComponent part,
+        SharedBodyComponent? body = null)
+    {
+        if (!Resolve(uid, ref body))
+            return false;
+
+        return TryAddPart(uid, GenerateUniqueSlotName(part), part, body);
+    }
+
+    /// <summary>
+    ///     Tries to add a given part to a body in a given slot.
+    /// </summary>
     public bool TryAddPart(EntityUid uid, string slotId, SharedBodyPartComponent part,
         SharedBodyComponent? body=null)
     {
@@ -88,8 +112,24 @@ public abstract partial class SharedBodySystem
     }
 
     /// <summary>
+    ///     Adds a given part, generating a new slot name for it.
+    ///
+    ///     Does not check if this can be done.
+    /// </summary>
+    public bool AddPart(EntityUid uid, SharedBodyPartComponent part,
+        SharedBodyComponent? body = null)
+    {
+        if (!Resolve(uid, ref body))
+            return false;
+
+        return AddPart(uid, GenerateUniqueSlotName(part), part, body);
+    }
+
+    /// <summary>
     ///     Sets a slot ID's part to the given part.
     ///     Removes the existing part from the slot, if there is one.
+    ///
+    ///     Does not check if this can be done.
     /// </summary>
     public bool AddPart(EntityUid uid, string slotId, SharedBodyPartComponent part,
         SharedBodyComponent? body=null)
@@ -110,32 +150,18 @@ public abstract partial class SharedBodySystem
 
         slot.Part = part;
         body.Parts[part] = slot;
-        RaiseLocalEvent(new PartAddedToBodyEvent(part.Body, body));
+        var ev = new PartAddedToBodyEvent(part, body, slot);
         part.Body = body;
         body.PartContainer.Insert(part.Owner);
 
-        OnPartAdded(uid, slot, part, body);
-
-        return true;
-    }
-
-
-    protected virtual void OnPartAdded(EntityUid uid, BodyPartSlot slot, SharedBodyPartComponent part,
-        SharedBodyComponent? body=null)
-    {
-        if (!Resolve(uid, ref body))
-            return;
-
-        var argsAdded = new BodyPartAddedEventArgs(slot.Id, part);
-
-        _humanoidAppearanceSystem.BodyPartAdded(uid, argsAdded);
-        foreach (var component in EntityManager.GetComponents<IBodyPartAdded>(uid).ToArray())
-        {
-            component.BodyPartAdded(argsAdded);
-        }
+        // Raise the event on both the body and the part.
+        RaiseLocalEvent(uid, ev, false);
+        RaiseLocalEvent(part.Owner, ev, false);
 
         // TODO BODY Sort this duplicate out
         body.Dirty();
+
+        return true;
     }
 
     #endregion
@@ -155,7 +181,7 @@ public abstract partial class SharedBodySystem
 
         var old = slot.Part;
 
-        RaiseLocalEvent(new PartRemovedFromBodyEvent(body, null));
+        var ev = new PartRemovedFromBodyEvent(old, body);
         slot.Part = null;
         body.Parts.Remove(old);
         body.PartContainer.Remove(old.Owner);
@@ -166,7 +192,11 @@ public abstract partial class SharedBodySystem
             RemovePart(uid, part.Value, body);
         }
 
-        OnPartRemoved(uid, slot, old, body);
+        // Raise the event on both the body and the part.
+        RaiseLocalEvent(uid, ev, false);
+        RaiseLocalEvent(old.Owner, ev, false);
+
+        body.Dirty();
 
         return true;
     }
@@ -216,40 +246,6 @@ public abstract partial class SharedBodySystem
 
         dropped[slot] = oldPart;
         return true;
-    }
-
-    protected virtual void OnPartRemoved(EntityUid uid, BodyPartSlot slot, SharedBodyPartComponent part,
-        SharedBodyComponent? body=null)
-    {
-        if (!Resolve(uid, ref body))
-            return;
-
-        var args = new BodyPartRemovedEventArgs(slot.Id, part);
-
-        // TODO MIRROR REMOVE make this a fucking event oh my god
-        _humanoidAppearanceSystem.BodyPartRemoved(uid, args);
-        foreach (var component in EntityManager.GetComponents<IBodyPartRemoved>(uid))
-        {
-            component.BodyPartRemoved(args);
-        }
-
-        // TODO MIRROR this should also be an event
-        // creadth: fall down if no legs
-        if (part.PartType == BodyPartType.Leg &&
-            GetPartsOfType(uid, BodyPartType.Leg, body).ToArray().Length == 0)
-        {
-            _standingStateSystem.Down(uid);
-        }
-
-        // TODO MIRROR this should also be an event
-        if (part.IsVital && body.Parts.Count(x => x.Value.PartType == part.PartType) == 0)
-        {
-            // TODO BODY SYSTEM KILL : Find a more elegant way of killing em than just dumping bloodloss damage.
-            var damage = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Bloodloss"), 300);
-            _damageableSystem.TryChangeDamage(part.Owner, damage);
-        }
-
-        body.Dirty();
     }
 
     #endregion

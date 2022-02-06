@@ -1,6 +1,8 @@
 using Content.Server.Administration;
+using Content.Server.Body.Systems;
 using Content.Shared.Administration;
 using Content.Shared.Body.Components;
+using Content.Shared.Body.Systems.Body;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
@@ -135,8 +137,8 @@ namespace Content.Server.Body.Commands
                 return;
             }
 
-            var slot = part.GetHashCode().ToString();
-            body.SetPart(slot, part);
+            var sys = EntitySystem.Get<SharedBodySystem>();
+            sys.AddPart(entity, part, body);
 
             shell.WriteLine($"Added hand to entity {entityManager.GetComponent<MetaDataComponent>(entity).EntityName}");
         }

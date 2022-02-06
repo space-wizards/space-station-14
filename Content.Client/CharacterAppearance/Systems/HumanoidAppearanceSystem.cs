@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Content.Client.Cuffs.Components;
 using Content.Shared.Body.Components;
+using Content.Shared.Body.Events;
 using Content.Shared.CharacterAppearance;
 using Content.Shared.CharacterAppearance.Components;
 using Content.Shared.CharacterAppearance.Systems;
@@ -22,8 +23,8 @@ namespace Content.Client.CharacterAppearance.Systems
             base.Initialize();
 
             SubscribeLocalEvent<HumanoidAppearanceComponent, ChangedHumanoidAppearanceEvent>(UpdateLooks);
-            SubscribeLocalEvent<HumanoidAppearanceBodyPartAddedEvent>(BodyPartAdded);
-            SubscribeLocalEvent<HumanoidAppearanceBodyPartRemovedEvent>(BodyPartRemoved);
+            SubscribeLocalEvent<HumanoidAppearanceComponent, PartAddedToBodyEvent>(BodyPartAdded);
+            SubscribeLocalEvent<HumanoidAppearanceComponent, PartRemovedFromBodyEvent>(BodyPartRemoved);
         }
 
         private List<HumanoidVisualLayers> _bodyPartLayers = new List<HumanoidVisualLayers>
@@ -111,19 +112,19 @@ namespace Content.Client.CharacterAppearance.Systems
         }
 
         // Scaffolding until Body is moved to ECS.
-        private void BodyPartAdded(HumanoidAppearanceBodyPartAddedEvent args)
+        private void BodyPartAdded(EntityUid uid, HumanoidAppearanceComponent component, PartAddedToBodyEvent args)
         {
-            if (!EntityManager.TryGetComponent(args.Uid, out SpriteComponent? sprite))
+            if (!EntityManager.TryGetComponent(uid, out SpriteComponent? sprite))
             {
                 return;
             }
 
-            if (!EntityManager.HasComponent<SpriteComponent>(args.Args.Part.Owner))
+            if (!EntityManager.HasComponent<SpriteComponent>(args.Part.Owner))
             {
                 return;
             }
 
-            var layers = args.Args.Part.ToHumanoidLayers();
+            var layers = args.Part.ToHumanoidLayers();
             // TODO BODY Layer color, sprite and state
             foreach (var layer in layers)
             {
@@ -134,19 +135,19 @@ namespace Content.Client.CharacterAppearance.Systems
             }
         }
 
-        private void BodyPartRemoved(HumanoidAppearanceBodyPartRemovedEvent args)
+        private void BodyPartRemoved(EntityUid uid, HumanoidAppearanceComponent component, PartRemovedFromBodyEvent args)
         {
-            if (!EntityManager.TryGetComponent(args.Uid, out SpriteComponent? sprite))
+            if (!EntityManager.TryGetComponent(uid, out SpriteComponent? sprite))
             {
                 return;
             }
 
-            if (!EntityManager.HasComponent<SpriteComponent>(args.Args.Part.Owner))
+            if (!EntityManager.HasComponent<SpriteComponent>(args.Part.Owner))
             {
                 return;
             }
 
-            var layers = args.Args.Part.ToHumanoidLayers();
+            var layers = args.Part.ToHumanoidLayers();
             // TODO BODY Layer color, sprite and state
             foreach (var layer in layers)
                 sprite.LayerSetVisible(layer, false);

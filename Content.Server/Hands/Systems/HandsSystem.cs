@@ -8,6 +8,8 @@ using Content.Server.Storage.Components;
 using Content.Server.Strip;
 using Content.Server.Throwing;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Body.Events;
+using Content.Shared.Body.Part;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Hands;
@@ -20,13 +22,9 @@ using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Utility;
@@ -57,6 +55,8 @@ namespace Content.Server.Hands.Systems
             SubscribeLocalEvent<HandsComponent, PullAttemptMessage>(HandlePullAttempt);
             SubscribeLocalEvent<HandsComponent, PullStartedMessage>(HandlePullStarted);
             SubscribeLocalEvent<HandsComponent, PullStoppedMessage>(HandlePullStopped);
+            SubscribeLocalEvent<HandsComponent, PartAddedToBodyEvent>(OnPartAdded);
+            SubscribeLocalEvent<HandsComponent, PartAddedToBodyEvent>(OnPartRemoved);
 
             SubscribeLocalEvent<HandsComponent, ComponentGetState>(GetComponentState);
 
@@ -167,6 +167,37 @@ namespace Content.Server.Hands.Systems
                 break;
             }
         }
+        #endregion
+
+        #region body
+
+        private void OnPartAdded(EntityUid uid, HandsComponent component, PartAddedToBodyEvent args)
+        {
+            if (args.Part.PartType != BodyPartType.Hand)
+                return;
+
+            // If this annoys you, which it should.
+            // Ping Smugleaf.
+            var location = args.Part.Symmetry switch
+            {
+                BodyPartSymmetry.None => HandLocation.Middle,
+                BodyPartSymmetry.Left => HandLocation.Left,
+                BodyPartSymmetry.Right => HandLocation.Right,
+                _ => throw new ArgumentOutOfRangeException()
+            };
+
+            component.AddHand(args.Slot.Id, location);
+        }
+
+        private void OnPartRemoved(EntityUid uid, HandsComponent component, PartAddedToBodyEvent args)
+        {
+            if (args.Part.PartType != BodyPartType.Hand)
+                return;
+
+            component.RemoveHand(args.Slot.Id);
+        }
+
+
         #endregion
 
         #region interactions

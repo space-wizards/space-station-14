@@ -60,45 +60,6 @@ namespace Content.Shared.CharacterAppearance.Systems
             UpdateAppearance(uid, state.Appearance, state.Sex, state.Gender);
         }
 
-        // Scaffolding until Body is moved to ECS.
-        public void BodyPartAdded(EntityUid uid, BodyPartAddedEventArgs args)
-        {
-            RaiseLocalEvent(new HumanoidAppearanceBodyPartAddedEvent(uid, args));
-        }
-
-        public void BodyPartRemoved(EntityUid uid, BodyPartRemovedEventArgs args)
-        {
-            RaiseLocalEvent(new HumanoidAppearanceBodyPartRemovedEvent(uid, args));
-        }
-
-        // Scaffolding until Body is moved to ECS.
-        [Serializable, NetSerializable]
-        public class HumanoidAppearanceBodyPartAddedEvent : EntityEventArgs
-        {
-            public EntityUid Uid { get; }
-            public BodyPartAddedEventArgs Args { get; }
-
-            public HumanoidAppearanceBodyPartAddedEvent(EntityUid uid, BodyPartAddedEventArgs args)
-            {
-                Uid = uid;
-                Args = args;
-            }
-        }
-
-        [Serializable, NetSerializable]
-        public class HumanoidAppearanceBodyPartRemovedEvent : EntityEventArgs
-        {
-            public EntityUid Uid { get; }
-            public BodyPartRemovedEventArgs Args { get; }
-
-            public HumanoidAppearanceBodyPartRemovedEvent(EntityUid uid, BodyPartRemovedEventArgs args)
-            {
-                Uid = uid;
-                Args = args;
-            }
-
-        }
-
         [Serializable, NetSerializable]
         public class ChangedHumanoidAppearanceEvent : EntityEventArgs
         {

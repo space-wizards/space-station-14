@@ -528,7 +528,7 @@ namespace Content.Server.Kitchen.Components
                     var part = slot.Part;
 
                     if (part == null ||
-                        !bodySys.TryDropPart(slot, out var dropped))
+                        !bodySys.TryRemovePart(victim, slot, out var dropped, body))
                     {
                         continue;
                     }

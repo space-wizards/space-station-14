@@ -28,6 +28,7 @@ namespace Content.IntegrationTests.Tests.Body
     preset: HumanPreset
     centerSlot: torso
   - type: StandingState
+  - type: FallDownNoLegs
 ";
 
         [Test]
