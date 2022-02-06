@@ -68,9 +68,6 @@
     inHandsOnly: false
     singleUser: true
     key: enum.ApcUiKey.Key
-  - type: Construction
-    graph: APC
-    node: apc
   - type: PowerNetworkBattery
     maxSupply: 10000
     maxChargeRate: 5000
@@ -87,30 +84,45 @@
   - type: Battery
     maxCharge: 20000
     startingCharge: 20000
-
+  - type: Construction
+    graph: APC
+    node: basic
+    
 - type: entity
   parent: BaseAPC
   id: APCHighCapacity
+  description: A control terminal for the area's electrical systems. High capacity.
   suffix: High Cap, 40kW
   components:
   - type: Battery
     maxCharge: 40000
     startingCharge: 40000
+  - type: Construction
+    graph: APC
+    node: high
     
 - type: entity
   parent: BaseAPC
   id: APCSuperCapacity
+  description: A control terminal for the area's electrical systems. Super capacity.
   suffix: Super Cap, 60kW
   components:
   - type: Battery
     maxCharge: 60000
     startingCharge: 60000
+  - type: Construction
+    graph: APC
+    node: super
     
 - type: entity
   parent: BaseAPC
   id: APCHyperCapacity
+  description: A control terminal for the area's electrical systems. Hyper capacity.
   suffix: Hyper Cap, 80kW
   components:
   - type: Battery
     maxCharge: 80000
     startingCharge: 80000
+  - type: Construction
+    graph: APC
+    node: hyper

@@ -32,7 +32,7 @@
       edges:
       - to: electronics 
         steps:
-        - tag: WallmountGeneratorElectronics
+        - prototype: WallmountGeneratorElectronics
           store: board
           name: "wallmount generator circuit board"
           icon:
@@ -41,7 +41,7 @@
           doAfter: 1
       - to: electronicsAPU
         steps:
-        - tag: WallmountGeneratorAPUElectronics
+        - prototype: WallmountGeneratorAPUElectronics
           store: board
           name: "wallmount APU circuit board"
           icon:

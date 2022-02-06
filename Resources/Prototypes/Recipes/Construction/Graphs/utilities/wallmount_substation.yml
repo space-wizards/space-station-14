@@ -32,7 +32,7 @@
       edges:
       - to: electronics 
         steps:
-        - tag: WallmountSubstationElectronics
+        - prototype: WallmountSubstationElectronics
           store: board
           name: "wallmount substation circuit board"
           icon:

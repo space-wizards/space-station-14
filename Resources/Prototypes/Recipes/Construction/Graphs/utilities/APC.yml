@@ -4,10 +4,106 @@
   graph:
     - node: start
       edges:
-        - to: apc
-          steps:
-            - material: Steel
-              amount: 3
+      - to: cable
+        steps:
+        - material: Steel
+          amount: 3
+          doAfter: 2
+              
+    - node: cable
+      edges:
+      - to: electronics
+        steps:
+        - material: Cable
+          amount: 5
+          doAfter: 2
+      - to: start
+        completed:
+        - !type:SpawnPrototype
+          prototype: CableApcStack1
+          amount: 5
+        - !type:SpawnPrototype
+          prototype: SheetSteel1
+          amount: 3
+        steps:
+        - tool: Cutting
+          doAfter: 1     
+          
+    - node: electronics
+      edges:
+      - to: cell
+        steps:
+        - prototype: APCElectronics
+          store: board
+          name: "APC electronics"
+          icon:
+            sprite: "Objects/Misc/module.rsi"
+            state: "charger_APC"
+          doAfter: 1 
+      - to: cable
+        conditions:
+        - !type:WirePanel {}
+        - !type:ContainerNotEmpty
+          container: board
+        completed:
+        - !type:EmptyAllContainers {}
+        steps:
+        - tool: Screwing
+          doAfter: 1
+          
+    - node: cell
+      edges:
+      - to: basic
+        steps:
+        - prototype: PowerCellLargeStandard
+          store: cell
+          name: "large power cell"
+          icon:
+            sprite: "Objects/Power/PowerCells/power_cell_large_st.rsi"
+            state: "l_st"
+      - to: high
+        steps:
+        - prototype: PowerCellLargeHigh
+          store: cell
+          name: "large high power cell"
+          icon:
+            sprite: "Objects/Power/PowerCells/power_cell_large_hi.rsi"
+            state: "l_hi"
+      - to: super
+        steps:
+        - prototype: PowerCellLargeSuper
+          store: cell
+          name: "large super power cell"
+          icon:
+            sprite: "Objects/Power/PowerCells/power_cell_large_sup.rsi"
+            state: "l_sup"
+      - to: hyper
+        steps:
+        - prototype: PowerCellLargeHyper
+          store: cell
+          name: "large hyper power cell"
+          icon:
+            sprite: "Objects/Power/PowerCells/power_cell_large_hy.rsi"
+            state: "l_hy"
+      - to: electronics
+        conditions:
+        - !type:WirePanel {}
+        - !type:ContainerNotEmpty
+          container: cell
+        completed:
+        - !type:EmptyAllContainers {}
+        steps:
+        - tool: Prying
+          doAfter: 1
 
-    - node: apc
+    - node: basic
       entity: BaseAPC
+
+    - node: high
+      entity: APCHighCapacity
+      
+    - node: super
+      entity: APCSuperCapacity
+      
+    - node: hyper
+      entity: APCHyperCapacity
