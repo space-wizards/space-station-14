@@ -81,7 +81,7 @@
   id: WallmountGeneratorAPU
   graph: WallmountGenerator
   startNode: start
-  targetNode: API
+  targetNode: APU
   category: Utilities
   description: "A wallmount APU for compact shuttles. Make sure to place cable under before building the wall."
   icon:

@@ -122,9 +122,6 @@
     supplyRate: 3000
     supplyRampRate: 500
     supplyRampTolerance: 500
-#  - type: Construction
-#    graph: APC
-#    node: apc
 
 # Generators in use
 
@@ -182,6 +179,9 @@
   components:
   - type: PowerSupplier
     supplyRate: 3000
+  - type: Construction
+    graph: WallmountGenerator
+    node: generator
 
 - type: entity
   parent: BaseGeneratorWallmount
@@ -192,7 +192,9 @@
   components:
   - type: PowerSupplier
     supplyRate: 6000
-    
+  - type: Construction
+    graph: WallmountGenerator
+    node: APU  
 
 # RTG - no fuel requirement
 
