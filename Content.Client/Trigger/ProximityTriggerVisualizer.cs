@@ -23,7 +23,7 @@ namespace Content.Client.Trigger
 
         public override void InitializeEntity(EntityUid entityUid)
         {
-            
+
             base.InitializeEntity(entityUid);
 
             if (_animationState == null) return;
@@ -74,11 +74,14 @@ namespace Content.Client.Trigger
                     spriteComponent.LayerSetState(ProximityTriggerVisualLayers.Base, "on");
                     break;
                 case ProximityTriggerVisuals.Active:
+                    /* TODO: Waiting on ECS OnChangeData so we can actually subscribe to the animation finishing properly.
                     if (_animationState == null || player == null ||
                         animSystem.HasRunningAnimation(player, AnimKey)) return;
-                    
+
                     animSystem.Play(player, _animation, AnimKey);
+                    */
                     break;
+                case ProximityTriggerVisuals.Off:
                 default:
                     spriteComponent.LayerSetState(ProximityTriggerVisualLayers.Base, "off");
                     break;

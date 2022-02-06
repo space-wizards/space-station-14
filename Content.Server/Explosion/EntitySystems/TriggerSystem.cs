@@ -43,7 +43,6 @@ namespace Content.Server.Explosion.EntitySystems
     [UsedImplicitly]
     public sealed partial class TriggerSystem : EntitySystem
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly ExplosionSystem _explosions = default!;
         [Dependency] private readonly FixtureSystem _fixtures = default!;
         [Dependency] private readonly FlashSystem _flashSystem = default!;
@@ -148,7 +147,7 @@ namespace Content.Server.Explosion.EntitySystems
         {
             base.Update(frameTime);
 
-            UpdateProximity();
+            UpdateProximity(frameTime);
         }
     }
 }

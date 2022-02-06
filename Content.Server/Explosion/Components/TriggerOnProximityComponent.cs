@@ -39,6 +39,7 @@ namespace Content.Server.Explosion.Components
         [DataField("enabled")]
         public bool Enabled = true;
 
+        [ViewVariables(VVAccess.ReadWrite)]
         [DataField("cooldown")]
         public float Cooldown { get; set; } = 5f;
 
@@ -50,8 +51,9 @@ namespace Content.Server.Explosion.Components
         /// <summary>
         /// What speed should the other object be moving at to trigger the proximity fixture?
         /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
         [DataField("triggerSpeed")]
-        public float TriggerSpeed { get; set; } = 3.0f;
+        public float TriggerSpeed { get; set; } = 3.5f;
 
         /// <summary>
         /// If this proximity is triggered should we continually repeat it?

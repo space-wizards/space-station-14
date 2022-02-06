@@ -24,10 +24,12 @@ public sealed partial class TriggerSystem
         SubscribeLocalEvent<TriggerOnProximityComponent, AnchorStateChangedEvent>(OnProximityAnchor);
     }
 
-    private void OnProximityAnchor(EntityUid uid, TriggerOnProximityComponent component, AnchorStateChangedEvent args)
+    private void OnProximityAnchor(EntityUid uid, TriggerOnProximityComponent component, ref AnchorStateChangedEvent args)
     {
         component.Enabled = !component.RequiresAnchored ||
                             args.Anchored;
+
+        SetProximityAppearance(uid, component);
 
         if (!component.Enabled)
         {
@@ -51,6 +53,8 @@ public sealed partial class TriggerSystem
     {
         component.Enabled = !component.RequiresAnchored ||
                             EntityManager.GetComponent<TransformComponent>(uid).Anchored;
+
+        SetProximityAppearance(uid, component);
 
         if (!TryComp<PhysicsComponent>(uid, out var body)) return;
 
@@ -83,7 +87,7 @@ public sealed partial class TriggerSystem
     {
         if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearanceComponent))
         {
-            appearanceComponent.SetData(ProximityTriggerVisualState.State, ProximityTriggerVisuals.Active);
+            appearanceComponent.SetData(ProximityTriggerVisualState.State, component.Enabled ? ProximityTriggerVisuals.Inactive : ProximityTriggerVisuals.Off);
         }
     }
 
@@ -106,7 +110,7 @@ public sealed partial class TriggerSystem
         Trigger(component.Owner);
     }
 
-    private void UpdateProximity()
+    private void UpdateProximity(float frameTime)
     {
         var toRemove = new RemQueue<TriggerOnProximityComponent>();
 
@@ -128,7 +132,7 @@ public sealed partial class TriggerSystem
 
             if (Paused(comp.Owner, metadata)) continue;
 
-            comp.Accumulator -= comp.Cooldown;
+            comp.Accumulator -= frameTime;
 
             if (comp.Accumulator > 0f) continue;
 
