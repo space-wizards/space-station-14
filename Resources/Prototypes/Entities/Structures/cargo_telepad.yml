@@ -47,5 +47,3 @@
   - type: ExtensionCableReceiver
   - type: CargoTelepad
   - type: Appearance
-    visuals:
-    - type: CargoTelepadVisualizer

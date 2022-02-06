@@ -12,14 +12,14 @@ public sealed partial class CargoSystem
 {
     [Dependency] private readonly AnimationPlayerSystem _player = default!;
 
-    private static readonly Animation CargoTelepadAnimation = new()
+    private static readonly Animation CargoTelepadBeamAnimation = new()
     {
         Length = TimeSpan.FromSeconds(0.5),
         AnimationTracks =
         {
             new AnimationTrackSpriteFlick
             {
-                LayerKey = CargoTelepadLayers.Base,
+                LayerKey = CargoTelepadLayers.Beam,
                 KeyFrames =
                 {
                     new AnimationTrackSpriteFlick.KeyFrame(new RSI.StateId("beam"), 0f)
@@ -27,6 +27,25 @@ public sealed partial class CargoSystem
             }
         }
     };
+
+    private static readonly Animation CargoTelepadIdleAnimation = new()
+    {
+        Length = TimeSpan.FromSeconds(0.5),
+        AnimationTracks =
+        {
+            new AnimationTrackSpriteFlick
+            {
+                LayerKey = CargoTelepadLayers.Beam,
+                KeyFrames =
+                {
+                    new AnimationTrackSpriteFlick.KeyFrame(new RSI.StateId("idle"), 0f)
+                }
+            }
+        }
+    };
+
+    private const string TelepadBeamKey = "cargo-telepad-beam";
+    private const string TelepadIdleKey = "cargo-telepad-idle";
 
     private void InitializeCargoTelepad()
     {
@@ -48,21 +67,30 @@ public sealed partial class CargoSystem
 
     private void OnChangeData(AppearanceComponent component)
     {
-
         if (!TryComp<SpriteComponent>(component.Owner, out var sprite)) return;
 
         component.TryGetData(CargoTelepadVisuals.State, out CargoTelepadState? state);
+        AnimationPlayerComponent? player = null;
 
         switch (state)
         {
             case CargoTelepadState.Teleporting:
-                _player.Play(component.Owner, CargoTelepadAnimation, "cargo-telepad");
+                if (_player.HasRunningAnimation(component.Owner, TelepadBeamKey)) return;
+                _player.Stop(component.Owner, player, TelepadIdleKey);
+                _player.Play(component.Owner, player, CargoTelepadBeamAnimation, TelepadBeamKey);
                 break;
             case CargoTelepadState.Unpowered:
                 sprite.LayerSetVisible(CargoTelepadLayers.Beam, false);
+                _player.Stop(component.Owner, player, TelepadBeamKey);
+                _player.Stop(component.Owner, player, TelepadIdleKey);
                 break;
             default:
                 sprite.LayerSetVisible(CargoTelepadLayers.Beam, true);
+
+                if (_player.HasRunningAnimation(component.Owner, player, TelepadIdleKey) ||
+                    _player.HasRunningAnimation(component.Owner, player, TelepadBeamKey)) return;
+
+                _player.Play(component.Owner, player, CargoTelepadIdleAnimation, TelepadIdleKey);
                 break;
         }
     }
