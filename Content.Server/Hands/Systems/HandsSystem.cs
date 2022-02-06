@@ -56,7 +56,7 @@ namespace Content.Server.Hands.Systems
             SubscribeLocalEvent<HandsComponent, PullStartedMessage>(HandlePullStarted);
             SubscribeLocalEvent<HandsComponent, PullStoppedMessage>(HandlePullStopped);
             SubscribeLocalEvent<HandsComponent, PartAddedToBodyEvent>(OnPartAdded);
-            SubscribeLocalEvent<HandsComponent, PartAddedToBodyEvent>(OnPartRemoved);
+            SubscribeLocalEvent<HandsComponent, PartRemovedFromBodyEvent>(OnPartRemoved);
 
             SubscribeLocalEvent<HandsComponent, ComponentGetState>(GetComponentState);
 
@@ -189,7 +189,7 @@ namespace Content.Server.Hands.Systems
             component.AddHand(args.Slot.Id, location);
         }
 
-        private void OnPartRemoved(EntityUid uid, HandsComponent component, PartAddedToBodyEvent args)
+        private void OnPartRemoved(EntityUid uid, HandsComponent component, PartRemovedFromBodyEvent args)
         {
             if (args.Part.PartType != BodyPartType.Hand)
                 return;

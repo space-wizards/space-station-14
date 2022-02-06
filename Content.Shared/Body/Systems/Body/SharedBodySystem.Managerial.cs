@@ -181,7 +181,7 @@ public abstract partial class SharedBodySystem
 
         var old = slot.Part;
 
-        var ev = new PartRemovedFromBodyEvent(old, body);
+        var ev = new PartRemovedFromBodyEvent(old, body, slot);
         slot.Part = null;
         body.Parts.Remove(old);
         body.PartContainer.Remove(old.Owner);

@@ -39,9 +39,9 @@ public abstract class SharedBodyComponent : Component
 [NetSerializable]
 public class BodyComponentState : ComponentState
 {
-    public Dictionary<string, SharedBodyPartComponent> Parts;
+    public Dictionary<string, EntityUid> Parts;
 
-    public BodyComponentState(Dictionary<string, SharedBodyPartComponent> parts)
+    public BodyComponentState(Dictionary<string, EntityUid> parts)
     {
         Parts = parts;
     }

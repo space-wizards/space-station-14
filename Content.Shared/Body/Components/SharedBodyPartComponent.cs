@@ -1,23 +1,17 @@
-using System;
-using System.Collections.Generic;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Systems.Body;
 using Content.Shared.Body.Systems.Part;
-using Robust.Shared.Analyzers;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Body.Components
 {
-    [NetworkedComponent()]
+    [NetworkedComponent(), RegisterComponent]
     [Friend(typeof(SharedBodyPartSystem), typeof(SharedBodySystem))]
-    public abstract class SharedBodyPartComponent : Component
+    public class SharedBodyPartComponent : Component
     {
         /// <summary>
         ///     A list of all mechanisms that should be added to this body part when spawned.

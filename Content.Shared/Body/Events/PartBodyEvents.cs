@@ -30,12 +30,14 @@ public class PartAddedToBodyEvent : EntityEventArgs
 public class PartRemovedFromBodyEvent : EntityEventArgs
 {
     public readonly SharedBodyPartComponent Part;
+    public readonly BodyPartSlot Slot;
 
     public readonly SharedBodyComponent OldBody;
     public readonly SharedBodyComponent? NewBody;
 
-    public PartRemovedFromBodyEvent(SharedBodyPartComponent part, SharedBodyComponent oldBody, SharedBodyComponent? newBody=null)
+    public PartRemovedFromBodyEvent(SharedBodyPartComponent part, SharedBodyComponent oldBody, BodyPartSlot slot, SharedBodyComponent? newBody=null)
     {
+        Slot = slot;
         Part = part;
         OldBody = oldBody;
         NewBody = newBody;

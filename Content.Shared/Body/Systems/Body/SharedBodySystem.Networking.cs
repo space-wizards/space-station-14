@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using Content.Shared.Body.Components;
-using Robust.Shared.GameObjects;
+﻿using Content.Shared.Body.Components;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Body.Systems.Body;
@@ -13,7 +11,7 @@ public abstract partial class SharedBodySystem
         SubscribeLocalEvent<SharedBodyComponent, ComponentHandleState>(OnComponentHandleState);
     }
 
-    public void OnComponentGetState(EntityUid uid, SharedBodyComponent body, ComponentGetState args)
+    public void OnComponentGetState(EntityUid uid, SharedBodyComponent body, ref ComponentGetState args)
     {
         var partIds = new (string slot, EntityUid partId)[body.Parts.Count];
 
@@ -24,7 +22,7 @@ public abstract partial class SharedBodySystem
             i++;
         }
 
-        var parts = new Dictionary<string, SharedBodyPartComponent>(partIds.Length);
+        var parts = new Dictionary<string, EntityUid>(partIds.Length);
 
         foreach (var (slot, partId) in partIds)
         {
@@ -33,18 +31,18 @@ public abstract partial class SharedBodySystem
                 continue;
             }
 
-            if (!TryComp(partId, out SharedBodyPartComponent? part))
+            if (!HasComp<SharedBodyPartComponent>(partId))
             {
                 continue;
             }
 
-            parts[slot] = part;
+            parts[slot] = partId;
         }
 
         args.State = new BodyComponentState(parts);
     }
 
-    public void OnComponentHandleState(EntityUid uid, SharedBodyComponent body, ComponentHandleState args)
+    public void OnComponentHandleState(EntityUid uid, SharedBodyComponent body, ref ComponentHandleState args)
     {
         if (args.Current is not BodyComponentState state)
         {
@@ -56,8 +54,9 @@ public abstract partial class SharedBodySystem
         foreach (var (oldPart, slot) in body.Parts)
         {
             if (!newParts.TryGetValue(slot.Id, out var newPart) ||
-                newPart != oldPart)
+                newPart != oldPart.Owner)
             {
+
                 RemovePart(uid, oldPart, body);
             }
         }
@@ -65,9 +64,12 @@ public abstract partial class SharedBodySystem
         foreach (var (slotId, newPart) in newParts)
         {
             if (!body.SlotIds.TryGetValue(slotId, out var slot) ||
-                slot.Part != newPart)
+                slot.Part?.Owner != newPart)
             {
-                AddPart(uid, slotId, newPart, body);
+                if (TryComp<SharedBodyPartComponent>(newPart, out var comp))
+                {
+                    AddPart(uid, slotId, comp, body);
+                }
             }
         }
     }

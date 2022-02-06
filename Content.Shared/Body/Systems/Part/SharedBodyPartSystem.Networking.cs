@@ -15,7 +15,7 @@ public abstract partial class SharedBodyPartSystem
         SubscribeLocalEvent<SharedBodyPartComponent, ComponentHandleState>(OnComponentHandleState);
     }
 
-    private void OnComponentGetState(EntityUid uid, SharedBodyPartComponent component, ComponentGetState args)
+    private void OnComponentGetState(EntityUid uid, SharedBodyPartComponent component, ref ComponentGetState args)
     {
         var mechanismIds = new EntityUid[component.Mechanisms.Count];
 
@@ -29,7 +29,7 @@ public abstract partial class SharedBodyPartSystem
         args.State = new BodyPartComponentState(mechanismIds);
     }
 
-    private void OnComponentHandleState(EntityUid uid, SharedBodyPartComponent component, ComponentHandleState args)
+    private void OnComponentHandleState(EntityUid uid, SharedBodyPartComponent component, ref ComponentHandleState args)
     {
         if (args.Current is BodyPartComponentState state)
         {
