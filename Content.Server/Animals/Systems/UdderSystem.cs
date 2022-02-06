@@ -37,25 +37,28 @@ namespace Content.Server.Animals.Systems
             {
                 udder.AccumulatedFrameTime += frameTime;
 
-                if (udder.AccumulatedFrameTime < udder.UpdateRate)
-                    continue;
-
-                // Actually there is food digestion so no problem with instant reagent generation "OnFeed"
-                if (EntityManager.TryGetComponent<HungerComponent?>(udder.Owner, out var hunger))
+                while (udder.AccumulatedFrameTime > udder.UpdateRate)
                 {
-                    hunger.HungerThresholds.TryGetValue(HungerThreshold.Peckish, out var targetThreshold);
+                    udder.AccumulatedFrameTime -= udder.UpdateRate;
 
-                    // Is there enough nutrition to produce reagent?
-                    if (hunger.CurrentHunger < targetThreshold)
+                    // Actually there is food digestion so no problem with instant reagent generation "OnFeed"
+                    if (EntityManager.TryGetComponent<HungerComponent?>(udder.Owner, out var hunger))
+                    {
+                        hunger.HungerThresholds.TryGetValue(HungerThreshold.Peckish, out var targetThreshold);
+
+                        // Is there enough nutrition to produce reagent?
+                        if (hunger.CurrentHunger < targetThreshold)
+                            continue;
+                    }
+
+                    if (!_solutionContainerSystem.TryGetSolution(udder.Owner, udder.TargetSolutionName,
+                            out var solution))
                         continue;
+
+                    //TODO: toxins from bloodstream !?
+                    _solutionContainerSystem.TryAddReagent(udder.Owner, solution, udder.ReagentId,
+                        udder.QuantityPerUpdate, out var accepted);
                 }
-
-                if (!_solutionContainerSystem.TryGetSolution(udder.Owner, udder.TargetSolutionName, out var solution))
-                    continue;
-
-                //TODO: toxins from bloodstream !?
-                _solutionContainerSystem.TryAddReagent(udder.Owner, solution, udder.ReagentId, udder.QuantityPerUpdate, out var accepted);
-                udder.AccumulatedFrameTime = 0;
             }
         }
 

@@ -181,7 +181,7 @@ public partial class AdminLogSystem : SharedAdminLogSystem
 
     private async Task SaveLogs()
     {
-        _accumulatedFrameTime = 0;
+        _accumulatedFrameTime -= (float) _queueSendDelay.TotalSeconds;
 
         // TODO ADMIN LOGS array pool
         var copy = new List<QueuedLog>(_logQueue.Count + _preRoundLogQueue.Count);

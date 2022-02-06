@@ -66,7 +66,7 @@ namespace Content.Server.Plants
             if (_timer < 3f)
                 return;
 
-            _timer = 0f;
+            _timer -= 3f;
 
             foreach (var plantHolder in EntityManager.EntityQuery<PlantHolderComponent>())
             {
