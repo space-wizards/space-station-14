@@ -31,6 +31,9 @@ public abstract partial class SharedBodyPartSystem
 
     private void OnComponentHandleState(EntityUid uid, SharedBodyPartComponent component, ref ComponentHandleState args)
     {
+        if (!component.Initialized)
+            return;
+
         if (args.Current is BodyPartComponentState state)
         {
             foreach (var id in state.MechanismIds)

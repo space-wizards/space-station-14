@@ -44,6 +44,10 @@ public abstract partial class SharedBodySystem
 
     public void OnComponentHandleState(EntityUid uid, SharedBodyComponent body, ref ComponentHandleState args)
     {
+        // why can this even happen?
+        if (!body.Initialized)
+            return;
+
         if (args.Current is not BodyComponentState state)
         {
             return;

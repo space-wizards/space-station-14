@@ -16,14 +16,6 @@ public class MechanismComponent : Component
 
     public SharedBodyPartComponent? Part;
 
-    // TODO BODY Replace with a simulation of organs
-    /// <summary>
-    ///     Whether or not the owning <see cref="Body"/> will die if this mechanism is removed.
-    /// </summary>
-    [ViewVariables]
-    [DataField("vital")]
-    public bool IsVital;
-
     // TODO BODY OnSizeChanged
     /// <summary>
     ///     Determines whether this
