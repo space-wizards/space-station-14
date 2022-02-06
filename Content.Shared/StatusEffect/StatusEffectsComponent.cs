@@ -14,8 +14,6 @@ namespace Content.Shared.StatusEffect
     [Friend(typeof(StatusEffectsSystem))]
     public class StatusEffectsComponent : Component
     {
-        public override string Name => "StatusEffects";
-
         [ViewVariables]
         public Dictionary<string, StatusEffectState> ActiveEffects = new();
 

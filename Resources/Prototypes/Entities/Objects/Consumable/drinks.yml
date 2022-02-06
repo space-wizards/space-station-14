@@ -20,6 +20,9 @@
     interfaces:
     - key: enum.TransferAmountUiKey.Key
       type: TransferAmountBoundUserInterface
+  - type: ItemCooldown
+  - type: UseDelay
+    delay: 1.0
 
 - type: entity
   parent: DrinkBase
@@ -860,16 +863,6 @@
 
 - type: entity
   parent: DrinkGlassBase
-  id: DrinkHell
-  name: hell ramen
-  description: The noodles are boiled, the flavors are artificial, just like being back in school.
-  components:
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/hell.rsi
-
-- type: entity
-  parent: DrinkGlassBase
   id: DrinkHippiesDelightGlass
   name: hippies' delight glass
   description: A drink enjoyed by people during the 1960's.
@@ -971,6 +964,24 @@
           Quantity: 50
   - type: Sprite
     sprite: Objects/Consumable/Drinks/iceglass.rsi
+
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkIceCreamGlass
+  name: ice cream glass
+  description: A glass full of good old ice cream. Might want a spoon.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: IceCream
+          Quantity: 50
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/icecreamglass.rsi
+    state: icon
 
 - type: entity
   parent: DrinkGlassBase
@@ -1319,8 +1330,8 @@
 
 - type: entity
   parent: DrinkGlassBase
-  id: DrinkNukaColaGlass
-  name: nuka cola glass
+  id: DrinkNuclearColaGlass
+  name: nuclear cola glass
   description: Don't cry, Don't raise your eye, It's only nuclear wasteland.
   components:
   - type: SolutionContainerManager
@@ -1328,11 +1339,11 @@
       drink:
         maxVol: 50
         reagents:
-        - ReagentId: NukaCola
+        - ReagentId: NuclearCola
           Quantity: 50
   - type: Drink
   - type: Sprite
-    sprite: Objects/Consumable/Drinks/nuka_colaglass.rsi
+    sprite: Objects/Consumable/Drinks/nuclear_colaglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1404,16 +1415,6 @@
 
 - type: entity
   parent: DrinkGlassBase
-  id: DrinkRamen
-  name: cup ramen
-  description: Just add 10ml water, self heats! A taste that reminds you of your school years.
-  components:
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/ramen.rsi
-
-- type: entity
-  parent: DrinkGlassBase
   id: DrinkRedMeadGlass
   name: red mead glass
   description: A true Viking's beverage, though its color is strange.
@@ -1445,6 +1446,42 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/rewriter.rsi
+
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkRootBeerGlass
+  name: root beer glass
+  description: Fizzy, foamy, and full of sweet, non-caffienated goodness.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: RootBeer
+          Quantity: 50
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/rootbeerglass.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkRootBeerFloatGlass
+  name: root beer float glass
+  description: Fizzy, foamy, and now with ice cream on top! Amazing!
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: RootBeerFloat
+          Quantity: 50
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/rootbeerfloatglass.rsi
+    state: icon
 
 - type: entity
   parent: DrinkGlassBase
@@ -2051,3 +2088,37 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shake-white.rsi
+
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkRamen
+  name: cup ramen
+  description: Just add 10ml water, self heats! A taste that reminds you of your school years
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: DryRamen
+          Quantity: 30
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/ramen.rsi
+
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkHellRamen
+  name: hell ramen
+  description: Just add 10ml water, self heats! Super spicy flavor.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: DryRamen
+          Quantity: 30
+        - ReagentId: CapsaicinOil
+          Quantity: 5
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/ramen.rsi

@@ -11,8 +11,6 @@ namespace Content.Shared.Ghost
     [NetworkedComponent()]
     public class SharedGhostComponent : Component
     {
-        public override string Name => "Ghost";
-
         [ViewVariables(VVAccess.ReadWrite)]
         public bool CanGhostInteract
         {

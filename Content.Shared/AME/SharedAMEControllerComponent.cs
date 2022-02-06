@@ -6,8 +6,6 @@ namespace Content.Shared.AME
 {
     public class SharedAMEControllerComponent : Component
     {
-        public override string Name => "AMEController";
-
         [Serializable, NetSerializable]
         public class AMEControllerBoundUserInterfaceState : BoundUserInterfaceState
         {

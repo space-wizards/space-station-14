@@ -24,7 +24,6 @@ namespace Content.Client.IconSmoothing
         {
             base.Initialize();
 
-            SubscribeLocalEvent<IconSmoothDirtyEvent>(HandleDirtyEvent);
             SubscribeLocalEvent<IconSmoothComponent, AnchorStateChangedEvent>(HandleAnchorChanged);
         }
 
@@ -46,54 +45,51 @@ namespace Content.Client.IconSmoothing
             }
         }
 
-        private void HandleDirtyEvent(IconSmoothDirtyEvent ev)
+        public void UpdateSmoothing(EntityUid uid, IconSmoothComponent? comp = null)
         {
-            // Yes, we updates ALL smoothing entities surrounding us even if they would never smooth with us.
-            // This is simpler to implement. If you want to optimize it be my guest.
-            var senderEnt = ev.Sender;
-            if (EntityManager.EntityExists(senderEnt) &&
-                _mapManager.TryGetGrid(EntityManager.GetComponent<TransformComponent>(senderEnt).GridID, out var grid1) &&
-                EntityManager.TryGetComponent(senderEnt, out IconSmoothComponent? iconSmooth)
-                && iconSmooth.Running)
-            {
-                var coords = EntityManager.GetComponent<TransformComponent>(senderEnt).Coordinates;
+            if (!Resolve(uid, ref comp))
+                return;
 
-                _dirtyEntities.Enqueue(senderEnt);
-                AddValidEntities(grid1.GetInDir(coords, Direction.North));
-                AddValidEntities(grid1.GetInDir(coords, Direction.South));
-                AddValidEntities(grid1.GetInDir(coords, Direction.East));
-                AddValidEntities(grid1.GetInDir(coords, Direction.West));
-                if (ev.Mode == IconSmoothingMode.Corners)
-                {
-                    AddValidEntities(grid1.GetInDir(coords, Direction.NorthEast));
-                    AddValidEntities(grid1.GetInDir(coords, Direction.SouthEast));
-                    AddValidEntities(grid1.GetInDir(coords, Direction.SouthWest));
-                    AddValidEntities(grid1.GetInDir(coords, Direction.NorthWest));
-                }
+            _dirtyEntities.Enqueue(uid);
+
+            var transform = Transform(uid);
+            Vector2i pos;
+
+            if (transform.Anchored && _mapManager.TryGetGrid(transform.GridID, out var grid))
+            {
+                pos = grid.CoordinatesToTile(transform.Coordinates);
+            }
+            else
+            {
+                // Entity is no longer valid, update around the last position it was at.
+                if (comp.LastPosition is not (GridId gridId, Vector2i oldPos))
+                    return;
+
+                if (!_mapManager.TryGetGrid(gridId, out grid))
+                    return;
+
+                pos = oldPos;
             }
 
-            // Entity is no longer valid, update around the last position it was at.
-            if (ev.LastPosition.HasValue && _mapManager.TryGetGrid(ev.LastPosition.Value.grid, out var grid))
-            {
-                var pos = ev.LastPosition.Value.pos;
+            // Yes, we updates ALL smoothing entities surrounding us even if they would never smooth with us.
+            // This is simpler to implement. If you want to optimize it be my guest.
 
-                AddValidEntities(grid.GetAnchoredEntities(pos + new Vector2i(1, 0)));
-                AddValidEntities(grid.GetAnchoredEntities(pos + new Vector2i(-1, 0)));
-                AddValidEntities(grid.GetAnchoredEntities(pos + new Vector2i(0, 1)));
-                AddValidEntities(grid.GetAnchoredEntities(pos + new Vector2i(0, -1)));
-                if (ev.Mode == IconSmoothingMode.Corners)
-                {
-                    AddValidEntities(grid.GetAnchoredEntities(pos + new Vector2i(1, 1)));
-                    AddValidEntities(grid.GetAnchoredEntities(pos + new Vector2i(-1, -1)));
-                    AddValidEntities(grid.GetAnchoredEntities(pos + new Vector2i(-1, 1)));
-                    AddValidEntities(grid.GetAnchoredEntities(pos + new Vector2i(1, -1)));
-                }
+            AddValidEntities(grid.GetAnchoredEntities(pos + new Vector2i(1, 0)));
+            AddValidEntities(grid.GetAnchoredEntities(pos + new Vector2i(-1, 0)));
+            AddValidEntities(grid.GetAnchoredEntities(pos + new Vector2i(0, 1)));
+            AddValidEntities(grid.GetAnchoredEntities(pos + new Vector2i(0, -1)));
+            if (comp.Mode == IconSmoothingMode.Corners)
+            {
+                AddValidEntities(grid.GetAnchoredEntities(pos + new Vector2i(1, 1)));
+                AddValidEntities(grid.GetAnchoredEntities(pos + new Vector2i(-1, -1)));
+                AddValidEntities(grid.GetAnchoredEntities(pos + new Vector2i(-1, 1)));
+                AddValidEntities(grid.GetAnchoredEntities(pos + new Vector2i(1, -1)));
             }
         }
 
-        private static void HandleAnchorChanged(EntityUid uid, IconSmoothComponent component, ref AnchorStateChangedEvent args)
+        private void HandleAnchorChanged(EntityUid uid, IconSmoothComponent component, ref AnchorStateChangedEvent args)
         {
-            component.AnchorStateChanged();
+            UpdateSmoothing(uid, component);
         }
 
         private void AddValidEntities(IEnumerable<EntityUid> candidates)
@@ -123,22 +119,5 @@ namespace Content.Client.IconSmoothing
 
             smoothing.UpdateGeneration = _generation;
         }
-    }
-
-    /// <summary>
-    ///     Event raised by a <see cref="IconSmoothComponent"/> when it needs to be recalculated.
-    /// </summary>
-    public sealed class IconSmoothDirtyEvent : EntityEventArgs
-    {
-        public IconSmoothDirtyEvent(EntityUid sender, (GridId grid, Vector2i pos)? lastPosition, IconSmoothingMode mode)
-        {
-            LastPosition = lastPosition;
-            Mode = mode;
-            Sender = sender;
-        }
-
-        public (GridId grid, Vector2i pos)? LastPosition { get; }
-        public IconSmoothingMode Mode { get; }
-        public EntityUid Sender { get; }
     }
 }
