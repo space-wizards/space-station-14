@@ -307,3 +307,21 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+
+#racks
+- type: construction
+  id: Rack
+  name: rack
+  description: A rack for storing things on.
+  graph: Rack
+  startNode: start
+  targetNode: Rack
+  category: Furniture
+  icon:
+    sprite: Structures/Furniture/furniture.rsi
+    state: rack
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
