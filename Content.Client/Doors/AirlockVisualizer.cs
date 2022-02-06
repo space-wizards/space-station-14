@@ -141,6 +141,7 @@ namespace Content.Client.Doors
             var unlitVisible = true;
             var boltedVisible = false;
             var weldedVisible = false;
+            var emergecyLightsVisible = false;
 
             if (animPlayer.HasRunningAnimation(AnimationKey))
             {
@@ -192,11 +193,17 @@ namespace Content.Client.Doors
                 boltedVisible = true;
             }
 
+            if (component.TryGetData(DoorVisuals.EmergencyLights, out bool eaLights) && eaLights)
+            {
+                emergecyLightsVisible = true;
+            }
+
             if (!_simpleVisuals)
             {
                 sprite.LayerSetVisible(DoorVisualLayers.BaseUnlit, unlitVisible && state != DoorState.Closed && state != DoorState.Welded);
                 sprite.LayerSetVisible(DoorVisualLayers.BaseWelded, weldedVisible);
                 sprite.LayerSetVisible(DoorVisualLayers.BaseBolted, unlitVisible && boltedVisible);
+                sprite.LayerSetVisible(DoorVisualLayers.BaseEAccess, emergecyLightsVisible);
             }
         }
     }
@@ -207,5 +214,6 @@ namespace Content.Client.Doors
         BaseUnlit,
         BaseWelded,
         BaseBolted,
+        BaseEAccess,
     }
 }
