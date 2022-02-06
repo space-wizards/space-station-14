@@ -41,10 +41,11 @@ public sealed class SeedExtractorSystem : EntitySystem
             QueueDel(args.Used);
 
             var random = _random.Next(component.MinSeeds, component.MaxSeeds);
+            var coords = Transform(uid).Coordinates;
 
             for (var i = 0; i < random; i++)
             {
-                _botanySystem.SpawnSeedPacket(seed, Transform(uid).Coordinates);
+                _botanySystem.SpawnSeedPacket(seed, coords);
             }
         }
     }

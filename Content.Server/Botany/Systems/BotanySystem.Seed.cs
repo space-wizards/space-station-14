@@ -51,7 +51,7 @@ public partial class BotanySystem
     {
         var seed = Spawn(SeedPrototype.Prototype, transformCoordinates);
 
-        var seedComp = seed.EnsureComponent<SeedComponent>();
+        var seedComp = EnsureComp<SeedComponent>(seed);
         seedComp.SeedName = proto.ID;
 
         if (TryComp(seed, out SpriteComponent? sprite))
@@ -118,7 +118,7 @@ public partial class BotanySystem
             entity.RandomOffset(0.25f);
             products.Add(entity);
 
-            var produce = entity.EnsureComponent<ProduceComponent>();
+            var produce = EnsureComp<ProduceComponent>(entity);
 
             produce.SeedName = proto.ID;
             ProduceGrown(entity, produce);
