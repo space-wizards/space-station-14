@@ -12,7 +12,6 @@ namespace Content.Shared.CloningConsole
         [Serializable, NetSerializable]
         public sealed class CloningConsoleBoundUserInterfaceState : BoundUserInterfaceState
         {
-            public readonly bool ScannerIsAlive;
             public readonly string? ScannerBodyInfo;
             public readonly string? ClonerBodyInfo;
             public readonly List<string> CloneHistory;
@@ -27,12 +26,11 @@ namespace Content.Shared.CloningConsole
             // If true, cloning is progressing (predict clone progress)
             public readonly bool Progressing;
             public readonly bool MindPresent;
-            public readonly bool ReadyToClone;
+            public readonly ClonerStatusState CloningStatus;
             public readonly bool ScannerConnected;
             public readonly bool ClonerConnected;
-            public CloningConsoleBoundUserInterfaceState(bool scannerIsAlive, string? scannerBodyInfo, string? cloningBodyInfo, List<string> cloneHistory, TimeSpan refTime, float progress, float maximum, bool progressing, bool mindPresent, bool readyToClone, bool scannerConnected, bool clonerConnected)
+            public CloningConsoleBoundUserInterfaceState(string? scannerBodyInfo, string? cloningBodyInfo, List<string> cloneHistory, TimeSpan refTime, float progress, float maximum, bool progressing, bool mindPresent, ClonerStatusState cloningStatus, bool scannerConnected, bool clonerConnected)
             {
-                ScannerIsAlive = scannerIsAlive;
                 ScannerBodyInfo = scannerBodyInfo;
                 ClonerBodyInfo = cloningBodyInfo;
                 CloneHistory = cloneHistory;
@@ -41,10 +39,22 @@ namespace Content.Shared.CloningConsole
                 Maximum = maximum;
                 Progressing = progressing;
                 MindPresent = mindPresent;
-                ReadyToClone = readyToClone;
+                CloningStatus = cloningStatus;
                 ScannerConnected = scannerConnected;
                 ClonerConnected = clonerConnected;
             }
+        }
+
+        [Serializable, NetSerializable]
+        public enum ClonerStatusState
+        {
+            Ready,
+            ScannerEmpty,
+            ScannerOccupantAlive,
+            OccupantMetaphyiscal,
+            ClonerOccupied,
+            NoClonerDetected,
+            NoMindDetected
         }
 
         [Serializable, NetSerializable]

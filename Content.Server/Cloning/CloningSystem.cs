@@ -131,15 +131,15 @@ namespace Content.Server.Cloning
         //         UpdateUserInterface(cloning);
         // }
 
-        public bool HasDnaScan(Mind.Mind mind)
-        {
-            return MindToId.ContainsKey(mind);
-        }
+        // public bool HasDnaScan(Mind.Mind mind)
+        // {
+        //     return MindToId.ContainsKey(mind);
+        // }
 
-        public Dictionary<int, string?> GetIdToUser()
-        {
-            return IdToDNA.ToDictionary(m => m.Key, m => m.Value.Mind.CharacterName);
-        }
+        // public Dictionary<int, string?> GetIdToUser()
+        // {
+        //     return IdToDNA.ToDictionary(m => m.Key, m => m.Value.Mind.CharacterName);
+        // }
 
         public void Reset(RoundRestartCleanupEvent ev)
         {

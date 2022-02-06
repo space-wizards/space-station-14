@@ -23,7 +23,7 @@
                                 VerticalAlignment="Center" />
                     </BoxContainer>
                     <Label Name="CloningActivity"
-                            Text = "{Loc 'cloning-pod-no-activity-text'}"
+                            Text = "{Loc 'cloning-console-component-msg-empty'}"
                             Access="Public"
                             HorizontalAlignment="Center"
                             HorizontalExpand="True" />
@@ -40,7 +40,7 @@
                         <RichTextLabel Name="ClonerInfoLabel"
                                 Access="Public"
                                 HorizontalExpand="True" />
-                        <Label Name="ClonerBrainActivity"
+                        <RichTextLabel Name="ClonerBrainActivity"
                                 Access="Public"
                                 HorizontalExpand="True"/>
                         <Button Name="EjectButton"

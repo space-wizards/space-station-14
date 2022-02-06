@@ -25,7 +25,6 @@ using Robust.Shared.Timing;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 
-
 using static Content.Shared.CloningConsole.SharedCloningConsoleComponent;
 
 namespace Content.Client.CloningConsole.UI
@@ -98,22 +97,51 @@ namespace Content.Client.CloningConsole.UI
             {
                 GeneticScannerContents.Visible = true;
                 GeneticScannerMissing.Visible = false;
+                CloneButton.Disabled = state.CloningStatus != ClonerStatusState.Ready;
+
+                switch (state.CloningStatus)
+                    {
+                        case ClonerStatusState.NoClonerDetected:
+                            CloningActivity.Text = (Loc.GetString("cloning-console-component-msg-no-cloner"));
+                            break;
+                        case ClonerStatusState.Ready:
+                            CloningActivity.Text = (Loc.GetString("cloning-console-component-msg-ready"));
+                            break;
+                        case ClonerStatusState.ClonerOccupied:
+                            CloningActivity.Text = (Loc.GetString("cloning-console-component-msg-occupied"));
+                            break;
+                        case ClonerStatusState.ScannerEmpty:
+                            CloningActivity.Text = (Loc.GetString("cloning-console-component-msg-empty"));
+                            break;
+                        case ClonerStatusState.ScannerOccupantAlive:
+                            CloningActivity.Text = (Loc.GetString("cloning-console-component-msg-scanner-occupant-alive"));
+                            break;
+                        case ClonerStatusState.OccupantMetaphyiscal:
+                            CloningActivity.Text = (Loc.GetString("cloning-console-component-msg-already-alive"));
+                            break;
+                        case ClonerStatusState.NoMindDetected:
+                            CloningActivity.Text = (Loc.GetString("cloning-console-component-msg-no-mind"));
+                            break;
+                    }
 
                 if (state.ScannerBodyInfo != null)
                 {
+                    // is occupied
                     ScannerInfoLabel.SetMarkup(Loc.GetString("cloning-console-window-scanner-id",
                     ("scannerOccupantName", state.ScannerBodyInfo)));
-                } else
+                }
+                else
                 {
+                    // is not occupied
                     ScannerInfoLabel.SetMarkup(Loc.GetString("cloning-console-window-id-blank"));
                 }
-                CloneButton.Disabled = !state.ReadyToClone;
             }
             else
             {
                 GeneticScannerContents.Visible = false;
                 GeneticScannerMissing.Visible = true;
             }
+
             // BUILD ClONER UI
             if (state.ClonerConnected)
             {
@@ -128,9 +156,7 @@ namespace Content.Client.CloningConsole.UI
                 CloningProgressBar.MaxValue = state.Maximum;
                 UpdateProgress();
 
-                ClonerBrainActivity.Text = Loc.GetString(state.MindPresent ? "cloning-console-mind-present-text" : "cloning-console-no-mind-activity-text");
-                ClonerBrainActivity.FontColorOverride = state.MindPresent ? Color.LimeGreen : Color.Red;
-
+                ClonerBrainActivity.SetMarkup(Loc.GetString(state.MindPresent ? "cloning-console-mind-present-text" : "cloning-console-no-mind-activity-text"));
                 if (state.ClonerBodyInfo != null)
                 {
                     ClonerInfoLabel.SetMarkup(Loc.GetString("cloning-console-window-pod-id",

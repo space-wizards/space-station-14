@@ -61,11 +61,7 @@ namespace Content.Client.HealthScanner.UI
                     }
                     text.Append('\n');
                 }
-
                 Diagnostics.Text = text.ToString();
-
-                // TODO HealthScanner resize window based on the length of text / number of damage types?
-                // Also, maybe add color schemes for specific damage groups?
                 SetSize = (250, 600);
             }
         }
