@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Construction recipes are now sorted alphabetically., type: Tweak}
-  id: 491
-  time: '2021-10-26T14:18:43.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: Fixed not being able to construct or deconstruct tables., type: Fix}
@@ -2954,3 +2949,9 @@ Entries:
     type: Tweak}
   id: 991
   time: '2022-02-06T02:25:13.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'NSS Pillar minor update! Check out changes to security, permabrig and
+      salvage among other things.', type: Tweak}
+  id: 992
+  time: '2022-02-06T12:56:41.0000000+00:00'
