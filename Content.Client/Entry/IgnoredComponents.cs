@@ -221,7 +221,6 @@ namespace Content.Client.Entry
             "MachineFrame",
             "MachineBoard",
             "ChemicalAmmo",
-            "CargoTelepad",
             "TraitorDeathMatchRedemption",
             "CanHostGuardian",
             "SliceableFood",

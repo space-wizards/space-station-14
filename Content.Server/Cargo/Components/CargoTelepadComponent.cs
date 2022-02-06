@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Content.Shared.Cargo;
+using Content.Shared.Cargo.Components;
 using Content.Shared.Sound;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
@@ -14,7 +15,7 @@ namespace Content.Server.Cargo.Components
     /// Handles teleporting in requested cargo after the specified delay.
     /// </summary>
     [RegisterComponent, Friend(typeof(CargoSystem))]
-    public sealed class CargoTelepadComponent : Component
+    public sealed class CargoTelepadComponent : SharedCargoTelepadComponent
     {
         [DataField("delay")]
         public float Delay = 20f;
