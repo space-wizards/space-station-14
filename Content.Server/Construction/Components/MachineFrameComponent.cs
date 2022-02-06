@@ -1,14 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Content.Server.Stack;
 using Content.Shared.Construction;
 using Content.Shared.Interaction;
 using Content.Shared.Tag;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Construction.Components
 {
@@ -17,7 +12,6 @@ namespace Content.Server.Construction.Components
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IComponentFactory _componentFactory = default!;
-        [Dependency] private readonly TagSystem _tag = default!;
 
         public const string PartContainer = "machine_parts";
         public const string BoardContainer = "machine_board";
@@ -237,10 +231,12 @@ namespace Content.Server.Construction.Components
                         _componentProgress[compName]++;
                 }
 
+                var tagSystem = EntitySystem.Get<TagSystem>();
+
                 // I have MANY regrets.
                 foreach (var (tagName, _) in TagRequirements)
                 {
-                    if (!_tag.HasTag(part, tagName))
+                    if (!tagSystem.HasTag(part, tagName))
                         continue;
 
                     if (!_tagProgress.ContainsKey(tagName))
