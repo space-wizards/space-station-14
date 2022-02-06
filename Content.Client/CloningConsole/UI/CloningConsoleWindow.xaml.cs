@@ -77,75 +77,73 @@ namespace Content.Client.CloningConsole.UI
 
                 HistoryList.AddChild(historyRowItem);
             }
-
-            //TODO: set up sort
-            //_filteredScans.Sort((a, b) => string.Compare(a.ToString(), b.ToString(), StringComparison.Ordinal));
         }
 
         public void Populate(CloningConsoleBoundUserInterfaceState state)
         {
-            // var text = new StringBuilder();
-            Logger.Debug("RUNNING FUCKING POPULATE");
-            var entities = IoCManager.Resolve<IEntityManager>();
-
-            // if (!state.Entity.HasValue ||
-            //     !state.HasDamage() ||
-            //     !entities.EntityExists(state.Entity.Value))
-            // {
-                // Diagnostics.Text = Loc.GetString("medical-scanner-window-no-patient-data-text");
-                // ScanButton.Disabled = true;
-                // SetSize = (250, 100);
-            // }
-            // else
-
-            // if (_lastUpdate == null || _lastUpdate.CloneHistory.Count != state.CloneHistory.Count)
-            // {
-            //     _historyManager = state.CloneHistory;
-                // if (_historyManager == null)
-                // {
-                //     _historyManager = new List<string>();
-                // }
-            //     BuildHistory();
-            // }
-            // _lastUpdate = state;
-
-            CloningProgressBar.MaxValue = state.Maximum;
-            UpdateProgress();
-
-            ClonerBrainActivity.Text = Loc.GetString(state.MindPresent ? "cloning-console-mind-present-text" : "cloning-console-no-mind-activity-text");
-            ClonerBrainActivity.FontColorOverride = state.MindPresent ? Color.LimeGreen : Color.Red;
-            if (state.ScannerBodyInfo != null)
+            // BUILD CLONING HISTORY
+            if (_lastUpdate == null || _lastUpdate.CloneHistory.Count != state.CloneHistory.Count)
             {
-                ScannerInfoLabel.SetMarkup(Loc.GetString("cloning-console-window-scanner-id",
-                ("scannerOccupantName", state.ScannerBodyInfo)));
+                _historyManager = state.CloneHistory;
+                if (_historyManager == null)
+                {
+                    _historyManager = new List<string>();
+                }
+                BuildHistory();
+            }
+            _lastUpdate = state;
+
+            // BUILD SCANNER UI
+            if (state.ScannerConnected)
+            {
+                GeneticScannerContents.Visible = true;
+                GeneticScannerMissing.Visible = false;
+
+                if (state.ScannerBodyInfo != null)
+                {
+                    ScannerInfoLabel.SetMarkup(Loc.GetString("cloning-console-window-scanner-id",
+                    ("scannerOccupantName", state.ScannerBodyInfo)));
+                } else
+                {
+                    ScannerInfoLabel.SetMarkup(Loc.GetString("cloning-console-window-id-blank"));
+                }
+                CloneButton.Disabled = !state.ReadyToClone;
+            }
+            else
+            {
+                GeneticScannerContents.Visible = false;
+                GeneticScannerMissing.Visible = true;
+            }
+            // BUILD ClONER UI
+            if (state.ClonerConnected)
+            {
+                CloningPodContents.Visible = true;
+                CloningPodMissing.Visible = false;
+
+                CloningProgressBar.MinSize = (200, 20);
+                CloningProgressBar.MinValue = 0;
+                CloningProgressBar.MaxValue = 120;
+                CloningProgressBar.Page = 0;
+                CloningProgressBar.Value = 0.5f;
+                CloningProgressBar.MaxValue = state.Maximum;
+                UpdateProgress();
+
+                ClonerBrainActivity.Text = Loc.GetString(state.MindPresent ? "cloning-console-mind-present-text" : "cloning-console-no-mind-activity-text");
+                ClonerBrainActivity.FontColorOverride = state.MindPresent ? Color.LimeGreen : Color.Red;
+
+                if (state.ClonerBodyInfo != null)
+                {
+                    ClonerInfoLabel.SetMarkup(Loc.GetString("cloning-console-window-pod-id",
+                    ("podOccupantName", state.ClonerBodyInfo)));
+                } else
+                {
+                    ClonerInfoLabel.SetMarkup(Loc.GetString("cloning-console-window-id-blank"));
+                }
             } else
             {
-                ScannerInfoLabel.SetMarkup(Loc.GetString("cloning-console-window-id-blank"));
+                CloningPodContents.Visible = false;
+                CloningPodMissing.Visible = true;
             }
-            if (state.ClonerBodyInfo != null)
-            {
-                ClonerInfoLabel.SetMarkup(Loc.GetString("cloning-console-window-pod-id",
-                ("podOccupantName", state.ClonerBodyInfo)));
-            } else
-            {
-                ClonerInfoLabel.SetMarkup(Loc.GetString("cloning-console-window-id-blank"));
-            }
-            // if (state.ScannerBodyInfo != null)
-            // {
-            //     Logger.Debug(state.ScannerBodyInfo);
-            //     text.Append($"{Loc.GetString("medical-scanner-window-entity-health-text", ("entityName", state.ScannerBodyInfo))}\n");
-            // }
-            // text.Append('\n');
-            bool buttonState = false;
-            if (state.ScannerIsAlive != null)
-            {
-                buttonState = state.ScannerIsAlive == false ? false : true;
-            }
-            // Diagnostics.Text = text.ToString();
-            CloneButton.Disabled = buttonState;
-            // TODO MEDICALSCANNER resize window based on the length of text / number of damage types?
-            // Also, maybe add color schemes for specific damage groups?
-            // SetSize = (250, 200);
         }
 
         [DebuggerDisplay("cloninghistory {" + nameof(Index) + "}")]

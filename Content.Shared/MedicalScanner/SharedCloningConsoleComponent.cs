@@ -12,7 +12,7 @@ namespace Content.Shared.CloningConsole
         [Serializable, NetSerializable]
         public sealed class CloningConsoleBoundUserInterfaceState : BoundUserInterfaceState
         {
-            public readonly bool? ScannerIsAlive;
+            public readonly bool ScannerIsAlive;
             public readonly string? ScannerBodyInfo;
             public readonly string? ClonerBodyInfo;
             public readonly List<string> CloneHistory;
@@ -27,8 +27,10 @@ namespace Content.Shared.CloningConsole
             // If true, cloning is progressing (predict clone progress)
             public readonly bool Progressing;
             public readonly bool MindPresent;
-
-            public CloningConsoleBoundUserInterfaceState(bool? scannerIsAlive, string? scannerBodyInfo, string? cloningBodyInfo, List<string> cloneHistory, TimeSpan refTime, float progress, float maximum, bool progressing, bool mindPresent)
+            public readonly bool ReadyToClone;
+            public readonly bool ScannerConnected;
+            public readonly bool ClonerConnected;
+            public CloningConsoleBoundUserInterfaceState(bool scannerIsAlive, string? scannerBodyInfo, string? cloningBodyInfo, List<string> cloneHistory, TimeSpan refTime, float progress, float maximum, bool progressing, bool mindPresent, bool readyToClone, bool scannerConnected, bool clonerConnected)
             {
                 ScannerIsAlive = scannerIsAlive;
                 ScannerBodyInfo = scannerBodyInfo;
@@ -39,6 +41,9 @@ namespace Content.Shared.CloningConsole
                 Maximum = maximum;
                 Progressing = progressing;
                 MindPresent = mindPresent;
+                ReadyToClone = readyToClone;
+                ScannerConnected = scannerConnected;
+                ClonerConnected = clonerConnected;
             }
         }
 

@@ -38,6 +38,6 @@ namespace Content.Server.Medical.Components
         public BoundUserInterface? UserInterface => Owner.GetUIOrNull(CloningConsoleUiKey.Key);
         public GeneticScannerComponent? GeneticScanner = null;
         public CloningPodComponent? CloningPod = null;
-        public List<String> CloningHistory = default!;
+        public List<String> CloningHistory = new List<string>();
     }
 }
