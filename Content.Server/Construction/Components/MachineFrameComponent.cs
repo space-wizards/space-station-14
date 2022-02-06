@@ -336,12 +336,14 @@ namespace Content.Server.Construction.Components
                     return true;
                 }
 
+                var tags = EntitySystem.Get<TagSystem>();
+
                 foreach (var (tagName, info) in TagRequirements)
                 {
                     if (_tagProgress[tagName] >= info.Amount)
                         continue;
 
-                    if (!_tag.HasTag(eventArgs.Using, tagName))
+                    if (!tags.HasTag(eventArgs.Using, tagName))
                         continue;
 
                     if (!eventArgs.Using.TryRemoveFromContainer() || !_partContainer.Insert(eventArgs.Using)) continue;
