@@ -429,6 +429,13 @@
     sprite: Objects/Specific/Hydroponics/corn.rsi
   - type: Produce
     seed: corn
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Cornoil
+        Quantity: 3
+      - ReagentId: Enzyme
+        Quantity: 2
 
 - type: entity
   name: corn cob
@@ -570,3 +577,47 @@
       sprite: Objects/Specific/Hydroponics/chili.rsi
     - type: Produce
       seed: chili
+
+- type: entity
+  name: aloe
+  parent: FoodProduceBase
+  id: FoodAloe
+  description: A fragrant plant with soothing properties.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 12 ##I'm pretty sure this has to match the total of 100 potency yields
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Kelotane
+          Quantity: 10
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/aloe.rsi
+  - type: Produce
+    seed: aloe
+  - type: Extractable
+    grindableSolutionName: food
+
+- type: entity
+  name: poppy
+  parent: FoodProduceBase
+  id: FoodPoppy
+  description: A flower with extracts often used in the production of medicine
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 12
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Bicaridine
+          Quantity: 10
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/poppy.rsi
+  - type: Produce
+    seed: poppy
+  - type: Extractable
+    grindableSolutionName: food

@@ -55,7 +55,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                     var transferMoles = (pressureDelta * outputVolume) / (airTemperature * Atmospherics.R);
                     transferMoles = MathF.Min(transferMoles, environment.TotalMoles * inlet.Air.Volume / environment.Volume);
                     var removed = environment.Remove(transferMoles);
-                    inlet.AssumeAir(removed);
+                    _atmosphereSystem.Merge(inlet.Air, removed);
                 }
             }
 

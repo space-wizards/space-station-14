@@ -100,7 +100,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 if (molesDelta > 0)
                 {
                     var removed = environment.Remove(molesDelta);
-                    pipe.AssumeAir(removed);
+                    _atmosphereSystem.Merge(pipe.Air, removed);
                 }
             }
         }

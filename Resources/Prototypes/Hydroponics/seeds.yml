@@ -469,3 +469,51 @@
       Min: 1
       Max: 10
       PotencyDivisor: 10
+
+- type: seed
+  id: poppy
+  name: poppy
+  seedName: poppy
+  displayName: poppies
+  plantRsi: Objects/Specific/Hydroponics/poppy.rsi
+  productPrototypes:
+    - FoodPoppy
+  lifespan: 25
+  maturation: 10
+  production: 1
+  yield: 5
+  potency: 10
+  growthStages: 3
+  waterConsumption: 6
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 2
+    Bicaridine:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+
+- type: seed
+  id: aloe
+  name: aloe
+  seedName: aloe
+  displayName: aloe
+  plantRsi: Objects/Specific/Hydroponics/aloe.rsi
+  productPrototypes:
+    - FoodAloe
+  lifespan: 25
+  maturation: 10
+  production: 1
+  yield: 5
+  potency: 10
+  growthStages: 5
+  waterConsumption: 6
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 2
+    Kelotane:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
