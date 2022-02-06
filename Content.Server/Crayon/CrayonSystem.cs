@@ -45,15 +45,8 @@ public sealed class CrayonSystem : EntitySystem
 
     private void OnCrayonAfterInteract(EntityUid uid, CrayonComponent component, AfterInteractEvent args)
     {
-        if (args.Handled)
+        if (args.Handled || !args.CanReach)
             return;
-
-        if (!args.InRangeUnobstructed(ignoreInsideBlocker: false, popup: true,
-                collisionMask: Shared.Physics.CollisionGroup.MobImpassable))
-        {
-            args.Handled = true;
-            return;
-        }
 
         if (component.Charges <= 0)
         {
