@@ -72,6 +72,18 @@
     sprite: Constructible/Structures/Doors/airlock_glass.rsi
   - type: Icon
     sprite: Constructible/Structures/Doors/airlock_glass.rsi
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.49,-0.49,0.49,0.49" # don't want this colliding with walls or they won't close
+      mask:
+      - MobImpassable
+      layer:    # removed the opaque layer inhibiting lasers to go through glass airlocks
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+
 
 - type: entity
   parent: Airlock
