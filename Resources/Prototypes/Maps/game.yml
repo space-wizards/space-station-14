@@ -43,6 +43,7 @@
     prefixCreator: 'VG'
   mapPath: /Maps/packedstation.yml
   minPlayers: 15
+  maxPlayers: 55
   conditions:
     - !type:HolidayMapCondition
       inverted: true
@@ -103,30 +104,29 @@
     !type:NanotrasenNameGenerator
     prefixCreator: '14'
   mapPath: /Maps/nss_pillar.yml
-  minPlayers: 20
-  votable: false
+  minPlayers: 40
   overflowJobs:
     - Assistant
   availableJobs:
     Assistant: [ -1, -1 ]
-    CargoTechnician: [ 4, 5 ]
-    Bartender: [ 1, 1 ]
-    Botanist: [ 2, 2 ]
-    Chef: [ 2, 2 ]
-    Clown: [ 1, 1 ]
-    Janitor: [ 2, 3 ]
-    Mime: [ 1, 1 ]
+    CargoTechnician: [ 4, 6 ]
+    Bartender: [ 2, 2 ]
+    Botanist: [ 2, 4 ]
+    Chef: [ 2, 4 ]
+    Clown: [ 1, 2 ]
+    Janitor: [ 2, 4 ]
+    Mime: [ 1, 2 ]
     Captain: [ 1, 1 ]
     HeadOfPersonnel: [ 1, 1 ]
     ChiefEngineer: [ 1, 1 ]
-    StationEngineer: [ 4, 6 ]
+    StationEngineer: [ 6, 10 ]
     ChiefMedicalOfficer: [ 1, 1 ]
-    MedicalDoctor: [ 4, 6 ]
-    Chemist: [ 2, 2 ]
+    MedicalDoctor: [ 6, 10 ]
+    Chemist: [ 2, 3 ]
     ResearchDirector: [ 1, 1 ]
-    Scientist: [ 3, 5 ]
+    Scientist: [ 3, 8 ]
     HeadOfSecurity: [ 1, 1 ]
-    SecurityOfficer: [ 5, 6 ]
+    SecurityOfficer: [ 6, 10 ]
     Chaplain: [ 1, 1 ]
     Librarian: [ 1, 1 ]
     Lawyer: [ 1, 2 ]

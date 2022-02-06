@@ -1,64 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Station will now start with a random rotation., type: Tweak}
-  id: 483
-  time: '2021-10-25T04:22:57.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Walking over slippery items (usually) won't slip you anymore., type: Tweak}
-  - {message: Turned-on magboots now stop you from slipping., type: Add}
-  id: 484
-  time: '2021-10-25T06:43:49.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Construction works on rotated grids, type: Fix}
-  id: 485
-  time: '2021-10-25T14:14:21.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Added electrocution., type: Add}
-  - {message: Cutting cables without insulated gloves shocks you., type: Tweak}
-  - {message: Grilles can now be electrified by placing a cable below them., type: Tweak}
-  id: 486
-  time: '2021-10-25T14:21:56.0000000+00:00'
-- author: ike709
-  changes:
-  - {message: Stacks can now be split in half by alt-clicking or into different amounts
-      with the new Split verb., type: Add}
-  id: 487
-  time: '2021-10-25T14:36:04.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Added insulated gloves (and their cheap knockoffs) to the station.,
-    type: Add}
-  id: 488
-  time: '2021-10-25T14:58:04.292881+00:00'
-- author: 20kdc
-  changes:
-  - {message: ChemMaster bottles are no longer 'empty', type: Fix}
-  id: 489
-  time: '2021-10-25T14:58:16.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: 'Wall lights can be placed again, APCs place where they should', type: Fix}
-  id: 490
-  time: '2021-10-26T14:15:02.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Construction recipes are now sorted alphabetically., type: Tweak}
-  id: 491
-  time: '2021-10-26T14:18:43.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Fixed not being able to construct or deconstruct tables., type: Fix}
-  id: 492
-  time: '2021-10-26T14:38:03.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Fix computer dupe bug., type: Fix}
-  id: 493
-  time: '2021-10-26T23:30:17.397968+00:00'
 - author: 20kdc
   changes:
   - {message: Morgue trays now extend to the proper position., type: Fix}
@@ -2934,7 +2874,7 @@ Entries:
   time: '2022-02-04T23:17:11.0000000+00:00'
 - author: Lamrr
   changes:
-  - {message: 'The digital audio workstaiton [sic] has been relabelled.', type: Fix}
+  - {message: The digital audio workstaiton (sic) has been relabelled., type: Fix}
   id: 981
   time: '2022-02-05T01:23:43.0000000+00:00'
 - author: Willhelm53
@@ -2953,3 +2893,65 @@ Entries:
       of just discarding your wrench.', type: Tweak}
   id: 983
   time: '2022-02-05T02:39:02.0000000+00:00'
+- author: walrusfromspace
+  changes:
+  - {message: Added door remotes to the heads' lockers, type: Add}
+  id: 984
+  time: '2022-02-05T13:33:24.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Windoors should no longer crush people as they auto close., type: Fix}
+  id: 985
+  time: '2022-02-05T17:27:06.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Blast doors can't be opened with a crowbar anymore., type: Tweak}
+  id: 986
+  time: '2022-02-05T18:06:33.0000000+00:00'
+- author: router
+  changes:
+  - {message: Replaced all ingot mints to fix a typo in their stamping. All "Nanotransen"
+      gold and silver bars have been melted down and reformed., type: Fix}
+  - {message: Removed Herobrine., type: Remove}
+  id: 987
+  time: '2022-02-05T19:23:06.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Massive list of changes and fixes for NSS Pillar. See Github for list.,
+    type: Fix}
+  id: 988
+  time: '2022-02-05T21:27:43.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Brig access is now the least privileged form of security access and
+      given to lawyers. It may take a while for stations to update their airlock software
+      to the latest version., type: Tweak}
+  id: 989
+  time: '2022-02-05T23:08:15.0000000+00:00'
+- author: moony
+  changes:
+  - {message: Hopefully fix pillar spawning., type: Fix}
+  id: 990
+  time: '2022-02-06T02:22:28.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Directional windows no longer look weird when viewed while rotated.,
+    type: Tweak}
+  id: 991
+  time: '2022-02-06T02:25:13.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'NSS Pillar minor update! Check out changes to security, permabrig and
+      salvage among other things.', type: Tweak}
+  id: 992
+  time: '2022-02-06T12:56:41.0000000+00:00'
+- author: lajolico
+  changes:
+  - {message: Lasers can now pass through glass airlocks, type: Add}
+  id: 993
+  time: '2022-02-06T13:48:31.0000000+00:00'
+- author: scaly-chimp
+  changes:
+  - {message: adds a portable flasher for security to lock down areas, type: Add}
+  id: 994
+  time: '2022-02-06T15:59:42.0000000+00:00'

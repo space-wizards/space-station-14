@@ -72,6 +72,9 @@ namespace Content.Server.Physics.Controllers
 
                 worldPos += Convey(direction, speed, frameTime, itemRelative);
                 transform.WorldPosition = worldPos;
+
+                if (TryComp<PhysicsComponent>(entity, out var body))
+                    body.Awake = true;
             }
         }
 
