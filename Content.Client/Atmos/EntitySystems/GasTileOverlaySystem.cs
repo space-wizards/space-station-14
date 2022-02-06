@@ -88,6 +88,9 @@ namespace Content.Client.Atmos.EntitySystems
             var overlayManager = IoCManager.Resolve<IOverlayManager>();
             if(!overlayManager.HasOverlay<GasTileOverlay>())
                 overlayManager.AddOverlay(new GasTileOverlay());
+            if(!overlayManager.HasOverlay<FireTileOverlay>())
+                overlayManager.AddOverlay(new FireTileOverlay());
+
         }
 
         private void HandleGasOverlayMessage(GasOverlayMessage message)
@@ -126,6 +129,8 @@ namespace Content.Client.Atmos.EntitySystems
             var overlayManager = IoCManager.Resolve<IOverlayManager>();
             if(!overlayManager.HasOverlay<GasTileOverlay>())
                 overlayManager.RemoveOverlay<GasTileOverlay>();
+            if(!overlayManager.HasOverlay<FireTileOverlay>())
+                overlayManager.RemoveOverlay<FireTileOverlay>();
         }
 
         private void OnGridRemoved(MapId mapId, GridId gridId)
@@ -217,6 +222,13 @@ namespace Content.Client.Atmos.EntitySystems
                     return true;
                 }
 
+                overlay = default;
+                return false;
+            }
+            //MoveNext but used in FireTileOverlay
+            public bool MoveNextFire(out (Texture Texture, Color Color) overlay)
+            {
+
                 if (_fireState != 0)
                 {
                     var state = _fireState - 1;
@@ -232,6 +244,8 @@ namespace Content.Client.Atmos.EntitySystems
                 overlay = default;
                 return false;
             }
+
+
 
             public void Dispose()
             {
