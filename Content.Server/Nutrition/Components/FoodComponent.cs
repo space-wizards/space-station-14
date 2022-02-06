@@ -47,6 +47,12 @@ namespace Content.Server.Nutrition.Components
         public string EatMessage = "food-nom";
 
         /// <summary>
+        /// How long it takes to eat the food personally.
+        /// </summary>
+        [DataField("delay")]
+        public float Delay = 1;
+
+        /// <summary>
         ///     This is how many seconds it takes to force feed someone this food.
         ///     Should probably be smaller for small items like pills.
         /// </summary>

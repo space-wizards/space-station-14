@@ -3,6 +3,7 @@ using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.NodeGroups;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -36,7 +37,20 @@ namespace Content.Server.NodeContainer.Nodes
         /// <summary>
         ///     If this node should be considered for connection by other nodes.
         /// </summary>
-        public bool Connectable => !Deleting && Anchored;
+        public virtual bool Connectable(IEntityManager entMan, TransformComponent? xform = null)
+        {
+            if (Deleting)
+                return false;
+
+            if (entMan.IsQueuedForDeletion(Owner))
+                return false;
+
+            if (!NeedAnchored)
+                return true;
+
+            xform ??= entMan.GetComponent<TransformComponent>(Owner);
+            return xform.Anchored;
+        }
 
         protected bool Anchored => !NeedAnchored || IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Anchored;
 
@@ -145,6 +159,10 @@ namespace Content.Server.NodeContainer.Nodes
         /// of this asymmetric relation are made to manually update with <see cref="NodeGroupSystem.QueueReflood"/>.
         /// </para>
         /// </remarks>
-        public abstract IEnumerable<Node> GetReachableNodes();
+        public abstract IEnumerable<Node> GetReachableNodes(TransformComponent xform,
+            EntityQuery<NodeContainerComponent> nodeQuery,
+            EntityQuery<TransformComponent> xformQuery,
+            IMapGrid? grid,
+            IEntityManager entMan);
     }
 }
