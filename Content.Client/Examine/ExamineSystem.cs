@@ -111,7 +111,10 @@ namespace Content.Client.Examine
             if (player == null)
                 return;
 
-            OpenTooltip(player.Value, ev.EntityUid, ev.CenterAtCursor);
+            // Tooltips coming in from the server generally prioritize
+            // opening at the old tooltip rather than the cursor/another entity,
+            // since there's probably one open already if it's coming in from the server.
+            OpenTooltip(player.Value, ev.EntityUid, ev.CenterAtCursor, ev.OpenAtOldTooltip);
             UpdateTooltipInfo(player.Value, ev.EntityUid, ev.Message, ev.GetVerbs);
         }
 
@@ -129,7 +132,7 @@ namespace Content.Client.Examine
 
         public override void SendExamineTooltip(EntityUid player, EntityUid target, FormattedMessage message, bool getVerbs, bool centerAtCursor)
         {
-            OpenTooltip(player, target, centerAtCursor);
+            OpenTooltip(player, target, centerAtCursor, false);
             UpdateTooltipInfo(player, target, message, getVerbs);
         }
 
@@ -138,9 +141,12 @@ namespace Content.Client.Examine
         ///     not fill it with information. This is done when the server sends examine info/verbs,
         ///     or immediately if it's entirely clientside.
         /// </summary>
-        public void OpenTooltip(EntityUid player, EntityUid target, bool centeredOnCursor=true)
+        public void OpenTooltip(EntityUid player, EntityUid target, bool centeredOnCursor=true, bool openAtOldTooltip=true)
         {
             // Close any examine tooltip that might already be opened
+            // Before we do that, save its position. We'll prioritize opening any new popups there if
+            // openAtOldTooltip is true.
+            var oldTooltipPos = _examineTooltipOpen?.ScreenCoordinates;
             CloseTooltip();
 
             // cache entity for Update function
@@ -149,7 +155,11 @@ namespace Content.Client.Examine
             const float minWidth = 300;
             ScreenCoordinates popupPos;
 
-            if (centeredOnCursor)
+            if (openAtOldTooltip && oldTooltipPos != null)
+            {
+                popupPos = oldTooltipPos.Value;
+            }
+            else if (centeredOnCursor)
             {
                 popupPos = _userInterfaceManager.MousePositionScaled;
             }
@@ -298,7 +308,7 @@ namespace Content.Client.Examine
                 return;
 
             FormattedMessage message;
-            OpenTooltip(playerEnt.Value, entity, centeredOnCursor);
+            OpenTooltip(playerEnt.Value, entity, centeredOnCursor, false);
             if (entity.IsClientSide())
             {
                 message = GetExamineText(entity, playerEnt);
