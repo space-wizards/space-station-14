@@ -56,7 +56,7 @@
     partType: Torso
     size: 7
     compatibility: Biological
-    mechanisms:
+    initialMechanisms:
     - OrganAnimalLungs
     - OrganAnimalStomach
     - OrganAnimalLiver

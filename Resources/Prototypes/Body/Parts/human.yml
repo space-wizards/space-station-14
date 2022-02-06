@@ -25,7 +25,7 @@
     partType: Torso
     size: 14
     compatibility: Biological
-    mechanisms:
+    initialMechanisms:
     - OrganHumanHeart
     - OrganHumanLungs
     - OrganHumanStomach
@@ -50,8 +50,7 @@
     partType: Head
     size: 7
     compatibility: Biological
-    vital: true
-    mechanisms:
+    initialMechanisms:
     - OrganHumanBrain
     - OrganHumanEyes
 #    criticalThreshold: 50

@@ -24,7 +24,7 @@
       partType: Torso
       size: 14
       compatibility: Slime
-      mechanisms:
+      initialMechanisms:
         - SentientSlimeCore
 #    criticalThreshold: 100
 #    deadThreshold: 150
@@ -45,7 +45,6 @@
       partType: Head
       size: 7
       compatibility: Slime
-      vital: true
     #    criticalThreshold: 50
     #    deadThreshold: 120
     - type: Input
