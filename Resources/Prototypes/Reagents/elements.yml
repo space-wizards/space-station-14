@@ -135,26 +135,6 @@
             Poison: 2
 
 - type: reagent
-  id: Nitrogen
-  name: nitrogen
-  group: Elements
-  desc: A colorless, odorless unreactive gas. Highly stable.
-  physicalDesc: gaseous
-  color: "#808080"
-  boilingPoint: -195.8
-  meltingPoint: -210.0
-
-- type: reagent
-  id: Oxygen
-  name: oxygen
-  group: Elements
-  desc: An oxidizing, colorless gas.
-  physicalDesc: gaseous
-  color: "#808080"
-  boilingPoint: -183.0
-  meltingPoint: -218.4
-
-- type: reagent
   id: Potassium
   name: potassium
   group: Elements

@@ -11,8 +11,6 @@ namespace Content.Server.Body.Components
     [RegisterComponent, Friend(typeof(RespiratorSystem))]
     public class RespiratorComponent : Component
     {
-        public override string Name => "Respirator";
-
         /// <summary>
         ///     Saturation level. Reduced by CycleDelay each tick.
         ///     Can be thought of as 'how many seconds you have until you start suffocating' in this configuration.

@@ -17,9 +17,13 @@
         conditions:
         - !type:OrganType
           type: Animal
-      - !type:CreateLungGas
+      # Convert Oxygen into CO2.
+      - !type:ModifyLungGas
         ratios:
           CarbonDioxide: 1.0
+      - !type:ModifyLungGas
+        ratios:
+          Oxygen: -1.0
 
 - type: reagent
   id: Plasma
@@ -51,9 +55,6 @@
           types:
             Poison:
               1
-      - !type:CreateLungGas
-        ratios:
-          Plasma: 1.0
       # Cant be added until I add metabolism effects on reagent removal
       #- !type:AdjustAlert
       #  alertType: Toxins
@@ -108,9 +109,6 @@
           types:
             Poison:
               0.2
-      - !type:CreateLungGas
-        ratios:
-          CarbonDioxide: 1.0
       # Cant be added until I add metabolism effects on reagent removal
       #- !type:AdjustAlert
       #  alertType: CarbonDioxide

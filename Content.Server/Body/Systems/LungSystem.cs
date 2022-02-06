@@ -1,11 +1,14 @@
-﻿using Content.Server.Atmos.Components;
+﻿using System.Linq;
+using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Atmos;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Inventory.Events;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Body.Systems;
 
@@ -62,7 +65,33 @@ public class LungSystem : EntitySystem
 
             var amount = moles * Atmospherics.BreathMolesToReagentMultiplier;
             _solutionContainerSystem.TryAddReagent(uid, lung.LungSolution, reagent, amount, out _);
-            lung.Air.AdjustMoles(i, -moles);
+
+            // We don't remove the gas from the lung mix,
+            // that's the responsibility of whatever gas is being metabolized.
+            // Most things will just want to exhale again.
+        }
+    }
+
+    public void ReagentToGas(EntityUid uid, LungComponent lung)
+    {
+        var queue = new RemQueue<Solution.ReagentQuantity>();
+
+        foreach (var reagent in lung.LungSolution.Contents)
+        {
+            if (!_atmosphereSystem.GasReagents.Contains(reagent.ReagentId))
+                continue;
+
+            var moles = reagent.Quantity.Float() / Atmospherics.BreathMolesToReagentMultiplier;
+            if (Enum.TryParse<Gas>(reagent.ReagentId, out var gas))
+            {
+                queue.Add(reagent);
+                lung.Air.AdjustMoles(gas, moles);
+            }
+        }
+
+        foreach (var reagent in queue)
+        {
+            lung.LungSolution.RemoveReagent(reagent.ReagentId, reagent.Quantity);
         }
     }
 }

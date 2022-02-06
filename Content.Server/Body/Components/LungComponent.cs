@@ -13,8 +13,6 @@ namespace Content.Server.Body.Components;
 [RegisterComponent, Friend(typeof(LungSystem))]
 public class LungComponent : Component
 {
-    public override string Name => "Lung";
-
     [DataField("air")]
     public GasMixture Air { get; set; } = new()
     {
