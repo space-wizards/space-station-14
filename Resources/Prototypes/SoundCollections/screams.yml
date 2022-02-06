@@ -26,3 +26,8 @@
     - /Audio/Voice/Human/science_scream4.ogg
     - /Audio/Voice/Human/science_scream5.ogg
     - /Audio/Voice/Human/science_scream6.ogg
+
+- type: soundCollection
+  id: MonkeyScreams
+  files:
+    - /Audio/Voice/Monkey/monkeyscream.ogg

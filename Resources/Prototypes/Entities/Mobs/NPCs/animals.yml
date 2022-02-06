@@ -506,6 +506,10 @@
     - type: FireVisualizer
       sprite: Mobs/Effects/onfire.rsi
       normalState: Monkey_burning
+  - type: Actions
+    innateActions:
+      - CombatMode
+      - MonkeyScream
   - type: Butcherable
     meat: FoodMeat
     pieces: 3

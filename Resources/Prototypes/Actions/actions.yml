@@ -52,6 +52,23 @@
       path: /Audio/Voice/Vox/shriek1.ogg
     wilhelm:
       path: /Audio/Voice/Human/wilhelm_scream.ogg
+    variation: 0.05
+
+- type: action
+  actionType: MonkeyScream
+  icon: Interface/Actions/scream.png
+  name: "Scream"
+  filters:
+    - monkey
+  behaviorType: Instant
+  behavior: !type:ScreamAction
+    cooldown: 5
+    male:
+      collection: MonkeyScreams
+    female:
+      collection: MonkeyScreams
+    wilhelm:
+      path: /Audio/Voice/Human/wilhelm_scream.ogg
 
 - type: action
   actionType: GhostBoo
