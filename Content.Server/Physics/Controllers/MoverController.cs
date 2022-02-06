@@ -232,7 +232,7 @@ namespace Content.Server.Physics.Controllers
                         var index = (int) Math.Log2((int) dir);
                         var impulse = shuttle.LinearThrusterImpulse[index] * length;
 
-                        var maxImpulse = body.Mass * shuttleSystem.ShuttleMaxLinearAcc;
+                        var maxImpulse = body.Mass * shuttleSystem.ShuttleMaxLinearImpulse;
 
                         impulse = Math.Clamp(impulse, 0f, maxImpulse);
 
@@ -253,7 +253,7 @@ namespace Content.Server.Physics.Controllers
                     body.AngularDamping = shuttleSystem.ShuttleMovingAngularDamping;
 
                     var angularImpulse = shuttle.AngularThrust;
-                    var maxAngImpulse = body.Inertia * shuttleSystem.ShuttleMaxAngularAcc;
+                    var maxAngImpulse = body.Inertia * shuttleSystem.ShuttleMaxAngularImpulse;
 
                     angularImpulse = Math.Clamp(angularImpulse, 0f, maxAngImpulse);
 
