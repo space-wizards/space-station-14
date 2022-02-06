@@ -7,7 +7,7 @@ namespace Content.Server.Botany.Components;
 
 [RegisterComponent]
 [Friend(typeof(SeedExtractorSystem))]
-public class SeedExtractorComponent : Component
+public sealed class SeedExtractorComponent : Component
 {
     // TODO: Upgradeable machines.
     [DataField("minSeeds")] public int MinSeeds = 1;

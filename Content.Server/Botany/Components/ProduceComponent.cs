@@ -7,7 +7,7 @@ namespace Content.Server.Botany.Components;
 
 [RegisterComponent]
 [Friend(typeof(BotanySystem))]
-public class ProduceComponent : Component
+public sealed class ProduceComponent : Component
 {
     [DataField("targetSolution")] public string SolutionName { get; set; } = "food";
 

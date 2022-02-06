@@ -7,7 +7,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Botany.Components
 {
     [RegisterComponent, Friend(typeof(BotanySystem))]
-    public class SeedComponent : Component
+    public sealed class SeedComponent : Component
     {
         [DataField("seed", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<SeedPrototype>))]
         public string SeedName = default!;

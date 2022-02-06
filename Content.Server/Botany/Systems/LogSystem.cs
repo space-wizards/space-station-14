@@ -7,7 +7,7 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Server.Botany.Systems;
 
-public class LogSystem : EntitySystem
+public sealed class LogSystem : EntitySystem
 {
     public override void Initialize()
     {

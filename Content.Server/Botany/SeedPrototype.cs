@@ -66,7 +66,7 @@ public struct SeedChemQuantity
 }
 
 [Prototype("seed")]
-public class SeedPrototype : IPrototype
+public sealed class SeedPrototype : IPrototype
 {
     public const string Prototype = "SeedBase";
 

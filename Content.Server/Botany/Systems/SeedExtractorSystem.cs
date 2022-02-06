@@ -11,7 +11,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Botany.Systems;
 
-public class SeedExtractorSystem : EntitySystem
+public sealed class SeedExtractorSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;

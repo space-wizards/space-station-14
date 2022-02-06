@@ -10,7 +10,7 @@ namespace Content.Server.Botany.Components;
 
 [RegisterComponent]
 [Friend(typeof(LogSystem))]
-public class LogComponent : Component
+public sealed class LogComponent : Component
 {
     [DataField("spawnedPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string SpawnedPrototype = "MaterialWoodPlank1";

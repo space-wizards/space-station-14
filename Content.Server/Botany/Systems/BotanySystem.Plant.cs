@@ -12,7 +12,7 @@ using Robust.Shared.Random;
 namespace Content.Server.Botany.Systems
 {
     [UsedImplicitly]
-    public partial class BotanySystem : EntitySystem
+    public sealed partial class BotanySystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
