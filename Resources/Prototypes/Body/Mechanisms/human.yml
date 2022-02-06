@@ -112,7 +112,7 @@
     metabolizerTypes: [ Human ]
     groups:
     - id: Gas
-      rateModifier: 10.0
+      rateModifier: 100.0
 
 - type: entity
   id: OrganHumanHeart
