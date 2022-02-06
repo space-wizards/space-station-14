@@ -48,7 +48,7 @@
       state_closed: mining_door
   - type: AccessReader
     access: [["Salvage"]] 
-
+    
 # Command
 - type: entity
   id: LockerCaptain
@@ -301,7 +301,7 @@
       state_open: warden_open
       state_closed: warden_door
   - type: AccessReader
-    access: [["Brig"]]
+    access: [["Armory"]]
 
 # Security Officer
 - type: entity

@@ -42,9 +42,6 @@
   - type: Wires
     BoardName: "CloningPod"
     LayoutId: CloningPod
-  - type: ApcPowerReceiver
-    powerLoad: 2500
-    priority: Low
   - type: Appearance
     visuals:
       - type: GenericEnumVisualizer
