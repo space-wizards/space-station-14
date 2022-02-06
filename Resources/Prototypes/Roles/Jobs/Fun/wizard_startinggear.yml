@@ -2,12 +2,12 @@
 - type: startingGear
   id: WizardBlueGear
   equipment:
-    innerclothing: ClothingUniformJumpsuitColorDarkBlue
-    backpack: ClothingBackpackFilled
+    jumpsuit: ClothingUniformJumpsuitColorDarkBlue
+    back: ClothingBackpackFilled
     head: ClothingHeadHatWizard
     outerClothing: ClothingOuterWizard
     shoes: ClothingShoesWizard
-    idcard: AssistantPDA
+    id: AssistantPDA
     ears: ClothingHeadsetService
   innerclothingskirt: ClothingUniformJumpskirtColorDarkBlue
   satchel: ClothingBackpackSatchelFilled
@@ -16,12 +16,12 @@
 - type: startingGear
   id: WizardRedGear
   equipment:
-    innerclothing: ClothingUniformJumpsuitColorRed
-    backpack: ClothingBackpackFilled
+    jumpsuit: ClothingUniformJumpsuitColorRed
+    back: ClothingBackpackFilled
     head: ClothingHeadHatRedwizard
     outerClothing: ClothingOuterWizardRed
     shoes: ClothingShoesWizard
-    idcard: AssistantPDA
+    id: AssistantPDA
     ears: ClothingHeadsetService
   innerclothingskirt: ClothingUniformJumpskirtColorRed
   satchel: ClothingBackpackSatchelFilled
@@ -30,12 +30,12 @@
 - type: startingGear
   id: WizardVioletGear
   equipment:
-    innerclothing: ClothingUniformJumpsuitColorPurple
-    backpack: ClothingBackpackFilled
+    jumpsuit: ClothingUniformJumpsuitColorPurple
+    back: ClothingBackpackFilled
     head: ClothingHeadHatVioletwizard
     outerClothing: ClothingOuterWizardViolet
     shoes: ClothingShoesWizard
-    idcard: AssistantPDA
+    id: AssistantPDA
     ears: ClothingHeadsetService
   innerclothingskirt: ClothingUniformJumpskirtColorPurple
   satchel: ClothingBackpackSatchelFilled
@@ -44,12 +44,12 @@
 - type: startingGear
   id: WizardHardsuitGear
   equipment:
-    innerclothing: ClothingUniformJumpsuitColorPurple
-    backpack: ClothingBackpackFilled
+    jumpsuit: ClothingUniformJumpsuitColorPurple
+    back: ClothingBackpackFilled
     head: ClothingHeadHelmetHardsuitWizard
     outerClothing: ClothingOuterHardsuitWizard
     shoes: ClothingShoesWizard
-    idcard: AssistantPDA
+    id: AssistantPDA
     ears: ClothingHeadsetService
   innerclothingskirt: ClothingUniformJumpskirtColorPurple
   satchel: ClothingBackpackSatchelFilled

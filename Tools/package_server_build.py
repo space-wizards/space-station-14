@@ -73,6 +73,27 @@ SERVER_EXTRA_ASSEMBLIES = [
     "Microsoft",
 ]
 
+SERVER_NOT_EXTRA_ASSEMBLIES = [
+    "Microsoft.CodeAnalysis"
+]
+
+BIN_SKIP_FOLDERS = [
+    # Roslyn localization files, screw em.
+    "cs",
+    "de",
+    "es",
+    "fr",
+    "it",
+    "ja",
+    "ko",
+    "pl",
+    "pt-BR",
+    "ru",
+    "tr",
+    "zh-Hans",
+    "zh-Hant"
+]
+
 def main() -> None:
     parser = argparse.ArgumentParser(
         description="Packages the SS14 content repo for release on all platforms.")
@@ -153,7 +174,7 @@ def build_platform(platform: PlatformReg, skip_build: bool, hybrid_acz: bool) ->
     print(Fore.GREEN + "Packaging {platform.rid} server..." + Style.RESET_ALL)
     server_zip = zipfile.ZipFile(p("release", f"SS14.Server_{platform.rid}.zip"), "w",
                                  compression=zipfile.ZIP_DEFLATED)
-    copy_dir_into_zip(p("RobustToolbox", "bin", "Server", platform.rid, "publish"), "", server_zip)
+    copy_dir_into_zip(p("RobustToolbox", "bin", "Server", platform.rid, "publish"), "", server_zip, BIN_SKIP_FOLDERS)
     copy_resources(p("Resources"), server_zip)
     copy_content_assemblies(p("Resources", "Assemblies"), server_zip)
     if hybrid_acz:
@@ -209,12 +230,16 @@ def zip_entry_exists(zipf, name):
     return True
 
 
-def copy_dir_into_zip(directory, basepath, zipf):
+def copy_dir_into_zip(directory, basepath, zipf, skip_folders={}):
     if basepath and not zip_entry_exists(zipf, basepath):
         zipf.write(directory, basepath)
 
-    for root, _, files in os.walk(directory):
+    for root, dirnames, files in os.walk(directory):
         relpath = os.path.relpath(root, directory)
+        if relpath in skip_folders:
+            dirnames.clear()
+            continue
+
         if relpath != "." and not zip_entry_exists(zipf, p(basepath, relpath)):
             zipf.write(root, p(basepath, relpath))
 
@@ -240,10 +265,9 @@ def copy_content_assemblies(target, zipf):
 
     # Additional assemblies that need to be copied such as EFCore.
     for filename in os.listdir(source_dir):
-        for extra_assembly_start in SERVER_EXTRA_ASSEMBLIES:
-            if filename.startswith(extra_assembly_start):
-                files.append(filename)
-                break
+        matches = lambda x: filename.startswith(x)
+        if any(map(matches, SERVER_EXTRA_ASSEMBLIES)) and not any(map(matches, SERVER_NOT_EXTRA_ASSEMBLIES)):
+            files.append(filename)
 
     # Include content assemblies.
     for asm in base_assemblies:

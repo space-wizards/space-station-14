@@ -20,8 +20,6 @@ namespace Content.Server.Explosion.Components
     [RegisterComponent]
     public class ExplosiveComponent : Component
     {
-        public override string Name => "Explosive";
-
         [DataField("devastationRange")]
         public int DevastationRange;
         [DataField("heavyImpactRange")]

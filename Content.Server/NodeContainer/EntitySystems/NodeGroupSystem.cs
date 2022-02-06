@@ -12,6 +12,7 @@ using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 
@@ -28,6 +29,7 @@ namespace Content.Server.NodeContainer.EntitySystems
         [Dependency] private readonly IAdminManager _adminManager = default!;
         [Dependency] private readonly INodeGroupFactory _nodeGroupFactory = default!;
         [Dependency] private readonly ILogManager _logManager = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
 
         private readonly List<int> _visDeletes = new();
         private readonly List<BaseNodeGroup> _visSends = new();
@@ -141,6 +143,9 @@ namespace Content.Server.NodeContainer.EntitySystems
 
             var sw = Stopwatch.StartNew();
 
+            var xformQuery = EntityManager.GetEntityQuery<TransformComponent>();
+            var nodeQuery = EntityManager.GetEntityQuery<NodeContainerComponent>();
+
             foreach (var toRemove in _toRemove)
             {
                 if (toRemove.NodeGroup == null)
@@ -182,7 +187,11 @@ namespace Content.Server.NodeContainer.EntitySystems
                     QueueRemakeGroup((BaseNodeGroup) node.NodeGroup);
                 }
 
-                foreach (var compatible in GetCompatibleNodes(node))
+                // GetCompatibleNodes will involve getting the transform & grid as most connection requirements are
+                // based on position & anchored neighbours However, here more than one node could be attached to the
+                // same parent. So there is probably a better way of doing this.
+
+                foreach (var compatible in GetCompatibleNodes(node, xformQuery, nodeQuery))
                 {
                     ClearReachableIfNecessary(compatible);
 
@@ -303,14 +312,23 @@ namespace Content.Server.NodeContainer.EntitySystems
             return allNodes;
         }
 
-        private static IEnumerable<Node> GetCompatibleNodes(Node node)
+        private IEnumerable<Node> GetCompatibleNodes(Node node, EntityQuery<TransformComponent> xformQuery, EntityQuery<NodeContainerComponent> nodeQuery)
         {
-            foreach (var reachable in node.GetReachableNodes())
+            var xform = xformQuery.GetComponent(node.Owner);
+            _mapManager.TryGetGrid(xform.GridID, out var grid);
+
+            if (!node.Connectable(EntityManager, xform))
+                    yield break;
+
+            foreach (var reachable in node.GetReachableNodes(xform, nodeQuery, xformQuery, grid, EntityManager))
             {
                 DebugTools.Assert(reachable != node, "GetReachableNodes() should not include self.");
 
-                if (reachable.Connectable && reachable.NodeGroupID == node.NodeGroupID)
+                if (reachable.NodeGroupID == node.NodeGroupID
+                    && reachable.Connectable(EntityManager, xformQuery.GetComponent(reachable.Owner)))
+                {
                     yield return reachable;
+                }
             }
         }
 

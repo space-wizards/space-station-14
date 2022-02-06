@@ -14,8 +14,6 @@ namespace Content.Client.CharacterInterface
     [RegisterComponent]
     public class CharacterInterfaceComponent : Component
     {
-        public override string Name => "Character Interface Component";
-
         /// <summary>
         ///     Window to hold each of the character interfaces
         /// </summary>

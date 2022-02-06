@@ -6,8 +6,6 @@ namespace Content.Shared.AME
 {
     public class SharedAMEShieldComponent : Component
     {
-        public override string Name => "AMEShield";
-
         [Serializable, NetSerializable]
         public enum AMEShieldVisuals
         {

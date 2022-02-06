@@ -14,8 +14,6 @@ namespace Content.Shared.Pinpointer
     [Friend(typeof(SharedPinpointerSystem))]
     public class PinpointerComponent : Component
     {
-        public override string Name => "Pinpointer";
-
         [DataField("whitelist")]
         public EntityWhitelist? Whitelist;
 

@@ -30,7 +30,7 @@ namespace Content.Client.DragDrop
     /// Handles clientside drag and drop logic
     /// </summary>
     [UsedImplicitly]
-    public class DragDropSystem : EntitySystem
+    public class DragDropSystem : SharedDragDropSystem
     {
         [Dependency] private readonly IStateManager _stateManager = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
@@ -433,7 +433,7 @@ namespace Content.Client.DragDrop
                 return false;
             }
 
-            bool? valid = null;
+            var valid = CheckDragDropOn(eventArgs);
 
             foreach (var comp in EntityManager.GetComponents<IDragDropOn>(eventArgs.Target))
             {

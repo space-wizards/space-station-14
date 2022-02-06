@@ -7,8 +7,6 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts;
 [RegisterComponent]
 public class RandomArtifactSpriteComponent : Component
 {
-    public override string Name => "RandomArtifactSprite";
-
     [DataField("minSprite")]
     public int MinSprite = 1;
 

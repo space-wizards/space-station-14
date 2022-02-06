@@ -23,7 +23,7 @@ namespace Content.Server.Traitor.Uplink.Telecrystal
 
         private void OnAfterInteract(EntityUid uid, TelecrystalComponent component, AfterInteractEvent args)
         {
-            if (args.Handled)
+            if (args.Handled || !args.CanReach)
                 return;
 
             if (args.Target == null || !EntityManager.TryGetComponent(args.Target.Value, out UplinkComponent? uplink))

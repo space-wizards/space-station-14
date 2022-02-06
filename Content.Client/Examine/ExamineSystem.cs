@@ -39,8 +39,6 @@ namespace Content.Client.Examine
 
         public override void Initialize()
         {
-            IoCManager.InjectDependencies(this);
-
             UpdatesOutsidePrediction = true;
 
             SubscribeLocalEvent<GetOtherVerbsEvent>(AddExamineVerb);

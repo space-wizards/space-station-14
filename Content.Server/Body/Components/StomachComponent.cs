@@ -12,8 +12,6 @@ namespace Content.Server.Body.Components
     [RegisterComponent, Friend(typeof(StomachSystem))]
     public class StomachComponent : Component
     {
-        public override string Name => "Stomach";
-
         public float AccumulatedFrameTime;
 
         /// <summary>

@@ -6,7 +6,6 @@ namespace Content.Shared.Body.Components
 {
     public abstract class SharedBodyScannerComponent : Component
     {
-        public override string Name => "BodyScanner";
     }
 
     [Serializable, NetSerializable]

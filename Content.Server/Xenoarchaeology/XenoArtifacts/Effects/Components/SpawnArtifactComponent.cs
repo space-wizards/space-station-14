@@ -15,8 +15,6 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 [RegisterComponent]
 public class SpawnArtifactComponent : Component
 {
-    public override string Name => "SpawnArtifact";
-
     [DataField("random")]
     public bool RandomPrototype = true;
 

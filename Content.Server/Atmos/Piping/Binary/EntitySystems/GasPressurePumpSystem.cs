@@ -1,5 +1,6 @@
 using System;
 using Content.Server.Administration.Logs;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Binary.Components;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.NodeContainer;
@@ -25,6 +26,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
     {
         [Dependency] private UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private AdminLogSystem _adminLogSystem = default!;
+        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 
         public override void Initialize()
         {
@@ -81,7 +83,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 var transferMoles = pressureDelta * outlet.Air.Volume / inlet.Air.Temperature * Atmospherics.R;
 
                 var removed = inlet.Air.Remove(transferMoles);
-                outlet.AssumeAir(removed);
+                _atmosphereSystem.Merge(outlet.Air, removed);
             }
         }
 
