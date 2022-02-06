@@ -2,7 +2,7 @@
 - type: entity
   name: Xeno
   id: MobXeno
-  parent: SimpleMobBase
+  parent: SimpleSpaceMobBase
   description: They mostly come at night. Mostly.
   components:
   - type: UtilityAI

@@ -11,8 +11,6 @@ namespace Content.Shared.Electrocution
     [RegisterComponent, NetworkedComponent]
     public class InsulatedComponent : Component
     {
-        public override string Name => "Insulated";
-
         /// <summary>
         ///     Siemens coefficient. Zero means completely insulated.
         /// </summary>

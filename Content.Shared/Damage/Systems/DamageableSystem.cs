@@ -84,10 +84,13 @@ namespace Content.Shared.Damage
         {
             component.DamagePerGroup = component.Damage.GetDamagePerGroup();
             component.TotalDamage = component.Damage.Total;
-            component.Dirty();
+            Dirty(component);
 
             if (EntityManager.TryGetComponent<AppearanceComponent>(component.Owner, out var appearance) && damageDelta != null)
-                appearance.SetData(DamageVisualizerKeys.DamageUpdateGroups, damageDelta.GetDamagePerGroup().Keys.ToList());
+            {
+                var data = new DamageVisualizerGroupData(damageDelta.GetDamagePerGroup().Keys.ToList());
+                appearance.SetData(DamageVisualizerKeys.DamageUpdateGroups, data);
+            }
             RaiseLocalEvent(component.Owner, new DamageChangedEvent(component, damageDelta, interruptsDoAfters), false);
         }
 
@@ -198,7 +201,7 @@ namespace Content.Shared.Damage
             component.DamageModifierSetId = state.ModifierSetId;
 
             // Has the damage actually changed?
-            DamageSpecifier newDamage = new() { DamageDict = state.DamageDict };
+            DamageSpecifier newDamage = new() { DamageDict = new(state.DamageDict) };
             var delta = component.Damage - newDamage;
             delta.TrimZeros();
 

@@ -10,8 +10,6 @@
     singleUser: true
     key: enum.InstrumentUiKey.Key
   - type: InteractionOutline
-  - type: Rotatable
-    rotateWhileAnchored: true
   - type: Sprite
     sprite: Structures/Furniture/instruments.rsi
   - type: Damageable
@@ -31,8 +29,17 @@
       type: InstrumentBoundUserInterface
 
 - type: entity
-  name: piano
   parent: BasePlaceableInstrument
+  id: BasePlaceableInstrumentRotatable
+  name: baseinstrumentrotatable
+  abstract: true
+  components:
+  - type: Rotatable
+    rotateWhileAnchored: true
+
+- type: entity
+  name: piano
+  parent: BasePlaceableInstrumentRotatable
   id: PianoInstrument
   description: Play Needles Piano Now.
   components:
@@ -44,7 +51,7 @@
 
 - type: entity
   name: minimoog
-  parent: BasePlaceableInstrument
+  parent: BasePlaceableInstrumentRotatable
   id: MinimoogInstrument
   description: This is a minimoog, like a space piano, but more spacey!
   components:
@@ -55,7 +62,7 @@
 
 - type: entity
   name: church organ
-  parent: BasePlaceableInstrument
+  parent: BasePlaceableInstrumentRotatable
   id: ChurchOrganInstrument
   description: This thing really blows!
   components:
@@ -63,3 +70,31 @@
     program: 20
   - type: Sprite
     state: church-organ
+
+- type: entity
+  parent: BasePlaceableInstrument
+  id: DawInstrument
+  name: digital audio workstation
+  description: Cutting edge music technology, straight from the 90s.
+  components:
+  - type: Sprite
+    layers:
+    - state: daw-base
+    - state: daw-display
+      shader: unshaded
+    - state: daw-panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Appearance
+    visuals:
+    - type: WiresVisualizer
+  - type: Construction
+    graph: Machine
+    node: machine
+  - type: Wires
+    BoardName: "DawInstrument"
+    LayoutId: DawInstrument
+  - type: Machine
+    board: DawInstrumentMachineCircuitboard
+  - type: Instrument
+    allowPercussion: true
+    allowProgramChange: true

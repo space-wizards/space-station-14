@@ -1,176 +1,91 @@
 ﻿- type: dataset
   id: names_ai
   values:
-  - 1-Rover-1
   - 16-20
-  - 7-Zark-7
   - 790
-  - AM
-  - AMEE
-  - ASTAR
   - Adaptive Manipulator
   - ALICE
   - Allied Mastercomputer
+  - Alpha 2
+  - Alpha 3
+  - Alpha 4  
   - Alpha 5
   - Alpha 6
   - Alpha 7
+  - Alpha 8
+  - Alpha 9
   - AmigoBot
   - Android
   - Aniel
   - AOL
   - Asimov
-  - Astor
-  - B-4
-  - B-9
-  - B.O.B.
-  - B166ER
-  - Bender
   - Bishop
   - Blitz
   - Box
-  - Brackenridge
-  - C-3PO
-  - Cassandra One
+  - Cassandra
   - Cell
   - Chii
   - Chip
   - Computer
-  - Conky 2000
-  - Cortana
   - Cutie
   - Daedalus
-  - Data
-  - Decimus
   - Dee Model
-  - Deep Thought
-  - Decimus
   - Dial Up
-  - Donald Trump
-  - Dor-15
   - Dorfl
-  - Dot Matrix
   - Duey
-  - E.D.I.
-  - ED-209
-  - E-Man
   - Emma-2
   - Erasmus
   - Everything
   - Ez-27
   - FRIEND COMPUTER
-  - Fagor
   - Faith
   - Fi
   - Frost
-  - Fum
-  - Futura
-  - G2
   - George
-  - GERTY
-  - GLaDOS
-  - Gnut
-  - Gort
-  - H.A.R.L.I.E.
-  - H.E.L.P.eR.
-  - H.E.R.B.I.E.
-  - HAL 9000
+  - H.E.L.P
   - Hadaly
   - Helios
   - Hivebot Overmind
   - Huey
   - Icarus
-  - Irona
-  - Ironhide
-  - Jay-Dub
   - Jinx
-  - Johnny 5
-  - K-9
-  - KITT
+  - K.I.N.G
   - Klapaucius
-  - Kryten 2X4B-523P
-  - L-76
-  - L-Ron
-  - LUH 3417
+  - Knight
   - Louie
   - MARK13
   - Maria
   - Marvin
-  - Master Control Program
   - Max 404
-  - Maximillian
-  - Mechagodzilla
-  - Mechani-Kong
-  - Megatron
   - Metalhead
-  - Mr. R.I.N.G.
+  - M.I.M.I
+  - MK ULTRA
+  - MoMMI
   - Mugsy3000
   - Multivac
   - NCH
-  - Necron-99
-  - Neuromancer
-  - Norby
-  - OMM 0910
-  - Optimus
-  - Orange v 3.5
   - PTO
-  - Project 2501
-  - Puppet Master
-  - R.I.C. 2.0
-  - R2-D2
-  - R4-P17
+  - Project Y2K
   - Revelation
-  - Ro-Man
-  - Robbie
   - Robot Devil
   - S.A.M.
   - S.H.O.C.K.
   - S.H.R.O.U.D.
   - S.O.P.H.I.E.
   - Samaritan
-  - SEN 5241
-  - SHODAN
-  - SID 6.7
-  - Siri
-  - Setaur
   - Shrike
   - Solo
-  - Soundwave
-  - Speedy
-  - Super 17
-  - Surgeon General Kraken
-  - Tay
-  - T-1000
-  - T-800
-  - T-850
-  - THX 1138
+  - Station Control Program
+  - Super 35
+  - Surgeon General
   - TWA
   - Terminus
   - Tidy
-  - Tik-Tok
-  - Tobor
-  - Trurl
-  - ULTRABOT
   - Ulysses
-  - Uniblab
-  - V.I.K.I.
-  - V.I.N.CENT.
-  - Voltes V
   - W1k1
-  - Wikipedia
-  - Windows 3.1
-  - Windows 7
-  - Windows 8
-  - Windows 10
-  - Windows XP
-  - Windows Vista
-  - Wintermute
   - X-5
-  - X.A.N.A.
   - XERXES
-  - XR
-  - Yod
   - Z-1
   - Z-2
   - Z-3
   - Zed
-  - Zord

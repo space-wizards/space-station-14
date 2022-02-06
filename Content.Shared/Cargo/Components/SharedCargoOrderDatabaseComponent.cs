@@ -9,7 +9,6 @@ namespace Content.Shared.Cargo.Components
     [NetworkedComponent()]
     public class SharedCargoOrderDatabaseComponent : Component
     {
-        public sealed override string Name => "CargoOrderDatabase";
     }
 
     [NetSerializable, Serializable]

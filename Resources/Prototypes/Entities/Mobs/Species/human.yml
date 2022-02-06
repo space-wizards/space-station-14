@@ -10,6 +10,7 @@
     tags:
     - CanPilot
     - FootstepSound
+    - DoorBumpOpener
   - type: Reactive
     groups:
       Flammable: [ Touch ]
@@ -27,7 +28,7 @@
   - type: Barotrauma
     damage:
       types:
-        Blunt: 1 #per second, scales with pressure and other constants.
+        Blunt: 0.7 #per second, scales with pressure and other constants.
   - type: DamageOnHighSpeedImpact
     damage:
       types:
@@ -288,7 +289,6 @@
     attributes:
       proper: true
   - type: StandingState
-  - type: DoorBumpOpener
 - type: entity
   save: false
   name: Urist McHands

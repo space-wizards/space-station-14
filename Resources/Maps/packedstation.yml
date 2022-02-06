@@ -167,6 +167,8 @@ entities:
     type: Transform
   - index: 0
     type: MapGrid
+  - type: BecomesStation
+    id: Packed
   - linearDamping: 0.1
     fixedRotation: False
     bodyType: Dynamic
@@ -18119,13 +18121,12 @@ entities:
   - pos: -4.3740964,-12.360607
     parent: 0
     type: Transform
+  - cellSlot:
+      startingItem: PowerCellSmallStandard
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
-  - cellInsertSound: !type:SoundPathSpecifier
-      path: /Audio/Items/pistol_magout.ogg
-    cellRemoveSound: !type:SoundPathSpecifier
-      path: /Audio/Items/pistol_magin.ogg
-    type: PowerCellSlot
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
@@ -19287,13 +19288,12 @@ entities:
   - pos: 11.509314,4.6065345
     parent: 0
     type: Transform
+  - cellSlot:
+      startingItem: PowerCellSmallStandard
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
-  - cellInsertSound: !type:SoundPathSpecifier
-      path: /Audio/Items/pistol_magout.ogg
-    cellRemoveSound: !type:SoundPathSpecifier
-      path: /Audio/Items/pistol_magin.ogg
-    type: PowerCellSlot
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
@@ -19545,7 +19545,7 @@ entities:
       stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 362
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 0.5,-3.5
     parent: 0
@@ -19560,7 +19560,7 @@ entities:
       stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 364
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: -0.5,-11.5
     parent: 0
@@ -19782,7 +19782,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 398
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 16.5,-6.5
     parent: 0
@@ -20233,7 +20233,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 461
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: -0.5,15.5
     parent: 0
@@ -20430,7 +20430,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 488
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 10.5,11.5
     parent: 0
@@ -21414,7 +21414,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 626
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 19.5,-13.5
     parent: 0
@@ -21909,7 +21909,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 703
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 12.5,-17.5
     parent: 0
@@ -21939,7 +21939,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 707
-  type: SalternSmes
+  type: SalternSMES
   components:
   - pos: 20.5,-14.5
     parent: 0
@@ -22345,7 +22345,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 773
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 8.5,-26.5
     parent: 0
@@ -22499,7 +22499,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 798
-  type: SalternSmes
+  type: SalternSMES
   components:
   - pos: 17.5,-23.5
     parent: 0
@@ -22705,7 +22705,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 825
-  type: SalternSmes
+  type: SalternSMES
   components:
   - pos: 18.5,-23.5
     parent: 0
@@ -23795,7 +23795,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 969
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 9.5,-35.5
     parent: 0
@@ -24416,7 +24416,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1065
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 26.5,-37.5
     parent: 0
@@ -24887,7 +24887,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 1133
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 21.5,5.5
     parent: 0
@@ -26596,7 +26596,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1394
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 5.5,-35.5
     parent: 0
@@ -27640,7 +27640,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 1561
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 37.485016,-2.5795918
     parent: 0
@@ -27871,7 +27871,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 1591
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 29.5,-37.5
     parent: 0
@@ -28211,7 +28211,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 1636
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 40.5,-11.5
     parent: 0
@@ -28560,7 +28560,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 1681
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 42.5,-11.5
     parent: 0
@@ -28823,7 +28823,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1710
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 39.5,-15.5
     parent: 0
@@ -29252,13 +29252,13 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 1770
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 34.5,-15.5
     parent: 0
     type: Transform
 - uid: 1771
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 41.5,-21.5
     parent: 0
@@ -29789,7 +29789,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1837
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 41.5,21.5
     parent: 0
@@ -30632,7 +30632,7 @@ entities:
       ItemCabinet: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1970
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 36.5,29.5
     parent: 0
@@ -31894,6 +31894,7 @@ entities:
     type: Transform
   - containers:
       PowerCellCharger-powerCellContainer: !type:ContainerSlot {}
+      charger-slot: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 2157
   type: ComputerSupplyOrdering
@@ -33622,7 +33623,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 2400
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 37.5,25.5
     parent: 0
@@ -33825,7 +33826,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 2426
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 43.5,26.5
     parent: 0
@@ -34443,7 +34444,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 2503
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 20.5,34.5
     parent: 0
@@ -36084,7 +36085,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 2743
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 68.5,-15.5
     parent: 0
@@ -36101,13 +36102,12 @@ entities:
   - pos: 20.544691,33.624443
     parent: 0
     type: Transform
+  - cellSlot:
+      startingItem: PowerCellSmallStandard
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
-  - cellInsertSound: !type:SoundPathSpecifier
-      path: /Audio/Items/pistol_magout.ogg
-    cellRemoveSound: !type:SoundPathSpecifier
-      path: /Audio/Items/pistol_magin.ogg
-    type: PowerCellSlot
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
@@ -36117,13 +36117,12 @@ entities:
   - pos: 20.529066,29.655691
     parent: 0
     type: Transform
+  - cellSlot:
+      startingItem: PowerCellSmallStandard
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
-  - cellInsertSound: !type:SoundPathSpecifier
-      path: /Audio/Items/pistol_magout.ogg
-    cellRemoveSound: !type:SoundPathSpecifier
-      path: /Audio/Items/pistol_magin.ogg
-    type: PowerCellSlot
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
@@ -36555,13 +36554,12 @@ entities:
   - pos: 22.507973,40.51647
     parent: 0
     type: Transform
+  - cellSlot:
+      startingItem: PowerCellSmallStandard
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
-  - cellInsertSound: !type:SoundPathSpecifier
-      path: /Audio/Items/pistol_magout.ogg
-    cellRemoveSound: !type:SoundPathSpecifier
-      path: /Audio/Items/pistol_magin.ogg
-    type: PowerCellSlot
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
@@ -37388,7 +37386,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 2924
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 69.5,47.5
     parent: 0
@@ -40467,7 +40465,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 3427
-  type: SalternSmes
+  type: SalternSMES
   components:
   - pos: 71.5,44.5
     parent: 0
@@ -40479,7 +40477,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 3429
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 0.5,-8.5
     parent: 0
@@ -44356,7 +44354,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4042
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 10.5,-4.5
     parent: 0
@@ -44634,7 +44632,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4076
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 22.5,-13.5
     parent: 0
@@ -45117,7 +45115,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4130
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 11.5,-15.5
     parent: 0
@@ -45163,7 +45161,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 4136
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: -4.5,-2.5
     parent: 0
@@ -45185,7 +45183,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 4139
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 13.5,16.5
     parent: 0
@@ -45780,7 +45778,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4209
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 28.5,7.5
     parent: 0
@@ -47326,7 +47324,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4348
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 10.311251,18.586544
     parent: 0
@@ -48502,7 +48500,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 4478
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 3.5,-27.5
     parent: 0
@@ -49667,7 +49665,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4610
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 33.5,7.5
     parent: 0
@@ -50743,7 +50741,7 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4726
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 40.5,-1.5
     parent: 0
@@ -51796,7 +51794,7 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4838
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 16.5,23.5
     parent: 0
@@ -51890,7 +51888,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4850
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 16.5,25.5
     parent: 0
@@ -51904,7 +51902,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4852
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 13.5,35.5
     parent: 0
@@ -52422,7 +52420,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4906
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 15.5,34.5
     parent: 0
@@ -52442,7 +52440,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 4909
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 25.5,43.5
     parent: 0
@@ -52739,13 +52737,13 @@ entities:
       PaperLabel: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 4941
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 20.5,40.5
     parent: 0
     type: Transform
 - uid: 4942
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 43.5,2.5
     parent: 0
@@ -53525,7 +53523,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 5036
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 52.5,-8.5
     parent: 0
@@ -53541,7 +53539,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 5038
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 66.5,-0.5
     parent: 0
@@ -54184,7 +54182,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 5111
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 75.5,-2.5
     parent: 0
@@ -54555,13 +54553,13 @@ entities:
       morgue_tray: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 5152
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 75.5,-4.5
     parent: 0
     type: Transform
 - uid: 5153
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 73.5,-7.5
     parent: 0
@@ -54573,7 +54571,7 @@ entities:
     supplyRampPosition: 1.6666667
     type: PowerNetworkBattery
 - uid: 5154
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 58.5,-8.5
     parent: 0
@@ -54766,7 +54764,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 5178
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 74.5,9.5
     parent: 0
@@ -55198,7 +55196,7 @@ entities:
   - enabled: False
     type: AmbientSound
 - uid: 5224
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 64.5,11.5
     parent: 0
@@ -55561,7 +55559,7 @@ entities:
   - color: '#0000FFFF'
     type: AtmosPipeColor
 - uid: 5259
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 56.5,11.5
     parent: 0
@@ -55863,19 +55861,19 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 5292
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 53.5,21.5
     parent: 0
     type: Transform
 - uid: 5293
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 51.5,22.5
     parent: 0
     type: Transform
 - uid: 5294
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 33.5,44.5
     parent: 0
@@ -56123,7 +56121,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 5322
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 66.488266,17.465452
     parent: 0
@@ -56242,6 +56240,7 @@ entities:
     type: Transform
   - containers:
       PowerCellCharger-powerCellContainer: !type:ContainerSlot {}
+      charger-slot: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 5336
   type: PowerCellLargeStandard
@@ -57246,7 +57245,7 @@ entities:
   - enabled: False
     type: AmbientSound
 - uid: 5450
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 2.5,-4.5
     parent: 0
@@ -57641,13 +57640,12 @@ entities:
   - pos: 67.5,37.5
     parent: 0
     type: Transform
+  - cellSlot:
+      startingItem: PowerCellSmallStandard
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
-  - cellInsertSound: !type:SoundPathSpecifier
-      path: /Audio/Items/pistol_magout.ogg
-    cellRemoveSound: !type:SoundPathSpecifier
-      path: /Audio/Items/pistol_magin.ogg
-    type: PowerCellSlot
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
@@ -58970,7 +58968,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 5671
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 68.47836,41.729954
     parent: 0
@@ -59334,7 +59332,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 5712
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 69.5,9.5
     parent: 0
@@ -59543,6 +59541,9 @@ entities:
   - pos: 76.49909,-12.519633
     parent: 0
     type: Transform
+  - cellSlot:
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
   - containers:
@@ -59592,6 +59593,9 @@ entities:
   - pos: 73.5,-12.5
     parent: 0
     type: Transform
+  - cellSlot:
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
   - containers:
@@ -59808,6 +59812,9 @@ entities:
   - pos: 12.5,17.5
     parent: 0
     type: Transform
+  - cellSlot:
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
   - containers:
@@ -59961,6 +59968,7 @@ entities:
     type: Transform
   - containers:
       WeaponCapacitorCharger-powerCellContainer: !type:ContainerSlot {}
+      charger-slot: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 5789
   type: Poweredlight
@@ -62168,7 +62176,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6028
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 78.5,-14.5
     parent: 0
@@ -62279,7 +62287,7 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 6038
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 6.5,-10.5
     parent: 0
@@ -62369,7 +62377,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 6048
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 28.5,-19.5
     parent: 0
@@ -62588,7 +62596,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6070
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 28.5,33.5
     parent: 0
@@ -63053,7 +63061,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6118
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 28.5,9.5
     parent: 0
@@ -63087,7 +63095,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6122
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 43.5,12.5
     parent: 0
@@ -63563,7 +63571,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6183
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 22.5,11.5
     parent: 0
@@ -63693,7 +63701,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6197
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 66.5,45.5
     parent: 0
@@ -65171,7 +65179,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6367
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 54.5,4.5
     parent: 0
@@ -65325,7 +65333,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6383
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 50.5,-14.5
     parent: 0
@@ -65997,7 +66005,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6452
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 65.5,23.5
     parent: 0
@@ -66909,7 +66917,7 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 6547
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 39.5,-18.5
     parent: 0
@@ -68534,7 +68542,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6722
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 11.5,2.5
     parent: 0
@@ -68712,7 +68720,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6743
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 7.5,3.5
     parent: 0
@@ -69348,6 +69356,7 @@ entities:
     type: Transform
   - containers:
       PowerCellCharger-powerCellContainer: !type:ContainerSlot {}
+      charger-slot: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 6820
   type: PowerCellRecharger
@@ -69357,6 +69366,7 @@ entities:
     type: Transform
   - containers:
       PowerCellCharger-powerCellContainer: !type:ContainerSlot {}
+      charger-slot: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 6821
   type: ClothingUnderSocksCoder
@@ -70062,7 +70072,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6899
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 47.5,28.5
     parent: 0
@@ -70920,7 +70930,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6986
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 22.5,-22.5
     parent: 0
@@ -77637,11 +77647,16 @@ entities:
     pos: 41.515198,24.735239
     parent: 0
     type: Transform
+  - cellSlot:
+      startingItem: PowerCellSmallStandard
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
   - containers:
       BatteryBarrel-powercell-container: !type:ContainerSlot {}
       BatteryBarrel-ammo-container: !type:ContainerSlot {}
+      cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 7577
   type: TaserGun
@@ -77649,11 +77664,16 @@ entities:
   - pos: 41.515827,24.580679
     parent: 0
     type: Transform
+  - cellSlot:
+      startingItem: PowerCellSmallStandard
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
   - containers:
       BatteryBarrel-powercell-container: !type:ContainerSlot {}
       BatteryBarrel-ammo-container: !type:ContainerSlot {}
+      cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 7578
   type: TaserGun
@@ -77661,11 +77681,16 @@ entities:
   - pos: 41.515827,24.393179
     parent: 0
     type: Transform
+  - cellSlot:
+      startingItem: PowerCellSmallStandard
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
   - containers:
       BatteryBarrel-powercell-container: !type:ContainerSlot {}
       BatteryBarrel-ammo-container: !type:ContainerSlot {}
+      cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 7579
   type: ClothingOuterCoatPirate
@@ -85752,7 +85777,7 @@ entities:
   - color: '#0000FFFF'
     type: AtmosPipeColor
 - uid: 8426
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 38.500893,-33.65727
     parent: 0
@@ -87800,7 +87825,7 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 8623
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 30.480644,38.38934
     parent: 0
@@ -88848,13 +88873,12 @@ entities:
   - pos: 32.544136,8.944672
     parent: 0
     type: Transform
+  - cellSlot:
+      startingItem: PowerCellSmallStandard
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
-  - cellInsertSound: !type:SoundPathSpecifier
-      path: /Audio/Items/pistol_magout.ogg
-    cellRemoveSound: !type:SoundPathSpecifier
-      path: /Audio/Items/pistol_magin.ogg
-    type: PowerCellSlot
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
@@ -89587,13 +89611,12 @@ entities:
   - pos: 107.54654,-24.346563
     parent: 0
     type: Transform
+  - cellSlot:
+      startingItem: PowerCellSmallStandard
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
-  - cellInsertSound: !type:SoundPathSpecifier
-      path: /Audio/Items/pistol_magout.ogg
-    cellRemoveSound: !type:SoundPathSpecifier
-      path: /Audio/Items/pistol_magin.ogg
-    type: PowerCellSlot
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
@@ -90861,7 +90884,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 9040
-  type: SalternSmes
+  type: SalternSMES
   components:
   - rot: -1.5707963267948966 rad
     pos: 112.5,-17.5
@@ -91033,7 +91056,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 9058
-  type: SalternApc
+  type: SalternAPC
   components:
   - rot: -1.5707963267948966 rad
     pos: 110.5,-14.5
@@ -92730,12 +92753,17 @@ entities:
   - pos: 41.526512,27.667274
     parent: 0
     type: Transform
+  - cellSlot:
+      startingItem: PowerCellSmallStandard
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
   - containers:
       BatteryBarrel-powercell-container: !type:ContainerSlot
         ent: 11108
       BatteryBarrel-ammo-container: !type:ContainerSlot {}
+      cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 9230
   type: GasPipeStraight
@@ -105274,7 +105302,7 @@ entities:
   - color: '#FF0000FF'
     type: AtmosPipeColor
 - uid: 10263
-  type: SalternSmes
+  type: SalternSMES
   components:
   - pos: 16.5,-23.5
     parent: 0
@@ -111910,6 +111938,9 @@ entities:
   - pos: 80.534454,-16.347055
     parent: 0
     type: Transform
+  - cellSlot:
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
   - containers:
@@ -112041,6 +112072,9 @@ entities:
   - pos: 81.401146,12.491636
     parent: 0
     type: Transform
+  - cellSlot:
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
   - containers:
@@ -112130,6 +112164,9 @@ entities:
   - pos: 81.50129,9.6576
     parent: 0
     type: Transform
+  - cellSlot:
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
   - containers:
@@ -112366,7 +112403,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 10894
-  type: SalternSmes
+  type: SalternSMES
   components:
   - pos: 3.5,-34.5
     parent: 0
@@ -114111,6 +114148,9 @@ entities:
   - pos: 38.46515,28.495308
     parent: 0
     type: Transform
+  - cellSlot:
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
   - containers:
@@ -114122,6 +114162,9 @@ entities:
   - pos: 38.46515,28.495308
     parent: 0
     type: Transform
+  - cellSlot:
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
   - containers:
@@ -114133,6 +114176,9 @@ entities:
   - pos: 38.46515,28.510933
     parent: 0
     type: Transform
+  - cellSlot:
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
   - containers:
@@ -114144,6 +114190,9 @@ entities:
   - pos: 38.46515,28.510933
     parent: 0
     type: Transform
+  - cellSlot:
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
   - containers:
@@ -114155,6 +114204,9 @@ entities:
   - pos: 38.46515,28.510933
     parent: 0
     type: Transform
+  - cellSlot:
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
   - containers:
@@ -114166,6 +114218,9 @@ entities:
   - pos: 41.286083,22.611008
     parent: 0
     type: Transform
+  - cellSlot:
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
   - containers:
@@ -114177,6 +114232,9 @@ entities:
   - pos: 41.442333,22.579758
     parent: 0
     type: Transform
+  - cellSlot:
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
   - containers:
@@ -114188,6 +114246,9 @@ entities:
   - pos: 41.55171,22.454758
     parent: 0
     type: Transform
+  - cellSlot:
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
   - containers:
@@ -114335,6 +114396,7 @@ entities:
     type: Transform
   - containers:
       WeaponCapacitorCharger-powerCellContainer: !type:ContainerSlot {}
+      charger-slot: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 11141
   type: WheatSeeds
@@ -114688,6 +114750,7 @@ entities:
     type: Transform
   - containers:
       WeaponCapacitorCharger-powerCellContainer: !type:ContainerSlot {}
+      charger-slot: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 11184
   type: WeaponCapacitorRecharger
@@ -114697,6 +114760,7 @@ entities:
     type: Transform
   - containers:
       WeaponCapacitorCharger-powerCellContainer: !type:ContainerSlot {}
+      charger-slot: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 11185
   type: CableApcExtension
@@ -114762,12 +114826,17 @@ entities:
   - pos: 41.526512,27.4329
     parent: 0
     type: Transform
+  - cellSlot:
+      startingItem: PowerCellSmallStandard
+      name: power-cell-slot-component-slot-name-default
+    type: PowerCellSlot
   - canCollide: False
     type: Physics
   - containers:
       BatteryBarrel-powercell-container: !type:ContainerSlot
         ent: 11204
       BatteryBarrel-ammo-container: !type:ContainerSlot {}
+      cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 11193
   type: CableApcExtension
@@ -116617,7 +116686,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 11447
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 55.5,37.5
     parent: 0
@@ -116625,7 +116694,7 @@ entities:
   - startingCharge: 12000
     type: Battery
 - uid: 11448
-  type: SalternSmes
+  type: SalternSMES
   components:
   - pos: 56.5,38.5
     parent: 0
@@ -118735,6 +118804,18 @@ entities:
   - pos: 39.5,52.5
     parent: 0
     type: Transform
+- uid: 11738
+  type: SpawnPointLawyer
+  components:
+  - pos: 18.5,32.5
+    parent: 0
+    type: Transform
+- uid: 11739
+  type: SpawnPointLawyer
+  components:
+  - pos: 18.5,30.5
+    parent: 0
+    type: Transform
 - uid: 11740
   type: CableMV
   components:
@@ -118786,6 +118867,18 @@ entities:
   components:
   - rot: -1.5707963267948966 rad
     pos: 3.5,-32.5
+    parent: 0
+    type: Transform
+- uid: 11747
+  type: SpawnPointLibrarian
+  components:
+  - pos: 9.5,3.5
+    parent: 0
+    type: Transform
+- uid: 11748
+  type: SpawnPointChaplain
+  components:
+  - pos: 14.5,14.5
     parent: 0
     type: Transform
 - uid: 11749
@@ -119948,6 +120041,7 @@ entities:
     type: Transform
   - containers:
       PowerCellCharger-powerCellContainer: !type:ContainerSlot {}
+      charger-slot: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 11953
   type: Autolathe

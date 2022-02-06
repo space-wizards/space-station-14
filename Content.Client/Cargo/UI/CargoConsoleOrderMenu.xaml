@@ -1,4 +1,4 @@
-﻿<SS14Window xmlns="https://spacestation14.io"
+﻿<DefaultWindow xmlns="https://spacestation14.io"
             Title="{Loc 'cargo-console-order-menu-title'}">
     <BoxContainer Orientation="Vertical">
         <GridContainer Columns="2">
@@ -19,4 +19,4 @@
                 Text="{Loc 'cargo-console-order-menu-submit-button'}"
                 TextAlign="Center" />
     </BoxContainer>
-</SS14Window>
+</DefaultWindow>

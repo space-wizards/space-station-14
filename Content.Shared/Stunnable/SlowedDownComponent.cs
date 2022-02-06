@@ -12,8 +12,6 @@ namespace Content.Shared.Stunnable
     [Friend(typeof(SharedStunSystem))]
     public class SlowedDownComponent : Component
     {
-        public override string Name => "SlowedDown";
-
         public float SprintSpeedModifier { get; set; } = 0.5f;
         public float WalkSpeedModifier { get; set; } = 0.5f;
     }

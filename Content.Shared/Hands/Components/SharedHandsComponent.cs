@@ -26,8 +26,6 @@ namespace Content.Shared.Hands.Components
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public sealed override string Name => "Hands";
-
         /// <summary>
         ///     The name of the currently active hand.
         /// </summary>
@@ -533,7 +531,7 @@ namespace Content.Shared.Hands.Components
 
             handSys.PickupAnimation(entity, initialPosition, finalPosition, animateUser ? null : Owner);
             handSys.PutEntityIntoHand(Owner, hand, entity, this);
-            
+
             return true;
         }
 
@@ -718,7 +716,7 @@ namespace Content.Shared.Hands.Components
     }
 
     [Serializable, NetSerializable]
-    public class HandsVisualState
+    public class HandsVisualState : ICloneable
     {
         public List<HandVisualState> Hands { get; } = new();
 
@@ -726,10 +724,15 @@ namespace Content.Shared.Hands.Components
         {
             Hands = hands;
         }
+
+        public object Clone()
+        {
+            return new HandsVisualState(new List<HandVisualState>(Hands));
+        }
     }
 
     [Serializable, NetSerializable]
-    public class HandVisualState
+    public struct HandVisualState
     {
         public string RsiPath { get; }
         public string? EquippedPrefix { get; }

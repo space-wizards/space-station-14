@@ -16,7 +16,7 @@ namespace Content.Client.Administration.UI.ManageSolutions
     ///     cref="EditSolutionsWindow"/>
     /// </summary>
     [GenerateTypedNameReferences]
-    public sealed partial class AddReagentWindow : SS14Window
+    public sealed partial class AddReagentWindow : DefaultWindow
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IClientConsoleHost _consoleHost = default!;

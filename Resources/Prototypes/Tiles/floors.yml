@@ -1,4 +1,4 @@
-﻿- type: tile
+- type: tile
   id: floor_steel
   name: steel floor
   texture: "steel"
@@ -18,7 +18,6 @@
   name: wood
   texture: "wood"
   base_turfs:
-  - space
   - plating
   is_subfloor: false
   can_crowbar: true
@@ -174,6 +173,7 @@
   can_crowbar: true
   footstep_sounds:
     collection: footstep_floor
+  friction: 0.30
   item_drop: FloorTileItemBlue
   thermalConductivity: 0.04
   heatCapacity: 10000

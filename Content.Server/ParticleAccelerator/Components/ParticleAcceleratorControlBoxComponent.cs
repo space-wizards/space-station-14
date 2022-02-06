@@ -39,8 +39,6 @@ namespace Content.Server.ParticleAccelerator.Components
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
 
-        public override string Name => "ParticleAcceleratorControlBox";
-
         [ViewVariables]
         private BoundUserInterface? UserInterface => Owner.GetUIOrNull(ParticleAcceleratorControlBoxUiKey.Key);
 

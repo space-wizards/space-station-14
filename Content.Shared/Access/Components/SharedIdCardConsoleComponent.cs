@@ -9,8 +9,6 @@ namespace Content.Shared.Access.Components
 {
     public class SharedIdCardConsoleComponent : Component
     {
-        public override string Name => "IdCardConsole";
-
         public const int MaxFullNameLength = 256;
         public const int MaxJobTitleLength = 256;
 

@@ -6,6 +6,5 @@ namespace Content.Server.ParticleAccelerator.Components
     [ComponentReference(typeof(ParticleAcceleratorPartComponent))]
     public class ParticleAcceleratorFuelChamberComponent : ParticleAcceleratorPartComponent
     {
-        public override string Name => "ParticleAcceleratorFuelChamber";
     }
 }

@@ -40,7 +40,7 @@ namespace Content.Server.Foldable
             if (!Resolve(uid, ref fold))
                 return false;
 
-            // Can't un-fold in hands / inventory
+            // Can't un-fold in any container (locker, hands, inventory, whatever).
             if (_container.IsEntityInContainer(uid))
                 return false;
 
@@ -48,9 +48,13 @@ namespace Content.Server.Foldable
             if (TryComp(uid, out StrapComponent? strap) && strap.BuckledEntities.Any())
                 return false;
 
-            // Also check if this entity is "open" (e.g., body bags)
-            return !TryComp(uid, out EntityStorageComponent? storage) || !storage.Open;
+            if (!TryComp(uid, out EntityStorageComponent? storage))
+                return true;
 
+            if (storage.Open)
+                return false;
+
+            return !storage.Contents.ContainedEntities.Any();
         }
 
         /// <summary>

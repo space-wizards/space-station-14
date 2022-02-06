@@ -45,11 +45,8 @@ namespace Content.Shared.Interaction
         }
     }
 
-    /// <summary>
-    ///     Raised directed on the used object when clicking on another object and no attack event was handled.
-    /// </summary>
     [PublicAPI]
-    public class AfterInteractEvent : HandledEntityEventArgs
+    public abstract class InteractEvent : HandledEntityEventArgs
     {
         /// <summary>
         ///     Entity that triggered the interaction.
@@ -62,7 +59,7 @@ namespace Content.Shared.Interaction
         public EntityUid Used { get; }
 
         /// <summary>
-        ///     Entity that was interacted on. This can be null if the attack did not click on an entity.
+        ///     Entity that was interacted on. This can be null if there was no target (e.g., clicking on tiles).
         /// </summary>
         public EntityUid? Target { get; }
 
@@ -72,12 +69,11 @@ namespace Content.Shared.Interaction
         public EntityCoordinates ClickLocation { get; }
 
         /// <summary>
-        /// Is the click location close enough to reach by the player? This does not check for obstructions, just that the target is within
-        /// reach radius around the user.
+        /// Is the click location in range without obstructions?
         /// </summary>
         public bool CanReach { get; }
 
-        public AfterInteractEvent(EntityUid user, EntityUid used, EntityUid? target,
+        public InteractEvent(EntityUid user, EntityUid used, EntityUid? target,
             EntityCoordinates clickLocation, bool canReach)
         {
             User = user;
@@ -86,5 +82,27 @@ namespace Content.Shared.Interaction
             ClickLocation = clickLocation;
             CanReach = canReach;
         }
+    }
+
+    /// <summary>
+    ///     Raised directed on the used object when clicking on another object and no standard interaction occurred.
+    ///     Used for low-priority interactions facilitated by the used entity.
+    /// </summary>
+    public sealed class AfterInteractEvent : InteractEvent
+    {
+        public AfterInteractEvent(EntityUid user, EntityUid used, EntityUid? target,
+            EntityCoordinates clickLocation, bool canReach) : base(user, used, target, clickLocation, canReach)
+        { }
+    }
+
+    /// <summary>
+    ///     Raised directed on the target when clicking on another object and no standard interaction occurred. Used for
+    ///     low-priority interactions facilitated by the target entity.
+    /// </summary>
+    public sealed class AfterInteractUsingEvent : InteractEvent
+    {
+        public AfterInteractUsingEvent(EntityUid user, EntityUid used, EntityUid? target,
+            EntityCoordinates clickLocation, bool canReach) : base(user, used, target, clickLocation, canReach)
+        { }
     }
 }

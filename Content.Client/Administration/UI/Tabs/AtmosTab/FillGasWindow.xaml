@@ -1,4 +1,4 @@
-﻿<SS14Window
+﻿<DefaultWindow
     xmlns="https://spacestation14.io" Title="{Loc Fill Gas}">
     <BoxContainer Orientation="Vertical">
         <BoxContainer Orientation="Horizontal">
@@ -18,4 +18,4 @@
         </BoxContainer>
         <Button Name="SubmitButton" Text="{Loc Fill Gas}" />
     </BoxContainer>
-</SS14Window>
+</DefaultWindow>

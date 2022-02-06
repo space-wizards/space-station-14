@@ -4,8 +4,10 @@ using System.Linq;
 using Content.Server.Database;
 using Content.Server.GameTicking.Events;
 using Content.Server.Ghost;
+using Content.Server.Maps;
 using Content.Server.Mind;
 using Content.Server.Players;
+using Content.Server.Station;
 using Content.Shared.CCVar;
 using Content.Shared.Coordinates;
 using Content.Shared.GameTicking;
@@ -17,6 +19,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
+using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
@@ -53,7 +56,8 @@ namespace Content.Server.GameTicking
             get => _runLevel;
             private set
             {
-                if (_runLevel == value) return;
+                // Game admins can run `restartroundnow` while still in-lobby, which'd break things with this check.
+                // if (_runLevel == value) return;
 
                 var old = _runLevel;
                 _runLevel = value;
@@ -71,24 +75,93 @@ namespace Content.Server.GameTicking
             _pauseManager.AddUninitializedMap(DefaultMap);
             _startingRound = false;
             var startTime = _gameTiming.RealTime;
-            var map = _gameMapManager.GetSelectedMapChecked(true);
-            var grid = _mapLoader.LoadBlueprint(DefaultMap, map.MapPath);
+            var maps = new List<GameMapPrototype>() { _gameMapManager.GetSelectedMapChecked(true) };
 
+            // Let game rules dictate what maps we should load.
+            RaiseLocalEvent(new LoadingMapsEvent(maps));
 
-            if (grid == null)
+            foreach (var map in maps)
             {
-                throw new InvalidOperationException($"No grid found for map {map.MapName}");
+                var toLoad = DefaultMap;
+                if (maps[0] != map)
+                {
+                    // Create other maps for the others since we need to.
+                    toLoad = _mapManager.CreateMap();
+                    _pauseManager.AddUninitializedMap(toLoad);
+                }
+
+                _mapLoader.LoadMap(toLoad, map.MapPath.ToString());
+
+                var grids = _mapManager.GetAllMapGrids(toLoad).ToList();
+                var dict = new Dictionary<string, StationId>();
+
+                StationId SetupInitialStation(IMapGrid grid, GameMapPrototype map)
+                {
+                    var stationId = _stationSystem.InitialSetupStationGrid(grid.GridEntityId, map);
+                    SetupGridStation(grid);
+
+                    // ass!
+                    _spawnPoint = grid.ToCoordinates();
+                    return stationId;
+                }
+
+                // Iterate over all BecomesStation
+                for (var i = 0; i < grids.Count; i++)
+                {
+                    var grid = grids[i];
+
+                    // We still setup the grid
+                    if (!TryComp<BecomesStationComponent>(grid.GridEntityId, out var becomesStation))
+                        continue;
+
+                    var stationId = SetupInitialStation(grid, map);
+
+                    dict.Add(becomesStation.Id, stationId);
+                }
+
+                if (!dict.Any())
+                {
+                    // Oh jeez, no stations got loaded.
+                    // We'll just take the first grid and setup that, then.
+
+                    var grid = grids[0];
+                    var stationId = SetupInitialStation(grid, map);
+
+                    dict.Add("Station", stationId);
+                }
+
+                // Iterate over all PartOfStation
+                for (var i = 0; i < grids.Count; i++)
+                {
+                    var grid = grids[i];
+                    if (!TryComp<PartOfStationComponent>(grid.GridEntityId, out var partOfStation))
+                        continue;
+                    SetupGridStation(grid);
+
+                    if (dict.TryGetValue(partOfStation.Id, out var stationId))
+                    {
+                        _stationSystem.AddGridToStation(grid.GridEntityId, stationId);
+                    }
+                    else
+                    {
+                        Logger.Error($"Grid {grid.Index} ({grid.GridEntityId}) specified that it was part of station {partOfStation.Id} which does not exist");
+                    }
+                }
             }
 
-            _stationSystem.InitialSetupStationGrid(grid.GridEntityId, map);
+            var timeSpan = _gameTiming.RealTime - startTime;
+            Logger.InfoS("ticker", $"Loaded maps in {timeSpan.TotalMilliseconds:N2}ms.");
+        }
 
+        private void SetupGridStation(IMapGrid grid)
+        {
             var stationXform = EntityManager.GetComponent<TransformComponent>(grid.GridEntityId);
 
             if (StationOffset)
             {
                 // Apply a random offset to the station grid entity.
-                var x = _robustRandom.NextFloat() * MaxStationOffset * 2 - MaxStationOffset;
-                var y = _robustRandom.NextFloat() * MaxStationOffset * 2 - MaxStationOffset;
+                var x = _robustRandom.NextFloat(-MaxStationOffset, MaxStationOffset);
+                var y = _robustRandom.NextFloat(-MaxStationOffset, MaxStationOffset);
                 stationXform.LocalPosition = new Vector2(x, y);
             }
 
@@ -96,11 +169,6 @@ namespace Content.Server.GameTicking
             {
                 stationXform.LocalRotation = _robustRandom.NextFloat(MathF.Tau);
             }
-
-            _spawnPoint = grid.ToCoordinates();
-
-            var timeSpan = _gameTiming.RealTime - startTime;
-            Logger.InfoS("ticker", $"Loaded map in {timeSpan.TotalMilliseconds:N2}ms.");
         }
 
         public async void StartRound(bool force = false)
@@ -362,7 +430,7 @@ namespace Content.Server.GameTicking
             }
             // This ordering mechanism isn't great (no ordering of minds) but functions
             var listOfPlayerInfoFinal = listOfPlayerInfo.OrderBy(pi => pi.PlayerOOCName).ToArray();
-
+            _playersInGame.Clear();
             RaiseNetworkEvent(new RoundEndMessageEvent(gamemodeTitle, roundEndText, roundDuration, listOfPlayerInfoFinal.Length, listOfPlayerInfoFinal));
         }
 
@@ -510,6 +578,21 @@ namespace Content.Server.GameTicking
         {
             Old = old;
             New = @new;
+        }
+    }
+
+    /// <summary>
+    ///     Event raised before maps are loaded in pre-round setup.
+    ///     Contains a list of game map prototypes to load; modify it if you want to load different maps,
+    ///     for example as part of a game rule.
+    /// </summary>
+    public class LoadingMapsEvent : EntityEventArgs
+    {
+        public List<GameMapPrototype> Maps;
+
+        public LoadingMapsEvent(List<GameMapPrototype> maps)
+        {
+            Maps = maps;
         }
     }
 

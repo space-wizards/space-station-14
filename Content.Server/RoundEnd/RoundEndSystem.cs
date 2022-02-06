@@ -24,9 +24,9 @@ namespace Content.Server.RoundEnd
         [Dependency] private readonly AdminLogSystem _adminLog = default!;
 
 
-        private readonly TimeSpan _cooldownDuration = TimeSpan.FromSeconds(30);
-        private readonly TimeSpan _countdownDuration = TimeSpan.FromMinutes(4);
-        private readonly TimeSpan _restartRoundDuration = TimeSpan.FromSeconds(20);
+        public TimeSpan DefaultCooldownDuration { get; set; } = TimeSpan.FromSeconds(30);
+        public TimeSpan DefaultCountdownDuration { get; set; } = TimeSpan.FromMinutes(4);
+        public TimeSpan DefaultRestartRoundDuration { get; set; } = TimeSpan.FromSeconds(20);
 
         private CancellationTokenSource? _countdownTokenSource = null;
         private CancellationTokenSource? _cooldownTokenSource = null;
@@ -35,10 +35,10 @@ namespace Content.Server.RoundEnd
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
+            SubscribeLocalEvent<RoundRestartCleanupEvent>(_ => Reset());
         }
 
-        private void Reset(RoundRestartCleanupEvent ev)
+        private void Reset()
         {
             if (_countdownTokenSource != null)
             {
@@ -53,6 +53,7 @@ namespace Content.Server.RoundEnd
             }
 
             ExpectedCountdownEnd = null;
+            RaiseLocalEvent(RoundEndSystemChangedEvent.Default);
         }
 
         public bool CanCall()
@@ -62,7 +63,7 @@ namespace Content.Server.RoundEnd
 
         public void RequestRoundEnd(EntityUid? requester = null, bool checkCooldown = true)
         {
-            RequestRoundEnd(_countdownDuration, requester, checkCooldown);
+            RequestRoundEnd(DefaultCountdownDuration, requester, checkCooldown);
         }
 
         public void RequestRoundEnd(TimeSpan countdownTime, EntityUid? requester = null, bool checkCooldown = true)
@@ -124,17 +125,19 @@ namespace Content.Server.RoundEnd
         public void EndRound()
         {
             if (_gameTicker.RunLevel != GameRunLevel.InRound) return;
+            ExpectedCountdownEnd = null;
             RaiseLocalEvent(RoundEndSystemChangedEvent.Default);
             _gameTicker.EndRound();
             _countdownTokenSource?.Cancel();
             _countdownTokenSource = new();
-            _chatManager.DispatchServerAnnouncement(Loc.GetString("round-end-system-round-restart-eta-announcement", ("seconds", _restartRoundDuration.Seconds)));
-            Timer.Spawn(_restartRoundDuration, AfterEndRoundRestart, _countdownTokenSource.Token);
+            _chatManager.DispatchServerAnnouncement(Loc.GetString("round-end-system-round-restart-eta-announcement", ("seconds", DefaultRestartRoundDuration.Seconds)));
+            Timer.Spawn(DefaultRestartRoundDuration, AfterEndRoundRestart, _countdownTokenSource.Token);
         }
 
         private void AfterEndRoundRestart()
         {
-            if (_gameTicker.RunLevel != GameRunLevel.InRound) return;
+            if (_gameTicker.RunLevel != GameRunLevel.PostRound) return;
+            Reset();
             _gameTicker.RestartRound();
         }
 
@@ -142,7 +145,7 @@ namespace Content.Server.RoundEnd
         {
             _cooldownTokenSource?.Cancel();
             _cooldownTokenSource = new();
-            Timer.Spawn(_cooldownDuration, () =>
+            Timer.Spawn(DefaultCooldownDuration, () =>
             {
                 _cooldownTokenSource.Cancel();
                 _cooldownTokenSource = null;

@@ -13,11 +13,11 @@ namespace Content.Client.Clothing
     [NetworkedComponent()]
     public class ClothingComponent : ItemComponent
     {
-        public override string Name => "Clothing";
-
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("femaleMask")]
         public FemaleClothingMask FemaleMask { get; } = FemaleClothingMask.UniformFull;
+
+        public string? InSlot;
     }
 
     public enum FemaleClothingMask : byte

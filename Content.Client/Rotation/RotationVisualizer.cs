@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Content.Shared.Rotation;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
@@ -17,17 +17,17 @@ namespace Content.Client.Rotation
         {
             base.OnChangeData(component);
 
-            if (component.TryGetData<RotationState>(RotationVisuals.RotationState, out var state))
+            // if TryGet fails, state defaults to RotationState.Vertical.
+            component.TryGetData<RotationState>(RotationVisuals.RotationState, out var state);
+
+            switch (state)
             {
-                switch (state)
-                {
-                    case RotationState.Vertical:
-                        SetRotation(component, 0);
-                        break;
-                    case RotationState.Horizontal:
-                        SetRotation(component, Angle.FromDegrees(90));
-                        break;
-                }
+                case RotationState.Vertical:
+                    SetRotation(component, 0);
+                    break;
+                case RotationState.Horizontal:
+                    SetRotation(component, Angle.FromDegrees(90));
+                    break;
             }
         }
 
