@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from CEV-Eris at commit https://github.com/discordia-space/CEV-Eris/commit/14517938186858388656a6aee14bf47af9e9649f - then modified by 20kdc & AJCM-git",
+  "copyright": "Taken from https://github.com/tgstation/tgstation at 04e43d8c1d5097fdb697addd4395fb849dd341bd",
   "size": {
     "x": 32,
     "y": 32
@@ -25,11 +25,9 @@
           0.2,
           0.2,
           0.2,
-          0.2,
-          0.2,
           0.2
+        ]
       ]
-    ]
     },
     {
       "name": "closing_unlit",
@@ -40,26 +38,32 @@
           0.2,
           0.2,
           0.2,
-          0.2,
-          0.2,
           0.2
+        ]
       ]
-    ]
+    },
+    {
+      "name": "deny",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
     },
     {
       "name": "deny_unlit",
       "delays": [
         [
-          0.2,
-          0.2,
-          0.2,
-          0.2,
-          0.2,
-          0.2,
-          0.2,
-          0.2
+          0.1,
+          0.1,
+          0.1
+        ]
       ]
-    ]
+    },
+    {
+      "name": "locked"
     },
     {
       "name": "open"
@@ -73,11 +77,9 @@
           0.2,
           0.2,
           0.2,
-          0.2,
-          0.2,
           0.2
+        ]
       ]
-    ]
     },
     {
       "name": "opening_unlit",
@@ -88,26 +90,23 @@
           0.2,
           0.2,
           0.2,
-          0.2,
-          0.2,
           0.2
+        ]
       ]
-    ]
     },
     {
       "name": "panel_closing",
       "delays": [
         [
-          0.2,
-          0.2,
-          0.2,
-          0.2,
-          0.2,
-          0.2,
-          0.2,
-          0.2
+          0.1,
+          0.1,
+          0.07,
+          0.07,
+          0.07,
+          0.07,
+          0.27
+        ]
       ]
-    ]
     },
     {
       "name": "panel_open"
@@ -117,21 +116,23 @@
       "delays": [
         [
           0.2,
-          0.2,
-          0.2,
-          0.2,
-          0.2,
-          0.2,
-          0.2,
+          0.07,
+          0.07,
+          0.07,
+          0.07,
+          0.07,
           0.2
+        ]
       ]
-    ]
     },
     {
       "name": "welded"
     },
     {
-      "name": "emergency_unlit",
+      "name": "welded_open"
+    },
+    {
+      "name": "emergency_access",
       "delays": [
         [
           0.4,

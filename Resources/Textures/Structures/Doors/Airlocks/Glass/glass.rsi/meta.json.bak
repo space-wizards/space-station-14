@@ -11,6 +11,12 @@
       "name": "assembly"
     },
     {
+      "name": "assembly-fill"
+    },
+    {
+      "name": "assembly-glass"
+    },
+    {
       "name": "bolted_unlit"
     },
     {
@@ -18,6 +24,15 @@
     },
     {
       "name": "closed_unlit"
+    },
+    {
+      "name": "closed-fill"
+    },
+    {
+      "name": "closed-glass"
+    },
+    {
+      "name": "panel_closed"
     },
     {
       "name": "closing",
@@ -46,12 +61,48 @@
       ]
     },
     {
-      "name": "deny_unlit",
+      "name": "closing-fill",
       "delays": [
         [
           0.1,
           0.1,
+          0.07,
+          0.07,
+          0.07,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "closing-glass",
+      "delays": [
+        [
           0.1,
+          0.1,
+          0.07,
+          0.07,
+          0.07,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "closing-panel",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.07,
+          0.07,
+          0.07,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "deny_unlit",
+      "delays": [
+        [
           0.1,
           0.1,
           0.1
@@ -59,12 +110,19 @@
       ]
     },
     {
-      "name": "open",
+      "name": "emergency_unlit",
       "delays": [
         [
-          1
+          12,
+          12
         ]
       ]
+    },
+    {
+      "name": "open"
+    },
+    {
+      "name": "panel_open"
     },
     {
       "name": "opening",
@@ -93,7 +151,7 @@
       ]
     },
     {
-      "name": "panel_closing",
+      "name": "opening-fill",
       "delays": [
         [
           0.1,
@@ -106,15 +164,20 @@
       ]
     },
     {
-      "name": "panel_open",
+      "name": "opening-glass",
       "delays": [
         [
-          1
+          0.1,
+          0.1,
+          0.07,
+          0.07,
+          0.07,
+          0.2
         ]
       ]
     },
     {
-      "name": "panel_opening",
+      "name": "opening-panel",
       "delays": [
         [
           0.1,
@@ -183,7 +246,7 @@
       "name": "welded"
     },
     {
-      "name": "emergency_unlit",
+      "name": "emergency_access",
       "delays": [
         [
           0.4,

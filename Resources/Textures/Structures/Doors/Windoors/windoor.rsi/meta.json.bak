@@ -165,7 +165,7 @@
             "directions":4
         },
         {
-            "name": "emergency_unlit",
+            "name": "emergency_access",
             "directions": 4
         }
     ]

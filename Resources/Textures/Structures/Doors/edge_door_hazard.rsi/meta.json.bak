@@ -1,0 +1,296 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/vgstation-coders/vgstation13/ at 38b65a605df7ae2907d6bf0d4aebc5faa1bbc561",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "alert_cold",
+      "directions": 4,
+      "delays": [
+          [
+            0.5,
+            0.5
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            0.5,
+            0.5
+          ]
+       ]
+    },
+    {
+      "name": "alert_hot",
+      "directions": 4,
+      "delays": [
+          [
+            0.5,
+            0.5
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            0.5,
+            0.5
+          ]
+       ]
+    },
+    {
+        "name": "bolted_unlit",
+        "directions": 4
+    },
+    {
+        "name": "closed",
+        "directions": 4
+    },
+    {
+        "name": "closed_unlit",
+        "directions": 4
+    },
+    {
+      "name": "closing",
+      "directions": 4,
+      "delays": [
+          [
+            0.2,
+            0.2,
+            0.2,
+            0.2,
+            0.2,
+            0.2
+          ],
+          [
+            0.2,
+            0.2,
+            0.2,
+            0.2,
+            0.2,
+            0.2
+          ],
+          [
+            0.2,
+            0.2,
+            0.2,
+            0.2,
+            0.2,
+            0.2
+          ],
+          [
+            0.2,
+            0.2,
+            0.2,
+            0.2,
+            0.2,
+            0.2
+          ]
+       ]
+    },
+    {
+      "name": "closing_unlit",
+      "directions": 4,
+      "delays": [
+          [
+            0.2,
+            0.2,
+            0.2,
+            0.2,
+            0.2,
+            0.2
+          ],
+          [
+            0.2,
+            0.2,
+            0.2,
+            0.2,
+            0.2,
+            0.2
+          ],
+          [
+            0.2,
+            0.2,
+            0.2,
+            0.2,
+            0.2,
+            0.2
+          ],
+          [
+            0.2,
+            0.2,
+            0.2,
+            0.2,
+            0.2,
+            0.2
+          ]
+       ]
+    },
+    {
+        "name": "deny",
+        "directions": 4
+    },
+    {
+        "name": "deny_unlit",
+        "directions": 4
+    },
+    {
+        "name": "locked",
+        "directions": 4
+    },
+    {
+        "name": "open",
+        "directions": 4
+    },
+    {
+      "name": "opening",
+      "directions": 4,
+      "delays": [
+          [
+            0.2,
+            0.2,
+            0.2,
+            0.2,
+            0.2,
+            0.2
+          ],
+          [
+            0.2,
+            0.2,
+            0.2,
+            0.2,
+            0.2,
+            0.2
+          ],
+          [
+            0.2,
+            0.2,
+            0.2,
+            0.2,
+            0.2,
+            0.2
+          ],
+          [
+            0.2,
+            0.2,
+            0.2,
+            0.2,
+            0.2,
+            0.2
+          ]
+       ]
+    },
+    {
+      "name": "opening_unlit",
+      "directions": 4,
+      "delays": [
+          [
+            0.2,
+            0.2,
+            0.2,
+            0.2,
+            0.2,
+            0.2
+          ],
+          [
+            0.2,
+            0.2,
+            0.2,
+            0.2,
+            0.2,
+            0.2
+          ],
+          [
+            0.2,
+            0.2,
+            0.2,
+            0.2,
+            0.2,
+            0.2
+          ],
+          [
+            0.2,
+            0.2,
+            0.2,
+            0.2,
+            0.2,
+            0.2
+          ]
+       ]
+    },
+    {
+      "name": "palert",
+      "directions": 4,
+      "delays": [
+          [
+            0.5,
+            0.5
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            0.5,
+            0.5
+          ]
+       ]
+    },
+    {
+      "name": "panel_closing",
+      "delays": [
+          [
+            0.1,
+            0.1,
+            0.07,
+            0.07,
+            0.07,
+            0.07,
+            0.27
+          ]
+       ]
+    },
+    {
+        "name": "panel_open",
+    },
+    {
+      "name": "panel_opening",
+      "delays": [
+          [
+            0.2,
+            0.07,
+            0.07,
+            0.07,
+            0.07,
+            0.07,
+            0.2
+          ]
+       ]
+    },
+    {
+        "name": "welded",
+        "directions": 4
+    },
+    {
+        "name": "welded_open",
+        "directions": 4
+    }
+  ]
+}
