@@ -1,17 +1,12 @@
-using System;
 using Content.Shared.Cargo;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Client.Cargo;
 
 public sealed partial class CargoSystem
 {
-    [Dependency] private readonly AnimationPlayerSystem _player = default!;
-
     private static readonly Animation CargoTelepadBeamAnimation = new()
     {
         Length = TimeSpan.FromSeconds(0.5),
