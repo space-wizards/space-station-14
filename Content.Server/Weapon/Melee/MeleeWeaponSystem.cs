@@ -215,7 +215,7 @@ namespace Content.Server.Weapon.Melee
         /// </summary>
         private void OnAfterInteract(EntityUid owner, MeleeWeaponComponent comp, AfterInteractEvent args)
         {
-            if (!args.CanReach)
+            if (args.Handled || !args.CanReach)
                 return;
 
             var curTime = _gameTiming.CurTime;

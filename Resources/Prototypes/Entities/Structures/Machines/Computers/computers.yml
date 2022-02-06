@@ -141,7 +141,7 @@
     - key: enum.ResearchClientUiKey.Key
       type: ResearchClientBoundUserInterface
   - type: ApcPowerReceiver
-    powerLoad: 1000
+    powerLoad: 200
     priority: Low
   - type: ExtensionCableReceiver
   - type: Computer
@@ -267,9 +267,6 @@
       type: SolarControlConsoleBoundUserInterface
   - type: Computer
     board: SolarControlComputerCircuitboard
-  - type: ApcPowerReceiver
-    powerLoad: 200
-    priority: Low
   - type: PointLight
     radius: 1.5
     energy: 1.6
