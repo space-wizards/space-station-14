@@ -241,7 +241,7 @@
   parent: SeedBase
   name: packet of ambrosia vulgaris seeds
   description: "A medicinal plant for the common folk."
-  id: AmbrosiaVSeeds ##The megaseed servitor won't load these if they have a fuller name and I have no idea why
+  id: AmbrosiaVulgarisSeeds
   components:
     - type: Seed
       seed: ambrosiaVulgaris
