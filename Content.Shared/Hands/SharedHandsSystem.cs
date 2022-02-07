@@ -2,7 +2,6 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.Input;
-using Content.Shared.Item;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input.Binding;
@@ -11,7 +10,6 @@ using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
-using System.Collections.Generic;
 
 namespace Content.Shared.Hands
 {
@@ -25,22 +23,12 @@ namespace Content.Shared.Hands
 
             SubscribeAllEvent<RequestSetHandEvent>(HandleSetHand);
             SubscribeLocalEvent<SharedHandsComponent, EntRemovedFromContainerMessage>(HandleContainerRemoved);
-            SubscribeLocalEvent<SharedHandsComponent, EntInsertedIntoContainerMessage>(HandleContainerModified);
-            SubscribeLocalEvent<SharedHandsComponent, ItemPrefixChangeEvent>(OnPrefixChanged);
+            SubscribeLocalEvent<SharedHandsComponent, EntInsertedIntoContainerMessage>(HandleContainerInserted);
 
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.Drop, new PointerInputCmdHandler(DropPressed))
                 .Bind(ContentKeyFunctions.SwapHands, InputCmdHandler.FromDelegate(SwapHandsPressed, handle: false))
                 .Register<SharedHandsSystem>();
-        }
-
-        private void OnPrefixChanged(EntityUid uid, SharedHandsComponent component, ItemPrefixChangeEvent args)
-        {
-            // update hands visuals if this item is in a hand (rather then inventory or other container).
-            if (component.HasHand(args.ContainerId))
-            {
-                UpdateHandVisuals(uid, component);
-            }
         }
 
         public override void Shutdown()
@@ -136,43 +124,25 @@ namespace Content.Shared.Hands
 
         public abstract void PickupAnimation(EntityUid item, EntityCoordinates initialPosition, Vector2 finalPosition,
             EntityUid? exclude);
+        #endregion
 
         protected virtual void HandleContainerRemoved(EntityUid uid, SharedHandsComponent component, ContainerModifiedMessage args)
         {
             HandleContainerModified(uid, component, args);
         }
-        #endregion
 
-        #region visuals
-        private void HandleContainerModified(EntityUid uid, SharedHandsComponent hands, ContainerModifiedMessage args)
+        protected virtual void HandleContainerModified(EntityUid uid, SharedHandsComponent hands, ContainerModifiedMessage args)
         {
-            UpdateHandVisuals(uid, hands);
+            // client updates hand visuals here.
         }
 
-        /// <summary>
-        ///     Update the In-Hand sprites
-        /// </summary>
-        public virtual void UpdateHandVisuals(EntityUid uid, SharedHandsComponent? handComp = null, AppearanceComponent? appearance = null)
+        private void HandleContainerInserted(EntityUid uid, SharedHandsComponent component, EntInsertedIntoContainerMessage args)
         {
-            if (!Resolve(uid, ref handComp, ref appearance, false))
-                return;
+            // un-rotate entities. needed for things like directional flashlights
+            Transform(args.Entity).LocalRotation = 0;
 
-            var handsVisuals = new List<HandVisualState>();
-            foreach (var hand in handComp.Hands)
-            {
-                if (hand.HeldEntity == null)
-                    continue;
-
-                if (!TryComp(hand.HeldEntity.Value, out SharedItemComponent? item) || item.RsiPath == null)
-                    continue;
-
-                var handState = new HandVisualState(item.RsiPath, item.EquippedPrefix, hand.Location, item.Color);
-                handsVisuals.Add(handState);
-            }
-
-            appearance.SetData(HandsVisuals.VisualState, new HandsVisualState(handsVisuals));
+            HandleContainerModified(uid, component, args);
         }
-        #endregion
 
         private void HandleSetHand(RequestSetHandEvent msg, EntitySessionEventArgs eventArgs)
         {

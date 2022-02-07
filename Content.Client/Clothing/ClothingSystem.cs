@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Client.Inventory;
 using Content.Shared.CharacterAppearance;
 using Content.Shared.Clothing;
@@ -9,8 +11,9 @@ using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
+using static Robust.Shared.GameObjects.SharedSpriteComponent;
 
 namespace Content.Client.Clothing;
 
@@ -48,11 +51,94 @@ public class ClothingSystem : EntitySystem
 
         SubscribeLocalEvent<ClothingComponent, GotEquippedEvent>(OnGotEquipped);
         SubscribeLocalEvent<ClothingComponent, GotUnequippedEvent>(OnGotUnequipped);
-        SubscribeLocalEvent<ClientInventoryComponent, ItemPrefixChangeEvent>(OnPrefixChanged);
+
+        SubscribeLocalEvent<SharedItemComponent, GetEquipmentVisualsEvent>(OnGetVisuals);
+
+        SubscribeLocalEvent<ClientInventoryComponent, VisualsChangedEvent>(OnVisualsChanged);
         SubscribeLocalEvent<SpriteComponent, DidUnequipEvent>(OnDidUnequip);
     }
 
-    private void OnPrefixChanged(EntityUid uid, ClientInventoryComponent component, ItemPrefixChangeEvent args)
+    private void OnGetVisuals(EntityUid uid, SharedItemComponent item, GetEquipmentVisualsEvent args)
+    {
+        if (!TryComp(args.Equipee, out ClientInventoryComponent? inventory))
+            return;
+
+        List<PrototypeLayerData>? layers = null;
+
+        // first attempt to get species specific data.
+        if (inventory.SpeciesId != null)
+            item.ClothingVisuals.TryGetValue($"{args.Slot}-{inventory.SpeciesId}", out layers);
+
+        // if that returned nothing, attempt to find generic data
+        if (layers == null && !item.ClothingVisuals.TryGetValue(args.Slot, out layers))
+        {
+            // No generic data either. Attempt to generate defaults from the item's RSI & item-prefixes
+            if (!TryGetDefaultVisuals(uid, item, args.Slot, inventory.SpeciesId, out layers))
+                return;
+        }
+
+        // add each layer to the visuals
+        var i = 0;
+        foreach (var layer in layers)
+        {
+            var key = layer.MapKeys?.FirstOrDefault();
+            if (key == null)
+            {
+                key = i == 0 ? args.Slot : $"{args.Slot}-{i}";
+                i++;
+            }
+
+            args.Layers.Add((key, layer));
+        }
+    }
+
+    /// <summary>
+    ///     If no explicit clothing visuals were specified, this attempts to populate with default values.
+    /// </summary>
+    /// <remarks>
+    ///     Useful for lazily adding clothing sprites without modifying yaml. And for backwards compatibility.
+    /// </remarks>
+    private bool TryGetDefaultVisuals(EntityUid uid, SharedItemComponent item, string slot, string? speciesId,
+        [NotNullWhen(true)] out List<PrototypeLayerData>? layers)
+    {
+        layers = null;
+
+        RSI? rsi = null;
+
+        if (item.RsiPath != null)
+            rsi = _cache.GetResource<RSIResource>(TextureRoot / item.RsiPath).RSI;
+        else if (TryComp(uid, out SpriteComponent? sprite))
+            rsi = sprite.BaseRSI;
+
+        if (rsi == null || rsi.Path == null)
+            return false;
+
+        var correctedSlot = slot;
+        TemporarySlotMap.TryGetValue(correctedSlot, out correctedSlot);
+
+        var state = (item.EquippedPrefix == null)
+            ? $"equipped-{correctedSlot}"
+            : $"{item.EquippedPrefix}-equipped-{correctedSlot}";
+
+        // species specific
+        if (speciesId != null && rsi.TryGetState($"{state}-{speciesId}", out _))
+        {
+            state = $"{state}-{speciesId}";
+        }
+        else if (!rsi.TryGetState(state, out _))
+        {
+            return false;
+        }
+
+        var layer = PrototypeLayerData.New();
+        layer.RsiPath = rsi.Path.ToString();
+        layer.State = state;
+        layers = new() { layer };
+
+        return true;
+    }
+
+    private void OnVisualsChanged(EntityUid uid, ClientInventoryComponent component, VisualsChangedEvent args)
     {
         if (!TryComp(args.Item, out ClothingComponent? clothing) || clothing.InSlot == null)
             return;
@@ -67,7 +153,19 @@ public class ClothingSystem : EntitySystem
 
     private void OnDidUnequip(EntityUid uid, SpriteComponent component, DidUnequipEvent args)
     {
-        component.LayerSetVisible(args.Slot, false);
+        if (!TryComp(uid, out ClientInventoryComponent? inventory) || !TryComp(uid, out SpriteComponent? sprite))
+            return;
+
+        if (!inventory.VisualLayerKeys.TryGetValue(args.Slot, out var revealedLayers))
+            return;
+
+        // Remove old layers. We could also just set them to invisible, but as items may add arbitrary layers, this
+        // may eventually bloat the player with lots of invisible layers.
+        foreach (var layer in revealedLayers)
+        {
+            sprite.RemoveLayer(layer);
+        }
+        revealedLayers.Clear();
     }
 
     public void InitClothing(EntityUid uid, ClientInventoryComponent? component = null, SpriteComponent? sprite = null)
@@ -76,8 +174,6 @@ public class ClothingSystem : EntitySystem
 
         foreach (var slot in slots)
         {
-            sprite.LayerMapReserveBlank(slot.Name);
-
             if (!_inventorySystem.TryGetSlotContainer(uid, slot.Name, out var containerSlot, out _, component) ||
                 !containerSlot.ContainedEntity.HasValue) continue;
 
@@ -89,54 +185,14 @@ public class ClothingSystem : EntitySystem
     {
         component.InSlot = args.Slot;
 
-        if (!TryComp<SpriteComponent>(args.Equipee, out var sprite) || !TryComp<ClientInventoryComponent>(args.Equipee, out var invComp))
-        {
-            return;
-        }
-
-        var data = GetEquippedStateInfo(args.Equipment, args.Slot, invComp.SpeciesId, component);
-        if (data != null)
-        {
-            var (rsi, state) = data.Value;
-            sprite.LayerSetVisible(args.Slot, true);
-            sprite.LayerSetState(args.Slot, state, rsi);
-            sprite.LayerSetAutoAnimated(args.Slot, true);
-
-            if (args.Slot == "jumpsuit" && sprite.LayerMapTryGet(HumanoidVisualLayers.StencilMask, out _))
-            {
-                sprite.LayerSetState(HumanoidVisualLayers.StencilMask, component.FemaleMask switch
-                {
-                    FemaleClothingMask.NoMask => "female_none",
-                    FemaleClothingMask.UniformTop => "female_top",
-                    _ => "female_full",
-                });
-            }
-
-            return;
-        }
-
-
-        sprite.LayerSetVisible(args.Slot, false);
+        RenderEquipment(args.Equipee, uid, args.Slot, clothingComponent: component);
     }
 
-    private void RenderEquipment(EntityUid uid, EntityUid equipment, string slot,
-        ClientInventoryComponent? inventoryComponent = null, SpriteComponent? sprite = null, ClothingComponent? clothingComponent = null)
+    private void RenderEquipment(EntityUid equipee, EntityUid equipment, string slot,
+        ClientInventoryComponent? inventory = null, SpriteComponent? sprite = null, ClothingComponent? clothingComponent = null)
     {
-        if(!Resolve(uid, ref inventoryComponent, ref sprite))
+        if(!Resolve(equipee, ref inventory, ref sprite) || !Resolve(equipment, ref clothingComponent, false))
             return;
-
-        if (!Resolve(equipment, ref clothingComponent, false))
-        {
-            sprite.LayerSetVisible(slot, false);
-            return;
-        }
-
-        var data = GetEquippedStateInfo(equipment, slot, inventoryComponent.SpeciesId, clothingComponent);
-        if (data == null) return;
-        var (rsi, state) = data.Value;
-        sprite.LayerSetVisible(slot, true);
-        sprite.LayerSetState(slot, state, rsi);
-        sprite.LayerSetAutoAnimated(slot, true);
 
         if (slot == "jumpsuit" && sprite.LayerMapTryGet(HumanoidVisualLayers.StencilMask, out _))
         {
@@ -147,34 +203,55 @@ public class ClothingSystem : EntitySystem
                 _ => "female_full",
             });
         }
-    }
 
-    public (RSI rsi, RSI.StateId stateId)? GetEquippedStateInfo(EntityUid uid, string slot, string? speciesId=null, ClothingComponent? component = null)
-    {
-        if (!Resolve(uid, ref component))
-            return null;
-
-        if (component.RsiPath == null)
-            return null;
-
-        var rsi = _cache.GetResource<RSIResource>(SharedSpriteComponent.TextureRoot / component.RsiPath).RSI;
-        var correctedSlot = slot;
-        TemporarySlotMap.TryGetValue(correctedSlot, out correctedSlot);
-        var stateId = component.EquippedPrefix != null ? $"{component.EquippedPrefix}-equipped-{correctedSlot}" : $"equipped-{correctedSlot}";
-        if (speciesId != null)
+        // Remove old layers. We could also just set them to invisible, but as items may add arbitrary layers, this
+        // may eventually bloat the player with lots of invisible layers.
+        if (inventory.VisualLayerKeys.TryGetValue(slot, out var revealedLayers))
         {
-            var speciesState = $"{stateId}-{speciesId}";
-            if (rsi.TryGetState(speciesState, out _))
+            foreach (var key in revealedLayers)
             {
-                return (rsi, speciesState);
+                sprite.RemoveLayer(key);
             }
+            revealedLayers.Clear();
         }
-
-        if (rsi.TryGetState(stateId, out _))
+        else
         {
-            return (rsi, stateId);
+            revealedLayers = new();
+            inventory.VisualLayerKeys[slot] = revealedLayers;
         }
 
-        return null;
+        var ev = new GetEquipmentVisualsEvent(equipee, slot);
+        RaiseLocalEvent(equipment, ev, false);
+
+        if (ev.Layers.Count == 0)
+        {
+            RaiseLocalEvent(equipment, new EquipmentVisualsUpdatedEvent(equipee, slot, revealedLayers));
+            return;
+        }
+
+        // add the new layers
+        foreach (var (key, layerData) in ev.Layers)
+        {
+            if (!revealedLayers.Add(key))
+            {
+                Logger.Warning($"Duplicate key for clothing visuals: {key}. Are multiple components attempting to modify the same layer? Equipment: {ToPrettyString(equipment)}");
+                continue;
+            }
+
+            var index = sprite.LayerMapReserveBlank(key);
+
+            // In case no RSI is given, use the item's base RSI as a default. This cuts down on a lot of unnecessary yaml entries.
+            if (layerData.RsiPath == null
+                && layerData.TexturePath == null
+                && sprite[index].Rsi == null
+                && TryComp(equipment, out SpriteComponent? clothingSprite))
+            {
+                sprite.LayerSetRSI(index, clothingSprite.BaseRSI);
+            }
+
+            sprite.LayerSetData(index, layerData);
+        }
+
+        RaiseLocalEvent(equipment, new EquipmentVisualsUpdatedEvent(equipee, slot, revealedLayers));
     }
 }
