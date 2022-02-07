@@ -160,6 +160,20 @@ namespace Content.Client.Atmos.EntitySystems
             return new GasOverlayEnumerator(overlays, this);
         }
 
+        public FireOverlayEnumerator GetFireOverlays(GridId gridIndex, Vector2i indices)
+        {
+            if (!_tileData.TryGetValue(gridIndex, out var chunks))
+                return default;
+
+            var chunkIndex = GetGasChunkIndices(indices);
+            if (!chunks.TryGetValue(chunkIndex, out var chunk))
+                return default;
+
+            var overlays = chunk.GetData(indices);
+
+            return new FireOverlayEnumerator(overlays, this);
+        }
+
         public override void FrameUpdate(float frameTime)
         {
             base.FrameUpdate(frameTime);
@@ -193,7 +207,6 @@ namespace Content.Client.Atmos.EntitySystems
         {
             private readonly GasTileOverlaySystem _system;
             private readonly GasData[]? _data;
-            private byte _fireState;
             // TODO: Take Fire Temperature into account, when we code fire color
 
             private readonly int _length; // We cache the length so we can avoid a pointer dereference, for speed. Brrr.
@@ -203,7 +216,6 @@ namespace Content.Client.Atmos.EntitySystems
             {
                 // Gas can't be null, as the caller to this constructor already ensured it wasn't.
                 _data = data.Gas;
-                _fireState = data.FireState;
 
                 _system = system;
 
@@ -225,8 +237,26 @@ namespace Content.Client.Atmos.EntitySystems
                 overlay = default;
                 return false;
             }
-            //MoveNext but used in FireTileOverlay
-            public bool MoveNextFire(out (Texture Texture, Color Color) overlay)
+
+
+
+            public void Dispose()
+            {
+            }
+        }
+
+        public struct FireOverlayEnumerator : IDisposable
+        {
+            private readonly GasTileOverlaySystem _system;
+            private byte _fireState;
+            // TODO: Take Fire Temperature into account, when we code fire color
+
+            public FireOverlayEnumerator(in GasOverlayData data, GasTileOverlaySystem system)
+            {
+                _fireState = data.FireState;
+                _system = system;
+            }
+            public bool MoveNext(out (Texture Texture, Color Color) overlay)
             {
 
                 if (_fireState != 0)

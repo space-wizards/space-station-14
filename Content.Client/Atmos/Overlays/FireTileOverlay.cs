@@ -44,8 +44,8 @@ namespace Content.Client.Atmos.Overlays
 
                 foreach (var tile in mapGrid.GetTilesIntersecting(worldBounds))
                 {
-                    var enumerator = _gasTileOverlaySystem.GetOverlays(mapGrid.Index, tile.GridIndices);
-                    while (enumerator.MoveNextFire(out var tuple))
+                    var enumerator = _gasTileOverlaySystem.GetFireOverlays(mapGrid.Index, tile.GridIndices);
+                    while (enumerator.MoveNext(out var tuple))
                     {
                         drawHandle.DrawTexture(tuple.Texture, new Vector2(tile.X, tile.Y), tuple.Color);
                     }
