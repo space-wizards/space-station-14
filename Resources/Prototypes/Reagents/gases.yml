@@ -21,8 +21,6 @@
       - !type:ModifyLungGas
         ratios:
           CarbonDioxide: 1.0
-      - !type:ModifyLungGas
-        ratios:
           Oxygen: -1.0
 
 - type: reagent
