@@ -1,9 +1,4 @@
 Entries:
-- author: Macoron
-  changes:
-  - {message: Fix light replacer interaction with wall lights, type: Fix}
-  id: 501
-  time: '2021-10-28T02:36:09.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Updated context menu UI, type: Tweak}
@@ -2961,3 +2956,8 @@ Entries:
   - {message: 'Slimepeople are now weak to slash, piercing, and cold damage.', type: Tweak}
   id: 1001
   time: '2022-02-07T04:48:20.0000000+00:00'
+- author: Emisse
+  changes:
+  - {message: 'Bagel Station, a comfy midpop station, has been introduced.', type: Add}
+  id: 1002
+  time: '2022-02-07T16:07:24.0000000+00:00'
