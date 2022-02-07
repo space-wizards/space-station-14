@@ -14,8 +14,8 @@ namespace Content.Server.Shuttles.EntitySystems
     {
         private const float TileMassMultiplier = 4f;
 
-        public float ShuttleMaxLinearImpulse = 13f;
-        public float ShuttleMaxAngularImpulse = 3f;
+        public float ShuttleMaxLinearAcc = 13f;
+        public float ShuttleMaxAngularAcc = 3f;
 
         public float ShuttleMovingLinearDamping = 1.15f;
         public float ShuttleIdleLinearDamping = 0.5f;
@@ -34,16 +34,16 @@ namespace Content.Server.Shuttles.EntitySystems
             SubscribeLocalEvent<GridFixtureChangeEvent>(OnGridFixtureChange);
 
             var configManager = IoCManager.Resolve<IConfigurationManager>();
-            configManager.OnValueChanged(CCVars.ShuttleMaxLinearImpulse, SetShuttleMaxLinearImpulse, true);
-            configManager.OnValueChanged(CCVars.ShuttleMaxAngularImpulse, SetShuttleMaxAngularImpulse, true);
+            configManager.OnValueChanged(CCVars.ShuttleMaxLinearAcc, SetShuttleMaxLinearAcc, true);
+            configManager.OnValueChanged(CCVars.ShuttleMaxAngularAcc, SetShuttleMaxAngularAcc, true);
             configManager.OnValueChanged(CCVars.ShuttleIdleLinearDamping, SetShuttleIdleLinearDamping, true);
             configManager.OnValueChanged(CCVars.ShuttleIdleAngularDamping, SetShuttleIdleAngularDamping, true);
             configManager.OnValueChanged(CCVars.ShuttleMovingLinearDamping, SetShuttleMovingLinearDamping, true);
             configManager.OnValueChanged(CCVars.ShuttleMovingAngularDamping, SetShuttleMovingAngularDamping, true);
         }
 
-        private void SetShuttleMaxLinearImpulse(float value) => ShuttleMaxLinearImpulse = value;
-        private void SetShuttleMaxAngularImpulse(float value) => ShuttleMaxAngularImpulse = value;
+        private void SetShuttleMaxLinearAcc(float value) => ShuttleMaxLinearAcc = value;
+        private void SetShuttleMaxAngularAcc(float value) => ShuttleMaxAngularAcc = value;
         private void SetShuttleIdleLinearDamping(float value) => ShuttleIdleLinearDamping = value;
         private void SetShuttleIdleAngularDamping(float value) => ShuttleIdleAngularDamping = value;
         private void SetShuttleMovingLinearDamping(float value) => ShuttleMovingLinearDamping = value;
@@ -53,8 +53,8 @@ namespace Content.Server.Shuttles.EntitySystems
         {
             base.Shutdown();
             var configManar = IoCManager.Resolve<IConfigurationManager>();
-            configManar.UnsubValueChanged(CCVars.ShuttleMaxLinearImpulse, SetShuttleMaxLinearImpulse);
-            configManar.UnsubValueChanged(CCVars.ShuttleMaxAngularImpulse, SetShuttleMaxAngularImpulse);
+            configManar.UnsubValueChanged(CCVars.ShuttleMaxLinearAcc, SetShuttleMaxLinearAcc);
+            configManar.UnsubValueChanged(CCVars.ShuttleMaxAngularAcc, SetShuttleMaxAngularAcc);
             configManar.UnsubValueChanged(CCVars.ShuttleIdleLinearDamping, SetShuttleIdleLinearDamping);
             configManar.UnsubValueChanged(CCVars.ShuttleIdleAngularDamping, SetShuttleIdleAngularDamping);
             configManar.UnsubValueChanged(CCVars.ShuttleMovingLinearDamping, SetShuttleMovingLinearDamping);

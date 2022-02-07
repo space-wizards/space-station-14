@@ -230,15 +230,15 @@ namespace Content.Server.Physics.Controllers
                         thrusterSystem.EnableLinearThrustDirection(shuttle, dir);
 
                         var index = (int) Math.Log2((int) dir);
-                        var impulse = shuttle.LinearThrusterImpulse[index] * length;
+                        var force = shuttle.LinearThrust[index] * length;
 
-                        var maxImpulse = body.Mass * shuttleSystem.ShuttleMaxLinearImpulse;
+                        var maxForce = body.Mass * shuttleSystem.ShuttleMaxLinearAcc;
 
-                        impulse = Math.Clamp(impulse, 0f, maxImpulse);
+                        force = Math.Clamp(force, 0f, maxForce);
 
                         body.ApplyLinearImpulse(
                             thrustAngle.RotateVec(shuttleNorth) *
-                            impulse *
+                            force *
                             frameTime);
                     }
                 }
@@ -252,14 +252,14 @@ namespace Content.Server.Physics.Controllers
                 {
                     body.AngularDamping = shuttleSystem.ShuttleMovingAngularDamping;
 
-                    var angularImpulse = shuttle.AngularThrust;
-                    var maxAngImpulse = body.Inertia * shuttleSystem.ShuttleMaxAngularImpulse;
+                    var torque = shuttle.AngularThrust;
+                    var maxTorque = body.Inertia * shuttleSystem.ShuttleMaxAngularAcc;
 
-                    angularImpulse = Math.Clamp(angularImpulse, 0f, maxAngImpulse);
+                    torque = Math.Clamp(torque, 0f, maxTorque);
 
                     body.ApplyAngularImpulse(
                         -angularInput *
-                        angularImpulse *
+                        torque *
                         frameTime);
 
                     thrusterSystem.SetAngularThrust(shuttle, true);

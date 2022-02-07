@@ -174,11 +174,11 @@ namespace Content.Server.Shuttles.EntitySystems
             var oldDirection = (int) args.OldRotation.GetCardinalDir() / 2;
             var direction = (int) args.NewRotation.GetCardinalDir() / 2;
 
-            shuttleComponent.LinearThrusterImpulse[oldDirection] -= component.Impulse;
+            shuttleComponent.LinearThrust[oldDirection] -= component.Thrust;
             DebugTools.Assert(shuttleComponent.LinearThrusters[oldDirection].Contains(component));
             shuttleComponent.LinearThrusters[oldDirection].Remove(component);
 
-            shuttleComponent.LinearThrusterImpulse[direction] += component.Impulse;
+            shuttleComponent.LinearThrust[direction] += component.Thrust;
             DebugTools.Assert(!shuttleComponent.LinearThrusters[direction].Contains(component));
             shuttleComponent.LinearThrusters[direction].Add(component);
         }
@@ -247,7 +247,7 @@ namespace Content.Server.Shuttles.EntitySystems
                 case ThrusterType.Linear:
                     var direction = (int) xform.LocalRotation.GetCardinalDir() / 2;
 
-                    shuttleComponent.LinearThrusterImpulse[direction] += component.Impulse;
+                    shuttleComponent.LinearThrust[direction] += component.Thrust;
                     DebugTools.Assert(!shuttleComponent.LinearThrusters[direction].Contains(component));
                     shuttleComponent.LinearThrusters[direction].Add(component);
 
@@ -271,7 +271,7 @@ namespace Content.Server.Shuttles.EntitySystems
 
                     break;
                 case ThrusterType.Angular:
-                    shuttleComponent.AngularThrust += component.Impulse;
+                    shuttleComponent.AngularThrust += component.Thrust;
                     DebugTools.Assert(!shuttleComponent.AngularThrusters.Contains(component));
                     shuttleComponent.AngularThrusters.Add(component);
                     break;
@@ -313,12 +313,12 @@ namespace Content.Server.Shuttles.EntitySystems
                     angle ??= xform.LocalRotation;
                     var direction = (int) angle.Value.GetCardinalDir() / 2;
 
-                    shuttleComponent.LinearThrusterImpulse[direction] -= component.Impulse;
+                    shuttleComponent.LinearThrust[direction] -= component.Thrust;
                     DebugTools.Assert(shuttleComponent.LinearThrusters[direction].Contains(component));
                     shuttleComponent.LinearThrusters[direction].Remove(component);
                     break;
                 case ThrusterType.Angular:
-                    shuttleComponent.AngularThrust -= component.Impulse;
+                    shuttleComponent.AngularThrust -= component.Thrust;
                     DebugTools.Assert(shuttleComponent.AngularThrusters.Contains(component));
                     shuttleComponent.AngularThrusters.Remove(component);
                     break;

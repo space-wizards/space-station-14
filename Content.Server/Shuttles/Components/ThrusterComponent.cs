@@ -48,8 +48,8 @@ namespace Content.Server.Shuttles.Components
         public bool IsOn;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("impulse")]
-        public float Impulse = 4900f;
+        [DataField("thrust")]
+        public float Thrust = 4900f;
 
         [ViewVariables]
         [DataField("thrusterType")]
