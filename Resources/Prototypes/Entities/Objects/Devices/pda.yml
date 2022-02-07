@@ -194,13 +194,9 @@
   - type: Appearance
     visuals:
       - type: PDAVisualizer
-        layers:
-        - state: pda-cargo
-          color: "#cc2323"
+        state: pda-cargo
   - type: Icon
-    layers:
-    - state: pda-cargo
-      color: "#cc2323"
+    state: pda-cargo
 
 - type: entity
   parent: BasePDA
