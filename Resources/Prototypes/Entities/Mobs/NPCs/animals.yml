@@ -39,6 +39,9 @@
   - type: Butcherable
     meat: FoodMeat
     pieces: 1
+  - type: Pettable
+    petDescription: soft and floofy
+    petSuccessChance: 0.2
 
 - type: entity
   name: bee
@@ -336,6 +339,9 @@
   - type: Butcherable
     meat: FoodMeatCrab
     pieces: 2
+  - type: Pettable
+    petDescription: smooth little
+    petSuccessChance: 0.5
 
 - type: entity
   name: goat
@@ -399,6 +405,9 @@
   - type: Butcherable
     meat: FoodMeatChicken
     pieces: 2
+  - type: Pettable
+    petDescription: horrible little
+    petSuccessChance: 0.1 # Good hecking luck. TODO: rewrite the PettingSystem code so there's a separate chance to make animals outright hostile towards you.
 
 - type: entity
   name: gorilla
@@ -686,6 +695,9 @@
   - type: Butcherable
     meat: FoodMeat
     pieces: 1
+  - type: Pettable
+    petDescription: scaly little
+    petSuccessChance: 0.3
 
 - type: entity
   name: frog
@@ -725,6 +737,9 @@
   - type: Butcherable
     meat: FoodMeat
     pieces: 1
+  - type: Pettable
+    petDescription: cute and slick
+    petSuccessChance: 0.6
 
 # Would be cool to have some functionality for the parrot to be able to sit on stuff
 - type: entity
@@ -765,6 +780,9 @@
   - type: Butcherable
     meat: FoodMeat
     pieces: 1
+  - type: Pettable
+    petDescription: cute feathery
+    petSuccessChance: 0.6
 
 - type: entity
   name: penguin
@@ -843,6 +861,9 @@
   - type: Butcherable
     meat: FoodMeat
     pieces: 1
+  - type: Pettable
+    petDescription: scaly little
+    petSuccessChance: 0.6
 
 # Code unique spider prototypes or combine them all into one spider and get a
 # random sprite state when you spawn it.

@@ -361,6 +361,8 @@
   - type: Butcherable
     meat: FoodMeat
     pieces: 3
+  - type: Pettable
+    petDescription: soft and floofy
   - type: Grammar
     attributes:
       gender: epicene
