@@ -1,22 +1,15 @@
-using System.Collections.Generic;
 using Content.Server.Cloning.Components;
 using Content.Server.Mind.Components;
 using Content.Server.Power.Components;
 using Content.Shared.Preferences;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
-using Robust.Shared.Timing;
 using Content.Server.Climbing;
 using Content.Shared.CharacterAppearance.Systems;
 using Content.Shared.MobState.Components;
 using Content.Shared.Species;
-using Robust.Shared.Log;
 using Robust.Server.Player;
 using Robust.Shared.Prototypes;
 using Content.Server.EUI;
 using Robust.Shared.Containers;
-
 
 using static Content.Shared.Cloning.SharedCloningPodComponent;
 
@@ -24,7 +17,6 @@ namespace Content.Server.Cloning
 {
     internal sealed class CloningPodSystem : EntitySystem
     {
-        [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IPlayerManager _playerManager = null!;
         [Dependency] private readonly IPrototypeManager _prototype = default!;
         [Dependency] private readonly EuiManager _euiManager = null!;
