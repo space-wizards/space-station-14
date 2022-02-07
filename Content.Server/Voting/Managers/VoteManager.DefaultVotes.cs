@@ -168,7 +168,7 @@ namespace Content.Server.Voting.Managers
                 Title = Loc.GetString("ui-vote-map-title"),
                 Duration = alone
                     ? TimeSpan.FromSeconds(10)
-                    : TimeSpan.FromSeconds(180)
+                    : TimeSpan.FromSeconds(90)
             };
 
             if (alone)
