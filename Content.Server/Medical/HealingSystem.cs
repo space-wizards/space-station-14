@@ -9,8 +9,6 @@ using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Stacks;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Medical;
 
@@ -86,9 +84,6 @@ public sealed class HealingSystem : EntitySystem
             return;
 
         if (component.DamageContainerID is not null && !component.DamageContainerID.Equals(targetDamage.DamageContainerID))
-            return;
-
-        if (!_blocker.CanInteract(user))
             return;
 
         if (user != target &&

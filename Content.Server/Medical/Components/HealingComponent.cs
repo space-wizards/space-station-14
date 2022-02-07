@@ -8,6 +8,9 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Medical.Components
 {
+    /// <summary>
+    /// Applies a damage change to the target when used in an interaction.
+    /// </summary>
     [RegisterComponent]
     public sealed class HealingComponent : Component
     {
