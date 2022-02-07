@@ -1,16 +1,4 @@
 Entries:
-- author: juliangiebel
-  changes:
-  - {message: Disposal units are constructable now!, type: Add}
-  - {message: Construction states for various disposal machines., type: Add}
-  id: 499
-  time: '2021-10-27T10:54:13.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Engi-Vend has insulated gloves so engineering don't run out with latejoins
-      or just a lot of roundstart engineers, type: Add}
-  id: 500
-  time: '2021-10-27T15:44:31.0000000+00:00'
 - author: Macoron
   changes:
   - {message: Fix light replacer interaction with wall lights, type: Fix}
@@ -2955,3 +2943,21 @@ Entries:
   - {message: Healing (via ointments etc.) now takes time., type: Tweak}
   id: 999
   time: '2022-02-07T03:14:46.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Plasma, tritium, and carbon dioxide are now harmful to breathe in.',
+    type: Add}
+  - {message: It may take time for you to stop suffocating once entering an oxygenated
+      area., type: Tweak}
+  - {message: Slimepeople no longer have to breathe., type: Add}
+  id: 1000
+  time: '2022-02-07T04:48:15.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Slimepeople now take extra pressure damage., type: Tweak}
+  - {message: 'Slimepeople are now hurt by water, and are not affected by acids on
+      touch.', type: Add}
+  - {message: Slimepeople are now resistant against blunt and poison damage., type: Tweak}
+  - {message: 'Slimepeople are now weak to slash, piercing, and cold damage.', type: Tweak}
+  id: 1001
+  time: '2022-02-07T04:48:20.0000000+00:00'
