@@ -48,8 +48,8 @@ public sealed class DoorSystem : SharedDoorSystem
         base.OnInit(uid, door, args);
 
         if (door.State == DoorState.Open
-            && door.ChangeAirtight
-            && TryComp(uid, out AirtightComponent? airtight))
+                && door.ChangeAirtight
+                && TryComp(uid, out AirtightComponent? airtight))
         {
             _airtightSystem.SetAirblocked(airtight, false);
         }
@@ -92,128 +92,128 @@ public sealed class DoorSystem : SharedDoorSystem
             filter.RemoveWhereAttachedEntity(e => e == predictingPlayer);
         }
 
-    // send the sound to players.
-    SoundSystem.Play(filter, sound, uid, audioParams);
-}
+        // send the sound to players.
+        SoundSystem.Play(filter, sound, uid, audioParams);
+    }
 
 #region DoAfters
-/// <summary>
-///     Weld or pry open a door.
-/// </summary>
-private void OnInteractUsing(EntityUid uid, DoorComponent door, InteractUsingEvent args)
-{
-    if (args.Handled)
-        return;
-
-    if (!TryComp(args.Used, out ToolComponent? tool))
-        return;
-
-    if (tool.Qualities.Contains(door.PryingQuality))
+    /// <summary>
+    ///     Weld or pry open a door.
+    /// </summary>
+    private void OnInteractUsing(EntityUid uid, DoorComponent door, InteractUsingEvent args)
     {
-        args.Handled = TryPryDoor(uid, args.Used, args.User, door);
-        return;
+        if (args.Handled)
+            return;
+
+        if (!TryComp(args.Used, out ToolComponent? tool))
+            return;
+
+        if (tool.Qualities.Contains(door.PryingQuality))
+        {
+            args.Handled = TryPryDoor(uid, args.Used, args.User, door);
+            return;
+        }
+
+        if (door.Weldable && tool.Qualities.Contains(door.WeldingQuality))
+        {
+            args.Handled = TryWeldDoor(uid, args.Used, args.User, door);
+        }
     }
 
-    if (door.Weldable && tool.Qualities.Contains(door.WeldingQuality))
+    /// <summary>
+    ///     Attempt to weld a door shut, or unweld it if it is already welded. This does not actually check if the user
+    ///     is holding the correct tool.
+    /// </summary>
+    private bool TryWeldDoor(EntityUid target, EntityUid used, EntityUid user, DoorComponent door)
     {
-        args.Handled = TryWeldDoor(uid, args.Used, args.User, door);
+        if (!door.Weldable || door.BeingWelded || door.CurrentlyCrushing.Count > 0)
+            return false;
+
+        // is the door in a weld-able state?
+        if (door.State != DoorState.Closed && door.State != DoorState.Welded)
+            return false;
+
+        // perform a do-after delay
+        door.BeingWelded = true;
+        _toolSystem.UseTool(used, user, target, 3f, 3f, door.WeldingQuality,
+                new WeldFinishedEvent(), new WeldCancelledEvent(), target);
+
+        return true; // we might not actually succeeded, but a do-after has started
     }
-}
 
-/// <summary>
-///     Attempt to weld a door shut, or unweld it if it is already welded. This does not actually check if the user
-///     is holding the correct tool.
-/// </summary>
-private bool TryWeldDoor(EntityUid target, EntityUid used, EntityUid user, DoorComponent door)
-{
-    if (!door.Weldable || door.BeingWelded || door.CurrentlyCrushing.Count > 0)
-        return false;
+    /// <summary>
+    ///     Pry open a door. This does not check if the user is holding the required tool.
+    /// </summary>
+    private bool TryPryDoor(EntityUid target, EntityUid tool, EntityUid user, DoorComponent door)
+    {
+        if (door.State == DoorState.Welded)
+            return false;
 
-    // is the door in a weld-able state?
-    if (door.State != DoorState.Closed && door.State != DoorState.Welded)
-        return false;
+        var canEv = new BeforeDoorPryEvent(user);
+        RaiseLocalEvent(target, canEv, false);
 
-    // perform a do-after delay
-    door.BeingWelded = true;
-    _toolSystem.UseTool(used, user, target, 3f, 3f, door.WeldingQuality,
-        new WeldFinishedEvent(), new WeldCancelledEvent(), target);
+        if (canEv.Cancelled)
+            return false;
 
-    return true; // we might not actually succeeded, but a do-after has started
-}
+        var modEv = new DoorGetPryTimeModifierEvent();
+        RaiseLocalEvent(target, modEv, false);
 
-/// <summary>
-///     Pry open a door. This does not check if the user is holding the required tool.
-/// </summary>
-private bool TryPryDoor(EntityUid target, EntityUid tool, EntityUid user, DoorComponent door)
-{
-    if (door.State == DoorState.Welded)
-        return false;
+        _toolSystem.UseTool(tool, user, target, 0f, modEv.PryTimeModifier * door.PryTime, door.PryingQuality,
+                new PryFinishedEvent(), new PryCancelledEvent(), target);
 
-    var canEv = new BeforeDoorPryEvent(user);
-    RaiseLocalEvent(target, canEv, false);
+        return true; // we might not actually succeeded, but a do-after has started
+    }
 
-    if (canEv.Cancelled)
-        return false;
+    private void OnWeldCancelled(EntityUid uid, DoorComponent door, WeldCancelledEvent args)
+    {
+        door.BeingWelded = false;
+    }
 
-    var modEv = new DoorGetPryTimeModifierEvent();
-    RaiseLocalEvent(target, modEv, false);
+    private void OnWeldFinished(EntityUid uid, DoorComponent door, WeldFinishedEvent args)
+    {
+        door.BeingWelded = false;
 
-    _toolSystem.UseTool(tool, user, target, 0f, modEv.PryTimeModifier * door.PryTime, door.PryingQuality,
-            new PryFinishedEvent(), new PryCancelledEvent(), target);
+        if (!door.Weldable)
+            return;
 
-    return true; // we might not actually succeeded, but a do-after has started
-}
+        if (door.State == DoorState.Closed)
+            SetState(uid, DoorState.Welded, door);
+        else if (door.State == DoorState.Welded)
+            SetState(uid, DoorState.Closed, door);
+    }
 
-private void OnWeldCancelled(EntityUid uid, DoorComponent door, WeldCancelledEvent args)
-{
-    door.BeingWelded = false;
-}
+    private void OnPryCancelled(EntityUid uid, DoorComponent door, PryCancelledEvent args)
+    {
+        door.BeingPried = false;
+    }
 
-private void OnWeldFinished(EntityUid uid, DoorComponent door, WeldFinishedEvent args)
-{
-    door.BeingWelded = false;
+    private void OnPryFinished(EntityUid uid, DoorComponent door, PryFinishedEvent args)
+    {
+        door.BeingPried = false;
 
-    if (!door.Weldable)
-        return;
-
-    if (door.State == DoorState.Closed)
-        SetState(uid, DoorState.Welded, door);
-    else if (door.State == DoorState.Welded)
-        SetState(uid, DoorState.Closed, door);
-}
-
-private void OnPryCancelled(EntityUid uid, DoorComponent door, PryCancelledEvent args)
-{
-    door.BeingPried = false;
-}
-
-private void OnPryFinished(EntityUid uid, DoorComponent door, PryFinishedEvent args)
-{
-    door.BeingPried = false;
-
-    if (door.State == DoorState.Closed)
-        StartOpening(uid, door);
-    else if (door.State == DoorState.Open)
-        StartClosing(uid, door);
-}
+        if (door.State == DoorState.Closed)
+            StartOpening(uid, door);
+        else if (door.State == DoorState.Open)
+            StartClosing(uid, door);
+    }
 #endregion
 
-/// <summary>
-///     Does the user have the permissions required to open this door?
-/// </summary>
-public override bool HasAccess(EntityUid uid, EntityUid? user = null, AccessReaderComponent? access = null)
-{
-    // TODO network AccessComponent for predicting doors
+    /// <summary>
+    ///     Does the user have the permissions required to open this door?
+    /// </summary>
+    public override bool HasAccess(EntityUid uid, EntityUid? user = null, AccessReaderComponent? access = null)
+    {
+        // TODO network AccessComponent for predicting doors
 
-    // if there is no "user" we skip the access checks. Access is also ignored in some game-modes.
-    if (user == null || AccessType == AccessTypes.AllowAll)
-        return true;
+        // if there is no "user" we skip the access checks. Access is also ignored in some game-modes.
+        if (user == null || AccessType == AccessTypes.AllowAll)
+            return true;
 
-    if (!Resolve(uid, ref access, false))
-        return true;
+        if (!Resolve(uid, ref access, false))
+            return true;
 
-    // If the door is on emergency access we skip the checks.
-    if (TryComp<AirlockComponent>(uid, out var airlock) && airlock.EmergencyAccess)
+        // If the door is on emergency access we skip the checks.
+        if (TryComp<AirlockComponent>(uid, out var airlock) && airlock.EmergencyAccess)
             return true;
 
         var isExternal = access.AccessLists.Any(list => list.Contains("External"));
@@ -222,8 +222,8 @@ public override bool HasAccess(EntityUid uid, EntityUid? user = null, AccessRead
         {
             // Some game modes modify access rules.
             AccessTypes.AllowAllIdExternal => !isExternal || _accessReaderSystem.IsAllowed(access, user.Value),
-            AccessTypes.AllowAllNoExternal => !isExternal,
-            _ => _accessReaderSystem.IsAllowed(access, user.Value)
+                AccessTypes.AllowAllNoExternal => !isExternal,
+                _ => _accessReaderSystem.IsAllowed(access, user.Value)
         };
     }
 
@@ -291,17 +291,17 @@ public override bool HasAccess(EntityUid uid, EntityUid? user = null, AccessRead
         var container = uid.EnsureContainer<Container>("board", out var existed);
 
         /* // TODO ShadowCommander: Re-enable when access is added to boards. Requires map update.
-        if (existed)
-        {
-            // We already contain a board. Note: We don't check if it's the right one!
-            if (container.ContainedEntities.Count != 0)
-                return;
+           if (existed)
+           {
+        // We already contain a board. Note: We don't check if it's the right one!
+        if (container.ContainedEntities.Count != 0)
+        return;
         }
 
         var board = Owner.EntityManager.SpawnEntity(_boardPrototype, Owner.Transform.Coordinates);
 
         if(!container.Insert(board))
-            Logger.Warning($"Couldn't insert board {board} into door {Owner}!");
+        Logger.Warning($"Couldn't insert board {board} into door {Owner}!");
         */
     }
 }
