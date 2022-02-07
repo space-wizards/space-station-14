@@ -181,8 +181,9 @@
   - type: StorageFill
     contents:
         - id: InflatableWallStack
-          amount: 3
+          amount: 2
         - id: InflatableDoorStack
+          amount: 2
   - type: Sprite
     layers:
       - state: box
