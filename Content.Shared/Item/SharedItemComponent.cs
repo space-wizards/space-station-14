@@ -1,10 +1,11 @@
 using System;
-using System.Collections.Generic;
+using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Inventory;
 using Content.Shared.Sound;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
@@ -12,7 +13,6 @@ using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
-using static Robust.Shared.GameObjects.SharedSpriteComponent;
 
 namespace Content.Shared.Item
 {
@@ -40,18 +40,10 @@ namespace Content.Shared.Item
         [DataField("size")]
         private int _size;
 
-        [DataField("inhandVisuals")]
-        public Dictionary<HandLocation, List<PrototypeLayerData>> InhandVisuals = new();
-
-        [DataField("clothingVisuals")]
-        public Dictionary<string, List<PrototypeLayerData>> ClothingVisuals = new();
-
         /// <summary>
-        ///     Part of the state of the sprite shown on the player when this item is in their hands or inventory.
+        ///     Part of the state of the sprite shown on the player when this item is in their hands.
         /// </summary>
-        /// <remarks>
-        ///     Only used if <see cref="InhandVisuals"/> or <see cref="ClothingVisuals"/> are unspecified.
-        /// </remarks>
+        // todo paul make this update slotvisuals on client on change
         [ViewVariables(VVAccess.ReadWrite)]
         public string? EquippedPrefix
         {
@@ -59,7 +51,7 @@ namespace Content.Shared.Item
             set
             {
                 _equippedPrefix = value;
-                EntitySystem.Get<SharedItemSystem>().VisualsChanged(Owner, this);
+                OnEquippedPrefixChange();
                 Dirty();
             }
         }
@@ -73,7 +65,6 @@ namespace Content.Shared.Item
         [DataField("EquipSound")]
         public SoundSpecifier? EquipSound { get; set; } = default!;
 
-        // TODO REMOVE. Currently nonfunctional and only used by RGB system. #6253 Fixes this but requires #6252
         /// <summary>
         ///     Color of the sprite shown on the player when this item is in their hands.
         /// </summary>
@@ -91,11 +82,20 @@ namespace Content.Shared.Item
         private Color _color = Color.White;
 
         /// <summary>
-        ///     Rsi of the sprite shown on the player when this item is in their hands. Used to generate a default entry for <see cref="InhandVisuals"/>
+        ///     Rsi of the sprite shown on the player when this item is in their hands.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
+        public string? RsiPath
+        {
+            get => _rsiPath;
+            set
+            {
+                _rsiPath = value;
+                Dirty();
+            }
+        }
         [DataField("sprite")]
-        public readonly string? RsiPath;
+        private string? _rsiPath;
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
@@ -116,6 +116,12 @@ namespace Content.Shared.Item
             return hands.TryPickupEntityToActiveHand(Owner, animateUser: true);
         }
 
+        private void OnEquippedPrefixChange()
+        {
+            if (Owner.TryGetContainer(out var container))
+                _entMan.EventBus.RaiseLocalEvent(container.Owner, new ItemPrefixChangeEvent(Owner, container.ID));
+        }
+
         public void RemovedFromSlot()
         {
             if (_entMan.TryGetComponent(Owner, out SharedSpriteComponent component))
@@ -134,25 +140,29 @@ namespace Content.Shared.Item
     {
         public int Size { get; }
         public string? EquippedPrefix { get; }
+        public Color Color { get; }
+        public string? RsiPath { get; }
 
-        public ItemComponentState(int size, string? equippedPrefix)
+        public ItemComponentState(int size, string? equippedPrefix, Color color, string? rsiPath)
         {
             Size = size;
             EquippedPrefix = equippedPrefix;
+            Color = color;
+            RsiPath = rsiPath;
         }
     }
 
     /// <summary>
-    ///     Raised when an item's visual state is changed. The event is directed at the entity that contains this item, so
-    ///     that it can properly update its hands or inventory sprites and GUI.
+    ///     Raised when an item's EquippedPrefix is changed. The event is directed at the entity that contains this item, so
+    ///     that it can properly update its sprite/GUI.
     /// </summary>
     [Serializable, NetSerializable]
-    public class VisualsChangedEvent : EntityEventArgs
+    public class ItemPrefixChangeEvent : EntityEventArgs
     {
         public readonly EntityUid Item;
         public readonly string ContainerId;
 
-        public VisualsChangedEvent(EntityUid item, string containerId)
+        public ItemPrefixChangeEvent(EntityUid item, string containerId)
         {
             Item = item;
             ContainerId = containerId;

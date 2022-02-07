@@ -502,6 +502,7 @@
       normal: monkey
       crit: dead
       dead: dead
+    - type: HandsVisualizer
     - type: FireVisualizer
       sprite: Mobs/Effects/onfire.rsi
       normalState: Monkey_burning
