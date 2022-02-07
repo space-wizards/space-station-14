@@ -1,15 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Updated context menu UI, type: Tweak}
-  id: 502
-  time: '2021-10-28T05:21:19.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Fix rare construction bug where some interactions would be incorrect.,
-    type: Fix}
-  id: 503
-  time: '2021-10-28T09:23:03.038084+00:00'
 - author: Zumorica
   changes:
   - {message: 'Fix being able to build machines for free by taking the board out,
@@ -2961,3 +2950,16 @@ Entries:
   - {message: 'Bagel Station, a comfy midpop station, has been introduced.', type: Add}
   id: 1002
   time: '2022-02-07T16:07:24.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'Added lingzhi and ambrosia vulgaris, two more potent but slightly dangerous
+      medicinal plants.', type: Add}
+  - {message: 'Instead of kelotane and nutriment, aloe now yields dermaline and...
+      wait for it... aloe!', type: Tweak}
+  id: 1003
+  time: '2022-02-07T19:43:21.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Gas mixers now properly animate when on., type: Fix}
+  id: 1004
+  time: '2022-02-07T20:42:07.0000000+00:00'
