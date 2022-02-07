@@ -1,9 +1,6 @@
 using Content.Server.Medical.Components;
-using Content.Shared.ActionBlocker;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Timing;
 using Content.Shared.Damage;
 using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
@@ -16,10 +13,6 @@ namespace Content.Server.Medical
     [UsedImplicitly]
     internal sealed class HealthScannerSystem : EntitySystem
     {
-        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly ActionBlockerSystem _blocker = default!;
-
         public override void Initialize()
         {
             base.Initialize();

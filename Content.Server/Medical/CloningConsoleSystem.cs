@@ -10,8 +10,6 @@ using Content.Server.Medical.GeneticScanner;
 using Robust.Shared.Map;
 using Content.Server.Cloning.Components;
 using Content.Server.Power.Components;
-using System;
-using Content.Server.Climbing;
 using Content.Server.Cloning;
 using Content.Server.Mind.Components;
 using Content.Server.Preferences.Managers;
@@ -44,11 +42,8 @@ namespace Content.Server.Medical
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly ActionBlockerSystem _blocker = default!;
         [Dependency] private readonly IServerPreferencesManager _prefsManager = null!;
-
 
         private const float UpdateRate = 3f;
         private float _updateDif;
