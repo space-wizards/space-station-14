@@ -62,3 +62,13 @@
     Heat: 2.0
   flatReductions:
     Blunt: 5
+
+- type: damageModifierSet
+  id: Slime
+  coefficients:
+    Blunt: 0.6
+    Slash: 1.2
+    Piercing: 1.2
+    Cold: 1.5
+    Poison: 0.8
+

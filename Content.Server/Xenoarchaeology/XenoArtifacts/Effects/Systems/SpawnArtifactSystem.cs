@@ -16,10 +16,10 @@ public class SpawnArtifactSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<SpawnArtifactComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<SpawnArtifactComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<SpawnArtifactComponent, ArtifactActivatedEvent>(OnActivate);
     }
-    private void OnInit(EntityUid uid, SpawnArtifactComponent component, ComponentInit args)
+    private void OnMapInit(EntityUid uid, SpawnArtifactComponent component, MapInitEvent args)
     {
         ChooseRandomPrototype(uid, component);
     }
