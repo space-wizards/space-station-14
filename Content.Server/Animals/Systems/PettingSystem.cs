@@ -58,7 +58,7 @@ public class PettingSystem : EntitySystem
         }
         else // if roll succeeds
         {
-            msg = Loc.GetString("petting-system-success", ("target", uid)); // petting successful
+            msg = Loc.GetString("petting-system-success", ("target", uid), ("desc", component.PetDescription)); // petting successful
 
             // play the sound effect only on petting success. TODO: could rework system to add different sounds on petting failure, such as a cat hissing.
             if (component.PetSound != null) // might be null if no sound is specified in the yaml.

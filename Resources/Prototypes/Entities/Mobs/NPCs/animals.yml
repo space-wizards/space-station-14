@@ -109,6 +109,7 @@
     meat: FoodMeatChicken
     pieces: 1
   - type: Pettable
+    petDescription: cute feathery
     petSuccessChance: 0.8
     petSound:
       path: /Audio/Animals/chicken_cluck_happy.ogg
@@ -135,6 +136,7 @@
     meat: FoodMeatDuck
     pieces: 1
   - type: Pettable
+    petDescription: cute feathery
     petSuccessChance: 0.9
     petSound:
       path: /Audio/Animals/duck_quack_happy.ogg
@@ -161,6 +163,7 @@
     meat: FoodMeatDuck
     pieces: 1
   - type: Pettable
+    petDescription: cute feathery
     petSuccessChance: 0.9
     petSound:
       path: /Audio/Animals/duck_quack_happy.ogg
@@ -187,6 +190,7 @@
     meat: FoodMeatDuck
     pieces: 1
   - type: Pettable
+    petDescription: cute feathery
     petSuccessChance: 0.9
     petSound:
       path: /Audio/Animals/duck_quack_happy.ogg
@@ -293,6 +297,7 @@
     attributes:
       gender: female # Here because of UdderComponent
   - type: Pettable
+    petDescription: soft floofy
     petSuccessChance: 0.7
 
 - type: entity
@@ -369,6 +374,7 @@
     attributes:
       gender: female # Here because of UdderComponent
   - type: Pettable
+    petDescription: floofy horned
     petSuccessChance: 0.2
 
 # Note that we gotta make this bitch vomit someday when you feed it anthrax or sumthin. Needs to be a small item thief too and aggressive if attacked.
@@ -796,6 +802,7 @@
     meat: FoodMeatPenguin
     pieces: 3
   - type: Pettable
+    petDescription: cute feathery
     petSuccessChance: 0.5
 
 - type: entity
@@ -875,4 +882,5 @@
     meat: FoodMeatSpider
     pieces: 2
   - type: Pettable
+    petDescription: hairy little
     petSuccessChance: 0.5

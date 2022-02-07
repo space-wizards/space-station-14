@@ -17,6 +17,10 @@ namespace Content.Server.Animals.Components
         [DataField("petSound")]
         public SoundSpecifier? PetSound; // Nullable in case no path is specified by yaml
 
+        /// <summary> How would you describe this creature's head? Up to two adjectives e.g. "soft floofy" </summary>
+        [DataField("petDescription")]
+        public string PetDescription = "";
+
         /// <summary> Chance that a petting attempt will succeed.
         /// 0 = never (always display failure popup, play no sound.)
         /// 0.5 = 50% chance (e.g. finnicky cats who don't always like to be pet.)
