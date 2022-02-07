@@ -8,8 +8,6 @@ namespace Content.Shared.Tag
     {
         [ViewVariables]
         [DataField("tags", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<TagPrototype>))]
-        public readonly HashSet<string> _tags = new();
-
-        public IReadOnlySet<string> Tags => _tags;
+        public readonly HashSet<string> Tags = new();
     }
 }

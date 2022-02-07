@@ -21,23 +21,24 @@ public sealed class TagSystem : EntitySystem
         if (args.Current is not TagComponentState state)
             return;
 
-        component._tags.Clear();
+        component.Tags.Clear();
 
         foreach (var tag in state.Tags)
         {
             GetTagOrThrow(tag);
-            component._tags.Add(tag);
+            component.Tags.Add(tag);
         }
     }
 
     private static void OnTagGetState(EntityUid uid, TagComponent component, ref ComponentGetState args)
     {
-        var tags = new string[component._tags.Count];
+        var tags = new string[component.Tags.Count];
         var i = 0;
 
-        foreach (var tag in component._tags)
+        foreach (var tag in component.Tags)
         {
             tags[i] = tag;
+            i++;
         }
 
         args.State = new TagComponentState(tags);
@@ -45,7 +46,7 @@ public sealed class TagSystem : EntitySystem
 
     private void OnTagInit(EntityUid uid, TagComponent component, ComponentInit args)
     {
-        foreach (var tag in component._tags)
+        foreach (var tag in component.Tags)
         {
             GetTagOrThrow(tag);
         }
@@ -288,213 +289,213 @@ public sealed class TagSystem : EntitySystem
     }
 
     /// <summary>
-        ///     Tries to add a tag if it doesn't already exist.
-        /// </summary>
-        /// <param name="id">The tag to add.</param>
-        /// <returns>true if it was added, false if it already existed.</returns>
-        /// <exception cref="UnknownPrototypeException">
-        ///     Thrown if no <see cref="TagPrototype"/> exists with the given id.
-        /// </exception>
-        public bool AddTag(TagComponent component, string id)
+    ///     Tries to add a tag if it doesn't already exist.
+    /// </summary>
+    /// <param name="id">The tag to add.</param>
+    /// <returns>true if it was added, false if it already existed.</returns>
+    /// <exception cref="UnknownPrototypeException">
+    ///     Thrown if no <see cref="TagPrototype"/> exists with the given id.
+    /// </exception>
+    public bool AddTag(TagComponent component, string id)
+    {
+        GetTagOrThrow(id);
+        var added = component.Tags.Add(id);
+
+        if (added)
         {
-            GetTagOrThrow(id);
-            var added = component._tags.Add(id);
-
-            if (added)
-            {
-                Dirty(component);
-                return true;
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        ///     Tries to add the given tags if they don't already exist.
-        /// </summary>
-        /// <param name="ids">The tags to add.</param>
-        /// <returns>true if any tags were added, false if they all already existed.</returns>
-        /// <exception cref="UnknownPrototypeException">
-        ///     Thrown if one of the ids represents an unregistered <see cref="TagPrototype"/>.
-        /// </exception>
-        public bool AddTags(TagComponent component, params string[] ids)
-        {
-            return AddTags(component, ids.AsEnumerable());
-        }
-
-        /// <summary>
-        ///     Tries to add the given tags if they don't already exist.
-        /// </summary>
-        /// <param name="ids">The tags to add.</param>
-        /// <returns>true if any tags were added, false if they all already existed.</returns>
-        /// <exception cref="UnknownPrototypeException">
-        ///     Thrown if one of the ids represents an unregistered <see cref="TagPrototype"/>.
-        /// </exception>
-        public bool AddTags(TagComponent component, IEnumerable<string> ids)
-        {
-            var count = component._tags.Count;
-
-            foreach (var id in ids)
-            {
-                GetTagOrThrow(id);
-                component._tags.Add(id);
-            }
-
-            if (component._tags.Count > count)
-            {
-                Dirty(component);
-                return true;
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        ///     Checks if a tag has been added.
-        /// </summary>
-        /// <param name="id">The tag to check for.</param>
-        /// <returns>true if it exists, false otherwise.</returns>
-        /// <exception cref="UnknownPrototypeException">
-        ///     Thrown if no <see cref="TagPrototype"/> exists with the given id.
-        /// </exception>
-        public bool HasTag(TagComponent component, string id)
-        {
-            GetTagOrThrow(id);
-            return component._tags.Contains(id);
-        }
-
-        /// <summary>
-        ///     Checks if all of the given tags have been added.
-        /// </summary>
-        /// <param name="ids">The tags to check for.</param>
-        /// <returns>true if they all exist, false otherwise.</returns>
-        /// <exception cref="UnknownPrototypeException">
-        ///     Thrown if one of the ids represents an unregistered <see cref="TagPrototype"/>.
-        /// </exception>
-        public bool HasAllTags(TagComponent component, params string[] ids)
-        {
-            return HasAllTags(component, ids.AsEnumerable());
-        }
-
-        /// <summary>
-        ///     Checks if all of the given tags have been added.
-        /// </summary>
-        /// <param name="ids">The tags to check for.</param>
-        /// <returns>true if they all exist, false otherwise.</returns>
-        /// <exception cref="UnknownPrototypeException">
-        ///     Thrown if one of the ids represents an unregistered <see cref="TagPrototype"/>.
-        /// </exception>
-        public bool HasAllTags(TagComponent component, IEnumerable<string> ids)
-        {
-            foreach (var id in ids)
-            {
-                GetTagOrThrow(id);
-
-                if (!component._tags.Contains(id))
-                    return false;
-
-            }
-
+            Dirty(component);
             return true;
         }
 
-        /// <summary>
-        ///     Checks if any of the given tags have been added.
-        /// </summary>
-        /// <param name="ids">The tags to check for.</param>
-        /// <returns>true if any of them exist, false otherwise.</returns>
-        /// <exception cref="UnknownPrototypeException">
-        ///     Thrown if one of the ids represents an unregistered <see cref="TagPrototype"/>.
-        /// </exception>
-        public bool HasAnyTag(TagComponent component, params string[] ids)
+        return false;
+    }
+
+    /// <summary>
+    ///     Tries to add the given tags if they don't already exist.
+    /// </summary>
+    /// <param name="ids">The tags to add.</param>
+    /// <returns>true if any tags were added, false if they all already existed.</returns>
+    /// <exception cref="UnknownPrototypeException">
+    ///     Thrown if one of the ids represents an unregistered <see cref="TagPrototype"/>.
+    /// </exception>
+    public bool AddTags(TagComponent component, params string[] ids)
+    {
+        return AddTags(component, ids.AsEnumerable());
+    }
+
+    /// <summary>
+    ///     Tries to add the given tags if they don't already exist.
+    /// </summary>
+    /// <param name="ids">The tags to add.</param>
+    /// <returns>true if any tags were added, false if they all already existed.</returns>
+    /// <exception cref="UnknownPrototypeException">
+    ///     Thrown if one of the ids represents an unregistered <see cref="TagPrototype"/>.
+    /// </exception>
+    public bool AddTags(TagComponent component, IEnumerable<string> ids)
+    {
+        var count = component.Tags.Count;
+
+        foreach (var id in ids)
         {
-            return HasAnyTag(component, ids.AsEnumerable());
+            GetTagOrThrow(id);
+            component.Tags.Add(id);
         }
 
-        /// <summary>
-        ///     Checks if any of the given tags have been added.
-        /// </summary>
-        /// <param name="ids">The tags to check for.</param>
-        /// <returns>true if any of them exist, false otherwise.</returns>
-        /// <exception cref="UnknownPrototypeException">
-        ///     Thrown if one of the ids represents an unregistered <see cref="TagPrototype"/>.
-        /// </exception>
-        public bool HasAnyTag(TagComponent component, IEnumerable<string> ids)
+        if (component.Tags.Count > count)
         {
-            foreach (var id in ids)
-            {
-                GetTagOrThrow(id);
-
-                if (component._tags.Contains(id))
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            Dirty(component);
+            return true;
         }
 
-        /// <summary>
-        ///     Tries to remove a tag if it exists.
-        /// </summary>
-        /// <returns>
-        ///     true if it was removed, false otherwise even if it didn't exist.
-        /// </returns>
-        /// <exception cref="UnknownPrototypeException">
-        ///     Thrown if no <see cref="TagPrototype"/> exists with the given id.
-        /// </exception>
-        public bool RemoveTag(TagComponent component, string id)
+        return false;
+    }
+
+    /// <summary>
+    ///     Checks if a tag has been added.
+    /// </summary>
+    /// <param name="id">The tag to check for.</param>
+    /// <returns>true if it exists, false otherwise.</returns>
+    /// <exception cref="UnknownPrototypeException">
+    ///     Thrown if no <see cref="TagPrototype"/> exists with the given id.
+    /// </exception>
+    public bool HasTag(TagComponent component, string id)
+    {
+        GetTagOrThrow(id);
+        return component.Tags.Contains(id);
+    }
+
+    /// <summary>
+    ///     Checks if all of the given tags have been added.
+    /// </summary>
+    /// <param name="ids">The tags to check for.</param>
+    /// <returns>true if they all exist, false otherwise.</returns>
+    /// <exception cref="UnknownPrototypeException">
+    ///     Thrown if one of the ids represents an unregistered <see cref="TagPrototype"/>.
+    /// </exception>
+    public bool HasAllTags(TagComponent component, params string[] ids)
+    {
+        return HasAllTags(component, ids.AsEnumerable());
+    }
+
+    /// <summary>
+    ///     Checks if all of the given tags have been added.
+    /// </summary>
+    /// <param name="ids">The tags to check for.</param>
+    /// <returns>true if they all exist, false otherwise.</returns>
+    /// <exception cref="UnknownPrototypeException">
+    ///     Thrown if one of the ids represents an unregistered <see cref="TagPrototype"/>.
+    /// </exception>
+    public bool HasAllTags(TagComponent component, IEnumerable<string> ids)
+    {
+        foreach (var id in ids)
         {
             GetTagOrThrow(id);
 
-            if (component._tags.Remove(id))
+            if (!component.Tags.Contains(id))
+                return false;
+
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    ///     Checks if any of the given tags have been added.
+    /// </summary>
+    /// <param name="ids">The tags to check for.</param>
+    /// <returns>true if any of them exist, false otherwise.</returns>
+    /// <exception cref="UnknownPrototypeException">
+    ///     Thrown if one of the ids represents an unregistered <see cref="TagPrototype"/>.
+    /// </exception>
+    public bool HasAnyTag(TagComponent component, params string[] ids)
+    {
+        return HasAnyTag(component, ids.AsEnumerable());
+    }
+
+    /// <summary>
+    ///     Checks if any of the given tags have been added.
+    /// </summary>
+    /// <param name="ids">The tags to check for.</param>
+    /// <returns>true if any of them exist, false otherwise.</returns>
+    /// <exception cref="UnknownPrototypeException">
+    ///     Thrown if one of the ids represents an unregistered <see cref="TagPrototype"/>.
+    /// </exception>
+    public bool HasAnyTag(TagComponent component, IEnumerable<string> ids)
+    {
+        foreach (var id in ids)
+        {
+            GetTagOrThrow(id);
+
+            if (component.Tags.Contains(id))
             {
-                Dirty(component);
                 return true;
             }
-
-            return false;
         }
 
-        /// <summary>
-        ///     Tries to remove all of the given tags if they exist.
-        /// </summary>
-        /// <param name="ids">The tags to remove.</param>
-        /// <returns>
-        ///     true if it was removed, false otherwise even if they didn't exist.
-        /// </returns>
-        /// <exception cref="UnknownPrototypeException">
-        ///     Thrown if one of the ids represents an unregistered <see cref="TagPrototype"/>.
-        /// </exception>
-        public bool RemoveTags(TagComponent component, params string[] ids)
+        return false;
+    }
+
+    /// <summary>
+    ///     Tries to remove a tag if it exists.
+    /// </summary>
+    /// <returns>
+    ///     true if it was removed, false otherwise even if it didn't exist.
+    /// </returns>
+    /// <exception cref="UnknownPrototypeException">
+    ///     Thrown if no <see cref="TagPrototype"/> exists with the given id.
+    /// </exception>
+    public bool RemoveTag(TagComponent component, string id)
+    {
+        GetTagOrThrow(id);
+
+        if (component.Tags.Remove(id))
         {
-            return RemoveTags(component, ids.AsEnumerable());
+            Dirty(component);
+            return true;
         }
 
-        /// <summary>
-        ///     Tries to remove all of the given tags if they exist.
-        /// </summary>
-        /// <param name="ids">The tags to remove.</param>
-        /// <returns>true if any tag was removed, false otherwise.</returns>
-        /// <exception cref="UnknownPrototypeException">
-        ///     Thrown if one of the ids represents an unregistered <see cref="TagPrototype"/>.
-        /// </exception>
-        public bool RemoveTags(TagComponent component, IEnumerable<string> ids)
+        return false;
+    }
+
+    /// <summary>
+    ///     Tries to remove all of the given tags if they exist.
+    /// </summary>
+    /// <param name="ids">The tags to remove.</param>
+    /// <returns>
+    ///     true if it was removed, false otherwise even if they didn't exist.
+    /// </returns>
+    /// <exception cref="UnknownPrototypeException">
+    ///     Thrown if one of the ids represents an unregistered <see cref="TagPrototype"/>.
+    /// </exception>
+    public bool RemoveTags(TagComponent component, params string[] ids)
+    {
+        return RemoveTags(component, ids.AsEnumerable());
+    }
+
+    /// <summary>
+    ///     Tries to remove all of the given tags if they exist.
+    /// </summary>
+    /// <param name="ids">The tags to remove.</param>
+    /// <returns>true if any tag was removed, false otherwise.</returns>
+    /// <exception cref="UnknownPrototypeException">
+    ///     Thrown if one of the ids represents an unregistered <see cref="TagPrototype"/>.
+    /// </exception>
+    public bool RemoveTags(TagComponent component, IEnumerable<string> ids)
+    {
+        var count = component.Tags.Count;
+
+        foreach (var id in ids)
         {
-            var count = component._tags.Count;
-
-            foreach (var id in ids)
-            {
-                GetTagOrThrow(id);
-                component._tags.Remove(id);
-            }
-
-            if (component._tags.Count < count)
-            {
-                Dirty(component);
-                return true;
-            }
-
-            return false;
+            GetTagOrThrow(id);
+            component.Tags.Remove(id);
         }
+
+        if (component.Tags.Count < count)
+        {
+            Dirty(component);
+            return true;
+        }
+
+        return false;
+    }
 }
