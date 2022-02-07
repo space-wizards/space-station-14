@@ -108,6 +108,10 @@
   - type: Butcherable
     meat: FoodMeatChicken
     pieces: 1
+  - type: Pettable
+    petSuccessChance: 0.8
+    petSound:
+      path: /Audio/Animals/chicken_cluck_happy.ogg
 
 - type: entity
   name: mallard duck #Quack
@@ -130,6 +134,10 @@
   - type: Butcherable
     meat: FoodMeatDuck
     pieces: 1
+  - type: Pettable
+    petSuccessChance: 0.9
+    petSound:
+      path: /Audio/Animals/duck_quack_happy.ogg
 
 - type: entity
   name: white duck #Quack
@@ -152,6 +160,10 @@
   - type: Butcherable
     meat: FoodMeatDuck
     pieces: 1
+  - type: Pettable
+    petSuccessChance: 0.9
+    petSound:
+      path: /Audio/Animals/duck_quack_happy.ogg
 
 - type: entity
   name: brown duck #Quack
@@ -174,6 +186,10 @@
   - type: Butcherable
     meat: FoodMeatDuck
     pieces: 1
+  - type: Pettable
+    petSuccessChance: 0.9
+    petSound:
+      path: /Audio/Animals/duck_quack_happy.ogg
 
 - type: entity
   name: butterfly
@@ -273,6 +289,11 @@
   - type: Butcherable
     meat: FoodMeat
     pieces: 5
+  - type: Grammar
+    attributes:
+      gender: female # Here because of UdderComponent
+  - type: Pettable
+    petSuccessChance: 0.7
 
 - type: entity
   name: crab
@@ -315,7 +336,7 @@
   name: goat
   parent: SimpleMobBase
   id: MobGoat
-  description: His spine consists of long sharp segments, no wonder he is so grumpy.
+  description: Her spine consists of long sharp segments, no wonder she is so grumpy.
   components:
   - type: Sprite
     drawdepth: Mobs
@@ -344,6 +365,11 @@
   - type: Butcherable
     meat: FoodMeat
     pieces: 4
+  - type: Grammar
+    attributes:
+      gender: female # Here because of UdderComponent
+  - type: Pettable
+    petSuccessChance: 0.2
 
 # Note that we gotta make this bitch vomit someday when you feed it anthrax or sumthin. Needs to be a small item thief too and aggressive if attacked.
 - type: entity
@@ -769,6 +795,8 @@
   - type: Butcherable
     meat: FoodMeatPenguin
     pieces: 3
+  - type: Pettable
+    petSuccessChance: 0.5
 
 - type: entity
   name: snake
@@ -846,3 +874,5 @@
   - type: Butcherable
     meat: FoodMeatSpider
     pieces: 2
+  - type: Pettable
+    petSuccessChance: 0.5

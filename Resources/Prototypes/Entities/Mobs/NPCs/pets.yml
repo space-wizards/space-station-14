@@ -38,6 +38,12 @@
     pieces: 3
   - type: ReplacementAccent
     accent: dog
+  - type: Pettable
+    petSound:
+      path: /Audio/Animals/small_dog_bark_happy.ogg
+  - type: Grammar
+    attributes:
+      gender: epicene
 
 - type: entity
   name: corrupted corgi
@@ -71,6 +77,9 @@
   - type: AiFactionTag
     factions:
     - SimpleHostile
+  - type: Grammar
+    attributes:
+      gender: epicene
 
 - type: entity
   name: Ian
@@ -90,6 +99,13 @@
       normal: ian
       crit: ian_dead
       dead: ian_dead
+  - type: Pettable
+    petSound:
+      path: /Audio/Animals/small_dog_bark_happy.ogg
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
 
 - type: entity
   name: Old Ian
@@ -109,6 +125,13 @@
       normal: old_ian
       crit: old_ian_dead
       dead: old_ian_dead
+  - type: Pettable
+    petSound:
+      path: /Audio/Animals/small_dog_bark_happy.ogg
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
 
 - type: entity
   name: Lisa
@@ -128,6 +151,13 @@
       normal: lisa
       crit: lisa_dead
       dead: lisa_dead
+  - type: Pettable
+    petSound:
+      path: /Audio/Animals/small_dog_bark_happy.ogg
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: female
 
 - type: entity
   name: corgi puppy
@@ -147,6 +177,12 @@
       normal: puppy
       crit: puppy_dead
       dead: puppy_dead
+  - type: Pettable
+    petSound:
+      path: /Audio/Animals/small_dog_bark_happy.ogg
+  - type: Grammar
+    attributes:
+      gender: epicene
 
 - type: entity
   name: cat
@@ -185,6 +221,13 @@
     pieces: 2
   - type: ReplacementAccent
     accent: cat
+  - type: Pettable
+    petSuccessChance: 0.7 #Cats are fickle and may refuse to be pet.
+    petSound:
+      path: /Audio/Animals/cat_meow.ogg
+  - type: Grammar
+    attributes:
+      gender: epicene
 
 - type: entity
   name: calico cat
@@ -204,6 +247,13 @@
       normal: cat2
       crit: cat2_dead
       dead: cat2_dead
+  - type: Pettable
+    petSuccessChance: 0.7
+    petSound:
+      path: /Audio/Animals/cat_meow.ogg
+  - type: Grammar
+    attributes:
+      gender: epicene
 
 - type: entity
   name: space cat
@@ -230,6 +280,13 @@
     damageRecovery:
       types:
         Asphyxiation: -1
+  - type: Pettable
+    petSuccessChance: 0.7
+    petSound:
+      path: /Audio/Animals/cat_meow.ogg
+  - type: Grammar
+    attributes:
+      gender: epicene
 
 - type: entity
   name: caracal cat
@@ -249,6 +306,13 @@
       normal: caracal_flop
       crit: caracal_dead
       dead: caracal_dead
+  - type: Pettable
+    petSuccessChance: 0.4
+    petSound:
+      path: /Audio/Animals/cat_meow.ogg
+  - type: Grammar
+    attributes:
+      gender: epicene
 
 - type: entity
   name: sloth
@@ -288,3 +352,6 @@
   - type: Butcherable
     meat: FoodMeat
     pieces: 3
+  - type: Grammar
+    attributes:
+      gender: epicene
