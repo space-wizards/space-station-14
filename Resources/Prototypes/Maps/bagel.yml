@@ -5,7 +5,7 @@
   nameGenerator:
     !type:NanotrasenNameGenerator
     prefixCreator: '14'
-  mapPath: maps/bagel.yml
+  mapPath: /Maps/bagel.yml
   minPlayers: 25
   overflowJobs:
     - Assistant
