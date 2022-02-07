@@ -24,8 +24,6 @@ namespace Content.Client.Atmos.Overlays
             IoCManager.InjectDependencies(this);
 
             _gasTileOverlaySystem = EntitySystem.Get<GasTileOverlaySystem>();
-
-            IoCManager.InjectDependencies(this);
             _shader = _prototypeManager.Index<ShaderPrototype>("unshaded").Instance().Duplicate();
         }
 
