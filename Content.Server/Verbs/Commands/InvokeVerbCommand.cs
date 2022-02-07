@@ -1,13 +1,8 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Verbs;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 
 namespace Content.Server.Verbs.Commands
 {
@@ -73,18 +68,12 @@ namespace Content.Server.Verbs.Commands
 
 
             // if the "verb name" is actually a verb-type, try run any verb of that type.
-            var verbType = Type.GetType(verbName, throwOnError: false, ignoreCase: true);
-            if (verbType != null &&
-                (verbType == typeof(Verb) || verbType.IsSubclassOf(typeof(Verb))))
+            var verbType = Verb.VerbTypes.FirstOrDefault(x => x.Value.ToLowerInvariant() == verbName).Key;
+            if (verbType != null)
             {
-                var verbOfType = verbs.Where(v => v.GetType() == verbType);
-
-                if (verbOfType.Any())
-                {
-                    verbSystem.ExecuteVerb(verbOfType.First(), playerEntity.Value, target, forced: true);
-                    shell.WriteLine(Loc.GetString("invoke-verb-command-success", ("verb", verbName), ("target", target), ("player", playerEntity)));
-                    return;
-                }
+                verbSystem.ExecuteVerb(verbType, playerEntity.Value, target, forced: true);
+                shell.WriteLine(Loc.GetString("invoke-verb-command-success", ("verb", verbName), ("target", target), ("player", playerEntity)));
+                return;
             }
 
             foreach (var verb in verbs)
