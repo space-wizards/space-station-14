@@ -49,7 +49,7 @@ namespace Content.Server.Shuttles.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("impulse")]
-        public float Impulse = 24600f;
+        public float Impulse = 4900f;
 
         [ViewVariables]
         [DataField("thrusterType")]
