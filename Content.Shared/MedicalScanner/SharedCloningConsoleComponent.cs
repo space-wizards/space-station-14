@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using Content.Shared.Damage;
-using Content.Shared.FixedPoint;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.CloningConsole
