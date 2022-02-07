@@ -1,11 +1,9 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Damage.Components;
-using Content.Shared.Administration.Logs;
 using Content.Shared.Damage;
 using Content.Shared.Database;
+using Content.Shared.MobState.Components;
 using Content.Shared.Throwing;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Damage.Systems
 {
@@ -22,7 +20,9 @@ namespace Content.Server.Damage.Systems
         private void OnDoHit(EntityUid uid, DamageOtherOnHitComponent component, ThrowDoHitEvent args)
         {
             var dmg = _damageableSystem.TryChangeDamage(args.Target, component.Damage, component.IgnoreResistances);
-            if (dmg != null)
+
+            // Log damage only for mobs. Useful for when people throw spears at each other, but also avoids log-spam when explosions send glass shards flying.
+            if (dmg != null && HasComp<MobStateComponent>(args.Target))
                 _logSystem.Add(LogType.ThrowHit, $"{ToPrettyString(args.Target):target} received {dmg.Total:damage} damage from collision");
         }
     }
