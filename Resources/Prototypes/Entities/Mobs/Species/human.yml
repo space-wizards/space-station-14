@@ -243,6 +243,7 @@
       fireStackAlternateState: 3
     - type: CreamPiedVisualizer
       state: creampie_human
+    - type: HandsVisualizer
     - type: DamageVisualizer
       thresholds: [20, 40, 100]
       targetLayers:
