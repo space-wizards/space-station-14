@@ -577,3 +577,49 @@
       Min: 1
       Max: 2
       PotencyDivisor: 50
+
+- type: seed
+  id: galaxythistle
+  name: galaxythistle
+  seedName: galaxythistle
+  displayName: galaxythistle
+  plantRsi: Objects/Specific/Hydroponics/galaxythistle.rsi
+  productPrototypes:
+    - FoodGalaxythistle
+  lifespan: 25
+  maturation: 10
+  production: 1
+  yield: 5
+  potency: 10
+  growthStages: 3
+  waterConsumption: 6
+  chemicals:
+    Stellibinin:
+      Min: 1
+      Max: 25
+      PotencyDivisor: 4
+
+- type: seed
+  id: flyAmanita
+  name: fly amanita
+  seedname: flyAmanita
+  displayName: fly amanita
+  plantRsi: Objects/Specific/Hydroponics/fly_amanita.rsi
+  productPrototypes:
+    - FoodFlyAmanita
+  lifespan: 25
+  maturation: 10
+  production: 1
+  yield: 5
+  potency: 10
+  growthStages: 2
+  waterConsumption: 6
+  chemicals:
+    Amatoxin:
+      Min: 1
+      Max: 25
+      PotencyDivisor: 4
+    Nutriment: ## yumby :)
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20

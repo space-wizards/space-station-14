@@ -666,6 +666,52 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/ambrosia_vulgaris.rsi
   - type: Produce
-    seed: lingzhi
+    seed: ambrosiaVulgaris
+  - type: Extractable
+    grindableSolutionName: food
+  - type: Clothing
+    sprite: Objects/Specific/Hydroponics/ambrosia_vulgaris.rsi
+    Slots:
+    - HEAD
+
+- type: entity
+  name: galaxythistle
+  parent: FoodProduceBase
+  id: FoodGalaxythistle
+  description: A medicinal plant used for its antitoxin.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 25
+        reagents:
+        - ReagentId: Stellibinin
+          Quantity: 25
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/galaxythistle.rsi
+  - type: Produce
+    seed: galaxythistle
+  - type: Extractable
+    grindableSolutionName: food
+
+- type: entity
+  name: fly amanita
+  parent: FoodProduceBase
+  id: FoodFlyAmanita
+  description: A delicious-looking mushroom like you see in those cartoons.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30
+        reagents:
+        - ReagentId: Amatoxin
+          Quantity: 25
+        - ReagentId: Nutriment
+          Quantity: 5
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/fly_amanita.rsi
+  - type: Produce
+    seed: flyAmanita
   - type: Extractable
     grindableSolutionName: food
