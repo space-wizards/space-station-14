@@ -25,6 +25,7 @@ public sealed class HealingSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+        SubscribeLocalEvent<HealingComponent, UseInHandEvent>(OnHealingUse);
         SubscribeLocalEvent<HealingComponent, AfterInteractEvent>(OnHealingAfterInteract);
         SubscribeLocalEvent<HealingCancelledEvent>(OnHealingCancelled);
         SubscribeLocalEvent<DamageableComponent, HealingCompleteEvent>(OnHealingComplete);
@@ -56,46 +57,52 @@ public sealed class HealingSystem : EntitySystem
         ev.Component.CancelToken = null;
     }
 
+    private void OnHealingUse(EntityUid uid, HealingComponent component, UseInHandEvent args)
+    {
+        if (args.Handled) return;
+
+        args.Handled = true;
+        Heal(args.User, args.User, component);
+    }
+
     private void OnHealingAfterInteract(EntityUid uid, HealingComponent component, AfterInteractEvent args)
     {
-        if (args.Handled || !args.CanReach) return;
+        if (args.Handled || !args.CanReach || args.Target == null) return;
 
+        args.Handled = true;
+        Heal(args.User, args.Target.Value, component);
+    }
+
+    private void Heal(EntityUid user, EntityUid target, HealingComponent component)
+    {
         if (component.CancelToken != null)
         {
             component.CancelToken?.Cancel();
             component.CancelToken = null;
-            args.Handled = true;
             return;
         }
 
-        if (args.Target == null)
-        {
-            return;
-        }
-
-        args.Handled = true;
-
-        if (!TryComp<DamageableComponent>(args.Target.Value, out var targetDamage))
+        if (!TryComp<DamageableComponent>(target, out var targetDamage))
             return;
 
         if (component.DamageContainerID is not null && !component.DamageContainerID.Equals(targetDamage.DamageContainerID))
             return;
 
-        if (!_blocker.CanInteract(args.User))
+        if (!_blocker.CanInteract(user))
             return;
 
-        if (args.User != args.Target &&
-            !args.User.InRangeUnobstructed(args.Target.Value, ignoreInsideBlocker: true, popup: true))
+        if (user != target &&
+            !user.InRangeUnobstructed(target, ignoreInsideBlocker: true, popup: true))
         {
             return;
         }
 
-        if (TryComp<SharedStackComponent>(uid, out var stack) && stack.Count < 1)
+        if (TryComp<SharedStackComponent>(component.Owner, out var stack) && stack.Count < 1)
             return;
 
         component.CancelToken = new CancellationTokenSource();
 
-        _doAfter.DoAfter(new DoAfterEventArgs(args.User, component.Delay, component.CancelToken.Token, args.Target)
+        _doAfter.DoAfter(new DoAfterEventArgs(user, component.Delay, component.CancelToken.Token, target)
         {
             BreakOnUserMove = true,
             BreakOnTargetMove = true,
@@ -105,7 +112,7 @@ public sealed class HealingSystem : EntitySystem
             NeedHand = true,
             TargetFinishedEvent = new HealingCompleteEvent
             {
-                User = args.User,
+                User = user,
                 Component = component,
             },
             BroadcastCancelledEvent = new HealingCancelledEvent
