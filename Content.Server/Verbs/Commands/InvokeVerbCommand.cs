@@ -71,9 +71,13 @@ namespace Content.Server.Verbs.Commands
             var verbType = Verb.VerbTypes.FirstOrDefault(x => x.Value.ToLowerInvariant() == verbName).Key;
             if (verbType != null)
             {
-                verbSystem.ExecuteVerb(verbType, playerEntity.Value, target, forced: true);
-                shell.WriteLine(Loc.GetString("invoke-verb-command-success", ("verb", verbName), ("target", target), ("player", playerEntity)));
-                return;
+                var verb = verbs.FirstOrDefault(v => v.GetType() == verbType);
+                if (verb != null)
+                {
+                    verbSystem.ExecuteVerb(verb, playerEntity.Value, target, forced: true);
+                    shell.WriteLine(Loc.GetString("invoke-verb-command-success", ("verb", verbName), ("target", target), ("player", playerEntity)));
+                    return;
+                }
             }
 
             foreach (var verb in verbs)
