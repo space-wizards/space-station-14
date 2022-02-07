@@ -20,9 +20,11 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         public string InletName { get; set; } = "pipe";
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("pumpDirection")]
         public VentPumpDirection PumpDirection { get; set; } = VentPumpDirection.Releasing;
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("pressureChecks")]
         public VentPressureBound PressureChecks { get; set; } = VentPressureBound.ExternalBound;
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -30,6 +32,8 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         public float ExternalPressureBound { get; set; } = Atmospherics.OneAtmosphere;
 
         [ViewVariables(VVAccess.ReadWrite)]
+
+        [DataField("internalPressureBound")]
         public float InternalPressureBound { get; set; } = 0f;
 
         /// <summary>
