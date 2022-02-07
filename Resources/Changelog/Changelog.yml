@@ -1,12 +1,6 @@
 Entries:
 - author: Zumorica
   changes:
-  - {message: Fix rare construction bug where some interactions would be incorrect.,
-    type: Fix}
-  id: 503
-  time: '2021-10-28T09:23:03.038084+00:00'
-- author: Zumorica
-  changes:
   - {message: 'Fix being able to build machines for free by taking the board out,
       putting it in again and screwing.', type: Fix}
   id: 504
@@ -2964,3 +2958,8 @@ Entries:
       wait for it... aloe!', type: Tweak}
   id: 1003
   time: '2022-02-07T19:43:21.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Gas mixers now properly animate when on., type: Fix}
+  id: 1004
+  time: '2022-02-07T20:42:07.0000000+00:00'
