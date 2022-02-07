@@ -1,10 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: Saltern default generators no longer act as effectively an infinite
-      source of power., type: Fix}
-  id: 498
-  time: '2021-10-27T08:32:06.0000000+00:00'
 - author: juliangiebel
   changes:
   - {message: Disposal units are constructable now!, type: Add}
@@ -2956,3 +2950,8 @@ Entries:
   - {message: Airlock construction / deconstruction now takes longer., type: Tweak}
   id: 998
   time: '2022-02-07T03:06:11.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Healing (via ointments etc.) now takes time., type: Tweak}
+  id: 999
+  time: '2022-02-07T03:14:46.0000000+00:00'
