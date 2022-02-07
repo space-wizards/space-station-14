@@ -317,6 +317,8 @@ namespace Content.Server.Light.EntitySystems
 
         private void OnPowerChanged(EntityUid uid, PoweredLightComponent component, PowerChangedEvent args)
         {
+            if (component.LifeStage < ComponentLifeStage.Initialized) return;
+
             UpdateLight(uid, component);
         }
 
