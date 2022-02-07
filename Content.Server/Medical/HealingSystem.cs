@@ -58,7 +58,7 @@ public sealed class HealingSystem : EntitySystem
 
     private void OnHealingAfterInteract(EntityUid uid, HealingComponent component, AfterInteractEvent args)
     {
-        if (args.Handled) return;
+        if (args.Handled || !args.CanReach) return;
 
         if (component.CancelToken != null)
         {
@@ -85,7 +85,7 @@ public sealed class HealingSystem : EntitySystem
             return;
 
         if (args.User != args.Target &&
-            !args.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
+            !args.User.InRangeUnobstructed(args.Target.Value, ignoreInsideBlocker: true, popup: true))
         {
             return;
         }
