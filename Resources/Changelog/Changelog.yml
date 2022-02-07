@@ -1,9 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Updated context menu UI, type: Tweak}
-  id: 502
-  time: '2021-10-28T05:21:19.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: Fix rare construction bug where some interactions would be incorrect.,
@@ -2961,3 +2956,11 @@ Entries:
   - {message: 'Bagel Station, a comfy midpop station, has been introduced.', type: Add}
   id: 1002
   time: '2022-02-07T16:07:24.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'Added lingzhi and ambrosia vulgaris, two more potent but slightly dangerous
+      medicinal plants.', type: Add}
+  - {message: 'Instead of kelotane and nutriment, aloe now yields dermaline and...
+      wait for it... aloe!', type: Tweak}
+  id: 1003
+  time: '2022-02-07T19:43:21.0000000+00:00'
