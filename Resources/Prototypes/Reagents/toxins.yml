@@ -302,7 +302,7 @@
   group: Toxins
   desc: A potent toxin found in some mushrooms.
   physicalDesc: nondescript
-  color: "#FAF9F6"
+  color: "#D6CE7B"
   metabolisms:
     Poison:
       effects:

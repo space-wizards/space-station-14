@@ -573,8 +573,8 @@
       effects:
       - !type:HealthChange
         damage:
-          groups:
-            Toxin: -2
+          types:
+            Poison: -1
       - !type:AdjustReagent
         conditions:
         - !type:ReagentThreshold
@@ -596,4 +596,4 @@
       - !type:HealthChange
         damage:
           groups:
-            Caustic: -5 ###Total gain from ingredients: -0.5 radiation, +2 poison
+            Caustic: -5
