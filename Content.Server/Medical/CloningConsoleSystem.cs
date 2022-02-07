@@ -1,11 +1,6 @@
 using Content.Server.Medical.Components;
-using Content.Shared.ActionBlocker;
-using Content.Shared.Movement;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Timing;
-using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Medical.GeneticScanner;
 using Robust.Shared.Map;
 using Content.Server.Cloning.Components;
@@ -13,23 +8,11 @@ using Content.Server.Power.Components;
 using Content.Server.Cloning;
 using Content.Server.Mind.Components;
 using Content.Server.Preferences.Managers;
-using Content.Server.UserInterface;
-using Content.Shared.Acts;
-using Content.Shared.Damage;
-using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
-using Content.Shared.CloningConsole;
 using Content.Shared.MobState.Components;
-using Content.Shared.Popups;
 using Content.Shared.Preferences;
 using Robust.Server.GameObjects;
-using Robust.Shared.Containers;
-using Robust.Shared.Localization;
 using Robust.Shared.Network;
-using Robust.Shared.ViewVariables;
-using Robust.Shared.Log;
-using System.Collections.Generic;
-using Content.Shared.Cloning;
 using Robust.Server.Player;
 
 using static Content.Shared.Cloning.SharedCloningPodComponent;
@@ -64,9 +47,6 @@ namespace Content.Server.Medical
             comp.UserInterface?.SetState(newState);
             UpdateUserInterface(comp);
         }
-
-
-
         private void HandleActivateInWorld(EntityUid uid, CloningConsoleComponent consoleComponent, ActivateInWorldEvent args)
         {
             if (!TryComp<ActorComponent>(args.User, out var actor))
@@ -100,7 +80,6 @@ namespace Content.Server.Medical
                 return;
             consoleComponent.UserInterface?.SetState(newState);
         }
-
 
         private void OnButtonPressed(EntityUid uid, CloningConsoleComponent consoleComponent, UiButtonPressedMessage args)
         {
@@ -187,6 +166,7 @@ namespace Content.Server.Medical
                     }
                 }
         }
+
         public CloningConsoleBoundUserInterfaceState? GetUserInterfaceState(CloningConsoleComponent consoleComponent)
         {
             FindDevices(consoleComponent.Owner, consoleComponent);
@@ -194,12 +174,11 @@ namespace Content.Server.Medical
             // !TryComp<DamageableComponent>(scanBody.Value, out var damageable)
             ClonerStatusState clonerStatus = ClonerStatusState.Ready;
 
-            EntityUid? scanBody = null;
             var scanBodyInfo = "Unknown";
             bool scannerConnected = false;
             if (consoleComponent.GeneticScanner != null) {
                 scannerConnected = true;
-                scanBody = consoleComponent.GeneticScanner.BodyContainer.ContainedEntity;
+                EntityUid? scanBody = consoleComponent.GeneticScanner.BodyContainer.ContainedEntity;
                 // GET NAME
                 if (TryComp<MetaDataComponent>(scanBody, out var scanMetaData))
                 {
@@ -229,7 +208,6 @@ namespace Content.Server.Medical
                 }
             }
 
-            EntityUid? cloneBody = null;
             var cloneBodyInfo = "Unknown";
             float cloningProgress = 0;
             float cloningTime = 30f;
@@ -239,7 +217,7 @@ namespace Content.Server.Medical
             if (consoleComponent.CloningPod != null)
             {
                 clonerConnected = true;
-                cloneBody = consoleComponent.CloningPod.BodyContainer.ContainedEntity;
+                EntityUid? cloneBody = consoleComponent.CloningPod.BodyContainer.ContainedEntity;
                 if (TryComp<MetaDataComponent>(cloneBody, out var cloneMetaData))
                 {
                     cloneBodyInfo = cloneMetaData.EntityName;
@@ -272,7 +250,6 @@ namespace Content.Server.Medical
                 clonerConnected
                 );
         }
-
 
         private HumanoidCharacterProfile GetPlayerProfileAsync(NetUserId userId)
         {

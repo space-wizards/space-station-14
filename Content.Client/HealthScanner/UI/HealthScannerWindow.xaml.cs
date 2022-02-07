@@ -27,23 +27,23 @@ namespace Content.Client.HealthScanner.UI
 
             if (state.TargetName == null || state.IsAlive == null)
             {
-                Diagnostics.Text = Loc.GetString("medical-scanner-window-no-patient-data-text");
+                Diagnostics.Text = Loc.GetString("health-scanner-window-no-patient-data-text");
                 SetSize = (250, 100);
             }
             else
             {
-                text.Append($"{Loc.GetString("medical-scanner-window-entity-health-text", ("entityName", state.TargetName))}\n");
+                text.Append($"{Loc.GetString("health-scanner-window-entity-health-text", ("entityName", state.TargetName))}\n");
 
                 var totalDamage = state.DamagePerType.Values.Sum();
 
-                text.Append($"{Loc.GetString("medical-scanner-window-entity-damage-total-text", ("amount", totalDamage))}\n");
+                text.Append($"{Loc.GetString("health-scanner-window-entity-damage-total-text", ("amount", totalDamage))}\n");
 
                 HashSet<string> shownTypes = new();
 
                 // Show the total damage and type breakdown for each damage group.
                 foreach (var (damageGroupId, damageAmount) in state.DamagePerGroup)
                 {
-                    text.Append($"\n{Loc.GetString("medical-scanner-window-damage-group-text", ("damageGroup", damageGroupId), ("amount", damageAmount))}");
+                    text.Append($"\n{Loc.GetString("health-scanner-window-damage-group-text", ("damageGroup", damageGroupId), ("amount", damageAmount))}");
 
                     // Show the damage for each type in that group.
                     var group = IoCManager.Resolve<IPrototypeManager>().Index<DamageGroupPrototype>(damageGroupId);
@@ -55,7 +55,7 @@ namespace Content.Client.HealthScanner.UI
                             if (!shownTypes.Contains(type))
                             {
                                 shownTypes.Add(type);
-                                text.Append($"\n- {Loc.GetString("medical-scanner-window-damage-type-text", ("damageType", type), ("amount", typeAmount))}");
+                                text.Append($"\n- {Loc.GetString("health-scanner-window-damage-type-text", ("damageType", type), ("amount", typeAmount))}");
                             }
                         }
                     }

@@ -92,12 +92,11 @@ namespace Content.Server.Cloning
             var speciesProto = _prototype.Index<SpeciesPrototype>(hcp.Species).Prototype;
             var mob = EntityManager.SpawnEntity(speciesProto, transform.MapPosition);
             EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(mob, hcp);
-            if (!TryComp<MetaDataComponent>(mob, out var meta))
+
+            if (TryComp<MetaDataComponent>(mob, out var meta))
             {
-                // FISH FIX THIS, NO DEPENDANT META DATA
-                return;
+                meta.EntityName = hcp.Name;
             }
-            meta.EntityName = hcp.Name;
             var cloneMindReturn = EntityManager.AddComponent<BeingClonedComponent>(mob);
             cloneMindReturn.Mind = mind;
             cloneMindReturn.Parent = clonePod.Owner;
