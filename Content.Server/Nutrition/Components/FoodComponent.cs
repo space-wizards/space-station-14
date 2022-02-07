@@ -16,8 +16,6 @@ namespace Content.Server.Nutrition.Components
     [RegisterComponent, Friend(typeof(FoodSystem))]
     public class FoodComponent : Component
     {
-        public override string Name => "Food";
-
         [DataField("solution")]
         public string SolutionName { get; set; } = "food";
 
@@ -47,6 +45,12 @@ namespace Content.Server.Nutrition.Components
 
         [DataField("eatMessage")]
         public string EatMessage = "food-nom";
+
+        /// <summary>
+        /// How long it takes to eat the food personally.
+        /// </summary>
+        [DataField("delay")]
+        public float Delay = 1;
 
         /// <summary>
         ///     This is how many seconds it takes to force feed someone this food.

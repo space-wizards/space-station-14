@@ -10,8 +10,6 @@ namespace Content.Shared.VendingMachines
     [NetworkedComponent()]
     public class SharedVendingMachineComponent : Component
     {
-        public override string Name => "VendingMachine";
-
         [ViewVariables]
         public List<VendingMachineInventoryEntry> Inventory = new();
 

@@ -67,9 +67,6 @@ namespace Content.Client.Weapons.Ranged.Barrels.Components
                 }
             }
         };
-
-        public override string Name => "MagazineBarrel";
-
         private StatusControl? _statusControl;
 
         /// <summary>

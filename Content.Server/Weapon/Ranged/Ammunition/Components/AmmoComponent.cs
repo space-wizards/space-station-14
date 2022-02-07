@@ -82,7 +82,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
         [DataField("ammoVelocity")]
         public float Velocity { get; } = 20f;
 
-        [DataField("muzzleFlash", customTypeSerializer:typeof(ResourcePathSerializer))]
+        [DataField("muzzleFlash")]
         public ResourcePath? MuzzleFlashSprite = new("Objects/Weapons/Guns/Projectiles/bullet_muzzle.png");
 
         [DataField("soundCollectionEject")]

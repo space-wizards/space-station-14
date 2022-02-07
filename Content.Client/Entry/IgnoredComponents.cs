@@ -78,6 +78,7 @@ namespace Content.Client.Entry
             "BodyScanner",
             "Stunbaton",
             "Tool",
+            "TriggerOnProximity",
             "TilePrying",
             "RandomSpriteColor",
             "ConditionalSpawner",
@@ -118,6 +119,9 @@ namespace Content.Client.Entry
             "RCDAmmo",
             "CursedEntityStorage",
             "Radio",
+            "GasArtifact",
+            "RadiateArtifact",
+            "TemperatureArtifact",
             "DisposalHolder",
             "DisposalTagger",
             "DisposalRouter",
@@ -235,7 +239,7 @@ namespace Content.Client.Entry
             "LightReplacer",
             "SecretStash",
             "Toilet",
-            "ClusterFlash",
+            "ClusterGrenade",
             "Repairable",
             "SolutionTransfer",
             "Evaporation",
@@ -301,7 +305,8 @@ namespace Content.Client.Entry
             "ArtifactInteractionTrigger",
             "Artifact",
             "RandomArtifactSprite",
-            "EnergySword"
+            "EnergySword",
+            "DoorRemote",
         };
     }
 }

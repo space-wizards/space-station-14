@@ -24,8 +24,6 @@ namespace Content.Shared.Item
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public override string Name => "Item";
-
         /// <summary>
         ///     How much big this item is.
         /// </summary>

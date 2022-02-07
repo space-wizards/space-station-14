@@ -8,8 +8,6 @@ namespace Content.Server.Labels.Components
     [RegisterComponent]
     public class HandLabelerComponent : Component
     {
-        public override string Name => "HandLabeler";
-
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("assignedLabel")]
         public string AssignedLabel { get; set; } = string.Empty;

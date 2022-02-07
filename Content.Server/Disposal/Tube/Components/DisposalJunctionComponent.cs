@@ -24,8 +24,6 @@ namespace Content.Server.Disposal.Tube.Components
         [DataField("degrees")]
         private List<Angle> _degrees = new();
 
-        public override string Name => "DisposalJunction";
-
         protected override Direction[] ConnectableDirections()
         {
             var direction = _entMan.GetComponent<TransformComponent>(Owner).LocalRotation;

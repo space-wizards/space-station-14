@@ -10,7 +10,6 @@ namespace Content.Server.Chemistry.Components.SolutionManager
     [RegisterComponent]
     public class InjectableSolutionComponent : Component
     {
-        public override string Name => "InjectableSolution";
 
         /// <summary>
         /// Solution name which can be added with syringes.
