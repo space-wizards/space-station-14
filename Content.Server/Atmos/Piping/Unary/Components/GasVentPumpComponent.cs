@@ -1,14 +1,10 @@
-using System;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Unary.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Atmos.Piping.Unary.Components
 {
     [RegisterComponent]
-    public class GasVentPumpComponent : Component
+    public sealed class GasVentPumpComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Enabled { get; set; } = true;
@@ -35,6 +31,27 @@ namespace Content.Server.Atmos.Piping.Unary.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         public float InternalPressureBound { get; set; } = 0f;
+
+        /// <summary>
+        ///     If the difference between the internal and external pressure is larger than this, the device can no
+        ///     longer move gas.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("maxPressureDifference")]
+        public float MaxPressureDifference = 4500;
+
+        /// <summary>
+        ///     Pressure pump speed. Determines how much gas is moved.
+        /// </summary>
+        /// <remarks>
+        ///     The pump will attempt to modify the destination's final pressure by this quantity. The actual change
+        ///     will be limited by efficiency losses as the pressure difference approaches <see
+        ///     cref="MaxPressureDifference"/>.
+        /// </remarks>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("pumpPressure")]
+        public float PumpPressure = 100;
+        // currently total-mole pumping capacity increases with available volume in the destination.
 
         public GasVentPumpData ToAirAlarmData()
         {

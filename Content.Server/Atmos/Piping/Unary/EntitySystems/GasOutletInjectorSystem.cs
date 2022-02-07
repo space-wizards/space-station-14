@@ -5,13 +5,11 @@ using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 {
     [UsedImplicitly]
-    public class GasOutletInjectorSystem : EntitySystem
+    public sealed class GasOutletInjectorSystem : EntitySystem
     {
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 
@@ -40,14 +38,19 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (environment == null)
                 return;
 
-            if (inlet.Air.Temperature > 0)
-            {
-                var transferMoles = inlet.Air.Pressure * injector.VolumeRate / (inlet.Air.Temperature * Atmospherics.R);
+            if (inlet.Air.Temperature < 0)
+                return;
 
-                var removed = inlet.Air.Remove(transferMoles);
+            var ratio = GasVentScrubberSystem.GetTransferRatio(
+                inlet.Air,
+                environment,
+                injector.VolumeRate,
+                injector.MaxVolumeRate,
+                injector.MaxPressureDifference);
 
-                _atmosphereSystem.Merge(environment, removed);
-            }
+            var removed = inlet.Air.RemoveRatio(ratio);
+
+            _atmosphereSystem.Merge(environment, removed);
         }
     }
 }

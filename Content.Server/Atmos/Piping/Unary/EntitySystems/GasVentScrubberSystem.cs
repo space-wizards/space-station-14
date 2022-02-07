@@ -15,14 +15,11 @@ using Content.Shared.Atmos.Piping.Unary.Visuals;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 {
     [UsedImplicitly]
-    public class GasVentScrubberSystem : EntitySystem
+    public sealed class GasVentScrubberSystem : EntitySystem
     {
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly DeviceNetworkSystem _deviceNetSystem = default!;
@@ -78,6 +75,35 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             }
         }
 
+        /// <summary>
+        ///     This function determines the volume transfer capability for some pump that is limited by both volume and pressure.
+        /// </summary>
+        public static float GetTransferVolume(
+            float desiredVolume,
+            float maxVolume,
+            float maxPressureDifference,
+            float pressureDifference)
+        {
+            // if the pressure difference is half, the effective max volume is 71% of the original.
+            var effectiveMaxVolume = maxVolume * MathF.Sqrt(1 - pressureDifference / maxPressureDifference);
+            return Math.Clamp(desiredVolume, 0f, effectiveMaxVolume);
+        }
+
+        /// <summary>
+        ///     Get the ratio of gas to remove from some source, assuming they are attempting to move some fixed volume.
+        /// </summary>
+        public static float GetTransferRatio(
+            GasMixture source,
+            GasMixture target,
+            float desiredVolume,
+            float maxVolume,
+            float maxPressureDifference)
+        {
+            var pressureDifference = MathF.Max(0, target.Pressure - source.Pressure);
+            var vol = GetTransferVolume(desiredVolume, maxVolume, maxPressureDifference, pressureDifference);
+            return MathF.Min(1f, vol / source.Volume);
+        }
+
         private void Scrub(AtmosphereSystem atmosphereSystem, GasVentScrubberComponent scrubber, AppearanceComponent? appearance, GasMixture? tile, PipeNode outlet)
         {
             // Cannot scrub if tile is null or air-blocked.
@@ -91,10 +117,11 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (scrubber.PumpDirection == ScrubberPumpDirection.Scrubbing)
             {
                 appearance?.SetData(ScrubberVisuals.State, scrubber.WideNet ? ScrubberState.WideScrub : ScrubberState.Scrub);
-                var transferMoles = MathF.Min(1f, scrubber.VolumeRate / tile.Volume) * tile.TotalMoles;
+
+                var ratio = GetTransferRatio(tile, outlet.Air, scrubber.VolumeRate, scrubber.MaxVolumeRate, scrubber.MaxPressureDifference);
 
                 // Take a gas sample.
-                var removed = tile.Remove(transferMoles);
+                var removed = tile.RemoveRatio(ratio);
 
                 // Nothing left to remove from the tile.
                 if (MathHelper.CloseToPercent(removed.TotalMoles, 0f))
@@ -108,9 +135,10 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             else if (scrubber.PumpDirection == ScrubberPumpDirection.Siphoning)
             {
                 appearance?.SetData(ScrubberVisuals.State, ScrubberState.Siphon);
-                var transferMoles = tile.TotalMoles * (scrubber.VolumeRate / tile.Volume);
 
-                var removed = tile.Remove(transferMoles);
+                var ratio = GetTransferRatio(tile, outlet.Air, scrubber.VolumeRate, scrubber.MaxVolumeRate, scrubber.MaxPressureDifference);
+
+                var removed = tile.RemoveRatio(ratio);
 
                 _atmosphereSystem.Merge(outlet.Air, removed);
             }

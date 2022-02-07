@@ -73,5 +73,6 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
         NoBound       = 0,
         InternalBound = 1,
         ExternalBound = 2,
+        Both = 3,
     }
 }

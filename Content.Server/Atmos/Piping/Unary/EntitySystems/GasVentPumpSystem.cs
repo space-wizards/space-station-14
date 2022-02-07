@@ -1,4 +1,3 @@
-using System;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Monitor.Components;
 using Content.Server.Atmos.Monitor.Systems;
@@ -12,17 +11,14 @@ using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
-using Content.Shared.Atmos.Monitor.Components;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.Atmos.Visuals;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 {
     [UsedImplicitly]
-    public class GasVentPumpSystem : EntitySystem
+    public sealed class GasVentPumpSystem : EntitySystem
     {
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly DeviceNetworkSystem _deviceNetSystem = default!;
@@ -36,6 +32,17 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             SubscribeLocalEvent<GasVentPumpComponent, AtmosMonitorAlarmEvent>(OnAtmosAlarm);
             SubscribeLocalEvent<GasVentPumpComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<GasVentPumpComponent, PacketSentEvent>(OnPacketRecv);
+        }
+
+        private static float Efficiency(float pressureDifference, float maxPressureDifference)
+        {
+            if (pressureDifference < 0)
+                return 1;
+            if (pressureDifference > maxPressureDifference)
+                return 0;
+
+            // about 70% efficiency when pressure difference is half of the maximum.
+            return MathF.Sqrt(1 - pressureDifference / maxPressureDifference);
         }
 
         private void OnGasVentPumpUpdated(EntityUid uid, GasVentPumpComponent vent, AtmosDeviceUpdateEvent args)
@@ -65,43 +72,68 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 return;
             }
 
-            if (vent.PumpDirection == VentPumpDirection.Releasing)
+            if (vent.PumpDirection == VentPumpDirection.Releasing && pipe.Air.Pressure > 0)
             {
                 appearance?.SetData(VentPumpVisuals.State, VentPumpState.Out);
-                var pressureDelta = 10000f;
+
+                var pressureDelta = vent.PumpPressure;
 
                 if ((vent.PressureChecks & VentPressureBound.ExternalBound) != 0)
                     pressureDelta = MathF.Min(pressureDelta, vent.ExternalPressureBound - environment.Pressure);
 
+                if (pressureDelta <= 0)
+                    return;
+
+                // how many moles to transfer to change external pressure by pressureDelta
+                // (ignoring temperature differences because I am lazy)
+                var transferMoles = pressureDelta * environment.Volume / (pipe.Air.Temperature * Atmospherics.R);
+
+                // limit transferMoles so the source doesn't go below its bound.
                 if ((vent.PressureChecks & VentPressureBound.InternalBound) != 0)
-                    pressureDelta = MathF.Min(pressureDelta, pipe.Air.Pressure - vent.InternalPressureBound);
-
-                if (pressureDelta > 0 && pipe.Air.Temperature > 0)
                 {
-                    var transferMoles = pressureDelta * environment.Volume / (pipe.Air.Temperature * Atmospherics.R);
+                    var internalDelta = pipe.Air.Pressure - vent.InternalPressureBound;
 
-                    _atmosphereSystem.Merge(environment, pipe.Air.Remove(transferMoles));
+                    if (internalDelta <= 0)
+                        return;
+
+                    var maxTransfer = internalDelta * pipe.Air.Volume / (pipe.Air.Temperature * Atmospherics.R);
+                    transferMoles = MathF.Min(transferMoles, maxTransfer);
                 }
+
+                transferMoles *= Efficiency(environment.Pressure - pipe.Air.Pressure, vent.MaxPressureDifference);
+                _atmosphereSystem.Merge(environment, pipe.Air.Remove(transferMoles));
             }
             else if (vent.PumpDirection == VentPumpDirection.Siphoning && environment.Pressure > 0)
             {
                 appearance?.SetData(VentPumpVisuals.State, VentPumpState.In);
-                var ourMultiplier = pipe.Air.Volume / (environment.Temperature * Atmospherics.R);
-                var molesDelta = 10000f * ourMultiplier;
 
-                if ((vent.PressureChecks & VentPressureBound.ExternalBound) != 0)
-                    molesDelta = MathF.Min(molesDelta,
-                        (environment.Pressure - vent.ExternalPressureBound) * environment.Volume /
-                        (environment.Temperature * Atmospherics.R));
+                var pressureDelta = vent.PumpPressure;
 
                 if ((vent.PressureChecks & VentPressureBound.InternalBound) != 0)
-                    molesDelta = MathF.Min(molesDelta, (vent.InternalPressureBound - pipe.Air.Pressure) * ourMultiplier);
+                    pressureDelta = MathF.Min(pressureDelta, vent.InternalPressureBound - pipe.Air.Pressure);
 
-                if (molesDelta > 0)
+                if (pressureDelta <= 0)
+                    return;
+
+                // how many moles to transfer to change internal pressure by pressureDelta
+                // (ignoring temperature differences because I am lazy)
+                var transferMoles = pressureDelta * pipe.Air.Volume / (environment.Temperature * Atmospherics.R);
+
+                // limit transferMoles so the source doesn't go below its bound.
+                if ((vent.PressureChecks & VentPressureBound.ExternalBound) != 0)
                 {
-                    var removed = environment.Remove(molesDelta);
-                    _atmosphereSystem.Merge(pipe.Air, removed);
+                    var externalDelta = environment.Pressure - vent.ExternalPressureBound;
+
+                    if (externalDelta <= 0)
+                        return;
+
+                    var maxTransfer = externalDelta * environment.Volume / (environment.Temperature * Atmospherics.R);
+
+                    transferMoles = MathF.Min(transferMoles, maxTransfer);
                 }
+
+                transferMoles *= Efficiency(pipe.Air.Pressure - environment.Pressure, vent.MaxPressureDifference);
+                _atmosphereSystem.Merge(pipe.Air, environment.Remove(transferMoles));
             }
         }
 
