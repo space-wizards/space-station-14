@@ -1,10 +1,4 @@
 Entries:
-- author: Saphire
-  changes:
-  - {message: 'Fix trashbags picking up anchored items, e.g. atmos pipes and vents',
-    type: Fix}
-  id: 496
-  time: '2021-10-27T07:12:37.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Storage closing boundary no longer encompasses 3 city blocks., type: Fix}
@@ -2957,3 +2951,8 @@ Entries:
   - {message: NanoTrasen has finally discovered the recipe for storage racks., type: Fix}
   id: 996
   time: '2022-02-07T01:51:57.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Add more random xeno artifacts effects., type: Add}
+  id: 997
+  time: '2022-02-07T02:26:10.0000000+00:00'
