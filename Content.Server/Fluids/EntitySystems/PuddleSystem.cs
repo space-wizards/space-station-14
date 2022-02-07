@@ -7,19 +7,15 @@ using Content.Shared.Fluids;
 using Content.Shared.Slippery;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Map;
 using Robust.Shared.Player;
 
 namespace Content.Server.Fluids.EntitySystems
 {
     [UsedImplicitly]
-    public partial class PuddleSystem : EntitySystem
+    public sealed class PuddleSystem : EntitySystem
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+        [Dependency] private readonly FluidSpreaderSystem _fluidSpreaderSystem = default!;
 
         public override void Initialize()
         {
@@ -141,7 +137,10 @@ namespace Content.Server.Fluids.EntitySystems
                 return false;
             }
 
-
+            if (checkForOverflow && WouldOverflow(puddleComponent.Owner, addedSolution, puddleComponent))
+            {
+                _fluidSpreaderSystem.AddOverflowingPuddle(puddleComponent, addedSolution);
+            }
             var result = _solutionContainerSystem
                 .TryAddSolution(puddleComponent.Owner, puddleSolution, addedSolution);
             if (!result)
@@ -151,11 +150,6 @@ namespace Content.Server.Fluids.EntitySystems
 
             RaiseLocalEvent(puddleComponent.Owner, new SolutionChangedEvent());
 
-            if (checkForOverflow && puddleComponent.IsOverflowing)
-            {
-                AddOverflowingPuddle(puddleComponent);
-            }
-
             if (!sound)
             {
                 return true;
@@ -164,6 +158,21 @@ namespace Content.Server.Fluids.EntitySystems
             SoundSystem.Play(Filter.Pvs(puddleComponent.Owner), puddleComponent.SpillSound.GetSound(),
                 puddleComponent.Owner);
             return true;
+        }
+
+        /// <summary>
+        ///     Whether adding this solution to this puddle would overflow.
+        /// </summary>
+        /// <param name="uid">Uid of owning entity</param>
+        /// <param name="puddle">Puddle to which we are adding solution</param>
+        /// <param name="solution">Solution we intend to add</param>
+        /// <returns></returns>
+        public bool WouldOverflow(EntityUid uid, Solution solution, PuddleComponent? puddle = null)
+        {
+            if (!Resolve(uid, ref puddle))
+                return false;
+
+            return puddle.CurrentVolume + solution.TotalVolume > puddle.OverflowVolume;
         }
     }
 }

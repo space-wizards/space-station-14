@@ -46,8 +46,6 @@ namespace Content.Server.Fluids.Components
 
         public FixedPoint2 OverflowLeft => CurrentVolume - OverflowVolume;
 
-        public bool IsOverflowing => CurrentVolume > OverflowVolume;
-
         [DataField("solution")] public string SolutionName { get; set; } = DefaultSolutionName;
     }
 }
