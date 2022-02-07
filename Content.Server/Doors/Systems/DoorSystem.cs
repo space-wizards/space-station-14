@@ -209,11 +209,11 @@ public sealed class DoorSystem : SharedDoorSystem
         if (user == null || AccessType == AccessTypes.AllowAll)
             return true;
 
-        if (!Resolve(uid, ref access, false))
+        // If the door is on emergency access we skip the checks.
+        if (TryComp<SharedAirlockComponent>(uid, out var airlock) && airlock.EmergencyAccess)
             return true;
 
-        // If the door is on emergency access we skip the checks.
-        if (TryComp<AirlockComponent>(uid, out var airlock) && airlock.EmergencyAccess)
+        if (!Resolve(uid, ref access, false))
             return true;
 
         var isExternal = access.AccessLists.Any(list => list.Contains("External"));

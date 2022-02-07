@@ -85,18 +85,6 @@ namespace Content.Server.Doors.Components
 
         private bool _boltLightsWirePulsed = true;
 
-        private bool _emergencyAccess;
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool EmergencyAccess
-        {
-            get => _emergencyAccess;
-            set
-            {
-                _emergencyAccess = value;
-                UpdateEmergencyLightStatus();
-            }
-        }
 
         [ViewVariables(VVAccess.ReadWrite)]
         private bool BoltLightsVisible
@@ -154,14 +142,6 @@ namespace Content.Server.Doors.Components
             if (_entityManager.TryGetComponent<AppearanceComponent>(Owner, out var appearanceComponent))
             {
                 appearanceComponent.SetData(DoorVisuals.BoltLights, BoltLightsVisible);
-            }
-        }
-
-        public void UpdateEmergencyLightStatus()
-        {
-            if (_entityManager.TryGetComponent<AppearanceComponent>(Owner, out var appearanceComponent))
-            {
-                appearanceComponent.SetData(DoorVisuals.EmergencyLights, EmergencyAccess);
             }
         }
 
@@ -397,11 +377,6 @@ namespace Content.Server.Doors.Components
             BoltsDown = newBolts;
 
             SoundSystem.Play(Filter.Broadcast(), newBolts ? BoltDownSound.GetSound() : BoltUpSound.GetSound(), Owner);
-        }
-
-        public void ToggleEmergencyAccess()
-        {
-            EmergencyAccess = !EmergencyAccess;
         }
     }
 }

@@ -20,6 +20,7 @@ namespace Content.Server.Remotes
         [Dependency] private readonly SharedDoorSystem _sharedDoorSystem = default!;
         [Dependency] private readonly DoorSystem _doorSystem = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+        [Dependency] private readonly SharedAirlockSystem _sharedAirlockSystem = default!;
 
         public override void Initialize()
         {
@@ -55,6 +56,7 @@ namespace Content.Server.Remotes
                 || !TryComp<DoorComponent>(args.Target, out var doorComponent) // If it isn't a door we don't use it
                 || !HasComp<AccessReaderComponent>(args.Target) // Remotes do not work on doors without access requirements
                 || !TryComp<AirlockComponent>(args.Target, out var airlockComponent) // Remotes only work on airlocks
+                || !TryComp<SharedAirlockComponent>(args.Target, out var sharedAirlockComponent)
                 || !_interactionSystem.InRangeUnobstructed(args.User, doorComponent.Owner, -1f, CollisionGroup.Opaque))
             {
                 return;
@@ -92,7 +94,7 @@ namespace Content.Server.Remotes
             {
                 if (_doorSystem.HasAccess(doorComponent.Owner, args.Used))
                 {
-                    airlockComponent.ToggleEmergencyAccess();
+                    _sharedAirlockSystem.ToggleEmergencyAccess(sharedAirlockComponent);
                 }
             }
         }
