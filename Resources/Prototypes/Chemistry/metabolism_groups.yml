@@ -16,7 +16,3 @@
 
 - type: metabolismGroup
   id: Drink
-
-# Used for gases that have effects on being inhaled
-- type: metabolismGroup
-  id: Gas

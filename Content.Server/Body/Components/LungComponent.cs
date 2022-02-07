@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using Content.Server.Atmos;
 using Content.Server.Body.Systems;
 using Content.Shared.Atmos;
-using Content.Shared.Chemistry.Components;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -13,6 +12,11 @@ namespace Content.Server.Body.Components;
 [RegisterComponent, Friend(typeof(LungSystem))]
 public class LungComponent : Component
 {
+    public float AccumulatedFrametime;
+
+    [ViewVariables]
+    public TimeSpan LastGaspPopupTime;
+
     [DataField("air")]
     public GasMixture Air { get; set; } = new()
     {
@@ -20,9 +24,19 @@ public class LungComponent : Component
         Temperature = Atmospherics.NormalBodyTemperature
     };
 
-    [DataField("validReagentGases", required: true)]
-    public HashSet<Gas> ValidGases = default!;
+    [DataField("gaspPopupCooldown")]
+    public TimeSpan GaspPopupCooldown { get; private set; } = TimeSpan.FromSeconds(8);
 
     [ViewVariables]
-    public Solution LungSolution = default!;
+    public LungStatus Status { get; set; }
+
+    [DataField("cycleDelay")]
+    public float CycleDelay { get; set; } = 2;
+}
+
+public enum LungStatus
+{
+    None = 0,
+    Inhaling,
+    Exhaling
 }
