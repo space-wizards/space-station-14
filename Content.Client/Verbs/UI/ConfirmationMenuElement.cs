@@ -10,7 +10,6 @@ public partial class ConfirmationMenuElement : ContextMenuElement
     public const string StyleClassConfirmationContextMenuButton = "confirmationContextMenuButton";
 
     public readonly Verb Verb;
-    public readonly VerbType Type;
 
     public override string Text
     {
@@ -23,10 +22,9 @@ public partial class ConfirmationMenuElement : ContextMenuElement
         }
     }
 
-    public ConfirmationMenuElement(Verb verb, string? text, VerbType type) : base(text)
+    public ConfirmationMenuElement(Verb verb, string? text) : base(text)
     {
         Verb = verb;
-        Type = type;
         Icon.Visible = false;
 
         SetOnlyStyleClass(StyleClassConfirmationContextMenuButton);

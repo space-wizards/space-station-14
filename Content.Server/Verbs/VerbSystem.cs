@@ -10,6 +10,9 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Player;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Content.Server.Verbs
 {
@@ -49,8 +52,19 @@ namespace Content.Server.Verbs
             var force = args.AdminRequest && eventArgs.SenderSession is IPlayerSession playerSession &&
                         _adminMgr.HasAdminFlag(playerSession, AdminFlags.Admin);
 
+            List<Type> verbTypes = new();
+            foreach (var key in args.VerbTypes)
+            {
+                var type = Verb.VerbTypes.FirstOrDefault(x => x.Value == key).Key;
+
+                if (type != null)
+                    verbTypes.Add(type);
+                else
+                    Logger.Error($"Unknown verb type received: {key}");
+            }
+
             var response =
-                new VerbsResponseEvent(args.EntityUid, GetLocalVerbs(args.EntityUid, attached, args.Type, force));
+                new VerbsResponseEvent(args.EntityUid, GetLocalVerbs(args.EntityUid, attached, verbTypes, force));
             RaiseNetworkEvent(response, player.ConnectedClient);
         }
 

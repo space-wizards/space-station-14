@@ -736,7 +736,7 @@ namespace Content.Shared.Interaction
         public bool AltInteract(EntityUid user, EntityUid target)
         {
             // Get list of alt-interact verbs
-            var verbs = _verbSystem.GetLocalVerbs(target, user, VerbType.Alternative)[VerbType.Alternative];
+            var verbs = _verbSystem.GetLocalVerbs(target, user, new() { typeof(AlternativeVerb) });
 
             if (!verbs.Any())
                 return false;

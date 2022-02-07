@@ -194,7 +194,7 @@ namespace Content.Server.Pointing.EntitySystems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<GetOtherVerbsEvent>(AddPointingVerb);
+            SubscribeLocalEvent<GetVerbsEvent<Verb>>(AddPointingVerb);
 
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
 
@@ -203,7 +203,7 @@ namespace Content.Server.Pointing.EntitySystems
                 .Register<PointingSystem>();
         }
 
-        private void AddPointingVerb(GetOtherVerbsEvent args)
+        private void AddPointingVerb(GetVerbsEvent<Verb> args)
         {
             if (args.Hands == null)
                 return;
