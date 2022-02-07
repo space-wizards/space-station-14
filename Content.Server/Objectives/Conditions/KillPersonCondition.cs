@@ -1,4 +1,5 @@
 using Content.Server.Objectives.Interfaces;
+using Content.Server.Roles;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -16,16 +17,17 @@ namespace Content.Server.Objectives.Conditions
             get
             {
                 var targetName = string.Empty;
+                var jobName = Target?.CurrentJob?.Name ?? "Unknown";
 
                 if (Target == null)
-                    return Loc.GetString("objective-condition-kill-person-title", ("targetName", targetName));
+                    return Loc.GetString("objective-condition-kill-person-title", ("targetName", targetName), ("job", jobName));
 
                 if (Target.CharacterName != null)
                     targetName = Target.CharacterName;
                 else if (Target.OwnedEntity is {Valid: true} owned)
                     targetName = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(owned).EntityName;
 
-                return Loc.GetString("objective-condition-kill-person-title", ("targetName", targetName));
+                return Loc.GetString("objective-condition-kill-person-title", ("targetName", targetName), ("job", jobName));
             }
         }
 

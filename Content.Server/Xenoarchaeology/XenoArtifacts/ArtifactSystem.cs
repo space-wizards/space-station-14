@@ -36,6 +36,7 @@ public class ArtifactSystem : EntitySystem
         trigger.Owner = uid;
 
         EntityManager.AddComponent(uid, trigger);
+        RaiseLocalEvent(uid, new RandomizeTriggerEvent());
     }
 
     public bool TryActivateArtifact(EntityUid uid, EntityUid? user = null,
