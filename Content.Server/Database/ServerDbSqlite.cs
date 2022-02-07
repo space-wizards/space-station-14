@@ -31,7 +31,7 @@ namespace Content.Server.Database
         private readonly Task _dbReadyTask;
         private readonly SqliteServerDbContext _prefsCtx;
 
-        public ServerDbSqlite(DbContextOptions<ServerDbContext> options)
+        public ServerDbSqlite(DbContextOptions<SqliteServerDbContext> options)
         {
             _prefsCtx = new SqliteServerDbContext(options);
 
@@ -67,33 +67,41 @@ namespace Content.Server.Database
 
             // SQLite can't do the net masking stuff we need to match IP address ranges.
             // So just pull down the whole list into memory.
-            var bans = await db.SqliteDbContext.Ban
-                .Include(p => p.Unban)
-                .Where(p => p.Unban == null && (p.ExpirationTime == null || p.ExpirationTime.Value > DateTime.UtcNow))
-                .ToListAsync();
+            var bans = await GetAllBans(db.SqliteDbContext, includeUnbanned: false);
 
             return bans.FirstOrDefault(b => BanMatches(b, address, userId, hwId)) is { } foundBan
                 ? ConvertBan(foundBan)
                 : null;
         }
 
-        public override async Task<List<ServerBanDef>> GetServerBansAsync(
-            IPAddress? address,
+        public override async Task<List<ServerBanDef>> GetServerBansAsync(IPAddress? address,
             NetUserId? userId,
-            ImmutableArray<byte>? hwId)
+            ImmutableArray<byte>? hwId, bool includeUnbanned)
         {
             await using var db = await GetDbImpl();
 
             // SQLite can't do the net masking stuff we need to match IP address ranges.
             // So just pull down the whole list into memory.
-            var queryBans = await db.SqliteDbContext.Ban
-                .Include(p => p.Unban)
-                .ToListAsync();
+            var queryBans = await GetAllBans(db.SqliteDbContext, includeUnbanned);
 
             return queryBans
                 .Where(b => BanMatches(b, address, userId, hwId))
                 .Select(ConvertBan)
                 .ToList()!;
+        }
+
+        private static async Task<List<ServerBan>> GetAllBans(
+            SqliteServerDbContext db,
+            bool includeUnbanned)
+        {
+            IQueryable<ServerBan> query = db.Ban.Include(p => p.Unban);
+            if (!includeUnbanned)
+            {
+                query = query.Where(p =>
+                    p.Unban == null && (p.ExpirationTime == null || p.ExpirationTime.Value > DateTime.UtcNow));
+            }
+
+            return await query.ToListAsync();
         }
 
         private static bool BanMatches(
@@ -215,21 +223,30 @@ namespace Content.Server.Database
                 unban.UnbanTime);
         }
 
-        public override async Task AddConnectionLogAsync(NetUserId userId, string userName, IPAddress address,
-            ImmutableArray<byte> hwId)
+        public override async Task<int>  AddConnectionLogAsync(
+            NetUserId userId,
+            string userName,
+            IPAddress address,
+            ImmutableArray<byte> hwId,
+            ConnectionDenyReason? denied)
         {
             await using var db = await GetDbImpl();
 
-            db.SqliteDbContext.ConnectionLog.Add(new ConnectionLog
+            var connectionLog = new ConnectionLog
             {
                 Address = address,
                 Time = DateTime.UtcNow,
                 UserId = userId.UserId,
                 UserName = userName,
-                HWId = hwId.ToArray()
-            });
+                HWId = hwId.ToArray(),
+                Denied = denied
+            };
+
+            db.SqliteDbContext.ConnectionLog.Add(connectionLog);
 
             await db.SqliteDbContext.SaveChangesAsync();
+
+            return connectionLog.Id;
         }
 
         public override async Task<((Admin, string? lastUserName)[] admins, AdminRank[])> GetAllAdminAndRanksAsync(

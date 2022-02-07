@@ -147,6 +147,7 @@
       - HydroponicsToolScythe
       - HydroponicsToolHatchet
       - Shovel
+      - HandheldCrewMonitor
       - Scalpel
       - Retractor
       - Cautery
@@ -195,6 +196,8 @@
       - KitchenReagentGrinderMachineCircuitboard
       - CrewMonitoringComputerCircuitboard
       - ShuttleConsoleCircuitboard
+      - DawInstrumentMachineCircuitboard
+      - SynthesizerInstrument
       - Bucket
       - MopItem
       - SprayBottle

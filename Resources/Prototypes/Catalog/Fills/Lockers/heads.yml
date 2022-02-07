@@ -25,6 +25,7 @@
         prob: 1
       - id: CigPackGreen
         prob: 0.50
+      - id: DoorRemoteCargo
 
 - type: entity
   id: LockerCaptainFilled
@@ -63,6 +64,7 @@
       - id: CigarGoldCase
         prob: 0.25
       - id: ClothingBeltSheathFilled
+      - id: DoorRemoteCommand
 
 - type: entity
   id: LockerHeadOfPersonnelFilled
@@ -94,6 +96,7 @@
       - id: CigarGoldCase
         prob: 0.10
         # Fuck the HoP they don't deserve fucking cigars.
+      - id: DoorRemoteService
 
 - type: entity
   id: LockerChiefEngineerFilled
@@ -114,6 +117,7 @@
       - id: ClothingHandsGlovesColorYellow
       - id: CigarCase
         prob: 0.15
+      - id: DoorRemoteEngineering
 
 - type: entity
   id: LockerChiefMedicalOfficerFilled
@@ -123,27 +127,19 @@
   - type: StorageFill
     contents:
       - id: MedkitFilled
-        prob: 1
       - id: ClothingHandsGlovesLatex
-        prob: 1
       #- name: ClothingEyesHudMedical #Removed until working properly
       #  prob: 1
       - id: ClothingHeadsetAltMedical
-        prob: 1
       - id: ClothingCloakCmo
-        prob: 1
       - id: ClothingBackpackDuffelSurgeryFilled
-        prob: 1
       - id: ClothingOuterCoatLabCmo
-        prob: 1
       - id: ClothingMaskSterile
-        prob: 1
       - id: ClothingHeadHelmetHardsuitMedical
-        prob: 1
       - id: ClothingOuterHardsuitMedical
-        prob: 1
       - id: Hypospray
-        prob: 1
+      - id: HandheldCrewMonitor
+      - id: DoorRemoteMedical
 
 - type: entity
   id: LockerResearchDirectorFilled
@@ -166,6 +162,7 @@
         prob: 1
       - id: PlushieSlime
         prob: 0.1
+      - id: DoorRemoteResearch
 
 - type: entity
   id: LockerHeadOfSecurityFilled
@@ -214,3 +211,4 @@
         prob: 1
       - id: CigarGoldCase
         prob: 0.50
+      - id: DoorRemoteSecurity
