@@ -104,6 +104,7 @@
     !type:NanotrasenNameGenerator
     prefixCreator: '14'
   mapPath: /Maps/nss_pillar.yml
+  votable: false
   minPlayers: 40
   overflowJobs:
     - Assistant
