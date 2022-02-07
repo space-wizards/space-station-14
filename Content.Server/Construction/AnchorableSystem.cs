@@ -61,7 +61,7 @@ namespace Content.Server.Construction
             if (attempt.Cancelled)
                 return false;
 
-            return await _toolSystem.UseTool(usingUid, userUid, uid, 0f, 0.5f + attempt.Delay, anchorable.Tool, toolComponent:usingTool);
+            return await _toolSystem.UseTool(usingUid, userUid, uid, 0f, anchorable.Delay + attempt.Delay, anchorable.Tool, toolComponent:usingTool);
         }
 
         /// <summary>
