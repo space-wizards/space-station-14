@@ -19,8 +19,6 @@ namespace Content.Server.Light.Components
     [RegisterComponent, Friend(typeof(PoweredLightSystem))]
     public class PoweredLightComponent : Component
     {
-        public override string Name => "PoweredLight";
-
         [DataField("burnHandSound")]
         public SoundSpecifier BurnHandSound = new SoundPathSpecifier("/Audio/Effects/lightburn.ogg");
 

@@ -14,8 +14,6 @@ namespace Content.Shared.Placeable
     [Friend(typeof(PlaceableSurfaceSystem))]
     public class PlaceableSurfaceComponent : Component
     {
-        public override string Name => "PlaceableSurface";
-
         [ViewVariables]
         [DataField("isPlaceable")]
         public bool IsPlaceable { get; set; } = true;

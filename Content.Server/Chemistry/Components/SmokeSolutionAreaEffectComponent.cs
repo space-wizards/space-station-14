@@ -16,7 +16,6 @@ namespace Content.Server.Chemistry.Components
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public override string Name => "SmokeSolutionAreaEffect";
         public new const string SolutionName = "solutionArea";
 
         protected override void UpdateVisuals()

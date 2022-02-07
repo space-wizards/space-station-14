@@ -7,10 +7,9 @@ namespace Content.Server.DeviceNetwork.Components
     /// Sends and receives device network messages wirelessly. Devices sending and receiving need to be in range and on the same frequency.
     /// </summary>
     [RegisterComponent]
+    [ComponentProtoName("WirelessNetworkConnection")]
     public class WirelessNetworkComponent : Component
     {
-        public override string Name => "WirelessNetworkConnection";
-        
         [DataField("range")]
         public int Range { get; set; }
     }

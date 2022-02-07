@@ -7,8 +7,6 @@ namespace Content.Server.AI.Components
     [RegisterComponent]
     public sealed class AiFactionTagComponent : Component
     {
-        public override string Name => "AiFactionTag";
-
         [DataField("factions")]
         public Faction Factions { get; private set; } = Faction.None;
     }

@@ -31,8 +31,7 @@ namespace Content.Shared.Interaction
         public EntityCoordinates ClickLocation { get; }
 
         /// <summary>
-        /// Is the click location close enough to reach by the player? This does not check for obstructions, just that the target is within
-        /// reach radius around the user.
+        /// Is the click location in range and unobstructed?
         /// </summary>
         public bool CanReach { get; }
 

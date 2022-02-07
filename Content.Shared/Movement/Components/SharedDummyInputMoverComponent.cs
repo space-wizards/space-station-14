@@ -7,7 +7,6 @@ namespace Content.Shared.Movement.Components
     [ComponentReference(typeof(IMoverComponent))]
     public class SharedDummyInputMoverComponent : Component, IMoverComponent
     {
-        public override string Name => "DummyInputMover";
         public bool IgnorePaused => false;
         public float CurrentWalkSpeed => 0f;
         public float CurrentSprintSpeed => 0f;

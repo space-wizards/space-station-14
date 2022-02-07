@@ -18,12 +18,12 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Tiles
 {
     [RegisterComponent]
+    [ComponentProtoName("FloorTile")]
     public class FloorTileItemComponent : Component, IAfterInteract
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
 
-        public override string Name => "FloorTile";
         [DataField("outputs", customTypeSerializer: typeof(PrototypeIdListSerializer<ContentTileDefinition>))]
         private List<string>? _outputTiles;
 
@@ -56,7 +56,7 @@ namespace Content.Server.Tiles
 
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            if (!eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
+            if (!eventArgs.CanReach)
                 return true;
 
             if (!_entMan.TryGetComponent(Owner, out StackComponent? stack))

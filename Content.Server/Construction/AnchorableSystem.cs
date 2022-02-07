@@ -33,7 +33,8 @@ namespace Content.Server.Construction
             if (!EntityManager.TryGetComponent(args.Used, out ToolComponent? usedTool))
                 return;
 
-            args.Handled = await TryToggleAnchor(uid, args.User, args.Used, anchorable, usingTool:usedTool);
+            args.Handled = true;
+            await TryToggleAnchor(uid, args.User, args.Used, anchorable, usingTool:usedTool);
         }
 
         /// <summary>

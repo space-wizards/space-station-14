@@ -37,6 +37,7 @@
   - type: Tag
     tags:
     - Trash
+  - type: ItemCooldown
 
 - type: entity
   parent: DrinkCanBaseFull

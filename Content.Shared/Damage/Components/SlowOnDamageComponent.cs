@@ -11,8 +11,6 @@ namespace Content.Shared.Damage.Components
     [RegisterComponent, NetworkedComponent]
     public class SlowOnDamageComponent : Component
     {
-        public override string Name => "SlowOnDamage";
-
         /// <summary>
         ///     Damage -> movespeed dictionary. This is -damage-, not -health-.
         /// </summary>
