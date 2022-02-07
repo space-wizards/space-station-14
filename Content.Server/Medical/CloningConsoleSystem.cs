@@ -70,7 +70,59 @@ namespace Content.Server.Medical
             UpdateUserInterface(comp);
         }
 
-        public void FindScanner(EntityUid Owner, CloningConsoleComponent? cloneConsoleComp = null)
+
+
+        private void HandleActivateInWorld(EntityUid uid, CloningConsoleComponent consoleComponent, ActivateInWorldEvent args)
+        {
+            if (!TryComp<ActorComponent>(args.User, out var actor))
+            {
+                return;
+            }
+            if (!IsPowered(consoleComponent))
+                return;
+
+            consoleComponent.UserInterface?.Open(actor.PlayerSession);
+        }
+
+        public bool IsPowered(CloningConsoleComponent consoleComponent)
+        {
+            if (TryComp<ApcPowerReceiverComponent>(consoleComponent.Owner, out var receiver))
+            {
+                return receiver.Powered;
+            }
+            return false;
+        }
+
+        private void UpdateUserInterface(CloningConsoleComponent consoleComponent)
+        {
+            if (!IsPowered(consoleComponent))
+            {
+                consoleComponent.UserInterface?.CloseAll();
+                return;
+            }
+            var newState = GetUserInterfaceState(consoleComponent);
+            if (newState == null)
+                return;
+            consoleComponent.UserInterface?.SetState(newState);
+        }
+
+
+        private void OnButtonPressed(EntityUid uid, CloningConsoleComponent consoleComponent, UiButtonPressedMessage args)
+        {
+            if (!IsPowered(consoleComponent))
+                return;
+
+            if (args.Button == UiButton.Clone) {
+                TryClone(uid, consoleComponent);
+                return;
+            }
+            if (args.Button == UiButton.Eject) {
+                TryEject(uid, consoleComponent);
+                return;
+            }
+        }
+
+        public void FindDevices(EntityUid Owner, CloningConsoleComponent? cloneConsoleComp = null)
         {
             if (!Resolve(Owner, ref cloneConsoleComp))
                 return;
@@ -104,58 +156,6 @@ namespace Content.Server.Medical
             return;
         }
 
-        private void HandleActivateInWorld(EntityUid uid, CloningConsoleComponent consoleComponent, ActivateInWorldEvent args)
-        {
-            if (!TryComp<ActorComponent>(args.User, out var actor))
-            {
-                return;
-            }
-            if (!IsPowered(consoleComponent))
-                return;
-
-            consoleComponent.UserInterface?.Open(actor.PlayerSession);
-        }
-
-        public bool IsPowered(CloningConsoleComponent consoleComponent)
-        {
-            if (TryComp<ApcPowerReceiverComponent>(consoleComponent.Owner, out var receiver))
-            {
-                return receiver.Powered;
-            }
-            return false;
-        }
-
-        private void UpdateUserInterface(CloningConsoleComponent consoleComponent)
-        {
-            if (!IsPowered(consoleComponent))
-            {
-                consoleComponent.UserInterface?.CloseAll();
-                return;
-
-            }
-
-            var newState = GetUserInterfaceState(consoleComponent);
-            if (newState == null)
-                return;
-            consoleComponent.UserInterface?.SetState(newState);
-        }
-
-
-        private void OnButtonPressed(EntityUid uid, CloningConsoleComponent consoleComponent, UiButtonPressedMessage args)
-        {
-            if (!IsPowered(consoleComponent))
-                return;
-
-            if (args.Button == UiButton.Clone) {
-                TryClone(uid, consoleComponent);
-                return;
-            }
-            if (args.Button == UiButton.Eject) {
-                TryEject(uid, consoleComponent);
-                return;
-            }
-        }
-
         public void TryEject(EntityUid uid, CloningConsoleComponent consoleComponent)
         {
             if (consoleComponent.CloningPod == null)
@@ -169,11 +169,7 @@ namespace Content.Server.Medical
                 {
                     var cloningPodSystem = EntitySystem.Get<CloningPodSystem>();
                     if (!TryComp<MindComponent>( consoleComponent.GeneticScanner.BodyContainer.ContainedEntity.Value, out MindComponent? mindComp) || mindComp.Mind == null)
-                    {
-                        // obj.Session.AttachedEntity.Value.PopupMessageCursor(Loc.GetString("medical-scanner-component-msg-no-soul"));
-                        // break;
                         return;
-                    }
                     // Null suppression based on above check. Yes, it's explicitly needed
                     var mind = mindComp.Mind!;
 
@@ -182,32 +178,23 @@ namespace Content.Server.Medical
                     // Ideally this ends with GameTicker & CloningSystem handing DNA to a function that sets up a body for that DNA.
                     var mindUser = mind.UserId;
                     if (mindUser.HasValue == false || mind.Session == null)
-                    {
-                        // For now assume this means soul departed
-                        // obj.Session.AttachedEntity.Value.PopupMessageCursor(Loc.GetString("medical-scanner-component-msg-soul-broken"));
                         return;
-                    }
-                    // var profile = GetPlayerProfileAsync(mindUser.Value);
+
                     // cloningSystem.AddToDnaScans(new ClonerDNAEntry(mind, profile));
                     if (consoleComponent.CloningPod != null && consoleComponent.GeneticScanner != null)
                     {
-                        // var mind = mindComp.Mind!;
-                        // var mindUser = mind.UserId;
                         if (mindUser.HasValue == false || mind.Session == null)
                         {
-                            // For now assume this means soul departed
-                            // obj.Session.AttachedEntity.Value.PopupMessageCursor(Loc.GetString("medical-scanner-component-msg-soul-broken"));
                             return;
                         }
                         var profile = GetPlayerProfileAsync(mindUser.Value);
-
-                            cloningPodSystem.TryCloning(mind, profile, consoleComponent.CloningPod);
+                        cloningPodSystem.TryCloning(mind, profile, consoleComponent.CloningPod);
                     }
                 }
         }
         public CloningConsoleBoundUserInterfaceState? GetUserInterfaceState(CloningConsoleComponent consoleComponent)
         {
-            FindScanner(consoleComponent.Owner, consoleComponent);
+            FindDevices(consoleComponent.Owner, consoleComponent);
 
             // !TryComp<DamageableComponent>(scanBody.Value, out var damageable)
             ClonerStatusState clonerStatus = ClonerStatusState.Ready;
@@ -239,21 +226,9 @@ namespace Content.Server.Medical
                     }
                     else
                     {
-                        if (mindComp != null && mindComp.Mind != null)
+                        if (mindComp == null || mindComp.Mind == null || mindComp.Mind.UserId == null || !_playerManager.TryGetSessionById(mindComp.Mind.UserId.Value, out var client))
                         {
-                            if (mindComp.Mind.OwnedEntity != null &&
-                                TryComp<MobStateComponent?>(mindComp.Mind?.OwnedEntity.Value, out var state) &&
-                                !state.IsDead())
-                            {
-                                clonerStatus = ClonerStatusState.OccupantMetaphyiscal;
-                            }
-
-                        } else
-                        {
-                            if (mindComp == null || mindComp.Mind == null || mindComp.Mind.UserId == null || !_playerManager.TryGetSessionById(mindComp.Mind.UserId.Value, out var client))
-                            {
-                                clonerStatus = ClonerStatusState.NoMindDetected;
-                            }
+                            clonerStatus = ClonerStatusState.NoMindDetected;
                         }
                     }
                 }

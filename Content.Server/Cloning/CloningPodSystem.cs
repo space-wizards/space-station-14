@@ -54,22 +54,8 @@ namespace Content.Server.Cloning
         public void TryCloning(Mind.Mind mind, HumanoidCharacterProfile hcp, CloningPodComponent clonePod)
         {
             if (clonePod.BodyContainer.ContainedEntity != null)
-            {
-                // obj.Session.AttachedEntity.Value.PopupMessageCursor(Loc.GetString("cloning-pod-component-msg-occupied"));
                 return;
-            }
-            // if (message.ScanId == null)
-            // {
-                // obj.Session.AttachedEntity.Value.PopupMessageCursor(Loc.GetString("cloning-pod-component-msg-no-selection"));
-            //     return;
             // }
-            // var cloningSystem = EntitySystem.Get<CloningSystem>();
-            // if (!cloningSystem.IdToDNA.TryGetValue(message.ScanId.Value, out var dna))
-            // {
-            //     obj.Session.AttachedEntity.Value.PopupMessageCursor(Loc.GetString("cloning-pod-component-msg-bad-selection"));
-            //     return; // ScanId is not in database
-            // }
-            // var mind = dna.Mind;
 
             // MOVE TO CLONING SYSTEM
             if (ClonesWaitingForMind.TryGetValue(mind, out var clone))
@@ -100,12 +86,9 @@ namespace Content.Server.Cloning
                 return; // If we can't track down the client, we can't offer transfer. That'd be quite bad.
             }
 
-
-
             if (!TryComp<TransformComponent>(clonePod.Owner, out var transform))
-            {
                 return;
-            }
+
             var speciesProto = _prototype.Index<SpeciesPrototype>(hcp.Species).Prototype;
             var mob = EntityManager.SpawnEntity(speciesProto, transform.MapPosition);
             EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(mob, hcp);
@@ -122,8 +105,7 @@ namespace Content.Server.Cloning
             clonePod.CapturedMind = mind;
             EntitySystem.Get<CloningSystem>().ClonesWaitingForMind.Add(mind, mob);
             UpdateStatus(CloningPodStatus.NoMind, clonePod);
-            var acceptMessage = new AcceptCloningEui(mind);
-            _euiManager.OpenEui(acceptMessage, client);
+            _euiManager.OpenEui(new AcceptCloningEui(mind), client);
         }
 
         public bool IsPowered(CloningPodComponent clonepod)
