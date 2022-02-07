@@ -251,7 +251,7 @@ namespace Content.Client.Entry
             "GhostOnMove",
             "RandomSpawner",
             "SpawnAfterInteract",
-            "DisassembleOnActivate",
+            "DisassembleOnAltVerb",
             "ExplosionLaunched",
             "BeingCloned",
             "Advertise",

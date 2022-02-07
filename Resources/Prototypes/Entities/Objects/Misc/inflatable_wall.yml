@@ -32,7 +32,7 @@
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: DisassembleOnActivate
+  - type: DisassembleOnAltVerb
     prototype: InflatableWallStack1
     doAfter: 3
   - type: Airtight
