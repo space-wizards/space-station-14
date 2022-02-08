@@ -171,22 +171,13 @@
           pipeDirection: South
 
 - type: entity
-  parent: GasBinaryBase
+  parent: GasVentPump
   id: GasDualPortVentPump
   name: dual-port air vent
   description: Has a valve and a pump attached to it. There are two ports.
   placement:
     mode: SnapgridCenter
   components:
-    - type: ApcPowerReceiver
-    - type: ExtensionCableReceiver
-    - type: DeviceNetworkComponent
-      deviceNetId: Apc
-      frequency: 1621
-    - type: ApcNetworkConnection
-    - type: AtmosAlarmable
-      alarmedBy:
-      - AirAlarm
     - type: Sprite
       netsync: false
       drawdepth: FloorObjects
@@ -197,13 +188,45 @@
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: vent_off
           map: [ "enum.VentVisualLayers.Vent", "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer" ]
-    - type: Appearance
-      visuals:
-        - type: SubFloorShowLayerVisualizer
-        - type: PipeConnectorVisualizer
-        - type: PipeColorVisualizer
-        - type: VentPumpVisualizer
-    - type: GasDualPortVentPump
+    - type: NodeContainer
+      nodes:
+        pipe:
+          !type:PipeNode
+          nodeGroupID: Pipe
+          pipeDirection: North
+        pipe:
+          !type:PipeNode
+          nodeGroupID: Pipe
+          pipeDirection: South
+          
+- type: entity
+  parent: GasPassiveVent
+  id: GasDualPortVentPump
+  name: dual-port passive vent
+  description: An open vent. There are two ports.
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Sprite
+      netsync: false
+      drawdepth: FloorObjects
+      sprite: Structures/Piping/Atmospherics/vent.rsi
+      layers:
+        - sprite: Structures/Piping/Atmospherics/pipe.rsi
+          state: pipeStraight
+          map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
+        - state: vent_off
+          map: [ "enum.VentVisualLayers.Vent", "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer" ]
+    - type: NodeContainer
+      nodes:
+        pipe:
+          !type:PipeNode
+          nodeGroupID: Pipe
+          pipeDirection: North
+        pipe:
+          !type:PipeNode
+          nodeGroupID: Pipe
+          pipeDirection: South
     
 - type: entity
   parent: GasBinaryBase
@@ -213,15 +236,6 @@
   placement:
     mode: SnapgridCenter
   components:
-    - type: ApcPowerReceiver
-    - type: ExtensionCableReceiver
-    - type: DeviceNetworkComponent
-      deviceNetId: Apc
-      frequency: 1621
-    - type: ApcNetworkConnection
-    - type: AtmosAlarmable
-      alarmedBy:
-      - AirAlarm
     - type: Sprite
       netsync: false
       drawdepth: FloorObjects
@@ -232,11 +246,13 @@
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: scrub_off
           map: [ "enum.ScrubberVisualLayers.Scrubber", "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer" ]
-    - type: Appearance
-      visuals:
-        - type: SubFloorShowLayerVisualizer
-        - type: PipeConnectorVisualizer
-        - type: PipeColorVisualizer
-        - type: ScrubberVisualizer
-    - type: AtmosDevice
-    - type: GasVentScrubber
+    - type: NodeContainer
+      nodes:
+        pipe:
+          !type:PipeNode
+          nodeGroupID: Pipe
+          pipeDirection: North
+        pipe:
+          !type:PipeNode
+          nodeGroupID: Pipe
+          pipeDirection: South
