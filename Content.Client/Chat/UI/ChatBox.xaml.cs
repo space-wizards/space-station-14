@@ -200,7 +200,6 @@ namespace Content.Client.Chat.UI
         protected override void FrameUpdate(FrameEventArgs args)
         {
             base.FrameUpdate(args);
-
         }
 
         private void OnChatPermissionsUpdated(ChatPermissionsUpdatedEventArgs eventArgs)

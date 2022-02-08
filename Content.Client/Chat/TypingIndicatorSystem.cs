@@ -28,7 +28,7 @@ namespace Content.Client.Chat
         /// The system needs to be enabled by default client side for handling remote players
         /// but clients can opt in to use this feature.
         /// </summary>
-		public bool EnabledLocally => _cfg.GetCVar(CCVars.ChatTypingIndicatorSystemEnabled);
+        public bool EnabledLocally => _cfg.GetCVar(CCVars.ChatTypingIndicatorSystemEnabled);
 
         /// <summary>
         /// Used for throttling how often we allow the client
