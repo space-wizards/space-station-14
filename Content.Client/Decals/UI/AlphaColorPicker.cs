@@ -63,8 +63,14 @@ public sealed class AlphaColorPicker : Control
             }
             else
             {
-                _picker.Close();
-                _picker = null;
+                if (_picker.IsOpen)
+                {
+                    _picker.Close();
+                }
+                else
+                {
+                    _picker.Open();
+                }
             }
         };
 
