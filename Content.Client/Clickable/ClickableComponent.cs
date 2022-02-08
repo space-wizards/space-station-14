@@ -48,7 +48,7 @@ namespace Content.Client.Clickable
             var invSpriteMatrix = Matrix3.CreateTransform(Vector2.Zero, -sprite.Rotation, (1,1)/sprite.Scale);
             var relativeRotation = worldRot + _eyeManager.CurrentEye.Rotation;
 
-            // localPos would be the clicked location in the entity's coordinate frame if it weren't for sprite.Offset.
+            // localPos is the clicked location in the entity's coordinate frame, but with the sprite offset removed.
             var localPos = transform.InvWorldMatrix.Transform(worldPos) - sprite.Offset;
 
             // Check explicitly defined click-able bounds
@@ -64,7 +64,7 @@ namespace Content.Client.Clickable
                 // How many orientations does this rsi have?
                 var dirCount = sprite.GetLayerDirectionCount(layer);
 
-                // If the sprite does not actually rotate we need to fix the rotation that was added to localPos via InvWorldMatrix
+                // If the sprite does not actually rotate we need to fix the rotation that was added to localPos via invSpriteMatrix
                 var modAngle = Angle.Zero;
                 if (sprite.NoRotation)
                     modAngle += CalcRectWorldAngle(relativeRotation, dirCount);
@@ -73,6 +73,7 @@ namespace Content.Client.Clickable
                 if (layer.Texture != null)
                 {
                     // Convert to sprite-coordinates. This includes sprite matrix (scale, rotation), and noRot corrections (modAngle)
+                    // Recall that the sprite offset was already removed
                     var spritePos = invSpriteMatrix.Transform(modAngle.RotateVec(localPos));
 
                     // Convert to image coordinates
@@ -82,37 +83,34 @@ namespace Content.Client.Clickable
                         return true;
                 }
 
-                // As the texture failed, check the RSI next
+                // As the texture failed, we check the RSI next
                 if (layer.State == null || layer.ActualRsi is not RSI rsi || !rsi.TryGetState(layer.State, out var state))
                     continue;
 
                 // Get the sprite direction, in the absence of any direction offset or override. this is just for
-                // transforming the sprite position.
+                // determining the angle-snapping correction for directional sprites.
                 var dir = relativeRotation.ToRsiDirection(state.Directions);
 
-                // Yes, angle -> dir -> angle is a bit silly, and there's probably a more direct calculation, but state.Directions could be one of three things and
-                // I CBF doing it manually in a case switch or something.
+                // Add the correction to the sprite angle due to the fact that it is a directional sprite. This is some
+                // multiple of 90 or 45 degrees for 4/8 directional sprites, or 0 for one-directional sprites.
                 modAngle += dir.Convert().ToAngle();
 
                 // TODO SPRITE LAYER ROTATION
                 // Currently this doesn't support layers with scale & rotation. Whenever/if-ever that should be added,
                 // this needs fixing. See also Layer.CalculateBoundingBox and other engine code with similar warnings.
 
-                // Convert to sprite-coordinates. This is the same as for the texture check, but now also includes directional angle-snapping corrections in modAngle
+                // Convert to sprite-coordinates. This is the same as for the texture check, but now also includes
+                // directional angle-snapping corrections in modAngle (+ the previous NoRot stuff)
                 var layerPos = invSpriteMatrix.Transform(modAngle.RotateVec(localPos));
 
                 // Convert to image coordinates
                 var layerImagePos = (Vector2i) (layerPos * EyeManager.PixelsPerMeter * (1, -1) + layer.ActualRsi.Size / 2f);
 
                 // Next, to get the right click map we need the "direction" of this layer that is actually being used to draw the sprite on the screen.
-                // This differs from the dir above which is just for coordinate transformations.
+                // This **can** differ from the dir defined before, but can also just be the same.
                 if (sprite.EnableDirectionOverride)
-                {
-                    dir = sprite.DirectionOverride.Convert(state.Directions);
-                    dir = dir.OffsetRsiDir(layer.DirOffset);
-                }
-                else
-                    dir = dir.OffsetRsiDir(layer.DirOffset);
+                    dir = sprite.DirectionOverride.Convert(state.Directions);;
+                dir = dir.OffsetRsiDir(layer.DirOffset);
 
                 if (_clickMapManager.IsOccluding(layer.ActualRsi, layer.State, dir, layer.AnimationFrame, layerImagePos))
                     return true;
@@ -128,7 +126,7 @@ namespace Content.Client.Clickable
             if (_data == null)
                 return false;
 
-            // Here we get sprite orientation, either from an explicit override or just the relative rotation
+            // Here we get sprite orientation, either from an explicit override or just from the relative rotation
             var direction = relativeRotation.GetCardinalDir();
 
             // Assuming the sprite snaps to 4 orientations we need to adjust our localPos relative to the entity by 90
@@ -143,11 +141,11 @@ namespace Content.Client.Clickable
 
             var spritePos = spriteMatrix.Transform(modAngle.RotateVec(localPos));
 
-            // First, check the bounding box from DirBoundData _data that this is valid for all orientations
+            // First, check the bounding box that is valid for all orientations
             if (_data.All.Contains(spritePos))
                 return true;
 
-            // otherwise, get and check the appropriate bounding box for the current sprite orientation
+            // Next, get and check the appropriate bounding box for the current sprite orientation
             var boundsForDir = (sprite.EnableDirectionOverride ? sprite.DirectionOverride : direction) switch
             {
                 Direction.East => _data.East,
@@ -157,7 +155,6 @@ namespace Content.Client.Clickable
                 _ => throw new InvalidOperationException()
             };
 
-            // and check if our adjusted point lies inside of it
             return boundsForDir.Contains(spritePos);
         }
 
