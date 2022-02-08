@@ -1,5 +1,5 @@
 ﻿<DefaultWindow xmlns="https://spacestation14.io"
-               Title="{Loc 'decal-placer-window-title'}"
+               Title="{Loc 'palette-color-picker-window-title'}"
                MinSize="250 500"
                SetSize="250 500">
     <BoxContainer Orientation="Vertical">
