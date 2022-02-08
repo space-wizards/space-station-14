@@ -9,8 +9,6 @@ namespace Content.Shared.Speech
     [RegisterComponent]
     public class SharedSpeechComponent : Component
     {
-        public override string Name => "Speech";
-
         [DataField("enabled")]
         private bool _enabled = true;
 

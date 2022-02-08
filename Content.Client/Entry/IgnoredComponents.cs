@@ -235,7 +235,7 @@ namespace Content.Client.Entry
             "LightReplacer",
             "SecretStash",
             "Toilet",
-            "ClusterFlash",
+            "ClusterGrenade",
             "Repairable",
             "SolutionTransfer",
             "Evaporation",
@@ -301,7 +301,8 @@ namespace Content.Client.Entry
             "ArtifactInteractionTrigger",
             "Artifact",
             "RandomArtifactSprite",
-            "EnergySword"
+            "EnergySword",
+            "DoorRemote",
         };
     }
 }

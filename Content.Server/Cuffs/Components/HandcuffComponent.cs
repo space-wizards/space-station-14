@@ -179,7 +179,7 @@ namespace Content.Server.Cuffs.Components
                 return true;
             }
 
-            if (!eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true))
+            if (!eventArgs.CanReach)
             {
                 eventArgs.User.PopupMessage(Loc.GetString("handcuff-component-too-far-away-error"));
                 return true;

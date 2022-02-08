@@ -11,7 +11,6 @@ namespace Content.Shared.Movement.Components
     [RegisterComponent]
     public sealed class MovementIgnoreGravityComponent : Component
     {
-        public override string Name => "MovementIgnoreGravity";
     }
 
     public static class GravityExtensions

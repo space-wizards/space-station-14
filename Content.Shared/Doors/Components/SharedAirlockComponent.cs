@@ -10,8 +10,6 @@ namespace Content.Shared.Doors.Components;
 [NetworkedComponent]
 public abstract class SharedAirlockComponent : Component
 {
-    public override string Name => "Airlock";
-
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("safety")]
     public bool Safety = true;

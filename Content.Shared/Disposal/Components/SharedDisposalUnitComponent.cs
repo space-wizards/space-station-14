@@ -11,8 +11,6 @@ namespace Content.Shared.Disposal.Components
     [NetworkedComponent]
     public abstract class SharedDisposalUnitComponent : Component
     {
-        public override string Name => "DisposalUnit";
-
         // TODO: Could maybe turn the contact off instead far more cheaply as farseer (though not box2d) had support for it?
         // Need to suss it out.
         /// <summary>

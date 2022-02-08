@@ -104,6 +104,12 @@
       effects:
       - !type:SatiateThirst
         factor: 4
+        
+- type: reagent
+  id: MilkGoat
+  parent: Milk
+  name: goats milk
+  desc: An opaque white liquid produced by a goat. High buttermilk content.
 
 - type: reagent
   id: MilkOat
@@ -120,16 +126,8 @@
 
 - type: reagent
   id: MilkSoy
+  parent: MilkOat
   name: soy milk
-  group: Drinks
-  desc: Surprisingly tasty.
-  physicalDesc: refreshing
-  color: "#302000"
-  metabolisms:
-    Drink:
-      effects:
-      - !type:SatiateThirst
-        factor: 5 # soyboys stay winning
 
 - type: reagent
   id: MilkSpoiled
@@ -263,3 +261,16 @@
       effects:
       - !type:SatiateHunger
         factor: 4
+
+- type: reagent
+  id: Pilk
+  name: pilk
+  parent: BaseDrink
+  desc: A sickening mixture of milk and cola.
+  physicalDesc: creamy
+  color: "#e7c69f"
+  metabolisms:
+    Drink:
+      effects:
+        - !type:SatiateThirst
+          factor: 1

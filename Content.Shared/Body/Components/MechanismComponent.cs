@@ -11,9 +11,6 @@ namespace Content.Shared.Body.Components
     public class MechanismComponent : Component, ISerializationHooks
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
-
-        public override string Name => "Mechanism";
-
         private SharedBodyPartComponent? _part;
 
         public SharedBodyComponent? Body => Part?.Body;

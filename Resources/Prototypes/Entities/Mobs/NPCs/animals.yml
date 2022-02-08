@@ -329,6 +329,18 @@
       normal: goat
       crit: dead
       dead: dead
+  - type: SolutionContainerManager
+    solutions:
+      udder:
+        maxVol: 250
+        reagents:
+        - ReagentId: MilkGoat
+          Quantity: 30
+  - type: Udder
+    reagentId: MilkGoat
+    targetSolution: udder
+    quantity: 25
+    updateRate: 20
   - type: Butcherable
     meat: FoodMeat
     pieces: 4

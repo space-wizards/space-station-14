@@ -14,8 +14,6 @@ namespace Content.Shared.Tag
     [RegisterComponent]
     public class TagComponent : Component, ISerializationHooks
     {
-        public override string Name => "Tag";
-
         [ViewVariables]
         [DataField("tags", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<TagPrototype>))]
         private readonly HashSet<string> _tags = new();

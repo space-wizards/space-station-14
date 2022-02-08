@@ -14,8 +14,6 @@ namespace Content.Shared.Chemistry.Components
     [NetworkedComponent] // only needed for white-lists. Client doesn't actually need Solution data;
     public class FitsInDispenserComponent : Component
     {
-        public override string Name => "FitsInDispenser";
-
         /// <summary>
         /// Solution name that will interact with ReagentDispenserComponent.
         /// </summary>

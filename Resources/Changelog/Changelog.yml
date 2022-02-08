@@ -1,146 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: Fixes mobs being on fire permanently, type: Fix}
-  id: 466
-  time: '2021-10-21T21:09:28.187458+00:00'
-- author: 20kdc
-  changes:
-  - {message: Saltern now uses SMES terminals, type: Add}
-  - {message: SMESes in solars, type: Add}
-  - {message: Nudge a trash spawner back in-bounds, type: Fix}
-  id: 467
-  time: '2021-10-21T21:25:21.0000000+00:00'
-- author: PJB
-  changes:
-  - {message: 'You can now see your held active item next to your mouse cursor, to
-      hopefully aid in remembering which your active hand is.', type: Add}
-  - {message: This feature can be toggled in the options menu if you'd prefer not
-      having it., type: Tweak}
-  id: 468
-  time: '2021-10-22T02:26:02.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Gunpet, type: Add}
-  id: 469
-  time: '2021-10-22T09:14:09.0000000+00:00'
-- author: Seth
-  changes:
-  - {message: Added Plasma into the cargo console, type: Add}
-  id: 470
-  time: '2021-10-22T09:47:47.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Fixes pulling items with hand item cursor overlay freezing the game.,
-    type: Fix}
-  id: 471
-  time: '2021-10-22T11:45:45.025249+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: Fixed being spaced causing the player to gib, type: Fix}
-  id: 472
-  time: '2021-10-23T18:45:58.0000000+00:00'
-- author: juliangiebel
-  changes:
-  - {message: Added light switches that turn lights connected to the same apc on and
-      off., type: Add}
-  id: 473
-  time: '2021-10-23T23:23:19.0000000+00:00'
-- author: moony
-  changes:
-  - {message: Placing cables on lattices works again, type: Fix}
-  id: 474
-  time: '2021-10-24T00:32:33.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed ghosts being able interact with objects., type: Fix}
-  id: 475
-  time: '2021-10-24T02:29:38.0000000+00:00'
-- author: Efruit
-  changes:
-  - {message: It is no longer advised to anger the magically-inclined janitorial staff.,
-    type: Tweak}
-  id: 476
-  time: '2021-10-24T02:34:31.0000000+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: 'The context menu, examining, and activating now works on items inside
-      storage entities. (The last one means boxes can now be opened while still inside
-      a backpack.)', type: Add}
-  id: 477
-  time: '2021-10-24T05:42:47.0000000+00:00'
-- author: moony
-  changes:
-  - {message: pipes can once again be picked up, type: Add}
-  id: 478
-  time: '2021-10-24T06:28:20.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: You can no longer paste the contents of Moby Dick into someone's ID.,
-    type: Fix}
-  id: 479
-  time: '2021-10-24T08:28:25.0000000+00:00'
-- author: Seth
-  changes:
-  - {message: Added Reinforced Plasma Windows, type: Add}
-  id: 480
-  time: '2021-10-24T12:46:38.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Pipes look 90% less jank on rotated shuttles., type: Fix}
-  id: 481
-  time: '2021-10-25T03:24:55.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: 'RCDs work on space again, if close to an existing non-space tile',
-    type: Fix}
-  id: 482
-  time: '2021-10-25T03:33:50.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Station will now start with a random rotation., type: Tweak}
-  id: 483
-  time: '2021-10-25T04:22:57.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Walking over slippery items (usually) won't slip you anymore., type: Tweak}
-  - {message: Turned-on magboots now stop you from slipping., type: Add}
-  id: 484
-  time: '2021-10-25T06:43:49.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Construction works on rotated grids, type: Fix}
-  id: 485
-  time: '2021-10-25T14:14:21.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Added electrocution., type: Add}
-  - {message: Cutting cables without insulated gloves shocks you., type: Tweak}
-  - {message: Grilles can now be electrified by placing a cable below them., type: Tweak}
-  id: 486
-  time: '2021-10-25T14:21:56.0000000+00:00'
-- author: ike709
-  changes:
-  - {message: Stacks can now be split in half by alt-clicking or into different amounts
-      with the new Split verb., type: Add}
-  id: 487
-  time: '2021-10-25T14:36:04.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Added insulated gloves (and their cheap knockoffs) to the station.,
-    type: Add}
-  id: 488
-  time: '2021-10-25T14:58:04.292881+00:00'
-- author: 20kdc
-  changes:
-  - {message: ChemMaster bottles are no longer 'empty', type: Fix}
-  id: 489
-  time: '2021-10-25T14:58:16.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: 'Wall lights can be placed again, APCs place where they should', type: Fix}
-  id: 490
-  time: '2021-10-26T14:15:02.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Construction recipes are now sorted alphabetically., type: Tweak}
@@ -2941,3 +2799,158 @@ Entries:
   - {message: 'Added insta-heat ramen, just add water!', type: Add}
   id: 966
   time: '2022-02-01T06:16:49.0000000+00:00'
+- author: Veritius
+  changes:
+  - {message: added pilk, type: Add}
+  id: 967
+  time: '2022-02-02T06:20:54.0000000+00:00'
+- author: wrexbe
+  changes:
+  - {message: Suicide by toilet shows correct messages., type: Fix}
+  id: 968
+  time: '2022-02-02T23:14:42.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Deconstructing crates now requires a screwdriver again., type: Fix}
+  id: 969
+  time: '2022-02-03T23:43:52.815666+00:00'
+- author: Peptide90
+  changes:
+  - {message: Changed map Reach from 25 players max to 15., type: Tweak}
+  - {message: Changed map Saltern from 20 to 25 max players., type: Tweak}
+  id: 970
+  time: '2022-02-04T13:20:25.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: You can now milk goats for their milk. Try keep them still long enough!,
+    type: Add}
+  id: 971
+  time: '2022-02-04T21:14:47.0000000+00:00'
+- author: Seth
+  changes:
+  - {message: Goats are back into the cargo console, type: Tweak}
+  id: 972
+  time: '2022-02-04T21:14:54.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Universal Enzyme and corn oil can now be produced by juicing corn.,
+    type: Add}
+  - {message: 'Ketchup can now be made by combining 10 tomato juice and 5 sugar. BBQ
+      Sauce can be made by 5 ketchup, vinegar and sugar each. Hot Sauce with 5 tomato
+      juice, salt and capsaicin oil.', type: Add}
+  id: 973
+  time: '2022-02-04T21:15:10.0000000+00:00'
+- author: Lamrr
+  changes:
+  - {message: 'Fingerless gloves have arrived. Protect your hands, well at least some
+      parts of them.', type: Add}
+  id: 974
+  time: '2022-02-04T21:16:22.0000000+00:00'
+- author: Zyme
+  changes:
+  - {message: The Syndicate now offers a pyjama bundle! You can find it on your nearest
+      uplink., type: Add}
+  id: 975
+  time: '2022-02-04T21:16:31.0000000+00:00'
+- author: Lamrr
+  changes:
+  - {message: Improve your MIDI track rendition five fold through the new digital
+      audio workstation. This end-of-the-line instrument won't be cheap to construct
+      however..., type: Add}
+  - {message: NanoTrasen has updated its research programme to include cutting edge
+      advances in applied musicology., type: Add}
+  id: 976
+  time: '2022-02-04T21:17:09.0000000+00:00'
+- author: Fishfish458
+  changes:
+  - {message: Added handheld crew monitor to research and proto-lathe, type: Add}
+  id: 977
+  time: '2022-02-04T21:17:16.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Added a new large pop map. Welcome to NSS Pillar! Familiar cousin to
+      box, follow the signs so you don''t get lost.', type: Add}
+  id: 978
+  time: '2022-02-04T21:34:52.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'Added poppies and aloe, 2 plants which yield basic medicines when ground.',
+    type: Add}
+  - {message: 'Added aloe cream, a natural ointment made by microwaving aloe for 10
+      seconds.', type: Add}
+  id: 979
+  time: '2022-02-04T23:17:05.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: The power bill has finally arrived. Computers and Machines use considerably
+      more power now. Engineering better be fast at getting some generation going!,
+    type: Tweak}
+  id: 980
+  time: '2022-02-04T23:17:11.0000000+00:00'
+- author: Lamrr
+  changes:
+  - {message: The digital audio workstaiton (sic) has been relabelled., type: Fix}
+  id: 981
+  time: '2022-02-05T01:23:43.0000000+00:00'
+- author: Willhelm53
+  changes:
+  - {message: Added new sparkle sprite that is applied to puddles below a certain
+      volume. Better look out for those wet floor signs!, type: Add}
+  - {message: 'Nerfed regular blue buckets to only hold 100u (down from 500u), bringing
+      them more in line with their capacity in SS13.', type: Fix}
+  - {message: 'Mops can now pick up all but the last 5u of a puddle. The remaining
+      5u is how wet floors work. But hey, that''s what evaporation is for!', type: Tweak}
+  id: 982
+  time: '2022-02-05T02:26:11.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'You should now be able to un-anchor things like disposal units, instead
+      of just discarding your wrench.', type: Tweak}
+  id: 983
+  time: '2022-02-05T02:39:02.0000000+00:00'
+- author: walrusfromspace
+  changes:
+  - {message: Added door remotes to the heads' lockers, type: Add}
+  id: 984
+  time: '2022-02-05T13:33:24.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Windoors should no longer crush people as they auto close., type: Fix}
+  id: 985
+  time: '2022-02-05T17:27:06.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Blast doors can't be opened with a crowbar anymore., type: Tweak}
+  id: 986
+  time: '2022-02-05T18:06:33.0000000+00:00'
+- author: router
+  changes:
+  - {message: Replaced all ingot mints to fix a typo in their stamping. All "Nanotransen"
+      gold and silver bars have been melted down and reformed., type: Fix}
+  - {message: Removed Herobrine., type: Remove}
+  id: 987
+  time: '2022-02-05T19:23:06.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Massive list of changes and fixes for NSS Pillar. See Github for list.,
+    type: Fix}
+  id: 988
+  time: '2022-02-05T21:27:43.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Brig access is now the least privileged form of security access and
+      given to lawyers. It may take a while for stations to update their airlock software
+      to the latest version., type: Tweak}
+  id: 989
+  time: '2022-02-05T23:08:15.0000000+00:00'
+- author: moony
+  changes:
+  - {message: Hopefully fix pillar spawning., type: Fix}
+  id: 990
+  time: '2022-02-06T02:22:28.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Directional windows no longer look weird when viewed while rotated.,
+    type: Tweak}
+  id: 991
+  time: '2022-02-06T02:25:13.0000000+00:00'

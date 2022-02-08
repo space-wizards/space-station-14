@@ -17,8 +17,6 @@ namespace Content.Shared.Lathe
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-        public override string Name => "ProtolatheDatabase";
-
         [DataField("protolatherecipes", customTypeSerializer:typeof(PrototypeIdListSerializer<LatheRecipePrototype>))]
         private List<string> _recipeIds = new();
 
