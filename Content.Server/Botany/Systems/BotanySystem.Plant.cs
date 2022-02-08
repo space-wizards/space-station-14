@@ -3,6 +3,7 @@ using Content.Server.Botany.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Popups;
 using Content.Shared.GameTicking;
+using Content.Shared.Tag;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -18,6 +19,7 @@ namespace Content.Server.Botany.Systems
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+        [Dependency] private readonly TagSystem _tags = default!;
 
         private int _nextUid = 0;
         private float _timer = 0f;

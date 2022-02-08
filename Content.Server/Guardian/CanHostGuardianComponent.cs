@@ -2,7 +2,7 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Server.Guardian;
 
-[RegisterComponent, ComponentProtoName("CanHostGuardian")]
+[RegisterComponent]
 public class CanHostGuardianComponent : Component
 {
 }

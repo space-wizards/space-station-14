@@ -9,6 +9,8 @@ namespace Content.Server.Botany.Systems;
 
 public sealed class LogSystem : EntitySystem
 {
+    [Dependency] private readonly TagSystem _tags = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -18,7 +20,7 @@ public sealed class LogSystem : EntitySystem
 
     private void OnInteractUsing(EntityUid uid, LogComponent component, InteractUsingEvent args)
     {
-        if (args.Used.HasTag("BotanySharp"))
+        if (_tags.HasTag(args.Used, "BotanySharp"))
         {
             for (var i = 0; i < component.SpawnCount; i++)
             {

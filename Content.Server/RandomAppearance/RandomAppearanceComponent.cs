@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Analyzers;
+using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.RandomAppearance;
 
-[RegisterComponent, ComponentProtoName("RandomAppearance")]
+[RegisterComponent]
 [Friend(typeof(RandomAppearanceSystem))]
 public class RandomAppearanceComponent : Component, ISerializationHooks
 {
