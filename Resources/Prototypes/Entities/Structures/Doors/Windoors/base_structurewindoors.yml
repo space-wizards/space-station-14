@@ -36,7 +36,7 @@
       map: ["enum.DoorVisualLayers.BaseBolted"]
     - state: emergency_unlit
       shader: unshaded
-      map: ["enum.DoorVisualLayers.BaseEAccess"]
+      map: ["enum.DoorVisualLayers.BaseEmergencyAccess"]
     - state: panel_open
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: ApcPowerReceiver
@@ -128,7 +128,7 @@
       map: [ "enum.DoorVisualLayers.BaseBolted" ]
     - state: emergency_unlit
       shader: unshaded
-      map: [ "enum.DoorVisualLayers.BaseEAccess" ]
+      map: [ "enum.DoorVisualLayers.BaseEmergencyAccess" ]
     - state: panel_open
       map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       visible: false
