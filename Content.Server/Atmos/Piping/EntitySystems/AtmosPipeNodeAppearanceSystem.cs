@@ -25,7 +25,7 @@ public sealed class AtmosPipeNodeAppearanceSystem : EntitySystem
         SubscribeLocalEvent<NodeGroupsRebuilt>(OnNodeUpdate);
     }
 
-    private void OnNodeUpdate(NodeGroupsRebuilt ev)
+    private void OnNodeUpdate(ref NodeGroupsRebuilt ev)
     {
         UpdateAppearance(ev.NodeOwner);
     }

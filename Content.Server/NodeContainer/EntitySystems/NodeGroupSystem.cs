@@ -257,7 +257,8 @@ namespace Content.Server.NodeContainer.EntitySystems
 
             foreach (var uid in entities)
             {
-                RaiseLocalEvent(uid, new NodeGroupsRebuilt(uid), true);
+                var ev = new NodeGroupsRebuilt(uid);
+                RaiseLocalEvent(uid, ref ev, true);
             }
 
             _sawmill.Debug($"Updated node groups in {sw.Elapsed.TotalMilliseconds}ms. {newGroups.Count} new groups, {refloodCount} nodes processed.");
@@ -414,9 +415,10 @@ namespace Content.Server.NodeContainer.EntitySystems
     ///     Event raised after node groups have been updated. Directed at any entity with a <see
     ///     cref="NodeContainerComponent"/> that had a relevant node.
     /// </summary>
-    public class NodeGroupsRebuilt : EntityEventArgs
+    [ByRefEvent]
+    public readonly struct NodeGroupsRebuilt
     {
-        public EntityUid NodeOwner;
+        public readonly EntityUid NodeOwner;
 
         public NodeGroupsRebuilt(EntityUid nodeOwner)
         {

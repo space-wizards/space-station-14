@@ -24,7 +24,7 @@ namespace Content.Server.Power.EntitySystems
             SubscribeLocalEvent<CableVisComponent, NodeGroupsRebuilt>(UpdateAppearance);
         }
 
-        private void UpdateAppearance(EntityUid uid, CableVisComponent cableVis, NodeGroupsRebuilt args)
+        private void UpdateAppearance(EntityUid uid, CableVisComponent cableVis, ref NodeGroupsRebuilt args)
         {
             if (cableVis.Node == null)
                 return;
