@@ -21,6 +21,7 @@
       map: ["enum.DoorVisualLayers.BaseBolted"]
     - state: emergency_unlit
       map: ["enum.DoorVisualLayers.BaseEAccess"]
+      shader: unshaded
     - state: panel_open
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Physics

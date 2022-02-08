@@ -56,7 +56,6 @@ namespace Content.Server.Remotes
                 || !TryComp<DoorComponent>(args.Target, out var doorComponent) // If it isn't a door we don't use it
                 || !HasComp<AccessReaderComponent>(args.Target) // Remotes do not work on doors without access requirements
                 || !TryComp<AirlockComponent>(args.Target, out var airlockComponent) // Remotes only work on airlocks
-                || !TryComp<SharedAirlockComponent>(args.Target, out var sharedAirlockComponent)
                 || !_interactionSystem.InRangeUnobstructed(args.User, doorComponent.Owner, -1f, CollisionGroup.Opaque))
             {
                 return;
@@ -94,7 +93,7 @@ namespace Content.Server.Remotes
             {
                 if (_doorSystem.HasAccess(doorComponent.Owner, args.Used))
                 {
-                    _sharedAirlockSystem.ToggleEmergencyAccess(sharedAirlockComponent);
+                    _sharedAirlockSystem.ToggleEmergencyAccess(airlockComponent);
                 }
             }
         }
