@@ -13,7 +13,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Animals.Systems;
 
-public class PettingSystem : EntitySystem
+public sealed class PettingSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
