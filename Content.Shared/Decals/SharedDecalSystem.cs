@@ -159,12 +159,12 @@ namespace Content.Shared.Decals
     public sealed class RequestDecalPlacementEvent : EntityEventArgs
     {
         public Decal Decal;
-        public GridId GridId;
+        public EntityCoordinates Coordinates;
 
-        public RequestDecalPlacementEvent(Decal decal, GridId gridId)
+        public RequestDecalPlacementEvent(Decal decal, EntityCoordinates coordinates)
         {
             Decal = decal;
-            GridId = gridId;
+            Coordinates = coordinates;
         }
     }
 

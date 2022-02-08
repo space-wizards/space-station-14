@@ -94,10 +94,10 @@ namespace Content.Server.Decals
             if (!_adminManager.HasAdminFlag(session, AdminFlags.Mapping))
                 return;
 
-            if (!ev.GridId.IsValid())
+            if (!ev.Coordinates.IsValid(EntityManager))
                 return;
 
-            TryAddDecal(ev.Decal, ev.GridId, out _);
+            TryAddDecal(ev.Decal, ev.Coordinates, out _);
         }
 
         private void OnDecalRemovalRequest(RequestDecalRemovalEvent ev, EntitySessionEventArgs eventArgs)
@@ -131,23 +131,24 @@ namespace Content.Server.Decals
         public bool TryAddDecal(string id, EntityCoordinates coordinates, [NotNullWhen(true)] out uint? uid, Color? color = null, Angle? rotation = null, int zIndex = 0, bool cleanable = false)
         {
             uid = 0;
-            if (!PrototypeManager.HasIndex<DecalPrototype>(id))
+
+            rotation ??= Angle.Zero;
+            var decal = new Decal(coordinates.Position, id, color, rotation.Value, zIndex, cleanable);
+
+            return TryAddDecal(decal, coordinates, out uid);
+        }
+
+        public bool TryAddDecal(Decal decal, EntityCoordinates coordinates, [NotNull] out uint? uid)
+        {
+            uid = 0;
+
+            if (!PrototypeManager.HasIndex<DecalPrototype>(decal.Id))
                 return false;
 
             var gridId = coordinates.GetGridId(EntityManager);
             if (MapManager.GetGrid(gridId).GetTileRef(coordinates).IsSpace())
                 return false;
 
-            rotation ??= Angle.Zero;
-            var decal = new Decal(coordinates.Position, id, color, rotation.Value, zIndex, cleanable);
-
-            TryAddDecal(decal, gridId, out uid);
-            return true;
-        }
-
-        public void TryAddDecal(Decal decal, GridId gridId, [NotNull] out uint? uid)
-        {
-            uid = 0;
             var chunkCollection = DecalGridChunkCollection(gridId);
             uid = chunkCollection.NextUid++;
             var chunkIndices = GetChunkIndices(decal.Coordinates);
@@ -156,6 +157,8 @@ namespace Content.Server.Decals
             chunkCollection.ChunkCollection[chunkIndices][uid.Value] = decal;
             ChunkIndex[gridId][uid.Value] = chunkIndices;
             DirtyChunk(gridId, chunkIndices);
+
+            return true;
         }
 
         public bool RemoveDecal(GridId gridId, uint uid) => RemoveDecalInternal(gridId, uid);

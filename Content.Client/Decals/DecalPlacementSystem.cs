@@ -51,7 +51,7 @@ public sealed class DecalPlacementSystem : EntitySystem
                     return false;
 
                 var decal = new Decal(coords.Position, _decalId, _decalColor, _decalAngle, _zIndex, _cleanable);
-                RaiseNetworkEvent(new RequestDecalPlacementEvent(decal, coords.GetGridId(EntityManager)));
+                RaiseNetworkEvent(new RequestDecalPlacementEvent(decal, coords));
 
                 return true;
             },
