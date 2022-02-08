@@ -109,6 +109,9 @@ namespace Content.Server.Decals
 
             var gridId = ev.Coordinates.GetGridId(EntityManager);
 
+            if (!gridId.IsValid())
+                return;
+
             // remove all decals on the same tile
             foreach (var decal in GetDecalsInRange(gridId, ev.Coordinates.Position))
             {
@@ -141,6 +144,9 @@ namespace Content.Server.Decals
                 return false;
 
             var gridId = coordinates.GetGridId(EntityManager);
+            if (!gridId.IsValid())
+                return false;
+
             if (MapManager.GetGrid(gridId).GetTileRef(coordinates).IsSpace())
                 return false;
 
