@@ -6,9 +6,9 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using System.Diagnostics;
 using Robust.Shared.Timing;
-using static Robust.Client.UserInterface.Controls.BoxContainer;
 
-using static Content.Shared.CloningConsole.SharedCloningConsoleComponent;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
+using static Content.Shared.Medical.CloningConsole.SharedCloningConsoleComponent;
 
 namespace Content.Client.CloningConsole.UI
 {

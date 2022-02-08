@@ -1,12 +1,9 @@
-using System;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using static Content.Shared.GeneticScanner.SharedGeneticScannerComponent;
-using static Content.Shared.GeneticScanner.SharedGeneticScannerComponent.GeneticScannerStatus;
+using static Content.Shared.Medical.GeneticScanner.SharedGeneticScannerComponent;
+using static Content.Shared.Medical.GeneticScanner.SharedGeneticScannerComponent.GeneticScannerStatus;
 
-namespace Content.Client.GeneticScanner
+namespace Content.Client.Medical.GeneticScanner
 {
     [UsedImplicitly]
     public sealed class GeneticScannerVisualizer : AppearanceVisualizer

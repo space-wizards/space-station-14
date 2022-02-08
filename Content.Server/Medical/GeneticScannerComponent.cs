@@ -1,8 +1,6 @@
-using System;
 using Content.Shared.DragDrop;
-using Content.Shared.GeneticScanner;
+using Content.Shared.Medical.GeneticScanner;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Medical.GeneticScanner
 {

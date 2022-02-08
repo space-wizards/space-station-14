@@ -2,7 +2,7 @@ using Content.Shared.Body.Components;
 using Content.Shared.DragDrop;
 using JetBrains.Annotations;
 
-namespace Content.Shared.GeneticScanner
+namespace Content.Shared.Medical.GeneticScanner
 {
     [UsedImplicitly]
     public abstract class SharedGeneticScannerSystem : EntitySystem

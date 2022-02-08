@@ -31,7 +31,6 @@ namespace Content.Server.Cloning
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<BeingClonedComponent, MindAddedMessage>(HandleMindAdded);
             SubscribeLocalEvent<CloningPodComponent, ComponentInit>(OnComponentInit);
-
         }
 
         private void OnComponentInit(EntityUid uid, CloningPodComponent clonePod, ComponentInit args)

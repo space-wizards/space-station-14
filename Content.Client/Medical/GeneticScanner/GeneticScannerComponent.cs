@@ -1,8 +1,7 @@
 ﻿using Content.Shared.DragDrop;
-using Content.Shared.GeneticScanner;
-using Robust.Shared.GameObjects;
+using Content.Shared.Medical.GeneticScanner;
 
-namespace Content.Client.GeneticScanner
+namespace Content.Client.Medical.GeneticScanner
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedGeneticScannerComponent))]

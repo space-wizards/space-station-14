@@ -1,6 +1,6 @@
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.CloningConsole
+namespace Content.Shared.Medical.CloningConsole
 {
     public abstract class SharedCloningConsoleComponent : Component
     {

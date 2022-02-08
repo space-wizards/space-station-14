@@ -1,4 +1,3 @@
-using Content.Server.Medical.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Timing;
 using Content.Server.Medical.GeneticScanner;
@@ -16,9 +15,9 @@ using Robust.Shared.Network;
 using Robust.Server.Player;
 
 using static Content.Shared.Cloning.SharedCloningPodComponent;
-using static Content.Shared.CloningConsole.SharedCloningConsoleComponent;
+using static Content.Shared.Medical.CloningConsole.SharedCloningConsoleComponent;
 
-namespace Content.Server.Medical
+namespace Content.Server.Medical.CloningConsole
 {
     [UsedImplicitly]
     internal sealed class CloningConsoleSystem : EntitySystem
@@ -28,7 +27,6 @@ namespace Content.Server.Medical
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IServerPreferencesManager _prefsManager = null!;
         [Dependency] private readonly CloningSystem _cloningSystem = default!;
-
         private const float UpdateRate = 3f;
         private float _updateDif;
         public override void Initialize()
@@ -38,16 +36,16 @@ namespace Content.Server.Medical
             SubscribeLocalEvent<CloningConsoleComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<CloningConsoleComponent, ActivateInWorldEvent>(HandleActivateInWorld);
             SubscribeLocalEvent<CloningConsoleComponent, UiButtonPressedMessage>(OnButtonPressed);
+            SubscribeLocalEvent<CloningConsoleComponent, PowerChangedEvent>(OnPowerChanged);
         }
 
         private void OnComponentInit(EntityUid uid, CloningConsoleComponent comp, ComponentInit args)
         {
             var newState = GetUserInterfaceState(comp);
-            if (newState == null)
-                return;
             comp.UserInterface?.SetState(newState);
             UpdateUserInterface(comp);
         }
+
         private void HandleActivateInWorld(EntityUid uid, CloningConsoleComponent consoleComponent, ActivateInWorldEvent args)
         {
             if (!TryComp<ActorComponent>(args.User, out var actor))
@@ -58,6 +56,29 @@ namespace Content.Server.Medical
                 return;
 
             consoleComponent.UserInterface?.Open(actor.PlayerSession);
+        }
+
+        private void OnButtonPressed(EntityUid uid, CloningConsoleComponent consoleComponent, UiButtonPressedMessage args)
+        {
+            if (!IsPowered(consoleComponent))
+                return;
+
+            if (args.Button == UiButton.Clone) {
+                TryClone(uid, consoleComponent);
+                return;
+            }
+            if (args.Button == UiButton.Eject) {
+                TryEject(uid, consoleComponent);
+                return;
+            }
+        }
+
+        private void OnPowerChanged(EntityUid uid, CloningConsoleComponent component, PowerChangedEvent args)
+        {
+            if (!args.Powered && component.UserInterface != null)
+            {
+                component.UserInterface.CloseAll();
+            }
         }
 
         public bool IsPowered(CloningConsoleComponent consoleComponent)
@@ -82,20 +103,7 @@ namespace Content.Server.Medical
             consoleComponent.UserInterface?.SetState(newState);
         }
 
-        private void OnButtonPressed(EntityUid uid, CloningConsoleComponent consoleComponent, UiButtonPressedMessage args)
-        {
-            if (!IsPowered(consoleComponent))
-                return;
 
-            if (args.Button == UiButton.Clone) {
-                TryClone(uid, consoleComponent);
-                return;
-            }
-            if (args.Button == UiButton.Eject) {
-                TryEject(uid, consoleComponent);
-                return;
-            }
-        }
 
         public void FindDevices(EntityUid Owner, CloningConsoleComponent? cloneConsoleComp = null)
         {
@@ -144,12 +152,7 @@ namespace Content.Server.Medical
                 {
                     if (!TryComp<MindComponent>(consoleComponent.GeneticScanner.BodyContainer.ContainedEntity.Value, out MindComponent? mindComp) || mindComp.Mind == null)
                         return;
-                    // Null suppression based on above check. Yes, it's explicitly needed
                     var mind = mindComp.Mind!;
-
-                    // We need the HumanoidCharacterProfile
-                    // TODO: Move this further 'outwards' into a DNAComponent or somesuch.
-                    // Ideally this ends with GameTicker & CloningSystem handing DNA to a function that sets up a body for that DNA.
                     var mindUser = mind.UserId;
                     if (mindUser.HasValue == false || mind.Session == null)
                         return;
@@ -165,7 +168,7 @@ namespace Content.Server.Medical
                 }
         }
 
-        public CloningConsoleBoundUserInterfaceState? GetUserInterfaceState(CloningConsoleComponent consoleComponent)
+        public CloningConsoleBoundUserInterfaceState GetUserInterfaceState(CloningConsoleComponent consoleComponent)
         {
             FindDevices(consoleComponent.Owner, consoleComponent);
 
@@ -221,8 +224,8 @@ namespace Content.Server.Medical
 
                 cloningProgress = consoleComponent.CloningPod.CloningProgress;
                 cloningTime = consoleComponent.CloningPod.CloningTime;
-                clonerProgressing = consoleComponent.CloningPod.UiKnownPowerState && (consoleComponent.CloningPod.BodyContainer.ContainedEntity != null);
-                clonerMindPresent =consoleComponent.CloningPod.Status == CloningPodStatus.Cloning;
+                clonerProgressing = _cloningSystem.IsPowered(consoleComponent.CloningPod) && (consoleComponent.CloningPod.BodyContainer.ContainedEntity != null);
+                clonerMindPresent = consoleComponent.CloningPod.Status == CloningPodStatus.Cloning;
                 if (cloneBody != null)
                 {
                     clonerStatus = ClonerStatusState.ClonerOccupied;

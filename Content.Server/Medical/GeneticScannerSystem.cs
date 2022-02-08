@@ -2,19 +2,16 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Movement;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Timing;
-using Content.Shared.GeneticScanner;
 using Content.Server.Climbing;
 using Content.Shared.MobState.Components;
 using Content.Shared.DragDrop;
 using Content.Shared.Acts;
 using Content.Server.Power.Components;
 using Robust.Shared.Containers;
+using Content.Shared.Medical.GeneticScanner;
 
-using static Content.Shared.GeneticScanner.SharedGeneticScannerComponent;
+using static Content.Shared.Medical.GeneticScanner.SharedGeneticScannerComponent;
 
 namespace Content.Server.Medical.GeneticScanner
 {
