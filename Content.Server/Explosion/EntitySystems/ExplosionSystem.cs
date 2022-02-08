@@ -53,10 +53,11 @@ namespace Content.Server.Explosion.EntitySystems
         [Dependency] private readonly TriggerSystem _triggers = default!;
         [Dependency] private readonly AdminLogSystem _logSystem = default!;
         [Dependency] private readonly CameraRecoilSystem _cameraRecoil = default!;
+        [Dependency] private readonly TagSystem _tags = default!;
 
         private bool IgnoreExplosivePassable(EntityUid e)
         {
-            return e.HasTag("ExplosivePassable");
+            return _tags.HasTag(e, "ExplosivePassable");
         }
 
         private ExplosionSeverity CalculateSeverity(float distance, float devastationRange, float heavyRange)

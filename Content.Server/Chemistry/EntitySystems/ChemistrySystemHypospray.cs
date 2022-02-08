@@ -6,13 +6,10 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Server.Chemistry.EntitySystems
 {
-    [UsedImplicitly]
-    public class HypospraySystem : EntitySystem
+    public sealed partial class ChemistrySystem
     {
-        public override void Initialize()
+        private void InitializeHypospray()
         {
-            base.Initialize();
-
             SubscribeLocalEvent<HyposprayComponent, AfterInteractEvent>(OnAfterInteract);
             SubscribeLocalEvent<HyposprayComponent, ClickAttackEvent>(OnClickAttack);
             SubscribeLocalEvent<HyposprayComponent, SolutionChangedEvent>(OnSolutionChange);
@@ -27,6 +24,7 @@ namespace Content.Server.Chemistry.EntitySystems
         {
             if (!args.CanReach)
                 return;
+
             var target = args.Target;
             var user = args.User;
 

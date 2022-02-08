@@ -1,46 +1,16 @@
-using System.Threading.Tasks;
-using Content.Server.Power.Components;
-using Content.Shared.Interaction;
-using Content.Shared.Popups;
+using Content.Server.Botany.Systems;
+using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Random;
+using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.Botany.Components
+namespace Content.Server.Botany.Components;
+
+[RegisterComponent]
+[Friend(typeof(SeedExtractorSystem))]
+public sealed class SeedExtractorComponent : Component
 {
-    [RegisterComponent]
-    public class SeedExtractorComponent : Component, IInteractUsing
-    {
-        [Dependency] private readonly IEntityManager _entMan = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
+    // TODO: Upgradeable machines.
+    [DataField("minSeeds")] public int MinSeeds = 1;
 
-        // TODO: Upgradeable machines.
-        private int _minSeeds = 1;
-        private int _maxSeeds = 4;
-
-        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
-        {
-            if (!_entMan.TryGetComponent<ApcPowerReceiverComponent>(Owner, out var powerReceiverComponent) || !powerReceiverComponent.Powered)
-                return false;
-
-            if (_entMan.TryGetComponent(eventArgs.Using, out ProduceComponent? produce) && produce.Seed != null)
-            {
-                eventArgs.User.PopupMessageCursor(Loc.GetString("seed-extractor-component-interact-message",("name", _entMan.GetComponent<MetaDataComponent>(eventArgs.Using).EntityName)));
-
-                _entMan.QueueDeleteEntity(eventArgs.Using);
-
-                var random = _random.Next(_minSeeds, _maxSeeds);
-
-                for (var i = 0; i < random; i++)
-                {
-                    produce.Seed.SpawnSeedPacket(_entMan.GetComponent<TransformComponent>(Owner).Coordinates, _entMan);
-                }
-
-                return true;
-            }
-
-            return false;
-        }
-    }
+    [DataField("maxSeeds")] public int MaxSeeds = 4;
 }

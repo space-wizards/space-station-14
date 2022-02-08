@@ -34,7 +34,7 @@
   components:
   - type: AccessReader
     access: [["Medical"]]
-    
+
 - type: entity
   parent: WindoorSecure
   id: WindoorChemistryLocked
@@ -78,7 +78,7 @@
     access: [["Security"]]
   - type: Wires
     LayoutId: WindoorSecurity
-    
+
 - type: entity
   parent: WindoorSecurityLocked
   id: WindoorBrigLocked
@@ -86,7 +86,15 @@
   components:
   - type: AccessReader
     access: [["Brig"]]
-    
+
+- type: entity
+  parent: WindoorSecurityLocked
+  id: WindoorArmoryLocked
+  suffix: Armory, Locked
+  components:
+  - type: AccessReader
+    access: [["Armory"]]
+
 - type: entity
   parent: WindoorSecure
   id: WindoorEngineeringLocked
@@ -94,7 +102,7 @@
   components:
   - type: AccessReader
     access: [["Engineering"]]
-    
+
 - type: entity
   parent: WindoorSecure
   id: WindoorChapelLocked
@@ -102,7 +110,7 @@
   components:
   - type: AccessReader
     access: [["Chapel"]]
-    
+
 - type: entity
   parent: WindoorSecure
   id: WindoorJanitorLocked
@@ -110,7 +118,7 @@
   components:
   - type: AccessReader
     access: [["Janitor"]]
-    
+
 - type: entity
   parent: WindoorSecure
   id: WindoorKitchenLocked

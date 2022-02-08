@@ -6,7 +6,6 @@ namespace Content.Shared.Camera;
 
 [RegisterComponent]
 [NetworkedComponent]
-[ComponentProtoName("CameraRecoil")]
 public class CameraRecoilComponent : Component
 {
     public Vector2 CurrentKick { get; set; }

@@ -13,7 +13,6 @@ namespace Content.Server.Power.Components;
 
 [RegisterComponent]
 [Friend(typeof(ApcSystem))]
-[ComponentProtoName("Apc")]
 public class ApcComponent : BaseApcNetComponent
 {
     [DataField("onReceiveMessageSound")]
