@@ -26,6 +26,7 @@ namespace Content.Client.Input
             common.AddFunction(ContentKeyFunctions.OpenInfo);
             common.AddFunction(ContentKeyFunctions.TakeScreenshot);
             common.AddFunction(ContentKeyFunctions.TakeScreenshotNoUI);
+            common.AddFunction(ContentKeyFunctions.PlaceDecal);
             common.AddFunction(ContentKeyFunctions.Point);
             common.AddFunction(ContentKeyFunctions.OpenContextMenu);
 
@@ -97,6 +98,7 @@ namespace Content.Client.Input
             common.AddFunction(ContentKeyFunctions.OpenEntitySpawnWindow);
             common.AddFunction(ContentKeyFunctions.OpenSandboxWindow);
             common.AddFunction(ContentKeyFunctions.OpenTileSpawnWindow);
+            common.AddFunction(ContentKeyFunctions.OpenDecalSpawnWindow);
             common.AddFunction(ContentKeyFunctions.OpenAdminMenu);
         }
     }

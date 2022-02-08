@@ -8,6 +8,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Decals
 {
@@ -148,6 +149,22 @@ namespace Content.Shared.Decals
             _yIndex += 1;
 
             return _xIndex <= _chunkRT.X;
+        }
+    }
+
+    /// <summary>
+    ///     Sent by clients to request that a decal is placed on the server.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public sealed class RequestDecalPlacementEvent : EntityEventArgs
+    {
+        public Decal Decal;
+        public GridId GridId;
+
+        public RequestDecalPlacementEvent(Decal decal, GridId gridId)
+        {
+            Decal = decal;
+            GridId = gridId;
         }
     }
 }

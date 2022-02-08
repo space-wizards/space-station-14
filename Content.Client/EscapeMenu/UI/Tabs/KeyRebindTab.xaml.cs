@@ -145,6 +145,7 @@ namespace Content.Client.EscapeMenu.UI.Tabs
             AddButton(ContentKeyFunctions.OpenEntitySpawnWindow);
             AddButton(ContentKeyFunctions.OpenSandboxWindow);
             AddButton(ContentKeyFunctions.OpenTileSpawnWindow);
+            AddButton(ContentKeyFunctions.OpenDecalSpawnWindow);
             AddButton(ContentKeyFunctions.OpenAdminMenu);
 
             AddHeader("ui-options-header-misc");
@@ -178,6 +179,7 @@ namespace Content.Client.EscapeMenu.UI.Tabs
             AddButton(EngineKeyFunctions.EditorGridPlace);
             AddButton(EngineKeyFunctions.EditorLinePlace);
             AddButton(EngineKeyFunctions.EditorRotateObject);
+            AddButton(ContentKeyFunctions.PlaceDecal);
 
             AddHeader("ui-options-header-dev");
             AddButton(EngineKeyFunctions.ShowDebugConsole);

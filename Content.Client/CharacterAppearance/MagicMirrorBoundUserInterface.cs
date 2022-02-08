@@ -278,7 +278,7 @@ namespace Content.Client.CharacterAppearance
 
     public class EyeColorPicker : Control
     {
-        public event Action<Color>? OnEyeColorPicked;
+        public event Action<Color>? OnColorPicked;
 
         private readonly ColorSlider _colorSliderR;
         private readonly ColorSlider _colorSliderG;
@@ -321,7 +321,7 @@ namespace Content.Client.CharacterAppearance
                 _colorSliderB.ColorValue
             );
 
-            OnEyeColorPicked?.Invoke(newColor);
+            OnColorPicked?.Invoke(newColor);
 
             _lastColor = newColor;
         }
@@ -349,7 +349,7 @@ namespace Content.Client.CharacterAppearance
             _facialHairStylePicker.OnHairColorPicked += newColor => owner.HairColorSelected(newColor, true);
 
             _eyeColorPicker = new EyeColorPicker { HorizontalExpand = true };
-            _eyeColorPicker.OnEyeColorPicked += newColor => owner.EyeColorSelected(newColor);
+            _eyeColorPicker.OnColorPicked += newColor => owner.EyeColorSelected(newColor);
 
             Contents.AddChild(new BoxContainer
             {

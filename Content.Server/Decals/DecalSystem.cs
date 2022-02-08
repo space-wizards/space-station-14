@@ -26,6 +26,8 @@ namespace Content.Server.Decals
 
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
             MapManager.TileChanged += OnTileChanged;
+
+            SubscribeNetworkEvent<RequestDecalPlacementEvent>(OnDecalPlacementRequest);
         }
 
         public override void Shutdown()
@@ -79,6 +81,13 @@ namespace Content.Server.Decals
             }
         }
 
+        private void OnDecalPlacementRequest(RequestDecalPlacementEvent ev)
+        {
+            // todo probably check that like. they can do this
+            TryAddDecal(ev.Decal, ev.GridId, out _);
+        }
+
+
         protected override void DirtyChunk(GridId id, Vector2i chunkIndices)
         {
             if(!_dirtyChunks.ContainsKey(id))
@@ -98,6 +107,14 @@ namespace Content.Server.Decals
 
             rotation ??= Angle.Zero;
             var decal = new Decal(coordinates.Position, id, color, rotation.Value, zIndex, cleanable);
+
+            TryAddDecal(decal, gridId, out uid);
+            return true;
+        }
+
+        public void TryAddDecal(Decal decal, GridId gridId, [NotNull] out uint? uid)
+        {
+            uid = 0;
             var chunkCollection = DecalGridChunkCollection(gridId);
             uid = chunkCollection.NextUid++;
             var chunkIndices = GetChunkIndices(decal.Coordinates);
@@ -106,7 +123,6 @@ namespace Content.Server.Decals
             chunkCollection.ChunkCollection[chunkIndices][uid.Value] = decal;
             ChunkIndex[gridId][uid.Value] = chunkIndices;
             DirtyChunk(gridId, chunkIndices);
-            return true;
         }
 
         public bool RemoveDecal(GridId gridId, uint uid) => RemoveDecalInternal(gridId, uid);
