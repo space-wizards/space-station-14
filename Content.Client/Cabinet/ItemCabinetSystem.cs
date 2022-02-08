@@ -7,7 +7,7 @@ public sealed class ItemCabinetSystem : VisualizerSystem<ItemCabinetVisualsCompo
 {
     protected override void OnComponentInit(EntityUid uid, ItemCabinetVisualsComponent component, ComponentInit args) { }
 
-    protected override void OnAppearanceChange(EntityUid uid, ItemCabinetVisualsComponent component, AppearanceChangeEvent args)
+    protected override void OnAppearanceChange(EntityUid uid, ItemCabinetVisualsComponent component, ref AppearanceChangeEvent args)
     {
         if (TryComp(uid, out SpriteComponent? sprite)
             && args.Component.TryGetData(ItemCabinetVisuals.IsOpen, out bool isOpen)
