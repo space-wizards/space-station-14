@@ -78,7 +78,6 @@ namespace Content.Client.Entry
             "BodyScanner",
             "Stunbaton",
             "Tool",
-            "TriggerOnProximity",
             "TilePrying",
             "RandomSpriteColor",
             "ConditionalSpawner",

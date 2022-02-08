@@ -53,7 +53,7 @@
 - type: entity
   name: portable flasher
   parent: BaseStructure
-  id: Portableflasher
+  id: PortableFlasher
   description: An ultrabright flashbulb with a proximity trigger, useful for making an area security-only.
   components:
     - type: SoundOnTrigger
@@ -77,7 +77,7 @@
           map: ["enum.ProximityTriggerVisualLayers.Base"]
     - type: InteractionOutline
     - type: Physics
-    - type: Fixtures  
+    - type: Fixtures
       fixtures:
       - shape:
           !type:PhysShapeAabb
@@ -90,9 +90,7 @@
         - MobImpassable
         mass: 70
     - type: Appearance
-      visuals:
-      - type: ProximityTriggerVisualizer
-        animationState: flashing
+    - type: AnimationPlayer
     - type: PointLight
       energy: 2.0
       radius: 0
