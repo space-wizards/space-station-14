@@ -560,3 +560,40 @@
           min: 1
         reagent: Ultravasculine
         amount: 0.5
+
+- type: reagent
+  id: Stellibinin
+  name: stellibinin
+  group: Medicine
+  desc: A natual antitoxin with particular effectiveness against amatoxin.
+  physicalDesc: starry
+  color: "#2b2f77"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: -1
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Amatoxin
+          min: 1
+        reagent: Amatoxin
+        amount: -3
+
+- type: reagent
+  id: Siderlac
+  name: siderlac
+  group: Medicine
+  desc: A powerful anti-caustic medicine derived from plants.
+  physicalDesc: milky
+  color: "#f4dab8"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          groups:
+            Caustic: -5

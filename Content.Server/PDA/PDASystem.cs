@@ -4,6 +4,7 @@ using Content.Server.Light.Events;
 using Content.Server.Traitor.Uplink;
 using Content.Server.Traitor.Uplink.Account;
 using Content.Server.Traitor.Uplink.Components;
+using Content.Server.PDA.Ringer;
 using Content.Server.UserInterface;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Interaction;
@@ -20,6 +21,7 @@ namespace Content.Server.PDA
         [Dependency] private readonly UplinkSystem _uplinkSystem = default!;
         [Dependency] private readonly UplinkAccountsSystem _uplinkAccounts = default!;
         [Dependency] private readonly UnpoweredFlashlightSystem _unpoweredFlashlight = default!;
+        [Dependency] private readonly RingerSystem _ringerSystem = default!;
 
         public override void Initialize()
         {
@@ -36,6 +38,13 @@ namespace Content.Server.PDA
             var ui = pda.Owner.GetUIOrNull(PDAUiKey.Key);
             if (ui != null)
                 ui.OnReceiveMessage += (msg) => OnUIMessage(pda, msg);
+        }
+
+        private void OnUse(EntityUid uid, PDAComponent pda, UseInHandEvent args)
+        {
+            if (args.Handled)
+                return;
+            args.Handled = OpenUI(pda, args.User);
         }
 
         private void OnActivateInWorld(EntityUid uid, PDAComponent pda, ActivateInWorldEvent args)
@@ -173,6 +182,12 @@ namespace Content.Server.PDA
                     {
                         if (EntityManager.TryGetComponent(pda.Owner, out UplinkComponent? uplink))
                             _uplinkSystem.ToggleUplinkUI(uplink, msg.Session);
+                        break;
+                    }
+                case PDAShowRingtoneMessage _:
+                    {
+                        if (EntityManager.TryGetComponent(pda.Owner, out RingerComponent? ringer))
+                            _ringerSystem.ToggleRingerUI(ringer, msg.Session);
                         break;
                     }
             }

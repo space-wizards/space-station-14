@@ -66,6 +66,7 @@ namespace Content.Client.Stylesheets
         public const string StyleClassSliderRed = "Red";
         public const string StyleClassSliderGreen = "Green";
         public const string StyleClassSliderBlue = "Blue";
+        public const string StyleClassSliderWhite = "White";
 
         public const string StyleClassLabelHeadingBigger = "LabelHeadingBigger";
         public const string StyleClassLabelKeyText = "LabelKeyText";
@@ -436,6 +437,7 @@ namespace Content.Client.Stylesheets
             var sliderFillGreen = new StyleBoxTexture(sliderFillBox) {Modulate = Color.LimeGreen};
             var sliderFillRed = new StyleBoxTexture(sliderFillBox) {Modulate = Color.Red};
             var sliderFillBlue = new StyleBoxTexture(sliderFillBox) {Modulate = Color.Blue};
+            var sliderFillWhite = new StyleBoxTexture(sliderFillBox) { Modulate = Color.White };
 
             var boxFont13 = resCache.GetFont("/Fonts/Boxfont-round/Boxfont Round.ttf", 13);
 
@@ -1153,6 +1155,11 @@ namespace Content.Client.Stylesheets
                 new StyleRule(new SelectorElement(typeof(Slider), new []{StyleClassSliderBlue}, null, null), new []
                 {
                     new StyleProperty(Slider.StylePropertyFill, sliderFillBlue),
+                }),
+
+                new StyleRule(new SelectorElement(typeof(Slider), new []{StyleClassSliderWhite}, null, null), new []
+                {
+                    new StyleProperty(Slider.StylePropertyFill, sliderFillWhite),
                 }),
 
                 // chat channel option selector

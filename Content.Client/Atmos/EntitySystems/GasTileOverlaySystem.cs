@@ -1,7 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using Content.Client.Atmos.Overlays;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.EntitySystems;
@@ -9,9 +5,7 @@ using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.Utility;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Atmos.EntitySystems
@@ -40,6 +34,8 @@ namespace Content.Client.Atmos.EntitySystems
 
         private readonly Dictionary<GridId, Dictionary<Vector2i, GasOverlayChunk>> _tileData =
             new();
+
+        public const int GasOverlayZIndex = 1;
 
         public override void Initialize()
         {
@@ -86,8 +82,8 @@ namespace Content.Client.Atmos.EntitySystems
             }
 
             var overlayManager = IoCManager.Resolve<IOverlayManager>();
-            if(!overlayManager.HasOverlay<GasTileOverlay>())
-                overlayManager.AddOverlay(new GasTileOverlay());
+            overlayManager.AddOverlay(new GasTileOverlay());
+            overlayManager.AddOverlay(new FireTileOverlay());
         }
 
         private void HandleGasOverlayMessage(GasOverlayMessage message)
@@ -124,8 +120,8 @@ namespace Content.Client.Atmos.EntitySystems
             base.Shutdown();
             _mapManager.OnGridRemoved -= OnGridRemoved;
             var overlayManager = IoCManager.Resolve<IOverlayManager>();
-            if(!overlayManager.HasOverlay<GasTileOverlay>())
-                overlayManager.RemoveOverlay<GasTileOverlay>();
+            overlayManager.RemoveOverlay<GasTileOverlay>();
+            overlayManager.RemoveOverlay<FireTileOverlay>();
         }
 
         private void OnGridRemoved(MapId mapId, GridId gridId)
@@ -153,6 +149,20 @@ namespace Content.Client.Atmos.EntitySystems
             var overlays = chunk.GetData(indices);
 
             return new GasOverlayEnumerator(overlays, this);
+        }
+
+        public FireOverlayEnumerator GetFireOverlays(GridId gridIndex, Vector2i indices)
+        {
+            if (!_tileData.TryGetValue(gridIndex, out var chunks))
+                return default;
+
+            var chunkIndex = GetGasChunkIndices(indices);
+            if (!chunks.TryGetValue(chunkIndex, out var chunk))
+                return default;
+
+            var overlays = chunk.GetData(indices);
+
+            return new FireOverlayEnumerator(overlays, this);
         }
 
         public override void FrameUpdate(float frameTime)
@@ -184,11 +194,10 @@ namespace Content.Client.Atmos.EntitySystems
             }
         }
 
-        public struct GasOverlayEnumerator : IDisposable
+        public struct GasOverlayEnumerator
         {
             private readonly GasTileOverlaySystem _system;
             private readonly GasData[]? _data;
-            private byte _fireState;
             // TODO: Take Fire Temperature into account, when we code fire color
 
             private readonly int _length; // We cache the length so we can avoid a pointer dereference, for speed. Brrr.
@@ -198,7 +207,6 @@ namespace Content.Client.Atmos.EntitySystems
             {
                 // Gas can't be null, as the caller to this constructor already ensured it wasn't.
                 _data = data.Gas;
-                _fireState = data.FireState;
 
                 _system = system;
 
@@ -217,6 +225,25 @@ namespace Content.Client.Atmos.EntitySystems
                     return true;
                 }
 
+                overlay = default;
+                return false;
+            }
+        }
+
+        public struct FireOverlayEnumerator
+        {
+            private readonly GasTileOverlaySystem _system;
+            private byte _fireState;
+            // TODO: Take Fire Temperature into account, when we code fire color
+
+            public FireOverlayEnumerator(in GasOverlayData data, GasTileOverlaySystem system)
+            {
+                _fireState = data.FireState;
+                _system = system;
+            }
+            public bool MoveNext(out (Texture Texture, Color Color) overlay)
+            {
+
                 if (_fireState != 0)
                 {
                     var state = _fireState - 1;
@@ -231,10 +258,6 @@ namespace Content.Client.Atmos.EntitySystems
 
                 overlay = default;
                 return false;
-            }
-
-            public void Dispose()
-            {
             }
         }
     }
