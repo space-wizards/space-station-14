@@ -1,19 +1,14 @@
-using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.SubFloor;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.GameStates;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
-using Robust.Shared.Maths;
+using Robust.Shared.Map;
 using Robust.Shared.Utility;
 
 namespace Content.Client.SubFloor;
 
-public class TrayScannerSystem : SharedTrayScannerSystem
+public sealed class TrayScannerSystem : SharedTrayScannerSystem
 {
-    [Dependency] private IEntityLookup _entityLookup = default!;
+    [Dependency] private IMapManager _mapManager = default!;
     [Dependency] private SubFloorHideSystem _subfloorSystem = default!;
     [Dependency] private SharedContainerSystem _containerSystem = default!;
 
@@ -28,7 +23,7 @@ public class TrayScannerSystem : SharedTrayScannerSystem
 
     public void OnComponentShutdown(EntityUid uid, TrayScannerComponent scanner, ComponentShutdown args)
     {
-        _subfloorSystem.ToggleSubfloorEntities(scanner.RevealedSubfloors, false, uid, _visualizerKeys);
+        _subfloorSystem.SetEntityRevealed(scanner.RevealedSubfloors, uid, false, _visualizerKeys);
         _invalidScanners.Add(uid);
     }
 
@@ -67,6 +62,28 @@ public class TrayScannerSystem : SharedTrayScannerSystem
     }
 
     /// <summary>
+    ///     When a subfloor entity gets anchored (which includes spawning & coming into PVS range), Check for nearby scanners.
+    /// </summary>
+    public override void OnSubfloorAnchored(EntityUid uid, SubFloorHideComponent? hideComp = null, TransformComponent? xform = null)
+    {
+        if (!Resolve(uid, ref hideComp, ref xform))
+            return;
+        
+        var pos = xform.MapPosition;
+
+        foreach (var entity in _activeScanners)
+        {
+            if (!TryComp(entity, out TrayScannerComponent? scanner))
+                continue;
+
+            if (Transform(entity).MapPosition.InRange(pos, scanner.Range))
+                continue;
+
+            scanner.RevealedSubfloors.Add(uid);
+        }
+    }
+
+    /// <summary>
     ///     Updates a T-Ray scanner. Should be called on immediate
     ///     state change (turned on/off), or during the update
     ///     loop.
@@ -86,7 +103,7 @@ public class TrayScannerSystem : SharedTrayScannerSystem
         // the active scanner list
         if (!scanner.Toggled)
         {
-            _subfloorSystem.ToggleSubfloorEntities(scanner.RevealedSubfloors, false, uid, _visualizerKeys);
+            _subfloorSystem.SetEntityRevealed(scanner.RevealedSubfloors, uid, false, _visualizerKeys);
             scanner.LastLocation = Vector2.Zero;
             scanner.RevealedSubfloors.Clear();
             return false;
@@ -130,36 +147,58 @@ public class TrayScannerSystem : SharedTrayScannerSystem
         // is still technically on
         if (flooredPos == Vector2.Zero)
         {
-            _subfloorSystem.ToggleSubfloorEntities(scanner.RevealedSubfloors, false, uid, _visualizerKeys);
+            _subfloorSystem.SetEntityRevealed(scanner.RevealedSubfloors, uid, false, _visualizerKeys);
             scanner.RevealedSubfloors.Clear();
             return true;
         }
 
+        // TODO REDO THIS
+        // Here we avoid the entity lookup & return early if the scanner's position hasn't appreciably changed. However,
+        // if a new player enters PVS-range, they will update the in-range entities on their end and use that to set
+        // LastLocation. This means that different players can technically see different entities being revealed by the
+        // same scanner. The correct fix for this is probably just to network the revealed entity set.... But I CBF
+        // doing that right now....
+        //
+        // Though this approach also has other issues. If the scanner is on a shuttle, and another grid moves close it,
+        // the scanner's local position doesn't update. But if you based this on the scanner's world position it would
+        // unnecessary update whenever the grid that it is on is moving. I guess you could just restrict scanners to
+        // only scan one grid at a time?
         if (flooredPos == scanner.LastLocation
             || (float.IsNaN(flooredPos.X) && float.IsNaN(flooredPos.Y)))
             return true;
 
         scanner.LastLocation = flooredPos;
 
-        // get all entities in range by uid
-        // but without using LINQ
+        //  Update entities in Range
         HashSet<EntityUid> nearby = new();
+        var coords = transform.MapPosition;
+        var worldBox = Box2.CenteredAround(coords.Position, (scanner.Range * 2, scanner.Range * 2));
 
-        foreach (var entityInRange in _entityLookup.GetEntitiesInRange(uid, scanner.Range))
-            if (FilterAnchored(entityInRange)) nearby.Add(entityInRange);
+        foreach (var grid in _mapManager.FindGridsIntersecting(transform.MapID, worldBox, approx: true))
+        {
+            foreach (var entity in grid.GetAnchoredEntities(worldBox))
+            {
+                if (!Transform(entity).MapPosition.InRange(coords, scanner.Range))
+                    continue;
+                
+                if (!TryComp(entity, out SubFloorHideComponent? hideComp))
+                    continue; // Not a hide-able entity.
+
+                nearby.Add(entity);
+
+                if (scanner.RevealedSubfloors.Add(entity))
+                    _subfloorSystem.SetEntityRevealed(entity, uid, true, hideComp, _visualizerKeys);
+            }
+        }
 
         // get all the old elements that are no longer detected
-        scanner.RevealedSubfloors.ExceptWith(nearby);
+        HashSet<EntityUid> missing = new(scanner.RevealedSubfloors.Except(nearby));
 
-        // hide all of them, since they're no longer needed
-        _subfloorSystem.ToggleSubfloorEntities(scanner.RevealedSubfloors, false, uid, _visualizerKeys);
-        scanner.RevealedSubfloors.Clear();
+        // remove those from the list
+        scanner.RevealedSubfloors.ExceptWith(missing);
 
-        // set the revealedsubfloor set to the new nearby set
-        scanner.RevealedSubfloors.UnionWith(nearby);
-
-        // show all the new subfloor
-        _subfloorSystem.ToggleSubfloorEntities(scanner.RevealedSubfloors, true, uid, _visualizerKeys);
+        // and hide them
+        _subfloorSystem.SetEntityRevealed(missing, uid, false, _visualizerKeys);
 
         return true;
     }
@@ -169,10 +208,4 @@ public class TrayScannerSystem : SharedTrayScannerSystem
         SubFloorVisuals.SubFloor,
         TrayScannerTransparency.Key
     };
-
-    private bool FilterAnchored(EntityUid uid)
-    {
-        return EntityManager.TryGetComponent<TransformComponent>(uid, out var transform)
-            && transform.Anchored;
-    }
 }
