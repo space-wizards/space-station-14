@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.Power.Components;
 using Content.Server.Power.NodeGroups;
@@ -7,6 +8,7 @@ using Content.Server.Power.Pow3r;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Maths;
 
 namespace Content.Server.Power.EntitySystems
@@ -20,8 +22,6 @@ namespace Content.Server.Power.EntitySystems
         private readonly PowerState _powerState = new();
         private readonly HashSet<PowerNet> _powerNetReconnectQueue = new();
         private readonly HashSet<ApcNet> _apcNetReconnectQueue = new();
-
-        private readonly Dictionary<PowerNetworkBatteryComponent, float> _lastSupply = new();
 
         private readonly BatteryRampPegSolver _solver = new();
 
@@ -208,14 +208,6 @@ namespace Content.Server.Power.EntitySystems
         {
             base.Update(frameTime);
 
-            // Setup for events.
-            {
-                foreach (var powerNetBattery in EntityManager.EntityQuery<PowerNetworkBatteryComponent>())
-                {
-                    _lastSupply[powerNetBattery] = powerNetBattery.CurrentSupply;
-                }
-            }
-
             // Reconnect networks.
             {
                 foreach (var apcNet in _apcNetReconnectQueue)
@@ -276,24 +268,20 @@ namespace Content.Server.Power.EntitySystems
 
                 foreach (var powerNetBattery in EntityManager.EntityQuery<PowerNetworkBatteryComponent>())
                 {
-                    if (!_lastSupply.TryGetValue(powerNetBattery, out var lastPowerSupply))
-                    {
-                        lastPowerSupply = 0f;
-                    }
-
+                    var lastSupply = powerNetBattery.LastSupply;
                     var currentSupply = powerNetBattery.CurrentSupply;
 
-                    if (lastPowerSupply == 0f && currentSupply != 0f)
+                    if (lastSupply == 0f && currentSupply != 0f)
                     {
                         RaiseLocalEvent(powerNetBattery.Owner, new PowerNetBatterySupplyEvent {Supply = true});
                     }
-                    else if (lastPowerSupply > 0f && currentSupply == 0f)
+                    else if (lastSupply > 0f && currentSupply == 0f)
                     {
                         RaiseLocalEvent(powerNetBattery.Owner, new PowerNetBatterySupplyEvent {Supply = false});
                     }
-                }
 
-                _lastSupply.Clear();
+                    powerNetBattery.LastSupply = currentSupply;
+                }
             }
         }
 

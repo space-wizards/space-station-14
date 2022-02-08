@@ -46,4 +46,7 @@
     arc: fist
     damage:
       types:
-        Blunt: 90
+        Blunt: 20
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 1
+    baseSprintSpeed : 1

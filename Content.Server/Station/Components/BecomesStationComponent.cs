@@ -1,4 +1,4 @@
-﻿using Content.Server.GameTicking;
+using Content.Server.GameTicking;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -9,7 +9,7 @@ namespace Content.Server.Station;
 /// <summary>
 ///     Added to grids saved in maps to designate that they are the 'main station' grid.
 /// </summary>
-[RegisterComponent, ComponentProtoName("BecomesStation")]
+[RegisterComponent]
 [Friend(typeof(GameTicker))]
 public class BecomesStationComponent : Component
 {

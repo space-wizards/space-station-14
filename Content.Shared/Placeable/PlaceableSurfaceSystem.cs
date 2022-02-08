@@ -13,7 +13,7 @@ namespace Content.Shared.Placeable
         {
             base.Initialize();
 
-            SubscribeLocalEvent<PlaceableSurfaceComponent, InteractUsingEvent>(OnInteractUsing);
+            SubscribeLocalEvent<PlaceableSurfaceComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
             SubscribeLocalEvent<PlaceableSurfaceComponent, ComponentHandleState>(OnHandleState);
         }
 
@@ -44,9 +44,9 @@ namespace Content.Shared.Placeable
             surface.Dirty();
         }
 
-        private void OnInteractUsing(EntityUid uid, PlaceableSurfaceComponent surface, InteractUsingEvent args)
+        private void OnAfterInteractUsing(EntityUid uid, PlaceableSurfaceComponent surface, AfterInteractUsingEvent args)
         {
-            if (args.Handled)
+            if (args.Handled || !args.CanReach)
                 return;
 
             if (!surface.IsPlaceable)
@@ -55,14 +55,11 @@ namespace Content.Shared.Placeable
             if(!EntityManager.TryGetComponent<SharedHandsComponent?>(args.User, out var handComponent))
                 return;
 
-            if (!args.ClickLocation.IsValid(EntityManager))
-                return;
-
             if(!handComponent.TryDropEntity(args.Used, EntityManager.GetComponent<TransformComponent>(surface.Owner).Coordinates))
                 return;
 
             if (surface.PlaceCentered)
-                EntityManager.GetComponent<TransformComponent>(args.Used).LocalPosition = EntityManager.GetComponent<TransformComponent>(args.Target).LocalPosition + surface.PositionOffset;
+                EntityManager.GetComponent<TransformComponent>(args.Used).LocalPosition = EntityManager.GetComponent<TransformComponent>(uid).LocalPosition + surface.PositionOffset;
             else
                 EntityManager.GetComponent<TransformComponent>(args.Used).Coordinates = args.ClickLocation;
 

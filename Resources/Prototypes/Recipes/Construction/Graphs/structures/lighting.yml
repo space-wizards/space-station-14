@@ -1,5 +1,5 @@
 ﻿- type: constructionGraph
-  id: lightFixture
+  id: LightFixture
   start: start
   graph:
     - node: start
@@ -46,7 +46,7 @@
             - !type:DeleteEntity {}
 
 - type: constructionGraph
-  id: lightSwitch
+  id: LightSwitch
   start: start
   graph:
     - node: start

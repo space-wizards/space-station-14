@@ -200,7 +200,7 @@ namespace Content.Shared.CCVar
             CVarDef.Create("traitor.starting_balance", 20);
 
         public static readonly CVarDef<int> TraitorMaxDifficulty =
-            CVarDef.Create("traitor.max_difficulty", 6);
+            CVarDef.Create("traitor.max_difficulty", 5);
 
         public static readonly CVarDef<int> TraitorMaxPicks =
             CVarDef.Create("traitor.max_picks", 20);
@@ -542,6 +542,32 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<float> VoteSameTypeTimeout =
             CVarDef.Create("vote.same_type_timeout", 240f, CVar.SERVERONLY);
+
+
+        /// <summary>
+        ///     Sets the duration of the map vote timer.
+        /// </summary>
+        public static readonly CVarDef<int>
+            VoteTimerMap = CVarDef.Create("vote.timermap", 90, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Sets the duration of the restart vote timer.
+        /// </summary>
+        public static readonly CVarDef<int>
+            VoteTimerRestart = CVarDef.Create("vote.timerrestart", 30, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Sets the duration of the gamemode/preset vote timer.
+        /// </summary>
+        public static readonly CVarDef<int>
+            VoteTimerPreset = CVarDef.Create("vote.timerpreset", 30, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Sets the duration of the map vote timer when ALONE.
+        /// </summary>
+        public static readonly CVarDef<int>
+            VoteTimerAlone = CVarDef.Create("vote.timeralone", 10, CVar.SERVERONLY);
+
 
         /*
          * BAN

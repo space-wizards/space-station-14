@@ -6,7 +6,7 @@ using Robust.Shared.Localization;
 namespace Content.Client.PDA
 {
     [GenerateTypedNameReferences]
-    public partial class PDAMenu : SS14Window
+    public partial class PDAMenu : DefaultWindow
     {
         public PDAMenu()
         {

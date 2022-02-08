@@ -12,8 +12,6 @@ namespace Content.Shared.Kitchen.Components
 {
     public abstract class SharedKitchenSpikeComponent : Component, IDragDropOn
     {
-        public override string Name => "KitchenSpike";
-
         [ViewVariables]
         [DataField("delay")]
         public float SpikeDelay = 12.0f;

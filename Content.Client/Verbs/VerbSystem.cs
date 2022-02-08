@@ -28,6 +28,7 @@ namespace Content.Client.Verbs
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly ExamineSystem _examineSystem = default!;
+        [Dependency] private readonly TagSystem _tagSystem = default!;
         [Dependency] private readonly IStateManager _stateManager = default!;
         [Dependency] private readonly IEntityLookup _entityLookup = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -130,7 +131,7 @@ namespace Content.Client.Verbs
             {
                 foreach (var entity in entities.ToList())
                 {
-                    if (!player.Value.IsInSameOrTransparentContainer(entity))
+                    if (!ContainerSystem.IsInSameOrTransparentContainer(player.Value, entity))
                         entities.Remove(entity);
                 }
             }
@@ -147,7 +148,7 @@ namespace Content.Client.Verbs
                         continue;
                     }
 
-                    if (entity.HasTag("HideContextMenu"))
+                    if (_tagSystem.HasTag(entity, "HideContextMenu"))
                         entities.Remove(entity);
                 }
             }

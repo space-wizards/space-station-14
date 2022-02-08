@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  id: BaseSmes
+  id: BaseSMES
   parent: BaseMachine
   name: SMES
   description: A high-capacity superconducting magnetic energy storage (SMES) unit.
@@ -22,7 +22,7 @@
         - type: SmesVisualizer
     - type: Battery
       maxCharge: 1000
-      startingCharge: 1000
+      startingCharge: 0
     - type: ExaminableBattery
     - type: NodeContainer
       examinable: true
@@ -50,7 +50,7 @@
       color: "#c9c042"
       castShadows: false
     - type: Construction
-      graph: machine
+      graph: Machine
       node: machine
     - type: Wires
       BoardName: "SMES"

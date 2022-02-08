@@ -9,8 +9,6 @@ namespace Content.Shared.Projectiles
     public abstract class SharedProjectileComponent : Component
     {
         private bool _ignoreShooter = true;
-        public override string Name => "Projectile";
-
         public EntityUid Shooter { get; protected set; }
 
         public bool IgnoreShooter

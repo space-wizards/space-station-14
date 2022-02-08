@@ -1277,7 +1277,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 151
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 7.5,-18.5
     parent: 853
@@ -21247,7 +21247,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 1239
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: -5.5,-7.5
     parent: 853
@@ -30660,7 +30660,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 2504
-  type: SalternApc
+  type: SalternAPC
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 9.5,27.5
@@ -30669,7 +30669,7 @@ entities:
   - startingCharge: 11999.634
     type: Battery
 - uid: 2505
-  type: SalternApc
+  type: SalternAPC
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -2.5,27.5
@@ -30678,7 +30678,7 @@ entities:
   - startingCharge: 11999.3
     type: Battery
 - uid: 2506
-  type: SalternApc
+  type: SalternAPC
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 9.5,22.5
@@ -30687,7 +30687,7 @@ entities:
   - startingCharge: 11999.066
     type: Battery
 - uid: 2507
-  type: SalternApc
+  type: SalternAPC
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 24.5,14.5
@@ -30696,7 +30696,7 @@ entities:
   - startingCharge: 11999.733
     type: Battery
 - uid: 2508
-  type: SalternApc
+  type: SalternAPC
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 28.5,14.5
@@ -30705,7 +30705,7 @@ entities:
   - startingCharge: 11999.483
     type: Battery
 - uid: 2509
-  type: SalternApc
+  type: SalternAPC
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 47.5,-1.5
@@ -30714,7 +30714,7 @@ entities:
   - startingCharge: 11991.15
     type: Battery
 - uid: 2510
-  type: SalternApc
+  type: SalternAPC
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 31.5,1.5
@@ -30723,7 +30723,7 @@ entities:
   - startingCharge: 11999.15
     type: Battery
 - uid: 2511
-  type: SalternApc
+  type: SalternAPC
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 43.5,10.5
@@ -30732,7 +30732,7 @@ entities:
   - startingCharge: 11999.384
     type: Battery
 - uid: 2512
-  type: SalternApc
+  type: SalternAPC
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 12.5,13.5
@@ -30747,7 +30747,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 2514
-  type: SalternApc
+  type: SalternAPC
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 22.5,-3.5
@@ -30756,7 +30756,7 @@ entities:
   - startingCharge: 11999.066
     type: Battery
 - uid: 2515
-  type: SalternApc
+  type: SalternAPC
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 16.5,2.5
@@ -30778,7 +30778,7 @@ entities:
       PaperLabel: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 2517
-  type: SalternApc
+  type: SalternAPC
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -3.5,15.5
@@ -30787,7 +30787,7 @@ entities:
   - startingCharge: 11999.483
     type: Battery
 - uid: 2518
-  type: SalternApc
+  type: SalternAPC
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -28.5,12.5
@@ -30796,7 +30796,7 @@ entities:
   - startingCharge: 11999.4
     type: Battery
 - uid: 2519
-  type: SalternApc
+  type: SalternAPC
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -39.5,11.5
@@ -30805,7 +30805,7 @@ entities:
   - startingCharge: 11999.4
     type: Battery
 - uid: 2520
-  type: SalternApc
+  type: SalternAPC
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -11.5,2.5
@@ -30820,7 +30820,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 2522
-  type: SalternApc
+  type: SalternAPC
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -20.5,-12.5
@@ -30844,7 +30844,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 2525
-  type: SalternApc
+  type: SalternAPC
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -1.5,-18.5
@@ -30853,7 +30853,7 @@ entities:
   - startingCharge: 11999.083
     type: Battery
 - uid: 2526
-  type: SalternApc
+  type: SalternAPC
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -9.5,-21.5
@@ -30862,7 +30862,7 @@ entities:
   - startingCharge: 11996.233
     type: Battery
 - uid: 2527
-  type: SalternApc
+  type: SalternAPC
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -14.5,-16.5
@@ -33625,7 +33625,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 2789
-  type: SalternApc
+  type: SalternAPC
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -15.5,-9.5
@@ -38968,7 +38968,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 3295
-  type: SalternSmes
+  type: SalternSMES
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 42.5,5.5
@@ -38981,7 +38981,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 3296
-  type: SalternSmes
+  type: SalternSMES
   components:
   - rot: 4.371139006309477E-08 rad
     pos: 40.5,5.5
@@ -39764,7 +39764,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 3380
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 13.5,-23.5
     parent: 853
@@ -40907,7 +40907,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 3505
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: -16.5,17.5
     parent: 853
@@ -45300,7 +45300,7 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 3921
-  type: SalternApc
+  type: SalternAPC
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -12.5,12.5
@@ -46950,7 +46950,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 4111
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: -30.5,-3.5
     parent: 853
@@ -48967,7 +48967,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4355
-  type: SalternSmes
+  type: SalternSMES
   components:
   - pos: 45.5,-11.5
     parent: 853
@@ -49061,7 +49061,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4366
-  type: SalternSmes
+  type: SalternSMES
   components:
   - pos: -22.5,25.5
     parent: 853
@@ -49691,7 +49691,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4443
-  type: SalternSmes
+  type: SalternSMES
   components:
   - pos: 53.5,-11.5
     parent: 853
@@ -50030,7 +50030,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 4479
-  type: SalternSmes
+  type: SalternSMES
   components:
   - pos: 14.5,-28.5
     parent: 853
@@ -73907,7 +73907,7 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 6922
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 37.329857,13.460722
     parent: 853

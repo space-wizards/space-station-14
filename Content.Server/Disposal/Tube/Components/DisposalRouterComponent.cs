@@ -31,8 +31,6 @@ namespace Content.Server.Disposal.Tube.Components
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public override string Name => "DisposalRouter";
-
         [ViewVariables]
         private readonly HashSet<string> _tags = new();
 
@@ -173,7 +171,7 @@ namespace Content.Server.Disposal.Tube.Components
                 return;
             }
 
-            var activeHandEntity = hands.GetActiveHand?.Owner;
+            var activeHandEntity = hands.GetActiveHandItem?.Owner;
             if (activeHandEntity == null)
             {
                 OpenUserInterface(actor);

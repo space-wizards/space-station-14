@@ -38,7 +38,7 @@ namespace Content.Shared.StatusEffect
                 foreach (var state in status.ActiveEffects.ToArray())
                 {
                     // if we're past the end point of the effect
-                    if (_gameTiming.CurTime > state.Value.Cooldown.Item2)
+                    if (curTime > state.Value.Cooldown.Item2)
                     {
                         TryRemoveStatusEffect(status.Owner, state.Key, status);
                     }
@@ -53,23 +53,32 @@ namespace Content.Shared.StatusEffect
 
         private void OnHandleState(EntityUid uid, StatusEffectsComponent component, ref ComponentHandleState args)
         {
-            if (args.Current is StatusEffectsComponentState state)
+            if (args.Current is not StatusEffectsComponentState state)
+                return;
+
+            component.AllowedEffects = new(state.AllowedEffects);
+
+            // Remove non-existent effects.
+            foreach (var effect in component.ActiveEffects.Keys)
             {
-                component.AllowedEffects = state.AllowedEffects;
-
-                foreach (var effect in state.ActiveEffects)
+                if (!state.ActiveEffects.ContainsKey(effect))
                 {
-                    // don't bother with anything if we already have it
-                    if (component.ActiveEffects.ContainsKey(effect.Key))
-                    {
-                        component.ActiveEffects[effect.Key] = effect.Value;
-                        continue;
-                    }
-
-                    var time = effect.Value.Cooldown.Item2 - effect.Value.Cooldown.Item1;
-                    //TODO: Not sure how to handle refresh here.
-                    TryAddStatusEffect(uid, effect.Key, time, true);
+                    TryRemoveStatusEffect(uid, effect, component);
                 }
+            }
+
+            foreach (var effect in state.ActiveEffects)
+            {
+                // don't bother with anything if we already have it
+                if (component.ActiveEffects.ContainsKey(effect.Key))
+                {
+                    component.ActiveEffects[effect.Key] = effect.Value;
+                    continue;
+                }
+
+                var time = effect.Value.Cooldown.Item2 - effect.Value.Cooldown.Item1;
+                //TODO: Not sure how to handle refresh here.
+                TryAddStatusEffect(uid, effect.Key, time, true);
             }
         }
 
@@ -140,7 +149,7 @@ namespace Content.Shared.StatusEffect
         /// <remarks>
         ///     This obviously does not add any actual 'effects' on its own. Use the generic overload,
         ///     which takes in a component type, if you want to automatically add and remove a component.
-        /// 
+        ///
         ///     If the effect already exists, it will simply replace the cooldown with the new one given.
         ///     If you want special 'effect merging' behavior, do it your own damn self!
         /// </remarks>
@@ -187,7 +196,7 @@ namespace Content.Shared.StatusEffect
                 _alertsSystem.ShowAlert(uid, proto.Alert.Value, null, cooldown1);
             }
 
-            status.Dirty();
+            Dirty(status);
             // event?
             return true;
         }
@@ -261,7 +270,7 @@ namespace Content.Shared.StatusEffect
 
             status.ActiveEffects.Remove(key);
 
-            status.Dirty();
+            Dirty(status);
             // event?
             return true;
         }
@@ -285,6 +294,7 @@ namespace Content.Shared.StatusEffect
                     failed = true;
             }
 
+            Dirty(status);
             return failed;
         }
 
@@ -352,6 +362,7 @@ namespace Content.Shared.StatusEffect
                 _alertsSystem.ShowAlert(uid, proto.Alert.Value, null, cooldown);
             }
 
+            Dirty(status);
             return true;
         }
 
@@ -387,6 +398,7 @@ namespace Content.Shared.StatusEffect
                 _alertsSystem.ShowAlert(uid, proto.Alert.Value, null, cooldown);
             }
 
+            Dirty(status);
             return true;
         }
 
@@ -406,6 +418,8 @@ namespace Content.Shared.StatusEffect
                 return false;
 
             status.ActiveEffects[key].Cooldown = (_gameTiming.CurTime, _gameTiming.CurTime + time);
+
+            Dirty(status);
             return true;
         }
 

@@ -13,8 +13,6 @@ namespace Content.Server.Chemistry.Components
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public override string Name => "TransformableContainer";
-
         public SpriteSpecifier? InitialSprite;
         public string InitialName = default!;
         public string InitialDescription = default!;

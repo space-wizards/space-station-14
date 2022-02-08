@@ -184,7 +184,7 @@ namespace Content.Client.Wires.UI
                     }),
                     (CloseButton = new TextureButton
                     {
-                        StyleClasses = {SS14Window.StyleClassWindowCloseButton},
+                        StyleClasses = {DefaultWindow.StyleClassWindowCloseButton},
                         VerticalAlignment = VAlignment.Center
                     })
                 }
