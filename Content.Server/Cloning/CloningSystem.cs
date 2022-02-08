@@ -1,21 +1,27 @@
-using System.Collections.Generic;
 using Content.Server.Cloning.Components;
 using Content.Server.Mind.Components;
 using Content.Server.Power.Components;
 using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
-using Robust.Shared.Timing;
 using Content.Server.Climbing;
+using Content.Shared.CharacterAppearance.Systems;
+using Content.Shared.MobState.Components;
+using Content.Shared.Species;
+using Robust.Server.Player;
+using Robust.Shared.Prototypes;
+using Content.Server.EUI;
+using Robust.Shared.Containers;
 using static Content.Shared.Cloning.SharedCloningPodComponent;
 
 namespace Content.Server.Cloning
 {
     internal sealed class CloningSystem : EntitySystem
     {
-        [Dependency] private readonly IGameTiming _timing = default!;
-        public readonly Dictionary<Mind.Mind, int> MindToId = new();
-        public readonly Dictionary<int, ClonerDNAEntry> IdToDNA = new();
-        private int _nextAllocatedMindId = 0;
+        [Dependency] private readonly IPlayerManager _playerManager = null!;
+        [Dependency] private readonly IPrototypeManager _prototype = default!;
+        [Dependency] private readonly EuiManager _euiManager = null!;
+        [Dependency] private readonly CloningSystem _cloningSystem = default!;
+        [Dependency] private readonly ClimbSystem _climbSystem = default!;
         public readonly Dictionary<Mind.Mind, EntityUid> ClonesWaitingForMind = new();
 
         public override void Initialize()
@@ -24,8 +30,20 @@ namespace Content.Server.Cloning
 
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<BeingClonedComponent, MindAddedMessage>(HandleMindAdded);
+            SubscribeLocalEvent<CloningPodComponent, ComponentInit>(OnComponentInit);
+
         }
 
+        private void OnComponentInit(EntityUid uid, CloningPodComponent clonePod, ComponentInit args)
+        {
+            clonePod.BodyContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(clonePod.Owner, $"{Name}-bodyContainer");
+        }
+
+        private void UpdateAppearance(CloningPodComponent clonePod)
+        {
+            if (TryComp<AppearanceComponent>(clonePod.Owner, out AppearanceComponent? appearance))
+                appearance.SetData(CloningPodVisuals.Status, clonePod.Status);
+        }
         internal void TransferMindToClone(Mind.Mind mind)
         {
             if (!ClonesWaitingForMind.TryGetValue(mind, out var entity) ||
@@ -43,27 +61,85 @@ namespace Content.Server.Cloning
         {
             if (component.Parent == EntityUid.Invalid ||
                 !EntityManager.EntityExists(component.Parent) ||
-                !EntityManager.TryGetComponent<CloningPodComponent?>(component.Parent, out var cloningPodComponent) ||
+                !TryComp<CloningPodComponent>(component.Parent, out CloningPodComponent? cloningPodComponent) ||
                 component.Owner != cloningPodComponent.BodyContainer?.ContainedEntity)
             {
                 EntityManager.RemoveComponent<BeingClonedComponent>(component.Owner);
                 return;
             }
-            EntitySystem.Get<CloningPodSystem>().UpdateStatus(CloningPodStatus.Cloning, cloningPodComponent);
+            UpdateStatus(CloningPodStatus.Cloning, cloningPodComponent);
+        }
+
+        public bool IsPowered(CloningPodComponent clonepod)
+        {
+            if (!TryComp<ApcPowerReceiverComponent>(clonepod.Owner, out ApcPowerReceiverComponent? receiver))
+            {
+                return false;
+            }
+            return receiver.Powered;
+        }
+
+        public bool TryCloning(Mind.Mind mind, HumanoidCharacterProfile hcp, CloningPodComponent clonePod)
+        {
+            if (clonePod.BodyContainer.ContainedEntity != null)
+                return false;
+
+            if (_cloningSystem.ClonesWaitingForMind.TryGetValue(mind, out var clone))
+            {
+                if (EntityManager.EntityExists(clone) &&
+                    TryComp<MobStateComponent>(clone, out var cloneState) &&
+                    !cloneState.IsDead() &&
+                    TryComp<MindComponent>(clone, out MindComponent? cloneMindComp) &&
+                    (cloneMindComp.Mind == null || cloneMindComp.Mind == mind))
+                    return false; // Mind already has clone
+
+                _cloningSystem.ClonesWaitingForMind.Remove(mind);
+            }
+
+            if (mind.OwnedEntity != null &&
+                TryComp<MobStateComponent?>(mind.OwnedEntity.Value, out var state) &&
+                !state.IsDead())
+                return false; // Body controlled by mind is not dead
+
+            // Yes, we still need to track down the client because we need to open the Eui
+            if (mind.UserId == null || !_playerManager.TryGetSessionById(mind.UserId.Value, out var client))
+                return false; // If we can't track down the client, we can't offer transfer. That'd be quite bad.
+
+            if (!TryComp<TransformComponent>(clonePod.Owner, out var transform))
+                return false;
+
+            // Get species from player profile, this needs to get it from entity getting cloned instead
+            var speciesProto = _prototype.Index<SpeciesPrototype>(hcp.Species).Prototype;
+            var mob = EntityManager.SpawnEntity(speciesProto, transform.MapPosition);
+            EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(mob, hcp);
+
+            if (TryComp<MetaDataComponent>(mob, out var meta))
+            {
+                meta.EntityName = hcp.Name;
+            }
+
+            var cloneMindReturn = EntityManager.AddComponent<BeingClonedComponent>(mob);
+            cloneMindReturn.Mind = mind;
+            cloneMindReturn.Parent = clonePod.Owner;
+            clonePod.BodyContainer.Insert(mob);
+            clonePod.CapturedMind = mind;
+            _cloningSystem.ClonesWaitingForMind.Add(mind, mob);
+            UpdateStatus(CloningPodStatus.NoMind, clonePod);
+            _euiManager.OpenEui(new AcceptCloningEui(mind), client);
+            return true;
+        }
+
+        public void UpdateStatus(CloningPodStatus status, CloningPodComponent cloningPod)
+        {
+            cloningPod.Status = status;
+            UpdateAppearance(cloningPod);
         }
 
         public override void Update(float frameTime)
         {
             foreach (var (cloning, power) in EntityManager.EntityQuery<CloningPodComponent, ApcPowerReceiverComponent>())
             {
-                // if (cloning.UiKnownPowerState != power.Powered)
-                // {
-                    // Must be *before* update
-                    // cloning.UiKnownPowerState = power.Powered;
-                    // UpdateUserInterface(cloning);
-                // }
-
-                if (!power.Powered)
+                if (!IsPowered(cloning))
                     continue;
 
                 if (cloning.BodyContainer.ContainedEntity != null)
@@ -88,47 +164,13 @@ namespace Content.Server.Cloning
             clonePod.BodyContainer.Remove(entity);
             clonePod.CapturedMind = null;
             clonePod.CloningProgress = 0f;
-            EntitySystem.Get<CloningPodSystem>().UpdateStatus(CloningPodStatus.Idle, clonePod);
-            EntitySystem.Get<ClimbSystem>().ForciblySetClimbing(entity);
+            UpdateStatus(CloningPodStatus.Idle, clonePod);
+            _climbSystem.ForciblySetClimbing(entity);
         }
-
-        // public void OnChangeMadeToDnaScans()
-        // {
-        //     foreach (var cloning in EntityManager.EntityQuery<CloningPodComponent>())
-        //         UpdateUserInterface(cloning);
-        // }
-
-        // public bool HasDnaScan(Mind.Mind mind)
-        // {
-        //     return MindToId.ContainsKey(mind);
-        // }
-
-        // public Dictionary<int, string?> GetIdToUser()
-        // {
-        //     return IdToDNA.ToDictionary(m => m.Key, m => m.Value.Mind.CharacterName);
-        // }
 
         public void Reset(RoundRestartCleanupEvent ev)
         {
-            MindToId.Clear();
-            IdToDNA.Clear();
             ClonesWaitingForMind.Clear();
-            _nextAllocatedMindId = 0;
-        }
-    }
-
-    // TODO: This needs to be moved to Content.Server.Mobs and made a global point of reference.
-    // For example, GameTicker should be using this, and this should be using ICharacterProfile rather than HumanoidCharacterProfile.
-    // It should carry a reference or copy of itself with the mobs that it affects.
-    // See TODO in MedicalScannerComponent.
-    struct ClonerDNAEntry {
-        public Mind.Mind Mind;
-        public HumanoidCharacterProfile Profile;
-
-        public ClonerDNAEntry(Mind.Mind m, HumanoidCharacterProfile hcp)
-        {
-            Mind = m;
-            Profile = hcp;
         }
     }
 }

@@ -27,6 +27,7 @@ namespace Content.Server.Medical
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IServerPreferencesManager _prefsManager = null!;
+        [Dependency] private readonly CloningSystem _cloningSystem = default!;
 
         private const float UpdateRate = 3f;
         private float _updateDif;
@@ -134,15 +135,14 @@ namespace Content.Server.Medical
         {
             if (consoleComponent.CloningPod == null)
                 return;
-            EntitySystem.Get<CloningPodSystem>().Eject(consoleComponent.CloningPod);
+            _cloningSystem.Eject(consoleComponent.CloningPod);
         }
 
         public void TryClone(EntityUid uid, CloningConsoleComponent consoleComponent)
         {
-             if (consoleComponent.GeneticScanner != null && consoleComponent.GeneticScanner.BodyContainer.ContainedEntity != null)
+             if (consoleComponent.GeneticScanner != null && consoleComponent.CloningPod != null && consoleComponent.GeneticScanner.BodyContainer.ContainedEntity != null)
                 {
-                    var cloningPodSystem = EntitySystem.Get<CloningPodSystem>();
-                    if (!TryComp<MindComponent>( consoleComponent.GeneticScanner.BodyContainer.ContainedEntity.Value, out MindComponent? mindComp) || mindComp.Mind == null)
+                    if (!TryComp<MindComponent>(consoleComponent.GeneticScanner.BodyContainer.ContainedEntity.Value, out MindComponent? mindComp) || mindComp.Mind == null)
                         return;
                     // Null suppression based on above check. Yes, it's explicitly needed
                     var mind = mindComp.Mind!;
@@ -154,17 +154,14 @@ namespace Content.Server.Medical
                     if (mindUser.HasValue == false || mind.Session == null)
                         return;
 
-                    if (consoleComponent.CloningPod != null && consoleComponent.GeneticScanner != null)
+                    if (mindUser.HasValue == false || mind.Session == null)
                     {
-                        if (mindUser.HasValue == false || mind.Session == null)
-                        {
-                            return;
-                        }
-                        var profile = GetPlayerProfileAsync(mindUser.Value);
-                        bool cloningSuccessful = cloningPodSystem.TryCloning(mind, profile, consoleComponent.CloningPod);
-                        if (cloningSuccessful)
-                            consoleComponent.CloningHistory.Add(profile.Name);
+                        return;
                     }
+                    var profile = GetPlayerProfileAsync(mindUser.Value);
+                    bool cloningSuccessful = _cloningSystem.TryCloning(mind, profile, consoleComponent.CloningPod);
+                    if (cloningSuccessful)
+                        consoleComponent.CloningHistory.Add(profile.Name);
                 }
         }
 
