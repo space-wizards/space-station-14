@@ -119,7 +119,8 @@ namespace Content.Server.PDA.Ringer
                 SoundSystem.Play(
                     Filter.Empty().AddInRange(ringerXform.MapPosition, ringer.Range),
                     GetSound(ringer.Ringtone[ringer.NoteCount]),
-                    AudioParams.Default.WithMaxDistance(ringer.Range));
+                    ringer.Owner,
+                    AudioParams.Default.WithMaxDistance(ringer.Range).WithVolume(ringer.Volume));
 
                 ringer.NoteCount++;
 

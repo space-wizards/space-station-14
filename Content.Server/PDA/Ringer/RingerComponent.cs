@@ -30,5 +30,9 @@ namespace Content.Server.PDA.Ringer
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("range")]
         public float Range = 3f;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("volume")]
+        public float Volume = -4f;
     }
 }
