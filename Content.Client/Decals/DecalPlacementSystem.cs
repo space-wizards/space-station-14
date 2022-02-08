@@ -9,12 +9,14 @@ using Robust.Shared.Map;
 
 namespace Content.Client.Decals;
 
+// This is shit and basically a half-rewrite of PlacementManager
+// TODO refactor placementmanager so this isnt shit anymore
 public sealed class DecalPlacementSystem : EntitySystem
 {
     [Dependency] private IInputManager _inputManager = default!;
     [Dependency] private InputSystem _inputSystem = default!;
 
-    private string _decalId = "0";
+    private string? _decalId;
     private Color _decalColor = Color.White;
     private Angle _decalAngle = Angle.Zero;
     private bool _snap = false;
@@ -32,11 +34,9 @@ public sealed class DecalPlacementSystem : EntitySystem
         CommandBinds.Builder.Bind(EngineKeyFunctions.EditorPlaceObject, new PointerStateInputCmdHandler(
             ((session, coords, uid) =>
             {
-                if (!_active)
+                if (!_active || _placing || _decalId == null)
                     return false;
 
-                if (_placing)
-                    return false;
                 _placing = true;
 
                 if (_snap)
@@ -69,9 +69,7 @@ public sealed class DecalPlacementSystem : EntitySystem
         CommandBinds.Builder.Bind(EngineKeyFunctions.EditorCancelPlace, new PointerStateInputCmdHandler((
             (session, coords, uid) =>
             {
-                if (!_active)
-                    return false;
-                if (_erasing)
+                if (!_active || _erasing)
                     return false;
 
                 _erasing = true;

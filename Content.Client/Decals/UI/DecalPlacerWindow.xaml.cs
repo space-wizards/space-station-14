@@ -25,6 +25,8 @@ namespace Content.Client.Decals.UI
         private bool _useColor = false;
         private bool _snap = false;
         private float _rotation = 0.0f;
+        private bool _cleanable = false;
+        private int _zIndex = 0;
 
         public DecalPlacerWindow(IPrototypeManager prototypeManager)
         {
@@ -32,6 +34,7 @@ namespace Content.Client.Decals.UI
 
             _prototypeManager = prototypeManager;
             _decalPlacementSystem = EntitySystem.Get<DecalPlacementSystem>();
+
             Search.OnTextChanged += _ => RefreshList();
             ColorPicker.OnColorPicked += (color =>
             {
@@ -55,6 +58,13 @@ namespace Content.Client.Decals.UI
                 _snap = args.Pressed;
                 UpdateDecalPlacementInfo();
             });
+            EnableCleanable.OnToggled += (args =>
+            {
+                _cleanable = args.Pressed;
+                UpdateDecalPlacementInfo();
+            });
+            // i have to make this a member method for some reason and i have no idea why its only for spinboxes
+            ZIndexSpinBox.ValueChanged += ZIndexSpinboxChanged;
 
             Populate();
         }
@@ -64,7 +74,7 @@ namespace Content.Client.Decals.UI
             if (_selected is null)
                 return;
 
-            _decalPlacementSystem.UpdateDecalInfo(_selected, _color, _rotation, _snap);
+            _decalPlacementSystem.UpdateDecalInfo(_selected, _color, _rotation, _snap, _zIndex, _cleanable);
         }
 
         private void RefreshList()
@@ -107,6 +117,12 @@ namespace Content.Client.Decals.UI
                     Grid.AddChild(button);
                 }
             }
+        }
+
+        private void ZIndexSpinboxChanged(object? sender, ValueChangedEventArgs e)
+        {
+            _zIndex = e.Value;
+            UpdateDecalPlacementInfo();
         }
 
         private void ButtonOnPressed(ButtonEventArgs obj)

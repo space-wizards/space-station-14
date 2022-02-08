@@ -113,7 +113,7 @@ namespace Content.Server.Decals
 
             // remove all decals on the same tile
             foreach (var decal in GetDecalsInRange(gridId, ev.Coordinates.Position,
-                         0.5f))
+                         1.0f))
             {
                 RemoveDecal(gridId, decal);
             }
