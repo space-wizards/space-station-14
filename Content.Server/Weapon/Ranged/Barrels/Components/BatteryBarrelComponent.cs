@@ -10,7 +10,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Weapon.Ranged.Barrels.Components
 {
-    [RegisterComponent, NetworkedComponent, ComponentProtoName("BatteryBarrel"), ComponentReference(typeof(ServerRangedBarrelComponent))]
+    [RegisterComponent, NetworkedComponent, ComponentReference(typeof(ServerRangedBarrelComponent))]
     public sealed class BatteryBarrelComponent : ServerRangedBarrelComponent
     {
         // The minimum change we need before we can fire

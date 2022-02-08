@@ -122,3 +122,33 @@
       maxSpawns: 20
       possiblePrototypes:
         - FoodBanana
+
+- type: entity
+  parent: BaseXenoArtifact
+  id: HeatArtifact
+  suffix: Heat
+  components:
+    - type: TemperatureArtifact
+      targetTemp: 400 # around 125 celsius
+
+- type: entity
+  parent: BaseXenoArtifact
+  id: ColdArtifact
+  suffix: Cold
+  components:
+    - type: TemperatureArtifact
+      targetTemp: 150 # around -125 celsius
+
+- type: entity
+  parent: BaseXenoArtifact
+  id: RadiateArtifact
+  suffix: Radiation
+  components:
+    - type: RadiateArtifact
+
+- type: entity
+  parent: BaseXenoArtifact
+  id: GasArtifact
+  suffix: Gas
+  components:
+    - type: GasArtifact

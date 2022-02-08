@@ -1,4 +1,3 @@
-using Content.Shared.Interaction;
 using Content.Shared.Tools;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
@@ -8,7 +7,6 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Construction.Components
 {
-    // TODO: Move this component's logic to an EntitySystem.
     [RegisterComponent, Friend(typeof(AnchorableSystem))]
     public class AnchorableComponent : Component
     {
@@ -18,6 +16,13 @@ namespace Content.Server.Construction.Components
         [DataField("snap")]
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Snap { get; private set; } = true;
+
+        /// <summary>
+        /// Base delay to use for anchoring.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("delay")]
+        public float Delay = 0.5f;
     }
 
     public abstract class BaseAnchoredAttemptEvent : CancellableEntityEventArgs
