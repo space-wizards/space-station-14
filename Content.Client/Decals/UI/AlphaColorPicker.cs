@@ -5,6 +5,9 @@ using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.Decals.UI;
 
+/// <summary>
+///     This is just copied from EyeColorPicker btw. I might make it more generic
+/// </summary>
 public sealed class AlphaColorPicker : Control
 {
     public event Action<Color>? OnColorPicked;
@@ -39,7 +42,7 @@ public sealed class AlphaColorPicker : Control
         vBox.AddChild(_colorSliderB = new ColorSlider(StyleNano.StyleClassSliderBlue));
         vBox.AddChild(_colorSliderA = new ColorSlider(StyleNano.StyleClassSliderWhite));
 
-        Action colorValueChanged = ColorValueChanged;
+        var colorValueChanged = ColorValueChanged;
         _colorSliderR.OnValueChanged += colorValueChanged;
         _colorSliderG.OnValueChanged += colorValueChanged;
         _colorSliderB.OnValueChanged += colorValueChanged;

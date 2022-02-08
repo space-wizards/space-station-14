@@ -1,11 +1,8 @@
 ﻿using Content.Shared.Decals;
-using Content.Shared.Input;
 using Robust.Client.GameObjects;
-using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.Map;
 
 namespace Content.Client.Decals;
 
@@ -13,26 +10,26 @@ namespace Content.Client.Decals;
 // TODO refactor placementmanager so this isnt shit anymore
 public sealed class DecalPlacementSystem : EntitySystem
 {
-    [Dependency] private IInputManager _inputManager = default!;
-    [Dependency] private InputSystem _inputSystem = default!;
+    [Dependency] private readonly IInputManager _inputManager = default!;
+    [Dependency] private readonly InputSystem _inputSystem = default!;
 
     private string? _decalId;
     private Color _decalColor = Color.White;
     private Angle _decalAngle = Angle.Zero;
-    private bool _snap = false;
-    private int _zIndex = 0;
-    private bool _cleanable = false;
+    private bool _snap;
+    private int _zIndex;
+    private bool _cleanable;
 
-    private bool _active = false;
-    private bool _placing = false;
-    private bool _erasing = false;
+    private bool _active;
+    private bool _placing;
+    private bool _erasing;
 
     public override void Initialize()
     {
         base.Initialize();
 
         CommandBinds.Builder.Bind(EngineKeyFunctions.EditorPlaceObject, new PointerStateInputCmdHandler(
-            ((session, coords, uid) =>
+            (session, coords, uid) =>
             {
                 if (!_active || _placing || _decalId == null)
                     return false;
@@ -42,11 +39,12 @@ public sealed class DecalPlacementSystem : EntitySystem
                 if (_snap)
                 {
                     var newPos = new Vector2(
-                        (float) (MathF.Round((coords.X - 0.5f), MidpointRounding.AwayFromZero) + 0.5),
-                        (float) (MathF.Round((coords.Y - 0.5f), MidpointRounding.AwayFromZero) + 0.5)
+                        (float) (MathF.Round(coords.X - 0.5f, MidpointRounding.AwayFromZero) + 0.5),
+                        (float) (MathF.Round(coords.Y - 0.5f, MidpointRounding.AwayFromZero) + 0.5)
                     );
                     coords = coords.WithPosition(newPos);
                 }
+
                 coords = coords.Offset(new Vector2(-0.5f, -0.5f));
 
                 if (!coords.IsValid(EntityManager))
@@ -56,17 +54,17 @@ public sealed class DecalPlacementSystem : EntitySystem
                 RaiseNetworkEvent(new RequestDecalPlacementEvent(decal, coords.GetGridId(EntityManager)));
 
                 return true;
-            }),
-            ((session, coords, uid) =>
+            },
+            (session, coords, uid) =>
             {
                 if (!_active)
                     return false;
 
                 _placing = false;
                 return true;
-            }), true)).Register<DecalPlacementSystem>();
+            }, true)).Register<DecalPlacementSystem>();
 
-        CommandBinds.Builder.Bind(EngineKeyFunctions.EditorCancelPlace, new PointerStateInputCmdHandler((
+        CommandBinds.Builder.Bind(EngineKeyFunctions.EditorCancelPlace, new PointerStateInputCmdHandler(
             (session, coords, uid) =>
             {
                 if (!_active || _erasing)
@@ -77,14 +75,14 @@ public sealed class DecalPlacementSystem : EntitySystem
                 RaiseNetworkEvent(new RequestDecalRemovalEvent(coords));
 
                 return true;
-            }), ((session, coords, uid) =>
+            }, (session, coords, uid) =>
             {
                 if (!_active)
                     return false;
                 _erasing = false;
 
                 return true;
-            }), true)).Register<DecalPlacementSystem>();
+            }, true)).Register<DecalPlacementSystem>();
     }
 
     public void UpdateDecalInfo(string id, Color color, float rotation, bool snap, int zIndex, bool cleanable)

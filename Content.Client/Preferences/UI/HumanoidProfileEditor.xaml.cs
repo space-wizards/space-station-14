@@ -279,7 +279,7 @@ namespace Content.Client.Preferences.UI
 
             #region Eyes
 
-            _eyesPicker.OnColorPicked += newColor =>
+            _eyesPicker.OnEyeColorPicked += newColor =>
             {
                 if (Profile is null)
                     return;
