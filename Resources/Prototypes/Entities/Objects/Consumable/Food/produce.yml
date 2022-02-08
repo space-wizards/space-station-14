@@ -587,10 +587,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 12 ##I'm pretty sure this has to match the total of 100 potency yields
+        maxVol: 20 ##I'm pretty sure this has to match the total of 100 potency yields
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 2
+        - ReagentId: Aloe
+          Quantity: 10
         - ReagentId: Kelotane
           Quantity: 10
   - type: Sprite
@@ -619,5 +619,53 @@
     sprite: Objects/Specific/Hydroponics/poppy.rsi
   - type: Produce
     seed: poppy
+  - type: Extractable
+    grindableSolutionName: food
+
+- type: entity
+  name: lingzhi
+  parent: FoodProduceBase
+  id: FoodLingzhi
+  description: A potent medicinal mushroom. Don't go overboard.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 40
+        reagents:
+        - ReagentId: Ultravasculine
+          Quantity: 20
+        - ReagentId: Epinephrine
+          Quantity: 20
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/lingzhi.rsi
+  - type: Produce
+    seed: lingzhi
+  - type: Extractable
+    grindableSolutionName: food
+
+- type: entity
+  name: ambrosia vulgaris
+  parent: FoodProduceBase
+  id: FoodAmbrosiaVulgaris
+  description: A medicinal plant. May make you feel a little funny.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 24
+        reagents:
+        - ReagentId: Bicaridine
+          Quantity: 10
+        - ReagentId: Kelotane
+          Quantity: 10
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Desoxyephedrine
+          Quantity: 2
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/ambrosia_vulgaris.rsi
+  - type: Produce
+    seed: lingzhi
   - type: Extractable
     grindableSolutionName: food

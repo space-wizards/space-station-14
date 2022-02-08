@@ -489,6 +489,7 @@
     Nutriment:
       Min: 1
       Max: 2
+      Potencydivisor: 50
     Bicaridine:
       Min: 1
       Max: 10
@@ -510,10 +511,69 @@
   growthStages: 5
   waterConsumption: 6
   chemicals:
+    Aloe:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+    Dermaline:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+
+- type: seed
+  id: lingzhi
+  name: lingzhi
+  seedName: lingzhi
+  displayName: lingzhi
+  plantRsi: Objects/Specific/Hydroponics/lingzhi.rsi
+  productPrototypes:
+    - FoodLingzhi
+  lifespan: 25
+  maturation: 10
+  production: 1
+  yield: 5
+  potency: 10
+  growthStages: 3
+  waterConsumption: 6
+  chemicals:
+    Ultravasculine:
+      Min: 1
+      Max: 20
+      PotencyDivisor: 5
+    Epinephrine:
+      Min: 1
+      Max: 20
+      PotencyDivisor: 5
+
+- type: seed
+  id: ambrosiaVulgaris
+  name: ambrosia vulgaris
+  seedName: ambrosiaVulgaris
+  displayName: ambrosia vulgaris
+  plantRsi: Objects/Specific/Hydroponics/ambrosia_vulgaris.rsi
+  productPrototypes:
+    - FoodAmbrosiaVulgaris
+  lifespan: 25
+  maturation: 10
+  production: 1
+  yield: 5
+  potency: 10
+  growthStages: 6
+  waterConsumption: 6
+  chemicals:
     Nutriment:
       Min: 1
       Max: 2
+      PotencyDivisor: 10
+    Bicaridine:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
     Kelotane:
       Min: 1
       Max: 10
       PotencyDivisor: 10
+    Desoxyephedrine: #Needs a small touch of spice, replace this with something better when we have more fun drugs
+      Min: 1
+      Max: 2
+      PotencyDivisor: 50
