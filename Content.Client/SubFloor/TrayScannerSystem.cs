@@ -23,7 +23,7 @@ public sealed class TrayScannerSystem : SharedTrayScannerSystem
 
     public void OnComponentShutdown(EntityUid uid, TrayScannerComponent scanner, ComponentShutdown args)
     {
-        _subfloorSystem.SetEntityRevealed(scanner.RevealedSubfloors, uid, false, _visualizerKeys);
+        _subfloorSystem.SetEntitiesRevealed(scanner.RevealedSubfloors, uid, false, _visualizerKeys);
         _invalidScanners.Add(uid);
     }
 
@@ -103,7 +103,7 @@ public sealed class TrayScannerSystem : SharedTrayScannerSystem
         // the active scanner list
         if (!scanner.Toggled)
         {
-            _subfloorSystem.SetEntityRevealed(scanner.RevealedSubfloors, uid, false, _visualizerKeys);
+            _subfloorSystem.SetEntitiesRevealed(scanner.RevealedSubfloors, uid, false, _visualizerKeys);
             scanner.LastLocation = Vector2.Zero;
             scanner.RevealedSubfloors.Clear();
             return false;
@@ -147,7 +147,7 @@ public sealed class TrayScannerSystem : SharedTrayScannerSystem
         // is still technically on
         if (flooredPos == Vector2.Zero)
         {
-            _subfloorSystem.SetEntityRevealed(scanner.RevealedSubfloors, uid, false, _visualizerKeys);
+            _subfloorSystem.SetEntitiesRevealed(scanner.RevealedSubfloors, uid, false, _visualizerKeys);
             scanner.RevealedSubfloors.Clear();
             return true;
         }
@@ -198,7 +198,7 @@ public sealed class TrayScannerSystem : SharedTrayScannerSystem
         scanner.RevealedSubfloors.ExceptWith(missing);
 
         // and hide them
-        _subfloorSystem.SetEntityRevealed(missing, uid, false, _visualizerKeys);
+        _subfloorSystem.SetEntitiesRevealed(missing, uid, false, _visualizerKeys);
 
         return true;
     }

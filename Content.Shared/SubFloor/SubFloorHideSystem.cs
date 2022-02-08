@@ -177,7 +177,7 @@ namespace Content.Shared.SubFloor
         /// <summary>
         ///     This function is used by T-Ray scanners or other sub-floor revealing entities to toggle visibility.
         /// </summary>
-        public void SetEntityRevealed(IEnumerable<EntityUid> entities, EntityUid revealer, bool visible, IEnumerable<object>? appearanceKeys = null)
+        public void SetEntitiesRevealed(IEnumerable<EntityUid> entities, EntityUid revealer, bool visible, IEnumerable<object>? appearanceKeys = null)
         {
             foreach (var uid in entities)
             {
