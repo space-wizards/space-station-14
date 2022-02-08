@@ -88,6 +88,9 @@
   - type: DeviceNetworkComponent
     deviceNetId: Apc
   - type: ApcNetworkConnection
+  - type: Construction
+    graph: LightFixture
+    node: groundLight
   - type: Appearance
     visuals:
     - type: PoweredLightVisualizer
