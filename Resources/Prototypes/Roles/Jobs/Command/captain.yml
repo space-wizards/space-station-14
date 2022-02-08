@@ -15,6 +15,7 @@
   # Could probably do with some kind of wildcard or whatever to automate this.
   # HELL FUCKING YEAH WE COULD
   # Guys please don't fight
+  # Seriously though...
   - Captain
   - HeadOfPersonnel
   - ChiefEngineer
@@ -28,6 +29,7 @@
   - Engineering
   - Medical
   - Quartermaster
+  - Salvage
   - Cargo
   - Research
   - Service
