@@ -1,15 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: Make warning for if FluidSynth is not installed more informative, type: Tweak}
-  id: 514
-  time: '2021-10-29T10:20:50.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: 'If holding a multitool, examining cables reads various power statistics.',
-    type: Add}
-  id: 515
-  time: '2021-10-29T12:42:18.0000000+00:00'
 - author: Ygg01
   changes:
   - {message: Tweaked the Reagent Window to not have the weird cutoff like before.,
@@ -2964,3 +2953,16 @@ Entries:
   - {message: Mappers can now add decals to maps using the Decal Placer menu., type: Add}
   id: 1014
   time: '2022-02-08T20:54:41.0000000+00:00'
+- author: Fishfish458
+  changes:
+  - {message: 'Added inflatable doors, which can now be found in the engineer Tool
+      Vend', type: Add}
+  id: 1015
+  time: '2022-02-08T21:54:14.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'Added galaxythistle and fly amanita, two more plants with powerful
+      chemical effects.', type: Add}
+  - {message: You can now wear ambrosia vulgaris in your head slot., type: Add}
+  id: 1016
+  time: '2022-02-08T21:54:28.0000000+00:00'
