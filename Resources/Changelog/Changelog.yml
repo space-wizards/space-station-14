@@ -1,9 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Fix certain windoors not autoclosing., type: Fix}
-  id: 509
-  time: '2021-10-29T05:39:44.812307+00:00'
 - author: vulppine
   changes:
   - {message: 'NanoTrasen has cut the budget on maintaining how pretty things look
@@ -2964,3 +2959,9 @@ Entries:
   - {message: 'The Mothership, a Syndicate Vessel.', type: Add}
   id: 1009
   time: '2022-02-08T10:23:11.0000000+00:00'
+- author: hubismal
+  changes:
+  - {message: 'Fires now burn brightly, meaning fires and people affected by fire
+      are much more noticeable.', type: Tweak}
+  id: 1010
+  time: '2022-02-08T10:43:34.0000000+00:00'
