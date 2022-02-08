@@ -193,3 +193,45 @@
   sprite:
     sprite: Decals/markings.rsi
     state: warninglinecorner_greyscale
+
+- type: decal
+  id: WarningLineCornerFlipped
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/markings.rsi
+    state: warninglinecorner_flipped
+
+- type: decal
+  id: WarningLineCornerFlippedGreyscale
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/markings.rsi
+    state: warninglinecorner_flipped_greyscale
+
+- type: decal
+  id: WarnCorner
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/markings.rsi
+    state: warn_corner
+
+- type: decal
+  id: WarnCornerGreyscale
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/markings.rsi
+    state: warn_corner_greyscale
+
+- type: decal
+  id: WarnCornerFlipped
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/markings.rsi
+    state: warn_corner_flipped
+
+- type: decal
+  id: WarnCornerFlippedGreyscale
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/markings.rsi
+    state: warn_corner_flipped_greyscale

@@ -95,7 +95,7 @@ public sealed partial class DecalPlacerWindow : DefaultWindow
         var filter = Search.Text;
         foreach (var (decal, tex) in _decals)
         {
-            if (!decal.Contains(filter))
+            if (!decal.ToLowerInvariant().Contains(filter.ToLowerInvariant()))
                 continue;
 
             var button = new TextureButton

@@ -90,6 +90,24 @@
     },
     {
       "name": "warninglinecorner_greyscale"
+    },
+    {
+      "name": "warninglinecorner_flipped"
+    },
+    {
+      "name": "warninglinecorner_flipped_greyscale"
+    },
+    {
+      "name": "warn_corner"
+    },
+    {
+      "name": "warn_corner_greyscale"
+    },
+    {
+      "name": "warn_corner_flipped"
+    },
+    {
+      "name": "warn_corner_flipped_greyscale"
     }
   ]
 }
