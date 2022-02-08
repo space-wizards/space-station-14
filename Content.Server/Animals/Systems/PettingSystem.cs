@@ -62,8 +62,7 @@ public class PettingSystem : EntitySystem
 
             // play the sound effect only on petting success. TODO: could rework system to add different sounds on petting failure, such as a cat hissing.
             if (component.PetSound != null) // might be null if no sound is specified in the yaml.
-            SoundSystem.Play(Filter.Pvs(args.Target), component.PetSound.GetSound(),
-                Transform(args.Target).Coordinates);
+                SoundSystem.Play(Filter.Pvs(args.Target), component.PetSound.GetSound(), Transform(args.Target).Coordinates);
         }
 
         _popupSystem.PopupEntity(msg, uid, Filter.Pvs(uid)); // if we get this far, display the popup, regardless of success or failure
