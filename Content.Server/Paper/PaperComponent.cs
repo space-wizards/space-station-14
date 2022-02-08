@@ -113,7 +113,7 @@ namespace Content.Server.Paper
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!eventArgs.Using.HasTag("Write"))
+            if (!EntitySystem.Get<TagSystem>().HasTag(eventArgs.Using, "Write"))
                 return false;
             if (!_entMan.TryGetComponent(eventArgs.User, out ActorComponent? actor))
                 return false;

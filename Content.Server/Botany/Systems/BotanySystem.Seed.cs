@@ -136,7 +136,7 @@ public partial class BotanySystem
 
     public bool CanHarvest(SeedPrototype proto, EntityUid? held = null)
     {
-        return !proto.Ligneous || proto.Ligneous && held != null && held.Value.HasTag("BotanySharp");
+        return !proto.Ligneous || proto.Ligneous && held != null && _tags.HasTag(held.Value, "BotanySharp");
     }
 
     #endregion
