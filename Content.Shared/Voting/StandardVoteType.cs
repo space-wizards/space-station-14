@@ -18,6 +18,11 @@
         /// <summary>
         /// Vote to change the map for the next round.
         /// </summary>
-        Map
+        Map,
+
+        /// <summary>
+        /// Vote to change the storyteller for the next dynamic round.
+        /// </summary>
+        Storyteller
     }
 }

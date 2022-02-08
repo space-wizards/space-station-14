@@ -1,5 +1,6 @@
 ﻿- type: storyteller
   id: MiddlingMandy
+  name: Middling Mandy
   weight: 9
   threatCurveCenterModifier:
     min: -0.5
@@ -7,3 +8,14 @@
   splitCurveCenterModifier:
     min: -0.5
     max: 0.5
+
+- type: storyteller
+  id: RandyRandom
+  name: Randy Random
+  weight: 9
+  threatCurveCenterModifier:
+    min: -0.5
+    max: 2
+  splitCurveCenterModifier:
+    min: -0.5
+    max: 2

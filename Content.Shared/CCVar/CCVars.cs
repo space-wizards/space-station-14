@@ -545,6 +545,9 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> VoteMapEnabled =
             CVarDef.Create("vote.map_enabled", true, CVar.SERVERONLY);
 
+        public static readonly CVarDef<bool> VoteStorytellerEnabled =
+            CVarDef.Create("vote.storyteller_enabled", true, CVar.SERVERONLY);
+
         /// <summary>
         ///     The required ratio of the server that must agree for a restart round vote to go through.
         /// </summary>
@@ -582,6 +585,8 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<int>
             VoteTimerAlone = CVarDef.Create("vote.timeralone", 10, CVar.SERVERONLY);
 
+        public static readonly CVarDef<int>
+            VoteTimerStoryteller = CVarDef.Create("vote.timerstoryteller", 90, CVar.SERVERONLY);
 
         /*
          * BAN

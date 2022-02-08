@@ -2,6 +2,7 @@
 using Content.Server.GameTicking.Events;
 using Content.Server.GameTicking.Rules;
 using Content.Server.StationEvents;
+using Content.Shared.CCVar;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Robust.Shared.Configuration;
 using Robust.Shared.IoC;
@@ -14,12 +15,13 @@ namespace Content.Server.Dynamic.Systems;
 /// <summary>
 ///     Its dynamic, baby!!!!
 /// </summary>
-public partial class DynamicModeSystem : GameRuleSystem
+public sealed partial class DynamicModeSystem : GameRuleSystem
 {
     public override string Prototype => "Dynamic";
 
-    // Cached so we can re-enable random events if dynamic is disabled.
+    // Cached so we can re-enable stuff if dynamic is disabled.
     private bool _stationEventsWereEnabled;
+    private bool _storytellerWasVotable;
 
     private float _refundAccumulator;
 
@@ -74,7 +76,18 @@ public partial class DynamicModeSystem : GameRuleSystem
             _stationEvents.Enabled = false;
         }
 
+        // Disable storyteller voting.
+        if (_cfg.GetCVar(CCVars.VoteStorytellerEnabled))
+        {
+            _storytellerWasVotable = true;
+            _cfg.SetCVar(CCVars.VoteStorytellerEnabled, false);
+        }
+
         RebuildSchedulers();
+
+        // Storyteller before budget, so that it can affect
+        // the threat level
+        PickStoryteller();
 
         // Calculate budget
         GenerateThreat();
@@ -93,6 +106,13 @@ public partial class DynamicModeSystem : GameRuleSystem
     public override void Removed()
     {
         _stationEvents.Enabled = _stationEventsWereEnabled;
+        _cfg.SetCVar(CCVars.VoteStorytellerEnabled, _storytellerWasVotable);
+
+        // Null the current storyteller at round end.
+        // This means that if dynamic wasn't selected,
+        // a vote from the previous round can select the storyteller for the next round,
+        // which is ideal.
+        CurrentStoryteller = null;
 
         TotalEvents.Clear();
         RefundableEvents.Clear();

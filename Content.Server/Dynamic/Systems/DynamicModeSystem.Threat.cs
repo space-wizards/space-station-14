@@ -53,8 +53,21 @@ public partial class DynamicModeSystem
     /// </summary>
     public void GenerateThreat()
     {
-        var relativeThreat = Lorentz.ProbabilityDensity(ThreatCurveCenter, ThreatCurveWidth);
-        ThreatLevel = Math.Clamp(Lorentz.LorentzToAmount(relativeThreat), 0, MaxThreatLevel);
+        // This shouldn't actually happen.
+        if (CurrentStoryteller == null)
+        {
+            Logger.Error("Dynamic tried to generate threat without a storyteller!");
+            return;
+        }
+
+        var st = CurrentStoryteller;
+        var curveCenterMod = st.RoundstartCurveCenterModifier.Choose(_random);
+        var curveWidthMod = st.RoundstartCurveWidthModifier.Choose(_random);
+        var threatCapMod = st.ThreatCapModifier.Choose(_random);
+
+        var relativeThreat =
+            Lorentz.ProbabilityDensity(ThreatCurveCenter + curveCenterMod, ThreatCurveWidth + curveWidthMod);
+        ThreatLevel = Math.Clamp(Lorentz.LorentzToAmount(relativeThreat), 0, MaxThreatLevel + threatCapMod);
     }
 
     /// <summary>
@@ -62,7 +75,20 @@ public partial class DynamicModeSystem
     /// </summary>
     public void GenerateBudgets()
     {
-        var relativeRoundstartThreatScale = Lorentz.ProbabilityDensity(SplitCurveCenter, SplitCurveWidth);
+        // This shouldn't actually happen.
+        if (CurrentStoryteller == null)
+        {
+            Logger.Error("Dynamic tried to generate budgets without a storyteller!");
+            return;
+        }
+
+        var st = CurrentStoryteller;
+        var curveCenterMod = st.SplitCurveCenterModifier.Choose(_random);
+        var curveWidthMod = st.SplitCurveWidthModifier.Choose(_random);
+
+        var relativeRoundstartThreatScale =
+            Lorentz.ProbabilityDensity(SplitCurveCenter + curveCenterMod, SplitCurveWidth + curveWidthMod);
+
         RoundstartBudget = (Lorentz.LorentzToAmount(relativeRoundstartThreatScale) / 100.0f) * ThreatLevel;
         RoundstartBudget = MathF.Round(RoundstartBudget, 2);
         MidroundBudget = ThreatLevel - RoundstartBudget;

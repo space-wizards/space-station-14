@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Content.Server.Database;
+﻿using System.Linq;
 using Content.Server.Dynamic.Prototypes;
 using Content.Server.GameTicking;
 using Content.Server.Mind.Components;
 using Content.Shared.CCVar;
-using NFluidsynth;
 using Robust.Server.Player;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
-using Logger = Robust.Shared.Log.Logger;
 
 namespace Content.Server.Dynamic.Systems;
 
@@ -30,8 +23,6 @@ public partial class DynamicModeSystem
     /// </summary>
     [ViewVariables]
     public readonly List<(GameEventPrototype, TimeSpan)> RefundableEvents = new();
-
-    #region Latejoin
 
     /// <summary>
     ///     When will dynamic start accepting latejoin events?
@@ -53,8 +44,6 @@ public partial class DynamicModeSystem
     /// </summary>
     public float LowInjectionChanceThreshold = 10.0f;
 
-    #endregion
-
     public void InitializeEvents()
     {
         SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerSpawnComplete);
@@ -75,6 +64,23 @@ public partial class DynamicModeSystem
         TryRunLatejoinEvent(ev.Player);
     }
 
+    #region Event Picking/Running
+
+    /// <summary>
+    ///     Selects a game event from a list of candidates, taking into account their weight,
+    ///     some random modifiers, and the current storyteller.
+    /// </summary>
+    /// <param name="eventCandidates"></param>
+    public GameEventPrototype SelectEvent(IEnumerable<GameEventPrototype> eventCandidates)
+    {
+        var chance = 0.0f;
+
+        // TODO WEIGHTED PICK
+        // TODO modify chance
+        // TODO storyteller weighted pick by tag
+        return _random.Pick(eventCandidates.ToArray());
+    }
+
     /// <summary>
     ///     Purchases and starts a set of roundstart events.
     /// </summary>
@@ -93,8 +99,7 @@ public partial class DynamicModeSystem
         var playerCount = players.Length;
         while (RoundstartBudget > 0)
         {
-            // TODO weighted pick.
-            var ev = _random.Pick(protos);
+            var ev = SelectEvent(protos);
             var candidates = GetCandidates(ev, players);
             var evData = new GameEventData(playerCount, candidates);
             if (!CanStartEvent(ev, evData))
@@ -114,11 +119,7 @@ public partial class DynamicModeSystem
     /// </summary>
     public void TryRunMidroundEvent(List<GameEventPrototype> eventCandidates, string schedule)
     {
-        var chance = 0.0f;
-
-        // TODO
-        var cand = _random.Pick(eventCandidates);
-
+        var cand = SelectEvent(eventCandidates);
         Logger.Info($"dynamic midround picked {cand.Name} on schedule {schedule}");
     }
 
@@ -128,8 +129,14 @@ public partial class DynamicModeSystem
     public void TryRunLatejoinEvent(IPlayerSession player)
     {
         // TODO
-        Logger.Info("Tried to run latejoin event, weehee");
+        var events = _proto.EnumeratePrototypes<GameEventPrototype>()
+            .Where(e => e.EventType == DynamicEventType.Latejoin);
+
+        var cand = SelectEvent(events);
+        Logger.Info($"Tried to run latejoin event {cand.Name}, weehee");
     }
+
+    #endregion
 
     /// <summary>
     ///     Iterates over all active refundable events and checks if they can be refunded.
@@ -270,7 +277,7 @@ public partial class DynamicModeSystem
     #endregion
 }
 
-public class StartEventAttemptEvent : CancellableEntityEventArgs
+public sealed class StartEventAttemptEvent : CancellableEntityEventArgs
 {
     public GameEventData Data;
     public GameEventPrototype Prototype;

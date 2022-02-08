@@ -8,7 +8,14 @@ namespace Content.Server.Dynamic.Systems;
 
 public partial class DynamicModeSystem
 {
+    /// <summary>
+    ///     A data structure containing the accumulators for each active scheduler.
+    /// </summary>
     public Dictionary<DynamicSchedulerPrototype, float> SchedulerTiming = new();
+
+    /// <summary>
+    ///     A data structure mapping each scheduler to the list of events that it can
+    /// </summary>
     public Dictionary<DynamicSchedulerPrototype, List<GameEventPrototype>> Schedulers = new();
 
     public void ReloadSchedulers(PrototypesReloadedEventArgs args)
@@ -26,7 +33,7 @@ public partial class DynamicModeSystem
 
             if (!_proto.TryIndex<DynamicSchedulerPrototype>(ev.Scheduler, out var scheduler))
             {
-                Logger.Error("oh fuck");
+                Logger.Error($"Game event {ev.Name} specified nonexistent scheduler {ev.Scheduler}");
                 continue;
             }
 

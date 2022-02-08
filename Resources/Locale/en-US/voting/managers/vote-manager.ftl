@@ -16,3 +16,7 @@ ui-vote-gamemode-win = { $winner } won the gamemode vote!
 ui-vote-map-title = Next map
 ui-vote-map-tie = Tie for map vote! Picking... { $picked }
 ui-vote-map-win = { $winner } won the map vote!
+
+ui-vote-storyteller-title = Next storyteller
+ui-vote-storyteller-tie = Tie for storyteller vote! Picking... { $picked }
+ui-vote-storyteller-win = { $winner } was chosen as the next storyteller!

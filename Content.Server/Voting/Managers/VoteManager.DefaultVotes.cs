@@ -1,12 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Server.Dynamic.Prototypes;
+using Content.Server.Dynamic.Systems;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Presets;
 using Content.Server.Maps;
 using Content.Server.RoundEnd;
 using Content.Shared.CCVar;
 using Content.Shared.Voting;
+using Microsoft.Extensions.Options;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
@@ -24,6 +27,7 @@ namespace Content.Server.Voting.Managers
             {StandardVoteType.Restart, CCVars.VoteRestartEnabled},
             {StandardVoteType.Preset, CCVars.VotePresetEnabled},
             {StandardVoteType.Map, CCVars.VoteMapEnabled},
+            {StandardVoteType.Storyteller, CCVars.VoteStorytellerEnabled}
         };
 
         public void CreateStandardVote(IPlayerSession? initiator, StandardVoteType voteType)
@@ -38,6 +42,9 @@ namespace Content.Server.Voting.Managers
                     break;
                 case StandardVoteType.Map:
                     CreateMapVote(initiator);
+                    break;
+                case StandardVoteType.Storyteller:
+                    CreateStorytellerVote(initiator);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(voteType), voteType, null);
@@ -200,6 +207,46 @@ namespace Content.Server.Voting.Managers
                 }
 
                 _gameMapManager.TrySelectMap(picked.ID);
+            };
+        }
+
+        private void CreateStorytellerVote(IPlayerSession? initiator)
+        {
+            var storytellers = _prototypeManager.EnumeratePrototypes<StorytellerPrototype>()
+                .Where(s => s.Votable).ToDictionary(s => s, s => s.Name);
+
+            var options = new VoteOptions
+            {
+                Title = Loc.GetString("ui-vote-storyteller-title"),
+                Duration = TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerStoryteller))
+            };
+
+            foreach (var (proto, name) in storytellers)
+            {
+                options.Options.Add((name, proto));
+            }
+
+            WirePresetVoteInitiator(options, initiator);
+
+            var vote = CreateVote(options);
+
+            vote.OnFinished += (_, args) =>
+            {
+                StorytellerPrototype picked;
+                if (args.Winner == null)
+                {
+                    picked = (StorytellerPrototype) _random.Pick(args.Winners);
+                    _chatManager.DispatchServerAnnouncement(
+                        Loc.GetString("ui-vote-storyteller-tie", ("picked", storytellers[picked])));
+                }
+                else
+                {
+                    picked = (StorytellerPrototype) args.Winner;
+                    _chatManager.DispatchServerAnnouncement(
+                        Loc.GetString("ui-vote-storyteller-win", ("winner", storytellers[picked])));
+                }
+
+                EntitySystem.Get<DynamicModeSystem>().CurrentStoryteller = picked;
             };
         }
 

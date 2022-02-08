@@ -1,6 +1,7 @@
 ui-vote-type-restart = Restart round
 ui-vote-type-gamemode = Next gamemode
 ui-vote-type-map = Next map
+ui-vote-type-storyteller = Next storyteller
 
 # Window title of the vote create menu
 ui-vote-create-title = Call Vote

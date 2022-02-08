@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using Robust.Shared.Prototypes;
+﻿using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
 namespace Content.Server.Dynamic.Prototypes;
@@ -10,16 +8,29 @@ namespace Content.Server.Dynamic.Prototypes;
 ///     A "dynamic preset" which is selected before round start and modifies Dynamic in some way.
 /// </summary>
 [Prototype("storyteller")]
-public class StorytellerPrototype : IPrototype
+public sealed class StorytellerPrototype : IPrototype
 {
     [DataField("id", required: true)]
     public string ID { get; } = default!;
+
+    /// <summary>
+    ///     A human readable name for this storyteller.
+    ///     Shown in Storyteller votes.
+    /// </summary>
+    [DataField("name", required: true)]
+    public string Name = default!;
 
     /// <summary>
     ///     How hard this storyteller is weighted against other storytellers.
     /// </summary>
     [DataField("weight")]
     public int Weight = 5;
+
+    /// <summary>
+    ///     Is this storyteller votable, or admin only?
+    /// </summary>
+    [DataField("votable")]
+    public bool Votable = true;
 
     /// <summary>
     ///     Modifies the base threat pool Lorentz curve center.
@@ -67,7 +78,7 @@ public class StorytellerPrototype : IPrototype
 ///
 /// </summary>
 [DataDefinition]
-public class StorytellerMinMax
+public sealed class StorytellerMinMax
 {
     [DataField("min")]
     public float Min;
