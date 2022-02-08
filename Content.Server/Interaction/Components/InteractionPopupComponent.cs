@@ -46,7 +46,7 @@ namespace Content.Server.Interaction.Components;
         /// 0.5 = 50% chance to play either success or failure popup and sound.
         /// 0   = always play "failure" popup and sound.
         /// </summary>
-        [DataField("SuccessChance")]
+        [DataField("successChance")]
         public float SuccessChance = 1.0f; // Always succeed, unless specified otherwise on the yaml prototype.
 
         /// <summary>
