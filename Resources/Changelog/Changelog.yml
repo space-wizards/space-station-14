@@ -1,11 +1,6 @@
 Entries:
 - author: mirrorcult
   changes:
-  - {message: Fix lasers not passing through grilles., type: Fix}
-  id: 508
-  time: '2021-10-29T05:26:45.714056+00:00'
-- author: mirrorcult
-  changes:
   - {message: Fix certain windoors not autoclosing., type: Fix}
   id: 509
   time: '2021-10-29T05:39:44.812307+00:00'
@@ -2964,3 +2959,8 @@ Entries:
       be coming to a NanoTrasen station near you sometime soon.', type: Add}
   id: 1008
   time: '2022-02-08T10:01:16.0000000+00:00'
+- author: Schiene
+  changes:
+  - {message: 'The Mothership, a Syndicate Vessel.', type: Add}
+  id: 1009
+  time: '2022-02-08T10:23:11.0000000+00:00'
