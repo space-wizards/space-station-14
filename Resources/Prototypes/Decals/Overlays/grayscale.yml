@@ -60,3 +60,17 @@
   sprite:
     sprite: Decals/Overlays/greyscale.rsi
     state: quartertile_overlay_270
+
+- type: decal
+  id: CheckerNESW
+  tags: ["station", "overlay"]
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: checkerNESW
+
+- type: decal
+  id: CheckerNWSE
+  tags: ["station", "overlay"]
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: checkerNWSE

@@ -33,6 +33,12 @@
     },
     {
       "name": "quartertile_overlay_270"
+    },
+    {
+      "name": "checkerNESW"
+    },
+    {
+      "name": "checkerNWSE"
     }
   ]
 }
