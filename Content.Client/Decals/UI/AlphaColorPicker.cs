@@ -1,4 +1,5 @@
-﻿using Content.Client.CharacterAppearance;
+﻿using System.Linq;
+using Content.Client.CharacterAppearance;
 using Content.Client.Stylesheets;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -16,6 +17,7 @@ public sealed class AlphaColorPicker : Control
     private readonly ColorSlider _colorSliderG;
     private readonly ColorSlider _colorSliderB;
     private readonly ColorSlider _colorSliderA;
+    private PaletteColorPicker? _picker;
 
     private Color _lastColor;
 
@@ -31,6 +33,7 @@ public sealed class AlphaColorPicker : Control
 
     public AlphaColorPicker()
     {
+        Button pickerOpen;
         var vBox = new BoxContainer
         {
             Orientation = BoxContainer.LayoutOrientation.Vertical
@@ -41,6 +44,30 @@ public sealed class AlphaColorPicker : Control
         vBox.AddChild(_colorSliderG = new ColorSlider(StyleNano.StyleClassSliderGreen));
         vBox.AddChild(_colorSliderB = new ColorSlider(StyleNano.StyleClassSliderBlue));
         vBox.AddChild(_colorSliderA = new ColorSlider(StyleNano.StyleClassSliderWhite));
+        vBox.AddChild(pickerOpen = new Button
+        {
+            Text = "Palette"
+        });
+
+        pickerOpen.OnPressed += _ =>
+        {
+            if (_picker is null)
+            {
+                _picker = new PaletteColorPicker();
+                _picker.OpenToLeft();
+                _picker.PaletteList.OnItemSelected += args =>
+                {
+                    SetData((args.ItemList.GetSelected().First().Metadata as Color?)!.Value);
+                    ColorValueChanged();
+                };
+            }
+            else
+            {
+                _picker.Close();
+                _picker = null;
+            }
+        };
+
 
         var colorValueChanged = ColorValueChanged;
         _colorSliderR.OnValueChanged += colorValueChanged;

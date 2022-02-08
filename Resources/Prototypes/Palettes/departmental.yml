@@ -1,0 +1,12 @@
+﻿- type: palette
+  id: Departmental
+  name: Departmental
+  colors:
+    command: "#52B4E9"
+    service: "#9FED58"
+    engineering: "#EFB341"
+    security: "#DE3A3A"
+    bar: "#791500"
+    science: "#D381C9"
+    cargo: "#A46106"
+    neutral: "#D4D4D4"
