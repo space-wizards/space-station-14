@@ -98,7 +98,7 @@ public sealed partial class GunSystem
         }
 
         var ammo = PeekAtAmmo(component);
-        if (TakeOutProjectile(component, Transform(shooter).Coordinates) is not { Valid: true } projectile)
+        if (TakeOutProjectile(component, Transform(shooter).Coordinates) is not {Valid: true} projectile)
         {
             SoundSystem.Play(Filter.Pvs(component.Owner), component.SoundEmpty.GetSound(), component.Owner);
             return;
