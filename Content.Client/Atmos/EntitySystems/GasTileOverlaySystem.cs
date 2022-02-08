@@ -1,7 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using Content.Client.Atmos.Overlays;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.EntitySystems;
@@ -9,9 +5,7 @@ using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.Utility;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Atmos.EntitySystems
@@ -40,6 +34,8 @@ namespace Content.Client.Atmos.EntitySystems
 
         private readonly Dictionary<GridId, Dictionary<Vector2i, GasOverlayChunk>> _tileData =
             new();
+
+        public const int GasOverlayZIndex = 1;
 
         public override void Initialize()
         {
@@ -86,11 +82,8 @@ namespace Content.Client.Atmos.EntitySystems
             }
 
             var overlayManager = IoCManager.Resolve<IOverlayManager>();
-            if(!overlayManager.HasOverlay<GasTileOverlay>())
-                overlayManager.AddOverlay(new GasTileOverlay());
-            if(!overlayManager.HasOverlay<FireTileOverlay>())
-                overlayManager.AddOverlay(new FireTileOverlay());
-
+            overlayManager.AddOverlay(new GasTileOverlay());
+            overlayManager.AddOverlay(new FireTileOverlay());
         }
 
         private void HandleGasOverlayMessage(GasOverlayMessage message)
@@ -127,10 +120,8 @@ namespace Content.Client.Atmos.EntitySystems
             base.Shutdown();
             _mapManager.OnGridRemoved -= OnGridRemoved;
             var overlayManager = IoCManager.Resolve<IOverlayManager>();
-            if(!overlayManager.HasOverlay<GasTileOverlay>())
-                overlayManager.RemoveOverlay<GasTileOverlay>();
-            if(!overlayManager.HasOverlay<FireTileOverlay>())
-                overlayManager.RemoveOverlay<FireTileOverlay>();
+            overlayManager.RemoveOverlay<GasTileOverlay>();
+            overlayManager.RemoveOverlay<FireTileOverlay>();
         }
 
         private void OnGridRemoved(MapId mapId, GridId gridId)
@@ -203,7 +194,7 @@ namespace Content.Client.Atmos.EntitySystems
             }
         }
 
-        public struct GasOverlayEnumerator : IDisposable
+        public struct GasOverlayEnumerator
         {
             private readonly GasTileOverlaySystem _system;
             private readonly GasData[]? _data;
@@ -237,15 +228,9 @@ namespace Content.Client.Atmos.EntitySystems
                 overlay = default;
                 return false;
             }
-
-
-
-            public void Dispose()
-            {
-            }
         }
 
-        public struct FireOverlayEnumerator : IDisposable
+        public struct FireOverlayEnumerator
         {
             private readonly GasTileOverlaySystem _system;
             private byte _fireState;
@@ -273,12 +258,6 @@ namespace Content.Client.Atmos.EntitySystems
 
                 overlay = default;
                 return false;
-            }
-
-
-
-            public void Dispose()
-            {
             }
         }
     }

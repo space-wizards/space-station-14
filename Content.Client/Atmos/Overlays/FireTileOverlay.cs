@@ -1,15 +1,12 @@
 using Content.Client.Atmos.EntitySystems;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 
 namespace Content.Client.Atmos.Overlays
 {
-    public class FireTileOverlay : Overlay
+    public sealed class FireTileOverlay : Overlay
     {
         private readonly GasTileOverlaySystem _gasTileOverlaySystem;
 
@@ -25,6 +22,7 @@ namespace Content.Client.Atmos.Overlays
 
             _gasTileOverlaySystem = EntitySystem.Get<GasTileOverlaySystem>();
             _shader = _prototypeManager.Index<ShaderPrototype>("unshaded").Instance().Duplicate();
+            ZIndex = GasTileOverlaySystem.GasOverlayZIndex + 1;
         }
 
         protected override void Draw(in OverlayDrawArgs args)
@@ -35,6 +33,7 @@ namespace Content.Client.Atmos.Overlays
             var worldBounds = args.WorldBounds;
 
             drawHandle.UseShader(_shader);
+
             foreach (var mapGrid in _mapManager.FindGridsIntersecting(mapId, worldBounds))
             {
                 if (!_gasTileOverlaySystem.HasData(mapGrid.Index))
