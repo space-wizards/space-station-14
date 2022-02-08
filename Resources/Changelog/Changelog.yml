@@ -1,12 +1,6 @@
 Entries:
 - author: 20kdc
   changes:
-  - {message: Gave Centcomm more varied and precise battery drainage-related tooling.,
-    type: Add}
-  id: 513
-  time: '2021-10-29T09:49:52.0000000+00:00'
-- author: 20kdc
-  changes:
   - {message: Make warning for if FluidSynth is not installed more informative, type: Tweak}
   id: 514
   time: '2021-10-29T10:20:50.0000000+00:00'
@@ -2965,3 +2959,8 @@ Entries:
       new graphical depth.', type: Tweak}
   id: 1013
   time: '2022-02-08T18:08:23.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Mappers can now add decals to maps using the Decal Placer menu., type: Add}
+  id: 1014
+  time: '2022-02-08T20:54:41.0000000+00:00'
