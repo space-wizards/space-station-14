@@ -521,7 +521,7 @@
 
 - type: reagent
   id: Ultravasculine
-  name: Ultravasculine
+  name: ultravasculine
   group: Medicine
   desc: Rapidly flushes toxins from the body, but places some stress on the veins. Do not overdose.
   physicalDesc: thick and grainy

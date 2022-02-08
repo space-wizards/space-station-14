@@ -38,8 +38,6 @@ namespace Content.Server.Storage.Components
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public override string Name => "EntityStorage";
-
         private const float MaxSize = 1.0f; // maximum width or height of an entity allowed inside the storage.
 
         public static readonly TimeSpan InternalOpenAttemptDelay = TimeSpan.FromSeconds(0.5);

@@ -81,3 +81,13 @@
   - type: StorageFill
     contents:
       - id: BoxSurvival
+      
+- type: entity
+  abstract: true
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelChaplainFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvival
+      - id: Bible

@@ -26,8 +26,6 @@ namespace Content.Shared.Actions.Components
     [RegisterComponent]
     public class ItemActionsComponent : Component
     {
-        public override string Name => "ItemActions";
-
         /// <summary>
         /// Configuration for the item actions initially provided by this item. Actions defined here
         /// will be automatically granted unless their state is modified using the methods
@@ -177,27 +175,6 @@ namespace Content.Shared.Actions.Components
         public void Toggle(ItemActionType actionType, bool toggleOn)
         {
             GrantOrUpdate(actionType, toggleOn: toggleOn);
-        }
-
-        public void EquippedHand(EntityUid user, Hand hand)
-        {
-            // this entity cannot be granted actions if no actions component
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedActionsComponent?>(user, out var actionsComponent))
-                return;
-            Holder = user;
-            HolderActionsComponent = actionsComponent;
-            IsEquipped = true;
-            InHand = hand;
-            GrantOrUpdateAllToHolder();
-        }
-
-        public void UnequippedHand()
-        {
-            RevokeAllFromHolder();
-            Holder = null;
-            HolderActionsComponent = null;
-            IsEquipped = false;
-            InHand = null;
         }
     }
 

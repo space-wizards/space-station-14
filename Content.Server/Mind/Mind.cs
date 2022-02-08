@@ -229,6 +229,11 @@ namespace Content.Server.Mind
         }
 
         /// <summary>
+        ///     Gets the current job
+        /// </summary>
+        public Job? CurrentJob => _roles.OfType<Job>().SingleOrDefault();
+
+        /// <summary>
         /// Adds an objective to this mind.
         /// </summary>
         public bool TryAddObjective(ObjectivePrototype objectivePrototype)

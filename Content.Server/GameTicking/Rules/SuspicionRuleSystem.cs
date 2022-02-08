@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Content.Server.Chat.Managers;
-using Content.Server.Doors;
 using Content.Server.Players;
 using Content.Server.Roles;
 using Content.Server.Suspicion;
@@ -11,6 +10,7 @@ using Content.Server.Suspicion.Roles;
 using Content.Server.Traitor.Uplink;
 using Content.Server.Traitor.Uplink.Account;
 using Content.Shared.CCVar;
+using Content.Shared.Doors.Systems;
 using Content.Shared.GameTicking;
 using Content.Shared.MobState.Components;
 using Content.Shared.Roles;
@@ -49,7 +49,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
     [Dependency] private readonly IEntityManager _entities = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly DoorSystem _doorSystem = default!;
+    [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
 
     public override string Prototype => "Suspicion";
 
@@ -217,7 +217,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
 
         SoundSystem.Play(filter, _addedSound.GetSound(), AudioParams.Default);
 
-        _doorSystem.AccessType = DoorSystem.AccessTypes.AllowAllNoExternal;
+        _doorSystem.AccessType = SharedDoorSystem.AccessTypes.AllowAllNoExternal;
 
         _checkTimerCancel = new CancellationTokenSource();
         Timer.SpawnRepeating(DeadCheckDelay, CheckWinConditions, _checkTimerCancel.Token);
@@ -225,7 +225,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
 
     public override void Removed()
     {
-        _doorSystem.AccessType = DoorSystem.AccessTypes.Id;
+        _doorSystem.AccessType = SharedDoorSystem.AccessTypes.Id;
         EndTime = null;
         _traitors.Clear();
 

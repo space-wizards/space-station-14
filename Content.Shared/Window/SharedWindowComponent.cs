@@ -6,6 +6,5 @@ namespace Content.Shared.Window
     [NetworkedComponent]
     public class SharedWindowComponent : Component
     {
-        public override string Name => "Window";
     }
 }

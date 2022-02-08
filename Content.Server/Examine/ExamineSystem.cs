@@ -2,7 +2,6 @@ using Content.Shared.Examine;
 using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 
@@ -24,8 +23,6 @@ namespace Content.Server.Examine
             base.Initialize();
 
             SubscribeNetworkEvent<ExamineSystemMessages.RequestExamineInfoMessage>(ExamineInfoRequest);
-
-            IoCManager.InjectDependencies(this);
         }
 
         private void ExamineInfoRequest(ExamineSystemMessages.RequestExamineInfoMessage request, EntitySessionEventArgs eventArgs)

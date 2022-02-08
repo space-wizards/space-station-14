@@ -33,7 +33,8 @@ namespace Content.Server.Construction
             if (!EntityManager.TryGetComponent(args.Used, out ToolComponent? usedTool))
                 return;
 
-            args.Handled = await TryToggleAnchor(uid, args.User, args.Used, anchorable, usingTool:usedTool);
+            args.Handled = true;
+            await TryToggleAnchor(uid, args.User, args.Used, anchorable, usingTool:usedTool);
         }
 
         /// <summary>
@@ -60,7 +61,7 @@ namespace Content.Server.Construction
             if (attempt.Cancelled)
                 return false;
 
-            return await _toolSystem.UseTool(usingUid, userUid, uid, 0f, 0.5f + attempt.Delay, anchorable.Tool, toolComponent:usingTool);
+            return await _toolSystem.UseTool(usingUid, userUid, uid, 0f, anchorable.Delay + attempt.Delay, anchorable.Tool, toolComponent:usingTool);
         }
 
         /// <summary>

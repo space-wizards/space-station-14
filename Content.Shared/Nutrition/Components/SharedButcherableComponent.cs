@@ -13,8 +13,6 @@ namespace Content.Shared.Nutrition.Components
     [RegisterComponent]
     public class SharedButcherableComponent : Component, IDraggable
     {
-        public override string Name => "Butcherable";
-
         //TODO: List for sub-products like animal-hides, organs and etc?
         [ViewVariables]
         [DataField("meat", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
