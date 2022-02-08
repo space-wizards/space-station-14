@@ -109,6 +109,9 @@ namespace Content.Server.Decals
             if (!_adminManager.HasAdminFlag(session, AdminFlags.Mapping))
                 return;
 
+            if (!ev.Coordinates.IsValid(EntityManager))
+                return;
+
             var gridId = ev.Coordinates.GetGridId(EntityManager);
 
             // remove all decals on the same tile
