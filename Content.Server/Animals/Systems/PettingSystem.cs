@@ -28,10 +28,19 @@ public sealed class PettingSystem : EntitySystem
 
     private void OnMobStateChanged(EntityUid uid, PettableComponent component, MobStateChangedEvent args)
     {
-        if (!args.Component.IsAlive()) // if not alive (dead, incapacitated, etc.)
-            component.PetSuccessChance = -1.0f; // set to the "invalid" value, which suppresses all popups and sound effects.
+        var originalPetSuccessChance = component.PetSuccessChance; // Stores this for later in case mob state changes back and forth.
 
-        return;
+        if (!args.Component.IsAlive()) // if not alive (dead, incapacitated, etc.)
+        {
+            component.PetSuccessChance = -1.0f; // set to the "invalid" value, which suppresses all popups and sound effects.
+            return;
+        }
+
+        if (args.Component.IsAlive()) // if alive and well
+        {
+            component.PetSuccessChance = originalPetSuccessChance;
+            return;
+        }
     }
 
     private void OnInteractHand(EntityUid uid, PettableComponent component, InteractHandEvent args)
@@ -48,21 +57,19 @@ public sealed class PettingSystem : EntitySystem
         if (component.PetSuccessChance == -1.0f) // for the special "invalid" case where PetSuccessChance is -1 (e.g. target is deceased), suppress both popup and sound effect.
             return;
 
-        var diceRoll = _random.NextFloat(1.0f); // roll to see if the petting attempt succeeds. Lower is better.
-
         var msg = ""; //blank by default
 
-        if (diceRoll > component.PetSuccessChance) // Lower is better, so a > means the roll fails.
-        {
-            msg = Loc.GetString("petting-system-failure", ("target", uid)); // the animal does not wish to be pet right now
-        }
-        else // if roll succeeds
+        if (_random.Prob(component.PetSuccessChance)) // Roll to see if the petting attempt succeeds.
         {
             msg = Loc.GetString("petting-system-success", ("target", uid), ("desc", component.PetDescription)); // petting successful
 
             // play the sound effect only on petting success. TODO: could rework system to add different sounds on petting failure, such as a cat hissing.
             if (component.PetSound != null) // might be null if no sound is specified in the yaml.
                 SoundSystem.Play(Filter.Pvs(args.Target), component.PetSound.GetSound(), Transform(args.Target).Coordinates);
+        }
+        else // if roll fails
+        {
+            msg = Loc.GetString("petting-system-failure", ("target", uid)); // the animal does not wish to be pet right now
         }
 
         _popupSystem.PopupEntity(msg, uid, Filter.Pvs(uid)); // if we get this far, display the popup, regardless of success or failure
