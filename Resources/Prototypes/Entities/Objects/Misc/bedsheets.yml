@@ -11,6 +11,7 @@
   components:
   - type: Sprite
     sprite: Objects/Misc/bedsheets.rsi
+    netsync: false
   - type: Clothing
     size: 10
     QuickEquip: true

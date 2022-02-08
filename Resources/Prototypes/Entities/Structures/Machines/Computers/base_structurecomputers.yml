@@ -14,6 +14,7 @@
   - type: ExtensionCableReceiver
   - type: Sprite
     sprite: Structures/Machines/computers.rsi
+    netsync: false
     layers:
     - state: computer
       map: ["enum.ComputerVisualizer+Layers.Body"]
