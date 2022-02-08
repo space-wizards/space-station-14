@@ -63,12 +63,12 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
             // Interactions
             SubscribeLocalEvent<DisposalUnitComponent, ActivateInWorldEvent>(HandleActivate);
-            SubscribeLocalEvent<DisposalUnitComponent, InteractHandEvent>(HandleInteractHand);
-            SubscribeLocalEvent<DisposalUnitComponent, InteractUsingEvent>(HandleInteractUsing);
+            SubscribeLocalEvent<DisposalUnitComponent, AfterInteractUsingEvent>(HandleAfterInteractUsing);
             SubscribeLocalEvent<DisposalUnitComponent, DragDropEvent>(HandleDragDropOn);
             SubscribeLocalEvent<DisposalUnitComponent, DestructionEventArgs>(HandleDestruction);
 
             // Verbs
+            SubscribeLocalEvent<DisposalUnitComponent, GetInteractionVerbsEvent>(AddInsertVerb);
             SubscribeLocalEvent<DisposalUnitComponent, GetAlternativeVerbsEvent>(AddFlushEjectVerbs);
             SubscribeLocalEvent<DisposalUnitComponent, GetOtherVerbsEvent>(AddClimbInsideVerb);
 
@@ -121,6 +121,31 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             // create a verb category for "enter"?
             // See also, medical scanner. Also maybe add verbs for entering lockers/body bags?
             args.Verbs.Add(verb);
+        }
+
+        private void AddInsertVerb(EntityUid uid, DisposalUnitComponent component, GetInteractionVerbsEvent args)
+        {
+            if (!args.CanAccess || !args.CanInteract || args.Hands == null || args.Using == null)
+                return;
+
+            if (!_actionBlockerSystem.CanDrop(args.User))
+                return;
+
+            if (!CanInsert(component, args.Using.Value))
+                return;
+
+            Verb insertVerb = new()
+            {
+                Text = Name(args.Using.Value),
+                Category = VerbCategory.Insert,
+                Act = () =>
+                {
+                    args.Hands.Drop(args.Using.Value, component.Container);
+                    AfterInsert(component, args.Using.Value);
+                }
+            };
+
+            args.Verbs.Add(insertVerb);
         }
 
         private void DoInsertDisposalUnit(DoInsertDisposalUnitEvent ev)
@@ -223,19 +248,11 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             }
         }
 
-        private void HandleInteractHand(EntityUid uid, DisposalUnitComponent component, InteractHandEvent args)
+        private void HandleAfterInteractUsing(EntityUid uid, DisposalUnitComponent component, AfterInteractUsingEvent args)
         {
-            if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor)) return;
+            if (args.Handled || !args.CanReach)
+                return;
 
-            // Duplicated code here, not sure how else to get actor inside to make UserInterface happy.
-
-            if (!IsValidInteraction(args)) return;
-            component.Owner.GetUIOrNull(SharedDisposalUnitComponent.DisposalUnitUiKey.Key)?.Open(actor.PlayerSession);
-            args.Handled = true;
-        }
-
-        private void HandleInteractUsing(EntityUid uid, DisposalUnitComponent component, InteractUsingEvent args)
-        {
             if (!EntityManager.TryGetComponent(args.User, out HandsComponent? hands))
             {
                 return;
@@ -417,7 +434,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             }
 
             if (count != component.RecentlyEjected.Count)
-                component.Dirty();
+                Dirty(component);
 
             return state == SharedDisposalUnitComponent.PressureState.Ready && component.RecentlyEjected.Count == 0;
         }
@@ -604,7 +621,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             if (!component.RecentlyEjected.Contains(entity))
                 component.RecentlyEjected.Add(entity);
 
-            component.Dirty();
+            Dirty(component);
             HandleStateChange(component, true);
             UpdateVisualState(component);
         }

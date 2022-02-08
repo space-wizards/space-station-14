@@ -252,6 +252,22 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+    
+- type: construction
+  name: shutter
+  id: Shutters
+  graph: Shutters
+  startNode: start
+  targetNode: Shutters
+  category: Structures
+  description: This is a shutter - connect it to a button to open and close it.
+  icon:
+    sprite: Structures/Doors/Shutters/shutters.rsi
+    state: closed
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+
 
 - type: construction
   name: catwalk

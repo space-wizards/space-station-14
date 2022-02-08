@@ -26,7 +26,6 @@ namespace Content.Server.Fluids.Components
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public override string Name => "Bucket";
         public const string SolutionName = "bucket";
 
         private List<EntityUid> _currentlyUsing = new();

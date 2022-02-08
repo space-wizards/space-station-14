@@ -14,8 +14,6 @@ namespace Content.Client.Clickable
     [RegisterComponent]
     public sealed class ClickableComponent : Component
     {
-        public override string Name => "Clickable";
-
         [Dependency] private readonly IClickMapManager _clickMapManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IEntityManager _entMan = default!;

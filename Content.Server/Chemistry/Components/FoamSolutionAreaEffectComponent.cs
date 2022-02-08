@@ -16,7 +16,6 @@ namespace Content.Server.Chemistry.Components
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public override string Name => "FoamSolutionAreaEffect";
         public new const string SolutionName = "solutionArea";
 
         [DataField("foamedMetalPrototype")] private string? _foamedMetalPrototype;

@@ -10,8 +10,6 @@ namespace Content.Shared.Cargo.Components
     {
         [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
 
-        public sealed override string Name => "CargoConsole";
-
         /// <summary>
         ///    Sends away or requests shuttle
         /// </summary>

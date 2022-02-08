@@ -103,6 +103,7 @@
   - savemap
   - tpgrid
   - gridtc
+  - togglespritenetsync
 
 - Flags: ADMIN
   Commands:
