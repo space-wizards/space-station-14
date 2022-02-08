@@ -8,7 +8,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Animals.Components
 {
     [RegisterComponent, Friend(typeof(PettingSystem))]
-    public class PettableComponent : Component
+    public sealed class PettableComponent : Component
     {
         [DataField("petDelay")]
         [ViewVariables(VVAccess.ReadWrite)]
