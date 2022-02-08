@@ -18,25 +18,10 @@ namespace Content.Shared.SubFloor
     ///     Entity system backing <see cref="SubFloorHideComponent"/>.
     /// </summary>
     [UsedImplicitly]
-    public class SubFloorHideSystem : EntitySystem
+    public abstract class SharedSubFloorHideSystem : EntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
-
-        private bool _showAll;
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool ShowAll
-        {
-            get => _showAll;
-            set
-            {
-                if (_showAll == value) return;
-                _showAll = value;
-
-                UpdateAll();
-            }
-        }
 
         public override void Initialize()
         {
@@ -138,14 +123,6 @@ namespace Content.Shared.SubFloor
             return tileDef.IsSubFloor;
         }
 
-        private void UpdateAll()
-        {
-            foreach (var comp in EntityManager.EntityQuery<SubFloorHideComponent>(true))
-            {
-                UpdateEntity(comp.Owner);
-            }
-        }
-
         private void UpdateTile(IMapGrid grid, Vector2i position)
         {
             var isSubFloor = IsSubFloor(grid, position);
@@ -225,49 +202,36 @@ namespace Content.Shared.SubFloor
                 revealedWithoutEntity = subFloorHideComponent.RevealedWithoutEntity;
             }
 
+            // If the subfloor is already revealed, we do not set the optional appearance keys, as they should only
+            // apply if the visualizer is underneath a subfloor
+            if (revealedWithoutEntity) appearanceKeys = null;
 
-            // Whether to show this entity as visible, visually.
-            var subFloorVisible = ShowAll || subFloor;
-
-            // if there are no keys given,
-            // or if the subfloor is already revealed,
-            // set the keys to the default:
-            //
-            // the reason why it's set to default when the subfloor is
-            // revealed without an entity is because the appearance keys
-            // should only apply if the visualizer is underneath a subfloor
-            if (appearanceKeys == null || revealedWithoutEntity) appearanceKeys = _defaultVisualizerKeys;
-
-            ShowSubfloorSprite(uid, subFloorVisible, appearanceKeys);
+            ShowSubfloorSprite(uid, subFloor, appearanceKeys);
         }
 
-        private void ShowSubfloorSprite(EntityUid uid, bool subFloorVisible, IEnumerable<object> appearanceKeys)
+        private void ShowSubfloorSprite(EntityUid uid, bool subFloorVisible, IEnumerable<object>? appearanceKeys = null, AppearanceComponent? appearance = null)
         {
-            // Show sprite
-            if (EntityManager.TryGetComponent(uid, out SharedSpriteComponent? spriteComponent))
-            {
-                spriteComponent.Visible = subFloorVisible;
-            }
+            if (!Resolve(uid, ref appearance, false))
+                return;
 
-            // Set an appearance data value so visualizers can use this as needed.
-            if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearanceComponent))
+            appearance.SetData(SubFloorVisuals.SubFloor, subFloorVisible);
+
+            if (appearanceKeys == null)
+                return;
+
+            foreach (var key in appearanceKeys)
             {
-                foreach (var key in appearanceKeys)
+                switch (key)
                 {
-                    switch (key)
-                    {
-                        case Enum enumKey:
-                            appearanceComponent.SetData(enumKey, subFloorVisible);
-                            break;
-                        case string stringKey:
-                            appearanceComponent.SetData(stringKey, subFloorVisible);
-                            break;
-                    }
+                    case Enum enumKey:
+                        appearance.SetData(enumKey, subFloorVisible);
+                        break;
+                    case string stringKey:
+                        appearance.SetData(stringKey, subFloorVisible);
+                        break;
                 }
             }
         }
-
-        private static List<object> _defaultVisualizerKeys = new List<object>{ SubFloorVisuals.SubFloor };
     }
 
     [Serializable, NetSerializable]

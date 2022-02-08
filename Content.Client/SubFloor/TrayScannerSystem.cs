@@ -14,7 +14,7 @@ namespace Content.Client.SubFloor;
 public class TrayScannerSystem : SharedTrayScannerSystem
 {
     [Dependency] private IEntityLookup _entityLookup = default!;
-    [Dependency] private SubFloorHideSystem _subfloorSystem = default!;
+    [Dependency] private SharedSubFloorHideSystem _subfloorSystem = default!;
     [Dependency] private SharedContainerSystem _containerSystem = default!;
 
     public override void Initialize()
@@ -166,7 +166,6 @@ public class TrayScannerSystem : SharedTrayScannerSystem
 
     private static IEnumerable<object> _visualizerKeys = new List<object>
     {
-        SubFloorVisuals.SubFloor,
         TrayScannerTransparency.Key
     };
 

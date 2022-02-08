@@ -32,7 +32,7 @@ public class TrayScannerSubFloorVisualizer : AppearanceVisualizer
             layer.Color = layer.Color.WithAlpha(transparency);
         }
 
-        if (sprite.LayerMapTryGet(SubFloorShowLayerVisualizer.Layers.FirstLayer, out var firstLayer))
+        if (sprite.LayerMapTryGet(SubfloorLayers.FirstLayer, out var firstLayer))
         {
             sprite.LayerSetColor(firstLayer, Color.White);
         }
