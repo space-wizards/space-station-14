@@ -1,15 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: 'Fix being able to build machines for free by taking the board out,
-      putting it in again and screwing.', type: Fix}
-  id: 504
-  time: '2021-10-28T09:23:03.038979+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed not being angle to anchor emitters., type: Fix}
-  id: 505
-  time: '2021-10-28T11:29:19.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixes in-hand sprites not properly updating., type: Fix}
@@ -2963,3 +2952,13 @@ Entries:
   - {message: Gas mixers now properly animate when on., type: Fix}
   id: 1004
   time: '2022-02-07T20:42:07.0000000+00:00'
+- author: router
+  changes:
+  - {message: Conveyor assemblies now only cost 5 steel to craft., type: Tweak}
+  id: 1005
+  time: '2022-02-08T00:32:22.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Portable flasher now has its animation., type: Add}
+  id: 1006
+  time: '2022-02-08T03:08:22.0000000+00:00'

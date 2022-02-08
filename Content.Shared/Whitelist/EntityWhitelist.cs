@@ -72,10 +72,11 @@ namespace Content.Shared.Whitelist
         public bool IsValid(EntityUid uid, IEntityManager? entityManager = null)
         {
             entityManager ??= IoCManager.Resolve<IEntityManager>();
+            var tagSystem = EntitySystem.Get<TagSystem>();
 
             if (Tags != null && entityManager.TryGetComponent(uid, out TagComponent? tags))
             {
-                if (tags.HasAnyTag(Tags))
+                if (tagSystem.HasAnyTag(tags, Tags))
                         return true;
             }
 
