@@ -193,11 +193,7 @@
         pipe:
           !type:PipeNode
           nodeGroupID: Pipe
-          pipeDirection: North
-        pipe:
-          !type:PipeNode
-          nodeGroupID: Pipe
-          pipeDirection: South
+          pipeDirection: Longitudinal
           
 - type: entity
   parent: GasPassiveVent
@@ -222,11 +218,7 @@
         pipe:
           !type:PipeNode
           nodeGroupID: Pipe
-          pipeDirection: North
-        pipe:
-          !type:PipeNode
-          nodeGroupID: Pipe
-          pipeDirection: South
+          pipeDirection: Longitudinal
     
 - type: entity
   parent: GasBinaryBase
@@ -251,8 +243,4 @@
         pipe:
           !type:PipeNode
           nodeGroupID: Pipe
-          pipeDirection: North
-        pipe:
-          !type:PipeNode
-          nodeGroupID: Pipe
-          pipeDirection: South
+          pipeDirection: Longitudinal
