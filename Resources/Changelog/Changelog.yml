@@ -1,9 +1,4 @@
 Entries:
-- author: Macoron
-  changes:
-  - {message: 'Add withdraw button and preview icons in Uplink UI,', type: Add}
-  id: 512
-  time: '2021-10-29T09:40:47.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: Gave Centcomm more varied and precise battery drainage-related tooling.,
@@ -2964,3 +2959,9 @@ Entries:
   - {message: NanoTrasen has recalled the defective ringers., type: Fix}
   id: 1012
   time: '2022-02-08T11:15:06.0000000+00:00'
+- author: Lamrr
+  changes:
+  - {message: 'A new line of reinforced tiles have been released, enjoy the fresh
+      new graphical depth.', type: Tweak}
+  id: 1013
+  time: '2022-02-08T18:08:23.0000000+00:00'
