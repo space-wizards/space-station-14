@@ -171,7 +171,6 @@ namespace Content.Server.Medical
         {
             FindDevices(consoleComponent.Owner, consoleComponent);
 
-            // !TryComp<DamageableComponent>(scanBody.Value, out var damageable)
             ClonerStatusState clonerStatus = ClonerStatusState.Ready;
 
             var scanBodyInfo = "Unknown";
@@ -219,11 +218,10 @@ namespace Content.Server.Medical
                 clonerConnected = true;
                 EntityUid? cloneBody = consoleComponent.CloningPod.BodyContainer.ContainedEntity;
                 if (TryComp<MetaDataComponent>(cloneBody, out var cloneMetaData))
-                {
                     cloneBodyInfo = cloneMetaData.EntityName;
-                }
+
                 cloningProgress = consoleComponent.CloningPod.CloningProgress;
-                cloningTime = consoleComponent.CloningPod.CloningProgress;
+                cloningTime = consoleComponent.CloningPod.CloningTime;
                 clonerProgressing = consoleComponent.CloningPod.UiKnownPowerState && (consoleComponent.CloningPod.BodyContainer.ContainedEntity != null);
                 clonerMindPresent =consoleComponent.CloningPod.Status == CloningPodStatus.Cloning;
                 if (cloneBody != null)
