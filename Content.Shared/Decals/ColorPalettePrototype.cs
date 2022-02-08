@@ -3,7 +3,7 @@
 namespace Content.Shared.Decals;
 
 [Prototype("palette")]
-public class ColorPalettePrototype : IPrototype
+public sealed class ColorPalettePrototype : IPrototype
 {
     [DataField("id")] public string ID { get; } = null!;
     [DataField("name")] public string Name { get; } = null!;
