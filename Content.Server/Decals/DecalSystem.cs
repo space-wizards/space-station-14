@@ -86,7 +86,7 @@ namespace Content.Server.Decals
                 return;
 
             // bad
-            if (!_adminManager.HasAdminFlag(session, AdminFlags.Mapping))
+            if (!_adminManager.HasAdminFlag(session, AdminFlags.Spawn))
                 return;
 
             if (!ev.Coordinates.IsValid(EntityManager))
@@ -101,7 +101,7 @@ namespace Content.Server.Decals
                 return;
 
             // bad
-            if (!_adminManager.HasAdminFlag(session, AdminFlags.Mapping))
+            if (!_adminManager.HasAdminFlag(session, AdminFlags.Spawn))
                 return;
 
             if (!ev.Coordinates.IsValid(EntityManager))
