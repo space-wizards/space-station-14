@@ -1,9 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixes in-hand sprites not properly updating., type: Fix}
-  id: 506
-  time: '2021-10-28T12:34:59.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: Fix not being able to build windows on top of grilles., type: Fix}
@@ -2962,3 +2957,8 @@ Entries:
   - {message: Portable flasher now has its animation., type: Add}
   id: 1006
   time: '2022-02-08T03:08:22.0000000+00:00'
+- author: TheDarkElites
+  changes:
+  - {message: PDAs now have ringtones, type: Add}
+  id: 1007
+  time: '2022-02-08T09:39:23.0000000+00:00'
