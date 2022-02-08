@@ -56,10 +56,10 @@ public sealed partial class GunSystem
         gun.LastFireTime = curTime;
         var coordinates = Transform(gun.Owner).Coordinates;
 
-        if (gun.ClumsyCheck && gun.ClumsyDamage != null && ClumsyComponent.TryRollClumsy(user, gun.ClumsyExplodeChance))
+        if (gun.ClumsyCheck && EntityManager.TryGetComponent<ClumsyComponent>(user, out var clumsyComponent) && ClumsyComponent.TryRollClumsy(user, gun.ClumsyExplodeChance))
         {
             //Wound them
-            _damageable.TryChangeDamage(user, gun.ClumsyDamage);
+            _damageable.TryChangeDamage(user, clumsyComponent.ClumsyDamage);
             _stun.TryParalyze(user, TimeSpan.FromSeconds(3f), true);
 
             // Apply salt to the wound ("Honk!")
@@ -98,7 +98,7 @@ public sealed partial class GunSystem
         }
 
         var ammo = PeekAtAmmo(component);
-        if (TakeOutProjectile(component, Transform(shooter).Coordinates) is not {Valid: true} projectile)
+        if (TakeOutProjectile(component, Transform(shooter).Coordinates) is not { Valid: true } projectile)
         {
             SoundSystem.Play(Filter.Pvs(component.Owner), component.SoundEmpty.GetSound(), component.Owner);
             return;
