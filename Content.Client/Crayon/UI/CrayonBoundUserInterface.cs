@@ -47,6 +47,7 @@ namespace Content.Client.Crayon.UI
             if (disposing)
             {
                 _menu?.Close();
+                _menu = null;
             }
         }
     }

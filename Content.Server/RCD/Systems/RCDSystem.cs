@@ -26,6 +26,7 @@ namespace Content.Server.RCD.Systems
 
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+        [Dependency] private readonly TagSystem _tagSystem = default!;
 
         private readonly RcdMode[] _modes = (RcdMode[]) Enum.GetValues(typeof(RcdMode));
 
@@ -191,7 +192,7 @@ namespace Content.Server.RCD.Systems
                         return false;
                     }
                     //They tried to decon a non-turf but it's not in the whitelist
-                    if (eventArgs.Target != null && !eventArgs.Target.Value.HasTag("RCDDeconstructWhitelist"))
+                    if (eventArgs.Target != null && !_tagSystem.HasTag(eventArgs.Target.Value, "RCDDeconstructWhitelist"))
                     {
                         rcd.Owner.PopupMessage(eventArgs.User, Loc.GetString("rcd-component-deconstruct-target-not-on-whitelist-message"));
                         return false;

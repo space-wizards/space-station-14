@@ -71,10 +71,8 @@
     # needed so that windoors will close regardless of whether there are people in it; it doesn't crush after all
     safety: false
   - type: Door
+    canCrush: false
     weldable: false
-    crushDamage:
-      types:
-        Blunt: 10
     openSound:
       path: /Audio/Machines/windoor_open.ogg
     closeSound:

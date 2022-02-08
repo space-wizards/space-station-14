@@ -79,6 +79,9 @@
   parent: BaseShutter
   components:
   - type: Occluder
+  - type: Construction
+    graph: Shutters
+    node: Shutters
 
 - type: entity
   id: ShuttersNormalOpen
@@ -87,6 +90,9 @@
   components:
   - type: Door
     state: Open
+  - type: Construction
+    graph: Shutters
+    node: Shutters
 
 - type: entity
   id: ShuttersRadiation
@@ -101,6 +107,9 @@
     - state: closed
       map: ["enum.DoorVisualLayers.Base"]
   - type: Occluder
+  - type: Construction
+    graph: Shutters
+    node: ShuttersRadiation
 
 - type: entity
   id: ShuttersRadiationOpen
@@ -109,6 +118,9 @@
   components:
   - type: Door
     state: Open
+  - type: Construction
+    graph: Shutters
+    node: ShuttersRadiation
 
 - type: entity
   id: ShuttersWindow
@@ -122,6 +134,9 @@
     layers:
     - state: closed
       map: ["enum.DoorVisualLayers.Base"]
+  - type: Construction
+    graph: Shutters
+    node: ShuttersWindow
 
 - type: entity
   id: ShuttersWindowOpen
@@ -130,3 +145,43 @@
   components:
   - type: Door
     state: Open
+  - type: Construction
+    graph: Shutters
+    node: ShuttersWindow
+
+# Frame for construction
+- type: entity
+  id: ShuttersFrame
+  parent: BaseStructureDynamic
+  name: shutter frame
+  description: A frame for constructing a shutter.
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Shutters/shutters.rsi
+    state: frame
+    netsync: false
+  - type: Construction
+    graph: Shutters
+    node: frame1
+  - type: InteractionOutline
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 500
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.49,-0.49,0.49,0.49"
+      mass: 50
+      layer:
+      - Opaque
