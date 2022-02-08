@@ -18,11 +18,11 @@ namespace Content.Client.Clickable
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        [ViewVariables] [DataField("bounds")] private DirBoundData? _data;
+        [ViewVariables] [DataField("bounds")] private DirBoundData? Bounds;
 
         /// <summary>
         /// Used to check whether a click worked. Will first check if the click falls inside of some explicit bounding
-        /// boxes (see <see cref="_data"/>). If that fails, attempts to use automatically generated click maps.
+        /// boxes (see <see cref="Bounds"/>). If that fails, attempts to use automatically generated click maps.
         /// </summary>
         /// <param name="worldPos">The world position that was clicked.</param>
         /// <param name="drawDepth">
@@ -121,7 +121,7 @@ namespace Content.Client.Clickable
 
         public bool CheckDirBound(ISpriteComponent sprite, Angle relativeRotation, Vector2 localPos, Matrix3 spriteMatrix)
         {
-            if (_data == null)
+            if (Bounds == null)
                 return false;
 
             // Here we get sprite orientation, either from an explicit override or just from the relative rotation
@@ -140,16 +140,16 @@ namespace Content.Client.Clickable
             var spritePos = spriteMatrix.Transform(modAngle.RotateVec(localPos));
 
             // First, check the bounding box that is valid for all orientations
-            if (_data.All.Contains(spritePos))
+            if (Bounds.All.Contains(spritePos))
                 return true;
 
             // Next, get and check the appropriate bounding box for the current sprite orientation
             var boundsForDir = (sprite.EnableDirectionOverride ? sprite.DirectionOverride : direction) switch
             {
-                Direction.East => _data.East,
-                Direction.North => _data.North,
-                Direction.South => _data.South,
-                Direction.West => _data.West,
+                Direction.East => Bounds.East,
+                Direction.North => Bounds.North,
+                Direction.South => Bounds.South,
+                Direction.West => Bounds.West,
                 _ => throw new InvalidOperationException()
             };
 
