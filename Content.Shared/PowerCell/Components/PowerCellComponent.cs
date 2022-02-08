@@ -13,7 +13,6 @@ namespace Content.Shared.PowerCell;
 /// </summary>
 [NetworkedComponent]
 [RegisterComponent]
-[ComponentProtoName("PowerCell")]
 public sealed class PowerCellComponent : Component
 {
     public const string SolutionName = "powerCell";

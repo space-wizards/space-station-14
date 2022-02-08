@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Sprite.Components
 {
-    [RegisterComponent, ComponentProtoName("RandomSpriteColor")]
+    [RegisterComponent]
     public class RandomSpriteColorComponent : Component
     {
         // This should handle random states + colors for layers.
