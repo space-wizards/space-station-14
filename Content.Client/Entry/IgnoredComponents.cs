@@ -134,6 +134,7 @@ namespace Content.Client.Entry
             "Airtight",
             "MovedByPressure",
             "Spray",
+            "Ringer",
             "Vapor",
             "AddAccentClothing",
             "DamageOnHighSpeedImpact",
