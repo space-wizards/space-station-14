@@ -693,7 +693,9 @@ namespace Content.Server.Botany.Components
                 return false;
             }
 
-            if (usingItem.HasTag("Hoe"))
+            var tagSystem = EntitySystem.Get<TagSystem>();
+
+            if (tagSystem.HasTag(usingItem, "Hoe"))
             {
                 if (WeedLevel > 0)
                 {
@@ -712,7 +714,7 @@ namespace Content.Server.Botany.Components
                 return true;
             }
 
-            if (usingItem.HasTag("Shovel"))
+            if (tagSystem.HasTag(usingItem, "Shovel"))
             {
                 if (Seed != null)
                 {
@@ -764,7 +766,7 @@ namespace Content.Server.Botany.Components
                 return true;
             }
 
-            if (usingItem.HasTag("PlantSampleTaker"))
+            if (tagSystem.HasTag(usingItem, "PlantSampleTaker"))
             {
                 if (Seed == null)
                 {
@@ -800,7 +802,7 @@ namespace Content.Server.Botany.Components
                 return true;
             }
 
-            if (usingItem.HasTag("BotanySharp"))
+            if (tagSystem.HasTag(usingItem, "BotanySharp"))
             {
                 return DoHarvest(user);
             }

@@ -28,6 +28,7 @@ public sealed class DoorSystem : SharedDoorSystem
     [Dependency] private readonly ToolSystem _toolSystem = default!;
     [Dependency] private readonly AirtightSystem _airtightSystem = default!;
     [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
+    [Dependency] private readonly TagSystem _tagSystem = default!;
 
     public override void Initialize()
     {
@@ -236,8 +237,10 @@ public sealed class DoorSystem : SharedDoorSystem
         if (door.State != DoorState.Closed)
             return;
 
-        if (TryComp(args.OtherFixture.Body.Owner, out TagComponent? tags) && tags.HasTag("DoorBumpOpener"))
-            TryOpen(uid, door, args.OtherFixture.Body.Owner);
+        var otherUid = args.OtherFixture.Body.Owner;
+
+        if (_tagSystem.HasTag(otherUid, "DoorBumpOpener"))
+            TryOpen(uid, door, otherUid);
     }
 
     public override void OnPartialOpen(EntityUid uid, DoorComponent? door = null, PhysicsComponent? physics = null)
@@ -264,7 +267,7 @@ public sealed class DoorSystem : SharedDoorSystem
         if (!base.OnPartialClose(uid, door, physics))
             return false;
 
-        // update airtight, if we did not crush something. 
+        // update airtight, if we did not crush something.
         if (door.ChangeAirtight && door.CurrentlyCrushing.Count == 0 && TryComp(uid, out AirtightComponent? airtight))
             _airtightSystem.SetAirblocked(airtight, true);
 
