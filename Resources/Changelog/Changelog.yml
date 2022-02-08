@@ -1,9 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: Fix not being able to build windows on top of grilles., type: Fix}
-  id: 507
-  time: '2021-10-28T17:03:11.646371+00:00'
 - author: mirrorcult
   changes:
   - {message: Fix lasers not passing through grilles., type: Fix}
@@ -2962,3 +2957,10 @@ Entries:
   - {message: PDAs now have ringtones, type: Add}
   id: 1007
   time: '2022-02-08T09:39:23.0000000+00:00'
+- author: Lamrr
+  changes:
+  - {message: 'Bring in the scrap heap with the new salvage specialist role! Tasked
+      with running salvage operations, this exciting but not very new gameplay will
+      be coming to a NanoTrasen station near you sometime soon.', type: Add}
+  id: 1008
+  time: '2022-02-08T10:01:16.0000000+00:00'
