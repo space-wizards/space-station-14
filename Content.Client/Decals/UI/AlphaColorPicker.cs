@@ -95,6 +95,4 @@ public sealed class AlphaColorPicker : Control
 
         _lastColor = newColor;
     }
-
-    // ColorSlider
 }
