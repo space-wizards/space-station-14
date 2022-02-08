@@ -12,8 +12,6 @@ namespace Content.Shared.Singularity.Components
     [NetworkedComponent]
     public class SingularityDistortionComponent : Component
     {
-        public override string Name => "SingularityDistortion";
-
         [DataField("intensity")]
         private float _intensity = 0.25f;
 
@@ -34,7 +32,7 @@ namespace Content.Shared.Singularity.Components
             set => this.SetAndDirtyIfChanged(ref _falloff, value);
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new SingularityDistortionComponentState(Intensity, Falloff);
         }

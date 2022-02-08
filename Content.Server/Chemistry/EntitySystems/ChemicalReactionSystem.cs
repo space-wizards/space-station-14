@@ -1,6 +1,7 @@
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -10,11 +11,16 @@ namespace Content.Server.Chemistry.EntitySystems
 {
     public class ChemicalReactionSystem : SharedChemicalReactionSystem
     {
-        protected override void OnReaction(Solution solution, ReactionPrototype reaction, EntityUid ownerUid, FixedPoint2 unitReactions)
+        protected override void OnReaction(Solution solution, ReactionPrototype reaction, ReagentPrototype randomReagent, EntityUid owner, FixedPoint2 unitReactions)
         {
-            base.OnReaction(solution, reaction, ownerUid, unitReactions);
+            base.OnReaction(solution, reaction,  randomReagent, owner, unitReactions);
 
-            SoundSystem.Play(Filter.Pvs(ownerUid, entityManager:EntityManager), reaction.Sound.GetSound(), ownerUid);
+            var coordinates = Transform(owner).Coordinates;
+
+            _logSystem.Add(LogType.ChemicalReaction, reaction.Impact,
+                $"Chemical reaction {reaction.ID:reaction} occurred with strength {unitReactions:strength} on entity {ToPrettyString(owner):metabolizer} at {coordinates}");
+
+            SoundSystem.Play(Filter.Pvs(owner, entityManager:EntityManager), reaction.Sound.GetSound(), owner);
         }
     }
 }

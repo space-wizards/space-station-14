@@ -8,15 +8,14 @@ using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Lathe
 {
     [NetworkedComponent()]
     public class SharedLatheDatabaseComponent : Component, IEnumerable<LatheRecipePrototype>, ISerializationHooks
     {
-        public override string Name => "LatheDatabase";
-
-        [DataField("recipes")] private List<string> _recipeIds = new();
+        [DataField("recipes", customTypeSerializer: typeof(PrototypeIdListSerializer<LatheRecipePrototype>))] private List<string> _recipeIds = new();
 
         private readonly List<LatheRecipePrototype> _recipes = new();
 

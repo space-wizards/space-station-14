@@ -9,6 +9,7 @@ using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using static Content.IntegrationTests.Tests.Destructible.DestructibleTestPrototypes;
@@ -35,7 +36,7 @@ namespace Content.IntegrationTests.Tests.Destructible
             var sPrototypeManager = server.ResolveDependency<IPrototypeManager>();
             var sEntitySystemManager = server.ResolveDependency<IEntitySystemManager>();
 
-            IEntity sDestructibleEntity = null; ;
+            EntityUid sDestructibleEntity = default;
             DamageableComponent sDamageableComponent = null;
             DestructibleComponent sDestructibleComponent = null;
             TestDestructibleListenerSystem sTestThresholdListenerSystem = null;
@@ -47,8 +48,8 @@ namespace Content.IntegrationTests.Tests.Destructible
                 var coordinates = new EntityCoordinates(gridId, 0, 0);
 
                 sDestructibleEntity = sEntityManager.SpawnEntity(DestructibleEntityId, coordinates);
-                sDamageableComponent = sDestructibleEntity.GetComponent<DamageableComponent>();
-                sDestructibleComponent = sDestructibleEntity.GetComponent<DestructibleComponent>();
+                sDamageableComponent = IoCManager.Resolve<IEntityManager>().GetComponent<DamageableComponent>(sDestructibleEntity);
+                sDestructibleComponent = IoCManager.Resolve<IEntityManager>().GetComponent<DestructibleComponent>(sDestructibleEntity);
 
                 sTestThresholdListenerSystem = sEntitySystemManager.GetEntitySystem<TestDestructibleListenerSystem>();
                 sTestThresholdListenerSystem.ThresholdsReached.Clear();
@@ -67,12 +68,12 @@ namespace Content.IntegrationTests.Tests.Destructible
             {
                 var bluntDamage = new DamageSpecifier(sPrototypeManager.Index<DamageTypePrototype>("TestBlunt"), 10);
 
-                sDamageableSystem.TryChangeDamage(sDestructibleEntity.Uid, bluntDamage, true);
+                sDamageableSystem.TryChangeDamage(sDestructibleEntity, bluntDamage, true);
 
                 // No thresholds reached yet, the earliest one is at 20 damage
                 Assert.IsEmpty(sTestThresholdListenerSystem.ThresholdsReached);
 
-                sDamageableSystem.TryChangeDamage(sDestructibleEntity.Uid, bluntDamage, true);
+                sDamageableSystem.TryChangeDamage(sDestructibleEntity, bluntDamage, true);
 
                 // Only one threshold reached, 20
                 Assert.That(sTestThresholdListenerSystem.ThresholdsReached.Count, Is.EqualTo(1));
@@ -88,7 +89,7 @@ namespace Content.IntegrationTests.Tests.Destructible
 
                 sTestThresholdListenerSystem.ThresholdsReached.Clear();
 
-                sDamageableSystem.TryChangeDamage(sDestructibleEntity.Uid, bluntDamage*3, true);
+                sDamageableSystem.TryChangeDamage(sDestructibleEntity, bluntDamage*3, true);
 
                 // One threshold reached, 50, since 20 already triggered before and it has not been healed below that amount
                 Assert.That(sTestThresholdListenerSystem.ThresholdsReached.Count, Is.EqualTo(1));
@@ -117,7 +118,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                 sTestThresholdListenerSystem.ThresholdsReached.Clear();
 
                 // Damage for 50 again, up to 100 now
-                sDamageableSystem.TryChangeDamage(sDestructibleEntity.Uid, bluntDamage*5, true);
+                sDamageableSystem.TryChangeDamage(sDestructibleEntity, bluntDamage*5, true);
 
                 // No thresholds reached as they weren't healed below the trigger amount
                 Assert.IsEmpty(sTestThresholdListenerSystem.ThresholdsReached);
@@ -126,7 +127,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                 sDamageableSystem.SetAllDamage(sDamageableComponent, 0);
 
                 // Damage for 100, up to 100
-                sDamageableSystem.TryChangeDamage(sDestructibleEntity.Uid, bluntDamage*10, true);
+                sDamageableSystem.TryChangeDamage(sDestructibleEntity, bluntDamage*10, true);
 
                 // Two thresholds reached as damage increased past the previous, 20 and 50
                 Assert.That(sTestThresholdListenerSystem.ThresholdsReached.Count, Is.EqualTo(2));
@@ -134,25 +135,25 @@ namespace Content.IntegrationTests.Tests.Destructible
                 sTestThresholdListenerSystem.ThresholdsReached.Clear();
 
                 // Heal the entity for 40 damage, down to 60
-                sDamageableSystem.TryChangeDamage(sDestructibleEntity.Uid, bluntDamage*-4, true);
+                sDamageableSystem.TryChangeDamage(sDestructibleEntity, bluntDamage*-4, true);
 
                 // Thresholds don't work backwards
                 Assert.That(sTestThresholdListenerSystem.ThresholdsReached, Is.Empty);
 
                 // Damage for 10, up to 70
-                sDamageableSystem.TryChangeDamage(sDestructibleEntity.Uid, bluntDamage, true);
+                sDamageableSystem.TryChangeDamage(sDestructibleEntity, bluntDamage, true);
 
                 // Not enough healing to de-trigger a threshold
                 Assert.That(sTestThresholdListenerSystem.ThresholdsReached, Is.Empty);
 
                 // Heal by 30, down to 40
-                sDamageableSystem.TryChangeDamage(sDestructibleEntity.Uid, bluntDamage*-3, true);
+                sDamageableSystem.TryChangeDamage(sDestructibleEntity, bluntDamage*-3, true);
 
                 // Thresholds don't work backwards
                 Assert.That(sTestThresholdListenerSystem.ThresholdsReached, Is.Empty);
 
                 // Damage up to 50 again
-                sDamageableSystem.TryChangeDamage(sDestructibleEntity.Uid, bluntDamage, true);
+                sDamageableSystem.TryChangeDamage(sDestructibleEntity, bluntDamage, true);
 
                 // The 50 threshold should have triggered again, after being healed
                 Assert.That(sTestThresholdListenerSystem.ThresholdsReached.Count, Is.EqualTo(1));
@@ -185,7 +186,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                 sDamageableSystem.SetAllDamage(sDamageableComponent, 0);
 
                 // Damage up to 50
-                sDamageableSystem.TryChangeDamage(sDestructibleEntity.Uid, bluntDamage*5, true);
+                sDamageableSystem.TryChangeDamage(sDestructibleEntity, bluntDamage*5, true);
 
                 // Check that the total damage matches
                 Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(FixedPoint2.New(50)));
@@ -246,7 +247,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                 }
 
                 // Damage the entity up to 50 damage again
-                sDamageableSystem.TryChangeDamage(sDestructibleEntity.Uid, bluntDamage*5, true);
+                sDamageableSystem.TryChangeDamage(sDestructibleEntity, bluntDamage*5, true);
 
                 // Check that the total damage matches
                 Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(FixedPoint2.New(50)));

@@ -1,7 +1,9 @@
+using Content.Shared.Administration.Logs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using System;
+using Content.Shared.Database;
 
 namespace Content.Shared.Verbs
 {
@@ -93,7 +95,7 @@ namespace Content.Shared.Verbs
         public bool Disabled;
 
         /// <summary>
-        ///     Optional informative message.  
+        ///     Optional informative message.
         /// </summary>
         /// <remarks>
         ///     This will be shown as a tooltip when hovering over this verb in the context menu. Additionally, iF a
@@ -126,6 +128,19 @@ namespace Content.Shared.Verbs
         public bool CloseMenu = true;
 
         /// <summary>
+        ///     How important is this verb, for the purposes of admin logging?
+        /// </summary>
+        /// <remarks>
+        ///     If this is just opening a UI or ejecting an id card, this should probably be low.
+        /// </remarks>
+        public LogImpact Impact = LogImpact.Low;
+
+        /// <summary>
+        ///     Whether this verb requires confirmation before being executed.
+        /// </summary>
+        public bool ConfirmationPopup = false;
+
+        /// <summary>
         ///     Compares two verbs based on their <see cref="Priority"/>, <see cref="Category"/>, <see cref="Text"/>,
         ///     and <see cref="IconTexture"/>.
         /// </summary>
@@ -155,7 +170,7 @@ namespace Content.Shared.Verbs
             {
                 return string.Compare(Category?.Text, otherVerb.Category?.Text, StringComparison.CurrentCulture);
             }
-            
+
             // Then try use alphabetical verb text.
             if (Text != otherVerb.Text)
             {

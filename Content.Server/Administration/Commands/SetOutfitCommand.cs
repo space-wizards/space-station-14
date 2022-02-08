@@ -1,11 +1,9 @@
 using Content.Server.Administration.UI;
 using Content.Server.EUI;
-using Content.Server.Inventory.Components;
-using Content.Server.Items;
-using Content.Server.PDA;
 using Content.Server.Preferences.Managers;
 using Content.Shared.Administration;
 using Content.Shared.Inventory;
+using Content.Shared.PDA;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Server.GameObjects;
@@ -15,6 +13,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
+using InventoryComponent = Content.Shared.Inventory.InventoryComponent;
 
 namespace Content.Server.Administration.Commands
 {
@@ -43,17 +42,15 @@ namespace Content.Server.Administration.Commands
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
 
-            var eUid = new EntityUid(entityUid);
+            var target = new EntityUid(entityUid);
 
-            if (!eUid.IsValid() || !entityManager.EntityExists(eUid))
+            if (!target.IsValid() || !entityManager.EntityExists(target))
             {
                 shell.WriteLine(Loc.GetString("shell-invalid-entity-id"));
                 return;
             }
 
-            var target = entityManager.GetEntity(eUid);
-
-            if (!target.TryGetComponent<InventoryComponent>(out var inventoryComponent))
+            if (!entityManager.TryGetComponent<InventoryComponent?>(target, out var inventoryComponent))
             {
                 shell.WriteLine(Loc.GetString("shell-target-entity-does-not-have-message",("missing", "inventory")));
                 return;
@@ -82,7 +79,7 @@ namespace Content.Server.Administration.Commands
 
             HumanoidCharacterProfile? profile = null;
             // Check if we are setting the outfit of a player to respect the preferences
-            if (target.TryGetComponent<ActorComponent>(out var actorComponent))
+            if (entityManager.TryGetComponent<ActorComponent?>(target, out var actorComponent))
             {
                 var userId = actorComponent.PlayerSession.UserId;
                 var preferencesManager = IoCManager.Resolve<IServerPreferencesManager>();
@@ -90,23 +87,27 @@ namespace Content.Server.Administration.Commands
                 profile = prefs.SelectedCharacter as HumanoidCharacterProfile;
             }
 
-            foreach (var slot in inventoryComponent.Slots)
+            var invSystem = EntitySystem.Get<InventorySystem>();
+            if (invSystem.TryGetSlots(target, out var slotDefinitions, inventoryComponent))
             {
-                inventoryComponent.ForceUnequip(slot);
-                var gearStr = startingGear.GetGear(slot, profile);
-                if (gearStr == string.Empty)
+                foreach (var slot in slotDefinitions)
                 {
-                    continue;
-                }
-                var equipmentEntity = entityManager.SpawnEntity(gearStr, target.Transform.Coordinates);
-                if (slot == EquipmentSlotDefines.Slots.IDCARD &&
-                    equipmentEntity.TryGetComponent<PDAComponent>(out var pdaComponent) &&
-                    pdaComponent.ContainedID != null)
-                {
-                    pdaComponent.ContainedID.FullName = target.Name;
-                }
+                    invSystem.TryUnequip(target, slot.Name, true, true, inventoryComponent);
+                    var gearStr = startingGear.GetGear(slot.Name, profile);
+                    if (gearStr == string.Empty)
+                    {
+                        continue;
+                    }
+                    var equipmentEntity = entityManager.SpawnEntity(gearStr, entityManager.GetComponent<TransformComponent>(target).Coordinates);
+                    if (slot.Name == "id" &&
+                        entityManager.TryGetComponent<PDAComponent?>(equipmentEntity, out var pdaComponent) &&
+                        pdaComponent.ContainedID != null)
+                    {
+                        pdaComponent.ContainedID.FullName = entityManager.GetComponent<MetaDataComponent>(target).EntityName;
+                    }
 
-                inventoryComponent.Equip(slot, equipmentEntity.GetComponent<ItemComponent>(), false);
+                    invSystem.TryEquip(target, equipmentEntity, slot.Name, true, inventory: inventoryComponent);
+                }
             }
         }
     }

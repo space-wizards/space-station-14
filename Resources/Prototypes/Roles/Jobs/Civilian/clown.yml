@@ -1,7 +1,6 @@
 - type: job
   id: Clown
   name: "clown"
-  positions: 1
   startingGear: ClownGear
   departments:
   - Civilian
@@ -17,12 +16,12 @@
 - type: startingGear
   id: ClownGear
   equipment:
-    innerclothing: ClothingUniformJumpsuitClown
-    backpack: ClothingBackpackClownFilled
+    jumpsuit: ClothingUniformJumpsuitClown
+    back: ClothingBackpackClownFilled
     shoes: ClothingShoesClown
     mask: ClothingMaskClown
     pocket1: BikeHorn
-    idcard: ClownPDA
+    id: ClownPDA
     ears: ClothingHeadsetService
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelClownFilled

@@ -4,6 +4,7 @@ using Content.Server.Stack;
 using Content.Shared.Prototypes;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Destructible.Thresholds.Behaviors
@@ -17,6 +18,9 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
         /// </summary>
         [DataField("spawn")]
         public Dictionary<string, MinMax> Spawn { get; set; } = new();
+
+        [DataField("offset")]
+        public float Offset { get; set; } = 0.5f;
 
         public void Execute(EntityUid owner, DestructibleSystem system)
         {
@@ -33,16 +37,16 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                 if (EntityPrototypeHelpers.HasComponent<StackComponent>(entityId))
                 {
                     var spawned = system.EntityManager.SpawnEntity(entityId, position);
-                    var stack = spawned.GetComponent<StackComponent>();
-                    EntitySystem.Get<StackSystem>().SetCount(spawned.Uid, count, stack);
-                    spawned.RandomOffset(0.5f);
+                    var stack = IoCManager.Resolve<IEntityManager>().GetComponent<StackComponent>(spawned);
+                    EntitySystem.Get<StackSystem>().SetCount(spawned, count, stack);
+                    spawned.RandomOffset(Offset);
                 }
                 else
                 {
                     for (var i = 0; i < count; i++)
                     {
                         var spawned = system.EntityManager.SpawnEntity(entityId, position);
-                        spawned.RandomOffset(0.5f);
+                        spawned.RandomOffset(Offset);
                     }
                 }
             }

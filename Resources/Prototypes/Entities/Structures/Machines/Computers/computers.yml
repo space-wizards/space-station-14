@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: ComputerBase
   id: ComputerAlert
   name: alerts computer
@@ -25,6 +25,8 @@
     radius: 1.5
     energy: 1.6
     color: "#43ccb5"
+  - type: Rotatable
+    rotateWhileAnchored: true
 
 - type: entity
   parent: ComputerShuttleBase
@@ -37,6 +39,8 @@
     - type: ComputerVisualizer
       key: generic_key
       screen: shuttle
+  - type: Computer
+    board: ShuttleConsoleCircuitboard
 
 - type: entity
   parent: ComputerShuttleBase
@@ -88,6 +92,36 @@
 
 - type: entity
   parent: ComputerBase
+  id: ComputerCrewMonitoring
+  name: crew monitoring console
+  description: Used to monitor active health sensors built into most of the crew's uniforms.
+  components:
+    - type: Appearance
+      visuals:
+        - type: ComputerVisualizer
+          key: med_key
+          screen: crew
+    - type: PointLight
+      radius: 1.5
+      energy: 1.6
+      color: "#006400"
+    - type: Computer
+      board: CrewMonitoringComputerCircuitboard
+    - type: ActivatableUI
+      key: enum.CrewMonitoringUIKey.Key
+    - type: ActivatableUIRequiresPower
+    - type: UserInterface
+      interfaces:
+        - key: enum.CrewMonitoringUIKey.Key
+          type: CrewMonitoringBoundUserInterface
+    - type: CrewMonitoringConsole
+    - type: DeviceNetworkComponent
+      deviceNetId: Wireless
+    - type: WirelessNetworkConnection
+      range: 500
+
+- type: entity
+  parent: ComputerBase
   id: ComputerResearchAndDevelopment
   name: R&D computer
   description: A computer used to interface with R&D tools.
@@ -126,6 +160,27 @@
   - type: AccessReader
     access: [["HeadOfPersonnel"]]
   - type: IdCardConsole
+    privilegedIdSlot:
+      name: id-card-console-privileged-id
+      ejectSound: /Audio/Machines/id_swipe.ogg
+      insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+      ejectOnBreak: true
+      swap: false
+      whitelist:
+        components:
+        - IdCard
+    targetIdSlot:
+      name: id-card-console-target-id
+      ejectSound: /Audio/Machines/id_swipe.ogg
+      insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+      ejectOnBreak: true
+      swap: false
+      whitelist:
+        components:
+        - IdCard
+  - type: ActivatableUI
+    key: enum.IdCardConsoleUiKey.Key
+  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.IdCardConsoleUiKey.Key
@@ -177,6 +232,9 @@
       key: generic_key
       screen: comm
   - type: CommunicationsConsole
+  - type: ActivatableUI
+    key: enum.CommunicationsConsoleUiKey.Key
+  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.CommunicationsConsoleUiKey.Key
@@ -200,6 +258,9 @@
       key: generic_key
       screen: solar_screen
   - type: SolarControlConsole
+  - type: ActivatableUI
+    key: enum.SolarControlConsoleUiKey.Key
+  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.SolarControlConsoleUiKey.Key
@@ -210,6 +271,32 @@
     radius: 1.5
     energy: 1.6
     color: "#e6e227"
+
+- type: entity
+  parent: ComputerBase
+  id: ComputerRadar
+  name: mass scanner computer
+  description: A computer for detecting nearby bodies, displaying them by position and mass.
+  components:
+    - type: Appearance
+      visuals:
+        - type: ComputerVisualizer
+          key: generic_key
+          screen: solar_screen
+    - type: RadarConsole
+    - type: ActivatableUI
+      key: enum.RadarConsoleUiKey.Key
+    - type: ActivatableUIRequiresPower
+    - type: UserInterface
+      interfaces:
+        - key: enum.RadarConsoleUiKey.Key
+          type: RadarConsoleBoundUserInterface
+    - type: Computer
+      board: RadarConsoleCircuitboard
+    - type: PointLight
+      radius: 1.5
+      energy: 1.6
+      color: "#e6e227"
 
 - type: entity
   id: ComputerSupplyOrdering
@@ -226,10 +313,13 @@
   - type: CargoOrderDatabase
   - type: GalacticMarket
     products:
+      - MedicalSupplies
+      - MedicalChemistrySupplies
       - EmergencyExplosive
       - EmergencyFire
       - EmergencyInternals
       - EmergencyRadiation
+      - EmergencyInflatablewall
       - ArmorySmg
       - ArmoryShotgun
       - SecurityArmor
@@ -238,12 +328,22 @@
       - SecurityHelmet
       - SecuritySupplies
       - SecurityNonLethal
+      - SecurityRestraints
       - HydroponicsTools
       - HydroponicsSeeds
       - HydroponicsSeedsExotic
       - LivestockMonkeyCube
+      - LivestockCow
+      - LivestockChicken
+      - LivestockDuck
+      - LivestockGoat
+      - FoodPizza
       - ServiceJanitorial
       - ServiceLightsReplacement
+      - ServiceSmokeables
+      - ServiceCustomSmokable
+      - ServiceBureaucracy
+      - ServicePersonnel
       - EngineeringCableLv
       - EngineeringCableMv
       - EngineeringCableHv
@@ -255,6 +355,7 @@
       - FunPlushies
       - FunArtSupplies
       - FunInstruments
+      - FunBoardGames
       - MaterialSteel
       - MaterialGlass
       - MaterialPlastic
@@ -265,6 +366,8 @@
       - EngineSingularityGenerator
       - EngineSingularityContainment
       - EngineParticleAccelerator
+      - ShuttleThruster
+      - ShuttleGyroscope
       - AtmosphericsAir
       - AtmosphericsOxygen
       - AtmosphericsNitrogen
@@ -272,6 +375,9 @@
 #      - AtmosphericsWaterVapor
 #      - AtmosphericsPlasma
 #      - AtmosphericsTritium
+  - type: ActivatableUI
+    key: enum.CargoConsoleUiKey.Key
+  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.CargoConsoleUiKey.Key
@@ -282,6 +388,8 @@
     radius: 1.5
     energy: 1.6
     color: "#b89f25"
+  - type: AccessReader
+    access: [["Cargo"]]
 
 - type: entity
   id: ComputerSupplyRequest

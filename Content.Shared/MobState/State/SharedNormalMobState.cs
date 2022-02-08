@@ -16,7 +16,7 @@ namespace Content.Shared.MobState.State
             base.EnterState(uid, entityManager);
             EntitySystem.Get<StandingStateSystem>().Stand(uid);
 
-            if (entityManager.TryGetComponent(uid, out SharedAppearanceComponent? appearance))
+            if (entityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
             {
                 appearance.SetData(DamageStateVisuals.State, DamageState.Alive);
             }

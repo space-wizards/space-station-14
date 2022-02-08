@@ -11,6 +11,7 @@
   - type: Tag
     tags:
       - RCDDeconstructWhitelist
+      - ForceFixRotations
   - type: Sprite
     netsync: false
     drawdepth: WallTops
@@ -20,6 +21,7 @@
     state: full
   - type: Physics
     bodyType: Static
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb {}
@@ -33,9 +35,17 @@
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Glass
+  - type: ExaminableDamage
+    messages: WindowMessages
   - type: Repairable
   - type: Destructible
     thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 150 #excess damage (nuke?). avoid computational cost of spawning entities.
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 50
@@ -56,12 +66,13 @@
     base: window
   - type: Window
   - type: Construction
-    graph: window
+    graph: Window
     node: window
   - type: Appearance
     visuals:
     - type: DamageVisualizer
       thresholds: [4, 8, 12]
+      damageDivisor: 2
       trackAllDamage: true
       damageOverlay:
         sprite: Structures/Windows/cracks.rsi
@@ -76,15 +87,17 @@
     snap:
     - Window
   components:
+    # Attention! If adding tags here:
+    # Keep WindowTintedDirectional in mind
   - type: Sprite
     netsync: false
-    drawdepth: WallTops
     sprite: Structures/Windows/directional.rsi
     state: window
   - type: Icon
     sprite: Structures/Windows/directional.rsi
     state: window
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -101,6 +114,8 @@
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Glass
+  - type: ExaminableDamage
+    messages: WindowMessages
   - type: Destructible
     thresholds:
     - trigger:
@@ -122,6 +137,9 @@
     airBlockedDirection:
     - South
   - type: Window
+  - type: Construction
+    graph: WindowDirectional
+    node: windowDirectional
 
 - type: entity
   id: WindowTintedDirectional
@@ -135,9 +153,11 @@
   components:
   - type: Sprite
     netsync: false
-    drawdepth: WallTops
     sprite: Structures/Windows/directional.rsi
     state: tinted_window
+  - type: Tag
+    tags:
+      - ForceNoFixRotations
   - type: Icon
     sprite: Structures/Windows/directional.rsi
     state: tinted_window
@@ -156,7 +176,6 @@
   components:
   - type: Sprite
     netsync: false
-    drawdepth: WallTops
     sprite: Structures/Windows/directional.rsi
     state: frosted_window
   - type: Icon

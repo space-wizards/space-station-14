@@ -1,5 +1,6 @@
 using System;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -12,7 +13,7 @@ namespace Content.Server.Power.Components
     [RegisterComponent]
     public class BatteryComponent : Component
     {
-        public override string Name => "Battery";
+        [Dependency] private readonly IEntityManager _entMan = default!;
 
         /// <summary>
         /// Maximum charge of the battery in joules (ie. watt seconds)
@@ -33,10 +34,6 @@ namespace Content.Server.Power.Components
         /// True if the battery is fully charged.
         /// </summary>
         [ViewVariables] public bool IsFullyCharged => MathHelper.CloseToPercent(CurrentCharge, MaxCharge);
-
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("autoRecharge")] public bool AutoRecharge { get; set; }
-
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("autoRechargeRate")] public float AutoRechargeRate { get; set; }
 
         /// <summary>
         ///     If sufficient charge is avaiable on the battery, use it. Otherwise, don't.
@@ -75,7 +72,10 @@ namespace Content.Server.Power.Components
             }
         }
 
-        protected virtual void OnChargeChanged() { }
+        protected virtual void OnChargeChanged()
+        {
+            _entMan.EventBus.RaiseLocalEvent(Owner, new ChargeChangedEvent(), false);
+        }
 
         private void SetMaxCharge(float newMax)
         {
@@ -89,12 +89,7 @@ namespace Content.Server.Power.Components
             _currentCharge = MathHelper.Clamp(newChargeAmount, 0, MaxCharge);
             OnChargeChanged();
         }
-
-        public void OnUpdate(float frameTime)
-        {
-            if (!AutoRecharge) return;
-            if (IsFullyCharged) return;
-            CurrentCharge += AutoRechargeRate * frameTime;
-        }
     }
+
+    public struct ChargeChangedEvent {}
 }

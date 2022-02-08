@@ -14,11 +14,16 @@
     damage:
       types:
         Slash: 12
-    hitSound: 
+    hitSound:
       path: /Audio/Weapons/bladeslice.ogg
   - type: Sprite
     netsync: false
   - type: Item
+  - type: Tool
+    qualities:
+      - Slicing
+    useSound:
+      path: /Audio/Items/Culinary/chop.ogg
 
 - type: entity
   name: kitchen knife
@@ -82,4 +87,19 @@
   - type: Item
     size: 10
     sprite: Objects/Weapons/Melee/combat_knife.rsi
+    prefix: inhand
+
+- type: entity
+  name: survival knife
+  parent: CombatKnife
+  id: SurvivalKnife
+  description: Weapon of first and last resort for combatting space carp.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/survival_knife.rsi
+    size: 2
+    state: icon
+  - type: Item
+    size: 10
+    sprite: Objects/Weapons/Melee/survival_knife.rsi
     prefix: inhand

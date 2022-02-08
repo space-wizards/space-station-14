@@ -6,19 +6,18 @@ using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
+using System.Linq;
 
 namespace Content.Server.Roles
 {
     [AdminCommand(AdminFlags.Fun)]
     public class AddRoleCommand : IConsoleCommand
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-
         public string Command => "addrole";
 
         public string Description => "Adds a role to a player's mind.";
 
-        public string Help => "addrole <session ID> <Role Type>\nThat role type is the actual C# type name.";
+        public string Help => "addrole <session ID> <role>";
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
@@ -42,7 +41,20 @@ namespace Content.Server.Roles
                 return;
             }
 
-            var role = new Job(mind, _prototypeManager.Index<JobPrototype>(args[1]));
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+            if (!prototypeManager.TryIndex<JobPrototype>(args[1], out var jobPrototype))
+            {
+                shell.WriteLine("Can't find that role");
+                return;
+            }
+
+            if (mind.AllRoles.Any(r => r.Name == jobPrototype.Name))
+            {
+                shell.WriteLine("Mind already has that role");
+                return;
+            }
+
+            var role = new Job(mind, jobPrototype!);
             mind.AddRole(role);
         }
     }

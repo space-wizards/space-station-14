@@ -1,8 +1,10 @@
 ﻿using System;
+using Nett;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -70,7 +72,7 @@ namespace Content.Shared.Cargo
         ///     The prototype name of the product.
         /// </summary>
         [ViewVariables]
-        [DataField("product")]
+        [DataField("product", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string Product { get; } = string.Empty;
 
         /// <summary>

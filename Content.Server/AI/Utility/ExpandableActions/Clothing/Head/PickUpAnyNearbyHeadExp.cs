@@ -9,6 +9,7 @@ using Content.Server.AI.WorldState.States;
 using Content.Server.AI.WorldState.States.Clothing;
 using Content.Server.Clothing.Components;
 using Content.Shared.Inventory;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Utility.ExpandableActions.Clothing.Head
@@ -22,9 +23,9 @@ namespace Content.Server.AI.Utility.ExpandableActions.Clothing.Head
             var considerationsManager = IoCManager.Resolve<ConsiderationsManager>();
             return new[]
             {
-                considerationsManager.Get<ClothingInSlotCon>().Slot(EquipmentSlotDefines.Slots.HEAD, context)
+                considerationsManager.Get<ClothingInSlotCon>().Slot("head", context)
                     .InverseBoolCurve(context),
-                considerationsManager.Get<ClothingInInventoryCon>().Slot(EquipmentSlotDefines.SlotFlags.HEAD, context)
+                considerationsManager.Get<ClothingInInventoryCon>().Slot(SlotFlags.HEAD, context)
                     .InverseBoolCurve(context)
             };
         }
@@ -35,8 +36,8 @@ namespace Content.Server.AI.Utility.ExpandableActions.Clothing.Head
 
             foreach (var entity in context.GetState<NearbyClothingState>().GetValue())
             {
-                if (entity.TryGetComponent(out ClothingComponent? clothing) &&
-                    (clothing.SlotFlags & EquipmentSlotDefines.SlotFlags.HEAD) != 0)
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out ClothingComponent? clothing) &&
+                    (clothing.SlotFlags & SlotFlags.HEAD) != 0)
                 {
                     yield return new PickUpHead {Owner = owner, Target = entity, Bonus = Bonus};
                 }

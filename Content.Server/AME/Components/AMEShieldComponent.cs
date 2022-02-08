@@ -2,6 +2,7 @@
 using Content.Shared.AME;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.AME.Components
@@ -21,8 +22,9 @@ namespace Content.Server.AME.Components
         protected override void Initialize()
         {
             base.Initialize();
-            Owner.TryGetComponent(out _appearance);
-            Owner.TryGetComponent(out _pointLight);
+            var entMan = IoCManager.Resolve<IEntityManager>();
+            entMan.TryGetComponent(Owner, out _appearance);
+            entMan.TryGetComponent(Owner, out _pointLight);
         }
 
         public void SetCore()

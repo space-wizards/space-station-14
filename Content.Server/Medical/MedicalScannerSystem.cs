@@ -1,7 +1,7 @@
 using Content.Server.Medical.Components;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Verbs;
 using Content.Shared.Movement;
+using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -32,13 +32,13 @@ namespace Content.Server.Medical
                 !args.CanAccess ||
                 !args.CanInteract ||
                 component.IsOccupied ||
-                !component.CanInsert(args.Using))
+                !component.CanInsert(args.Using.Value))
                 return;
 
             Verb verb = new();
-            verb.Act = () => component.InsertBody(args.Using);
+            verb.Act = () => component.InsertBody(args.Using.Value);
             verb.Category = VerbCategory.Insert;
-            verb.Text = args.Using.Name;
+            verb.Text = EntityManager.GetComponent<MetaDataComponent>(args.Using.Value).EntityName;
             args.Verbs.Add(verb);
         }
 
@@ -60,7 +60,7 @@ namespace Content.Server.Medical
             // Self-insert verb
             if (!component.IsOccupied &&
                 component.CanInsert(args.User) &&
-                _actionBlockerSystem.CanMove(args.User.Uid))
+                _actionBlockerSystem.CanMove(args.User))
             {
                 Verb verb = new();
                 verb.Act = () => component.InsertBody(args.User);
@@ -75,7 +75,7 @@ namespace Content.Server.Medical
 
         private void OnRelayMovement(EntityUid uid, MedicalScannerComponent component, RelayMovementEntityEvent args)
         {
-            if (_blocker.CanInteract(args.Entity.Uid))
+            if (_blocker.CanInteract(args.Entity))
             {
                 if (_gameTiming.CurTime <
                     component.LastInternalOpenAttempt + MedicalScannerComponent.InternalOpenAttemptDelay)

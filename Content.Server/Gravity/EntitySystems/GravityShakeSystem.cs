@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Content.Server.Camera;
+using System.Collections.Generic;
+using Content.Shared.Camera;
 using Content.Shared.Gravity;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
@@ -20,12 +20,14 @@ namespace Content.Server.Gravity.EntitySystems
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
+        [Dependency] private readonly CameraRecoilSystem _cameraRecoil = default!;
+
         private Dictionary<GridId, uint> _gridsToShake = new();
 
         private const float GravityKick = 100.0f;
         private const uint ShakeTimes = 10;
 
-        private float _internalTimer = 0.0f;
+        private float _internalTimer;
 
         public override void Update(float frameTime)
         {
@@ -77,16 +79,17 @@ namespace Content.Server.Gravity.EntitySystems
 
         private void ShakeGrid(GridId gridId)
         {
-            foreach (var player in _playerManager.GetAllPlayers())
+            foreach (var player in _playerManager.Sessions)
             {
-                if (player.AttachedEntity == null
-                    || player.AttachedEntity.Transform.GridID != gridId
-                    || !player.AttachedEntity.TryGetComponent(out CameraRecoilComponent? recoil))
+                if (player.AttachedEntity is not {Valid: true} attached
+                    || EntityManager.GetComponent<TransformComponent>(attached).GridID != gridId
+                    || !EntityManager.HasComponent<CameraRecoilComponent>(attached))
                 {
                     continue;
                 }
 
-                recoil.Kick(new Vector2(_random.NextFloat(), _random.NextFloat()) * GravityKick);
+                var kick = new Vector2(_random.NextFloat(), _random.NextFloat()) * GravityKick;
+                _cameraRecoil.KickCamera(player.AttachedEntity.Value, kick);
             }
         }
     }

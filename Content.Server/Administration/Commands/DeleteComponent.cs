@@ -37,7 +37,7 @@ namespace Content.Server.Administration.Commands
 
                     foreach (var component in components)
                     {
-                        var uid = component.Owner.Uid;
+                        var uid = component.Owner;
                         entityManager.RemoveComponent(uid, component);
                         i++;
                     }

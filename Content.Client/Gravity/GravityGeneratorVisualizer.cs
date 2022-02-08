@@ -4,6 +4,7 @@ using Content.Shared.Gravity;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -37,11 +38,11 @@ namespace Content.Client.Gravity
             }
         }
 
-        public override void InitializeEntity(IEntity entity)
+        public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
 
-            if (!entity.TryGetComponent(out SpriteComponent? sprite))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out SpriteComponent? sprite))
                 return;
 
             sprite.LayerMapReserveBlank(GravityGeneratorVisualLayers.Base);
@@ -52,7 +53,7 @@ namespace Content.Client.Gravity
         {
             base.OnChangeData(component);
 
-            var sprite = component.Owner.GetComponent<SpriteComponent>();
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(component.Owner);
 
             if (component.TryGetData(GravityGeneratorVisuals.State, out GravityGeneratorStatus state))
             {

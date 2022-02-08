@@ -1,9 +1,7 @@
-using System.Collections.Generic;
 using Content.Server.Construction.Components;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Construction.Steps;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Robust.Server.Containers;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -166,7 +164,7 @@ namespace Content.Server.Construction
             Resolve(uid, ref containerManager, false);
 
             // We create the new entity.
-            var newUid = EntityManager.SpawnEntity(newEntity, transform.Coordinates).Uid;
+            var newUid = EntityManager.SpawnEntity(newEntity, transform.Coordinates);
 
             // Construction transferring.
             var newConstruction = EntityManager.EnsureComponent<ConstructionComponent>(newUid);

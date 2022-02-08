@@ -8,12 +8,11 @@ using Robust.Shared.Maths;
 
 namespace Content.Client.Atmos.Overlays
 {
-    public class GasTileOverlay : Overlay
+    public sealed class GasTileOverlay : Overlay
     {
         private readonly GasTileOverlaySystem _gasTileOverlaySystem;
 
         [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly IEyeManager _eyeManager = default!;
 
         public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
 
@@ -22,14 +21,15 @@ namespace Content.Client.Atmos.Overlays
             IoCManager.InjectDependencies(this);
 
             _gasTileOverlaySystem = EntitySystem.Get<GasTileOverlaySystem>();
+            ZIndex = GasTileOverlaySystem.GasOverlayZIndex;
         }
 
         protected override void Draw(in OverlayDrawArgs args)
         {
             var drawHandle = args.WorldHandle;
 
-            var mapId = _eyeManager.CurrentMap;
-            var worldBounds = _eyeManager.GetWorldViewbounds();
+            var mapId = args.Viewport.Eye!.Position.MapId;
+            var worldBounds = args.WorldBounds;
 
             foreach (var mapGrid in _mapManager.FindGridsIntersecting(mapId, worldBounds))
             {
@@ -47,8 +47,6 @@ namespace Content.Client.Atmos.Overlays
                     }
                 }
             }
-
-            drawHandle.SetTransform(Matrix3.Identity);
         }
     }
 }

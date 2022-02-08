@@ -2,8 +2,10 @@
 using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using Robust.Server.Maps;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Utility;
+using Robust.Shared.Map;
 using YamlDotNet.RepresentationModel;
 
 namespace Content.IntegrationTests.Tests
@@ -53,6 +55,42 @@ namespace Content.IntegrationTests.Tests
                 var postMapInit = meta["postmapinit"].AsBool();
 
                 Assert.False(postMapInit, $"Map {map.Filename} was saved postmapinit");
+            }
+        }
+
+        [Test]
+        public async Task MapsLoadableTest()
+        {
+            var server = StartServer();
+
+            await server.WaitIdleAsync();
+
+            var mapLoader = server.ResolveDependency<IMapLoader>();
+            var mapManager = server.ResolveDependency<IMapManager>();
+            var resourceManager = server.ResolveDependency<IResourceManager>();
+            var mapFolder = new ResourcePath("/Maps");
+            var maps = resourceManager
+                .ContentFindFiles(mapFolder)
+                .Where(filePath => filePath.Extension == "yml" && !filePath.Filename.StartsWith("."))
+                .ToArray();
+
+            foreach (var map in maps)
+            {
+                var rootedPath = map.ToRootedPath();
+
+                // ReSharper disable once RedundantLogicalConditionalExpressionOperand
+                if (SkipTestMaps && rootedPath.ToString().StartsWith(TestMapsPath))
+                {
+                    continue;
+                }
+
+                server.Post(() =>
+                {
+                    var mapId = mapManager.CreateMap();
+                    mapLoader.LoadMap(mapId, rootedPath.ToString());
+                    mapManager.DeleteMap(mapId);
+                });
+                await server.WaitIdleAsync();
             }
         }
     }

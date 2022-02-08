@@ -2,6 +2,7 @@
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Client.Cuffs.Components
 {
@@ -21,7 +22,7 @@ namespace Content.Client.Cuffs.Components
                 return;
             }
 
-            if (Owner.TryGetComponent<SpriteComponent>(out var sprite))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<SpriteComponent?>(Owner, out var sprite))
             {
                 sprite.LayerSetState(0, new RSI.StateId(state.IconState)); // TODO: safety check to see if RSI contains the state?
             }

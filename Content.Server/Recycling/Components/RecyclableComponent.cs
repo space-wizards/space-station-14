@@ -1,5 +1,6 @@
 using System;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Recycling.Components
@@ -7,7 +8,7 @@ namespace Content.Server.Recycling.Components
     [RegisterComponent]
     public class RecyclableComponent : Component
     {
-        public override string Name => "Recyclable";
+        [Dependency] private readonly IEntityManager _entMan = default!;
 
         /// <summary>
         ///     The prototype that will be spawned on recycle.
@@ -32,12 +33,12 @@ namespace Content.Server.Recycling.Components
             {
                 for (var i = 0; i < Math.Max(_amount * efficiency, 1); i++)
                 {
-                    Owner.EntityManager.SpawnEntity(_prototype, Owner.Transform.Coordinates);
+                    _entMan.SpawnEntity(_prototype, _entMan.GetComponent<TransformComponent>(Owner).Coordinates);
                 }
 
             }
 
-            Owner.QueueDelete();
+            _entMan.QueueDeleteEntity(Owner);
         }
     }
 }

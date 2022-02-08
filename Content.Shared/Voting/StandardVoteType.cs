@@ -13,6 +13,11 @@
         /// <summary>
         /// Vote to change the game preset for next round.
         /// </summary>
-        Preset
+        Preset,
+
+        /// <summary>
+        /// Vote to change the map for the next round.
+        /// </summary>
+        Map
     }
 }

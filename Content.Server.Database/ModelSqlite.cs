@@ -1,7 +1,9 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
+using System.IO;
 using System.Net;
+using System.Text;
+using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -11,49 +13,58 @@ namespace Content.Server.Database
 {
     public sealed class SqliteServerDbContext : ServerDbContext
     {
-        public DbSet<SqliteServerBan> Ban { get; set; } = default!;
-        public DbSet<SqliteServerUnban> Unban { get; set; } = default!;
-        public DbSet<SqlitePlayer> Player { get; set; } = default!;
-        public DbSet<SqliteConnectionLog> ConnectionLog { get; set; } = default!;
-
-        public SqliteServerDbContext()
+        public SqliteServerDbContext(DbContextOptions<SqliteServerDbContext> options) : base(options)
         {
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            if (!InitializedWithOptions)
-                options.UseSqlite("dummy connection string");
-
             ((IDbContextOptionsBuilderInfrastructure) options).AddOrUpdateExtension(new SnakeCaseExtension());
 
             options.ConfigureWarnings(x =>
             {
                 x.Ignore(CoreEventId.ManyServiceProvidersCreatedWarning);
+#if DEBUG
+                // for tests
+                x.Ignore(CoreEventId.SensitiveDataLoggingEnabledWarning);
+#endif
             });
+
+#if DEBUG
+            options.EnableSensitiveDataLogging();
+#endif
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<SqlitePlayer>()
-                .HasIndex(p => p.LastSeenUserName);
+            var ipConverter = new ValueConverter<IPAddress, string>(
+                v => v.ToString(),
+                v => IPAddress.Parse(v));
 
-            var converter = new ValueConverter<(IPAddress address, int mask), string>(
+            modelBuilder.Entity<Player>()
+                .Property(p => p.LastSeenAddress)
+                .HasConversion(ipConverter);
+
+            var ipMaskConverter = new ValueConverter<(IPAddress address, int mask), string>(
                 v => InetToString(v.address, v.mask),
                 v => StringToInet(v)
             );
 
             modelBuilder
-                .Entity<SqliteServerBan>()
+                .Entity<ServerBan>()
                 .Property(e => e.Address)
                 .HasColumnType("TEXT")
-                .HasConversion(converter);
-        }
+                .HasConversion(ipMaskConverter);
 
-        public SqliteServerDbContext(DbContextOptions<ServerDbContext> options) : base(options)
-        {
+            var jsonConverter = new ValueConverter<JsonDocument, string>(
+                v => JsonDocumentToString(v),
+                v => StringToJsonDocument(v));
+
+            modelBuilder.Entity<AdminLog>()
+                .Property(log => log.Json)
+                .HasConversion(jsonConverter);
         }
 
         private static string InetToString(IPAddress address, int mask) {
@@ -74,62 +85,21 @@ namespace Content.Server.Database
                 int.Parse(inet.AsSpan(idx + 1), provider: CultureInfo.InvariantCulture)
             );
         }
-    }
 
-    [Table("ban")]
-    public class SqliteServerBan
-    {
-        public int Id { get; set; }
+        private static string JsonDocumentToString(JsonDocument document)
+        {
+            using var stream = new MemoryStream();
+            using var writer = new Utf8JsonWriter(stream, new JsonWriterOptions {Indented = false});
 
-        public Guid? UserId { get; set; }
-        public (IPAddress address, int mask)? Address { get; set; }
-        public byte[]? HWId { get; set; }
+            document.WriteTo(writer);
+            writer.Flush();
 
-        public DateTime BanTime { get; set; }
-        public DateTime? ExpirationTime { get; set; }
-        public string Reason { get; set; } = null!;
-        public Guid? BanningAdmin { get; set; }
+            return Encoding.UTF8.GetString(stream.ToArray());
+        }
 
-        public SqliteServerUnban? Unban { get; set; }
-    }
-
-    [Table("unban")]
-    public class SqliteServerUnban
-    {
-        [Column("unban_id")] public int Id { get; set; }
-
-        public int BanId { get; set; }
-        public SqliteServerBan Ban { get; set; } = null!;
-
-        public Guid? UnbanningAdmin { get; set; }
-        public DateTime UnbanTime { get; set; }
-    }
-
-    [Table("player")]
-    public class SqlitePlayer
-    {
-        public int Id { get; set; }
-
-        // Permanent data
-        public Guid UserId { get; set; }
-        public DateTime FirstSeenTime { get; set; }
-
-        // Data that gets updated on each join.
-        public string LastSeenUserName { get; set; } = null!;
-        public DateTime LastSeenTime { get; set; }
-        public string LastSeenAddress { get; set; } = null!;
-        public byte[]? LastSeenHWId { get; set; }
-    }
-
-    [Table("connection_log")]
-    public class SqliteConnectionLog
-    {
-        public int Id { get; set; }
-
-        public Guid UserId { get; set; }
-        public string UserName { get; set; } = null!;
-        public DateTime Time { get; set; }
-        public string Address { get; set; } = null!;
-        public byte[]? HWId { get; set; }
+        private static JsonDocument StringToJsonDocument(string str)
+        {
+            return JsonDocument.Parse(str);
+        }
     }
 }

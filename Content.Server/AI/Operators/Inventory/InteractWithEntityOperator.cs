@@ -11,11 +11,15 @@ namespace Content.Server.AI.Operators.Inventory
     /// </summary>
     public class InteractWithEntityOperator : AiOperator
     {
-        private readonly IEntity _owner;
-        private readonly IEntity _useTarget;
+        [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public InteractWithEntityOperator(IEntity owner, IEntity useTarget)
+        private readonly EntityUid _owner;
+        private readonly EntityUid _useTarget;
+
+        public InteractWithEntityOperator(EntityUid owner, EntityUid useTarget)
         {
+            IoCManager.InjectDependencies(this);
+
             _owner = owner;
             _useTarget = useTarget;
 
@@ -23,7 +27,9 @@ namespace Content.Server.AI.Operators.Inventory
 
         public override Outcome Execute(float frameTime)
         {
-            if (_useTarget.Transform.GridID != _owner.Transform.GridID)
+            var targetTransform = _entMan.GetComponent<TransformComponent>(_useTarget);
+
+            if (targetTransform.GridID != _entMan.GetComponent<TransformComponent>(_owner).GridID)
             {
                 return Outcome.Failed;
             }
@@ -33,14 +39,14 @@ namespace Content.Server.AI.Operators.Inventory
                 return Outcome.Failed;
             }
 
-            if (_owner.TryGetComponent(out CombatModeComponent? combatModeComponent))
+            if (_entMan.TryGetComponent(_owner, out CombatModeComponent? combatModeComponent))
             {
                 combatModeComponent.IsInCombatMode = false;
             }
 
             // Click on da thing
-            var interactionSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<InteractionSystem>();
-            interactionSystem.AiUseInteraction(_owner, _useTarget.Transform.Coordinates, _useTarget.Uid);
+            var interactionSystem = EntitySystem.Get<InteractionSystem>();
+            interactionSystem.AiUseInteraction(_owner, targetTransform.Coordinates, _useTarget);
 
             return Outcome.Success;
         }

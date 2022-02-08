@@ -1,7 +1,6 @@
-using Content.Server.Body;
-using Content.Server.Body.Mechanism;
-using Content.Server.Body.Part;
+using Content.Server.Body.Components;
 using Content.Shared.Administration;
+using Content.Shared.Body.Components;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;

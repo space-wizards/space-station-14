@@ -1,5 +1,5 @@
-﻿using Content.Server.Body.Metabolism;
-using Content.Shared.Body.Metabolism;
+﻿using Content.Server.Body.Components;
+using Content.Shared.Body.Prototypes;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.GameObjects;

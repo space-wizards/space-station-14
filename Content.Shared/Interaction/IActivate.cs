@@ -24,14 +24,14 @@ namespace Content.Shared.Interaction
 
     public class ActivateEventArgs : EventArgs, ITargetedInteractEventArgs
     {
-        public ActivateEventArgs(IEntity user, IEntity target)
+        public ActivateEventArgs(EntityUid user, EntityUid target)
         {
             User = user;
             Target = target;
         }
 
-        public IEntity User { get; }
-        public IEntity Target { get; }
+        public EntityUid User { get; }
+        public EntityUid Target { get; }
     }
 
     /// <summary>
@@ -43,24 +43,14 @@ namespace Content.Shared.Interaction
         /// <summary>
         ///     Entity that activated the target world entity.
         /// </summary>
-        public IEntity User { get; }
-
-        /// <summary>
-        ///     Entity that activated the target world entity.
-        /// </summary>
-        public EntityUid UserUid => User.Uid;
+        public EntityUid User { get; }
 
         /// <summary>
         ///     Entity that was activated in the world.
         /// </summary>
-        public IEntity Target { get; }
+        public EntityUid Target { get; }
 
-        /// <summary>
-        ///     Entity that was activated in the world.
-        /// </summary>
-        public EntityUid TargetUid => Target.Uid;
-
-        public ActivateInWorldEvent(IEntity user, IEntity target)
+        public ActivateInWorldEvent(EntityUid user, EntityUid target)
         {
             User = user;
             Target = target;

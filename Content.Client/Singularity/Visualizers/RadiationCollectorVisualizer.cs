@@ -4,6 +4,7 @@ using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 
 namespace Content.Client.Singularity.Visualizers
@@ -43,20 +44,18 @@ namespace Content.Client.Singularity.Visualizers
             }
         }
 
-        public override void InitializeEntity(IEntity entity)
+        public override void InitializeEntity(EntityUid entity)
         {
-            if (!entity.HasComponent<AnimationPlayerComponent>())
-            {
-                entity.AddComponent<AnimationPlayerComponent>();
-            }
+            IoCManager.Resolve<IEntityManager>().EnsureComponent<AnimationPlayerComponent>(entity);
         }
 
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
 
-            if (!component.Owner.TryGetComponent<ISpriteComponent>(out var sprite)) return;
-            if (!component.Owner.TryGetComponent<AnimationPlayerComponent>(out var animPlayer)) return;
+            var entities = IoCManager.Resolve<IEntityManager>();
+            if (!entities.TryGetComponent(component.Owner, out ISpriteComponent sprite)) return;
+            if (!entities.TryGetComponent(component.Owner, out AnimationPlayerComponent animPlayer)) return;
             if (!component.TryGetData(RadiationCollectorVisuals.VisualState, out RadiationCollectorVisualState state))
             {
                 state = RadiationCollectorVisualState.Deactive;

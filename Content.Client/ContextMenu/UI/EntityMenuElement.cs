@@ -1,7 +1,7 @@
-using Content.Client.Stylesheets;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 
 namespace Content.Client.ContextMenu.UI
@@ -10,10 +10,12 @@ namespace Content.Client.ContextMenu.UI
     {
         public const string StyleClassEntityMenuCountText = "contextMenuCount";
 
+        [Dependency] private IEntityManager _entityManager = default!;
+
         /// <summary>
         ///     The entity that can be accessed by interacting with this element.
         /// </summary>
-        public IEntity? Entity;
+        public EntityUid? Entity;
 
         /// <summary>
         ///     How many entities are accessible through this element's sub-menus.
@@ -23,11 +25,13 @@ namespace Content.Client.ContextMenu.UI
         /// </remarks>
         public int Count;
 
-        public Label CountLabel;
-        public SpriteView EntityIcon = new SpriteView { OverrideDirection = Direction.South};
+        public readonly Label CountLabel;
+        public readonly SpriteView EntityIcon = new() { OverrideDirection = Direction.South};
 
-        public EntityMenuElement(IEntity? entity = null) : base()
+        public EntityMenuElement(EntityUid? entity = null)
         {
+            IoCManager.InjectDependencies(this);
+
             CountLabel = new Label { StyleClasses = { StyleClassEntityMenuCountText } };
             Icon.AddChild(new LayoutContainer() { Children = { EntityIcon, CountLabel } });
 
@@ -55,16 +59,25 @@ namespace Content.Client.ContextMenu.UI
         ///     Update the icon and text of this element based on the given entity or this element's own entity if none
         ///     is provided.
         /// </summary>
-        public void UpdateEntity(IEntity? entity = null)
+        public void UpdateEntity(EntityUid? entity = null)
         {
             entity ??= Entity;
 
-            EntityIcon.Sprite = entity?.GetComponentOrNull<ISpriteComponent>();
+            // check whether entity is null, invalid, or has been deleted.
+            // _entityManager.Deleted() implicitly checks all of these.
+            if (_entityManager.Deleted(entity))
+            {
+                Text = string.Empty;
+                EntityIcon.Sprite = null;
+                return;
+            }
+
+            EntityIcon.Sprite = _entityManager.GetComponentOrNull<ISpriteComponent>(entity);
 
             if (UserInterfaceManager.DebugMonitors.Visible)
-                Text = $"{entity?.Name} ({entity?.Uid})";
+                Text = _entityManager.ToPrettyString(entity.Value);
             else
-                Text = entity?.Name ?? string.Empty;
+                Text = _entityManager.GetComponent<MetaDataComponent>(entity.Value).EntityName;
         }
     }
 }

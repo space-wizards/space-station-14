@@ -8,9 +8,7 @@ namespace Content.Shared.Throwing
     [RegisterComponent, NetworkedComponent]
     public class ThrownItemComponent : Component
     {
-        public override string Name => "ThrownItem";
-
-        public IEntity? Thrower { get; set; }
+        public EntityUid? Thrower { get; set; }
     }
 
     [Serializable, NetSerializable]

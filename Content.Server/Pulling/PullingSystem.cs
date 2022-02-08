@@ -27,9 +27,7 @@ namespace Content.Server.Pulling
 
         private void HandleReleasePulledObject(ICommonSession? session)
         {
-            var player = session?.AttachedEntity;
-
-            if (player == null)
+            if (session?.AttachedEntity is not {Valid: true} player)
             {
                 return;
             }
@@ -39,7 +37,7 @@ namespace Content.Server.Pulling
                 return;
             }
 
-            if (!pulled.TryGetComponent(out SharedPullableComponent? pullable))
+            if (!EntityManager.TryGetComponent(pulled.Value, out SharedPullableComponent? pullable))
             {
                 return;
             }

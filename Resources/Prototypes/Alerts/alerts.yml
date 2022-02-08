@@ -72,7 +72,7 @@
     state: hot
   maxSeverity: 3
   name: "[color=red]Too Hot[/color]"
-  description: "It's [color=red]too hot![/color] Flee to space or at least away from the flames. Standing on weeds will heal you."
+  description: "It's [color=red]too hot![/color] Get somewhere colder, take off any insulating clothing like a space suit, or at least get away from the flames."
 
 - type: alert
   alertType: Weightless

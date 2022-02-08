@@ -5,10 +5,11 @@ using System.Linq;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
+using Content.Shared.MobState.EntitySystems;
 using Content.Shared.MobState.State;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.Players;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -25,7 +26,7 @@ namespace Content.Shared.MobState.Components
     [NetworkedComponent]
     public class MobStateComponent : Component
     {
-        public override string Name => "MobState";
+        [Dependency] private readonly IEntityManager _entMan = default!;
 
         /// <summary>
         ///     States that this <see cref="MobStateComponent"/> mapped to
@@ -59,21 +60,18 @@ namespace Content.Shared.MobState.Components
             else
             {
                 // Initialize with some amount of damage, defaulting to 0.
-                UpdateState(Owner.GetComponentOrNull<DamageableComponent>()?.TotalDamage ?? FixedPoint2.Zero);
+                UpdateState(_entMan.GetComponentOrNull<DamageableComponent>(Owner)?.TotalDamage ?? FixedPoint2.Zero);
             }
         }
 
         protected override void OnRemove()
         {
-            if (Owner.TryGetComponent(out SharedAlertsComponent? status))
-            {
-                status.ClearAlert(AlertType.HumanHealth);
-            }
+            EntitySystem.Get<AlertsSystem>().ClearAlert(Owner, AlertType.HumanHealth);
 
             base.OnRemove();
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new MobStateComponentState(CurrentThreshold);
         }
@@ -288,9 +286,11 @@ namespace Content.Shared.MobState.Components
         /// </summary>
         private void SetMobState(IMobState? old, (IMobState state, FixedPoint2 threshold)? current)
         {
+            var entMan = _entMan;
+
             if (!current.HasValue)
             {
-                old?.ExitState(OwnerUid, Owner.EntityManager);
+                old?.ExitState(Owner, entMan);
                 return;
             }
 
@@ -300,23 +300,19 @@ namespace Content.Shared.MobState.Components
 
             if (state == old)
             {
-                state.UpdateState(OwnerUid, threshold, Owner.EntityManager);
+                state.UpdateState(Owner, threshold, entMan);
                 return;
             }
 
-            old?.ExitState(OwnerUid, Owner.EntityManager);
+            old?.ExitState(Owner, entMan);
 
             CurrentState = state;
 
-            state.EnterState(OwnerUid, Owner.EntityManager);
-            state.UpdateState(OwnerUid, threshold, Owner.EntityManager);
+            state.EnterState(Owner, entMan);
+            state.UpdateState(Owner, threshold, entMan);
 
-            var message = new MobStateChangedMessage(this, old, state);
-#pragma warning disable 618
-            SendMessage(message);
-#pragma warning restore 618
-            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, message);
-
+            var message = new MobStateChangedEvent(this, old, state);
+            entMan.EventBus.RaiseLocalEvent(Owner, message);
             Dirty();
         }
     }

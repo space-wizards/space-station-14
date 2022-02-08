@@ -1,14 +1,17 @@
 ﻿using System;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Cargo
 {
     public class CargoBankAccount : ICargoBankAccount
     {
+        [ViewVariables]
         public int Id { get; }
-
+        [ViewVariables]
         public string Name { get; }
 
         private int _balance;
+        [ViewVariables(VVAccess.ReadWrite)]
         public int Balance
         {
             get => _balance;

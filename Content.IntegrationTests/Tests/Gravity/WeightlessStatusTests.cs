@@ -1,11 +1,11 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Content.Server.Gravity;
 using Content.Server.Gravity.EntitySystems;
-using Content.Shared.Acts;
 using Content.Shared.Alert;
 using Content.Shared.Coordinates;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
 namespace Content.IntegrationTests.Tests.Gravity
@@ -42,9 +42,9 @@ namespace Content.IntegrationTests.Tests.Gravity
 
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
+            var alertsSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<AlertsSystem>();
 
-            IEntity human = null;
-            SharedAlertsComponent alerts = null;
+            EntityUid human = default;
 
             await server.WaitAssertion(() =>
             {
@@ -52,7 +52,7 @@ namespace Content.IntegrationTests.Tests.Gravity
                 var coordinates = grid.ToCoordinates();
                 human = entityManager.SpawnEntity("HumanDummy", coordinates);
 
-                Assert.True(human.TryGetComponent(out alerts));
+                Assert.True(entityManager.TryGetComponent(human, out AlertsComponent alerts));
             });
 
             // Let WeightlessSystem and GravitySystem tick
@@ -61,9 +61,9 @@ namespace Content.IntegrationTests.Tests.Gravity
             await server.WaitAssertion(() =>
             {
                 // No gravity without a gravity generator
-                Assert.True(alerts.IsShowingAlert(AlertType.Weightless));
+                Assert.True(alertsSystem.IsShowingAlert(human, AlertType.Weightless));
 
-                entityManager.SpawnEntity("GravityGeneratorDummy", human.Transform.Coordinates);
+                entityManager.SpawnEntity("GravityGeneratorDummy", entityManager.GetComponent<TransformComponent>(human).Coordinates);
             });
 
             // Let WeightlessSystem and GravitySystem tick
@@ -71,7 +71,7 @@ namespace Content.IntegrationTests.Tests.Gravity
 
             await server.WaitAssertion(() =>
             {
-                Assert.False(alerts.IsShowingAlert(AlertType.Weightless));
+                Assert.False(alertsSystem.IsShowingAlert(human, AlertType.Weightless));
 
                 // TODO: Re-add gravity generator breaking when Vera is done with construction stuff.
                 /*

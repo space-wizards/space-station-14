@@ -1,9 +1,8 @@
-using System;
+using Content.Server.Mind.Commands;
 using Content.Server.Mind.Components;
-using Content.Server.Players;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Utility;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Ghost.Roles.Components
 {
@@ -13,8 +12,6 @@ namespace Content.Server.Ghost.Roles.Components
     [RegisterComponent, ComponentReference(typeof(GhostRoleComponent))]
     public class GhostTakeoverAvailableComponent : GhostRoleComponent
     {
-        public override string Name => "GhostTakeoverAvailable";
-
         public override bool Take(IPlayerSession session)
         {
             if (Taken)
@@ -27,13 +24,13 @@ namespace Content.Server.Ghost.Roles.Components
             if (mind.HasMind)
                 return false;
 
-            var sessionMind = session.ContentData()?.Mind;
+            if (MakeSentient)
+                MakeSentientCommand.MakeSentient(Owner, IoCManager.Resolve<IEntityManager>());
 
-            DebugTools.AssertNotNull(sessionMind);
+            var ghostRoleSystem = EntitySystem.Get<GhostRoleSystem>();
+            ghostRoleSystem.GhostRoleInternalCreateMindAndTransfer(session, Owner, Owner, this);
 
-            sessionMind!.TransferTo(Owner);
-
-            EntitySystem.Get<GhostRoleSystem>().UnregisterGhostRole(this);
+            ghostRoleSystem.UnregisterGhostRole(this);
 
             return true;
         }

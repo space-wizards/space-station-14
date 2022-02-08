@@ -1,10 +1,10 @@
 using System;
-using System.Data;
-using Content.Server.Alert;
+using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Damage;
+using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -15,10 +15,11 @@ namespace Content.Server.Atmos.EntitySystems
     {
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+        [Dependency] private readonly AlertsSystem _alertsSystem = default!;
+        [Dependency] private readonly AdminLogSystem _logSystem = default!;
 
         private const float UpdateTimer = 1f;
-
-        private float _timer = 0f;
+        private float _timer;
 
         public override void Initialize()
         {
@@ -70,7 +71,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             _timer -= UpdateTimer;
 
-            foreach (var (barotrauma, damageable, transform) in EntityManager.EntityQuery<BarotraumaComponent, DamageableComponent, TransformComponent>(false))
+            foreach (var (barotrauma, damageable, transform) in EntityManager.EntityQuery<BarotraumaComponent, DamageableComponent, TransformComponent>())
             {
                 var totalDamage = FixedPoint2.Zero;
                 foreach (var (barotraumaDamageType, _) in barotrauma.Damage.DamageDict)
@@ -82,66 +83,75 @@ namespace Content.Server.Atmos.EntitySystems
                 if (totalDamage >= barotrauma.MaxDamage)
                     continue;
 
-                var uid = barotrauma.Owner.Uid;
-
-                var status = barotrauma.Owner.GetComponentOrNull<ServerAlertsComponent>();
-
                 var pressure = 1f;
 
                 if (_atmosphereSystem.GetTileMixture(transform.Coordinates) is { } mixture)
                 {
-                    pressure = MathF.Max(mixture.Pressure, 1f);;
+                    pressure = MathF.Max(mixture.Pressure, 1f);
                 }
 
                 switch (pressure)
                 {
                     // Low pressure.
                     case <= Atmospherics.WarningLowPressure:
-                        pressure = GetFeltLowPressure(uid, pressure);
+                        pressure = GetFeltLowPressure(barotrauma.Owner, pressure);
 
                         if (pressure > Atmospherics.WarningLowPressure)
                             goto default;
 
                         // Deal damage and ignore resistances. Resistance to pressure damage should be done via pressure protection gear.
-                        _damageableSystem.TryChangeDamage(uid, barotrauma.Damage * Atmospherics.LowPressureDamage, true);
+                        _damageableSystem.TryChangeDamage(barotrauma.Owner, barotrauma.Damage * Atmospherics.LowPressureDamage, true, false);
 
-                        if (status == null) break;
+                        if (!barotrauma.TakingDamage)
+                        {
+                            barotrauma.TakingDamage = true;
+                            _logSystem.Add(LogType.Barotrauma, $"{ToPrettyString(barotrauma.Owner):entity} started taking low pressure damage");
+                        }
 
                         if (pressure <= Atmospherics.HazardLowPressure)
                         {
-                            status.ShowAlert(AlertType.LowPressure, 2);
+                            _alertsSystem.ShowAlert(barotrauma.Owner, AlertType.LowPressure, 2);
                             break;
                         }
 
-                        status.ShowAlert(AlertType.LowPressure, 1);
+                        _alertsSystem.ShowAlert(barotrauma.Owner, AlertType.LowPressure, 1);
                         break;
 
                     // High pressure.
                     case >= Atmospherics.WarningHighPressure:
-                        pressure = GetFeltHighPressure(uid, pressure);
+                        pressure = GetFeltHighPressure(barotrauma.Owner, pressure);
 
                         if(pressure < Atmospherics.WarningHighPressure)
                             goto default;
 
-                        var damageScale = (int) MathF.Min((pressure / Atmospherics.HazardHighPressure) * Atmospherics.PressureDamageCoefficient, Atmospherics.MaxHighPressureDamage);
+                        var damageScale = MathF.Min((pressure / Atmospherics.HazardHighPressure) * Atmospherics.PressureDamageCoefficient, Atmospherics.MaxHighPressureDamage);
 
                         // Deal damage and ignore resistances. Resistance to pressure damage should be done via pressure protection gear.
-                        _damageableSystem.TryChangeDamage(uid, barotrauma.Damage * damageScale, true);
+                        _damageableSystem.TryChangeDamage(barotrauma.Owner, barotrauma.Damage * damageScale, true, false);
 
-                        if (status == null) break;
+                        if (!barotrauma.TakingDamage)
+                        {
+                            barotrauma.TakingDamage = true;
+                            _logSystem.Add(LogType.Barotrauma, $"{ToPrettyString(barotrauma.Owner):entity} started taking high pressure damage");
+                        }
 
                         if (pressure >= Atmospherics.HazardHighPressure)
                         {
-                            status.ShowAlert(AlertType.HighPressure, 2);
+                            _alertsSystem.ShowAlert(barotrauma.Owner, AlertType.HighPressure, 2);
                             break;
                         }
 
-                        status.ShowAlert(AlertType.HighPressure, 1);
+                        _alertsSystem.ShowAlert(barotrauma.Owner, AlertType.HighPressure, 1);
                         break;
 
                     // Normal pressure.
                     default:
-                        status?.ClearAlertCategory(AlertCategory.Pressure);
+                        if (barotrauma.TakingDamage)
+                        {
+                            barotrauma.TakingDamage = false;
+                            _logSystem.Add(LogType.Barotrauma, $"{ToPrettyString(barotrauma.Owner):entity} stopped taking pressure damage");
+                        }
+                        _alertsSystem.ClearAlertCategory(barotrauma.Owner, AlertCategory.Pressure);
                         break;
                 }
             }

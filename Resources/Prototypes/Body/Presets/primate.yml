@@ -1,0 +1,8 @@
+- type: bodyPreset
+  name: "primate preset"
+  id: PrimatePreset
+  partIDs:
+    hands: HandsAnimal
+    legs: LegsAnimal
+    feet: FeetAnimal
+    torso: TorsoAnimal

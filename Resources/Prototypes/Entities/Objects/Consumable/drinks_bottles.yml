@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseItem
+  parent: DrinkBase
   id: DrinkBottleBaseFull
   abstract: true
   components:
@@ -10,12 +10,6 @@
     solutions:
       drink:
         maxVol: 100
-  - type: SolutionTransfer
-    canChangeTransferAmount: true
-  - type: UserInterface
-    interfaces:
-    - key: enum.TransferAmountUiKey.Key
-      type: TransferAmountBoundUserInterface
   - type: Sprite
     state: icon
   - type: DamageOnLand
@@ -25,9 +19,7 @@
   - type: DamageOtherOnHit
     damage:
       types:
-        Blunt: 10
-  - type: Spillable
-    solution: drink
+        Blunt: 4
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
@@ -42,9 +34,9 @@
       - !type:SpillBehavior { }
       - !type:SpawnEntitiesBehavior
         spawn:
-          ShardGlass:
+          BrokenBottle:
             min: 1
-            max: 2
+            max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
 

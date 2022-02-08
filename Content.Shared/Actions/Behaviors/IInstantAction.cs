@@ -18,7 +18,7 @@ namespace Content.Shared.Actions.Behaviors
 
     public class InstantActionEventArgs : ActionEventArgs
     {
-        public InstantActionEventArgs(IEntity performer, ActionType actionType) : base(performer, actionType)
+        public InstantActionEventArgs(EntityUid performer, ActionType actionType) : base(performer, actionType)
         {
         }
     }

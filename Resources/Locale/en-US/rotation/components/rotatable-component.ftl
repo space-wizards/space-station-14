@@ -1,4 +1,4 @@
-# RotatableComponenet
+# RotatableComponent
 rotatable-component-try-rotate-stuck = It's stuck.
 
 # RotateVerb

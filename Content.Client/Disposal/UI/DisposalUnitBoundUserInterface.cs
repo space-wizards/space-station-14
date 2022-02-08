@@ -3,6 +3,7 @@ using Content.Client.Disposal.Systems;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using static Content.Shared.Disposal.Components.SharedDisposalUnitComponent;
 
 namespace Content.Client.Disposal.UI
@@ -52,7 +53,7 @@ namespace Content.Client.Disposal.UI
             Window?.UpdateState(cast);
 
             // Kinda icky but we just want client to handle its own lerping and not flood bandwidth for it.
-            if (!Owner.Owner.TryGetComponent(out DisposalUnitComponent? component)) return;
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Owner, out DisposalUnitComponent? component)) return;
 
             component.UiState = cast;
             EntitySystem.Get<DisposalUnitSystem>().UpdateActive(component, true);

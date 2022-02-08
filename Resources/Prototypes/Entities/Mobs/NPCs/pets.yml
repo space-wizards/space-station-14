@@ -14,13 +14,15 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: corgi
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.25,-0.50,0.25,0.30"
+        !type:PhysShapeCircle
+        radius: 0.35
       mass: 10
       mask:
       - Impassable
+      - MobImpassable #Bullets?!
       - VaultImpassable
       - SmallImpassable
       layer:
@@ -29,7 +31,46 @@
     visuals:
     - type: DamageStateVisualizer
       normal: corgi
+      crit: corgi_dead
       dead: corgi_dead
+  - type: Butcherable
+    meat: FoodMeat
+    pieces: 3
+  - type: ReplacementAccent
+    accent: dog
+
+- type: entity
+  name: corrupted corgi
+  parent: MobCorgi
+  id: MobCorgiNarsi
+  description: Ian! No!
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Pets/corgi.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: narsian
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: narsian
+      crit: narsian_dead
+      dead: narsian_dead
+  - type: UnarmedCombat
+    range: 1.5
+    arcwidth: 0
+    arc: bite
+    damage:
+      types:
+        Piercing: 5
+        Slash: 5
+  - type: UtilityAI
+    behaviorSets:
+    - UnarmedAttackHostiles
+  - type: AiFactionTag
+    factions:
+    - SimpleHostile
 
 - type: entity
   name: Ian
@@ -47,7 +88,65 @@
     visuals:
     - type: DamageStateVisualizer
       normal: ian
+      crit: ian_dead
       dead: ian_dead
+
+- type: entity
+  name: Old Ian
+  parent: MobCorgi
+  id: MobCorgiIanOld
+  description: Still the favorite pet corgi. Love his wheels.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Pets/corgi.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: old_ian
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: old_ian
+      crit: old_ian_dead
+      dead: old_ian_dead
+
+- type: entity
+  name: Lisa
+  parent: MobCorgi
+  id: MobCorgiLisa
+  description: Ian's favorite corgi.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Pets/corgi.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: lisa
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: lisa
+      crit: lisa_dead
+      dead: lisa_dead
+
+- type: entity
+  name: corgi puppy
+  parent: MobCorgi
+  id: MobCorgiPuppy
+  description: A little corgi! Aww...
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Pets/corgi.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: puppy
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: puppy
+      crit: puppy_dead
+      dead: puppy_dead
 
 - type: entity
   name: cat
@@ -62,13 +161,15 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: cat
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.20,-0.45,0.20,0.30"
+        !type:PhysShapeCircle
+        radius: 0.35
       mass: 10
       mask:
       - Impassable
+      - MobImpassable #Bullets?!
       - VaultImpassable
       - SmallImpassable
       layer:
@@ -77,7 +178,13 @@
     visuals:
     - type: DamageStateVisualizer
       normal: cat
+      crit: cat_dead
       dead: cat_dead
+  - type: Butcherable
+    meat: FoodMeat
+    pieces: 2
+  - type: ReplacementAccent
+    accent: cat
 
 - type: entity
   name: calico cat
@@ -95,7 +202,34 @@
     visuals:
     - type: DamageStateVisualizer
       normal: cat2
+      crit: cat2_dead
       dead: cat2_dead
+
+- type: entity
+  name: space cat
+  id: MobCatSpace
+  parent: MobCat
+  description: Feline pet, prepared for the worst.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Pets/cat.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: spacecat
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: spacecat
+      crit: spacecat_dead
+      dead: spacecat_dead
+  - type: Respirator #Space kitty should be immune to Asphyxiation. Taken from xenos.yml
+    damage:
+      types:
+        Asphyxiation: 1
+    damageRecovery:
+      types:
+        Asphyxiation: -1
 
 - type: entity
   name: caracal cat
@@ -113,6 +247,7 @@
     visuals:
     - type: DamageStateVisualizer
       normal: caracal_flop
+      crit: caracal_dead
       dead: caracal_dead
 
 - type: entity
@@ -131,13 +266,15 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: sloth
   - type: Physics
+  - type: Fixtures
     fixtures:
     - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.35,-0.45,0.35,0.15"
+        !type:PhysShapeCircle
+        radius: 0.35
       mass: 10
       mask:
       - Impassable
+      - MobImpassable #Bullets?!
       - VaultImpassable
       - SmallImpassable
       layer:
@@ -146,4 +283,8 @@
     visuals:
     - type: DamageStateVisualizer
       normal: sloth
+      crit: sloth_dead
       dead: sloth_dead
+  - type: Butcherable
+    meat: FoodMeat
+    pieces: 3

@@ -1,5 +1,3 @@
-using Content.Server.Body.Mechanism;
-using Content.Server.Body.Part;
 using Content.Server.Storage.Components;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
@@ -40,7 +38,7 @@ namespace Content.Server.Administration.Commands
 
             if (entityManager.TryGetComponent<EntityStorageComponent>(storageUid, out var storage))
             {
-                storage.Insert(entityManager.GetEntity(entityUid));
+                storage.Insert(entityUid);
             }
             else
             {

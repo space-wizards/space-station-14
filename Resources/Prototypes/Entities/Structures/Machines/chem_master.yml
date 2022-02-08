@@ -16,8 +16,14 @@
     sprite: Structures/Machines/mixer.rsi
     state: mixer_loaded
   - type: ChemMaster
+    beakerSlot:
+      whitelistFailPopup: chem-master-component-cannot-put-entity-message
+      whitelist:
+        components:
+        - FitsInDispenser
   - type: Physics
     bodyType: Static
+  - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -50,9 +56,6 @@
     board: ChemMasterMachineCircuitboard
   - type: MaterialStorage
   - type: Construction
-    graph: machine
+    graph: Machine
     node: machine
-  - type: EmptyOnMachineDeconstruct
-    containers:
-    - ChemMaster-reagentContainerContainer
 

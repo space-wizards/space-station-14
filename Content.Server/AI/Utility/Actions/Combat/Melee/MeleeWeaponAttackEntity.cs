@@ -21,13 +21,13 @@ namespace Content.Server.AI.Utility.Actions.Combat.Melee
 {
     public sealed class MeleeWeaponAttackEntity : UtilityAction
     {
-        public IEntity Target { get; set; } = default!;
+        public EntityUid Target { get; set; } = default!;
 
         public override void SetupOperators(Blackboard context)
         {
             MoveToEntityOperator moveOperator;
             var equipped = context.GetState<EquippedEntityState>().GetValue();
-            if (equipped != null && equipped.TryGetComponent(out MeleeWeaponComponent? meleeWeaponComponent))
+            if (equipped != default && IoCManager.Resolve<IEntityManager>().TryGetComponent(equipped, out MeleeWeaponComponent? meleeWeaponComponent))
             {
                 moveOperator = new MoveToEntityOperator(Owner, Target, meleeWeaponComponent.Range - 0.01f);
             }

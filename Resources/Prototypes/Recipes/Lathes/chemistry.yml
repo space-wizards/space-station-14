@@ -27,7 +27,8 @@
   completetime: 500
   materials:
     Steel: 250
-
+    Plastic: 50
+    
 - type: latheRecipe
   id: Dropper
   icon:
@@ -47,4 +48,13 @@
   result: Syringe
   completetime: 500
   materials:
-    Glass: 200
+    Plastic: 100
+    Steel: 25
+
+- type: latheRecipe
+  id: PillCanister
+  icon: Objects/Specific/Chemistry/pills_canister.rsi/pill_canister.png
+  result: PillCanister
+  completetime: 500
+  materials:
+    Plastic: 100

@@ -11,8 +11,6 @@ namespace Content.Server.Wieldable.Components
     [RegisterComponent, Friend(typeof(WieldableSystem))]
     public class WieldableComponent : Component
     {
-        public override string Name => "Wieldable";
-
         [DataField("wieldSound")]
         public SoundSpecifier? WieldSound = new SoundPathSpecifier("/Audio/Effects/thudswoosh.ogg");
 

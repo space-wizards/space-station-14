@@ -22,10 +22,10 @@ namespace Content.Server.Chemistry.EntitySystems
             SubscribeLocalEvent<TransformableContainerComponent, SolutionChangedEvent>(OnSolutionChange);
         }
 
-        private void OnSolutionChange(EntityUid uid, TransformableContainerComponent component,
+        private void OnSolutionChange(EntityUid owner, TransformableContainerComponent component,
             SolutionChangedEvent args)
         {
-            if (!_solutionsSystem.TryGetFitsInDispenser(uid, out var solution))
+            if (!_solutionsSystem.TryGetFitsInDispenser(owner, out var solution))
                 return;
             //Transform container into initial state when emptied
             if (component.CurrentReagent != null && solution.Contents.Count == 0)
@@ -50,14 +50,14 @@ namespace Content.Server.Chemistry.EntitySystems
                 var spriteSpec =
                     new SpriteSpecifier.Rsi(
                         new ResourcePath("Objects/Consumable/Drinks/" + proto.SpriteReplacementPath), "icon");
-                var ownerEntity = EntityManager.GetEntity(uid);
-                if (ownerEntity.TryGetComponent(out SpriteComponent? sprite))
+                if (EntityManager.TryGetComponent(owner, out SpriteComponent? sprite))
                 {
                     sprite?.LayerSetSprite(0, spriteSpec);
                 }
 
-                ownerEntity.Name = proto.Name + " glass";
-                ownerEntity.Description = proto.Description;
+                string val = proto.Name + " glass";
+                EntityManager.GetComponent<MetaDataComponent>(owner).EntityName = val;
+                EntityManager.GetComponent<MetaDataComponent>(owner).EntityDescription = proto.Description;
                 component.CurrentReagent = proto;
                 component.Transformed = true;
             }
@@ -68,14 +68,14 @@ namespace Content.Server.Chemistry.EntitySystems
             component.CurrentReagent = null;
             component.Transformed = false;
 
-            if (component.Owner.TryGetComponent(out SpriteComponent? sprite) &&
+            if (EntityManager.TryGetComponent(component.Owner, out SpriteComponent? sprite) &&
                 component.InitialSprite != null)
             {
                 sprite.LayerSetSprite(0, component.InitialSprite);
             }
 
-            component.Owner.Name = component.InitialName;
-            component.Owner.Description = component.InitialDescription;
+            EntityManager.GetComponent<MetaDataComponent>(component.Owner).EntityName = component.InitialName;
+            EntityManager.GetComponent<MetaDataComponent>(component.Owner).EntityDescription = component.InitialDescription;
         }
     }
 }

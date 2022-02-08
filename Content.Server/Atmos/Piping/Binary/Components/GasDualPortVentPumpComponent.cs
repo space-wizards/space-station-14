@@ -1,6 +1,6 @@
 using System;
-using Content.Server.Atmos.Piping.Unary.Components;
 using Content.Shared.Atmos;
+using Content.Shared.Atmos.Piping.Unary.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -10,8 +10,6 @@ namespace Content.Server.Atmos.Piping.Binary.Components
     [RegisterComponent]
     public class GasDualPortVentPumpComponent : Component
     {
-        public override string Name => "GasDualPortVentPump";
-
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Enabled { get; set; } = true;
 

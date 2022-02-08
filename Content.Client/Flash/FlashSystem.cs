@@ -27,7 +27,7 @@ namespace Content.Client.Flash
                 return;
 
             // Yes, this code is awful. I'm just porting it to an entity system so don't blame me.
-            if (_playerManager.LocalPlayer != null && _playerManager.LocalPlayer.Session.AttachedEntityUid != uid)
+            if (_playerManager.LocalPlayer != null && _playerManager.LocalPlayer.Session.AttachedEntity != uid)
             {
                 return;
             }

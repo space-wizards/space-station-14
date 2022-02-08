@@ -23,10 +23,10 @@ namespace Content.Server.Traitor.Uplink.Telecrystal
 
         private void OnAfterInteract(EntityUid uid, TelecrystalComponent component, AfterInteractEvent args)
         {
-            if (args.Handled)
+            if (args.Handled || !args.CanReach)
                 return;
 
-            if (args.Target == null || !EntityManager.TryGetComponent(args.Target.Uid, out UplinkComponent? uplink))
+            if (args.Target == null || !EntityManager.TryGetComponent(args.Target.Value, out UplinkComponent? uplink))
                 return;
 
             // TODO: when uplink will have some auth logic (like PDA ringtone code)

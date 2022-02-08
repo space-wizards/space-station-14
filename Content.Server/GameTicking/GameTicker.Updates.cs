@@ -37,7 +37,7 @@ namespace Content.Server.GameTicking
             // Can't simple check the current connected player count since that doesn't update
             // before PlayerStatusChanged gets fired.
             // So in the disconnect handler we'd still see a single player otherwise.
-            var playersOnline = _playerManager.GetAllPlayers().Any(p => p.Status != SessionStatus.Disconnected);
+            var playersOnline = _playerManager.Sessions.Any(p => p.Status != SessionStatus.Disconnected);
             if (playersOnline || !_updateOnRoundEnd)
             {
                 // Still somebody online.

@@ -13,7 +13,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Research.UI
 {
     [GenerateTypedNameReferences]
-    public partial class ResearchConsoleMenu : SS14Window
+    public partial class ResearchConsoleMenu : DefaultWindow
     {
         public ResearchConsoleBoundUserInterface Owner { get; }
 

@@ -3,6 +3,8 @@ using Content.Shared.Storage.Components;
 using Content.Shared.Storage.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Storage.EntitySystems
 {
@@ -11,7 +13,7 @@ namespace Content.Server.Storage.EntitySystems
     {
         protected override int? GetCount(ContainerModifiedMessage msg, ItemCounterComponent itemCounter)
         {
-            if (!msg.Container.Owner.TryGetComponent(out ServerStorageComponent? component)
+            if (!EntityManager.TryGetComponent(msg.Container.Owner, out ServerStorageComponent? component)
                 || component.StoredEntities == null)
             {
                 return null;
@@ -20,7 +22,7 @@ namespace Content.Server.Storage.EntitySystems
             var count = 0;
             foreach (var entity in component.StoredEntities)
             {
-                if (itemCounter.Count.IsValid(entity.Uid)) count++;
+                if (itemCounter.Count.IsValid(entity)) count++;
             }
 
             return count;

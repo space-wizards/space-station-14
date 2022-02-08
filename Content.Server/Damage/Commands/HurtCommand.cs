@@ -1,4 +1,3 @@
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
@@ -42,18 +41,15 @@ namespace Content.Server.Damage.Commands
             return $"Damage Types:{msg}";
         }
 
-        private delegate void Damage(IEntity entity, bool ignoreResistances);
+        private delegate void Damage(EntityUid entity, bool ignoreResistances);
 
-        private bool TryParseEntity(IConsoleShell shell, IPlayerSession? player, string arg,
-            [NotNullWhen(true)] out IEntity? entity)
+        private bool TryParseEntity(IConsoleShell shell, IPlayerSession? player, string arg, out EntityUid entity)
         {
-            entity = null;
+            entity = default;
 
             if (arg == "_")
             {
-                var playerEntity = player?.AttachedEntity;
-
-                if (playerEntity == null)
+                if (player?.AttachedEntity is not {Valid: true} playerEntity)
                 {
                     shell.WriteLine($"You must have a player entity to use this command without specifying an entity.\n{Help}");
                     return false;
@@ -63,33 +59,30 @@ namespace Content.Server.Damage.Commands
                 return true;
             }
 
-            if (!EntityUid.TryParse(arg, out var entityUid))
+            if (!EntityUid.TryParse(arg, out entity))
             {
                 shell.WriteLine($"{arg} is not a valid entity uid.\n{Help}");
-
                 return false;
             }
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
 
-            if (!entityManager.TryGetEntity(entityUid, out var parsedEntity))
+            if (!entityManager.EntityExists(entity))
             {
-                shell.WriteLine($"No entity found with uid {entityUid}");
-
+                shell.WriteLine($"No entity found with uid {entity}");
                 return false;
             }
 
-            entity = parsedEntity;
             return true;
         }
 
         private bool TryParseDamageArgs(
             IConsoleShell shell,
-            IEntity target,
+            EntityUid target,
             string[] args,
             [NotNullWhen(true)] out Damage? func)
         {
-
+            var entMan = IoCManager.Resolve<IEntityManager>();
 
             if (!int.TryParse(args[1], out var amount))
             {
@@ -104,9 +97,9 @@ namespace Content.Server.Damage.Commands
                 func = (entity, ignoreResistances) =>
                 {
                     var damage = new DamageSpecifier(damageGroup, amount);
-                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(entity.Uid, damage, ignoreResistances);
+                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(entity, damage, ignoreResistances);
 
-                    shell.WriteLine($"Damaged entity {entity.Name} with id {entity.Uid} for {amount} {damageGroup} damage{(ignoreResistances ? ", ignoring resistances." : ".")}");
+                    shell.WriteLine($"Damaged entity {entMan.GetComponent<MetaDataComponent>(entity).EntityName} with id {entity} for {amount} {damageGroup} damage{(ignoreResistances ? ", ignoring resistances." : ".")}");
                 };
 
                 return true;
@@ -117,9 +110,9 @@ namespace Content.Server.Damage.Commands
                 func = (entity, ignoreResistances) =>
                 {
                     var damage = new DamageSpecifier(damageType, amount);
-                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(entity.Uid, damage, ignoreResistances);
+                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(entity, damage, ignoreResistances);
 
-                    shell.WriteLine($"Damaged entity {entity.Name} with id {entity.Uid} for {amount} {damageType} damage{(ignoreResistances ? ", ignoring resistances." : ".")}");
+                    shell.WriteLine($"Damaged entity {entMan.GetComponent<MetaDataComponent>(entity).EntityName} with id {entity} for {amount} {damageType} damage{(ignoreResistances ? ", ignoring resistances." : ".")}");
 
                 };
                 return true;
@@ -141,8 +134,10 @@ namespace Content.Server.Damage.Commands
         {
             var player = shell.Player as IPlayerSession;
             bool ignoreResistances;
-            IEntity entity;
+            EntityUid entity;
             Damage? damageFunc;
+
+            var entMan = IoCManager.Resolve<IEntityManager>();
 
             switch (args.Length)
             {
@@ -197,9 +192,9 @@ namespace Content.Server.Damage.Commands
                     return;
             }
 
-            if (!entity.TryGetComponent(out DamageableComponent? damageable))
+            if (!entMan.TryGetComponent(entity, out DamageableComponent? damageable))
             {
-                shell.WriteLine($"Entity {entity.Name} with id {entity.Uid} does not have a {nameof(DamageableComponent)}.");
+                shell.WriteLine($"Entity {entMan.GetComponent<MetaDataComponent>(entity).EntityName} with id {entity} does not have a {nameof(DamageableComponent)}.");
                 return;
             }
 

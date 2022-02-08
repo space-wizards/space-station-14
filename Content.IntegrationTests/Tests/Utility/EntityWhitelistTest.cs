@@ -65,18 +65,18 @@ namespace Content.IntegrationTests.Tests.Utility
 
             await server.WaitIdleAsync();
             var mapManager = server.ResolveDependency<IMapManager>();
-            var entityManager = server.ResolveDependency<IEntityManager>();
+            var sEntities = server.ResolveDependency<IEntityManager>();
 
             await server.WaitAssertion(() =>
             {
                 var mapId = GetMainMapId(mapManager);
                 var mapCoordinates = new MapCoordinates(0, 0, mapId);
 
-                var validComponent = entityManager.SpawnEntity("ValidComponentDummy", mapCoordinates).Uid;
-                var validTag = entityManager.SpawnEntity("ValidTagDummy", mapCoordinates).Uid;
+                var validComponent = sEntities.SpawnEntity("ValidComponentDummy", mapCoordinates);
+                var validTag = sEntities.SpawnEntity("ValidTagDummy", mapCoordinates);
 
-                var invalidComponent = entityManager.SpawnEntity("InvalidComponentDummy", mapCoordinates).Uid;
-                var invalidTag = entityManager.SpawnEntity("InvalidTagDummy", mapCoordinates).Uid;
+                var invalidComponent = sEntities.SpawnEntity("InvalidComponentDummy", mapCoordinates);
+                var invalidTag = sEntities.SpawnEntity("InvalidTagDummy", mapCoordinates);
 
                 // Test instantiated on its own
                 var whitelistInst = new EntityWhitelist
@@ -97,8 +97,8 @@ namespace Content.IntegrationTests.Tests.Utility
                 Assert.That(whitelistInst.IsValid(invalidTag), Is.False);
 
                 // Test from serialized
-                var dummy = entityManager.SpawnEntity("WhitelistDummy", mapCoordinates);
-                var whitelistSer = dummy.GetComponent<SharedItemSlotsComponent>().Slots.Values.First().Whitelist;
+                var dummy = sEntities.SpawnEntity("WhitelistDummy", mapCoordinates);
+                var whitelistSer = sEntities.GetComponent<ItemSlotsComponent>(dummy).Slots.Values.First().Whitelist;
                 Assert.That(whitelistSer, Is.Not.Null);
 
                 Assert.That(whitelistSer.Components, Is.Not.Null);

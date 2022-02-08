@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Players;
@@ -18,9 +19,6 @@ namespace Content.Shared.SubFloor
     [RegisterComponent]
     public sealed class SubFloorHideComponent : Component
     {
-        /// <inheritdoc />
-        public override string Name => "SubFloorHide";
-
         /// <summary>
         ///     Whether the entity will be hid when not in subfloor.
         /// </summary>
@@ -35,10 +33,30 @@ namespace Content.Shared.SubFloor
         [DataField("requireAnchored")]
         public bool RequireAnchored { get; set; } = true;
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new SubFloorHideComponentState(Enabled, RequireAnchored);
         }
+
+        /// <summary>
+        ///     Whether or not this entity is supposed
+        ///     to be visible.
+        /// </summary>
+        [ViewVariables]
+        public bool Visible { get; set; }
+
+        /// <summary>
+        ///     The entities this subfloor is revealed by.
+        /// </summary>
+        [ViewVariables]
+        public HashSet<EntityUid> RevealedBy { get; set; } = new();
+
+        /// <summary>
+        ///     Whether or not this entity was revealed with or without
+        ///     an entity.
+        /// </summary>
+        [ViewVariables]
+        public bool RevealedWithoutEntity { get; set; }
     }
 
     [Serializable, NetSerializable]

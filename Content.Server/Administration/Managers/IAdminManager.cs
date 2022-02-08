@@ -25,6 +25,11 @@ namespace Content.Server.Administration.Managers
         IEnumerable<IPlayerSession> ActiveAdmins { get; }
 
         /// <summary>
+        /// Gets all admins currently on the server, even de-adminned ones.
+        /// </summary>
+        IEnumerable<IPlayerSession> AllAdmins { get; }
+
+        /// <summary>
         ///     Checks if a player is an admin.
         /// </summary>
         /// <param name="session">The player to check.</param>

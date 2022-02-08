@@ -33,7 +33,10 @@ namespace Content.IntegrationTests
             (CCVars.HolidaysEnabled.Name, "false", false),
 
             // Avoid loading a large map by default for integration tests if none has been specified.
-            (CCVars.GameMap.Name, "Maps/Test/empty.yml", true)
+            (CCVars.GameMap.Name, "empty", true),
+
+            // Makes sure IGameMapManager actually listens.
+            (CCVars.GameMapForced.Name, "true", true)
         };
 
         private static void SetServerTestCvars(IntegrationOptions options)
@@ -190,9 +193,9 @@ namespace Content.IntegrationTests
                 return false;
             }
 
-            if (options.Pool == false)
+            if (options.Pool.HasValue)
             {
-                return false;
+                return options.Pool.Value;
             }
 
             if (server)
@@ -316,12 +319,18 @@ namespace Content.IntegrationTests
         protected async Task WaitUntil(IntegrationInstance instance, Func<bool> func, int maxTicks = 600,
             int tickStep = 1)
         {
+            await WaitUntil(instance, async () => await Task.FromResult(func()), maxTicks, tickStep);
+        }
+
+        protected async Task WaitUntil(IntegrationInstance instance, Func<Task<bool>> func, int maxTicks = 600,
+            int tickStep = 1)
+        {
             var ticksAwaited = 0;
             bool passed;
 
             await instance.WaitIdleAsync();
 
-            while (!(passed = func()) && ticksAwaited < maxTicks)
+            while (!(passed = await func()) && ticksAwaited < maxTicks)
             {
                 var ticksToRun = tickStep;
 

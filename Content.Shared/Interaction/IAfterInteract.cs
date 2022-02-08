@@ -31,12 +31,12 @@ namespace Content.Shared.Interaction
 
     public class AfterInteractEventArgs : EventArgs
     {
-        public IEntity User { get; }
+        public EntityUid User { get; }
         public EntityCoordinates ClickLocation { get; }
-        public IEntity? Target { get; }
+        public EntityUid? Target { get; }
         public bool CanReach { get; }
 
-        public AfterInteractEventArgs(IEntity user, EntityCoordinates clickLocation, IEntity? target, bool canReach)
+        public AfterInteractEventArgs(EntityUid user, EntityCoordinates clickLocation, EntityUid? target, bool canReach)
         {
             User = user;
             ClickLocation = clickLocation;
@@ -45,41 +45,23 @@ namespace Content.Shared.Interaction
         }
     }
 
-    /// <summary>
-    ///     Raised directed on the used object when clicking on another object and no attack event was handled.
-    /// </summary>
     [PublicAPI]
-    public class AfterInteractEvent : HandledEntityEventArgs
+    public abstract class InteractEvent : HandledEntityEventArgs
     {
         /// <summary>
         ///     Entity that triggered the interaction.
         /// </summary>
-        public IEntity User { get; }
-
-        /// <summary>
-        ///     Entity that triggered the interaction.
-        /// </summary>
-        public EntityUid UserUid => User.Uid;
+        public EntityUid User { get; }
 
         /// <summary>
         ///     Entity that the user used to interact.
         /// </summary>
-        public IEntity Used { get; }
+        public EntityUid Used { get; }
 
         /// <summary>
-        ///     Entity that the user used to interact.
+        ///     Entity that was interacted on. This can be null if there was no target (e.g., clicking on tiles).
         /// </summary>
-        public EntityUid UsedUid => Used.Uid;
-
-        /// <summary>
-        ///     Entity that was interacted on. This can be null if the attack did not click on an entity.
-        /// </summary>
-        public IEntity? Target { get; }
-
-        /// <summary>
-        ///     Entity that was interacted on. This can be null if the attack did not click on an entity.
-        /// </summary>
-        public EntityUid? TargetUid => Target?.Uid;
+        public EntityUid? Target { get; }
 
         /// <summary>
         ///     Location that the user clicked outside of their interaction range.
@@ -87,12 +69,11 @@ namespace Content.Shared.Interaction
         public EntityCoordinates ClickLocation { get; }
 
         /// <summary>
-        /// Is the click location close enough to reach by the player? This does not check for obstructions, just that the target is within
-        /// reach radius around the user.
+        /// Is the click location in range without obstructions?
         /// </summary>
         public bool CanReach { get; }
 
-        public AfterInteractEvent(IEntity user, IEntity used, IEntity? target,
+        public InteractEvent(EntityUid user, EntityUid used, EntityUid? target,
             EntityCoordinates clickLocation, bool canReach)
         {
             User = user;
@@ -101,5 +82,27 @@ namespace Content.Shared.Interaction
             ClickLocation = clickLocation;
             CanReach = canReach;
         }
+    }
+
+    /// <summary>
+    ///     Raised directed on the used object when clicking on another object and no standard interaction occurred.
+    ///     Used for low-priority interactions facilitated by the used entity.
+    /// </summary>
+    public sealed class AfterInteractEvent : InteractEvent
+    {
+        public AfterInteractEvent(EntityUid user, EntityUid used, EntityUid? target,
+            EntityCoordinates clickLocation, bool canReach) : base(user, used, target, clickLocation, canReach)
+        { }
+    }
+
+    /// <summary>
+    ///     Raised directed on the target when clicking on another object and no standard interaction occurred. Used for
+    ///     low-priority interactions facilitated by the target entity.
+    /// </summary>
+    public sealed class AfterInteractUsingEvent : InteractEvent
+    {
+        public AfterInteractUsingEvent(EntityUid user, EntityUid used, EntityUid? target,
+            EntityCoordinates clickLocation, bool canReach) : base(user, used, target, clickLocation, canReach)
+        { }
     }
 }

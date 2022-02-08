@@ -2,7 +2,9 @@ using System;
 using System.Threading.Tasks;
 using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Botany.Systems;
 using Content.Server.Chemistry.EntitySystems;
+using Content.Server.Chemistry.Components;
 using Content.Server.Fluids.Components;
 using Content.Server.Hands.Components;
 using Content.Server.Plants;
@@ -18,7 +20,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Tag;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -45,9 +46,7 @@ namespace Content.Server.Botany.Components
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [ComponentDependency] private readonly AppearanceComponent? _appearanceComponent = default!;
-
-        public override string Name => "PlantHolder";
+        [Dependency] private readonly IEntityManager _entMan = default!;
 
         [ViewVariables] private int _lastProduce;
 
@@ -109,7 +108,7 @@ namespace Content.Server.Botany.Components
         public float WeedCoefficient { get; set; } = 1f;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public Seed? Seed { get; set; }
+        public SeedPrototype? Seed { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool ImproperHeat { get; set; }
@@ -148,6 +147,8 @@ namespace Content.Server.Botany.Components
 
             _lastCycle = curTime;
 
+            // todo ecs.
+            var botanySystem = EntitySystem.Get<BotanySystem>();
 
             // Weeds like water and nutrients! They may appear even if there's not a seed planted.
             if (WaterLevel > 10 && NutritionLevel > 2 && _random.Prob(Seed == null ? 0.05f : 0.01f))
@@ -248,7 +249,7 @@ namespace Content.Server.Botany.Components
                     _updateSpriteAfterUpdate = true;
             }
 
-            var environment = EntitySystem.Get<AtmosphereSystem>().GetTileMixture(Owner.Transform.Coordinates, true) ??
+            var environment = EntitySystem.Get<AtmosphereSystem>().GetTileMixture(_entMan.GetComponent<TransformComponent>(Owner).Coordinates, true) ??
                               GasMixture.SpaceGas;
 
             if (Seed.ConsumeGasses.Count > 0)
@@ -274,7 +275,7 @@ namespace Content.Server.Botany.Components
                 }
             }
 
-            // Seed pressure resistance.
+            // SeedPrototype pressure resistance.
             var pressure = environment.Pressure;
             if (pressure < Seed.LowPressureTolerance || pressure > Seed.HighPressureTolerance)
             {
@@ -288,7 +289,7 @@ namespace Content.Server.Botany.Components
                 ImproperPressure = false;
             }
 
-            // Seed ideal temperature.
+            // SeedPrototype ideal temperature.
             if (MathF.Abs(environment.Temperature - Seed.IdealHeat) > Seed.HeatTolerance)
             {
                 Health -= healthMod;
@@ -361,7 +362,7 @@ namespace Content.Server.Botany.Components
             }
             else if (Age < 0) // Revert back to seed packet!
             {
-                Seed.SpawnSeedPacket(Owner.Transform.Coordinates);
+                botanySystem.SpawnSeedPacket(Seed, _entMan.GetComponent<TransformComponent>(Owner).Coordinates);
                 RemovePlant();
                 ForceUpdate = true;
                 Update();
@@ -419,24 +420,26 @@ namespace Content.Server.Botany.Components
             MutationMod = MathHelper.Clamp(MutationMod, 0f, 3f);
         }
 
-        public bool DoHarvest(IEntity user)
+        public bool DoHarvest(EntityUid user)
         {
-            if (Seed == null || user.Deleted || !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user.Uid))
+            if (Seed == null || _entMan.Deleted(user) || !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 return false;
+
+            var botanySystem = EntitySystem.Get<BotanySystem>();
 
             if (Harvest && !Dead)
             {
-                if (user.TryGetComponent(out HandsComponent? hands))
+                if (_entMan.TryGetComponent(user, out HandsComponent? hands))
                 {
-                    if (!Seed.CheckHarvest(user, hands.GetActiveHand?.Owner))
+                    if (!botanySystem.CanHarvest(Seed, hands.GetActiveHandItem?.Owner))
                         return false;
                 }
-                else if (!Seed.CheckHarvest(user))
+                else if (!botanySystem.CanHarvest(Seed))
                 {
                     return false;
                 }
 
-                Seed.Harvest(user, YieldMod);
+                botanySystem.Harvest(Seed, user, YieldMod);
                 AfterHarvest();
                 return true;
             }
@@ -453,7 +456,9 @@ namespace Content.Server.Botany.Components
             if (Seed == null || !Harvest)
                 return;
 
-            Seed.AutoHarvest(Owner.Transform.Coordinates);
+            var botanySystem = EntitySystem.Get<BotanySystem>();
+
+            botanySystem.AutoHarvest(Seed, _entMan.GetComponent<TransformComponent>(Owner).Coordinates);
             AfterHarvest();
         }
 
@@ -549,7 +554,7 @@ namespace Content.Server.Botany.Components
         public void UpdateReagents()
         {
             var solutionSystem = EntitySystem.Get<SolutionContainerSystem>();
-            if (!solutionSystem.TryGetSolution(Owner.Uid, SoilSolutionName, out var solution))
+            if (!solutionSystem.TryGetSolution(Owner, SoilSolutionName, out var solution))
                 return;
 
             if (solution.TotalVolume <= 0 || MutationLevel >= 25)
@@ -563,10 +568,10 @@ namespace Content.Server.Botany.Components
             else
             {
                 var amt = FixedPoint2.New(1);
-                foreach (var reagent in solutionSystem.RemoveEachReagent(OwnerUid, solution, amt))
+                foreach (var reagent in solutionSystem.RemoveEachReagent(Owner, solution, amt))
                 {
                     var reagentProto = _prototypeManager.Index<ReagentPrototype>(reagent);
-                    reagentProto.ReactionPlant(OwnerUid, new Solution.ReagentQuantity(reagent, amt), solution);
+                    reagentProto.ReactionPlant(Owner, new Solution.ReagentQuantity(reagent, amt), solution);
                 }
             }
 
@@ -582,50 +587,51 @@ namespace Content.Server.Botany.Components
         {
             _updateSpriteAfterUpdate = false;
 
-            if (_appearanceComponent == null)
+            if (!_entMan.TryGetComponent<AppearanceComponent>(Owner, out var appearanceComponent))
                 return;
 
             if (Seed != null)
             {
                 if (DrawWarnings)
-                    _appearanceComponent.SetData(PlantHolderVisuals.HealthLight, Health <= (Seed.Endurance / 2f));
+                    appearanceComponent.SetData(PlantHolderVisuals.HealthLight, Health <= (Seed.Endurance / 2f));
 
                 if (Dead)
                 {
-                    _appearanceComponent.SetData(PlantHolderVisuals.Plant,
-                        new SpriteSpecifier.Rsi(Seed.PlantRsi, "dead"));
+                    appearanceComponent.SetData(PlantHolderVisuals.PlantRsi, Seed.PlantRsi.ToString());
+                    appearanceComponent.SetData(PlantHolderVisuals.PlantState, "dead");
                 }
                 else if (Harvest)
                 {
-                    _appearanceComponent.SetData(PlantHolderVisuals.Plant,
-                        new SpriteSpecifier.Rsi(Seed.PlantRsi, "harvest"));
+                    appearanceComponent.SetData(PlantHolderVisuals.PlantRsi, Seed.PlantRsi.ToString());
+                    appearanceComponent.SetData(PlantHolderVisuals.PlantState, "harvest");
                 }
                 else if (Age < Seed.Maturation)
                 {
                     var growthStage = Math.Max(1, (int) ((Age * Seed.GrowthStages) / Seed.Maturation));
-                    _appearanceComponent.SetData(PlantHolderVisuals.Plant,
-                        new SpriteSpecifier.Rsi(Seed.PlantRsi, $"stage-{growthStage}"));
+
+                    appearanceComponent.SetData(PlantHolderVisuals.PlantRsi, Seed.PlantRsi.ToString());
+                    appearanceComponent.SetData(PlantHolderVisuals.PlantState, $"stage-{growthStage}");
                     _lastProduce = Age;
                 }
                 else
                 {
-                    _appearanceComponent.SetData(PlantHolderVisuals.Plant,
-                        new SpriteSpecifier.Rsi(Seed.PlantRsi, $"stage-{Seed.GrowthStages}"));
+                    appearanceComponent.SetData(PlantHolderVisuals.PlantRsi, Seed.PlantRsi.ToString());
+                    appearanceComponent.SetData(PlantHolderVisuals.PlantState, $"stage-{Seed.GrowthStages}");
                 }
             }
             else
             {
-                _appearanceComponent.SetData(PlantHolderVisuals.Plant, SpriteSpecifier.Invalid);
-                _appearanceComponent.SetData(PlantHolderVisuals.HealthLight, false);
+                appearanceComponent.SetData(PlantHolderVisuals.PlantState, "");
+                appearanceComponent.SetData(PlantHolderVisuals.HealthLight, false);
             }
 
             if (!DrawWarnings) return;
-            _appearanceComponent.SetData(PlantHolderVisuals.WaterLight, WaterLevel <= 10);
-            _appearanceComponent.SetData(PlantHolderVisuals.NutritionLight, NutritionLevel <= 2);
-            _appearanceComponent.SetData(PlantHolderVisuals.AlertLight,
+            appearanceComponent.SetData(PlantHolderVisuals.WaterLight, WaterLevel <= 10);
+            appearanceComponent.SetData(PlantHolderVisuals.NutritionLight, NutritionLevel <= 2);
+            appearanceComponent.SetData(PlantHolderVisuals.AlertLight,
                 WeedLevel >= 5 || PestLevel >= 5 || Toxins >= 40 || ImproperHeat || ImproperLight || ImproperPressure ||
                 _missingGas > 0);
-            _appearanceComponent.SetData(PlantHolderVisuals.HarvestLight, Harvest);
+            appearanceComponent.SetData(PlantHolderVisuals.HarvestLight, Harvest);
         }
 
         public void CheckForDivergence(bool modified)
@@ -634,7 +640,7 @@ namespace Content.Server.Botany.Components
             // If this seed is not in the global seed list, then no products of this line have been harvested yet.
             // It is then safe to assume it's restricted to this tray.
             if (Seed == null) return;
-            var plantSystem = EntitySystem.Get<PlantSystem>();
+            var plantSystem = EntitySystem.Get<BotanySystem>();
             if (plantSystem.Seeds.ContainsKey(Seed.Uid))
                 Seed = Seed.Diverge(modified);
         }
@@ -651,31 +657,30 @@ namespace Content.Server.Botany.Components
             var user = eventArgs.User;
             var usingItem = eventArgs.Using;
 
-            if (usingItem.Deleted || !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user.Uid))
+            if ((!_entMan.EntityExists(usingItem) ? EntityLifeStage.Deleted : _entMan.GetComponent<MetaDataComponent>(usingItem).EntityLifeStage) >= EntityLifeStage.Deleted || !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 return false;
 
-            if (usingItem.TryGetComponent(out SeedComponent? seeds))
+            var botanySystem = EntitySystem.Get<BotanySystem>();
+
+            if (_entMan.TryGetComponent(usingItem, out SeedComponent? seeds))
             {
                 if (Seed == null)
                 {
-                    if (seeds.Seed == null)
-                    {
-                        user.PopupMessageCursor(Loc.GetString("plant-holder-component-empty-seed-packet-message"));
-                        usingItem.QueueDelete();
+                    var protoMan = IoCManager.Resolve<IPrototypeManager>();
+                    if (!protoMan.TryIndex<SeedPrototype>(seeds.SeedName, out var seed))
                         return false;
-                    }
 
                     user.PopupMessageCursor(Loc.GetString("plant-holder-component-plant-success-message",
-                        ("seedName", seeds.Seed.SeedName),
-                        ("seedNoun", seeds.Seed.SeedNoun)));
+                        ("seedName", seed.SeedName),
+                        ("seedNoun", seed.SeedNoun)));
 
-                    Seed = seeds.Seed;
+                    Seed = seed;
                     Dead = false;
                     Age = 1;
                     Health = Seed.Endurance;
                     _lastCycle = _gameTiming.CurTime;
 
-                    usingItem.QueueDelete();
+                    _entMan.QueueDeleteEntity(usingItem);
 
                     CheckLevelSanity();
                     UpdateSprite();
@@ -684,18 +689,20 @@ namespace Content.Server.Botany.Components
                 }
 
                 user.PopupMessageCursor(Loc.GetString("plant-holder-component-already-seeded-message",
-                    ("name", Owner.Name)));
+                    ("name", _entMan.GetComponent<MetaDataComponent>(Owner).EntityName)));
                 return false;
             }
 
-            if (usingItem.HasTag("Hoe"))
+            var tagSystem = EntitySystem.Get<TagSystem>();
+
+            if (tagSystem.HasTag(usingItem, "Hoe"))
             {
                 if (WeedLevel > 0)
                 {
                     user.PopupMessageCursor(Loc.GetString("plant-holder-component-remove-weeds-message",
-                        ("name", Owner.Name)));
+                        ("name", _entMan.GetComponent<MetaDataComponent>(Owner).EntityName)));
                     user.PopupMessageOtherClients(Loc.GetString("plant-holder-component-remove-weeds-others-message",
-                        ("otherName", user.Name)));
+                        ("otherName", _entMan.GetComponent<MetaDataComponent>(user).EntityName)));
                     WeedLevel = 0;
                     UpdateSprite();
                 }
@@ -707,14 +714,14 @@ namespace Content.Server.Botany.Components
                 return true;
             }
 
-            if (usingItem.HasTag("Shovel"))
+            if (tagSystem.HasTag(usingItem, "Shovel"))
             {
                 if (Seed != null)
                 {
                     user.PopupMessageCursor(Loc.GetString("plant-holder-component-remove-plant-message",
-                        ("name", Owner.Name)));
+                        ("name", _entMan.GetComponent<MetaDataComponent>(Owner).EntityName)));
                     user.PopupMessageOtherClients(Loc.GetString("plant-holder-component-remove-plant-others-message",
-                        ("name", user.Name)));
+                        ("name", _entMan.GetComponent<MetaDataComponent>(user).EntityName)));
                     RemovePlant();
                 }
                 else
@@ -726,24 +733,21 @@ namespace Content.Server.Botany.Components
             }
 
             var solutionSystem = EntitySystem.Get<SolutionContainerSystem>();
-            if (solutionSystem.TryGetDrainableSolution(usingItem.Uid, out var solution)
-                && solutionSystem.TryGetSolution(Owner.Uid, SoilSolutionName, out var targetSolution))
+            if (solutionSystem.TryGetDrainableSolution(usingItem, out var solution)
+                && solutionSystem.TryGetSolution(Owner, SoilSolutionName, out var targetSolution) && _entMan.TryGetComponent(usingItem, out SprayComponent? spray))
             {
-                var amount = FixedPoint2.New(5);
-                var sprayed = false;
-                var targetEntity = Owner.Uid;
-                var solutionEntity = usingItem.Uid;
+                var amount = FixedPoint2.New(1);
 
-                if (usingItem.TryGetComponent(out SprayComponent? spray))
-                {
-                    sprayed = true;
-                    amount = FixedPoint2.New(1);
+                var targetEntity = Owner;
+                var solutionEntity = usingItem;
 
-                    SoundSystem.Play(Filter.Pvs(usingItem), spray.SpraySound.GetSound(), usingItem,
-                        AudioHelpers.WithVariation(0.125f));
-                }
+
+                SoundSystem.Play(Filter.Pvs(usingItem), spray.SpraySound.GetSound(), usingItem,
+                AudioHelpers.WithVariation(0.125f));
+
 
                 var split = solutionSystem.Drain(solutionEntity, solution, amount);
+
                 if (split.TotalVolume == 0)
                 {
                     user.PopupMessageCursor(Loc.GetString("plant-holder-component-empty-message",
@@ -751,8 +755,7 @@ namespace Content.Server.Botany.Components
                     return true;
                 }
 
-                user.PopupMessageCursor(Loc.GetString(
-                    sprayed ? "plant-holder-component-spray-message" : "plant-holder-component-transfer-message",
+                user.PopupMessageCursor(Loc.GetString("plant-holder-component-spray-message",
                     ("owner", Owner),
                     ("amount", split.TotalVolume)));
 
@@ -763,7 +766,7 @@ namespace Content.Server.Botany.Components
                 return true;
             }
 
-            if (usingItem.HasTag("PlantSampleTaker"))
+            if (tagSystem.HasTag(usingItem, "PlantSampleTaker"))
             {
                 if (Seed == null)
                 {
@@ -783,7 +786,7 @@ namespace Content.Server.Botany.Components
                     return false;
                 }
 
-                var seed = Seed.SpawnSeedPacket(user.Transform.Coordinates);
+                var seed = botanySystem.SpawnSeedPacket(Seed, _entMan.GetComponent<TransformComponent>(user).Coordinates);
                 seed.RandomOffset(0.25f);
                 user.PopupMessageCursor(Loc.GetString("plant-holder-component-take-sample-message",
                     ("seedName", Seed.DisplayName)));
@@ -799,12 +802,12 @@ namespace Content.Server.Botany.Components
                 return true;
             }
 
-            if (usingItem.HasTag("BotanySharp"))
+            if (tagSystem.HasTag(usingItem, "BotanySharp"))
             {
                 return DoHarvest(user);
             }
 
-            if (usingItem.TryGetComponent<ProduceComponent>(out var produce))
+            if (_entMan.TryGetComponent<ProduceComponent?>(usingItem, out var produce))
             {
                 user.PopupMessageCursor(Loc.GetString("plant-holder-component-compost-message",
                     ("owner", Owner),
@@ -814,16 +817,16 @@ namespace Content.Server.Botany.Components
                     ("usingItem", usingItem),
                     ("owner", Owner)));
 
-                if (solutionSystem.TryGetSolution(usingItem.Uid, produce.SolutionName, out var solution2))
+                if (solutionSystem.TryGetSolution(usingItem, produce.SolutionName, out var solution2))
                 {
                     // This deliberately discards overfill.
-                    solutionSystem.TryAddSolution(usingItem.Uid, solution2,
-                        solutionSystem.SplitSolution(usingItem.Uid, solution2, solution2.TotalVolume));
+                    solutionSystem.TryAddSolution(usingItem, solution2,
+                        solutionSystem.SplitSolution(usingItem, solution2, solution2.TotalVolume));
 
                     ForceUpdateByExternalCause();
                 }
 
-                usingItem.QueueDelete();
+                _entMan.QueueDeleteEntity(usingItem);
 
                 return true;
             }

@@ -1,10 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using Content.Shared.Administration;
 using Robust.Client.Console;
+using Robust.Shared.Console;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Network;
+using Robust.Shared.Reflection;
 
 namespace Content.Client.Administration.Managers
 {
@@ -35,7 +38,7 @@ namespace Content.Client.Administration.Managers
 
         public bool CanViewVar()
         {
-            return _adminData?.CanViewVar() ?? false;
+            return CanCommand("vv");
         }
 
         public bool CanAdminPlace()
@@ -61,6 +64,15 @@ namespace Content.Client.Administration.Managers
         private void UpdateMessageRx(MsgUpdateAdminStatus message)
         {
             _availableCommands.Clear();
+            var host = IoCManager.Resolve<IClientConsoleHost>();
+
+            // Anything marked as Any we'll just add even if the server doesn't know about it.
+            foreach (var (command, instance) in host.RegisteredCommands)
+            {
+                if (Attribute.GetCustomAttribute(instance.GetType(), typeof(AnyCommandAttribute)) == null) continue;
+                _availableCommands.Add(command);
+            }
+
             _availableCommands.UnionWith(message.AvailableCommands);
             Logger.DebugS("admin", $"Have {message.AvailableCommands.Length} commands available");
 

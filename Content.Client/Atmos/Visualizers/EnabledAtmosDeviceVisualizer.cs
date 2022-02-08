@@ -2,6 +2,7 @@ using System;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.Atmos.Visualizers
@@ -20,7 +21,8 @@ namespace Content.Client.Atmos.Visualizers
         {
             base.OnChangeData(component);
 
-            if (!component.Owner.TryGetComponent(out ISpriteComponent? sprite))
+            var entities = IoCManager.Resolve<IEntityManager>();
+            if (!entities.TryGetComponent(component.Owner, out ISpriteComponent? sprite))
                 return;
 
             if(component.TryGetData(DataKey, out bool enabled) && sprite.LayerMapTryGet(LayerMap, out var layer))

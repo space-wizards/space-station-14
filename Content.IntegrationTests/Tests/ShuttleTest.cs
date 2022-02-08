@@ -1,6 +1,6 @@
 #nullable enable
 using System.Threading.Tasks;
-using Content.Server.Shuttles;
+using Content.Server.Shuttles.Components;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
@@ -19,30 +19,29 @@ namespace Content.IntegrationTests.Tests
 
             await server.WaitIdleAsync();
 
-            var entMan = server.ResolveDependency<IEntityManager>();
             var mapMan = server.ResolveDependency<IMapManager>();
-            IEntity? gridEnt = null;
+            var sEntities = server.ResolveDependency<IEntityManager>();
+
+            EntityUid gridEnt = default;
 
             await server.WaitAssertion(() =>
             {
                 var mapId = mapMan.CreateMap();
                 var grid = mapMan.CreateGrid(mapId);
-                gridEnt = entMan.GetEntity(grid.GridEntityId);
+                gridEnt = grid.GridEntityId;
 
-                Assert.That(gridEnt.TryGetComponent(out ShuttleComponent? shuttleComponent));
-                Assert.That(gridEnt.TryGetComponent(out PhysicsComponent? physicsComponent));
+                Assert.That(sEntities.TryGetComponent(gridEnt, out ShuttleComponent? shuttleComponent));
+                Assert.That(sEntities.TryGetComponent(gridEnt, out PhysicsComponent? physicsComponent));
                 Assert.That(physicsComponent!.BodyType, Is.EqualTo(BodyType.Dynamic));
-                Assert.That(gridEnt.Transform.LocalPosition, Is.EqualTo(Vector2.Zero));
+                Assert.That(sEntities.GetComponent<TransformComponent>(gridEnt).LocalPosition, Is.EqualTo(Vector2.Zero));
                 physicsComponent.ApplyLinearImpulse(Vector2.One);
             });
 
-            // TODO: Should have tests that collision + rendertree + pointlights work on a moved grid but I'll deal with that
-            // when we get rotations.
             await server.WaitRunTicks(1);
 
             await server.WaitAssertion(() =>
             {
-                Assert.That(gridEnt?.Transform.LocalPosition, Is.Not.EqualTo(Vector2.Zero));
+                Assert.That<Vector2?>(sEntities.GetComponent<TransformComponent>(gridEnt).LocalPosition, Is.Not.EqualTo(Vector2.Zero));
             });
         }
     }

@@ -2,6 +2,7 @@ using Content.Shared.Popups;
 using Content.Shared.Rotatable;
 using Content.Shared.Verbs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
@@ -38,54 +39,62 @@ namespace Content.Server.Rotatable
 
             // Check if the object is anchored, and whether we are still allowed to rotate it.
             if (!component.RotateWhileAnchored &&
-                component.Owner.TryGetComponent(out IPhysBody? physics) &&
+                EntityManager.TryGetComponent(component.Owner, out IPhysBody? physics) &&
                 physics.BodyType == BodyType.Static)
                 return;
 
-            Verb resetRotation = new();
-            resetRotation.Act = () => component.Owner.Transform.LocalRotation = Angle.Zero;
-            resetRotation.Category = VerbCategory.Rotate;
-            resetRotation.IconTexture = "/Textures/Interface/VerbIcons/refresh.svg.192dpi.png";
-            resetRotation.Text = "Reset";
-            resetRotation.Priority = -2; // show CCW, then CW, then reset
-            resetRotation.CloseMenu = false;
+            Verb resetRotation = new ()
+            {
+                Act = () => EntityManager.GetComponent<TransformComponent>(component.Owner).LocalRotation = Angle.Zero,
+                Category = VerbCategory.Rotate,
+                IconTexture = "/Textures/Interface/VerbIcons/refresh.svg.192dpi.png",
+                Text = "Reset",
+                Priority = -2, // show CCW, then CW, then reset
+                CloseMenu = false,
+            };
             args.Verbs.Add(resetRotation);
 
             // rotate clockwise
-            Verb rotateCW = new();
-            rotateCW.Act = () => component.Owner.Transform.LocalRotation += Angle.FromDegrees(-90);
-            rotateCW.Category = VerbCategory.Rotate;
-            rotateCW.IconTexture =  "/Textures/Interface/VerbIcons/rotate_cw.svg.192dpi.png";
-            rotateCW.Priority = -1;
-            rotateCW.CloseMenu = false; // allow for easy double rotations.
+            Verb rotateCW = new()
+            {
+                Act = () => EntityManager.GetComponent<TransformComponent>(component.Owner).LocalRotation -= component.Increment,
+                Category = VerbCategory.Rotate,
+                IconTexture =  "/Textures/Interface/VerbIcons/rotate_cw.svg.192dpi.png",
+                Priority = -1,
+                CloseMenu = false, // allow for easy double rotations.
+            };
             args.Verbs.Add(rotateCW);
 
             // rotate counter-clockwise
-            Verb rotateCCW = new();
-            rotateCCW.Act = () => component.Owner.Transform.LocalRotation += Angle.FromDegrees(90);
-            rotateCCW.Category = VerbCategory.Rotate;
-            rotateCCW.IconTexture = "/Textures/Interface/VerbIcons/rotate_ccw.svg.192dpi.png";
-            rotateCCW.Priority = 0;
-            rotateCCW.CloseMenu = false; // allow for easy double rotations.
+            Verb rotateCCW = new()
+            {
+                Act = () => EntityManager.GetComponent<TransformComponent>(component.Owner).LocalRotation += component.Increment,
+                Category = VerbCategory.Rotate,
+                IconTexture = "/Textures/Interface/VerbIcons/rotate_ccw.svg.192dpi.png",
+                Priority = 0,
+                CloseMenu = false, // allow for easy double rotations.
+            };
             args.Verbs.Add(rotateCCW);
         }
 
         /// <summary>
         ///     Replace a flippable entity with it's flipped / mirror-symmetric entity.
         /// </summary>
-        public static void TryFlip(FlippableComponent component, IEntity user)
+        public void TryFlip(FlippableComponent component, EntityUid user)
         {
-            // TODO FLIPPABLE Currently an entity needs to be un-anchored when flipping. But the newly spawned entity
-            // defaults to being anchored (and spawns under floor tiles). Fix this?
-            if (component.Owner.TryGetComponent(out IPhysBody? physics) &&
+            if (EntityManager.TryGetComponent(component.Owner, out IPhysBody? physics) &&
                 physics.BodyType == BodyType.Static)
             {
                 component.Owner.PopupMessage(user, Loc.GetString("flippable-component-try-flip-is-stuck"));
                 return;
             }
 
-            component.Owner.EntityManager.SpawnEntity(component.MirrorEntity, component.Owner.Transform.Coordinates);
-            component.Owner.Delete();
+            var oldTransform = EntityManager.GetComponent<TransformComponent>(component.Owner);
+            var entity = EntityManager.SpawnEntity(component.MirrorEntity, oldTransform.Coordinates);
+            var newTransform = EntityManager.GetComponent<TransformComponent>(entity);
+            newTransform.LocalRotation = oldTransform.LocalRotation;
+            newTransform.Anchored = false;
+            EntityManager.DeleteEntity(component.Owner);
         }
     }
 }

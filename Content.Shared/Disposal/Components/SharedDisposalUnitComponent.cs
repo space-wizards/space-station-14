@@ -9,10 +9,8 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Disposal.Components
 {
     [NetworkedComponent]
-    public abstract class SharedDisposalUnitComponent : Component, IDragDropOn
+    public abstract class SharedDisposalUnitComponent : Component
     {
-        public override string Name => "DisposalUnit";
-
         // TODO: Could maybe turn the contact off instead far more cheaply as farseer (though not box2d) had support for it?
         // Need to suss it out.
         /// <summary>
@@ -68,7 +66,7 @@ namespace Content.Shared.Disposal.Components
             Pressurizing
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new DisposalUnitComponentState(RecentlyEjected);
         }
@@ -134,13 +132,5 @@ namespace Content.Shared.Disposal.Components
         {
             Key
         }
-
-        // TODO: Unfortunately these aren't really ECS yet so soontm
-        public virtual bool CanDragDropOn(DragDropEvent eventArgs)
-        {
-            return EntitySystem.Get<SharedDisposalUnitSystem>().CanInsert(this, eventArgs.Dragged);
-        }
-
-        public abstract bool DragDropOn(DragDropEvent eventArgs);
     }
 }

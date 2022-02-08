@@ -2,6 +2,7 @@
 using Content.Shared.Window;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -12,11 +13,11 @@ namespace Content.Shared.Construction.Conditions
     [DataDefinition]
     public class NoWindowsInTile : IConstructionCondition
     {
-        public bool Condition(IEntity user, EntityCoordinates location, Direction direction)
+        public bool Condition(EntityUid user, EntityCoordinates location, Direction direction)
         {
             foreach (var entity in location.GetEntitiesInTile(LookupFlags.Approximate | LookupFlags.IncludeAnchored))
             {
-                if (entity.HasComponent<SharedWindowComponent>())
+                if (IoCManager.Resolve<IEntityManager>().HasComponent<SharedWindowComponent>(entity))
                     return false;
             }
 

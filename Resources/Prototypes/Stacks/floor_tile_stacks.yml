@@ -1,55 +1,69 @@
 ﻿- type: stack
   id: FloorTileSteel
   name: steel tile
+  spawn: FloorTileItemSteel
 
 - type: stack
   id: FloorTileWood
   name: wood floor
+  spawn: FloorTileItemWood
 
 - type: stack
   id: FloorTileWhite
   name: white tile
+  spawn: FloorTileItemWhite
 
 - type: stack
   id: FloorTileDark
   name: dark tile
+  spawn: FloorTileItemDark
 
 - type: stack
   id: FloorTileTechmaint
   name: techmaint floor
+  spawn: FloorTileItemTechmaint
 
 - type: stack
   id: FloorTileFreezer
   name: freezer tile
+  spawn: FloorTileItemFreezer
 
 - type: stack
   id: FloorTileShowroom
   name: showroom tile
+  spawn: FloorTileItemShowroom
 
 - type: stack
   id: FloorTileGCircuit
   name: green-circuit floor
+  spawn: FloorTileItemGCircuit
 
 - type: stack
   id: FloorTileGold
   name: gold floor
+  spawn: FloorTileItemGold
 
 - type: stack
   id: FloorTileReinforced
   name: reinforced tile
+  spawn: FloorTileItemReinforced
 
 - type: stack
   id: FloorTileMono
   name: mono tile
+  spawn: FloorTileItemMono
 
 - type: stack
   id: FloorTileLino
   name: linoleum floor
+  spawn: FloorTileItemLino
 
 - type: stack
   id: FloorTileHydro
   name: hydro tile
+  spawn: FloorTileItemHydro
 
 - type: stack
   id: FloorTileDirty
   name: dirty tile
+  spawn: FloorTileItemDirty

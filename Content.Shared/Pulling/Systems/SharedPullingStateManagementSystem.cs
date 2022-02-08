@@ -30,20 +30,34 @@ namespace Content.Shared.Pulling
     public class SharedPullingStateManagementSystem : EntitySystem
     {
         [Dependency] private readonly SharedJointSystem _jointSystem = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            SubscribeLocalEvent<SharedPullableComponent, ComponentShutdown>(OnShutdown);
+        }
+
+        private void OnShutdown(EntityUid uid, SharedPullableComponent component, ComponentShutdown args)
+        {
+            if (component.Puller != null)
+                ForceRelationship(null, component);
+        }
 
         // A WARNING:
         // The following 2 functions are the most internal part of the pulling system's relationship management.
         // They do not expect to be cancellable.
         private void ForceDisconnect(SharedPullerComponent puller, SharedPullableComponent pullable)
         {
-            var pullerPhysics = puller.Owner.GetComponent<PhysicsComponent>();
-            var pullablePhysics = pullable.Owner.GetComponent<PhysicsComponent>();
+            var pullerPhysics = EntityManager.GetComponent<PhysicsComponent>(puller.Owner);
+            var pullablePhysics = EntityManager.GetComponent<PhysicsComponent>(pullable.Owner);
 
             // MovingTo shutdown
             ForceSetMovingTo(pullable, null);
 
             // Joint shutdown
-            if (puller.Owner.TryGetComponent<JointComponent>(out var jointComp))
+            if (EntityManager.TryGetComponent<JointComponent?>(puller.Owner, out var jointComp))
             {
                 if (jointComp.GetJoints.Contains(pullable.PullJoint!))
                 {
@@ -59,10 +73,10 @@ namespace Content.Shared.Pulling
             // Messaging
             var message = new PullStoppedMessage(pullerPhysics, pullablePhysics);
 
-            RaiseLocalEvent(puller.OwnerUid, message, broadcast: false);
+            RaiseLocalEvent(puller.Owner, message, broadcast: false);
 
-            if (pullable.Owner.LifeStage <= EntityLifeStage.MapInitialized)
-                RaiseLocalEvent(pullable.OwnerUid, message);
+            if (Initialized(pullable.Owner))
+                RaiseLocalEvent(pullable.Owner, message);
 
             // Networking
             puller.Dirty();
@@ -71,7 +85,7 @@ namespace Content.Shared.Pulling
 
         public void ForceRelationship(SharedPullerComponent? puller, SharedPullableComponent? pullable)
         {
-            if ((puller != null) && (puller.Pulling == pullable))
+            if (pullable != null && puller != null && (puller.Pulling == pullable.Owner))
             {
                 // Already done
                 return;
@@ -81,32 +95,32 @@ namespace Content.Shared.Pulling
             var pullableOldPullerE = pullable?.Puller;
             if (pullableOldPullerE != null)
             {
-                ForceDisconnect(pullableOldPullerE.GetComponent<SharedPullerComponent>(), pullable!);
+                ForceDisconnect(EntityManager.GetComponent<SharedPullerComponent>(pullableOldPullerE.Value), pullable!);
             }
 
             // Continue with the puller.
             var pullerOldPullableE = puller?.Pulling;
             if (pullerOldPullableE != null)
             {
-                ForceDisconnect(puller!, pullerOldPullableE.GetComponent<SharedPullableComponent>());
+                ForceDisconnect(puller!, EntityManager.GetComponent<SharedPullableComponent>(pullerOldPullableE.Value));
             }
 
             // And now for the actual connection (if any).
 
             if ((puller != null) && (pullable != null))
             {
-                var pullerPhysics = puller.Owner.GetComponent<PhysicsComponent>();
-                var pullablePhysics = pullable.Owner.GetComponent<PhysicsComponent>();
+                var pullerPhysics = EntityManager.GetComponent<PhysicsComponent>(puller.Owner);
+                var pullablePhysics = EntityManager.GetComponent<PhysicsComponent>(pullable.Owner);
 
                 // State startup
                 puller.Pulling = pullable.Owner;
                 pullable.Puller = puller.Owner;
 
                 // Joint startup
-                var union = pullerPhysics.GetWorldAABB().Union(pullablePhysics.GetWorldAABB());
+                var union = _physics.GetHardAABB(pullerPhysics).Union(_physics.GetHardAABB(pullablePhysics));
                 var length = Math.Max(union.Size.X, union.Size.Y) * 0.75f;
 
-                pullable.PullJoint = _jointSystem.CreateDistanceJoint(pullablePhysics.OwnerUid, pullerPhysics.Owner.Uid, id:$"pull-joint-{pullablePhysics.Owner.Uid}");
+                pullable.PullJoint = _jointSystem.CreateDistanceJoint(pullablePhysics.Owner, pullerPhysics.Owner, id:$"pull-joint-{pullablePhysics.Owner}");
                 pullable.PullJoint.CollideConnected = false;
                 // This maximum has to be there because if the object is constrained too closely, the clamping goes backwards and asserts.
                 pullable.PullJoint.MaxLength = Math.Max(1.0f, length);
@@ -117,8 +131,8 @@ namespace Content.Shared.Pulling
                 // Messaging
                 var message = new PullStartedMessage(pullerPhysics, pullablePhysics);
 
-                RaiseLocalEvent(puller.OwnerUid, message, broadcast: false);
-                RaiseLocalEvent(pullable.OwnerUid, message);
+                RaiseLocalEvent(puller.Owner, message, broadcast: false);
+                RaiseLocalEvent(pullable.Owner, message);
 
                 // Networking
                 puller.Dirty();
@@ -158,11 +172,11 @@ namespace Content.Shared.Pulling
 
             if (movingTo == null)
             {
-                RaiseLocalEvent(pullable.Owner.Uid, new PullableStopMovingMessage());
+                RaiseLocalEvent(pullable.Owner, new PullableStopMovingMessage());
             }
             else
             {
-                RaiseLocalEvent(pullable.Owner.Uid, new PullableMoveMessage());
+                RaiseLocalEvent(pullable.Owner, new PullableMoveMessage());
             }
         }
     }

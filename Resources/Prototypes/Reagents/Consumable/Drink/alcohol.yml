@@ -58,6 +58,23 @@
   spritePath: rumglass.rsi
 
 - type: reagent
+  id: Ethanol
+  name: ethanol
+  parent: BaseAlcohol
+  desc: A simple alcohol, makes you drunk if consumed, flammable.
+  physicalDesc: strong-smelling
+  color: "#b05b3c"
+  boilingPoint: 78.2
+  meltingPoint: -114.1
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          groups:
+            Caustic: 1
+
+- type: reagent
   id: Gin
   name: gin
   parent: BaseAlcohol

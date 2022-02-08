@@ -2,6 +2,7 @@ using Content.Shared.MobState.Components;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Enums;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
@@ -11,8 +12,8 @@ namespace Content.Client.MobState.Overlays
     public class CritOverlay : Overlay
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IEntityManager _entities = default!;
 
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
         private readonly ShaderInstance _gradientCircleShader;
@@ -23,15 +24,14 @@ namespace Content.Client.MobState.Overlays
             _gradientCircleShader = _prototypeManager.Index<ShaderPrototype>("GradientCircleMask").Instance();
         }
 
-        public static bool LocalPlayerHasState(IPlayerManager pm, bool critical, bool dead) {
-            var playerEntity = pm.LocalPlayer?.ControlledEntity;
-
-            if (playerEntity == null)
+        public static bool LocalPlayerHasState(IPlayerManager pm, bool critical, bool dead, IEntityManager? entities = null) {
+            if (pm.LocalPlayer?.ControlledEntity is not {Valid: true} player)
             {
                 return false;
             }
 
-            if (playerEntity.TryGetComponent<MobStateComponent>(out var mobState))
+            IoCManager.Resolve(ref entities);
+            if (entities.TryGetComponent<MobStateComponent?>(player, out var mobState))
             {
                 if (critical)
                     if (mobState.IsCritical())
@@ -46,11 +46,11 @@ namespace Content.Client.MobState.Overlays
 
         protected override void Draw(in OverlayDrawArgs args)
         {
-            if (!LocalPlayerHasState(_playerManager, true, false))
+            if (!LocalPlayerHasState(_playerManager, true, false, _entities))
                 return;
 
             var worldHandle = args.WorldHandle;
-            var viewport = _eyeManager.GetWorldViewport();
+            var viewport = args.WorldAABB;
             worldHandle.UseShader(_gradientCircleShader);
             worldHandle.DrawRect(viewport, Color.White);
         }

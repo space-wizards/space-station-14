@@ -18,7 +18,7 @@ namespace Content.Server.Lathe.Components
         [DataField("static")]
         public bool Static { get; private set; } = false;
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new LatheDatabaseState(GetRecipeIdList());
         }

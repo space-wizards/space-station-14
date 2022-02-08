@@ -1,28 +1,28 @@
 - type: job
   id: SecurityOfficer
   name: "security officer"
-  positions: 3
-  spawnPositions: 2
   startingGear: SecurityOfficerGear
   departments:
   - Security
   icon: "SecurityOfficer"
   supervisors: "the head of security"
+  canBeAntag: false
   access:
   - Security
+  - Brig
   - Maintenance
   - Service
 
 - type: startingGear
   id: SecurityOfficerGear
   equipment:
-    innerclothing: ClothingUniformJumpsuitSec
-    backpack: ClothingBackpackSecurityFilled
+    jumpsuit: ClothingUniformJumpsuitSec
+    back: ClothingBackpackSecurityFilled
     shoes: ClothingShoesBootsJack
     eyes: ClothingEyesGlassesSecurity
     head: ClothingHeadHelmetHelmetOld
-    outerclothing: ClothingOuterVestKevlar
-    idcard: SecurityPDA
+    outerClothing: ClothingOuterVestKevlar
+    id: SecurityPDA
     ears: ClothingHeadsetSecurity
     belt: ClothingBeltSecurityFilled
   innerclothingskirt: ClothingUniformJumpskirtSec

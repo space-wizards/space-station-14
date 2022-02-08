@@ -19,8 +19,6 @@ namespace Content.Server.Speech.EntitySystems
             { "you", "wu" },
         };
 
-        private string RandomFace => _random.Pick(Faces);
-
         public override void Initialize()
         {
             SubscribeLocalEvent<OwOAccentComponent, AccentGetEvent>(OnAccent);
@@ -33,7 +31,7 @@ namespace Content.Server.Speech.EntitySystems
                 message = message.Replace(word, repl);
             }
 
-            return message.Replace("!", RandomFace)
+            return message.Replace("!", _random.Pick(Faces))
                 .Replace("r", "w").Replace("R", "W")
                 .Replace("l", "w").Replace("L", "W");
         }

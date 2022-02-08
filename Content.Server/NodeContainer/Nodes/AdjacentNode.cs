@@ -12,16 +12,18 @@ namespace Content.Server.NodeContainer.Nodes
     [DataDefinition]
     public class AdjacentNode : Node
     {
-        public override IEnumerable<Node> GetReachableNodes()
+        public override IEnumerable<Node> GetReachableNodes(TransformComponent xform,
+            EntityQuery<NodeContainerComponent> nodeQuery,
+            EntityQuery<TransformComponent> xformQuery,
+            IMapGrid? grid,
+            IEntityManager entMan)
         {
-            if (!Owner.Transform.Anchored)
+            if (!xform.Anchored || grid == null)
                 yield break;
 
-            var entMan = IoCManager.Resolve<IEntityManager>();
-            var grid = IoCManager.Resolve<IMapManager>().GetGrid(Owner.Transform.GridID);
-            var gridIndex = grid.TileIndicesFor(Owner.Transform.Coordinates);
+            var gridIndex = grid.TileIndicesFor(xform.Coordinates);
 
-            foreach (var (_, node) in NodeHelpers.GetCardinalNeighborNodes(entMan, grid, gridIndex))
+            foreach (var (_, node) in NodeHelpers.GetCardinalNeighborNodes(nodeQuery, grid, gridIndex))
             {
                 if (node != this)
                     yield return node;

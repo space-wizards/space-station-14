@@ -14,7 +14,7 @@ namespace Content.Server.Chemistry.ReagentEffects
     [UsedImplicitly]
     public class WashCreamPieReaction : ReagentEffect
     {
-        public override void Metabolize(ReagentEffectArgs args)
+        public override void Effect(ReagentEffectArgs args)
         {
             if (!args.EntityManager.TryGetComponent(args.SolutionEntity, out CreamPiedComponent? creamPied)) return;
 

@@ -12,7 +12,6 @@ namespace Content.Shared.Emoting
     public class SharedEmotingComponent : Component
     {
         [DataField("enabled")] private bool _enabled = true;
-        public override string Name => "Emoting";
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Enabled
@@ -28,7 +27,7 @@ namespace Content.Shared.Emoting
             }
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new EmotingComponentState(Enabled);
         }

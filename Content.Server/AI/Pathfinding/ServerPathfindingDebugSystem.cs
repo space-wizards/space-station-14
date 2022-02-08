@@ -95,7 +95,7 @@ namespace Content.Server.AI.Pathfinding
 
         private void DispatchGraph(SharedAiDebug.RequestPathfindingGraphMessage message)
         {
-            var pathfindingSystem = EntitySystemManager.GetEntitySystem<PathfindingSystem>();
+            var pathfindingSystem = EntityManager.EntitySysManager.GetEntitySystem<PathfindingSystem>();
             var mapManager = IoCManager.Resolve<IMapManager>();
             var result = new Dictionary<int, List<Vector2>>();
 

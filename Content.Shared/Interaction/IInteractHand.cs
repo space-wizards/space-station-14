@@ -21,14 +21,14 @@ namespace Content.Shared.Interaction
 
     public class InteractHandEventArgs : EventArgs, ITargetedInteractEventArgs
     {
-        public InteractHandEventArgs(IEntity user, IEntity target)
+        public InteractHandEventArgs(EntityUid user, EntityUid target)
         {
             User = user;
             Target = target;
         }
 
-        public IEntity User { get; }
-        public IEntity Target { get; }
+        public EntityUid User { get; }
+        public EntityUid Target { get; }
     }
 
     /// <summary>
@@ -40,24 +40,14 @@ namespace Content.Shared.Interaction
         /// <summary>
         ///     Entity that triggered the interaction.
         /// </summary>
-        public IEntity User { get; }
-
-        /// <summary>
-        ///     Entity that triggered the interaction.
-        /// </summary>
-        public EntityUid UserUid => User.Uid;
+        public EntityUid User { get; }
 
         /// <summary>
         ///     Entity that was interacted on.
         /// </summary>
-        public IEntity Target { get; }
+        public EntityUid Target { get; }
 
-        /// <summary>
-        ///     Entity that was interacted on.
-        /// </summary>
-        public EntityUid TargetUid => Target.Uid;
-
-        public InteractHandEvent(IEntity user, IEntity target)
+        public InteractHandEvent(EntityUid user, EntityUid target)
         {
             User = user;
             Target = target;

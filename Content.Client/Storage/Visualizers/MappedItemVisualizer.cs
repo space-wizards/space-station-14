@@ -4,6 +4,7 @@ using Content.Shared.Storage.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 
@@ -15,11 +16,11 @@ namespace Content.Client.Storage.Visualizers
         [DataField("sprite")] private ResourcePath? _rsiPath;
         private List<string> _spriteLayers = new();
 
-        public override void InitializeEntity(IEntity entity)
+        public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
 
-            if (entity.TryGetComponent<ISpriteComponent>(out var spriteComponent))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<ISpriteComponent?>(entity, out var spriteComponent))
             {
                 _rsiPath ??= spriteComponent.BaseRSI!.Path!;
             }
@@ -29,14 +30,16 @@ namespace Content.Client.Storage.Visualizers
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
-            if (component.Owner.TryGetComponent<ISpriteComponent>(out var spriteComponent))
+
+            var entities = IoCManager.Resolve<IEntityManager>();
+            if (entities.TryGetComponent(component.Owner, out ISpriteComponent spriteComponent))
             {
                 if (_spriteLayers.Count == 0)
                 {
                     InitLayers(spriteComponent, component);
                 }
-                EnableLayers(spriteComponent, component);
 
+                EnableLayers(spriteComponent, component);
             }
         }
 

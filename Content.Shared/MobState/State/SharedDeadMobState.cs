@@ -21,7 +21,7 @@ namespace Content.Shared.MobState.State
                 physics.CanCollide = false;
             }
 
-            if (entityManager.TryGetComponent(uid, out SharedAppearanceComponent? appearance))
+            if (entityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
             {
                 appearance.SetData(DamageStateVisuals.State, DamageState.Dead);
             }

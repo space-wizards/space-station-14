@@ -1,5 +1,7 @@
 using Content.Shared.Toilet;
 using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Client.Toilet
 {
@@ -9,14 +11,13 @@ namespace Content.Client.Toilet
         {
             base.OnChangeData(component);
 
-            if (!component.Owner.TryGetComponent(out ISpriteComponent? sprite)) return;
+            var entities = IoCManager.Resolve<IEntityManager>();
+            if (!entities.TryGetComponent(component.Owner, out ISpriteComponent? sprite)) return;
 
             if (!component.TryGetData(ToiletVisuals.LidOpen, out bool lidOpen)) lidOpen = false;
             if (!component.TryGetData(ToiletVisuals.SeatUp, out bool seatUp)) seatUp = false;
 
-            var state = string.Format("{0}_toilet_{1}",
-                lidOpen ? "open" : "closed",
-                seatUp ? "seat_up" : "seat_down");
+            var state = $"{(lidOpen ? "open" : "closed")}_toilet_{(seatUp ? "seat_up" : "seat_down")}";
 
             sprite.LayerSetState(0, state);
         }

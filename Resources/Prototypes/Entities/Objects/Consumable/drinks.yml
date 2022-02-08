@@ -1,4 +1,4 @@
-﻿# TODO: Find remaining cans and move to drinks_cans
+# TODO: Find remaining cans and move to drinks_cans
 # TODO: Find empty containers (e.g. mug, pitcher) and move to their own yml
 - type: entity
   parent: BaseItem
@@ -860,16 +860,6 @@
 
 - type: entity
   parent: DrinkGlassBase
-  id: DrinkHell
-  name: hell ramen
-  description: The noodles are boiled, the flavors are artificial, just like being back in school.
-  components:
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/hell.rsi
-
-- type: entity
-  parent: DrinkGlassBase
   id: DrinkHippiesDelightGlass
   name: hippies' delight glass
   description: A drink enjoyed by people during the 1960's.
@@ -971,6 +961,24 @@
           Quantity: 50
   - type: Sprite
     sprite: Objects/Consumable/Drinks/iceglass.rsi
+
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkIceCreamGlass
+  name: ice cream glass
+  description: A glass full of good old ice cream. Might want a spoon.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: IceCream
+          Quantity: 50
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/icecreamglass.rsi
+    state: icon
 
 - type: entity
   parent: DrinkGlassBase
@@ -1319,8 +1327,8 @@
 
 - type: entity
   parent: DrinkGlassBase
-  id: DrinkNukaColaGlass
-  name: nuka cola glass
+  id: DrinkNuclearColaGlass
+  name: nuclear cola glass
   description: Don't cry, Don't raise your eye, It's only nuclear wasteland.
   components:
   - type: SolutionContainerManager
@@ -1328,11 +1336,11 @@
       drink:
         maxVol: 50
         reagents:
-        - ReagentId: NukaCola
+        - ReagentId: NuclearCola
           Quantity: 50
   - type: Drink
   - type: Sprite
-    sprite: Objects/Consumable/Drinks/nuka_colaglass.rsi
+    sprite: Objects/Consumable/Drinks/nuclear_colaglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1404,16 +1412,6 @@
 
 - type: entity
   parent: DrinkGlassBase
-  id: DrinkRamen
-  name: cup ramen
-  description: Just add 10ml water, self heats! A taste that reminds you of your school years.
-  components:
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/ramen.rsi
-
-- type: entity
-  parent: DrinkGlassBase
   id: DrinkRedMeadGlass
   name: red mead glass
   description: A true Viking's beverage, though its color is strange.
@@ -1445,6 +1443,42 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/rewriter.rsi
+
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkRootBeerGlass
+  name: root beer glass
+  description: Fizzy, foamy, and full of sweet, non-caffienated goodness.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: RootBeer
+          Quantity: 50
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/rootbeerglass.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkRootBeerFloatGlass
+  name: root beer float glass
+  description: Fizzy, foamy, and now with ice cream on top! Amazing!
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: RootBeerFloat
+          Quantity: 50
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/rootbeerfloatglass.rsi
+    state: icon
 
 - type: entity
   parent: DrinkGlassBase
@@ -2000,129 +2034,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/wineglass.rsi
 
-# TODO: Move to containers
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkShaker
-  name: shaker
-  description: ''
-  components:
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/shaker.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkShinyFlask
-  name: shiny flask
-  description: A shiny metal flask. It appears to have a Greek symbol inscribed on it.
-  components:
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/shinyflask.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkShotGlass
-  name: shot glass
-  description: ''
-  components:
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/shotglass.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkCarafe
-  name: pitcher
-  description: A handled glass pitcher.
-  components:
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/carafe.rsi
-    state: icon-10
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkDetFlask
-  name: inspector's flask
-  description: A metal flask with a leather band and golden badge belonging to the inspector.
-  components:
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/detflask.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkFlask
-  name: captain's flask
-  description: A metal flask belonging to the captain
-  components:
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/flask.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkFlaskOld
-  name: flask
-  description: ''
-  components:
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/flask_old.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkJar
-  name: jar
-  description: The hipster's cup
-  components:
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/jar.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkJarMetroid
-  name: jar metroid
-  description: ''
-  components:
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/jar_metroid.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkJarWhat
-  name: jar of something
-  description: You can't really tell what this is.
-  components:
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/jar_what.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkLithiumFlask
-  name: lithium flask
-  description: A flask with a Lithium Atom symbol on it.
-  components:
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/lithiumflask.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkVacuumFlask
-  name: vacuum flask
-  description: Keeping your drinks at the perfect temperature since 1892.
-  components:
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/vacuumflask.rsi
-
 # TODO: MOVE
 
 - type: entity
@@ -2174,3 +2085,37 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shake-white.rsi
+
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkRamen
+  name: cup ramen
+  description: Just add 10ml water, self heats! A taste that reminds you of your school years
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: DryRamen
+          Quantity: 30
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/ramen.rsi
+
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkHellRamen
+  name: hell ramen
+  description: Just add 10ml water, self heats! Super spicy flavor.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: DryRamen
+          Quantity: 30
+        - ReagentId: CapsaicinOil
+          Quantity: 5
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/ramen.rsi

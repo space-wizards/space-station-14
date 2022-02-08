@@ -1,0 +1,21 @@
+- type: entity
+  name: bola
+  parent: BaseItem
+  id: Bola
+  description: Linked together with some spare cuffs and metal.
+  components:
+  - type: Item
+    size: 20
+  - type: Sprite
+    sprite: Objects/Weapons/Throwable/bola.rsi
+    state: icon
+  - type: EmitSoundOnThrow
+    sound: /Audio/Weapons/bolathrow.ogg
+  - type: EmitSoundOnLand
+    sound: /Audio/Effects/snap.ogg
+  - type: StunOnCollide
+    stunAmount: 1
+    knockdownAmount: 3
+  - type: Construction
+    graph: Bola
+    node: bola

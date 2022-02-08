@@ -11,8 +11,6 @@ namespace Content.Shared.Ghost
     [NetworkedComponent()]
     public class SharedGhostComponent : Component
     {
-        public override string Name => "Ghost";
-
         [ViewVariables(VVAccess.ReadWrite)]
         public bool CanGhostInteract
         {
@@ -47,7 +45,7 @@ namespace Content.Shared.Ghost
         [DataField("canReturnToBody")]
         private bool _canReturnToBody;
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             return new GhostComponentState(CanReturnToBody, CanGhostInteract);
         }

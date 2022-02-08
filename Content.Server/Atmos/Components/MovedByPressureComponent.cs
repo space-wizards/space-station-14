@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Atmos;
 using Content.Shared.MobState.Components;
@@ -18,8 +18,7 @@ namespace Content.Server.Atmos.Components
     public class MovedByPressureComponent : Component
     {
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
-
-        public override string Name => "MovedByPressure";
+        [Dependency] private readonly IEntityManager _entMan = default!;
 
         private const float MoveForcePushRatio = 1f;
         private const float MoveForceForcePushRatio = 1f;
@@ -42,12 +41,14 @@ namespace Content.Server.Atmos.Components
         public void ExperiencePressureDifference(int cycle, float pressureDifference, AtmosDirection direction,
             float pressureResistanceProbDelta, EntityCoordinates throwTarget)
         {
-            if (!Owner.TryGetComponent(out PhysicsComponent? physics))
+            if (!_entMan.TryGetComponent(Owner, out PhysicsComponent? physics))
+                return;
+            if (!_entMan.TryGetComponent(Owner, out FixturesComponent? fixtureComponent))
                 return;
 
             // TODO ATMOS stuns?
 
-            var transform = physics.Owner.Transform;
+            var transform = _entMan.GetComponent<TransformComponent>(physics.Owner);
             var maxForce = MathF.Sqrt(pressureDifference) * 2.25f;
             var moveProb = 100f;
 
@@ -61,21 +62,20 @@ namespace Content.Server.Atmos.Components
                                                  && (maxForce >= (MoveResist * MoveForcePushRatio)))
                 || (physics.BodyType == BodyType.Static && (maxForce >= (MoveResist * MoveForceForcePushRatio))))
             {
-                if (physics.Owner.HasComponent<MobStateComponent>())
+                if (_entMan.HasComponent<MobStateComponent>(physics.Owner))
                 {
                     physics.BodyStatus = BodyStatus.InAir;
-
-                    foreach (var fixture in physics.Fixtures)
+                    foreach (var fixture in fixtureComponent.Fixtures.Values)
                     {
                         fixture.CollisionMask &= ~(int) CollisionGroup.VaultImpassable;
                     }
 
                     Owner.SpawnTimer(2000, () =>
                     {
-                        if (Deleted || !Owner.TryGetComponent(out PhysicsComponent? physicsComponent)) return;
+                        if (Deleted || !_entMan.TryGetComponent(Owner, out PhysicsComponent? physicsComponent)) return;
 
                         // Uhh if you get race conditions good luck buddy.
-                        if (physicsComponent.Owner.HasComponent<MobStateComponent>())
+                        if (_entMan.HasComponent<MobStateComponent>(physicsComponent.Owner))
                         {
                             physicsComponent.BodyStatus = BodyStatus.OnGround;
                         }
@@ -106,20 +106,6 @@ namespace Content.Server.Atmos.Components
                     LastHighPressureMovementAirCycle = cycle;
                 }
             }
-        }
-    }
-
-    public static class MovedByPressureExtensions
-    {
-        public static bool IsMovedByPressure(this IEntity entity)
-        {
-            return entity.IsMovedByPressure(out _);
-        }
-
-        public static bool IsMovedByPressure(this IEntity entity, [NotNullWhen(true)] out MovedByPressureComponent? moved)
-        {
-            return entity.TryGetComponent(out moved) &&
-                   moved.Enabled;
         }
     }
 }

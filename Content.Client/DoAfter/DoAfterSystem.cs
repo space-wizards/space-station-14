@@ -5,6 +5,7 @@ using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
 namespace Content.Client.DoAfter
@@ -31,11 +32,12 @@ namespace Content.Client.DoAfter
         /// </summary>
         public const float ExcessTime = 0.5f;
 
-        private IEntity? _attachedEntity;
+        private EntityUid? _attachedEntity;
 
         public override void Initialize()
         {
             base.Initialize();
+            UpdatesOutsidePrediction = true;
             SubscribeLocalEvent<PlayerAttachSysMessage>(HandlePlayerAttached);
         }
 
@@ -51,32 +53,33 @@ namespace Content.Client.DoAfter
             var currentTime = _gameTiming.CurTime;
 
             // Can't see any I guess?
-            if (_attachedEntity == null || _attachedEntity.Deleted)
+            if (_attachedEntity is not {Valid: true} entity || Deleted(entity))
                 return;
 
             var viewbox = _eyeManager.GetWorldViewport().Enlarged(2.0f);
+            var entXform = Transform(entity);
+            var playerPos = entXform.MapPosition;
 
-            foreach (var comp in EntityManager.EntityQuery<DoAfterComponent>(true))
+            foreach (var (comp, xform) in EntityManager.EntityQuery<DoAfterComponent, TransformComponent>(true))
             {
                 var doAfters = comp.DoAfters.ToList();
-                var compPos = comp.Owner.Transform.WorldPosition;
+                var compPos = xform.MapPosition;
 
                 if (doAfters.Count == 0 ||
-                    comp.Owner.Transform.MapID != _attachedEntity.Transform.MapID ||
-                    !viewbox.Contains(compPos))
+                    compPos.MapId != entXform.MapID ||
+                    !viewbox.Contains(compPos.Position))
                 {
                     comp.Disable();
                     continue;
                 }
 
-                var range = (compPos - _attachedEntity.Transform.WorldPosition).Length +
-                            0.01f;
+                var range = (compPos.Position - playerPos.Position).Length + 0.01f;
 
                 if (comp.Owner != _attachedEntity &&
                     !ExamineSystemShared.InRangeUnOccluded(
-                        _attachedEntity.Transform.MapPosition,
-                        comp.Owner.Transform.MapPosition, range,
-                        entity => entity == comp.Owner || entity == _attachedEntity))
+                        playerPos,
+                        compPos, range,
+                        ent => ent == comp.Owner || ent == _attachedEntity))
                 {
                     comp.Disable();
                     continue;
@@ -84,7 +87,7 @@ namespace Content.Client.DoAfter
 
                 comp.Enable();
 
-                var userGrid = comp.Owner.Transform.Coordinates;
+                var userGrid = xform.Coordinates;
 
                 // Check cancellations / finishes
                 foreach (var (id, doAfter) in doAfters)
@@ -116,8 +119,8 @@ namespace Content.Client.DoAfter
 
                     if (doAfter.BreakOnTargetMove)
                     {
-                        if (EntityManager.TryGetEntity(doAfter.TargetUid, out var targetEntity) &&
-                            !targetEntity.Transform.Coordinates.InRange(EntityManager, doAfter.TargetGrid,
+                        if (!EntityManager.Deleted(doAfter.Target) &&
+                            !Transform(doAfter.Target.Value).Coordinates.InRange(EntityManager, doAfter.TargetGrid,
                                 doAfter.MovementThreshold))
                         {
                             comp.Cancel(id, currentTime);

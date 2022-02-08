@@ -20,8 +20,18 @@ namespace Content.Server.Objectives.Conditions
             var allHumans = entityMgr.EntityQuery<MindComponent>(true).Where(mc =>
             {
                 var entity = mc.Mind?.OwnedEntity;
-                return (entity?.GetComponentOrNull<MobStateComponent>()?.IsAlive() ?? false) && mc.Mind != mind;
+
+                if (entity == default)
+                    return false;
+
+                return entityMgr.TryGetComponent(entity, out MobStateComponent mobState) &&
+                       mobState.IsAlive() &&
+                       mc.Mind != mind;
             }).Select(mc => mc.Mind).ToList();
+
+            if (allHumans.Count == 0)
+                return new DieCondition(); // I guess I'll die
+
             return new KillRandomPersonCondition {Target = IoCManager.Resolve<IRobustRandom>().Pick(allHumans)};
         }
     }

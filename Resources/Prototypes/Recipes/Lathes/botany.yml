@@ -10,7 +10,7 @@
     Plastic: 100
 
 - type: latheRecipe
-  id: Scythe
+  id: HydroponicsToolScythe
   icon:
     sprite: Objects/Tools/Hydroponics/scythe.rsi
     state: icon
@@ -21,7 +21,7 @@
     Plastic: 200
 
 - type: latheRecipe
-  id: Hatchet
+  id: HydroponicsToolHatchet
   icon:
     sprite: Objects/Tools/Hydroponics/hatchet.rsi
     state: icon

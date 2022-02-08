@@ -23,6 +23,8 @@ namespace Content.Shared.Chemistry
         {
             base.Initialize();
 
+            UpdatesOutsidePrediction = true;
+
             SubscribeLocalEvent<MovespeedModifierMetabolismComponent, ComponentHandleState>(OnMovespeedHandleState);
             SubscribeLocalEvent<MovespeedModifierMetabolismComponent, ComponentStartup>(AddComponent);
             SubscribeLocalEvent<MovespeedModifierMetabolismComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
@@ -75,9 +77,9 @@ namespace Content.Shared.Chemistry
                 if (component.ModifierTimer > currentTime) continue;
 
                 _components.RemoveAt(i);
-                EntityManager.RemoveComponent<MovespeedModifierMetabolismComponent>(component.OwnerUid);
+                EntityManager.RemoveComponent<MovespeedModifierMetabolismComponent>(component.Owner);
 
-                _movespeed.RefreshMovementSpeedModifiers(component.OwnerUid);
+                _movespeed.RefreshMovementSpeedModifiers(component.Owner);
             }
         }
     }

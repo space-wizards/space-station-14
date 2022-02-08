@@ -17,7 +17,7 @@ namespace Content.Server.Cargo.Components
             Database = EntitySystem.Get<CargoConsoleSystem>().StationOrderDatabase;
         }
 
-        public override ComponentState GetComponentState(ICommonSession player)
+        public override ComponentState GetComponentState()
         {
             if (!ConnectedToDatabase)
                 return new CargoOrderDatabaseState(null);

@@ -15,7 +15,7 @@ namespace Content.Server.AI.Utility.Actions.Nutrition.Food
 {
     public sealed class UseFoodInInventory : UtilityAction
     {
-        public IEntity Target { get; set; } = default!;
+        public EntityUid Target { get; set; } = default!;
 
         public override void SetupOperators(Blackboard context)
         {

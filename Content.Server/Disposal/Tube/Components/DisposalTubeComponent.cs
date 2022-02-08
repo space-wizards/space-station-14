@@ -2,18 +2,15 @@ using System;
 using System.Linq;
 using Content.Server.Construction.Components;
 using Content.Server.Disposal.Unit.Components;
+using Content.Server.Disposal.Unit.EntitySystems;
 using Content.Shared.Acts;
 using Content.Shared.Disposal.Components;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
-using Content.Shared.Verbs;
-using Robust.Server.Console;
-using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -23,13 +20,12 @@ namespace Content.Server.Disposal.Tube.Components
 {
     public abstract class DisposalTubeComponent : Component, IDisposalTubeComponent, IBreakAct
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IEntityManager _entMan = default!;
 
         public static readonly TimeSpan ClangDelay = TimeSpan.FromSeconds(0.5);
         public TimeSpan LastClang;
 
         private bool _connected;
-        private bool _broken;
         [DataField("clangSound")] public SoundSpecifier ClangSound = new SoundPathSpecifier("/Audio/Effects/clang.ogg");
 
         /// <summary>
@@ -40,7 +36,7 @@ namespace Content.Server.Disposal.Tube.Components
 
         [ViewVariables]
         private bool Anchored =>
-            !Owner.TryGetComponent(out PhysicsComponent? physics) ||
+            !_entMan.TryGetComponent(Owner, out PhysicsComponent? physics) ||
             physics.BodyType == BodyType.Static;
 
         /// <summary>
@@ -51,38 +47,10 @@ namespace Content.Server.Disposal.Tube.Components
 
         public abstract Direction NextDirection(DisposalHolderComponent holder);
 
-        public virtual Vector2 ExitVector(DisposalHolderComponent holder)
-        {
-            return NextDirection(holder).ToVec();
-        }
-
-        public bool Remove(DisposalHolderComponent holder)
-        {
-            var removed = Contents.Remove(holder.Owner);
-            holder.ExitDisposals();
-            return removed;
-        }
-
-        public bool TransferTo(DisposalHolderComponent holder, IDisposalTubeComponent to)
-        {
-            var position = holder.Owner.Transform.LocalPosition;
-            if (!to.Contents.Insert(holder.Owner))
-            {
-                return false;
-            }
-
-            holder.Owner.Transform.LocalPosition = position;
-
-            Contents.Remove(holder.Owner);
-            holder.EnterTube(to);
-
-            return true;
-        }
-
         // TODO: Make disposal pipes extend the grid
         private void Connect()
         {
-            if (_connected || _broken)
+            if (_connected)
             {
                 return;
             }
@@ -93,11 +61,6 @@ namespace Content.Server.Disposal.Tube.Components
         public bool CanConnect(Direction direction, IDisposalTubeComponent with)
         {
             if (!_connected)
-            {
-                return false;
-            }
-
-            if (_broken)
             {
                 return false;
             }
@@ -121,16 +84,16 @@ namespace Content.Server.Disposal.Tube.Components
 
             foreach (var entity in Contents.ContainedEntities.ToArray())
             {
-                if (!entity.TryGetComponent(out DisposalHolderComponent? holder))
+                if (!_entMan.TryGetComponent(entity, out DisposalHolderComponent? holder))
                 {
                     continue;
                 }
 
-                holder.ExitDisposals();
+                EntitySystem.Get<DisposableSystem>().ExitDisposals((holder).Owner);
             }
         }
 
-        public void PopupDirections(IEntity entity)
+        public void PopupDirections(EntityUid entity)
         {
             var directions = string.Join(", ", ConnectableDirections());
 
@@ -139,23 +102,21 @@ namespace Content.Server.Disposal.Tube.Components
 
         private void UpdateVisualState()
         {
-            if (!Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (!_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
             {
                 return;
             }
 
-            var state = _broken
-                ? DisposalTubeVisualState.Broken
-                : Anchored
-                    ? DisposalTubeVisualState.Anchored
-                    : DisposalTubeVisualState.Free;
+            var state = Anchored
+                ? DisposalTubeVisualState.Anchored 
+                : DisposalTubeVisualState.Free;
 
             appearance.SetData(DisposalTubeVisuals.VisualState, state);
         }
 
         public void AnchoredChanged()
         {
-            if (!Owner.TryGetComponent(out PhysicsComponent? physics))
+            if (!_entMan.TryGetComponent(Owner, out PhysicsComponent? physics))
             {
                 return;
             }
@@ -213,9 +174,7 @@ namespace Content.Server.Disposal.Tube.Components
 
         void IBreakAct.OnBreak(BreakageEventArgs eventArgs)
         {
-            _broken = true; // TODO: Repair
             Disconnect();
-            UpdateVisualState();
         }
     }
 }

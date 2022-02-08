@@ -41,7 +41,7 @@ namespace Content.Server.Mind.Commands
             }
 
             var builder = new StringBuilder();
-            builder.AppendFormat("player: {0}, mob: {1}\nroles: ", mind.UserId, mind.OwnedComponent?.Owner?.Uid);
+            builder.AppendFormat("player: {0}, mob: {1}\nroles: ", mind.UserId, mind.OwnedComponent?.Owner);
             foreach (var role in mind.AllRoles)
             {
                 builder.AppendFormat("{0} ", role.Name);

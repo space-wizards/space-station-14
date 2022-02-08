@@ -30,6 +30,14 @@ namespace Content.Shared.PDA
 
         }
     }
+    [Serializable, NetSerializable]
+    public sealed class PDAShowRingtoneMessage : BoundUserInterfaceMessage
+    {
+        public PDAShowRingtoneMessage()
+        {
+
+        }
+    }
 
     [Serializable, NetSerializable]
     public sealed class PDAShowUplinkMessage : BoundUserInterfaceMessage

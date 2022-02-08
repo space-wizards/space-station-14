@@ -51,7 +51,7 @@ namespace Content.Server.DeviceNetwork.Systems
         /// <param name="uid">The Entity containing a DeviceNetworkComponent</param>
         public void Connect(EntityUid uid)
         {
-            if (EntityManager.GetEntity(uid).TryGetComponent<DeviceNetworkComponent>(out var component))
+            if (EntityManager.TryGetComponent<DeviceNetworkComponent>(uid, out var component))
             {
                 AddConnection(component);
             }
@@ -90,7 +90,7 @@ namespace Content.Server.DeviceNetwork.Systems
         /// <param name="uid">The Entity containing a DeviceNetworkComponent</param>
         public void Disconnect(EntityUid uid)
         {
-            if (EntityManager.GetEntity(uid).TryGetComponent<DeviceNetworkComponent>(out var component))
+            if (EntityManager.TryGetComponent<DeviceNetworkComponent>(uid, out var component))
             {
                 RemoveConnection(component);
             }
@@ -211,12 +211,12 @@ namespace Content.Server.DeviceNetwork.Systems
         {
             foreach (var connection in connections)
             {
-                var beforeEvent = new BeforePacketSentEvent(packet.Sender.Owner.Uid);
-                RaiseLocalEvent(connection.Owner.Uid, beforeEvent, false);
+                var beforeEvent = new BeforePacketSentEvent(packet.Sender.Owner);
+                RaiseLocalEvent(connection.Owner, beforeEvent, false);
 
                 if (!beforeEvent.Cancelled)
                 {
-                    RaiseLocalEvent(connection.Owner.Uid, new PacketSentEvent(connection.Frequency, packet.Sender.Address, packet.Data, packet.Broadcast) , false);
+                    RaiseLocalEvent(connection.Owner, new PacketSentEvent(connection.Frequency, packet.Sender.Address, packet.Data, packet.Broadcast) , false);
                 }
             }
         }

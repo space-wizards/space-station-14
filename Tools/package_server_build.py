@@ -24,20 +24,26 @@ except ImportError:
     Style = ColorDummy()
 
 class PlatformReg:
-    def __init__(self, rid: str, target_os: str):
+    def __init__(self, rid: str, target_os: str, build_by_default: bool):
         self.rid = rid
         self.target_os = target_os
+        self.build_by_default = build_by_default
 
 p = os.path.join
 
 PLATFORMS = [
-    PlatformReg("win-x64", "Windows"),
-    PlatformReg("linux-x64", "Linux"),
-    PlatformReg("linux-arm64", "Linux"),
-    PlatformReg("osx-x64", "MacOS"),
+    PlatformReg("win-x64", "Windows", True),
+    PlatformReg("linux-x64", "Linux", True),
+    PlatformReg("linux-arm64", "Linux", True),
+    PlatformReg("osx-x64", "MacOS", True),
+    # Non-default platforms (i.e. for Watchdog Git)
+    PlatformReg("win-x86", "Windows", False),
+    PlatformReg("linux-x86", "Linux", False),
+    PlatformReg("linux-arm", "Linux", False),
 ]
 
 PLATFORM_RIDS = {x.rid for x in PLATFORMS}
+PLATFORM_RIDS_DEFAULT = {x.rid for x in filter(lambda val: val.build_by_default, PLATFORMS)}
 
 SHARED_IGNORED_RESOURCES = {
     ".gitignore",
@@ -57,13 +63,35 @@ SERVER_IGNORED_RESOURCES = {
 SERVER_CONTENT_ASSEMBLIES = [
     "Content.Server.Database",
     "Content.Server",
-    "Content.Shared"
+    "Content.Shared",
+    "Content.Shared.Database"
 ]
 
 # Extra assemblies to copy on the server, with a startswith
 SERVER_EXTRA_ASSEMBLIES = [
     "Npgsql.",
     "Microsoft",
+]
+
+SERVER_NOT_EXTRA_ASSEMBLIES = [
+    "Microsoft.CodeAnalysis"
+]
+
+BIN_SKIP_FOLDERS = [
+    # Roslyn localization files, screw em.
+    "cs",
+    "de",
+    "es",
+    "fr",
+    "it",
+    "ja",
+    "ko",
+    "pl",
+    "pt-BR",
+    "ru",
+    "tr",
+    "zh-Hans",
+    "zh-Hant"
 ]
 
 def main() -> None:
@@ -80,12 +108,17 @@ def main() -> None:
                         action="store_true",
                         help=argparse.SUPPRESS)
 
+    parser.add_argument("--hybrid-acz",
+                        action="store_true",
+                        help="Creates a 'Hybrid ACZ' build that contains an embedded Content.Client.zip the server hosts.")
+
     args = parser.parse_args()
     platforms = args.platform
     skip_build = args.skip_build
+    hybrid_acz = args.hybrid_acz
 
     if not platforms:
-        platforms = PLATFORM_RIDS
+        platforms = PLATFORM_RIDS_DEFAULT
 
     if os.path.exists("release"):
         print(Fore.BLUE + Style.DIM +
@@ -94,13 +127,20 @@ def main() -> None:
 
     os.mkdir("release")
 
+    if hybrid_acz:
+        # Hybrid ACZ involves a file "Content.Client.zip" in the server executable directory.
+        # Rather than hosting the client ZIP on the watchdog or on a separate server,
+        #  Hybrid ACZ uses the ACZ hosting functionality to host it as part of the status host,
+        #  which means that features such as automatic UPnP forwarding still work properly.
+        import package_client_build
+        package_client_build.build(skip_build)
+
     # Good variable naming right here.
     for platform in PLATFORMS:
         if platform.rid not in platforms:
             continue
 
-        build_platform(platform, skip_build)
-
+        build_platform(platform, skip_build, hybrid_acz)
 
 def wipe_bin():
     print(Fore.BLUE + Style.DIM +
@@ -112,7 +152,7 @@ def wipe_bin():
         shutil.rmtree("bin")
 
 
-def build_platform(platform: PlatformReg, skip_build: bool) -> None:
+def build_platform(platform: PlatformReg, skip_build: bool, hybrid_acz: bool) -> None:
     print(Fore.GREEN + f"Building project for {platform.rid}..." + Style.RESET_ALL)
 
     if not skip_build:
@@ -134,9 +174,12 @@ def build_platform(platform: PlatformReg, skip_build: bool) -> None:
     print(Fore.GREEN + "Packaging {platform.rid} server..." + Style.RESET_ALL)
     server_zip = zipfile.ZipFile(p("release", f"SS14.Server_{platform.rid}.zip"), "w",
                                  compression=zipfile.ZIP_DEFLATED)
-    copy_dir_into_zip(p("RobustToolbox", "bin", "Server", platform.rid, "publish"), "", server_zip)
+    copy_dir_into_zip(p("RobustToolbox", "bin", "Server", platform.rid, "publish"), "", server_zip, BIN_SKIP_FOLDERS)
     copy_resources(p("Resources"), server_zip)
     copy_content_assemblies(p("Resources", "Assemblies"), server_zip)
+    if hybrid_acz:
+        # Hybrid ACZ expects "Content.Client.zip" (as it's not SS14-specific)
+        server_zip.write(p("release", "SS14.Client.zip"), "Content.Client.zip")
     server_zip.close()
 
 
@@ -187,12 +230,16 @@ def zip_entry_exists(zipf, name):
     return True
 
 
-def copy_dir_into_zip(directory, basepath, zipf):
+def copy_dir_into_zip(directory, basepath, zipf, skip_folders={}):
     if basepath and not zip_entry_exists(zipf, basepath):
         zipf.write(directory, basepath)
 
-    for root, _, files in os.walk(directory):
+    for root, dirnames, files in os.walk(directory):
         relpath = os.path.relpath(root, directory)
+        if relpath in skip_folders:
+            dirnames.clear()
+            continue
+
         if relpath != "." and not zip_entry_exists(zipf, p(basepath, relpath)):
             zipf.write(root, p(basepath, relpath))
 
@@ -218,10 +265,9 @@ def copy_content_assemblies(target, zipf):
 
     # Additional assemblies that need to be copied such as EFCore.
     for filename in os.listdir(source_dir):
-        for extra_assembly_start in SERVER_EXTRA_ASSEMBLIES:
-            if filename.startswith(extra_assembly_start):
-                files.append(filename)
-                break
+        matches = lambda x: filename.startswith(x)
+        if any(map(matches, SERVER_EXTRA_ASSEMBLIES)) and not any(map(matches, SERVER_NOT_EXTRA_ASSEMBLIES)):
+            files.append(filename)
 
     # Include content assemblies.
     for asm in base_assemblies:

@@ -214,10 +214,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 50 # at least enough for one cheese
         reagents:
         - ReagentId: Milk
-          Quantity: 20
+          Quantity: 50
 
 - type: entity
   parent: ReagentContainerBase
@@ -230,10 +230,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol:  50
         reagents:
         - ReagentId: MilkSoy
-          Quantity: 20
+          Quantity: 50
 
 - type: entity
   parent: ReagentContainerBase
@@ -314,7 +314,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 18
         reagents:
         - ReagentId: Nutriment
           Quantity: 15
@@ -433,6 +433,13 @@
   components:
   - type: Sprite
     state: cheesewedge
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 6
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
 
 - type: entity
   name: burned mess

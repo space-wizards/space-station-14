@@ -24,8 +24,8 @@ namespace Content.Server.StationEvents.Events
         public override int? MaxOccurrences => 2;
         public override int MinimumPlayers => 20;
 
-        public override string StartAnnouncement => "Meteors are on a collision course with the station. Brace for impact.";
-        protected override string EndAnnouncement => "The meteor swarm has passed. Please return to your stations.";
+        public override string StartAnnouncement =>  Loc.GetString("station-event-meteor-swarm-start-announcement");
+        protected override string EndAnnouncement => Loc.GetString("station-event-meteor-swarm-ebd-announcement");
 
         public override string? StartAudio => "/Audio/Announcements/bloblarm.ogg";
 
@@ -111,7 +111,7 @@ namespace Content.Server.StationEvents.Events
                 var offset = angle.RotateVec(new Vector2((maximumDistance - minimumDistance) * _robustRandom.NextFloat() + minimumDistance, 0));
                 var spawnPosition = new MapCoordinates(center + offset, mapId);
                 var meteor = _entityManager.SpawnEntity("MeteorLarge", spawnPosition);
-                var physics = _entityManager.GetComponent<PhysicsComponent>(meteor.Uid);
+                var physics = _entityManager.GetComponent<PhysicsComponent>(meteor);
                 physics.BodyStatus = BodyStatus.InAir;
                 physics.LinearDamping = 0f;
                 physics.AngularDamping = 0f;
@@ -121,7 +121,7 @@ namespace Content.Server.StationEvents.Events
                     physics.Mass * ((MaxAngularVelocity - MinAngularVelocity) * _robustRandom.NextFloat() +
                                     MinAngularVelocity));
                 // TODO: God this disgusts me but projectile needs a refactor.
-                meteor.GetComponent<ProjectileComponent>().TimeLeft = 120f;
+                IoCManager.Resolve<IEntityManager>().GetComponent<ProjectileComponent>(meteor).TimeLeft = 120f;
             }
         }
     }

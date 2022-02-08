@@ -2,6 +2,7 @@
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.Nutrition.Visualizers
@@ -12,11 +13,11 @@ namespace Content.Client.Nutrition.Visualizers
         [DataField("state")]
         private string? _state;
 
-        public override void InitializeEntity(IEntity entity)
+        public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
 
-            var sprite = entity.GetComponent<ISpriteComponent>();
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(entity);
 
             sprite.LayerMapReserveBlank(CreamPiedVisualLayers.Pie);
             sprite.LayerSetRSI(CreamPiedVisualLayers.Pie, "Effects/creampie.rsi");
@@ -35,7 +36,7 @@ namespace Content.Client.Nutrition.Visualizers
 
         private void SetPied(AppearanceComponent component, bool pied)
         {
-            var sprite = component.Owner.GetComponent<ISpriteComponent>();
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner);
 
             sprite.LayerSetVisible(CreamPiedVisualLayers.Pie, pied);
             sprite.LayerSetState(CreamPiedVisualLayers.Pie, _state);
