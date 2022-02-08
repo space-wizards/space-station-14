@@ -1,11 +1,4 @@
 Entries:
-- author: vulppine
-  changes:
-  - {message: 'NanoTrasen has cut the budget on maintaining how pretty things look
-      on our stations. You may notice things around you slowly become more decrepit
-      over time, for example, skin.', type: Add}
-  id: 510
-  time: '2021-10-29T08:04:25.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: Disposals works properly under station rotation, type: Fix}
@@ -2965,3 +2958,9 @@ Entries:
       are much more noticeable.', type: Tweak}
   id: 1010
   time: '2022-02-08T10:43:34.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Shutters can now be constructed from the construction menu (G)! Add
+      glass before final step for windowed, or steel for radiation shutters.', type: Add}
+  id: 1011
+  time: '2022-02-08T10:49:48.0000000+00:00'
