@@ -225,3 +225,25 @@
       seed: poppy
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/poppy.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of lingzhi seeds
+  description: "Also known as reishi."
+  id: LingzhiSeeds
+  components:
+    - type: Seed
+      seed: lingzhi
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/lingzhi.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of ambrosia vulgaris seeds
+  description: "A medicinal plant for the common folk."
+  id: AmbrosiaVulgarisSeeds
+  components:
+    - type: Seed
+      seed: ambrosiaVulgaris
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/ambrosia_vulgaris.rsi

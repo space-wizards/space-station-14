@@ -7,8 +7,8 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.DeviceNetwork.Components
 {
     [RegisterComponent]
-    [ComponentProtoName("ApcNetworkConnection")]
     [Friend(typeof(ApcNetworkSystem))]
+    [ComponentProtoName("ApcNetworkConnection")]
     public class ApcNetworkComponent : Component
     {
         /// <summary>
