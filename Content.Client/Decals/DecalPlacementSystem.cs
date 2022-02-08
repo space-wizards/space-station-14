@@ -85,6 +85,13 @@ public sealed class DecalPlacementSystem : EntitySystem
             }, true)).Register<DecalPlacementSystem>();
     }
 
+    public override void Shutdown()
+    {
+        base.Shutdown();
+
+        CommandBinds.Unregister<DecalPlacementSystem>();
+    }
+
     public void UpdateDecalInfo(string id, Color color, float rotation, bool snap, int zIndex, bool cleanable)
     {
         _decalId = id;

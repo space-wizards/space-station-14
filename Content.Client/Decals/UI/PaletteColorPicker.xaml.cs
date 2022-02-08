@@ -31,7 +31,6 @@ public sealed partial class PaletteColorPicker : DefaultWindow
             i += 1;
         }
 
-
         Palettes.OnItemSelected += args =>
         {
             Palettes.SelectId(args.Id);
