@@ -15,7 +15,7 @@ public abstract class SharedAirlockComponent : Component
     public bool Safety = true;
     
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("emergency access")]
+    [DataField("emergencyAccess")]
     public bool EmergencyAccess = false;
 }
 

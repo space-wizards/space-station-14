@@ -147,7 +147,7 @@ namespace Content.Client.Doors
             var unlitVisible = true;
             var boltedVisible = false;
             var weldedVisible = false;
-            var emergecyLightsVisible = false;
+            var emergencyLightsVisible = false;
 
             if (animPlayer.HasRunningAnimation(AnimationKey))
             {
@@ -201,7 +201,7 @@ namespace Content.Client.Doors
 
             if (component.TryGetData(DoorVisuals.EmergencyLights, out bool eaLights) && eaLights)
             {
-                emergecyLightsVisible = true;
+                emergencyLightsVisible = true;
             }
 
             if (!_simpleVisuals)
@@ -211,8 +211,8 @@ namespace Content.Client.Doors
                 sprite.LayerSetVisible(DoorVisualLayers.BaseBolted, unlitVisible && boltedVisible);
                 if (_emergencyAccessLayer)
                 {
-                    sprite.LayerSetVisible(DoorVisualLayers.BaseEAccess, 
-                            emergecyLightsVisible 
+                    sprite.LayerSetVisible(DoorVisualLayers.BaseEmergencyAccess, 
+                            emergencyLightsVisible 
                             && state != DoorState.Open 
                             && state != DoorState.Opening 
                             && state != DoorState.Closing
@@ -228,6 +228,6 @@ namespace Content.Client.Doors
         BaseUnlit,
         BaseWelded,
         BaseBolted,
-        BaseEAccess,
+        BaseEmergencyAccess,
     }
 }

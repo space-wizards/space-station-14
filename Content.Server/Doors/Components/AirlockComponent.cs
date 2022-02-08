@@ -85,7 +85,6 @@ namespace Content.Server.Doors.Components
 
         private bool _boltLightsWirePulsed = true;
 
-
         [ViewVariables(VVAccess.ReadWrite)]
         private bool BoltLightsVisible
         {

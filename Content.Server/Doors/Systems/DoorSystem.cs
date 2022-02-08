@@ -222,8 +222,8 @@ public sealed class DoorSystem : SharedDoorSystem
         {
             // Some game modes modify access rules.
             AccessTypes.AllowAllIdExternal => !isExternal || _accessReaderSystem.IsAllowed(access, user.Value),
-                AccessTypes.AllowAllNoExternal => !isExternal,
-                _ => _accessReaderSystem.IsAllowed(access, user.Value)
+            AccessTypes.AllowAllNoExternal => !isExternal,
+            _ => _accessReaderSystem.IsAllowed(access, user.Value)
         };
     }
 
