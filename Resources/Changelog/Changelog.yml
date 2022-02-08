@@ -1,9 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: Disposals works properly under station rotation, type: Fix}
-  id: 511
-  time: '2021-10-29T08:07:32.0000000+00:00'
 - author: Macoron
   changes:
   - {message: 'Add withdraw button and preview icons in Uplink UI,', type: Add}
@@ -2964,3 +2959,8 @@ Entries:
       glass before final step for windowed, or steel for radiation shutters.', type: Add}
   id: 1011
   time: '2022-02-08T10:49:48.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: NanoTrasen has recalled the defective ringers., type: Fix}
+  id: 1012
+  time: '2022-02-08T11:15:06.0000000+00:00'
