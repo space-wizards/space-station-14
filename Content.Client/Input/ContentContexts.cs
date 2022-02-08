@@ -26,7 +26,6 @@ namespace Content.Client.Input
             common.AddFunction(ContentKeyFunctions.OpenInfo);
             common.AddFunction(ContentKeyFunctions.TakeScreenshot);
             common.AddFunction(ContentKeyFunctions.TakeScreenshotNoUI);
-            common.AddFunction(ContentKeyFunctions.PlaceDecal);
             common.AddFunction(ContentKeyFunctions.Point);
             common.AddFunction(ContentKeyFunctions.OpenContextMenu);
 

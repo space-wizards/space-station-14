@@ -18,15 +18,18 @@ public sealed class DecalPlacementSystem : EntitySystem
     private Color _decalColor = Color.White;
     private Angle _decalAngle = Angle.Zero;
     private bool _snap = false;
+    private int _zIndex = 0;
+    private bool _cleanable = false;
 
     private bool _active = false;
     private bool _placing = false;
+    private bool _erasing = false;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        CommandBinds.Builder.Bind(ContentKeyFunctions.PlaceDecal, new PointerStateInputCmdHandler(
+        CommandBinds.Builder.Bind(EngineKeyFunctions.EditorPlaceObject, new PointerStateInputCmdHandler(
             ((session, coords, uid) =>
             {
                 if (!_active)
@@ -36,8 +39,20 @@ public sealed class DecalPlacementSystem : EntitySystem
                     return false;
                 _placing = true;
 
-                coords = _snap ? coords.AlignWithClosestGridTile() : coords;
-                var decal = new Decal(coords.Position, _decalId, _decalColor, _decalAngle, 0, false);
+                if (_snap)
+                {
+                    var newPos = new Vector2(
+                        (float) (MathF.Round((coords.X - 0.5f), MidpointRounding.AwayFromZero) + 0.5),
+                        (float) (MathF.Round((coords.Y - 0.5f), MidpointRounding.AwayFromZero) + 0.5)
+                    );
+                    coords = coords.WithPosition(newPos);
+                }
+                coords = coords.Offset(new Vector2(-0.5f, -0.5f));
+
+                if (!coords.IsValid(EntityManager))
+                    return false;
+
+                var decal = new Decal(coords.Position, _decalId, _decalColor, _decalAngle, _zIndex, _cleanable);
                 RaiseNetworkEvent(new RequestDecalPlacementEvent(decal, coords.GetGridId(EntityManager)));
 
                 return true;
@@ -50,22 +65,46 @@ public sealed class DecalPlacementSystem : EntitySystem
                 _placing = false;
                 return true;
             }), true)).Register<DecalPlacementSystem>();
+
+        CommandBinds.Builder.Bind(EngineKeyFunctions.EditorCancelPlace, new PointerStateInputCmdHandler((
+            (session, coords, uid) =>
+            {
+                if (!_active)
+                    return false;
+                if (_erasing)
+                    return false;
+
+                _erasing = true;
+
+                RaiseNetworkEvent(new RequestDecalRemovalEvent(coords));
+
+                return true;
+            }), ((session, coords, uid) =>
+            {
+                if (!_active)
+                    return false;
+                _erasing = false;
+
+                return true;
+            }), true)).Register<DecalPlacementSystem>();
     }
 
-    public void UpdateDecalInfo(string id, Color color, float rotation, bool snap)
+    public void UpdateDecalInfo(string id, Color color, float rotation, bool snap, int zIndex, bool cleanable)
     {
         _decalId = id;
         _decalColor = color;
         _decalAngle = Angle.FromDegrees(rotation);
         _snap = snap;
+        _zIndex = zIndex;
+        _cleanable = cleanable;
     }
 
     public void SetActive(bool active)
     {
         _active = active;
-        //if (_active)
-        //    _inputManager.Contexts.SetActiveContext("editor");
-        //else
-        //    _inputSystem.SetEntityContextActive();
+        if (_active)
+            _inputManager.Contexts.SetActiveContext("editor");
+        else
+            _inputSystem.SetEntityContextActive();
     }
 }

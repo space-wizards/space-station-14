@@ -162,10 +162,6 @@ binds:
 - function: ReleasePulledObject
   type: State
   key: H
-- function: PlaceDecal
-  type: State
-  canFocus: true
-  key: MouseLeft
 - function: OpenContextMenu
   type: State
   key: MouseRight

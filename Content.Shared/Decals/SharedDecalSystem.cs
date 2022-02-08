@@ -167,4 +167,15 @@ namespace Content.Shared.Decals
             GridId = gridId;
         }
     }
+
+    [Serializable, NetSerializable]
+    public sealed class RequestDecalRemovalEvent : EntityEventArgs
+    {
+        public EntityCoordinates Coordinates;
+
+        public RequestDecalRemovalEvent(EntityCoordinates coordinates)
+        {
+            Coordinates = coordinates;
+        }
+    }
 }

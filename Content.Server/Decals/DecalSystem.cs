@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using Content.Server.Administration.Managers;
+using Content.Shared.Administration;
 using Content.Shared.Decals;
 using Content.Shared.Maps;
 using Robust.Server.Player;
@@ -16,6 +18,7 @@ namespace Content.Server.Decals
     public class DecalSystem : SharedDecalSystem
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IAdminManager _adminManager = default!;
 
         private readonly Dictionary<GridId, HashSet<Vector2i>> _dirtyChunks = new();
         private readonly Dictionary<IPlayerSession, Dictionary<GridId, HashSet<Vector2i>>> _previousSentChunks = new();
@@ -28,6 +31,7 @@ namespace Content.Server.Decals
             MapManager.TileChanged += OnTileChanged;
 
             SubscribeNetworkEvent<RequestDecalPlacementEvent>(OnDecalPlacementRequest);
+            SubscribeNetworkEvent<RequestDecalRemovalEvent>(OnDecalRemovalRequest);
         }
 
         public override void Shutdown()
@@ -81,12 +85,39 @@ namespace Content.Server.Decals
             }
         }
 
-        private void OnDecalPlacementRequest(RequestDecalPlacementEvent ev)
+        private void OnDecalPlacementRequest(RequestDecalPlacementEvent ev, EntitySessionEventArgs eventArgs)
         {
-            // todo probably check that like. they can do this
+            if (eventArgs.SenderSession is not IPlayerSession session)
+                return;
+
+            // bad
+            if (!_adminManager.HasAdminFlag(session, AdminFlags.Mapping))
+                return;
+
+            if (!ev.GridId.IsValid())
+                return;
+
             TryAddDecal(ev.Decal, ev.GridId, out _);
         }
 
+        private void OnDecalRemovalRequest(RequestDecalRemovalEvent ev, EntitySessionEventArgs eventArgs)
+        {
+            if (eventArgs.SenderSession is not IPlayerSession session)
+                return;
+
+            // bad
+            if (!_adminManager.HasAdminFlag(session, AdminFlags.Mapping))
+                return;
+
+            var gridId = ev.Coordinates.GetGridId(EntityManager);
+
+            // remove all decals on the same tile
+            foreach (var decal in GetDecalsInRange(gridId, ev.Coordinates.Position,
+                         0.5f))
+            {
+                RemoveDecal(gridId, decal);
+            }
+        }
 
         protected override void DirtyChunk(GridId id, Vector2i chunkIndices)
         {

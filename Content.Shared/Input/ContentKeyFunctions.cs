@@ -42,7 +42,6 @@ namespace Content.Shared.Input
         public static readonly BoundKeyFunction OpenAdminMenu = "OpenAdminMenu";
         public static readonly BoundKeyFunction TakeScreenshot = "TakeScreenshot";
         public static readonly BoundKeyFunction TakeScreenshotNoUI = "TakeScreenshotNoUI";
-        public static readonly BoundKeyFunction PlaceDecal = "PlaceDecal";
         public static readonly BoundKeyFunction Point = "Point";
         public static readonly BoundKeyFunction ArcadeUp = "ArcadeUp";
         public static readonly BoundKeyFunction ArcadeDown = "ArcadeDown";
