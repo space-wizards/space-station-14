@@ -62,9 +62,8 @@ public sealed class DecalPlacementSystem : EntitySystem
 
                 _placing = false;
                 return true;
-            }, true)).Register<DecalPlacementSystem>();
-
-        CommandBinds.Builder.Bind(EngineKeyFunctions.EditorCancelPlace, new PointerStateInputCmdHandler(
+            }, true))
+            .Bind(EngineKeyFunctions.EditorCancelPlace, new PointerStateInputCmdHandler(
             (session, coords, uid) =>
             {
                 if (!_active || _erasing)
