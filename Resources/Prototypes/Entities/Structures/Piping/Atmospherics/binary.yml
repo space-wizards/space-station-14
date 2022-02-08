@@ -171,16 +171,25 @@
           pipeDirection: South
 
 - type: entity
-  parent: GasUnaryBase
+  parent: GasBinaryBase
   id: GasDualPortVentPump
   name: dual-port air vent
   description: Has a valve and a pump attached to it. There are two ports.
   placement:
     mode: SnapgridCenter
   components:
+    - type: ApcPowerReceiver
+    - type: ExtensionCableReceiver
+    - type: DeviceNetworkComponent
+      deviceNetId: Apc
+      frequency: 1621
+    - type: ApcNetworkConnection
+    - type: AtmosAlarmable
+      alarmedBy:
+      - AirAlarm
     - type: Sprite
-      drawdepth: FloorObjects
       netsync: false
+      drawdepth: FloorObjects
       sprite: Structures/Piping/Atmospherics/vent.rsi
       layers:
         - sprite: Structures/Piping/Atmospherics/pipe.rsi
@@ -194,4 +203,40 @@
         - type: PipeConnectorVisualizer
         - type: PipeColorVisualizer
         - type: VentPumpVisualizer
-    - type: GasVentPump
+    - type: GasDualPortVentPump
+    
+- type: entity
+  parent: GasBinaryBase
+  id: GasDualPortVentScrubber
+  name: dual-port air scrubber
+  description: Has a valve and a pump attached to it. There are two ports.
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: ApcPowerReceiver
+    - type: ExtensionCableReceiver
+    - type: DeviceNetworkComponent
+      deviceNetId: Apc
+      frequency: 1621
+    - type: ApcNetworkConnection
+    - type: AtmosAlarmable
+      alarmedBy:
+      - AirAlarm
+    - type: Sprite
+      netsync: false
+      drawdepth: FloorObjects
+      sprite: Structures/Piping/Atmospherics/scrubber.rsi
+      layers:
+        - sprite: Structures/Piping/Atmospherics/pipe.rsi
+          state: pipeStraight
+          map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
+        - state: scrub_off
+          map: [ "enum.ScrubberVisualLayers.Scrubber", "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer" ]
+    - type: Appearance
+      visuals:
+        - type: SubFloorShowLayerVisualizer
+        - type: PipeConnectorVisualizer
+        - type: PipeColorVisualizer
+        - type: ScrubberVisualizer
+    - type: AtmosDevice
+    - type: GasVentScrubber
