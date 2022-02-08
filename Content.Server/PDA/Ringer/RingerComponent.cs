@@ -1,11 +1,8 @@
 using Content.Shared.PDA;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.PDA.Ringer
 {
-    [RegisterComponent, ComponentProtoName("Ringer")]
+    [RegisterComponent]
     public sealed class RingerComponent : Component
     {
         [ViewVariables]
