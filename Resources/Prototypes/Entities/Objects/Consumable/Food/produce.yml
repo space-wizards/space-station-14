@@ -715,3 +715,25 @@
     seed: flyAmanita
   - type: Extractable
     grindableSolutionName: food
+
+- type: entity
+  name: gatfruit
+  parent: FoodProduceBase
+  id: FoodGatfruit
+  description: A delicious, gun-shaped fruit with a thick wooden stem.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Sulfur
+          Quantity: 5
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/gatfruit.rsi
+  - type: Produce
+    seed: gatfruit
+  - type: Food
+    trash: RevolverPredator
