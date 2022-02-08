@@ -1,0 +1,36 @@
+- type: gameMap
+  id: kilostation
+  mapName: 'Kilo Station'
+  mapNameTemplate: '{0} Kilo Station {1}'
+  nameGenerator:
+    !type:NanotrasenNameGenerator
+    prefixCreator: '14'
+  mapPath: /Maps/kilostation.yml
+  minPlayers: 25
+  overflowJobs:
+    - Assistant
+  availableJobs:
+    CargoTechnician: [ 2, 3 ]
+    Quartermaster: [ 1, 1 ]
+    Assistant: [ -1, -1 ]
+    Bartender: [ 1, 1 ]
+    Botanist: [ 2, 3]
+    Chef: [ 1, 1 ]
+    Clown: [ 1, 1 ]
+    Janitor: [ 1, 2 ]
+    Mime: [ 1, 1 ]
+    Captain: [ 1, 1 ]
+    HeadOfPersonnel: [ 1, 1 ]
+    ChiefEngineer: [ 1, 1 ]
+    StationEngineer: [ 5, 6 ]
+    ChiefMedicalOfficer: [ 1, 1 ]
+    MedicalDoctor: [ 3, 5 ]
+    Chemist: [ 2, 2 ]
+    ResearchDirector: [ 1, 1 ]
+    Scientist: [ 3, 5 ]
+    HeadOfSecurity: [ 1, 1 ]
+    SecurityOfficer: [ 5, 5 ]
+    Chaplain: [ 1, 1 ]
+    Warden: [ 1, 1 ]
+    Librarian: [ 1, 1 ]
+    Lawyer: [ 2, 2 ]
