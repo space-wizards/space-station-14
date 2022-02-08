@@ -23,5 +23,12 @@ namespace Content.Server.PDA.Ringer
 
         [DataField("isPlaying")]
         public bool IsPlaying = false;
+
+        /// <summary>
+        /// How far the sound projects in metres.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("range")]
+        public float Range = 3f;
     }
 }
