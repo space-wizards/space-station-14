@@ -1,0 +1,21 @@
+﻿
+- type: decal
+  id: FullTileAlphaOverlay
+  tags: ["station", "overlay"]
+  sprite:
+    sprite: Decals/overlays.rsi
+    state: fulltile_overlay
+
+- type: decal
+  id: HalfTileAlphaOverlay
+  tags: ["station", "overlay"]
+  sprite:
+    sprite: Decals/overlays.rsi
+    state: halftile_overlay
+
+- type: decal
+  id: QuarterTileAlphaOverlay
+  tags: ["station", "overlay"]
+  sprite:
+    sprite: Decals/overlays.rsi
+    state: quartertile_overlay

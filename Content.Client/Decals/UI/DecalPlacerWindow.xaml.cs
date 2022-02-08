@@ -19,6 +19,8 @@ namespace Content.Client.Decals.UI
         private IPrototypeManager _prototypeManager;
         private DecalPlacementSystem _decalPlacementSystem;
 
+        public FloatSpinBox RotationSpinBox;
+
         private Dictionary<string, Texture>? _decals;
         private string? _selected;
         private Color _color = Color.White;
@@ -34,6 +36,14 @@ namespace Content.Client.Decals.UI
 
             _prototypeManager = prototypeManager;
             _decalPlacementSystem = EntitySystem.Get<DecalPlacementSystem>();
+
+            // This needs to be done in C# so we can have custom stuff passed in the constructor
+            // and thus have a proper step size
+            RotationSpinBox = new FloatSpinBox(90.0f, 0)
+            {
+                HorizontalExpand = true,
+            };
+            SpinBoxContainer.AddChild(RotationSpinBox);
 
             Search.OnTextChanged += _ => RefreshList();
             ColorPicker.OnColorPicked += (color =>
@@ -74,7 +84,8 @@ namespace Content.Client.Decals.UI
             if (_selected is null)
                 return;
 
-            _decalPlacementSystem.UpdateDecalInfo(_selected, _color, _rotation, _snap, _zIndex, _cleanable);
+            var color = _useColor ? _color : Color.White;
+            _decalPlacementSystem.UpdateDecalInfo(_selected, color, _rotation, _snap, _zIndex, _cleanable);
         }
 
         private void RefreshList()

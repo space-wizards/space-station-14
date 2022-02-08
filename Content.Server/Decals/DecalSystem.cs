@@ -112,8 +112,7 @@ namespace Content.Server.Decals
             var gridId = ev.Coordinates.GetGridId(EntityManager);
 
             // remove all decals on the same tile
-            foreach (var decal in GetDecalsInRange(gridId, ev.Coordinates.Position,
-                         1.0f))
+            foreach (var decal in GetDecalsInRange(gridId, ev.Coordinates.Position))
             {
                 RemoveDecal(gridId, decal);
             }
