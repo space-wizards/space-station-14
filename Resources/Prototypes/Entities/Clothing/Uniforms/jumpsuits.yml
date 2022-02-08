@@ -60,9 +60,9 @@
   description: It's a snappy jumpsuit with a sturdy set of overalls. It is very dirty.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/salvagenaut.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/salvage.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/salvagenaut.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/salvage.rsi
   - type: Armor
     modifiers:
       coefficients:
