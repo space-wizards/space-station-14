@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace Content.Server.Atmos.Piping.EntitySystems;
 
-public class AtmosPipeNodeAppearanceSystem : EntitySystem
+public sealed class AtmosPipeNodeAppearanceSystem : EntitySystem
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
 

@@ -10,7 +10,7 @@ namespace Content.Server.NodeContainer.EntitySystems
     /// </summary>
     /// <seealso cref="NodeGroupSystem"/>
     [UsedImplicitly]
-    public class NodeContainerSystem : EntitySystem
+    public sealed class NodeContainerSystem : EntitySystem
     {
         [Dependency] private readonly NodeGroupSystem _nodeGroupSystem = default!;
 
