@@ -43,13 +43,11 @@ namespace Content.Server.Cloning
             }
         }
 
-        public void TryCloning(Mind.Mind mind, HumanoidCharacterProfile hcp, CloningPodComponent clonePod)
+        public bool TryCloning(Mind.Mind mind, HumanoidCharacterProfile hcp, CloningPodComponent clonePod)
         {
             if (clonePod.BodyContainer.ContainedEntity != null)
-                return;
-            // }
+                return false;
 
-            // MOVE TO CLONING SYSTEM
             if (ClonesWaitingForMind.TryGetValue(mind, out var clone))
             {
                 if (EntityManager.EntityExists(clone) &&
@@ -57,30 +55,24 @@ namespace Content.Server.Cloning
                     !cloneState.IsDead() &&
                     TryComp<MindComponent>(clone, out MindComponent? cloneMindComp) &&
                     (cloneMindComp.Mind == null || cloneMindComp.Mind == mind))
-                {
-                    // obj.Session.AttachedEntity.Value.PopupMessageCursor(Loc.GetString("cloning-pod-component-msg-already-cloning"));
-                    return; // Mind already has clone
-                }
+                    return false; // Mind already has clone
+
                 ClonesWaitingForMind.Remove(mind);
             }
+
             if (mind.OwnedEntity != null &&
                 TryComp<MobStateComponent?>(mind.OwnedEntity.Value, out var state) &&
                 !state.IsDead())
-            {
-                // obj.Session.AttachedEntity.Value.PopupMessageCursor(Loc.GetString("cloning-pod-component-msg-already-alive"));
-                return; // Body controlled by mind is not dead
-            }
+                return false; // Body controlled by mind is not dead
 
             // Yes, we still need to track down the client because we need to open the Eui
             if (mind.UserId == null || !_playerManager.TryGetSessionById(mind.UserId.Value, out var client))
-            {
-                // obj.Session.AttachedEntity.Value.PopupMessageCursor(Loc.GetString("cloning-pod-component-msg-user-offline"));
-                return; // If we can't track down the client, we can't offer transfer. That'd be quite bad.
-            }
+                return false; // If we can't track down the client, we can't offer transfer. That'd be quite bad.
 
             if (!TryComp<TransformComponent>(clonePod.Owner, out var transform))
-                return;
+                return false;
 
+            // Get species from player profile, this needs to get it from entity getting cloned instead
             var speciesProto = _prototype.Index<SpeciesPrototype>(hcp.Species).Prototype;
             var mob = EntityManager.SpawnEntity(speciesProto, transform.MapPosition);
             EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(mob, hcp);
@@ -89,6 +81,7 @@ namespace Content.Server.Cloning
             {
                 meta.EntityName = hcp.Name;
             }
+
             var cloneMindReturn = EntityManager.AddComponent<BeingClonedComponent>(mob);
             cloneMindReturn.Mind = mind;
             cloneMindReturn.Parent = clonePod.Owner;
@@ -97,6 +90,7 @@ namespace Content.Server.Cloning
             EntitySystem.Get<CloningSystem>().ClonesWaitingForMind.Add(mind, mob);
             UpdateStatus(CloningPodStatus.NoMind, clonePod);
             _euiManager.OpenEui(new AcceptCloningEui(mind), client);
+            return true;
         }
 
         public bool IsPowered(CloningPodComponent clonepod)
@@ -144,17 +138,6 @@ namespace Content.Server.Cloning
                 {
                     Eject(cloning);
                 }
-            }
-        }
-
-        struct ClonerDNAEntry {
-            public Mind.Mind Mind;
-            public HumanoidCharacterProfile Profile;
-
-            public ClonerDNAEntry(Mind.Mind m, HumanoidCharacterProfile hcp)
-            {
-                Mind = m;
-                Profile = hcp;
             }
         }
     }

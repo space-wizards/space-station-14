@@ -310,6 +310,8 @@ namespace Content.Client.Entry
             "EnergySword",
             "DoorRemote",
             "InteractionPopup",
+            "HealthScanner",
+            "CloningConsole"
         };
     }
 }

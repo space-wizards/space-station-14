@@ -42,7 +42,8 @@ namespace Content.Client.CloningConsole.UI
                 simulatedProgress += (float) sinceReference.TotalSeconds;
                 simulatedProgress = MathHelper.Clamp(simulatedProgress, 0f, _lastUpdate.Maximum);
             }
-            var percentage = simulatedProgress / CloningProgressBar.MaxValue * 100;
+            float percentage = simulatedProgress / CloningProgressBar.MaxValue * 100;
+            EjectButton.Disabled = simulatedProgress < CloningProgressBar.MaxValue;
             ProgressLabel.Text = $"{percentage:0}%";
             CloningProgressBar.Value = simulatedProgress;
         }
@@ -76,7 +77,6 @@ namespace Content.Client.CloningConsole.UI
                 BuildHistory();
             }
             _lastUpdate = state;
-
             // BUILD SCANNER UI
             if (state.ScannerConnected)
             {

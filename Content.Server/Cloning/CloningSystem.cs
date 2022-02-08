@@ -1,15 +1,9 @@
 using System.Collections.Generic;
-using System.Linq;
 using Content.Server.Cloning.Components;
 using Content.Server.Mind.Components;
 using Content.Server.Power.Components;
 using Content.Shared.GameTicking;
-using Content.Shared.Interaction;
 using Content.Shared.Preferences;
-using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 using Content.Server.Climbing;
 using static Content.Shared.Cloning.SharedCloningPodComponent;
@@ -97,33 +91,6 @@ namespace Content.Server.Cloning
             EntitySystem.Get<CloningPodSystem>().UpdateStatus(CloningPodStatus.Idle, clonePod);
             EntitySystem.Get<ClimbSystem>().ForciblySetClimbing(entity);
         }
-        // public void UpdateUserInterface(CloningPodComponent comp)
-        // {
-        //     var idToUser = GetIdToUser();
-        //     comp.UserInterface?.SetState(
-        //         new CloningPodBoundUserInterfaceState(
-        //             idToUser,
-        //             // now
-        //             _timing.CurTime,
-        //             // progress, time, progressing
-        //             comp.CloningProgress,
-        //             comp.CloningTime,
-        //             // this is duplicate w/ the above check that actually updates progress
-        //             // better here than on client though
-        //             comp.UiKnownPowerState && (comp.BodyContainer.ContainedEntity != null),
-        //             comp.Status == CloningPodStatus.Cloning));
-        // }
-
-        // public void AddToDnaScans(ClonerDNAEntry dna)
-        // {
-        //     if (!MindToId.ContainsKey(dna.Mind))
-        //     {
-        //         int id = _nextAllocatedMindId++;
-        //         MindToId.Add(dna.Mind, id);
-        //         IdToDNA.Add(id, dna);
-        //     }
-        //     OnChangeMadeToDnaScans();
-        // }
 
         // public void OnChangeMadeToDnaScans()
         // {
@@ -147,7 +114,6 @@ namespace Content.Server.Cloning
             IdToDNA.Clear();
             ClonesWaitingForMind.Clear();
             _nextAllocatedMindId = 0;
-            // We PROBABLY don't need to send out UI interface updates for the dna scan changes during a reset
         }
     }
 

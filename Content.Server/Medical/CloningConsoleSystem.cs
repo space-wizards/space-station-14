@@ -154,7 +154,6 @@ namespace Content.Server.Medical
                     if (mindUser.HasValue == false || mind.Session == null)
                         return;
 
-                    // cloningSystem.AddToDnaScans(new ClonerDNAEntry(mind, profile));
                     if (consoleComponent.CloningPod != null && consoleComponent.GeneticScanner != null)
                     {
                         if (mindUser.HasValue == false || mind.Session == null)
@@ -162,7 +161,9 @@ namespace Content.Server.Medical
                             return;
                         }
                         var profile = GetPlayerProfileAsync(mindUser.Value);
-                        cloningPodSystem.TryCloning(mind, profile, consoleComponent.CloningPod);
+                        bool cloningSuccessful = cloningPodSystem.TryCloning(mind, profile, consoleComponent.CloningPod);
+                        if (cloningSuccessful)
+                            consoleComponent.CloningHistory.Add(profile.Name);
                     }
                 }
         }
@@ -173,13 +174,14 @@ namespace Content.Server.Medical
 
             ClonerStatusState clonerStatus = ClonerStatusState.Ready;
 
-            var scanBodyInfo = "Unknown";
+            // genetic scanner info
+            string scanBodyInfo = "Unknown";
             bool scannerConnected = false;
             if (consoleComponent.GeneticScanner != null) {
                 scannerConnected = true;
                 EntityUid? scanBody = consoleComponent.GeneticScanner.BodyContainer.ContainedEntity;
                 // GET NAME
-                if (TryComp<MetaDataComponent>(scanBody, out var scanMetaData))
+                if (TryComp<MetaDataComponent>(scanBody, out MetaDataComponent? scanMetaData))
                 {
                     scanBodyInfo = scanMetaData.EntityName;
                 }
@@ -206,7 +208,7 @@ namespace Content.Server.Medical
                     }
                 }
             }
-
+            // cloning pod info
             var cloneBodyInfo = "Unknown";
             float cloningProgress = 0;
             float cloningTime = 30f;
