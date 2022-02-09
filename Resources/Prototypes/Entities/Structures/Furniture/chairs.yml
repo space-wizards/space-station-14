@@ -140,7 +140,7 @@
     netsync: false
   - type: Construction
     graph: Seat
-    node: ChairPilotSeat
+    node: chairPilotSeat
 
 - type: entity
   name: wooden chair
