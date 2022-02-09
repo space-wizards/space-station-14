@@ -197,7 +197,7 @@
           
 - type: entity
   parent: GasPassiveVent
-  id: GasDualPortVentPump
+  id: GasDualPortVent
   name: dual-port passive vent
   description: An open vent. There are two ports.
   placement:
