@@ -1114,7 +1114,7 @@
   - type: Advertise
     pack: DetDrobeAds
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/chefdrobe.rsi
+    sprite: Structures/Machines/VendingMachines/detdrobe.rsi
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Unlit"]
