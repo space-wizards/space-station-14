@@ -5,8 +5,6 @@ namespace Content.Client.Cabinet;
 
 public sealed class ItemCabinetSystem : VisualizerSystem<ItemCabinetVisualsComponent>
 {
-    protected override void OnComponentInit(EntityUid uid, ItemCabinetVisualsComponent component, ComponentInit args) { }
-
     protected override void OnAppearanceChange(EntityUid uid, ItemCabinetVisualsComponent component, ref AppearanceChangeEvent args)
     {
         if (TryComp(uid, out SpriteComponent? sprite)
