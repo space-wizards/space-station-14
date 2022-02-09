@@ -24,7 +24,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         public string? AmmoPrototype;
 
         /// <summary>
-        ///     Keeps track of the last shots-left that was sent to the client. Useful so that instead of dirtying the
+        ///     Keeps trach of the last shots-left that was sent to the client. Useful so that instead of dirtying the
         ///     components EVERY time the power changes, it only does so when the shots left actually changes.
         /// </summary>
         public int? LastShotsLeftSent;
