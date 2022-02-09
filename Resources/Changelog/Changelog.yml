@@ -1,9 +1,4 @@
 Entries:
-- author: PaulRitter
-  changes:
-  - {message: RoguePointingArrow will no longer attack ghosts, type: Fix}
-  id: 522
-  time: '2021-10-31T14:03:32.0000000+00:00'
 - author: CrudeWax
   changes:
   - {message: Replaced placeholder piloting alert icon, type: Tweak}
@@ -2963,3 +2958,8 @@ Entries:
       plates and ramen cups.', type: Tweak}
   id: 1022
   time: '2022-02-09T15:07:14.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed syringes not working., type: Fix}
+  id: 1023
+  time: '2022-02-09T15:08:59.0000000+00:00'
