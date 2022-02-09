@@ -57,7 +57,7 @@ namespace Content.Shared.SubFloor
         public void SetEnabled(SubFloorHideComponent subFloor, bool enabled)
         {
             subFloor.Enabled = enabled;
-            subFloor.Dirty();
+            Dirty(subFloor);
             UpdateAppearance(subFloor.Owner);
         }
 
