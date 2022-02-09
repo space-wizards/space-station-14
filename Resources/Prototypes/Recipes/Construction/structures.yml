@@ -252,6 +252,22 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+    
+- type: construction
+  name: shutter
+  id: Shutters
+  graph: Shutters
+  startNode: start
+  targetNode: Shutters
+  category: Structures
+  description: This is a shutter - connect it to a button to open and close it.
+  icon:
+    sprite: Structures/Doors/Shutters/shutters.rsi
+    state: closed
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+
 
 - type: construction
   name: catwalk
@@ -433,6 +449,24 @@
   canBuildInImpassable: false
   conditions:
   # Same here. - 20kdc
+    - !type:TileNotBlocked
+    
+- type: construction
+  name: ground light post
+  id: LightGroundFixture
+  graph: LightFixture
+  startNode: start
+  targetNode: groundLight
+  category: Structures
+  description: A ground light fixture. Use light bulbs.
+  icon:
+    sprite: Structures/Decoration/LightPosts/small_light_post.rsi
+    state: off
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
     - !type:TileNotBlocked
 
 - type: construction

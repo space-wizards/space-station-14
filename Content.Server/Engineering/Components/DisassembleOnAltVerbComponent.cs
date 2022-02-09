@@ -8,7 +8,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Engineering.Components
 {
     [RegisterComponent]
-    public class DisassembleOnActivateComponent : Component
+    public class DisassembleOnAltVerbComponent : Component
     {
         [ViewVariables]
         [DataField("prototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]

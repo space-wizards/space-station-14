@@ -114,6 +114,17 @@
     damage:
       types:
         Heat: 20
+     
+- type: entity
+  parent: WallLight
+  id: UnpoweredLightLED
+  suffix: Unpowered, LED
+  components:
+  - type: PointLight
+    radius: 10
+    energy: 2.5
+    softness: 0.9
+    color: "#EEEEFF"
         
 - type: entity
   id: PoweredlightExterior
@@ -128,6 +139,17 @@
         Heat: 20
         
 - type: entity
+  parent: WallLight
+  id: UnpoweredLightExterior
+  suffix: Unpowered, Exterior
+  components:
+  - type: PointLight
+    radius: 12
+    energy: 4.5
+    softness: 0.5
+    color: "#B4FCF0"
+        
+- type: entity
   id: PoweredlightSodium
   description: "A light fixture. Draws power and produces light when equipped with a light tube."
   suffix: Sodium tube, Powered
@@ -138,6 +160,17 @@
     damage:
       types:
         Heat: 20
+        
+- type: entity
+  parent: WallLight
+  id: UnpoweredLightSodium
+  suffix: Unpowered, Sodium
+  components:
+  - type: PointLight
+    radius: 10
+    energy: 4
+    softness: 0.5
+    color: "#FFAF38"
 
 - type: entity
   name: small light

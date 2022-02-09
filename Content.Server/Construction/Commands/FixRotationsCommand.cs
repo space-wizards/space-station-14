@@ -25,22 +25,23 @@ namespace Content.Server.Construction.Commands
             var player = shell.Player as IPlayerSession;
             var entityManager = IoCManager.Resolve<IEntityManager>();
             GridId gridId;
+            var xformQuery = entityManager.GetEntityQuery<TransformComponent>();
 
             switch (args.Length)
             {
                 case 0:
                     if (player?.AttachedEntity is not {Valid: true} playerEntity)
                     {
-                        shell.WriteLine("Only a player can run this command.");
+                        shell.WriteError("Only a player can run this command.");
                         return;
                     }
 
-                    gridId = entityManager.GetComponent<TransformComponent>(playerEntity).GridID;
+                    gridId = xformQuery.GetComponent(playerEntity).GridID;
                     break;
                 case 1:
                     if (!int.TryParse(args[0], out var id))
                     {
-                        shell.WriteLine($"{args[0]} is not a valid integer.");
+                        shell.WriteError($"{args[0]} is not a valid integer.");
                         return;
                     }
 
@@ -54,18 +55,20 @@ namespace Content.Server.Construction.Commands
             var mapManager = IoCManager.Resolve<IMapManager>();
             if (!mapManager.TryGetGrid(gridId, out var grid))
             {
-                shell.WriteLine($"No grid exists with id {gridId}");
+                shell.WriteError($"No grid exists with id {gridId}");
                 return;
             }
 
             if (!entityManager.EntityExists(grid.GridEntityId))
             {
-                shell.WriteLine($"Grid {gridId} doesn't have an associated grid entity.");
+                shell.WriteError($"Grid {gridId} doesn't have an associated grid entity.");
                 return;
             }
 
             var changed = 0;
-            foreach (var child in entityManager.GetComponent<TransformComponent>(grid.GridEntityId).ChildEntities)
+            var tagSystem = EntitySystem.Get<TagSystem>();
+
+            foreach (var child in xformQuery.GetComponent(grid.GridEntityId).ChildEntities)
             {
                 if (!entityManager.EntityExists(child))
                 {
@@ -85,18 +88,18 @@ namespace Content.Server.Construction.Commands
                 // cables
                 valid |= entityManager.HasComponent<CableComponent>(child);
                 // anything else that might need this forced
-                valid |= child.HasTag("ForceFixRotations");
+                valid |= tagSystem.HasTag(child, "ForceFixRotations");
                 // override
-                valid &= !child.HasTag("ForceNoFixRotations");
+                valid &= !tagSystem.HasTag(child, "ForceNoFixRotations");
 
                 if (!valid)
-                {
                     continue;
-                }
 
-                if (entityManager.GetComponent<TransformComponent>(child).LocalRotation != Angle.Zero)
+                var childXform = xformQuery.GetComponent(child);
+
+                if (childXform.LocalRotation != Angle.Zero)
                 {
-                    entityManager.GetComponent<TransformComponent>(child).LocalRotation = Angle.Zero;
+                    childXform.LocalRotation = Angle.Zero;
                     changed++;
                 }
             }

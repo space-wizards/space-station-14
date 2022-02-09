@@ -19,13 +19,12 @@ namespace Content.Server.StationEvents.Events
 
         public override string Name => "GasLeak";
 
-        public override string StartAnnouncement =>
-            "Attention crew, there is a gas leak on the station. We advise you to avoid the area and wear suit internals in the meantime.";
+        public override string StartAnnouncement => Loc.GetString("station-event-gas-leak-start-announcement");
 
         // Sourced from https://github.com/vgstation-coders/vgstation13/blob/2c5a491446ab824a8fbbf39bcf656b590e0228df/sound/misc/bloblarm.ogg
         public override string StartAudio => "/Audio/Announcements/bloblarm.ogg";
 
-        protected override string EndAnnouncement => "The source of the gas leak has been fixed. Please be cautious around areas with gas remaining.";
+        protected override string EndAnnouncement => Loc.GetString("station-event-gas-leak-end-announcement");
 
         private static readonly Gas[] LeakableGases = {
             Gas.Plasma,
