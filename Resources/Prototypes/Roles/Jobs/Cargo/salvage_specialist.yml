@@ -1,6 +1,6 @@
 - type: job
   id: SalvageSpecialist
-  name: "salvage spationaut"
+  name: "salvage specialist"
   icon: "ShaftMiner"
   startingGear: SalvageSpecialistGear
   departments:

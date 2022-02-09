@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "By Peptide90 for SS14",
+  "states": [
+    {
+      "name": "off"
+    },
+    {
+      "name": "on"
+    }
+  ]
+}

@@ -295,3 +295,18 @@
         damage:
           types:
             Poison: 4
+
+- type: reagent
+  id: Amatoxin
+  name: amatoxin
+  group: Toxins
+  desc: A potent toxin found in some mushrooms.
+  physicalDesc: nondescript
+  color: "#D6CE7B"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 6
