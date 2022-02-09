@@ -31,7 +31,7 @@ namespace Content.Shared.Verbs
 
             // Get the list of verbs. This effectively also checks that the requested verb is in fact a valid verb that
             // the user can perform.
-            var verbs = GetLocalVerbs(args.Target, user.Value, new() { args.RequestedVerb.GetType() });
+            var verbs = GetLocalVerbs(args.Target, user.Value, args.RequestedVerb.GetType());
 
             // Note that GetLocalVerbs might waste time checking & preparing unrelated verbs even though we know
             // precisely which one we want to run. However, MOST entities will only have 1 or 2 verbs of a given type.
@@ -40,6 +40,15 @@ namespace Content.Shared.Verbs
             // Find the requested verb.
             if (verbs.TryGetValue(args.RequestedVerb, out var verb))
                 ExecuteVerb(verb, user.Value, args.Target);
+        }
+
+        /// <summary>
+        ///     Raises a number of events in order to get all verbs of the given type(s) defined in local systems. This
+        ///     does not request verbs from the server.
+        /// </summary>
+        public SortedSet<Verb> GetLocalVerbs(EntityUid target, EntityUid user, Type type, bool force = false, bool all = false)
+        {
+            return GetLocalVerbs(target, user, new List<Type>() { type }, force, all);
         }
 
         /// <summary>
