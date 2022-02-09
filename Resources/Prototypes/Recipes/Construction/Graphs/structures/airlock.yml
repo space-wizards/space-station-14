@@ -83,8 +83,6 @@
             - !type:AirlockBolted
               value: false
             - !type:WirePanel {}
-            - !type:ContainerNotEmpty
-              container: board
           completed:
             - !type:EmptyAllContainers {}
           steps:
