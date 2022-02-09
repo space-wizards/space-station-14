@@ -27,8 +27,8 @@ namespace Content.Shared.SubFloor
         public bool IsUnderCover { get; set; } = false;
 
         /*
-         * An un-anchored hiding entity would require listening to on-move events in case it moves into a sub-floor tile.
-         * Also if this is ever needed, re-examine why `CollideOnAnchorComponent` are ensured????
+         * An un-anchored hiding entity would require listening to on-move events in case it moves into a sub-floor
+         * tile. Also T-Ray scanner headaches.
         /// <summary>
         ///     This entity needs to be anchored to be hid when not in subfloor.
         /// </summary>
