@@ -3,7 +3,7 @@ import logging
 
 from pydash import py_
 
-from Tools.ss14_ru import FluentFile
+from file import FluentFile
 from fluentast import FluentAstAbstract
 from fluentformatter import FluentFormatter
 from project import Project
