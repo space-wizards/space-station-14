@@ -28,3 +28,7 @@
 - Flags: ADMIN
   Commands:
     - togglehealthoverlay
+
+- Flags: FUN #uhhh sure? fun is subjective :)
+  Commands:
+    - toggletypingindicator
