@@ -36,7 +36,7 @@
             - material: Steel
               amount: 5
               doAfter: 1
-        - to: chairPilot
+        - to: chairPilotSeat
           steps:
             - material: Steel
               amount: 5
