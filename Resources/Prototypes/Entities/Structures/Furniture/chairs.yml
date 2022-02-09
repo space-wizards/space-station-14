@@ -171,6 +171,9 @@
   - type: Sprite
     state: shuttle
     netsync: false
+  - type: Construction
+    graph: Seat
+    node: pilot
 
 - type: entity
   name: ritual chair
