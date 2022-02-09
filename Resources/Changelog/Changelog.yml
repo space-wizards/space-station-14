@@ -1,14 +1,4 @@
 Entries:
-- author: Daemon
-  changes:
-  - {message: Changed Thirteen Loko to Fourteen Loko, type: Tweak}
-  - {message: Fixed some bottles in booze-o-mat and admin spawn panel being empty,
-    type: Fix}
-  - {message: Added various new reagents for bartending and added them to dispensers
-      and vending machines, type: Add}
-  - {message: 'Added many new craft-able mixed drinks, experiment to find out!', type: Add}
-  id: 521
-  time: '2021-10-31T13:57:06.0000000+00:00'
 - author: PaulRitter
   changes:
   - {message: RoguePointingArrow will no longer attack ghosts, type: Fix}
@@ -2967,3 +2957,9 @@ Entries:
     type: Remove}
   id: 1021
   time: '2022-02-09T04:25:13.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'More things now fit in the trashbag! Crayons, medipens, mice, broken
+      plates and ramen cups.', type: Tweak}
+  id: 1022
+  time: '2022-02-09T15:07:14.0000000+00:00'
