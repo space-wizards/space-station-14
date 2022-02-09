@@ -1,9 +1,9 @@
 - type: entity
   id: PlasticFlapsClear
   parent: BaseStructureDynamic
-  name: airtight plastic flaps
+  name: plastic flaps
   suffix: Clear
-  description: Heavy duty, airtight, plastic flaps. Definitely can't get past those. No way.
+  description: Heavy duty, plastic flaps. Definitely can't get past those. No way.
   placement:
     mode: SnapgridCenter
   components:
@@ -12,6 +12,8 @@
     sprite: Structures/plastic_flaps.rsi
     state: plasticflaps
   - type: Physics
+  - type: Transform
+    anchored: true
   - type: Fixtures
     fixtures:
     - shape:
@@ -22,8 +24,6 @@
       - Passable
       layer:
       - MobImpassable
-  - type: Airtight
-    fixVacuum: true
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -45,9 +45,9 @@
 - type: entity
   id: PlasticFlapsOpaque
   parent: PlasticFlapsClear
-  name: airtight plastic flaps
+  name: plastic flaps
   suffix: Opaque
-  description: Heavy duty, airtight, plastic flaps. Definitely can't get past those. No way.
+  description: Heavy duty, plastic flaps. Definitely can't get past those. No way.
   components:
   - type: Fixtures
     fixtures:
