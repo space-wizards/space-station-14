@@ -2,3 +2,8 @@
   id: InflatableWall
   name: inflatable wall
   spawn: InflatableWallStack1
+
+- type: stack
+  id: InflatableDoor
+  name: inflatable door
+  spawn: InflatableDoorStack1

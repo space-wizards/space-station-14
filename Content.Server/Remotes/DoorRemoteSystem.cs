@@ -20,6 +20,7 @@ namespace Content.Server.Remotes
         [Dependency] private readonly SharedDoorSystem _sharedDoorSystem = default!;
         [Dependency] private readonly DoorSystem _doorSystem = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+        [Dependency] private readonly SharedAirlockSystem _sharedAirlockSystem = default!;
 
         public override void Initialize()
         {
@@ -38,15 +39,13 @@ namespace Content.Server.Remotes
                     _popupSystem.PopupEntity(Loc.GetString("door-remote-switch-state-toggle-bolts"), args.User, Filter.Entities(args.User));
                     break;
                 case DoorRemoteComponent.OperatingMode.ToggleBolts:
-                    component.Mode = DoorRemoteComponent.OperatingMode.OpenClose; // TODO: Swítch to ToggleEmergencyAcces when EA is implemented
-                    _popupSystem.PopupEntity(Loc.GetString("door-remote-switch-state-open-close"), args.User, Filter.Entities(args.User)); // TODO: See the above comment
+                    component.Mode = DoorRemoteComponent.OperatingMode.ToggleEmergencyAccess;
+                    _popupSystem.PopupEntity(Loc.GetString("door-remote-switch-state-toggle-emergency-access"), args.User, Filter.Entities(args.User));
                     break;
-            /*
                 case DoorRemoteComponent.OperatingMode.ToggleEmergencyAccess:
                     component.Mode = DoorRemoteComponent.OperatingMode.OpenClose;
                     _popupSystem.PopupEntity(Loc.GetString("door-remote-switch-state-open-close"), args.User, Filter.Entities(args.User));
                     break;
-            */
             }
         }
 
@@ -86,6 +85,15 @@ namespace Content.Server.Remotes
                     {
                         SoundSystem.Play(Filter.Pvs(args.Target.Value), doorComponent.DenySound.GetSound(), args.Target.Value);
                     }
+                }
+            }
+
+            if (component.Mode == DoorRemoteComponent.OperatingMode.ToggleEmergencyAccess
+                && airlockComponent.IsPowered())
+            {
+                if (_doorSystem.HasAccess(doorComponent.Owner, args.Used))
+                {
+                    _sharedAirlockSystem.ToggleEmergencyAccess(airlockComponent);
                 }
             }
         }

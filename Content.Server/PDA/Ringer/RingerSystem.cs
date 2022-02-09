@@ -114,7 +114,14 @@ namespace Content.Server.PDA.Ringer
                 if (ringer.TimeElapsed < NoteDelay) continue;
 
                 ringer.TimeElapsed -= NoteDelay;
-                SoundSystem.Play(Filter.Pvs(ringer.Owner, entityManager: EntityManager), GetSound(ringer.Ringtone[ringer.NoteCount]));
+                var ringerXform = Transform(ringer.Owner);
+
+                SoundSystem.Play(
+                    Filter.Empty().AddInRange(ringerXform.MapPosition, ringer.Range),
+                    GetSound(ringer.Ringtone[ringer.NoteCount]),
+                    ringer.Owner,
+                    AudioParams.Default.WithMaxDistance(ringer.Range).WithVolume(ringer.Volume));
+
                 ringer.NoteCount++;
 
                 if (ringer.NoteCount > 3)
