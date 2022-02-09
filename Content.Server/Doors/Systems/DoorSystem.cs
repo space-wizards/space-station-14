@@ -151,7 +151,9 @@ public sealed class DoorSystem : SharedDoorSystem
         RaiseLocalEvent(target, canEv, false);
 
         if (canEv.Cancelled)
-            return true; // true, as airlock component will cancel after generating a pop-up.
+            // mark handled, as airlock component will cancel after generating a pop-up & you don't want to pry a tile
+            // under a windoor.
+            return true; 
 
         var modEv = new DoorGetPryTimeModifierEvent();
         RaiseLocalEvent(target, modEv, false);
