@@ -37,6 +37,11 @@ namespace Content.Shared.Item
             args.State = new ItemComponentState(component.Size, component.EquippedPrefix, component.Color, component.RsiPath);
         }
 
+        // Although netsync is being set to false for items client can still update these
+        // Realistically:
+        // Container should already hide these
+        // Client is the only thing that matters.
+
         private void OnUnequipped(EntityUid uid, SharedSpriteComponent component, GotUnequippedEvent args)
         {
             component.Visible = true;
