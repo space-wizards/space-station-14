@@ -457,9 +457,9 @@
         damage:
           groups:
             Burn: -1
-            Toxin: -1
-            Airloss: -1
             Brute: -1
+          types:
+            Poison: -0.5 ##Should be about what it was when it healed the toxin group
 
 - type: reagent
   id: ChloralHydrate
