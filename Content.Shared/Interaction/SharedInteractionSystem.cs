@@ -49,6 +49,8 @@ namespace Content.Shared.Interaction
         public const float InteractionRange = 1.2f;
         public const float InteractionRangeSquared = InteractionRange * InteractionRange;
 
+        public const float MaxRaycastRange = 100;
+
         public delegate bool Ignored(EntityUid entity);
 
         public override void Initialize()
@@ -322,19 +324,24 @@ namespace Content.Shared.Interaction
             // Have to be on same map regardless.
             if (other.MapId != origin.MapId) return false;
 
-            // Uhh this does mean we could raycast infinity distance so may need to limit it.
             var dir = other.Position - origin.Position;
-            var lengthSquared = dir.LengthSquared;
-
-            if (lengthSquared.Equals(0f)) return true;
+            var length = dir.Length;
 
             // If range specified also check it
-            if (range > 0f && lengthSquared > range * range) return false;
+            if (range > 0f && length > range) return false;
+
+            if (MathHelper.CloseTo(length, 0)) return true;
 
             predicate ??= _ => false;
 
+            if (length > MaxRaycastRange)
+            {
+                Logger.Warning("InRangeUnobstructed check performed over extreme range. Limiting CollisionRay size.");
+                length = MaxRaycastRange;
+            }
+
             var ray = new CollisionRay(origin.Position, dir.Normalized, (int) collisionMask);
-            var rayResults = _sharedBroadphaseSystem.IntersectRayWithPredicate(origin.MapId, ray, dir.Length, predicate.Invoke, false).ToList();
+            var rayResults = _sharedBroadphaseSystem.IntersectRayWithPredicate(origin.MapId, ray, length, predicate.Invoke, false).ToList();
 
             if (rayResults.Count == 0) return true;
 

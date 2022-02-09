@@ -21,8 +21,6 @@ namespace Content.Server.NodeContainer.Nodes
     [DataDefinition]
     public class PipeNode : Node, IGasMixtureHolder, IRotatableNode
     {
-        private PipeDirection _connectedDirections;
-
         /// <summary>
         ///     The directions in which this pipe can connect to other pipes around it.
         /// </summary>
@@ -54,21 +52,6 @@ namespace Content.Server.NodeContainer.Nodes
             if (pipeNode.NodeGroupID != NodeGroupID) return;
             _alwaysReachable.Remove(pipeNode);
             EntitySystem.Get<NodeGroupSystem>().QueueRemakeGroup((BaseNodeGroup) NodeGroup);
-        }
-
-        /// <summary>
-        ///     The directions in which this node is connected to other nodes.
-        ///     Used by <see cref="PipeVisualState"/>.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public PipeDirection ConnectedDirections
-        {
-            get => _connectedDirections;
-            private set
-            {
-                _connectedDirections = value;
-                UpdateAppearance();
-            }
         }
 
         /// <summary>
@@ -124,30 +107,37 @@ namespace Content.Server.NodeContainer.Nodes
 
         private const float DefaultVolume = 200f;
 
-        public override void OnContainerStartup()
+        public override void Initialize(EntityUid owner, IEntityManager entMan)
         {
-            base.OnContainerStartup();
-            OnConnectedDirectionsNeedsUpdating();
+            base.Initialize(owner, entMan);
+
+            if (!RotationsEnabled)
+                return;
+
+            var xform = entMan.GetComponent<TransformComponent>(owner);
+            CurrentPipeDirection = _originalPipeDirection.RotatePipeDirection(xform.LocalRotation);
         }
 
-        public override void OnContainerShutdown()
+        bool IRotatableNode.RotateEvent(ref RotateEvent ev)
         {
-            base.OnContainerShutdown();
-            UpdateAdjacentConnectedDirections();
-        }
+            if (_originalPipeDirection == PipeDirection.Fourway)
+                return false;
 
-        public void JoinPipeNet(IPipeNet pipeNet)
-        {
-            OnConnectedDirectionsNeedsUpdating();
-        }
+            // update valid pipe direction
+            if (!RotationsEnabled)
+            {
+                if (CurrentPipeDirection == _originalPipeDirection)
+                    return false;
 
-        /// <summary>
-        ///     Rotates the <see cref="PipeDirection"/> when the entity is rotated, and re-calculates the <see cref="IPipeNet"/>.
-        /// </summary>
-        void IRotatableNode.RotateEvent(ref RotateEvent ev)
-        {
-            OnConnectedDirectionsNeedsUpdating();
-            UpdateAppearance();
+                CurrentPipeDirection = _originalPipeDirection;
+            }
+            else
+            {
+                CurrentPipeDirection = _originalPipeDirection.RotatePipeDirection(ev.NewRotation);
+            }
+
+            // node connections need to be updated
+            return true;
         }
 
         public override IEnumerable<Node> GetReachableNodes(TransformComponent xform,
@@ -228,105 +218,6 @@ namespace Content.Server.NodeContainer.Nodes
                         yield return pipe;
                 }
             }
-        }
-
-        /// <summary>
-        ///     Updates the <see cref="ConnectedDirections"/> of this and all sorrounding pipes.
-        ///     Also updates CurrentPipeDirection.
-        /// </summary>
-        private void OnConnectedDirectionsNeedsUpdating()
-        {
-            if (RotationsEnabled)
-            {
-                CurrentPipeDirection = _originalPipeDirection.RotatePipeDirection(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).LocalRotation);
-            }
-            else
-            {
-                CurrentPipeDirection = _originalPipeDirection;
-            }
-            UpdateConnectedDirections();
-            UpdateAdjacentConnectedDirections();
-            UpdateAppearance();
-        }
-
-        /// <summary>
-        ///     Checks what directions there are connectable pipes in, to update <see cref="ConnectedDirections"/>.
-        /// </summary>
-        private void UpdateConnectedDirections()
-        {
-            ConnectedDirections = PipeDirection.None;
-
-            var entMan = IoCManager.Resolve<IEntityManager>();
-            var xform = entMan.GetComponent<TransformComponent>(Owner);
-            if (!IoCManager.Resolve<IMapManager>().TryGetGrid(xform.GridID, out var grid))
-                return;
-            var pos = grid.WorldToTile(xform.WorldPosition);
-            var query = entMan.GetEntityQuery<NodeContainerComponent>();
-
-            for (var i = 0; i < PipeDirectionHelpers.AllPipeDirections; i++)
-            {
-                var pipeDir = (PipeDirection) (1 << i);
-
-                if (!CurrentPipeDirection.HasDirection(pipeDir))
-                    continue;
-
-                foreach (var pipe in LinkableNodesInDirection(pos, pipeDir, grid, query))
-                {
-                    if (pipe.Connectable(entMan) && pipe.NodeGroupID == NodeGroupID)
-                    {
-                        ConnectedDirections |= pipeDir;
-                        break;
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        ///     Calls <see cref="UpdateConnectedDirections"/> on all adjacent pipes,
-        ///     to update their <see cref="ConnectedDirections"/> when this pipe is changed.
-        /// </summary>
-        private void UpdateAdjacentConnectedDirections()
-        {
-            var entMan = IoCManager.Resolve<IEntityManager>();
-            var xform = entMan.GetComponent<TransformComponent>(Owner);
-            if (!IoCManager.Resolve<IMapManager>().TryGetGrid(xform.GridID, out var grid))
-                return;
-            var pos = grid.WorldToTile(xform.WorldPosition);
-            var query = entMan.GetEntityQuery<NodeContainerComponent>();
-
-            for (var i = 0; i < PipeDirectionHelpers.PipeDirections; i++)
-            {
-                var pipeDir = (PipeDirection) (1 << i);
-
-                foreach (var pipe in LinkableNodesInDirection(pos, pipeDir, grid, query))
-                {
-                    pipe.UpdateConnectedDirections();
-                    pipe.UpdateAppearance();
-                }
-            }
-        }
-
-        /// <summary>
-        ///     Updates the <see cref="AppearanceComponent"/>.
-        ///     Gets the combined <see cref="ConnectedDirections"/> of every pipe on this entity, so the visualizer on this entity can draw the pipe connections.
-        /// </summary>
-        private void UpdateAppearance()
-        {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out AppearanceComponent? appearance)
-                || !IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out NodeContainerComponent? container))
-                return;
-
-            var netConnectedDirections = PipeDirection.None;
-
-            foreach (var node in container.Nodes.Values)
-            {
-                if (node is PipeNode pipe)
-                {
-                    netConnectedDirections |= pipe.ConnectedDirections;
-                }
-            }
-
-            appearance.SetData(PipeVisuals.VisualState, netConnectedDirections);
         }
     }
 }

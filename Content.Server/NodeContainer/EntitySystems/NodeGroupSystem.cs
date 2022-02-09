@@ -245,12 +245,20 @@ namespace Content.Server.NodeContainer.EntitySystems
             _toRemake.Clear();
             _toRemove.Clear();
 
+            // notify entities that node groups have been updated, so they can do things like update their visuals.
+            HashSet<EntityUid> entities = new();
             foreach (var group in newGroups)
             {
                 foreach (var node in group.Nodes)
                 {
-                    node.OnPostRebuild();
+                    entities.Add(node.Owner);
                 }
+            }
+
+            foreach (var uid in entities)
+            {
+                var ev = new NodeGroupsRebuilt(uid);
+                RaiseLocalEvent(uid, ref ev, true);
             }
 
             _sawmill.Debug($"Updated node groups in {sw.Elapsed.TotalMilliseconds}ms. {newGroups.Count} new groups, {refloodCount} nodes processed.");
@@ -400,6 +408,21 @@ namespace Content.Server.NodeContainer.EntitySystems
                 NodeGroupID.WireNet => Color.DarkMagenta,
                 _ => Color.White
             };
+        }
+    }
+
+    /// <summary>
+    ///     Event raised after node groups have been updated. Directed at any entity with a <see
+    ///     cref="NodeContainerComponent"/> that had a relevant node.
+    /// </summary>
+    [ByRefEvent]
+    public readonly struct NodeGroupsRebuilt
+    {
+        public readonly EntityUid NodeOwner;
+
+        public NodeGroupsRebuilt(EntityUid nodeOwner)
+        {
+            NodeOwner = nodeOwner;
         }
     }
 }

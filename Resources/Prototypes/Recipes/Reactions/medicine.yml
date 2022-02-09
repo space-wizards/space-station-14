@@ -454,7 +454,7 @@
       amount: 1
   products:
     SpaceDrugs: 3
-    
+
 - type: reaction
   id: Ultravasculine
   reactants:
@@ -465,3 +465,13 @@
       catalyst: true
   products:
     Ultravasculine: 2
+
+- type: reaction
+  id: Siderlac
+  reactants:
+    Aloe:
+      amount: 1
+    Stellibinin:
+      amount: 1
+  products:
+    Siderlac: 2

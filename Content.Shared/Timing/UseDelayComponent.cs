@@ -9,7 +9,7 @@ namespace Content.Shared.Timing
     /// <summary>
     /// Timer that creates a cooldown each time an object is activated/used
     /// </summary>
-    [RegisterComponent, ComponentProtoName("UseDelay")]
+    [RegisterComponent]
     public sealed class UseDelayComponent : Component
     {
         [ViewVariables]
