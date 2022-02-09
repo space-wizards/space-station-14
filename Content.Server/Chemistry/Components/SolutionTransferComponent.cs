@@ -120,14 +120,7 @@ namespace Content.Server.Chemistry.Components
             if (!eventArgs.InRangeUnobstructed() || eventArgs.Target == null)
                 return false;
 
-            if (!_entities.HasComponent<SolutionContainerManagerComponent>(Owner))
-                return false;
-
             var target = eventArgs.Target!.Value;
-            if (!_entities.HasComponent<SolutionContainerManagerComponent>(target))
-            {
-                return false;
-            }
 
             //Special case for reagent tanks, because normally clicking another container will give solution, not take it.
             if (CanReceive  && !_entities.HasComponent<RefillableSolutionComponent>(target) // target must not be refillable (e.g. Reagent Tanks)
