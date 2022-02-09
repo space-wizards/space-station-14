@@ -137,7 +137,6 @@
   - type: Rotatable
   - type: Sprite
     state: shuttle
-    netsync: false
   - type: Construction
     graph: Seat
     node: chairPilotSeat
