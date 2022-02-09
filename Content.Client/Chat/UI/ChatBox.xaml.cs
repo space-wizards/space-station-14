@@ -594,6 +594,7 @@ namespace Content.Client.Chat.UI
 
             Input.CursorPosition = Input.Text.Length;
             Input.SelectionStart = selectStart.GetOffset(Input.Text.Length);
+            _typingIndicatorSystem.HandleClientTyping();
         }
 
         private ChatSelectChannel MapLocalIfGhost(ChatSelectChannel channel)

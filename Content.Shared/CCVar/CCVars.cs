@@ -609,16 +609,12 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<int> ChatMaxMessageLength =
             CVarDef.Create("chat.max_message_length", 1000, CVar.SERVER | CVar.REPLICATED);
+
         /// <summary>
-        /// Polling interval (in seconds) for activity in the chatbox input field after typing has begun.
+        /// Cooldown for the typing system's network event broadcasting.
         /// </summary>
-        public static readonly CVarDef<float> ChatTypingIndicatorPollRate =
-            CVarDef.Create("chat.typing_indicator_poll_rate", 2.5f, CVar.SERVER | CVar.REPLICATED);
-        /// <summary>
-        /// Whether the client has enabled the typing indicator.
-        /// </summary>
-        public static readonly CVarDef<bool> ChatTypingIndicatorSystemEnabled =
-            CVarDef.Create("chat.typing_indicator_system_enabled", false, CVar.CLIENTONLY);
+        public static readonly CVarDef<int> ChatTypingIndicatorCooldown =
+            CVarDef.Create("chat.typing_indicator_accum_threshold", 2, CVar.SERVER | CVar.REPLICATED);
 
         public static readonly CVarDef<bool> ChatSanitizerEnabled =
             CVarDef.Create("chat.chat_sanitizer_enabled", true, CVar.SERVERONLY);

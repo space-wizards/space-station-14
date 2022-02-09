@@ -18,6 +18,7 @@ namespace Content.Server.Speech.EntitySystems
         {
             //in here we can do some server side checks before the client system finally renders the indicators
             RaiseNetworkEvent(new RemoteClientTypingMessage(ev.ClientId, ev.Owner));
+            Logger.Info($"{ev.Owner} is typing..");
         }
     }
 }
