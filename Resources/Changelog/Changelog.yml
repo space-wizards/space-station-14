@@ -1,10 +1,4 @@
 Entries:
-- author: Saphire
-  changes:
-  - {message: 'Fix singulo field generators, somewhat. Do not remove the scaffold
-      under the field...', type: Add}
-  id: 520
-  time: '2021-10-31T13:39:37.0000000+00:00'
 - author: Daemon
   changes:
   - {message: Changed Thirteen Loko to Fourteen Loko, type: Tweak}
@@ -2967,3 +2961,9 @@ Entries:
       access mode, type: Add}
   id: 1020
   time: '2022-02-09T03:13:35.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Removed targeting dummy, as limb-damage is still not yet implemented.',
+    type: Remove}
+  id: 1021
+  time: '2022-02-09T04:25:13.0000000+00:00'
