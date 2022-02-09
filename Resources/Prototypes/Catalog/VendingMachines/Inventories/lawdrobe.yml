@@ -3,7 +3,7 @@
   name: LawDrobe
   spriteName: lawdrobe
   startingInventory:
-    ClothingUniformJumpsuitLawyerBlue: = 1
+    ClothingUniformJumpsuitLawyerBlue: 1
     ClothingUniformJumpsuitLawyerPurple: 1
     ClothingUniformJumpsuitLawyerRed: 1
     ClothingUniformJumpsuitLawyerBlack: 1

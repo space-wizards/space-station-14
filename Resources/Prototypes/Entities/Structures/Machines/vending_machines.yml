@@ -960,35 +960,6 @@
 
 - type: entity
   parent: VendingMachine
-  id: VendingMachineCargoDrobe
-  name: CargoDrobe
-  description: A highly advanced vending machine for buying cargo related clothing for free.
-  components:
-  - type: VendingMachine
-    pack: CargoDrobeInventory
-  - type: Advertise
-    pack: CargoDrobeAds
-  - type: Sprite
-    sprite: Structures/Machines/VendingMachines/cargodrobe.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      broken: true
-    - type: WiresVisualizer
-  - type: AccessReader
-    access: [["Cargo"]]
-
-- type: entity
-  parent: VendingMachine
   id: VendingMachineMediDrobe
   name: MediDrobe
   description: A vending machine rumoured to be capable of dispensing clothing for medical personnel.
@@ -1134,35 +1105,6 @@
 
 - type: entity
   parent: VendingMachine
-  id: VendingMachineChefDrobe
-  name: ChefDrobe
-  description: This vending machine might not dispense meat, but it certainly dispenses chef related clothing.
-  components:
-  - type: VendingMachine
-    pack: ChefDrobeInventory
-  - type: Advertise
-    pack: ChefDrobeAds
-  - type: Sprite
-    sprite: Structures/Machines/VendingMachines/chefdrobe.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      broken: true
-    - type: WiresVisualizer
-  - type: AccessReader
-    access: [["Kitchen"]]
-
-- type: entity
-  parent: VendingMachine
   id: VendingMachineDetDrobe
   name: DetDrobe
   description: A machine for all your detective needs, as long as you need clothes.
@@ -1217,4 +1159,4 @@
       broken: true
     - type: WiresVisualizer
   - type: AccessReader
-    access: [["Security"]]
+    access: [["Janitor"]]
