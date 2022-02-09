@@ -126,6 +126,23 @@
     node: chairComfy
 
 - type: entity
+  name: pilot seat
+  id: ChairPilotSeat
+  parent: SeatBase
+  description: The pilot seat of a prestigious ship.
+  components:
+  - type: Transform
+    anchored: true
+  - type: Anchorable
+  - type: Rotatable
+  - type: Sprite
+    state: shuttle
+    netsync: false
+  - type: Construction
+    graph: Seat
+    node: ChairPilotSeat
+
+- type: entity
   name: wooden chair
   id: ChairWood
   parent: SeatBase
@@ -157,23 +174,6 @@
   - type: Tag
     tags:
     - Wooden
-
-- type: entity
-  name: pilot seat
-  id: ChairPilotSeat
-  parent: SeatBase
-  description: The pilot seat of a prestigious ship.
-  components:
-  - type: Transform
-    anchored: true
-  - type: Anchorable
-  - type: Rotatable
-  - type: Sprite
-    state: shuttle
-    netsync: false
-  - type: Construction
-    graph: Seat
-    node: pilot
 
 - type: entity
   name: ritual chair
