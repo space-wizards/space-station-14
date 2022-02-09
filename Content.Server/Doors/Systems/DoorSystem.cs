@@ -5,6 +5,7 @@ using Content.Server.Construction;
 using Content.Server.Construction.Components;
 using Content.Server.Tools;
 using Content.Server.Tools.Components;
+using Content.Server.Doors.Components;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Doors;
@@ -48,8 +49,8 @@ public sealed class DoorSystem : SharedDoorSystem
         base.OnInit(uid, door, args);
 
         if (door.State == DoorState.Open
-            && door.ChangeAirtight
-            && TryComp(uid, out AirtightComponent? airtight))
+                && door.ChangeAirtight
+                && TryComp(uid, out AirtightComponent? airtight))
         {
             _airtightSystem.SetAirblocked(airtight, false);
         }
@@ -96,7 +97,7 @@ public sealed class DoorSystem : SharedDoorSystem
         SoundSystem.Play(filter, sound, uid, audioParams);
     }
 
-    #region DoAfters
+#region DoAfters
     /// <summary>
     ///     Weld or pry open a door.
     /// </summary>
@@ -136,7 +137,7 @@ public sealed class DoorSystem : SharedDoorSystem
         // perform a do-after delay
         door.BeingWelded = true;
         _toolSystem.UseTool(used, user, target, 3f, 3f, door.WeldingQuality,
-            new WeldFinishedEvent(), new WeldCancelledEvent(), target);
+                new WeldFinishedEvent(), new WeldCancelledEvent(), target);
 
         return true; // we might not actually succeeded, but a do-after has started
     }
@@ -196,7 +197,7 @@ public sealed class DoorSystem : SharedDoorSystem
         else if (door.State == DoorState.Open)
             StartClosing(uid, door);
     }
-    #endregion
+#endregion
 
     /// <summary>
     ///     Does the user have the permissions required to open this door?
@@ -207,6 +208,10 @@ public sealed class DoorSystem : SharedDoorSystem
 
         // if there is no "user" we skip the access checks. Access is also ignored in some game-modes.
         if (user == null || AccessType == AccessTypes.AllowAll)
+            return true;
+
+        // If the door is on emergency access we skip the checks.
+        if (TryComp<SharedAirlockComponent>(uid, out var airlock) && airlock.EmergencyAccess)
             return true;
 
         if (!Resolve(uid, ref access, false))
@@ -289,17 +294,17 @@ public sealed class DoorSystem : SharedDoorSystem
         var container = uid.EnsureContainer<Container>("board", out var existed);
 
         /* // TODO ShadowCommander: Re-enable when access is added to boards. Requires map update.
-        if (existed)
-        {
-            // We already contain a board. Note: We don't check if it's the right one!
-            if (container.ContainedEntities.Count != 0)
-                return;
+           if (existed)
+           {
+        // We already contain a board. Note: We don't check if it's the right one!
+        if (container.ContainedEntities.Count != 0)
+        return;
         }
 
         var board = Owner.EntityManager.SpawnEntity(_boardPrototype, Owner.Transform.Coordinates);
 
         if(!container.Insert(board))
-            Logger.Warning($"Couldn't insert board {board} into door {Owner}!");
+        Logger.Warning($"Couldn't insert board {board} into door {Owner}!");
         */
     }
 }
