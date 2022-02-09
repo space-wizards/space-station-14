@@ -103,10 +103,10 @@
     
 - type: construction
   name: pilots chair
-  id: ChairPilot
+  id: chairPilotSeat
   graph: Seat
   startNode: start
-  targetNode: pilot
+  targetNode: chairPilotSeat
   category: Furniture
   description: Fit for a captain.
   icon:
