@@ -1,4 +1,5 @@
 using System;
+using Content.Client.Decals.UI;
 using Content.Client.HUD;
 using Content.Client.Markers;
 using Content.Client.SubFloor;
@@ -30,6 +31,7 @@ namespace Content.Client.Sandbox
         public readonly Button RespawnButton;
         public readonly Button SpawnEntitiesButton;
         public readonly Button SpawnTilesButton;
+        public readonly Button SpawnDecalsButton;
         public readonly Button GiveFullAccessButton;  //A button that just puts a captain's ID in your hands.
         public readonly Button GiveAghostButton;
         public readonly Button ToggleLightButton;
@@ -64,6 +66,9 @@ namespace Content.Client.Sandbox
 
             SpawnTilesButton = new Button { Text = Loc.GetString("sandbox-window-spawn-tiles-button") };
             vBox.AddChild(SpawnTilesButton);
+
+            SpawnDecalsButton = new Button { Text = Loc.GetString("sandbox-window-spawn-decals-button") };
+            vBox.AddChild(SpawnDecalsButton);
 
             GiveFullAccessButton = new Button { Text = Loc.GetString("sandbox-window-grant-full-access-button") };
             vBox.AddChild(GiveFullAccessButton);
@@ -129,6 +134,7 @@ namespace Content.Client.Sandbox
         private SandboxWindow? _window;
         private EntitySpawnWindow? _spawnWindow;
         private TileSpawnWindow? _tilesSpawnWindow;
+        private DecalPlacerWindow? _decalSpawnWindow;
         private bool _sandboxWindowToggled;
 
         public void Initialize()
@@ -143,7 +149,7 @@ namespace Content.Client.Sandbox
 
             _netManager.RegisterNetMessage<MsgSandboxSuicide>();
 
-            _gameHud.SandboxButtonToggled = SandboxButtonPressed;
+            _gameHud.SandboxButtonToggled += SandboxButtonPressed;
 
             _inputManager.SetInputCommand(ContentKeyFunctions.OpenEntitySpawnWindow,
                 InputCmdHandler.FromDelegate(session => ToggleEntitySpawnWindow()));
@@ -151,6 +157,8 @@ namespace Content.Client.Sandbox
                 InputCmdHandler.FromDelegate(session => ToggleSandboxWindow()));
             _inputManager.SetInputCommand(ContentKeyFunctions.OpenTileSpawnWindow,
                 InputCmdHandler.FromDelegate(session => ToggleTilesWindow()));
+            _inputManager.SetInputCommand(ContentKeyFunctions.OpenDecalSpawnWindow,
+                InputCmdHandler.FromDelegate(session => ToggleDecalsWindow()));
         }
 
         private void SandboxButtonPressed(bool newValue)
@@ -206,6 +214,7 @@ namespace Content.Client.Sandbox
             _window.RespawnButton.OnPressed += OnRespawnButtonOnOnPressed;
             _window.SpawnTilesButton.OnPressed += OnSpawnTilesButtonClicked;
             _window.SpawnEntitiesButton.OnPressed += OnSpawnEntitiesButtonClicked;
+            _window.SpawnDecalsButton.OnPressed += OnSpawnDecalsButtonClicked;
             _window.GiveFullAccessButton.OnPressed += OnGiveAdminAccessButtonClicked;
             _window.GiveAghostButton.OnPressed += OnGiveAghostButtonClicked;
             _window.ToggleLightButton.OnToggled += OnToggleLightButtonClicked;
@@ -239,6 +248,11 @@ namespace Content.Client.Sandbox
         private void OnSpawnTilesButtonClicked(BaseButton.ButtonEventArgs args)
         {
             ToggleTilesWindow();
+        }
+
+        private void OnSpawnDecalsButtonClicked(BaseButton.ButtonEventArgs obj)
+        {
+            ToggleDecalsWindow();
         }
 
         private void OnToggleLightButtonClicked(BaseButton.ButtonEventArgs args)
@@ -325,6 +339,25 @@ namespace Content.Client.Sandbox
             else
             {
                 _tilesSpawnWindow.Open();
+            }
+        }
+
+        private void ToggleDecalsWindow()
+        {
+            if (_decalSpawnWindow == null)
+            {
+                _decalSpawnWindow = new DecalPlacerWindow(_prototypeManager);
+                _decalSpawnWindow.OpenToLeft();
+                return;
+            }
+
+            if (_decalSpawnWindow.IsOpen)
+            {
+                _decalSpawnWindow.Close();
+            }
+            else
+            {
+                _decalSpawnWindow.Open();
             }
         }
 
