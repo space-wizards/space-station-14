@@ -1,10 +1,4 @@
 Entries:
-- author: Saphire
-  changes:
-  - {message: The ban message now actually tells you which one of your deeds got you
-      banned, type: Add}
-  id: 518
-  time: '2021-10-29T18:54:15.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: 'can no longer place multiple wires of the same type on one spot, HV
@@ -2966,3 +2960,9 @@ Entries:
       post., type: Add}
   id: 1018
   time: '2022-02-09T00:47:33.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: The cursed locker in a certain salvage map has been replaced with something
+      else., type: Tweak}
+  id: 1019
+  time: '2022-02-09T03:02:15.0000000+00:00'
