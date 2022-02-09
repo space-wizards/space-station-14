@@ -148,7 +148,7 @@ namespace Content.Client.Sandbox
 
             _netManager.RegisterNetMessage<MsgSandboxSuicide>();
 
-            _gameHud.SandboxButtonToggled = SandboxButtonPressed;
+            _gameHud.SandboxButtonToggled += SandboxButtonPressed;
 
             _inputManager.SetInputCommand(ContentKeyFunctions.OpenEntitySpawnWindow,
                 InputCmdHandler.FromDelegate(session => ToggleEntitySpawnWindow()));
