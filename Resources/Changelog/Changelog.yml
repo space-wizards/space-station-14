@@ -1,9 +1,4 @@
 Entries:
-- author: CrudeWax
-  changes:
-  - {message: Replaced placeholder piloting alert icon, type: Tweak}
-  id: 523
-  time: '2021-11-01T13:26:37.0000000+00:00'
 - author: PJB
   changes:
   - {message: Gravity generator now needs ~100 seconds to charge up/down when turned
@@ -2963,3 +2958,8 @@ Entries:
   - {message: Fixed syringes not working., type: Fix}
   id: 1023
   time: '2022-02-09T15:08:59.0000000+00:00'
+- author: Delete69
+  changes:
+  - {message: command decal color to departmental pallette, type: Add}
+  id: 1024
+  time: '2022-02-09T17:26:10.0000000+00:00'
