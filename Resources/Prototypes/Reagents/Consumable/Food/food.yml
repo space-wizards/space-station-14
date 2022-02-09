@@ -48,3 +48,19 @@
             Brute: -0.5
             Burn: -0.5
 
+- type: reagent
+  id: Protein
+  name: protein
+  group: Foods
+  desc: Found in certain meals, good for bodily health.
+  physicalDesc: clumpy
+  color: "#FFFFE5"
+  metabolisms:
+    Food:
+      effects:
+      - !type:HealthChange
+        probability: 0.5
+        damage:
+          groups:
+            Brute: -0.4
+
