@@ -18,8 +18,6 @@
   abstract: true
   components:
   - type: ShuttleConsole
-  - type: ApcPowerReceiver
-    powerLoad: 200
   - type: ExtensionCableReceiver
   - type: PointLight
     radius: 1.5
@@ -213,6 +211,8 @@
     - type: ComputerVisualizer
       key: generic_key
       screen: generic
+  - type: ApcPowerReceiver
+    powerLoad: 500
   - type: Computer
     board: BodyScannerComputerCircuitboard
   - type: PointLight
@@ -267,9 +267,6 @@
       type: SolarControlConsoleBoundUserInterface
   - type: Computer
     board: SolarControlComputerCircuitboard
-  - type: ApcPowerReceiver
-    powerLoad: 200
-    priority: Low
   - type: PointLight
     radius: 1.5
     energy: 1.6
