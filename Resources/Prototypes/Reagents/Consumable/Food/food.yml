@@ -30,3 +30,21 @@
     amount: 2
   - !type:PlantAdjustPests
     amount: 2
+
+- type: reagent
+  id: Vitamin
+  name: vitamin
+  group: Foods
+  desc: Found in healthy, complete meals.
+  physicalDesc: chalky
+  color: "#D3D3D3"
+  metabolisms:
+    Food: #This makes it not compete with medicines, a large bonus for something that can heal
+      effects:
+      - !type:HealthChange
+        probability: 0.5
+        damage:
+          groups:
+            Brute: -0.5
+            Burn: -0.5
+
