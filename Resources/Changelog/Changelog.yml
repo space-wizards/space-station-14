@@ -1,10 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: 'can no longer place multiple wires of the same type on one spot, HV
-      no longer blocks other wires.', type: Fix}
-  id: 519
-  time: '2021-10-30T23:08:48.0000000+00:00'
 - author: Saphire
   changes:
   - {message: 'Fix singulo field generators, somewhat. Do not remove the scaffold
@@ -2966,3 +2960,10 @@ Entries:
       else., type: Tweak}
   id: 1019
   time: '2022-02-09T03:02:15.0000000+00:00'
+- author: WlarusFromDaSpace
+  changes:
+  - {message: Added Emergency Access to airlocks, type: Add}
+  - {message: Door remotes can now put airlocks they have access for to emergency
+      access mode, type: Add}
+  id: 1020
+  time: '2022-02-09T03:13:35.0000000+00:00'
