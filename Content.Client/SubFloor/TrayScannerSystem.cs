@@ -152,17 +152,13 @@ public sealed class TrayScannerSystem : SharedTrayScannerSystem
             return true;
         }
 
-        // TODO REDO THIS
+        // MAYBE redo this. Currently different players can see different entities
+        //
         // Here we avoid the entity lookup & return early if the scanner's position hasn't appreciably changed. However,
         // if a new player enters PVS-range, they will update the in-range entities on their end and use that to set
         // LastLocation. This means that different players can technically see different entities being revealed by the
         // same scanner. The correct fix for this is probably just to network the revealed entity set.... But I CBF
         // doing that right now....
-        //
-        // Though this approach also has other issues. If the scanner is on a shuttle, and another grid moves close it,
-        // the scanner's local position doesn't update. But if you based this on the scanner's world position it would
-        // unnecessary update whenever the grid that it is on is moving. I guess you could just restrict scanners to
-        // only scan one grid at a time?
         if (flooredPos == scanner.LastLocation
             || (float.IsNaN(flooredPos.X) && float.IsNaN(flooredPos.Y)))
             return true;
@@ -174,13 +170,15 @@ public sealed class TrayScannerSystem : SharedTrayScannerSystem
         var coords = transform.MapPosition;
         var worldBox = Box2.CenteredAround(coords.Position, (scanner.Range * 2, scanner.Range * 2));
 
-        foreach (var grid in _mapManager.FindGridsIntersecting(transform.MapID, worldBox, approx: true))
+        // For now, limiting to the scanner's own grid. We could do a grid-lookup, but then what do we do if one grid
+        // flies away, while the scanner's local-position remains unchanged?
+        if (_mapManager.TryGetGrid(transform.GridID, out var grid))
         {
             foreach (var entity in grid.GetAnchoredEntities(worldBox))
             {
                 if (!Transform(entity).MapPosition.InRange(coords, scanner.Range))
                     continue;
-                
+
                 if (!TryComp(entity, out SubFloorHideComponent? hideComp))
                     continue; // Not a hide-able entity.
 
