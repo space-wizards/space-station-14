@@ -247,3 +247,36 @@
       seed: ambrosiaVulgaris
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/ambrosia_vulgaris.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of galaxythistle seeds
+  description: "Brushes of starry nights."
+  id: GalaxythistleSeeds
+  components:
+    - type: Seed
+      seed: galaxythistle
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/galaxythistle.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of fly amanita seeds
+  description: "The iconic, extremely deadly mushroom to be used for purely ornamental purposes."
+  id: FlyAmanitaSeeds
+  components:
+    - type: Seed
+      seed: flyAmanita
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/fly_amanita.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of gatfruit seeds
+  description: "These are no peashooters."
+  id: GatfruitSeeds
+  components:
+    - type: Seed
+      seed: gatfruit
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/gatfruit.rsi

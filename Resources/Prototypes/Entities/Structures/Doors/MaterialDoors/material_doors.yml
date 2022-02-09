@@ -1,0 +1,66 @@
+- type: entity
+  id: BaseMaterialDoor
+  parent: BaseStructure
+  name: door
+  abstract: true
+  description: A door, where will it lead?
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Doors/MineralDoors/wood_door.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.49,-0.49,0.49,0.49"
+      mass: 100
+      mask:
+      - MobImpassable
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Door
+    bumpOpen: false
+    clickOpen: true
+    weldable: false
+    closeTimeOne: 0.2
+    closeTimeTwo: 0.6
+    openTimeOne: 0.6
+    openTimeTwo: 0.2
+    openSound:
+      path: /Audio/Effects/door_open.ogg
+    closeSound:
+      path: /Audio/Effects/door_close.ogg
+  - type: Appearance
+    visuals:
+      - type: AirlockVisualizer
+        simpleVisuals: true
+        animationTime: 1.2
+  - type: Airtight
+    fixVacuum: true
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Wood
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: IconSmooth
+    key: walls
+    mode: NoSprite
+
+- type: entity
+  id: WoodDoor
+  name: wooden door
+  parent: BaseMaterialDoor

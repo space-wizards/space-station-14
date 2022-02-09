@@ -16,7 +16,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
     /// <summary>
     /// Shotguns mostly
     /// </summary>
-    [RegisterComponent, NetworkedComponent, ComponentProtoName("BoltActionBarrel"), ComponentReference(typeof(ServerRangedBarrelComponent))]
+    [RegisterComponent, NetworkedComponent, ComponentReference(typeof(ServerRangedBarrelComponent))]
     public sealed class BoltActionBarrelComponent : ServerRangedBarrelComponent
     {
         // Originally I had this logic shared with PumpBarrel and used a couple of variables to control things
