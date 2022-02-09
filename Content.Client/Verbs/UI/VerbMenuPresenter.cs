@@ -52,7 +52,7 @@ namespace Content.Client.Verbs.UI
             Close();
 
             CurrentTarget = target;
-            CurrentVerbs = _verbSystem.GetVerbs(target, user, Verb.VerbTypes.Keys.ToList(), force);
+            CurrentVerbs = _verbSystem.GetVerbs(target, user, Verb.VerbTypes, force);
 
             if (!target.IsClientSide())
             {

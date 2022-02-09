@@ -1,4 +1,4 @@
-﻿using Content.Server.Administration;
+using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Verbs;
 using Robust.Shared.Console;
@@ -66,7 +66,7 @@ namespace Content.Server.Verbs.Commands
                 return;
             }
 
-            var verbs = verbSystem.GetLocalVerbs(target, playerEntity.Value, Verb.VerbTypes.Keys.ToList());
+            var verbs = verbSystem.GetLocalVerbs(target, playerEntity.Value, Verb.VerbTypes);
 
             foreach (var verb in verbs)
             {

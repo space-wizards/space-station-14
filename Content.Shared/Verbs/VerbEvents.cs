@@ -1,12 +1,9 @@
-using System;
-using System.Collections.Generic;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Log;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Verbs
 {
@@ -31,12 +28,10 @@ namespace Content.Shared.Verbs
             SlotOwner = slotOwner;
             AdminRequest = adminRequest;
 
-            foreach (var verbType in verbTypes)
+            foreach (var type in verbTypes)
             {
-                if (Verb.VerbTypes.TryGetValue(verbType, out var key))
-                    VerbTypes.Add(key);
-                else
-                    Logger.Error($"Unknown verb Type: {verbType}");
+                DebugTools.Assert(typeof(Verb).IsAssignableFrom(type));
+                VerbTypes.Add(type.Name);
             }
         }
     }

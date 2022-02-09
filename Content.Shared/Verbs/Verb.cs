@@ -192,15 +192,16 @@ namespace Content.Shared.Verbs
         ///     Collection of all verb types, along with string keys.
         /// </summary>
         /// <remarks>
-        ///     Apparently a <see cref="Type"/> is not serializable, so these strings are needed for networking.
-        ///     Though probably this should use reflection or something.
+        ///     Useful when iterating over verb types, though maybe this should be obtained and stored via reflection or
+        ///     something (list of all classes that inherit from Verb). Currently used for networking (apparently Type
+        ///     is not serializable?), and resolving console commands.
         /// </remarks>
-        public static Dictionary<Type, string> VerbTypes = new()
+        public static List<Type> VerbTypes = new()
         {
-            { typeof(Verb), "Verb" },
-            { typeof(InteractionVerb), "InteractionVerb" },
-            { typeof(AlternativeVerb), "AlternativeVerb" },
-            { typeof(ActivationVerb), "ActivationVerb" },
+            { typeof(Verb) },
+            { typeof(InteractionVerb) },
+            { typeof(AlternativeVerb) },
+            { typeof(ActivationVerb) },
         };
     }
 

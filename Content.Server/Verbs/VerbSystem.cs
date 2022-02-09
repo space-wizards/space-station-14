@@ -6,12 +6,7 @@ using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.Verbs;
 using Robust.Server.Player;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Player;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Content.Server.Verbs
@@ -55,7 +50,7 @@ namespace Content.Server.Verbs
             List<Type> verbTypes = new();
             foreach (var key in args.VerbTypes)
             {
-                var type = Verb.VerbTypes.FirstOrDefault(x => x.Value == key).Key;
+                var type = Verb.VerbTypes.FirstOrDefault(x => x.Name == key);
 
                 if (type != null)
                     verbTypes.Add(type);

@@ -64,11 +64,11 @@ namespace Content.Server.Verbs.Commands
             }
 
             var verbName = args[2].ToLowerInvariant();
-            var verbs = verbSystem.GetLocalVerbs(target, playerEntity.Value, Verb.VerbTypes.Keys.ToList(), true);
+            var verbs = verbSystem.GetLocalVerbs(target, playerEntity.Value, Verb.VerbTypes, true);
 
 
             // if the "verb name" is actually a verb-type, try run any verb of that type.
-            var verbType = Verb.VerbTypes.FirstOrDefault(x => x.Value.ToLowerInvariant() == verbName).Key;
+            var verbType = Verb.VerbTypes.FirstOrDefault(x => x.Name == verbName);
             if (verbType != null)
             {
                 var verb = verbs.FirstOrDefault(v => v.GetType() == verbType);
