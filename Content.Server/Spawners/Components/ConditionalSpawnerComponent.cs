@@ -8,7 +8,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Spawners.Components
 {
-    [RegisterComponent, ComponentProtoName("ConditionalSpawner")]
+    [RegisterComponent]
     public class ConditionalSpawnerComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]

@@ -9,7 +9,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Explosion.Components
 {
-    [RegisterComponent, ComponentProtoName("ClusterGrenade"), Friend(typeof(ClusterGrenadeSystem))]
+    [RegisterComponent, Friend(typeof(ClusterGrenadeSystem))]
     public sealed class ClusterGrenadeComponent : Component
     {
         public Container GrenadesContainer = default!;

@@ -58,7 +58,7 @@ namespace Content.Server.Throwing
             {
                 comp.Thrower = user;
                 // Give it a l'il spin.
-                if (!entity.HasTag("NoSpinOnThrow"))
+                if (!EntitySystem.Get<TagSystem>().HasTag(entity, "NoSpinOnThrow"))
                 {
                     physicsComponent.ApplyAngularImpulse(ThrowAngularImpulse);
                 }
