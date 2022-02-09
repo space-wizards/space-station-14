@@ -25,7 +25,6 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
     /// Generally used for bullets but can be used for other things like bananas
     /// </summary>
     [RegisterComponent]
-    [ComponentProtoName("Ammo")]
     [Friend(typeof(GunSystem))]
     public sealed class AmmoComponent : Component, ISerializationHooks
     {
