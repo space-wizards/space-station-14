@@ -1,15 +1,4 @@
 Entries:
-- author: Ygg01
-  changes:
-  - {message: Tweaked the Reagent Window to not have the weird cutoff like before.,
-    type: Tweak}
-  id: 516
-  time: '2021-10-29T12:48:02.0000000+00:00'
-- author: ike709
-  changes:
-  - {message: Ghosts can no longer use uplinks, type: Fix}
-  id: 517
-  time: '2021-10-29T16:37:34.0000000+00:00'
 - author: Saphire
   changes:
   - {message: The ban message now actually tells you which one of your deeds got you
@@ -2966,3 +2955,14 @@ Entries:
   - {message: You can now wear ambrosia vulgaris in your head slot., type: Add}
   id: 1016
   time: '2022-02-08T21:54:28.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Tricord no longer heals airloss or radiation damage., type: Tweak}
+  id: 1017
+  time: '2022-02-09T00:46:49.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added a new light fixture that can be constructed - the small light
+      post., type: Add}
+  id: 1018
+  time: '2022-02-09T00:47:33.0000000+00:00'
