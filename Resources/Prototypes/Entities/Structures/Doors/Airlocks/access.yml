@@ -388,6 +388,14 @@
 
 - type: entity
   parent: AirlockMaint
+  id: AirlockMaintSalvageLocked
+  suffix: Salvage, Locked
+  components:
+  - type: AccessReader
+    access: [["Salvage"]]
+
+- type: entity
+  parent: AirlockMaint
   id: AirlockMaintCargoLocked
   suffix: Cargo, Locked
   components:
