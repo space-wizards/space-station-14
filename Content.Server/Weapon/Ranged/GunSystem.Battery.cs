@@ -35,16 +35,10 @@ public sealed partial class GunSystem
         args.State = new BatteryBarrelComponentState(
             component.FireRateSelector,
             count);
-
-        component.LastShotsLeftSent = count?.Item1;
     }
 
     private void OnCellSlotUpdated(EntityUid uid, BatteryBarrelComponent component, PowerCellChangedEvent args)
     {
-        // Update item-status information.
-        if (component.LastShotsLeftSent != component.ShotsLeft)
-            Dirty(component);
-
         UpdateBatteryAppearance(component);
     }
 
