@@ -24,4 +24,6 @@
   components:
   - type: SalvageMagnet
     offset: 0, -12
+  - type: ApcPowerReceiver
+    powerLoad: 1000
 
