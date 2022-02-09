@@ -65,10 +65,14 @@
   waterConsumption: 6
   idealHeat: 298
   chemicals:
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
     Nutriment:
       Min: 1
-      Max: 20
-      PotencyDivisor: 20
+      Max: 2
+      PotencyDivisor: 50
 
 - type: seed
   id: carrots
@@ -88,8 +92,12 @@
   chemicals:
     Nutriment:
       Min: 1
-      Max: 20
+      Max: 5
       PotencyDivisor: 20
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
 
 - type: seed
   id: lemon
@@ -109,8 +117,12 @@
   chemicals:
     Nutriment:
       Min: 1
-      Max: 20
+      Max: 5
       PotencyDivisor: 20
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
 
 - type: seed
   id: pineapple
@@ -132,6 +144,14 @@
       Min: 1
       Max: 20
       PotencyDivisor: 20
+    Water:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
+    Vitamin:
+      Min: 1
+      Max: 2
+      PotencyDivisor: 50
 
 - type: seed
   id: potato
@@ -153,6 +173,10 @@
       Min: 1
       Max: 10
       PotencyDivisor: 10
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
 
 - type: seed
   id: sugarcane
@@ -220,6 +244,10 @@
       Min: 1
       Max: 10
       PotencyDivisor: 10
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
 
 - type: seed
   id: eggplant
@@ -242,6 +270,10 @@
       Min: 1
       Max: 10
       PotencyDivisor: 10
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
 
 - type: seed
   id: apple
@@ -263,6 +295,10 @@
       Min: 1
       Max: 10
       PotencyDivisor: 10
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
 
 - type: seed
   id: corn
@@ -286,6 +322,10 @@
       Min: 1
       Max: 10
       PotencyDivisor: 10
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
 
 - type: seed
   id: onion
@@ -309,6 +349,10 @@
       Min: 1
       Max: 10
       PotencyDivisor: 10
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
 
 - type: seed
   id: onionred
@@ -332,6 +376,10 @@
       Min: 1
       Max: 10
       PotencyDivisor: 10
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
 
 - type: seed
   id: chanterelle
@@ -469,6 +517,14 @@
       Min: 1
       Max: 10
       PotencyDivisor: 10
+    Nutriment:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
 
 - type: seed
   id: poppy
@@ -577,6 +633,10 @@
       Min: 1
       Max: 2
       PotencyDivisor: 50
+    Vitamin:
+      Min: 1
+      Max: 2
+      Potencydivisor: 50
 
 - type: seed
   id: galaxythistle

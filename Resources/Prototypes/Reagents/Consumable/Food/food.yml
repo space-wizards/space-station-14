@@ -48,6 +48,7 @@
           groups:
             Brute: -0.5
             Burn: -0.5
+      - !type:SatiateHunger #Numbers are balanced with this in mind + it helps limit how much healing you can get from food
 
 - type: reagent
   id: Protein
@@ -64,4 +65,5 @@
         damage:
           groups:
             Brute: -0.4
+      - !type:SatiateHunger
 
