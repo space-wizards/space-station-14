@@ -623,3 +623,29 @@
       Min: 1
       Max: 5
       PotencyDivisor: 20
+
+- type: seed
+  id: gatfruit
+  name: gatfruit
+  seedName: gatfruit
+  displayName: gatfruit tree
+  plantRsi: Objects/Specific/Hydroponics/gatfruit.rsi
+  productPrototypes:
+    - FoodGatfruit
+  harvestRepeat: Repeat
+  lifespan: 55
+  maturation: 6
+  production: 6
+  yield: 2
+  potency: 10
+  growthStages: 2
+  idealLight: 6
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+    Sulfur:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
