@@ -876,7 +876,7 @@
   description: A stylish vendor to dispense the most stylish bar clothing!
   components:
   - type: VendingMachine
-    pack: BarDrobe
+    pack: BarDrobeInventory
   - type: Advertise
     pack: BarDrobeAds
   - type: Sprite
