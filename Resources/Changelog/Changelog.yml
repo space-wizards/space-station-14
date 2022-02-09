@@ -1,75 +1,4 @@
 Entries:
-- author: Macoron
-  changes:
-  - {message: 'Add withdraw button and preview icons in Uplink UI,', type: Add}
-  id: 512
-  time: '2021-10-29T09:40:47.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Gave Centcomm more varied and precise battery drainage-related tooling.,
-    type: Add}
-  id: 513
-  time: '2021-10-29T09:49:52.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Make warning for if FluidSynth is not installed more informative, type: Tweak}
-  id: 514
-  time: '2021-10-29T10:20:50.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: 'If holding a multitool, examining cables reads various power statistics.',
-    type: Add}
-  id: 515
-  time: '2021-10-29T12:42:18.0000000+00:00'
-- author: Ygg01
-  changes:
-  - {message: Tweaked the Reagent Window to not have the weird cutoff like before.,
-    type: Tweak}
-  id: 516
-  time: '2021-10-29T12:48:02.0000000+00:00'
-- author: ike709
-  changes:
-  - {message: Ghosts can no longer use uplinks, type: Fix}
-  id: 517
-  time: '2021-10-29T16:37:34.0000000+00:00'
-- author: Saphire
-  changes:
-  - {message: The ban message now actually tells you which one of your deeds got you
-      banned, type: Add}
-  id: 518
-  time: '2021-10-29T18:54:15.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: 'can no longer place multiple wires of the same type on one spot, HV
-      no longer blocks other wires.', type: Fix}
-  id: 519
-  time: '2021-10-30T23:08:48.0000000+00:00'
-- author: Saphire
-  changes:
-  - {message: 'Fix singulo field generators, somewhat. Do not remove the scaffold
-      under the field...', type: Add}
-  id: 520
-  time: '2021-10-31T13:39:37.0000000+00:00'
-- author: Daemon
-  changes:
-  - {message: Changed Thirteen Loko to Fourteen Loko, type: Tweak}
-  - {message: Fixed some bottles in booze-o-mat and admin spawn panel being empty,
-    type: Fix}
-  - {message: Added various new reagents for bartending and added them to dispensers
-      and vending machines, type: Add}
-  - {message: 'Added many new craft-able mixed drinks, experiment to find out!', type: Add}
-  id: 521
-  time: '2021-10-31T13:57:06.0000000+00:00'
-- author: PaulRitter
-  changes:
-  - {message: RoguePointingArrow will no longer attack ghosts, type: Fix}
-  id: 522
-  time: '2021-10-31T14:03:32.0000000+00:00'
-- author: CrudeWax
-  changes:
-  - {message: Replaced placeholder piloting alert icon, type: Tweak}
-  id: 523
-  time: '2021-11-01T13:26:37.0000000+00:00'
 - author: PJB
   changes:
   - {message: Gravity generator now needs ~100 seconds to charge up/down when turned
@@ -2964,3 +2893,73 @@ Entries:
   - {message: NanoTrasen has recalled the defective ringers., type: Fix}
   id: 1012
   time: '2022-02-08T11:15:06.0000000+00:00'
+- author: Lamrr
+  changes:
+  - {message: 'A new line of reinforced tiles have been released, enjoy the fresh
+      new graphical depth.', type: Tweak}
+  id: 1013
+  time: '2022-02-08T18:08:23.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Mappers can now add decals to maps using the Decal Placer menu., type: Add}
+  id: 1014
+  time: '2022-02-08T20:54:41.0000000+00:00'
+- author: Fishfish458
+  changes:
+  - {message: 'Added inflatable doors, which can now be found in the engineer Tool
+      Vend', type: Add}
+  id: 1015
+  time: '2022-02-08T21:54:14.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'Added galaxythistle and fly amanita, two more plants with powerful
+      chemical effects.', type: Add}
+  - {message: You can now wear ambrosia vulgaris in your head slot., type: Add}
+  id: 1016
+  time: '2022-02-08T21:54:28.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Tricord no longer heals airloss or radiation damage., type: Tweak}
+  id: 1017
+  time: '2022-02-09T00:46:49.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added a new light fixture that can be constructed - the small light
+      post., type: Add}
+  id: 1018
+  time: '2022-02-09T00:47:33.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: The cursed locker in a certain salvage map has been replaced with something
+      else., type: Tweak}
+  id: 1019
+  time: '2022-02-09T03:02:15.0000000+00:00'
+- author: WlarusFromDaSpace
+  changes:
+  - {message: Added Emergency Access to airlocks, type: Add}
+  - {message: Door remotes can now put airlocks they have access for to emergency
+      access mode, type: Add}
+  id: 1020
+  time: '2022-02-09T03:13:35.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Removed targeting dummy, as limb-damage is still not yet implemented.',
+    type: Remove}
+  id: 1021
+  time: '2022-02-09T04:25:13.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'More things now fit in the trashbag! Crayons, medipens, mice, broken
+      plates and ramen cups.', type: Tweak}
+  id: 1022
+  time: '2022-02-09T15:07:14.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed syringes not working., type: Fix}
+  id: 1023
+  time: '2022-02-09T15:08:59.0000000+00:00'
+- author: Delete69
+  changes:
+  - {message: command decal color to departmental pallette, type: Add}
+  id: 1024
+  time: '2022-02-09T17:26:10.0000000+00:00'
