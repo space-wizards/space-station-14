@@ -18,7 +18,7 @@ namespace Content.Server.Mind.Components
     /// <summary>
     ///     Stores a <see cref="Server.Mind.Mind"/> on a mob.
     /// </summary>
-    [RegisterComponent, ComponentProtoName("Mind"), Friend(typeof(MindSystem))]
+    [RegisterComponent, Friend(typeof(MindSystem))]
     public class MindComponent : Component
     {
         /// <summary>

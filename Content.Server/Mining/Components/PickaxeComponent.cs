@@ -6,7 +6,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Mining.Components
 {
-    [RegisterComponent, ComponentProtoName("Pickaxe")]
+    [RegisterComponent]
     public class PickaxeComponent : Component
     {
         [DataField("sound")]

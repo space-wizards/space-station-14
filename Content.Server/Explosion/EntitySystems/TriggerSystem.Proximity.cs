@@ -73,14 +73,11 @@ public sealed partial class TriggerSystem
         component.Colliding.Add(args.OtherFixture.Body);
     }
 
-    private void OnProximityEndCollide(EntityUid uid, TriggerOnProximityComponent component, EndCollideEvent args)
+    private static void OnProximityEndCollide(EntityUid uid, TriggerOnProximityComponent component, EndCollideEvent args)
     {
         if (args.OurFixture.ID != TriggerOnProximityComponent.FixtureID) return;
 
         component.Colliding.Remove(args.OtherFixture.Body);
-
-        if (component.Colliding.Count == 0)
-            _activeProximities.Remove(component);
     }
 
     private void SetProximityAppearance(EntityUid uid, TriggerOnProximityComponent component)
@@ -103,10 +100,14 @@ public sealed partial class TriggerSystem
         }
         else
         {
-            component.Accumulator = component.Cooldown;
+            component.Accumulator += component.Cooldown;
         }
 
-        SetProximityAppearance(component.Owner, component);
+        if (EntityManager.TryGetComponent(component.Owner, out AppearanceComponent? appearanceComponent))
+        {
+            appearanceComponent.SetData(ProximityTriggerVisualState.State, ProximityTriggerVisuals.Active);
+        }
+
         Trigger(component.Owner);
     }
 
@@ -116,12 +117,6 @@ public sealed partial class TriggerSystem
 
         foreach (var comp in _activeProximities)
         {
-            if (!comp.Enabled)
-            {
-                toRemove.Add(comp);
-                continue;
-            }
-
             MetaDataComponent? metadata = null;
 
             if (Deleted(comp.Owner, metadata))
@@ -130,11 +125,21 @@ public sealed partial class TriggerSystem
                 continue;
             }
 
+            SetProximityAppearance(comp.Owner, comp);
+
             if (Paused(comp.Owner, metadata)) continue;
 
             comp.Accumulator -= frameTime;
 
             if (comp.Accumulator > 0f) continue;
+
+            // Only remove it from accumulation when nothing colliding anymore.
+            if (!comp.Enabled || comp.Colliding.Count == 0)
+            {
+                comp.Accumulator = 0f;
+                toRemove.Add(comp);
+                continue;
+            }
 
             // Alright now that we have no cd check everything in range.
 

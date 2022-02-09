@@ -4,6 +4,7 @@ using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 using System.Collections.Generic;
+using Content.Shared.Explosion;
 
 namespace Content.Server.Explosion.Components
 {
@@ -12,7 +13,7 @@ namespace Content.Server.Explosion.Components
     /// Raises a <see cref="TriggerEvent"/> whenever an entity collides with a fixture attached to the owner of this component.
     /// </summary>
     [RegisterComponent]
-    public sealed class TriggerOnProximityComponent : Component
+    public sealed class TriggerOnProximityComponent : SharedTriggerOnProximityComponent
     {
         public const string FixtureID  = "trigger-on-proximity-fixture";
 

@@ -1,147 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: Morgue trays now extend to the proper position., type: Fix}
-  id: 494
-  time: '2021-10-27T01:23:44.0000000+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: Fixed speech bubble position on rotated grids., type: Fix}
-  id: 495
-  time: '2021-10-27T01:31:22.0000000+00:00'
-- author: Saphire
-  changes:
-  - {message: 'Fix trashbags picking up anchored items, e.g. atmos pipes and vents',
-    type: Fix}
-  id: 496
-  time: '2021-10-27T07:12:37.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Storage closing boundary no longer encompasses 3 city blocks., type: Fix}
-  id: 497
-  time: '2021-10-27T08:27:25.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Saltern default generators no longer act as effectively an infinite
-      source of power., type: Fix}
-  id: 498
-  time: '2021-10-27T08:32:06.0000000+00:00'
-- author: juliangiebel
-  changes:
-  - {message: Disposal units are constructable now!, type: Add}
-  - {message: Construction states for various disposal machines., type: Add}
-  id: 499
-  time: '2021-10-27T10:54:13.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Engi-Vend has insulated gloves so engineering don't run out with latejoins
-      or just a lot of roundstart engineers, type: Add}
-  id: 500
-  time: '2021-10-27T15:44:31.0000000+00:00'
-- author: Macoron
-  changes:
-  - {message: Fix light replacer interaction with wall lights, type: Fix}
-  id: 501
-  time: '2021-10-28T02:36:09.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Updated context menu UI, type: Tweak}
-  id: 502
-  time: '2021-10-28T05:21:19.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Fix rare construction bug where some interactions would be incorrect.,
-    type: Fix}
-  id: 503
-  time: '2021-10-28T09:23:03.038084+00:00'
-- author: Zumorica
-  changes:
-  - {message: 'Fix being able to build machines for free by taking the board out,
-      putting it in again and screwing.', type: Fix}
-  id: 504
-  time: '2021-10-28T09:23:03.038979+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed not being angle to anchor emitters., type: Fix}
-  id: 505
-  time: '2021-10-28T11:29:19.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixes in-hand sprites not properly updating., type: Fix}
-  id: 506
-  time: '2021-10-28T12:34:59.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Fix not being able to build windows on top of grilles., type: Fix}
-  id: 507
-  time: '2021-10-28T17:03:11.646371+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Fix lasers not passing through grilles., type: Fix}
-  id: 508
-  time: '2021-10-29T05:26:45.714056+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Fix certain windoors not autoclosing., type: Fix}
-  id: 509
-  time: '2021-10-29T05:39:44.812307+00:00'
-- author: vulppine
-  changes:
-  - {message: 'NanoTrasen has cut the budget on maintaining how pretty things look
-      on our stations. You may notice things around you slowly become more decrepit
-      over time, for example, skin.', type: Add}
-  id: 510
-  time: '2021-10-29T08:04:25.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Disposals works properly under station rotation, type: Fix}
-  id: 511
-  time: '2021-10-29T08:07:32.0000000+00:00'
-- author: Macoron
-  changes:
-  - {message: 'Add withdraw button and preview icons in Uplink UI,', type: Add}
-  id: 512
-  time: '2021-10-29T09:40:47.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Gave Centcomm more varied and precise battery drainage-related tooling.,
-    type: Add}
-  id: 513
-  time: '2021-10-29T09:49:52.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Make warning for if FluidSynth is not installed more informative, type: Tweak}
-  id: 514
-  time: '2021-10-29T10:20:50.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: 'If holding a multitool, examining cables reads various power statistics.',
-    type: Add}
-  id: 515
-  time: '2021-10-29T12:42:18.0000000+00:00'
-- author: Ygg01
-  changes:
-  - {message: Tweaked the Reagent Window to not have the weird cutoff like before.,
-    type: Tweak}
-  id: 516
-  time: '2021-10-29T12:48:02.0000000+00:00'
-- author: ike709
-  changes:
-  - {message: Ghosts can no longer use uplinks, type: Fix}
-  id: 517
-  time: '2021-10-29T16:37:34.0000000+00:00'
-- author: Saphire
-  changes:
-  - {message: The ban message now actually tells you which one of your deeds got you
-      banned, type: Add}
-  id: 518
-  time: '2021-10-29T18:54:15.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: 'can no longer place multiple wires of the same type on one spot, HV
-      no longer blocks other wires.', type: Fix}
-  id: 519
-  time: '2021-10-30T23:08:48.0000000+00:00'
 - author: Saphire
   changes:
   - {message: 'Fix singulo field generators, somewhat. Do not remove the scaffold
@@ -2955,3 +2812,158 @@ Entries:
   - {message: adds a portable flasher for security to lock down areas, type: Add}
   id: 994
   time: '2022-02-06T15:59:42.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'The L6 Saw, C20r, Bojevic, and Grenade Launcher are no longer purchasable
+      without another traitor''s help. Do something more creative.', type: Tweak}
+  - {message: Holoparasites cost 14TC down from 16TC., type: Tweak}
+  id: 995
+  time: '2022-02-06T23:46:06.0000000+00:00'
+- author: Lamrr
+  changes:
+  - {message: NanoTrasen has finally discovered the recipe for storage racks., type: Fix}
+  id: 996
+  time: '2022-02-07T01:51:57.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Add more random xeno artifacts effects., type: Add}
+  id: 997
+  time: '2022-02-07T02:26:10.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Airlock construction / deconstruction now takes longer., type: Tweak}
+  id: 998
+  time: '2022-02-07T03:06:11.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Healing (via ointments etc.) now takes time., type: Tweak}
+  id: 999
+  time: '2022-02-07T03:14:46.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Plasma, tritium, and carbon dioxide are now harmful to breathe in.',
+    type: Add}
+  - {message: It may take time for you to stop suffocating once entering an oxygenated
+      area., type: Tweak}
+  - {message: Slimepeople no longer have to breathe., type: Add}
+  id: 1000
+  time: '2022-02-07T04:48:15.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Slimepeople now take extra pressure damage., type: Tweak}
+  - {message: 'Slimepeople are now hurt by water, and are not affected by acids on
+      touch.', type: Add}
+  - {message: Slimepeople are now resistant against blunt and poison damage., type: Tweak}
+  - {message: 'Slimepeople are now weak to slash, piercing, and cold damage.', type: Tweak}
+  id: 1001
+  time: '2022-02-07T04:48:20.0000000+00:00'
+- author: Emisse
+  changes:
+  - {message: 'Bagel Station, a comfy midpop station, has been introduced.', type: Add}
+  id: 1002
+  time: '2022-02-07T16:07:24.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'Added lingzhi and ambrosia vulgaris, two more potent but slightly dangerous
+      medicinal plants.', type: Add}
+  - {message: 'Instead of kelotane and nutriment, aloe now yields dermaline and...
+      wait for it... aloe!', type: Tweak}
+  id: 1003
+  time: '2022-02-07T19:43:21.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Gas mixers now properly animate when on., type: Fix}
+  id: 1004
+  time: '2022-02-07T20:42:07.0000000+00:00'
+- author: router
+  changes:
+  - {message: Conveyor assemblies now only cost 5 steel to craft., type: Tweak}
+  id: 1005
+  time: '2022-02-08T00:32:22.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Portable flasher now has its animation., type: Add}
+  id: 1006
+  time: '2022-02-08T03:08:22.0000000+00:00'
+- author: TheDarkElites
+  changes:
+  - {message: PDAs now have ringtones, type: Add}
+  id: 1007
+  time: '2022-02-08T09:39:23.0000000+00:00'
+- author: Lamrr
+  changes:
+  - {message: 'Bring in the scrap heap with the new salvage specialist role! Tasked
+      with running salvage operations, this exciting but not very new gameplay will
+      be coming to a NanoTrasen station near you sometime soon.', type: Add}
+  id: 1008
+  time: '2022-02-08T10:01:16.0000000+00:00'
+- author: Schiene
+  changes:
+  - {message: 'The Mothership, a Syndicate Vessel.', type: Add}
+  id: 1009
+  time: '2022-02-08T10:23:11.0000000+00:00'
+- author: hubismal
+  changes:
+  - {message: 'Fires now burn brightly, meaning fires and people affected by fire
+      are much more noticeable.', type: Tweak}
+  id: 1010
+  time: '2022-02-08T10:43:34.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Shutters can now be constructed from the construction menu (G)! Add
+      glass before final step for windowed, or steel for radiation shutters.', type: Add}
+  id: 1011
+  time: '2022-02-08T10:49:48.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: NanoTrasen has recalled the defective ringers., type: Fix}
+  id: 1012
+  time: '2022-02-08T11:15:06.0000000+00:00'
+- author: Lamrr
+  changes:
+  - {message: 'A new line of reinforced tiles have been released, enjoy the fresh
+      new graphical depth.', type: Tweak}
+  id: 1013
+  time: '2022-02-08T18:08:23.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Mappers can now add decals to maps using the Decal Placer menu., type: Add}
+  id: 1014
+  time: '2022-02-08T20:54:41.0000000+00:00'
+- author: Fishfish458
+  changes:
+  - {message: 'Added inflatable doors, which can now be found in the engineer Tool
+      Vend', type: Add}
+  id: 1015
+  time: '2022-02-08T21:54:14.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'Added galaxythistle and fly amanita, two more plants with powerful
+      chemical effects.', type: Add}
+  - {message: You can now wear ambrosia vulgaris in your head slot., type: Add}
+  id: 1016
+  time: '2022-02-08T21:54:28.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Tricord no longer heals airloss or radiation damage., type: Tweak}
+  id: 1017
+  time: '2022-02-09T00:46:49.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added a new light fixture that can be constructed - the small light
+      post., type: Add}
+  id: 1018
+  time: '2022-02-09T00:47:33.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: The cursed locker in a certain salvage map has been replaced with something
+      else., type: Tweak}
+  id: 1019
+  time: '2022-02-09T03:02:15.0000000+00:00'
+- author: WlarusFromDaSpace
+  changes:
+  - {message: Added Emergency Access to airlocks, type: Add}
+  - {message: Door remotes can now put airlocks they have access for to emergency
+      access mode, type: Add}
+  id: 1020
+  time: '2022-02-09T03:13:35.0000000+00:00'

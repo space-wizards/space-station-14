@@ -1,9 +1,9 @@
-﻿using Robust.Shared.Analyzers;
+using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 
 namespace Content.Server.Mining.Components;
 
-[RegisterComponent, ComponentProtoName("Mineable")]
+[RegisterComponent]
 [Friend(typeof(MineableSystem))]
 public class MineableComponent : Component
 {

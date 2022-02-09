@@ -68,6 +68,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             SubscribeLocalEvent<DisposalUnitComponent, DestructionEventArgs>(HandleDestruction);
 
             // Verbs
+            SubscribeLocalEvent<DisposalUnitComponent, GetInteractionVerbsEvent>(AddInsertVerb);
             SubscribeLocalEvent<DisposalUnitComponent, GetAlternativeVerbsEvent>(AddFlushEjectVerbs);
             SubscribeLocalEvent<DisposalUnitComponent, GetOtherVerbsEvent>(AddClimbInsideVerb);
 
@@ -120,6 +121,31 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             // create a verb category for "enter"?
             // See also, medical scanner. Also maybe add verbs for entering lockers/body bags?
             args.Verbs.Add(verb);
+        }
+
+        private void AddInsertVerb(EntityUid uid, DisposalUnitComponent component, GetInteractionVerbsEvent args)
+        {
+            if (!args.CanAccess || !args.CanInteract || args.Hands == null || args.Using == null)
+                return;
+
+            if (!_actionBlockerSystem.CanDrop(args.User))
+                return;
+
+            if (!CanInsert(component, args.Using.Value))
+                return;
+
+            Verb insertVerb = new()
+            {
+                Text = Name(args.Using.Value),
+                Category = VerbCategory.Insert,
+                Act = () =>
+                {
+                    args.Hands.Drop(args.Using.Value, component.Container);
+                    AfterInsert(component, args.Using.Value);
+                }
+            };
+
+            args.Verbs.Add(insertVerb);
         }
 
         private void DoInsertDisposalUnit(DoInsertDisposalUnitEvent ev)
