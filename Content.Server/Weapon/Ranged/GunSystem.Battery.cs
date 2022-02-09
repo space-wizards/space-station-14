@@ -1,11 +1,8 @@
-using System;
-using Content.Server.PowerCell;
 using Content.Server.Projectiles.Components;
 using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 
@@ -30,11 +27,8 @@ public sealed partial class GunSystem
 
     private void OnBatteryGetState(EntityUid uid, BatteryBarrelComponent component, ref ComponentGetState args)
     {
-        (int, int)? count = (component.ShotsLeft, component.Capacity);
-
-        args.State = new BatteryBarrelComponentState(
-            component.FireRateSelector,
-            count);
+        // currently unused, but maybe `FireRateSelector` will be used eventually?
+        args.State = new BatteryBarrelComponentState(component.FireRateSelector);
     }
 
     private void OnCellSlotUpdated(EntityUid uid, BatteryBarrelComponent component, PowerCellChangedEvent args)
