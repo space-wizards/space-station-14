@@ -130,10 +130,10 @@ namespace Content.Server.Chemistry.Components
             }
 
             //Special case for reagent tanks, because normally clicking another container will give solution, not take it.
-            if (CanReceive  && _entities.TryGetComponent(target, out DrainableSolutionComponent? drainable) // target must be drainable
-                            && !_entities.TryGetComponent(target, out RefillableSolutionComponent? refillable) // target must not be refillable (e.g. Reagent Tanks)
-                            && solutionsSys.TryGetRefillableSolution(Owner, out var ownerRefill)
-                            && solutionsSys.TryGetDrainableSolution(target, out var targetDrain))
+            if (CanReceive  && !_entities.HasComponent<RefillableSolutionComponent>(target) // target must not be refillable (e.g. Reagent Tanks)
+                            && _entities.TryGetComponent(Owner, out RefillableSolutionComponent refillComp)
+                            && solutionsSys.TryGetRefillableSolution(Owner, out var ownerRefill, refillable: refillComp)
+                            && solutionsSys.TryGetDrainableSolution(target, out var targetDrain)) // target must be drainable
             {
 
                 var transferAmount = TransferAmount; // This is the player-configurable transfer amount of "Owner," not the target reagent tank.
