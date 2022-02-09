@@ -56,7 +56,7 @@
     - type: AirlockVisualizer
     - type: WiresVisualizer
   - type: ApcPowerReceiver
-    powerLoad: 100
+    powerLoad: 20
   - type: ExtensionCableReceiver
   - type: Wires
     BoardName: "Airlock Control"
