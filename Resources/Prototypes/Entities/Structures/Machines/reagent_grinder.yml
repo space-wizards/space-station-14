@@ -30,3 +30,5 @@
     sprite: Structures/Machines/juicer.rsi
     state: juicer0
     drawdepth: SmallObjects
+  - type: ApcPowerReceiver
+    powerLoad: 300
