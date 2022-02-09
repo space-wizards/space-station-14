@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.Power.Components;
@@ -16,74 +17,49 @@ namespace Content.Server.Power.EntitySystems
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
 
-        private readonly HashSet<EntityUid> _toUpdate = new();
-
-        public void QueueUpdate(EntityUid uid)
-        {
-            _toUpdate.Add(uid);
-        }
-
         public override void Initialize()
         {
             base.Initialize();
 
-            UpdatesAfter.Add(typeof(NodeGroupSystem));
+            SubscribeLocalEvent<CableVisComponent, NodeGroupsRebuilt>(UpdateAppearance);
         }
 
-        public override void Update(float frameTime)
+        private void UpdateAppearance(EntityUid uid, CableVisComponent cableVis, ref NodeGroupsRebuilt args)
         {
-            base.Update(frameTime);
+            if (cableVis.Node == null)
+                return;
 
-            foreach (var uid in _toUpdate)
+            if (!TryComp(uid, out NodeContainerComponent? nodeContainer) || !TryComp(uid, out AppearanceComponent? appearance))
+                return;
+
+            var transform = Transform(uid);
+            if (!_mapManager.TryGetGrid(transform.GridID, out var grid))
+                return;
+
+            var mask = WireVisDirFlags.None;
+            var tile = grid.TileIndicesFor(transform.Coordinates);
+            var node = nodeContainer.GetNode<CableNode>(cableVis.Node);
+
+            foreach (var reachable in node.ReachableNodes)
             {
-                if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
-                    || !EntityManager.TryGetComponent(uid, out CableVisComponent? cableVis)
-                    || !EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
+                if (reachable is not CableNode)
+                    continue;
+
+                var otherTransform = Transform(reachable.Owner);
+                var otherTile = grid.TileIndicesFor(otherTransform.Coordinates);
+                var diff = otherTile - tile;
+
+                mask |= diff switch
                 {
-                    continue;
-                }
-
-                if (cableVis.Node == null)
-                    continue;
-
-                var mask = WireVisDirFlags.None;
-
-                var transform = EntityManager.GetComponent<TransformComponent>(uid);
-
-                // Only valid grids allowed.
-                if(!transform.GridID.IsValid())
-                    continue;
-
-                var grid = _mapManager.GetGrid(transform.GridID);
-                var tile = grid.TileIndicesFor(transform.Coordinates);
-                var node = nodeContainer.GetNode<CableNode>(cableVis.Node);
-
-                foreach (var reachable in node.ReachableNodes)
-                {
-                    if (reachable is not CableNode)
-                        continue;
-
-                    var otherTransform = EntityManager.GetComponent<TransformComponent>(reachable.Owner);
-                    if (otherTransform.GridID != grid.Index)
-                        continue;
-
-                    var otherTile = grid.TileIndicesFor(otherTransform.Coordinates);
-                    var diff = otherTile - tile;
-
-                    mask |= diff switch
-                    {
-                        (0, 1) => WireVisDirFlags.North,
-                        (0, -1) => WireVisDirFlags.South,
-                        (1, 0) => WireVisDirFlags.East,
-                        (-1, 0) => WireVisDirFlags.West,
-                        _ => WireVisDirFlags.None
-                    };
-                }
-
-                appearance.SetData(WireVisVisuals.ConnectedMask, mask);
+                    (0, 1) => WireVisDirFlags.North,
+                    (0, -1) => WireVisDirFlags.South,
+                    (1, 0) => WireVisDirFlags.East,
+                    (-1, 0) => WireVisDirFlags.West,
+                    _ => WireVisDirFlags.None
+                };
             }
 
-            _toUpdate.Clear();
+            appearance.SetData(WireVisVisuals.ConnectedMask, mask);
         }
     }
 }

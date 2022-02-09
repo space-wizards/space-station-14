@@ -30,6 +30,7 @@ namespace Content.Client.Atmos.Visualizers
 
             sprite.LayerMapReserveBlank(FireVisualLayers.Fire);
             sprite.LayerSetVisible(FireVisualLayers.Fire, false);
+            sprite.LayerSetShader(FireVisualLayers.Fire, "unshaded");
         }
 
         public override void OnChangeData(AppearanceComponent component)

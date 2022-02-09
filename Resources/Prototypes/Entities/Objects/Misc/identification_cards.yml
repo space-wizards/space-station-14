@@ -120,6 +120,18 @@
 
 - type: entity
   parent: IDCardStandard
+  id: SalvageIDCard
+  name: salvage ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idshaftminer
+  - type: PresetIdCard
+    job: SalvageSpecialist
+
+- type: entity
+  parent: IDCardStandard
   id: QuartermasterIDCard
   name: quartermaster ID card
   components:

@@ -34,6 +34,9 @@
     - state: bolted_unlit
       shader: unshaded
       map: ["enum.DoorVisualLayers.BaseBolted"]
+    - state: emergency_unlit
+      shader: unshaded
+      map: ["enum.DoorVisualLayers.BaseEmergencyAccess"]
     - state: panel_open
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: ApcPowerReceiver
@@ -71,10 +74,8 @@
     # needed so that windoors will close regardless of whether there are people in it; it doesn't crush after all
     safety: false
   - type: Door
+    canCrush: false
     weldable: false
-    crushDamage:
-      types:
-        Blunt: 10
     openSound:
       path: /Audio/Machines/windoor_open.ogg
     closeSound:
@@ -125,6 +126,9 @@
     - state: bolted_unlit
       shader: unshaded
       map: [ "enum.DoorVisualLayers.BaseBolted" ]
+    - state: emergency_unlit
+      shader: unshaded
+      map: [ "enum.DoorVisualLayers.BaseEmergencyAccess" ]
     - state: panel_open
       map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       visible: false

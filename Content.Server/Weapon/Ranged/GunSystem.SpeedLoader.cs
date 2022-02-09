@@ -90,7 +90,7 @@ public sealed partial class GunSystem
 
     private void OnSpeedLoaderAfterInteract(EntityUid uid, SpeedLoaderComponent component, AfterInteractEvent args)
     {
-        if (args.Handled) return;
+        if (args.Handled || !args.CanReach) return;
 
         if (args.Target == null)
         {

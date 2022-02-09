@@ -1,12 +1,11 @@
+using Content.Server.Atmos.Piping.Trinary.EntitySystems;
 using Content.Shared.Atmos;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Atmos.Piping.Trinary.Components
 {
     [RegisterComponent]
-    public class GasMixerComponent : Component
+    [Friend(typeof(GasMixerSystem))]
+    public sealed class GasMixerComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Enabled = true;

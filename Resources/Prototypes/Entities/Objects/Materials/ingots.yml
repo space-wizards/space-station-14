@@ -2,7 +2,7 @@
   abstract: true
   parent: BaseItem
   id: IngotBase
-  description: A heavy metal ingot stamped with the Nanotransen logo.
+  description: A heavy metal ingot stamped with the Nanotrasen logo.
   components:
   - type: Sprite
     netsync: false

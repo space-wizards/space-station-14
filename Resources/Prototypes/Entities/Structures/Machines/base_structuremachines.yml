@@ -5,6 +5,7 @@
   components:
   - type: InteractionOutline
   - type: Anchorable
+    delay: 2
   - type: Physics
     bodyType: Static
   - type: Fixtures

@@ -115,7 +115,7 @@ namespace Content.Server.Chemistry.Components
         {
             var solutionsSys = EntitySystem.Get<SolutionContainerSystem>();
 
-            if (!eventArgs.InRangeUnobstructed() || eventArgs.Target == null)
+            if (!eventArgs.CanReach || eventArgs.Target == null)
                 return false;
 
             if (!_entities.HasComponent<SolutionContainerManagerComponent>(Owner))

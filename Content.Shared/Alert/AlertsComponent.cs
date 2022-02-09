@@ -11,7 +11,6 @@ namespace Content.Shared.Alert;
 /// </summary>
 [RegisterComponent]
 [NetworkedComponent]
-[ComponentProtoName("Alerts")]
 public class AlertsComponent : Component
 {
     [ViewVariables] public Dictionary<AlertKey, AlertState> Alerts = new();
