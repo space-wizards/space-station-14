@@ -263,10 +263,21 @@
     layers:
     - state: plate
     - state: amanita
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 17
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: Amatoxin
+          Quantity: 3
+        - ReagentId: Vitamin
+          Quantity: 4
 # Tastes like pie, mushrooms.
 
 - type: entity
-  name: amanita pie
+  name: plump pie
   parent: FoodPieBase
   id: FoodPiePlump
   description: I bet you love stuff made out of plump helmets!
