@@ -639,3 +639,20 @@
     state: closed
   conditions:
     - !type:TileNotBlocked
+
+- type: construction
+  name: paper door
+  id: PaperDoor
+  graph: DoorGraph
+  startNode: start
+  targetNode: paperDoor
+  category: Structures
+  description: A primitive door with manual operation like the cavemen used.
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Doors/MineralDoors/paper_door.rsi
+    state: closed
+  conditions:
+    - !type:TileNotBlocked

@@ -131,6 +131,9 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
+  - type: Construction
+    graph: DoorGraph
+    node: paperDoor
 
 - type: entity
   id: PlasmaDoor

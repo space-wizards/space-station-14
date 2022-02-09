@@ -62,6 +62,13 @@
             - material: Sand
               amount: 20
               doAfter: 15
+        - to: paperDoor
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: Paper
+              amount: 20
+              doAfter: 15
     - node: metalDoor
       entity: MetalDoor
       edges:
@@ -150,4 +157,14 @@
           steps:
             - tool: Anchoring
               doAfter: 15
-
+    - node: paperDoor
+      entity: PaperDoor
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetPaper1
+              amount: 20
+          steps:
+            - tool: Anchoring
+              doAfter: 15
