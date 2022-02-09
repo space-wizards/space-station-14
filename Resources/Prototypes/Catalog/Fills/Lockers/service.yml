@@ -66,10 +66,7 @@
   - type: StorageFill
     contents:
       - id: BriefcaseBrownFilled
-      - id: ClothingUniformJumpsuitLawyerRed
-      - id: ClothingUniformJumpsuitLawyerBlue
-      - id: ClothingUniformJumpsuitLawyerPurple
-      - id: ClothingUniformJumpsuitLawyerBlack
+        prob: 0.80
 
 - type: entity
   id: LockerBotanistFilled
