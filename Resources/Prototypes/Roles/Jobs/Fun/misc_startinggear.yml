@@ -61,6 +61,7 @@
     shoes: ClothingShoesChameleonNoSlips
     id: CentcomPDA
     pocket1: EmergencyOxygenTankFilled
+    pocket2: WageDoctorate #Ph.D in fucking your shit up, for real
     belt: ClothingBeltUtilityFilled
   innerclothingskirt: ClothingUniformJumpskirtColorBlack
   satchel: ClothingBackpackDuffelSyndicateAmmo

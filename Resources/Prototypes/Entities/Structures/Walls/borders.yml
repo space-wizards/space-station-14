@@ -1,0 +1,73 @@
+- type: entity
+  abstract: true
+  parent: BaseStructure
+  id: WorldBorderBase
+  name: borderbase
+  description: Keeps the universe in and the shitters out.
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wall
+  components:
+  - type: Tag
+    tags:
+    - Wall
+  - type: Sprite
+    netsync: false
+    drawdepth: Overlays
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      - GhostImpassable
+  - type: Physics
+    bodyType: Static
+  - type: Airtight
+
+- type: entity
+  parent: WorldBorderBase
+  id: WorldBorder
+  name: border
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/border.rsi
+    state: full
+  - type: Occluder
+    sizeX: 32
+    sizeY: 32
+
+- type: entity
+  parent: WorldBorderBase
+  id: WorldBorderLarge
+  name: border
+  suffix: 4x4
+  placement:
+    mode: SnapgridBorder
+    snap:
+    - Wall
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/border_large.rsi
+    state: full
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-2,-2,2,2"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      - GhostImpassable
+  - type: Occluder
+    sizeX: 128
+    sizeY: 128

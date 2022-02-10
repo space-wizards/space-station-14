@@ -21,6 +21,7 @@
     shoes: ClothingShoesColorBlack
     id: ChaplainPDA
     ears: ClothingHeadsetService
+    pocket1: WageUntrained
   innerclothingskirt: ClothingUniformJumpskirtChaplain
   satchel: ClothingBackpackSatchelChaplainFilled
   duffelbag: ClothingBackpackDuffelChaplainFilled

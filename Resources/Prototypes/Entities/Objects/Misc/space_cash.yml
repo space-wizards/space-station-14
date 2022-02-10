@@ -1,0 +1,152 @@
+- type: entity
+  parent: BaseItem
+  id: SpaceCash
+  name: credit
+  description: You gotta have money.
+  components:
+  - type: Material
+    materials:
+    - Credit
+  - type: Stack
+    stackType: Credit
+    max: 10000000 # if you somehow get this rich consider buying a second station
+    count: 1
+  - type: Sprite
+    sprite: Objects/Economy/cash.rsi
+    state: cash
+  - type: Appearance
+    visuals:
+    - type: StackVisualizer
+      stackLayers:
+      - cash
+      - cash_10
+      - cash_100
+      - cash_500
+      - cash_1000
+      - cash_1000000
+
+- type: stack
+  id: Credit
+  name: credit
+  icon: /Textures/Objects/Economy/cash.rsi/cash.png
+  spawn: SpaceCash
+
+- type: entity
+  parent: SpaceCash
+  id: SpaceCash10
+  name: credit
+  suffix: 10
+  components:
+  - type: Icon
+    sprite: Objects/Economy/cash.rsi
+    state: cash_10
+  - type: Stack
+    count: 10
+
+- type: entity
+  parent: SpaceCash
+  id: SpaceCash100
+  name: credit
+  suffix: 100
+  components:
+  - type: Icon
+    sprite: Objects/Economy/cash.rsi
+    state: cash_100
+  - type: Stack
+    count: 100
+
+- type: entity
+  parent: SpaceCash
+  id: SpaceCash500
+  name: credit
+  suffix: 500
+  components:
+  - type: Icon
+    sprite: Objects/Economy/cash.rsi
+    state: cash_500
+  - type: Stack
+    count: 500
+
+- type: entity
+  parent: SpaceCash
+  id: SpaceCash1000
+  name: credit
+  suffix: 1000
+  components:
+  - type: Icon
+    sprite: Objects/Economy/cash.rsi
+    state: cash_1000
+  - type: Stack
+    count: 1000
+
+- type: entity
+  parent: SpaceCash
+  id: SpaceCash1000000
+  name: credit
+  suffix: 1000000
+  components:
+  - type: Icon
+    sprite: Objects/Economy/cash.rsi
+    state: cash_1000000
+  - type: Stack
+    count: 1000000
+
+# beginregion wages
+
+# these specific values are based on goonstation - TODO change?
+
+- type: entity
+  parent: SpaceCash
+  id: WageUntrained # e.g. the plebs
+  name: credit
+  suffix: untrained salary
+  components:
+  - type: Icon
+    sprite: Objects/Economy/cash.rsi
+    state: cash_100
+  - type: Stack
+    count: 120
+
+- type: entity
+  parent: SpaceCash
+  id: WageTradesman # e.g. cargo, engineering, security
+  name: credit
+  suffix: tradesman salary
+  components:
+  - type: Sprite
+    state: cash_100
+  - type: Stack
+    count: 300
+
+- type: entity
+  parent: SpaceCash
+  id: WageDoctorate # e.g. science, medical
+  name: credit
+  suffix: doctorate salary
+  components:
+  - type: Sprite
+    state: cash_100
+  - type: Stack
+    count: 480
+
+- type: entity
+  parent: SpaceCash
+  id: WageImportant # e.g. heads of staff
+  name: credit
+  suffix: head salary
+  components:
+  - type: Sprite
+    state: cash_500
+  - type: Stack
+    count: 900
+
+- type: entity
+  parent: SpaceCash
+  id: WageExecutive # e.g. captain
+  name: credit
+  suffix: executive salary
+  components:
+  - type: Sprite
+    state: cash_1000
+  - type: Stack
+    count: 1200

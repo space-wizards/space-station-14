@@ -93,6 +93,7 @@
   - type: StorageFill
     contents:
       - id: BoxSurvival
+      - id: SpaceCash10
 
 - type: entity
   abstract: true
@@ -102,7 +103,7 @@
   - type: StorageFill
     contents:
       - id: BoxSurvival
-     
+
 - type: entity
   abstract: true
   parent: ClothingBackpack
