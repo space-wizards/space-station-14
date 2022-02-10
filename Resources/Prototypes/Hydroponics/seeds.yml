@@ -632,11 +632,10 @@
   plantRsi: Objects/Specific/Hydroponics/gatfruit.rsi
   productPrototypes:
     - FoodGatfruit
-  harvestRepeat: Repeat
-  lifespan: 55
-  maturation: 6
-  production: 6
-  yield: 2
+  lifespan: 65
+  maturation: 25
+  production: 25
+  yield: 1
   potency: 10
   growthStages: 2
   idealLight: 6
