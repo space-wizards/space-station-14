@@ -54,13 +54,17 @@ namespace Content.Client.Verbs.UI
             CurrentTarget = target;
             CurrentVerbs = _verbSystem.GetVerbs(target, user, Verb.VerbTypes, force);
 
+            // Fill in client-side verbs.
+            FillVerbPopup();
+
+            // Add indicator that some verbs may be missing.
+            // I long for the day when verbs will all be predicted and this becomes unnecessary.
             if (!target.IsClientSide())
             {
                 AddElement(RootMenu, new ContextMenuElement(Loc.GetString("verb-system-waiting-on-server-text")));
             }
 
             // Show the menu
-            FillVerbPopup();
             RootMenu.SetPositionLast();
             var box = UIBox2.FromDimensions(_userInterfaceManager.MousePositionScaled.Position, (1, 1));
             RootMenu.Open(box);
