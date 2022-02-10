@@ -1,14 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix parallax viewport when the eye is rotated., type: Fix}
-  id: 533
-  time: '2021-11-03T00:27:40.0000000+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: Added character name to traitor round end screen., type: Add}
-  id: 534
-  time: '2021-11-03T13:40:32.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: 'Open firelocks now have a smaller draw depth, so that they are not
@@ -2959,3 +2949,13 @@ Entries:
       now return to its regular safe levels.', type: Fix}
   id: 1033
   time: '2022-02-10T21:07:22.0000000+00:00'
+- author: Lamrr
+  changes:
+  - {message: High-voltage cables are now a little smoother., type: Tweak}
+  id: 1034
+  time: '2022-02-10T21:08:50.0000000+00:00'
+- author: Mith-randalf
+  changes:
+  - {message: 'Added some new, sensibly-sized signs.', type: Add}
+  id: 1035
+  time: '2022-02-10T21:08:56.0000000+00:00'
