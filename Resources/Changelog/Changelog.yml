@@ -1,15 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: Chem dispensers and ChemMasters are constructible and destructible now.,
-    type: Add}
-  id: 527
-  time: '2021-11-02T09:04:08.0000000+00:00'
-- author: ike709
-  changes:
-  - {message: Gas filters now have a UI, type: Add}
-  id: 528
-  time: '2021-11-02T09:44:40.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: Construction menu guides have been improved to be more accurate., type: Tweak}
@@ -2961,3 +2950,14 @@ Entries:
     type: Add}
   id: 1027
   time: '2022-02-10T01:58:24.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Flare Gun no longer spawns with a shotgun shell loaded, type: Fix}
+  - {message: Flare Gun now has a low chance to spawn in some lockers, type: Fix}
+  id: 1028
+  time: '2022-02-10T02:00:48.0000000+00:00'
+- author: SweptWasTaken
+  changes:
+  - {message: Fixes youtool deny state, type: Fix}
+  id: 1029
+  time: '2022-02-10T02:00:57.0000000+00:00'
