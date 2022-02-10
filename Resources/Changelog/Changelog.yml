@@ -1,10 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: Rotating on barstools/etc. now works in more cases and rotates the right
-      way., type: Fix}
-  id: 532
-  time: '2021-11-02T18:38:47.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix parallax viewport when the eye is rotated., type: Fix}
@@ -2958,3 +2952,10 @@ Entries:
     type: Fix}
   id: 1032
   time: '2022-02-10T19:04:05.0000000+00:00'
+- author: Spillhelm53
+  changes:
+  - {message: 'Fixes certain puddles not being able to evaporate, which had been slipping
+      people forever. The janitor''s *points at wet floor sign* schadenfreude  can
+      now return to its regular safe levels.', type: Fix}
+  id: 1033
+  time: '2022-02-10T21:07:22.0000000+00:00'
