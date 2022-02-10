@@ -205,6 +205,21 @@
 
 - type: entity
   parent: BasePDA
+  id: SalvagePDA
+  name: salvage PDA
+  description: Smells like ash.
+  components:
+  - type: PDA
+    id: SalvageIDCard
+  - type: Appearance
+    visuals:
+      - type: PDAVisualizer
+        state: pda-miner
+  - type: Icon
+    state: pda-miner
+
+- type: entity
+  parent: BasePDA
   id: BartenderPDA
   name: bartender PDA
   description: Smells like beer.

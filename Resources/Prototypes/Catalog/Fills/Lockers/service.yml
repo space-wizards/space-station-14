@@ -103,3 +103,20 @@
         prob: 1
       - id: ClothingHeadHatTrucker
         prob: 0.1
+
+- type: entity
+  id: LockerBotanistLoot
+  suffix: Loot
+  parent: LockerBotanist
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingUniformOveralls
+      - id: ClothingHeadHatTrucker
+        prob: 0.3
+      - id: GatfruitSeeds
+        prob: 0.1
+      - id: FlyAmanitaSeeds
+        prob: 0.5
+      - id: NettleSeeds
+        prob: 0.7

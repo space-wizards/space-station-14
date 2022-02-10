@@ -9,6 +9,13 @@
   - type: Icon
     sprite: Mobs/Species/Slime/parts.rsi
     state: full
+  - type: Respirator
+    damage:
+      types:
+        Asphyxiation: 3
+    damageRecovery:
+      types:
+        Asphyxiation: -1.5
   - type: Sprite
     netsync: false
     noRot: true

@@ -73,4 +73,11 @@
   mapPath: /Maps/Salvage/medium-ruined-emergency-shuttle.yml
   size: 8.5 # Over standard medium wreck size, may need future adjustment.
 
+# """Large""" maps
+
+- type: salvageMap
+  id: stationstation
+  name: "StationStation"
+  mapPath: /Maps/Salvage/stationstation.yml
+  size: 16
 

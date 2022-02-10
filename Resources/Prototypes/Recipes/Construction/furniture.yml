@@ -100,6 +100,23 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+    
+- type: construction
+  name: pilots chair
+  id: chairPilotSeat
+  graph: Seat
+  startNode: start
+  targetNode: chairPilotSeat
+  category: Furniture
+  description: Fit for a captain.
+  icon:
+    sprite: Structures/Furniture/chairs.rsi
+    state: shuttle
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
 
 - type: construction
   name: wooden chair

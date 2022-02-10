@@ -36,6 +36,10 @@
     },
     {
       "name": "stage-6"
+    },
+    {
+      "name": "equipped-HELMET",
+      "directions": 4
     }
   ]
 }
