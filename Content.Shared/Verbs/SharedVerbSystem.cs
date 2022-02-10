@@ -103,9 +103,13 @@ namespace Content.Shared.Verbs
                 && @using != target)
             {
                 var verbEvent = new GetVerbsEvent<UtilityVerb>(user, target, @using, hands, canInteract, canAccess);
-                RaiseLocalEvent(target, verbEvent);
+                RaiseLocalEvent(@using.Value, verbEvent); // directed at used, not at target
                 verbs.UnionWith(verbEvent.Verbs);
             }
+
+            // TODO add innate verbs? Utility verbs obtained by directing event at the user? Might be useful for
+            // mob/species specific abilities, though thats maybe straying into the territory of actions.
+            // Then again, whats an action if not a cached-verb....
             
             if (types.Contains(typeof(AlternativeVerb)))
             {

@@ -32,7 +32,6 @@ namespace Content.Client.Verbs.UI
             TooltipDelay = VerbTooltipDelay;
             Disabled = verb.Disabled;
             Verb = verb;
-            Type = verbType;
 
             Label.SetOnlyStyleClass(verb.TextStyleClass);
 

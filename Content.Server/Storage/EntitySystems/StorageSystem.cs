@@ -11,9 +11,6 @@ using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -123,7 +120,7 @@ namespace Content.Server.Storage.EntitySystems
             args.Verbs.Add(verb);
         }
 
-        private void AddTransferVerbs(EntityUid uid, ServerStorageComponent component, GetUtilityVerbsEvent args)
+        private void AddTransferVerbs(EntityUid uid, ServerStorageComponent component, GetVerbsEvent<UtilityVerb> args)
         {
             if (!args.CanAccess || !args.CanInteract)
                 return;
@@ -139,7 +136,7 @@ namespace Content.Server.Storage.EntitySystems
             if (TryComp(args.Target, out ServerStorageComponent? targetStorage)
                 && (!TryComp(uid, out LockComponent? targetLock) || !targetLock.Locked))
             {
-                Verb verb = new()
+                UtilityVerb verb = new()
                 {
                     Text = Loc.GetString("storage-component-transfer-verb"),
                     IconEntity = args.Using,
@@ -153,7 +150,7 @@ namespace Content.Server.Storage.EntitySystems
             if (!TryComp(args.Target, out DisposalUnitComponent? disposal))
                 return;
 
-            Verb dispose = new()
+            UtilityVerb dispose = new()
             {
                 Text = Loc.GetString("storage-component-dispose-verb"),
                 IconEntity = args.Using,
