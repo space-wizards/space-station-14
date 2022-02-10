@@ -75,8 +75,13 @@ namespace Content.Server.NodeContainer.EntitySystems
                 return;
             }
 
+            var anchored = Transform(uid).Anchored;
+
             foreach (var node in container.Nodes.Values)
             {
+                if (node.NeedAnchored && !anchored)
+                    continue;
+
                 if (node is not IRotatableNode rotatableNode)
                     continue;
 
