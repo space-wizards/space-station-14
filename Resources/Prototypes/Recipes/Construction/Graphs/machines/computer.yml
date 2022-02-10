@@ -1,5 +1,5 @@
 ﻿- type: constructionGraph
-  id: computer
+  id: Computer
   start: start
   graph:
     - node: start

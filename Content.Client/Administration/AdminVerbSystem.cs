@@ -12,15 +12,14 @@ namespace Content.Client.Verbs
     class AdminVerbSystem : EntitySystem
     {
         [Dependency] private readonly IClientConGroupController _clientConGroupController = default!;
-        [Dependency] private readonly IViewVariablesManager _viewVariablesManager = default!;
         [Dependency] private readonly IClientConsoleHost _clientConsoleHost = default!;
 
         public override void Initialize()
         {
-            SubscribeLocalEvent<GetOtherVerbsEvent>(AddAdminVerbs);
+            SubscribeLocalEvent<GetVerbsEvent<Verb>>(AddAdminVerbs);
         }
 
-        private void AddAdminVerbs(GetOtherVerbsEvent args)
+        private void AddAdminVerbs(GetVerbsEvent<Verb> args)
         {
             // Currently this is only the ViewVariables verb, but more admin-UI related verbs can be added here.
 

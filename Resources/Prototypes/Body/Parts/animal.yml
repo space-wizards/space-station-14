@@ -82,6 +82,19 @@
     size: 1
     compatibility: Biological
   - type: Lung
+    validReagentGases:
+    - Oxygen
+    - Plasma
+    - Tritium
+    - CarbonDioxide
+  - type: Metabolizer
+    removeEmpty: true
+    solutionOnBody: false
+    solution: "Lung"
+    metabolizerTypes: [ Animal ]
+    groups:
+    - id: Gas
+      rateModifier: 100.0
 
 - type: entity
   id: OrganAnimalStomach

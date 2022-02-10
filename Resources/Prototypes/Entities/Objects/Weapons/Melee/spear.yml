@@ -28,7 +28,7 @@
     Slots:
     - back
   - type: Construction
-    graph: spear
+    graph: Spear
     node: spear
   - type: ItemCooldown
   - type: MeleeChemicalInjector

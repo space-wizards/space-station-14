@@ -163,6 +163,10 @@
         {
             "name":"secure_underlay",
             "directions":4
+        },
+        {
+            "name": "emergency_unlit",
+            "directions": 4
         }
     ]
 }

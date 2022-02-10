@@ -17,7 +17,7 @@
       sprite: Structures/Walls/grille.rsi
       state: grille
     - type: Construction
-      graph: grille
+      graph: Grille
       node: grille
       deconstructionTarget: start
     - type: Damageable
@@ -57,6 +57,12 @@
       thresholds:
         - trigger:
             !type:DamageTrigger
+            damage: 50 #excess damage (nuke?). avoid computational cost of spawning entities.
+          behaviors:
+            - !type:DoActsBehavior
+              acts: ["Destruction"]
+        - trigger:
+            !type:DamageTrigger
             damage: 20
           behaviors:
             - !type:ChangeConstructionNodeBehavior
@@ -82,7 +88,7 @@
       tags:
         - RCDDeconstructWhitelist
     - type: Construction
-      graph: grille
+      graph: Grille
       node: grilleBroken
       deconstructionTarget: start
     - type: Fixtures # overwrite BaseStructure parent.

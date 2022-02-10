@@ -9,8 +9,6 @@ namespace Content.Server.Cleanable
     [RegisterComponent]
     public class CleanableComponent : Component
     {
-        public override string Name => "Cleanable";
-
         [DataField("cleanAmount")]
         private FixedPoint2 _cleanAmount = FixedPoint2.Zero;
         [ViewVariables(VVAccess.ReadWrite)]

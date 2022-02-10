@@ -17,8 +17,6 @@ namespace Content.Server.Spawners.Components
     {
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
-        public override string Name => "TimedSpawner";
-
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("prototypes", customTypeSerializer:typeof(PrototypeIdListSerializer<EntityPrototype>))]
         public List<string> Prototypes { get; set; } = new();

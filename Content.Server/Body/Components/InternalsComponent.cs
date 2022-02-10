@@ -10,7 +10,6 @@ namespace Content.Server.Body.Components
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        public override string Name => "Internals";
         [ViewVariables] public EntityUid? GasTankEntity { get; set; }
         [ViewVariables] public EntityUid? BreathToolEntity { get; set; }
 

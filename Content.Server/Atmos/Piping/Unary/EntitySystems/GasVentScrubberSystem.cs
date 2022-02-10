@@ -112,7 +112,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
                 var removed = tile.Remove(transferMoles);
 
-                outlet.AssumeAir(removed);
+                _atmosphereSystem.Merge(outlet.Air, removed);
             }
         }
 

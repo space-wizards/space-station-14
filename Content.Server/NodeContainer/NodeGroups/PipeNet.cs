@@ -54,7 +54,6 @@ namespace Content.Server.NodeContainer.NodeGroups
             {
                 var pipeNode = (PipeNode) node;
                 _pipes.Add(pipeNode);
-                pipeNode.JoinPipeNet(this);
                 Air.Volume += pipeNode.Volume;
             }
         }

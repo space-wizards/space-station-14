@@ -76,7 +76,7 @@ internal class ClientAlertsSystem : AlertsSystem
         if (componentAlerts == null) return;
 
         //TODO: Do we really want to send alerts for non-attached entity?
-        component.Alerts = componentAlerts;
+        component.Alerts = new(componentAlerts);
         if (!CurControlled(component.Owner, _playerManager)) return;
 
         SyncAlerts?.Invoke(this, componentAlerts);

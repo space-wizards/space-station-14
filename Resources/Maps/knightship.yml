@@ -2121,7 +2121,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 152
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: -1.5,-3.5
     parent: 0
@@ -2419,7 +2419,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 186
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: -0.5,0.5
     parent: 0
@@ -2864,7 +2864,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 241
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 6.5,-9.5
     parent: 0
@@ -3166,7 +3166,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 281
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 7.5,2.5
     parent: 0
@@ -3473,7 +3473,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 317
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 4.5,-1.5
     parent: 0
@@ -3801,7 +3801,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 355
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 5.5,-3.5
     parent: 0
@@ -5211,7 +5211,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 509
-  type: SalternApc
+  type: SalternAPC
   components:
   - pos: 4.5,-16.5
     parent: 0

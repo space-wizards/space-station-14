@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
@@ -7,6 +6,7 @@ using Content.Server.CombatMode;
 using Content.Server.Hands.Components;
 using Content.Server.Pulling;
 using Content.Server.Storage.Components;
+using Content.Server.Timing;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Database;
 using Content.Shared.DragDrop;
@@ -14,18 +14,16 @@ using Content.Shared.Input;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Item;
-using Content.Shared.Popups;
 using Content.Shared.Pulling.Components;
+using Content.Shared.Timing;
 using Content.Shared.Weapons.Melee;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
@@ -41,6 +39,7 @@ namespace Content.Server.Interaction
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly PullingSystem _pullSystem = default!;
         [Dependency] private readonly AdminLogSystem _adminLogSystem = default!;
+        [Dependency] private readonly UseDelaySystem _useDelay = default!;
 
         public override void Initialize()
         {
@@ -85,6 +84,11 @@ namespace Content.Server.Interaction
 
             // we don't check if the user can access the storage entity itself. This should be handed by the UI system.
             return storage.SubscribedSessions.Contains(actor.PlayerSession);
+        }
+
+        protected override void BeginDelay(UseDelayComponent? component = null)
+        {
+            _useDelay.BeginDelay(component);
         }
 
         #region Drag drop
@@ -230,10 +234,10 @@ namespace Content.Server.Interaction
         /// Finds components with the InteractHand interface and calls their function
         /// NOTE: Does not have an InRangeUnobstructed check
         /// </summary>
-        public override void InteractHand(EntityUid user, EntityUid target)
+        public override void InteractHand(EntityUid user, EntityUid target, bool checkActionBlocker = true)
         {
             // TODO PREDICTION move server-side interaction logic into the shared system for interaction prediction.
-            if (!_actionBlockerSystem.CanInteract(user))
+            if (checkActionBlocker && !_actionBlockerSystem.CanInteract(user))
                 return;
 
             // all interactions should only happen when in range / unobstructed, so no range check is needed
@@ -266,31 +270,19 @@ namespace Content.Server.Interaction
         public override async Task<bool> InteractUsingRanged(EntityUid user, EntityUid used, EntityUid? target, EntityCoordinates clickLocation, bool inRangeUnobstructed)
         {
             // TODO PREDICTION move server-side interaction logic into the shared system for interaction prediction.
-            if (InteractDoBefore(user, used, inRangeUnobstructed ? target : null, clickLocation, false))
+            if (InteractDoBefore(user, used, target, clickLocation, inRangeUnobstructed))
                 return true;
 
             if (target != null)
             {
                 var rangedMsg = new RangedInteractEvent(user, used, target.Value, clickLocation);
                 RaiseLocalEvent(target.Value, rangedMsg);
+
                 if (rangedMsg.Handled)
                     return true;
-
-                var rangedInteractions = AllComps<IRangedInteract>(target.Value).ToList();
-                var rangedInteractionEventArgs = new RangedInteractEventArgs(user, used, clickLocation);
-
-                // See if we have a ranged interaction
-                foreach (var t in rangedInteractions)
-                {
-                    // If an InteractUsingRanged returns a status completion we finish our interaction
-#pragma warning disable 618
-                    if (t.RangedInteract(rangedInteractionEventArgs))
-#pragma warning restore 618
-                        return true;
-                }
             }
 
-            return await InteractDoAfter(user, used, inRangeUnobstructed ? target : null, clickLocation, false);
+            return await InteractDoAfter(user, used, target, clickLocation, inRangeUnobstructed);
         }
 
         public override void DoAttack(EntityUid user, EntityCoordinates coordinates, bool wideAttack, EntityUid? target = null)
@@ -305,7 +297,7 @@ namespace Content.Server.Interaction
             if (!wideAttack)
             {
                 // Check if interacted entity is in the same container, the direct child, or direct parent of the user.
-                if (target != null && !Deleted(target.Value) && !user.IsInSameOrParentContainer(target.Value) && !CanAccessViaStorage(user, target.Value))
+                if (target != null && !Deleted(target.Value) && !ContainerSystem.IsInSameOrParentContainer(user, target.Value) && !CanAccessViaStorage(user, target.Value))
                 {
                     Logger.WarningS("system.interaction",
                         $"User entity {ToPrettyString(user):user} clicked on object {ToPrettyString(target.Value):target} that isn't the parent, child, or in the same container");
@@ -320,7 +312,7 @@ namespace Content.Server.Interaction
             // Verify user has a hand, and find what object they are currently holding in their active hand
             if (TryComp(user, out HandsComponent? hands))
             {
-                var item = hands.GetActiveHand?.Owner;
+                var item = hands.GetActiveHandItem?.Owner;
 
                 if (item != null && !Deleted(item.Value))
                 {

@@ -18,9 +18,6 @@ namespace Content.Client.Disposal.Visualizers
         [DataField("state_anchored")]
         private string? _stateAnchored;
 
-        [DataField("state_broken")]
-        private string? _stateBroken;
-
         private void ChangeState(AppearanceComponent appearance)
         {
             var entities = IoCManager.Resolve<IEntityManager>();
@@ -38,7 +35,6 @@ namespace Content.Client.Disposal.Visualizers
             {
                 DisposalTubeVisualState.Free => _stateFree,
                 DisposalTubeVisualState.Anchored => _stateAnchored,
-                DisposalTubeVisualState.Broken => _stateBroken,
                 _ => throw new ArgumentOutOfRangeException()
             };
 

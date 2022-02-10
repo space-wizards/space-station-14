@@ -20,7 +20,7 @@ namespace Content.Server.Clothing
         {
             base.Initialize();
 
-            SubscribeLocalEvent<MagbootsComponent, GetActivationVerbsEvent>(AddToggleVerb);
+            SubscribeLocalEvent<MagbootsComponent, GetVerbsEvent<ActivationVerb>>(AddToggleVerb);
             SubscribeLocalEvent<MagbootsComponent, SlipAttemptEvent>(OnSlipAttempt);
             SubscribeLocalEvent<MagbootsComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
             SubscribeLocalEvent<MagbootsComponent, GotEquippedEvent>(OnGotEquipped);
@@ -69,12 +69,12 @@ namespace Content.Server.Clothing
             args.ModifySpeed(component.WalkSpeedModifier, component.SprintSpeedModifier);
         }
 
-        private void AddToggleVerb(EntityUid uid, MagbootsComponent component, GetActivationVerbsEvent args)
+        private void AddToggleVerb(EntityUid uid, MagbootsComponent component, GetVerbsEvent<ActivationVerb> args)
         {
             if (!args.CanAccess || !args.CanInteract)
                 return;
 
-            Verb verb = new();
+            ActivationVerb verb = new();
             verb.Text = Loc.GetString("toggle-magboots-verb-get-data-text");
             verb.Act = () => component.On = !component.On;
             // TODO VERB ICON add toggle icon? maybe a computer on/off symbol?

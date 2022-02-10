@@ -13,8 +13,6 @@ namespace Content.Server.Research.Components
     {
         public static int ServerCount = 0;
 
-        public override string Name => "ResearchServer";
-
         [ViewVariables(VVAccess.ReadWrite)] public string ServerName => _serverName;
 
         [DataField("servername")]

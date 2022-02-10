@@ -8,6 +8,7 @@ using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Item;
 using Content.Shared.Light.Component;
 using Content.Shared.Rounding;
 using Content.Shared.Verbs;
@@ -44,7 +45,7 @@ namespace Content.Server.Light.EntitySystems
             SubscribeLocalEvent<HandheldLightComponent, ComponentGetState>(OnGetState);
 
             SubscribeLocalEvent<HandheldLightComponent, ExaminedEvent>(OnExamine);
-            SubscribeLocalEvent<HandheldLightComponent, GetActivationVerbsEvent>(AddToggleLightVerb);
+            SubscribeLocalEvent<HandheldLightComponent, GetVerbsEvent<ActivationVerb>>(AddToggleLightVerb);
 
             SubscribeLocalEvent<HandheldLightComponent, ActivateInWorldEvent>(OnActivate);
         }
@@ -124,7 +125,7 @@ namespace Content.Server.Light.EntitySystems
                     continue;
                 }
 
-                if (handheld.Paused) continue;
+                if (Paused(handheld.Owner)) continue;
                 TryUpdate(handheld, frameTime);
             }
 
@@ -134,11 +135,11 @@ namespace Content.Server.Light.EntitySystems
             }
         }
 
-        private void AddToggleLightVerb(EntityUid uid, HandheldLightComponent component, GetActivationVerbsEvent args)
+        private void AddToggleLightVerb(EntityUid uid, HandheldLightComponent component, GetVerbsEvent<ActivationVerb> args)
         {
             if (!args.CanAccess || !args.CanInteract) return;
 
-            Verb verb = new()
+            ActivationVerb verb = new()
             {
                 Text = Loc.GetString("verb-common-toggle-light"),
                 IconTexture = "/Textures/Interface/VerbIcons/light.svg.192dpi.png",
@@ -214,9 +215,9 @@ namespace Content.Server.Light.EntitySystems
                 light.Enabled = on;
             }
 
-            if (EntityManager.TryGetComponent(component.Owner, out ItemComponent? item))
+            if (EntityManager.TryGetComponent(component.Owner, out SharedItemComponent? item))
             {
-                item.EquippedPrefix = Loc.GetString(on ? "on" : "off");
+                item.EquippedPrefix = on ? "on" : "off";
             }
         }
 

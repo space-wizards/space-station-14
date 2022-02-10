@@ -23,3 +23,10 @@
   - Piep!
   - Chuu!
   - Eeee!
+
+- type: accent
+  id: mumble
+  words:
+    - Mmfph!
+    - Mmmf mrrfff!
+    - Mmmf mnnf!

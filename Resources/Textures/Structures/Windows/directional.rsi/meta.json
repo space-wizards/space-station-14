@@ -9,27 +9,27 @@
   "states": [
     {
       "name": "window",
-      "directions": 8
+      "directions": 4
     },
     {
       "name": "reinforced_window",
-      "directions": 8
+      "directions": 4
     },
     {
       "name": "tinted_window",
-      "directions": 8
+      "directions": 4
     },
     {
       "name": "frosted_window",
-      "directions": 8
+      "directions": 4
     },
 	{
 	  "name": "plasma_window",
-	  "directions": 8
+	  "directions": 4
 	},
 	{
 	  "name": "plasma_reinforced_window",
-	  "directions": 8
+	  "directions": 4
 	}
   ]
 }

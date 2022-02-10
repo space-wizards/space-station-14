@@ -7,8 +7,6 @@ namespace Content.Server.Atmos.Piping.Unary.Components
     [RegisterComponent]
     public class GasPortableComponent : Component
     {
-        public override string Name => "GasPortable";
-
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("port")]
         public string PortName { get; set; } = "port";

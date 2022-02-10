@@ -8,7 +8,7 @@ using Robust.Client.UserInterface.XAML;
 namespace Content.Client.MachineLinking.UI
 {
     [GenerateTypedNameReferences]
-    public partial class SignalPortSelectorMenu : SS14Window
+    public partial class SignalPortSelectorMenu : DefaultWindow
     {
         private SignalPortSelectorBoundUserInterface _bui;
 

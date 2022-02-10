@@ -1,6 +1,7 @@
-﻿using Content.Server.NodeContainer.Nodes;
+using Content.Server.NodeContainer.Nodes;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.NodeContainer.EntitySystems
 {
@@ -9,8 +10,10 @@ namespace Content.Server.NodeContainer.EntitySystems
     /// </summary>
     /// <seealso cref="NodeGroupSystem"/>
     [UsedImplicitly]
-    public class NodeContainerSystem : EntitySystem
+    public sealed class NodeContainerSystem : EntitySystem
     {
+        [Dependency] private readonly NodeGroupSystem _nodeGroupSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -22,54 +25,68 @@ namespace Content.Server.NodeContainer.EntitySystems
             SubscribeLocalEvent<NodeContainerComponent, RotateEvent>(OnRotateEvent);
         }
 
-        private static void OnInitEvent(EntityUid uid, NodeContainerComponent component, ComponentInit args)
+        private void OnInitEvent(EntityUid uid, NodeContainerComponent component, ComponentInit args)
         {
             foreach (var (key, node) in component.Nodes)
             {
                 node.Name = key;
-                node.Initialize(component.Owner);
+                node.Initialize(component.Owner, EntityManager);
             }
         }
 
-        private static void OnStartupEvent(EntityUid uid, NodeContainerComponent component, ComponentStartup args)
+        private void OnStartupEvent(EntityUid uid, NodeContainerComponent component, ComponentStartup args)
         {
             foreach (var node in component.Nodes.Values)
             {
-                node.OnContainerStartup();
+                _nodeGroupSystem.QueueReflood(node);
             }
         }
 
-        private static void OnShutdownEvent(EntityUid uid, NodeContainerComponent component, ComponentShutdown args)
+        private void OnShutdownEvent(EntityUid uid, NodeContainerComponent component, ComponentShutdown args)
         {
             foreach (var node in component.Nodes.Values)
             {
-                node.OnContainerShutdown();
+                _nodeGroupSystem.QueueNodeRemove(node);
+                node.Deleting = true;
             }
         }
 
-        private static void OnAnchorStateChanged(
+        private void OnAnchorStateChanged(
             EntityUid uid,
             NodeContainerComponent component,
             ref AnchorStateChangedEvent args)
         {
             foreach (var node in component.Nodes.Values)
             {
-                node.AnchorUpdate();
-                node.AnchorStateChanged();
+                if (!node.NeedAnchored)
+                    continue;
+
+                if (args.Anchored)
+                    _nodeGroupSystem.QueueReflood(node);
+                else
+                    _nodeGroupSystem.QueueNodeRemove(node);
             }
         }
 
-        private static void OnRotateEvent(EntityUid uid, NodeContainerComponent container, ref RotateEvent ev)
+        private void OnRotateEvent(EntityUid uid, NodeContainerComponent container, ref RotateEvent ev)
         {
             if (ev.NewRotation == ev.OldRotation)
             {
                 return;
             }
 
+            var anchored = Transform(uid).Anchored;
+
             foreach (var node in container.Nodes.Values)
             {
-                if (node is not IRotatableNode rotatableNode) continue;
-                rotatableNode.RotateEvent(ref ev);
+                if (node.NeedAnchored && !anchored)
+                    continue;
+
+                if (node is not IRotatableNode rotatableNode)
+                    continue;
+
+                if (rotatableNode.RotateEvent(ref ev))
+                    _nodeGroupSystem.QueueReflood(node);
             }
         }
     }
