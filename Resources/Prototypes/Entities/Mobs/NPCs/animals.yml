@@ -95,7 +95,7 @@
   description: How nice a bee. Oh no, it looks angry and wants my pizza.
   components:
   - type: UnarmedCombat
-    range: 1
+    range: 0.3
     arcwidth: 0
     arc: bite
     damage:
