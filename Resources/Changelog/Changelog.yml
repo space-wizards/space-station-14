@@ -1,10 +1,4 @@
 Entries:
-- author: Macoron
-  changes:
-  - {message: Added a brand new pinpointer for the nuclear disk in a captain locker,
-    type: Add}
-  id: 537
-  time: '2021-11-03T21:35:34.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: Pinpointers stop being active on component shutdown, type: Fix}
@@ -2958,3 +2952,9 @@ Entries:
   - {message: Lack of oxygen is now slightly less deadly., type: Tweak}
   id: 1037
   time: '2022-02-10T21:58:41.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'Maintenance drones are a new ghost role. They are unlocked with Avionics
+      research, or can be found in drone storage rooms.', type: Add}
+  id: 1038
+  time: '2022-02-10T22:15:06.0000000+00:00'
