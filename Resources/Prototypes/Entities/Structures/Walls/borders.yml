@@ -12,9 +12,6 @@
   - type: Tag
     tags:
     - Wall
-  - type: Sprite
-    netsync: false
-    drawdepth: Overlays
   - type: Fixtures
     fixtures:
     - shape:
@@ -36,8 +33,8 @@
   id: WorldBorder
   name: border
   components:
-  - type: Sprite
-    sprite: Structures/Walls/border_large.rsi
+  - type: Icon
+    sprite: Structures/Walls/border.rsi
     state: full
   - type: Occluder
     boundingBox: "-1024,-2,1024,2"
