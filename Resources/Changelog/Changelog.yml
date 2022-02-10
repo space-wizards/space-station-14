@@ -1,10 +1,4 @@
 Entries:
-- author: Ygg01
-  changes:
-  - {message: 'Make tomato juiceable and grindable. Finally, more nutritious juice
-      is possible.', type: Tweak}
-  id: 526
-  time: '2021-11-02T04:20:14.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: Chem dispensers and ChemMasters are constructible and destructible now.,
@@ -2961,3 +2955,9 @@ Entries:
       trash bag., type: Tweak}
   id: 1026
   time: '2022-02-10T01:37:43.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Pilot seats can now be constructed. Bling up that homemade shuttle.,
+    type: Add}
+  id: 1027
+  time: '2022-02-10T01:58:24.0000000+00:00'
