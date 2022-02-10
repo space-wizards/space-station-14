@@ -1,0 +1,19 @@
+﻿- type: palette
+  id: Departmental
+  name: Departmental
+  colors:
+    medical: "#8bb8cf"
+    medical-alt: "#74b8dc"
+    engineering: "#b79c6b"
+    engineering-alt: "#c67154"
+    atmospherics: "#88a29d"
+    security: "#B67D7D"
+    security-alt: "#a96262"
+    cargo: "#b88e46"
+    cargo-alt: "#967952"
+    science: "#ab87a6"
+    science-alt: "#b881b1"
+    hydro: "#93b373"
+    janitor: "#ab86a5"
+    shaded: "#8c8c8c"
+    dark: "#616161"
