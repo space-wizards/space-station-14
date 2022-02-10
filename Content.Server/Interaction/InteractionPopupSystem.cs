@@ -15,7 +15,6 @@ public sealed class InteractionPopupSystem : EntitySystem
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IEntityManager _entities = default!;
 
     public override void Initialize()
     {
