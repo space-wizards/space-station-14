@@ -88,7 +88,8 @@
     - Bee
 
 - type: entity
-  name: angry bee
+  name: bee
+  suffix: Angry
   parent: MobBee
   id: MobAngryBee
   description: How nice a bee. Oh no, it looks angry and wants my pizza.
