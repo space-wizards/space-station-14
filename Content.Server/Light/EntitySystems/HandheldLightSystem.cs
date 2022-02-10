@@ -45,7 +45,7 @@ namespace Content.Server.Light.EntitySystems
             SubscribeLocalEvent<HandheldLightComponent, ComponentGetState>(OnGetState);
 
             SubscribeLocalEvent<HandheldLightComponent, ExaminedEvent>(OnExamine);
-            SubscribeLocalEvent<HandheldLightComponent, GetActivationVerbsEvent>(AddToggleLightVerb);
+            SubscribeLocalEvent<HandheldLightComponent, GetVerbsEvent<ActivationVerb>>(AddToggleLightVerb);
 
             SubscribeLocalEvent<HandheldLightComponent, ActivateInWorldEvent>(OnActivate);
         }
@@ -135,11 +135,11 @@ namespace Content.Server.Light.EntitySystems
             }
         }
 
-        private void AddToggleLightVerb(EntityUid uid, HandheldLightComponent component, GetActivationVerbsEvent args)
+        private void AddToggleLightVerb(EntityUid uid, HandheldLightComponent component, GetVerbsEvent<ActivationVerb> args)
         {
             if (!args.CanAccess || !args.CanInteract) return;
 
-            Verb verb = new()
+            ActivationVerb verb = new()
             {
                 Text = Loc.GetString("verb-common-toggle-light"),
                 IconTexture = "/Textures/Interface/VerbIcons/light.svg.192dpi.png",

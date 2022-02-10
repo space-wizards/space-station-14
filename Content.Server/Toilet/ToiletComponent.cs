@@ -9,7 +9,6 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Toilet
 {
     [RegisterComponent]
-    [ComponentProtoName("Toilet")]
     public sealed class ToiletComponent : Component, ISuicideAct
     {
         [DataField("pryLidTime")]

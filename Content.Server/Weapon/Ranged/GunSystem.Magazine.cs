@@ -22,7 +22,7 @@ namespace Content.Server.Weapon.Ranged;
 
 public sealed partial class GunSystem
 {
-    private void AddEjectMagazineVerb(EntityUid uid, MagazineBarrelComponent component, GetAlternativeVerbsEvent args)
+    private void AddEjectMagazineVerb(EntityUid uid, MagazineBarrelComponent component, GetVerbsEvent<AlternativeVerb> args)
     {
         if (args.Hands == null ||
             !args.CanAccess ||
@@ -34,7 +34,7 @@ public sealed partial class GunSystem
         if (component.MagNeedsOpenBolt && !component.BoltOpen)
             return;
 
-        Verb verb = new()
+        AlternativeVerb verb = new()
         {
             Text = MetaData(component.MagazineContainer.ContainedEntity!.Value).EntityName,
             Category = VerbCategory.Eject,
@@ -43,7 +43,7 @@ public sealed partial class GunSystem
         args.Verbs.Add(verb);
     }
 
-    private void AddMagazineInteractionVerbs(EntityUid uid, MagazineBarrelComponent component, GetInteractionVerbsEvent args)
+    private void AddMagazineInteractionVerbs(EntityUid uid, MagazineBarrelComponent component, GetVerbsEvent<InteractionVerb> args)
     {
         if (args.Hands == null ||
             !args.CanAccess ||
@@ -51,7 +51,7 @@ public sealed partial class GunSystem
             return;
 
         // Toggle bolt verb
-        Verb toggleBolt = new()
+        InteractionVerb toggleBolt = new()
         {
             Text = component.BoltOpen
                 ? Loc.GetString("close-bolt-verb-get-data-text")
@@ -67,7 +67,7 @@ public sealed partial class GunSystem
             return;
 
         // Insert mag verb
-        Verb insert = new()
+        InteractionVerb insert = new()
         {
             Text = MetaData(@using).EntityName,
             Category = VerbCategory.Insert,

@@ -5,7 +5,7 @@
   departments:
   - Cargo
   icon: "CargoTechnician"
-  supervisors: "the head of personnel" # TODO: Change this to include the QM when it gets in.
+  supervisors: "the quartermaster and head of personnel"
   access:
   - Cargo
   - Maintenance
@@ -18,7 +18,6 @@
     jumpsuit: ClothingUniformJumpsuitCargo
     back: ClothingBackpackFilled
     shoes: ClothingShoesColorBlack
-    gloves: ClothingHandsGlovesFingerless
     id: CargoPDA
     ears: ClothingHeadsetCargo
   innerclothingskirt: ClothingUniformJumpskirtCargo

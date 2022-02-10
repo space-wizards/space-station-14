@@ -48,6 +48,11 @@ namespace Content.Client.PDA
                 SendMessage(new PDAShowUplinkMessage());
             };
 
+            _menu.AccessRingtoneButton.OnPressed += _ =>
+            {
+                SendMessage(new PDAShowRingtoneMessage());
+            };
+
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)

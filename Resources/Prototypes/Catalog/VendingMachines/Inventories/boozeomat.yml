@@ -5,6 +5,7 @@
   startingInventory:
 
     DrinkGlass: 30 #Kept glasses at top for ease to differentiate from booze.
+    DrinkShaker: 3
     DrinkAbsintheBottleFull: 3
     DrinkAleBottleFull: 6
     DrinkBeer: 6 # Needs to be renamed DrinkBeerBottleFull
