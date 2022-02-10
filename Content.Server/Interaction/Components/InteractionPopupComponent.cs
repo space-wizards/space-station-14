@@ -41,7 +41,8 @@ namespace Content.Server.Interaction.Components;
         [DataField("interactFailureSound")]
         public SoundSpecifier? InteractFailureSound;
 
-        /// <summary> Chance that an interaction attempt will succeed.
+        /// <summary> 
+        /// Chance that an interaction attempt will succeed.
         /// 1   = always play "success" popup and sound.
         /// 0.5 = 50% chance to play either success or failure popup and sound.
         /// 0   = always play "failure" popup and sound.
