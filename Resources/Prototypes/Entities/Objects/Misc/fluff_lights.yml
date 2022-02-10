@@ -4,6 +4,8 @@
   id: BaseLamp
   abstract: true
   components:
+  - type: Sprite
+    netsync: false
   - type: HandheldLight
   - type: PowerCellSlot
   - type: ItemActions
