@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.ContextMenu.UI;
@@ -30,7 +31,7 @@ namespace Content.Client.Verbs.UI
         private readonly VerbSystem _verbSystem;
 
         public EntityUid CurrentTarget;
-        public Dictionary<VerbType, SortedSet<Verb>> CurrentVerbs = new();
+        public SortedSet<Verb> CurrentVerbs = new();
 
         public VerbMenuPresenter(VerbSystem verbSystem)
         {
@@ -51,7 +52,7 @@ namespace Content.Client.Verbs.UI
             Close();
 
             CurrentTarget = target;
-            CurrentVerbs = _verbSystem.GetVerbs(target, user, VerbType.All, force);
+            CurrentVerbs = _verbSystem.GetVerbs(target, user, Verb.VerbTypes, force);
 
             if (!target.IsClientSide())
             {
@@ -73,26 +74,17 @@ namespace Content.Client.Verbs.UI
             if (RootMenu == null)
                 return;
 
-            // Add verbs to pop-up, grouped by type. Order determined by how types are defined VerbTypes
-            var types = CurrentVerbs.Keys.ToList();
-            types.Sort();
-            foreach (var type in types)
+            HashSet<string> listedCategories = new();
+            foreach (var verb in CurrentVerbs)
             {
-                if (!CurrentVerbs.TryGetValue(type, out var verbs))
-                    continue;
-
-                HashSet<string> listedCategories = new();
-                foreach (var verb in verbs)
+                if (verb.Category == null)
                 {
-                    if (verb.Category == null)
-                    {
-                        var element = new VerbMenuElement(verb, type);
-                        AddElement(RootMenu, element);
-                    }
-
-                    else if (listedCategories.Add(verb.Category.Text))
-                        AddVerbCategory(verb.Category, verbs, type);
+                    var element = new VerbMenuElement(verb);
+                    AddElement(RootMenu, element);
                 }
+
+                else if (listedCategories.Add(verb.Category.Text))
+                    AddVerbCategory(verb.Category);
             }
 
             RootMenu.InvalidateMeasure();
@@ -101,12 +93,12 @@ namespace Content.Client.Verbs.UI
         /// <summary>
         ///     Add a verb category button to the pop-up
         /// </summary>
-        public void AddVerbCategory(VerbCategory category, SortedSet<Verb> verbs, VerbType type)
+        public void AddVerbCategory(VerbCategory category)
         {
             // Get a list of the verbs in this category
             List<Verb> verbsInCategory = new();
             var drawIcons = false;
-            foreach (var verb in verbs)
+            foreach (var verb in CurrentVerbs)
             {
                 if (verb.Category?.Text == category.Text)
                 {
@@ -118,14 +110,14 @@ namespace Content.Client.Verbs.UI
             if (verbsInCategory.Count == 0)
                 return;
 
-            var element = new VerbMenuElement(category, type);
+            var element = new VerbMenuElement(category, verbsInCategory[0].TextStyleClass);
             AddElement(RootMenu, element);
 
             // Create the pop-up that appears when hovering over this element
             element.SubMenu = new ContextMenuPopup(this, element);
             foreach (var verb in verbsInCategory)
             {
-                var subElement = new VerbMenuElement(verb, type)
+                var subElement = new VerbMenuElement(verb)
                 {
                     IconVisible = drawIcons,
                     TextVisible = !category.IconsOnly
@@ -140,7 +132,7 @@ namespace Content.Client.Verbs.UI
         /// <summary>
         ///     Add verbs from the server to <see cref="CurrentVerbs"/> and update the verb menu.
         /// </summary>
-        public void AddServerVerbs(Dictionary<VerbType, List<Verb>>? verbs)
+        public void AddServerVerbs(List<Verb>? verbs)
         {
             RootMenu.MenuBody.DisposeAllChildren();
 
@@ -152,15 +144,7 @@ namespace Content.Client.Verbs.UI
                 return;
             }
 
-            // Add the new server-side verbs.
-            foreach (var (verbType, verbSet) in verbs)
-            {
-                if (!CurrentVerbs.TryAdd(verbType, new SortedSet<Verb>(verbSet)))
-                {
-                    CurrentVerbs[verbType].UnionWith(verbSet);
-                }
-            }
-
+            CurrentVerbs.UnionWith(verbs);
             FillVerbPopup();
         }
 
@@ -175,7 +159,7 @@ namespace Content.Client.Verbs.UI
                     return;
 
                 args.Handle();
-                ExecuteVerb(confElement.Verb, confElement.Type);
+                ExecuteVerb(confElement.Verb);
                 return;
             }
 
@@ -208,7 +192,7 @@ namespace Content.Client.Verbs.UI
             {
                 if (verbElement.SubMenu == null)
                 {
-                    var popupElement = new ConfirmationMenuElement(verb, "Confirm", verbElement.Type);
+                    var popupElement = new ConfirmationMenuElement(verb, "Confirm");
                     verbElement.SubMenu = new ContextMenuPopup(this, verbElement);
                     AddElement(verbElement.SubMenu, popupElement);
                 }
@@ -217,13 +201,13 @@ namespace Content.Client.Verbs.UI
             }
             else
             {
-                ExecuteVerb(verb, verbElement.Type);
+                ExecuteVerb(verb);
             }
         }
 
-        private void ExecuteVerb(Verb verb, VerbType verbType)
+        private void ExecuteVerb(Verb verb)
         {
-            _verbSystem.ExecuteVerb(CurrentTarget, verb, verbType);
+            _verbSystem.ExecuteVerb(CurrentTarget, verb);
             if (verb.CloseMenu)
                 _verbSystem.CloseAllMenus();
         }

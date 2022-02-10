@@ -1,12 +1,8 @@
-﻿using System;
 using System.Linq;
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Verbs;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 
 namespace Content.Server.Verbs.Commands
 {
@@ -68,28 +64,29 @@ namespace Content.Server.Verbs.Commands
             }
 
             var verbName = args[2].ToLowerInvariant();
-            var verbs = verbSystem.GetLocalVerbs(target, playerEntity.Value, VerbType.All, true);
+            var verbs = verbSystem.GetLocalVerbs(target, playerEntity.Value, Verb.VerbTypes, true);
 
-            if ((Enum.TryParse(typeof(VerbType), verbName, ignoreCase: true, out var vtype) &&
-                vtype is VerbType key) &&
-                verbs.TryGetValue(key, out var vset) &&
-                vset.Any())
+
+            // if the "verb name" is actually a verb-type, try run any verb of that type.
+            var verbType = Verb.VerbTypes.FirstOrDefault(x => x.Name == verbName);
+            if (verbType != null)
             {
-                verbSystem.ExecuteVerb(vset.First(), playerEntity.Value, target, forced: true);
-                shell.WriteLine(Loc.GetString("invoke-verb-command-success", ("verb", verbName), ("target", target), ("player", playerEntity)));
-                return;
+                var verb = verbs.FirstOrDefault(v => v.GetType() == verbType);
+                if (verb != null)
+                {
+                    verbSystem.ExecuteVerb(verb, playerEntity.Value, target, forced: true);
+                    shell.WriteLine(Loc.GetString("invoke-verb-command-success", ("verb", verbName), ("target", target), ("player", playerEntity)));
+                    return;
+                }
             }
 
-            foreach (var (_, set) in verbs)
+            foreach (var verb in verbs)
             {
-                foreach (var verb in set)
+                if (verb.Text.ToLowerInvariant() == verbName)
                 {
-                    if (verb.Text.ToLowerInvariant() == verbName)
-                    {
-                        verbSystem.ExecuteVerb(verb, playerEntity.Value, target, forced: true);
-                        shell.WriteLine(Loc.GetString("invoke-verb-command-success", ("verb", verb.Text), ("target", target), ("player", playerEntity)));
-                        return;
-                    }
+                    verbSystem.ExecuteVerb(verb, playerEntity.Value, target, forced: true);
+                    shell.WriteLine(Loc.GetString("invoke-verb-command-success", ("verb", verb.Text), ("target", target), ("player", playerEntity)));
+                    return;
                 }
             }
 
