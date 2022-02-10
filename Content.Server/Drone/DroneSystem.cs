@@ -21,9 +21,10 @@ using Content.Shared.Tag;
 
 namespace Content.Server.Drone
 {
-    public class DroneSystem : SharedDroneSystem
+    public sealed class DroneSystem : SharedDroneSystem
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly TagSystem _tagSystem = default!;
         public override void Initialize()
         {
             base.Initialize();
@@ -77,9 +78,8 @@ namespace Content.Server.Drone
 
         private void OnMindAdded(EntityUid uid, DroneComponent drone, MindAddedMessage args)
         {
-            TryComp<TagComponent>(uid, out var tagComp);
             UpdateDroneAppearance(uid, DroneStatus.On);
-            tagComp?.AddTag("DoorBumpOpener");
+            _tagSystem.AddTag(uid, "DoorBumpOpener");
             _popupSystem.PopupEntity(Loc.GetString("drone-activated"), uid, Filter.Pvs(uid));
 
             if (drone.AlreadyAwoken == false)
@@ -105,9 +105,8 @@ namespace Content.Server.Drone
 
         private void OnMindRemoved(EntityUid uid, DroneComponent drone, MindRemovedMessage args)
         {
-            TryComp<TagComponent>(uid, out var tagComp);
             UpdateDroneAppearance(uid, DroneStatus.Off);
-            tagComp?.RemoveTag("DoorBumpOpener");
+            _tagSystem.RemoveTag(uid, "DoorBumpOpener");
             EnsureComp<GhostTakeoverAvailableComponent>(uid);
         }
 
