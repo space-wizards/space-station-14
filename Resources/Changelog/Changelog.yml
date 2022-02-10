@@ -1,9 +1,4 @@
 Entries:
-- author: Mith-randalf
-  changes:
-  - {message: Changed some clothing item names., type: Tweak}
-  id: 531
-  time: '2021-11-02T18:37:51.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: Rotating on barstools/etc. now works in more cases and rotates the right
@@ -2957,3 +2952,9 @@ Entries:
   - {message: Angry bees., type: Add}
   id: 1031
   time: '2022-02-10T14:24:16.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Mobs that need to breathe once again suffocate while in critical condition.,
+    type: Fix}
+  id: 1032
+  time: '2022-02-10T19:04:05.0000000+00:00'
