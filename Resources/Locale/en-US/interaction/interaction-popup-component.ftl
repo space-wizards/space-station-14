@@ -21,7 +21,7 @@ petting-success-tarantula = You pet {THE($target)} on {POSS-ADJ($target)} hairy 
 petting-failure-generic = You reach out to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BE($target)} aloof towards you.
 
 petting-failure-bat = You reach out to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BE($target)} too hard to catch!
-petting-failure-crab = You reach out to pet {THE($target)}, but {SUBJECT($target)} snaps its claws in your general direction!
+petting-failure-crab = You reach out to pet {THE($target)}, but {SUBJECT($target)} snaps {POSS-ADJ($target)} claws in your general direction!
 petting-failure-goat = You reach out to pet {THE($target)}, but {SUBJECT($target)} stubbornly refuses!
 petting-failure-goose = You reach out to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BE($target)} too horrible!
 petting-failure-sloth = You reach out to pet {THE($target)}, but {SUBJECT($target)} somehow dodge with ludicrous speed!
