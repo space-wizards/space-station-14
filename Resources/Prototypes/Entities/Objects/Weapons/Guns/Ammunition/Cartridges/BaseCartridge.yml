@@ -1,0 +1,10 @@
+- type: entity
+  id: BaseCartridge
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+    - Cartridge
+  - type: Item
+    size: 1

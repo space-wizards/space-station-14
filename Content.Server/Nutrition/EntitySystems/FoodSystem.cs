@@ -49,7 +49,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             SubscribeLocalEvent<FoodComponent, UseInHandEvent>(OnUseFoodInHand);
             SubscribeLocalEvent<FoodComponent, AfterInteractEvent>(OnFeedFood);
-            SubscribeLocalEvent<FoodComponent, GetInteractionVerbsEvent>(AddEatVerb);
+            SubscribeLocalEvent<FoodComponent, GetVerbsEvent<InteractionVerb>>(AddEatVerb);
             SubscribeLocalEvent<SharedBodyComponent, FeedEvent>(OnFeed);
             SubscribeLocalEvent<ForceFeedCancelledEvent>(OnFeedCancelled);
             SubscribeLocalEvent<InventoryComponent, IngestionAttemptEvent>(OnInventoryIngestAttempt);
@@ -245,7 +245,7 @@ namespace Content.Server.Nutrition.EntitySystems
             EntityManager.QueueDeleteEntity(component.Owner);
         }
 
-        private void AddEatVerb(EntityUid uid, FoodComponent component, GetInteractionVerbsEvent ev)
+        private void AddEatVerb(EntityUid uid, FoodComponent component, GetVerbsEvent<InteractionVerb> ev)
         {
             if (component.CancelToken != null)
                 return;
@@ -260,7 +260,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (EntityManager.TryGetComponent<MobStateComponent>(uid, out var mobState) && mobState.IsAlive())
                 return;
 
-            Verb verb = new()
+            InteractionVerb verb = new()
             {
                 Act = () =>
                 {
