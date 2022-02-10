@@ -32,11 +32,10 @@ public sealed class InteractionPopupSystem : EntitySystem
         if (curTime < component.LastInteractTime + component.InteractDelay)
             return;
 
-        EntityManager.TryGetComponent<MobStateComponent>(uid, out var MobStateComponent);
-
         string msg = "";
 
-        if (MobStateComponent.IsAlive()) // Only if target is alive and well, not incapacitated or critical.
+        if (!TryComp<MobStateComponent>(uid, out var state) // if it doesn't have a MobStateComponent, e.g. for a window.
+            || state.IsAlive())                             // OR if its state is Alive (not dead/incapacitated/critical).
         {
             if (_random.Prob(component.SuccessChance))
             {
@@ -44,7 +43,7 @@ public sealed class InteractionPopupSystem : EntitySystem
                     msg = Loc.GetString(component.InteractSuccessString, ("target", uid)); // Success message (localized).
 
                 if (component.InteractSuccessSound != null)
-                    SoundSystem.Play(Filter.Pvs(args.Target), component.InteractSuccessSound.GetSound(), Transform(args.Target).Coordinates);
+                    SoundSystem.Play(Filter.Pvs(args.Target), component.InteractSuccessSound.GetSound(), args.Target);
             }
             else
             {
@@ -52,9 +51,10 @@ public sealed class InteractionPopupSystem : EntitySystem
                     msg = Loc.GetString(component.InteractFailureString, ("target", uid)); // Failure message (localized).
 
                 if (component.InteractFailureSound != null)
-                    SoundSystem.Play(Filter.Pvs(args.Target), component.InteractFailureSound.GetSound(), Transform(args.Target).Coordinates);
+                    SoundSystem.Play(Filter.Pvs(args.Target), component.InteractFailureSound.GetSound(), args.Target);
             }
         }
+        else return;
 
         _popupSystem.PopupEntity(msg, uid, Filter.Pvs(uid));
 
