@@ -36,8 +36,7 @@ public sealed class InteractionPopupSystem : EntitySystem
             component.SuccessChance = -1.0f; // set to the "invalid" value, which suppresses all popups and sound effects.
             return;
         }
-
-        if (args.Component.IsAlive()) // if the mob being interacted with is alive and well
+        else // if the mob being interacted with is alive and well
         {
             component.SuccessChance = originalSuccessChance;
             return;
