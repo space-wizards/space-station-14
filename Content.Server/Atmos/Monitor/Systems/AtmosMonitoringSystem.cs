@@ -237,7 +237,7 @@ namespace Content.Server.Atmos.Monitor.Systems
             }
         }
 
-        private void OnFireEvent(EntityUid uid, AtmosMonitorComponent component, TileFireEvent args)
+        private void OnFireEvent(EntityUid uid, AtmosMonitorComponent component, ref TileFireEvent args)
         {
             if (!TryComp<ApcPowerReceiverComponent>(uid, out var powerReceiverComponent)
                 || !powerReceiverComponent.Powered)

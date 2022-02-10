@@ -112,7 +112,7 @@ namespace Content.Server.Atmos.EntitySystems
                 AddActiveTile(atmosphere, tile);
 
                 // TODO ATMOS: Query all the contents of this tile (like walls) and calculate the correct thermal conductivity and heat capacity
-                var tileDef = tile.Tile?.Tile.GetContentTileDefinition();
+                var tileDef = GetTile(tile)?.Tile.GetContentTileDefinition(_tileDefinitionManager);
                 tile.ThermalConductivity = tileDef?.ThermalConductivity ?? 0.5f;
                 tile.HeatCapacity = tileDef?.HeatCapacity ?? float.PositiveInfinity;
                 InvalidateVisuals(mapGrid.Index, indices);

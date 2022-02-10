@@ -1493,6 +1493,11 @@ namespace Content.Server.Atmos.EntitySystems
 
         #region Position Helpers
 
+        private TileRef? GetTile(TileAtmosphere tile)
+        {
+            return tile.GridIndices.GetTileRef(tile.GridIndex, _mapManager);
+        }
+
         public bool TryGetGridAndTile(MapCoordinates coordinates, [NotNullWhen(true)] out (GridId Grid, Vector2i Tile)? tuple)
         {
             if (!_mapManager.TryFindGridAt(coordinates, out var grid))
