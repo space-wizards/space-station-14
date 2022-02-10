@@ -51,7 +51,6 @@ namespace Content.Client.Verbs.UI
 
                 Icon.AddChild(spriteView);
                 return;
-
             }
 
             Icon.AddChild(new TextureRect()

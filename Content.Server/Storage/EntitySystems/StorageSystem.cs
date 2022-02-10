@@ -185,7 +185,7 @@ namespace Content.Server.Storage.EntitySystems
         }
 
         /// <summary>
-        ///     Move entities from one storage to another.
+        ///     Move entities from storage into a disposal unit.
         /// </summary>
         public void DisposeEntities(EntityUid user, EntityUid source, EntityUid target,
             ServerStorageComponent? sourceComp = null, LockComponent? sourceLock = null,

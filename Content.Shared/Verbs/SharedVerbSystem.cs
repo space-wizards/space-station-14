@@ -46,16 +46,16 @@ namespace Content.Shared.Verbs
         ///     Raises a number of events in order to get all verbs of the given type(s) defined in local systems. This
         ///     does not request verbs from the server.
         /// </summary>
-        public SortedSet<Verb> GetLocalVerbs(EntityUid target, EntityUid user, Type type, bool force = false, bool all = false)
+        public SortedSet<Verb> GetLocalVerbs(EntityUid target, EntityUid user, Type type, bool force = false)
         {
-            return GetLocalVerbs(target, user, new List<Type>() { type }, force, all);
+            return GetLocalVerbs(target, user, new List<Type>() { type }, force);
         }
 
         /// <summary>
         ///     Raises a number of events in order to get all verbs of the given type(s) defined in local systems. This
         ///     does not request verbs from the server.
         /// </summary>
-        public SortedSet<Verb> GetLocalVerbs(EntityUid target, EntityUid user, List<Type> types, bool force = false, bool all = false)
+        public SortedSet<Verb> GetLocalVerbs(EntityUid target, EntityUid user, List<Type> types, bool force = false)
         {
             SortedSet<Verb> verbs = new();
 
