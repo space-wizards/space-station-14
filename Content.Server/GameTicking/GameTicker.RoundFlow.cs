@@ -449,6 +449,7 @@ namespace Content.Server.GameTicking
             Logger.InfoS("ticker", "Restarting round!");
 
             SendServerMessage(Loc.GetString("game-ticker-restart-round"));
+            SendDiscordNewRoundAlert();
 
             RoundNumberMetric.Inc();
 

@@ -27,6 +27,12 @@ namespace Content.Server.GameTicking
         [ViewVariables]
         public float MaxStationOffset { get; private set; } = 0f;
 
+        [ViewVariables]
+        public string DiscordWebhook { get; private set; } = "";
+
+        [ViewVariables]
+        public string DiscordRoleId { get; private set; } = "";
+
         private void InitializeCVars()
         {
             _configurationManager.OnValueChanged(CCVars.GameLobbyEnabled, value => LobbyEnabled = value, true);
@@ -37,6 +43,8 @@ namespace Content.Server.GameTicking
             _configurationManager.OnValueChanged(CCVars.StationOffset, value => StationOffset = value, true);
             _configurationManager.OnValueChanged(CCVars.StationRotation, value => StationRotation = value, true);
             _configurationManager.OnValueChanged(CCVars.MaxStationOffset, value => MaxStationOffset = value, true);
+            _configurationManager.OnValueChanged(CCVars.DiscordRoundWebhook, value => DiscordWebhook = value, true);
+            _configurationManager.OnValueChanged(CCVars.DiscordRoundRoleId, value => DiscordRoleId = value, true);
         }
     }
 }
