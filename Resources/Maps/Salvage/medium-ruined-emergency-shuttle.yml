@@ -41,7 +41,6 @@ tilemap:
   34: floor_wood
   35: lattice
   36: plating
-  37: underplating
 grids:
 - settings:
     chunksize: 16
@@ -57,6 +56,420 @@ grids:
     tiles: IQAAACEAAAAIAAAAJAAAACQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACEAAAAhAAAACAAAACEAAAAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAIQAAAAgAAAAhAAAAJAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAgAAAAIAAAACAAAACQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACEAAAAhAAAACAAAACEAAAAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAIQAAAAgAAAAhAAAAJAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAgAAAAIAAAAIQAAACQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAhAAAAIQAAACEAAAAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
 entities:
 - uid: 0
+  type: WindowReinforcedDirectional
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 0.5,-7.5
+    parent: 61
+    type: Transform
+- uid: 1
+  type: Chair
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 0.5,2.5
+    parent: 61
+    type: Transform
+- uid: 2
+  type: Chair
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -1.5,1.5
+    parent: 61
+    type: Transform
+- uid: 3
+  type: ReinforcedWindow
+  components:
+  - pos: 4.5,-6.5
+    parent: 61
+    type: Transform
+- uid: 4
+  type: ReinforcedWindow
+  components:
+  - pos: 4.5,-4.5
+    parent: 61
+    type: Transform
+- uid: 5
+  type: GrilleBroken
+  components:
+  - pos: 4.5,-0.5
+    parent: 61
+    type: Transform
+- uid: 6
+  type: Grille
+  components:
+  - pos: 4.5,-4.5
+    parent: 61
+    type: Transform
+- uid: 7
+  type: ReinforcedWindow
+  components:
+  - pos: 4.5,5.5
+    parent: 61
+    type: Transform
+- uid: 8
+  type: Girder
+  components:
+  - pos: 4.5,-7.5
+    parent: 61
+    type: Transform
+- uid: 9
+  type: Table
+  components:
+  - pos: 0.5,4.5
+    parent: 61
+    type: Transform
+- uid: 10
+  type: Chair
+  components:
+  - pos: -0.5,5.5
+    parent: 61
+    type: Transform
+- uid: 11
+  type: Chair
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 1.5,1.5
+    parent: 61
+    type: Transform
+- uid: 12
+  type: Chair
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -1.5,2.5
+    parent: 61
+    type: Transform
+- uid: 13
+  type: ShardGlassReinforced
+  components:
+  - pos: -2.2565908,6.7523093
+    parent: 61
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 14
+  type: Chair
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 0.5,0.5
+    parent: 61
+    type: Transform
+- uid: 15
+  type: GrilleBroken
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 2.5,-3.5
+    parent: 61
+    type: Transform
+- uid: 16
+  type: Chair
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -1.5,0.5
+    parent: 61
+    type: Transform
+- uid: 17
+  type: Grille
+  components:
+  - pos: 4.5,1.5
+    parent: 61
+    type: Transform
+- uid: 18
+  type: ReinforcedWindow
+  components:
+  - pos: 4.5,1.5
+    parent: 61
+    type: Transform
+- uid: 19
+  type: ReinforcedWindow
+  components:
+  - pos: 4.5,-0.5
+    parent: 61
+    type: Transform
+- uid: 20
+  type: ReinforcedWindow
+  components:
+  - pos: 4.5,0.5
+    parent: 61
+    type: Transform
+- uid: 21
+  type: WallReinforced
+  components:
+  - pos: 4.5,-1.5
+    parent: 61
+    type: Transform
+- uid: 22
+  type: WallReinforced
+  components:
+  - pos: 4.5,-3.5
+    parent: 61
+    type: Transform
+- uid: 23
+  type: WindowReinforcedDirectional
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 1.5,0.5
+    parent: 61
+    type: Transform
+- uid: 24
+  type: WallSolid
+  components:
+  - pos: -3.5,-3.5
+    parent: 61
+    type: Transform
+- uid: 25
+  type: WallReinforced
+  components:
+  - pos: 3.5,-7.5
+    parent: 61
+    type: Transform
+- uid: 26
+  type: WallReinforced
+  components:
+  - pos: 4.5,-5.5
+    parent: 61
+    type: Transform
+- uid: 27
+  type: WindowReinforcedDirectional
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 2.5,-7.5
+    parent: 61
+    type: Transform
+- uid: 28
+  type: WindowReinforcedDirectional
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -2.5,-7.5
+    parent: 61
+    type: Transform
+- uid: 29
+  type: WallSolid
+  components:
+  - pos: -0.5,-4.5
+    parent: 61
+    type: Transform
+- uid: 30
+  type: WallReinforced
+  components:
+  - pos: -5.5,-3.5
+    parent: 61
+    type: Transform
+- uid: 31
+  type: Grille
+  components:
+  - pos: 4.5,0.5
+    parent: 61
+    type: Transform
+- uid: 32
+  type: WindowReinforcedDirectional
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 1.5,-7.5
+    parent: 61
+    type: Transform
+- uid: 33
+  type: Thruster
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -2.5,-8.5
+    parent: 61
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+- uid: 34
+  type: AirlockShuttle
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -5.5,3.5
+    parent: 61
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 35
+  type: AirlockShuttle
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -5.5,-4.5
+    parent: 61
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 36
+  type: AirlockShuttle
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -5.5,-2.5
+    parent: 61
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 37
+  type: AirlockShuttle
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -5.5,5.5
+    parent: 61
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 38
+  type: Grille
+  components:
+  - pos: -5.5,1.5
+    parent: 61
+    type: Transform
+- uid: 39
+  type: ShardGlassReinforced
+  components:
+  - pos: -1.8659657,6.4085593
+    parent: 61
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 40
+  type: WallSolid
+  components:
+  - pos: -1.5,4.5
+    parent: 61
+    type: Transform
+- uid: 41
+  type: WallReinforced
+  components:
+  - pos: 4.5,4.5
+    parent: 61
+    type: Transform
+- uid: 42
+  type: Grille
+  components:
+  - pos: -1.5,5.5
+    parent: 61
+    type: Transform
+- uid: 43
+  type: Grille
+  components:
+  - pos: 4.5,-6.5
+    parent: 61
+    type: Transform
+- uid: 44
+  type: WallSolid
+  components:
+  - pos: -0.5,-3.5
+    parent: 61
+    type: Transform
+- uid: 45
+  type: WallSolid
+  components:
+  - pos: -4.5,-3.5
+    parent: 61
+    type: Transform
+- uid: 46
+  type: WallSolid
+  components:
+  - pos: -1.5,-3.5
+    parent: 61
+    type: Transform
+- uid: 47
+  type: WallReinforced
+  components:
+  - pos: 4.5,6.5
+    parent: 61
+    type: Transform
+- uid: 48
+  type: Chair
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 3.5,1.5
+    parent: 61
+    type: Transform
+- uid: 49
+  type: Chair
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 1.5,-0.5
+    parent: 61
+    type: Transform
+- uid: 50
+  type: Chair
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 1.5,-1.5
+    parent: 61
+    type: Transform
+- uid: 51
+  type: Chair
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 0.5,5.5
+    parent: 61
+    type: Transform
+- uid: 52
+  type: Table
+  components:
+  - pos: -0.5,4.5
+    parent: 61
+    type: Transform
+- uid: 53
+  type: WallSolid
+  components:
+  - pos: -0.5,-5.5
+    parent: 61
+    type: Transform
+- uid: 54
+  type: WindowReinforcedDirectional
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -1.5,-0.5
+    parent: 61
+    type: Transform
+- uid: 55
+  type: Table
+  components:
+  - pos: 1.5,4.5
+    parent: 61
+    type: Transform
+- uid: 56
+  type: WindowReinforcedDirectional
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 1.5,-0.5
+    parent: 61
+    type: Transform
+- uid: 57
+  type: Table
+  components:
+  - pos: 1.5,5.5
+    parent: 61
+    type: Transform
+- uid: 58
+  type: WindowReinforcedDirectional
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -1.5,0.5
+    parent: 61
+    type: Transform
+- uid: 59
+  type: Gyroscope
+  components:
+  - pos: -0.5,-7.5
+    parent: 61
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+- uid: 60
+  type: WallSolid
+  components:
+  - pos: -3.5,4.5
+    parent: 61
+    type: Transform
+- uid: 61
   components:
   - pos: 0.5,0.5
     parent: null
@@ -135,19 +548,6 @@ entities:
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
-        - -0.01,6.01
-        - -0.01,6.99
-        - -4.99,6.99
-        - -4.99,6.01
-      id: grid_chunk--4.99-6.01
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 19.521591
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
         - -5.01,0.01
         - -5.01,0.99
         - -5.99,0.99
@@ -158,6 +558,45 @@ entities:
       layer:
       - MapGrid
       mass: 3.8415983
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -0.01,0.01
+        - -0.01,0.99
+        - -3.99,0.99
+        - -3.99,0.01
+      id: grid_chunk--3.99-0.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 15.601601
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -0.01,1.01
+        - -0.01,5.99
+        - -5.99,5.99
+        - -5.99,1.01
+      id: grid_chunk--5.99-1.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 119.12158
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - -0.01,6.01
+        - -0.01,6.99
+        - -4.99,6.99
+        - -4.99,6.01
+      id: grid_chunk--4.99-6.01
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 19.521591
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
@@ -185,1149 +624,371 @@ entities:
       - MapGrid
       mass: 158.96158
       restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - -0.01,1.01
-        - -0.01,5.99
-        - -5.99,5.99
-        - -5.99,1.01
-      id: grid_chunk--5.99-1.01
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 119.12158
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 0,-2
-        - 0,-1
-        - -2,-1
-        - -2,-2
-      id: grid_chunk--2--2
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 8
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - -3,-3
-        - -3,-1
-        - -4,-1
-        - -4,-3
-      id: grid_chunk--4--3
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 8
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - -7,-7
-        - -7,-1
-        - -8,-1
-        - -8,-7
-      id: grid_chunk--8--7
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 24
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 0,-3
-        - 0,-2
-        - -1,-2
-        - -1,-3
-      id: grid_chunk--1--3
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 4
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 0,-4
-        - 0,-3
-        - -4,-3
-        - -4,-4
-      id: grid_chunk--4--4
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 16
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 7,-7
-        - 7,-1
-        - 6,-1
-        - 6,-7
-      id: grid_chunk-6--7
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 24
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 3,-3
-        - 3,-1
-        - 2,-1
-        - 2,-3
-      id: grid_chunk-2--3
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 8
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 1,-2
-        - 1,-1
-        - 0,-1
-        - 0,-2
-      id: grid_chunk-0--2
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 4
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 3,-4
-        - 3,-3
-        - 0,-3
-        - 0,-4
-      id: grid_chunk-0--4
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 12
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 0,3
-        - 0,6
-        - -1,6
-        - -1,3
-      id: grid_chunk--1-3
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 12
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - -7,0
-        - -7,6
-        - -8,6
-        - -8,0
-      id: grid_chunk--8-0
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 24
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 0,2
-        - 0,3
-        - -4,3
-        - -4,2
-      id: grid_chunk--4-2
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 16
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 0,1
-        - 0,2
-        - -1,2
-        - -1,1
-      id: grid_chunk--1-1
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 4
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 7,0
-        - 7,6
-        - 6,6
-        - 6,0
-      id: grid_chunk-6-0
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 24
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 3,2
-        - 3,3
-        - 0,3
-        - 0,2
-      id: grid_chunk-0-2
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 12
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 3,0
-        - 3,2
-        - 2,2
-        - 2,0
-      id: grid_chunk-2-0
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 8
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 0,6
-        - 0,7
-        - -8,7
-        - -8,6
-      id: grid_chunk--8-6
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 32
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 0,-1
-        - 0,0
-        - -8,0
-        - -8,-1
-      id: grid_chunk--8--1
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 32
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 0,-7
-        - 0,-4
-        - -1,-4
-        - -1,-7
-      id: grid_chunk--1--7
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 12
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 0,-8
-        - 0,-7
-        - -8,-7
-        - -8,-8
-      id: grid_chunk--8--8
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 32
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 7,-1
-        - 7,0
-        - 0,0
-        - 0,-1
-      id: grid_chunk-0--1
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 28
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 7,-8
-        - 7,-7
-        - 0,-7
-        - 0,-8
-      id: grid_chunk-0--8
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 28
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 7,6
-        - 7,7
-        - 0,7
-        - 0,6
-      id: grid_chunk-0-6
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 28
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - -3,0
-        - -3,2
-        - -4,2
-        - -4,0
-      id: grid_chunk--4-0
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 8
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 0,0
-        - 0,1
-        - -2,1
-        - -2,0
-      id: grid_chunk--2-0
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 8
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 1,0
-        - 1,1
-        - 0,1
-        - 0,0
-      id: grid_chunk-0-0
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 4
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - -0.01,0.01
-        - -0.01,0.99
-        - -3.99,0.99
-        - -3.99,0.01
-      id: grid_chunk--3.99-0.01
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 15.601601
-      restitution: 0.1
     type: Fixtures
   - gravityShakeSound: !type:SoundPathSpecifier
       path: /Audio/Effects/alert.ogg
     type: Gravity
   - chunkCollection: {}
     type: DecalGrid
-- uid: 1
-  type: WindowReinforcedDirectional
-  components:
-  - rot: -1.5707963267948966 rad
-    pos: 1.5,1.5
-    parent: 0
-    type: Transform
-- uid: 2
+- uid: 62
   type: WindowReinforcedDirectional
   components:
   - rot: -1.5707963267948966 rad
     pos: 1.5,2.5
-    parent: 0
+    parent: 61
     type: Transform
-- uid: 3
-  type: WallReinforced
-  components:
-  - pos: -5.5,-1.5
-    parent: 0
-    type: Transform
-- uid: 4
-  type: Grille
-  components:
-  - pos: -5.5,-0.5
-    parent: 0
-    type: Transform
-- uid: 5
-  type: WallSolid
-  components:
-  - pos: -2.5,4.5
-    parent: 0
-    type: Transform
-- uid: 6
+- uid: 63
   type: WindowReinforcedDirectional
   components:
-  - rot: 3.141592653589793 rad
-    pos: -0.5,-7.5
-    parent: 0
+  - rot: -1.5707963267948966 rad
+    pos: 1.5,1.5
+    parent: 61
     type: Transform
-- uid: 7
-  type: WallSolid
-  components:
-  - pos: -0.5,-5.5
-    parent: 0
-    type: Transform
-- uid: 8
-  type: Gyroscope
-  components:
-  - pos: -0.5,-7.5
-    parent: 0
-    type: Transform
-  - enabled: False
-    type: AmbientSound
-- uid: 9
+- uid: 64
   type: Thruster
   components:
   - rot: 3.141592653589793 rad
     pos: -1.5,-8.5
-    parent: 0
+    parent: 61
     type: Transform
   - enabled: False
     type: AmbientSound
-- uid: 10
-  type: Grille
-  components:
-  - pos: 4.5,-4.5
-    parent: 0
-    type: Transform
-- uid: 11
-  type: WallReinforced
-  components:
-  - pos: -5.5,2.5
-    parent: 0
-    type: Transform
-- uid: 12
-  type: Grille
-  components:
-  - pos: 4.5,5.5
-    parent: 0
-    type: Transform
-- uid: 13
-  type: WallSolid
-  components:
-  - pos: -3.5,4.5
-    parent: 0
-    type: Transform
-- uid: 14
-  type: Table
-  components:
-  - pos: 3.5,-5.5
-    parent: 0
-    type: Transform
-- uid: 15
-  type: WallReinforced
-  components:
-  - pos: -5.5,4.5
-    parent: 0
-    type: Transform
-- uid: 16
-  type: Grille
-  components:
-  - pos: 4.5,7.5
-    parent: 0
-    type: Transform
-- uid: 17
-  type: Grille
-  components:
-  - pos: -1.5,5.5
-    parent: 0
-    type: Transform
-- uid: 18
-  type: Grille
-  components:
-  - pos: 4.5,-6.5
-    parent: 0
-    type: Transform
-- uid: 19
-  type: WallSolid
-  components:
-  - pos: -0.5,-3.5
-    parent: 0
-    type: Transform
-- uid: 20
-  type: WallSolid
-  components:
-  - pos: -4.5,-3.5
-    parent: 0
-    type: Transform
-- uid: 21
-  type: WallReinforced
-  components:
-  - pos: 4.5,4.5
-    parent: 0
-    type: Transform
-- uid: 22
-  type: WallReinforced
-  components:
-  - pos: 4.5,6.5
-    parent: 0
-    type: Transform
-- uid: 23
-  type: WallSolid
-  components:
-  - pos: -1.5,-3.5
-    parent: 0
-    type: Transform
-- uid: 24
-  type: WindowReinforcedDirectional
-  components:
-  - rot: -1.5707963267948966 rad
-    pos: 1.5,0.5
-    parent: 0
-    type: Transform
-- uid: 25
-  type: WallSolid
-  components:
-  - pos: -3.5,-3.5
-    parent: 0
-    type: Transform
-- uid: 26
-  type: WallReinforced
-  components:
-  - pos: 3.5,-7.5
-    parent: 0
-    type: Transform
-- uid: 27
-  type: WallReinforced
-  components:
-  - pos: 4.5,-5.5
-    parent: 0
-    type: Transform
-- uid: 28
-  type: WallReinforced
-  components:
-  - pos: 4.5,-3.5
-    parent: 0
-    type: Transform
-- uid: 29
-  type: WallReinforced
-  components:
-  - pos: 4.5,-1.5
-    parent: 0
-    type: Transform
-- uid: 30
-  type: WallReinforced
-  components:
-  - pos: 4.5,-2.5
-    parent: 0
-    type: Transform
-- uid: 31
-  type: WallReinforced
-  components:
-  - pos: 4.5,2.5
-    parent: 0
-    type: Transform
-- uid: 32
-  type: WallReinforced
-  components:
-  - pos: 4.5,3.5
-    parent: 0
-    type: Transform
-- uid: 33
-  type: ReinforcedWindow
-  components:
-  - pos: -5.5,1.5
-    parent: 0
-    type: Transform
-- uid: 34
-  type: Thruster
-  components:
-  - rot: 3.141592653589793 rad
-    pos: 1.5,-8.5
-    parent: 0
-    type: Transform
-  - enabled: False
-    type: AmbientSound
-- uid: 35
-  type: Thruster
-  components:
-  - rot: 3.141592653589793 rad
-    pos: 0.5,-8.5
-    parent: 0
-    type: Transform
-  - enabled: False
-    type: AmbientSound
-- uid: 36
-  type: Thruster
-  components:
-  - rot: 3.141592653589793 rad
-    pos: -2.5,-8.5
-    parent: 0
-    type: Transform
-  - enabled: False
-    type: AmbientSound
-- uid: 37
-  type: Thruster
-  components:
-  - rot: 3.141592653589793 rad
-    pos: -3.5,-8.5
-    parent: 0
-    type: Transform
-  - enabled: False
-    type: AmbientSound
-- uid: 38
-  type: AirlockShuttle
-  components:
-  - rot: -1.5707963267948966 rad
-    pos: -5.5,-2.5
-    parent: 0
-    type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 39
-  type: AirlockShuttle
-  components:
-  - rot: -1.5707963267948966 rad
-    pos: -5.5,3.5
-    parent: 0
-    type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 40
-  type: AirlockShuttle
-  components:
-  - rot: -1.5707963267948966 rad
-    pos: -5.5,-4.5
-    parent: 0
-    type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 41
-  type: AirlockShuttle
-  components:
-  - rot: -1.5707963267948966 rad
-    pos: -5.5,5.5
-    parent: 0
-    type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 42
-  type: ShardGlassReinforced
-  components:
-  - pos: -1.8659657,6.4085593
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 43
-  type: Grille
-  components:
-  - pos: -5.5,1.5
-    parent: 0
-    type: Transform
-- uid: 44
-  type: WallSolid
-  components:
-  - pos: -1.5,4.5
-    parent: 0
-    type: Transform
-- uid: 45
-  type: GrilleBroken
-  components:
-  - pos: -1.5,7.5
-    parent: 0
-    type: Transform
-- uid: 46
-  type: WallSolid
-  components:
-  - pos: -0.5,-4.5
-    parent: 0
-    type: Transform
-- uid: 47
-  type: WallReinforced
-  components:
-  - pos: -5.5,-3.5
-    parent: 0
-    type: Transform
-- uid: 48
-  type: WindowReinforcedDirectional
-  components:
-  - rot: 3.141592653589793 rad
-    pos: 1.5,-7.5
-    parent: 0
-    type: Transform
-- uid: 49
-  type: WindowReinforcedDirectional
-  components:
-  - rot: 3.141592653589793 rad
-    pos: 0.5,-7.5
-    parent: 0
-    type: Transform
-- uid: 50
-  type: WindowReinforcedDirectional
-  components:
-  - rot: 3.141592653589793 rad
-    pos: -2.5,-7.5
-    parent: 0
-    type: Transform
-- uid: 51
-  type: Grille
-  components:
-  - pos: 4.5,0.5
-    parent: 0
-    type: Transform
-- uid: 52
-  type: WindowReinforcedDirectional
-  components:
-  - rot: 3.141592653589793 rad
-    pos: 2.5,-7.5
-    parent: 0
-    type: Transform
-- uid: 53
-  type: WallSolid
-  components:
-  - pos: -4.5,4.5
-    parent: 0
-    type: Transform
-- uid: 54
-  type: Girder
-  components:
-  - pos: 4.5,-7.5
-    parent: 0
-    type: Transform
-- uid: 55
-  type: WallSolid
-  components:
-  - pos: -0.5,-6.5
-    parent: 0
-    type: Transform
-- uid: 56
-  type: WindowReinforcedDirectional
-  components:
-  - rot: 3.141592653589793 rad
-    pos: -1.5,-7.5
-    parent: 0
-    type: Transform
-- uid: 57
-  type: AirlockGlass
-  components:
-  - pos: 1.5,-3.5
-    parent: 0
-    type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 58
-  type: ReinforcedWindow
-  components:
-  - pos: 4.5,7.5
-    parent: 0
-    type: Transform
-- uid: 59
-  type: ReinforcedWindow
-  components:
-  - pos: 4.5,5.5
-    parent: 0
-    type: Transform
-- uid: 60
-  type: ReinforcedWindow
-  components:
-  - pos: 3.5,-3.5
-    parent: 0
-    type: Transform
-- uid: 61
-  type: ReinforcedWindow
-  components:
-  - pos: 2.5,-3.5
-    parent: 0
-    type: Transform
-- uid: 62
-  type: ReinforcedWindow
-  components:
-  - pos: 0.5,-3.5
-    parent: 0
-    type: Transform
-- uid: 63
-  type: ReinforcedWindow
-  components:
-  - pos: -1.5,5.5
-    parent: 0
-    type: Transform
-- uid: 64
-  type: ReinforcedWindow
-  components:
-  - pos: -5.5,-0.5
-    parent: 0
-    type: Transform
 - uid: 65
-  type: ReinforcedWindow
+  type: Grille
   components:
-  - pos: 4.5,-6.5
-    parent: 0
+  - pos: 4.5,7.5
+    parent: 61
     type: Transform
 - uid: 66
   type: ReinforcedWindow
   components:
-  - pos: 4.5,-4.5
-    parent: 0
+  - pos: -1.5,5.5
+    parent: 61
     type: Transform
 - uid: 67
-  type: ReinforcedWindow
+  type: WallSolid
   components:
-  - pos: 4.5,-0.5
-    parent: 0
+  - pos: -2.5,4.5
+    parent: 61
     type: Transform
 - uid: 68
-  type: ReinforcedWindow
+  type: WallReinforced
   components:
-  - pos: 4.5,0.5
-    parent: 0
+  - pos: -5.5,-1.5
+    parent: 61
     type: Transform
 - uid: 69
-  type: ReinforcedWindow
+  type: WindowReinforcedDirectional
   components:
-  - pos: 4.5,1.5
-    parent: 0
+  - rot: 3.141592653589793 rad
+    pos: -0.5,-7.5
+    parent: 61
     type: Transform
 - uid: 70
-  type: ShardGlassReinforced
-  components:
-  - pos: -2.2565908,6.7523093
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 71
-  type: Grille
-  components:
-  - pos: 4.5,1.5
-    parent: 0
-    type: Transform
-- uid: 72
-  type: Chair
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -1.5,2.5
-    parent: 0
-    type: Transform
-- uid: 73
-  type: Chair
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -1.5,1.5
-    parent: 0
-    type: Transform
-- uid: 74
-  type: Chair
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -1.5,0.5
-    parent: 0
-    type: Transform
-- uid: 75
-  type: GrilleBroken
-  components:
-  - rot: 3.141592653589793 rad
-    pos: 2.5,-3.5
-    parent: 0
-    type: Transform
-- uid: 76
-  type: GrilleBroken
-  components:
-  - rot: 3.141592653589793 rad
-    pos: 0.5,-3.5
-    parent: 0
-    type: Transform
-- uid: 77
-  type: Chair
-  components:
-  - rot: -1.5707963267948966 rad
-    pos: 0.5,2.5
-    parent: 0
-    type: Transform
-- uid: 78
-  type: Chair
-  components:
-  - rot: -1.5707963267948966 rad
-    pos: 0.5,1.5
-    parent: 0
-    type: Transform
-- uid: 79
-  type: Chair
-  components:
-  - rot: -1.5707963267948966 rad
-    pos: 0.5,0.5
-    parent: 0
-    type: Transform
-- uid: 80
-  type: GrilleBroken
-  components:
-  - pos: 4.5,-0.5
-    parent: 0
-    type: Transform
-- uid: 81
   type: GrilleBroken
   components:
   - pos: 3.5,-3.5
-    parent: 0
+    parent: 61
+    type: Transform
+- uid: 71
+  type: ReinforcedWindow
+  components:
+  - pos: -5.5,1.5
+    parent: 61
+    type: Transform
+- uid: 72
+  type: Thruster
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 1.5,-8.5
+    parent: 61
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+- uid: 73
+  type: Thruster
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 0.5,-8.5
+    parent: 61
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+- uid: 74
+  type: WallReinforced
+  components:
+  - pos: 4.5,-2.5
+    parent: 61
+    type: Transform
+- uid: 75
+  type: WallReinforced
+  components:
+  - pos: 4.5,2.5
+    parent: 61
+    type: Transform
+- uid: 76
+  type: Chair
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 1.5,0.5
+    parent: 61
+    type: Transform
+- uid: 77
+  type: WallSolid
+  components:
+  - pos: -4.5,4.5
+    parent: 61
+    type: Transform
+- uid: 78
+  type: WallSolid
+  components:
+  - pos: -0.5,-6.5
+    parent: 61
+    type: Transform
+- uid: 79
+  type: AirlockGlass
+  components:
+  - pos: 1.5,-3.5
+    parent: 61
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 80
+  type: ReinforcedWindow
+  components:
+  - pos: 4.5,7.5
+    parent: 61
+    type: Transform
+- uid: 81
+  type: ReinforcedWindow
+  components:
+  - pos: 2.5,-3.5
+    parent: 61
     type: Transform
 - uid: 82
-  type: SheetSteel1
+  type: Grille
   components:
-  - rot: 0.00074002705514431 rad
-    pos: 3.341268,-8.26206
-    parent: 0
+  - pos: -5.5,-0.5
+    parent: 61
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 83
-  type: Chair
+  type: ReinforcedWindow
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 3.5,1.5
-    parent: 0
+  - pos: -5.5,-0.5
+    parent: 61
     type: Transform
 - uid: 84
-  type: Chair
+  type: WindowReinforcedDirectional
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 3.5,2.5
-    parent: 0
+  - rot: 3.141592653589793 rad
+    pos: -1.5,-7.5
+    parent: 61
     type: Transform
 - uid: 85
   type: Chair
   components:
-  - rot: 1.5707963267948966 rad
-    pos: 1.5,2.5
-    parent: 0
+  - rot: -1.5707963267948966 rad
+    pos: 3.5,2.5
+    parent: 61
     type: Transform
 - uid: 86
   type: Chair
   components:
-  - rot: 1.5707963267948966 rad
-    pos: 1.5,1.5
-    parent: 0
+  - rot: -1.5707963267948966 rad
+    pos: 0.5,1.5
+    parent: 61
     type: Transform
 - uid: 87
   type: Chair
   components:
   - rot: 1.5707963267948966 rad
-    pos: 1.5,0.5
-    parent: 0
+    pos: 1.5,2.5
+    parent: 61
     type: Transform
 - uid: 88
-  type: Chair
+  type: Thruster
   components:
-  - rot: 1.5707963267948966 rad
-    pos: 1.5,-0.5
-    parent: 0
+  - rot: 3.141592653589793 rad
+    pos: -3.5,-8.5
+    parent: 61
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 89
-  type: Chair
+  type: WallReinforced
   components:
-  - rot: 1.5707963267948966 rad
-    pos: 1.5,-1.5
-    parent: 0
+  - pos: -5.5,4.5
+    parent: 61
     type: Transform
 - uid: 90
-  type: Chair
+  type: Table
   components:
-  - pos: -0.5,5.5
-    parent: 0
+  - pos: 3.5,-5.5
+    parent: 61
     type: Transform
 - uid: 91
-  type: Chair
+  type: ReinforcedWindow
   components:
-  - rot: 1.5707963267948966 rad
-    pos: 0.5,5.5
-    parent: 0
+  - pos: 0.5,-3.5
+    parent: 61
     type: Transform
 - uid: 92
-  type: Table
+  type: Grille
   components:
-  - pos: -0.5,4.5
-    parent: 0
+  - pos: 4.5,5.5
+    parent: 61
     type: Transform
 - uid: 93
-  type: Table
+  type: ReinforcedWindow
   components:
-  - pos: 0.5,4.5
-    parent: 0
+  - pos: 3.5,-3.5
+    parent: 61
     type: Transform
 - uid: 94
-  type: Table
+  type: WallReinforced
   components:
-  - pos: 1.5,4.5
-    parent: 0
+  - pos: -5.5,2.5
+    parent: 61
     type: Transform
 - uid: 95
-  type: Table
+  type: WallReinforced
   components:
-  - pos: 1.5,5.5
-    parent: 0
+  - pos: 4.5,3.5
+    parent: 61
     type: Transform
 - uid: 96
-  type: WindowReinforcedDirectional
+  type: GrilleBroken
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 1.5,-0.5
-    parent: 0
+  - pos: -1.5,7.5
+    parent: 61
     type: Transform
 - uid: 97
   type: WindowReinforcedDirectional
   components:
   - rot: -1.5707963267948966 rad
     pos: 1.5,-1.5
-    parent: 0
+    parent: 61
     type: Transform
 - uid: 98
-  type: WindowReinforcedDirectional
+  type: GrilleBroken
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -1.5,-1.5
-    parent: 0
+  - rot: 3.141592653589793 rad
+    pos: 0.5,-3.5
+    parent: 61
     type: Transform
 - uid: 99
-  type: WindowReinforcedDirectional
+  type: SheetSteel1
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -1.5,-0.5
-    parent: 0
+  - rot: 0.00074002705514431 rad
+    pos: 3.341268,-8.26206
+    parent: 61
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 100
   type: WindowReinforcedDirectional
   components:
   - rot: -1.5707963267948966 rad
-    pos: -1.5,0.5
-    parent: 0
+    pos: -1.5,-1.5
+    parent: 61
     type: Transform
 - uid: 101
   type: WindowReinforcedDirectional
   components:
   - rot: -1.5707963267948966 rad
     pos: -1.5,1.5
-    parent: 0
+    parent: 61
     type: Transform
 - uid: 102
   type: WindowReinforcedDirectional
   components:
   - rot: -1.5707963267948966 rad
     pos: -1.5,2.5
-    parent: 0
+    parent: 61
     type: Transform
 - uid: 103
   type: WindowReinforcedDirectional
   components:
   - rot: 1.5707963267948966 rad
     pos: -2.5,2.5
-    parent: 0
+    parent: 61
     type: Transform
 - uid: 104
   type: WindowReinforcedDirectional
   components:
   - rot: 1.5707963267948966 rad
     pos: -2.5,1.5
-    parent: 0
+    parent: 61
     type: Transform
 - uid: 105
   type: WindowReinforcedDirectional
   components:
   - rot: 1.5707963267948966 rad
     pos: -2.5,0.5
-    parent: 0
+    parent: 61
     type: Transform
 - uid: 106
   type: WindowReinforcedDirectional
   components:
   - rot: 1.5707963267948966 rad
     pos: -2.5,-0.5
-    parent: 0
+    parent: 61
     type: Transform
 - uid: 107
   type: WindowReinforcedDirectional
   components:
   - rot: 1.5707963267948966 rad
     pos: -2.5,-1.5
-    parent: 0
+    parent: 61
     type: Transform
 - uid: 108
   type: WindowReinforcedDirectional
   components:
   - rot: 1.5707963267948966 rad
     pos: 0.5,2.5
-    parent: 0
+    parent: 61
     type: Transform
 - uid: 109
   type: WindowReinforcedDirectional
   components:
   - rot: 1.5707963267948966 rad
     pos: 0.5,1.5
-    parent: 0
+    parent: 61
     type: Transform
 - uid: 110
   type: WindowReinforcedDirectional
   components:
   - rot: 1.5707963267948966 rad
     pos: 0.5,0.5
-    parent: 0
+    parent: 61
     type: Transform
 - uid: 111
   type: WindowReinforcedDirectional
   components:
   - rot: 1.5707963267948966 rad
     pos: 0.5,-0.5
-    parent: 0
+    parent: 61
     type: Transform
 - uid: 112
   type: WindowReinforcedDirectional
   components:
   - rot: 1.5707963267948966 rad
     pos: 0.5,-1.5
-    parent: 0
+    parent: 61
     type: Transform
 - uid: 113
   type: Table
   components:
   - pos: 3.5,7.5
-    parent: 0
+    parent: 61
     type: Transform
 - uid: 114
   type: MedkitBurnFilled
   components:
   - pos: 3.5,-5.5
-    parent: 0
+    parent: 61
     type: Transform
   - canCollide: False
     type: Physics
@@ -1339,7 +1000,7 @@ entities:
   type: MedkitBurnFilled
   components:
   - pos: 3.5,7.5
-    parent: 0
+    parent: 61
     type: Transform
   - canCollide: False
     type: Physics
@@ -1351,7 +1012,7 @@ entities:
   type: Crowbar
   components:
   - pos: 3.5,7.5
-    parent: 0
+    parent: 61
     type: Transform
   - canCollide: False
     type: Physics
@@ -1359,7 +1020,7 @@ entities:
   type: Crowbar
   components:
   - pos: 3.5,-5.5
-    parent: 0
+    parent: 61
     type: Transform
   - canCollide: False
     type: Physics
@@ -1367,7 +1028,7 @@ entities:
   type: MedkitFilled
   components:
   - pos: 3.5,7.5
-    parent: 0
+    parent: 61
     type: Transform
   - canCollide: False
     type: Physics
@@ -1379,7 +1040,7 @@ entities:
   type: MedkitFilled
   components:
   - pos: 3.5,-5.5
-    parent: 0
+    parent: 61
     type: Transform
   - canCollide: False
     type: Physics
@@ -1391,7 +1052,7 @@ entities:
   type: ExtinguisherCabinetFilled
   components:
   - pos: 4.2787867,3.503158
-    parent: 0
+    parent: 61
     type: Transform
   - containers:
       ItemCabinet: !type:ContainerSlot {}
@@ -1400,7 +1061,7 @@ entities:
   type: ExtinguisherCabinetFilled
   components:
   - pos: 4.2944117,-5.506811
-    parent: 0
+    parent: 61
     type: Transform
   - containers:
       ItemCabinet: !type:ContainerSlot {}
@@ -1409,7 +1070,7 @@ entities:
   type: ExtinguisherCabinetFilled
   components:
   - pos: -0.7055881,-4.444311
-    parent: 0
+    parent: 61
     type: Transform
   - containers:
       ItemCabinet: !type:ContainerSlot {}
@@ -1418,7 +1079,7 @@ entities:
   type: ExtinguisherCabinetFilled
   components:
   - pos: -3.5268059,-3.475561
-    parent: 0
+    parent: 61
     type: Transform
   - containers:
       ItemCabinet: !type:ContainerSlot {}
@@ -1427,7 +1088,7 @@ entities:
   type: ExtinguisherCabinetFilled
   components:
   - pos: -3.5268059,4.4864717
-    parent: 0
+    parent: 61
     type: Transform
   - containers:
       ItemCabinet: !type:ContainerSlot {}
@@ -1436,7 +1097,7 @@ entities:
   type: VendingMachineWallMedical
   components:
   - pos: -0.3015678,-5.3653183
-    parent: 0
+    parent: 61
     type: Transform
   - enabled: False
     type: AmbientSound
@@ -1444,19 +1105,19 @@ entities:
   type: Bed
   components:
   - pos: 3.5,-4.5
-    parent: 0
+    parent: 61
     type: Transform
 - uid: 127
   type: Bed
   components:
   - pos: 3.5,-6.5
-    parent: 0
+    parent: 61
     type: Transform
 - uid: 128
   type: BedsheetCosmos
   components:
   - pos: 3.5,-6.5
-    parent: 0
+    parent: 61
     type: Transform
   - canCollide: False
     type: Physics
@@ -1464,7 +1125,7 @@ entities:
   type: RollerBed
   components:
   - pos: 1.4799528,-6.355282
-    parent: 0
+    parent: 61
     type: Transform
   - canCollide: False
     type: Physics
@@ -1472,13 +1133,13 @@ entities:
   type: BedsheetSpawner
   components:
   - pos: 3.5,-4.5
-    parent: 0
+    parent: 61
     type: Transform
 - uid: 131
   type: ClosetEmergencyFilledRandom
   components:
   - pos: 0.5,-6.5
-    parent: 0
+    parent: 61
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
@@ -1490,7 +1151,7 @@ entities:
   type: ClosetEmergencyFilledRandom
   components:
   - pos: 0.5,-4.5
-    parent: 0
+    parent: 61
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
@@ -1502,7 +1163,7 @@ entities:
   type: ClosetEmergencyFilledRandom
   components:
   - pos: 2.5,7.5
-    parent: 0
+    parent: 61
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
@@ -1514,25 +1175,25 @@ entities:
   type: SalvageMaterialCrateSpawner
   components:
   - pos: -1.5,-4.5
-    parent: 0
+    parent: 61
     type: Transform
 - uid: 135
   type: SalvageMaterialCrateSpawner
   components:
   - pos: -1.5,-5.5
-    parent: 0
+    parent: 61
     type: Transform
 - uid: 136
   type: SalvageMaterialCrateSpawner
   components:
   - pos: -1.5,-6.5
-    parent: 0
+    parent: 61
     type: Transform
 - uid: 137
   type: CrateEmergencyExplosive
   components:
   - pos: -2.5,6.5
-    parent: 0
+    parent: 61
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
@@ -1545,7 +1206,7 @@ entities:
   type: ClosetBase
   components:
   - pos: -3.5,-6.5
-    parent: 0
+    parent: 61
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
@@ -1557,7 +1218,7 @@ entities:
   type: CrateGenericSteel
   components:
   - pos: -2.5,-6.5
-    parent: 0
+    parent: 61
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
@@ -1570,30 +1231,30 @@ entities:
   type: SalvageCanisterSpawner
   components:
   - pos: -3.5,-4.5
-    parent: 0
+    parent: 61
     type: Transform
 - uid: 141
   type: SalvageMobSpawner
   components:
   - pos: -2.5,-5.5
-    parent: 0
+    parent: 61
     type: Transform
 - uid: 142
   type: SalvageMobSpawner
   components:
   - pos: 1.5,-6.5
-    parent: 0
+    parent: 61
     type: Transform
 - uid: 143
   type: SalvageMobSpawner
   components:
   - pos: 0.5,6.5
-    parent: 0
+    parent: 61
     type: Transform
 - uid: 144
   type: GrilleBroken
   components:
   - pos: -5.5,0.5
-    parent: 0
+    parent: 61
     type: Transform
 ...

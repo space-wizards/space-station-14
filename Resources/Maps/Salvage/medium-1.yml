@@ -11,407 +11,794 @@ tilemap:
   4: floor_asteroid_coarse_sand_dug
   5: floor_asteroid_sand
   6: floor_asteroid_tile
-  7: floor_blue
-  8: floor_blue_circuit
-  9: floor_dark
-  10: floor_elevator_shaft
-  11: floor_freezer
-  12: floor_glass
-  13: floor_gold
-  14: floor_green_circuit
-  15: floor_hydro
-  16: floor_lino
-  17: floor_mono
-  18: floor_reinforced
-  19: floor_rglass
-  20: floor_rock_vault
-  21: floor_showroom
-  22: floor_silver
-  23: floor_snow
-  24: floor_steel
-  25: floor_steel_dirty
-  26: floor_techmaint
-  27: floor_white
-  28: floor_wood
-  29: lattice
-  30: plating
-  31: underplating
+  7: floor_bar
+  8: floor_blue
+  9: floor_blue_circuit
+  10: floor_clown
+  11: floor_dark
+  12: floor_elevator_shaft
+  13: floor_freezer
+  14: floor_glass
+  15: floor_gold
+  16: floor_grass
+  17: floor_green_circuit
+  18: floor_hydro
+  19: floor_kitchen
+  20: floor_laundry
+  21: floor_lino
+  22: floor_mime
+  23: floor_mono
+  24: floor_reinforced
+  25: floor_rglass
+  26: floor_rock_vault
+  27: floor_showroom
+  28: floor_silver
+  29: floor_snow
+  30: floor_steel
+  31: floor_steel_dirty
+  32: floor_techmaint
+  33: floor_white
+  34: floor_wood
+  35: lattice
+  36: plating
 grids:
 - settings:
     chunksize: 16
     tilesize: 1
   chunks:
   - ind: "-1,-1"
-    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHQAAAB0AAAAdAAAAHQAAAB0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB0AAAAeAAAAHgAAAB4AAAAeAAAAHQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAAAAHgAAAB4AAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHgAAAB4AAAAYAAAAHgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHgAAAB4AAAAYAAAAGAAAAB4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHQAAAB4AAAAeAAAAHgAAABgAAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHgAAABgAAAAYAAAAGAAAAA==
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIwAAACMAAAAjAAAAIwAAACMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACMAAAAkAAAAJAAAACQAAAAkAAAAIwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJAAAACQAAAAkAAAAJAAAACQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAkAAAAJAAAACQAAAAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJAAAACQAAAAeAAAAJAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJAAAACQAAAAeAAAAHgAAACQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIwAAACQAAAAkAAAAJAAAAB4AAAAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJAAAAB4AAAAeAAAAHgAAAA==
   - ind: "0,-1"
-    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAdAAAAHQAAAB0AAAAdAAAAHQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHQAAAAAAAAAAAAAAAAAAAB4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4AAAAeAAAAHgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHQAAAB4AAAAeAAAAHgAAAB4AAAAdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAYAAAAGAAAABgAAAAeAAAAHgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAAAAGAAAAB4AAAAYAAAAHgAAAB4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGAAAABgAAAAeAAAAHgAAAB4AAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAjAAAAIwAAACMAAAAjAAAAIwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIwAAAAAAAAAAAAAAAAAAACQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACQAAAAkAAAAJAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIwAAACQAAAAkAAAAJAAAACQAAAAjAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJAAAACQAAAAkAAAAJAAAACQAAAAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4AAAAeAAAAHgAAAB4AAAAkAAAAJAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAkAAAAHgAAACQAAAAeAAAAJAAAACQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHgAAAB4AAAAkAAAAJAAAACQAAAAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
   - ind: "-1,0"
-    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB0AAAAdAAAAHgAAABkAAAAYAAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHQAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAGQAAABkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAAAAGQAAABkAAAAZAAAAHgAAAB4AAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAdAAAAHgAAAB4AAAAZAAAAGQAAABkAAAAZAAAAGQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAAAAHgAAAB4AAAAeAAAAGQAAABkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAdAAAAHgAAAB4AAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACMAAAAjAAAAJAAAAB8AAAAeAAAAHgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIwAAACQAAAAkAAAAJAAAACQAAAAkAAAAHwAAAB8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAkAAAAHwAAAB8AAAAfAAAAJAAAACQAAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAjAAAAJAAAACQAAAAfAAAAHwAAAB8AAAAfAAAAHwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAkAAAAJAAAACQAAAAkAAAAHwAAAB8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAjAAAAJAAAACQAAAAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
   - ind: "0,0"
-    tiles: GAAAABgAAAAeAAAAHgAAAB4AAAAeAAAAHQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAYAAAAHgAAAB4AAAAeAAAAHgAAAB0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAAAAHgAAAB4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAABkAAAAeAAAAHgAAAB0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABkAAAAZAAAAGQAAAB4AAAAeAAAAHgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHQAAAAAAAAAAAAAAAAAAAB0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+    tiles: HgAAAB4AAAAkAAAAJAAAACQAAAAkAAAAIwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4AAAAeAAAAJAAAACQAAAAkAAAAJAAAACMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAkAAAAJAAAACQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHwAAAB8AAAAkAAAAJAAAACMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB8AAAAfAAAAHwAAACQAAAAkAAAAJAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAkAAAAJAAAACQAAAAkAAAAJAAAACQAAAAjAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIwAAAAAAAAAAAAAAAAAAACMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
 entities:
 - uid: 0
+  type: WallSolid
+  components:
+  - pos: 3.5,5.5
+    parent: 61
+    type: Transform
+- uid: 1
+  type: SalvageMobSpawner
+  components:
+  - pos: -3.5,-2.5
+    parent: 61
+    type: Transform
+- uid: 2
+  type: SalvageMaterialCrateSpawner
+  components:
+  - pos: 0.5,4.5
+    parent: 61
+    type: Transform
+- uid: 3
+  type: AirlockEngineering
+  components:
+  - pos: -0.5,2.5
+    parent: 61
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 4
+  type: Girder
+  components:
+  - pos: 3.5,-4.5
+    parent: 61
+    type: Transform
+- uid: 5
+  type: SalvageMobSpawner
+  components:
+  - pos: -1.5,1.5
+    parent: 61
+    type: Transform
+- uid: 6
+  type: WallSolid
+  components:
+  - pos: -0.5,-3.5
+    parent: 61
+    type: Transform
+- uid: 7
+  type: WallSolid
+  components:
+  - pos: -3.5,4.5
+    parent: 61
+    type: Transform
+- uid: 8
+  type: WallSolid
+  components:
+  - pos: -5.5,1.5
+    parent: 61
+    type: Transform
+- uid: 9
+  type: SalvageMaterialCrateSpawner
+  components:
+  - pos: -3.5,-3.5
+    parent: 61
+    type: Transform
+- uid: 10
+  type: AtmosFixInstantPlasmaFireMarker
+  components:
+  - pos: -1.5,4.5
+    parent: 61
+    type: Transform
+- uid: 11
+  type: SalvageCanisterSpawner
+  components:
+  - pos: -3.5,3.5
+    parent: 61
+    type: Transform
+- uid: 12
+  type: SalvageMaterialCrateSpawner
+  components:
+  - pos: 1.5,3.5
+    parent: 61
+    type: Transform
+- uid: 13
+  type: SalvageMaterialCrateSpawner
+  components:
+  - pos: 1.5,4.5
+    parent: 61
+    type: Transform
+- uid: 14
+  type: SalvageMobSpawner
+  components:
+  - pos: -1.5,-5.5
+    parent: 61
+    type: Transform
+- uid: 15
+  type: SalvageMobSpawner
+  components:
+  - pos: 1.5,-2.5
+    parent: 61
+    type: Transform
+- uid: 16
+  type: SalvageMobSpawner
+  components:
+  - pos: 3.5,-2.5
+    parent: 61
+    type: Transform
+- uid: 17
+  type: SalvageMaterialCrateSpawner
+  components:
+  - pos: 0.5,3.5
+    parent: 61
+    type: Transform
+- uid: 18
+  type: SalvageMaterialCrateSpawner
+  components:
+  - pos: 2.5,4.5
+    parent: 61
+    type: Transform
+- uid: 19
+  type: Girder
+  components:
+  - pos: 3.5,-5.5
+    parent: 61
+    type: Transform
+- uid: 20
+  type: Girder
+  components:
+  - pos: 5.5,-1.5
+    parent: 61
+    type: Transform
+- uid: 21
+  type: WallSolid
+  components:
+  - pos: 0.5,-3.5
+    parent: 61
+    type: Transform
+- uid: 22
+  type: WallSolid
+  components:
+  - pos: 0.5,-1.5
+    parent: 61
+    type: Transform
+- uid: 23
+  type: WallSolid
+  components:
+  - pos: 2.5,1.5
+    parent: 61
+    type: Transform
+- uid: 24
+  type: WallSolid
+  components:
+  - pos: 2.5,0.5
+    parent: 61
+    type: Transform
+- uid: 25
+  type: WallSolid
+  components:
+  - pos: 2.5,-0.5
+    parent: 61
+    type: Transform
+- uid: 26
+  type: WallSolid
+  components:
+  - pos: 2.5,-1.5
+    parent: 61
+    type: Transform
+- uid: 27
+  type: WallSolid
+  components:
+  - pos: 3.5,3.5
+    parent: 61
+    type: Transform
+- uid: 28
+  type: WallSolid
+  components:
+  - pos: 3.5,4.5
+    parent: 61
+    type: Transform
+- uid: 29
+  type: WallSolid
+  components:
+  - pos: 0.5,5.5
+    parent: 61
+    type: Transform
+- uid: 30
+  type: WallSolid
+  components:
+  - pos: 1.5,5.5
+    parent: 61
+    type: Transform
+- uid: 31
+  type: WallSolid
+  components:
+  - pos: 2.5,3.5
+    parent: 61
+    type: Transform
+- uid: 32
+  type: WallSolid
+  components:
+  - pos: 2.5,5.5
+    parent: 61
+    type: Transform
+- uid: 33
+  type: WallSolid
+  components:
+  - pos: 4.5,-0.5
+    parent: 61
+    type: Transform
+- uid: 34
+  type: AirlockGlass
+  components:
+  - pos: 3.5,0.5
+    parent: 61
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 35
+  type: AirlockGlass
+  components:
+  - pos: 1.5,-1.5
+    parent: 61
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 36
+  type: Girder
+  components:
+  - pos: 4.5,1.5
+    parent: 61
+    type: Transform
+- uid: 37
+  type: AirlockGlass
+  components:
+  - pos: -1.5,-1.5
+    parent: 61
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 38
+  type: WallSolid
+  components:
+  - pos: -2.5,5.5
+    parent: 61
+    type: Transform
+- uid: 39
+  type: WallSolid
+  components:
+  - pos: -2.5,4.5
+    parent: 61
+    type: Transform
+- uid: 40
+  type: WallSolid
+  components:
+  - pos: -1.5,5.5
+    parent: 61
+    type: Transform
+- uid: 41
+  type: WallSolid
+  components:
+  - pos: 0.5,2.5
+    parent: 61
+    type: Transform
+- uid: 42
+  type: WallSolid
+  components:
+  - pos: -2.5,1.5
+    parent: 61
+    type: Transform
+- uid: 43
+  type: WallSolid
+  components:
+  - pos: -2.5,2.5
+    parent: 61
+    type: Transform
+- uid: 44
+  type: WallSolid
+  components:
+  - pos: -1.5,2.5
+    parent: 61
+    type: Transform
+- uid: 45
+  type: Girder
+  components:
+  - pos: -0.5,-5.5
+    parent: 61
+    type: Transform
+- uid: 46
+  type: WallSolid
+  components:
+  - pos: 2.5,2.5
+    parent: 61
+    type: Transform
+- uid: 47
+  type: WallSolid
+  components:
+  - pos: 1.5,2.5
+    parent: 61
+    type: Transform
+- uid: 48
+  type: Table
+  components:
+  - pos: -0.5,0.5
+    parent: 61
+    type: Transform
+- uid: 49
+  type: SalvageCanisterSpawner
+  components:
+  - pos: -4.5,3.5
+    parent: 61
+    type: Transform
+- uid: 50
+  type: AtmosFixInstantPlasmaFireMarker
+  components:
+  - pos: -1.5,3.5
+    parent: 61
+    type: Transform
+- uid: 51
+  type: AtmosFixInstantPlasmaFireMarker
+  components:
+  - pos: -0.5,4.5
+    parent: 61
+    type: Transform
+- uid: 52
+  type: SalvageMaterialCrateSpawner
+  components:
+  - pos: -3.5,-2.5
+    parent: 61
+    type: Transform
+- uid: 53
+  type: Girder
+  components:
+  - pos: -4.5,-2.5
+    parent: 61
+    type: Transform
+- uid: 54
+  type: AtmosFixInstantPlasmaFireMarker
+  components:
+  - pos: 2.5,4.5
+    parent: 61
+    type: Transform
+- uid: 55
+  type: AtmosFixInstantPlasmaFireMarker
+  components:
+  - pos: -0.5,3.5
+    parent: 61
+    type: Transform
+- uid: 56
+  type: AtmosFixInstantPlasmaFireMarker
+  components:
+  - pos: 0.5,3.5
+    parent: 61
+    type: Transform
+- uid: 57
+  type: AtmosFixInstantPlasmaFireMarker
+  components:
+  - pos: 0.5,4.5
+    parent: 61
+    type: Transform
+- uid: 58
+  type: AtmosFixInstantPlasmaFireMarker
+  components:
+  - pos: -2.5,3.5
+    parent: 61
+    type: Transform
+- uid: 59
+  type: WallSolid
+  components:
+  - pos: -0.5,-1.5
+    parent: 61
+    type: Transform
+- uid: 60
+  type: WallSolid
+  components:
+  - pos: -2.5,-1.5
+    parent: 61
+    type: Transform
+- uid: 61
   components:
   - pos: 0.5,0.5
     parent: null
     type: Transform
   - index: 0
     type: MapGrid
-  - angularDamping: 0.3
+  - linearDamping: 0.1
     fixedRotation: False
     bodyType: Dynamic
     type: Physics
   - fixtures:
     - shape: !type:PolygonShape
         vertices:
-        - -1,-8
-        - -1,-7
-        - -6,-7
-        - -6,-8
-      id: grid_chunk--6--8
+        - -1.01,-7.99
+        - -1.01,-7.01
+        - -5.99,-7.01
+        - -5.99,-7.99
+      id: grid_chunk--5.99--7.99
       mask:
       - MapGrid
       layer:
       - MapGrid
-      mass: 20
+      mass: 19.521591
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
-        - 0,-7
-        - 0,-6
-        - -6,-6
-        - -6,-7
-      id: grid_chunk--6--7
+        - -0.01,-6.99
+        - -0.01,-6.01
+        - -5.99,-6.01
+        - -5.99,-6.99
+      id: grid_chunk--5.99--6.99
       mask:
       - MapGrid
       layer:
       - MapGrid
-      mass: 24
+      mass: 23.44159
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
-        - 0,-6
-        - 0,-5
-        - -5,-5
-        - -5,-6
-      id: grid_chunk--5--6
+        - -0.01,-5.99
+        - -0.01,-5.01
+        - -4.99,-5.01
+        - -4.99,-5.99
+      id: grid_chunk--4.99--5.99
       mask:
       - MapGrid
       layer:
       - MapGrid
-      mass: 20
+      mass: 19.521591
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
-        - 0,-5
-        - 0,-3
-        - -4,-3
-        - -4,-5
-      id: grid_chunk--4--5
+        - -0.01,-4.99
+        - -0.01,-3.01
+        - -3.99,-3.01
+        - -3.99,-4.99
+      id: grid_chunk--3.99--4.99
       mask:
       - MapGrid
       layer:
       - MapGrid
-      mass: 32
+      mass: 31.521597
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
-        - 0,-3
-        - 0,-2
-        - -5,-2
-        - -5,-3
-      id: grid_chunk--5--3
+        - -0.01,-2.99
+        - -0.01,-2.01
+        - -4.99,-2.01
+        - -4.99,-2.99
+      id: grid_chunk--4.99--2.99
       mask:
       - MapGrid
       layer:
       - MapGrid
-      mass: 20
+      mass: 19.521599
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
-        - 0,-2
-        - 0,-1
-        - -6,-1
-        - -6,-2
-      id: grid_chunk--6--2
+        - -0.01,-1.99
+        - -0.01,-1.01
+        - -5.99,-1.01
+        - -5.99,-1.99
+      id: grid_chunk--5.99--1.99
       mask:
       - MapGrid
       layer:
       - MapGrid
-      mass: 24
+      mass: 23.4416
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
-        - 0,-1
-        - 0,0
-        - -4,0
-        - -4,-1
-      id: grid_chunk--4--1
+        - -0.01,-0.99
+        - -0.01,-0.01
+        - -3.99,-0.01
+        - -3.99,-0.99
+      id: grid_chunk--3.99--0.99
       mask:
       - MapGrid
       layer:
       - MapGrid
-      mass: 16
+      mass: 15.601601
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
-        - 5,-8
-        - 5,-7
-        - 0,-7
-        - 0,-8
-      id: grid_chunk-0--8
+        - 4.99,-7.99
+        - 4.99,-7.01
+        - 0.01,-7.01
+        - 0.01,-7.99
+      id: grid_chunk-0.01--7.99
       mask:
       - MapGrid
       layer:
       - MapGrid
-      mass: 20
+      mass: 19.521591
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
-        - 1,-7
-        - 1,-6
-        - 0,-6
-        - 0,-7
-      id: grid_chunk-0--7
+        - 0.99,-6.99
+        - 0.99,-6.01
+        - 0.01,-6.01
+        - 0.01,-6.99
+      id: grid_chunk-0.01--6.99
       mask:
       - MapGrid
       layer:
       - MapGrid
-      mass: 4
+      mass: 3.8415983
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
-        - 5,-7
-        - 5,-6
-        - 4,-6
-        - 4,-7
-      id: grid_chunk-4--7
+        - 4.99,-6.99
+        - 4.99,-6.01
+        - 4.01,-6.01
+        - 4.01,-6.99
+      id: grid_chunk-4.01--6.99
       mask:
       - MapGrid
       layer:
       - MapGrid
-      mass: 4
+      mass: 3.8415964
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
-        - 6,-6
-        - 6,-5
-        - 3,-5
-        - 3,-6
-      id: grid_chunk-3--6
+        - 5.99,-5.99
+        - 5.99,-5.01
+        - 3.01,-5.01
+        - 3.01,-5.99
+      id: grid_chunk-3.01--5.99
       mask:
       - MapGrid
       layer:
       - MapGrid
-      mass: 12
+      mass: 11.681594
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
-        - 7,-5
-        - 7,-4
-        - 1,-4
-        - 1,-5
-      id: grid_chunk-1--5
+        - 6.99,-4.99
+        - 6.99,-4.01
+        - 1.01,-4.01
+        - 1.01,-4.99
+      id: grid_chunk-1.01--4.99
       mask:
       - MapGrid
       layer:
       - MapGrid
-      mass: 24
+      mass: 23.44159
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
-        - 6,-4
-        - 6,0
-        - 0,0
-        - 0,-4
-      id: grid_chunk-0--4
+        - 5.99,-3.99
+        - 5.99,-0.01
+        - 0.01,-0.01
+        - 0.01,-3.99
+      id: grid_chunk-0.01--3.99
       mask:
       - MapGrid
       layer:
       - MapGrid
-      mass: 96
+      mass: 95.2016
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
-        - 0,0
-        - 0,1
-        - -6,1
-        - -6,0
-      id: grid_chunk--6-0
+        - -0.01,0.01
+        - -0.01,0.99
+        - -5.99,0.99
+        - -5.99,0.01
+      id: grid_chunk--5.99-0.01
       mask:
       - MapGrid
       layer:
       - MapGrid
-      mass: 24
+      mass: 23.4416
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
-        - 0,1
-        - 0,2
-        - -8,2
-        - -8,1
-      id: grid_chunk--8-1
+        - -0.01,1.01
+        - -0.01,1.99
+        - -7.99,1.99
+        - -7.99,1.01
+      id: grid_chunk--7.99-1.01
       mask:
       - MapGrid
       layer:
       - MapGrid
-      mass: 32
+      mass: 31.2816
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
-        - 0,2
-        - 0,3
-        - -7,3
-        - -7,2
-      id: grid_chunk--7-2
+        - -0.01,2.01
+        - -0.01,2.99
+        - -6.99,2.99
+        - -6.99,2.01
+      id: grid_chunk--6.99-2.01
       mask:
       - MapGrid
       layer:
       - MapGrid
-      mass: 28
+      mass: 27.361599
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
-        - 0,3
-        - 0,4
-        - -8,4
-        - -8,3
-      id: grid_chunk--8-3
+        - -0.01,3.01
+        - -0.01,3.99
+        - -7.99,3.99
+        - -7.99,3.01
+      id: grid_chunk--7.99-3.01
       mask:
       - MapGrid
       layer:
       - MapGrid
-      mass: 32
+      mass: 31.2816
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
-        - 0,4
-        - 0,5
-        - -6,5
-        - -6,4
-      id: grid_chunk--6-4
+        - -0.01,4.01
+        - -0.01,4.99
+        - -5.99,4.99
+        - -5.99,4.01
+      id: grid_chunk--5.99-4.01
       mask:
       - MapGrid
       layer:
       - MapGrid
-      mass: 24
+      mass: 23.44159
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
-        - 0,5
-        - 0,6
-        - -4,6
-        - -4,5
-      id: grid_chunk--4-5
+        - -0.01,5.01
+        - -0.01,5.99
+        - -3.99,5.99
+        - -3.99,5.01
+      id: grid_chunk--3.99-5.01
       mask:
       - MapGrid
       layer:
       - MapGrid
-      mass: 16
+      mass: 15.601593
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
-        - 0,6
-        - 0,7
-        - -1,7
-        - -1,6
-      id: grid_chunk--1-6
+        - -0.01,6.01
+        - -0.01,6.99
+        - -0.99,6.99
+        - -0.99,6.01
+      id: grid_chunk--0.99-6.01
       mask:
       - MapGrid
       layer:
       - MapGrid
-      mass: 4
+      mass: 3.8415983
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
-        - 7,0
-        - 7,2
-        - 0,2
-        - 0,0
-      id: grid_chunk-0-0
+        - 6.99,0.01
+        - 6.99,1.99
+        - 0.01,1.99
+        - 0.01,0.01
+      id: grid_chunk-0.01-0.01
       mask:
       - MapGrid
       layer:
       - MapGrid
-      mass: 56
+      mass: 55.2816
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
-        - 3,2
-        - 3,3
-        - 0,3
-        - 0,2
-      id: grid_chunk-0-2
+        - 2.99,2.01
+        - 2.99,2.99
+        - 0.01,2.99
+        - 0.01,2.01
+      id: grid_chunk-0.01-2.01
       mask:
       - MapGrid
       layer:
       - MapGrid
-      mass: 12
+      mass: 11.681601
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
-        - 5,3
-        - 5,4
-        - 0,4
-        - 0,3
-      id: grid_chunk-0-3
+        - 4.99,3.01
+        - 4.99,3.99
+        - 0.01,3.99
+        - 0.01,3.01
+      id: grid_chunk-0.01-3.01
       mask:
       - MapGrid
       layer:
       - MapGrid
-      mass: 20
+      mass: 19.521599
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
-        - 6,4
-        - 6,5
-        - 0,5
-        - 0,4
-      id: grid_chunk-0-4
+        - 5.99,4.01
+        - 5.99,4.99
+        - 0.01,4.99
+        - 0.01,4.01
+      id: grid_chunk-0.01-4.01
       mask:
       - MapGrid
       layer:
       - MapGrid
-      mass: 24
+      mass: 23.44159
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
-        - 7,5
-        - 7,6
-        - 0,6
-        - 0,5
-      id: grid_chunk-0-5
+        - 6.99,5.01
+        - 6.99,5.99
+        - 0.01,5.99
+        - 0.01,5.01
+      id: grid_chunk-0.01-5.01
       mask:
       - MapGrid
       layer:
       - MapGrid
-      mass: 28
+      mass: 27.361588
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
-        - 1,6
-        - 1,7
-        - 0,7
-        - 0,6
-      id: grid_chunk-0-6
+        - 0.99,6.01
+        - 0.99,6.99
+        - 0.01,6.99
+        - 0.01,6.01
+      id: grid_chunk-0.01-6.01
       mask:
       - MapGrid
       layer:
       - MapGrid
-      mass: 4
+      mass: 3.8415983
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
-        - 5,6
-        - 5,7
-        - 4,7
-        - 4,6
-      id: grid_chunk-4-6
+        - 4.99,6.01
+        - 4.99,6.99
+        - 4.01,6.99
+        - 4.01,6.01
+      id: grid_chunk-4.01-6.01
       mask:
       - MapGrid
       layer:
       - MapGrid
-      mass: 4
+      mass: 3.8415964
       restitution: 0.1
     type: Fixtures
   - gravityShakeSound: !type:SoundPathSpecifier
@@ -638,667 +1025,293 @@ entities:
       - 0
       - 0
     type: GridAtmosphere
-- uid: 1
-  type: WallSolid
-  components:
-  - pos: -4.5,-5.5
-    parent: 0
-    type: Transform
-- uid: 2
+  - chunkCollection: {}
+    type: DecalGrid
+- uid: 62
   type: WallSolid
   components:
   - pos: -4.5,-6.5
-    parent: 0
+    parent: 61
     type: Transform
-- uid: 3
+- uid: 63
   type: WallSolid
   components:
-  - pos: -3.5,-6.5
-    parent: 0
+  - pos: -4.5,-5.5
+    parent: 61
     type: Transform
-- uid: 4
-  type: WallSolid
-  components:
-  - pos: -2.5,-6.5
-    parent: 0
-    type: Transform
-- uid: 5
-  type: WallSolid
-  components:
-  - pos: -1.5,-6.5
-    parent: 0
-    type: Transform
-- uid: 6
-  type: WallSolid
-  components:
-  - pos: -4.5,-1.5
-    parent: 0
-    type: Transform
-- uid: 7
-  type: Girder
-  components:
-  - pos: -4.5,-2.5
-    parent: 0
-    type: Transform
-- uid: 8
-  type: WallSolid
-  components:
-  - pos: -0.5,-1.5
-    parent: 0
-    type: Transform
-- uid: 9
+- uid: 64
   type: WallSolid
   components:
   - pos: -0.5,-2.5
-    parent: 0
+    parent: 61
     type: Transform
-- uid: 10
-  type: WallSolid
-  components:
-  - pos: -0.5,-3.5
-    parent: 0
-    type: Transform
-- uid: 11
-  type: WallSolid
-  components:
-  - pos: -0.5,-4.5
-    parent: 0
-    type: Transform
-- uid: 12
-  type: WallSolid
-  components:
-  - pos: -3.5,-1.5
-    parent: 0
-    type: Transform
-- uid: 13
-  type: WallSolid
-  components:
-  - pos: -2.5,-1.5
-    parent: 0
-    type: Transform
-- uid: 14
-  type: WallSolid
-  components:
-  - pos: -3.5,-0.5
-    parent: 0
-    type: Transform
-- uid: 15
-  type: WallSolid
-  components:
-  - pos: -3.5,0.5
-    parent: 0
-    type: Transform
-- uid: 16
+- uid: 65
   type: WallSolid
   components:
   - pos: -3.5,1.5
-    parent: 0
+    parent: 61
     type: Transform
-- uid: 17
-  type: WallSolid
-  components:
-  - pos: -2.5,1.5
-    parent: 0
-    type: Transform
-- uid: 18
-  type: WallSolid
-  components:
-  - pos: -2.5,2.5
-    parent: 0
-    type: Transform
-- uid: 19
-  type: WallSolid
-  components:
-  - pos: -1.5,2.5
-    parent: 0
-    type: Transform
-- uid: 20
-  type: Girder
-  components:
-  - pos: -0.5,-5.5
-    parent: 0
-    type: Transform
-- uid: 21
-  type: WallSolid
-  components:
-  - pos: 0.5,2.5
-    parent: 0
-    type: Transform
-- uid: 22
-  type: WallSolid
-  components:
-  - pos: 1.5,2.5
-    parent: 0
-    type: Transform
-- uid: 23
-  type: WallSolid
-  components:
-  - pos: 2.5,2.5
-    parent: 0
-    type: Transform
-- uid: 24
-  type: WallSolid
-  components:
-  - pos: 2.5,1.5
-    parent: 0
-    type: Transform
-- uid: 25
-  type: WallSolid
-  components:
-  - pos: 2.5,0.5
-    parent: 0
-    type: Transform
-- uid: 26
-  type: WallSolid
-  components:
-  - pos: 2.5,-0.5
-    parent: 0
-    type: Transform
-- uid: 27
-  type: WallSolid
-  components:
-  - pos: 2.5,-1.5
-    parent: 0
-    type: Transform
-- uid: 28
-  type: WallSolid
-  components:
-  - pos: 0.5,-1.5
-    parent: 0
-    type: Transform
-- uid: 29
-  type: WallSolid
-  components:
-  - pos: 0.5,-3.5
-    parent: 0
-    type: Transform
-- uid: 30
-  type: WallSolid
-  components:
-  - pos: 1.5,-3.5
-    parent: 0
-    type: Transform
-- uid: 31
-  type: WallSolid
-  components:
-  - pos: 2.5,-3.5
-    parent: 0
-    type: Transform
-- uid: 32
-  type: WallSolid
-  components:
-  - pos: 3.5,-3.5
-    parent: 0
-    type: Transform
-- uid: 33
-  type: WallSolid
-  components:
-  - pos: 4.5,-3.5
-    parent: 0
-    type: Transform
-- uid: 34
-  type: WallSolid
-  components:
-  - pos: 4.5,-2.5
-    parent: 0
-    type: Transform
-- uid: 35
-  type: WallSolid
-  components:
-  - pos: 4.5,-1.5
-    parent: 0
-    type: Transform
-- uid: 36
-  type: WallSolid
-  components:
-  - pos: 4.5,-0.5
-    parent: 0
-    type: Transform
-- uid: 37
-  type: WallSolid
-  components:
-  - pos: 4.5,0.5
-    parent: 0
-    type: Transform
-- uid: 38
-  type: Girder
-  components:
-  - pos: 4.5,1.5
-    parent: 0
-    type: Transform
-- uid: 39
-  type: AirlockGlass
-  components:
-  - pos: 3.5,0.5
-    parent: 0
-    type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 40
-  type: AirlockGlass
-  components:
-  - pos: 1.5,-1.5
-    parent: 0
-    type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 41
-  type: AirlockGlass
-  components:
-  - pos: -1.5,-1.5
-    parent: 0
-    type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 42
-  type: WallSolid
-  components:
-  - pos: -2.5,4.5
-    parent: 0
-    type: Transform
-- uid: 43
-  type: WallSolid
-  components:
-  - pos: -2.5,5.5
-    parent: 0
-    type: Transform
-- uid: 44
-  type: WallSolid
-  components:
-  - pos: -1.5,5.5
-    parent: 0
-    type: Transform
-- uid: 45
-  type: WallSolid
-  components:
-  - pos: -0.5,5.5
-    parent: 0
-    type: Transform
-- uid: 46
-  type: WallSolid
-  components:
-  - pos: 0.5,5.5
-    parent: 0
-    type: Transform
-- uid: 47
-  type: WallSolid
-  components:
-  - pos: 1.5,5.5
-    parent: 0
-    type: Transform
-- uid: 48
-  type: WallSolid
-  components:
-  - pos: 2.5,5.5
-    parent: 0
-    type: Transform
-- uid: 49
-  type: WallSolid
-  components:
-  - pos: 3.5,5.5
-    parent: 0
-    type: Transform
-- uid: 50
-  type: WallSolid
-  components:
-  - pos: 3.5,4.5
-    parent: 0
-    type: Transform
-- uid: 51
-  type: WallSolid
-  components:
-  - pos: 2.5,3.5
-    parent: 0
-    type: Transform
-- uid: 52
-  type: WallSolid
-  components:
-  - pos: 3.5,3.5
-    parent: 0
-    type: Transform
-- uid: 53
-  type: WallSolid
-  components:
-  - pos: -4.5,1.5
-    parent: 0
-    type: Transform
-- uid: 54
-  type: WallSolid
-  components:
-  - pos: -5.5,1.5
-    parent: 0
-    type: Transform
-- uid: 55
-  type: WallSolid
-  components:
-  - pos: -6.5,1.5
-    parent: 0
-    type: Transform
-- uid: 56
-  type: WallSolid
-  components:
-  - pos: -6.5,2.5
-    parent: 0
-    type: Transform
-- uid: 57
-  type: WallSolid
-  components:
-  - pos: -6.5,3.5
-    parent: 0
-    type: Transform
-- uid: 58
-  type: WallSolid
-  components:
-  - pos: -4.5,4.5
-    parent: 0
-    type: Transform
-- uid: 59
-  type: WallSolid
-  components:
-  - pos: -3.5,4.5
-    parent: 0
-    type: Transform
-- uid: 60
-  type: WallSolid
-  components:
-  - pos: -5.5,3.5
-    parent: 0
-    type: Transform
-- uid: 61
-  type: WallSolid
-  components:
-  - pos: -5.5,4.5
-    parent: 0
-    type: Transform
-- uid: 62
-  type: SalvageCanisterSpawner
-  components:
-  - pos: -5.5,2.5
-    parent: 0
-    type: Transform
-- uid: 63
+- uid: 66
   type: SalvageCanisterSpawner
   components:
   - pos: -4.5,2.5
-    parent: 0
-    type: Transform
-- uid: 64
-  type: StorageCanister
-  components:
-  - pos: -1.5,4.5
-    parent: 0
-    type: Transform
-- uid: 65
-  type: AirlockEngineering
-  components:
-  - pos: -0.5,2.5
-    parent: 0
-    type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 66
-  type: Girder
-  components:
-  - pos: 3.5,-4.5
-    parent: 0
+    parent: 61
     type: Transform
 - uid: 67
-  type: Girder
+  type: WallSolid
   components:
-  - pos: 3.5,-5.5
-    parent: 0
+  - pos: -1.5,-6.5
+    parent: 61
     type: Transform
 - uid: 68
-  type: Girder
+  type: WallSolid
   components:
-  - pos: 5.5,-1.5
-    parent: 0
+  - pos: -3.5,-6.5
+    parent: 61
     type: Transform
 - uid: 69
-  type: SalvageMaterialCrateSpawner
+  type: WallSolid
   components:
-  - pos: 2.5,4.5
-    parent: 0
+  - pos: -4.5,-1.5
+    parent: 61
     type: Transform
 - uid: 70
-  type: SalvageMaterialCrateSpawner
-  components:
-  - pos: 1.5,4.5
-    parent: 0
-    type: Transform
-- uid: 71
-  type: SalvageMaterialCrateSpawner
-  components:
-  - pos: 0.5,3.5
-    parent: 0
-    type: Transform
-- uid: 72
-  type: SalvageMaterialCrateSpawner
-  components:
-  - pos: 1.5,3.5
-    parent: 0
-    type: Transform
-- uid: 73
-  type: SalvageMaterialCrateSpawner
-  components:
-  - pos: 0.5,4.5
-    parent: 0
-    type: Transform
-- uid: 74
-  type: SalvageMobSpawner
-  components:
-  - pos: 3.5,-2.5
-    parent: 0
-    type: Transform
-- uid: 75
-  type: SalvageMobSpawner
-  components:
-  - pos: 1.5,-2.5
-    parent: 0
-    type: Transform
-- uid: 76
-  type: SalvageMobSpawner
-  components:
-  - pos: 3.5,-0.5
-    parent: 0
-    type: Transform
-- uid: 77
-  type: SalvageMobSpawner
-  components:
-  - pos: -3.5,-2.5
-    parent: 0
-    type: Transform
-- uid: 78
-  type: SalvageMobSpawner
-  components:
-  - pos: -3.5,-5.5
-    parent: 0
-    type: Transform
-- uid: 79
-  type: SalvageMobSpawner
-  components:
-  - pos: -1.5,-5.5
-    parent: 0
-    type: Transform
-- uid: 80
-  type: SalvageMobSpawner
-  components:
-  - pos: -1.5,1.5
-    parent: 0
-    type: Transform
-- uid: 81
   type: SalvageMobSpawner
   components:
   - pos: 1.5,1.5
-    parent: 0
+    parent: 61
     type: Transform
-- uid: 82
-  type: SalvageMobSpawner
+- uid: 71
+  type: WallSolid
   components:
-  - pos: -2.5,-0.5
-    parent: 0
+  - pos: 4.5,-3.5
+    parent: 61
     type: Transform
-- uid: 83
-  type: Table
+- uid: 72
+  type: WallSolid
   components:
-  - pos: -0.5,0.5
-    parent: 0
+  - pos: 4.5,-2.5
+    parent: 61
     type: Transform
-- uid: 84
-  type: Table
+- uid: 73
+  type: WallSolid
   components:
-  - pos: 0.5,0.5
-    parent: 0
+  - pos: 4.5,-1.5
+    parent: 61
     type: Transform
-- uid: 85
-  type: PaperWrittenSalvageLoreMedium1PlasmaTrap
+- uid: 74
+  type: WallSolid
   components:
-  - pos: 0.48327154,0.5698495
-    parent: 0
+  - pos: 1.5,-3.5
+    parent: 61
     type: Transform
-- uid: 86
-  type: SalvageCanisterSpawner
+- uid: 75
+  type: WallSolid
   components:
-  - pos: -3.5,3.5
-    parent: 0
+  - pos: 2.5,-3.5
+    parent: 61
     type: Transform
-- uid: 87
+- uid: 76
   type: SalvageCanisterSpawner
   components:
   - pos: -3.5,2.5
-    parent: 0
+    parent: 61
     type: Transform
-- uid: 88
-  type: SalvageCanisterSpawner
+- uid: 77
+  type: WallSolid
   components:
-  - pos: -4.5,3.5
-    parent: 0
+  - pos: -4.5,1.5
+    parent: 61
     type: Transform
-- uid: 89
-  type: AtmosFixInstantPlasmaFireMarker
+- uid: 78
+  type: WallSolid
   components:
-  - pos: -1.5,3.5
-    parent: 0
+  - pos: -6.5,1.5
+    parent: 61
     type: Transform
-- uid: 90
-  type: AtmosFixInstantPlasmaFireMarker
+- uid: 79
+  type: WallSolid
+  components:
+  - pos: -6.5,3.5
+    parent: 61
+    type: Transform
+- uid: 80
+  type: WallSolid
+  components:
+  - pos: -4.5,4.5
+    parent: 61
+    type: Transform
+- uid: 81
+  type: WallSolid
+  components:
+  - pos: -5.5,4.5
+    parent: 61
+    type: Transform
+- uid: 82
+  type: WallSolid
+  components:
+  - pos: -2.5,-6.5
+    parent: 61
+    type: Transform
+- uid: 83
+  type: StorageCanister
   components:
   - pos: -1.5,4.5
-    parent: 0
+    parent: 61
+    type: Transform
+- uid: 84
+  type: WallSolid
+  components:
+  - pos: -6.5,2.5
+    parent: 61
+    type: Transform
+- uid: 85
+  type: Table
+  components:
+  - pos: 0.5,0.5
+    parent: 61
+    type: Transform
+- uid: 86
+  type: SalvageMobSpawner
+  components:
+  - pos: -3.5,-5.5
+    parent: 61
+    type: Transform
+- uid: 87
+  type: PaperWrittenSalvageLoreMedium1PlasmaTrap
+  components:
+  - pos: 0.48327154,0.5698495
+    parent: 61
+    type: Transform
+- uid: 88
+  type: WallSolid
+  components:
+  - pos: 4.5,0.5
+    parent: 61
+    type: Transform
+- uid: 89
+  type: WallSolid
+  components:
+  - pos: -3.5,0.5
+    parent: 61
+    type: Transform
+- uid: 90
+  type: WallSolid
+  components:
+  - pos: -3.5,-0.5
+    parent: 61
     type: Transform
 - uid: 91
-  type: AtmosFixInstantPlasmaFireMarker
+  type: SalvageCanisterSpawner
   components:
-  - pos: -0.5,4.5
-    parent: 0
+  - pos: -5.5,2.5
+    parent: 61
     type: Transform
 - uid: 92
-  type: SalvageMaterialCrateSpawner
+  type: WallSolid
   components:
-  - pos: -3.5,-2.5
-    parent: 0
+  - pos: -3.5,-1.5
+    parent: 61
     type: Transform
 - uid: 93
-  type: SalvageMaterialCrateSpawner
+  type: WallSolid
   components:
-  - pos: -3.5,-3.5
-    parent: 0
+  - pos: -5.5,3.5
+    parent: 61
     type: Transform
 - uid: 94
-  type: AtmosFixInstantPlasmaFireMarker
+  type: WallSolid
   components:
-  - pos: -0.5,3.5
-    parent: 0
+  - pos: -0.5,-4.5
+    parent: 61
     type: Transform
 - uid: 95
-  type: AtmosFixInstantPlasmaFireMarker
+  type: WallSolid
   components:
-  - pos: 0.5,4.5
-    parent: 0
+  - pos: 3.5,-3.5
+    parent: 61
     type: Transform
 - uid: 96
-  type: AtmosFixInstantPlasmaFireMarker
+  type: WallSolid
   components:
-  - pos: 0.5,3.5
-    parent: 0
+  - pos: -0.5,5.5
+    parent: 61
     type: Transform
 - uid: 97
   type: AtmosFixInstantPlasmaFireMarker
   components:
   - pos: 1.5,4.5
-    parent: 0
+    parent: 61
     type: Transform
 - uid: 98
-  type: AtmosFixInstantPlasmaFireMarker
+  type: SalvageMobSpawner
   components:
-  - pos: 1.5,3.5
-    parent: 0
+  - pos: 3.5,-0.5
+    parent: 61
     type: Transform
 - uid: 99
-  type: AtmosFixInstantPlasmaFireMarker
+  type: SalvageMobSpawner
   components:
-  - pos: 2.5,4.5
-    parent: 0
+  - pos: -2.5,-0.5
+    parent: 61
     type: Transform
 - uid: 100
   type: AtmosFixInstantPlasmaFireMarker
   components:
-  - pos: -2.5,3.5
-    parent: 0
+  - pos: 1.5,3.5
+    parent: 61
     type: Transform
 - uid: 101
   type: AtmosFixInstantPlasmaFireMarker
   components:
   - pos: -3.5,3.5
-    parent: 0
+    parent: 61
     type: Transform
 - uid: 102
   type: AtmosFixInstantPlasmaFireMarker
   components:
   - pos: -4.5,3.5
-    parent: 0
+    parent: 61
     type: Transform
 - uid: 103
   type: AtmosFixInstantPlasmaFireMarker
   components:
   - pos: -3.5,2.5
-    parent: 0
+    parent: 61
     type: Transform
 - uid: 104
   type: AtmosFixInstantPlasmaFireMarker
   components:
   - pos: -4.5,2.5
-    parent: 0
+    parent: 61
     type: Transform
 - uid: 105
   type: AtmosFixInstantPlasmaFireMarker
   components:
   - pos: -5.5,2.5
-    parent: 0
+    parent: 61
     type: Transform
 - uid: 106
   type: SalternSubstation
   components:
   - pos: 0.5,-2.5
-    parent: 0
+    parent: 61
     type: Transform
   - startingCharge: 3990010
     type: Battery
   - supplyRampPosition: 2.3437593
     type: PowerNetworkBattery
+  - containers:
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 107
   type: CableMV
   components:
   - pos: 0.5,-2.5
-    parent: 0
+    parent: 61
     type: Transform
   - visible: False
     type: Sprite
@@ -1308,7 +1321,7 @@ entities:
   type: CableMV
   components:
   - pos: 1.5,-2.5
-    parent: 0
+    parent: 61
     type: Transform
   - visible: False
     type: Sprite
@@ -1318,7 +1331,7 @@ entities:
   type: CableMV
   components:
   - pos: 1.5,-1.5
-    parent: 0
+    parent: 61
     type: Transform
   - visible: False
     type: Sprite
@@ -1328,7 +1341,7 @@ entities:
   type: CableMV
   components:
   - pos: 1.5,-0.5
-    parent: 0
+    parent: 61
     type: Transform
   - visible: False
     type: Sprite
@@ -1338,7 +1351,7 @@ entities:
   type: CableMV
   components:
   - pos: 1.5,0.5
-    parent: 0
+    parent: 61
     type: Transform
   - visible: False
     type: Sprite
@@ -1348,7 +1361,7 @@ entities:
   type: CableMV
   components:
   - pos: 1.5,1.5
-    parent: 0
+    parent: 61
     type: Transform
   - visible: False
     type: Sprite
@@ -1358,7 +1371,7 @@ entities:
   type: CableMV
   components:
   - pos: 1.5,2.5
-    parent: 0
+    parent: 61
     type: Transform
   - canCollide: False
     type: Physics
@@ -1366,7 +1379,7 @@ entities:
   type: SalternAPC
   components:
   - pos: 1.5,2.5
-    parent: 0
+    parent: 61
     type: Transform
   - startingCharge: 12000
     type: Battery
@@ -1374,7 +1387,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 1.5,2.5
-    parent: 0
+    parent: 61
     type: Transform
   - canCollide: False
     type: Physics
@@ -1382,7 +1395,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 1.5,1.5
-    parent: 0
+    parent: 61
     type: Transform
   - visible: False
     type: Sprite
@@ -1392,7 +1405,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 1.5,0.5
-    parent: 0
+    parent: 61
     type: Transform
   - visible: False
     type: Sprite
@@ -1402,7 +1415,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 1.5,-0.5
-    parent: 0
+    parent: 61
     type: Transform
   - visible: False
     type: Sprite
@@ -1412,7 +1425,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 0.5,-0.5
-    parent: 0
+    parent: 61
     type: Transform
   - visible: False
     type: Sprite
@@ -1422,7 +1435,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: -0.5,-0.5
-    parent: 0
+    parent: 61
     type: Transform
   - visible: False
     type: Sprite
@@ -1432,7 +1445,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: -1.5,-0.5
-    parent: 0
+    parent: 61
     type: Transform
   - visible: False
     type: Sprite
@@ -1442,7 +1455,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: -2.5,-0.5
-    parent: 0
+    parent: 61
     type: Transform
   - visible: False
     type: Sprite
@@ -1452,7 +1465,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: -1.5,-0.5
-    parent: 0
+    parent: 61
     type: Transform
   - visible: False
     type: Sprite
@@ -1462,7 +1475,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: -1.5,-1.5
-    parent: 0
+    parent: 61
     type: Transform
   - visible: False
     type: Sprite
@@ -1472,7 +1485,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: -1.5,-2.5
-    parent: 0
+    parent: 61
     type: Transform
   - visible: False
     type: Sprite
@@ -1482,7 +1495,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: -1.5,-3.5
-    parent: 0
+    parent: 61
     type: Transform
   - visible: False
     type: Sprite
@@ -1492,7 +1505,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: -1.5,-4.5
-    parent: 0
+    parent: 61
     type: Transform
   - canCollide: False
     type: Physics
@@ -1500,7 +1513,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: -2.5,-4.5
-    parent: 0
+    parent: 61
     type: Transform
   - canCollide: False
     type: Physics
@@ -1508,7 +1521,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: -0.5,0.5
-    parent: 0
+    parent: 61
     type: Transform
   - visible: False
     type: Sprite
@@ -1518,7 +1531,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: -0.5,1.5
-    parent: 0
+    parent: 61
     type: Transform
   - visible: False
     type: Sprite
@@ -1528,7 +1541,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 1.5,3.5
-    parent: 0
+    parent: 61
     type: Transform
   - visible: False
     type: Sprite
@@ -1538,7 +1551,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 1.5,4.5
-    parent: 0
+    parent: 61
     type: Transform
   - visible: False
     type: Sprite
@@ -1548,7 +1561,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 0.5,4.5
-    parent: 0
+    parent: 61
     type: Transform
   - visible: False
     type: Sprite
@@ -1558,7 +1571,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: -0.5,4.5
-    parent: 0
+    parent: 61
     type: Transform
   - visible: False
     type: Sprite
@@ -1568,7 +1581,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: -1.5,4.5
-    parent: 0
+    parent: 61
     type: Transform
   - visible: False
     type: Sprite
@@ -1578,7 +1591,7 @@ entities:
   type: Poweredlight
   components:
   - pos: -0.5,4.5
-    parent: 0
+    parent: 61
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
@@ -1590,7 +1603,7 @@ entities:
   components:
   - rot: -1.5707963267948966 rad
     pos: 1.5,0.5
-    parent: 0
+    parent: 61
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
@@ -1602,7 +1615,7 @@ entities:
   components:
   - rot: -1.5707963267948966 rad
     pos: -1.5,-3.5
-    parent: 0
+    parent: 61
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
@@ -1614,7 +1627,7 @@ entities:
   components:
   - rot: 1.5707963267948966 rad
     pos: -2.5,0.5
-    parent: 0
+    parent: 61
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
@@ -1625,7 +1638,7 @@ entities:
   type: Poweredlight
   components:
   - pos: 2.5,-2.5
-    parent: 0
+    parent: 61
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
@@ -1637,7 +1650,7 @@ entities:
   components:
   - rot: 1.5707963267948966 rad
     pos: 3.5,-1.5
-    parent: 0
+    parent: 61
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
@@ -1648,7 +1661,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 1.5,-1.5
-    parent: 0
+    parent: 61
     type: Transform
   - visible: False
     type: Sprite
@@ -1658,7 +1671,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 1.5,-2.5
-    parent: 0
+    parent: 61
     type: Transform
   - visible: False
     type: Sprite
@@ -1668,7 +1681,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 2.5,-2.5
-    parent: 0
+    parent: 61
     type: Transform
   - visible: False
     type: Sprite
@@ -1678,7 +1691,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 3.5,-2.5
-    parent: 0
+    parent: 61
     type: Transform
   - visible: False
     type: Sprite
@@ -1688,7 +1701,7 @@ entities:
   type: CableApcExtension
   components:
   - pos: 3.5,-1.5
-    parent: 0
+    parent: 61
     type: Transform
   - visible: False
     type: Sprite

@@ -41,7 +41,6 @@ tilemap:
   34: floor_wood
   35: lattice
   36: plating
-  37: underplating
 grids:
 - settings:
     chunksize: 16
@@ -57,84 +56,6 @@ grids:
     tiles: FAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
 entities:
 - uid: 0
-  type: WallSolid
-  components:
-  - pos: -0.5,-2.5
-    parent: 10
-    type: Transform
-- uid: 1
-  type: SalvageCanisterSpawner
-  components:
-  - pos: -0.5,-0.5
-    parent: 10
-    type: Transform
-- uid: 2
-  type: ClosetFireFilled
-  components:
-  - pos: -2.254117,1.5
-    parent: 10
-    type: Transform
-  - isPlaceable: False
-    type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 3
-  type: SalvageMaterialCrateSpawner
-  components:
-  - pos: -0.5,1.5
-    parent: 10
-    type: Transform
-- uid: 4
-  type: SalvageMaterialCrateSpawner
-  components:
-  - pos: -1.5,-0.5
-    parent: 10
-    type: Transform
-- uid: 5
-  type: WallSolid
-  components:
-  - pos: -1.5,-2.5
-    parent: 10
-    type: Transform
-- uid: 6
-  type: ClosetEmergencyFilledRandom
-  components:
-  - pos: -1.2175364,1.5
-    parent: 10
-    type: Transform
-  - isPlaceable: False
-    type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 7
-  type: ClosetLegal
-  components:
-  - pos: -2.7688956,1.5
-    parent: 10
-    type: Transform
-  - isPlaceable: False
-    type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 8
-  type: SalvageCanisterSpawner
-  components:
-  - pos: -1.5,-1.5
-    parent: 10
-    type: Transform
-- uid: 9
-  type: WallSolid
-  components:
-  - pos: 0.5,-2.5
-    parent: 10
-    type: Transform
-- uid: 10
   components:
   - pos: 0.5,0.5
     parent: null
@@ -269,11 +190,89 @@ entities:
     type: Gravity
   - chunkCollection: {}
     type: DecalGrid
+- uid: 1
+  type: ClosetLegal
+  components:
+  - pos: -2.7688956,1.5
+    parent: 0
+    type: Transform
+  - isPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 2
+  type: SalvageCanisterSpawner
+  components:
+  - pos: -1.5,-1.5
+    parent: 0
+    type: Transform
+- uid: 3
+  type: WallSolid
+  components:
+  - pos: -0.5,-2.5
+    parent: 0
+    type: Transform
+- uid: 4
+  type: ClosetFireFilled
+  components:
+  - pos: -2.254117,1.5
+    parent: 0
+    type: Transform
+  - isPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 5
+  type: SalvageCanisterSpawner
+  components:
+  - pos: -0.5,-0.5
+    parent: 0
+    type: Transform
+- uid: 6
+  type: WallSolid
+  components:
+  - pos: 0.5,-2.5
+    parent: 0
+    type: Transform
+- uid: 7
+  type: WallSolid
+  components:
+  - pos: -1.5,-2.5
+    parent: 0
+    type: Transform
+- uid: 8
+  type: SalvageMaterialCrateSpawner
+  components:
+  - pos: -0.5,1.5
+    parent: 0
+    type: Transform
+- uid: 9
+  type: ClosetEmergencyFilledRandom
+  components:
+  - pos: -1.2175364,1.5
+    parent: 0
+    type: Transform
+  - isPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 10
+  type: SalvageMaterialCrateSpawner
+  components:
+  - pos: -1.5,-0.5
+    parent: 0
+    type: Transform
 - uid: 11
   type: LockerBotanistLoot
   components:
   - pos: -1.7394279,1.5
-    parent: 10
+    parent: 0
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface

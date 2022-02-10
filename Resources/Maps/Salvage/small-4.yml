@@ -41,7 +41,6 @@ tilemap:
   34: floor_wood
   35: lattice
   36: plating
-  37: underplating
 grids:
 - settings:
     chunksize: 16
@@ -57,6 +56,282 @@ grids:
     tiles: BwAAAAcAAAAjAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAcAAAAjAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAjAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
 entities:
 - uid: 0
+  type: TableFrame
+  components:
+  - pos: 1.5,-2.5
+    parent: 34
+    type: Transform
+- uid: 1
+  type: CableApcExtension
+  components:
+  - pos: -0.5,-0.5
+    parent: 34
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 2
+  type: FoodDonutChaos
+  components:
+  - pos: -2.0778189,0.69161737
+    parent: 34
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 3
+  type: CableApcExtension
+  components:
+  - pos: -0.5,-3.5
+    parent: 34
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 4
+  type: DisposalUnit
+  components:
+  - pos: -2.5,-0.5
+    parent: 34
+    type: Transform
+  - containers:
+      DisposalUnit: !type:Container
+        ents:
+        - 18
+    type: ContainerContainer
+- uid: 5
+  type: VendingMachineBooze
+  components:
+  - pos: -2.5,-2.5
+    parent: 34
+    type: Transform
+  - enabled: False
+    type: AmbientSound
+- uid: 6
+  type: ReinforcedWindow
+  components:
+  - pos: -3.5,-0.5
+    parent: 34
+    type: Transform
+- uid: 7
+  type: WallSolid
+  components:
+  - pos: -3.5,-1.5
+    parent: 34
+    type: Transform
+- uid: 8
+  type: Table
+  components:
+  - pos: -0.5,-2.5
+    parent: 34
+    type: Transform
+- uid: 9
+  type: Table
+  components:
+  - pos: 0.5,-2.5
+    parent: 34
+    type: Transform
+- uid: 10
+  type: FloorTileItemBar
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 1.1162573,1.2208744
+    parent: 34
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 11
+  type: ShotgunSawn
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -1.1875,-1.421875
+    parent: 34
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      BoltActionBarrel-ammo-container: !type:Container
+        ents: []
+      BoltActionBarrel-chamber-container: !type:ContainerSlot {}
+      Content.Server.Weapon.Ranged.Barrels.Components.BoltActionBarrelComponent-ammo-container: !type:Container
+        ents: []
+      Content.Server.Weapon.Ranged.Barrels.Components.BoltActionBarrelComponent-chamber-container: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 12
+  type: FoodMeatXenoCutlet
+  components:
+  - pos: 0.09969014,-0.8567695
+    parent: 34
+    type: Transform
+- uid: 13
+  type: FoodDonutChaos
+  components:
+  - pos: -1.640319,0.59786737
+    parent: 34
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 14
+  type: CableApcExtension
+  components:
+  - pos: -0.5,-1.5
+    parent: 34
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 15
+  type: CableApcExtension
+  components:
+  - pos: -0.5,-2.5
+    parent: 34
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 16
+  type: BoozeDispenser
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 0.5,-2.5
+    parent: 34
+    type: Transform
+  - containers:
+      ReagentDispenser-beaker: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 17
+  type: GrilleBroken
+  components:
+  - pos: -3.5,1.5
+    parent: 34
+    type: Transform
+- uid: 18
+  type: SheetSteel1
+  components:
+  - rot: 1.2938857078552246 rad
+    parent: 4
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 19
+  type: AirlockAssembly
+  components:
+  - pos: -1.5,-3.5
+    parent: 34
+    type: Transform
+- uid: 20
+  type: ClothingHeadHatTophat
+  components:
+  - pos: -1.4423176,-0.6220329
+    parent: 34
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 21
+  type: OrganHumanTongue
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -1.5187342,-1.4814079
+    parent: 34
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 22
+  type: OrganHumanEyes
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -0.92498416,-0.5751579
+    parent: 34
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 23
+  type: PuddleVomit
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 0.15314084,-1.7314079
+    parent: 34
+    type: Transform
+- uid: 24
+  type: Poweredlight
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 0.5,-2.5
+    parent: 34
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 25
+  type: TableReinforced
+  components:
+  - pos: -2.5,0.5
+    parent: 34
+    type: Transform
+- uid: 26
+  type: CableApcExtension
+  components:
+  - pos: -0.5,0.5
+    parent: 34
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 27
+  type: CableApcExtension
+  components:
+  - pos: 0.5,0.5
+    parent: 34
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 28
+  type: CableApcExtension
+  components:
+  - pos: 1.5,0.5
+    parent: 34
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 29
+  type: Grille
+  components:
+  - pos: -3.5,-0.5
+    parent: 34
+    type: Transform
+- uid: 30
+  type: GrilleBroken
+  components:
+  - pos: -3.5,0.5
+    parent: 34
+    type: Transform
+- uid: 31
+  type: StoolBar
+  components:
+  - pos: 0.5,1.5
+    parent: 34
+    type: Transform
+- uid: 32
+  type: Girder
+  components:
+  - pos: -3.5,-2.5
+    parent: 34
+    type: Transform
+- uid: 33
+  type: GrilleBroken
+  components:
+  - pos: -3.5,2.5
+    parent: 34
+    type: Transform
+- uid: 34
   components:
   - pos: 0.5,0.5
     parent: null
@@ -172,473 +447,68 @@ entities:
       - MapGrid
       mass: 3.8416002
       restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - -3,-3
-        - -3,-1
-        - -4,-1
-        - -4,-3
-      id: grid_chunk--4--3
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 8
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 1,-2
-        - 1,-1
-        - 0,-1
-        - 0,-2
-      id: grid_chunk-0--2
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 4
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 0,-3
-        - 0,-2
-        - -1,-2
-        - -1,-3
-      id: grid_chunk--1--3
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 4
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - -3,0
-        - -3,2
-        - -4,2
-        - -4,0
-      id: grid_chunk--4-0
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 8
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 3,0
-        - 3,2
-        - 2,2
-        - 2,0
-      id: grid_chunk-2-0
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 8
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 0,-2
-        - 0,-1
-        - -2,-1
-        - -2,-2
-      id: grid_chunk--2--2
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 8
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 0,-4
-        - 0,-3
-        - -4,-3
-        - -4,-4
-      id: grid_chunk--4--4
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 16
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 0,-1
-        - 0,0
-        - -4,0
-        - -4,-1
-      id: grid_chunk--4--1
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 16
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 0,1
-        - 0,2
-        - -1,2
-        - -1,1
-      id: grid_chunk--1-1
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 4
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 3,2
-        - 3,3
-        - 0,3
-        - 0,2
-      id: grid_chunk-0-2
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 12
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 1,0
-        - 1,1
-        - 0,1
-        - 0,0
-      id: grid_chunk-0-0
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 4
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 3,-3
-        - 3,-1
-        - 2,-1
-        - 2,-3
-      id: grid_chunk-2--3
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 8
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 3,-1
-        - 3,0
-        - 0,0
-        - 0,-1
-      id: grid_chunk-0--1
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 12
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 3,-4
-        - 3,-3
-        - 0,-3
-        - 0,-4
-      id: grid_chunk-0--4
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 12
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 0,2
-        - 0,3
-        - -4,3
-        - -4,2
-      id: grid_chunk--4-2
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 16
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
-        - 0,0
-        - 0,1
-        - -2,1
-        - -2,0
-      id: grid_chunk--2-0
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 8
-      restitution: 0.1
     type: Fixtures
   - gravityShakeSound: !type:SoundPathSpecifier
       path: /Audio/Effects/alert.ogg
     type: Gravity
   - chunkCollection: {}
     type: DecalGrid
-- uid: 1
+- uid: 35
+  type: TableReinforced
+  components:
+  - pos: -0.5,0.5
+    parent: 34
+    type: Transform
+- uid: 36
   type: TableReinforced
   components:
   - pos: -1.5,0.5
-    parent: 0
+    parent: 34
     type: Transform
-- uid: 2
-  type: TableReinforced
-  components:
-  - pos: -0.5,0.5
-    parent: 0
-    type: Transform
-- uid: 3
-  type: TableReinforced
-  components:
-  - pos: 0.5,0.5
-    parent: 0
-    type: Transform
-- uid: 4
-  type: TableFrame
-  components:
-  - pos: 1.5,0.5
-    parent: 0
-    type: Transform
-- uid: 5
-  type: StoolBar
-  components:
-  - pos: -1.5,1.5
-    parent: 0
-    type: Transform
-- uid: 6
-  type: StoolBar
-  components:
-  - pos: -0.5,1.5
-    parent: 0
-    type: Transform
-- uid: 7
-  type: StoolBar
-  components:
-  - pos: 0.5,1.5
-    parent: 0
-    type: Transform
-- uid: 8
-  type: Girder
-  components:
-  - pos: -3.5,-2.5
-    parent: 0
-    type: Transform
-- uid: 9
+- uid: 37
   type: WallSolid
   components:
   - pos: -2.5,-3.5
-    parent: 0
+    parent: 34
     type: Transform
-- uid: 10
-  type: CableApcExtension
-  components:
-  - pos: -0.5,-0.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 11
-  type: WallSolid
-  components:
-  - pos: 0.5,-3.5
-    parent: 0
-    type: Transform
-- uid: 12
-  type: Girder
-  components:
-  - rot: 3.141592653589793 rad
-    pos: 1.5,-3.5
-    parent: 0
-    type: Transform
-- uid: 13
-  type: GrilleBroken
-  components:
-  - pos: -3.5,2.5
-    parent: 0
-    type: Transform
-- uid: 14
-  type: ReinforcedWindow
-  components:
-  - pos: -3.5,0.5
-    parent: 0
-    type: Transform
-- uid: 15
-  type: ShardGlassReinforced
-  components:
-  - pos: -3.3713274,1.6430573
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 16
+- uid: 38
   type: SignBar
   components:
   - pos: -3.5,-1.5
-    parent: 0
+    parent: 34
     type: Transform
-- uid: 17
+- uid: 39
+  type: FoodMeatXeno
+  components:
+  - pos: -2.2600613,1.1977519
+    parent: 34
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 40
+  type: StoolBar
+  components:
+  - pos: -1.5,1.5
+    parent: 34
+    type: Transform
+- uid: 41
   type: TableReinforced
   components:
-  - pos: -2.5,0.5
-    parent: 0
-    type: Transform
-- uid: 18
-  type: CableApcExtension
-  components:
-  - pos: -0.5,0.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 19
-  type: CableApcExtension
-  components:
   - pos: 0.5,0.5
-    parent: 0
+    parent: 34
     type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 20
-  type: CableApcExtension
+- uid: 42
+  type: StoolBar
   components:
-  - pos: 1.5,0.5
-    parent: 0
+  - pos: -0.5,1.5
+    parent: 34
     type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 21
-  type: Poweredlight
-  components:
-  - rot: 3.141592653589793 rad
-    pos: 0.5,-2.5
-    parent: 0
-    type: Transform
-  - powerLoad: 0
-    type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
-- uid: 22
-  type: GrilleBroken
-  components:
-  - pos: -3.5,0.5
-    parent: 0
-    type: Transform
-- uid: 23
-  type: Grille
-  components:
-  - pos: -3.5,-0.5
-    parent: 0
-    type: Transform
-- uid: 24
-  type: ReinforcedWindow
-  components:
-  - pos: -3.5,-0.5
-    parent: 0
-    type: Transform
-- uid: 25
-  type: WallSolid
-  components:
-  - pos: -3.5,-1.5
-    parent: 0
-    type: Transform
-- uid: 26
-  type: Table
-  components:
-  - pos: -0.5,-2.5
-    parent: 0
-    type: Transform
-- uid: 27
-  type: Table
-  components:
-  - pos: 0.5,-2.5
-    parent: 0
-    type: Transform
-- uid: 28
-  type: VendingMachineBooze
-  components:
-  - pos: -2.5,-2.5
-    parent: 0
-    type: Transform
-  - enabled: False
-    type: AmbientSound
-- uid: 29
-  type: DisposalUnit
-  components:
-  - pos: -2.5,-0.5
-    parent: 0
-    type: Transform
-  - containers:
-      DisposalUnit: !type:Container
-        ents:
-        - 40
-    type: ContainerContainer
-- uid: 30
-  type: DisposalPipe
-  components:
-  - rot: -1.5707963267948966 rad
-    pos: 2.5,-0.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      DisposalTransit: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 31
-  type: DisposalPipe
-  components:
-  - rot: -1.5707963267948966 rad
-    pos: 1.5,-0.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      DisposalTransit: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 32
-  type: DisposalPipe
-  components:
-  - rot: -1.5707963267948966 rad
-    pos: 0.5,-0.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-  - containers:
-      DisposalTransit: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 33
+- uid: 43
   type: DisposalPipe
   components:
   - rot: -1.5707963267948966 rad
     pos: -0.5,-0.5
-    parent: 0
+    parent: 34
     type: Transform
   - visible: False
     type: Sprite
@@ -648,12 +518,12 @@ entities:
       DisposalTransit: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 34
+- uid: 44
   type: DisposalPipe
   components:
   - rot: -1.5707963267948966 rad
     pos: -1.5,-0.5
-    parent: 0
+    parent: 34
     type: Transform
   - visible: False
     type: Sprite
@@ -663,12 +533,12 @@ entities:
       DisposalTransit: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 35
+- uid: 45
   type: DisposalTrunk
   components:
   - rot: 1.5707963267948966 rad
     pos: -2.5,-0.5
-    parent: 0
+    parent: 34
     type: Transform
   - visible: False
     type: Sprite
@@ -678,252 +548,176 @@ entities:
       DisposalEntry: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 36
-  type: BoozeDispenser
-  components:
-  - rot: 3.141592653589793 rad
-    pos: 0.5,-2.5
-    parent: 0
-    type: Transform
-  - containers:
-      ReagentDispenser-beaker: !type:ContainerSlot {}
-    type: ContainerContainer
-- uid: 37
-  type: KitchenReagentGrinder
-  components:
-  - rot: -1.5707963267948966 rad
-    pos: 1.5,-1.5
-    parent: 0
-    type: Transform
-  - containers:
-      ReagentGrinder-reagentContainerContainer: !type:ContainerSlot {}
-      ReagentGrinder-entityContainerContainer: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 38
-  type: AirlockAssembly
-  components:
-  - pos: -1.5,-3.5
-    parent: 0
-    type: Transform
-- uid: 39
-  type: GrilleBroken
-  components:
-  - pos: -3.5,1.5
-    parent: 0
-    type: Transform
-- uid: 40
-  type: SheetSteel1
-  components:
-  - rot: 1.2938857078552246 rad
-    parent: 29
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 41
-  type: ClothingHeadHatTophat
-  components:
-  - pos: -1.4423176,-0.6220329
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 42
-  type: OrganHumanEyes
-  components:
-  - rot: -1.5707963267948966 rad
-    pos: -0.92498416,-0.5751579
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 43
-  type: OrganHumanTongue
-  components:
-  - rot: -1.5707963267948966 rad
-    pos: -1.5187342,-1.4814079
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 44
-  type: PuddleVomit
-  components:
-  - rot: -1.5707963267948966 rad
-    pos: 0.15314084,-1.7314079
-    parent: 0
-    type: Transform
-- uid: 45
-  type: Poweredlight
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -2.5,-1.5
-    parent: 0
-    type: Transform
-  - powerLoad: 0
-    type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 46
-  type: FoodMeatXenoCutlet
-  components:
-  - pos: 0.09969014,-0.8567695
-    parent: 0
-    type: Transform
-- uid: 47
-  type: FoodDonutChaos
-  components:
-  - pos: -1.640319,0.59786737
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 48
-  type: CableApcExtension
-  components:
-  - pos: -0.5,-2.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 49
-  type: TableFrame
-  components:
-  - pos: 1.5,-2.5
-    parent: 0
-    type: Transform
-- uid: 50
-  type: ShotgunSawn
+  type: DisposalPipe
   components:
   - rot: -1.5707963267948966 rad
-    pos: -1.1875,-1.421875
-    parent: 0
+    pos: 2.5,-0.5
+    parent: 34
     type: Transform
   - canCollide: False
     type: Physics
   - containers:
-      BoltActionBarrel-ammo-container: !type:Container
+      DisposalTransit: !type:Container
         ents: []
-      BoltActionBarrel-chamber-container: !type:ContainerSlot {}
     type: ContainerContainer
-- uid: 51
-  type: CableApcExtension
-  components:
-  - pos: -0.5,-1.5
-    parent: 0
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 52
-  type: FloorTileItemBar
+- uid: 47
+  type: DisposalPipe
   components:
   - rot: -1.5707963267948966 rad
-    pos: 1.1162573,1.2208744
-    parent: 0
+    pos: 1.5,-0.5
+    parent: 34
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 53
+  - containers:
+      DisposalTransit: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 48
   type: SalternAPC
   components:
   - pos: -0.5,-3.5
-    parent: 0
+    parent: 34
     type: Transform
   - enabled: False
     type: AmbientSound
   - loadingNetworkDemand: 20
     supplyRampPosition: 0.010999783
     type: PowerNetworkBattery
-- uid: 54
-  type: CableApcExtension
-  components:
-  - pos: -0.5,-3.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 55
+- uid: 49
   type: WallSolid
   components:
   - pos: -0.5,-3.5
-    parent: 0
+    parent: 34
     type: Transform
-- uid: 56
-  type: CableApcExtension
-  components:
-  - pos: 2.5,0.5
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 57
+- uid: 50
   type: DrinkBottleOfNothingFull
   components:
   - pos: -0.640319,-2.4491396
-    parent: 0
+    parent: 34
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 51
+  type: DrinkBottleOfNothingFull
+  components:
+  - pos: -0.280944,-2.4335146
+    parent: 34
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 52
+  type: FoodMeatXenoCutlet
+  components:
+  - pos: -2.5569363,1.807127
+    parent: 34
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 53
+  type: TableFrame
+  components:
+  - pos: 1.5,0.5
+    parent: 34
+    type: Transform
+- uid: 54
+  type: FoodMeatXeno
+  components:
+  - pos: 0.4864508,-1.117334
+    parent: 34
+    type: Transform
+- uid: 55
+  type: CableApcExtension
+  components:
+  - pos: 2.5,0.5
+    parent: 34
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 56
+  type: KitchenReagentGrinder
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 1.5,-1.5
+    parent: 34
+    type: Transform
+  - containers:
+      ReagentGrinder-reagentContainerContainer: !type:ContainerSlot {}
+      ReagentGrinder-entityContainerContainer: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 57
+  type: ShardGlassReinforced
+  components:
+  - pos: -3.3713274,1.6430573
+    parent: 34
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 58
-  type: DrinkBottleOfNothingFull
+  type: ReinforcedWindow
   components:
-  - pos: -0.280944,-2.4335146
-    parent: 0
+  - pos: -3.5,0.5
+    parent: 34
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 59
-  type: FoodDonutChaos
+  type: FoodMeatXeno
   components:
-  - pos: -2.0778189,0.69161737
-    parent: 0
+  - pos: -2.5100613,1.3540019
+    parent: 34
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 60
+  type: Girder
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 1.5,-3.5
+    parent: 34
+    type: Transform
+- uid: 61
   type: DrinkFlask
   components:
   - rot: -1.5707963267948966 rad
     pos: -1.046569,1.8478675
-    parent: 0
+    parent: 34
     type: Transform
   - canCollide: False
     type: Physics
   - solution: drink
     type: DrainableSolution
-- uid: 61
-  type: FoodMeatXenoCutlet
-  components:
-  - pos: -2.5569363,1.807127
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 62
-  type: FoodMeatXeno
+  type: WallSolid
   components:
-  - pos: -2.5100613,1.3540019
-    parent: 0
+  - pos: 0.5,-3.5
+    parent: 34
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 63
-  type: FoodMeatXeno
+  type: DisposalPipe
   components:
-  - pos: -2.2600613,1.1977519
-    parent: 0
+  - rot: -1.5707963267948966 rad
+    pos: 0.5,-0.5
+    parent: 34
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
+  - containers:
+      DisposalTransit: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 64
-  type: FoodMeatXeno
+  type: Poweredlight
   components:
-  - pos: 0.4864508,-1.117334
-    parent: 0
+  - rot: 1.5707963267948966 rad
+    pos: -2.5,-1.5
+    parent: 34
     type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
 ...
