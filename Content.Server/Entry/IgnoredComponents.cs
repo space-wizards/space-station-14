@@ -15,7 +15,8 @@ namespace Content.Server.Entry
             "Clickable",
             "Icon",
             "ClientEntitySpawner",
-            "CharacterInfo"
+            "CharacterInfo",
+            "ItemCabinetVisuals"
         };
     }
 }

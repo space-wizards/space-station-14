@@ -41,7 +41,7 @@ namespace Content.Server.Medical.SuitSensors
             SubscribeLocalEvent<SuitSensorComponent, GotEquippedEvent>(OnEquipped);
             SubscribeLocalEvent<SuitSensorComponent, GotUnequippedEvent>(OnUnequipped);
             SubscribeLocalEvent<SuitSensorComponent, ExaminedEvent>(OnExamine);
-            SubscribeLocalEvent<SuitSensorComponent, GetInteractionVerbsEvent>(OnVerb);
+            SubscribeLocalEvent<SuitSensorComponent, GetVerbsEvent<Verb>>(OnVerb);
         }
 
         public override void Update(float frameTime)
@@ -135,7 +135,7 @@ namespace Content.Server.Medical.SuitSensors
             args.PushMarkup(Loc.GetString(msg));
         }
 
-        private void OnVerb(EntityUid uid, SuitSensorComponent component, GetInteractionVerbsEvent args)
+        private void OnVerb(EntityUid uid, SuitSensorComponent component, GetVerbsEvent<Verb> args)
         {
             // check if user can change sensor
             if (component.ControlsLocked)

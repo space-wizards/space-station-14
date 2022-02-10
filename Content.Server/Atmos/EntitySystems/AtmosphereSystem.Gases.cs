@@ -27,6 +27,8 @@ namespace Content.Server.Atmos.EntitySystems
         /// </summary>
         public float[] GasSpecificHeats => _gasSpecificHeats;
 
+        public string?[] GasReagents = new string[Atmospherics.TotalNumberOfGases];
+
         private void InitializeGases()
         {
             _gasReactions = _protoMan.EnumeratePrototypes<GasReactionPrototype>().ToArray();
@@ -37,6 +39,7 @@ namespace Content.Server.Atmos.EntitySystems
             for (var i = 0; i < GasPrototypes.Length; i++)
             {
                 _gasSpecificHeats[i] = GasPrototypes[i].SpecificHeat;
+                GasReagents[i] = GasPrototypes[i].Reagent;
             }
         }
 

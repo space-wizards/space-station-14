@@ -43,6 +43,17 @@ namespace Content.Client.Clickable
 
             var transform = _entMan.GetComponent<TransformComponent>(Owner);
             var worldRot = transform.WorldRotation;
+
+            // We need to convert world angle to a positive value. between 0 and 2pi. This is important for
+            // CalcRectWorldAngle to get the right angle. Otherwise can get incorrect results for sprites at angles like
+            // -135 degrees (seems highly specific, but AI actors & other entities can snap to those angles while
+            // moving). As to why we treat world-angle like this, but not eye angle or world+eye, it is just because
+            // thats what sprite-rendering does.
+            worldRot = worldRot.Reduced();
+
+            if (worldRot.Theta < 0)
+                worldRot = new Angle(worldRot.Theta + Math.Tau);
+
             var invSpriteMatrix = Matrix3.CreateTransform(Vector2.Zero, -sprite.Rotation, (1,1)/sprite.Scale);
             var relativeRotation = worldRot + _eyeManager.CurrentEye.Rotation;
 

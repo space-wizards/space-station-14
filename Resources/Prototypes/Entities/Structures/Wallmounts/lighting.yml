@@ -22,6 +22,7 @@
   - type: Sprite
     sprite: Structures/Wallmounts/Lighting/light_tube.rsi
     drawdepth: WallMountedItems
+    netsync: false
     layers:
     - state: on
       map: ["enum.PoweredLightLayers.Base"]
@@ -137,7 +138,6 @@
     damage:
       types:
         Heat: 20
-        
 - type: entity
   parent: WallLight
   id: UnpoweredLightExterior
@@ -149,6 +149,7 @@
     softness: 0.5
     color: "#B4FCF0"
         
+
 - type: entity
   id: PoweredlightSodium
   description: "A light fixture. Draws power and produces light when equipped with a light tube."
