@@ -113,7 +113,8 @@
   name: credit
   suffix: tradesman salary
   components:
-  - type: Sprite
+  - type: Icon
+    sprite: Objects/Economy/cash.rsi
     state: cash_100
   - type: Stack
     count: 300
@@ -124,7 +125,8 @@
   name: credit
   suffix: doctorate salary
   components:
-  - type: Sprite
+  - type: Icon
+    sprite: Objects/Economy/cash.rsi
     state: cash_100
   - type: Stack
     count: 480
@@ -135,7 +137,8 @@
   name: credit
   suffix: head salary
   components:
-  - type: Sprite
+  - type: Icon
+    sprite: Objects/Economy/cash.rsi
     state: cash_500
   - type: Stack
     count: 900
@@ -146,7 +149,8 @@
   name: credit
   suffix: executive salary
   components:
-  - type: Sprite
+  - type: Icon
+    sprite: Objects/Economy/cash.rsi
     state: cash_1000
   - type: Stack
     count: 1200
